@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
       ],
       toast: [
-        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-lg border bg-card text-fg shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
+        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-lg shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
         "[transition:transform_500ms_cubic-bezier(.22,1,.36,1),opacity_500ms,height_150ms,background-color_500ms,border-color_500ms]",
         "before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_0_rgb(0_0_0_/_0.04)]",
@@ -45,10 +45,10 @@ const { useStyles, styles } = createStyles(toastMeta, {
       icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
       message: "flex min-w-0 flex-1 flex-col gap-0.5",
       title: "text-sm leading-snug font-medium empty:hidden",
-      description: "text-sm leading-snug text-fg-muted empty:hidden",
+      description: "text-sm leading-snug empty:hidden",
       actions: "ml-2 flex shrink-0 items-center gap-1",
       action:
-        "inline-flex h-7 max-w-32 items-center justify-center rounded-md bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
+        "inline-flex h-7 max-w-32 items-center justify-center rounded-md px-2.5 text-xs font-medium focus-reset transition-colors empty:hidden focus-visible:focus-ring **:[span]:truncate",
     },
     variants: {
       position: {
@@ -60,31 +60,14 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "bottom-right": {},
       },
       variant: {
-        neutral: {
-          toast: "",
-        },
-        success: {
-          toast: "border-border-success",
-          icon: "text-fg-success",
-        },
-        warning: {
-          toast: "border-border-warning",
-          icon: "text-fg-warning",
-        },
-        danger: {
-          toast: "border-border-danger",
-          icon: "text-fg-danger",
-        },
-        error: {
-          toast: "border-border-danger",
-          icon: "text-fg-danger",
-        },
-        info: {
-          toast: "border-border-info",
-          icon: "text-fg-info",
-        },
+        neutral: {},
+        success: {},
+        warning: {},
+        danger: {},
+        error: {},
+        info: {},
         loading: {
-          icon: "animate-spin text-fg-muted",
+          icon: "animate-spin",
         },
       },
     },
@@ -106,6 +89,130 @@ const { useStyles, styles } = createStyles(toastMeta, {
       slots: {
         content: "min-h-16 px-4 py-3.5",
       },
+    },
+  },
+  params: {
+    style: {
+      surface: {
+        slots: {
+          toast: "border bg-card text-fg",
+          description: "text-fg-muted",
+          action:
+            "bg-neutral text-fg-on-neutral hover:bg-neutral-hover active:bg-neutral-active",
+        },
+        variants: {
+          variant: {
+            success: {
+              toast: "border-border-success",
+              icon: "text-fg-success",
+            },
+            warning: {
+              toast: "border-border-warning",
+              icon: "text-fg-warning",
+            },
+            danger: {
+              toast: "border-border-danger",
+              icon: "text-fg-danger",
+            },
+            error: {
+              toast: "border-border-danger",
+              icon: "text-fg-danger",
+            },
+            info: {
+              toast: "border-border-info",
+              icon: "text-fg-info",
+            },
+            loading: {
+              icon: "text-fg-muted",
+            },
+          },
+        },
+      },
+      inverted: {
+        slots: {
+          toast: "bg-tooltip text-fg-on-tooltip",
+          description: "text-current/70",
+          action: "bg-current/12 hover:bg-current/20 active:bg-current/25",
+        },
+      },
+      filled: {
+        slots: {
+          description: "text-current/80",
+          action: "bg-current/12 hover:bg-current/20 active:bg-current/25",
+        },
+        variants: {
+          variant: {
+            neutral: {
+              toast: "bg-tooltip text-fg-on-tooltip",
+            },
+            success: {
+              toast: "bg-success text-fg-on-success",
+            },
+            warning: {
+              toast: "bg-warning text-fg-on-warning",
+            },
+            danger: {
+              toast: "bg-danger text-fg-on-danger",
+            },
+            error: {
+              toast: "bg-danger text-fg-on-danger",
+            },
+            info: {
+              toast: "bg-info text-fg-on-info",
+            },
+            loading: {
+              toast: "bg-tooltip text-fg-on-tooltip",
+            },
+          },
+        },
+      },
+      "accent-bar": {
+        slots: {
+          toast: "rounded-l-none border border-l-[3px] bg-card text-fg",
+          description: "text-fg-muted",
+          action:
+            "bg-neutral text-fg-on-neutral hover:bg-neutral-hover active:bg-neutral-active",
+        },
+        variants: {
+          variant: {
+            neutral: {
+              toast: "border-l-fg-muted",
+            },
+            success: {
+              toast: "border-l-success",
+              icon: "text-fg-success",
+            },
+            warning: {
+              toast: "border-l-warning",
+              icon: "text-fg-warning",
+            },
+            danger: {
+              toast: "border-l-danger",
+              icon: "text-fg-danger",
+            },
+            error: {
+              toast: "border-l-danger",
+              icon: "text-fg-danger",
+            },
+            info: {
+              toast: "border-l-info",
+              icon: "text-fg-info",
+            },
+            loading: {
+              toast: "border-l-fg-muted",
+              icon: "text-fg-muted",
+            },
+          },
+        },
+      },
+    },
+    position: {
+      "top-left": { defaultVariants: { position: "top-left" } },
+      "top-center": { defaultVariants: { position: "top-center" } },
+      "top-right": { defaultVariants: { position: "top-right" } },
+      "bottom-left": { defaultVariants: { position: "bottom-left" } },
+      "bottom-center": { defaultVariants: { position: "bottom-center" } },
+      "bottom-right": {},
     },
   },
 })

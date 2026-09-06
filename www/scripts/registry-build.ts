@@ -17,7 +17,7 @@ import {
   collectBaseFiles,
 } from "../src/publisher/build-time/build-publishables"
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps"
-import { BUNDLED_INTO_INIT } from "../src/publisher/publish"
+import { BUNDLED_INTO_INIT, registryDepsFor } from "../src/publisher/publish"
 import { registryBase } from "../src/registry/base/registry"
 import { registryHooks } from "../src/registry/hooks/registry"
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map"
@@ -273,13 +273,13 @@ ${iconExports}
 async function buildInternalExamples() {
   // Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
   // rather than registry/__generated__, so the registry tree never imports "up" into
-  // @/modules/create/preview/group-examples — keeping registry/ items-only.
-  const targetDir = path.join(process.cwd(), "src/modules/create/__generated__")
+  // @/modules/studio/preview/group-examples — keeping registry/ items-only.
+  const targetDir = path.join(process.cwd(), "src/modules/studio/__generated__")
   const targetPath = path.join(targetDir, "examples.tsx")
   const uiDir = path.join(REGISTRY_DIR, "ui")
   const groupExamplesDir = path.join(
     process.cwd(),
-    "src/modules/create/preview/group-examples",
+    "src/modules/studio/preview/group-examples",
   )
   await fs.mkdir(targetDir, { recursive: true })
 
@@ -302,7 +302,7 @@ async function buildInternalExamples() {
       if (!file.endsWith(".tsx")) continue
       const name = file.replace(/\.tsx$/, "")
       groupEntries.push(
-        `  "${name}": () => import("@/modules/create/preview/group-examples/${name}"),`,
+        `  "${name}": () => import("@/modules/studio/preview/group-examples/${name}"),`,
       )
     }
   }
@@ -522,30 +522,52 @@ async function checkRegistryDepsDrift(
   const errors: string[] = []
 
   for (const meta of registryUi) {
-    const derived = deriveRegistryDeps({
-      registryDir: REGISTRY_DIR,
-      baseFiles: collectBaseFiles(meta),
-    })
-    const declared = new Set(meta.registryDependencies ?? [])
+    // A base file an enum value swaps in is checked against that value's deps.
+    for (const baseFile of collectBaseFiles(meta)) {
+      const derived = deriveRegistryDeps({
+        registryDir: REGISTRY_DIR,
+        baseFiles: [baseFile],
+      })
+      const declared = new Set(
+        registryDepsFor(meta, selectionsShipping(meta, baseFile.path)),
+      )
 
-    for (const dep of derived) {
-      if (declared.has(dep)) continue
-      if (BUNDLED_INTO_INIT.has(dep)) continue
-      if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue
-      if (registeredNames.has(dep)) {
-        errors.push(
-          `registryDependencies drift: "${meta.name}" base file imports "${dep}" but meta omits it. ` +
-            `Add "${dep}" to registryDependencies in ui/${meta.name}/meta.ts.`,
-        )
-      } else {
-        errors.push(
-          `Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
-            `not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
-        )
+      for (const dep of derived) {
+        if (declared.has(dep)) continue
+        if (BUNDLED_INTO_INIT.has(dep)) continue
+        if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue
+        if (registeredNames.has(dep)) {
+          errors.push(
+            `registryDependencies drift: "${meta.name}" ${baseFile.path} imports "${dep}" but meta omits it. ` +
+              `Add "${dep}" to registryDependencies in ui/${meta.name}/meta.ts (on the item, or on the param value that ships the file).`,
+          )
+        } else {
+          errors.push(
+            `Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
+              `not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+          )
+        }
       }
     }
   }
   return errors
+}
+
+/** The param selections under which `filePath` is the shipped base file. */
+function selectionsShipping(
+  meta: RegistryItem,
+  filePath: string,
+): Record<string, string> {
+  const selections: Record<string, string> = {}
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== "enum" || !def.files) continue
+    for (const [value, files] of Object.entries(def.files)) {
+      if (files.some((file) => file.path === filePath)) {
+        selections[paramName] = value
+      }
+    }
+  }
+  return selections
 }
 
 /**
@@ -669,7 +691,7 @@ function checkDependencyClosure(
   const referenced = new Set<string>()
   for (const meta of registryUi) {
     if (!build.builtNames.has(meta.name)) continue
-    for (const dep of meta.registryDependencies ?? []) {
+    for (const dep of registryDepsFor(meta)) {
       if (build.builtNames.has(dep)) continue
       if (BUNDLED_INTO_INIT.has(dep)) continue
       if (dep.includes("://") || dep.startsWith("@")) continue

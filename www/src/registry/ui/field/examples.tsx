@@ -28,8 +28,8 @@ import {
 import { Slider, SliderControl } from "@/registry/ui/slider"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function FieldExamples() {
   return (

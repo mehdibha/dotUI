@@ -18,7 +18,7 @@ const toastVariants = tv({
       "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
     ],
     toast: [
-      "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-lg border bg-card text-fg shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
+      "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-lg shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
       "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
       "[transition:transform_500ms_cubic-bezier(.22,1,.36,1),opacity_500ms,height_150ms,background-color_500ms,border-color_500ms]",
       "before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_0_rgb(0_0_0_/_0.04)]",
@@ -45,6 +45,7 @@ const toastVariants = tv({
       "data-expanded:data-[ending-style]:data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))]",
       "data-expanded:data-[ending-style]:data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
       "data-expanded:data-[ending-style]:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
+      "border bg-card text-fg",
     ],
     content:
       "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm transition-opacity duration-200 data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
@@ -52,10 +53,12 @@ const toastVariants = tv({
     icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
     message: "flex min-w-0 flex-1 flex-col gap-0.5",
     title: "text-sm leading-snug font-medium empty:hidden",
-    description: "text-sm leading-snug text-fg-muted empty:hidden",
+    description: ["text-sm leading-snug empty:hidden", "text-fg-muted"],
     actions: "ml-2 flex shrink-0 items-center gap-1",
-    action:
-      "inline-flex h-7 max-w-32 items-center justify-center rounded-md bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
+    action: [
+      "inline-flex h-7 max-w-32 items-center justify-center rounded-md px-2.5 text-xs font-medium focus-reset transition-colors empty:hidden focus-visible:focus-ring **:[span]:truncate",
+      "bg-neutral text-fg-on-neutral hover:bg-neutral-hover active:bg-neutral-active",
+    ],
   },
   variants: {
     position: {
@@ -67,9 +70,7 @@ const toastVariants = tv({
       "bottom-right": {},
     },
     variant: {
-      neutral: {
-        toast: "",
-      },
+      neutral: {},
       success: {
         toast: "border-border-success",
         icon: "text-fg-success",
@@ -91,7 +92,7 @@ const toastVariants = tv({
         icon: "text-fg-info",
       },
       loading: {
-        icon: "animate-spin text-fg-muted",
+        icon: ["animate-spin", "text-fg-muted"],
       },
     },
   },
@@ -169,12 +170,13 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 function ToastProvider({
   children,
   limit = 3,
-  position = "bottom-right",
+  position,
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
 }: ToastProviderProps) {
+  const { defaultVariants } = toastVariants;
   return (
     <ToastPrimitive.Provider
       limit={limit}
@@ -183,7 +185,10 @@ function ToastProvider({
       {...props}
     >
       {children}
-      <ToastList position={position} portalProps={portalProps} />
+      <ToastList
+        position={position ?? defaultVariants.position ?? "bottom-right"}
+        portalProps={portalProps}
+      />
     </ToastPrimitive.Provider>
   );
 }

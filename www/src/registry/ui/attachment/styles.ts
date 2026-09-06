@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
-        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--attachment-radius) border bg-card text-fg transition-colors",
+        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--attachment-radius) border border-(--card-border) bg-card text-fg shadow-[var(--shadow-card,0_0_#0000)] transition-colors",
         "has-[>a,>button]:hover:bg-muted/50",
         "has-[[data-attachment-trigger]:focus-visible]:focus-ring",
         "data-[state=error]:border-border-danger data-[state=idle]:border-dashed",

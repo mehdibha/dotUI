@@ -12,6 +12,14 @@ const drawerMeta = {
       target: "ui/drawer.tsx",
     },
   ],
+  params: {
+    backdrop: {
+      kind: "enum",
+      default: "dim",
+      values: ["dim", "blur", "none"] as const,
+      description: "How the page reads under the open drawer.",
+    },
+  },
 } satisfies RegistryItem
 
 export default drawerMeta

@@ -99,6 +99,7 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
   const ctx = useContext(InternalCheckboxContext)
   return (
     <span
+      data-checkbox-indicator=""
       data-rac=""
       data-selected={ctx?.isSelected || undefined}
       data-indeterminate={ctx?.isIndeterminate || undefined}

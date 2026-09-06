@@ -22,10 +22,10 @@ const inputVariants = tv({
       "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
       "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
       "has-data-textarea:px-0",
-      "disabled:cursor-disabled disabled:text-fg-disabled",
+      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
       "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
+      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     ],
     inputGroupAddon: [
       "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
@@ -43,18 +43,18 @@ const inputVariants = tv({
     input: [
       "inline-flex w-full cursor-text items-center outline-none",
       "h-(--input-h) in-data-input-group:h-auto",
-      "disabled:cursor-disabled disabled:text-fg-disabled",
+      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
     ],
     textArea: [
       "min-h-16 w-full resize-none py-(--top-to-text) outline-none",
-      "disabled:cursor-disabled disabled:text-fg-disabled",
+      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
     ],
     dateInputSegment:
-      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
   },
   variants: {
     size: {

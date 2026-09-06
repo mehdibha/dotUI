@@ -1,8 +1,8 @@
 import { ArrowRightIcon, BadgeCheckIcon } from "@/registry/icons"
 import { Badge } from "@/registry/ui/badge"
 import { Loader } from "@/registry/ui/loader"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function BadgeExample() {
   return (
@@ -20,25 +20,26 @@ export default function BadgeExample() {
 function BadgeVariants() {
   return (
     <Example title="Variants">
-      {(["solid", "subtle"] as const).map((appearance) => (
-        <div key={appearance} className="flex flex-wrap gap-2">
-          {(
-            [
-              "neutral",
-              "accent",
-              "danger",
-              "success",
-              "warning",
-              "info",
-            ] as const
-          ).map((variant) => (
-            <Badge key={variant} appearance={appearance} variant={variant}>
-              {variant}
-              {appearance === "solid" ? "" : "-subtle"}
-            </Badge>
-          ))}
-        </div>
-      ))}
+      {(["solid", "soft", "outline", "soft-outline"] as const).map(
+        (appearance) => (
+          <div key={appearance} className="flex flex-wrap gap-2">
+            {(
+              [
+                "neutral",
+                "accent",
+                "danger",
+                "success",
+                "warning",
+                "info",
+              ] as const
+            ).map((variant) => (
+              <Badge key={variant} appearance={appearance} variant={variant}>
+                {variant}
+              </Badge>
+            ))}
+          </div>
+        ),
+      )}
     </Example>
   )
 }

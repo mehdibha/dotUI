@@ -9,12 +9,6 @@ export interface InternalTool {
 
 export const INTERNAL_TOOLS: InternalTool[] = [
   {
-    href: "/internal/panel-lab",
-    label: "Panel Lab",
-    description:
-      "The /create control panel, and the row vocabulary it is built from.",
-  },
-  {
     href: "/internal/color-lab",
     label: "Color Lab",
     description:

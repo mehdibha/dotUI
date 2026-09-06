@@ -27,6 +27,7 @@ import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
@@ -87,20 +88,18 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
             defaultValue={3}
             className="w-fit shrink-0"
           >
-            <Group>
+            <NumberFieldGroup>
               <NumberFieldDecrement />
               <Input className="w-8 text-center" />
               <NumberFieldIncrement />
-            </Group>
+            </NumberFieldGroup>
           </NumberField>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Badge variant="accent">Badge</Badge>
             <Badge variant="neutral">Neutral</Badge>
-            <Badge appearance="subtle" variant="accent">
-              Subtle
-            </Badge>
+            <Badge variant="accent">Subtle</Badge>
           </div>
           <AvatarGroup size="sm" className="*:data-avatar:ring-card">
             <Avatar size="sm">

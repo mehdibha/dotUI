@@ -12,37 +12,31 @@ const modalMeta = {
     },
   ],
   params: {
-    style: {
+    backdrop: {
       kind: "enum",
-      default: "default",
-      values: ["default", "muted-footer"] as const,
+      default: "dim",
+      values: ["dim", "blur", "none"] as const,
+      description: "How the page reads under the open modal.",
     },
-    "backdrop-blur": {
-      kind: "scalar",
-      type: "blur",
-      cssVar: "--modal-backdrop-blur",
-      default: "--blur-sm",
-      description: "Amount of blur applied behind the modal.",
+    position: {
+      kind: "enum",
+      default: "center",
+      values: ["center", "top"] as const,
+      description: "Where the modal rests in the viewport.",
     },
-    "backdrop-opacity": {
-      kind: "scalar",
-      type: "opacity",
-      cssVar: "--modal-backdrop-opacity",
-      default: "40%",
-      description: "Opacity of the black backdrop.",
+    // Synced with popover and tooltip: the studio's Motion axis writes all three.
+    motion: {
+      kind: "enum",
+      default: "scale",
+      values: ["scale", "fade", "slide", "none"] as const,
+      description: "How the dialog enters and leaves.",
     },
-    background: {
-      kind: "scalar",
-      type: "color",
-      cssVar: "--modal-background",
-      default: "--color-popover",
-      description: "Background color of the modal surface.",
-    },
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--modal-radius",
-      default: "--radius-xl",
+    mobile: {
+      kind: "enum",
+      default: "center",
+      values: ["center", "sheet"] as const,
+      description:
+        "Where the modal sits below the mobile line: centered, or docked to the bottom edge as a sheet.",
     },
   },
 } satisfies RegistryItem

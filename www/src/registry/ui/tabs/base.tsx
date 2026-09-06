@@ -11,7 +11,7 @@ import { useStyles } from "./styles"
 
 // MARK: tabsStyles
 
-type TabsVariant = "default" | "line"
+type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
 
 // MARK: Separator
 
@@ -19,8 +19,12 @@ const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
   name: "TabsContext",
 })
 
-const [TabListProvider, useTabListContext] = createContext<TabsVariant>({
+// Unset, the design system's tab style applies.
+const [TabListProvider, useTabListContext] = createContext<
+  TabsVariant | undefined
+>({
   name: "TabListContext",
+  strict: false,
 })
 
 // MARK: Separator
@@ -51,11 +55,7 @@ interface TabListProps extends React.ComponentProps<
   variant?: TabsVariant
 }
 
-const TabList = ({
-  className,
-  variant = "default",
-  ...props
-}: TabListProps) => {
+const TabList = ({ className, variant, ...props }: TabListProps) => {
   const { list } = useStyles()()
   return (
     <TabListProvider value={variant}>
@@ -80,6 +80,7 @@ const Tab = ({ className, ...props }: TabProps) => {
   return (
     <TabsPrimitives.Tab
       data-tab=""
+      data-orientation={orientation}
       className={composeRenderProps(className, (cn) =>
         tab({ orientation, variant, className: cn }),
       )}

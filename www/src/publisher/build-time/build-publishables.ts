@@ -17,7 +17,12 @@ import type { RegistryItem, RegistryItemFile } from "@/registry/types"
 import type { StylesConfig } from "../types"
 import { cssToRegistryFields } from "./css-to-registry-fields"
 import { extractStylesConfig } from "./extract-config"
-import { transformBase, TV_CONFIG_PLACEHOLDER } from "./transform-base"
+import { paramSelections, selectionKey } from "./fold-param-values"
+import {
+  paramValueHooksOf,
+  transformBase,
+  TV_CONFIG_PLACEHOLDER,
+} from "./transform-base"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
@@ -42,10 +47,11 @@ export async function buildPublishables({
 
   const written: string[] = []
   const skipped: Array<{ name: string; reason: string }> = []
+  const metas = new Map(items.map((item) => [item.name, item]))
 
   for (const meta of items) {
     try {
-      const result = await buildOne({ meta, registryDir, outDir })
+      const result = await buildOne({ meta, metas, registryDir, outDir })
       if (result === "skipped") {
         skipped.push({ name: meta.name, reason: "no base.tsx in meta.files" })
       } else if (typeof result === "string") {
@@ -151,7 +157,7 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
   lines.push(`import type { Publishable } from "@/publisher/types";`)
   lines.push(``)
   lines.push(
-    `type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`,
+    `type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable>; publishableBySelection?: Record<string, Publishable> }>;`,
   )
   lines.push(``)
   lines.push(`export const publishables: Record<string, Loader> = {`)
@@ -217,6 +223,7 @@ async function renderBaseRegistryCss(registryDir: string): Promise<string> {
 
 interface BuildOneInput {
   meta: RegistryItem
+  metas: ReadonlyMap<string, RegistryItem>
   registryDir: string
   outDir: string
 }
@@ -228,6 +235,7 @@ interface BuildOneInput {
  */
 async function buildOne({
   meta,
+  metas,
   registryDir,
   outDir,
 }: BuildOneInput): Promise<string | "skipped"> {
@@ -241,23 +249,64 @@ async function buildOne({
   const stylesTsPath = path.join(componentDir, "styles.ts")
   const hasStyles = existsSync(stylesTsPath)
   const stylesConfig: StylesConfig = hasStyles
-    ? extractStylesConfig(stylesTsPath)
+    ? extractStylesConfig(stylesTsPath, { metas })
     : emptyStylesConfig()
   const runtimeMeta = withComponentCssFields(
     meta,
     await readComponentCssFields(componentDir),
   )
 
-  // Transform each base file to a template.
-  const templates = baseFiles.map((file) => {
-    const absPath = path.join(registryDir, file.path)
-    const { template } = transformBase({
-      baseTsxPath: absPath,
+  // `createParamValue` hooks fold to one template per param selection; the
+  // default `publishable` is the meta defaults' fold.
+  const hooks = baseFiles.flatMap((file) =>
+    paramValueHooksOf(path.join(registryDir, file.path)),
+  )
+  if (hooks.length > 0 && baseFiles.length > 1) {
+    throw new Error(
+      `[publisher] ${meta.name}: createParamValue can't combine with per-value base files`,
+    )
+  }
+  const paramNames = hooks.map((hook) => hook.paramName)
+  const defaultSelection: Record<string, string> = {}
+  for (const hook of hooks) {
+    const def = meta.params?.[hook.paramName]
+    const declared = def ? [...def.values].sort() : []
+    const folded = Object.keys(hook.values).sort()
+    if (
+      !def ||
+      declared.length !== folded.length ||
+      declared.some((value, i) => value !== folded[i])
+    ) {
+      throw new Error(
+        `[publisher] ${meta.name}: ${hook.hookName} values must match params.${hook.paramName} in meta.ts`,
+      )
+    }
+    defaultSelection[hook.paramName] = def.default
+  }
+
+  const transform = (
+    file: RegistryItemFile,
+    selection?: Record<string, string>,
+  ) =>
+    transformBase({
+      baseTsxPath: path.join(registryDir, file.path),
       componentName: meta.name,
       hasStylesConfig: hasStyles,
-    })
-    return { file, template }
-  })
+      paramSelection: selection,
+    }).template
+
+  // Transform each base file to a template.
+  const templates = baseFiles.map((file) => ({
+    file,
+    template: transform(file, hooks.length > 0 ? defaultSelection : undefined),
+  }))
+  const selectionTemplates: Record<string, string> = {}
+  for (const selection of hooks.length > 0 ? paramSelections(hooks) : []) {
+    selectionTemplates[selectionKey(paramNames, selection)] = transform(
+      baseFiles[0]!,
+      selection,
+    )
+  }
 
   // Secondary files (e.g. a `use-x.ts` hook shipped next to `base.tsx`) carry
   // no styles config — ship them verbatim with only registry import paths
@@ -277,6 +326,7 @@ async function buildOne({
     meta: runtimeMeta,
     stylesConfig,
     templates,
+    selectionTemplates,
     extraFiles,
   })
   await fs.writeFile(outPath, source, "utf8")
@@ -292,7 +342,7 @@ async function buildStylelessPublishable({
   meta,
   registryDir,
   outDir,
-}: BuildOneInput): Promise<string | "skipped"> {
+}: Omit<BuildOneInput, "metas">): Promise<string | "skipped"> {
   const files = meta.files ?? []
   if (files.length === 0) return "skipped"
 
@@ -425,6 +475,8 @@ interface RenderInput {
   meta: RegistryItem
   stylesConfig: StylesConfig
   templates: Array<{ file: RegistryItemFile; template: string }>
+  /** Folded templates keyed by `param=value[&…]` (see fold-param-values). */
+  selectionTemplates: Record<string, string>
   extraFiles: Record<string, string>
 }
 
@@ -470,14 +522,16 @@ async function renderPublishableSource({
   meta,
   stylesConfig,
   templates,
+  selectionTemplates,
   extraFiles,
 }: RenderInput): Promise<string> {
-  // We emit two top-level exports:
+  // We emit up to three top-level exports:
   //   - `publishable`: the default (single-template) Publishable
   //   - `publishableByPath`: a map keyed by source file path, for enum-with-files components
+  //   - `publishableBySelection`: a map keyed by param selection, for createParamValue folds
   //
   // The runtime route picks the right entry based on the preset's selection of
-  // the enum param that drives file swapping.
+  // the enum params that drive the swap.
 
   const defaultFile =
     (meta.files ?? []).find((f) => isBaseFile(f, meta.name)) ??
@@ -517,13 +571,11 @@ async function renderPublishableSource({
   if (extraFilesProp) lines.push(extraFilesProp)
   lines.push(`};`)
 
-  if (templates.length > 1) {
+  const renderMap = (name: string, entries: Array<[string, string]>) => {
     lines.push(``)
-    lines.push(
-      `export const publishableByPath: Record<string, Publishable> = {`,
-    )
-    for (const { file, template } of templates) {
-      lines.push(`\t${JSON.stringify(file.path)}: {`)
+    lines.push(`export const ${name}: Record<string, Publishable> = {`)
+    for (const [key, template] of entries) {
+      lines.push(`\t${JSON.stringify(key)}: {`)
       lines.push(`\t\ttemplate: ${templateLiteral(template)},`)
       lines.push(
         `\t\tstylesConfig: stylesConfig as unknown as Publishable["stylesConfig"],`,
@@ -535,6 +587,15 @@ async function renderPublishableSource({
       lines.push(`\t},`)
     }
     lines.push(`};`)
+  }
+  if (templates.length > 1) {
+    renderMap(
+      "publishableByPath",
+      templates.map(({ file, template }) => [file.path, template]),
+    )
+  }
+  if (Object.keys(selectionTemplates).length > 0) {
+    renderMap("publishableBySelection", Object.entries(selectionTemplates))
   }
 
   lines.push(``)

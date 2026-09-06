@@ -2,6 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import commandMeta from "./meta"
 
+// A frameless input over a hairline that runs the full width of the surface.
+const HAIRLINE_FIELD =
+  "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0 **:data-search-field:border-b"
+
 const { useStyles, styles } = createStyles(commandMeta, {
   base: {
     base: [
@@ -11,10 +15,10 @@ const { useStyles, styles } = createStyles(commandMeta, {
       "max-h-[inherit]",
       "**:data-search-field:shrink-0",
       "**:data-listbox:min-h-0 **:data-listbox:overflow-y-auto",
-      // Modal and drawer commands are spotlight/touch surfaces — roomier rows
-      // than a dropdown.
-      "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:px-2 in-data-modal:**:data-menu-item:py-2",
-      "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:px-2 in-data-drawer:**:data-menu-item:py-2",
+      // Modal and drawer commands are spotlight/touch surfaces — taller rows
+      // than a dropdown. Their inline padding follows the inset param.
+      "in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2",
+      "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
     ],
   },
   density: {
@@ -23,8 +27,8 @@ const { useStyles, styles } = createStyles(commandMeta, {
     comfortable: {},
   },
   params: {
-    style: {
-      1: {
+    search: {
+      field: {
         base: [
           // The shell inset lives on the search field and inside the scrolling
           // list — never on the root, so the list runs to the surface edge and
@@ -32,40 +36,57 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // concentric by subtracting the inset from the container's own
           // radius var.
           "**:data-search-field:px-1.5 **:data-search-field:pt-1.5 **:data-search-field:pb-0",
-          "**:data-listbox:scroll-py-1.5 **:data-listbox:px-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
-          "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5",
+          "**:data-listbox:scroll-py-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
+          "**:data-listbox:**:data-separator:my-1.5",
           // --surface-radius: set by whichever rounded surface contains the
           // command (popover, modal, card), so one rule stays concentric
           // everywhere.
           "**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--surface-radius,var(--radius-surface))-(--spacing(1.5)))]",
           // The modal is a bigger surface — roomier inset to match.
           "in-data-modal:**:data-search-field:px-2 in-data-modal:**:data-search-field:pt-2",
-          "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:px-2 in-data-modal:**:data-listbox:pb-2",
-          "in-data-modal:**:data-listbox:**:data-separator:-mx-2",
+          "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:pb-2",
           "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--surface-radius,var(--radius-surface))-(--spacing(2)))]",
         ],
       },
-      2: {
+      bar: {
+        base: [HAIRLINE_FIELD, "in-data-modal:**:data-search-field:p-0.5"],
+      },
+      prompt: {
         base: [
-          "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
-          "**:data-search-field:border-b",
-          "in-data-modal:**:data-search-field:p-0.5",
+          HAIRLINE_FIELD,
+          // Text only: the leading magnifier goes, and the prompt takes the
+          // items' text inset (list gutter + item padding) so they line up.
+          "**:[[data-search-field]_[data-input-group-addon]:first-child]:hidden",
+          "**:[[data-search-field]_[data-input]]:pl-3 in-data-drawer:**:[[data-search-field]_[data-input]]:pl-3.5 in-data-modal:**:[[data-search-field]_[data-input]]:pl-4",
         ],
       },
-      3: {
+    },
+    inset: {
+      inset: {
         base: [
-          // Vercel ⌘K: padded shell, frameless input on an inset hairline,
-          // flush list. The inset rides the search field (margins keep the
-          // hairline's geometry) and the list's own padding, so the scrollbar
-          // sits flush against the popover edge.
-          "gap-2",
-          // w-auto: margins keep the hairline inset, and the field's base
-          // w-full would otherwise add them on top of the full width.
-          "**:data-search-field:mx-2 **:data-search-field:mt-2 **:data-search-field:w-auto",
-          "**:data-listbox:scroll-py-2 **:data-listbox:px-2 **:data-listbox:pt-0 **:data-listbox:pb-2",
-          "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
-          "**:data-search-field:border-b **:data-search-field:pb-1.5",
-          "**:data-listbox:**:data-separator:mx-0 **:data-listbox:**:data-separator:my-1.5",
+          // The list gutter matches the field inset; the modal's is roomier.
+          "**:data-listbox:px-1.5 **:data-listbox:**:data-separator:-mx-1.5",
+          "in-data-modal:**:data-listbox:px-2 in-data-modal:**:data-listbox:**:data-separator:-mx-2",
+          "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2",
+          "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",
+        ],
+      },
+      "full-bleed": {
+        base: [
+          "in-data-modal:**:data-listbox-item:px-4 in-data-modal:**:data-menu-item:px-4",
+          "in-data-drawer:**:data-listbox-item:px-3.5 in-data-drawer:**:data-menu-item:px-3.5",
+        ],
+      },
+    },
+    scale: {
+      default: {},
+      large: {
+        base: [
+          // Input, rows and icons step up together (Raycast, Linear ⌘K).
+          "**:[[data-search-field]_[data-input-group]]:[--icon-size:--spacing(5)] **:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(11)]",
+          "**:[[data-search-field]_[data-input]]:text-base",
+          "**:data-listbox-item:py-2 **:data-listbox-item:text-base **:data-menu-item:py-2 **:data-menu-item:text-base",
+          "**:[[data-listbox-item]>svg]:not-with-[size]:size-5 **:[[data-menu-item]>svg]:not-with-[size]:size-5",
         ],
       },
     },

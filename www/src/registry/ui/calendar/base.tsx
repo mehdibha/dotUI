@@ -143,12 +143,18 @@ const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
 interface CalendarGridProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGrid
 > {}
-const CalendarGrid = ({ className, children, ...props }: CalendarGridProps) => {
+const CalendarGrid = ({
+  className,
+  children,
+  weekdayStyle = "narrow",
+  ...props
+}: CalendarGridProps) => {
   const { grid } = useStyles()()
   return (
     <CalendarPrimitive.CalendarGrid
       data-calendar-grid=""
       className={grid({ className })}
+      weekdayStyle={weekdayStyle}
       {...props}
     >
       {children ?? (
@@ -172,6 +178,7 @@ interface CalendarGridHeaderProps extends React.ComponentProps<
 > {}
 const CalendarGridHeader = ({
   className,
+  children,
   ...props
 }: CalendarGridHeaderProps) => {
   const { gridHeader } = useStyles()()
@@ -180,7 +187,9 @@ const CalendarGridHeader = ({
       data-calendar-grid-header=""
       className={gridHeader({ className })}
       {...props}
-    />
+    >
+      {children}
+    </CalendarPrimitive.CalendarGridHeader>
   )
 }
 

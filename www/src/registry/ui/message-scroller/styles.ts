@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
     slots: {
       root: "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
       viewport:
-        "size-full min-h-0 min-w-0 [scrollbar-width:thin] overflow-y-auto overscroll-contain contain-content",
+        "size-full min-h-0 min-w-0 overflow-y-auto overscroll-contain contain-content",
       content: "flex h-max min-h-full flex-col",
       item: "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
       button: [

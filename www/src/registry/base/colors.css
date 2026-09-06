@@ -230,6 +230,7 @@
 	--color-fg-primary-disabled: var(--neutral-500);
 	--color-selection: var(--neutral-950);
 	--color-selection-hover: color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25));
+	--color-selection-muted: var(--neutral-200);
 	--color-fg-on-selection: var(--neutral-25);
 	--color-success: var(--success-700);
 	--color-success-hover: var(--success-800);
@@ -283,6 +284,7 @@
 	--color-fg-on-neutral: var(--neutral-950);
 	--color-border: color-mix(in oklab, var(--neutral-200) 50%, var(--neutral-300));
 	--color-border-control: var(--neutral-400);
+	--color-border-control-hover: var(--neutral-500);
 	--color-border-focus: var(--accent-700);
 	--color-border-focus-muted: var(--accent-300);
 	--color-tooltip: var(--neutral-950);

@@ -2,23 +2,26 @@ import { createStyles } from "@/lib/styles"
 
 import modalMeta from "./meta"
 
+/* Entrances ride the motion tokens (base.css): the character curve and the
+   enter / exit durations on the panel, the durations alone on the backdrop.
+   Exits keep a plain ease-out. */
+const backdropFade =
+  "transition-opacity duration-enter group-exiting/modal:duration-exit motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0"
+
+const entrance =
+  "duration-enter ease-enter exiting:duration-exit exiting:ease-out motion-reduce:transition-none"
+
 const { useStyles, styles } = createStyles(modalMeta, {
   base: {
     slots: {
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full",
       ],
-      backdrop: [
-        "absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur) duration-200 group-exiting/modal:duration-150",
-        "transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
-      ],
+      backdrop: ["absolute inset-0"],
       viewport:
-        "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full items-center justify-center",
+        "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] [--surface-radius:var(--modal-radius)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
-        "transition-[opacity,scale] ease-[cubic-bezier(0.165,0.84,0.44,1)]",
-        "duration-200 entering:scale-95 entering:opacity-0",
-        "exiting:scale-95 exiting:opacity-0 exiting:duration-150",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-modal,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)]",
       ],
     },
   },
@@ -28,15 +31,71 @@ const { useStyles, styles } = createStyles(modalMeta, {
     comfortable: { slots: { modal: "sm:max-w-md" } },
   },
   params: {
-    style: {
-      default: {},
-      "muted-footer": {
+    backdrop: {
+      dim: { slots: { backdrop: "bg-overlay/40 backdrop-blur-sm" } },
+      blur: { slots: { backdrop: "bg-overlay/20 backdrop-blur-lg" } },
+      none: {},
+    },
+    position: {
+      center: {
         slots: {
-          overlay: "",
-          backdrop: "",
-          viewport: "",
+          viewport: "items-center",
           modal:
-            "**:data-[slot=dialog-footer]:-mx-6 **:data-[slot=dialog-footer]:-mb-6 **:data-[slot=dialog-footer]:rounded-b-(--modal-radius) **:data-[slot=dialog-footer]:border-t **:data-[slot=dialog-footer]:bg-muted **:data-[slot=dialog-footer]:px-6 **:data-[slot=dialog-footer]:py-4",
+            "max-h-[calc(var(--visual-viewport-height)-2rem)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
+        },
+      },
+      top: {
+        slots: {
+          viewport: "items-start pt-[10vh]",
+          modal: "max-h-[calc(var(--visual-viewport-height)-10vh-1rem)]",
+        },
+      },
+    },
+    motion: {
+      scale: {
+        slots: {
+          backdrop: backdropFade,
+          modal: [
+            "transition-[opacity,scale]",
+            entrance,
+            "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
+          ],
+        },
+      },
+      fade: {
+        slots: {
+          backdrop: backdropFade,
+          modal: [
+            "transition-opacity",
+            entrance,
+            "entering:opacity-0 exiting:opacity-0",
+          ],
+        },
+      },
+      slide: {
+        slots: {
+          backdrop: backdropFade,
+          modal: [
+            "transition-[opacity,translate]",
+            entrance,
+            "entering:translate-y-2 entering:opacity-0 exiting:translate-y-2 exiting:opacity-0",
+          ],
+        },
+      },
+      none: {},
+    },
+    /* Below the mobile line the sheet docks to the bottom edge of the visual
+       viewport (keyboard-aware) and rises in instead of scaling. It spans the
+       full width via min-width, which beats the density max-width. */
+    mobile: {
+      center: {},
+      sheet: {
+        slots: {
+          viewport: "max-md:items-end",
+          modal: [
+            "max-md:min-w-full max-md:rounded-t-(--modal-radius) max-md:rounded-b-none max-md:border-b-0 max-md:pb-[env(safe-area-inset-bottom)]",
+            "max-md:transition-[opacity,translate] max-md:entering:translate-y-4 max-md:entering:scale-100 max-md:exiting:translate-y-4 max-md:exiting:scale-100",
+          ],
         },
       },
     },

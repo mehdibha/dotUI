@@ -1,7 +1,6 @@
 "use client";
 
 import type * as React from "react";
-
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -9,7 +8,7 @@ import {
 } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
 import type { LinkButtonProps } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 const paginationVariants = tv({
   slots: {
     root: "mx-auto flex w-full justify-center",
@@ -63,11 +62,12 @@ const PaginationLink = ({
   isIconOnly = true,
   ...props
 }: PaginationLinkProps) => {
+  const activeVariant = "secondary";
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
       data-pagination-link=""
-      variant={variant ?? (isActive ? "secondary" : "quiet")}
+      variant={variant ?? (isActive ? activeVariant : "quiet")}
       isIconOnly={isIconOnly}
       {...props}
     />

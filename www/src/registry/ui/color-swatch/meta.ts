@@ -11,14 +11,6 @@ const colorSwatchMeta = {
       target: "ui/color-swatch.tsx",
     },
   ],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--color-swatch-radius",
-      default: "--radius-sm",
-    },
-  },
 } satisfies RegistryItem
 
 export default colorSwatchMeta

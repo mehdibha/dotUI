@@ -1,7 +1,7 @@
 import { Button } from "@/registry/ui/button"
 import { toastManager } from "@/registry/ui/toast"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function ToastExamples() {
   return (

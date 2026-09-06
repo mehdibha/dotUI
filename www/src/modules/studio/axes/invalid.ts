@@ -1,0 +1,28 @@
+/* Invalid — how the system flags a failed value, everywhere at once. One
+   axis, treatment: the danger border with a plain message (dotUI today,
+   shadcn) vs the message line carrying an icon (Material, Spectrum, Carbon,
+   Polaris) vs GOV.UK's left bar with a bold message above the field.
+
+   Engine: the `error` enum param on `field`. Label and message reorder
+   through field's slots; the message build ships a second base file with the
+   icon; the bar is a field/styles.css rule on every `data-field` root, driven
+   by the value's vars. */
+
+import type { Resolved, StudioState } from "./index"
+
+export const INVALID_DEFAULTS = {
+  inputError: "border",
+}
+
+export const ERROR_OPTIONS = [
+  { value: "border", label: "Border" },
+  { value: "message", label: "Message" },
+  { value: "bar", label: "Bar" },
+]
+
+export function resolveInvalid(state: StudioState): Resolved {
+  const error = ERROR_OPTIONS.some((o) => o.value === state.inputError)
+    ? state.inputError
+    : "border"
+  return { params: { field: { error } } }
+}

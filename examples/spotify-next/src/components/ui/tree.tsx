@@ -16,13 +16,13 @@ const treeVariants = tv({
       "text-sm",
     ],
     item: [
-      "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-none",
+      "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-border-focus",
+      "focus-visible:outline-(length:--focus-ring-width) focus-visible:outline-offset-[calc(var(--focus-ring-width)*-1)] focus-visible:outline-(color:--focus-ring-color) focus-visible:outline-solid",
       "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",
       "drop-target:bg-accent-muted drop-target:text-fg",
       "dragging:opacity-60",
-      "disabled:pointer-events-none disabled:text-fg-disabled disabled:**:text-current",
+      "disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
       "min-h-8 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
     ],
     itemContent: [

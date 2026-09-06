@@ -4,17 +4,19 @@ import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DisclosurePrimitives from "react-aria-components/Disclosure";
 import * as HeadingPrimitives from "react-aria-components/Heading";
-
 import { ChevronDownIcon } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 const disclosureVariants = tv({
   slots: {
-    root: "group/disclosure w-full disabled:text-fg-disabled disabled:**:[svg]:text-fg-disabled **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
+    root: "group/disclosure w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
     heading: "flex",
     button: [
       "focus-reset focus-visible:focus-ring",
-      "flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
+      "flex flex-1 cursor-interactive items-start gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
+      "justify-between",
     ],
+    marker:
+      "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200 **:[svg]:size-4",
     panel:
       "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
   },
@@ -57,7 +59,8 @@ interface DisclosureTriggerProps extends React.ComponentProps<
 > {}
 
 function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
-  const { heading, button } = disclosureVariants();
+  const { heading, button, marker } = disclosureVariants();
+  const glyph = <ChevronDownIcon />;
   return (
     <HeadingPrimitives.Heading className={heading()}>
       <ButtonPrimitives.Button
@@ -71,7 +74,9 @@ function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
         {composeRenderProps(props.children, (children) => (
           <>
             {children}
-            <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200" />
+            <span data-disclosure-marker="" className={marker()}>
+              {glyph}
+            </span>
           </>
         ))}
       </ButtonPrimitives.Button>

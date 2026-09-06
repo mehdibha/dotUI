@@ -102,15 +102,9 @@ export const componentRenders: Record<string, () => ReactNode> = {
         <Badge variant="info">info</Badge>
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <Badge variant="neutral" appearance="subtle">
-          neutral
-        </Badge>
-        <Badge variant="accent" appearance="subtle">
-          accent
-        </Badge>
-        <Badge variant="success" appearance="subtle">
-          success
-        </Badge>
+        <Badge variant="neutral">neutral</Badge>
+        <Badge variant="accent">accent</Badge>
+        <Badge variant="success">success</Badge>
       </div>
     </div>
   ),

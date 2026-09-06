@@ -29,18 +29,18 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
-      self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
-        "group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
+        "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
   },
 })
 
 const lineField = tv({
-  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border",
+  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -51,7 +51,7 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border disabled:bg-disabled",
+  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
@@ -62,12 +62,12 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
-      self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
-        "group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
+        "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
   },
 })
@@ -83,6 +83,20 @@ const addonInputModeParadigmB =
 // Line style — symmetric inline padding (no bg/border to "yield to").
 const addonInputModeLine =
   "group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)"
+
+/* Hover is the field's own pointer state: focus and invalid keep their border,
+   so it yields to both. */
+const hoverBorder =
+  "hover:not-focus-within:not-invalid:not-disabled:border-border-control-hover"
+const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
+
+/* Boxed addons: a tinted cell hugging the shell edge (Bootstrap input-group,
+   Ant addonBefore), the control keeping its own inset beside it. Inline
+   padding stays the style's — a cell wears the same inset an inline addon does. */
+const addonBoxed =
+  "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)"
+const addonDivider =
+  "border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t"
 
 /* -------------------------------------------------------------------------- */
 
@@ -100,7 +114,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
         "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
         "has-data-textarea:px-0",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
       ],
       inputGroupAddon: [
@@ -118,14 +132,14 @@ const { useStyles, styles } = createStyles(inputMeta, {
       input: [
         "inline-flex w-full cursor-text items-center outline-none",
         "h-(--input-h) in-data-input-group:h-auto",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
       textArea: [
         "min-h-16 w-full resize-none py-(--top-to-text) outline-none",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
       dateInputSegment:
-        "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+        "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
     },
     variants: {
       size: {
@@ -251,6 +265,32 @@ const { useStyles, styles } = createStyles(inputMeta, {
           textArea: filledField({ focus: "self" }),
           inputGroupAddon: addonInputModeParadigmB,
         },
+      },
+    },
+    hover: {
+      none: {},
+      border: {
+        slots: {
+          inputGroup: hoverBorder,
+          input: hoverBorder,
+          textArea: hoverBorder,
+        },
+      },
+      tint: {
+        slots: {
+          inputGroup: hoverTint,
+          input: hoverTint,
+          textArea: hoverTint,
+        },
+      },
+    },
+    addon: {
+      inside: {},
+      boxed: {
+        slots: { inputGroupAddon: [addonBoxed, addonDivider] },
+      },
+      "boxed-flush": {
+        slots: { inputGroupAddon: addonBoxed },
       },
     },
   },

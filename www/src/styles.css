@@ -48,8 +48,6 @@
 
   --breakpoint-xs: 30rem;
   --breakpoint-3xl: 120rem;
-
-  --radius-full: calc(infinity * 1px);
 }
 
 /* View transitions must never freeze the page. Two defaults conspire to: the

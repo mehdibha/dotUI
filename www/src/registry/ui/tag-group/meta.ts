@@ -14,11 +14,11 @@ const tagGroupMeta = {
   registryDependencies: ["field", "button", "focus-styles"],
   dependencies: ["react-aria-components"],
   params: {
-    tagRadius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--tag-radius",
-      default: "--radius-md",
+    style: {
+      kind: "enum",
+      default: "solid",
+      values: ["solid", "soft", "outline", "soft-outline"] as const,
+      description: "The chip fill a tag wears.",
     },
   },
 } satisfies RegistryItem

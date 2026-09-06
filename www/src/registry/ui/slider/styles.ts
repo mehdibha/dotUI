@@ -10,12 +10,13 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       control:
         "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
       track:
-        "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
-      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-disabled",
+        "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
+      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
       thumb: [
-        "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) shadow-(--slider-thumb-shadow) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
+        "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
       ],
-      output: "text-fg-muted tabular-nums disabled:text-fg-disabled",
+      output:
+        "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
     },
     variants: {
       orientation: {
@@ -52,31 +53,42 @@ const { useStyles, styles } = createStyles(sliderMeta, {
     },
   },
   params: {
-    /* ----------------------------- Thumb styles ----------------------------- */
-    "thumb-style": {
-      solid: {
+    thumb: {
+      circle: {
         slots: {
-          thumb: "size-(--slider-thumb-size) border-0 bg-fg",
+          thumb:
+            "size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
         },
       },
       outline: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) border-2 border-border-control bg-bg",
+            "size-(--slider-thumb-size) border-2 border-border-control bg-bg shadow-(--slider-thumb-shadow)",
         },
       },
+      // M3's handle: the fill color, with the track cut away around it.
       bar: {
         slots: {
-          thumb:
-            "h-(--slider-thumb-size) w-[calc(var(--slider-thumb-size)*0.2)] border-0 bg-fg",
+          thumb: "bg-(--slider-fill-color) shadow-[0_0_0_3px_var(--color-bg)]",
+        },
+        variants: {
+          orientation: {
+            horizontal: {
+              thumb: "h-[calc(var(--slider-thumb-size)*2)] w-1",
+            },
+            vertical: {
+              thumb: "h-1 w-[calc(var(--slider-thumb-size)*2)]",
+            },
+          },
         },
       },
-      faceted: {
+    },
+    track: {
+      thin: {},
+      thick: {
         slots: {
-          thumb: [
-            "size-(--slider-thumb-size) border border-border-control/60",
-            "bg-[conic-gradient(from_45deg,var(--color-bg),var(--color-neutral),var(--color-fg),var(--color-bg),var(--color-fg-muted),var(--color-bg))]",
-          ],
+          control:
+            "[--slider-size:--spacing(3)] [--slider-thumb-size:--spacing(5)]",
         },
       },
     },

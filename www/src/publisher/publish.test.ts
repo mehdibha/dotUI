@@ -10,25 +10,31 @@
 
 import { afterEach, describe, expect, test } from "vitest"
 
+import {
+  publishables,
+  PUBLISHABLE_NAMES,
+} from "@/registry/__generated__/publishables"
+import type { RegistryItem } from "@/registry/types"
+
 import { alertPublishable } from "./__fixtures__/alert-publishable"
 import { buttonPublishable } from "./__fixtures__/button-publishable"
 import { flatten } from "./flatten"
 import {
   depsFromFileImports,
   publish,
+  selectPublishable,
   setDotuiDepResolver,
   setKnownDotuiNames,
   TV_CONFIG_PLACEHOLDER,
 } from "./publish"
 import {
-  buildScalarVarMap,
   buildStyleVarMap,
   pruneResolvedCssVars,
   resolveClasses,
   rewriteClassString,
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
-import type { ClassValue, TvLayer } from "./types"
+import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
 
 afterEach(() => {
   setKnownDotuiNames([])
@@ -75,6 +81,53 @@ describe("flatten", () => {
     })
     const sizeMd = layer.variants?.size?.md as string
     expect(sizeMd).toContain("h-8")
+  })
+
+  test("param value: density sub-layer lands after the value's own classes", () => {
+    const meta = {
+      name: "list",
+      type: "registry:ui",
+      files: [],
+      params: {
+        inset: {
+          kind: "enum",
+          default: "inset",
+          values: ["inset", "full-bleed"],
+        },
+      },
+    } as unknown as RegistryItem
+    const stylesConfig: StylesConfig = {
+      base: { slots: { item: "flex" } },
+      density: { compact: { slots: { item: "py-1" } } },
+      params: {
+        inset: {
+          inset: {
+            slots: { item: "rounded-md" },
+            density: {
+              compact: { slots: { item: "px-2" } },
+              default: { slots: { item: "px-1.5" } },
+            },
+          },
+          "full-bleed": {
+            density: { compact: { slots: { item: "px-2.5" } } },
+          },
+        },
+      },
+    }
+    const compact = flatten({
+      stylesConfig,
+      meta,
+      density: "compact",
+      paramSelections: {},
+    })
+    expect(compact.slots?.item).toEqual(["flex", "py-1", "rounded-md", "px-2"])
+    const comfortable = flatten({
+      stylesConfig,
+      meta,
+      density: "comfortable",
+      paramSelections: { inset: "full-bleed" },
+    })
+    expect(comfortable.slots?.item).toBe("flex")
   })
 
   test("alert: enum param 'style' merges slot maps inside variants", () => {
@@ -169,18 +222,6 @@ describe("resolve-classes", () => {
     expect(rewriteClassString("rounded-(--btn-radius) p-2", map)).toBe(
       "rounded-(--btn-radius) p-2",
     )
-  })
-
-  test("buildScalarVarMap uses preset selection over default", () => {
-    const map = buildScalarVarMap(alertPublishable.meta, {
-      radius: "--radius-sm",
-    })
-    expect(map.get("--alert-radius")).toBe("sm")
-  })
-
-  test("buildScalarVarMap falls back to def.default", () => {
-    const map = buildScalarVarMap(alertPublishable.meta, {})
-    expect(map.get("--alert-radius")).toBe("lg")
   })
 
   test("resolveClasses rewrites within slot arrays", () => {
@@ -334,6 +375,64 @@ describe("publish", () => {
     expect(file?.content).toBe(rawContent)
   })
 
+  test("enum param `source`: the selected value rewrites the shipped source", () => {
+    const publishable: Publishable = {
+      template: `import { ChevronDownIcon } from "@/components/icons";\n\nconst caretVariants = tv(%%TV_CONFIG%%);\n\nconst Caret = () => <ChevronDownIcon className="ml-auto" />;\n`,
+      stylesConfig: { base: { base: "flex" } },
+      meta: {
+        name: "caret",
+        type: "registry:ui",
+        files: [{ type: "registry:ui", path: "ui/caret/base.tsx" }],
+        params: {
+          caret: {
+            kind: "enum",
+            default: "chevron",
+            values: ["chevron", "double"],
+            source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },
+          },
+        },
+      },
+    }
+
+    const untouched = publish({
+      publishable,
+      preset: { density: "default", componentParams: {} },
+    }).rawContent
+    expect(untouched).toContain(
+      'import { ChevronDownIcon } from "lucide-react";',
+    )
+    expect(untouched).toContain("<ChevronDownIcon ")
+
+    const swapped = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: { caret: { caret: "double" } },
+      },
+    }).rawContent
+    expect(swapped).toContain(
+      'import { ChevronsUpDownIcon } from "lucide-react";',
+    )
+    expect(swapped).toContain("<ChevronsUpDownIcon ")
+    expect(swapped).not.toContain("ChevronDownIcon")
+  })
+
+  test("enum param `source`: every substitution key occurs in its template", async () => {
+    // A renamed identifier or reformatted prop default would otherwise turn
+    // the swap into a silent no-op.
+    for (const name of PUBLISHABLE_NAMES) {
+      const { publishable } = await publishables[name]!()
+      for (const def of Object.values(publishable.meta.params ?? {})) {
+        if (def.kind !== "enum" || !def.source) continue
+        for (const swaps of Object.values(def.source)) {
+          for (const from of Object.keys(swaps)) {
+            expect(publishable.template, `${name}: "${from}"`).toContain(from)
+          }
+        }
+      }
+    }
+  })
+
   test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {
     setKnownDotuiNames(["loader"])
     setDotuiDepResolver("https://dotui.com", "?preset=abc")
@@ -381,24 +480,71 @@ describe("publish", () => {
     ])
   })
 
-  test("alert: rewrites scalar-param var when preset selects 'md' radius", () => {
+  test("popover: ships a param value's registry deps only when it is selected", () => {
+    setKnownDotuiNames(["drawer", "use-mobile"])
+    setDotuiDepResolver("https://dotui.org")
+    const publishable = {
+      template: TV_CONFIG_PLACEHOLDER,
+      stylesConfig: { base: {} },
+      meta: {
+        name: "popover",
+        type: "registry:ui",
+        files: [
+          {
+            type: "registry:ui",
+            path: "ui/popover/base.drawer.tsx",
+            target: "ui/popover.tsx",
+          },
+        ],
+        params: {
+          mobile: {
+            kind: "enum",
+            default: "drawer",
+            values: ["drawer", "popover"],
+            registryDependencies: { drawer: ["drawer", "use-mobile"] },
+          },
+        },
+      },
+    } satisfies Publishable
+
+    const drawer = publish({
+      publishable,
+      preset: { density: "default", componentParams: {} },
+    })
+    expect(drawer.item.registryDependencies).toEqual([
+      "https://dotui.org/r/drawer",
+      "https://dotui.org/r/use-mobile",
+    ])
+
+    const plain = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: { popover: { mobile: "popover" } },
+      },
+    })
+    expect(plain.item.registryDependencies).toBeUndefined()
+  })
+
+  test("alert: rewrites the surface var when the preset retargets its role", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,
       preset: {
         density: "default",
-        componentParams: { alert: { radius: "--radius-md" } },
+        componentParams: {},
+        tokens: { "--alert-radius": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")
     expect(rawContent).not.toContain("rounded-(--alert-radius)")
   })
 
-  test("alert: falls back to default radius when preset omits the param", () => {
+  test("alert: falls back to the styles.css default radius", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // alert.radius default is "--radius-lg" → suffix "lg".
+    // --alert-radius → --radius-surface → --radius-lg → suffix "lg".
     expect(rawContent).toContain("rounded-lg")
   })
 
@@ -450,16 +596,6 @@ describe("publish", () => {
       styleVarDefaults: { "--btn-radius": "var(--radius-md)" },
     })
     expect(rawContent).toContain("rounded-md")
-  })
-
-  test("scalar-param selection overrides the styles.css default", () => {
-    const map = buildStyleVarMap({ "--alert-radius": "var(--radius-lg)" })
-    for (const [k, v] of buildScalarVarMap(alertPublishable.meta, {
-      radius: "--radius-sm",
-    })) {
-      map.set(k, v)
-    }
-    expect(map.get("--alert-radius")).toBe("sm")
   })
 
   test("surface-var refs in template markup (outside the tv config) resolve too", () => {
@@ -607,5 +743,53 @@ describe("depsFromFileImports", () => {
     // types are imported (time-picker) — caught by the examples smoke.
     const found = deps(`import type { Time } from "@internationalized/date"`)
     expect(found).toContain("@internationalized/date")
+  })
+})
+
+describe("selectPublishable: createParamValue selections", () => {
+  const meta: Publishable["meta"] = {
+    name: "disclosure",
+    type: "registry:ui",
+    files: [],
+    params: {
+      marker: {
+        kind: "enum",
+        default: "chevron",
+        values: ["chevron", "plus"],
+      },
+    },
+  }
+  const make = (template: string): Publishable => ({
+    template,
+    stylesConfig: { base: {} },
+    meta,
+  })
+  const mod = {
+    publishable: make("default"),
+    publishableBySelection: {
+      "marker=chevron": make("chevron"),
+      "marker=plus": make("plus"),
+    },
+  }
+
+  test("picks the folded template for the preset's value", () => {
+    const preset = {
+      density: "default",
+      componentParams: { disclosure: { marker: "plus" } },
+    } as const
+    expect(selectPublishable(mod, preset).template).toBe("plus")
+  })
+
+  test("falls back to the meta default, then the default publishable", () => {
+    expect(
+      selectPublishable(mod, { density: "default", componentParams: {} })
+        .template,
+    ).toBe("chevron")
+    expect(
+      selectPublishable(mod, {
+        density: "default",
+        componentParams: { disclosure: { marker: "bogus" } },
+      }).template,
+    ).toBe("default")
   })
 })

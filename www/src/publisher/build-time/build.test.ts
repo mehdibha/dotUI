@@ -10,11 +10,14 @@
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import fieldMeta from "../../registry/ui/field/meta"
 import { publish, TV_CONFIG_PLACEHOLDER } from "../publish"
 import { extractStylesConfig } from "./extract-config"
 import { transformBase } from "./transform-base"
 
 const REGISTRY_UI = path.resolve(__dirname, "../../registry/ui")
+// Composing `fieldStyles()` needs field's param defaults.
+const METAS = { metas: new Map([["field", fieldMeta]]) }
 
 /* ============================================================ */
 /* extract-config                                                */
@@ -38,7 +41,7 @@ describe("extractStylesConfig", () => {
     expect(cfg.density?.comfortable).toBeDefined()
   })
 
-  test("alert: extracts slots, params, scalar var references in classes", () => {
+  test("alert: extracts slots, params, surface var references in classes", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "alert/styles.ts"))
 
     // Slots present on base.
@@ -51,9 +54,13 @@ describe("extractStylesConfig", () => {
       ),
     ).toBe(true)
 
-    // Both enum values for `style` extracted.
-    expect(cfg.params?.style?.default).toBeDefined()
-    expect(cfg.params?.style?.sousse).toBeDefined()
+    // Every enum value for `style` extracted.
+    expect(Object.keys(cfg.params?.style ?? {}).sort()).toEqual([
+      "accent-bar",
+      "neutral",
+      "tinted",
+      "tinted-border",
+    ])
   })
 
   test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {
@@ -87,13 +94,14 @@ describe("extractStylesConfig", () => {
     expect(sm.input).toContain("[--input-h:--spacing(6)]")
     // `outlineField({ focus: 'self' })` in params.style.outline.
     const outline = cfg.params?.style?.outline?.slots?.input as string
-    expect(outline).toContain("focus:ring-2")
+    expect(outline).toContain("focus:focus-input")
     expect(outline).toContain("border-border-control")
   })
 
   test("otp-field: composes field styles via fieldStyles().field(...)", () => {
     const cfg = extractStylesConfig(
       path.join(REGISTRY_UI, "otp-field/styles.ts"),
+      METAS,
     )
     const root = cfg.base.slots?.root as string[]
     expect(Array.isArray(root)).toBe(true)
@@ -103,7 +111,10 @@ describe("extractStylesConfig", () => {
   })
 
   test("slider: composes field styles via fieldStyles().field()", () => {
-    const cfg = extractStylesConfig(path.join(REGISTRY_UI, "slider/styles.ts"))
+    const cfg = extractStylesConfig(
+      path.join(REGISTRY_UI, "slider/styles.ts"),
+      METAS,
+    )
     // Same default-composed field slot the app renders (no className arg).
     expect(cfg.base.slots?.root).toBe(
       "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
@@ -153,9 +164,9 @@ describe("transformBase", () => {
     )
   })
 
-  test("loader spinner variant: transform works on variant base files", () => {
+  test("loader ring variant: transform works on variant base files", () => {
     const { template } = transformBase({
-      baseTsxPath: path.join(REGISTRY_UI, "loader/base.spinner.tsx"),
+      baseTsxPath: path.join(REGISTRY_UI, "loader/base.ring.tsx"),
       componentName: "loader",
     })
     expect(template).toContain("const loaderVariants = tv(")
@@ -202,7 +213,7 @@ describe("end-to-end (extract + transform → publish)", () => {
     expect(rawContent).not.toContain(TV_CONFIG_PLACEHOLDER)
   })
 
-  test("alert: scalar `radius` is resolved (publisher reads meta.params for the cssVar map)", () => {
+  test("alert: a retargeted surface role exports as the utility it resolves to", () => {
     const stylesConfig = extractStylesConfig(
       path.join(REGISTRY_UI, "alert/styles.ts"),
     )
@@ -228,24 +239,23 @@ describe("end-to-end (extract + transform → publish)", () => {
           params: {
             style: {
               kind: "enum",
-              default: "default",
-              values: ["default", "sousse"] as const,
-            },
-            radius: {
-              kind: "scalar",
-              type: "radius",
-              cssVar: "--alert-radius",
-              default: "--radius-lg",
+              default: "neutral",
+              values: [
+                "neutral",
+                "tinted",
+                "tinted-border",
+                "accent-bar",
+              ] as const,
             },
           },
         },
       },
       preset: {
         density: "default",
-        componentParams: { alert: { radius: "--radius-md" } },
+        componentParams: {},
+        tokens: { "--radius-surface": "var(--radius-md)" },
       },
     })
-
     expect(rawContent).toContain("rounded-md")
     expect(rawContent).not.toContain("rounded-(--alert-radius)")
   })
@@ -282,5 +292,64 @@ describe("end-to-end (extract + transform → publish)", () => {
     // flatten drops the empty slot keys, those become undefined slot functions.
     expect(rawContent).toMatch(/fieldset:\s*""/)
     expect(rawContent).toMatch(/legend:\s*""/)
+  })
+})
+
+/* ============================================================ */
+/* fold-param-values                                             */
+/* ============================================================ */
+
+describe("createParamValue folds", () => {
+  const disclosure = path.join(REGISTRY_UI, "disclosure/base.tsx")
+
+  test("disclosure: the selected marker inlines, the rest and their imports go", () => {
+    const chevron = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+      paramSelection: { marker: "chevron" },
+    }).template
+    expect(chevron).toContain("const glyph = <ChevronDownIcon />")
+    expect(chevron).not.toContain("PlusIcon")
+    expect(chevron).not.toContain("createParamValue")
+    expect(chevron).not.toContain("@/lib/styles")
+
+    const plus = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+      paramSelection: { marker: "plus" },
+    }).template
+    expect(plus).toContain("<PlusIcon")
+    expect(plus).toContain("<MinusIcon")
+    expect(plus).not.toContain("ChevronDownIcon")
+    expect(plus).not.toContain("useMarker")
+  })
+
+  test("breadcrumbs: a string value folds to the literal", () => {
+    const slash = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "breadcrumbs/base.tsx"),
+      componentName: "breadcrumbs",
+      paramSelection: { separator: "slash" },
+    }).template
+    expect(slash).toContain('const glyph = "/"')
+    expect(slash).not.toContain("ChevronRightIcon")
+    expect(slash).not.toContain("@/components/icons")
+  })
+
+  test("pagination: the current-page variant folds to its name", () => {
+    const outline = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "pagination/base.tsx"),
+      componentName: "pagination",
+      paramSelection: { current: "outline" },
+    }).template
+    expect(outline).toContain('const activeVariant = "secondary"')
+    expect(outline).not.toContain("createParamValue")
+  })
+
+  test("hooks stay in place without a selection", () => {
+    const { template } = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+    })
+    expect(template).toContain("createParamValue")
   })
 })

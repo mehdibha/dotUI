@@ -2,6 +2,12 @@ import { createStyles } from "@/lib/styles"
 
 import groupMeta from "./meta"
 
+/* Synced with toggle-button-group: same `separator` param — change both
+   together. Auto lets the segments' own edges divide (bordered buttons share
+   a hairline, fills abut); divider and none strip the borders between two
+   adjacent buttons, divider drawing an inset hairline in their place. Seams
+   next to a text, input or select child always stay auto. */
+
 const { useStyles, styles } = createStyles(groupMeta, {
   base: {
     slots: {
@@ -31,6 +37,41 @@ const { useStyles, styles } = createStyles(groupMeta, {
     compact: {},
     default: {},
     comfortable: {},
+  },
+  params: {
+    separator: {
+      auto: {},
+      divider: {
+        variants: {
+          orientation: {
+            horizontal: {
+              root: [
+                "*:data-button:[&:has(+[data-button])]:me-0 *:data-button:[&:has(+[data-button])]:border-r-0 *:data-button:[[data-button]+&]:border-l-0",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-y-1.5 *:data-button:[[data-button]+&]:before:left-0 *:data-button:[[data-button]+&]:before:w-px *:data-button:[[data-button]+&]:before:bg-current/20",
+              ],
+            },
+            vertical: {
+              root: [
+                "*:data-button:[&:has(+[data-button])]:border-b-0 *:data-button:[[data-button]+&]:border-t-0",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-x-1.5 *:data-button:[[data-button]+&]:before:top-0 *:data-button:[[data-button]+&]:before:h-px *:data-button:[[data-button]+&]:before:bg-current/20",
+              ],
+            },
+          },
+        },
+      },
+      none: {
+        variants: {
+          orientation: {
+            horizontal: {
+              root: "*:data-button:[&:has(+[data-button])]:border-r-0 *:data-button:[[data-button]+&]:border-l-0",
+            },
+            vertical: {
+              root: "*:data-button:[&:has(+[data-button])]:border-b-0 *:data-button:[[data-button]+&]:border-t-0",
+            },
+          },
+        },
+      },
+    },
   },
 })
 

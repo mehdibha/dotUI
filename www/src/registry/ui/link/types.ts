@@ -6,7 +6,7 @@ import type * as LinkPrimitives from "react-aria-components/Link"
 export interface LinkProps extends LinkPrimitives.LinkProps {
   /**
    * The visual style of the link.
-   * @default 'accent'
+   * @default 'default'
    */
-  variant?: "accent" | "quiet" | "unstyled"
+  variant?: "default" | "quiet" | "unstyled"
 }

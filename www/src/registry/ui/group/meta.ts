@@ -12,6 +12,14 @@ const groupMeta = {
     },
   ],
   registryDependencies: ["button"],
+  // Synced with toggle-button-group: the studio's Button groups axis writes both.
+  params: {
+    separator: {
+      kind: "enum",
+      default: "auto",
+      values: ["auto", "divider", "none"] as const,
+    },
+  },
 } satisfies RegistryItem
 
 export default groupMeta

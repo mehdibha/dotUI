@@ -2,16 +2,16 @@
 
 import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-
 import { ChevronRightIcon } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 const breadcrumbsVariants = tv({
   slots: {
     root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted",
     item: "inline-flex items-center gap-1",
     link: [
       "focus-reset focus-visible:focus-ring",
-      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled current:text-fg hover:[a]:text-fg",
+      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-disabled disabled:not-current:text-(--disabled-fg,currentColor) current:text-fg",
+      "hover:[a]:text-fg",
     ],
     separator: "[&_svg]:size-4",
   },
@@ -75,6 +75,7 @@ const BreadcrumbSeparator = ({
   ...props
 }: BreadcrumbSeparatorProps) => {
   const { separator } = breadcrumbsVariants();
+  const glyph = <ChevronRightIcon />;
   return (
     <span
       data-breadcrumb-separator=""
@@ -82,7 +83,7 @@ const BreadcrumbSeparator = ({
       className={separator({ className })}
       {...props}
     >
-      {children ?? <ChevronRightIcon />}
+      {children ?? glyph}
     </span>
   );
 };

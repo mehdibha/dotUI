@@ -11,15 +11,18 @@ const sliderVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
     control:
-      "relative flex grow cursor-interactive touch-none items-center select-none disabled:cursor-disabled",
+      "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
     track:
-      "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-disabled",
-    fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-disabled",
+      "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
+    fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
     thumb: [
-      "top-1/2 left-1/2 grid cursor-interactive place-items-center rounded-full shadow-none focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-interactive",
-      "size-(--slider-thumb-size) border-0 bg-fg",
+      "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
+      "size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
     ],
-    output: ["text-fg-muted tabular-nums disabled:text-fg-disabled", "text-sm"],
+    output: [
+      "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
+      "text-sm",
+    ],
   },
   variants: {
     orientation: {
@@ -49,6 +52,7 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
   return (
     <SliderPrimitive.Slider
       data-slider=""
+      data-field=""
       className={composeRenderProps(className, (cn, { orientation }) =>
         root({ className: cn, orientation }),
       )}

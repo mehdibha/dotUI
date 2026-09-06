@@ -49,7 +49,7 @@ export function CodeBlockTabs({
 }
 
 export function CodeBlockTabsList(props: TabListProps) {
-  return <TabList className="border bg-muted" {...props} />
+  return <TabList {...props} />
 }
 
 export function CodeBlockTabsTrigger({

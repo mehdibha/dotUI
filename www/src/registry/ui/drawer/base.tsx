@@ -6,7 +6,7 @@ import { OverlayTriggerStateContext } from "react-aria-components/Dialog"
 import { DismissButton } from "react-aria/Overlay"
 import { useIsHidden } from "react-aria/private/collections/Hidden"
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder"
-import { useInteractOutside } from "react-aria/useInteractOutside"
+import { useOverlay } from "react-aria/useOverlay"
 import { useOverlayTriggerState } from "react-stately"
 
 import { useStyles } from "./styles"
@@ -109,11 +109,12 @@ function Drawer({
       ? localState
       : contextState
 
-  useInteractOutside({
-    ref: popupRef,
-    isDisabled: !state.isOpen || !isDismissable,
-    onInteractOutside: () => state.close(),
-  })
+  // Joins react-aria's overlay stack, so a tap outside dismisses only the
+  // topmost layer (a nested drawer, a popover opened inside).
+  useOverlay(
+    { isOpen: state.isOpen, isDismissable, onClose: state.close },
+    popupRef,
+  )
 
   if (isHidden) {
     return <>{children}</>

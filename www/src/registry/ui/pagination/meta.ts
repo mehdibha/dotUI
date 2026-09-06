@@ -12,6 +12,15 @@ const paginationMeta = {
     },
   ],
   registryDependencies: ["button"],
+  params: {
+    current: {
+      kind: "enum",
+      default: "outline",
+      values: ["filled", "outline"] as const,
+      description:
+        "The current page's button variant: primary fill or the secondary outline.",
+    },
+  },
 } satisfies RegistryItem
 
 export default paginationMeta

@@ -20,18 +20,22 @@ const calendarVariants = tv({
     cell: [
       "relative flex aspect-square size-full items-center justify-center text-center text-sm font-medium no-highlight",
       "min-w-(--cell-size) cursor-interactive",
-      "disabled:text-fg-disabled unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
-      "in-data-range-calendar:not-outside-month:selected:bg-accent-muted selection-start:rounded-l-full selection-end:rounded-r-full",
+      "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
+      "in-data-range-calendar:not-outside-month:selected:bg-accent-muted",
+      "focus-reset in-data-calendar:transition-shadow in-data-calendar:hover:bg-accent-muted in-data-calendar:focus-visible:focus-ring in-data-calendar:selected:not-outside-month:bg-accent in-data-calendar:selected:not-outside-month:text-fg-on-accent",
+      "outside-month:pointer-events-none",
+      "in-data-calendar:not-outside-month:invalid:selected:bg-danger in-data-calendar:not-outside-month:invalid:selected:text-fg-on-danger",
+      "in-data-calendar:rounded-(--cell-radius)",
+      "selection-start:rounded-l-full selection-end:rounded-r-full",
       "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-xs",
       "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-xs",
       "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-xs",
       "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-xs",
-      "focus-reset in-data-calendar:rounded-(--cell-radius) in-data-calendar:transition-shadow in-data-calendar:hover:bg-accent-muted in-data-calendar:focus-visible:focus-ring in-data-calendar:selected:not-outside-month:bg-accent in-data-calendar:selected:not-outside-month:text-fg-on-accent",
-      "outside-month:pointer-events-none",
-      "in-data-calendar:not-outside-month:invalid:selected:bg-danger in-data-calendar:not-outside-month:invalid:selected:text-fg-on-danger",
     ],
-    cellInner:
-      "flex size-full items-center justify-center rounded-(--cell-radius) focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent",
+    cellInner: [
+      "flex size-full items-center justify-center focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent",
+      "rounded-(--cell-radius)",
+    ],
   },
 });
 
@@ -156,12 +160,18 @@ const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
 interface CalendarGridProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGrid
 > {}
-const CalendarGrid = ({ className, children, ...props }: CalendarGridProps) => {
+const CalendarGrid = ({
+  className,
+  children,
+  weekdayStyle = "narrow",
+  ...props
+}: CalendarGridProps) => {
   const { grid } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarGrid
       data-calendar-grid=""
       className={grid({ className })}
+      weekdayStyle={weekdayStyle}
       {...props}
     >
       {children ?? (
@@ -183,6 +193,7 @@ interface CalendarGridHeaderProps extends React.ComponentProps<
 > {}
 const CalendarGridHeader = ({
   className,
+  children,
   ...props
 }: CalendarGridHeaderProps) => {
   const { gridHeader } = calendarVariants();
@@ -191,7 +202,9 @@ const CalendarGridHeader = ({
       data-calendar-grid-header=""
       className={gridHeader({ className })}
       {...props}
-    />
+    >
+      {children}
+    </CalendarPrimitive.CalendarGridHeader>
   );
 };
 

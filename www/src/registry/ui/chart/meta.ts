@@ -12,6 +12,14 @@ const chartMeta = {
     },
   ],
   dependencies: ["recharts"],
+  params: {
+    grid: {
+      kind: "enum",
+      default: "solid",
+      values: ["solid", "dashed", "none"] as const,
+      description: "The gridline treatment behind the plot.",
+    },
+  },
 } satisfies RegistryItem
 
 export default chartMeta

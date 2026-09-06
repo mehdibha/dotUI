@@ -24,6 +24,7 @@ const SearchField = ({
   return (
     <SearchFieldPrimitives.SearchField
       data-search-field=""
+      data-field=""
       data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         cn(

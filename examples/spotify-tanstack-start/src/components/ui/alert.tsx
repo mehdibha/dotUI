@@ -3,17 +3,14 @@ import { type VariantProps, tv } from "tailwind-variants";
 const alertVariants = tv({
   slots: {
     root: [
-      "relative grid w-full items-start px-4 py-3",
+      "relative grid w-full items-start px-4 py-3 text-sm",
       "rounded-lg",
       "has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto]",
       "*:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current",
-      "border bg-card text-sm",
+      "border bg-card",
     ],
-    title: ["[svg~&]:col-start-2", "font-medium tracking-tight"],
-    description: [
-      "[svg~&]:col-start-2",
-      "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
-    ],
+    title: "font-medium tracking-tight [svg~&]:col-start-2",
+    description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
     action:
       "flex gap-1 max-sm:col-start-2 max-sm:mt-2 sm:row-start-1 sm:row-end-3 sm:[[data-alert-title]~&]:col-start-2 sm:[svg~&]:col-start-2 sm:[svg~[data-alert-description]~&]:col-start-3 sm:[svg~[data-alert-title]~&]:col-start-3",
   },

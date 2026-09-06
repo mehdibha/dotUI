@@ -138,6 +138,68 @@ describe("emitInitItem", () => {
     expect(item.css?.[":root"]).toEqual({ "--btn-radius": "var(--radius-md)" })
   })
 
+  test("flattens preset color tokens to per-mode literals", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: {
+        density: "default",
+        componentParams: {},
+        tokens: {
+          // A vocabulary re-point rides in the shadcn-named slots …
+          "--color-selection": "var(--color-accent)",
+          "--color-fg-on-selection": "var(--color-fg-on-accent)",
+          "--color-highlight": "var(--accent-700)",
+          "--color-fg-on-highlight": "var(--on-accent-700)",
+          // … keywords pass through …
+          "--color-text-selection": "Highlight",
+          // … and other tokens split `light-dark()` across `:root` / `.dark`,
+          // ramps and semantic refs resolved, oklab mixes computed, alpha
+          // mixes kept over literals.
+          "--card-border": "light-dark(transparent, var(--neutral-200))",
+          "--color-card":
+            "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+          "--color-popover":
+            "color-mix(in srgb, light-dark(var(--neutral-25), var(--neutral-100)) 72%, transparent)",
+          "--focus-glow":
+            "color-mix(in oklab, var(--color-fg) 60%, transparent)",
+          "--btn-radius": "--radius-md",
+        },
+      },
+      registryRoot: "https://dotui.com",
+    })
+    const { theme, light, dark } = item.cssVars ?? {}
+    const root = item.css?.[":root"]
+    const darkRule = item.css?.[".dark"]
+
+    expect(light?.["selection"]).toBe(light?.["accent"])
+    expect(dark?.["selection"]).toBe(dark?.["accent"])
+    expect(light?.["fg-on-selection"]).toBe(light?.["fg-on-accent"])
+    expect(light?.["highlight"]).toMatch(OKLCH)
+    expect(dark?.["highlight"]).toMatch(OKLCH)
+    expect(light?.["fg-on-highlight"]).toMatch(OKLCH)
+    expect(light?.["text-selection"]).toBe("Highlight")
+    expect(theme?.["--color-selection"]).toBe("var(--selection)")
+    expect(light?.["card"]).toMatch(OKLCH)
+    expect(dark?.["card"]).toMatch(OKLCH)
+    expect(light?.["card"]).not.toBe(dark?.["card"])
+    expect(light?.["popover"]).toMatch(
+      /^color-mix\(in srgb, oklch\([\d. ]+\) 72%, transparent\)$/,
+    )
+    expect(root).toEqual({
+      "--card-border": "transparent",
+      "--focus-glow": `color-mix(in oklab, ${light?.["fg"]} 60%, transparent)`,
+      "--btn-radius": "var(--radius-md)",
+    })
+    expect(darkRule).toEqual({
+      "--card-border": expect.stringMatching(OKLCH),
+      "--focus-glow": `color-mix(in oklab, ${dark?.["fg"]} 60%, transparent)`,
+    })
+    // Nothing the consumer's CSS doesn't declare escapes.
+    expect(JSON.stringify([light, dark, root, darkRule])).not.toMatch(
+      /var\(--(neutral|accent|on|color)-|light-dark\(/,
+    )
+  })
+
   test("font tokens become registry:font deps, not a Google Fonts @import", () => {
     const preset = {
       density: "default" as const,

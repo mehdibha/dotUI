@@ -12,11 +12,11 @@ const badgeMeta = {
     },
   ],
   params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--badge-radius",
-      default: "--radius-md",
+    style: {
+      kind: "enum",
+      default: "solid",
+      values: ["solid", "soft", "outline", "soft-outline"] as const,
+      description: "The appearance a badge wears when none is set.",
     },
   },
 } satisfies RegistryItem

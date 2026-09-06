@@ -155,12 +155,6 @@ export const alertPublishable: Publishable = {
         default: "default",
         values: ["default", "sousse"] as const,
       },
-      radius: {
-        kind: "scalar",
-        type: "radius",
-        cssVar: "--alert-radius",
-        default: "--radius-lg",
-      },
     },
   },
 }

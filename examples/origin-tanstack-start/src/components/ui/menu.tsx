@@ -9,26 +9,34 @@ import { tv, type VariantProps } from "tailwind-variants";
 const menuVariants = tv({
   slots: {
     root: [
-      "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] p-1 outline-hidden",
-      "**:data-separator:-mx-1 **:data-separator:my-1 **:data-separator:w-auto",
+      "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] outline-hidden",
+      "**:data-separator:my-1 **:data-separator:w-auto",
       "text-sm",
+      "p-1 **:data-separator:-mx-1",
     ],
     item: [
-      "relative flex w-full cursor-interactive items-center gap-2 rounded-md outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
+      "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
       "focus:bg-highlight focus:text-fg-on-highlight",
-      "disabled:text-fg-disabled disabled:**:text-current",
+      "disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
       "has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2",
-      "data-selection-mode:pr-8",
-      "*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
+      "data-has-submenu:pr-8",
+      "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
       "data-[variant=danger]:text-fg-danger data-[variant=danger]:focus:bg-danger-muted",
-      "gap-1.5 px-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+      "gap-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+      "data-selection-mode:pr-8",
+      "rounded-md",
+      "px-1.5",
     ],
-    indicator:
+    indicator: [
+      "pointer-events-none absolute flex items-center justify-center",
+      "right-2",
+    ],
+    submenuIndicator:
       "pointer-events-none absolute right-2 flex items-center justify-center",
     itemLabel: "",
     itemDescription: "text-fg-muted",
     section: "scroll-my-1",
-    sectionTitle: ["px-2 py-1.5 text-xs text-fg-muted", "px-1.5 py-1"],
+    sectionTitle: ["text-fg-muted", "py-1", "px-1.5", "text-xs"],
   },
 });
 
@@ -71,7 +79,7 @@ const MenuItem = <T extends object>({
   textValue: textValueProp,
   ...props
 }: MenuItemProps<T>) => {
-  const { item, indicator } = menuVariants();
+  const { item, indicator, submenuIndicator } = menuVariants();
   const textValue =
     textValueProp ||
     (typeof props.children === "string" ? props.children : undefined);
@@ -104,7 +112,7 @@ const MenuItem = <T extends object>({
               children
             )}
             {hasSubmenu && (
-              <span data-menu-item-indicator="" className={indicator()}>
+              <span data-menu-item-indicator="" className={submenuIndicator()}>
                 <ChevronRightIcon aria-hidden className="size-4" />
               </span>
             )}

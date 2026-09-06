@@ -12,23 +12,19 @@ const tooltipMeta = {
     },
   ],
   params: {
-    color: {
+    style: {
       kind: "enum",
-      default: "default",
-      values: ["default", "translucid"] as const,
-      vars: {
-        translucid: {
-          "--color-tooltip": "var(--neutral-200)",
-          "--color-fg-on-tooltip": "var(--neutral-950)",
-        },
-      },
-      description: "How the tooltip surface is rendered.",
+      default: "inverted",
+      values: ["inverted", "surface"] as const,
+      description:
+        "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--tooltip-radius",
-      default: "--radius-md",
+    // Synced with popover and modal: the studio's Motion axis writes all three.
+    motion: {
+      kind: "enum",
+      default: "scale",
+      values: ["scale", "fade", "slide", "none"] as const,
+      description: "How the tooltip enters and leaves.",
     },
   },
 } satisfies RegistryItem

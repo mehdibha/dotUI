@@ -9,4 +9,5 @@
   --radius-2xl: calc(var(--radius) * 2);
   --radius-3xl: calc(var(--radius) * 3);
   --radius-4xl: calc(var(--radius) * 4);
+  --radius-full: calc(infinity * 1px);
 }

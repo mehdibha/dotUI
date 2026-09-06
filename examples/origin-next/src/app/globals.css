@@ -7,9 +7,30 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+    --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+    --transition-duration-enter: 200ms;
+    --transition-duration-exit: 150ms;
+    --default-transition-duration: 150ms;
     --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
     --cursor-interactive: pointer;
+    --cursor-pending: default;
     --cursor-disabled: not-allowed;
+    --cursor-drag: var(--cursor-interactive);
+    --cursor-dragging: var(--cursor-interactive);
+    --focus-ring-color: var(--color-border-focus);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-inner: 0px;
+    --focus-input-color: var(--color-border-focus-muted);
+    --focus-input-width: 2px;
+    --focus-input-offset: 0px;
+    --focus-input-inner: 0px;
+    --disabled-bg: var(--color-disabled);
+    --disabled-fg: var(--color-fg-disabled);
+    --disabled-border: var(--color-border);
+    --disabled-selected-bg: var(--color-disabled);
+    --disabled-selected-fg: var(--color-fg-disabled);
+    --disabled-unselected-bg: transparent;
     --radius-xs: calc(var(--radius) * 0.25);
     --radius-sm: calc(var(--radius) * 0.5);
     --radius-md: calc(var(--radius) * 0.75);
@@ -18,6 +39,7 @@
     --radius-2xl: calc(var(--radius) * 2);
     --radius-3xl: calc(var(--radius) * 3);
     --radius-4xl: calc(var(--radius) * 4);
+    --radius-full: calc(infinity * 1px);
     --font-sans: var(--font-geist-sans);
     --font-heading: var(--font-sans);
     --font-mono: var(--font-geist-mono);
@@ -44,6 +66,7 @@
     --color-fg-primary-disabled: var(--fg-primary-disabled);
     --color-selection: var(--selection);
     --color-selection-hover: var(--selection-hover);
+    --color-selection-muted: var(--selection-muted);
     --color-fg-on-selection: var(--fg-on-selection);
     --color-success: var(--success);
     --color-success-hover: var(--success-hover);
@@ -97,6 +120,7 @@
     --color-fg-on-neutral: var(--fg-on-neutral);
     --color-border: var(--border);
     --color-border-control: var(--border-control);
+    --color-border-control-hover: var(--border-control-hover);
     --color-border-focus: var(--border-focus);
     --color-border-focus-muted: var(--border-focus-muted);
     --color-tooltip: var(--tooltip);
@@ -116,6 +140,48 @@
     --color-chart-3: var(--chart-3);
     --color-chart-2: var(--chart-2);
     --color-chart-1: var(--chart-1);
+    --color-disabled-selected-fg: var(----disabled-selected-fg);
+    --color-disabled-selected-bg: var(----disabled-selected-bg);
+    --color-disabled-border: var(----disabled-border);
+    --color-disabled-fg: var(----disabled-fg);
+    --color-disabled-bg: var(----disabled-bg);
+    --color-focus-input-color: var(----focus-input-color);
+    --color-focus-ring-color: var(----focus-ring-color);
+    --animate-loader-blades: loader-blades 0.8s steps(8, end) infinite;
+    --animate-loader-dots: loader-dots 0.9s ease-in-out infinite;
+    --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
+    --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;
+  @keyframes loader-blades {
+  to {
+    transform: rotate(1turn);
+        }
+    }
+  @keyframes loader-dots {
+  0%,
+  100% {
+    opacity: 0.25;
+        }
+  50% {
+    opacity: 1;
+        }
+    }
+  @keyframes progress-slide {
+  from {
+    transform: translateX(-100%);
+        }
+  to {
+    transform: translateX(250%);
+        }
+    }
+  @keyframes progress-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+        }
+  50% {
+    opacity: 1;
+        }
+    }
 }
 
 :root {
@@ -143,6 +209,7 @@
     --fg-primary-disabled: oklch(0.86 0.0694 241.45);
     --selection: oklch(0.5787 0.2113 258.04);
     --selection-hover: oklch(0.5345 0.1965 258.04);
+    --selection-muted: oklch(0.9591 0.0195 241.04);
     --fg-on-selection: oklch(1 0 0);
     --success: oklch(0.6546 0.1176 154.91);
     --success-hover: oklch(0.6148 0.1094 154.91);
@@ -196,6 +263,7 @@
     --fg-on-neutral: oklch(0.2399 0.0126 258.04);
     --border: oklch(0.921 0.006 258.04);
     --border-control: oklch(0.8827 0.0074 258.04);
+    --border-control-hover: oklch(0.8545 0.0091 258.04);
     --border-focus: oklch(0.5787 0.2113 258.04);
     --border-focus-muted: oklch(0.8984 0.0496 241.04);
     --tooltip: oklch(0.2399 0.0126 258.04);
@@ -215,15 +283,19 @@
     --chart-6: oklch(0.4744 0.1949 260.13);
     --chart-7: oklch(0.4149 0.183 261.32);
     --chart-8: oklch(0.3636 0.1727 262.34);
+    --card-border: var(--color-border);
+    --overlay-border: var(--color-border);
     --input-radius: var(--radius-control);
-    --modal-backdrop-opacity: 40%;
     --modal-background: var(--color-popover);
     --modal-radius: var(--radius-panel);
-    --popover-radius: var(--radius-surface);
     --btn-font-weight: var(--font-weight-medium);
+    --popover-radius: var(--radius-surface);
     --card-radius: var(--radius-panel);
     --slider-thumb-size: calc(var(--spacing) * 3);
+    --slider-thumb-shadow: 0 0 #0000;
     --slider-fill-color: var(--color-primary);
+    --slider-cursor: var(--cursor-drag);
+    --slider-dragging-cursor: var(--cursor-dragging);
     --slider-size: calc(var(--spacing) * 1);
     --calendar-cell-radius: var(--radius-md);
     --calendar-cell-size: --spacing(8);
@@ -253,6 +325,7 @@
     --fg-primary-disabled: oklch(0.3669 0.109 262.28);
     --selection: oklch(0.5787 0.2113 258.04);
     --selection-hover: oklch(0.6229 0.1965 258.04);
+    --selection-muted: oklch(0.2319 0.0723 264.98);
     --fg-on-selection: oklch(1 0 0);
     --success: oklch(0.6546 0.1176 154.91);
     --success-hover: oklch(0.6546 0.1176 154.91);
@@ -306,6 +379,7 @@
     --fg-on-neutral: oklch(0.9562 0.0029 258.04);
     --border: oklch(0.249 0.0051 258.04);
     --border-control: oklch(0.3608 0.0082 258.04);
+    --border-control-hover: oklch(0.4318 0.0096 258.04);
     --border-focus: oklch(0.5787 0.2113 258.04);
     --border-focus-muted: oklch(0.3183 0.1101 263.25);
     --tooltip: oklch(0.9562 0.0029 258.04);
@@ -334,23 +408,61 @@
 }
 
 @utility focus-ring {
-    @apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
+    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--color-bg),
+    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),
+    var(--focus-ring-inset,) 0 0 0
+      calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
 }
 
 @utility focus-input {
-    @apply border-border-focus ring-2 ring-border-focus-muted;
+    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--color-bg),
+    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),
+    var(--focus-input-inset,) 0 0 0
+      calc(var(--focus-input-offset) + var(--focus-input-width))
+      var(--tw-ring-color, var(--focus-input-color));
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
 }
 
 @utility no-highlight {
     -webkit-tap-highlight-color: transparent;
 }
 
+@utility select-ui {
+    -webkit-user-select: var(--user-select-ui, none);
+    user-select: var(--user-select-ui, none);
+}
+
 @layer base {
   * {
     @apply border-border;
+    corner-shape: var(--corner-shape, round);
+    scrollbar-width: var(--scrollbar-width, auto);
+    scrollbar-color: var(--scrollbar-color, auto);
+    }
+  *:hover {
+    scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
+    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-heading, var(--font-weight-semibold));
+    letter-spacing: var(--tracking-heading, 0);
     }
   body {
     @apply bg-bg font-sans text-fg;
+    }
+  :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
+    opacity: var(--disabled-opacity, 1);
     }
   html {
     @apply font-sans;
@@ -518,4 +630,11 @@
 }
   [data-required] [data-label]::after {
     content: "*" / "";
+}
+
+@layer components {
+  [data-field][data-invalid] {
+    border-left: var(--field-error-bar, 0) solid var(--color-border-danger);
+    padding-left: var(--field-error-inset, 0);
+    }
 }

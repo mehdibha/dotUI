@@ -6,6 +6,8 @@
 import { z } from "zod"
 
 import {
+  CATEGORICAL_CHROMA,
+  categoricalPalettes,
   divergingPalette,
   sequentialPalette,
   tonalCategoricalPalette,
@@ -113,6 +115,11 @@ export const themeOptionsSchema = z.object({
       }),
     )
     .optional(),
+  /**
+   * D11 — the categorical series strategy: `tonal` (default) shades one brand
+   * hue, `vivid` / `muted` spread hues around the accent at high / low chroma.
+   */
+  chartPalette: z.enum(["tonal", "vivid", "muted"]).optional(),
 })
 
 export type ThemeOptions = z.infer<typeof themeOptionsSchema>
@@ -369,15 +376,25 @@ export function createTheme(input: string | ThemeOptions): Theme {
 
   // D11 — chart palettes from the brand accent, one set per mode. The
   // categorical default is tonal (shadcn parity: shades of one brand hue,
-  // lightness-encoded); the hue-spread generator stays exported for callers
-  // that need maximal series separation.
+  // lightness-encoded); the hue-spread strategies pick one hue sequence for
+  // both modes and maximize their CVD gates by construction, so only the
+  // tonal ladder is priced here.
+  const chartPalette = options.chartPalette ?? "tonal"
+  const hueSpread =
+    chartPalette === "tonal"
+      ? undefined
+      : categoricalPalettes(accentSeed, 8, CATEGORICAL_CHROMA[chartPalette])
   const chartSet = (mode: Mode) => {
-    const categorical = tonalCategoricalPalette(accentSeed, 8, mode)
-    const gate = tonalGateReport(categorical)
-    if (!gate.passes)
-      warnings.push(
-        `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
-      )
+    let categorical: Oklch[]
+    if (hueSpread) categorical = hueSpread[mode]
+    else {
+      categorical = tonalCategoricalPalette(accentSeed, 8, mode)
+      const gate = tonalGateReport(categorical)
+      if (!gate.passes)
+        warnings.push(
+          `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
+        )
+    }
     return {
       categorical: categorical.map(oklchCss),
       sequential: sequentialPalette(accentSeed.h, 7, mode).map(oklchCss),

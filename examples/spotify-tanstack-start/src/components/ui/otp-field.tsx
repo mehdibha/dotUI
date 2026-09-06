@@ -10,7 +10,6 @@ import { Provider } from "react-aria-components/slots";
 import * as TextPrimitive from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
-import { Group } from "@/components/ui/group";
 import { Input } from "@/components/ui/input";
 import { tv, type VariantProps } from "tailwind-variants";
 const otpFieldVariants = tv({
@@ -18,6 +17,10 @@ const otpFieldVariants = tv({
     root: [
       "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 group/otp-field",
       "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
+    ],
+    group: [
+      "flex",
+      "w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
     ],
     separator: "",
   },
@@ -38,6 +41,8 @@ interface OTPFieldProps extends Omit<
   isRequired?: boolean;
   onChange?: (value: string) => void;
 }
+
+interface OTPFieldGroupProps extends React.ComponentProps<"div"> {}
 
 interface OTPFieldSeparatorProps extends React.ComponentProps<
   typeof OTPFieldPrimitive.Separator
@@ -142,17 +147,28 @@ function OTPField({
         )}
       >
         {children ?? (
-          <Group>
+          <OTPFieldGroup>
             {Array.from({ length }, (_, index) => (
               <Input
                 key={index}
                 aria-label={index === 0 ? undefined : `Digit ${index + 1}`}
               />
             ))}
-          </Group>
+          </OTPFieldGroup>
         )}
       </OTPFieldPrimitive.Root>
     </Provider>
+  );
+}
+
+function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
+  const { group } = otpFieldVariants();
+  return (
+    <div
+      data-slot="otp-field-group"
+      className={group({ className })}
+      {...props}
+    />
   );
 }
 
@@ -162,5 +178,5 @@ function OTPFieldSeparator(props: OTPFieldSeparatorProps) {
   );
 }
 
-export type { OTPFieldProps, OTPFieldSeparatorProps };
-export { OTPField, OTPFieldSeparator };
+export type { OTPFieldGroupProps, OTPFieldProps, OTPFieldSeparatorProps };
+export { OTPField, OTPFieldGroup, OTPFieldSeparator };

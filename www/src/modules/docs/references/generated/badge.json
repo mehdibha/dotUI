@@ -4,22 +4,30 @@
   "extendsElement": "span",
   "props": {
     "appearance": {
-      "type": "\"solid\" | \"subtle\"",
-      "detailedType": "'solid' | 'subtle' | undefined",
+      "type": "\"outline\" | \"soft\" | \"soft-outline\" | \"solid\"",
+      "detailedType": "| 'outline'\n| 'soft'\n| 'soft-outline'\n| 'solid'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "solid"
+            "value": "outline"
           },
           {
             "type": "stringLiteral",
-            "value": "subtle"
+            "value": "soft"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "soft-outline"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "solid"
           }
         ]
       },
-      "description": "The visual appearance of the badge.",
+      "description": "The visual appearance of the badge. Defaults to the design system's badge style.",
       "default": "'solid'"
     },
     "variant": {

@@ -167,6 +167,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
       <div
         {...focusProps}
         data-time-picker=""
+        data-field=""
         data-focus-within={isFocused || undefined}
         data-focus-visible={isFocusVisible || undefined}
         data-open={overlayState.isOpen || undefined}

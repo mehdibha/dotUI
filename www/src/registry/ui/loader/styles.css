@@ -1,0 +1,22 @@
+@theme inline {
+  --animate-loader-blades: loader-blades 0.8s steps(8, end) infinite;
+  --animate-loader-dots: loader-dots 0.9s ease-in-out infinite;
+}
+
+/* Blades step the whole dial round (the Apple/Geist mechanic); the opacity
+   ramp is static on the spokes. */
+@keyframes loader-blades {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes loader-dots {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}

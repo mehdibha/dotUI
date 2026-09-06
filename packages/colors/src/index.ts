@@ -44,8 +44,10 @@ export {
   wcag2,
 } from "./meters"
 export {
+  CATEGORICAL_CHROMA,
   categoricalGateReport,
   categoricalPalette,
+  categoricalPalettes,
   divergingPalette,
   sequentialPalette,
   tonalCategoricalPalette,

@@ -125,6 +125,7 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 
   return (
     <span
+      data-switch-indicator=""
       data-rac=""
       data-selected={ctx.isSelected || undefined}
       data-pressed={ctx.isPressed || undefined}

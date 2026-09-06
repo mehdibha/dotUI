@@ -2,42 +2,6 @@
   "name": "LoaderProps",
   "description": "A loader displays an animated spinner that indicates an operation is in progress.",
   "props": {
-    "size": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The size of the loader in pixels.",
-      "default": "20"
-    },
-    "stroke": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The stroke width of the loader circle.",
-      "default": "2"
-    },
-    "speed": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The animation speed in seconds.",
-      "default": "0.8"
-    },
-    "strokeLength": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The length of the stroke as a percentage (0-1).",
-      "default": "0.25"
-    },
     "isIndeterminate": {
       "type": "boolean",
       "detailedType": "boolean | undefined",

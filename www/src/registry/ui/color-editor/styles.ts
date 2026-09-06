@@ -42,7 +42,7 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
       default: {},
       hammamet: {
         slots: {
-          root: "rounded-lg border bg-card p-3",
+          root: "rounded-lg border border-(--card-border) bg-card p-3 shadow-[var(--shadow-card,0_0_#0000)]",
         },
       },
     },
