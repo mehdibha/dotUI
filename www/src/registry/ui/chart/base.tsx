@@ -69,6 +69,8 @@ export const chartDefaults = {
   draw: { duration: 900, easing: "cubic-bezier(0.33, 1, 0.68, 1)" },
   axisTickMinWidth: 420,
   axisTickCountNarrow: 4,
+  // Room past the data extent on a linear scale behind a hidden axis.
+  headroom: 0.03,
   gradientStops: [0.02, 0.5],
 } as const
 
@@ -424,6 +426,63 @@ const SCALES: Record<ChartScaleKind, () => ChartScaleOption> = {
   linear: () => scaleLinear(),
 }
 
+/* d3's `nice()` rounds the domain out to a tick step and loops until stable:
+   a 305 maximum lands on a 350 top, and the tallest bar stops at 87% of the
+   plot. This extent stays tight instead — `chartDefaults.headroom` past the
+   data, with zero on a gridline when the data crosses it. Its ticks spread
+   evenly from edge to edge for a hidden axis; a visible axis keeps d3's round
+   ticks inside the same domain, so the labels read well and the plot fills. */
+export function tightExtent(
+  min: number,
+  max: number,
+  intervals: number,
+): { domain: [number, number]; ticks: number[] } | null {
+  if (!(max > min) || intervals < 1) return null
+  const pad = (max - min) * chartDefaults.headroom
+  let lo: number
+  let step: number
+  let count: number
+  if (min <= 0 && max >= 0) {
+    const above = max > 0 ? max + pad : 0
+    const below = min < 0 ? -min + pad : 0
+    const [big, small] = above >= below ? [above, below] : [below, above]
+    const bigCount = Math.max(1, Math.round((intervals * big) / (big + small)))
+    step = big / bigCount
+    const smallCount = Math.ceil(small / step - 1e-9)
+    count = bigCount + smallCount
+    lo = -(above >= below ? smallCount : bigCount) * step
+  } else {
+    lo = min - pad
+    step = (max - min + 2 * pad) / intervals
+    count = intervals
+  }
+  const ticks = Array.from({ length: count + 1 }, (_, i) => lo + i * step)
+  return { domain: [lo, lo + count * step], ticks }
+}
+
+/* The library copies a factory's scale before nicing it, so the overrides
+   travel with `copy`. */
+function tightLinear(
+  roundTicks: boolean,
+  scale = scaleLinear(),
+  ticks: number[] | null = null,
+): ChartScaleOption {
+  const { ticks: d3Ticks, copy } = scale
+  return Object.assign(scale, {
+    nice(count = 5) {
+      const [min, max] = scale.domain() as [number, number]
+      // Two gridlines are just the plot edges: keep at least one in between.
+      const tight = tightExtent(min, max, Math.max(2, count - 1))
+      if (!tight) return scale
+      ticks = tight.ticks
+      return scale.domain(tight.domain)
+    },
+    ticks: (count?: number) =>
+      roundTicks || ticks === null ? d3Ticks(count) : ticks,
+    copy: () => tightLinear(roundTicks, copy(), ticks),
+  })
+}
+
 /** Axis options merged over the computed axis; `label` is the axis title. */
 export interface ChartAxisOverrides extends Partial<
   Omit<ChartAxisOptions, "axis">
@@ -462,7 +521,10 @@ function frameAxis(
   const { label, ...overrides }: ChartAxisOverrides =
     typeof spec === "object" ? spec : {}
   return {
-    scale: SCALES[kind],
+    scale:
+      kind === "linear"
+        ? () => tightLinear(presentation !== false)
+        : SCALES[kind],
     nice: kind === "linear",
     grid,
     axis: presentation && { ...presentation, label },

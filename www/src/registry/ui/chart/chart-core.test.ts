@@ -9,6 +9,7 @@ import {
   serialize,
   splitChartProps,
   stackY,
+  tightExtent,
 } from "./base"
 
 interface Row {
@@ -67,6 +68,44 @@ describe("stackY", () => {
       [-4, -10],
       [10, 15],
     ])
+  })
+})
+
+describe("tightExtent", () => {
+  const fill = (max: number, intervals = 4) =>
+    max / tightExtent(0, max, intervals)!.domain[1]
+
+  it("keeps the tallest bar near the top of the plot", () => {
+    for (const max of [305, 275, 214, 73, 595, 30500]) {
+      expect(fill(max)).toBeCloseTo(1 / 1.03, 6)
+    }
+  })
+
+  it("spreads the gridlines evenly from zero to the top", () => {
+    const extent = tightExtent(0, 305, 4)!
+    expect(extent.ticks).toHaveLength(5)
+    expect(extent.ticks[0]).toBe(0)
+    expect(extent.ticks.at(-1)).toBe(extent.domain[1])
+  })
+
+  it("lands zero on a gridline when the data crosses it", () => {
+    const extent = tightExtent(-209, 214, 5)!
+    expect(extent.ticks).toContain(0)
+    expect(extent.domain[0]).toBeLessThan(-209)
+    expect(extent.domain[1]).toBeGreaterThan(214)
+    expect(214 / extent.domain[1]).toBeGreaterThan(0.9)
+    expect(-209 / extent.domain[0]).toBeGreaterThan(0.9)
+  })
+
+  it("pads both ends of a range that excludes zero", () => {
+    const extent = tightExtent(150, 305, 4)!
+    expect(extent.domain[0]).toBeLessThan(150)
+    expect(extent.domain[1]).toBeGreaterThan(305)
+    expect(extent.ticks).toHaveLength(5)
+  })
+
+  it("leaves a flat or empty extent to d3", () => {
+    expect(tightExtent(5, 5, 4)).toBeNull()
   })
 })
 
