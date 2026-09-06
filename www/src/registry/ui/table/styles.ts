@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
     slots: {
       container:
         "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-md border bg-bg",
-      table: "min-w-full text-sm text-fg outline-hidden select-none",
+      table: "min-w-full text-sm text-fg outline-hidden select-ui",
       // The blur lives on the cells, not the thead: a backdrop-filter is
       // clipped by its own border-radius but escapes the scroll container's
       // rounded clip (Chromium), so the corner cells round themselves to the

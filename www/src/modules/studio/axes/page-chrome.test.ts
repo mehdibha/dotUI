@@ -13,16 +13,16 @@ describe("selection and scrollbar axes", () => {
     ).toEqual([])
   })
 
-  it("maps non-selectable UI text and the accent highlight to tokens", () => {
+  it("maps selectable UI text and the OS highlight to tokens", () => {
     const { tokens } = resolveDesignSystem({
       ...DEFAULTS,
-      selectionUiText: "none",
-      selectionHighlight: "accent",
+      selectionUiText: "selectable",
+      selectionHighlight: "browser",
     })
-    expect(tokens).toMatchObject({
-      "--user-select-ui": "none",
-      "--selection-bg": "var(--color-accent)",
-      "--selection-fg": "var(--color-fg-on-accent)",
+    expect(tokens).toEqual({
+      "--user-select-ui": "auto",
+      "--color-text-selection": "Highlight",
+      "--color-fg-on-text-selection": "HighlightText",
     })
   })
 

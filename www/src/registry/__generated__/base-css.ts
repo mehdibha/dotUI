@@ -21,10 +21,19 @@ export const baseRegistryCss = {
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
 		},
+		"@utility select-ui": {
+			"-webkit-user-select": "var(--user-select-ui, none)",
+			"user-select": "var(--user-select-ui, none)",
+		},
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
 				"corner-shape": "var(--corner-shape, round)",
+				"scrollbar-width": "var(--scrollbar-width, auto)",
+				"scrollbar-color": "var(--scrollbar-color, auto)",
+			},
+			"*:hover": {
+				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
 			},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
@@ -34,16 +43,12 @@ export const baseRegistryCss = {
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
 			},
-			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
-				opacity: "var(--disabled-opacity, 1)",
-			},
 			html: {
 				"@apply font-sans": {},
 			},
 		},
 		"::selection": {
-			"background-color": "var(--accent-300)",
-			color: "var(--neutral-950)",
+			"@apply bg-text-selection text-fg-on-text-selection": {},
 		},
 		".lucide,\n.tabler-icon": {
 			"stroke-width": "var(--icon-stroke-width, 2)",
@@ -395,12 +400,6 @@ export const baseRegistryCss = {
 			"--cursor-disabled": "not-allowed",
 			"--cursor-drag": "var(--cursor-interactive)",
 			"--cursor-dragging": "var(--cursor-interactive)",
-			"--disabled-bg": "var(--color-disabled)",
-			"--disabled-fg": "var(--color-fg-disabled)",
-			"--disabled-border": "var(--color-border)",
-			"--disabled-selected-bg": "var(--color-disabled)",
-			"--disabled-selected-fg": "var(--color-fg-disabled)",
-			"--disabled-unselected-bg": "transparent",
 			"--radius-xs": "calc(var(--radius) * 0.25)",
 			"--radius-sm": "calc(var(--radius) * 0.5)",
 			"--radius-md": "calc(var(--radius) * 0.75)",
@@ -428,7 +427,6 @@ export const baseRegistryCss = {
 			"--color-primary-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-primary-active": "color-mix(in oklab, var(--neutral-950) 80%, var(--neutral-25))",
 			"--color-primary-muted": "var(--neutral-200)",
-			"--color-primary-disabled": "var(--neutral-300)",
 			"--color-fg-on-primary": "var(--neutral-25)",
 			"--color-fg-primary-disabled": "var(--neutral-500)",
 			"--color-selection": "var(--neutral-950)",
@@ -495,6 +493,8 @@ export const baseRegistryCss = {
 			"--color-sidebar": "var(--neutral-50)",
 			"--color-overlay": "oklch(0 0 0)",
 			"--color-thumb": "oklch(1 0 0)",
+			"--color-text-selection": "var(--accent-300)",
+			"--color-fg-on-text-selection": "var(--neutral-950)",
 			"--font-sans": "var(--font-geist-sans)",
 			"--font-heading": "var(--font-sans)",
 			"--font-mono": "var(--font-geist-mono)",

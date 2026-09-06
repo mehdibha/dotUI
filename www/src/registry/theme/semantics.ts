@@ -233,6 +233,10 @@ export function semanticVocabulary(
     // ---- overlay / chrome (previously hardcoded in components) ----
     "color-overlay": bg({ value: "oklch(0 0 0)" }),
     "color-thumb": bg({ value: "oklch(1 0 0)" }),
+    // `::selection` — a light accent tint under dark text in light mode, a
+    // dark tint under light text in dark (both flip with the ramps).
+    "color-text-selection": bg(ref("accent", "300"), PRIMARY),
+    "color-fg-on-text-selection": fg(ref("neutral", "950")),
   }
 }
 

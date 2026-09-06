@@ -4,7 +4,7 @@
    looks like. The model is Linear's one-line rule: a global switch kills
    selection on chrome and the arrow cursor rides along, while content stays
    selectable — the hero previews both surfaces so the split is visible.
-   Highlight styles ::selection; the browser default never themes. */
+   Highlight styles ::selection: the system's own tint, or the OS default. */
 
 import type { CSSProperties } from "react"
 
@@ -27,13 +27,13 @@ const UI_TEXT_ILLUSTRATIONS: Record<string, React.ReactNode> = {
 /* Painted words, not cursors: the option is the highlight itself. The blue
    depicts the OS default, which is literal like the cursor drawings. */
 const HIGHLIGHT_ILLUSTRATIONS: Record<string, React.ReactNode> = {
-  browser: (
-    <span className="rounded-xs bg-[#B3D7FF] px-1 text-sm text-[#1B1B1F]">
+  accent: (
+    <span className="rounded-xs bg-text-selection px-1 text-sm text-fg-on-text-selection">
       Aa
     </span>
   ),
-  accent: (
-    <span className="rounded-xs bg-accent px-1 text-sm text-fg-on-accent">
+  browser: (
+    <span className="rounded-xs bg-[#B3D7FF] px-1 text-sm text-[#1B1B1F]">
       Aa
     </span>
   ),
@@ -51,9 +51,9 @@ const highlightOptions: SelectRowOption[] = HIGHLIGHT_OPTIONS.map((o) => ({
 
 /* Content and chrome side by side, wearing the engine's own tokens: the
    sentence stays selectable under either switch — non-selectable systems opt
-   content back in — while the label (a control label, so base.css's rule
-   reaches it) follows the switch, arrow cursor included. ::selection can't
-   be forced to render, so the sentence asks to be selected instead. */
+   content back in — while the label wears `select-ui` like every control, so
+   it follows the switch, arrow cursor included. ::selection can't be forced
+   to render, so the sentence asks to be selected instead. */
 export function SelectionHero({ state }: { state: LabState }) {
   const none = state.selectionUiText === "none"
   return (
@@ -65,10 +65,10 @@ export function SelectionHero({ state }: { state: LabState }) {
         <p className="cursor-text text-sm text-fg">
           Select this sentence — content always allows it.
         </p>
-        <label className="relative text-xs text-fg-muted">
+        <span className="relative text-xs text-fg-muted select-ui">
           UI label
           <GlyphBadge>{none ? <ArrowCursor /> : <IBeamCursor />}</GlyphBadge>
-        </label>
+        </span>
       </div>
     </Hero>
   )

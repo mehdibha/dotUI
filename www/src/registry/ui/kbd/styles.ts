@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(kbdMeta, {
     slots: {
       group: "inline-flex items-center gap-1",
       kbd: [
-        "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-none",
+        "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-ui",
         "**:[svg]:not-with-[size]:size-3",
       ],
     },
