@@ -16,9 +16,7 @@ import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-import { useTweak } from "@/dev/tweaker"
 
-import { WIRED } from "./axes"
 import { CARD_DEMOS } from "./demos"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
@@ -34,16 +32,6 @@ const PANE =
    `inert` — invisible, unfocusable, and out of the accessibility tree. */
 const PANE_HIDDEN = "opacity-0"
 
-/** The not-wired-yet marker (issue #666) — drops per chapter via its axis module's WIRED flag. */
-const isWired = (ids: string[]) => ids.every((id) => WIRED[id])
-function WipChip() {
-  return (
-    <span className="shrink-0 rounded-sm border border-border/60 px-1 py-px text-[9px] leading-none font-medium tracking-wide text-fg-muted/80 uppercase">
-      wip
-    </span>
-  )
-}
-
 /* Index rows speak the same bg-muted row language as the chapter pages — no
    border, one panel surface behind them. Hover paints a translucent highlight
    OVER the whole card (::after sits on top of the demos too), not just the
@@ -55,20 +43,15 @@ function IndexRow({
   chapter,
   lab,
   compact,
-  showWip,
   onPress,
 }: {
   chapter: IndexChapter
   lab: Lab
   compact?: boolean
-  showWip: boolean
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
-  const wip = showWip && !isWired(chapter.members.map((m) => m.id)) && (
-    <WipChip />
-  )
   // The label column: title (with its modified dot), and the live value
   // beneath it — first segment only, one word-ish.
   const label = (
@@ -91,7 +74,6 @@ function IndexRow({
             className="size-1 shrink-0 rounded-full bg-accent"
           />
         )}
-        {wip}
       </span>
       <span className="max-w-full truncate text-xs text-fg-muted/60">
         {chapter.summary(lab.state).split(" · ")[0]}
@@ -159,14 +141,6 @@ export function DrillInPanel({
 }) {
   const index = resolveIndex(chapters)
   const [activeId, setActiveId] = useState<string | null>(null)
-  // Dev tweak: hide the chips to read the panel as the finished product.
-  // Deliberately kept (not exploration scaffolding) — it goes when the last
-  // chip drops at the parity bar (issue #666).
-  const showWip = useTweak("WIP chips", {
-    type: "boolean",
-    default: true,
-    group: "Studio panel",
-  })
   const page =
     index
       .flatMap((group) => group.chapters)
@@ -218,7 +192,6 @@ export function DrillInPanel({
                   chapter={chapter}
                   lab={lab}
                   compact={group.compact}
-                  showWip={showWip}
                   onPress={() => setActiveId(chapter.id)}
                 />
               ))}
@@ -244,9 +217,6 @@ export function DrillInPanel({
                   All settings
                 </RacButton>
                 <span className="ml-auto flex items-center gap-1.5 pr-1">
-                  {showWip && !isWired(page.members.map((m) => m.id)) && (
-                    <WipChip />
-                  )}
                   <span className="text-[0.8125rem] font-medium text-fg">
                     {page.label}
                   </span>

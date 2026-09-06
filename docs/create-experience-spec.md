@@ -128,7 +128,7 @@ Mehdi's modifications:
   the micro-preview) carry the visual load.
 
 Structured scroll (variant A) and the stacks served as comparison references;
-the drill-in won and they have been deleted from panel-lab.
+the drill-in won and they have been deleted from the studio module.
 
 ## Taxonomy revision (Aug 2026, four-lens panel)
 
