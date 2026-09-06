@@ -35,8 +35,9 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-              Every design decision is yours. Create, tweak, and ship components
-              you own.
+              Every design decision is yours. Create, tweak and refine colors,
+              type and components live, then install them with the shadcn CLI as
+              React code you own.
               {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
