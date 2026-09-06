@@ -22,8 +22,8 @@ import type { Lab, LabState } from "../state"
 
 /* The engine's modal backdrop slices, at hero scale. */
 export const BACKDROP = {
-  dim: "bg-overlay/40",
-  blur: "bg-overlay/30 backdrop-blur-[3px]",
+  dim: "bg-overlay/40 backdrop-blur-[1.5px]",
+  blur: "bg-overlay/20 backdrop-blur-[4px]",
   none: "",
 }
 

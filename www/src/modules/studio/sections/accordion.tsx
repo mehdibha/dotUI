@@ -134,10 +134,7 @@ export function Marker({ open, state }: { open: boolean; state: LabState }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       aria-hidden
-      className={cn(
-        "size-3 shrink-0 text-fg-muted",
-        state.accordionMarker === "chevron" && open && "rotate-180",
-      )}
+      className="size-3 shrink-0 text-fg-muted"
     >
       {state.accordionMarker === "chevron" ? (
         <path d="M2.5 4.25 6 7.75l3.5-3.5" strokeLinejoin="round" />

@@ -32,8 +32,8 @@ const { useStyles, styles } = createStyles(modalMeta, {
   },
   params: {
     backdrop: {
-      dim: { slots: { backdrop: "bg-overlay/40" } },
-      blur: { slots: { backdrop: "bg-overlay/30 backdrop-blur-sm" } },
+      dim: { slots: { backdrop: "bg-overlay/40 backdrop-blur-sm" } },
+      blur: { slots: { backdrop: "bg-overlay/20 backdrop-blur-lg" } },
       none: {},
     },
     position: {

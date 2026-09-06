@@ -80,7 +80,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     comfortable: {
       slots: {
         root: "[--tabs-list-height:2.25rem]",
-        tab: "gap-1.5 px-2.5 py-1 text-sm has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4",
+        tab: "gap-1.5 px-2 py-1 text-sm has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-4",
         panel: "text-sm",
       },
     },

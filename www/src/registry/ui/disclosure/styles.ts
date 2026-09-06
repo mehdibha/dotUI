@@ -24,11 +24,7 @@ const { useStyles, styles } = createStyles(disclosureMeta, {
   },
   params: {
     marker: {
-      chevron: {
-        slots: {
-          marker: "group-expanded/disclosure:rotate-180",
-        },
-      },
+      chevron: {},
       plus: {},
     },
     markerPosition: {
