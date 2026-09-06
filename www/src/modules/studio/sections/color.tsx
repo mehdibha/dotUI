@@ -324,7 +324,7 @@ export function colorSummary(state: StudioState): string {
 }
 
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { state, set, setState } = studio
   const modes = state.modes
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
@@ -365,10 +365,13 @@ export function ColorSection({ studio }: { studio: Studio }) {
         />
         <NeutralPickerRow
           value={{ hue: state.neutralHue, tint: state.neutralTint }}
-          onChange={(neutral) => {
-            set("neutralHue")(neutral.hue)
-            set("neutralTint")(neutral.tint)
-          }}
+          onChange={(neutral) =>
+            setState({
+              ...state,
+              neutralHue: neutral.hue,
+              neutralTint: neutral.tint,
+            })
+          }
           brandHue={toOklch(state.brand).h}
           ramp={STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)}
         />

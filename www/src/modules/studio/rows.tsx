@@ -18,6 +18,7 @@ import {
   XIcon,
 } from "lucide-react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
   ListBox as RacListBox,
@@ -431,6 +432,21 @@ export function SelectRow({
   )
 }
 
+/* ------------------------------- Drafting -------------------------------- */
+
+/** A value the control owns while it's being dragged, reseeded whenever the
+ *  committed prop changes from outside (preset switch, reset). Lets continuous
+ *  controls commit once on release instead of on every frame. */
+function useDraft<T>(committed: T) {
+  const [draft, setDraft] = useState(committed)
+  const [seed, setSeed] = useState(committed)
+  if (seed !== committed) {
+    setSeed(committed)
+    setDraft(committed)
+  }
+  return [draft, setDraft] as const
+}
+
 /* ------------------------------ Color picker ------------------------------ */
 
 /** Hue-spaced seeds: one tap to a plausible brand before touching the area. */
@@ -469,8 +485,13 @@ export function ColorPickerRow({
 }) {
   const tile = layout === "tile"
   const palette = layout === "palette"
+  // The area and hue slider drag through the draft; the recipe resolves on
+  // release. Swatches and the hex field are discrete, so they commit at once.
+  const [draft, setDraft] = useDraft<string | Color>(value)
+  const commit = (color: Color | null) =>
+    color && onChange(color.toString("hex"))
   return (
-    <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
+    <ColorPicker value={draft} onChange={setDraft}>
       {({ color }) => (
         <>
           {tile ? (
@@ -543,7 +564,10 @@ export function ColorPickerRow({
             className={cn("w-64 min-w-0", INSTANT_POPOVER)}
           >
             <DialogContent className="flex flex-col gap-3 p-3">
-              <ColorSwatchPicker className="justify-between gap-0">
+              <ColorSwatchPicker
+                className="justify-between gap-0"
+                onChange={commit}
+              >
                 {COLOR_PRESETS.map((preset) => (
                   <ColorSwatchPickerItem
                     key={preset}
@@ -557,17 +581,19 @@ export function ColorPickerRow({
                 colorSpace="hsb"
                 xChannel="saturation"
                 yChannel="brightness"
+                onChangeEnd={commit}
                 className="w-full rounded-xl"
               />
               <ColorSlider
                 aria-label="Hue"
                 colorSpace="hsb"
                 channel="hue"
+                onChangeEnd={commit}
                 className="w-full"
               >
                 <ColorSliderControl className="h-5 rounded-full" />
               </ColorSlider>
-              <ColorField aria-label="Hex" className="w-full">
+              <ColorField aria-label="Hex" onChange={commit} className="w-full">
                 <InputGroup size="sm" className="w-full">
                   <InputGroupAddon>
                     <ColorSwatch className="size-4 rounded-full" />
@@ -656,6 +682,7 @@ function NeutralSlider({
   track,
   thumb,
   onChange,
+  onChangeEnd,
 }: {
   label: string
   /** Where the value is coming from, when it isn't the user — e.g. the brand. */
@@ -668,6 +695,7 @@ function NeutralSlider({
   /** The sample the thumb carries — the color at the current value. */
   thumb: string
   onChange: (value: number) => void
+  onChangeEnd: (value: number) => void
 }) {
   return (
     <div className="flex flex-col gap-1">
@@ -682,6 +710,7 @@ function NeutralSlider({
         maxValue={maxValue}
         step={step}
         onChange={(v) => onChange(v as number)}
+        onChangeEnd={(v) => onChangeEnd(v as number)}
         className="w-full"
       >
         <SliderControl>
@@ -727,13 +756,16 @@ export function NeutralPickerRow({
   // Seven dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
-  const hue = value.hue ?? brandHue
+  // Sliders drag through drafts and commit on release: the neutral scale is
+  // a full engine run, too slow to resolve per frame.
+  const [hue, setHue] = useDraft(value.hue ?? brandHue)
+  const [tint, setTint] = useDraft(value.tint)
   const family =
-    value.tint === 0
+    tint === 0
       ? PURE_GRAY.label
-      : value.hue === null
+      : value.hue === null && hue === brandHue
         ? "From brand"
-        : nearestFamilyName(value.hue)
+        : nearestFamilyName(hue)
   const preset =
     value.tint === 0
       ? PURE_GRAY.id
@@ -829,17 +861,19 @@ export function NeutralPickerRow({
             step={1}
             track={HUE_TRACK}
             thumb={sample(hue)}
-            onChange={(next) => onChange({ ...value, hue: next })}
+            onChange={setHue}
+            onChangeEnd={(next) => onChange({ ...value, hue: next })}
           />
 
           <NeutralSlider
             label="Tint"
-            value={value.tint}
+            value={tint}
             maxValue={MAX_TINT}
             step={0.05}
             track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
-            thumb={sample(hue, value.tint)}
-            onChange={(next) => onChange({ ...value, tint: next })}
+            thumb={sample(hue, tint)}
+            onChange={setTint}
+            onChangeEnd={(next) => onChange({ ...value, tint: next })}
           />
 
           <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
