@@ -12,7 +12,7 @@ import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { TextField } from "@/registry/ui/text-field"
-import type { SavedPreset } from "@/modules/create/preset"
+import type { SavedPreset } from "@/modules/studio/preset"
 
 /**
  * The actions menu on a saved preset's picker row: rename / duplicate / copy

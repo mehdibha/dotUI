@@ -8,7 +8,7 @@
    modified dot covers every member's axes. The flat chapter list in state.ts
    stays untouched. */
 
-import type { Chapter, LabState } from "./state"
+import type { Chapter, StudioState } from "./state"
 
 interface CompositeDef {
   id: string
@@ -65,9 +65,9 @@ export interface IndexChapter {
   /** ≥1 chapters; the first is the host body, the rest render titled. */
   members: Chapter[]
   /** Union of every member's defaults — drives the modified dot. */
-  defaults: Partial<LabState>
+  defaults: Partial<StudioState>
   /** The host member's live value summary. */
-  summary: (state: LabState) => string
+  summary: (state: StudioState) => string
   /** Untitled host body, or all-titled for hostless composites. */
   hostless: boolean
 }

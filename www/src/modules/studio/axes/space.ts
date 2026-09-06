@@ -38,8 +38,6 @@ export function spaceRecipe(state: StudioState) {
   }
 }
 
-export const WIRED = true
-
 export function resolveSpace(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.spacingUnit !== SPACE_DEFAULTS.spacingUnit)

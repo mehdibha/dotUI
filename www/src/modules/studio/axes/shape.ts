@@ -159,8 +159,6 @@ const ROLE_VARS: Record<ShapeRoleKey, string> = {
   rolePanel: "--radius-panel",
 }
 
-export const WIRED = true
-
 export function resolveShape(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.radiusPx !== SHAPE_DEFAULTS.radiusPx)

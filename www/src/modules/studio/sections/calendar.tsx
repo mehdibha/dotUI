@@ -17,7 +17,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -118,7 +118,7 @@ function DayCell({
   state,
 }: {
   cell: { label: number; outside: boolean }
-  state: LabState
+  state: StudioState
 }) {
   const shape = state.calendarDayShape
   const day = cell.outside ? -1 : cell.label
@@ -158,7 +158,7 @@ function DayCell({
   )
 }
 
-export function CalendarHero({ state }: { state: LabState }) {
+export function CalendarHero({ state }: { state: StudioState }) {
   const labels = WEEKDAYS[state.calendarWeekdays] ?? WEEKDAYS.single
   return (
     <Hero className="items-center py-4">
@@ -183,7 +183,7 @@ export function CalendarHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the day shape, and the today marker. */
-export function calendarSummary(state: LabState): string {
+export function calendarSummary(state: StudioState): string {
   const shape =
     DAY_SHAPE_OPTIONS.find((o) => o.value === state.calendarDayShape)?.label ??
     state.calendarDayShape
@@ -193,8 +193,8 @@ export function calendarSummary(state: LabState): string {
   return `${shape} days · ${today} today`
 }
 
-export function CalendarSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function CalendarSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <CalendarHero state={state} />

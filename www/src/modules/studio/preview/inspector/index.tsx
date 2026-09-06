@@ -4,7 +4,7 @@ import {
   sendInspect,
   sendInspectorExit,
   useInspectorModeMessages,
-} from "@/modules/create/preset"
+} from "@/modules/studio/preset"
 
 import { findOwner, getHostElements } from "./fiber"
 import type { FiberLike } from "./fiber"

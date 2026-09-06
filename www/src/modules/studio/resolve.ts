@@ -7,8 +7,8 @@
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { registryUi } from "@/registry/ui/registry"
-import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/create/preset/defaults"
-import type { DesignSystem } from "@/modules/create/preset/types"
+import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/studio/preset/defaults"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { resolveAll } from "./axes"
 import type { StudioState } from "./axes"

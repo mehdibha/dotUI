@@ -273,13 +273,13 @@ ${iconExports}
 async function buildInternalExamples() {
   // Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
   // rather than registry/__generated__, so the registry tree never imports "up" into
-  // @/modules/create/preview/group-examples — keeping registry/ items-only.
-  const targetDir = path.join(process.cwd(), "src/modules/create/__generated__")
+  // @/modules/studio/preview/group-examples — keeping registry/ items-only.
+  const targetDir = path.join(process.cwd(), "src/modules/studio/__generated__")
   const targetPath = path.join(targetDir, "examples.tsx")
   const uiDir = path.join(REGISTRY_DIR, "ui")
   const groupExamplesDir = path.join(
     process.cwd(),
-    "src/modules/create/preview/group-examples",
+    "src/modules/studio/preview/group-examples",
   )
   await fs.mkdir(targetDir, { recursive: true })
 
@@ -302,7 +302,7 @@ async function buildInternalExamples() {
       if (!file.endsWith(".tsx")) continue
       const name = file.replace(/\.tsx$/, "")
       groupEntries.push(
-        `  "${name}": () => import("@/modules/create/preview/group-examples/${name}"),`,
+        `  "${name}": () => import("@/modules/studio/preview/group-examples/${name}"),`,
       )
     }
   }

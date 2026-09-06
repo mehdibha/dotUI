@@ -18,7 +18,7 @@ import { DIALOG_OPTIONS, mobileOverlays, PICKER_OPTIONS } from "../axes/mobile"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow, SwitchRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { BACKDROP } from "./dialogs"
 
 type Layer = "drawer" | "popover" | "center" | "sheet"
@@ -161,7 +161,7 @@ function Phone({
   )
 }
 
-export function MobileHero({ state }: { state: LabState }) {
+export function MobileHero({ state }: { state: StudioState }) {
   const { pickers, dialogs } = mobileOverlays(state)
   const scrim = cn(
     "absolute inset-0",
@@ -216,15 +216,15 @@ export function MobileHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: off, or what pickers and dialogs become. */
-export function mobileSummary(state: LabState): string {
+export function mobileSummary(state: StudioState): string {
   if (!state.mobileAdapt) return "Off"
   const label = (options: SelectRowOption[], value: string) =>
     options.find((o) => o.value === value)?.label ?? value
   return `${label(PICKER_OPTIONS, state.mobilePickers)} pickers · ${label(DIALOG_OPTIONS, state.mobileDialogs)} dialogs`
 }
 
-export function MobileSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function MobileSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <MobileHero state={state} />

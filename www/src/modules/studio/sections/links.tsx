@@ -13,7 +13,7 @@ import { cn } from "@/registry/lib/utils"
 import { COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* Mirrors the `link` registry params (registry/ui/link/styles.ts). */
 const LINK_COLOR = {
@@ -34,7 +34,7 @@ const LINK_HOVERED = {
   never: "",
 }
 
-export function LinksHero({ state }: { state: LabState }) {
+export function LinksHero({ state }: { state: StudioState }) {
   const color = LINK_COLOR[state.linkColor as keyof typeof LINK_COLOR]
   return (
     <Hero className="px-4 py-5">
@@ -70,7 +70,7 @@ export function LinksHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the underline policy, and the link color. */
-export function linksSummary(state: LabState): string {
+export function linksSummary(state: StudioState): string {
   const underline =
     UNDERLINE_OPTIONS.find((o) => o.value === state.linkUnderline)?.label ??
     state.linkUnderline
@@ -80,8 +80,8 @@ export function linksSummary(state: LabState): string {
   return `${underline} underline · ${color} color`
 }
 
-export function LinksSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function LinksSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <LinksHero state={state} />

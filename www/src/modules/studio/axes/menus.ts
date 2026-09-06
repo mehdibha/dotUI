@@ -60,8 +60,6 @@ export const SCALE_OPTIONS = [
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveMenus(state: StudioState): Resolved {
   const list = {
     indicator: pick(INDICATOR_OPTIONS, state.menuIndicator, "check-end"),

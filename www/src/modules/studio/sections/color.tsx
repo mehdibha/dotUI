@@ -30,7 +30,7 @@ import {
   COLOR_DEFAULTS,
   GUARANTEE_OPTIONS,
 } from "../axes/color"
-import type { LabMode } from "../axes/color"
+import type { ColorMode } from "../axes/color"
 import {
   DetailRow,
   MiniSliderRow,
@@ -50,7 +50,7 @@ import {
   ROW_VALUE,
   SegmentedControlRow,
 } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -60,7 +60,7 @@ const COLOR_KEYS = Object.keys(
 
 /** The state's recipe, reference-stable on its values so the engine runs
  *  once per color edit (never for edits in other sections). */
-function useColorConfig(state: LabState): ColorConfig {
+function useColorConfig(state: StudioState): ColorConfig {
   const key = JSON.stringify(COLOR_KEYS.map((k) => state[k]))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => buildColorConfig(state), [key])
@@ -68,7 +68,7 @@ function useColorConfig(state: LabState): ColorConfig {
 
 /** One mode's engine half — how other sections (Surfaces) read the mode
  *  pair without owning color state. */
-export function useModeTheme(state: LabState, mode?: LabMode) {
+export function useModeTheme(state: StudioState, mode?: ColorMode) {
   const theme = resolveColorConfigCached(useColorConfig(state))
   return mode ? theme[mode.polarity] : null
 }
@@ -95,8 +95,8 @@ function cssToHex(css: string): string {
 /** A mode's background as CSS without running the engine — for the swatches
  *  in summaries and mode rows (at dot size CIELAB L* on a neutral axis is
  *  indistinguishable from the engine's). */
-function modeBgCss(mode: LabMode): string {
-  return `lab(${mode.bg}% 0 0)`
+function modeBgCss(mode: ColorMode): string {
+  return `studio(${mode.bg}% 0 0)`
 }
 
 /* ----------------------------- Contrast status ----------------------------- */
@@ -147,8 +147,8 @@ function ModeEditor({
   mode,
   onChange,
 }: {
-  mode: LabMode
-  onChange: (mode: LabMode) => void
+  mode: ColorMode
+  onChange: (mode: ColorMode) => void
 }) {
   const PolarityIcon = mode.polarity === "light" ? SunIcon : MoonIcon
   const light = mode.polarity === "light"
@@ -318,13 +318,13 @@ const SEMANTIC_SEEDS = [
 ] as const
 
 /** Collapsed-row summary: the brand seed and where primary actions draw from. */
-export function colorSummary(state: LabState): string {
+export function colorSummary(state: StudioState): string {
   const primary = state.primary === "accent" ? "Accent" : "Neutral"
   return `${state.brand.toUpperCase()} · ${primary} primary`
 }
 
-export function ColorSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ColorSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   const modes = state.modes
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
@@ -346,7 +346,7 @@ export function ColorSection({ lab }: { lab: Lab }) {
     (key) => state[key] !== COLOR_DEFAULTS[key],
   )
 
-  const updateMode = (next: LabMode) =>
+  const updateMode = (next: ColorMode) =>
     set("modes")(modes.map((mode) => (mode.id === next.id ? next : mode)))
 
   const setBorderContrast = (on: boolean) => {

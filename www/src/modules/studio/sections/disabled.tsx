@@ -15,7 +15,7 @@ import { cn } from "@/registry/lib/utils"
 import { TREATMENT_OPTIONS } from "../axes/disabled"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -120,7 +120,7 @@ function SpecimenColumn({ look }: { look: Look }) {
   )
 }
 
-export function DisabledHero({ state }: { state: LabState }) {
+export function DisabledHero({ state }: { state: StudioState }) {
   const look =
     DISABLED_LOOKS[state.disabledTreatment as keyof typeof DISABLED_LOOKS]
   return (
@@ -134,15 +134,15 @@ export function DisabledHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the disabled treatment. */
-export function disabledSummary(state: LabState): string {
+export function disabledSummary(state: StudioState): string {
   return (
     TREATMENT_OPTIONS.find((o) => o.value === state.disabledTreatment)?.label ??
     state.disabledTreatment
   )
 }
 
-export function DisabledSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function DisabledSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <DisabledHero state={state} />

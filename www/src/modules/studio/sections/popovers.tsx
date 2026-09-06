@@ -26,7 +26,7 @@ import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -112,7 +112,7 @@ const HEADER_ROW_OPTIONS: SelectRowOption[] = HEADER_OPTIONS.map((o) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function PopoversHero({ state }: { state: LabState }) {
+export function PopoversHero({ state }: { state: StudioState }) {
   const header = state.popoverHeader
   const title = "Share project"
   const description = "Anyone with the link can view."
@@ -147,7 +147,7 @@ export function PopoversHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the header treatment, plus the tip when present. */
-export function popoversSummary(state: LabState): string {
+export function popoversSummary(state: StudioState): string {
   const header =
     HEADER_OPTIONS.find((o) => o.value === state.popoverHeader)?.label ??
     state.popoverHeader
@@ -156,8 +156,8 @@ export function popoversSummary(state: LabState): string {
   return parts.join(" · ")
 }
 
-export function PopoversSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function PopoversSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <PopoversHero state={state} />

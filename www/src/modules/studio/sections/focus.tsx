@@ -34,7 +34,7 @@ import {
   SPECIMEN_FIELD,
 } from "../rows"
 import type { SegmentedRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { controlRadiusPx } from "./shape"
 
 /* The ink each color option draws in — the ramp steps the engine re-points
@@ -56,7 +56,7 @@ const COLOR_OPTIONS: SegmentedRowOption[] = FOCUS_COLOR_OPTIONS.map(
   }),
 )
 
-const focusInk = (state: LabState) =>
+const focusInk = (state: StudioState) =>
   COLOR_VARS[state.focusColor as keyof typeof COLOR_VARS] ?? COLOR_VARS.accent
 
 const px = (n: number) => `${n}px`
@@ -64,7 +64,7 @@ const px = (n: number) => `${n}px`
 /** The keyboard ring as a box-shadow stack, the exact recipe the `focus-ring`
  *  utility composes from the tokens: the gap paints in bg (so it follows any
  *  radius), duo adds a bg hairline just inside the edge under a flush ring. */
-export function focusRingShadow(state: LabState): string {
+export function focusRingShadow(state: StudioState): string {
   const width = state.focusWidth
   const base = focusInk(state).ring
   if (state.focusStyle === "duo")
@@ -87,7 +87,7 @@ export function focusRingShadow(state: LabState): string {
  *  halo of the ring color, the exact keyboard ring, or the border alone
  *  (thickened by an inset stroke, so the box never shifts). Exported: the
  *  Inputs hero wears this recipe when its specimens focus. */
-export function focusFieldStyle(state: LabState): CSSProperties {
+export function focusFieldStyle(state: StudioState): CSSProperties {
   const ink = focusInk(state)
   switch (state.focusInputStyle) {
     case "ring":
@@ -112,7 +112,7 @@ export function focusFieldStyle(state: LabState): CSSProperties {
 
 /** The chapter specimen: both categories on one stage — controls wearing the
  *  ring, and a focused field beside its idle twin. */
-export function FocusHero({ state }: { state: LabState }) {
+export function FocusHero({ state }: { state: StudioState }) {
   const specimen = {
     borderRadius: controlRadiusPx(state),
     boxShadow: focusRingShadow(state),
@@ -161,13 +161,13 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 /** Collapsed-row summary: the control ring style, and the ink it draws in.
  *  Values capitalized directly — the color labels are JSX (dot + name). */
-export function focusSummary(state: LabState): string {
+export function focusSummary(state: StudioState): string {
   return `${cap(state.focusStyle)} · ${cap(state.focusColor)}`
 }
 
 /** Both reads of the ring: the primary is where a flush accent ring vanishes
  *  into its own fill, the secondary where it has no strong fill behind it. */
-function ControlFocusHero({ state }: { state: LabState }) {
+function ControlFocusHero({ state }: { state: StudioState }) {
   const specimen = {
     borderRadius: controlRadiusPx(state),
     boxShadow: focusRingShadow(state),
@@ -192,7 +192,7 @@ function ControlFocusHero({ state }: { state: LabState }) {
 
 /** An idle twin beside the focused field — the style only reads as the delta
  *  from rest: border swap vs halo vs ring against the same silhouette. */
-function InputFocusHero({ state }: { state: LabState }) {
+function InputFocusHero({ state }: { state: StudioState }) {
   const field = cn(
     SPECIMEN_FIELD,
     "flex-1 border border-border-control bg-field text-fg",
@@ -216,7 +216,7 @@ function InputFocusHero({ state }: { state: LabState }) {
 
 /** What the ring's geometry reads back while folded: width, then the
  *  placement (or the halo strength) when it left the default. */
-function ringSummary(state: LabState): string {
+function ringSummary(state: StudioState): string {
   const parts = [px(state.focusWidth)]
   if (state.focusStyle === "halo") parts.push(`${state.focusHaloStrength}%`)
   if (state.focusStyle !== "duo")
@@ -228,14 +228,14 @@ function ringSummary(state: LabState): string {
   return parts.join(" · ")
 }
 
-function inputSummary(state: LabState): string {
+function inputSummary(state: StudioState): string {
   return state.focusInputStyle === "border"
     ? px(state.focusInputBorderWidth)
     : `${px(state.focusInputWidth)} · ${state.focusInputStrength}%`
 }
 
-export function FocusSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function FocusSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <>
       {/* Untitled on purpose: the shared ink opens the chapter, the way a

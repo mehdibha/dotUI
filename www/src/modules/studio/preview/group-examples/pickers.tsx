@@ -3,8 +3,8 @@ import ComboboxDemo from "@/registry/ui/combobox/demos/basic"
 import DatePickerDemo from "@/registry/ui/date-picker/demos/basic"
 import MentionDemo from "@/registry/ui/mention/demos/basic"
 import SelectDemo from "@/registry/ui/select/demos/basic"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function PickersGroupExamples() {
   return (

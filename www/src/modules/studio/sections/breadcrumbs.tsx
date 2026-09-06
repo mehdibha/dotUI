@@ -24,7 +24,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -76,7 +76,7 @@ const CRUMB_HOVERED = {
   muted: "text-fg",
 }
 
-export function Separator({ state }: { state: LabState }) {
+export function Separator({ state }: { state: StudioState }) {
   if (state.breadcrumbSeparator === "slash")
     return <span className="text-fg-muted/60">/</span>
   return (
@@ -97,7 +97,7 @@ export function Separator({ state }: { state: LabState }) {
   )
 }
 
-export function BreadcrumbsHero({ state }: { state: LabState }) {
+export function BreadcrumbsHero({ state }: { state: StudioState }) {
   const tone = state.breadcrumbTone as keyof typeof CRUMB_REST
   return (
     <Hero className="flex-row items-center justify-center gap-1.5 py-6 text-[0.8125rem]">
@@ -117,7 +117,7 @@ export function BreadcrumbsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the separator glyph, and the crumb tone. */
-export function breadcrumbsSummary(state: LabState): string {
+export function breadcrumbsSummary(state: StudioState): string {
   const separator =
     SEPARATOR_OPTIONS.find((o) => o.value === state.breadcrumbSeparator)
       ?.label ?? state.breadcrumbSeparator
@@ -125,8 +125,8 @@ export function breadcrumbsSummary(state: LabState): string {
   return `${separator} · ${tone} crumbs`
 }
 
-export function BreadcrumbsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function BreadcrumbsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <BreadcrumbsHero state={state} />

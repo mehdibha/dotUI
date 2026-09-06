@@ -26,8 +26,6 @@ export const POSITION_OPTIONS = [
   { value: "top", label: "Top" },
 ]
 
-export const WIRED = true
-
 export function resolveDialogs(state: StudioState): Resolved {
   const backdrop = pick(BACKDROP_OPTIONS, state.dialogBackdrop, "dim")
   const position = pick(POSITION_OPTIONS, state.dialogPosition, "center")

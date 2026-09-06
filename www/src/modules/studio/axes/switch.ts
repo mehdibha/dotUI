@@ -8,8 +8,6 @@ export const SWITCH_DEFAULTS = {
   checkFill: CHECKBOX_DEFAULTS.checkFill,
 }
 
-export const WIRED = true
-
 export function resolveSwitch(_state: StudioState): Resolved {
   return {}
 }

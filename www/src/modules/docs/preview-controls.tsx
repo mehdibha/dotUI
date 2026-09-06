@@ -10,14 +10,14 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-import type { DesignSystem } from "@/modules/create/preset"
+import { PresetPicker } from "@/modules/presets/preset-picker"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import type { DesignSystem } from "@/modules/studio/preset"
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
   useStoredPreset,
-} from "@/modules/create/preset/storage"
-import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+} from "@/modules/studio/preset/storage"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 /**

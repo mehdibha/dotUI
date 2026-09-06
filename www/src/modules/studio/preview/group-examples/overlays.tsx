@@ -3,8 +3,8 @@ import DrawerDemo from "@/registry/ui/drawer/demos/basic"
 import ModalDemo from "@/registry/ui/modal/demos/basic"
 import PopoverDemo from "@/registry/ui/popover/demos/basic"
 import TooltipDemo from "@/registry/ui/tooltip/demos/basic"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function OverlaysGroupExamples() {
   return (

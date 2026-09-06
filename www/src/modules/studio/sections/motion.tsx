@@ -34,7 +34,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -205,7 +205,7 @@ const STATE_ROWS = withGlyphs(STATE_OPTIONS, {
 /* A menu the user opens themselves — self-serve replay, no fake loop. The
    scoped provider is the engine: the popover reads the overlay param, the
    tokens ride on the scope and its portal. */
-export function MotionHero({ state }: { state: LabState }) {
+export function MotionHero({ state }: { state: StudioState }) {
   const { tokens, params } = useMemo(() => resolveMotion(state), [state])
   return (
     <Hero className="flex-row items-center justify-center gap-4 px-4 py-6">
@@ -234,15 +234,15 @@ const optionLabel = (
 
 /** Collapsed-row summary: the easing character, and the overlay entrance
  *  when overlays animate. */
-export function motionSummary(state: LabState): string {
+export function motionSummary(state: StudioState): string {
   const character = optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
   return state.motionOverlay === "none"
     ? character
     : `${character} · ${optionLabel(OVERLAY_OPTIONS, state.motionOverlay)} overlays`
 }
 
-export function MotionSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function MotionSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <MotionHero state={state} />

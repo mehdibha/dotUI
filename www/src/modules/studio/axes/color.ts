@@ -11,7 +11,7 @@ import type { ColorConfig } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
 
-export interface LabMode {
+export interface ColorMode {
   id: string
   name: string
   polarity: "light" | "dark"
@@ -22,7 +22,7 @@ export interface LabMode {
 
 /* Light 99 is the engine's own default and stays absent from the config;
    dark 2 is dotUI's (the engine would pick 6). */
-const DEFAULT_MODES: LabMode[] = [
+const DEFAULT_MODES: ColorMode[] = [
   {
     id: "light",
     name: "Light",
@@ -70,13 +70,11 @@ export const BORDER_JOBS = [
 /** WCAG floors a high-contrast mode holds its border jobs to. */
 const HIGH_CONTRAST_FLOORS = { "400": 2, "500": 3, "600": 4.5 } as const
 
-export const WIRED = true
-
 /** One polarity's mode; the default when a stored pair lost it. */
-export function modeFor(state: StudioState, polarity: LabMode["polarity"]) {
+export function modeFor(state: StudioState, polarity: ColorMode["polarity"]) {
   return (
     state.modes.find((mode) => mode.polarity === polarity) ??
-    (DEFAULT_MODES.find((mode) => mode.polarity === polarity) as LabMode)
+    (DEFAULT_MODES.find((mode) => mode.polarity === polarity) as ColorMode)
   )
 }
 
@@ -92,7 +90,7 @@ function compact<T extends object>(value: T): T {
 
 function borderTargets(
   state: StudioState,
-  high: Record<LabMode["polarity"], boolean>,
+  high: Record<ColorMode["polarity"], boolean>,
 ): ColorConfig["borders"] {
   const targets: NonNullable<ColorConfig["borders"]>[string] = {}
   for (const { key, job } of BORDER_JOBS) {

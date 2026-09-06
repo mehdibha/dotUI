@@ -13,7 +13,7 @@ import { STYLE_OPTIONS } from "../axes/spinner"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* The registry's own base files: the hero and option cards show what ships. */
 const LOADERS = {
@@ -30,7 +30,7 @@ const SPINNER_OPTIONS: SelectRowOption[] = STYLE_OPTIONS.map((option) => {
   return { ...option, illustration: <Loader className="size-6" /> }
 })
 
-export function SpinnerHero({ state }: { state: LabState }) {
+export function SpinnerHero({ state }: { state: StudioState }) {
   const Loader = loaderFor(state.spinnerStyle)
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
@@ -44,15 +44,15 @@ export function SpinnerHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the spinner style. */
-export function spinnerSummary(state: LabState): string {
+export function spinnerSummary(state: StudioState): string {
   return (
     STYLE_OPTIONS.find((o) => o.value === state.spinnerStyle)?.label ??
     state.spinnerStyle
   )
 }
 
-export function SpinnerSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SpinnerSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <SpinnerHero state={state} />

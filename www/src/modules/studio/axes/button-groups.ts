@@ -17,8 +17,6 @@ export const SEPARATOR_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-export const WIRED = true
-
 export function resolveButtonGroups(state: StudioState): Resolved {
   const separator = SEPARATOR_OPTIONS.some(
     (o) => o.value === state.groupSeparator,

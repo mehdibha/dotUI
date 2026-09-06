@@ -14,7 +14,7 @@ import { CURRENT_OPTIONS as CURRENT_VALUES } from "../axes/pagination"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import {
   buttonRadiusPx,
   hoverFx,
@@ -80,7 +80,7 @@ function Chevron({ dir }: { dir: "prev" | "next" }) {
 const ITEM =
   "flex h-8 min-w-8 items-center justify-center px-1 text-[0.8125rem] font-medium"
 
-export function PaginationHero({ state }: { state: LabState }) {
+export function PaginationHero({ state }: { state: StudioState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
 
@@ -124,15 +124,15 @@ export function PaginationHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the current-page emphasis. */
-export function paginationSummary(state: LabState): string {
+export function paginationSummary(state: StudioState): string {
   const current =
     CURRENT_OPTIONS.find((o) => o.value === state.paginationCurrent)?.label ??
     state.paginationCurrent
   return `${current} current page`
 }
 
-export function PaginationSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function PaginationSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <PaginationHero state={state} />

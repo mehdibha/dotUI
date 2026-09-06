@@ -33,8 +33,6 @@ export const pick = (
   fallback: string,
 ) => (options.some((o) => o.value === value) ? value : fallback)
 
-export const WIRED = true
-
 export function resolveInputs(state: StudioState): Resolved {
   return {
     params: {

@@ -420,8 +420,6 @@ function surfaceTokens(state: StudioState): Record<string, string> {
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
 
-export const WIRED = true
-
 export function resolveSurfaces(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   for (const [name, value] of Object.entries(surfaceTokens(state))) {

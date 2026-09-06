@@ -18,7 +18,7 @@ import { TREATMENT_OPTIONS } from "../axes/kbd"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 const TYPE = {
   text: "font-sans text-xs tracking-widest",
@@ -117,7 +117,7 @@ const TREATMENT_ROW_OPTIONS: SelectRowOption[] = TREATMENT_OPTIONS.map((o) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function KbdHero({ state }: { state: LabState }) {
+export function KbdHero({ state }: { state: StudioState }) {
   const treatment = state.kbdTreatment
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
@@ -138,15 +138,15 @@ export function KbdHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the shortcut treatment. */
-export function kbdSummary(state: LabState): string {
+export function kbdSummary(state: StudioState): string {
   return (
     TREATMENT_OPTIONS.find((o) => o.value === state.kbdTreatment)?.label ??
     state.kbdTreatment
   )
 }
 
-export function KbdSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function KbdSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <KbdHero state={state} />

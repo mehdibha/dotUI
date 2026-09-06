@@ -4,8 +4,8 @@ import { FileTrigger } from "@/registry/ui/file-trigger"
 import { Link } from "@/registry/ui/link"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function ButtonsGroupExamples() {
   return (

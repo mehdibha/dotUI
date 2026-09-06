@@ -20,8 +20,6 @@ export const ERROR_OPTIONS = [
   { value: "bar", label: "Bar" },
 ]
 
-export const WIRED = true
-
 export function resolveInvalid(state: StudioState): Resolved {
   const error = ERROR_OPTIONS.some((o) => o.value === state.inputError)
     ? state.inputError

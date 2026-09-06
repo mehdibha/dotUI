@@ -40,8 +40,6 @@ export const STROKE_DEFAULTS: Partial<Record<IconLibraryName, number>> = {
   hugeicons: 1.5,
 }
 
-export const WIRED = true
-
 export function resolveIcons(state: StudioState): Resolved {
   const library = LIBRARY_OPTIONS.some((o) => o.value === state.iconLibrary)
     ? (state.iconLibrary as IconLibraryName)

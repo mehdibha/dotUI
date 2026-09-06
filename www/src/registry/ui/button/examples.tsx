@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function ButtonExamples() {
   return (

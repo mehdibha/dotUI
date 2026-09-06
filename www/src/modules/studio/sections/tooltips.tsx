@@ -13,7 +13,7 @@ import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* The engine's tooltip style slices, at hero scale. */
 export const TOOLTIP = {
@@ -58,7 +58,7 @@ const TOOLTIP_OPTIONS: SelectRowOption[] = TOOLTIP_STYLE_OPTIONS.map((o) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function TooltipsHero({ state }: { state: LabState }) {
+export function TooltipsHero({ state }: { state: StudioState }) {
   return (
     <Hero className="h-24 items-center justify-center">
       <div className="flex flex-col items-center gap-1.5">
@@ -79,15 +79,15 @@ export function TooltipsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the tooltip surface style. */
-export function tooltipsSummary(state: LabState): string {
+export function tooltipsSummary(state: StudioState): string {
   return (
     TOOLTIP_OPTIONS.find((o) => o.value === state.tooltipStyle)?.label ??
     state.tooltipStyle
   )
 }
 
-export function TooltipsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function TooltipsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <TooltipsHero state={state} />

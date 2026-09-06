@@ -10,22 +10,22 @@ import { useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
-import { ExportDialog } from "@/modules/create/export"
+import { PresetPicker } from "@/modules/presets/preset-picker"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { ExportDialog } from "@/modules/studio/export"
 import {
   decodePreset,
   encodePreset,
   encodeState,
   useMyPresets,
-} from "@/modules/create/preset"
+} from "@/modules/studio/preset"
 import {
   saveDesignSystemName,
   useDesignSystemName,
-} from "@/modules/create/preset/storage"
-import { SavePresetDialog } from "@/modules/create/save-preset-dialog"
-import { SavedPresetActions } from "@/modules/create/saved-preset-actions"
-import { UnsavedChangesDialog } from "@/modules/create/unsaved-changes-dialog"
-import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+} from "@/modules/studio/preset/storage"
+import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
+import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
+import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
 import { DrillInPanel } from "./drill-in"
 import type { PanelSystem } from "./panel"
@@ -47,7 +47,7 @@ function canon(state: string): string {
    global reset returns to, and what the modified dot diffs against. */
 const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
 
-export function LabCreatePanel({ className }: { className?: string }) {
+export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -196,7 +196,7 @@ export function LabCreatePanel({ className }: { className?: string }) {
         className,
       )}
     >
-      <DrillInPanel chapters={CHAPTERS} lab={studio} system={system} />
+      <DrillInPanel chapters={CHAPTERS} studio={studio} system={system} />
       <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
       <UnsavedChangesDialog
         isOpen={pendingPick !== null}

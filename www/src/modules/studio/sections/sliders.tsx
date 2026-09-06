@@ -11,7 +11,7 @@ import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -87,7 +87,7 @@ function SliderSpecimen({
   state,
 }: {
   percent: number
-  state: LabState
+  state: StudioState
 }) {
   const left = `${percent}%`
   const track = TRACK[state.sliderTrack as keyof typeof TRACK] ?? TRACK.thin
@@ -117,7 +117,7 @@ function SliderSpecimen({
   )
 }
 
-export function SlidersHero({ state }: { state: LabState }) {
+export function SlidersHero({ state }: { state: StudioState }) {
   return (
     <Hero className="gap-3 px-5 py-4">
       <SliderSpecimen percent={35} state={state} />
@@ -127,7 +127,7 @@ export function SlidersHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the thumb treatment, and the track weight. */
-export function slidersSummary(state: LabState): string {
+export function slidersSummary(state: StudioState): string {
   const thumb =
     THUMB_OPTIONS.find((o) => o.value === state.sliderThumb)?.label ??
     state.sliderThumb
@@ -137,8 +137,8 @@ export function slidersSummary(state: LabState): string {
   return `${thumb} thumb · ${track} track`
 }
 
-export function SlidersSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SlidersSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <SlidersHero state={state} />

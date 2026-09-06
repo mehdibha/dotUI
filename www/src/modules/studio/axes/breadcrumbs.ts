@@ -25,8 +25,6 @@ export const TONE_OPTIONS = [
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveBreadcrumbs(state: StudioState): Resolved {
   return {
     params: {

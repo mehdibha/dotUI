@@ -12,8 +12,6 @@ export const CURSOR_DEFAULTS = {
   cursorDisabled: "not-allowed",
 }
 
-export const WIRED = true
-
 export function resolveCursor(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.cursorControls !== CURSOR_DEFAULTS.cursorControls)

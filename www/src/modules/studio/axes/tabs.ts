@@ -19,8 +19,6 @@ export const TAB_STYLE_OPTIONS = [
   { value: "enclosed", label: "Enclosed" },
 ]
 
-export const WIRED = true
-
 export function resolveTabs(state: StudioState): Resolved {
   const style = TAB_STYLE_OPTIONS.some((o) => o.value === state.tabStyle)
     ? state.tabStyle

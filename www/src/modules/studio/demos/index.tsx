@@ -8,7 +8,7 @@
 
 import { PlusIcon } from "lucide-react"
 
-import type { LabState } from "../state"
+import type { StudioState } from "../state"
 import {
   CheckboxDemo,
   ChoiceCardsDemo,
@@ -83,7 +83,7 @@ function InputsDemo() {
  *  index. Keyed by index-chapter id (composites included). */
 export const CARD_DEMOS: Record<
   string,
-  React.ComponentType<{ state: LabState }>
+  React.ComponentType<{ state: StudioState }>
 > = {
   color: ColorDemo,
   typography: TypographyDemo,

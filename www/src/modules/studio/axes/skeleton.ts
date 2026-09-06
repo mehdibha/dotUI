@@ -16,8 +16,6 @@ export const ANIMATION_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-export const WIRED = true
-
 export function resolveSkeleton(state: StudioState): Resolved {
   const animation = ANIMATION_OPTIONS.some(
     (o) => o.value === state.skeletonAnimation,

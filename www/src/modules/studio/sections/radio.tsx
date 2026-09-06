@@ -8,7 +8,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { Hero } from "../hero"
 import { ControlGroup } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { fillLabel, FillRow, fillOf, HERO_ROW } from "./checkbox"
 import type { CheckFill } from "./checkbox"
 
@@ -35,7 +35,7 @@ export function DemoRadio({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function RadioHero({ state }: { state: LabState }) {
+export function RadioHero({ state }: { state: StudioState }) {
   const fill = fillOf(state)
   return (
     <Hero className="p-4">
@@ -57,15 +57,15 @@ export function RadioHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the family fill school, the section's one axis. */
-export function radioSummary(state: LabState): string {
+export function radioSummary(state: StudioState): string {
   return fillLabel(state)
 }
 
-export function RadioSection({ lab }: { lab: Lab }) {
+export function RadioSection({ studio }: { studio: Studio }) {
   return (
     <ControlGroup>
-      <RadioHero state={lab.state} />
-      <FillRow lab={lab} />
+      <RadioHero state={studio.state} />
+      <FillRow studio={studio} />
     </ControlGroup>
   )
 }

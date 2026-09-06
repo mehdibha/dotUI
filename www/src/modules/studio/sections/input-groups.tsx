@@ -15,14 +15,14 @@ import {
 } from "../axes/input-groups"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { BARE_INPUT, hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
 /** One group, both attachments: a text prefix and an icon-button suffix
  *  around a live input — the two addon kinds systems actually disagree on. */
-export function AddonsHero({ state }: { state: LabState }) {
+export function AddonsHero({ state }: { state: StudioState }) {
   const [focused, setFocused] = useState(false)
   const radius = controlRadiusPx(state)
   const look = inputLook(state.inputStyle, radius)
@@ -93,7 +93,7 @@ export function AddonsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the addon layout, and the divider when boxed. */
-export function inputGroupsSummary(state: LabState): string {
+export function inputGroupsSummary(state: StudioState): string {
   const layout =
     ADDON_LAYOUT_OPTIONS.find((o) => o.value === state.addonLayout)?.label ??
     state.addonLayout
@@ -105,8 +105,8 @@ export function inputGroupsSummary(state: LabState): string {
   return `${layout} addons · ${divider} divider`
 }
 
-export function InputGroupsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function InputGroupsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <AddonsHero state={state} />

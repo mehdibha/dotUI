@@ -21,10 +21,10 @@ import {
 } from "../axes/charts"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /** The first series colors the recipe generates for the brand, per mode. */
-function useChartSeries(state: LabState, count: number): string[] {
+function useChartSeries(state: StudioState, count: number): string[] {
   const { resolvedTheme } = useTheme()
   const config = useMemo(
     (): ColorConfig => ({
@@ -75,7 +75,7 @@ export function seriesPoints(values: number[]): Point[] {
   return values.map((y, i) => [8 + (i * (W - 16)) / (values.length - 1), y])
 }
 
-export function ChartsHero({ state }: { state: LabState }) {
+export function ChartsHero({ state }: { state: StudioState }) {
   const colors = useChartSeries(state, SERIES.length)
   const grid = state.chartGrid
   return (
@@ -123,7 +123,7 @@ export function ChartsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the palette strategy and the grid. */
-export function chartsSummary(state: LabState): string {
+export function chartsSummary(state: StudioState): string {
   const palette = paletteOption(state.chartPalette)
   const grid = gridOption(state.chartGrid)
   return `${PALETTE_OPTIONS.find((o) => o.value === palette)?.label} · ${
@@ -131,8 +131,8 @@ export function chartsSummary(state: LabState): string {
   }`
 }
 
-export function ChartsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ChartsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ChartsHero state={state} />

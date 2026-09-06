@@ -12,7 +12,7 @@ import { cn } from "@/registry/lib/utils"
 import { SELECTED_OPTIONS } from "../axes/toggles"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { AttachedShell } from "./button-groups"
 import {
   buttonRadiusPx,
@@ -24,7 +24,7 @@ import {
 
 /* Chip is the container archetype's floating pill; the hairline ring keeps it
    reading on dark wells and flat surfaces alike. */
-export function selectedFx(state: LabState): string {
+export function selectedFx(state: StudioState): string {
   switch (state.toggleSelected) {
     case "chip":
       return "bg-bg text-fg shadow-sm ring-1 ring-border-control"
@@ -37,7 +37,7 @@ export function selectedFx(state: LabState): string {
 
 /** A lone Toggle Button and a working single-select Toggle Group wearing the
  *  same selected look. */
-export function ToggleHero({ state }: { state: LabState }) {
+export function ToggleHero({ state }: { state: StudioState }) {
   const [starred, setStarred] = useState(true)
   const [view, setView] = useState("list")
   const look = styleLook(state)
@@ -106,15 +106,15 @@ export function ToggleHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the selected look, the section's one axis. */
-export function togglesSummary(state: LabState): string {
+export function togglesSummary(state: StudioState): string {
   const selected =
     SELECTED_OPTIONS.find((o) => o.value === state.toggleSelected)?.label ??
     state.toggleSelected
   return `${selected} selected`
 }
 
-export function TogglesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function TogglesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ToggleHero state={state} />

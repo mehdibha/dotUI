@@ -16,7 +16,7 @@ import { resolveScrollbars, STYLE_OPTIONS } from "../axes/scrollbars"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -102,7 +102,7 @@ const SETTINGS_ROWS: [string, string][] = [
 
 /* A list long enough that the bar renders at rest, tall enough to grab,
    wearing the engine's own tokens so the bar is the one users will ship. */
-export function ScrollbarsHero({ state }: { state: LabState }) {
+export function ScrollbarsHero({ state }: { state: StudioState }) {
   return (
     <Hero inset={false}>
       <div
@@ -126,15 +126,15 @@ export function ScrollbarsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the scrollbar style. */
-export function scrollbarsSummary(state: LabState): string {
+export function scrollbarsSummary(state: StudioState): string {
   return (
     STYLE_OPTIONS.find((o) => o.value === state.scrollbarStyle)?.label ??
     state.scrollbarStyle
   )
 }
 
-export function ScrollbarsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ScrollbarsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ScrollbarsHero state={state} />

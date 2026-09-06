@@ -24,8 +24,6 @@ export const HIGHLIGHT_OPTIONS = [
   { value: "browser", label: "Browser" },
 ]
 
-export const WIRED = true
-
 export function resolveSelection(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.selectionUiText === "selectable")

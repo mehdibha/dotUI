@@ -6,18 +6,18 @@ import { ToastProvider } from "@/registry/ui/toast"
 import {
   ExamplesIndex,
   GroupExamplesIndex,
-} from "@/modules/create/__generated__/examples"
-import { decodeState } from "@/modules/create/preset/codec"
+} from "@/modules/studio/__generated__/examples"
+import { DEFAULTS } from "@/modules/studio/axes"
+import { decodeState } from "@/modules/studio/preset/codec"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
   usePreviewNavigationMessages,
-} from "@/modules/create/preset/iframe-sync"
-import type { DesignSystem } from "@/modules/create/preset/types"
-import { BlocksIndex } from "@/modules/create/preview/blocks"
-import { PreviewInspector } from "@/modules/create/preview/inspector"
-import { PresetOverview } from "@/modules/create/preview/overview"
-import { DEFAULTS } from "@/modules/studio/axes"
+} from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { PreviewInspector } from "@/modules/studio/preview/inspector"
+import { PresetOverview } from "@/modules/studio/preview/overview"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 // Non-route file so the examples barrel, preset codec and overview stay in

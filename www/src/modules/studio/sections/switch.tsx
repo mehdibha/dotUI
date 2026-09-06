@@ -11,7 +11,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { Hero } from "../hero"
 import { ControlGroup } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { fillLabel, FillRow, fillOf, HERO_ROW } from "./checkbox"
 import type { CheckFill } from "./checkbox"
 
@@ -38,7 +38,7 @@ export function DemoSwitch({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function SwitchHero({ state }: { state: LabState }) {
+export function SwitchHero({ state }: { state: StudioState }) {
   const fill = fillOf(state)
   return (
     <Hero className="gap-3 p-4">
@@ -55,15 +55,15 @@ export function SwitchHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the family fill school, the section's one axis. */
-export function switchSummary(state: LabState): string {
+export function switchSummary(state: StudioState): string {
   return fillLabel(state)
 }
 
-export function SwitchSection({ lab }: { lab: Lab }) {
+export function SwitchSection({ studio }: { studio: Studio }) {
   return (
     <ControlGroup>
-      <SwitchHero state={lab.state} />
-      <FillRow lab={lab} />
+      <SwitchHero state={studio.state} />
+      <FillRow studio={studio} />
     </ControlGroup>
   )
 }

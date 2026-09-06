@@ -25,8 +25,6 @@ export const ADDON_DIVIDER_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-export const WIRED = true
-
 export function resolveInputGroups(state: StudioState): Resolved {
   const layout = pick(ADDON_LAYOUT_OPTIONS, state.addonLayout, "inside")
   const divider = pick(ADDON_DIVIDER_OPTIONS, state.addonDivider, "hairline")

@@ -36,8 +36,6 @@ const CORNER_TOKENS: Record<string, string> = {
   circle: "var(--radius-full)",
 }
 
-export const WIRED = true
-
 export function resolveCheckbox(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.checkFill === "accent") {

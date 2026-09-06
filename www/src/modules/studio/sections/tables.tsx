@@ -17,7 +17,7 @@ import { cn } from "@/registry/lib/utils"
 import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 const optionLabel = (
   options: { value: string; label: string }[],
@@ -43,7 +43,7 @@ const PEOPLE = [
 
 export const CELLS = "grid grid-cols-[1.1fr_1fr_auto] items-center gap-2 px-2"
 
-export function TablesHero({ state }: { state: LabState }) {
+export function TablesHero({ state }: { state: StudioState }) {
   return (
     <Hero className="gap-0 py-2.5">
       <div
@@ -79,7 +79,7 @@ export function TablesHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the row separation, and the header treatment. */
-export function tablesSummary(state: LabState): string {
+export function tablesSummary(state: StudioState): string {
   const separation =
     state.tableSeparation === "plain"
       ? "Plain rows"
@@ -87,8 +87,8 @@ export function tablesSummary(state: LabState): string {
   return `${separation} · ${optionLabel(HEADER_OPTIONS, state.tableHeader)} header`
 }
 
-export function TablesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function TablesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <TablesHero state={state} />

@@ -36,8 +36,6 @@ export function mobileOverlays(state: StudioState) {
   }
 }
 
-export const WIRED = true
-
 export function resolveMobile(state: StudioState): Resolved {
   const { pickers, dialogs } = mobileOverlays(state)
   return {

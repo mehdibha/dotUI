@@ -11,7 +11,7 @@ import { cn } from "@/registry/lib/utils"
 import { SEPARATOR_OPTIONS } from "../axes/button-groups"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import {
   buttonRadiusPx,
   hoverFx,
@@ -28,7 +28,7 @@ export function AttachedShell({
   className,
   segments,
 }: {
-  state: LabState
+  state: StudioState
   radius: number
   className?: string
   segments: React.ReactNode[]
@@ -55,7 +55,7 @@ export function AttachedShell({
 }
 
 /** Cut/Copy/Paste as one control, wearing the secondary skin on the shell. */
-export function ButtonGroupHero({ state }: { state: LabState }) {
+export function ButtonGroupHero({ state }: { state: StudioState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
   const actions = ["Cut", "Copy", "Paste"]
@@ -86,15 +86,15 @@ export function ButtonGroupHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the separator treatment, the section's one axis. */
-export function buttonGroupsSummary(state: LabState): string {
+export function buttonGroupsSummary(state: StudioState): string {
   const sep =
     SEPARATOR_OPTIONS.find((o) => o.value === state.groupSeparator)?.label ??
     state.groupSeparator
   return state.groupSeparator === "none" ? "No separator" : `${sep} separator`
 }
 
-export function ButtonGroupsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ButtonGroupsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ButtonGroupHero state={state} />

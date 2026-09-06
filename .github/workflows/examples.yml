@@ -54,7 +54,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -z "$BASE" ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          if git diff --name-only "$BASE...HEAD" | grep -qE '^(www/src/registry/|www/src/publisher/|www/src/routes/r/|www/src/lib/registry-preset\.ts|www/src/lib/fonts\.ts|www/src/modules/presets/presets-data\.ts|www/src/modules/create/preset/|packages/colors/|examples/|\.github/workflows/examples\.yml)'; then
+          if git diff --name-only "$BASE...HEAD" | grep -qE '^(www/src/registry/|www/src/publisher/|www/src/routes/r/|www/src/lib/registry-preset\.ts|www/src/lib/fonts\.ts|www/src/modules/presets/presets-data\.ts|www/src/modules/studio/preset/|packages/colors/|examples/|\.github/workflows/examples\.yml)'; then
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
             echo "nothing that reaches consumer output changed"

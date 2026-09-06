@@ -98,8 +98,6 @@ export function motionTokens(state: StudioState): Record<string, string> {
   return tokens
 }
 
-export const WIRED = true
-
 export function resolveMotion(state: StudioState): Resolved {
   const motion = OVERLAY_OPTIONS.some((o) => o.value === state.motionOverlay)
     ? state.motionOverlay

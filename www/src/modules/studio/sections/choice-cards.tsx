@@ -15,7 +15,7 @@ import { cn } from "@/registry/lib/utils"
 import { CONTROL_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { checkboxCorner, DemoCheckbox, fillOf } from "./checkbox"
 import { DemoRadio } from "./radio"
 import { DemoSwitch } from "./switch"
@@ -47,7 +47,7 @@ function ChoiceCard({
   title,
   description,
 }: {
-  state: LabState
+  state: StudioState
   selected?: boolean
   control: React.ReactNode
   placement?: string
@@ -76,7 +76,7 @@ function ChoiceCard({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function ChoiceCardsHero({ state }: { state: LabState }) {
+export function ChoiceCardsHero({ state }: { state: StudioState }) {
   const fill = fillOf(state)
   const corner = checkboxCorner(state)
   return (
@@ -116,7 +116,7 @@ export function ChoiceCardsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the selected treatment, and the control placement. */
-export function choiceCardsSummary(state: LabState): string {
+export function choiceCardsSummary(state: StudioState): string {
   const selected =
     SELECTED_OPTIONS.find((o) => o.value === state.cardSelected)?.label ??
     state.cardSelected
@@ -126,8 +126,8 @@ export function choiceCardsSummary(state: LabState): string {
   return `${selected} selected · ${control} control`
 }
 
-export function ChoiceCardsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ChoiceCardsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ChoiceCardsHero state={state} />

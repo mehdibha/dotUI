@@ -33,8 +33,6 @@ const SHAPE_TOKENS: Record<string, string> = {
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveAvatars(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.avatarShape]

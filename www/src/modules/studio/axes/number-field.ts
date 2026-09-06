@@ -18,8 +18,6 @@ export const NUMBER_LAYOUT_OPTIONS = [
   { value: "stacked", label: "Stacked" },
 ]
 
-export const WIRED = true
-
 export function resolveNumberField(state: StudioState): Resolved {
   return {
     params: {

@@ -35,6 +35,7 @@ import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { componentsData } from "@/modules/docs/components-list/components-data"
 import {
   pingIframe,
   sendInspectorMode,
@@ -43,10 +44,9 @@ import {
   sendPreviewPrefetch,
   sendToIframe,
   useInspectorExitMessages,
-} from "@/modules/create/preset"
-import type { PreviewMode } from "@/modules/create/preset"
-import { AVAILABLE_BLOCKS } from "@/modules/create/preview/blocks"
-import { componentsData } from "@/modules/docs/components-list/components-data"
+} from "@/modules/studio/preset"
+import type { PreviewMode } from "@/modules/studio/preset"
+import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"

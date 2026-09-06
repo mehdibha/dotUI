@@ -23,7 +23,7 @@ import {
   SwitchRow,
 } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -81,7 +81,7 @@ const INDETERMINATE_ROW_OPTIONS: SelectRowOption[] = INDETERMINATE_OPTIONS.map(
 
 /* The registry bar under a provider carrying only this chapter's params —
    the hero shows exactly what the preview does. */
-export function ProgressHero({ state }: { state: LabState }) {
+export function ProgressHero({ state }: { state: StudioState }) {
   const params = useMemo(() => resolveProgress(state).params, [state])
   return (
     <Hero className="gap-5 px-5 py-6">
@@ -94,7 +94,7 @@ export function ProgressHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the track weight, and the indeterminate motion. */
-export function progressSummary(state: LabState): string {
+export function progressSummary(state: StudioState): string {
   const track =
     TRACK_OPTIONS.find((o) => o.value === state.progressTrack)?.label ??
     state.progressTrack
@@ -104,8 +104,8 @@ export function progressSummary(state: LabState): string {
   return `${track} track · ${motion} indeterminate`
 }
 
-export function ProgressSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ProgressSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ProgressHero state={state} />

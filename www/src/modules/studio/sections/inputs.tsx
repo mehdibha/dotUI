@@ -24,7 +24,7 @@ import { cn } from "@/registry/lib/utils"
 import { HOVER_OPTIONS, STYLE_OPTIONS } from "../axes/inputs"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { controlRadiusPx } from "./shape"
 
@@ -58,7 +58,7 @@ export function inputLook(
   }
 }
 
-export function hoverFx(state: LabState): string {
+export function hoverFx(state: StudioState): string {
   switch (state.inputHover) {
     case "border":
       return "hover:not-focus-within:border-border-control-hover"
@@ -80,7 +80,7 @@ const LABEL = "text-xs font-medium text-fg"
 type Specimen = "email" | "role" | "username" | "notes"
 
 /** The message line every treatment but the bar puts under the field. */
-export function ErrorMessage({ state }: { state: LabState }) {
+export function ErrorMessage({ state }: { state: StudioState }) {
   if (state.inputError === "bar") return null
   return (
     <p className="flex items-center gap-1 text-xs text-fg-danger">
@@ -94,7 +94,7 @@ export function ErrorMessage({ state }: { state: LabState }) {
 
 /** Live specimens — label, control, help — focusing with the Focus section's
  *  field recipe, the way the buttons hero hovers and presses for real. */
-export function FieldHero({ state }: { state: LabState }) {
+export function FieldHero({ state }: { state: StudioState }) {
   const id = useId()
   const [focused, setFocused] = useState<Specimen | null>(null)
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
@@ -194,7 +194,7 @@ export function FieldHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the field style, and the hover feel when it has
  *  one. */
-export function inputsSummary(state: LabState): string {
+export function inputsSummary(state: StudioState): string {
   const style =
     STYLE_OPTIONS.find((o) => o.value === state.inputStyle)?.label ??
     state.inputStyle
@@ -202,8 +202,8 @@ export function inputsSummary(state: LabState): string {
   return state.inputHover === "none" ? style : `${style} · ${hover} hover`
 }
 
-export function InputsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function InputsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <FieldHero state={state} />

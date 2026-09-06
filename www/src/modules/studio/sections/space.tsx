@@ -7,13 +7,13 @@
 import { DENSITY_OPTIONS, spaceRecipe } from "../axes/space"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SliderRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { controlRadiusPx, roleRadiusPx } from "./shape"
 
 /** A working mini form wearing the resolved recipe — control heights, the
  *  stack gap and the card inset all derive from unit × density × size, with
  *  radii read from Shape's roles. */
-export function SpaceHero({ state }: { state: LabState }) {
+export function SpaceHero({ state }: { state: StudioState }) {
   const r = spaceRecipe(state)
   const controlRadius = controlRadiusPx(state)
   return (
@@ -64,15 +64,15 @@ export function SpaceHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the density recipe, and the spacing unit. */
-export function spaceSummary(state: LabState): string {
+export function spaceSummary(state: StudioState): string {
   const density =
     DENSITY_OPTIONS.find((o) => o.value === state.density)?.label ??
     state.density
   return `${density} density · ${state.spacingUnit}px unit`
 }
 
-export function SpaceSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SpaceSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <>
       <ControlGroup>

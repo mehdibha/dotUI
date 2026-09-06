@@ -37,7 +37,7 @@ import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Switch } from "@/registry/ui/switch"
 import { Controls } from "@/components/showcase/controls"
-import type { DesignSystem } from "@/modules/create/preset"
+import type { DesignSystem } from "@/modules/studio/preset"
 
 interface PresetPickerItem {
   id: string

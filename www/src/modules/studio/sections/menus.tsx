@@ -44,7 +44,7 @@ import {
   SelectRow,
 } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
@@ -159,7 +159,7 @@ function MenuItem({
   highlighted,
 }: {
   label: string
-  state: LabState
+  state: StudioState
   selected?: boolean
   highlighted?: boolean
 }) {
@@ -197,7 +197,7 @@ function MenuItem({
   )
 }
 
-export function MenusHero({ state }: { state: LabState }) {
+export function MenusHero({ state }: { state: StudioState }) {
   const inset = state.menuInset === "inset"
   const lg = state.menuScale === "large"
   const search = state.menuSearch
@@ -272,12 +272,12 @@ export function MenusHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the check placement, and the highlight treatment. */
-export function menusSummary(state: LabState): string {
+export function menusSummary(state: StudioState): string {
   return `${optionLabel(INDICATOR_OPTIONS, state.menuIndicator)} · ${optionLabel(HIGHLIGHT_OPTIONS, state.menuHighlight)} highlight`
 }
 
-export function MenusSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function MenusSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   const detailsModified =
     state.menuLabels !== "sentence" ||
     state.menuSearch !== "field" ||

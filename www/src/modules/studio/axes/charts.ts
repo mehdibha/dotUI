@@ -49,8 +49,6 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
   return palette === "vivid" || palette === "muted" ? palette : undefined
 }
 
-export const WIRED = true
-
 export function resolveCharts(state: StudioState): Resolved {
   const chartPalette = chartPaletteOf(state.chartPalette)
   const grid = gridOption(state.chartGrid)

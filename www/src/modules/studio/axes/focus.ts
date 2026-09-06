@@ -62,8 +62,6 @@ const NEUTRAL_FOCUS: TokenOverrides = {
   "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 }
 
-export const WIRED = true
-
 export function resolveFocus(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   const d = FOCUS_DEFAULTS

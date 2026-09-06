@@ -24,7 +24,7 @@ import { SELECTED_OPTIONS, TRACK_OPTIONS } from "../axes/segmented-control"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 const TRACK_SHELL = {
   filled: "bg-muted",
@@ -95,7 +95,7 @@ const PERIODS = [
   ["month", "Month"],
 ] as const
 
-export function SegmentedHero({ state }: { state: LabState }) {
+export function SegmentedHero({ state }: { state: StudioState }) {
   const [period, setPeriod] = useState("week")
   return (
     <Hero className="items-center py-5">
@@ -129,7 +129,7 @@ export function SegmentedHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the chip treatment, and the track shell. */
-export function segmentedControlSummary(state: LabState): string {
+export function segmentedControlSummary(state: StudioState): string {
   const selected =
     SELECTED_OPTIONS.find((o) => o.value === state.segmentedSelected)?.label ??
     state.segmentedSelected
@@ -139,8 +139,8 @@ export function segmentedControlSummary(state: LabState): string {
   return `${selected} chip · ${track} track`
 }
 
-export function SegmentedControlSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SegmentedControlSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <SegmentedHero state={state} />

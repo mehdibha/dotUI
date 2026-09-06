@@ -55,8 +55,6 @@ const RADIUS_TOKENS: Record<string, string> = {
   pill: "var(--radius-full)",
 }
 
-export const WIRED = true
-
 export function resolveButtons(state: StudioState): Resolved {
   const selection = {
     style: pick(STYLE_OPTIONS, state.buttonStyle, "flat"),

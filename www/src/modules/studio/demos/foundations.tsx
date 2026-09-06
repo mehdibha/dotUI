@@ -12,11 +12,11 @@ import {
   SettingsIcon,
 } from "lucide-react"
 
-import type { LabState } from "../state"
+import type { StudioState } from "../state"
 import { Bar } from "./ink"
 
 /** The brand seed as a swatch — the raw seed, no engine run. */
-export function ColorDemo({ state }: { state: LabState }) {
+export function ColorDemo({ state }: { state: StudioState }) {
   return (
     <span
       className="size-5 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"

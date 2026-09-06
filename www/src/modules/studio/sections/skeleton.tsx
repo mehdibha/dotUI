@@ -13,7 +13,7 @@ import { ANIMATION_OPTIONS, resolveSkeleton } from "../axes/skeleton"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -93,7 +93,7 @@ const SKELETON_OPTIONS: SelectRowOption[] = ANIMATION_OPTIONS.map((option) => ({
 /* ---------------------------------- Hero ----------------------------------- */
 
 /* One content card, wearing the idle treatment. */
-export function SkeletonHero({ state }: { state: LabState }) {
+export function SkeletonHero({ state }: { state: StudioState }) {
   const params = useMemo(() => resolveSkeleton(state).params, [state])
   return (
     <Hero>
@@ -115,15 +115,15 @@ export function SkeletonHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the idle animation. */
-export function skeletonSummary(state: LabState): string {
+export function skeletonSummary(state: StudioState): string {
   return (
     ANIMATION_OPTIONS.find((o) => o.value === state.skeletonAnimation)?.label ??
     state.skeletonAnimation
   )
 }
 
-export function SkeletonSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SkeletonSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <SkeletonHero state={state} />

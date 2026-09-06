@@ -12,8 +12,8 @@ import { ThemeProvider } from "starter-themes"
 
 import { siteConfig } from "@/config/site"
 import { truncateOnWord } from "@/lib/text"
-import { usePreviewForcedTheme } from "@/modules/create/preset/iframe-sync"
 import { PREVIEW_PENDING_SCRIPT } from "@/modules/docs/preview-pending"
+import { usePreviewForcedTheme } from "@/modules/studio/preset/iframe-sync"
 
 import appCss from "@/styles.css?url"
 

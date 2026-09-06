@@ -18,7 +18,7 @@ import { CARET_OPTIONS } from "../axes/pickers"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
@@ -51,7 +51,7 @@ const OPTIONS: SelectRowOption[] = CARET_OPTIONS.map((o) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function PickersHero({ state }: { state: LabState }) {
+export function PickersHero({ state }: { state: StudioState }) {
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const box = cn(SHELL, "gap-2 px-2.5", look.className, hoverFx(state))
   const Caret =
@@ -83,15 +83,15 @@ export function PickersHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the caret glyph. */
-export function pickersSummary(state: LabState): string {
+export function pickersSummary(state: StudioState): string {
   const caret =
     CARET_OPTIONS.find((o) => o.value === state.pickerCaret)?.label ??
     state.pickerCaret
   return `${caret} caret`
 }
 
-export function PickersSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function PickersSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <PickersHero state={state} />

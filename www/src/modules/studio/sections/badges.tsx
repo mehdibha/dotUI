@@ -19,7 +19,7 @@ import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 export const BADGE_STYLE = {
   solid: {
@@ -103,7 +103,7 @@ function Chip({
   children,
 }: {
   intent: keyof (typeof BADGE_STYLE)["soft"]
-  state: LabState
+  state: StudioState
   dismissible?: boolean
   children: React.ReactNode
 }) {
@@ -123,7 +123,7 @@ function Chip({
   )
 }
 
-export function BadgesHero({ state }: { state: LabState }) {
+export function BadgesHero({ state }: { state: StudioState }) {
   return (
     <Hero className="items-start py-4">
       <div className="flex flex-wrap items-center gap-1.5">
@@ -153,14 +153,14 @@ export function BadgesHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the chip style, and its shape. */
-export function badgesSummary(state: LabState): string {
+export function badgesSummary(state: StudioState): string {
   const label = (options: { value: string; label: string }[], value: string) =>
     options.find((o) => o.value === value)?.label ?? value
   return `${label(STYLE_OPTIONS, state.badgeStyle)} · ${label(SHAPE_OPTIONS, state.badgeShape)}`
 }
 
-export function BadgesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function BadgesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <BadgesHero state={state} />

@@ -3,8 +3,8 @@
 /* The panel chrome: one enclosed surface — header (system switcher, global
    reset, search) and footer (save, export) are flush hairline bars on the
    card. The drill-in frame supplies the middle. Real behavior arrives through
-   `system` (wired by LabCreatePanel on /create); without it the chrome stays
-   the lab's inert design shell. */
+   `system` (wired by StudioPanel on /create); without it the chrome stays
+   the studio's inert design shell. */
 
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
@@ -12,10 +12,10 @@ import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 import { Button } from "@/registry/ui/button"
 
 import { DEFAULTS } from "./state"
-import type { Lab } from "./state"
+import type { Studio } from "./state"
 
 /** The create-engine wiring the chrome acts through. Everything here operates
- *  on the real design system (URL preset + localStorage); the lab's own axes
+ *  on the real design system (URL preset + localStorage); the studio's own axes
  *  reset alongside it but aren't persisted until their chapters are wired. */
 export interface PanelSystem {
   /** What's being edited: the active saved system's name, else the working name. */
@@ -36,20 +36,20 @@ export interface PanelSystem {
  *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
  *  (44px header, 52px footer, plus the body's 12px gap). */
 export function PanelChrome({
-  lab,
+  studio,
   system,
   search,
   children,
 }: {
-  lab: Lab
+  studio: Studio
   system?: PanelSystem
   /** Search trigger + overlay, supplied by the frame (it owns navigation). */
   search?: ReactNode
   children: React.ReactNode
 }) {
   // The only reset in the panel — chapters carry a modified dot, never a
-  // button of their own. It clears the lab axes and the engine state as one.
-  const whole = lab.section(DEFAULTS)
+  // button of their own. It clears the studio axes and the engine state as one.
+  const whole = studio.section(DEFAULTS)
   const modified = whole.modified || (system?.modified ?? false)
   const resetAll = () => {
     whole.onReset()

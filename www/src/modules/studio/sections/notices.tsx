@@ -20,7 +20,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow, SwitchRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 export const TOAST_FAMILY = {
   surface: "border bg-card text-fg **:[svg]:text-fg-success",
@@ -137,7 +137,7 @@ const positionOptions: SelectRowOption[] = POSITION_OPTIONS.map((option) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function NoticesHero({ state }: { state: LabState }) {
+export function NoticesHero({ state }: { state: StudioState }) {
   return (
     <Hero inset={false} className="relative h-44">
       <div className="p-2.5">
@@ -172,7 +172,7 @@ export function NoticesHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the toast style, and the alert style. */
-export function noticesSummary(state: LabState): string {
+export function noticesSummary(state: StudioState): string {
   const toast =
     TOAST_OPTIONS.find((o) => o.value === state.noticeToast)?.label ??
     state.noticeToast
@@ -182,8 +182,8 @@ export function noticesSummary(state: LabState): string {
   return `${toast} toast · ${alert} alert`
 }
 
-export function NoticesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function NoticesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
 
   const setToast = (value: string) => {
     set("noticeToast")(value)

@@ -30,8 +30,6 @@ export const COLOR_OPTIONS = [
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveLinks(state: StudioState): Resolved {
   return {
     params: {

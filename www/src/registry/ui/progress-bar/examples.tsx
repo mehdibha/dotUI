@@ -1,5 +1,5 @@
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 import ControlledDemo from "./demos/controlled"
 import FileUploadListDemo from "./demos/file-upload-list"

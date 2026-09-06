@@ -22,7 +22,7 @@ export async function resolveRequestPreset(
   if (!encoded) return defaultPreset()
   try {
     const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
-      import("@/modules/create/preset/codec"),
+      import("@/modules/studio/preset/codec"),
       import("@/modules/studio/resolve"),
     ])
     const preset = decodePreset(encoded)

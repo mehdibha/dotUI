@@ -18,7 +18,7 @@ import { ERROR_OPTIONS } from "../axes/invalid"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { BARE_INPUT, ErrorMessage, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
@@ -114,7 +114,7 @@ const ERROR_ROW_OPTIONS: SelectRowOption[] = ERROR_OPTIONS.map((o) => ({
 }))
 
 /** One failed field wearing the current field style and the treatment. */
-export function InvalidHero({ state }: { state: LabState }) {
+export function InvalidHero({ state }: { state: StudioState }) {
   const id = useId()
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const bar = state.inputError === "bar"
@@ -158,15 +158,15 @@ export function InvalidHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the error treatment. */
-export function invalidSummary(state: LabState): string {
+export function invalidSummary(state: StudioState): string {
   return (
     ERROR_OPTIONS.find((o) => o.value === state.inputError)?.label ??
     state.inputError
   )
 }
 
-export function InvalidSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function InvalidSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <InvalidHero state={state} />

@@ -1,7 +1,7 @@
 /**
  * The single export surface for /create: one dialog with a target picker
  * (shadcn CLI, v0, upcoming tools) and the code-style options. The trigger is
- * passed as children (the navbar CTA, the panel lab's footer button).
+ * passed as children (the navbar CTA, the panel studio's footer button).
  */
 
 import { useState, type ReactNode } from "react"

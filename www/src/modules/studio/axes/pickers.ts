@@ -16,8 +16,6 @@ export const CARET_OPTIONS = [
   { value: "double", label: "Up-down" },
 ]
 
-export const WIRED = true
-
 export function resolvePickers(state: StudioState): Resolved {
   const caret = CARET_OPTIONS.some((o) => o.value === state.pickerCaret)
     ? state.pickerCaret

@@ -18,7 +18,7 @@ import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* The engine's modal backdrop slices, at hero scale. */
 export const BACKDROP = {
@@ -88,7 +88,7 @@ const BACKDROP_ROW_OPTIONS: SelectRowOption[] = BACKDROP_OPTIONS.map((o) => ({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function DialogsHero({ state }: { state: LabState }) {
+export function DialogsHero({ state }: { state: StudioState }) {
   return (
     <Hero inset={false} className="relative h-44">
       {/* Page content: what the backdrop dims, frosts, or leaves alone. */}
@@ -122,7 +122,7 @@ export function DialogsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the backdrop treatment, and where the dialog rests. */
-export function dialogsSummary(state: LabState): string {
+export function dialogsSummary(state: StudioState): string {
   const backdrop =
     BACKDROP_OPTIONS.find((o) => o.value === state.dialogBackdrop)?.label ??
     state.dialogBackdrop
@@ -134,8 +134,8 @@ export function dialogsSummary(state: LabState): string {
   return `${first} · ${position}`
 }
 
-export function DialogsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function DialogsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <DialogsHero state={state} />

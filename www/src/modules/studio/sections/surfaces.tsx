@@ -33,7 +33,7 @@ import { HeroModes } from "../hero"
 import { DetailRow } from "../patterns"
 import { ControlGroup, ROW, ROW_LABEL, SegmentedControlRow } from "../rows"
 import type { SegmentedRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { useModeTheme } from "./color"
 
 /* ---------------------------------- Hero ----------------------------------- */
@@ -53,7 +53,7 @@ function SurfaceTile({
   label: string
   icon: React.ComponentType<{ className?: string }>
   mode: Mode
-  state: LabState
+  state: StudioState
   scales: Scales
   background: string
 }) {
@@ -173,7 +173,7 @@ function StackedSegmentedRow({
 
 /** The chapter specimen: both polarities side by side — "right in light,
  *  wrong in dark" is the failure mode being shopped for. */
-export function SurfacesHero({ state }: { state: LabState }) {
+export function SurfacesHero({ state }: { state: StudioState }) {
   const modes = state.modes
   const lightMode = useMemo(
     () => modes.find((mode) => mode.polarity === "light"),
@@ -216,7 +216,7 @@ const label = (options: SegmentedRowOption[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value
 
 /** Collapsed-row summary: the separation strategy, and the floating material. */
-export function surfacesSummary(state: LabState): string {
+export function surfacesSummary(state: StudioState): string {
   return `${label(STRATEGY_OPTIONS, state.surfaceStrategy)} · ${label(MATERIAL_OPTIONS, state.surfaceMaterial)}`
 }
 
@@ -226,8 +226,8 @@ const DETAIL_ROWS = [
   { key: "surfaceCanvas", label: "Canvas", options: CANVAS_OPTIONS },
 ] as const
 
-export function SurfacesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SurfacesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   const details = DETAIL_ROWS.filter(
     (row) => state[row.key] !== SURFACE_DEFAULTS[row.key],
   ).map((row) => label(row.options, state[row.key]))

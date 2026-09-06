@@ -30,7 +30,7 @@ import {
   SelectRow,
   SliderRow,
 } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 export { controlRadiusPx, roleRadiusPx } from "../axes/shape"
 
@@ -58,7 +58,7 @@ function RoleLabel({ name, px }: { name: string; px?: string }) {
   )
 }
 
-export function ShapeHero({ state }: { state: LabState }) {
+export function ShapeHero({ state }: { state: StudioState }) {
   const px = (key: ShapeRoleKey) =>
     rolePxLabel(state.radiusPx, roleRatio(state, key))
   const shape = (key: ShapeRoleKey): CSSProperties => ({
@@ -129,7 +129,7 @@ const CHARACTER_OPTIONS = SHAPE_CHARACTERS.map((character) => ({
 }))
 
 /** The character whose vector matches the current roles, if any. */
-function activeCharacter(state: LabState): string {
+function activeCharacter(state: StudioState): string {
   const match = SHAPE_CHARACTERS.find((character) =>
     SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
   )
@@ -137,15 +137,15 @@ function activeCharacter(state: LabState): string {
 }
 
 /** Collapsed-row summary: the corner shape, and the base radius. */
-export function shapeSummary(state: LabState): string {
+export function shapeSummary(state: StudioState): string {
   const corner =
     CORNER_SHAPE_OPTIONS.find((o) => o.value === state.cornerShape)?.label ??
     state.cornerShape
   return `${corner} · ${state.radiusPx}px`
 }
 
-export function ShapeSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ShapeSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   const autoRatio =
     SHAPE_RUNGS[Math.max(0, rungIndex(state.roleSurface) - 1)]?.ratio ?? 0
   const rungOptions = (allowAuto: boolean) => [

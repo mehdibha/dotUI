@@ -21,7 +21,7 @@ import {
 } from "../axes/icons"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow, SliderRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /** Renders children as real icons of a library: context + stroke var in one. */
 function IconScope({
@@ -87,7 +87,7 @@ const SPECIMEN = [
 /** Rows of real registry icons in the current library, stroke and weight. No
  *  inspect verb — the set itself is the specimen, so the space goes to more
  *  glyphs instead of a readout. */
-export function IconsHero({ state }: { state: LabState }) {
+export function IconsHero({ state }: { state: StudioState }) {
   const library = state.iconLibrary as IconLibraryName
   const weight =
     library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
@@ -114,15 +114,15 @@ export function IconsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the library, and the stroke it draws with. */
-export function iconsSummary(state: LabState): string {
+export function iconsSummary(state: StudioState): string {
   const library =
     LIBRARY_OPTIONS.find((o) => o.value === state.iconLibrary)?.label ??
     state.iconLibrary
   return `${library} · Stroke ${state.iconStroke}`
 }
 
-export function IconsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function IconsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <IconsHero state={state} />

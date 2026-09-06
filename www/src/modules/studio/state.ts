@@ -176,24 +176,23 @@ import {
   tooltipsSummary,
 } from "./sections/tooltips"
 import { TypeHero, TypeSection, typeSummary } from "./sections/type"
-import type { Studio } from "./use-studio"
 
 export { DEFAULTS }
-export type LabState = StudioState
+export type { StudioState } from "./axes"
+import type { Studio } from "./use-studio"
 
-/** What a section body gets: the state, a setter per key, and its status. */
-export type Lab = Pick<Studio, "state" | "set" | "section">
+export type { Studio }
 
 export interface Chapter {
   id: string
   label: string
-  defaults: Partial<LabState>
-  Body: React.ComponentType<{ lab: Lab }>
+  defaults: Partial<StudioState>
+  Body: React.ComponentType<{ studio: Studio }>
   /** The always-visible specimen atop the stack. Optional only for Color,
    *  whose rows are the specimen. */
-  Hero?: React.ComponentType<{ state: LabState }>
+  Hero?: React.ComponentType<{ state: StudioState }>
   /** The collapsed row's live value summary. */
-  summary: (state: LabState) => string
+  summary: (state: StudioState) => string
 }
 
 export const CHAPTERS: Chapter[] = [

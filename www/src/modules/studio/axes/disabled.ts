@@ -51,8 +51,6 @@ const TREATMENT_TOKENS: Record<string, Record<string, string>> = {
   },
 }
 
-export const WIRED = true
-
 export function resolveDisabled(state: StudioState): Resolved {
   const tokens = TREATMENT_TOKENS[state.disabledTreatment]
   return tokens ? { tokens: { ...tokens } } : {}

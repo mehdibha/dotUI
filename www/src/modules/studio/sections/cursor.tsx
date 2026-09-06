@@ -16,7 +16,7 @@ import { Button } from "@/registry/ui/button"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* macOS cursor drawings — literal black/white/blue like the real cursors,
    which never theme; the white casing keeps them readable on dark cards.
@@ -263,7 +263,7 @@ export function GlyphBadge({ children }: { children: React.ReactNode }) {
 
 /* One specimen per axis, each wearing the cursor its selection maps to,
    ordered like the rows read: enabled, disabled, pending, dragging. */
-export function CursorHero({ state }: { state: LabState }) {
+export function CursorHero({ state }: { state: StudioState }) {
   const controls = state.cursorControls
   const grab = state.cursorDragging === "grab"
   return (
@@ -315,15 +315,15 @@ export function CursorHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the controls cursor alone. */
-export function cursorSummary(state: LabState): string {
+export function cursorSummary(state: StudioState): string {
   return (
     CONTROL_OPTIONS.find((o) => o.value === state.cursorControls)?.label ??
     state.cursorControls
   )
 }
 
-export function CursorSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function CursorSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <CursorHero state={state} />

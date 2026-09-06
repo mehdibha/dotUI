@@ -1,5 +1,5 @@
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 import ChatSettings from "./demos/chat-settings"
 import NoCloseButton from "./demos/no-close-button"

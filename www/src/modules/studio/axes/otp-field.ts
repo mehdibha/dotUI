@@ -17,8 +17,6 @@ export const OTP_STYLE_OPTIONS = [
   { value: "underline", label: "Underline" },
 ]
 
-export const WIRED = true
-
 export function resolveOtpField(state: StudioState): Resolved {
   return {
     params: {

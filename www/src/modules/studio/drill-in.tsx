@@ -24,7 +24,7 @@ import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { ControlGroup, GroupTitle, ROW_LABEL } from "./rows"
 import { PanelSearch } from "./search"
-import type { Chapter, Lab } from "./state"
+import type { Chapter, Studio } from "./state"
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
@@ -41,16 +41,16 @@ const CARD =
 
 function IndexRow({
   chapter,
-  lab,
+  studio,
   compact,
   onPress,
 }: {
   chapter: IndexChapter
-  lab: Lab
+  studio: Studio
   compact?: boolean
   onPress: () => void
 }) {
-  const status = lab.section(chapter.defaults)
+  const status = studio.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
   // The label column: title (with its modified dot), and the live value
   // beneath it — first segment only, one word-ish.
@@ -76,7 +76,7 @@ function IndexRow({
         )}
       </span>
       <span className="max-w-full truncate text-xs text-fg-muted/60">
-        {chapter.summary(lab.state).split(" · ")[0]}
+        {chapter.summary(studio.state).split(" · ")[0]}
       </span>
     </span>
   )
@@ -97,7 +97,7 @@ function IndexRow({
               aria-hidden
               className="pointer-events-none flex shrink-0 items-center"
             >
-              <Demo state={lab.state} />
+              <Demo state={studio.state} />
             </span>
           )}
         </span>
@@ -122,7 +122,7 @@ function IndexRow({
           className="pointer-events-none ml-auto flex h-full min-w-0 flex-1 overflow-hidden py-1.5"
         >
           <span className="my-auto ml-auto flex items-center gap-2 pr-3.5">
-            <Demo state={lab.state} />
+            <Demo state={studio.state} />
           </span>
         </span>
       )}
@@ -132,11 +132,11 @@ function IndexRow({
 
 export function DrillInPanel({
   chapters,
-  lab,
+  studio,
   system,
 }: {
   chapters: Chapter[]
-  lab: Lab
+  studio: Studio
   system?: PanelSystem
 }) {
   const index = resolveIndex(chapters)
@@ -168,7 +168,7 @@ export function DrillInPanel({
 
   return (
     <PanelChrome
-      lab={lab}
+      studio={studio}
       system={system}
       search={
         <PanelSearch
@@ -190,7 +190,7 @@ export function DrillInPanel({
                 <IndexRow
                   key={chapter.id}
                   chapter={chapter}
-                  lab={lab}
+                  studio={studio}
                   compact={group.compact}
                   onPress={() => setActiveId(chapter.id)}
                 />
@@ -227,7 +227,7 @@ export function DrillInPanel({
                   {(page.hostless || i > 0) && (
                     <GroupTitle>{member.label}</GroupTitle>
                   )}
-                  <member.Body lab={lab} />
+                  <member.Body studio={studio} />
                 </Fragment>
               ))}
             </>

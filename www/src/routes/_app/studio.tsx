@@ -4,15 +4,15 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { ExportHeaderAction } from "@/modules/create/export"
-import { DEFAULT_PRESET } from "@/modules/create/preset/codec"
+import { ORIGIN } from "@/modules/presets/presets-data"
+import { StudioPanel } from "@/modules/studio/create"
+import { ExportHeaderAction } from "@/modules/studio/export"
+import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
-} from "@/modules/create/preset/storage"
-import { PreviewPanel } from "@/modules/create/preview/preview-panel"
-import { ORIGIN } from "@/modules/presets/presets-data"
-import { LabCreatePanel } from "@/modules/studio/create"
+} from "@/modules/studio/preset/storage"
+import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { useStudio } from "@/modules/studio/use-studio"
 
 export function createSearchSchema(
@@ -87,7 +87,7 @@ function StudioPage() {
     // lines up with the Export button above it.
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
-      <LabCreatePanel className="max-lg:hidden" />
+      <StudioPanel className="max-lg:hidden" />
       <PreviewPanel onCustomize={() => setSheetOpen(true)} />
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
@@ -103,7 +103,7 @@ function StudioPage() {
             className="flex h-full min-h-0 flex-col gap-0 p-0"
           >
             <DrawerHandle />
-            <LabCreatePanel className="min-h-0 flex-1" />
+            <StudioPanel className="min-h-0 flex-1" />
           </DialogContent>
         </Drawer>
       </div>

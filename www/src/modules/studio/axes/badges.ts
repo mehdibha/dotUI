@@ -39,8 +39,6 @@ const SHAPE_TOKENS: Record<string, string> = {
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveBadges(state: StudioState): Resolved {
   const style = pick(STYLE_OPTIONS, state.badgeStyle, "solid")
   const tokens: Record<string, string> = {}

@@ -18,7 +18,7 @@ import { cn } from "@/registry/lib/utils"
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 const SHAPE = {
   circle: "rounded-full",
@@ -42,7 +42,7 @@ export function LabAvatar({
   initials: string
   /** Position in the entity list — what the tinted wash hashes on. */
   index: number
-  state: LabState
+  state: StudioState
   className?: string
 }) {
   return (
@@ -61,7 +61,7 @@ export function LabAvatar({
   )
 }
 
-export function AvatarsHero({ state }: { state: LabState }) {
+export function AvatarsHero({ state }: { state: StudioState }) {
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
       <div className="flex -space-x-2">
@@ -84,14 +84,14 @@ export function AvatarsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the avatar shape, and the fallback treatment. */
-export function avatarsSummary(state: LabState): string {
+export function avatarsSummary(state: StudioState): string {
   const shape = state.avatarShape === "rounded" ? "Rounded" : "Circle"
   const fallback = state.avatarFallback === "neutral" ? "Neutral" : "Tinted"
   return `${shape} · ${fallback} fallback`
 }
 
-export function AvatarsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function AvatarsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <AvatarsHero state={state} />

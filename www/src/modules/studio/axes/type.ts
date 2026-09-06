@@ -78,8 +78,6 @@ const TEXT_LADDER: Record<string, number> = {
 /* The body sizes leading applies to; Tailwind's own ratios are the 'normal'. */
 const BODY_SIZES = ["xs", "sm", "base"]
 
-export const WIRED = true
-
 export function resolveType(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.bodyFont !== DEFAULT_BODY_FAMILY)

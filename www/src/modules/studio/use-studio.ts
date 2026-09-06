@@ -14,9 +14,9 @@ import {
   DEFAULT_PRESET,
   decodePreset,
   encodePreset,
-} from "@/modules/create/preset/codec"
-import type { StudioPreset } from "@/modules/create/preset/codec"
-import type { DesignSystem } from "@/modules/create/preset/types"
+} from "@/modules/studio/preset/codec"
+import type { StudioPreset } from "@/modules/studio/preset/codec"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"

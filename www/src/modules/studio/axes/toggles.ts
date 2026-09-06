@@ -17,8 +17,6 @@ export const SELECTED_OPTIONS = [
   { value: "inverse", label: "Inverse" },
 ]
 
-export const WIRED = true
-
 export function resolveToggles(state: StudioState): Resolved {
   const selected = SELECTED_OPTIONS.some(
     (o) => o.value === state.toggleSelected,

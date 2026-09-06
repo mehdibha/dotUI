@@ -16,18 +16,18 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { controlRadiusPx } from "./shape"
 
 const optionLabel = (options: SelectRowOption[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value
 
 /** Collapsed-row summary: the style family, and the press feel. */
-export function buttonsSummary(state: LabState): string {
+export function buttonsSummary(state: StudioState): string {
   return `${optionLabel(STYLE_OPTIONS, state.buttonStyle)} · ${optionLabel(PRESS_OPTIONS, state.buttonPress)} press`
 }
 
-export function buttonRadiusPx(state: LabState): number {
+export function buttonRadiusPx(state: StudioState): number {
   switch (state.buttonRadius) {
     case "sharp":
       return 0
@@ -72,12 +72,12 @@ const FILLS = {
   danger: "bg-danger text-fg-on-danger",
 } as const
 
-export const styleLook = (state: LabState) =>
+export const styleLook = (state: StudioState) =>
   STYLE_LOOKS[state.buttonStyle as keyof typeof STYLE_LOOKS] ?? STYLE_LOOKS.flat
 
 /* Quiet gains a background on hover in every surveyed system, whatever the
    fill variants do — so both dim and lighten resolve to a fill for it. */
-export function hoverFx(state: LabState, tier: "fill" | "quiet"): string {
+export function hoverFx(state: StudioState, tier: "fill" | "quiet"): string {
   if (state.buttonHover === "none") return ""
   if (tier === "quiet") return "hover:bg-highlight"
   return state.buttonHover === "lighten"
@@ -86,7 +86,7 @@ export function hoverFx(state: LabState, tier: "fill" | "quiet"): string {
 }
 
 /* Press is uniform across variants (the Linear precedent). */
-export function pressFx(state: LabState, tier: "fill" | "quiet"): string {
+export function pressFx(state: StudioState, tier: "fill" | "quiet"): string {
   switch (state.buttonPress) {
     case "dim":
       return tier === "quiet" ? "active:bg-inverse/15" : "active:brightness-90"
@@ -105,7 +105,7 @@ export const SPECIMEN_FX =
 /** The section's specimen: the full variant ladder wearing one style — the
  *  neutral row, then the status fills. Hover and press demo for real; link
  *  only underlines, whatever the axes say. */
-export function ButtonsHero({ state }: { state: LabState }) {
+export function ButtonsHero({ state }: { state: StudioState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
 
@@ -160,8 +160,8 @@ export function ButtonsHero({ state }: { state: LabState }) {
   )
 }
 
-export function ButtonsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function ButtonsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <ButtonsHero state={state} />

@@ -11,7 +11,7 @@ import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Select } from "@/registry/ui/select"
-import { useLoadedFamilies } from "@/modules/create/typography"
+import { useLoadedFamilies } from "@/modules/studio/fonts"
 
 import {
   LEADING_OPTIONS,
@@ -35,10 +35,10 @@ import {
   ROW_VALUE,
   SegmentedControlRow,
 } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /** Collapsed-row summary: the face the system reads in, and its base size. */
-export function typeSummary(state: LabState): string {
+export function typeSummary(state: StudioState): string {
   return `${state.headingFont || state.bodyFont} · ${state.typeBase}px`
 }
 
@@ -50,13 +50,13 @@ const HEADING_STEPS = [-2, 0, 4, 8, 12]
 const HERO_STEP = 12
 
 /** A heading step in px: base plus the step's offset. */
-function headingPx(state: LabState, step: number): number {
+function headingPx(state: StudioState, step: number): number {
   return state.typeBase + step
 }
 
 /** A role's live recipe — heading and body follow the scale axes, UI and code
  *  sizes are the section's constants. */
-function typeRole(state: LabState, id: TypeRoleId) {
+function typeRole(state: StudioState, id: TypeRoleId) {
   switch (id) {
     case "heading":
       return {
@@ -81,7 +81,7 @@ function typeRole(state: LabState, id: TypeRoleId) {
 
 /** Every text role the system ships, live in the chosen faces — heading, body,
  *  UI labels and code. */
-export function TypeHero({ state }: { state: LabState }) {
+export function TypeHero({ state }: { state: StudioState }) {
   const heading = typeRole(state, "heading")
   const body = typeRole(state, "body")
   const ui = typeRole(state, "ui")
@@ -201,7 +201,7 @@ function AutoFontRow({
 }
 
 /** The scale as a glyph ramp — every step of the heading ladder, live. */
-function ScaleLadder({ state }: { state: LabState }) {
+function ScaleLadder({ state }: { state: StudioState }) {
   const heading = typeRole(state, "heading")
   return (
     <div className="flex items-baseline gap-3 overflow-hidden px-2 pt-1.5 pb-1">
@@ -224,8 +224,8 @@ function ScaleLadder({ state }: { state: LabState }) {
   )
 }
 
-export function TypeSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function TypeSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   const scaleModified =
     state.typeBase !== TYPE_DEFAULTS.typeBase ||
     state.bodyLeading !== TYPE_DEFAULTS.bodyLeading

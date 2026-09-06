@@ -9,8 +9,8 @@ import TextAreaDemo from "@/registry/ui/text-area/demos/default"
 import { TextField } from "@/registry/ui/text-field"
 import TextFieldDemo from "@/registry/ui/text-field/demos/basic"
 import TimeFieldDemo from "@/registry/ui/time-field/demos/basic"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function InputsGroupExamples() {
   return (

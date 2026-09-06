@@ -8,13 +8,13 @@ import { cn } from "@/registry/lib/utils"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { inputLook } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
 /** Three digits and a caret: cells wear the field style boxed, fused into one
  *  group, or reduced to a dash per digit. */
-export function OtpHero({ state }: { state: LabState }) {
+export function OtpHero({ state }: { state: StudioState }) {
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const style = state.otpStyle
   const digits = ["3", "9", "4", null]
@@ -66,15 +66,15 @@ export function OtpHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the cell treatment. */
-export function otpFieldSummary(state: LabState): string {
+export function otpFieldSummary(state: StudioState): string {
   const style =
     OTP_STYLE_OPTIONS.find((o) => o.value === state.otpStyle)?.label ??
     state.otpStyle
   return `${style} cells`
 }
 
-export function OtpFieldSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function OtpFieldSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <OtpHero state={state} />

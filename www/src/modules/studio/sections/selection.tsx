@@ -16,7 +16,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { ArrowCursor, GlyphBadge, IBeamCursor } from "./cursor"
 
 const UI_TEXT_ILLUSTRATIONS: Record<string, React.ReactNode> = {
@@ -54,7 +54,7 @@ const highlightOptions: SelectRowOption[] = HIGHLIGHT_OPTIONS.map((o) => ({
    content back in — while the label wears `select-ui` like every control, so
    it follows the switch, arrow cursor included. ::selection can't be forced
    to render, so the sentence asks to be selected instead. */
-export function SelectionHero({ state }: { state: LabState }) {
+export function SelectionHero({ state }: { state: StudioState }) {
   const none = state.selectionUiText === "none"
   return (
     <Hero className="px-5 py-5">
@@ -75,7 +75,7 @@ export function SelectionHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the UI-text selectability, and the highlight. */
-export function selectionSummary(state: LabState): string {
+export function selectionSummary(state: StudioState): string {
   const uiText =
     UI_TEXT_OPTIONS.find((o) => o.value === state.selectionUiText)?.label ??
     state.selectionUiText
@@ -85,8 +85,8 @@ export function selectionSummary(state: LabState): string {
   return `${uiText} text · ${highlight} highlight`
 }
 
-export function SelectionSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function SelectionSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <SelectionHero state={state} />

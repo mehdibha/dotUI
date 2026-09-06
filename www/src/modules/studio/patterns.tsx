@@ -1,6 +1,6 @@
 "use client"
 
-/* Panel Lab patterns — controls invented for the full-panel recreation, built
+/* studio panel patterns — controls invented for the full-panel recreation, built
    on the panel row language. If one earns its keep it graduates into
    rows.tsx. */
 
@@ -24,7 +24,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
-import { useLoadedFamilies } from "@/modules/create/typography"
+import { useLoadedFamilies } from "@/modules/studio/fonts"
 
 import {
   INSTANT_POPOVER,

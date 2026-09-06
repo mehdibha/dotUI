@@ -15,8 +15,6 @@ export const TOOLTIP_STYLE_OPTIONS = [
   { value: "surface", label: "Surface" },
 ]
 
-export const WIRED = true
-
 export function resolveTooltips(state: StudioState): Resolved {
   return {
     params: {

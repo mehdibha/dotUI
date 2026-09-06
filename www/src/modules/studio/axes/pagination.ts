@@ -16,8 +16,6 @@ export const CURRENT_OPTIONS = [
   { value: "outline", label: "Outline" },
 ]
 
-export const WIRED = true
-
 export function resolvePagination(state: StudioState): Resolved {
   const current = CURRENT_OPTIONS.some(
     (o) => o.value === state.paginationCurrent,

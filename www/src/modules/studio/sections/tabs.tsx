@@ -16,7 +16,7 @@ import { TAB_STYLE_OPTIONS } from "../axes/tabs"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 export const TAB_STRIP = {
   segmented: "m-2 w-fit rounded-lg bg-muted p-[3px]",
@@ -156,7 +156,7 @@ const TAB_OPTIONS: SelectRowOption[] = TAB_STYLE_OPTIONS.map((option) => ({
 
 const TABS = ["Overview", "Activity", "Settings"]
 
-export function TabsHero({ state }: { state: LabState }) {
+export function TabsHero({ state }: { state: StudioState }) {
   const style = state.tabStyle as keyof typeof TAB_FAMILY
   const tab = TAB_FAMILY[style]
   return (
@@ -188,14 +188,14 @@ export function TabsHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the selected-tab style. */
-export function tabsSummary(state: LabState): string {
+export function tabsSummary(state: StudioState): string {
   return (
     TAB_OPTIONS.find((o) => o.value === state.tabStyle)?.label ?? state.tabStyle
   )
 }
 
-export function TabsSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function TabsSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <TabsHero state={state} />

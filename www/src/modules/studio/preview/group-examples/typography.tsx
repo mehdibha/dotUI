@@ -1,6 +1,6 @@
 import { Text } from "@/registry/ui/text"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 export default function TypographyGroupExamples() {
   return (

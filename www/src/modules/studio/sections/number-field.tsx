@@ -18,7 +18,7 @@ import { cn } from "@/registry/lib/utils"
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { BARE_INPUT, hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
@@ -28,7 +28,7 @@ const SEGMENT =
 
 /** A working stepper: the shell is the field, the buttons really step, and
  *  the three placements systems disagree on swap around a live value. */
-export function NumberHero({ state }: { state: LabState }) {
+export function NumberHero({ state }: { state: StudioState }) {
   const [value, setValue] = useState(12)
   const [focused, setFocused] = useState(false)
   const radius = controlRadiusPx(state)
@@ -144,15 +144,15 @@ export function NumberHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the stepper placement. */
-export function numberFieldSummary(state: LabState): string {
+export function numberFieldSummary(state: StudioState): string {
   const layout =
     NUMBER_LAYOUT_OPTIONS.find((o) => o.value === state.numberLayout)?.label ??
     state.numberLayout
   return `${layout} steppers`
 }
 
-export function NumberFieldSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function NumberFieldSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <NumberHero state={state} />

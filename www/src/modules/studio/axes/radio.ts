@@ -8,8 +8,6 @@ export const RADIO_DEFAULTS = {
   checkFill: CHECKBOX_DEFAULTS.checkFill,
 }
 
-export const WIRED = true
-
 export function resolveRadio(_state: StudioState): Resolved {
   return {}
 }

@@ -70,10 +70,7 @@ import {
   SliderTrack,
 } from "@/registry/ui/slider"
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
-import {
-  useLazyFontPreviews,
-  useLoadedFamilies,
-} from "@/modules/create/typography"
+import { useLazyFontPreviews, useLoadedFamilies } from "@/modules/studio/fonts"
 
 /* -------------------------------- Shared shell --------------------------- */
 

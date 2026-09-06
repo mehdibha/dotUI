@@ -62,8 +62,6 @@ export const syncedToast = (alert: string) => ALERT_TO_TOAST[alert] ?? "surface"
 const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
-export const WIRED = true
-
 export function resolveNotices(state: StudioState): Resolved {
   return {
     params: {

@@ -16,8 +16,6 @@ export const STYLE_OPTIONS = [
   { value: "overlay", label: "Hover reveal" },
 ]
 
-export const WIRED = true
-
 const THUMB = "var(--color-border) transparent"
 
 export function resolveScrollbars(state: StudioState): Resolved {

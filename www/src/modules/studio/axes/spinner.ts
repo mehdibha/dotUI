@@ -17,8 +17,6 @@ export const STYLE_OPTIONS = [
   { value: "dots", label: "Dots" },
 ]
 
-export const WIRED = true
-
 export function resolveSpinner(state: StudioState): Resolved {
   const style = STYLE_OPTIONS.some((o) => o.value === state.spinnerStyle)
     ? state.spinnerStyle

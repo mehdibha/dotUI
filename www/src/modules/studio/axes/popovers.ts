@@ -26,8 +26,6 @@ export const HEADER_OPTIONS = [
   { value: "band", label: "Band" },
 ]
 
-export const WIRED = true
-
 export function resolvePopovers(state: StudioState): Resolved {
   return {
     params: {

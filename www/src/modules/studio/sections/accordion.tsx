@@ -24,7 +24,7 @@ import {
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -125,7 +125,7 @@ export const CONTAINER = {
   },
 }
 
-export function Marker({ open, state }: { open: boolean; state: LabState }) {
+export function Marker({ open, state }: { open: boolean; state: StudioState }) {
   return (
     <svg
       viewBox="0 0 12 12"
@@ -152,7 +152,7 @@ function AccordionItem({
 }: {
   label: string
   open?: boolean
-  state: LabState
+  state: StudioState
 }) {
   const container =
     CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
@@ -179,7 +179,7 @@ function AccordionItem({
   )
 }
 
-export function AccordionHero({ state }: { state: LabState }) {
+export function AccordionHero({ state }: { state: StudioState }) {
   const container =
     CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
   return (
@@ -195,7 +195,7 @@ export function AccordionHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the container style, and the marker with its
  *  position. */
-export function accordionSummary(state: LabState): string {
+export function accordionSummary(state: StudioState): string {
   const container =
     CONTAINER_OPTIONS.find((o) => o.value === state.accordionContainer)
       ?.label ?? state.accordionContainer
@@ -207,8 +207,8 @@ export function accordionSummary(state: LabState): string {
   return `${container} · ${position} ${marker.toLowerCase()}`
 }
 
-export function AccordionSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function AccordionSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <AccordionHero state={state} />

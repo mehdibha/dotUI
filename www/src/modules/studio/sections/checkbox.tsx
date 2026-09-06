@@ -16,7 +16,7 @@ import { CORNER_OPTIONS, FILL_OPTIONS } from "../axes/checkbox"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Lab, LabState } from "../state"
+import type { Studio, StudioState } from "../state"
 
 const FILL = {
   accent: {
@@ -35,7 +35,7 @@ const FILL = {
 
 export type CheckFill = (typeof FILL)[keyof typeof FILL]
 
-export function fillOf(state: LabState): CheckFill {
+export function fillOf(state: StudioState): CheckFill {
   return FILL[state.checkFill as keyof typeof FILL]
 }
 
@@ -45,7 +45,7 @@ const CORNER = {
   circle: "rounded-full",
 }
 
-export function checkboxCorner(state: LabState): string {
+export function checkboxCorner(state: StudioState): string {
   return CORNER[state.checkCorner as keyof typeof CORNER]
 }
 
@@ -80,17 +80,17 @@ function CornerGlyph({ rx }: { rx: number }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-export function fillLabel(state: LabState): string {
+export function fillLabel(state: StudioState): string {
   return `${FILL_OPTIONS.find((o) => o.value === state.checkFill)?.label ?? state.checkFill} fill`
 }
 
 /** The family's synced axis, shown in each chapter — one key, one look. */
-export function FillRow({ lab }: { lab: Lab }) {
+export function FillRow({ studio }: { studio: Studio }) {
   return (
     <SegmentedControlRow
       label="Fill"
-      value={lab.state.checkFill}
-      onChange={lab.set("checkFill")}
+      value={studio.state.checkFill}
+      onChange={studio.set("checkFill")}
       options={FILL_OPTIONS}
     />
   )
@@ -129,7 +129,7 @@ export function DemoCheckbox({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export function CheckboxHero({ state }: { state: LabState }) {
+export function CheckboxHero({ state }: { state: StudioState }) {
   const fill = fillOf(state)
   const corner = checkboxCorner(state)
   return (
@@ -147,19 +147,19 @@ export function CheckboxHero({ state }: { state: LabState }) {
 }
 
 /** Collapsed-row summary: the fill school, and the corner geometry. */
-export function checkboxSummary(state: LabState): string {
+export function checkboxSummary(state: StudioState): string {
   const corner =
     CORNER_OPTIONS.find((o) => o.value === state.checkCorner)?.label ??
     state.checkCorner
   return `${fillLabel(state)} · ${corner} corner`
 }
 
-export function CheckboxSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+export function CheckboxSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
   return (
     <ControlGroup>
       <CheckboxHero state={state} />
-      <FillRow lab={lab} />
+      <FillRow studio={studio} />
       <SelectRow
         label="Corner"
         value={state.checkCorner}
