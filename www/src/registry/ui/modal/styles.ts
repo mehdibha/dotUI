@@ -17,9 +17,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       overlay: [
         "group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full",
       ],
-      backdrop: [
-        "absolute inset-0",
-      ],
+      backdrop: ["absolute inset-0"],
       viewport:
         "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [

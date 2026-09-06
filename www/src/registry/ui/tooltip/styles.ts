@@ -32,8 +32,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
     style: {
       inverted: {
         slots: {
-          content:
-            "bg-tooltip text-fg-on-tooltip",
+          content: "bg-tooltip text-fg-on-tooltip",
           arrow: "[&>svg]:fill-tooltip",
         },
       },
