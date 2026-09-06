@@ -1,5 +1,7 @@
 import { LinkButton } from "@/registry/ui/button"
 import { Eyebrow } from "@/components/eyebrow"
+import { ReactAriaIcon } from "@/components/icons/react-aria"
+import { TailwindIcon } from "@/components/icons/tailwind"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
@@ -35,9 +37,8 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-              Every design decision is yours. Create, tweak and refine colors,
-              type and components live, then install them with the shadcn CLI as
-              React code you own.
+              Every design decision is yours. Create, tweak and refine your
+              system live, then install it with the shadcn CLI as code you own.
               {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
@@ -48,6 +49,17 @@ export function HomePage() {
                 View components
               </LinkButton>
             </div>
+            <p className="mt-6 flex items-center gap-x-4 text-sm text-fg-muted">
+              <span>Built on</span>
+              <span className="inline-flex items-center gap-1.5">
+                <ReactAriaIcon className="size-4" />
+                React Aria
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <TailwindIcon className="size-4" />
+                Tailwind CSS
+              </span>
+            </p>
           </div>
         </section>
 
