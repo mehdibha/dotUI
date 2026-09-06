@@ -15,9 +15,13 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer } from "@/registry/ui/drawer"
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
-import { NumberField } from "@/registry/ui/number-field"
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldGroup,
+  NumberFieldIncrement,
+} from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
 import {
   Select,
@@ -74,27 +78,27 @@ export default function Demo() {
         </Select>
         <NumberField value={offset} onChange={setOffset}>
           <Label>Offset</Label>
-          <Group>
+          <NumberFieldGroup>
             <Input />
-            <Button slot="decrement" />
-            <Button slot="increment" />
-          </Group>
+            <NumberFieldDecrement />
+            <NumberFieldIncrement />
+          </NumberFieldGroup>
         </NumberField>
         <NumberField value={crossOffset} onChange={setCrossOffset}>
           <Label>Cross offset</Label>
-          <Group>
+          <NumberFieldGroup>
             <Input />
-            <Button slot="decrement" />
-            <Button slot="increment" />
-          </Group>
+            <NumberFieldDecrement />
+            <NumberFieldIncrement />
+          </NumberFieldGroup>
         </NumberField>
         <NumberField value={containerPadding} onChange={setContainerPadding}>
           <Label>Container padding</Label>
-          <Group>
+          <NumberFieldGroup>
             <Input />
-            <Button slot="decrement" />
-            <Button slot="increment" />
-          </Group>
+            <NumberFieldDecrement />
+            <NumberFieldIncrement />
+          </NumberFieldGroup>
         </NumberField>
         <Switch isSelected={showArrow} onChange={setShowArrow}>
           <SwitchControl />

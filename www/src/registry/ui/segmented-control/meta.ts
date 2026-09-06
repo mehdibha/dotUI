@@ -12,6 +12,18 @@ const segmentedControlMeta = {
     },
   ],
   registryDependencies: ["focus-styles"],
+  params: {
+    selected: {
+      kind: "enum",
+      default: "flat",
+      values: ["raised", "flat", "inverse"] as const,
+    },
+    track: {
+      kind: "enum",
+      default: "filled",
+      values: ["filled", "outline"] as const,
+    },
+  },
 } satisfies RegistryItem
 
 export default segmentedControlMeta

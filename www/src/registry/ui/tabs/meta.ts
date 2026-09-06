@@ -12,6 +12,15 @@ const tabsMeta = {
     },
   ],
   registryDependencies: ["context", "focus-styles"],
+  params: {
+    style: {
+      kind: "enum",
+      default: "segmented",
+      values: ["segmented", "line", "pill", "enclosed"] as const,
+      description:
+        "The default look of a tab list; the `variant` prop overrides it.",
+    },
+  },
 } satisfies RegistryItem
 
 export default tabsMeta

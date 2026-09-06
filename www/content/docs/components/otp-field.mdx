@@ -17,50 +17,52 @@ npx shadcn@latest add @dotui/otp-field
 
 ## Usage
 
-Use `OTPField` with `Group` and the existing `Input` component to compose passcode slots.
+Use `OTPField` with `OTPFieldGroup` and the existing `Input` component to compose passcode slots.
 
 ```tsx
-import { OTPField } from "@/components/ui/otp-field"
+import { OTPField, OTPFieldGroup } from "@/components/ui/otp-field"
 import { Label } from "@/components/ui/field"
-import { Group } from "@/components/ui/group"
 import { Input } from "@/components/ui/input"
 ```
 
 ```tsx
 <OTPField length={6}>
   <Label>Verification code</Label>
-  <Group>
+  <OTPFieldGroup>
     <Input />
     <Input aria-label="Digit 2" />
     <Input aria-label="Digit 3" />
     <Input aria-label="Digit 4" />
     <Input aria-label="Digit 5" />
     <Input aria-label="Digit 6" />
-  </Group>
+  </OTPFieldGroup>
 </OTPField>
 ```
 
 ## Anatomy
 
-`OTPField` wraps a `Label`, one or more `Group`s of single-character `Input` slots, and optional `Description`, `FieldError`, and `OTPFieldSeparator` parts. `length` sets how many slots render. Split the slots across `Group`s with an `OTPFieldSeparator` between them.
+`OTPField` wraps a `Label`, one or more `OTPFieldGroup`s of single-character `Input` slots, and optional `Description`, `FieldError`, and `OTPFieldSeparator` parts. `length` sets how many slots render. Split the slots across `OTPFieldGroup`s with an `OTPFieldSeparator` between them.
 
 ```tsx
-import { OTPField, OTPFieldSeparator } from "@/components/ui/otp-field"
+import {
+  OTPField,
+  OTPFieldGroup,
+  OTPFieldSeparator,
+} from "@/components/ui/otp-field"
 import { Description, FieldError, Label } from "@/components/ui/field"
-import { Group } from "@/components/ui/group"
 import { Input } from "@/components/ui/input"
 ```
 
 ```tsx
 <OTPField length={6}>
   <Label />
-  <Group>
+  <OTPFieldGroup>
     <Input />
-  </Group>
+  </OTPFieldGroup>
   <OTPFieldSeparator />
-  <Group>
+  <OTPFieldGroup>
     <Input />
-  </Group>
+  </OTPFieldGroup>
   <Description />
   <FieldError />
 </OTPField>
@@ -90,10 +92,10 @@ Mark the field `isRequired`, drive `isInvalid` to surface a `FieldError` alongsi
   validationType="alphanumeric"
 >
   <Label>Recovery code</Label>
-  <Group>
+  <OTPFieldGroup>
     <Input />
     {/* ... */}
-  </Group>
+  </OTPFieldGroup>
   <Description>Enter the code we sent you.</Description>
   <FieldError>Enter all six characters.</FieldError>
 </OTPField>
@@ -116,6 +118,10 @@ Mark the field `isRequired`, drive `isInvalid` to surface a `FieldError` alongsi
 ### OTPField
 
 <Reference name="otp-field" />
+
+### OTPFieldGroup
+
+<Reference name="otp-field-group" />
 
 ### OTPFieldSeparator
 

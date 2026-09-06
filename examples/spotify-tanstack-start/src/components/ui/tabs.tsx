@@ -12,14 +12,13 @@ const tabsVariants = tv({
     root: ["flex gap-2", "[--tabs-list-height:2rem]"],
     list: "inline-flex w-fit items-center justify-center text-fg-muted",
     tab: [
-      "relative isolate inline-flex flex-1 cursor-default items-center justify-center border border-transparent font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-none focus-visible:focus-ring",
+      "relative isolate inline-flex flex-1 cursor-default items-center justify-center font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-ui focus-visible:focus-ring",
       "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
       "gap-1.5 px-1.5 py-0.5 text-sm has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-4",
     ],
     selectionIndicator:
-      "pointer-events-none absolute rounded-md duration-150 ease-out motion-safe:transition-[translate,width,height]",
+      "pointer-events-none absolute ease-out motion-safe:transition-[translate,width,height]",
     panel: ["flex-1 outline-none data-[inert=true]:hidden", "text-sm"],
   },
   variants: {
@@ -27,7 +26,6 @@ const tabsVariants = tv({
       horizontal: {
         root: "flex-col",
         list: "h-(--tabs-list-height) flex-row",
-        tab: "h-[calc(100%-1px)]",
       },
       vertical: {
         root: "flex-row",
@@ -36,32 +34,46 @@ const tabsVariants = tv({
       },
     },
     variant: {
-      default: {
+      segmented: {
         list: "rounded-lg bg-muted p-[3px]",
-        tab: "rounded-md selected:text-fg-on-selected",
-        selectionIndicator: "inset-0 bg-selected shadow-sm",
+        tab: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
+        selectionIndicator: "inset-0 rounded-md bg-selected shadow-sm",
       },
       line: {
-        list: "gap-1 rounded-none bg-transparent p-[3px]",
-        tab: "rounded-md selected:text-fg",
+        list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
+        tab: "rounded-md orientation-horizontal:h-full selected:text-fg",
         selectionIndicator:
-          "rounded-full bg-fg orientation-horizontal:bottom-[-5px] orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-1 orientation-vertical:h-full orientation-vertical:w-0.5",
+          "rounded-full bg-fg orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
+      },
+      pill: {
+        list: "gap-1",
+        tab: "rounded-full orientation-horizontal:h-full selected:text-fg",
+        selectionIndicator: "inset-0 rounded-full bg-muted",
+      },
+      enclosed: {
+        list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
+        tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-bg selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+        selectionIndicator: "hidden",
       },
     },
   },
   defaultVariants: {
-    variant: "default",
+    variant: "segmented",
   },
 });
 
-type TabsVariant = "default" | "line";
+type TabsVariant = "segmented" | "line" | "pill" | "enclosed";
 
 const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
   name: "TabsContext",
 });
 
-const [TabListProvider, useTabListContext] = createContext<TabsVariant>({
+// Unset, the design system's tab style applies.
+const [TabListProvider, useTabListContext] = createContext<
+  TabsVariant | undefined
+>({
   name: "TabListContext",
+  strict: false,
 });
 
 interface TabsProps extends React.ComponentProps<typeof TabsPrimitives.Tabs> {}
@@ -88,11 +100,7 @@ interface TabListProps extends React.ComponentProps<
   variant?: TabsVariant;
 }
 
-const TabList = ({
-  className,
-  variant = "default",
-  ...props
-}: TabListProps) => {
+const TabList = ({ className, variant, ...props }: TabListProps) => {
   const { list } = tabsVariants();
   return (
     <TabListProvider value={variant}>
@@ -115,6 +123,7 @@ const Tab = ({ className, ...props }: TabProps) => {
   return (
     <TabsPrimitives.Tab
       data-tab=""
+      data-orientation={orientation}
       className={composeRenderProps(className, (cn) =>
         tab({ orientation, variant, className: cn }),
       )}

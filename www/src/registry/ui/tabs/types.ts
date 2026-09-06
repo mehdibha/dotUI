@@ -1,7 +1,7 @@
 import type * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
 import type * as TabsPrimitives from "react-aria-components/Tabs"
 
-type TabsVariant = "default" | "line"
+type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
 
 /**
  * Tabs organize content into multiple sections and allow users to navigate between them.
@@ -17,9 +17,8 @@ export interface TabListProps extends React.ComponentProps<
   typeof TabsPrimitives.TabList
 > {
   /**
-   * The visual style of the tab list.
-   *
-   * @default "default"
+   * The visual style of the tab list. Unset, the design system's tab style
+   * applies.
    */
   variant?: TabsVariant
 }

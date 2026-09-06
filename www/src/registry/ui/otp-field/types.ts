@@ -21,6 +21,11 @@ export interface OTPFieldProps extends Omit<
 }
 
 /**
+ * A group lays out a run of single-character inputs as the design system's cells.
+ */
+export interface OTPFieldGroupProps extends React.ComponentProps<"div"> {}
+
+/**
  * A separator visually divides groups of inputs within the OTP field.
  */
 export interface OTPFieldSeparatorProps extends React.ComponentProps<

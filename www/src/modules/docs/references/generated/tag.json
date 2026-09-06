@@ -755,7 +755,7 @@
           "name": "type",
           "value": {
             "type": "identifier",
-            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+            "name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
           },
           "optional": false,
           "readonly": false,

@@ -7,7 +7,7 @@
  *
  * Pipeline:
  *   1. flatten         — merge base ← density ← param-value layers
- *   2. resolveClasses  — rewrite scalar-param var refs to Tailwind suffixes
+ *   2. resolveClasses  — rewrite surface-var refs to Tailwind suffixes
  *   3. serialize       — render the flat config to a TS literal string
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
@@ -28,7 +28,6 @@ import {
 } from "./code-options"
 import { flatten } from "./flatten"
 import {
-  buildScalarVarMap,
   buildStyleVarMap,
   pruneResolvedCssVars,
   resolveClasses,
@@ -66,7 +65,7 @@ let dotuiDepQuery = ""
 export const BUNDLED_INTO_INIT = new Set([
   // focus-ring / focus-reset / focus-input utilities ship in base.css.
   "focus-styles",
-  // @theme blocks ship in theme.css.
+  // The @theme vocabulary ships in the init item's cssVars.
   "theme",
   // cn() helper ships as `src/lib/utils.ts` in the init item.
   "utils",
@@ -153,24 +152,61 @@ export function depsFromFileImports(
   return found
 }
 
+/**
+ * The registry deps an item ships: its own plus those of the selected value
+ * of every enum param that declares some (`selections` omitted → every value,
+ * for build-time guards).
+ */
+export function registryDepsFor(
+  meta: RegistryItem,
+  selections?: Record<string, string>,
+): string[] {
+  const deps = [...(meta.registryDependencies ?? [])]
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== "enum" || !def.registryDependencies) continue
+    const values = selections
+      ? [selections[paramName] ?? def.default]
+      : Object.keys(def.registryDependencies)
+    for (const value of values)
+      deps.push(...(def.registryDependencies[value] ?? []))
+  }
+  return [...new Set(deps)]
+}
+
 export interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
+  /** Folded `createParamValue` templates keyed `param=value[&…]`. */
+  publishableBySelection?: Record<string, Publishable>
 }
 
 /**
  * Pick the publishable variant the preset selects. Components with an
  * enum-with-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
- * generate one publishable per file; the user's choice points at one of them.
+ * generate one publishable per file; those with `createParamValue` hooks one
+ * per param selection. The user's choice points at one of them.
  */
 export function selectPublishable(
   mod: PublishableModule,
   preset: PublishPreset,
 ): Publishable {
-  if (!mod.publishableByPath) return mod.publishable
   const meta = mod.publishable.meta
   const selections = preset.componentParams[meta.name] ?? {}
 
+  if (mod.publishableBySelection) {
+    const paramNames = Object.keys(mod.publishableBySelection)[0]!
+      .split("&")
+      .map((entry) => entry.split("=")[0]!)
+    const key = paramNames
+      .map(
+        (name) =>
+          `${name}=${selections[name] ?? meta.params?.[name]?.default ?? ""}`,
+      )
+      .join("&")
+    return mod.publishableBySelection[key] ?? mod.publishable
+  }
+
+  if (!mod.publishableByPath) return mod.publishable
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
     if (def.kind !== "enum" || !def.files) continue
     const value = selections[paramName] ?? def.default
@@ -181,6 +217,21 @@ export function selectPublishable(
     if (hit) return hit
   }
   return mod.publishable
+}
+
+function applySourceSubstitutions(
+  content: string,
+  meta: RegistryItem,
+  selections: Record<string, string>,
+): string {
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== "enum") continue
+    const swaps = def.source?.[selections[paramName] ?? def.default]
+    for (const [from, to] of Object.entries(swaps ?? {})) {
+      content = content.replaceAll(from, to)
+    }
+  }
+  return content
 }
 
 export interface PublishedItem {
@@ -219,11 +270,12 @@ export function publish({
 
   // 2. Rewrite surface-var refs to Tailwind suffixes. The registry-wide
   // styles.css defaults seed the map (those vars are builder-only
-  // indirection); this component's scalar-param selections override.
-  const varMap = buildStyleVarMap(styleVarDefaults ?? STYLE_VAR_DEFAULTS)
-  for (const [cssVar, suffix] of buildScalarVarMap(meta, paramSelections)) {
-    varMap.set(cssVar, suffix)
-  }
+  // indirection); the preset's tokens overlay them so a retargeted role
+  // (`--radius-control` → 2xl) exports as the utility it resolves to.
+  const varMap = buildStyleVarMap({
+    ...(styleVarDefaults ?? STYLE_VAR_DEFAULTS),
+    ...preset.tokens,
+  })
   let resolved = resolveClasses(flat, varMap)
 
   // 2b. Code-style: collapse grouped class arrays to a single string per
@@ -235,6 +287,10 @@ export function publish({
   // 3+4. Serialize and substitute.
   const literal = serializeTvConfig(resolved)
   let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+
+  // 4a. Param values that rewrite source text — an icon identifier, a prop
+  // default (see `EnumParamDef.source`).
+  content = applySourceSubstitutions(content, meta, paramSelections)
 
   // 4b. Resolve the source's `// MARK:` markers: always drop the internal
   // `…Styles` injection marker; render the rest as section separators when the
@@ -287,7 +343,9 @@ export function publish({
     externalCorpus,
   )
 
-  const registryDependencies = rewriteDeps(meta.registryDependencies)
+  const registryDependencies = rewriteDeps(
+    registryDepsFor(meta, paramSelections),
+  )
   const dependencies = [
     ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
   ]

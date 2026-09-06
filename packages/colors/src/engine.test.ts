@@ -52,9 +52,6 @@ describe("default theme", () => {
         expect(Object.keys(scales)).toContain(name)
       for (const [name, scale] of Object.entries(scales)) {
         expect(Object.keys(scale), `${name}/${mode}`).toEqual([...STEPS])
-        expect(Object.keys(defaultTheme[mode].alphas[name]!)).toEqual([
-          ...STEPS,
-        ])
       }
     }
   })

@@ -1,6 +1,6 @@
 import { PieChart } from "@/registry/ui/chart-pie"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 const data = [
   { browser: "chrome", visitors: 275 },

@@ -1,20 +1,18 @@
-import {
-  FONT_HEADING_VAR,
-  FONT_MONO_VAR,
-  FONT_SANS_VAR,
-  fontStack,
-} from "@/lib/fonts"
-import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "@/registry/theme"
-import { DEFAULTS } from "@/modules/create/preset/defaults"
-import type { DesignSystem } from "@/modules/create/preset/types"
+import { toOklch } from "@dotui/colors"
+
+import { DEFAULTS } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 /**
- * A pre-built design system the gallery can browse and present.
+ * A built-in design system the gallery can browse and apply: studio state
+ * overrides on the defaults, resolved once for the previews.
  *
  * EXPERIMENT: this hand-authored list stands in for a real preset source so we
  * can validate the gallery UI. Each entry varies only the high-impact, low-risk
- * axes (palette seeds, engine axes, density, radius) off the builder defaults —
- * enough to read as a distinct design system in the scaled-down preview.
+ * axes off the builder defaults — enough to read as a distinct design system in
+ * the scaled-down preview. Due to be replaced by fewer, high-fidelity presets.
  */
 export type Preset = {
   id: string
@@ -26,69 +24,36 @@ export type Preset = {
    * near-black accent would vanish; it shows as a monochrome light dot).
    */
   swatch: string
+  state: StudioState
   designSystem: DesignSystem
 }
 
-function makeDesignSystem(opts: {
-  neutral: string
-  accent: string
-  density?: DesignSystem["density"]
-  /** Base radius length written to `--radius` (0.625rem = builder default). */
-  radius?: string
-  /** Ramp the primary-action tokens draw from (default neutral black/white). */
-  primary?: ColorConfig["primary"]
-  /** Splits selection controls + focus onto their own ramp (else = primary). */
-  selection?: string
-  /** Chroma-curve scale (1 = engine default). */
-  vividness?: ColorConfig["vividness"]
-  /** App-background lightness per mode (engine axis; dark accepts 0–20 or 'oled'). */
-  background?: ColorConfig["background"]
-  /** Per-token semantic remaps (palette + job, optionally per-mode). */
-  colorOverrides?: ColorConfig["overrides"]
-  /** Google font families for the typography tokens (default Geist / match body). */
-  fonts?: { heading?: string; body?: string; mono?: string }
-  /** Per-component param overrides on top of the builder defaults. */
-  components?: Record<string, Record<string, string>>
-  /** Raw token overrides (semantic color roles, etc.). */
-  tokens?: Record<string, string>
-}): DesignSystem {
-  const { neutral, accent, density = "default" } = opts
-  const tokens: Record<string, string> = { ...opts.tokens }
-  if (opts.radius) tokens["--radius"] = opts.radius
-  if (opts.fonts?.heading)
-    tokens[FONT_HEADING_VAR] = fontStack(opts.fonts.heading)
-  if (opts.fonts?.body) tokens[FONT_SANS_VAR] = fontStack(opts.fonts.body)
-  if (opts.fonts?.mono) tokens[FONT_MONO_VAR] = fontStack(opts.fonts.mono)
-  const componentParams = { ...DEFAULTS.componentParams }
-  for (const [component, overrides] of Object.entries(opts.components ?? {})) {
-    componentParams[component] = { ...componentParams[component], ...overrides }
-  }
-  return {
-    ...DEFAULTS,
-    componentParams,
-    density,
-    tokens,
-    color: {
-      v: 2,
-      seeds: {
-        accent,
-        neutral,
-        ...(opts.selection ? { selection: opts.selection } : {}),
-      },
-      ...(opts.primary ? { primary: opts.primary } : {}),
-      ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
-      ...(opts.background ? { background: opts.background } : {}),
-      ...(opts.colorOverrides ? { overrides: opts.colorOverrides } : {}),
-    },
-  }
+/** OKLCH hue of a measured gray — the studio's neutral axis is a hue, not a seed. */
+const grayHue = (hex: string) => Math.round(toOklch(hex).h ?? 0)
+
+/** Mode overrides: background L* per polarity (0 on dark = OLED). */
+function modes(bg: { light?: number; dark?: number }): StudioState["modes"] {
+  return DEFAULTS.modes.map((mode) => {
+    const next = bg[mode.polarity]
+    return next === undefined ? mode : { ...mode, bg: next }
+  })
+}
+
+function definePreset(
+  preset: Omit<Preset, "state" | "designSystem"> & {
+    state: Partial<StudioState>
+  },
+): Preset {
+  const state = { ...DEFAULTS, ...preset.state }
+  return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 
 /** Geist's measured blue: Vercel's selection ramp, Origin's accent + selection. */
 const SELECTION_BLUE = "#0072f5"
 
 export const PRESETS: Preset[] = [
-  {
-    // Kept first: ORIGIN below and the gallery's ordering both rely on it.
+  // Kept first: ORIGIN below and the gallery's ordering both rely on it.
+  definePreset({
     id: "origin",
     name: "Origin",
     description: "dotUI blue, the starting point.",
@@ -96,223 +61,169 @@ export const PRESETS: Preset[] = [
     // Tracks the builder defaults on every axis but the brand blue, which
     // drives the accent ramp, the primary-action tokens, and the split
     // selection + focus ramp.
-    designSystem: {
-      ...DEFAULTS,
-      color: {
-        ...DEFAULT_COLOR_CONFIG,
-        primary: "accent",
-        seeds: {
-          ...DEFAULT_COLOR_CONFIG.seeds,
-          accent: SELECTION_BLUE,
-          selection: SELECTION_BLUE,
-        },
-      },
+    state: {
+      brand: SELECTION_BLUE,
+      primary: "accent",
+      selectionSeed: SELECTION_BLUE,
     },
-  },
-  {
+  }),
+  definePreset({
     id: "claude",
     name: "Claude",
     description: "Warm coral on sand.",
     swatch: "#e0916f",
-    designSystem: makeDesignSystem({
+    state: {
+      brand: "#d97757",
       // Claude neutrals are yellow-warm beige (hue ~96), not orange (issue #484 audit).
-      neutral: "#84806f",
-      accent: "#d97757",
+      neutralHue: grayHue("#84806f"),
       primary: "accent",
-      radius: "0.75rem",
-      density: "default",
+      radiusPx: 12,
       // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
       // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
-      fonts: { heading: "Source Serif 4", body: "Inter" },
+      headingFont: "Source Serif 4",
+      bodyFont: "Inter",
       // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
-      background: { light: 98 },
-    }),
-  },
-  {
+      modes: modes({ light: 98 }),
+    },
+  }),
+  definePreset({
     id: "supabase",
     name: "Supabase",
     description: "Emerald on cool gray.",
     swatch: "#3ecf8e",
-    designSystem: makeDesignSystem({
+    state: {
+      brand: "#3ecf8e",
       // Supabase grays are near-neutral with a faint green cast (hue ~159), not
       // cool blue; measured on production docs CSS (issue #484 audit).
-      neutral: "#6d726f",
-      accent: "#3ecf8e",
+      neutralHue: grayHue("#6d726f"),
       primary: "accent",
-      density: "default",
       // Verified against live production CSS: Supabase ships Inter.
-      fonts: { body: "Inter" },
-    }),
-  },
-  {
+      bodyFont: "Inter",
+    },
+  }),
+  definePreset({
     id: "stripe",
     name: "Stripe",
     description: "Blurple on cool slate.",
     swatch: "#7a73ff",
-    designSystem: makeDesignSystem({
-      neutral: "#687385",
-      accent: "#635bff",
+    state: {
+      brand: "#635bff",
+      neutralHue: grayHue("#687385"),
       primary: "accent",
       // Stripe controls measure ~8px radius (md = 0.75 × base).
-      radius: "0.665rem",
-      density: "default",
+      radiusPx: 10.64,
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
-      fonts: { body: "Inter" },
-      tokens: {
-        // Stripe's "floating hairline": a 1px drop shadow riding on the field border.
-        "--shadow-control": "rgb(16 17 26 / 0.16) 0 1px 1px",
-      },
-    }),
-  },
-  {
+      bodyFont: "Inter",
+      // Stripe's "floating hairline": a 1px drop shadow riding on the control.
+      buttonStyle: "outline",
+    },
+  }),
+  definePreset({
     id: "linear",
     name: "Linear",
     description: "Indigo, crisp hairlines.",
     swatch: "#818cf8",
-    designSystem: makeDesignSystem({
-      neutral: "#8a8f98",
-      accent: "#5e6ad2",
+    state: {
+      brand: "#5e6ad2",
+      neutralHue: grayHue("#8a8f98"),
       primary: "accent",
-      // Linear controls measure 32px/12px — our default scale, not compact.
-      density: "default",
       // Linear ships Inter (verified against live production CSS).
-      fonts: { body: "Inter" },
+      bodyFont: "Inter",
       // Linear's dark-first page is near-black #08090a.
-      background: { dark: 2 },
-      // Hairlines are far softer than our border default.
-      colorOverrides: {
-        "color-border": { palette: "neutral", job: "ui-hover" },
-      },
-    }),
-  },
-  {
+      modes: modes({ dark: 2 }),
+      buttonHover: "lighten",
+      surfaceStrategy: "outline",
+    },
+  }),
+  definePreset({
     id: "vercel",
     name: "Vercel",
     description: "Monochrome, hairline borders.",
     swatch: "#cbd5e1",
-    designSystem: makeDesignSystem({
-      neutral: "#737373",
-      accent: "#171717",
-      // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
-      // (verified against live computed styles; see issue #484 Phase 1 audit).
-      density: "default",
+    state: {
+      brand: "#171717",
+      neutralHue: null,
+      neutralTint: 0,
       // Geist runs black CTAs but a blue selection: focus rings + checked
-      // controls. The #171717 accent + #737373 neutral seeds are already
-      // achromatic, so the monochrome chrome needs no vividness clamp — and
-      // clamping it would flatten this chromatic selection ramp back to gray.
-      selection: SELECTION_BLUE,
-      // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
-      // n50 (the card step) on 0x0a0a0a exactly.
-      background: { dark: 0 },
-      colorOverrides: {
-        // Geist hairlines sit two ramp steps lighter than our border default.
-        "color-border": { palette: "neutral", job: "ui-hover" },
-        // Light mode inverts our elevation: white cards float on a #fafafa page.
-        "color-bg": { light: { palette: "neutral", job: "subtle-bg" } },
-        "color-card": { light: { palette: "neutral", job: "app-bg" } },
-        "color-popover": { light: { palette: "neutral", job: "app-bg" } },
-      },
-      components: {
-        command: { style: "3" },
-        badge: { radius: "--radius-full" },
-      },
-      tokens: {
-        // Geist elevation: two soft layered shadows. The hairline comes from the
-        // components' own border (color-border above) — a shadow ring on top
-        // would double it and smear the corners. Overlays and cards share the
-        // value — both float over the page.
-        "--shadow-overlay":
-          "0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)",
-        "--shadow-card":
-          "0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)",
-      },
-    }),
-  },
-  {
+      // controls.
+      selectionSeed: SELECTION_BLUE,
+      // Vercel dark runs a true-black page with #0a0a0a panels.
+      modes: modes({ dark: 0 }),
+      badgeShape: "pill",
+      surfaceCanvas: "tinted",
+    },
+  }),
+  definePreset({
     id: "airbnb",
     name: "Airbnb",
     description: "Rausch accents, ink actions.",
     swatch: "#ff5c7c",
-    designSystem: makeDesignSystem({
-      neutral: "#717171",
-      accent: "#ff385c",
+    state: {
+      brand: "#ff385c",
+      neutralHue: null,
+      neutralTint: 0,
       // Airbnb's primary CTA and selection controls are near-black (#222); Rausch
       // stays the accent for badges, links, prices (issue #484 audit).
       // Controls measure 8px radius (md = 0.75 × base), not 12.
-      radius: "0.665rem",
+      radiusPx: 10.64,
       density: "comfortable",
       // Airbnb Cereal is proprietary; Plus Jakarta Sans is the closest free match.
-      fonts: { body: "Plus Jakarta Sans" },
-      components: { badge: { radius: "--radius-full" } },
-    }),
-  },
-  {
+      bodyFont: "Plus Jakarta Sans",
+      badgeShape: "pill",
+    },
+  }),
+  definePreset({
     id: "github",
     name: "GitHub",
     description: "Primer blue, sober gray.",
     swatch: "#54aeff",
-    designSystem: makeDesignSystem({
-      neutral: "#656d76",
-      accent: "#0969da",
+    state: {
+      brand: "#0969da",
+      neutralHue: grayHue("#656d76"),
       primary: "accent",
-      density: "default",
       // GitHub's brand font, open-sourced and on Google Fonts.
-      fonts: { body: "Mona Sans" },
+      bodyFont: "Mona Sans",
       // GitHub dark sits on blue-black #0d1117.
-      background: { dark: 4.5 },
-      // Inputs are canvas-white in light but a raised panel in dark.
-      colorOverrides: {
-        "color-field": {
-          light: { palette: "neutral", job: "app-bg" },
-          dark: { palette: "neutral", job: "ui-rest" },
-        },
-      },
-      // Labels/counters are pills; focus ring is a brighter blue than link blue.
-      components: { badge: { radius: "--radius-full" } },
-      tokens: { "--color-border-focus": "#1f6feb" },
-    }),
-  },
-  {
+      modes: modes({ dark: 4.5 }),
+      // Labels/counters are pills.
+      badgeShape: "pill",
+    },
+  }),
+  definePreset({
     id: "notion",
     name: "Notion",
     description: "Warm ink, quiet blue.",
     swatch: "#d4cec2",
-    designSystem: makeDesignSystem({
-      neutral: "#787774",
+    state: {
       // The blue actually measured on Notion CTAs/links; #2383e2 rendered too light.
-      accent: "#0075de",
+      brand: "#0075de",
+      neutralHue: grayHue("#787774"),
       primary: "accent",
-      radius: "0.375rem",
-      // Notion chrome text is 14px — our default, not compact (issue #484 audit).
-      density: "default",
+      radiusPx: 6,
       // Notion ships NotionInter, a customized Inter.
-      fonts: { body: "Inter" },
-      colorOverrides: {
-        "color-border": { palette: "neutral", job: "ui-hover" },
-      },
-    }),
-  },
-  {
+      bodyFont: "Inter",
+    },
+  }),
+  definePreset({
     id: "spotify",
     name: "Spotify",
     description: "Vivid green, pill-shaped.",
     swatch: "#1ed760",
-    designSystem: makeDesignSystem({
-      neutral: "#6a6a6a",
+    state: {
       // Spotify's interactive green (buttons, Play) — brighter than the logo green.
-      accent: "#1ed760",
+      brand: "#1ed760",
+      neutralHue: null,
+      neutralTint: 0,
       primary: "accent",
-      radius: "1rem",
-      density: "default",
+      radiusPx: 16,
+      buttonRadius: "pill",
       // Spotify Circular is proprietary; Figtree is the closest free geometric.
-      fonts: { body: "Figtree" },
-      components: {
-        badge: { radius: "--radius-full" },
-        input: { style: "filled" },
-      },
-    }),
-  },
+      bodyFont: "Figtree",
+      badgeShape: "pill",
+      inputStyle: "filled",
+    },
+  }),
 ]
 
-/** The default preset — what /create starts on for first-time users. */
+/** The default preset — what /studio starts on for first-time users. */
 export const ORIGIN = PRESETS[0]!

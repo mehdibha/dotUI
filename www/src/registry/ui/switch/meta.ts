@@ -13,19 +13,11 @@ const switchMeta = {
   ],
   registryDependencies: ["focus-styles", "field"],
   params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--switch-radius",
-      default: "--radius-full",
-    },
-    "card-radius": {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--switch-card-radius",
-      default: "--radius-lg",
-      description:
-        "Radius of the switch control when it contains label content.",
+    "card-selected": {
+      kind: "enum",
+      default: "tint",
+      values: ["outline", "tint", "outline-tint"] as const,
+      description: "What marks the selected card.",
     },
   },
 } satisfies RegistryItem

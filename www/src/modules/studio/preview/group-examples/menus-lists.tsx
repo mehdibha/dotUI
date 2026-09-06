@@ -1,0 +1,25 @@
+import CommandDemo from "@/registry/ui/command/demos/basic"
+import ListBoxDemo from "@/registry/ui/list-box/demos/basic"
+import MenuDemo from "@/registry/ui/menu/demos/basic"
+import TreeDemo from "@/registry/ui/tree/demos/basic"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
+
+export default function MenusListsGroupExamples() {
+  return (
+    <Examples>
+      <Example title="Menu">
+        <MenuDemo />
+      </Example>
+      <Example title="List Box">
+        <ListBoxDemo />
+      </Example>
+      <Example title="Command">
+        <CommandDemo />
+      </Example>
+      <Example title="Tree">
+        <TreeDemo />
+      </Example>
+    </Examples>
+  )
+}

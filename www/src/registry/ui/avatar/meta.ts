@@ -13,11 +13,11 @@ const avatarMeta = {
   ],
   registryDependencies: ["context", "use-image-loading-status"],
   params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--avatar-radius",
-      default: "--radius-full",
+    fallback: {
+      kind: "enum",
+      default: "neutral",
+      values: ["neutral", "tinted"] as const,
+      description: "What initials sit on when no image loads.",
     },
   },
 } satisfies RegistryItem

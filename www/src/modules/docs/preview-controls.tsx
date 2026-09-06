@@ -1,24 +1,24 @@
 "use client"
 
-import { useEffect, useSyncExternalStore, type ReactNode } from "react"
+import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
 import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { Button } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-import { DEFAULTS, type DesignSystem } from "@/modules/create/preset"
+import { PresetPicker } from "@/modules/presets/preset-picker"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import type { DesignSystem } from "@/modules/studio/preset"
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
   useStoredPreset,
-} from "@/modules/create/preset/storage"
-import { PresetPicker } from "@/modules/presets/preset-picker"
-import { PRESETS } from "@/modules/presets/presets-data"
+} from "@/modules/studio/preset/storage"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 /**
  * Which design system and light/dark mode the docs previews render in. Global
@@ -103,8 +103,11 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 export function useResolvedPreset(): DesignSystem {
   const selected = presetStore.useValue()
   const yours = useStoredPreset()
-  if (selected === YOURS) return yours
-  return PRESETS.find((p) => p.id === selected)?.designSystem ?? DEFAULTS
+  const yoursResolved = useMemo(() => resolveDesignSystem(yours.state), [yours])
+  if (selected === YOURS) return yoursResolved
+  return (
+    PRESETS.find((p) => p.id === selected)?.designSystem ?? ORIGIN.designSystem
+  )
 }
 
 /**
@@ -153,9 +156,12 @@ function PresetSelector() {
   const selected = presetStore.useValue()
   const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
+  const yoursDesignSystem = useMemo(
+    () => resolveDesignSystem(yours.state),
+    [yours],
+  )
   const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
-  const yoursSwatch =
-    (yours.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? "var(--color-primary)"
+  const yoursSwatch = yours.state.brand
   const selectedName =
     selected === YOURS
       ? yoursName
@@ -178,7 +184,7 @@ function PresetSelector() {
             {
               id: YOURS,
               name: yoursName,
-              designSystem: yours,
+              designSystem: yoursDesignSystem,
             },
           ],
         },

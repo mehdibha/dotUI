@@ -12,7 +12,7 @@ function Loader({ className, ...props }: LoaderProps) {
     <ProgressBarPrimitives.ProgressBar
       data-loader=""
       className={cn(
-        "inline-flex shrink-0 items-center justify-center",
+        "inline-flex size-4 shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."
@@ -22,7 +22,7 @@ function Loader({ className, ...props }: LoaderProps) {
       <Loader2Icon
         role="status"
         aria-label="Loading"
-        className={cn("size-4 animate-spin")}
+        className="size-full animate-spin"
       />
     </ProgressBarPrimitives.ProgressBar>
   );

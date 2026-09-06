@@ -57,7 +57,7 @@ const MenuItem = <T extends object>({
   textValue: textValueProp,
   ...props
 }: MenuItemProps<T>) => {
-  const { item, indicator } = useStyles()()
+  const { item, indicator, submenuIndicator } = useStyles()()
   const textValue =
     textValueProp ||
     (typeof props.children === "string" ? props.children : undefined)
@@ -90,7 +90,7 @@ const MenuItem = <T extends object>({
               children
             )}
             {hasSubmenu && (
-              <span data-menu-item-indicator="" className={indicator()}>
+              <span data-menu-item-indicator="" className={submenuIndicator()}>
                 <ChevronRightIcon aria-hidden className="size-4" />
               </span>
             )}

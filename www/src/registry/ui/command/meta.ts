@@ -13,10 +13,24 @@ const commandMeta = {
   ],
   registryDependencies: ["list-box", "search-field"],
   params: {
-    style: {
+    search: {
       kind: "enum",
-      default: "1",
-      values: ["1", "2", "3"],
+      default: "field",
+      values: ["field", "bar", "prompt"] as const,
+      description:
+        "The search chrome: a boxed field, a full-bleed bar with the magnifier, or a bare prompt.",
+    },
+    inset: {
+      kind: "enum",
+      default: "inset",
+      values: ["inset", "full-bleed"] as const,
+      description: "The list gutter: rows in a padded gutter, or edge-to-edge.",
+    },
+    scale: {
+      kind: "enum",
+      default: "default",
+      values: ["default", "large"] as const,
+      description: "Menu scale, or a hero surface with larger input and rows.",
     },
   },
 } satisfies RegistryItem

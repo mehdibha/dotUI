@@ -5,9 +5,8 @@ import { Mail } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 import { Description, FieldError, Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
-import { OTPField } from "@/registry/ui/otp-field"
+import { OTPField, OTPFieldGroup } from "@/registry/ui/otp-field"
 
 const CORRECT_CODE = "123456"
 
@@ -57,14 +56,14 @@ export default function Demo() {
         isDisabled={isPending}
       >
         <Label className="sr-only">Email verification code</Label>
-        <Group>
+        <OTPFieldGroup>
           <Input />
           <Input aria-label="Digit 2" />
           <Input aria-label="Digit 3" />
           <Input aria-label="Digit 4" />
           <Input aria-label="Digit 5" />
           <Input aria-label="Digit 6" />
-        </Group>
+        </OTPFieldGroup>
         {error ? (
           <FieldError>{error}</FieldError>
         ) : (

@@ -1,5 +1,5 @@
 /**
- * Resolve scalar-param var references in a flat tv layer.
+ * Resolve surface-var references in a flat tv layer.
  *
  * Input class examples (from `styles.ts`):
  *   "rounded-(--alert-radius)"        — Tailwind v4 shorthand for arbitrary CSS var
@@ -14,9 +14,9 @@
  * made dead.
  */
 
-import type { RegistryItem, ScalarParamDef } from "@/registry/types"
+import type { RegistryItem } from "@/registry/types"
 
-import { tokenRefToSuffix, tokenValueToSuffix } from "./token-map"
+import { tokenRefToSuffix } from "./token-map"
 import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 
 /* ---------------------------- var → suffix map ---------------------------- */
@@ -49,30 +49,6 @@ export function buildStyleVarMap(
     if (!ref) continue
     const suffix = refToSuffix(ref)
     if (suffix !== undefined) map.set(cssVar, suffix)
-  }
-  return map
-}
-
-/**
- * Build the cssVar → suffix lookup for one component's scalar params, given
- * the user's preset selection for that component. Returns an empty map when
- * there are no resolvable scalar params (other types like color/spacing are
- * left to flow through unchanged for now — they're shipped as base CSS).
- */
-export function buildScalarVarMap(
-  meta: RegistryItem,
-  paramSelections: Record<string, string>,
-): Map<string, string> {
-  const map = new Map<string, string>()
-  const params = meta.params ?? {}
-  for (const [paramName, def] of Object.entries(params)) {
-    if (def.kind !== "scalar") continue
-    const scalar = def as ScalarParamDef
-    const value = paramSelections[paramName] ?? scalar.default
-    const suffix = tokenValueToSuffix(scalar.type, value)
-    if (suffix !== undefined) {
-      map.set(scalar.cssVar, suffix)
-    }
   }
   return map
 }

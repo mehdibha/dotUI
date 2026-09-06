@@ -1,9 +1,9 @@
 import { Description, Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -16,11 +16,11 @@ export default function Demo() {
       isDisabled
     >
       <Label>Width</Label>
-      <Group>
+      <NumberFieldGroup>
         <NumberFieldDecrement />
         <Input />
         <NumberFieldIncrement />
-      </Group>
+      </NumberFieldGroup>
       <Description>Enter the desired width.</Description>
     </NumberField>
   )

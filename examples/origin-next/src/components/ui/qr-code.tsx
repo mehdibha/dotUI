@@ -6,7 +6,7 @@ import { encode } from "uqr";
 
 const qrCodeStyles = tv({
   slots: {
-    root: "relative inline-flex size-32 shrink-0 items-center justify-center rounded-lg bg-bg p-2 text-fg",
+    root: "relative inline-flex size-32 shrink-0 items-center justify-center rounded-(--qr-code-radius) bg-bg p-2 text-fg",
     logo: "absolute flex size-1/5 items-center justify-center *:size-full",
   },
 });

@@ -97,6 +97,11 @@ export const colorConfigSchema = z.object({
    * per-mode pair. Applied by the semantic resolver; unknown names are inert.
    */
   overrides: z.record(z.string(), tokenOverride).optional(),
+  /**
+   * Categorical chart series (engine D11): absent = tonal shades of the accent
+   * (shadcn parity); `vivid` / `muted` spread hues around it.
+   */
+  chartPalette: z.enum(["vivid", "muted"]).optional(),
 })
 
 export type ColorConfig = z.infer<typeof colorConfigSchema>
@@ -236,6 +241,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     overrides?: unknown
     guaranteePolicy?: unknown
     borders?: unknown
+    chartPalette?: unknown
     algorithm?: string
     knobs?: Record<string, unknown>
     primary?: unknown
@@ -267,6 +273,8 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     if (raw.primary === "accent") config.primary = "accent"
     const overrides = salvageOverrides(raw.overrides)
     if (overrides) config.overrides = overrides
+    if (raw.chartPalette === "vivid" || raw.chartPalette === "muted")
+      config.chartPalette = raw.chartPalette
     return config
   }
 

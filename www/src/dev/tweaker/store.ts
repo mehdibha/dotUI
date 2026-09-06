@@ -4,7 +4,7 @@
  * A framework-free singleton (so it's unit-testable without React and tree-shakes
  * out of production via the `useTweak` build-constant split in ./use-tweak.ts).
  * Mirrors the localStorage + useSyncExternalStore pattern of
- * `@/modules/create/preset/storage.ts`, with two deliberate twists:
+ * `@/modules/studio/preset/storage.ts`, with two deliberate twists:
  *
  *   1. Value lifetime ≠ control lifetime. `values` (live, chosen values) is NEVER
  *      cleared when a control unmounts — only `controls` (the mounted set the panel

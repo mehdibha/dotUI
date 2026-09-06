@@ -19,6 +19,7 @@ const DatePicker = <T extends DatePickerPrimitive.DateValue>({
   const fieldStyles = useStyles()
   return (
     <DatePickerPrimitive.DatePicker
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ className }),
       )}
@@ -40,6 +41,7 @@ const DateRangePicker = <T extends DateRangePickerPrimitive.DateValue>({
   const fieldStyles = useStyles()
   return (
     <DateRangePickerPrimitive.DateRangePicker
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ className }),
       )}

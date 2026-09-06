@@ -773,8 +773,7 @@
           }
         ]
       },
-      "description": "The visual style of the link.",
-      "default": "isActive ? 'secondary' : 'quiet'"
+      "description": "The visual style of the link. Unset, it's `quiet`, or the design\nsystem's current-page style when `isActive`."
     }
   },
   "typeLinks": {
@@ -976,7 +975,7 @@
           "name": "type",
           "value": {
             "type": "identifier",
-            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+            "name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
           },
           "optional": false,
           "readonly": false,

@@ -2,14 +2,13 @@ import { startTransition, useCallback, useState } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { CardsGrid } from "@/components/showcase/cards-grid"
-import { DEFAULTS } from "@/modules/create/preset/defaults"
 import { PresetSwitcher } from "@/modules/marketing/preset-switcher"
 import { SkeletonRail } from "@/modules/marketing/skeleton-cards"
 import { PRESETS } from "@/modules/presets/presets-data"
 
 export function Cards() {
   const [selected, setSelected] = useState(0)
-  const preset = PRESETS[selected]?.designSystem ?? DEFAULTS
+  const preset = (PRESETS[selected] ?? PRESETS[0]!).designSystem
 
   // Re-theming the grid re-renders every styled component in it; as a transition
   // that render is interruptible and doesn't block the click.

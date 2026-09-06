@@ -39,7 +39,7 @@ export default function Demo() {
             <FieldContent>
               <div className="flex items-center gap-2">
                 <Label className="font-mono">{flag.key}</Label>
-                <Badge appearance="subtle" variant={flag.variant} size="sm">
+                <Badge variant={flag.variant} size="sm">
                   {flag.status}
                 </Badge>
               </div>

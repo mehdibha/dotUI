@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
 
 import { cn } from "@/registry/lib/utils"
+import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
+import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 
 /**
  * Frozen-open overlay compositions for the preview cards. The trigger is a real
@@ -95,6 +97,8 @@ export function OverlayPreview({
   surfaceClassName?: string
   children: ReactNode
 }) {
+  const modalBackdrop = useModalStyles()().backdrop
+  const drawerBackdrop = useDrawerStyles()().backdrop
   if (variant === "modal" || variant === "drawer") {
     return (
       <div className="absolute inset-0">
@@ -107,9 +111,7 @@ export function OverlayPreview({
           aria-hidden
           className={cn(
             "absolute inset-0",
-            variant === "modal"
-              ? "bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)"
-              : "bg-overlay/70",
+            variant === "modal" ? modalBackdrop() : drawerBackdrop(),
           )}
         />
         {variant === "modal" ? (

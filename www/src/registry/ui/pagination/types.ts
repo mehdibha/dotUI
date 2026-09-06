@@ -31,8 +31,8 @@ export interface PaginationLinkProps extends React.ComponentProps<
   isActive?: boolean
 
   /**
-   * The visual style of the link.
-   * @default isActive ? 'secondary' : 'quiet'
+   * The visual style of the link. Unset, it's `quiet`, or the design
+   * system's current-page style when `isActive`.
    */
   variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
 

@@ -14,6 +14,7 @@ const CheckboxGroup = ({
 }: CheckboxGroupPrimitives.CheckboxGroupProps) => {
   return (
     <CheckboxGroupPrimitives.CheckboxGroup
+      data-field=""
       className={composeRenderProps(className, (className) =>
         checkboxGroupStyles({ className }),
       )}

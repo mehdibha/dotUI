@@ -3,7 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 const cardVariants = tv({
   slots: {
     root: [
-      "group/card flex flex-col rounded-xl border bg-card shadow-[var(--shadow-card,none)] [--surface-radius:var(--card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-xl *:[img]:last:rounded-b-xl",
+      "group/card flex flex-col rounded-xl border border-(--card-border) bg-card shadow-[var(--shadow-card,0_0_#0000)] [--surface-radius:var(--card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-xl *:[img]:last:rounded-b-xl",
       "gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
     ],
     header: [

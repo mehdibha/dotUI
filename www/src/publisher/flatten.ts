@@ -208,10 +208,11 @@ export function flatten({
     const selectedValue = paramSelections[paramName] ?? def.default
     const overrideLayer = stylesConfig.params?.[paramName]?.[selectedValue]
     if (!overrideLayer) continue
-    const layer = stripVars(overrideLayer)
-    // Skip if the layer is effectively empty.
-    if (Object.keys(layer).length === 0) continue
-    current = mergeLayer(current, layer)
+    const { vars: _vars, density: byDensity, ...layer } = overrideLayer
+    for (const l of [layer, byDensity?.[density]]) {
+      if (!l || Object.keys(l).length === 0) continue
+      current = mergeLayer(current, l)
+    }
   }
 
   return current

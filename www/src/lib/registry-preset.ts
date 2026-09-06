@@ -2,11 +2,10 @@
  * Shared `?preset=` resolution for the `/r/*` registry routes.
  *
  * Each handler reads the compressed-base64url `preset` query param and turns it
- * into the publisher's `PublishPreset`. The create-builder codec is imported
- * lazily so it stays out of the route handlers' eager server graph.
+ * into the publisher's `PublishPreset`. The studio codec and resolver are
+ * imported lazily so they stay out of the route handlers' eager server graph.
  */
 
-import { migrateColorConfig } from "@/registry/theme"
 import type { PublishPreset } from "@/publisher/types"
 
 export function defaultPreset(): PublishPreset {
@@ -22,16 +21,18 @@ export async function resolveRequestPreset(
 ): Promise<PublishPreset> {
   if (!encoded) return defaultPreset()
   try {
-    const { decodePreset } = await import("@/modules/create/preset/codec")
-    const ds = decodePreset(encoded)
+    const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
+      import("@/modules/studio/preset/codec"),
+      import("@/modules/studio/resolve"),
+    ])
+    const preset = decodePreset(encoded)
+    const ds = resolveDesignSystem(preset.state)
     return {
-      // Old `?preset=` URLs and components.json replays can carry v1 color
-      // shapes — migrate (idempotent for v2) so they keep resolving.
-      color: ds.color ? migrateColorConfig(ds.color) : undefined,
+      color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
       tokens: ds.tokens,
-      codeOptions: ds.codeOptions,
+      codeOptions: preset.codeOptions,
       icons: ds.icons,
     }
   } catch {

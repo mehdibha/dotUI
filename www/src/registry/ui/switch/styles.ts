@@ -8,16 +8,16 @@ const { useStyles, styles } = createStyles(switchMeta, {
       root: "flex items-center has-data-description:items-start",
       control: [
         "relative flex items-center gap-2 rounded-(--switch-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--switch-card-radius)",
-        "transition-colors duration-75 has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-accent/25 has-data-label:selected:bg-accent-muted",
+        "transition-colors duration-75 has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
         "inline-flex shrink-0 cursor-pointer items-center rounded-(--switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-200",
         "selected:bg-selection",
-        "read-only:cursor-default disabled:cursor-disabled disabled:border-border disabled:bg-transparent disabled:selected:border-transparent disabled:selected:bg-disabled",
+        "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
       ],
       thumb: [
         "pointer-events-none block rounded-(--switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-200",
-        "disabled:bg-fg-disabled",
+        "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
       ],
     },
     variants: {
@@ -54,6 +54,29 @@ const { useStyles, styles } = createStyles(switchMeta, {
     comfortable: {
       slots: {
         root: "gap-3",
+      },
+    },
+  },
+  /* The card treatment — synced with checkbox and radio-group, change all three
+     together. Every value paints with the selection tokens, so the card
+     follows the family fill. The switch card always trails its control, so
+     the family's `card-control` stops at the box and the dot. */
+  params: {
+    "card-selected": {
+      outline: {
+        slots: { control: "has-data-label:selected:border-selection" },
+      },
+      tint: {
+        slots: {
+          control:
+            "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
+        },
+      },
+      "outline-tint": {
+        slots: {
+          control:
+            "has-data-label:selected:border-selection has-data-label:selected:bg-selection-muted",
+        },
       },
     },
   },

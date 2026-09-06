@@ -12,7 +12,16 @@ const otpFieldMeta = {
     },
   ],
   dependencies: ["@base-ui/react"],
-  registryDependencies: ["field", "group", "input"],
+  registryDependencies: ["field", "input"],
+  params: {
+    cells: {
+      kind: "enum",
+      default: "group",
+      values: ["group", "boxes", "underline"] as const,
+      description:
+        "How the digit cells sit: one attached group, separate boxes, or a dash per digit.",
+    },
+  },
 } satisfies RegistryItem
 
 export default otpFieldMeta

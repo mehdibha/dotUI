@@ -36,12 +36,6 @@ const fixtureMeta = {
       default: "subtle",
       values: ["subtle", "accent"] as const,
     },
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--fixture-radius",
-      default: "--radius-md",
-    },
   },
 } satisfies RegistryItem
 
@@ -286,34 +280,5 @@ const _missingValues = {
   },
 } satisfies RegistryItem
 
-/* 16) Scalar param: `cssVar` must be a `--<string>` template literal */
-const _badCssVar = {
-  name: "x",
-  type: "registry:ui",
-  files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      // @ts-expect-error — cssVar must start with "--"
-      cssVar: "alert-radius",
-      default: "--radius-md",
-    },
-  },
-} satisfies RegistryItem
-
-/* 17) Scalar param: `type` must be a known TokenType */
-const _badType = {
-  name: "x",
-  type: "registry:ui",
-  files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
-  params: {
-    // @ts-expect-error — "weight" isn't a TokenType
-    w: { kind: "scalar", type: "weight", cssVar: "--w", default: "100" },
-  },
-} satisfies RegistryItem
-
 /* Suppress "unused" warnings */
 void _missingValues
-void _badCssVar
-void _badType

@@ -21,15 +21,17 @@ The apps are not part of the monorepo workspace: each carries its own `pnpm-work
 
 ## Regenerating
 
-Nobody maintains the generated output by hand. When a change to the registry lands on `main`, CI regenerates every template and commits the result (`chore(examples): regenerate templates`), so `examples/` always matches what the registry serves.
-
-To regenerate locally — to look at what a branch produces, or to iterate on the publisher:
+The generated output is committed with the registry change that caused it, like every other generated file in the repo. Touched the registry, the publisher, presets, or `/r/*`? Regenerate and commit `examples/`:
 
 ```bash
-pnpm smoke:examples
+pnpm smoke:examples                              # all four templates, ~5 min
+pnpm smoke:examples --example spotify-next       # one template
+pnpm smoke:examples --no-build                   # write the files, skip build + typecheck
 ```
 
-With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `/r/registry.json`, a production build, `tsc --noEmit`, and checks that the theme's fonts survived into the built output. Committing the result is optional; `main` converges on its own.
+With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `/r/registry.json`, a production build, `tsc --noEmit`, and checks that the theme's fonts survived into the built output. It runs offline: the CLI's own base files (its style list and base color) are answered from `scripts/shadcn-base/`, vendored from [shadcn-ui/ui](https://github.com/shadcn-ui/ui/tree/main/apps/v4/public/r), through the CLI's `REGISTRY_URL` override — so a sandboxed agent session can regenerate too, and CI and a laptop produce the same bytes. If the CLI ever fetches a file that isn't vendored, the run logs `shadcn-base: no vendored file for …` and fails; add the file from the same place.
+
+Never hand-edit or hand-merge `examples/`: if two registry branches conflict there, regenerate on the merged result.
 
 Against a deployment instead — a Vercel preview, or production:
 
@@ -37,20 +39,25 @@ Against a deployment instead — a Vercel preview, or production:
 pnpm smoke:examples --origin https://dotui-git-my-branch.vercel.app
 ```
 
-One template only:
-
-```bash
-pnpm smoke:examples --example spotify-tanstack-start
-```
-
 Two things are normalised so a regeneration only differs when the registry did: `components.json` always points at `https://dotui.org` whatever origin served the run, and `package.json` is kept as committed unless the set of dependencies changed (`pnpm add` would otherwise re-resolve version ranges on every run). The shadcn version is pinned in `scripts/smoke.ts`.
 
 Presets are identified by their encoded design system in the init URL, the same value the create page bakes into `components.json`. The smoke gets it from `www/scripts/encode-preset.ts`, so the encoding always comes from this checkout even when the registry origin is a deployment.
 
+## Live preview while working
+
+To see real consumer output on every save, without the CLI:
+
+```bash
+pnpm examples:preview --example spotify-tanstack-start --watch   # terminal 1
+cd examples/spotify-tanstack-start && pnpm install && pnpm dev   # terminal 2
+```
+
+`examples:preview` runs the publisher in-process for every item, exactly as `/r/<name>` serves it, and writes the files where the CLI would put them, plus the stylesheet rendered from the init item's CSS fields; `--watch` re-runs on changes under `www/src/registry` and `www/src/publisher`, so the template's dev server hot-reloads the real components. Component files come out byte-identical to what the CLI installs. The stylesheet does not: `shadcn init` merges the same fields into the consumer's file in its own layout and wires the preset's fonts per framework, which the preview skips. It is a preview of the output, never the output itself — regenerate with `pnpm smoke:examples` before committing, and don't commit what the preview wrote.
+
 ## CI
 
-`.github/workflows/examples.yml` has two sides. On pull requests that touch the registry, the publisher, the `/r/*` routes, presets, or `examples/`, it regenerates each template, builds and type-checks it, and reports the diff against the committed template in the job summary (full patch as an artifact) — so a registry change is reviewable as the consumer-facing files it changes. Drift never fails a PR. On push to `main` it regenerates everything and commits the result. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
+`.github/workflows/examples.yml` runs on every pull request and merge-group run. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
 
 ## Adding a template
 
-Copy the scaffold for the framework (or add a new framework scaffold: same `showcase.tsx`, a `typecheck` and `build` script, its own `pnpm-workspace.yaml`, and a `.gitignore` for build artifacts). Register it in `scripts/smoke.ts` (`EXAMPLES`, plus `FRAMEWORKS` for a new framework), add it to the matrix in the workflow, regenerate, and commit.
+Copy the scaffold for the framework (or add a new framework scaffold: same `showcase.tsx`, a `typecheck` and `build` script, its own `pnpm-workspace.yaml`, and a `.gitignore` for build artifacts). Register it in `scripts/smoke.ts` (`EXAMPLES`, plus `FRAMEWORKS` for a new framework) and in `www/scripts/preview-example.ts`, add it to the matrix in the workflow, regenerate, and commit.

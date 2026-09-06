@@ -43,11 +43,16 @@ export interface OverrideLayer extends TvLayer {
   vars?: Record<string, string>
 }
 
+/** A param value's layer may also carry per-density classes, applied after its own. */
+export interface ParamValueLayer extends OverrideLayer {
+  density?: Partial<Record<Density, TvLayer>>
+}
+
 /** The plain-JSON extract of a component's `styles.ts` config. */
 export interface StylesConfig {
   base: TvLayer
   density?: Partial<Record<Density, OverrideLayer>>
-  params?: Record<string, Record<string, OverrideLayer>>
+  params?: Record<string, Record<string, ParamValueLayer>>
 }
 
 /**
@@ -58,8 +63,7 @@ export interface StylesConfig {
  *   and a `%%TV_CONFIG%%` placeholder where the resolved config gets injected.
  * - `stylesConfig` — the plain-JSON extract.
  * - `meta` — the shadcn-shaped registry item meta (params kept on this side
- *   only so the request-time path can read scalar param definitions for the
- *   class rewriter; they're dropped from the emitted shadcn JSON).
+ *   for the flatten step; they're dropped from the emitted shadcn JSON).
  */
 export interface Publishable {
   template: string

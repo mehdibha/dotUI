@@ -12,14 +12,6 @@ const colorAreaMeta = {
     },
   ],
   registryDependencies: ["color-thumb"],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--color-area-radius",
-      default: "--radius-md",
-    },
-  },
 } satisfies RegistryItem
 
 export default colorAreaMeta

@@ -18,6 +18,7 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
   const fieldStyles = useStyles()
   return (
     <ColorFieldPrimitives.ColorField
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ orientation: "vertical", className }),
       )}

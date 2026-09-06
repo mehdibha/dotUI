@@ -190,12 +190,7 @@ export default function Demo() {
                   <span className="truncate text-fg-muted uppercase">
                     {group.name}
                   </span>
-                  <Badge
-                    appearance="subtle"
-                    variant="neutral"
-                    size="sm"
-                    className="rounded-sm"
-                  >
+                  <Badge variant="neutral" size="sm" className="rounded-sm">
                     {group.count}
                   </Badge>
                 </span>

@@ -12,12 +12,15 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     comfortable: {},
   },
   params: {
-    style: {
-      default: {
+    container: {
+      divided: {
         base: "**:data-disclosure:not-last:border-b",
       },
-      hammamet: {
-        base: "border **:data-disclosure:not-last:border-b",
+      boxed: {
+        base: "rounded-(--accordion-radius) border bg-card **:data-disclosure:px-3 **:data-disclosure:not-last:border-b",
+      },
+      cards: {
+        base: "gap-2 **:data-disclosure:rounded-(--accordion-radius) **:data-disclosure:border **:data-disclosure:bg-card **:data-disclosure:px-3",
       },
     },
   },

@@ -13,7 +13,8 @@
     "typecheck": "pnpm build:registry && tsc --noEmit",
     "clean": "git clean -xdf .output .nitro .cache .turbo node_modules",
     "build:references": "tsx scripts/api-docs-builder/src/index.ts",
-    "probe:registry": "tsx scripts/registry-probe.ts"
+    "probe:registry": "tsx scripts/registry-probe.ts",
+    "preview:example": "tsx scripts/preview-example.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

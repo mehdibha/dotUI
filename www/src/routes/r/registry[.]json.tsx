@@ -27,6 +27,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
 import { registryUi } from "@/registry/__generated__/registry-items"
+import { registryDepsFor } from "@/publisher/publish"
 
 const JSON_HEADERS = {
   "Content-Type": "application/json; charset=utf-8",
@@ -40,6 +41,8 @@ const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
 function toIndexItem(name: string) {
   const item = META_BY_NAME.get(name)
   if (!item) return { name, type: "registry:ui" }
+  // No preset here: the deps of the default configuration /r/{name} serves.
+  const registryDependencies = registryDepsFor(item, {})
   return {
     name: item.name,
     type: item.type,
@@ -49,9 +52,7 @@ function toIndexItem(name: string) {
       : {}),
     ...(item.dependencies ? { dependencies: item.dependencies } : {}),
     ...(item.devDependencies ? { devDependencies: item.devDependencies } : {}),
-    ...(item.registryDependencies
-      ? { registryDependencies: item.registryDependencies }
-      : {}),
+    ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
   }
 }
 

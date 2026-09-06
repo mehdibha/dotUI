@@ -28,20 +28,13 @@ import {
   setDotuiDepResolver,
   setKnownDotuiNames,
 } from "./publish"
+import { consumerPath } from "./serve"
 
 // www/ — the fixture lives inside it so bare imports resolve via www/node_modules
 // and path aliases can reach registry source with plain relative specifiers.
 const WWW_DIR = path.resolve(import.meta.dirname, "../..")
 const FIXTURE_DIR = path.join(WWW_DIR, ".smoke-fixture")
 const TSC_BIN = path.join(WWW_DIR, "node_modules", "typescript", "bin", "tsc")
-
-/** Map a shipped `path` to its consumer-alias location under the fixture src. */
-function fixtureRelPath(target: string): string {
-  if (target.startsWith("ui/")) return `src/components/ui/${target.slice(3)}`
-  if (target.startsWith("lib/")) return `src/lib/${target.slice(4)}`
-  if (target.startsWith("hooks/")) return `src/hooks/${target.slice(6)}`
-  return `src/${target}`
-}
 
 function writeFixtureFile(relPath: string, content: string): void {
   const abs = path.join(FIXTURE_DIR, relPath)
@@ -67,7 +60,7 @@ async function buildFixture(): Promise<void> {
     })
     for (const file of item.files ?? []) {
       if (file.content == null) continue
-      writeFixtureFile(fixtureRelPath(file.path), file.content)
+      writeFixtureFile(consumerPath(file.path), file.content)
     }
   }
 

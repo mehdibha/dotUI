@@ -171,7 +171,6 @@ export default function Demo() {
                               <Badge
                                 key={e.id}
                                 variant={e.variant}
-                                appearance="subtle"
                                 size="sm"
                                 className="flex w-full min-w-0 justify-start overflow-hidden"
                               >

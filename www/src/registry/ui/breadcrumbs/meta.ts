@@ -12,6 +12,20 @@ const breadcrumbsMeta = {
     },
   ],
   registryDependencies: ["focus-styles"],
+  params: {
+    separator: {
+      kind: "enum",
+      default: "chevron",
+      values: ["chevron", "slash"] as const,
+    },
+    tone: {
+      kind: "enum",
+      default: "muted",
+      values: ["muted", "accent"] as const,
+      description:
+        "Ancestor crumbs: muted labels that sharpen on hover, or accent links.",
+    },
+  },
 } satisfies RegistryItem
 
 export default breadcrumbsMeta

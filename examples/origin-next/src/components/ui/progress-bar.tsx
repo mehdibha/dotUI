@@ -7,9 +7,15 @@ import { tv, type VariantProps } from "tailwind-variants";
 const progressBarVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
-    track:
-      "relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted",
-    fill: "data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all",
+    track: [
+      "relative flex w-full items-center overflow-x-hidden rounded-full",
+      "h-1",
+      "bg-muted",
+    ],
+    fill: [
+      "h-full w-full bg-primary transition-all",
+      "data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide",
+    ],
     output: ["ml-auto text-fg-muted tabular-nums", "text-sm"],
   },
   variants: {},
@@ -33,6 +39,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   const { root } = progressBarVariants();
   return (
     <ProgressBarPrimitive.ProgressBar
+      data-field=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}
@@ -78,15 +85,10 @@ const ProgressBarFill = ({
       data-rac=""
       data-indeterminate={isIndeterminate || undefined}
       className={fill({ className })}
-      style={
-        {
-          transform:
-            typeof percentage === "number"
-              ? `scaleX(${percentage / 100})`
-              : undefined,
-          ...style,
-        } as React.CSSProperties
-      }
+      style={{
+        width: typeof percentage === "number" ? `${percentage}%` : undefined,
+        ...style,
+      }}
       {...props}
     />
   );

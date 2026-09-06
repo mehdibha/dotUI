@@ -1,11 +1,11 @@
 "use client"
 
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -24,11 +24,11 @@ export default function Demo({
       isInvalid={isInvalid}
     >
       {label && <Label>{label}</Label>}
-      <Group>
+      <NumberFieldGroup>
         <NumberFieldDecrement />
         <Input />
         <NumberFieldIncrement />
-      </Group>
+      </NumberFieldGroup>
     </NumberField>
   )
 }

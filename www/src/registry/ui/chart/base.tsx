@@ -31,7 +31,7 @@ import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip"
 import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal"
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
 
-import { cn } from "@/registry/lib/utils"
+import { useStyles } from "./styles"
 
 /* Chart core: the host, the house defaults, and the frame every chart family
    composes. No mark is imported here — families own theirs, so a bar chart
@@ -690,9 +690,9 @@ export type ChartComponentProps<
 const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-background:var(--color-popover)]",
   "[--ts-chart-tooltip-color:var(--color-fg)]",
-  "[--ts-chart-tooltip-border:1px_solid_var(--color-border-elevated)]",
+  "[--ts-chart-tooltip-border:1px_solid_var(--overlay-border)]",
   "[--ts-chart-tooltip-border-radius:var(--popover-radius)]",
-  "[--ts-chart-tooltip-shadow:var(--shadow-overlay,var(--shadow-md))]",
+  "[--ts-chart-tooltip-shadow:var(--shadow-popover,var(--shadow-md))]",
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ")
 
@@ -788,8 +788,9 @@ export function Chart<TDatum, TXValue extends ChartValue>({
   ...props
 }: ChartProps<TDatum, TXValue>) {
   const draw = useRef<ReturnType<typeof createDrawEntrance> | null>(null)
+  const { container } = useStyles()()
   return (
-    <div className={cn("relative", className)}>
+    <div className={container({ className })}>
       <RendererChart
         renderer={MOTION_RENDERER}
         aspectRatio={

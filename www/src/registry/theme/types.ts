@@ -2,7 +2,7 @@
  * Semantic color vocabulary types (token system v2 — see SPEC.md).
  *
  * A token targets the engine's primitives by (palette, step) — steps are the
- * 12-job ladder — or an alpha twin, a solved on-label, a mix, or a literal.
+ * 12-job ladder — or a solved on-label, a mix, or a literal.
  * Targets are per-mode capable: `.dark` re-points are generated, never
  * hand-authored. `@dotui/colors` stays the pure engine (ramp generation);
  * this layer owns the semantic vocabulary + CSS.
@@ -22,15 +22,9 @@ export type PrimaryColorSource = "neutral" | "accent"
 /** How a semantic token resolves to a CSS value. */
 export type SemanticTarget =
   | { ref: { palette: string; step: StepName } } // → var(--<palette>-<step>)
-  | { alpha: { palette: string; step: StepName } } // → var(--<palette>-a<step>)
   | { on: { palette: string; step: "700" | "800" } } // → var(--on-<palette>-<step>)
   | { value: string } // a literal CSS value
-  | {
-      mix: {
-        space: "oklab" | "oklch" | "srgb"
-        stops: [SemanticTarget, number, SemanticTarget]
-      }
-    }
+  | { mix: [SemanticTarget, number, SemanticTarget] } // → color-mix(in oklab, a <n>%, b)
 
 /** Customizer grouping for a token. The picker filters on this today. */
 export type SemanticCategory = "background" | "foreground" | "border"

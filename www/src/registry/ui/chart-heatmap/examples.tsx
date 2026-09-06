@@ -1,6 +1,6 @@
 import { heatmapColors, HeatmapChart } from "@/registry/ui/chart-heatmap"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 const hours = [
   { hour: "09", base: 32 },

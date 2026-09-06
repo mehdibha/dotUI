@@ -2,21 +2,23 @@ import { type ReactNode, useCallback, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
+import { ToastProvider } from "@/registry/ui/toast"
 import {
   ExamplesIndex,
   GroupExamplesIndex,
-} from "@/modules/create/__generated__/examples"
-import { decodePreset } from "@/modules/create/preset/codec"
-import { DEFAULTS } from "@/modules/create/preset/defaults"
+} from "@/modules/studio/__generated__/examples"
+import { DEFAULTS } from "@/modules/studio/axes"
+import { decodeState } from "@/modules/studio/preset/codec"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
   usePreviewNavigationMessages,
-} from "@/modules/create/preset/iframe-sync"
-import type { DesignSystem } from "@/modules/create/preset/types"
-import { BlocksIndex } from "@/modules/create/preview/blocks"
-import { PreviewInspector } from "@/modules/create/preview/inspector"
-import { PresetOverview } from "@/modules/create/preview/overview"
+} from "@/modules/studio/preset/iframe-sync"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { PreviewInspector } from "@/modules/studio/preview/inspector"
+import { PresetOverview } from "@/modules/studio/preview/overview"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 // Non-route file so the examples barrel, preset codec and overview stay in
 // this route's split chunk instead of the router's critical import graph.
@@ -54,7 +56,7 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   const { preset } = route.useSearch()
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    preset ? decodePreset(preset) : DEFAULTS,
+    resolveDesignSystem(preset ? decodeState(preset) : DEFAULTS),
   )
 
   const navigate = route.useNavigate()
@@ -119,6 +121,9 @@ export function PreviewPage() {
     >
       {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
       {embedded && <PreviewInspector />}
+      {/* Inside the provider so toasts wear the previewed params; the app
+          itself fires none. */}
+      <ToastProvider />
       {content}
     </DesignSystemProvider>
   )

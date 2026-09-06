@@ -23,6 +23,7 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
   return (
     <SliderPrimitive.Slider
       data-slider=""
+      data-field=""
       className={composeRenderProps(className, (cn, { orientation }) =>
         root({ className: cn, orientation }),
       )}

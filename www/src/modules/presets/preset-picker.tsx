@@ -37,8 +37,7 @@ import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Switch } from "@/registry/ui/switch"
 import { Controls } from "@/components/showcase/controls"
-import { DEFAULT_RADIUS, RADIUS_VAR } from "@/modules/create/layout"
-import type { DesignSystem } from "@/modules/create/preset"
+import type { DesignSystem } from "@/modules/studio/preset"
 
 interface PresetPickerItem {
   id: string
@@ -402,7 +401,7 @@ function fontPair(designSystem: DesignSystem) {
 
 /** The control radius the base lands on — `--radius-md` = 0.75 × the base. */
 function radiusLabel(designSystem: DesignSystem) {
-  const raw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
+  const raw = designSystem.tokens["--radius"] ?? "0.625rem"
   const parsed = Number.parseFloat(raw)
   const px = raw.trim().endsWith("rem") ? parsed * 16 : parsed
   return `${Math.round((Number.isFinite(px) ? px : 10) * 0.75)}px`
@@ -659,7 +658,7 @@ function PresetVignette() {
           <ArrowRightIcon />
         </Button>
         <Button size="sm">Preview</Button>
-        <Badge variant="accent" appearance="subtle" size="sm">
+        <Badge variant="accent" size="sm">
           Beta
         </Badge>
       </div>

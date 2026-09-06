@@ -22,6 +22,7 @@ const TimeField = <T extends TimeFieldPrimitive.TimeValue>({
   return (
     <TimeFieldPrimitive.TimeField
       data-time-field=""
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ className: cn("group/time-field", className) }),
       )}

@@ -1,20 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { type VariantProps, tv } from "tailwind-variants";
 
 import { useImageLoadingStatus } from "@/hooks/use-image-loading-status";
 import type { ImageLoadingStatus } from "@/hooks/use-image-loading-status";
 import { createContext } from "@/lib/context";
-
-const avatarStyles = tv({
+const avatarVariants = tv({
   slots: {
     root: "group/avatar relative inline-flex size-8 shrink-0 rounded-full bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
     image: "aspect-square size-full rounded-[inherit] object-cover",
     fallback:
-      "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-none group-data-[size=sm]/avatar:text-xs",
+      "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-ui group-data-[size=sm]/avatar:text-xs",
     badge: [
-      "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg select-none with-[left]:right-auto with-[top]:bottom-auto",
+      "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg select-ui with-[left]:right-auto with-[top]:bottom-auto",
       "not-with-[size]:group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
       "not-with-[size]:group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2",
       "not-with-[size]:group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",
@@ -30,14 +29,21 @@ const avatarStyles = tv({
   },
   variants: {
     size: {
-      sm: { group: "*:data-avatar:size-6", root: "size-6" },
-      md: { group: "*:data-avatar:size-8", root: "size-8" },
-      lg: { group: "*:data-avatar:size-10", root: "size-10" },
+      sm: {
+        group: "*:data-avatar:size-6",
+        root: "size-6",
+      },
+      md: {
+        group: "*:data-avatar:size-8",
+        root: "size-8",
+      },
+      lg: {
+        group: "*:data-avatar:size-10",
+        root: "size-10",
+      },
     },
   },
 });
-
-const { root, image, fallback, badge, group, groupCount } = avatarStyles();
 
 const [AvatarContext, useAvatarContext] = createContext<{
   status: ImageLoadingStatus;
@@ -47,11 +53,24 @@ const [AvatarContext, useAvatarContext] = createContext<{
   strict: true,
 });
 
+/** A stable 0–3 index from the fallback text, so tinted fallbacks differ per entity. */
+function tintOf(children: React.ReactNode): number {
+  const text =
+    typeof children === "string" || typeof children === "number"
+      ? String(children)
+      : "";
+  let hash = 0;
+  for (let i = 0; i < text.length; i++)
+    hash = (hash * 31 + text.charCodeAt(i)) | 0;
+  return Math.abs(hash) % 4;
+}
+
 interface AvatarProps
-  extends React.ComponentProps<"span">, VariantProps<typeof avatarStyles> {}
+  extends React.ComponentProps<"span">, VariantProps<typeof avatarVariants> {}
 
 function Avatar({ className, size = "md", ...props }: AvatarProps) {
   const [status, setStatus] = React.useState<ImageLoadingStatus>("idle");
+  const { root } = avatarVariants();
 
   return (
     <AvatarContext value={{ status, setStatus }}>
@@ -79,6 +98,7 @@ function AvatarImage({
 }: AvatarImageProps) {
   const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin });
   const { setStatus } = useAvatarContext("AvatarImage");
+  const { image } = avatarVariants();
 
   React.useLayoutEffect(() => {
     setStatus(status);
@@ -100,15 +120,23 @@ function AvatarImage({
 
 interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
-const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
+const AvatarFallback = ({
+  className,
+  children,
+  ...props
+}: AvatarFallbackProps) => {
   const { status } = useAvatarContext("AvatarFallback");
+  const { fallback } = avatarVariants();
   if (status !== "loaded")
     return (
       <span
         data-avatar-fallback=""
+        data-tint={tintOf(children)}
         className={fallback({ className })}
         {...props}
-      />
+      >
+        {children}
+      </span>
     );
   return null;
 };
@@ -116,19 +144,21 @@ const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
 interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
 
 const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
+  const { badge } = avatarVariants();
   return (
     <span data-avatar-badge="" className={badge({ className })} {...props} />
   );
 };
 
 interface AvatarGroupProps
-  extends React.ComponentProps<"div">, VariantProps<typeof avatarStyles> {}
+  extends React.ComponentProps<"div">, VariantProps<typeof avatarVariants> {}
 
 const AvatarGroup = ({
   className,
   size = "md",
   ...props
 }: AvatarGroupProps) => {
+  const { group } = avatarVariants();
   return (
     <div
       data-avatar-group=""
@@ -142,6 +172,7 @@ const AvatarGroup = ({
 interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
 
 const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
+  const { groupCount } = avatarVariants();
   return (
     <span
       data-avatar-group-count=""

@@ -1,7 +1,7 @@
 import { stackY } from "@/registry/ui/chart"
 import { BarChart } from "@/registry/ui/chart-bar"
-import { Example } from "@/modules/create/preview/example"
-import { Examples } from "@/modules/create/preview/examples"
+import { Example } from "@/modules/studio/preview/example"
+import { Examples } from "@/modules/studio/preview/examples"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },

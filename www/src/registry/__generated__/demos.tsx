@@ -2021,10 +2021,6 @@ export const DemosIndex: Record<
 		files: ["ui/progress-bar/demos/custom-value-label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/custom-value-label")),
 	},
-	"progress-bar/demos/duration": {
-		files: ["ui/progress-bar/demos/duration.tsx"],
-		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/duration")),
-	},
 	"progress-bar/demos/file-upload-list": {
 		files: ["ui/progress-bar/demos/file-upload-list.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/file-upload-list")),
