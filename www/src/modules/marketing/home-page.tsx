@@ -1,19 +1,16 @@
 import { LinkButton } from "@/registry/ui/button"
+import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
+import { HeroStack } from "@/modules/marketing/hero-stack"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 
-function StackLink({ href, children }: { href: string; children: string }) {
+function HeroEyebrow() {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="underline decoration-fg-muted/40 underline-offset-3 hover:text-fg"
-    >
-      {children}
-    </a>
+    <Eyebrow className="mb-3 border-transparent bg-inverse/5">
+      Currently in beta
+    </Eyebrow>
   )
 }
 
@@ -27,6 +24,7 @@ export function HomePage() {
         {/* Hero section */}
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
+            <HeroEyebrow />
             <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/8.5),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio <br className="max-sm:hidden" />
               <span className="text-fg-muted">
@@ -34,8 +32,7 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-              Every design decision is yours. Create, tweak and refine your
-              system live. Install it with shadcn CLI as code you own.
+              Every design decision is yours. Create, refine and own the code.
               {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
@@ -46,19 +43,11 @@ export function HomePage() {
                 View components
               </LinkButton>
             </div>
-            <p className="mt-6 text-sm text-balance text-fg-muted">
-              Currently in beta · Built on{" "}
-              <StackLink href="https://react-spectrum.adobe.com/react-aria">
-                React Aria
-              </StackLink>
-              , <StackLink href="https://base-ui.com">Base UI</StackLink> and{" "}
-              <StackLink href="https://tailwindcss.com">Tailwind CSS</StackLink>
-              .
-            </p>
+            <HeroStack />
           </div>
         </section>
 
-        <section className="mt-24">
+        <section className="mt-28 md:mt-32">
           <Cards />
         </section>
 
