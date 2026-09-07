@@ -10,21 +10,34 @@ import { TailwindIcon } from "@/components/icons/tailwind"
 
 const tools = [
   {
-    label: "Built on React Aria",
+    prefix: "Built on",
+    name: "React Aria",
     href: "https://react-spectrum.adobe.com/react-aria",
     icon: <ReactAriaIcon className="size-5" />,
   },
   {
-    label: "Styled with Tailwind",
+    prefix: "Styled with",
+    name: "Tailwind",
     href: "https://tailwindcss.com",
     icon: <TailwindIcon className="size-8 text-[#38bdf8]" />,
   },
   {
-    label: "Installed via shadcn CLI",
+    prefix: "Installed via",
+    name: "shadcn CLI",
     href: "https://ui.shadcn.com",
     icon: <ShadcnIcon className="size-6" />,
   },
-]
+].map((tool) => ({ ...tool, label: `${tool.prefix} ${tool.name}` }))
+
+type Tool = (typeof tools)[number]
+
+function Label({ tool }: { tool: Tool }) {
+  return (
+    <>
+      {tool.prefix} <span className="font-medium">{tool.name}</span>
+    </>
+  )
+}
 
 const handle = Tooltip.createHandle<string>()
 
@@ -56,14 +69,14 @@ const REDUCED_VARIANTS = {
   exit: { opacity: 0, transition: { duration: EXIT } },
 }
 
-function TipLabel({ label, dir }: { label: string; dir: number }) {
+function TipLabel({ tool, dir }: { tool: Tool; dir: number }) {
   const reduce = useReducedMotion() ?? false
   const variants = reduce ? REDUCED_VARIANTS : VARIANTS
   const measure = useRef<HTMLSpanElement>(null)
   const [width, setWidth] = useState<number>()
   useLayoutEffect(() => {
     setWidth(measure.current?.offsetWidth)
-  }, [label])
+  }, [tool])
   return (
     <motion.div
       className="relative overflow-hidden whitespace-nowrap"
@@ -72,11 +85,11 @@ function TipLabel({ label, dir }: { label: string; dir: number }) {
       transition={reduce ? { duration: 0 } : { duration: 0.2, ease: EASE_OUT }}
     >
       <span ref={measure} aria-hidden className="invisible block w-max">
-        {label}
+        <Label tool={tool} />
       </span>
       <AnimatePresence initial={false} custom={dir}>
         <motion.span
-          key={label}
+          key={tool.label}
           custom={dir}
           className="absolute inset-0"
           variants={variants}
@@ -85,7 +98,7 @@ function TipLabel({ label, dir }: { label: string; dir: number }) {
           exit="exit"
           transition={{ duration: ENTER, ease: EASE_OUT }}
         >
-          {label}
+          <Label tool={tool} />
         </motion.span>
       </AnimatePresence>
     </motion.div>
@@ -102,7 +115,9 @@ function SharedTooltip() {
         if (index !== -1 && index !== prev.current.index) {
           prev.current = { index, dir: Math.sign(index - prev.current.index) }
         }
-        const dir = prev.current.dir
+        const { dir } = prev.current
+        const tool = tools[prev.current.index]
+        if (!tool) return null
         return (
           <Tooltip.Portal>
             <Tooltip.Positioner
@@ -111,7 +126,7 @@ function SharedTooltip() {
               className="transition-transform duration-200 ease-out"
             >
               <Tooltip.Popup className="rounded-(--tooltip-radius) border border-border bg-neutral px-3 py-1.5 text-xs text-fg-on-neutral shadow-[var(--shadow-overlay,none)] transition-[opacity,scale] duration-150 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
-                <TipLabel label={payload ?? ""} dir={dir} />
+                <TipLabel tool={tool} dir={dir} />
               </Tooltip.Popup>
             </Tooltip.Positioner>
           </Tooltip.Portal>
@@ -121,7 +136,7 @@ function SharedTooltip() {
   )
 }
 
-function Logo({ tool }: { tool: (typeof tools)[number] }) {
+function Logo({ tool }: { tool: Tool }) {
   return (
     <Tooltip.Trigger
       handle={handle}
