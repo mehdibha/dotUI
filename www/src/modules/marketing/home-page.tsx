@@ -47,7 +47,7 @@ export function HomePage() {
           </div>
         </section>
 
-        <section className="mt-28 md:mt-32">
+        <section className="mt-24 md:mt-28">
           <Cards />
         </section>
 
