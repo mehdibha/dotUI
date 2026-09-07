@@ -14,6 +14,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	card: () => import("@/registry/ui/card/examples"),
 	"chart-area": () => import("@/registry/ui/chart-area/examples"),
 	"chart-bar": () => import("@/registry/ui/chart-bar/examples"),
+	"chart-heatmap": () => import("@/registry/ui/chart-heatmap/examples"),
 	"chart-line": () => import("@/registry/ui/chart-line/examples"),
 	"chart-pie": () => import("@/registry/ui/chart-pie/examples"),
 	"chart-radar": () => import("@/registry/ui/chart-radar/examples"),

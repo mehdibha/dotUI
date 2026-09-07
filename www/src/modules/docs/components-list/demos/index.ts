@@ -12,6 +12,7 @@ import { CalendarDemo } from "./calendar"
 import { CardDemo } from "./card"
 import { ChartAreaDemo } from "./chart-area"
 import { ChartBarDemo } from "./chart-bar"
+import { ChartHeatmapDemo } from "./chart-heatmap"
 import { ChartLineDemo } from "./chart-line"
 import { ChartPieDemo } from "./chart-pie"
 import { ChartRadarDemo } from "./chart-radar"
@@ -86,6 +87,7 @@ export const componentDemos: Record<string, ComponentType> = {
   card: CardDemo,
   "chart-area": ChartAreaDemo,
   "chart-bar": ChartBarDemo,
+  "chart-heatmap": ChartHeatmapDemo,
   "chart-line": ChartLineDemo,
   "chart-pie": ChartPieDemo,
   "chart-radar": ChartRadarDemo,

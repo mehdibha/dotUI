@@ -1,102 +1,120 @@
 import type * as React from "react"
+import type {
+  ChartPoint,
+  ChartRendererRenderContext,
+  ChartValue,
+} from "@tanstack/charts"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
-import type { ChartConfig } from "./base"
+import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
 
-export type { ChartConfig }
-
-/**
- * Wraps a Recharts chart with theming and a responsive container. Pass your
- * `config` (series → label / color / icon) and a single Recharts chart child.
- */
-export interface ChartContainerProps extends React.ComponentProps<"div"> {
-  /**
-   * Series metadata keyed by `dataKey`: a `label`, a `color` (or a per-theme
-   * `theme` map), and an optional `icon`. Drives tooltips, legends, and the
-   * `--color-<key>` CSS variables.
-   */
-  config: ChartConfig
-
-  /**
-   * Fallback dimensions used for the first server render (the responsive
-   * container has no measured size yet). Keep this set or the chart can
-   * collapse in SSR / production builds.
-   * @default { width: 320, height: 200 }
-   */
-  initialDimension?: { width: number; height: number }
-}
+export type { ChartAnimate, ChartFocus, ChartTooltipAnchor }
 
 /**
- * Styled content for a chart tooltip. Use inside `<ChartTooltip content={...} />`.
+ * Props every chart family component shares: the interaction and animation
+ * behavior, and the host surface — sizing, callbacks, and the HTML overlay.
+ * Family props interfaces extend this, so each family's API reference lists
+ * them alongside its own options.
+ * @ignore no page of its own — it renders inlined into every family reference
  */
-export interface ChartTooltipContentProps extends React.ComponentProps<"div"> {
-  /**
-   * Shape of the color indicator shown next to each series.
-   * @default "dot"
-   */
-  indicator?: "line" | "dot" | "dashed"
+export interface ChartFamilyProps {
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
+
+  /** Longer description, announced after the name. */
+  ariaDescription?: string
 
   /**
-   * Hide the tooltip label (the row header).
-   * @default false
+   * How pointer and keyboard resolve to points. Group modes highlight every
+   * series at the same position; `nearest` matches a single point.
+   * @default "group-x"
    */
-  hideLabel?: boolean
+  focus?: ChartFocus
+
+  /** Pixel radius beyond which the pointer stops matching a point. */
+  maxFocusDistance?: number
 
   /**
-   * Hide the colored indicator next to each value.
-   * @default false
+   * Where the tooltip attaches: to the focused point, to the pointer, or to
+   * the center of the focused group.
+   * @default "group-center"
    */
-  hideIndicator?: boolean
-
-  /** Key used to resolve the series name against `config`. */
-  nameKey?: string
-
-  /** Key used to resolve the label against `config`. */
-  labelKey?: string
-}
-
-/**
- * Styled content for a chart legend. Use inside `<ChartLegend content={...} />`.
- */
-export interface ChartLegendContentProps extends React.ComponentProps<"div"> {
-  /**
-   * Hide the per-series icon/swatch.
-   * @default false
-   */
-  hideIcon?: boolean
-
-  /** Key used to resolve the series name against `config`. */
-  nameKey?: string
+  tooltipAnchor?: ChartTooltipAnchor
 
   /**
-   * Legend position relative to the chart, used for spacing.
-   * @default "bottom"
+   * Keep the tooltip pinned to the focused position instead of letting it
+   * follow the pointer between points.
+   * @default true
    */
-  verticalAlign?: "top" | "bottom"
-}
-
-/**
- * A visually-hidden table that mirrors a chart's series for assistive tech
- * (dotUI accessibility layer; not part of shadcn). Render it alongside any chart
- * with the same props you already pass. It adapts to the data shape: wide-format
- * (bar/line/area/radar) gets one column per series; long-format (pie/radial) gets
- * a two-column category/value table.
- */
-export interface ChartDataTableProps extends React.ComponentProps<"table"> {
-  /** The same data array passed to the chart. */
-  data: Record<string, unknown>[]
-
-  /** The same `config` passed to `ChartContainer`. */
-  config: ChartConfig
+  tooltipSticky?: boolean
 
   /**
-   * Key in each datum used as the row header — the x-axis category for cartesian
-   * charts, or the slice/segment name for pie and radial charts.
+   * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
+   * but lose their live region, so screen readers get silent stops — keep the
+   * tooltip unless the chart is decorative.
+   * @default true
    */
-  labelKey?: string
+  tooltip?: boolean
 
-  /** Header for the `labelKey` column. Defaults to a capitalized `labelKey`. */
-  labelName?: string
+  /**
+   * Animation between data states, and the entrance on first client paint:
+   * `false` to disable, a `{ type: "tween" }` with duration and easing, or a
+   * `{ type: "spring" }` with stiffness, damping, and mass. Charts above ~800
+   * points animate off automatically, and reduced motion is always respected.
+   * @default { type: "spring", stiffness: 170, damping: 26 }
+   */
+  animate?: ChartAnimate
 
-  /** Optional caption announced to assistive tech. */
-  caption?: string
+  /**
+   * Chart height in pixels.
+   * @default 256
+   */
+  height?: number
+
+  /** Width/height ratio, used instead of `height` when set. */
+  aspectRatio?: number
+
+  /** Fixed width. Omit to fill the container and track resizes. */
+  width?: number
+
+  /** Width assumed for the first render, before the container is measured. */
+  initialWidth?: number
+
+  /** Class applied to the chart's outer box — size and place the chart with it. */
+  className?: string
+
+  /** Style applied to the chart surface. */
+  style?: React.CSSProperties
+
+  /** Tab index of the chart surface. Charts are keyboard-focusable. */
+  tabIndex?: number
+
+  /** Prefix for generated element ids. */
+  idPrefix?: string
+
+  /** Called when the focused point changes, by pointer or keyboard. */
+  onFocusChange?: (
+    point: ChartPoint<unknown, ChartValue, number> | null,
+  ) => void
+
+  /** Called when the focused group changes, in the group focus modes. */
+  onFocusGroupChange?: (
+    points: readonly ChartPoint<unknown, ChartValue, number>[],
+  ) => void
+
+  /** Called when a point is activated with Enter, Space, or a click. */
+  onSelect?: (point: ChartPoint<unknown, ChartValue, number> | null) => void
+
+  /** Called after every paint, with the container, SVG, and scene. */
+  onRender?: (
+    context: ChartRendererRenderContext<unknown, ChartValue, number>,
+  ) => void
+
+  /** Replaces the tooltip body. Receives the default body to wrap or discard. */
+  renderTooltipBody?: (
+    context: ChartTooltipBodyRenderContext<unknown, ChartValue, number>,
+  ) => React.ReactNode
+
+  /** Overlay rendered above the chart surface, ignoring pointer events. */
+  children?: React.ReactNode
 }

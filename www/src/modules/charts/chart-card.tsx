@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { RotateCcwIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
@@ -9,6 +9,47 @@ import { ShowcaseCard } from "@/components/showcase-card"
 
 import { ChartCodeModal } from "./chart-code-modal"
 import { getDemoComponent, POLAR_FAMILIES } from "./data"
+
+/**
+ * Mounts the chart once the card comes near the viewport; until then the card
+ * surface stays empty. The page stacks ~70 live chart previews; mounting them
+ * all at once blocks the main thread for seconds, so offscreen charts wait
+ * their turn. Only the chart body is deferred — the card shell renders on
+ * first paint.
+ */
+function LazyChartBody({
+  placeholderClassName,
+  children,
+}: {
+  /** Sized to match the mounted chart exactly, so mounting never shifts layout. */
+  placeholderClassName: string
+  children: React.ReactNode
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "600px 0px" },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className="w-full">
+      {visible ? children : <div className={placeholderClassName} />}
+    </div>
+  )
+}
 
 interface ChartCardProps {
   /** Family id, e.g. `chart-bar` — decides polar vs cartesian sizing. */
@@ -26,10 +67,10 @@ interface ChartCardProps {
  * the real, interactive component (with its source) lives in the docs, which
  * "Show code" links to.
  *
- * Every card is the same height and padding so the gallery reads as one set.
- * Sizing mirrors shadcn's charts page: cartesian charts (line/bar/area) fill the
- * frame width, polar charts (pie/radar/radial) stay square and are capped at
- * 250px (shadcn's size) so they don't balloon, centered in the frame.
+ * Cards have no fixed height (mirroring shadcn's charts page): the chart draws
+ * at 16/9 of the frame width and the card wraps it, so every card in a grid of
+ * equal columns lands at the same height. Polar charts are capped at 250px
+ * wide so they read as a circle rather than a lone arc in a wide box.
  */
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   // Bumping this key remounts the chart, replaying its entry animation.
@@ -38,6 +79,12 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   if (!Component) return null
 
   const isPolar = POLAR_FAMILIES.has(familyId)
+  // What the chart resolves to once mounted — the placeholder mirrors it so
+  // neither lazy mounting nor the Suspense chunk load shifts layout.
+  const chartFootprint = cn(
+    "aspect-video w-full",
+    isPolar && "mx-auto max-w-[250px]",
+  )
 
   return (
     <ShowcaseCard
@@ -57,24 +104,25 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
           <ChartCodeModal demoKey={demoKey} label={label} />
         </div>
       }
-      className="h-80"
+      className="h-auto"
       inert
       aria-hidden="true"
     >
-      {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
-          wrapper so it never insets the fallback. */}
-      <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
-        <div
-          className={cn(
-            "flex size-full items-center justify-center p-9 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!",
-            isPolar
-              ? "[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:max-h-[250px]! [&_[data-slot=chart]]:w-auto!"
-              : "[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!",
-          )}
-        >
-          <Component key={replayKey} />
-        </div>
-      </Suspense>
+      <div className="p-6">
+        <LazyChartBody placeholderClassName={chartFootprint}>
+          <Suspense fallback={<div className={chartFootprint} />}>
+            <div
+              className={cn(
+                "w-full animate-in duration-300 fade-in [&_*]:pointer-events-none [&>div]:w-full",
+                isPolar &&
+                  "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
+              )}
+            >
+              <Component key={replayKey} />
+            </div>
+          </Suspense>
+        </LazyChartBody>
+      </div>
     </ShowcaseCard>
   )
 }

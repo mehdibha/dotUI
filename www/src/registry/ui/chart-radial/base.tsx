@@ -1,94 +1,383 @@
 "use client"
 
-import { PolarGrid, RadialBar, RadialBarChart } from "recharts"
+import type {
+  ChannelField,
+  ChartBuildContext,
+  ChartKey,
+} from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import type { PolarGuide, PolarMark } from "@tanstack/charts/polar"
+import {
+  polar,
+  radialArc,
+  radialGrid,
+  radialText,
+} from "@tanstack/charts/polar"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
+import { scaleLinear } from "d3-scale"
+import { arc as d3Arc } from "d3-shape"
 
-import { TrendingUpIcon } from "@/registry/icons"
+import type { ChartComponentProps, ChartSpecOf } from "@/registry/ui/chart"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
+  Chart,
+  CHART_THEME,
+  chartDefaults,
+  decorative,
+  finiteOrNull,
+  useChartDefinition,
 } from "@/registry/ui/chart"
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--chart-1)" },
-  { browser: "safari", visitors: 200, fill: "var(--chart-2)" },
-  { browser: "firefox", visitors: 187, fill: "var(--chart-3)" },
-  { browser: "edge", visitors: 173, fill: "var(--chart-4)" },
-  { browser: "other", visitors: 90, fill: "var(--chart-5)" },
-]
+const TAU = Math.PI * 2
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "var(--chart-1)",
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
-  },
-} satisfies ChartConfig
+/** Mark layers spliced inside the polar container — cartesian marks would land outside it. */
+// oxlint-disable-next-line no-explicit-any
+export type PolarMarkLayer = PolarMark<any, any, any>
 
-export function ChartRadial() {
+/* Geometry the radial family owns; everything shared with the other chart
+   families is read from `chartDefaults`. */
+const radialDefaults = {
+  innerRadius: 0.35,
+  outerRadius: 1,
+  barPadding: 0.2,
+  stackPadding: 0.04,
+  gridTicks: 4,
+  trackFill: "var(--color-muted)",
+  labelFontSize: 11,
+} as const
+
+/**
+ * What every arc, label and focus callback carries: the resolved geometry plus
+ * the row it came from.
+ */
+export interface RadialBarDatum<TDatum> {
+  /** The row this arc was built from. */
+  datum: TDatum
+  /** Display name, after `labels`. */
+  name: string
+  value: number
+  startAngle: number
+  endAngle: number
+  /** Ratios of the resolved layout radius. */
+  inner: number
+  outer: number
+}
+
+export interface RadialBarChartSpecOptions<TDatum> {
+  data: readonly TDatum[]
+  /** One field draws a ring per row; an array stacks the first row's fields. */
+  value: ChannelField<TDatum, number> | readonly ChannelField<TDatum, number>[]
+  /** Field naming each ring. */
+  name: ChannelField<TDatum, ChartKey>
+  /** Display names for ring keys. */
+  labels?: Readonly<Record<string, string>>
+  /** Angular sweep in radians. Defaults to a full turn. */
+  startAngle?: number
+  endAngle?: number
+  /** Ratios of the resolved layout radius. */
+  innerRadius?: number
+  outerRadius?: number
+  /** Shrinks the circle inside its box. */
+  radiusRatio?: number
+  /** Pixel inset applied before `radiusRatio`. */
+  inset?: number
+  /** Gap between rings, as a share of a ring's thickness. */
+  barPadding?: number
+  cornerRadius?: number
+  /** Draw an unfilled arc behind every ring. */
+  track?: boolean
+  trackFill?: string
+  /** Value that fills the whole sweep. Defaults to the largest value. */
+  max?: number
+  /** Print each ring's name at the start of its arc. */
+  barLabels?: boolean
+  barLabelFill?: string
+  barLabelFontSize?: number
+  /** Concentric rings behind the bars. */
+  grid?: boolean
+  gridTicks?: number
+  legend?: boolean
+  /** Extra polar mark layers painted under the bars. */
+  polarMarksBefore?: readonly PolarMarkLayer[]
+  /** Extra polar mark layers painted over the bars. */
+  polarMarks?: readonly PolarMarkLayer[]
+}
+
+function read(row: unknown, field: string): number {
+  return finiteOrNull((row as Record<string, unknown>)[field]) ?? 0
+}
+
+interface RadialBars<TDatum> {
+  bars: RadialBarDatum<TDatum>[]
+  track: RadialBarDatum<TDatum>[]
+}
+
+/* Bars are laid out here rather than by a scale: a ring's radii are per-datum,
+   and the library exposes those only through the arc generator. */
+function radialBars<TDatum>(
+  options: RadialBarChartSpecOptions<TDatum>,
+  start: number,
+  end: number,
+): RadialBars<TDatum> {
+  const label = (key: string) => options.labels?.[key] ?? key
+  const inner = options.innerRadius ?? radialDefaults.innerRadius
+  const outer = options.outerRadius ?? radialDefaults.outerRadius
+  const bars: RadialBarDatum<TDatum>[] = []
+  const track: RadialBarDatum<TDatum>[] = []
+
+  if (Array.isArray(options.value)) {
+    // One ring, cumulative angles — segments stack around the sweep.
+    const fields = options.value as readonly string[]
+    const row = options.data[0] as TDatum | undefined
+    if (row === undefined) return { bars, track }
+    const values = fields.map((field) => read(row, field))
+    const max = options.max ?? values.reduce((sum, value) => sum + value, 0)
+    const gap =
+      (options.barPadding ?? radialDefaults.stackPadding) * (outer - inner)
+    let cursor = start
+    fields.forEach((field, index) => {
+      const value = values[index] ?? 0
+      const span = (value / (max || 1)) * (end - start)
+      bars.push({
+        datum: row,
+        name: label(field),
+        value,
+        startAngle: cursor,
+        endAngle: cursor + span,
+        inner: inner + gap * index,
+        outer: outer - gap * (fields.length - 1 - index),
+      })
+      cursor += span
+    })
+    return { bars, track }
+  }
+
+  const field = options.value as string
+  const values = options.data.map((row) => read(row, field))
+  const max = options.max ?? (Math.max(...values, 0) || 1)
+  const count = options.data.length
+  const band = (outer - inner) / Math.max(1, count)
+  const pad = band * (options.barPadding ?? radialDefaults.barPadding)
+  options.data.forEach((datum, index) => {
+    // Outermost row first, so ring order matches the data order.
+    const slot = count - 1 - index
+    const value = values[index] ?? 0
+    const geometry = {
+      datum,
+      name: label(String((datum as Record<string, unknown>)[options.name])),
+      value,
+      inner: inner + slot * band + pad / 2,
+      outer: inner + (slot + 1) * band - pad / 2,
+    }
+    bars.push({
+      ...geometry,
+      startAngle: start,
+      endAngle: start + (value / max) * (end - start),
+    })
+    track.push({ ...geometry, startAngle: start, endAngle: end })
+  })
+  return { bars, track }
+}
+
+function barArc<TDatum>(
+  id: string,
+  rows: readonly RadialBarDatum<TDatum>[],
+  cornerRadius: number,
+  fill?: string,
+  motion?: false,
+) {
+  return radialArc(rows, {
+    id,
+    cornerRadius,
+    fill,
+    motion,
+    color: (bar: RadialBarDatum<TDatum>) => bar.name,
+    key: (bar: RadialBarDatum<TDatum>) => `${id}:${bar.name}`,
+    generator: ({ radius }) =>
+      d3Arc<RadialBarDatum<TDatum>>()
+        .startAngle((bar) => bar.startAngle)
+        .endAngle((bar) => bar.endAngle)
+        .padAngle(() => 0)
+        .innerRadius((bar) => bar.inner * radius)
+        .outerRadius((bar) => bar.outer * radius)
+        .cornerRadius(cornerRadius),
+  })
+}
+
+/* `radialText` maps its channels through the container scales, so the chart
+   carries identity ones while any mark binds them. A configured polar scale
+   with no mark binding it is rejected — bare `radialArc` bars use authored
+   radians, no scale bindings — so the extra layers are probed: `initialize`
+   is pure data preparation and exposes the mark's bindings. */
+function marksUseScales(marks: readonly PolarMarkLayer[] | undefined) {
+  return (marks ?? []).some((mark) => {
+    const probed = mark.initialize({ markIndex: 0, parentId: "probe" })
+    return Boolean(
+      probed.angleScale ??
+      probed.radiusScale ??
+      (probed.requiresAngleScale || probed.requiresRadiusScale),
+    )
+  })
+}
+
+function identityScales(startAngle: number, endAngle: number, used: boolean) {
+  return {
+    scales: used
+      ? {
+          angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
+          radius: { scale: scaleLinear().domain([0, 1]) },
+        }
+      : { angle: null, radius: null },
+  }
+}
+
+export function radialBarChartSpec<TDatum>(
+  options: RadialBarChartSpecOptions<TDatum>,
+  _ctx: ChartBuildContext,
+): ChartSpecOf<RadialBarDatum<TDatum>, number> {
+  const start = options.startAngle ?? 0
+  const end = options.endAngle ?? TAU
+  const { bars, track } = radialBars(options, start, end)
+  const corner = options.cornerRadius ?? chartDefaults.barRadius
+  const legend = (options.legend ?? false) ? colorLegend() : undefined
+  /* The grid reads its ring radii from a named scale: a reserved scale may
+     only be configured when a mark binds it, and the bars bind none. */
+  const guides: PolarGuide[] = options.grid
+    ? [
+        radialGrid({
+          scale: "grid",
+          ticks: options.gridTicks ?? radialDefaults.gridTicks,
+          shape: "circle",
+          labels: false,
+        }),
+      ]
+    : []
+  const identity = identityScales(
+    start,
+    end,
+    Boolean(options.barLabels) ||
+      marksUseScales(options.polarMarks) ||
+      marksUseScales(options.polarMarksBefore),
+  )
+  return {
+    scales: { x: null, y: null },
+    color: { domain: bars.map((bar) => bar.name), legend },
+    theme: CHART_THEME,
+    marks: [
+      polar({
+        scales: {
+          ...identity.scales,
+          ...(options.grid
+            ? {
+                grid: {
+                  channel: "radius" as const,
+                  scale: scaleLinear().domain([0, 1]),
+                },
+              }
+            : null),
+        },
+        startAngle: start,
+        endAngle: end,
+        inset: options.inset ?? 0,
+        radiusRatio: options.radiusRatio ?? 1,
+        guides,
+        marks: [
+          ...(options.polarMarksBefore ?? []),
+          ...(options.track && track.length > 0
+            ? [
+                decorative(
+                  /* The track is static background spanning the whole sweep —
+                     entrance choreography would sweep it in like a value. */
+                  barArc(
+                    "radial-track",
+                    track,
+                    corner,
+                    options.trackFill ?? radialDefaults.trackFill,
+                    false,
+                  ),
+                ),
+              ]
+            : []),
+          barArc("radial-bar", bars, corner),
+          ...(options.barLabels
+            ? [
+                decorative(
+                  radialText(bars, {
+                    id: "radial-bar-label",
+                    angle: "startAngle",
+                    radius: (bar: RadialBarDatum<TDatum>) =>
+                      (bar.inner + bar.outer) / 2,
+                    text: "name",
+                    anchor: "start" as const,
+                    dx: 8,
+                    fill: options.barLabelFill ?? "var(--color-fg-muted)",
+                    fontSize:
+                      options.barLabelFontSize ?? radialDefaults.labelFontSize,
+                  }),
+                ),
+              ]
+            : []),
+          ...(options.polarMarks ?? []),
+        ],
+      }),
+    ],
+  }
+}
+
+/* The library's default tooltip body prints the scale values, which on a polar
+   chart are radians and pixel radii — every polar family supplies its own. */
+function radialTooltipBody({
+  points,
+}: ChartTooltipBodyRenderContext<RadialBarDatum<unknown>, number, number>) {
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel nameKey="browser" />}
-            />
-            <PolarGrid gridType="circle" />
-            <RadialBar dataKey="visitors" />
-          </RadialBarChart>
-        </ChartContainer>
-        <ChartDataTable
-          data={chartData}
-          config={chartConfig}
-          labelKey="browser"
-          caption="Visitors by browser, January through June 2024"
-        />
-      </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUpIcon className="size-4" />
+    <div className="grid gap-1">
+      {points.map((point) => (
+        <div key={point.key} className="flex items-center gap-1.5">
+          <span
+            aria-hidden
+            className="size-2 shrink-0 rounded-xs"
+            style={{ background: point.color }}
+          />
+          <span>{point.datum.name}</span>
+          <span className="ml-3 flex-1 text-right tabular-nums">
+            {String(point.datum.value)}
+          </span>
         </div>
-        <div className="leading-none text-fg-muted">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+      ))}
+    </div>
+  )
+}
+
+export type RadialBarChartProps<TDatum> = ChartComponentProps<
+  RadialBarChartSpecOptions<TDatum>,
+  RadialBarDatum<TDatum>,
+  number
+>
+
+export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
+  const { definition, host, children } = useChartDefinition<
+    RadialBarDatum<TDatum>,
+    number,
+    RadialBarChartSpecOptions<TDatum>
+  >(
+    {
+      ...props,
+      /* The cartesian presets in `chartDefaults` do not fit arcs: an arc's x
+         value is an angle in radians, so only `nearest` and a point anchor
+         read right. */
+      focus: props.focus ?? "nearest",
+      tooltipAnchor: props.tooltipAnchor ?? "point",
+      renderTooltipBody: props.renderTooltipBody ?? radialTooltipBody,
+      /* The polar mark arrays serialize into the structural key — mark objects
+         key by function identity — and alias into the reference-compared
+         `marks` slots. */
+      marks: props.polarMarks,
+      marksBefore: props.polarMarksBefore,
+    },
+    radialBarChartSpec,
+  )
+  return (
+    <Chart definition={definition} {...host}>
+      {children}
+    </Chart>
   )
 }

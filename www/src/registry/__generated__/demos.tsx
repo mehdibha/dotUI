@@ -361,9 +361,9 @@ export const DemosIndex: Record<
 		files: ["ui/chart-area/demos/gradient.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/gradient")),
 	},
-	"chart-area/demos/icons": {
-		files: ["ui/chart-area/demos/icons.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-area/demos/icons")),
+	"chart-area/demos/labels": {
+		files: ["ui/chart-area/demos/labels.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/labels")),
 	},
 	"chart-area/demos/legend": {
 		files: ["ui/chart-area/demos/legend.tsx"],
@@ -388,6 +388,10 @@ export const DemosIndex: Record<
 	"chart-bar/demos/active": {
 		files: ["ui/chart-bar/demos/active.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/active")),
+	},
+	"chart-bar/demos/axes": {
+		files: ["ui/chart-bar/demos/axes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/axes")),
 	},
 	"chart-bar/demos/default": {
 		files: ["ui/chart-bar/demos/default.tsx"],
@@ -420,6 +424,26 @@ export const DemosIndex: Record<
 	"chart-bar/demos/stacked": {
 		files: ["ui/chart-bar/demos/stacked.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/stacked")),
+	},
+	"chart-heatmap/demos/calendar-months": {
+		files: ["ui/chart-heatmap/demos/calendar-months.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/calendar-months")),
+	},
+	"chart-heatmap/demos/discrete-scale": {
+		files: ["ui/chart-heatmap/demos/discrete-scale.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/discrete-scale")),
+	},
+	"chart-heatmap/demos/matrix": {
+		files: ["ui/chart-heatmap/demos/matrix.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/matrix")),
+	},
+	"chart-heatmap/demos/with-values": {
+		files: ["ui/chart-heatmap/demos/with-values.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/with-values")),
+	},
+	"chart-line/demos/axes": {
+		files: ["ui/chart-line/demos/axes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/axes")),
 	},
 	"chart-line/demos/default": {
 		files: ["ui/chart-line/demos/default.tsx"],

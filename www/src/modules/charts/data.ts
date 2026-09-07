@@ -22,18 +22,18 @@ export function familyOf(demoKey: string): string {
 
 /**
  * The registry items to install for a variant: its family, plus any other
- * registry UI components the variant's source imports (e.g. the interactive
- * area chart pulls in `select`). The chart primitive and sibling chart families
- * are skipped — installing the family item already brings the primitive along.
+ * registry UI components the variant's source imports (e.g. a stat-card demo
+ * pulls in `card`). Matches the rewritten display source, so the paths are
+ * the installed `@/ui/*` ones, not `@/registry/ui/*`.
  */
 export function installItems(demoKey: string, source: string | null): string[] {
   const family = familyOf(demoKey)
   if (!source) return [family]
   const extras = new Set<string>()
-  for (const match of source.matchAll(/@\/components\/ui\/([a-z0-9-]+)/g)) {
+  for (const match of source.matchAll(/@\/ui\/([a-z0-9-]+)/g)) {
     const name = match[1]
-    // Skip the chart primitive and sibling chart families — installing the
-    // family item already pulls those in.
+    // Skip the chart core and sibling chart families — installing the family
+    // item already pulls those in.
     if (name && name !== "chart" && !name.startsWith("chart-")) {
       extras.add(name)
     }
@@ -109,17 +109,18 @@ export const POLAR_FAMILIES = new Set([
 export interface ChartFamily {
   /** Registry item id, e.g. `chart-bar`. */
   id: string
-  /** Family label noun, e.g. `Bar`. */
+  /** Family label, e.g. `Bar chart`. */
   name: string
 }
 
 export const CHART_FAMILIES = [
-  { id: "chart-bar", name: "Bar" },
-  { id: "chart-line", name: "Line" },
-  { id: "chart-area", name: "Area" },
-  { id: "chart-pie", name: "Pie" },
-  { id: "chart-radar", name: "Radar" },
-  { id: "chart-radial", name: "Radial" },
+  { id: "chart-bar", name: "Bar chart" },
+  { id: "chart-line", name: "Line chart" },
+  { id: "chart-area", name: "Area chart" },
+  { id: "chart-pie", name: "Pie chart" },
+  { id: "chart-radar", name: "Radar chart" },
+  { id: "chart-radial", name: "Radial chart" },
+  { id: "chart-heatmap", name: "Heatmap" },
 ] as const satisfies readonly ChartFamily[]
 
 /** Variant entries for a family, derived from the demo index (always in sync). */
@@ -134,9 +135,4 @@ export function variantsFor(
       label: key.slice(prefix.length).replace(/-/g, " "),
     }))
     .sort((a, b) => a.label.localeCompare(b.label))
-}
-
-/** Total number of shipped chart variants across every family. */
-export function totalVariantCount(): number {
-  return CHART_FAMILIES.reduce((sum, f) => sum + variantsFor(f.id).length, 0)
 }

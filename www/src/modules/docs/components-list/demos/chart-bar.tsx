@@ -16,7 +16,7 @@ export function ChartBarDemo() {
     <div className="w-[360px] max-w-full">
       <Suspense
         fallback={
-          <div className="h-[400px] w-full animate-pulse rounded-xl bg-muted" />
+          <div className="h-64 w-full animate-pulse rounded-xl bg-muted" />
         }
       >
         <ChartBarDefault />
