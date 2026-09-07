@@ -3,16 +3,13 @@ import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
+import { HeroStack } from "@/modules/marketing/hero-stack"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 
 function HeroEyebrow() {
   return (
-    <Eyebrow className="mb-3 border-transparent bg-inverse/5 pl-2.5">
-      <span aria-hidden className="relative flex size-1.5">
-        <span className="absolute inset-0 animate-ping rounded-full bg-warning opacity-75" />
-        <span className="relative size-1.5 rounded-full bg-warning" />
-      </span>
-      Public preview
+    <Eyebrow className="mb-3 border-transparent bg-inverse/5">
+      Currently in beta
     </Eyebrow>
   )
 }
@@ -28,16 +25,14 @@ export function HomePage() {
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
             <HeroEyebrow />
-            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
-              The Design System Studio
-              <br />
+            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/8.5),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
+              The Design System Studio <br className="max-sm:hidden" />
               <span className="text-fg-muted">
                 for <HeroWordSwap />
               </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-              Every design decision is yours — create, tweak, and ship code you
-              own.
+              Every design decision is yours. Create, refine and own the code.
               {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
@@ -48,10 +43,11 @@ export function HomePage() {
                 View components
               </LinkButton>
             </div>
+            <HeroStack />
           </div>
         </section>
 
-        <section className="mt-24">
+        <section className="mt-24 md:mt-28">
           <Cards />
         </section>
 
