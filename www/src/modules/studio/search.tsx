@@ -63,7 +63,7 @@ export function PanelSearch({
         <TooltipContent>Search settings ⌘P</TooltipContent>
       </Tooltip>
       <Popover placement="bottom end" className={INSTANT_POPOVER}>
-        <Command aria-label="Search settings" className="w-60">
+        <Command aria-label="Search settings" className="w-56">
           <SearchField autoFocus aria-label="Search settings">
             <InputGroup>
               <InputGroupAddon>
