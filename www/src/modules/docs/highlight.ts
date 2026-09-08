@@ -59,6 +59,7 @@ const TYPE_PREFIX = new Set([
   "satisfies",
 ])
 const OPERATOR = /^[=&|?!+\-*/%]+$/
+const OPENERS = new Set(["(", "{", ",", ";"])
 
 interface State {
   /** Paren depth inside a `function` parameter list; 0 when outside one. */
@@ -79,6 +80,13 @@ function significant(
     if (token && token.type !== "space") return token
   }
   return undefined
+}
+
+/** `const a = …` / `const { a, b } = …` — a binding name shiki paints as a constant. */
+function isConstName(tokens: readonly ParsedToken[], index: number): boolean {
+  if (tokens.find((t) => t.type !== "space")?.value !== "const") return false
+  for (let i = 0; i < index; i++) if (tokens[i]?.value === "=") return false
+  return true
 }
 
 /** `(a, b) =>` — the identifier at `index` sits in an arrow function's parameter list. */
@@ -119,8 +127,8 @@ function colorsOf(
       if (next?.value === ":") return FG
       return KEYWORD
     case "identifier": {
-      const opensName =
-        !prev || prev.value === "(" || prev.value === "{" || prev.value === ","
+      if (isConstName(tokens, index)) return CONSTANT
+      const opensName = !prev || OPENERS.has(prev.value)
       if (
         opensName &&
         (state.params > 0 || state.members > 0 || isArrowParam(tokens, index))
@@ -134,6 +142,7 @@ function colorsOf(
       if (
         prev?.value === "function" ||
         prev?.value === "interface" ||
+        prev?.value === "new" ||
         (prev && TYPE_PREFIX.has(prev.value))
       )
         return ENTITY
