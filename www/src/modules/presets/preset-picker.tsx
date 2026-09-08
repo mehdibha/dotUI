@@ -233,7 +233,6 @@ function PresetPickerContent({
         // No search autofocus on mobile — the keyboard would cover the list.
         autoFocus={surface === "popover"}
         aria-label="Search design systems"
-        className="shrink-0 p-2"
       >
         <InputGroup>
           <InputGroupAddon>
@@ -310,20 +309,17 @@ function PresetPickerContent({
     </>
   )
 
-  if (surface === "drawer")
-    return <Command className="gap-0 p-0">{list}</Command>
+  if (surface === "drawer") return <Command>{list}</Command>
 
   return (
     <>
       <Command
-        className="max-h-[inherit] gap-0 overflow-hidden p-0"
+        className="max-h-[inherit] w-[200px] overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
       >
-        <div className="flex max-h-[inherit] w-[200px] shrink-0 flex-col">
-          {list}
-        </div>
+        {list}
       </Command>
       {flyout && (
         <PresetPreviewFlyout
