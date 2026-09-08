@@ -34,18 +34,19 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // list — never on the root, so the list runs to the surface edge and
           // the scrollbar sits flush against it. The input radius stays
           // concentric by subtracting the inset from the container's own
-          // radius var.
+          // radius var, floored at the input radius so small surfaces never
+          // square it off.
           "**:data-search-field:px-1.5 **:data-search-field:pt-1.5 **:data-search-field:pb-0",
           "**:data-listbox:scroll-py-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
           "**:data-listbox:**:data-separator:my-1.5",
           // --surface-radius: set by whichever rounded surface contains the
           // command (popover, modal, card), so one rule stays concentric
           // everywhere.
-          "**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--surface-radius,var(--radius-surface))-(--spacing(1.5)))]",
+          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(1.5))))]",
           // The modal is a bigger surface — roomier inset to match.
           "in-data-modal:**:data-search-field:px-2 in-data-modal:**:data-search-field:pt-2",
           "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:pb-2",
-          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--surface-radius,var(--radius-surface))-(--spacing(2)))]",
+          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(2))))]",
         ],
       },
       bar: {
