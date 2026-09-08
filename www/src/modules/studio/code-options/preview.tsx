@@ -2,8 +2,7 @@
  * Live preview of the exported button component. Fetches the real `/r/button`
  * registry endpoint (same publisher + oxfmt the user gets on install),
  * debounced and same-origin, so every codeOptions toggle shows the actual
- * resulting source. Highlighting reuses the docs `DynamicPre` (synchronous
- * shiki).
+ * resulting source. Highlighting reuses the docs `DynamicPre`.
  */
 
 import { useEffect, useState } from "react"
