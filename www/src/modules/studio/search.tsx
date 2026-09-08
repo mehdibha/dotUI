@@ -1,25 +1,26 @@
 "use client"
 
-/* The panel's search — the header's search button opens a popover holding a
-   command: search field on top, the chapter list under it. Opens instantly on
-   purpose: it's a frequent gesture. Selecting drills into the chapter. ⌘P, not
-   ⌘K — the site header's docs search owns ⌘K everywhere, /studio included. */
+/* The panel's inline search — the header's search button swaps to a combobox
+   bar over the header; suggestions appear below it once there's a query, with
+   the matched characters highlighted. No open/close animation on purpose: it's
+   a frequent gesture and instant feels faster. Selecting drills into the
+   chapter. ⌘P, not ⌘K — the site header's docs search owns ⌘K everywhere,
+   /studio included. */
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
+import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
 
 import { Button } from "@/registry/ui/button"
-import { Command } from "@/registry/ui/command"
-import { Dialog } from "@/registry/ui/dialog"
-import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Input } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
-import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import type { IndexChapter } from "./groups"
-import { INSTANT_POPOVER } from "./rows"
 
+/** Renders the trigger button in place; the bar and suggestions card position
+ *  against the panel header (the nearest positioned ancestor). */
 export function PanelSearch({
   chapters,
   onOpenChapter,
@@ -28,6 +29,14 @@ export function PanelSearch({
   onOpenChapter: (id: string) => void
 }) {
   const [isOpen, setOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const { contains } = AutocompletePrimitive.useFilter({
+    sensitivity: "base",
+    ignorePunctuation: true,
+  })
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
   // `preventDefault` also suppresses the browser's print dialog; `repeat`
@@ -44,66 +53,167 @@ export function PanelSearch({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  function jump(id: string) {
+  // Click/tap anywhere outside dismisses — without stealing focus back.
+  useEffect(() => {
+    if (!isOpen) return
+    const onPointerDown = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    document.addEventListener("pointerdown", onPointerDown, true)
+    return () =>
+      document.removeEventListener("pointerdown", onPointerDown, true)
+  }, [isOpen])
+
+  // Every reopen starts blank.
+  useEffect(() => {
+    if (!isOpen) setQuery("")
+  }, [isOpen])
+
+  // Keyboard-initiated closes hand focus back to the trigger.
+  function close() {
     setOpen(false)
+    buttonRef.current?.focus()
+  }
+
+  function jump(id: string) {
+    close()
     onOpenChapter(id)
   }
 
   return (
-    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
+    <>
       <Tooltip delay={300}>
         <Button
+          ref={buttonRef}
           size="sm"
           variant="quiet"
           isIconOnly
           aria-label="Search settings"
+          onPress={() => setOpen(true)}
         >
           <SearchIcon />
         </Button>
         <TooltipContent>Search settings ⌘P</TooltipContent>
       </Tooltip>
-      <Popover placement="bottom end" className={INSTANT_POPOVER}>
-        <Command aria-label="Search settings" className="w-56">
-          <SearchField autoFocus aria-label="Search settings">
-            <InputGroup>
-              <InputGroupAddon>
-                <SearchIcon />
-              </InputGroupAddon>
-              <Input placeholder="Search settings…" />
-              <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
-                <Button variant="quiet" isIconOnly>
-                  <XIcon aria-hidden="true" />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </SearchField>
-          <ListBox
-            aria-label="Settings"
-            className="max-h-64 overscroll-contain"
-            renderEmptyState={() => (
-              <div className="px-3 py-6 text-center text-sm text-fg-muted">
-                No matching settings
-              </div>
-            )}
+      {isOpen && (
+        <div
+          ref={wrapperRef}
+          className="contents"
+          onKeyDown={(event) => {
+            // SearchField preventDefaults Escape while it has text (to clear);
+            // an unprevented Escape means the input was already empty — close.
+            if (event.key === "Escape" && !event.defaultPrevented) close()
+          }}
+          onBlur={(event) => {
+            // Tab-away closes; a null relatedTarget (scrollbar clicks) doesn't.
+            if (
+              event.relatedTarget &&
+              !event.currentTarget.contains(event.relatedTarget)
+            )
+              setOpen(false)
+          }}
+        >
+          <AutocompletePrimitive.Autocomplete
+            filter={contains}
+            inputValue={query}
+            onInputChange={setQuery}
           >
-            {chapters.map((chapter) => (
-              <ListBoxItem
-                key={chapter.id}
-                id={chapter.id}
-                // Members make a composite findable by what it absorbed —
-                // "toggle" or "segmented" both land on Buttons.
-                textValue={[
-                  chapter.label,
-                  ...chapter.members.map((member) => member.label),
-                ].join(" ")}
-                onAction={() => jump(chapter.id)}
+            {/* The bar — takes over the header while searching. */}
+            <div className="absolute inset-0 z-10 flex items-center gap-2 rounded-t-xl bg-card pr-2 pl-3">
+              <SearchIcon className="size-4 shrink-0 text-fg-muted" />
+              <SearchField
+                autoFocus
+                aria-label="Search settings"
+                className="flex min-w-0 flex-1 flex-row items-center"
               >
-                <span className="truncate">{chapter.label}</span>
-              </ListBoxItem>
-            ))}
-          </ListBox>
-        </Command>
-      </Popover>
-    </Dialog>
+                <Input
+                  placeholder="Search settings…"
+                  className="h-full w-full border-0 bg-transparent px-0 shadow-none focus:ring-0"
+                />
+              </SearchField>
+              {/* Outside the SearchField on purpose — RAC would wire it as a
+                  clear button; this one closes the search entirely. */}
+              <Button
+                variant="quiet"
+                size="sm"
+                isIconOnly
+                aria-label="Close search"
+                onPress={close}
+              >
+                <XIcon />
+              </Button>
+            </div>
+            {/* The suggestions card — only once there's a query, the full
+                index is the panel itself. Solid bg: backdrop-blur can't sample
+                past the header's own backdrop-filter. */}
+            <div
+              hidden={!query.trim()}
+              className="absolute inset-x-2 top-full z-10 mt-2 overflow-hidden rounded-lg border border-border/45 bg-card shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)]"
+            >
+              <ListBox
+                aria-label="Settings"
+                className="max-h-80 overflow-y-auto p-1"
+                renderEmptyState={() => (
+                  <div className="px-3 py-6 text-center text-sm text-fg-muted">
+                    No matching settings
+                  </div>
+                )}
+              >
+                {chapters.map((chapter) => {
+                  // Members make a composite findable by what it absorbed —
+                  // "toggle" or "segmented" both land on Buttons. When only
+                  // a member matches, show it so the hit makes sense.
+                  const member = matches(chapter.label, query)
+                    ? undefined
+                    : chapter.members.find((m) => matches(m.label, query))
+                  return (
+                    <ListBoxItem
+                      key={chapter.id}
+                      id={chapter.id}
+                      textValue={[
+                        chapter.label,
+                        ...chapter.members.map((m) => m.label),
+                      ].join(" ")}
+                      onAction={() => jump(chapter.id)}
+                    >
+                      <span className="truncate">
+                        <Highlight text={chapter.label} query={query} />
+                      </span>
+                      {member && (
+                        <span className="ml-auto truncate text-xs text-fg-muted">
+                          <Highlight text={member.label} query={query} />
+                        </span>
+                      )}
+                    </ListBoxItem>
+                  )
+                })}
+              </ListBox>
+            </div>
+          </AutocompletePrimitive.Autocomplete>
+        </div>
+      )}
+    </>
+  )
+}
+
+function matches(text: string, query: string) {
+  return text.toLowerCase().includes(query.trim().toLowerCase())
+}
+
+/** The label with the query's characters emphasized. Plain substring match:
+ *  the filter is looser (accents, punctuation), so a hit can show no mark. */
+function Highlight({ text, query }: { text: string; query: string }) {
+  const needle = query.trim()
+  const start = needle ? text.toLowerCase().indexOf(needle.toLowerCase()) : -1
+  if (start < 0) return text
+  const end = start + needle.length
+  return (
+    <>
+      {text.slice(0, start)}
+      <mark className="bg-transparent font-semibold text-fg">
+        {text.slice(start, end)}
+      </mark>
+      {text.slice(end)}
+    </>
   )
 }
