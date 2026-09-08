@@ -42,6 +42,7 @@ The systems worth studying when researching presets, missing axes, or component 
 - [shadcn/create](https://ui.shadcn.com/create)
 - [HeroUI Pro Theme Editor](https://heroui.pro/ds)
 - [Astryx Playground](https://astryx.atmeta.com/playground)
+- [Nuxt UI Theme Editor](https://ui.nuxt.com/theme)
 
 ### Preset targets
 
