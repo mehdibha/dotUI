@@ -23,7 +23,7 @@ import type { IndexChapter } from "./groups"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { ControlGroup, GroupTitle, ROW_LABEL } from "./rows"
-import { PanelSearch } from "./search"
+import { Highlight, PanelSearch, matches } from "./search"
 import type { Chapter, Studio } from "./state"
 
 const PANE =
@@ -43,17 +43,25 @@ function IndexRow({
   chapter,
   studio,
   compact,
+  query = "",
   onPress,
 }: {
   chapter: IndexChapter
   studio: Studio
   compact?: boolean
+  /** The active search — highlights the hit in the label. */
+  query?: string
   onPress: () => void
 }) {
   const status = studio.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
   // The label column: title (with its modified dot), and the live value
-  // beneath it — first segment only, one word-ish.
+  // beneath it — first segment only, one word-ish. A hit on an absorbed
+  // member only ("toggle" → Buttons) shows that member there instead.
+  const memberHits =
+    query.trim() && !matches(chapter.label, query)
+      ? chapter.members.filter((m) => matches(m.label, query))
+      : []
   const label = (
     <span
       className={cn(
@@ -66,7 +74,7 @@ function IndexRow({
           the full title. */}
       <span className="flex items-center gap-2">
         <span className={cn(ROW_LABEL, "whitespace-nowrap")}>
-          {chapter.label}
+          <Highlight text={chapter.label} query={query} />
         </span>
         {status.modified && (
           <span
@@ -76,7 +84,14 @@ function IndexRow({
         )}
       </span>
       <span className="max-w-full truncate text-xs text-fg-muted/60">
-        {chapter.summary(studio.state).split(" · ")[0]}
+        {memberHits.length > 0
+          ? memberHits.map((m, i) => (
+              <Fragment key={m.id}>
+                {i > 0 && ", "}
+                <Highlight text={m.label} query={query} />
+              </Fragment>
+            ))
+          : chapter.summary(studio.state).split(" · ")[0]}
       </span>
     </span>
   )
@@ -146,6 +161,28 @@ export function DrillInPanel({
       .flatMap((group) => group.chapters)
       .find((chapter) => chapter.id === activeId) ?? null
 
+  // Search: null while closed. While open the index pane shows (over any
+  // chapter page) and, once there's a query, filters down to the hits —
+  // one flat group, chapters whose label or any member label matches.
+  const [query, setQuery] = useState<string | null>(null)
+  const searching = query !== null
+  const hits = query?.trim()
+    ? index.flatMap((group) =>
+        group.chapters
+          .filter(
+            (chapter) =>
+              matches(chapter.label, query) ||
+              chapter.members.some((m) => matches(m.label, query)),
+          )
+          .map((chapter) => ({ chapter, compact: group.compact })),
+      )
+    : null
+
+  function open(id: string) {
+    setQuery(null)
+    setActiveId(id)
+  }
+
   // The page pane is one persistent scroller — start each chapter at its top.
   // The instant swap moves focus with it: drilling in lands on the back
   // button (its subtree is about to go inert under the focused row), backing
@@ -172,38 +209,78 @@ export function DrillInPanel({
       system={system}
       search={
         <PanelSearch
-          chapters={index.flatMap((group) => group.chapters)}
-          onOpenChapter={setActiveId}
+          query={query}
+          onQueryChange={setQuery}
+          onSubmit={() => {
+            const first = hits?.[0]
+            if (first) open(first.chapter.id)
+          }}
+          onFocusResults={() =>
+            indexRef.current
+              ?.querySelector<HTMLElement>("[data-chapter]")
+              ?.focus()
+          }
         />
       }
     >
-      <div className="relative min-h-0 flex-1 overflow-hidden">
+      <div
+        className="relative min-h-0 flex-1 overflow-hidden"
+        onKeyDown={(event) => {
+          // Escape on a focused result row closes the search too.
+          if (event.key === "Escape" && searching) setQuery(null)
+        }}
+      >
         {/* Index pane. */}
         <div
           ref={indexRef}
-          className={cn(PANE, "gap-3", page && PANE_HIDDEN)}
-          inert={!!page}
+          className={cn(PANE, "gap-3", page && !searching && PANE_HIDDEN)}
+          inert={!!page && !searching}
         >
-          {index.map((group, i) => (
-            <ControlGroup key={i}>
-              {group.chapters.map((chapter) => (
-                <IndexRow
-                  key={chapter.id}
-                  chapter={chapter}
-                  studio={studio}
-                  compact={group.compact}
-                  onPress={() => setActiveId(chapter.id)}
-                />
-              ))}
-            </ControlGroup>
-          ))}
+          {hits ? (
+            hits.length > 0 ? (
+              <ControlGroup>
+                {hits.map(({ chapter, compact }) => (
+                  <IndexRow
+                    key={chapter.id}
+                    chapter={chapter}
+                    studio={studio}
+                    compact={compact}
+                    query={query ?? ""}
+                    onPress={() => open(chapter.id)}
+                  />
+                ))}
+              </ControlGroup>
+            ) : (
+              <p className="py-10 text-center text-sm text-fg-muted">
+                No matching settings
+              </p>
+            )
+          ) : (
+            index.map((group, i) => (
+              <ControlGroup key={i}>
+                {group.chapters.map((chapter) => (
+                  <IndexRow
+                    key={chapter.id}
+                    chapter={chapter}
+                    studio={studio}
+                    compact={group.compact}
+                    onPress={() => open(chapter.id)}
+                  />
+                ))}
+              </ControlGroup>
+            ))
+          )}
         </div>
 
         {/* Chapter page. */}
         <div
           ref={pageRef}
-          className={cn(PANE, "gap-3 bg-card", !page && PANE_HIDDEN)}
-          inert={!page}
+          className={cn(
+            PANE,
+            "gap-3 bg-card",
+            (!page || searching) && PANE_HIDDEN,
+          )}
+          inert={!page || searching}
         >
           {page && (
             <>
