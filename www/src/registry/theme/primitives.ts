@@ -15,7 +15,7 @@ import {
   type ThemeOptions,
 } from "@dotui/colors"
 
-import { type ColorConfig, colorConfigSchema } from "./color-config"
+import { type ColorConfig, migrateColorConfig } from "./color-config"
 import { PALETTE_ORDER } from "./palettes"
 
 export type Ramp = Record<string, string>
@@ -53,13 +53,12 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
 }
 
 /**
- * Resolve a config through the engine. Validates first — this also runs in
- * the publisher path on decoded request data, where a clear error beats a
+ * Resolve a config through the engine. Salvages first — this also runs in
+ * the publisher path on decoded request data, where a clamped axis beats a
  * deep engine throw.
  */
 export function resolveColorConfig(config: ColorConfig): Theme {
-  const parsed = colorConfigSchema.parse(config)
-  return createTheme(themeOptionsFromConfig(parsed))
+  return createTheme(themeOptionsFromConfig(migrateColorConfig(config)))
 }
 
 export interface EmitPrimitivesOptions {
