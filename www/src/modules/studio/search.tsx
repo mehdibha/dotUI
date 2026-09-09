@@ -13,13 +13,6 @@ import { SearchIcon, XIcon } from "lucide-react"
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Dialog } from "@/registry/ui/dialog"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/registry/ui/empty"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Popover } from "@/registry/ui/popover"
@@ -164,28 +157,13 @@ export function PanelSearch({
             aria-label="Settings"
             className="max-h-64 overscroll-contain"
             items={query.trim() ? items : []}
-            renderEmptyState={() =>
-              query.trim() ? (
-                <Empty className="p-4">
-                  <EmptyHeader>
-                    <EmptyTitle>No matching settings</EmptyTitle>
-                    <EmptyDescription>Try another word.</EmptyDescription>
-                  </EmptyHeader>
-                </Empty>
-              ) : (
-                <Empty className="p-4">
-                  <EmptyMedia variant="icon">
-                    <SearchIcon />
-                  </EmptyMedia>
-                  <EmptyHeader>
-                    <EmptyTitle>Search settings</EmptyTitle>
-                    <EmptyDescription>
-                      Find a chapter by name, or by a setting inside it.
-                    </EmptyDescription>
-                  </EmptyHeader>
-                </Empty>
-              )
-            }
+            renderEmptyState={() => (
+              <div className="px-3 py-6 text-center text-sm text-fg-muted">
+                {query.trim()
+                  ? "No matching settings"
+                  : "Type to search settings"}
+              </div>
+            )}
           >
             {(entry) => (
               <ListBoxItem
