@@ -58,6 +58,10 @@ cd examples/spotify-tanstack-start && pnpm install && pnpm dev   # terminal 2
 
 `.github/workflows/examples.yml` runs on every pull request and merge-group run. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
 
+## Vercel previews
+
+`origin-next/` and `spotify-next/` each have a Vercel project (`dotui-example-origin-next`, `dotui-example-spotify-next`) with the template directory as its Root Directory, so every pull request gets a preview link for them in the Vercel bot comment next to the `dotui` one. The `vercel.json` in each template sets the ignore command to `git diff --quiet HEAD^ HEAD -- .`: a build only runs when the template changed, which happens when a regeneration is committed. The preview shows the committed output, never the PR's live registry — if the examples check fails on drift, the preview is stale too.
+
 ## Adding a template
 
 Copy the scaffold for the framework (or add a new framework scaffold: same `showcase.tsx`, a `typecheck` and `build` script, its own `pnpm-workspace.yaml`, and a `.gitignore` for build artifacts). Register it in `scripts/smoke.ts` (`EXAMPLES`, plus `FRAMEWORKS` for a new framework) and in `www/scripts/preview-example.ts`, add it to the matrix in the workflow, regenerate, and commit.
