@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "@tanstack/react-router"
 
+import { cn } from "@/registry/lib/utils"
+
+import { previewPendingClass } from "../preview-controls"
 import { componentDemos } from "./demos"
 
 interface ComponentCardProps {
@@ -73,7 +76,7 @@ export function ComponentCard({
             of the tab order and lets clicks fall through to the card link, so the
             whole card navigates instead of an embedded demo hijacking the click. */}
         {fill ? (
-          <div inert className="absolute inset-0">
+          <div inert className={cn("absolute inset-0", previewPendingClass)}>
             {content}
           </div>
         ) : (
@@ -82,14 +85,23 @@ export function ComponentCard({
             className="absolute inset-4 flex items-center justify-center overflow-hidden"
           >
             {stretch ? (
-              <div inert className="flex w-full items-center justify-center">
+              <div
+                inert
+                className={cn(
+                  "flex w-full items-center justify-center",
+                  previewPendingClass,
+                )}
+              >
                 {content}
               </div>
             ) : (
               <div
                 ref={demoRef}
                 inert
-                className="flex items-center justify-center"
+                className={cn(
+                  "flex items-center justify-center",
+                  previewPendingClass,
+                )}
                 style={{ transform: `scale(${Math.min(scale, fit)})` }}
               >
                 {content}
