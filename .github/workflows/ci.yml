@@ -64,6 +64,7 @@ jobs:
             www/src/registry/__generated__/demos.tsx \
             www/src/registry/__generated__/icons.tsx \
             www/src/modules/studio/__generated__/examples.tsx \
+            www/src/modules/studio/__generated__/search-index.ts \
             www/src/registry/__generated__/base-css.ts \
             www/src/registry/__generated__/registry-items.ts \
             www/src/registry/base/colors.css \

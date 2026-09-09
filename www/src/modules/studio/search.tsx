@@ -1,37 +1,104 @@
 "use client"
 
-/* The panel's inline search — the header's search button swaps to a search
-   bar over the header, and the query filters the index rows in place (the
-   System Settings model): one list, no floating results. No open/close
-   animation on purpose: it's a frequent gesture and instant feels faster.
-   ⌘P, not ⌘K — the site header's docs search owns ⌘K everywhere, /studio
-   included. */
+/* The panel's search — the header's search button opens a popover holding a
+   command: search field on top, results under it once there's a query (the
+   full index is the panel itself, so an empty query shows a prompt instead).
+   Opens instantly on purpose: it's a frequent gesture. Selecting drills into
+   the chapter. ⌘P, not ⌘K — the site header's docs search owns ⌘K
+   everywhere, /studio included. */
 
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
-import { Input } from "@/registry/ui/input"
+import { Command } from "@/registry/ui/command"
+import { Dialog } from "@/registry/ui/dialog"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/registry/ui/empty"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-/** Renders the trigger button in place; the bar positions against the panel
- *  header (the nearest positioned ancestor). `query` is null while closed. */
+import { SEARCH_INDEX } from "./__generated__/search-index"
+import type { IndexChapter } from "./groups"
+import { INSTANT_POPOVER } from "./rows"
+
+interface Entry {
+  id: string
+  chapterId: string
+  label: string
+  /** Where the hit lives — the chapter, and the member for composites. */
+  context?: string
+}
+
+/** One entry per chapter, per composite member, and per settings row. */
+function entries(chapters: IndexChapter[]): Entry[] {
+  return chapters.flatMap((chapter) => {
+    const composite = chapter.members.length > 1
+    return [
+      { id: chapter.id, chapterId: chapter.id, label: chapter.label },
+      ...chapter.members.flatMap((member) => {
+        // The host member shares the composite's label — no "Buttons › Buttons".
+        const nested = composite && member.label !== chapter.label
+        const context = nested
+          ? `${chapter.label} › ${member.label}`
+          : chapter.label
+        const own = nested
+          ? [
+              {
+                id: `${chapter.id}/${member.id}`,
+                chapterId: chapter.id,
+                label: member.label,
+                context: chapter.label,
+              },
+            ]
+          : []
+        const rows = (SEARCH_INDEX[member.id] ?? []).map((label) => ({
+          id: `${chapter.id}/${member.id}/${label}`,
+          chapterId: chapter.id,
+          label,
+          context,
+        }))
+        return [...own, ...rows]
+      }),
+    ]
+  })
+}
+
+/** The label with the query's characters picked out in accent. */
+function Highlight({ text, query }: { text: string; query: string }) {
+  const needle = query.trim()
+  const start = needle ? text.toLowerCase().indexOf(needle.toLowerCase()) : -1
+  if (start < 0) return text
+  const end = start + needle.length
+  return (
+    <>
+      {text.slice(0, start)}
+      <mark className="bg-transparent text-accent">
+        {text.slice(start, end)}
+      </mark>
+      {text.slice(end)}
+    </>
+  )
+}
+
 export function PanelSearch({
-  query,
-  onQueryChange,
-  onSubmit,
-  onFocusResults,
+  chapters,
+  onOpenChapter,
 }: {
-  query: string | null
-  onQueryChange: (query: string | null) => void
-  /** Enter in the field — open the first match. */
-  onSubmit: () => void
-  /** ArrowDown in the field — hand focus to the first result row. */
-  onFocusResults: () => void
+  chapters: IndexChapter[]
+  onOpenChapter: (id: string) => void
 }) {
-  const isOpen = query !== null
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [isOpen, setOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const items = useMemo(() => entries(chapters), [chapters])
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
   // `preventDefault` also suppresses the browser's print dialog; `repeat`
@@ -41,95 +108,104 @@ export function PanelSearch({
       if (event.repeat) return
       if (event.key === "p" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
-        onQueryChange(isOpen ? null : "")
+        setOpen((open) => !open)
       }
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
-  }, [isOpen, onQueryChange])
+  }, [])
 
-  // Keyboard-initiated closes hand focus back to the trigger.
-  function close() {
-    onQueryChange(null)
-    buttonRef.current?.focus()
+  function jump(id: string) {
+    setOpen(false)
+    onOpenChapter(id)
+  }
+
+  function close(open: boolean) {
+    setOpen(open)
+    if (!open) setQuery("")
   }
 
   return (
-    <>
+    <Dialog isOpen={isOpen} onOpenChange={close}>
       <Tooltip delay={300}>
         <Button
-          ref={buttonRef}
           size="sm"
           variant="quiet"
           isIconOnly
           aria-label="Search settings"
-          onPress={() => onQueryChange("")}
         >
           <SearchIcon />
         </Button>
         <TooltipContent>Search settings ⌘P</TooltipContent>
       </Tooltip>
-      {isOpen && (
-        <div
-          className="absolute inset-0 z-10 flex items-center gap-2 rounded-t-xl bg-card pr-2 pl-3"
-          onKeyDown={(event) => {
-            // SearchField preventDefaults Escape while it has text (to clear);
-            // an unprevented Escape means the input was already empty — close.
-            if (event.key === "Escape" && !event.defaultPrevented) close()
-            if (event.key === "Enter") onSubmit()
-            if (event.key === "ArrowDown") {
-              event.preventDefault()
-              onFocusResults()
-            }
-          }}
-        >
-          <SearchIcon className="size-4 shrink-0 text-fg-muted" />
+      <Popover placement="bottom end" className={INSTANT_POPOVER}>
+        <Command aria-label="Search settings" className="w-56">
+          {/* onChange chains with the Autocomplete's own — it only observes. */}
           <SearchField
             autoFocus
             aria-label="Search settings"
-            value={query}
-            onChange={onQueryChange}
-            className="flex min-w-0 flex-1 flex-row items-center"
+            onChange={setQuery}
           >
-            <Input
-              placeholder="Search settings…"
-              className="h-full w-full border-0 bg-transparent px-0 shadow-none focus:ring-0"
-            />
+            <InputGroup>
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <Input placeholder="Search settings…" />
+              <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
+                <Button variant="quiet" isIconOnly>
+                  <XIcon aria-hidden="true" />
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
           </SearchField>
-          {/* Outside the SearchField on purpose — RAC would wire it as a
-              clear button; this one closes the search entirely. */}
-          <Button
-            variant="quiet"
-            size="sm"
-            isIconOnly
-            aria-label="Close search"
-            onPress={close}
+          {/* An empty query hands the listbox no items, so the empty state
+              doubles as the prompt. */}
+          <ListBox
+            aria-label="Settings"
+            className="max-h-64 overscroll-contain"
+            items={query.trim() ? items : []}
+            renderEmptyState={() =>
+              query.trim() ? (
+                <Empty className="p-4">
+                  <EmptyHeader>
+                    <EmptyTitle>No matching settings</EmptyTitle>
+                    <EmptyDescription>Try another word.</EmptyDescription>
+                  </EmptyHeader>
+                </Empty>
+              ) : (
+                <Empty className="p-4">
+                  <EmptyMedia variant="icon">
+                    <SearchIcon />
+                  </EmptyMedia>
+                  <EmptyHeader>
+                    <EmptyTitle>Search settings</EmptyTitle>
+                    <EmptyDescription>
+                      Find a chapter by name, or by a setting inside it.
+                    </EmptyDescription>
+                  </EmptyHeader>
+                </Empty>
+              )
+            }
           >
-            <XIcon />
-          </Button>
-        </div>
-      )}
-    </>
-  )
-}
-
-export function matches(text: string, query: string) {
-  return text.toLowerCase().includes(query.trim().toLowerCase())
-}
-
-/** The label with the query's characters emphasized. */
-export function Highlight({ text, query }: { text: string; query: string }) {
-  const needle = query.trim()
-  const start = needle ? text.toLowerCase().indexOf(needle.toLowerCase()) : -1
-  if (start < 0) return text
-  const end = start + needle.length
-  return (
-    <>
-      {text.slice(0, start)}
-      <mark className="bg-transparent font-semibold text-fg">
-        {text.slice(start, end)}
-      </mark>
-      {text.slice(end)}
-    </>
+            {(entry) => (
+              <ListBoxItem
+                id={entry.id}
+                textValue={entry.label}
+                onAction={() => jump(entry.chapterId)}
+              >
+                <span className="truncate">
+                  <Highlight text={entry.label} query={query} />
+                </span>
+                {entry.context && (
+                  <span className="ml-auto truncate pl-3 text-xs text-fg-muted">
+                    {entry.context}
+                  </span>
+                )}
+              </ListBoxItem>
+            )}
+          </ListBox>
+        </Command>
+      </Popover>
+    </Dialog>
   )
 }
