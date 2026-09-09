@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useSyncExternalStore,
-  type ReactNode,
-} from "react"
+import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
@@ -175,13 +169,9 @@ function PresetSwatch({
 
 function PresetSelector({
   variant = "quiet",
-  labelId,
 }: {
   variant?: ButtonProps["variant"]
-  /** An external caption; the trigger's name then reads caption + value. */
-  labelId?: string
 }) {
-  const valueId = useId()
   const selected = presetStore.useValue()
   const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
@@ -231,12 +221,11 @@ function PresetSelector({
       <Button
         variant={variant}
         size="sm"
-        aria-label={labelId ? undefined : "Preview design system"}
-        aria-labelledby={labelId ? `${labelId} ${valueId}` : undefined}
+        aria-label="Preview design system"
         className="gap-1.5"
       >
         <PresetSwatch color={selectedSwatch} />
-        <span id={valueId}>{selectedName}</span>
+        {selectedName}
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>
@@ -302,20 +291,14 @@ export function PreviewControls({ className }: { className?: string }) {
 }
 
 /**
- * The page-level toolbar of gallery pages (frontmatter `preview`): a captioned
- * preset field and a mode toggle, right-aligned under the page header. Same
- * store, so it stays in sync with every per-demo toolbar.
+ * The page-level toolbar of gallery pages (frontmatter `preview`): the preset
+ * picker and mode toggle, right-aligned under the page header. Same store, so
+ * it stays in sync with every per-demo toolbar.
  */
 export function PagePreviewControls() {
-  const labelId = useId()
   return (
-    <div className="flex items-end justify-end gap-3">
-      <div className="flex flex-col gap-1.5">
-        <span id={labelId} className="text-xs text-fg-muted">
-          Preset
-        </span>
-        <PresetSelector variant="secondary" labelId={labelId} />
-      </div>
+    <div className="flex items-center justify-end gap-3">
+      <PresetSelector variant="secondary" />
       <PreviewModeToggle variant="secondary" />
     </div>
   )
