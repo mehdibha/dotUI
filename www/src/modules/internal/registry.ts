@@ -26,4 +26,10 @@ export const INTERNAL_TOOLS: InternalTool[] = [
     description:
       "The blur-reveal utilities paired with ProgressiveBlur: root-scroll and nearest-scroller drivers.",
   },
+  {
+    href: "/internal/composition-animation",
+    label: "Composition animation",
+    description:
+      "The retired landing-page loop: magic-move code diffs synced with view-transitioned component previews.",
+  },
 ]

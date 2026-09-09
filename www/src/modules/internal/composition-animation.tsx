@@ -835,7 +835,7 @@ const paginate = (list: Step[]) =>
 const paginatedSteps = paginate(steps)
 const compactPaginatedSteps = paginate(compactSteps)
 
-export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
+type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
 // shiki-magic-move delays each phase by a *fraction of* `duration` and then runs
 // it for a further 1×duration. Enter is last, so a transition ends at
@@ -853,7 +853,7 @@ const CODE_STAGGER_MS = 2
 // `compactBelowLg` swaps in the compact loop when the viewport is under the
 // lg breakpoint. It flips after mount only, so server and hydration markup
 // always show the full list's first step.
-export function useCompositionPlayer({ compactBelowLg = false } = {}) {
+function useCompositionPlayer({ compactBelowLg = false } = {}) {
   const [step, setStep] = useState(0)
   const [compact, setCompact] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
@@ -1019,7 +1019,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
 // exactly one per player — onAnimationEnd is what advances the sequence, so
 // the decorative progress bars (same animation, same play state) stay in sync
 // with the actual tick by construction.
-export function StepTimer({ player }: { player: CompositionPlayer }) {
+function StepTimer({ player }: { player: CompositionPlayer }) {
   const { step, stepDurationMs, playing, advance, reducedMotion } = player
   if (reducedMotion) return null
   return (
@@ -1050,7 +1050,7 @@ function progressStyle(
 
 // A track clipping a full-size bar that slides in via translate — scaling a
 // hairline bar re-rasterizes it every frame and visibly steps at slow speeds.
-export function StepProgress({
+function StepProgress({
   player,
   axis = "x",
   className,
@@ -1074,7 +1074,7 @@ export function StepProgress({
   )
 }
 
-export function StepDots({
+function StepDots({
   player,
   className,
 }: {
@@ -1114,7 +1114,7 @@ export function StepDots({
   )
 }
 
-export function PlayPauseButton({
+function PlayPauseButton({
   player,
   withLabel = false,
   className,
@@ -1139,7 +1139,7 @@ export function PlayPauseButton({
   )
 }
 
-export function CompositionTransitionStyles({
+function CompositionTransitionStyles({
   morphMs = 450,
 }: { morphMs?: number } = {}) {
   return (
@@ -1314,7 +1314,7 @@ function keyedTokens(code: string, theme: "light" | "dark"): KeyedTokensInfo {
 
 // The gutter is sized for the loop's longest snippet, so it can't widen at line
 // 10 and shift the code sideways mid-transition.
-export const lineNumberWidth = String(maxCodeLines).length
+const lineNumberWidth = String(maxCodeLines).length
 
 // Line numbers are injected after the key sync rather than through the
 // library's `lineNumbers` option: the numbers stay out of the code's diff (which
@@ -1344,7 +1344,7 @@ function withLineNumbers(info: KeyedTokensInfo): KeyedTokensInfo {
   return { ...info, tokens }
 }
 
-export function CompositionCode({
+function CompositionCode({
   code,
   reducedMotion,
   duration = CODE_DURATION_MS,
