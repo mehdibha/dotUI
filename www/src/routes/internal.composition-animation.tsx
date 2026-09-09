@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { CompositionAnimation } from "@/modules/internal/composition-animation"
+import { CompositionSection } from "@/modules/internal/composition-section"
 import { InternalShell } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/composition-animation")({
@@ -13,9 +13,11 @@ function CompositionAnimationDemo() {
     <InternalShell
       crumbs={[{ label: "Composition animation" }]}
       title="Composition animation"
-      description="The code-to-preview composition loop that used to run on the landing page: magic-move code diffs synced with view-transitioned component previews."
+      description="The composition section retired from the landing page: 30 magic-move code beats synced with view-transitioned component previews, with the step rail on desktop and the compact loop when stacked."
     >
-      <CompositionAnimation className="max-w-4xl" />
+      <div className="max-w-6xl">
+        <CompositionSection />
+      </div>
     </InternalShell>
   )
 }

@@ -66,15 +66,72 @@ interface Step {
   durationMs: number
   code: string
   preview: React.ReactNode
+  // Short transitional beat that plays during auto-advance but isn't a
+  // clickable stop in the pagination (e.g. building an InputGroup addon by
+  // addon before landing on the headline step).
+  mid?: boolean
   // Part of the compact loop played when the home section stacks vertically —
   // only steps within a few code lines of each other, so the pane height
   // barely moves (see compactSteps).
   compact?: boolean
 }
 
+// Opening mid beat: a bare Input, the seed the TextField builds around. It's
+// the first frame on load, so it dwells a touch longer than the mids after it.
+const firstStep: Step = {
+  title: "TextField",
+  mid: true,
+  durationMs: 2000,
+  code: `<Input placeholder="hello@example.com" />`,
+  preview: (
+    <Input
+      aria-label="Email"
+      placeholder="hello@example.com"
+      className="w-full max-w-xs [view-transition-name:cmp-field]"
+    />
+  ),
+}
+
 const steps: Step[] = [
+  firstStep,
   {
-    // The full field — label, input, and description.
+    // Mid beat: wrap the bare input in a TextField — no field parts yet.
+    title: "TextField",
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Input placeholder="hello@example.com" />
+</TextField>`,
+    preview: (
+      <TextField aria-label="Email" className="w-full max-w-xs">
+        <Input
+          placeholder="hello@example.com"
+          className="[view-transition-name:cmp-field]"
+        />
+      </TextField>
+    ),
+  },
+  {
+    // Mid beat: the field gains its label.
+    title: "TextField",
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Label>Email</Label>
+  <Input placeholder="hello@example.com" />
+</TextField>`,
+    preview: (
+      <TextField className="w-full max-w-xs">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <Input
+          placeholder="hello@example.com"
+          className="[view-transition-name:cmp-field]"
+        />
+      </TextField>
+    ),
+  },
+  {
+    // Headline: the full field — label, input, and description.
     title: "TextField",
     durationMs: 3000,
     code: `<TextField>
@@ -96,7 +153,61 @@ const steps: Step[] = [
     ),
   },
   {
-    // The same field, its input now an InputGroup with icon and action addons.
+    // Mid beat: wrap the input in an InputGroup — no addons yet.
+    title: "InputGroup",
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Label>Email</Label>
+  <InputGroup>
+    <Input placeholder="hello@example.com" />
+  </InputGroup>
+  <Description>No spam, unsubscribe anytime.</Description>
+</TextField>`,
+    preview: (
+      <TextField className="w-full max-w-xs">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <Input placeholder="hello@example.com" />
+        </InputGroup>
+        <Description className="[view-transition-name:cmp-desc]">
+          No spam, unsubscribe anytime.
+        </Description>
+      </TextField>
+    ),
+  },
+  {
+    // Mid beat: add the leading addon.
+    title: "InputGroup",
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Label>Email</Label>
+  <InputGroup>
+    <InputGroupAddon>
+      <MailIcon />
+    </InputGroupAddon>
+    <Input placeholder="hello@example.com" />
+  </InputGroup>
+  <Description>No spam, unsubscribe anytime.</Description>
+</TextField>`,
+    preview: (
+      <TextField className="w-full max-w-xs">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <InputGroupAddon>
+            <MailIcon />
+          </InputGroupAddon>
+          <Input placeholder="hello@example.com" />
+        </InputGroup>
+        <Description className="[view-transition-name:cmp-desc]">
+          No spam, unsubscribe anytime.
+        </Description>
+      </TextField>
+    ),
+  },
+  {
+    // Headline step: add the trailing addon — the full InputGroup.
     title: "InputGroup",
     compact: true,
     durationMs: 3600,
@@ -195,7 +306,45 @@ const steps: Step[] = [
     ),
   },
   {
-    // Attach the popover calendar.
+    // Mid beat: promote to DatePicker — move the icon to a trailing trigger,
+    // still no popover.
+    title: "DatePicker",
+    mid: true,
+    durationMs: 1400,
+    code: `<DatePicker>
+  <Label>Meeting date</Label>
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <CalendarIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+</DatePicker>`,
+    preview: (
+      <DatePicker
+        className="w-full max-w-xs"
+        defaultValue={parseDate("2026-07-10")}
+      >
+        <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <DateInput />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <CalendarIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </DatePicker>
+    ),
+  },
+  {
+    // Headline: attach the popover calendar.
     title: "DatePicker",
     durationMs: 3400,
     code: `<DatePicker>
@@ -241,7 +390,59 @@ const steps: Step[] = [
     ),
   },
   {
-    // The field gains its end date.
+    // Mid beat: promote to a range — Calendar → RangeCalendar, one input still.
+    // The snippet defers the slots to the headline beat; the preview needs
+    // slot="start" at runtime.
+    title: "DateRangePicker",
+    mid: true,
+    durationMs: 1400,
+    code: `<DateRangePicker>
+  <Label>Trip dates</Label>
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <CalendarIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Popover>
+    <DialogContent>
+      <RangeCalendar />
+    </DialogContent>
+  </Popover>
+</DateRangePicker>`,
+    preview: (
+      <DateRangePicker
+        className="w-full max-w-xs"
+        defaultValue={{
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
+        }}
+      >
+        <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <DateInput slot="start" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <CalendarIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <Popover>
+          <DialogContent>
+            <RangeCalendar />
+          </DialogContent>
+        </Popover>
+      </DateRangePicker>
+    ),
+  },
+  {
+    // Headline: the field gains its end date.
     title: "DateRangePicker",
     durationMs: 3400,
     code: `<DateRangePicker>
@@ -290,6 +491,61 @@ const steps: Step[] = [
             <RangeCalendar />
           </DialogContent>
         </Popover>
+      </DateRangePicker>
+    ),
+  },
+  {
+    // Mid beat: swap the overlay primitive — one word, Popover → Modal.
+    title: "Modal",
+    mid: true,
+    // 110 tokens: the transition needs ~1410ms to land (see CODE_SPAN).
+    durationMs: 1500,
+    code: `<DateRangePicker>
+  <Label>Trip dates</Label>
+  <InputGroup>
+    <DateInput slot="start" />
+    <span>–</span>
+    <DateInput slot="end" />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <CalendarIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Modal>
+    <DialogContent>
+      <RangeCalendar />
+    </DialogContent>
+  </Modal>
+</DateRangePicker>`,
+    preview: (
+      <DateRangePicker
+        className="w-full max-w-xs"
+        defaultValue={{
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
+        }}
+      >
+        <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <DateInput slot="start" />
+          <span>–</span>
+          <DateInput slot="end" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <CalendarIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <Modal>
+          <DialogContent>
+            <RangeCalendar />
+          </DialogContent>
+        </Modal>
       </DateRangePicker>
     ),
   },
@@ -346,7 +602,32 @@ const steps: Step[] = [
     ),
   },
   {
-    // Same trigger-plus-popover shape, now holding a list of options.
+    // Mid beat: collapse to a bare Select — label and trigger only.
+    title: "Select",
+    mid: true,
+    durationMs: 1300,
+    code: `<Select>
+  <Label>Assignee</Label>
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
+</Select>`,
+    preview: (
+      // defaultSelectedKey is mount-only, and the headline's Select updates
+      // this same instance in place — so the selection must start here, even
+      // though there are no items to resolve it against yet.
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
+        <Label className="[view-transition-name:cmp-label]">Assignee</Label>
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
+      </Select>
+    ),
+  },
+  {
+    // Headline: attach the options list.
     title: "Select",
     compact: true,
     durationMs: 3200,
@@ -382,7 +663,7 @@ const steps: Step[] = [
     ),
   },
   {
-    // Same list, now a typeahead — swap the trigger for an input.
+    // Headline: same list, now a typeahead — swap the trigger for an input.
     title: "Combobox",
     durationMs: 3200,
     code: `<Combobox>
@@ -429,7 +710,7 @@ const steps: Step[] = [
     ),
   },
   {
-    // Multi-select — selected people surface as tags.
+    // Headline: multi-select — selected people surface as tags.
     title: "Tags",
     durationMs: 3000,
     code: `<Combobox>
@@ -488,7 +769,90 @@ const steps: Step[] = [
     ),
   },
   {
-    // The same popover list behind an icon trigger, one item nesting a submenu.
+    // Mid beat: a plain menu off an icon button.
+    title: "Menu",
+    mid: true,
+    durationMs: 1400,
+    code: `<Menu>
+  <Button size="sm" isIconOnly>
+    <MoreHorizontalIcon />
+  </Button>
+  <Popover>
+    <MenuContent>
+      <MenuItem>Edit</MenuItem>
+      <MenuItem>Duplicate</MenuItem>
+      <MenuItem>Delete</MenuItem>
+    </MenuContent>
+  </Popover>
+</Menu>`,
+    preview: (
+      <Menu>
+        <Button
+          size="sm"
+          isIconOnly
+          aria-label="Actions"
+          className="[view-transition-name:cmp-trigger]"
+        >
+          <MoreHorizontalIcon />
+        </Button>
+        <Popover>
+          <MenuContent className="[view-transition-name:cmp-list]">
+            <MenuItem>Edit</MenuItem>
+            <MenuItem>Duplicate</MenuItem>
+            <MenuItem>Delete</MenuItem>
+          </MenuContent>
+        </Popover>
+      </Menu>
+    ),
+  },
+  {
+    // Mid beat: the items gain keyboard shortcuts.
+    title: "Menu",
+    mid: true,
+    durationMs: 1400,
+    code: `<Menu>
+  <Button size="sm" isIconOnly>
+    <MoreHorizontalIcon />
+  </Button>
+  <Popover>
+    <MenuContent>
+      <MenuItem>Edit <Kbd>⌘E</Kbd></MenuItem>
+      <MenuItem>Duplicate <Kbd>⌘D</Kbd></MenuItem>
+      <MenuItem>Delete <Kbd>⌘⌫</Kbd></MenuItem>
+    </MenuContent>
+  </Popover>
+</Menu>`,
+    preview: (
+      <Menu>
+        <Button
+          size="sm"
+          isIconOnly
+          aria-label="Actions"
+          className="[view-transition-name:cmp-trigger]"
+        >
+          <MoreHorizontalIcon />
+        </Button>
+        <Popover>
+          <MenuContent className="[view-transition-name:cmp-list]">
+            <MenuItem textValue="Edit">
+              Edit
+              <Kbd>⌘E</Kbd>
+            </MenuItem>
+            <MenuItem textValue="Duplicate">
+              Duplicate
+              <Kbd>⌘D</Kbd>
+            </MenuItem>
+            <MenuItem textValue="Delete">
+              Delete
+              <Kbd>⌘⌫</Kbd>
+            </MenuItem>
+          </MenuContent>
+        </Popover>
+      </Menu>
+    ),
+  },
+  {
+    // Headline: one item nests a submenu.
     title: "Menu",
     compact: true,
     durationMs: 3000,
@@ -608,7 +972,40 @@ const steps: Step[] = [
     ),
   },
   {
-    // The same menu again, this time raised by typing @ in a textarea.
+    // Mid beat: the same menu, filtered by an @-mention typed into a textarea.
+    title: "Mention",
+    mid: true,
+    durationMs: 1500,
+    code: `<Mention>
+  <TextField>
+    <Label>Comment</Label>
+    <TextArea placeholder="Type @ to mention…" />
+  </TextField>
+  <Popover>
+    <MenuContent>
+      <MenuItem>Alex Miller</MenuItem>
+      <MenuItem>Sarah Jones</MenuItem>
+    </MenuContent>
+  </Popover>
+</Mention>`,
+    preview: (
+      <Mention className="w-full max-w-xs">
+        <TextField>
+          <Label className="[view-transition-name:cmp-label]">Comment</Label>
+          <TextArea placeholder="Type @ to mention…" />
+        </TextField>
+        <Popover>
+          <MenuContent className="[view-transition-name:cmp-list]">
+            {/* Ids are the full names — Mention inserts String(key) on select. */}
+            <MenuItem id="Alex Miller">Alex Miller</MenuItem>
+            <MenuItem id="Sarah Jones">Sarah Jones</MenuItem>
+          </MenuContent>
+        </Popover>
+      </Mention>
+    ),
+  },
+  {
+    // Headline: each suggestion gains an avatar.
     title: "Mention",
     durationMs: 3200,
     code: `<Mention>
@@ -652,6 +1049,79 @@ const steps: Step[] = [
           </MenuContent>
         </Popover>
       </Mention>
+    ),
+  },
+  {
+    // Mid beat: the command palette skeleton — a search input inside Command.
+    title: "Command",
+    mid: true,
+    durationMs: 1400,
+    code: `<Command>
+  <SearchField>
+    <InputGroup>
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <Input placeholder="Type a command…" />
+    </InputGroup>
+  </SearchField>
+</Command>`,
+    preview: (
+      <div className="w-full max-w-xs overflow-hidden rounded-md border bg-bg">
+        <Command aria-label="Command menu">
+          <SearchField aria-label="Search">
+            <InputGroup className="[view-transition-name:cmp-field]">
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <Input placeholder="Type a command…" />
+            </InputGroup>
+          </SearchField>
+        </Command>
+      </div>
+    ),
+  },
+  {
+    // Mid beat: the palette gains its list of commands.
+    title: "Command",
+    mid: true,
+    durationMs: 1500,
+    code: `<Command>
+  <SearchField>
+    <InputGroup>
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <Input placeholder="Type a command…" />
+    </InputGroup>
+  </SearchField>
+  <ListBox>
+    <ListBoxItem>New issue</ListBoxItem>
+    <ListBoxItem>Assign to…</ListBoxItem>
+    <ListBoxItem>Search docs</ListBoxItem>
+  </ListBox>
+</Command>`,
+    preview: (
+      <div className="w-full max-w-xs overflow-hidden rounded-md border bg-bg">
+        <Command aria-label="Command menu">
+          <SearchField aria-label="Search">
+            <InputGroup className="[view-transition-name:cmp-field]">
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <Input placeholder="Type a command…" />
+            </InputGroup>
+          </SearchField>
+          <ListBox
+            aria-label="Commands"
+            className="[view-transition-name:cmp-list]"
+          >
+            <ListBoxItem id="new-issue">New issue</ListBoxItem>
+            <ListBoxItem id="assign">Assign to…</ListBoxItem>
+            <ListBoxItem id="search-docs">Search docs</ListBoxItem>
+          </ListBox>
+        </Command>
+      </div>
     ),
   },
   {
@@ -828,22 +1298,34 @@ const steps: Step[] = [
 const compactSteps = steps.filter((s) => s.compact)
 const maxCodeLines = Math.max(...steps.map((s) => s.code.split("\n").length))
 
-// Each entry keeps its index into its list so the rail/dots can jump straight
-// to it.
+// Pagination lists only the headline steps; mid steps play during auto-advance
+// but aren't clickable stops. Each entry keeps its index into its list so the
+// rail/dots can jump straight to it.
 const paginate = (list: Step[]) =>
-  list.map((s, index) => ({ title: s.title, index }))
+  list
+    .map((s, index) => ({ title: s.title, index, mid: s.mid }))
+    .filter((s) => !s.mid)
 const paginatedSteps = paginate(steps)
 const compactPaginatedSteps = paginate(compactSteps)
 
-type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
+export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
 // shiki-magic-move delays each phase by a *fraction of* `duration` and then runs
 // it for a further 1×duration. Enter is last, so a transition ends at
 // (1 + delayEnter)×duration + the stagger tail — not at `duration`. Every dwell
 // above has to clear that, or the next step cuts the animation off mid-flight.
 const CODE_ENTER_DELAY = 0.7
+const CODE_SPAN = 1 + CODE_ENTER_DELAY
 const CODE_DURATION_MS = 700
 const CODE_STAGGER_MS = 2
+
+// A manual walk plays the exact same code transition as auto-play, only with a
+// smaller stagger — so each beat must clear the full span plus the stagger tail
+// of the longest (~120-token) snippet.
+const WALK_CODE_STAGGER_MS = 0.5
+const MANUAL_BEAT_MS = Math.ceil(
+  CODE_SPAN * CODE_DURATION_MS + 120 * WALK_CODE_STAGGER_MS,
+)
 
 // Shared player: auto-advance while visible, with a CSS animation as the step
 // clock (see StepTimer) so the visible progress and the advance tick can never
@@ -853,7 +1335,7 @@ const CODE_STAGGER_MS = 2
 // `compactBelowLg` swaps in the compact loop when the viewport is under the
 // lg breakpoint. It flips after mount only, so server and hydration markup
 // always show the full list's first step.
-function useCompositionPlayer({ compactBelowLg = false } = {}) {
+export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   const [step, setStep] = useState(0)
   const [compact, setCompact] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
@@ -953,14 +1435,61 @@ function useCompositionPlayer({ compactBelowLg = false } = {}) {
     })
   }, [])
 
+  // Manual navigation (rail/dots): when the target is the next headline, play
+  // the mid beats between here and there on a fast cadence instead of
+  // hard-jumping, so the code still arrives in small blocks. Backward jumps
+  // and far jumps (crossing another headline) stay direct.
+  const walkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cancelWalk = useCallback(() => {
+    if (walkTimerRef.current) {
+      clearTimeout(walkTimerRef.current)
+      walkTimerRef.current = null
+    }
+  }, [])
+  useEffect(() => cancelWalk, [cancelWalk])
+
   // Restart from the top when the step list swaps (breakpoint cross) — the
   // current index points into the other list.
   useEffect(() => {
+    cancelWalk()
     stepRef.current = 0
     setStep(0)
-  }, [compact])
+  }, [compact, cancelWalk])
 
-  const goToStep = applyStep
+  const [walking, setWalking] = useState(false)
+  const goToStep = useCallback(
+    (next: number) => {
+      cancelWalk()
+      const from = stepRef.current
+      const between = activeSteps.slice(from + 1, next)
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches
+      if (
+        reduce ||
+        next <= from ||
+        between.length === 0 ||
+        !between.every((s) => s.mid)
+      ) {
+        setWalking(false)
+        applyStep(next)
+        return
+      }
+      setWalking(true)
+      const walk = () => {
+        applyStep(stepRef.current + 1)
+        if (stepRef.current < next) {
+          walkTimerRef.current = setTimeout(walk, MANUAL_BEAT_MS)
+        } else {
+          // Clears in the same commit as the final step, so the arrival plays at
+          // full duration — nothing follows it to cut it off.
+          setWalking(false)
+        }
+      }
+      walk()
+    },
+    [applyStep, cancelWalk, activeSteps],
+  )
 
   const advance = useCallback(
     () => applyStep((stepRef.current + 1) % activeSteps.length),
@@ -982,8 +1511,13 @@ function useCompositionPlayer({ compactBelowLg = false } = {}) {
   // The index may briefly outlive a list swap — the reset effect above hasn't
   // run yet on that render.
   const current =
-    activeSteps[Math.min(step, activeSteps.length - 1)] ?? activeSteps[0]!
-  const activePaginated = Math.min(step, paginated.length - 1)
+    activeSteps[Math.min(step, activeSteps.length - 1)] ?? firstStep
+  // A mid step maps to the headline step it's building toward (the next
+  // paginated entry), so that entry stays lit while the beats play.
+  const activePaginated = Math.max(
+    0,
+    paginated.findIndex((p) => p.index >= step),
+  )
   const stepDurationMs = current.durationMs
   const reducedMotion =
     mounted && window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -1012,6 +1546,7 @@ function useCompositionPlayer({ compactBelowLg = false } = {}) {
     reducedMotion,
     paginated,
     activePaginated,
+    codeStaggerMs: walking ? WALK_CODE_STAGGER_MS : CODE_STAGGER_MS,
   }
 }
 
@@ -1019,7 +1554,7 @@ function useCompositionPlayer({ compactBelowLg = false } = {}) {
 // exactly one per player — onAnimationEnd is what advances the sequence, so
 // the decorative progress bars (same animation, same play state) stay in sync
 // with the actual tick by construction.
-function StepTimer({ player }: { player: CompositionPlayer }) {
+export function StepTimer({ player }: { player: CompositionPlayer }) {
   const { step, stepDurationMs, playing, advance, reducedMotion } = player
   if (reducedMotion) return null
   return (
@@ -1050,7 +1585,7 @@ function progressStyle(
 
 // A track clipping a full-size bar that slides in via translate — scaling a
 // hairline bar re-rasterizes it every frame and visibly steps at slow speeds.
-function StepProgress({
+export function StepProgress({
   player,
   axis = "x",
   className,
@@ -1074,7 +1609,7 @@ function StepProgress({
   )
 }
 
-function StepDots({
+export function StepDots({
   player,
   className,
 }: {
@@ -1114,7 +1649,7 @@ function StepDots({
   )
 }
 
-function PlayPauseButton({
+export function PlayPauseButton({
   player,
   withLabel = false,
   className,
@@ -1139,7 +1674,7 @@ function PlayPauseButton({
   )
 }
 
-function CompositionTransitionStyles({
+export function CompositionTransitionStyles({
   morphMs = 450,
 }: { morphMs?: number } = {}) {
   return (
@@ -1314,7 +1849,7 @@ function keyedTokens(code: string, theme: "light" | "dark"): KeyedTokensInfo {
 
 // The gutter is sized for the loop's longest snippet, so it can't widen at line
 // 10 and shift the code sideways mid-transition.
-const lineNumberWidth = String(maxCodeLines).length
+export const lineNumberWidth = String(maxCodeLines).length
 
 // Line numbers are injected after the key sync rather than through the
 // library's `lineNumbers` option: the numbers stay out of the code's diff (which
@@ -1344,7 +1879,7 @@ function withLineNumbers(info: KeyedTokensInfo): KeyedTokensInfo {
   return { ...info, tokens }
 }
 
-function CompositionCode({
+export function CompositionCode({
   code,
   reducedMotion,
   duration = CODE_DURATION_MS,
@@ -1398,53 +1933,10 @@ function CompositionCode({
       options={{
         duration: reducedMotion ? 0 : duration,
         stagger,
+        // Pinned: CODE_SPAN is only correct if this is what the renderer uses.
         delayEnter: CODE_ENTER_DELAY,
         containerStyle: false,
       }}
     />
-  )
-}
-
-export function CompositionAnimation({ className }: { className?: string }) {
-  const player = useCompositionPlayer()
-  const { mounted, containerRef, current, reducedMotion, setHoverPaused } =
-    player
-
-  return (
-    <div
-      ref={containerRef}
-      className={cn("overflow-hidden rounded-md border bg-card", className)}
-      onMouseEnter={() => setHoverPaused(true)}
-      onMouseLeave={() => setHoverPaused(false)}
-      onFocus={() => setHoverPaused(true)}
-      onBlur={() => setHoverPaused(false)}
-    >
-      <CompositionTransitionStyles />
-      <StepTimer player={player} />
-      <div className="flex items-center justify-between gap-2 border-b py-1.5 pr-1.5 pl-2.5">
-        <span className="truncate font-mono text-[0.8125rem] text-fg-muted">
-          {current.title}
-        </span>
-        <div className="flex items-center gap-1">
-          <StepDots player={player} />
-          <PlayPauseButton player={player} />
-        </div>
-      </div>
-      <div className="grid sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div className="no-scrollbar h-88 overflow-auto p-4 font-mono text-[0.8125rem] leading-relaxed">
-          {mounted ? (
-            <CompositionCode
-              code={current.code}
-              reducedMotion={reducedMotion}
-            />
-          ) : (
-            <pre className="whitespace-pre">{current.code}</pre>
-          )}
-        </div>
-        <div className="flex min-h-40 items-center justify-center border-t bg-bg p-6 sm:border-t-0 sm:border-l">
-          {current.preview}
-        </div>
-      </div>
-    </div>
   )
 }

@@ -30,6 +30,6 @@ export const INTERNAL_TOOLS: InternalTool[] = [
     href: "/internal/composition-animation",
     label: "Composition animation",
     description:
-      "The retired landing-page loop: magic-move code diffs synced with view-transitioned component previews.",
+      "The composition section retired from the landing page: code beats synced with view-transitioned component previews.",
   },
 ]
