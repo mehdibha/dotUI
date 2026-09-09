@@ -13,10 +13,9 @@ export {
   createTheme,
   type ModeOutput,
   type Theme,
-  themeOptionsSchema,
-  type ThemeOptions,
   type ThemeReport,
 } from "./theme"
+export type { ThemeOptions } from "./schema"
 
 export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from "./data"
 

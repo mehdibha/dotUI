@@ -37,7 +37,6 @@ export {
 } from "./emit-css"
 export {
   type ColorConfig,
-  colorConfigSchema,
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   migrateColorConfig,

@@ -6,8 +6,6 @@
  * no algorithm menu — the v1 `{algorithm, knobs}` shape migrates below.
  */
 
-import { z } from "zod"
-
 import { STATUS_SEEDS, toOklch } from "@dotui/colors"
 
 import type {
@@ -18,93 +16,65 @@ import type {
 } from "./types"
 import { JOB_STEPS, type JobName } from "./types"
 
-const JOB_NAMES = Object.keys(JOB_STEPS) as [JobName, ...JobName[]]
-const tokenTargetSpec = z.object({
-  palette: z.string().min(1),
-  job: z.enum(JOB_NAMES),
-})
-const tokenOverride = z.union([
-  tokenTargetSpec,
-  z.object({
-    light: tokenTargetSpec.optional(),
-    dark: tokenTargetSpec.optional(),
-  }),
-])
+/** WCAG ratio vs the app background (1.05–21), one value or per mode. */
+type BorderTarget = number | { light?: number; dark?: number }
 
-const borderTargetRatio = z.number().min(1.05).max(21)
-const borderTargetValue = z.union([
-  borderTargetRatio,
-  z.object({
-    light: borderTargetRatio.optional(),
-    dark: borderTargetRatio.optional(),
-  }),
-])
-const borderTargetsSchema = z.object({
-  "400": borderTargetValue.optional(),
-  "500": borderTargetValue.optional(),
-  "600": borderTargetValue.optional(),
-})
-
-export const colorConfigSchema = z.object({
-  v: z.literal(2),
-  seeds: z.object({
+export interface ColorConfig {
+  v: 2
+  seeds: {
     /** The brand accent — the one required input. */
-    accent: z.string(),
+    accent: string
     /** Absent → auto-tinted from the accent hue at whisper chroma (engine D8). */
-    neutral: z.string().optional(),
-    success: z.string().optional(),
-    warning: z.string().optional(),
-    danger: z.string().optional(),
-    info: z.string().optional(),
+    neutral?: string
+    success?: string
+    warning?: string
+    danger?: string
+    info?: string
     /** Splits selection controls + focus onto their own ramp (else = primary). */
-    selection: z.string().optional(),
-  }),
-  /** App-background lightness per mode (L*); dark accepts OLED black. */
-  background: z
-    .object({
-      light: z.number().min(90).max(100).optional(),
-      dark: z.union([z.number().min(0).max(20), z.literal("oled")]).optional(),
-    })
-    .optional(),
-  /** Scales the fitted chroma curve (1 ≈ Radix, ~1.33 ≈ Tailwind). */
-  vividness: z.number().min(0).max(2).optional(),
-  /** Scalar on the hue-band bend table (1.6 ≈ Tailwind warm bends). */
-  hueShift: z.number().min(0).max(3).optional(),
-  /** Scales the neutral whisper tint (0 = pure gray). */
-  neutralTint: z.number().min(0).max(4).optional(),
+    selection?: string
+  }
+  /** App-background lightness per mode (L*: light 90–100, dark 0–20); dark accepts OLED black. */
+  background?: { light?: number; dark?: number | "oled" }
+  /** Scales the fitted chroma curve, 0–2 (1 ≈ Radix, ~1.33 ≈ Tailwind). */
+  vividness?: number
+  /** Scalar on the hue-band bend table, 0–3 (1.6 ≈ Tailwind warm bends). */
+  hueShift?: number
+  /** Scales the neutral whisper tint, 0–4 (0 = pure gray). */
+  neutralTint?: number
   /** OKLCH hue the neutral tint leans toward (absent = follow the accent). */
-  neutralHue: z.number().min(0).max(360).optional(),
+  neutralHue?: number
   /** Pin the accent verbatim at the solid step; the report prices it. */
-  preserveSeed: z.boolean().optional(),
+  preserveSeed?: boolean
   /**
    * Guarantee policy (engine D2): `relaxed` prices border-floor misses as
    * warnings; `strict` solves solid labels to the full WCAG 4.5. Stored only
    * when non-default — absent means the default policy.
    */
-  guaranteePolicy: z.enum(["relaxed", "strict"]).optional(),
+  guaranteePolicy?: "relaxed" | "strict"
   /**
    * Border placement targets (engine D2): WCAG vs the app background per
    * border job, one value or per-mode values, keyed by palette (`'*'` = all).
    */
-  borders: z.record(z.string(), borderTargetsSchema).optional(),
+  borders?: Record<
+    string,
+    { "400"?: BorderTarget; "500"?: BorderTarget; "600"?: BorderTarget }
+  >
   /**
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
    * (brand-colored primary); absent means the default neutral (black/white).
    */
-  primary: z.literal("accent").optional(),
+  primary?: "accent"
   /**
    * Per-token remaps (T5): token name → (palette, job), one destination or a
    * per-mode pair. Applied by the semantic resolver; unknown names are inert.
    */
-  overrides: z.record(z.string(), tokenOverride).optional(),
+  overrides?: TokenOverrides
   /**
    * Categorical chart series (engine D11): absent = tonal shades of the accent
    * (shadcn parity); `vivid` / `muted` spread hues around it.
    */
-  chartPalette: z.enum(["vivid", "muted"]).optional(),
-})
-
-export type ColorConfig = z.infer<typeof colorConfigSchema>
+  chartPalette?: "vivid" | "muted"
+}
 export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
@@ -225,6 +195,7 @@ function salvageBorders(raw: unknown): ColorConfig["borders"] {
  * nearest v2 axes (algorithm + per-producer knobs are gone; the one engine
  * covers their range). Unknown shapes fall back to the default, and every
  * kept seed is verified parseable — never a decode or render explosion.
+ * Also the validator in front of the engine (`resolveColorConfig`).
  */
 export function migrateColorConfig(input: unknown): ColorConfig {
   if (typeof input !== "object" || input === null) return DEFAULT_COLOR_CONFIG

@@ -12,6 +12,9 @@ import path from "node:path"
 import { format } from "oxfmt"
 import { rimraf } from "rimraf"
 
+import { themeOptionsSchema } from "@dotui/colors/schema"
+
+import { PRESETS } from "../src/modules/presets/presets-data"
 import {
   buildPublishables,
   collectBaseFiles,
@@ -28,6 +31,7 @@ import {
   emitDarkOverridesCss,
   emitPrimitivesCss,
   resolveColorConfig,
+  themeOptionsFromConfig,
 } from "../src/registry/theme"
 import type { RegistryItem } from "../src/registry/types"
 
@@ -893,6 +897,26 @@ async function buildShadcnPublishables(
  * block that references them. This file is site-only — the shipped theme
  * flattens the semantic tokens to literals instead (see publisher/emit-theme).
  */
+// The engine's input contract is a zod schema checked here, at build time,
+// for the default and every built-in preset — `createTheme` itself trusts
+// its typed input so the client never ships zod.
+function checkColorConfigs() {
+  const configs = [
+    ["default", DEFAULT_COLOR_CONFIG] as const,
+    ...PRESETS.map((preset) => [preset.id, preset.designSystem.color] as const),
+  ]
+  for (const [name, config] of configs) {
+    if (!config) continue
+    const result = themeOptionsSchema.safeParse(themeOptionsFromConfig(config))
+    if (!result.success) {
+      throw new Error(
+        `Invalid color config for preset "${name}": ${result.error.message}`,
+      )
+    }
+  }
+  console.log(`  ✓ color configs (${configs.length} presets)`)
+}
+
 async function generateBaseColorsCss() {
   const primitives = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
   const dark = emitDarkOverridesCss(DEFAULT_SEMANTICS)
@@ -909,6 +933,7 @@ async function main() {
 
   try {
     console.log("Generating base color css")
+    checkColorConfigs()
     await generateBaseColorsCss()
 
     // Fresh item lists globbed from disk — never the (possibly stale) committed
