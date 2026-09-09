@@ -13,8 +13,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "culori": "^4.0.2",
-    "zod": "^4.2.1"
+    "culori": "^4.0.2"
   },
   "devDependencies": {
     "@adobe/leonardo-contrast-colors": "^1.1.0",

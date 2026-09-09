@@ -3,8 +3,6 @@
  * modes × {accent, neutral, status} × 12 steps + on-* + chart palettes, all guarantees enforced in-loop and audited in the report.
  */
 
-import { z } from "zod"
-
 import {
   CATEGORICAL_CHROMA,
   categoricalPalettes,
@@ -42,87 +40,153 @@ import {
 import { lstarOf, type Oklch, oklchCss, toOklch } from "./space"
 import { type GuaranteeResult, verifyLadder, verifyScale } from "./verify"
 
-const colorString = z.string().refine(
-  (value) => {
-    try {
-      toOklch(value)
-      return true
-    } catch {
-      return false
-    }
-  },
-  { message: "not a parsable CSS color" },
-)
+/** WCAG ratio vs the app background (1.05–21), one value or per mode. */
+type BorderTargetValue = number | { light?: number; dark?: number }
 
-const borderTargetRatio = z.number().min(1.05).max(21)
-const borderTargetValue = z.union([
-  borderTargetRatio,
-  z.object({
-    light: borderTargetRatio.optional(),
-    dark: borderTargetRatio.optional(),
-  }),
-])
-
-export const themeOptionsSchema = z.object({
-  seeds: z
-    .object({
-      accent: colorString,
-      neutral: colorString.optional(),
-      success: colorString.optional(),
-      warning: colorString.optional(),
-      danger: colorString.optional(),
-      info: colorString.optional(),
-    })
-    .catchall(colorString),
+export interface ThemeOptions {
+  /** Parsable CSS colors; extra keys are custom palettes. */
+  seeds: {
+    accent: string
+    neutral?: string
+    success?: string
+    warning?: string
+    danger?: string
+    info?: string
+    [palette: string]: string | undefined
+  }
   /** D7 — pin the accent verbatim at the solid step; the report prices it. */
-  preserveSeed: z.boolean().optional(),
-  /** D5 — scales the fitted chroma curve (1 ≈ Radix, ~1.33 ≈ Tailwind). */
-  vividness: z.number().min(0).max(2).optional(),
-  /** D6 — scalar on the hue-band bend table (1.6 ≈ Tailwind warm bends). */
-  hueShift: z.number().min(0).max(3).optional(),
-  /** D8 — scales the whisper tint peak (0 = pure gray). */
-  neutralTint: z.number().min(0).max(4).optional(),
+  preserveSeed?: boolean
+  /** D5 — scales the fitted chroma curve, 0–2 (1 ≈ Radix, ~1.33 ≈ Tailwind). */
+  vividness?: number
+  /** D6 — scalar on the hue-band bend table, 0–3 (1.6 ≈ Tailwind warm bends). */
+  hueShift?: number
+  /** D8 — scales the whisper tint peak, 0–4 (0 = pure gray). */
+  neutralTint?: number
   /** D8 — override the derived neutral hue (degrees). */
-  neutralHue: z.number().optional(),
-  /** D9/D12 — app-background lightness per mode (L*), or OLED black. */
-  background: z
-    .object({
-      light: z.number().min(90).max(100).optional(),
-      dark: z.union([z.number().min(0).max(20), z.literal("oled")]).optional(),
-    })
-    .optional(),
+  neutralHue?: number
+  /** D9/D12 — app-background lightness per mode (L*: light 90–100, dark 0–20), or OLED black. */
+  background?: { light?: number; dark?: number | "oled" }
   /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
-  strictOnSolid: z.boolean().optional(),
+  strictOnSolid?: boolean
   /**
    * D2 — guarantee policy: `relaxed` reports border-floor misses as warnings
    * instead of failing the build (text guarantees never relax); `strict`
    * implies `strictOnSolid`. Absent = `default`.
    */
-  guaranteePolicy: z.enum(["relaxed", "default", "strict"]).optional(),
+  guaranteePolicy?: "relaxed" | "default" | "strict"
   /**
    * D2 — per-palette border placement targets: WCAG vs the app background,
    * per border job, one value or per-mode values. Key `'*'` applies to every
    * palette without its own entry. A target below the default floor is
    * honored and priced as a report warning.
    */
-  borders: z
-    .record(
-      z.string(),
-      z.object({
-        "400": borderTargetValue.optional(),
-        "500": borderTargetValue.optional(),
-        "600": borderTargetValue.optional(),
-      }),
-    )
-    .optional(),
+  borders?: Record<
+    string,
+    {
+      "400"?: BorderTargetValue
+      "500"?: BorderTargetValue
+      "600"?: BorderTargetValue
+    }
+  >
   /**
    * D11 — the categorical series strategy: `tonal` (default) shades one brand
    * hue, `vivid` / `muted` spread hues around the accent at high / low chroma.
    */
-  chartPalette: z.enum(["tonal", "vivid", "muted"]).optional(),
-})
+  chartPalette?: "tonal" | "vivid" | "muted"
+}
 
-export type ThemeOptions = z.infer<typeof themeOptionsSchema>
+/* The input gate: a clear error at the boundary beats a deep engine throw. */
+
+class ThemeOptionsError extends Error {
+  constructor(path: string, message: string) {
+    super(`createTheme: ${path} ${message}`)
+    this.name = "ThemeOptionsError"
+  }
+}
+
+function checkColor(path: string, value: unknown): void {
+  if (value === undefined) return
+  try {
+    if (typeof value !== "string") throw new Error()
+    toOklch(value)
+  } catch {
+    throw new ThemeOptionsError(path, "is not a parsable CSS color")
+  }
+}
+
+function checkNumber(
+  path: string,
+  value: unknown,
+  min = -Infinity,
+  max = Infinity,
+): void {
+  if (value === undefined) return
+  if (typeof value !== "number" || !Number.isFinite(value))
+    throw new ThemeOptionsError(path, "must be a number")
+  if (value < min || value > max)
+    throw new ThemeOptionsError(path, `must be between ${min} and ${max}`)
+}
+
+function checkBoolean(path: string, value: unknown): void {
+  if (value !== undefined && typeof value !== "boolean")
+    throw new ThemeOptionsError(path, "must be a boolean")
+}
+
+function checkEnum(path: string, value: unknown, values: string[]): void {
+  if (value !== undefined && !values.includes(value as string))
+    throw new ThemeOptionsError(path, `must be one of ${values.join(", ")}`)
+}
+
+function checkBorderTarget(path: string, value: unknown): void {
+  if (value === undefined) return
+  if (typeof value === "number") return checkNumber(path, value, 1.05, 21)
+  if (typeof value !== "object" || value === null)
+    throw new ThemeOptionsError(path, "must be a ratio or a per-mode pair")
+  const pair = value as { light?: unknown; dark?: unknown }
+  checkNumber(`${path}.light`, pair.light, 1.05, 21)
+  checkNumber(`${path}.dark`, pair.dark, 1.05, 21)
+}
+
+function validateThemeOptions(input: ThemeOptions): ThemeOptions {
+  if (typeof input !== "object" || input === null)
+    throw new ThemeOptionsError("options", "must be an object")
+  if (typeof input.seeds !== "object" || input.seeds === null)
+    throw new ThemeOptionsError("seeds", "must be an object")
+  if (input.seeds.accent === undefined)
+    throw new ThemeOptionsError("seeds.accent", "is required")
+  for (const [name, seed] of Object.entries(input.seeds))
+    checkColor(`seeds.${name}`, seed)
+  checkBoolean("preserveSeed", input.preserveSeed)
+  checkNumber("vividness", input.vividness, 0, 2)
+  checkNumber("hueShift", input.hueShift, 0, 3)
+  checkNumber("neutralTint", input.neutralTint, 0, 4)
+  checkNumber("neutralHue", input.neutralHue)
+  if (input.background !== undefined) {
+    if (typeof input.background !== "object" || input.background === null)
+      throw new ThemeOptionsError("background", "must be an object")
+    checkNumber("background.light", input.background.light, 90, 100)
+    if (input.background.dark !== "oled")
+      checkNumber("background.dark", input.background.dark, 0, 20)
+  }
+  checkBoolean("strictOnSolid", input.strictOnSolid)
+  checkEnum("guaranteePolicy", input.guaranteePolicy, [
+    "relaxed",
+    "default",
+    "strict",
+  ])
+  if (input.borders !== undefined) {
+    if (typeof input.borders !== "object" || input.borders === null)
+      throw new ThemeOptionsError("borders", "must be an object")
+    for (const [palette, spec] of Object.entries(input.borders)) {
+      if (typeof spec !== "object" || spec === null)
+        throw new ThemeOptionsError(`borders.${palette}`, "must be an object")
+      for (const job of ["400", "500", "600"] as const)
+        checkBorderTarget(`borders.${palette}.${job}`, spec[job])
+    }
+  }
+  checkEnum("chartPalette", input.chartPalette, ["tonal", "vivid", "muted"])
+  return input
+}
 
 export interface ModeOutput {
   /** The app background (= neutral step 25). */
@@ -157,10 +221,9 @@ export interface Theme {
 const CORE_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"]
 
 export function createTheme(input: string | ThemeOptions): Theme {
-  const options =
-    typeof input === "string"
-      ? themeOptionsSchema.parse({ seeds: { accent: input } })
-      : themeOptionsSchema.parse(input)
+  const options = validateThemeOptions(
+    typeof input === "string" ? { seeds: { accent: input } } : input,
+  )
 
   const vividness = options.vividness ?? 1
   const hueShift = options.hueShift ?? 1
@@ -225,7 +288,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
     )
   }
   for (const [name, value] of Object.entries(options.seeds)) {
-    if (name in seeds) continue
+    if (name in seeds || value === undefined) continue
     seeds[name] = classify(toOklch(value))
   }
 

@@ -13,7 +13,6 @@ export {
   createTheme,
   type ModeOutput,
   type Theme,
-  themeOptionsSchema,
   type ThemeOptions,
   type ThemeReport,
 } from "./theme"
