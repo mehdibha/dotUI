@@ -26,6 +26,7 @@ import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
 import { Route as InternalHighlightCompareRouteImport } from './routes/internal.highlight-compare'
+import { Route as InternalCompositionAnimationRouteImport } from './routes/internal.composition-animation'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
@@ -125,6 +126,12 @@ const InternalHighlightCompareRoute =
     path: '/internal/highlight-compare',
     getParentRoute: () => rootRouteImport,
   } as any)
+const InternalCompositionAnimationRoute =
+  InternalCompositionAnimationRouteImport.update({
+    id: '/internal/composition-animation',
+    path: '/internal/composition-animation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const InternalColorLabRoute = InternalColorLabRouteImport.update({
   id: '/internal/color-lab',
   path: '/internal/color-lab',
@@ -211,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -241,6 +249,7 @@ export interface FileRoutesByTo {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -274,6 +283,7 @@ export interface FileRoutesById {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/composition-animation': typeof InternalCompositionAnimationRoute
   '/internal/highlight-compare': typeof InternalHighlightCompareRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/composition-animation'
     | '/internal/highlight-compare'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -338,6 +349,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/composition-animation'
     | '/internal/highlight-compare'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -370,6 +382,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/composition-animation'
     | '/internal/highlight-compare'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -397,6 +410,7 @@ export interface RootRouteChildren {
   DemosSlugRoute: typeof DemosSlugRoute
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
+  InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
   InternalHighlightCompareRoute: typeof InternalHighlightCompareRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
@@ -527,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/internal/highlight-compare'
       fullPath: '/internal/highlight-compare'
       preLoaderRoute: typeof InternalHighlightCompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/composition-animation': {
+      id: '/internal/composition-animation'
+      path: '/internal/composition-animation'
+      fullPath: '/internal/composition-animation'
+      preLoaderRoute: typeof InternalCompositionAnimationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/color-lab': {
@@ -674,6 +695,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemosSlugRoute: DemosSlugRoute,
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
+  InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
   InternalHighlightCompareRoute: InternalHighlightCompareRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,
