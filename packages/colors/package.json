@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "culori": "^4.0.2",
-    "zod": "^4.2.1"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@adobe/leonardo-contrast-colors": "^1.1.0",

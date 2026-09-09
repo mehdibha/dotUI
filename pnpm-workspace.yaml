@@ -18,7 +18,7 @@ catalog:
   tailwindcss: ^4.3.0
   typescript: ^7.0.2
   vite: ^8.1.0
-  zod: ^4.2.1
+  zod: ^4.5.4
 
 allowBuilds:
   "@tailwindcss/oxide": true
