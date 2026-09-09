@@ -9,6 +9,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
+import { useFilter } from "react-aria-components/Autocomplete"
 
 import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
@@ -26,43 +27,40 @@ import { INSTANT_POPOVER } from "./rows"
 interface Entry {
   id: string
   chapterId: string
-  label: string
-  /** Where the hit lives — the chapter, and the member for composites. */
-  context?: string
+  /** The category — the chapter, or "Chapter › Member" for composites. */
+  category: string
+  /** A settings row inside it; absent for the category itself. */
+  axis?: string
 }
 
-/** One entry per chapter, per composite member, and per settings row. */
-function entries(chapters: IndexChapter[]): Entry[] {
-  return chapters.flatMap((chapter) => {
-    const composite = chapter.members.length > 1
-    return [
-      { id: chapter.id, chapterId: chapter.id, label: chapter.label },
-      ...chapter.members.flatMap((member) => {
-        // The host member shares the composite's label — no "Buttons › Buttons".
-        const nested = composite && member.label !== chapter.label
-        const context = nested
-          ? `${chapter.label} › ${member.label}`
-          : chapter.label
-        const own = nested
-          ? [
-              {
-                id: `${chapter.id}/${member.id}`,
-                chapterId: chapter.id,
-                label: member.label,
-                context: chapter.label,
-              },
-            ]
-          : []
-        const rows = (SEARCH_INDEX[member.id] ?? []).map((label) => ({
-          id: `${chapter.id}/${member.id}/${label}`,
-          chapterId: chapter.id,
-          label,
-          context,
-        }))
-        return [...own, ...rows]
-      }),
-    ]
-  })
+/** The categories: every chapter, plus each composite's non-host members. */
+function categories(chapters: IndexChapter[]): Entry[] {
+  return chapters.flatMap((chapter) => [
+    { id: chapter.id, chapterId: chapter.id, category: chapter.label },
+    ...chapter.members
+      .filter((m) => chapter.members.length > 1 && m.label !== chapter.label)
+      .map((m) => ({
+        id: `${chapter.id}/${m.id}`,
+        chapterId: chapter.id,
+        category: `${chapter.label} › ${m.label}`,
+      })),
+  ])
+}
+
+/** Every settings row, under its category. */
+function axes(chapters: IndexChapter[]): Entry[] {
+  return chapters.flatMap((chapter) =>
+    chapter.members.flatMap((m) => {
+      const nested = chapter.members.length > 1 && m.label !== chapter.label
+      const category = nested ? `${chapter.label} › ${m.label}` : chapter.label
+      return (SEARCH_INDEX[m.id] ?? []).map((axis) => ({
+        id: `${chapter.id}/${m.id}/${axis}`,
+        chapterId: chapter.id,
+        category,
+        axis,
+      }))
+    }),
+  )
 }
 
 /** The label with the query's characters picked out in accent. */
@@ -91,7 +89,24 @@ export function PanelSearch({
 }) {
   const [isOpen, setOpen] = useState(false)
   const [query, setQuery] = useState("")
-  const items = useMemo(() => entries(chapters), [chapters])
+  const { contains } = useFilter({
+    sensitivity: "base",
+    ignorePunctuation: true,
+  })
+  // Categories first: a query that names one lists categories only. Nested
+  // axes surface only when nothing at that level matches — searching "color"
+  // means the Color chapter, not every row called Color. Filtered here, not
+  // left to the Autocomplete, so the list is right even if the field remounts.
+  const items = useMemo(() => {
+    const needle = query.trim()
+    if (!needle) return []
+    const cats = categories(chapters).filter((c) =>
+      contains(c.category, needle),
+    )
+    return cats.length > 0
+      ? cats
+      : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
+  }, [chapters, query, contains])
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
   // `preventDefault` also suppresses the browser's print dialog; `repeat`
@@ -121,29 +136,25 @@ export function PanelSearch({
   return (
     <Dialog isOpen={isOpen} onOpenChange={close}>
       <Tooltip delay={300}>
-        <Button
-          size="sm"
-          variant="quiet"
-          isIconOnly
-          aria-label="Search settings"
-        >
+        <Button size="sm" variant="quiet" isIconOnly aria-label="Search">
           <SearchIcon />
         </Button>
-        <TooltipContent>Search settings ⌘P</TooltipContent>
+        <TooltipContent>Search ⌘P</TooltipContent>
       </Tooltip>
       <Popover placement="bottom end" className={INSTANT_POPOVER}>
-        <Command aria-label="Search settings" className="w-56">
-          {/* onChange chains with the Autocomplete's own — it only observes. */}
+        <Command aria-label="Search" className="w-56">
+          {/* Both chain with the Autocomplete's own field props. */}
           <SearchField
             autoFocus
-            aria-label="Search settings"
+            aria-label="Search"
+            value={query}
             onChange={setQuery}
           >
             <InputGroup>
               <InputGroupAddon>
                 <SearchIcon />
               </InputGroupAddon>
-              <Input placeholder="Search settings…" />
+              <Input placeholder="Search…" />
               <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
                 <Button variant="quiet" isIconOnly>
                   <XIcon aria-hidden="true" />
@@ -156,27 +167,33 @@ export function PanelSearch({
           <ListBox
             aria-label="Settings"
             className="max-h-64 overscroll-contain"
-            items={query.trim() ? items : []}
+            items={items}
+            dependencies={[query]}
             renderEmptyState={() => (
               <div className="px-3 py-6 text-center text-sm text-fg-muted">
-                {query.trim()
-                  ? "No matching settings"
-                  : "Type to search settings"}
+                {query.trim() ? "No results" : "Type to search"}
               </div>
             )}
           >
             {(entry) => (
               <ListBoxItem
                 id={entry.id}
-                textValue={entry.label}
+                textValue={entry.axis ?? entry.category}
                 onAction={() => jump(entry.chapterId)}
+                className="flex-col items-start gap-0"
               >
-                <span className="truncate">
-                  <Highlight text={entry.label} query={query} />
-                </span>
-                {entry.context && (
-                  <span className="ml-auto truncate pl-3 text-xs text-fg-muted">
-                    {entry.context}
+                {entry.axis ? (
+                  <>
+                    <span className="truncate text-xs text-fg-muted">
+                      {entry.category}
+                    </span>
+                    <span className="truncate">
+                      <Highlight text={entry.axis} query={query} />
+                    </span>
+                  </>
+                ) : (
+                  <span className="truncate">
+                    <Highlight text={entry.category} query={query} />
                   </span>
                 )}
               </ListBoxItem>
