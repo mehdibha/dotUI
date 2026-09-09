@@ -10,7 +10,6 @@ import {
   diffCleanupSemanticLossless,
   type Diff,
 } from "diff-match-patch-es"
-import { PauseIcon, PlayIcon } from "lucide-react"
 import { Pressable } from "react-aria-components/Pressable"
 import { syncTokenKeys, toKeyedTokens } from "shiki-magic-move/core"
 import { ShikiMagicMoveRenderer } from "shiki-magic-move/react"
@@ -24,7 +23,6 @@ import {
   MoreHorizontalIcon,
   SearchIcon,
 } from "@/registry/__generated__/icons"
-import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import { Calendar, RangeCalendar } from "@/registry/ui/calendar"
@@ -1563,7 +1561,7 @@ export function StepTimer({ player }: { player: CompositionPlayer }) {
       aria-hidden
       onAnimationEnd={advance}
       className="pointer-events-none fixed size-px opacity-0"
-      style={progressStyle(stepDurationMs, playing, "x")}
+      style={progressStyle(stepDurationMs, playing)}
     />
   )
 }
@@ -1571,107 +1569,15 @@ export function StepTimer({ player }: { player: CompositionPlayer }) {
 function progressStyle(
   durationMs: number,
   playing: boolean,
-  axis: "x" | "y",
 ): React.CSSProperties {
   return {
-    animationName: axis === "x" ? "cmp-progress-x" : "cmp-progress-y",
+    animationName: "cmp-progress-x",
     animationDuration: `${durationMs}ms`,
     animationTimingFunction: "linear",
     animationFillMode: "both",
     animationPlayState: playing ? "running" : "paused",
     willChange: "transform",
   }
-}
-
-// A track clipping a full-size bar that slides in via translate — scaling a
-// hairline bar re-rasterizes it every frame and visibly steps at slow speeds.
-export function StepProgress({
-  player,
-  axis = "x",
-  className,
-}: {
-  player: CompositionPlayer
-  axis?: "x" | "y"
-  className?: string
-}) {
-  const { step, stepDurationMs, playing, reducedMotion } = player
-  return (
-    <span key={step} aria-hidden className={cn("overflow-hidden", className)}>
-      <span
-        className="block size-full bg-fg"
-        style={
-          reducedMotion
-            ? undefined
-            : progressStyle(stepDurationMs, playing, axis)
-        }
-      />
-    </span>
-  )
-}
-
-export function StepDots({
-  player,
-  className,
-}: {
-  player: CompositionPlayer
-  className?: string
-}) {
-  const { paginated, activePaginated, goToStep } = player
-  return (
-    <div className={cn("flex items-center", className)}>
-      {paginated.map((p, pos) => (
-        <button
-          key={p.title}
-          type="button"
-          aria-label={`Step ${pos + 1}: ${p.title}`}
-          aria-current={pos === activePaginated ? "step" : undefined}
-          onClick={() => goToStep(p.index)}
-          className="group flex h-8 cursor-pointer items-center px-[3px]"
-        >
-          <span
-            className={cn(
-              "relative h-1 overflow-hidden rounded-full transition-all duration-300",
-              pos === activePaginated
-                ? "w-5 bg-border"
-                : "w-1.5 bg-border group-hover:bg-fg-muted",
-            )}
-          >
-            {pos === activePaginated && (
-              <StepProgress
-                player={player}
-                className="absolute inset-0 block rounded-full"
-              />
-            )}
-          </span>
-        </button>
-      ))}
-    </div>
-  )
-}
-
-export function PlayPauseButton({
-  player,
-  withLabel = false,
-  className,
-}: {
-  player: CompositionPlayer
-  withLabel?: boolean
-  className?: string
-}) {
-  const { paused, togglePlay } = player
-  return (
-    <Button
-      size="sm"
-      variant="quiet"
-      isIconOnly={!withLabel}
-      aria-label={paused ? "Play steps" : "Pause steps"}
-      onPress={togglePlay}
-      className={cn("text-fg-muted", className)}
-    >
-      {paused ? <PlayIcon /> : <PauseIcon />}
-      {withLabel && (paused ? "Play" : "Pause")}
-    </Button>
-  )
 }
 
 export function CompositionTransitionStyles({
@@ -1692,7 +1598,6 @@ export function CompositionTransitionStyles({
         animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
       }
       @keyframes cmp-progress-x { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-      @keyframes cmp-progress-y { from { transform: translateY(-100%); } to { transform: translateY(0); } }
     `}</style>
   )
 }

@@ -13,7 +13,7 @@ function CompositionAnimationDemo() {
     <InternalShell
       crumbs={[{ label: "Composition animation" }]}
       title="Composition animation"
-      description="The composition section retired from the landing page: 30 magic-move code beats synced with view-transitioned component previews, with the step rail on desktop and the compact loop when stacked."
+      description="The composition loop retired from the landing page: 30 magic-move code beats synced with view-transitioned component previews. Hover to pause, click a step to jump."
     >
       <div className="max-w-6xl">
         <CompositionSection />
