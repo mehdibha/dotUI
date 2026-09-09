@@ -1,13 +1,19 @@
 "use client"
 
-import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
 import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
+import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
@@ -167,7 +173,15 @@ function PresetSwatch({
   )
 }
 
-function PresetSelector() {
+function PresetSelector({
+  variant = "quiet",
+  labelId,
+}: {
+  variant?: ButtonProps["variant"]
+  /** An external caption; the trigger's name then reads caption + value. */
+  labelId?: string
+}) {
+  const valueId = useId()
   const selected = presetStore.useValue()
   const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
@@ -215,20 +229,27 @@ function PresetSelector() {
       ]}
     >
       <Button
-        variant="quiet"
+        variant={variant}
         size="sm"
-        aria-label="Preview design system"
+        aria-label={labelId ? undefined : "Preview design system"}
+        aria-labelledby={labelId ? `${labelId} ${valueId}` : undefined}
         className="gap-1.5"
       >
         <PresetSwatch color={selectedSwatch} />
-        {selectedName}
+        <span id={valueId}>{selectedName}</span>
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>
   )
 }
 
-function PreviewModeToggle({ className }: { className?: string }) {
+function PreviewModeToggle({
+  variant = "quiet",
+  className,
+}: {
+  variant?: ButtonProps["variant"]
+  className?: string
+}) {
   const stored = modeStore.useValue()
   const mode = usePreviewMode() ?? "light"
   const next = mode === "light" ? "dark" : "light"
@@ -236,11 +257,11 @@ function PreviewModeToggle({ className }: { className?: string }) {
   return (
     <Tooltip>
       <Button
-        variant="quiet"
+        variant={variant}
         size="sm"
         isIconOnly
         aria-label={`Switch preview to ${next} mode`}
-        className={cn("text-fg-muted", className)}
+        className={cn(variant === "quiet" && "text-fg-muted", className)}
         onPress={() => modeStore.set(next)}
       >
         {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
@@ -276,6 +297,26 @@ export function PreviewControls({ className }: { className?: string }) {
     >
       <PresetSelector />
       <PreviewModeToggle />
+    </div>
+  )
+}
+
+/**
+ * The page-level toolbar of gallery pages (frontmatter `preview`): a captioned
+ * preset field and a mode toggle, right-aligned under the page header. Same
+ * store, so it stays in sync with every per-demo toolbar.
+ */
+export function PagePreviewControls() {
+  const labelId = useId()
+  return (
+    <div className="flex items-end justify-end gap-3">
+      <div className="flex flex-col gap-1.5">
+        <span id={labelId} className="text-xs text-fg-muted">
+          Preset
+        </span>
+        <PresetSelector variant="secondary" labelId={labelId} />
+      </div>
+      <PreviewModeToggle variant="secondary" />
     </div>
   )
 }

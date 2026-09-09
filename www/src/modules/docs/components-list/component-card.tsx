@@ -5,6 +5,7 @@ import { Link } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
 
+import { DemoPreset } from "../demo-preset"
 import { previewPendingClass } from "../preview-controls"
 import { componentDemos } from "./demos"
 
@@ -71,51 +72,55 @@ export function ComponentCard({
       data-component={slug}
       className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
     >
-      <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control">
-        {/* The demo is a non-interactive preview: `inert` keeps its controls out
+      {/* Only the frame renders in the selected preset and mode; the name
+          below stays in the site theme so it never fades on a pinned mode. */}
+      <DemoPreset>
+        <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control">
+          {/* The demo is a non-interactive preview: `inert` keeps its controls out
             of the tab order and lets clicks fall through to the card link, so the
             whole card navigates instead of an embedded demo hijacking the click. */}
-        {fill ? (
-          <div inert className={cn("absolute inset-0", previewPendingClass)}>
-            {content}
-          </div>
-        ) : (
-          <div
-            ref={stageRef}
-            className="absolute inset-4 flex items-center justify-center overflow-hidden"
-          >
-            {stretch ? (
-              <div
-                inert
-                className={cn(
-                  "flex w-full items-center justify-center",
-                  previewPendingClass,
-                )}
-              >
-                {content}
-              </div>
-            ) : (
-              <div
-                ref={demoRef}
-                inert
-                className={cn(
-                  "flex items-center justify-center",
-                  previewPendingClass,
-                )}
-                style={{ transform: `scale(${Math.min(scale, fit)})` }}
-              >
-                {content}
-              </div>
-            )}
-          </div>
-        )}
-        {/* A wash over the demo on hover/focus: the card reads as a preview you
+          {fill ? (
+            <div inert className={cn("absolute inset-0", previewPendingClass)}>
+              {content}
+            </div>
+          ) : (
+            <div
+              ref={stageRef}
+              className="absolute inset-4 flex items-center justify-center overflow-hidden"
+            >
+              {stretch ? (
+                <div
+                  inert
+                  className={cn(
+                    "flex w-full items-center justify-center",
+                    previewPendingClass,
+                  )}
+                >
+                  {content}
+                </div>
+              ) : (
+                <div
+                  ref={demoRef}
+                  inert
+                  className={cn(
+                    "flex items-center justify-center",
+                    previewPendingClass,
+                  )}
+                  style={{ transform: `scale(${Math.min(scale, fit)})` }}
+                >
+                  {content}
+                </div>
+              )}
+            </div>
+          )}
+          {/* A wash over the demo on hover/focus: the card reads as a preview you
             open, not a control you operate. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-10 bg-fg/5 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
-        />
-      </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 z-10 bg-fg/5 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
+          />
+        </div>
+      </DemoPreset>
       <span className="text-base font-medium text-fg group-hover:underline">
         {name}
       </span>

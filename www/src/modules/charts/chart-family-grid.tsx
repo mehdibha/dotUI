@@ -1,5 +1,7 @@
 "use client"
 
+import { PreviewVeil } from "@/modules/docs/preview-controls"
+
 import { ChartCard } from "./chart-card"
 import { CHART_FAMILIES, variantsFor } from "./data"
 
@@ -21,7 +23,8 @@ export function ChartFamilyGrid({ family }: { family: string }) {
   }
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="relative mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 xl:grid-cols-3">
+      <PreviewVeil />
       {variantsFor(data.id).map((v) => (
         <ChartCard
           key={v.key}
