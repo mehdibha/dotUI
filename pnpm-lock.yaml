@@ -89,6 +89,9 @@ importers:
       culori:
         specifier: ^4.0.2
         version: 4.0.2
+      zod:
+        specifier: ^4.2.1
+        version: 4.4.3
     devDependencies:
       '@adobe/leonardo-contrast-colors':
         specifier: ^1.1.0
