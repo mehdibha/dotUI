@@ -29,7 +29,7 @@ pnpm smoke:examples --example spotify-next       # one template
 pnpm smoke:examples --no-build                   # write the files, skip build + typecheck
 ```
 
-With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `/r/registry.json`, a production build, `tsc --noEmit`, and checks that the theme's fonts survived into the built output. It runs offline: the CLI's own base files (its style list and base color) are answered from `scripts/shadcn-base/`, vendored from [shadcn-ui/ui](https://github.com/shadcn-ui/ui/tree/main/apps/v4/public/r), through the CLI's `REGISTRY_URL` override — so a sandboxed agent session can regenerate too, and CI and a laptop produce the same bytes. If the CLI ever fetches a file that isn't vendored, the run logs `shadcn-base: no vendored file for …` and fails; add the file from the same place.
+With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `/r/registry.json`, a production build, `tsc --noEmit`, and checks that the preset's fonts were wired into the framework (the layout on Next.js, the stylesheet on TanStack Start). It runs offline: the CLI's own base files (its style list and base color) are answered from `scripts/shadcn-base/`, vendored from [shadcn-ui/ui](https://github.com/shadcn-ui/ui/tree/main/apps/v4/public/r), through the CLI's `REGISTRY_URL` override — so a sandboxed agent session can regenerate too, and CI and a laptop produce the same bytes. If the CLI ever fetches a file that isn't vendored, the run logs `shadcn-base: no vendored file for …` and fails; add the file from the same place.
 
 Never hand-edit or hand-merge `examples/`: if two registry branches conflict there, regenerate on the merged result.
 
@@ -57,6 +57,10 @@ cd examples/spotify-tanstack-start && pnpm install && pnpm dev   # terminal 2
 ## CI
 
 `.github/workflows/examples.yml` runs on every pull request and merge-group run. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
+
+## Vercel previews
+
+`origin-next/` and `spotify-next/` each have a Vercel project (`dotui-example-origin-next`, `dotui-example-spotify-next`) with the template directory as its Root Directory, so every pull request gets a preview link for them in the Vercel bot comment next to the `dotui` one. The `vercel.json` in each template sets the ignore command to `git diff --quiet HEAD^ HEAD -- .`: a build only runs when the template changed, which happens when a regeneration is committed. The preview shows the committed output, never the PR's live registry — if the examples check fails on drift, the preview is stale too.
 
 ## Adding a template
 

@@ -12,11 +12,7 @@ import {
 } from "diff-match-patch-es"
 import { PauseIcon, PlayIcon } from "lucide-react"
 import { Pressable } from "react-aria-components/Pressable"
-import {
-  codeToKeyedTokens,
-  syncTokenKeys,
-  toKeyedTokens,
-} from "shiki-magic-move/core"
+import { syncTokenKeys, toKeyedTokens } from "shiki-magic-move/core"
 import { ShikiMagicMoveRenderer } from "shiki-magic-move/react"
 import type { KeyedToken, KeyedTokensInfo } from "shiki-magic-move/types"
 import { useTheme } from "starter-themes"
@@ -61,7 +57,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
-import { highlighter } from "@/modules/docs/highlight"
+import { tokenizeTsx } from "@/modules/docs/highlight"
 
 interface Step {
   title: string
@@ -1305,6 +1301,17 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
 
 const EMPTY_TOKENS = toKeyedTokens("", [])
 
+function keyedTokens(code: string, theme: "light" | "dark"): KeyedTokensInfo {
+  const lines = tokenizeTsx(code).map((line) =>
+    line.map(({ content, offset, light, dark }) => ({
+      content,
+      offset,
+      color: theme === "light" ? light : dark,
+    })),
+  )
+  return { ...toKeyedTokens(code, lines), themeName: theme }
+}
+
 // The gutter is sized for the loop's longest snippet, so it can't widen at line
 // 10 and shift the code sideways mid-transition.
 export const lineNumberWidth = String(maxCodeLines).length
@@ -1351,7 +1358,7 @@ export function CompositionCode({
   lineNumbers?: boolean
 }) {
   const { resolvedTheme } = useTheme()
-  const theme = resolvedTheme === "light" ? "github-light" : "github-dark"
+  const theme = resolvedTheme === "light" ? "light" : "dark"
   // Inlined ShikiMagicMove machine so lockTagPunctuation can rewrite the
   // synced keys before they reach the renderer. The code/theme guard keeps a
   // strict-mode double render from committing the same step twice (which
@@ -1364,7 +1371,7 @@ export function CompositionCode({
     if (previous.code === code && previous.themeName === theme) {
       return cache.current!
     }
-    const next = codeToKeyedTokens(highlighter, code, { lang: "tsx", theme })
+    const next = keyedTokens(code, theme)
     const { from, to } = syncTokenKeys(previous, next, {
       diffCleanup: cleanupCodeDiff,
     })

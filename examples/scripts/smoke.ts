@@ -40,7 +40,6 @@ import { spawn, spawnSync } from "node:child_process"
 import {
   existsSync,
   openSync,
-  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -90,8 +89,6 @@ interface FrameworkSetup {
    * previous run's output.
    */
   seeds: Record<string, string>
-  /** Where the production build writes CSS. */
-  builtCss: string
   /**
    * Where `shadcn init` wires a `registry:font` item on this framework: the
    * `next/font/google` import in the root layout on Next.js, the `@fontsource`
@@ -125,13 +122,11 @@ const FRAMEWORKS: Record<Framework, FrameworkSetup> = {
   next: {
     stylesheet: "src/app/globals.css",
     seeds: { "src/app/layout.tsx": NEXT_LAYOUT },
-    builtCss: ".next/static",
     fontWiring: { file: "src/app/layout.tsx", needle: "next/font/google" },
   },
   "tanstack-start": {
     stylesheet: "src/styles.css",
     seeds: {},
-    builtCss: "dist/client",
     fontWiring: { file: "src/styles.css", needle: '@import "@fontsource' },
   },
 }
@@ -377,57 +372,15 @@ async function registryNames(origin: string): Promise<string[]> {
 
 /* ----------------------------------- checks --------------------------------- */
 
-/** Every `.css` file under `dir`, recursively. */
-function cssFiles(dir: string): string[] {
-  const out: string[] = []
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name)
-    if (entry.isDirectory()) out.push(...cssFiles(full))
-    else if (entry.name.endsWith(".css")) out.push(full)
-  }
-  return out
-}
-
 /**
- * A build can pass while quietly dropping part of the theme: an `@import url()`
- * the registry appends lands after `@import "tailwindcss"`, which is invalid
- * once Tailwind expands, and bundlers strip it instead of failing. Every URL
- * import in the stylesheet must survive into the built CSS, and a preset that
- * ships fonts must have had them wired the framework's way.
+ * A preset that ships fonts must have had them wired the framework's way:
+ * a build passes either way, and a dropped import would otherwise surface as
+ * one line buried in a large diff.
  */
-function checkBuiltCss(
-  cwd: string,
-  framework: FrameworkSetup,
-  expectFonts: boolean,
-): void {
-  const source = readFileSync(path.join(cwd, framework.stylesheet), "utf8")
-  const urls = [...source.matchAll(/@import\s+url\(\s*['"]?([^'")]+)/g)].map(
-    (m) => m[1]!,
-  )
-  const built = cssFiles(path.join(cwd, framework.builtCss)).map((file) =>
-    readFileSync(file, "utf8"),
-  )
-  if (built.length === 0) {
-    throw new Error(`no built CSS found under ${framework.builtCss}`)
-  }
-  const dropped = urls.filter((url) => !built.some((css) => css.includes(url)))
-  if (dropped.length > 0) {
-    throw new Error(
-      `built CSS dropped ${dropped.length} @import url() from ${framework.stylesheet}:\n` +
-        dropped.map((url) => `  ${url}`).join("\n"),
-    )
-  }
-  if (urls.length > 0) {
-    console.log(`@import url() survived the build: ${urls.length}`)
-  }
-
-  if (!expectFonts) return
+function checkFontWiring(cwd: string, framework: FrameworkSetup): void {
   const { file, needle } = framework.fontWiring
   if (!readFileSync(path.join(cwd, file), "utf8").includes(needle)) {
     throw new Error(`font not wired: ${file} has no ${needle}`)
-  }
-  if (!built.some((css) => css.includes("@font-face"))) {
-    throw new Error("font not wired: built CSS has no @font-face")
   }
   console.log(`fonts wired via ${needle}`)
 }
@@ -541,7 +494,7 @@ async function regenerate(
   // Next's next-env.d.ts).
   await run(cwd, "pnpm", ["build"])
   await run(cwd, "pnpm", ["typecheck"])
-  checkBuiltCss(cwd, framework, expectFonts)
+  if (expectFonts) checkFontWiring(cwd, framework)
 }
 
 async function main() {

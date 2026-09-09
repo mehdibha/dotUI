@@ -30,9 +30,8 @@ interface ChartCodeModalContentProps {
 /**
  * Body of the "Show code" modal — title, live preview, and install command on
  * the left; the variant's source filling the full modal height on the right.
- * Lazily mounted (see chart-code-modal), so its heavy imports (the highlighter)
- * load only on first open. Source is read via `use()` against a cached promise,
- * so the modal suspends until it resolves.
+ * Lazily mounted (see chart-code-modal). Source is read via `use()` against a
+ * cached promise, so the modal suspends until it resolves.
  */
 export default function ChartCodeModalContent({
   demoKey,
