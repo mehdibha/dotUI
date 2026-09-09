@@ -39,6 +39,39 @@ export default defineConfig({
   define: {
     "import.meta.env.VERCEL_ENV": JSON.stringify(process.env.VERCEL_ENV ?? ""),
   },
+  environments: {
+    client: {
+      build: {
+        rolldownOptions: {
+          output: {
+            // Rolldown's default splitting merges react-aria and base-ui
+            // modules into coarse shared chunks, so every page downloads
+            // collection and overlay code only a few routes use. Regroup them
+            // by the set of entries that actually import each module.
+            codeSplitting: {
+              groups: [
+                {
+                  name: "react-aria",
+                  entriesAware: true,
+                  test: /[\\/](react-aria-components|react-aria|react-stately|@react-aria|@react-stately|@react-types|@internationalized)[\\/]/,
+                },
+                {
+                  name: "base-ui",
+                  entriesAware: true,
+                  test: /[\\/]@base-ui[\\/]/,
+                },
+              ],
+            },
+            // entriesAware names chunks after every entry that shares them.
+            chunkFileNames: (chunk) =>
+              /^(react-aria|base-ui)~/.test(chunk.name)
+                ? `assets/${chunk.name.split("~")[0]}-[hash].js`
+                : "assets/[name]-[hash].js",
+          },
+        },
+      },
+    },
+  },
   resolve: {
     alias: [
       {
