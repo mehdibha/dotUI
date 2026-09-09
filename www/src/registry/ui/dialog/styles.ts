@@ -28,8 +28,8 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     default: {
       slots: {
         content:
-          "text-sm [--dialog-padding:--spacing(4)] in-data-popover:text-xs in-data-popover:[--dialog-padding:--spacing(2.5)]",
-        header: "gap-2 in-data-popover:gap-0.5 in-data-popover:text-sm",
+          "text-sm [--dialog-padding:--spacing(4)] in-data-popover:[--dialog-padding:--spacing(2.5)]",
+        header: "gap-2 in-data-popover:gap-0.5",
         title: "font-medium in-data-modal:text-base in-data-modal:leading-none",
         description: "",
         closeButton: "top-2 right-2",

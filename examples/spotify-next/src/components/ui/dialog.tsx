@@ -12,12 +12,9 @@ const dialogVariants = tv({
   slots: {
     content: [
       "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
-      "text-sm [--dialog-padding:--spacing(4)] in-data-popover:text-xs in-data-popover:[--dialog-padding:--spacing(2.5)]",
+      "text-sm [--dialog-padding:--spacing(4)] in-data-popover:[--dialog-padding:--spacing(2.5)]",
     ],
-    header: [
-      "flex flex-col",
-      "gap-2 in-data-popover:gap-0.5 in-data-popover:text-sm",
-    ],
+    header: ["flex flex-col", "gap-2 in-data-popover:gap-0.5"],
     title: [
       "font-heading",
       "font-medium in-data-modal:text-base in-data-modal:leading-none",

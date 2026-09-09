@@ -19,6 +19,9 @@ const { useStyles, styles } = createStyles(commandMeta, {
       // than a dropdown. Their inline padding follows the inset param.
       "in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2",
       "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
+      // Command rows and headings sit taller than a menu's (shadcn: py-1.5 in
+      // every style), and headings carry weight so they read as group labels.
+      "**:data-listbox-item:py-1.5 **:data-listbox-section-header:py-1.5 **:data-listbox-section-header:font-medium",
     ],
   },
   density: {
@@ -36,17 +39,13 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // concentric by subtracting the inset from the container's own
           // radius var, floored at the input radius so small surfaces never
           // square it off.
-          "**:data-search-field:px-1.5 **:data-search-field:pt-1.5 **:data-search-field:pb-0",
-          "**:data-listbox:scroll-py-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
-          "**:data-listbox:**:data-separator:my-1.5",
+          "**:data-search-field:px-2 **:data-search-field:pt-2 **:data-search-field:pb-0",
+          "**:data-listbox:scroll-py-2 **:data-listbox:pt-0 **:data-listbox:pb-2",
+          "**:data-listbox:**:data-separator:my-2",
           // --surface-radius: set by whichever rounded surface contains the
           // command (popover, modal, card), so one rule stays concentric
           // everywhere.
-          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(1.5))))]",
-          // The modal is a bigger surface — roomier inset to match.
-          "in-data-modal:**:data-search-field:px-2 in-data-modal:**:data-search-field:pt-2",
-          "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:pb-2",
-          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(2))))]",
+          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(2))))]",
         ],
       },
       bar: {
@@ -65,9 +64,8 @@ const { useStyles, styles } = createStyles(commandMeta, {
     inset: {
       inset: {
         base: [
-          // The list gutter matches the field inset; the modal's is roomier.
-          "**:data-listbox:px-1.5 **:data-listbox:**:data-separator:-mx-1.5",
-          "in-data-modal:**:data-listbox:px-2 in-data-modal:**:data-listbox:**:data-separator:-mx-2",
+          // The list gutter matches the field inset.
+          "**:data-listbox:px-2 **:data-listbox:**:data-separator:-mx-2",
           "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2",
           "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",
         ],

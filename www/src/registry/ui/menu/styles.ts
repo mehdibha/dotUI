@@ -28,7 +28,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
       itemLabel: [""],
       itemDescription: ["text-fg-muted"],
       section: ["scroll-my-1"],
-      sectionTitle: ["text-fg-muted"],
+      sectionTitle: ["font-medium text-fg-muted"],
     },
   },
   density: {
@@ -36,7 +36,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
       slots: {
         root: "text-xs/relaxed",
         item: "min-h-7 gap-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
-        sectionTitle: "py-1",
+        sectionTitle: "py-1.5",
       },
     },
     default: {

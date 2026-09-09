@@ -36,7 +36,7 @@ const menuVariants = tv({
     itemLabel: "",
     itemDescription: "text-fg-muted",
     section: "scroll-my-1",
-    sectionTitle: ["text-fg-muted", "py-1", "px-1.5", "text-xs"],
+    sectionTitle: ["font-medium text-fg-muted", "py-1", "px-1.5", "text-xs"],
   },
 });
 
