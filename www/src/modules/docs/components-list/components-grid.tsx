@@ -1,7 +1,7 @@
 "use client"
 
 import { DemoPreset } from "../demo-preset"
-import { PreviewVeil } from "../preview-controls"
+import { usePreviewPending } from "../preview-controls"
 import { ComponentCard } from "./component-card"
 import { componentsData } from "./components-data"
 
@@ -11,6 +11,10 @@ import { componentsData } from "./components-data"
  * feeds the page's table of contents like any other docs heading.
  */
 export function ComponentsGrid({ category }: { category: string }) {
+  // No veil over the grid: the cards stay in place while the stored preset
+  // resolves and only the demo inside each card waits (see component-card.tsx).
+  // The flag still has to be cleared, which this hook does.
+  usePreviewPending()
   const data = componentsData.find((c) => c.slug === category)
 
   if (!data) {
@@ -24,8 +28,7 @@ export function ComponentsGrid({ category }: { category: string }) {
 
   return (
     <DemoPreset>
-      <div className="relative mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
-        <PreviewVeil />
+      <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
         {data.components.map((component) => (
           <ComponentCard
             key={component.slug}

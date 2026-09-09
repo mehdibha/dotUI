@@ -47,21 +47,36 @@ const modeStore = createPersistedStore<PreviewMode | null>(
 )
 
 /**
- * Covers a preview until hydration applies the stored preset/mode. Rendered on
- * every load but only visible (via CSS) when the pre-paint script flagged a
- * stored selection (see preview-pending.ts), so first-time visitors keep the
- * instant SSR previews. Drop inside any `relative` preview container that
- * isn't wrapped in PreviewPanel.
+ * Whether the SSR'd previews still show the wrong preset/mode — true only when
+ * the pre-paint script flagged a stored selection (see preview-pending.ts), so
+ * first-time visitors keep the instant SSR previews. Clears the flag once the
+ * re-render with the stored selection commits, so nothing flashes the wrong
+ * preset and later navigations never wait.
  */
-export function PreviewVeil() {
+export function usePreviewPending() {
   const hydrated = useHydrated()
-  // Runs after the re-render with the stored selection commits, so the flag
-  // clears without a wrong-preset flash and later navigations never veil.
   useEffect(() => {
     if (hydrated)
       document.documentElement.removeAttribute("data-preview-pending")
   }, [hydrated])
-  if (hydrated) return null
+  return !hydrated
+}
+
+/**
+ * Hides pending preview content in place, for previews whose frame should stay
+ * visible while the preset resolves (the component cards). The container must
+ * call usePreviewPending() to clear the flag.
+ */
+export const previewPendingClass =
+  "transition-opacity duration-200 [[data-preview-pending]_&]:opacity-0"
+
+/**
+ * Covers a preview until hydration applies the stored preset/mode. Rendered on
+ * every load but only visible (via CSS) while pending. Drop inside any
+ * `relative` preview container that isn't wrapped in PreviewPanel.
+ */
+export function PreviewVeil() {
+  if (!usePreviewPending()) return null
   return (
     <div
       aria-hidden
