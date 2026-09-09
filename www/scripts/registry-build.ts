@@ -335,6 +335,61 @@ ${groupEntries.join("\n")}
   )
 }
 
+/** Studio panel search index: every settings row label and group title in
+ *  each chapter's section, keyed by chapter id — so search reaches nested
+ *  axes, not just chapter names. Read off the section JSX; data-driven
+ *  labels (color roles, shape roles) are out of scope. */
+async function buildStudioSearchIndex() {
+  const studioDir = path.join(process.cwd(), "src/modules/studio")
+  const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
+  const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
+
+  const sectionOf = new Map<string, string>()
+  for (const [, names = "", file = ""] of state.matchAll(
+    /import \{([^}]+)\} from "\.\/sections\/([\w-]+)"/g,
+  )) {
+    for (const name of names.split(",")) sectionOf.set(name.trim(), file)
+  }
+
+  const lines: string[] = []
+  for (const [, id = "", body = ""] of state.matchAll(
+    /id: "([\w-]+)",[\s\S]*?Body: (\w+),/g,
+  )) {
+    const file = sectionOf.get(body)
+    if (!file) continue
+    const source = await fs.readFile(
+      path.join(studioDir, "sections", `${file}.tsx`),
+      "utf8",
+    )
+    const labels = new Set<string>()
+    // A row's own label — the tag must not contain another "<" before it.
+    for (const [, label = ""] of source.matchAll(
+      /<\w+Row(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+    ))
+      labels.add(label)
+    for (const [, title = ""] of source.matchAll(
+      /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
+    ))
+      labels.add(title.trim())
+    lines.push(
+      `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
+    )
+  }
+
+  const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+
+/** Settings row labels per chapter id, for the panel search. */
+export const SEARCH_INDEX: Record<string, string[]> = {
+${lines.join("\n")}
+}
+`
+  await writeGeneratedFile(targetPath, content)
+  console.log(
+    `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
+  )
+}
+
 // ============================================================================
 // Generated item manifest: registryUi / registryLib globbed from meta.ts
 // ============================================================================
@@ -951,6 +1006,7 @@ async function main() {
     await buildInternalDemos()
     await buildInternalIcons()
     await buildInternalExamples()
+    await buildStudioSearchIndex()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies
