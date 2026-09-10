@@ -1,0 +1,11 @@
+{
+  "comment": "Client-bundle budget for the production build, checked by scripts/perf-budget.mjs. Every prerendered page is measured: the first rule whose glob matches sets its caps, and a page matching none falls to `default` — so a new route is covered the day it lands. First-load JS counts every chunk the page's HTML references plus their transitive static imports. Thresholds sit ~15 KB gz above main — roughly one dependency — so silent regressions fail CI. Raise one only with a reviewed reason.",
+  "entryChunkGzKB": 100,
+  "exclude": ["/internal/**"],
+  "rules": [
+    { "match": "/", "firstLoadGzKB": 645, "preloads": 40 },
+    { "match": "/docs/**", "firstLoadGzKB": 730, "preloads": 32 },
+    { "match": "/studio", "firstLoadGzKB": 585, "preloads": 75 }
+  ],
+  "default": { "firstLoadGzKB": 250, "preloads": 16 }
+}
