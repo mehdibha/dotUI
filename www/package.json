@@ -8,7 +8,7 @@
     "dev:clean": "rm -rf node_modules/.vite .cache && pnpm build:registry && vite dev",
     "build:registry": "tsx scripts/registry-build.ts",
     "build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
-    "build:postprocess": "node scripts/patch-vercel-config.mjs",
+    "build:postprocess": "tsx scripts/patch-vercel-config.ts",
     "preview": "vite preview",
     "perf:budget": "node scripts/perf-budget.mjs",
     "typecheck": "pnpm build:registry && tsc --noEmit",

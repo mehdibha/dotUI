@@ -18,6 +18,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname } from "node:path"
 
+import { homeMarkdown } from "../src/config/home-md"
+
 const CONFIG = ".vercel/output/config.json"
 const STATIC_HOME_MD = ".vercel/output/static/home.md"
 
@@ -30,34 +32,15 @@ if (!existsSync(CONFIG)) {
 
 // 1) Static markdown homepage. On Vercel this static file is what actually
 // serves for GET /home.md and the "/" Accept:text/markdown negotiation (it
-// shadows the src/routes/home[.]md.tsx route). Keep byte-identical to that
-// route's BODY.
-const HOME_MD = `# dotUI
-
-> Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.
-
-dotUI is a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Generate a UI library that looks like your product — not a preset — with the style editor, then consume it through the shadcn CLI, the registry endpoint, or AI tooling like v0.
-
-## Documentation
-
-- Introduction: https://dotui.org/docs
-- Installation: https://dotui.org/docs/installation
-- Components index (llms.txt): https://dotui.org/llms.txt
-- Full documentation, single file (llms-full.txt): https://dotui.org/llms-full.txt
-- Component registry API: GET https://dotui.org/r/{name}
-
-## Links
-
-- GitHub: https://github.com/mehdibha/dotUI
-- X (Twitter): https://x.com/mehdibha
-- Discord: https://discord.gg/DXpj5V2fU8
-`
-
+// shadows the src/routes/home[.]md.tsx route, which serves the same module).
 mkdirSync(dirname(STATIC_HOME_MD), { recursive: true })
-writeFileSync(STATIC_HOME_MD, HOME_MD)
+writeFileSync(STATIC_HOME_MD, homeMarkdown)
 
 // 2) + 3) Override content-type and inject the rewrite.
-const config = JSON.parse(readFileSync(CONFIG, "utf-8"))
+const config = JSON.parse(readFileSync(CONFIG, "utf-8")) as {
+  overrides?: Record<string, { contentType: string }>
+  routes?: { src?: string; dest?: string; has?: unknown; handle?: string }[]
+}
 
 config.overrides ??= {}
 config.overrides["home.md"] = { contentType: "text/markdown; charset=utf-8" }
