@@ -1,10 +1,10 @@
+import { lazy, Suspense } from "react"
 import { ArrowUpRightIcon } from "lucide-react"
 import type { MDXComponents } from "mdx/types"
 
 import { cn } from "@/registry/lib/utils"
 import { Alert, type AlertProps } from "@/registry/ui/alert"
 import { Link } from "@/registry/ui/link"
-import { ChartFamilyGrid } from "@/modules/charts/chart-family-grid"
 import { CodeBlock, Pre } from "@/modules/docs/code-block"
 import {
   CodeBlockTab,
@@ -12,7 +12,6 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from "@/modules/docs/code-block-tabs"
-import { ComponentsGrid } from "@/modules/docs/components-list/components-grid"
 import {
   Demo,
   DemoCode,
@@ -23,6 +22,19 @@ import { Example } from "@/modules/docs/example"
 import { Examples, type ExamplesProps } from "@/modules/docs/examples"
 import { InteractiveDemo } from "@/modules/docs/interactive-demo"
 import { Reference, type ReferenceProps } from "@/modules/docs/reference"
+
+// The gallery grids render every preview in a category — and so pull the whole
+// demo set and its registry components behind them. Two pages use them; loading
+// them lazily keeps that weight off every other docs page's first load. SSR
+// streams the resolved grid into the prerendered HTML, so first paint is
+// unchanged and only a client-side navigation waits on the chunk.
+const ComponentsGrid = lazy(async () => ({
+  default: (await import("@/modules/docs/components-list/components-grid"))
+    .ComponentsGrid,
+}))
+const ChartFamilyGrid = lazy(async () => ({
+  default: (await import("@/modules/charts/chart-family-grid")).ChartFamilyGrid,
+}))
 
 export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
@@ -209,6 +221,14 @@ export const mdxComponents: MDXComponents = {
   Reference: ({ className, ...props }: ReferenceProps) => (
     <Reference className={cn("mt-4", className)} {...props} />
   ),
-  ComponentsGrid,
-  ChartFamilyGrid,
+  ComponentsGrid: (props: { category: string }) => (
+    <Suspense>
+      <ComponentsGrid {...props} />
+    </Suspense>
+  ),
+  ChartFamilyGrid: (props: { family: string }) => (
+    <Suspense>
+      <ChartFamilyGrid {...props} />
+    </Suspense>
+  ),
 }

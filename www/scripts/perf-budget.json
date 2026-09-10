@@ -4,7 +4,7 @@
   "exclude": ["/internal/**"],
   "rules": [
     { "match": "/", "firstLoadGzKB": 645, "preloads": 40 },
-    { "match": "/docs/**", "firstLoadGzKB": 730, "preloads": 32 },
+    { "match": "/docs/**", "firstLoadGzKB": 535, "preloads": 32 },
     { "match": "/studio", "firstLoadGzKB": 585, "preloads": 75 }
   ],
   "default": { "firstLoadGzKB": 250, "preloads": 16 }

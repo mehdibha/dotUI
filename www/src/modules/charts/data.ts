@@ -1,14 +1,33 @@
-import { DemosIndex } from "@/registry/__generated__/demos"
+import { lazy, type ComponentType, type LazyExoticComponent } from "react"
 
 /**
- * Data layer for the `/docs/charts` showcase. Live demo components come
- * from the generated `DemosIndex` (lazy). The "Show code" modal additionally
+ * Data layer for the `/docs/charts` showcase. Live demo components are globbed
+ * straight from the chart families (lazy). The "Show code" modal additionally
  * pulls each variant's raw source on demand (see below).
  */
 
+// Chart demos only. The generated `DemosIndex` covers the whole registry, and
+// importing it here put that barrel — every demo's import thunk plus its
+// preload map — on the static path of every docs page.
+const demoModules = import.meta.glob(
+  "../../registry/ui/chart-*/demos/*.tsx",
+) as Record<string, () => Promise<{ default: ComponentType<object> }>>
+
+/** Demo key for a glob path: `.../ui/chart-bar/demos/multiple.tsx` → `chart-bar/demos/multiple`. */
+const keyOf = (path: string) =>
+  path.slice(path.indexOf("/ui/") + 4, -".tsx".length)
+
+const demoComponents = new Map<
+  string,
+  LazyExoticComponent<ComponentType<object>>
+>()
+for (const [path, load] of Object.entries(demoModules)) {
+  demoComponents.set(keyOf(path), lazy(load))
+}
+
 /** Lazy demo component for a demo key, or `undefined` if it doesn't exist. */
 export function getDemoComponent(key: string) {
-  return DemosIndex[key]?.component
+  return demoComponents.get(key)
 }
 
 /** Package managers offered in the install section, in display order. */
@@ -128,7 +147,7 @@ export function variantsFor(
   familyId: string,
 ): { key: string; label: string }[] {
   const prefix = `${familyId}/demos/`
-  return Object.keys(DemosIndex)
+  return [...demoComponents.keys()]
     .filter((key) => key.startsWith(prefix))
     .map((key) => ({
       key,
