@@ -240,7 +240,10 @@ function PresetPickerContent({
           button beside it the row carries the line instead, inset to the
           input's edges like the rows below. */}
       <div
-        className={cn("flex items-center", onCreate && "mx-2 gap-2 border-b")}
+        className={cn(
+          "flex items-center",
+          onCreate && "mx-2 gap-2 border-b pb-2",
+        )}
       >
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
