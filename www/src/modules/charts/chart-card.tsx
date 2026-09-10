@@ -5,7 +5,7 @@ import { RotateCcwIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { ShowcaseCard } from "@/components/showcase-card"
+import { DemoPreset } from "@/modules/docs/demo-preset"
 
 import { ChartCodeModal } from "./chart-code-modal"
 import { getDemoComponent, POLAR_FAMILIES } from "./data"
@@ -62,10 +62,12 @@ interface ChartCardProps {
 
 /**
  * One variant in the gallery: a subtle title, a replay action and a "Show code"
- * link sit in a header row above a card that holds nothing but the live chart. The chart is
- * decorative (`inert` + `aria-hidden`) so it never traps focus across the grid —
- * the real, interactive component (with its source) lives in the docs, which
- * "Show code" links to.
+ * link sit in a header row above a card that holds nothing but the live chart.
+ * Only the card renders in the selected preset and mode; the header row stays
+ * in the site theme so it never fades on a pinned mode. The chart is decorative
+ * (`inert` + `aria-hidden`) so it never traps focus across the grid — the real,
+ * interactive component (with its source) lives in the docs, which "Show code"
+ * links to.
  *
  * Cards have no fixed height (mirroring shadcn's charts page): the chart draws
  * at 16/9 of the frame width and the card wraps it, so every card in a grid of
@@ -87,9 +89,9 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   )
 
   return (
-    <ShowcaseCard
-      label={label}
-      action={
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-2 pl-1">
+        <span className="text-sm text-fg-muted capitalize">{label}</span>
         <div className="flex items-center">
           <Button
             variant="quiet"
@@ -103,26 +105,28 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
           </Button>
           <ChartCodeModal demoKey={demoKey} label={label} />
         </div>
-      }
-      className="h-auto"
-      inert
-      aria-hidden="true"
-    >
-      <div className="p-6">
-        <LazyChartBody placeholderClassName={chartFootprint}>
-          <Suspense fallback={<div className={chartFootprint} />}>
-            <div
-              className={cn(
-                "w-full animate-in duration-300 fade-in [&_*]:pointer-events-none [&>div]:w-full",
-                isPolar &&
-                  "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
-              )}
-            >
-              <Component key={replayKey} />
-            </div>
-          </Suspense>
-        </LazyChartBody>
       </div>
-    </ShowcaseCard>
+      <DemoPreset>
+        <div
+          inert
+          aria-hidden="true"
+          className="relative overflow-hidden rounded-2xl border bg-card p-6"
+        >
+          <LazyChartBody placeholderClassName={chartFootprint}>
+            <Suspense fallback={<div className={chartFootprint} />}>
+              <div
+                className={cn(
+                  "w-full animate-in duration-300 fade-in [&_*]:pointer-events-none [&>div]:w-full",
+                  isPolar &&
+                    "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
+                )}
+              >
+                <Component key={replayKey} />
+              </div>
+            </Suspense>
+          </LazyChartBody>
+        </div>
+      </DemoPreset>
+    </div>
   )
 }

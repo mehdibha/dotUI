@@ -7,7 +7,7 @@ import { useTheme } from "starter-themes"
 import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
+import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
@@ -167,7 +167,11 @@ function PresetSwatch({
   )
 }
 
-function PresetSelector() {
+function PresetSelector({
+  variant = "quiet",
+}: {
+  variant?: ButtonProps["variant"]
+}) {
   const selected = presetStore.useValue()
   const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
@@ -215,7 +219,7 @@ function PresetSelector() {
       ]}
     >
       <Button
-        variant="quiet"
+        variant={variant}
         size="sm"
         aria-label="Preview design system"
         className="gap-1.5"
@@ -228,7 +232,13 @@ function PresetSelector() {
   )
 }
 
-function PreviewModeToggle({ className }: { className?: string }) {
+function PreviewModeToggle({
+  variant = "quiet",
+  className,
+}: {
+  variant?: ButtonProps["variant"]
+  className?: string
+}) {
   const stored = modeStore.useValue()
   const mode = usePreviewMode() ?? "light"
   const next = mode === "light" ? "dark" : "light"
@@ -236,11 +246,11 @@ function PreviewModeToggle({ className }: { className?: string }) {
   return (
     <Tooltip>
       <Button
-        variant="quiet"
+        variant={variant}
         size="sm"
         isIconOnly
         aria-label={`Switch preview to ${next} mode`}
-        className={cn("text-fg-muted", className)}
+        className={cn(variant === "quiet" && "text-fg-muted", className)}
         onPress={() => modeStore.set(next)}
       >
         {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
@@ -276,6 +286,20 @@ export function PreviewControls({ className }: { className?: string }) {
     >
       <PresetSelector />
       <PreviewModeToggle />
+    </div>
+  )
+}
+
+/**
+ * The page-level toolbar of gallery pages (frontmatter `preview`): the preset
+ * picker and mode toggle, right-aligned under the page header. Same store, so
+ * it stays in sync with every per-demo toolbar.
+ */
+export function PagePreviewControls() {
+  return (
+    <div className="flex items-center justify-end gap-3">
+      <PresetSelector variant="secondary" />
+      <PreviewModeToggle variant="secondary" />
     </div>
   )
 }

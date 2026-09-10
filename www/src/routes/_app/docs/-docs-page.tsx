@@ -10,6 +10,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/modules/docs/page-layout"
+import { PagePreviewControls } from "@/modules/docs/preview-controls"
 import { MiniTOC, TOC, TOCProvider } from "@/modules/docs/toc"
 import browserCollections from "@/.source/browser"
 
@@ -36,6 +37,7 @@ export const clientLoader = browserCollections.docs.createClientLoader({
     // the xl TOC rail; the in-flow MiniTOC column takes over at every width.
     // Width only — prose and heading styles stay identical to other docs pages.
     const full = frontmatter.full
+    const preview = frontmatter.preview
 
     return (
       <TOCProvider toc={toc}>
@@ -77,6 +79,7 @@ export const clientLoader = browserCollections.docs.createClientLoader({
               </div>
               <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
             </div>
+            {preview && <PagePreviewControls />}
             <div>
               <MDX components={mdxComponents} />
             </div>

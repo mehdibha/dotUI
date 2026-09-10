@@ -22,6 +22,8 @@ export const docs = defineDocs({
       wip: z.boolean().optional().default(false),
       // Wide layout: the content column expands and the xl TOC rail is dropped.
       full: z.boolean().optional().default(false),
+      // Gallery pages: a page-level preset/mode toolbar themes every preview on the page.
+      preview: z.boolean().optional().default(false),
     }),
     postprocess: {
       includeProcessedMarkdown: true,
