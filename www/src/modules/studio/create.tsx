@@ -85,30 +85,27 @@ export function StudioPanel({ className }: { className?: string }) {
     : currentState !== "" && !builtInStates.has(currentState)
 
   // Saved systems decode to full design systems for the picker's mini previews.
-  const pickerSections = useMemo(
-    () => [
-      {
-        id: "mine",
-        title: "My systems",
-        items: presets.map((saved) => ({
-          id: saved.id,
-          name: saved.name,
-          designSystem: resolveDesignSystem(decodePreset(saved.state).state),
-        })),
-        onCreate: () => setCreateOpen(true),
-      },
-      {
-        id: "featured",
-        title: "Featured",
-        items: PRESETS.map((p) => ({
-          id: p.id,
-          name: p.name,
-          designSystem: p.designSystem,
-        })),
-      },
-    ],
-    [presets],
-  )
+  const pickerSections = useMemo(() => {
+    const mine = {
+      id: "mine",
+      title: "My systems",
+      items: presets.map((saved) => ({
+        id: saved.id,
+        name: saved.name,
+        designSystem: resolveDesignSystem(decodePreset(saved.state).state),
+      })),
+    }
+    const featured = {
+      id: "featured",
+      title: "Featured",
+      items: PRESETS.map((p) => ({
+        id: p.id,
+        name: p.name,
+        designSystem: p.designSystem,
+      })),
+    }
+    return presets.length > 0 ? [mine, featured] : [featured]
+  }, [presets])
 
   // Apply a state and close the gallery in one navigation — two separate
   // navigates would race each other's search updates.
@@ -180,6 +177,7 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={pickerSections}
         selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
         onPick={(item) => guarded(() => pickPreset(item.id))}
+        onCreate={() => setCreateOpen(true)}
         withPreview
         renderItemActions={(item) => {
           const saved = presets.find((p) => p.id === item.id)

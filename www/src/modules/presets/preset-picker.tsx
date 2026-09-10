@@ -9,6 +9,7 @@ import { useFilter } from "react-aria-components/Autocomplete"
 import { DesignSystemProvider } from "@/lib/styles"
 import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Command,
   CommandContent,
@@ -36,8 +37,6 @@ interface PresetPickerSection {
   id: string
   title: string
   items: PresetPickerItem[]
-  /** Ends the section with a "New design system" row; the section shows even when empty. */
-  onCreate?: () => void
 }
 
 interface PresetPickerProps {
@@ -59,6 +58,8 @@ interface PresetPickerProps {
   withPreview?: boolean
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetPickerItem) => ReactNode
+  /** Adds a "+ New" button beside the search field; pressing it closes the picker first. */
+  onCreate?: () => void
 }
 
 /**
@@ -83,6 +84,7 @@ export function PresetPicker({
   previewMode,
   withPreview = false,
   renderItemActions,
+  onCreate,
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
@@ -103,6 +105,7 @@ export function PresetPicker({
           previewMode={previewMode}
           withPreview={withPreview}
           renderItemActions={renderItemActions}
+          onCreate={onCreate}
         />
       )}
     </DialogContent>
@@ -137,6 +140,7 @@ function PresetPickerContent({
   previewMode,
   withPreview,
   renderItemActions,
+  onCreate,
 }: {
   sections: PresetPickerSection[]
   selectedId?: string
@@ -146,6 +150,7 @@ function PresetPickerContent({
   previewMode?: "light" | "dark"
   withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
+  onCreate?: () => void
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
@@ -209,9 +214,6 @@ function PresetPickerContent({
     }, 150)
   }, [])
 
-  // A section's create row filters like a row of its own, and keeps the
-  // section on screen when it has nothing else to show.
-  const createMatches = !query || contains(CREATE_LABEL, query)
   const visible = sections
     .map((section) => ({
       ...section,
@@ -219,24 +221,13 @@ function PresetPickerContent({
         ? section.items.filter((item) => contains(item.name, query))
         : section.items,
     }))
-    .filter(
-      (section) =>
-        section.items.length > 0 || (section.onCreate && createMatches),
-    )
+    .filter((section) => section.items.length > 0)
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
   const flyout = surface === "popover" && withPreview
 
   function pick(key: Key) {
-    const create = sections.find(
-      (section) => createKey(section.id) === key,
-    )?.onCreate
-    if (create) {
-      close()
-      create()
-      return
-    }
     const item = allItems.find((candidate) => candidate.id === key)
     if (!item) return
     onPick(item)
@@ -245,26 +236,45 @@ function PresetPickerContent({
 
   const list = (
     <>
-      <SearchField
-        // No search autofocus on mobile — the keyboard would cover the list.
-        autoFocus={surface === "popover"}
-        aria-label="Search design systems"
-      >
-        <InputGroup>
-          <InputGroupAddon>
-            <SearchIcon />
-          </InputGroupAddon>
-          <Input
-            placeholder="Search design systems..."
-            onInput={(e) => {
-              setQuery(e.currentTarget.value)
-              // Typing moves the highlight to the first match, so from here on
-              // the pane follows it.
-              navigatedRef.current = true
+      {/* The Command styles give the search field its hairline; with a New
+          button beside it the row carries the line instead. */}
+      <div className={cn("flex items-center", onCreate && "border-b")}>
+        <SearchField
+          // No search autofocus on mobile — the keyboard would cover the list.
+          autoFocus={surface === "popover"}
+          aria-label="Search design systems"
+          className={cn(onCreate && "flex-1 border-b-0!")}
+        >
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input
+              placeholder="Search..."
+              onInput={(e) => {
+                setQuery(e.currentTarget.value)
+                // Typing moves the highlight to the first match, so from here on
+                // the pane follows it.
+                navigatedRef.current = true
+              }}
+            />
+          </InputGroup>
+        </SearchField>
+        {onCreate && (
+          <Button
+            variant="secondary"
+            size="md"
+            className="mt-2 mr-2 shrink-0"
+            onPress={() => {
+              close()
+              onCreate()
             }}
-          />
-        </InputGroup>
-      </SearchField>
+          >
+            <PlusIcon />
+            New
+          </Button>
+        )}
+      </div>
       <CommandContent
         aria-label="Design systems"
         onAction={pick}
@@ -319,19 +329,6 @@ function PresetPickerContent({
                 )}
               </CommandItem>
             ))}
-            {section.onCreate &&
-              createMatches && (
-                // A dashed slot at the end of the section: reads as "add one
-                // here", and stays a real row so arrow keys reach it.
-                <CommandItem
-                  id={createKey(section.id)}
-                  textValue={CREATE_LABEL}
-                  className="mt-0.5 justify-center border border-dashed border-border-control"
-                >
-                  <PlusIcon />
-                  {CREATE_LABEL}
-                </CommandItem>
-              )}
           </CommandSection>
         ))}
       </CommandContent>
@@ -360,9 +357,6 @@ function PresetPickerContent({
     </>
   )
 }
-
-const CREATE_LABEL = "New design system"
-const createKey = (sectionId: string) => `${sectionId}:create`
 
 /**
  * One option: the preset's accent as a dot and its name. The scope only themes
