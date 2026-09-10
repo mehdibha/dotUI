@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { CheckIcon, SearchIcon } from "lucide-react"
+import { CheckIcon, PlusIcon, SearchIcon } from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
 
@@ -36,6 +36,8 @@ interface PresetPickerSection {
   id: string
   title: string
   items: PresetPickerItem[]
+  /** Ends the section with a "New design system" row; the section shows even when empty. */
+  onCreate?: () => void
 }
 
 interface PresetPickerProps {
@@ -84,7 +86,7 @@ export function PresetPicker({
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
-      aria-label="Presets"
+      aria-label="Design systems"
       // `max-h-[inherit]` chains the popover's computed max-height (set inline
       // by react-aria from the available space) down to the list, so the
       // search field stays pinned and the list owns all the overflow — the
@@ -207,6 +209,9 @@ function PresetPickerContent({
     }, 150)
   }, [])
 
+  // A section's create row filters like a row of its own, and keeps the
+  // section on screen when it has nothing else to show.
+  const createMatches = !query || contains(CREATE_LABEL, query)
   const visible = sections
     .map((section) => ({
       ...section,
@@ -214,13 +219,24 @@ function PresetPickerContent({
         ? section.items.filter((item) => contains(item.name, query))
         : section.items,
     }))
-    .filter((section) => section.items.length > 0)
+    .filter(
+      (section) =>
+        section.items.length > 0 || (section.onCreate && createMatches),
+    )
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
   const flyout = surface === "popover" && withPreview
 
   function pick(key: Key) {
+    const create = sections.find(
+      (section) => createKey(section.id) === key,
+    )?.onCreate
+    if (create) {
+      close()
+      create()
+      return
+    }
     const item = allItems.find((candidate) => candidate.id === key)
     if (!item) return
     onPick(item)
@@ -303,6 +319,19 @@ function PresetPickerContent({
                 )}
               </CommandItem>
             ))}
+            {section.onCreate &&
+              createMatches && (
+                // A dashed slot at the end of the section: reads as "add one
+                // here", and stays a real row so arrow keys reach it.
+                <CommandItem
+                  id={createKey(section.id)}
+                  textValue={CREATE_LABEL}
+                  className="mt-0.5 justify-center border border-dashed border-border-control"
+                >
+                  <PlusIcon />
+                  {CREATE_LABEL}
+                </CommandItem>
+              )}
           </CommandSection>
         ))}
       </CommandContent>
@@ -331,6 +360,9 @@ function PresetPickerContent({
     </>
   )
 }
+
+const CREATE_LABEL = "New design system"
+const createKey = (sectionId: string) => `${sectionId}:create`
 
 /**
  * One option: the preset's accent as a dot and its name. The scope only themes

@@ -65,13 +65,16 @@ export function SavePresetDialog({
       onOpenChange={onOpenChange}
       className="w-full sm:max-w-sm"
     >
-      <DialogContent aria-label="Save preset" className="flex flex-col gap-4">
+      <DialogContent
+        aria-label="Save design system"
+        className="flex flex-col gap-4"
+      >
         <div className="flex flex-col gap-1">
           <DialogTitle className="text-base font-semibold">
-            Save preset
+            Save design system
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Store the current system as a named preset you can reapply later.
+            Store the current design system under a name you can come back to.
           </DialogDescription>
         </div>
         <form
@@ -84,7 +87,7 @@ export function SavePresetDialog({
         >
           <TextField
             autoFocus
-            aria-label="Preset name"
+            aria-label="Name"
             value={name}
             onChange={setName}
           >

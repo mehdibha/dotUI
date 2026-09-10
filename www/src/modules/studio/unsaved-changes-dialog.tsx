@@ -38,7 +38,7 @@ export function UnsavedChangesDialog({
             Unsaved changes
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Applying this preset will replace your unsaved changes.
+            Applying this design system will replace your unsaved changes.
           </DialogDescription>
         </div>
         <div className="flex justify-end gap-2">

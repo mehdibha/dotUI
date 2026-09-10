@@ -12,6 +12,7 @@ import { getRouteApi } from "@tanstack/react-router"
 import { cn } from "@/registry/lib/utils"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
 import {
   decodePreset,
@@ -63,8 +64,9 @@ export function StudioPanel({ className }: { className?: string }) {
   } = useMyPresets()
   const storedName = useDesignSystemName()
   const [saveOpen, setSaveOpen] = useState(false)
-  // Preset pick held back by the unsaved-changes guard, awaiting save/discard.
-  const [pendingPick, setPendingPick] = useState<string | null>(null)
+  const [createOpen, setCreateOpen] = useState(false)
+  // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
+  const [pending, setPending] = useState<(() => void) | null>(null)
 
   // The header names what's being edited: the active saved system (dotted when
   // edited past its snapshot), else the standalone design-system name.
@@ -83,27 +85,30 @@ export function StudioPanel({ className }: { className?: string }) {
     : currentState !== "" && !builtInStates.has(currentState)
 
   // Saved systems decode to full design systems for the picker's mini previews.
-  const pickerSections = useMemo(() => {
-    const mine = {
-      id: "mine",
-      title: "My systems",
-      items: presets.map((saved) => ({
-        id: saved.id,
-        name: saved.name,
-        designSystem: resolveDesignSystem(decodePreset(saved.state).state),
-      })),
-    }
-    const builtIn = {
-      id: "built-in",
-      title: "Presets",
-      items: PRESETS.map((p) => ({
-        id: p.id,
-        name: p.name,
-        designSystem: p.designSystem,
-      })),
-    }
-    return presets.length > 0 ? [mine, builtIn] : [builtIn]
-  }, [presets])
+  const pickerSections = useMemo(
+    () => [
+      {
+        id: "mine",
+        title: "My systems",
+        items: presets.map((saved) => ({
+          id: saved.id,
+          name: saved.name,
+          designSystem: resolveDesignSystem(decodePreset(saved.state).state),
+        })),
+        onCreate: () => setCreateOpen(true),
+      },
+      {
+        id: "featured",
+        title: "Featured",
+        items: PRESETS.map((p) => ({
+          id: p.id,
+          name: p.name,
+          designSystem: p.designSystem,
+        })),
+      },
+    ],
+    [presets],
+  )
 
   // Apply a state and close the gallery in one navigation — two separate
   // navigates would race each other's search updates.
@@ -140,19 +145,25 @@ export function StudioPanel({ className }: { className?: string }) {
     applyState(encodeState(builtIn.state))
   }
 
-  // Applying a preset over unsaved work asks first; over clean state it's instant.
-  function requestPick(itemId: string) {
-    if (isDirty) setPendingPick(itemId)
-    else pickPreset(itemId)
+  function createPreset(name: string, state: string) {
+    save(name, state)
+    saveDesignSystemName(name)
+    applyState(state)
   }
 
-  function resolvePendingPick(saveFirst: boolean) {
+  // Replacing the state over unsaved work asks first; over clean state it's instant.
+  function guarded(action: () => void) {
+    if (isDirty) setPending(() => action)
+    else action()
+  }
+
+  function resolvePending(saveFirst: boolean) {
     if (saveFirst) {
       if (activeSaved) update(activeSaved.id, currentState)
       else save(displayName, currentState)
     }
-    if (pendingPick) pickPreset(pendingPick)
-    setPendingPick(null)
+    pending?.()
+    setPending(null)
   }
 
   const system: PanelSystem = {
@@ -168,7 +179,7 @@ export function StudioPanel({ className }: { className?: string }) {
         popoverClassName={INSTANT_POPOVER}
         sections={pickerSections}
         selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
-        onPick={(item) => requestPick(item.id)}
+        onPick={(item) => guarded(() => pickPreset(item.id))}
         withPreview
         renderItemActions={(item) => {
           const saved = presets.find((p) => p.id === item.id)
@@ -198,13 +209,21 @@ export function StudioPanel({ className }: { className?: string }) {
     >
       <DrillInPanel chapters={CHAPTERS} studio={studio} system={system} />
       <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
+      <CreatePresetDialog
+        isOpen={createOpen}
+        onOpenChange={setCreateOpen}
+        presets={presets}
+        activeId={activeSaved?.id}
+        currentState={currentState}
+        onCreate={(name, state) => guarded(() => createPreset(name, state))}
+      />
       <UnsavedChangesDialog
-        isOpen={pendingPick !== null}
+        isOpen={pending !== null}
         onOpenChange={(open) => {
-          if (!open) setPendingPick(null)
+          if (!open) setPending(null)
         }}
-        onSave={() => resolvePendingPick(true)}
-        onDiscard={() => resolvePendingPick(false)}
+        onSave={() => resolvePending(true)}
+        onDiscard={() => resolvePending(false)}
       />
     </div>
   )

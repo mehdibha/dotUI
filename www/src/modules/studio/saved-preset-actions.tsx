@@ -102,9 +102,12 @@ function RenamePresetDialog({
       }}
       className="w-full sm:max-w-sm"
     >
-      <DialogContent aria-label="Rename preset" className="flex flex-col gap-4">
+      <DialogContent
+        aria-label="Rename design system"
+        className="flex flex-col gap-4"
+      >
         <DialogTitle className="text-base font-semibold">
-          Rename preset
+          Rename design system
         </DialogTitle>
         <form
           onSubmit={(e) => {
@@ -114,7 +117,7 @@ function RenamePresetDialog({
         >
           <TextField
             autoFocus
-            aria-label="Preset name"
+            aria-label="Name"
             value={name}
             onChange={setName}
           >
