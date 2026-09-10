@@ -237,13 +237,16 @@ function PresetPickerContent({
   const list = (
     <>
       {/* The Command styles give the search field its hairline; with a New
-          button beside it the row carries the line instead. */}
-      <div className={cn("flex items-center", onCreate && "border-b")}>
+          button beside it the row carries the line instead, inset to the
+          input's edges like the rows below. */}
+      <div
+        className={cn("flex items-center", onCreate && "mx-2 gap-2 border-b")}
+      >
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === "popover"}
           aria-label="Search design systems"
-          className={cn(onCreate && "flex-1 border-b-0!")}
+          className={cn(onCreate && "flex-1 border-b-0! px-0!")}
         >
           <InputGroup>
             <InputGroupAddon>
@@ -264,7 +267,7 @@ function PresetPickerContent({
           <Button
             variant="secondary"
             size="md"
-            className="mt-2 mr-2 shrink-0"
+            className="mt-2 shrink-0"
             onPress={() => {
               close()
               onCreate()
@@ -340,7 +343,7 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="max-h-[inherit] w-[200px] overflow-hidden"
+        className="max-h-[inherit] w-[260px] overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
