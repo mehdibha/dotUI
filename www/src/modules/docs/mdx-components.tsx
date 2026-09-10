@@ -4,7 +4,6 @@ import type { MDXComponents } from "mdx/types"
 import { cn } from "@/registry/lib/utils"
 import { Alert, type AlertProps } from "@/registry/ui/alert"
 import { Link } from "@/registry/ui/link"
-import { ChartFamilyGrid } from "@/modules/charts/chart-family-grid"
 import { CodeBlock, Pre } from "@/modules/docs/code-block"
 import {
   CodeBlockTab,
@@ -12,7 +11,6 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from "@/modules/docs/code-block-tabs"
-import { ComponentsGrid } from "@/modules/docs/components-list/components-grid"
 import {
   Demo,
   DemoCode,
@@ -209,6 +207,8 @@ export const mdxComponents: MDXComponents = {
   Reference: ({ className, ...props }: ReferenceProps) => (
     <Reference className={cn("mt-4", className)} {...props} />
   ),
-  ComponentsGrid,
-  ChartFamilyGrid,
+  // The gallery grids (<ComponentsGrid>, <ChartFamilyGrid>) are imported by the
+  // two pages that use them, not registered here: they pull every preview demo
+  // and its registry component behind them, and this map is on every docs
+  // page's static import path.
 }
