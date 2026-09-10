@@ -236,15 +236,9 @@ function PresetPickerContent({
 
   const list = (
     <>
-      {/* The Command styles give the search field its hairline; with a New
-          button beside it the row carries the line instead, inset to the
-          input's edges like the rows below. */}
-      <div
-        className={cn(
-          "flex items-center",
-          onCreate && "mx-2 gap-2 border-b pb-2",
-        )}
-      >
+      {/* With a New button beside it the search field gives up its own
+          hairline; the row sits on the same inset as the rows below. */}
+      <div className={cn("flex items-center", onCreate && "mx-2 gap-2")}>
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === "popover"}
