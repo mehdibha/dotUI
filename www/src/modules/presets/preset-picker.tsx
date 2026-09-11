@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { CheckIcon, SearchIcon } from "lucide-react"
+import { CheckIcon, PlusIcon, SearchIcon } from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Command,
   CommandContent,
@@ -49,14 +50,14 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
-  /** Extra classes on the desktop popover (e.g. the panel's instant motion). */
-  popoverClassName?: string
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetPickerItem) => ReactNode
+  /** Adds a "+ New" button beside the search field; pressing it closes the picker first. */
+  onCreate?: () => void
 }
 
 /**
@@ -77,14 +78,14 @@ export function PresetPicker({
   isOpen,
   onOpenChange,
   placement = "bottom start",
-  popoverClassName,
   previewMode,
   withPreview = false,
   renderItemActions,
+  onCreate,
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
-      aria-label="Presets"
+      aria-label="Design systems"
       // `max-h-[inherit]` chains the popover's computed max-height (set inline
       // by react-aria from the available space) down to the list, so the
       // search field stays pinned and the list owns all the overflow — the
@@ -101,6 +102,7 @@ export function PresetPicker({
           previewMode={previewMode}
           withPreview={withPreview}
           renderItemActions={renderItemActions}
+          onCreate={onCreate}
         />
       )}
     </DialogContent>
@@ -116,7 +118,11 @@ export function PresetPicker({
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
-            <Popover placement={placement} className={popoverClassName}>
+            // Instant, like the panel chrome it belongs to.
+            <Popover
+              placement={placement}
+              className="transition-none will-change-auto"
+            >
               {content("popover")}
             </Popover>
           )
@@ -135,6 +141,7 @@ function PresetPickerContent({
   previewMode,
   withPreview,
   renderItemActions,
+  onCreate,
 }: {
   sections: PresetPickerSection[]
   selectedId?: string
@@ -144,6 +151,7 @@ function PresetPickerContent({
   previewMode?: "light" | "dark"
   withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
+  onCreate?: () => void
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
@@ -229,26 +237,45 @@ function PresetPickerContent({
 
   const list = (
     <>
-      <SearchField
-        // No search autofocus on mobile — the keyboard would cover the list.
-        autoFocus={surface === "popover"}
-        aria-label="Search design systems"
-      >
-        <InputGroup>
-          <InputGroupAddon>
-            <SearchIcon />
-          </InputGroupAddon>
-          <Input
-            placeholder="Search design systems..."
-            onInput={(e) => {
-              setQuery(e.currentTarget.value)
-              // Typing moves the highlight to the first match, so from here on
-              // the pane follows it.
-              navigatedRef.current = true
+      {/* The search row drops the Command's hairline and sits on the same
+          inset as the rows below; the New button, when any, shares it. */}
+      <div className="mx-2 flex items-center gap-2">
+        <SearchField
+          // No search autofocus on mobile — the keyboard would cover the list.
+          autoFocus={surface === "popover"}
+          aria-label="Search design systems"
+          className="flex-1 border-b-0! px-0!"
+        >
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input
+              placeholder="Search systems..."
+              onInput={(e) => {
+                setQuery(e.currentTarget.value)
+                // Typing moves the highlight to the first match, so from here on
+                // the pane follows it.
+                navigatedRef.current = true
+              }}
+            />
+          </InputGroup>
+        </SearchField>
+        {onCreate && (
+          <Button
+            variant="secondary"
+            size="md"
+            className="mt-2 shrink-0"
+            onPress={() => {
+              close()
+              onCreate()
             }}
-          />
-        </InputGroup>
-      </SearchField>
+          >
+            <PlusIcon />
+            New
+          </Button>
+        )}
+      </div>
       <CommandContent
         aria-label="Design systems"
         onAction={pick}
@@ -260,7 +287,7 @@ function PresetPickerContent({
         style={{
           // Relative so the rows' offsetTop reads against the scroller.
           position: "relative",
-          maxHeight: surface === "popover" ? 420 : "60vh",
+          maxHeight: surface === "popover" ? 320 : "60vh",
           // Shrink below the content when the inherited max-height is tighter
           // than the 420 cap.
           minHeight: 0,
@@ -314,7 +341,7 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="max-h-[inherit] w-[200px] overflow-hidden"
+        className="max-h-[inherit] w-65 overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
@@ -417,10 +444,10 @@ function PresetOptionRow({
  * aligned with it and sized to its content, drawn entirely on the previewed
  * preset's own surface. The body is the landing showcase's Controls card — the
  * same sampler the marketing grid opens with — so the preview and the landing
- * agree on what a design system looks like. It opens once (after the hover
+ * agree on what a design system looks like. It shows once (after the hover
  * delay upstream) and then never moves; swapping presets swaps its content
- * outright — the highlight moves tens of times per open, and animating the
- * swap would only slow it down.
+ * outright — the highlight moves tens of times per open, and animating any
+ * of it would only slow it down.
  */
 function PresetPreviewFlyout({
   item,
@@ -451,10 +478,8 @@ function PresetPreviewFlyout({
           // The Controls card *is* the surface: the shell borrows its bg and
           // sizes to it, so the flyout may run taller than the popover.
           "pointer-events-none absolute top-0 left-full ml-3 flex w-[340px] flex-col overflow-hidden rounded-xl border bg-card shadow-lg",
-          "origin-left transition-[opacity,transform,scale] ease-out will-change-[transform,opacity] motion-reduce:transition-none",
-          isVisible
-            ? "scale-100 opacity-100 duration-200"
-            : "-translate-x-1 scale-97 opacity-0 duration-150",
+          // Instant, like the rest of the panel chrome.
+          !isVisible && "hidden",
         )}
       >
         <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
