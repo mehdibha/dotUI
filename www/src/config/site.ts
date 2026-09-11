@@ -52,7 +52,7 @@ export const navItems: {
     name: "Docs",
     match: "/docs",
     to: "/docs/$",
-    params: { _splat: "installation" },
+    params: { _splat: "" },
   },
   {
     name: "Components",

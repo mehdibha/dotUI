@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site"
 
 // Serves /.well-known/api-catalog (RFC 9727) — a linkset that points agents at
 // dotUI's real, machine-consumable resources: the shadcn component registry
-// endpoint (GET /r/{name}), the installation guide, and the llms.txt index.
+// endpoint (GET /r/{name}), the docs overview, and the llms.txt index.
 // This deliberately advertises only capabilities that actually exist — there is
 // no MCP server, agent card, or OAuth on this static docs site, so none are
 // claimed (a hollow capability card is worse than its absence).
