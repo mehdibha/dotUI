@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import type { Key } from "react-aria-components"
 
 import { Button } from "@/registry/ui/button"
 import {
@@ -12,73 +11,34 @@ import {
 import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectSection,
-  SelectSectionHeader,
-  SelectTrigger,
-} from "@/registry/ui/select"
 import { TextField } from "@/registry/ui/text-field"
-import { PRESETS } from "@/modules/presets/presets-data"
-import { encodeState } from "@/modules/studio/preset"
-import type { SavedPreset } from "@/modules/studio/preset"
 
 /**
- * Creates a new saved design system from a name and a starting point — a
- * built-in preset or one of the user's systems — then hands the snapshot back
- * to the panel to store and apply.
+ * Names a new design system. It starts from Origin — a blank canvas; forking
+ * a featured or saved system is pick it, edit, Save as new.
  */
-/** "Based on" entry for the working state when it matches no preset. */
-const CURRENT = "__current"
-
 export function CreatePresetDialog({
   isOpen,
   onOpenChange,
-  presets,
-  activeId,
-  currentState,
   onCreate,
 }: {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  presets: SavedPreset[]
-  /** The active saved preset, when the working state still matches it. */
-  activeId?: string
-  /** The working state, encoded. */
-  currentState: string
-  onCreate: (name: string, state: string) => void
+  onCreate: (name: string) => void
 }) {
-  // Based on what's on screen: the active saved preset (when unedited), else
-  // the built-in the state matches, else the unsaved working state itself.
-  const initialBase =
-    (activeId && presets.some((p) => p.id === activeId) && activeId) ||
-    PRESETS.find((p) => (encodeState(p.state) ?? "") === currentState)?.id ||
-    CURRENT
   const [name, setName] = useState("")
-  const [base, setBase] = useState<Key>(initialBase)
-  // Fields reset on every open (the modal stays mounted between opens).
+  // The field resets on every open (the modal stays mounted between opens).
   const [wasOpen, setWasOpen] = useState(isOpen)
   if (isOpen !== wasOpen) {
     setWasOpen(isOpen)
-    if (isOpen) {
-      setName("")
-      setBase(initialBase)
-    }
+    if (isOpen) setName("")
   }
 
   const trimmed = name.trim()
 
   function submit() {
     if (!trimmed) return
-    const saved = presets.find((p) => p.id === base)
-    const builtIn = PRESETS.find((p) => p.id === base)
-    const state =
-      base === CURRENT
-        ? currentState
-        : (saved?.state ?? (builtIn && encodeState(builtIn.state)) ?? "")
-    onCreate(trimmed, state)
+    onCreate(trimmed)
     onOpenChange(false)
   }
 
@@ -97,11 +57,11 @@ export function CreatePresetDialog({
             New design system
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Give it a name and a starting point. Everything stays editable.
+            Starts from Origin, the default look. Every decision is yours from
+            there.
           </DialogDescription>
         </div>
         <form
-          className="flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault()
             submit()
@@ -116,39 +76,6 @@ export function CreatePresetDialog({
             <Label>Name</Label>
             <Input placeholder="My design system" />
           </TextField>
-          <Select
-            aria-label="Based on"
-            selectedKey={base}
-            onSelectionChange={(key) => {
-              if (key != null) setBase(key)
-            }}
-          >
-            <Label>Based on</Label>
-            <SelectTrigger className="w-full" />
-            <SelectContent>
-              {initialBase === CURRENT && (
-                <SelectItem id={CURRENT}>Current changes</SelectItem>
-              )}
-              <SelectSection>
-                <SelectSectionHeader>Featured</SelectSectionHeader>
-                {PRESETS.map((p) => (
-                  <SelectItem key={p.id} id={p.id}>
-                    {p.name}
-                  </SelectItem>
-                ))}
-              </SelectSection>
-              {presets.length > 0 && (
-                <SelectSection>
-                  <SelectSectionHeader>My systems</SelectSectionHeader>
-                  {presets.map((p) => (
-                    <SelectItem key={p.id} id={p.id}>
-                      {p.name}
-                    </SelectItem>
-                  ))}
-                </SelectSection>
-              )}
-            </SelectContent>
-          </Select>
         </form>
         <div className="flex justify-end gap-2">
           <Button size="sm" onPress={() => onOpenChange(false)}>

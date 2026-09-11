@@ -210,16 +210,7 @@ export function StudioPanel({ className }: { className?: string }) {
       <CreatePresetDialog
         isOpen={createOpen}
         onOpenChange={setCreateOpen}
-        presets={presets}
-        activeId={isDirty ? undefined : activeSaved?.id}
-        currentState={currentState}
-        // Creating from the working state keeps the unsaved edits — only a
-        // different base would throw them away.
-        onCreate={(name, state) =>
-          state === currentState
-            ? createPreset(name, state)
-            : guarded(() => createPreset(name, state))
-        }
+        onCreate={(name) => guarded(() => createPreset(name, ORIGIN_CANON))}
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}
