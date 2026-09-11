@@ -56,7 +56,7 @@ export function Cards() {
             color={preset.color}
             icons={preset.icons}
           >
-            <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none [zoom:0.8] [mask-image:linear-gradient(to_right,black_calc(125vw_-_1.25*var(--crop-pl)_-_1.25*var(--edge-fade)),transparent_calc(125vw_-_1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:[zoom:1] lg:[mask-image:none]" />
+            <CardsGrid className="relative z-20 w-max [zoom:0.8] [mask-image:linear-gradient(to_right,black_calc(125vw_-_1.25*var(--crop-pl)_-_1.25*var(--edge-fade)),transparent_calc(125vw_-_1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:[zoom:1] lg:[mask-image:none]" />
           </DesignSystemProvider>
         </div>
         <SkeletonRail side="right" />

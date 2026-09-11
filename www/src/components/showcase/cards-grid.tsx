@@ -131,9 +131,11 @@ function CardColumn({
 }
 
 // The landing showcase grid: a rail, the AI banner over two card columns, and a
-// side column wherever four columns fit. Three equal columns, four at sm–lg
-// and xl. Memoized: the grid re-themes via context and CSS vars, so a parent
-// re-render (preset swap) never needs to re-render the cards themselves.
+// side column wherever four columns fit. Three columns, four at sm–lg and xl.
+// Below lg the columns are a fixed 18rem (the grid bleeds past the viewport
+// there); from lg they share the container width. Memoized: the grid
+// re-themes via context and CSS vars, so a parent re-render (preset swap)
+// never needs to re-render the cards themselves.
 export const CardsGrid = memo(function CardsGrid({
   className,
 }: {
@@ -142,7 +144,7 @@ export const CardsGrid = memo(function CardsGrid({
   return (
     <div
       className={cn(
-        "grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4",
+        "grid grid-cols-[repeat(3,18rem)] items-start gap-5 sm:grid-cols-[repeat(4,18rem)] lg:grid-cols-3 xl:grid-cols-4",
         className,
       )}
     >
