@@ -1,5 +1,5 @@
 {
   "title": "Docs",
   "root": true,
-  "pages": ["index", "[Components](/docs/components)", "charts", "components"]
+  "pages": ["(root)", "components"]
 }
