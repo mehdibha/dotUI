@@ -299,7 +299,7 @@ export function PreviewControls({ className }: { className?: string }) {
 export function PagePreviewControls() {
   return (
     <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-fg-muted">
-      You&apos;re looking at the
+      You&apos;re looking at
       <PresetSelector variant="secondary" />
       design system.
     </p>
