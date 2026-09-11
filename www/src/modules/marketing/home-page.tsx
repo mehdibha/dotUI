@@ -9,6 +9,7 @@ import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 function HeroEyebrow() {
   return (
     <Eyebrow className="mb-3 border-transparent bg-inverse/5">
+      <span className="size-1.5 rounded-full bg-fg-muted" />
       Currently in beta
     </Eyebrow>
   )

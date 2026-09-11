@@ -10,19 +10,19 @@ import { TailwindIcon } from "@/components/icons/tailwind"
 
 const tools = [
   {
-    prefix: "Built on",
+    prefix: "Powered by",
     name: "React Aria",
     href: "https://react-spectrum.adobe.com/react-aria",
     icon: <ReactAriaIcon className="size-5" />,
   },
   {
     prefix: "Styled with",
-    name: "Tailwind",
+    name: "Tailwind CSS",
     href: "https://tailwindcss.com",
     icon: <TailwindIcon className="size-8 text-[#38bdf8]" />,
   },
   {
-    prefix: "Installed via",
+    prefix: "Installed with",
     name: "shadcn CLI",
     href: "https://ui.shadcn.com",
     icon: <ShadcnIcon className="size-6" />,
@@ -34,7 +34,7 @@ type Tool = (typeof tools)[number]
 function Label({ tool }: { tool: Tool }) {
   return (
     <>
-      {tool.prefix} <span className="font-medium">{tool.name}</span>
+      {tool.prefix} <span className="font-semibold">{tool.name}</span>
     </>
   )
 }
