@@ -50,8 +50,6 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
-  /** Extra classes on the desktop popover (e.g. the panel's instant motion). */
-  popoverClassName?: string
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
@@ -80,7 +78,6 @@ export function PresetPicker({
   isOpen,
   onOpenChange,
   placement = "bottom start",
-  popoverClassName,
   previewMode,
   withPreview = false,
   renderItemActions,
@@ -121,7 +118,11 @@ export function PresetPicker({
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
-            <Popover placement={placement} className={popoverClassName}>
+            // Instant, like the panel chrome it belongs to.
+            <Popover
+              placement={placement}
+              className="transition-none will-change-auto"
+            >
               {content("popover")}
             </Popover>
           )
@@ -236,21 +237,21 @@ function PresetPickerContent({
 
   const list = (
     <>
-      {/* With a New button beside it the search field gives up its own
-          hairline; the row sits on the same inset as the rows below. */}
-      <div className={cn("flex items-center", onCreate && "mx-2 gap-2")}>
+      {/* The search row drops the Command's hairline and sits on the same
+          inset as the rows below; the New button, when any, shares it. */}
+      <div className="mx-2 flex items-center gap-2">
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === "popover"}
           aria-label="Search design systems"
-          className={cn(onCreate && "flex-1 border-b-0! px-0!")}
+          className="flex-1 border-b-0! px-0!"
         >
           <InputGroup>
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
             <Input
-              placeholder="Search design systems..."
+              placeholder="Search systems..."
               onInput={(e) => {
                 setQuery(e.currentTarget.value)
                 // Typing moves the highlight to the first match, so from here on
@@ -286,7 +287,7 @@ function PresetPickerContent({
         style={{
           // Relative so the rows' offsetTop reads against the scroller.
           position: "relative",
-          maxHeight: surface === "popover" ? 420 : "60vh",
+          maxHeight: surface === "popover" ? 320 : "60vh",
           // Shrink below the content when the inherited max-height is tighter
           // than the 420 cap.
           minHeight: 0,
@@ -340,7 +341,7 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="max-h-[inherit] w-80 overflow-hidden"
+        className="max-h-[inherit] w-65 overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}

@@ -31,7 +31,6 @@ import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 import { DrillInPanel } from "./drill-in"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
-import { INSTANT_POPOVER } from "./rows"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 
@@ -173,7 +172,6 @@ export function StudioPanel({ className }: { className?: string }) {
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
-        popoverClassName={INSTANT_POPOVER}
         sections={pickerSections}
         selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
         onPick={(item) => guarded(() => pickPreset(item.id))}

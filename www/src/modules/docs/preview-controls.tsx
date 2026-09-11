@@ -191,10 +191,11 @@ function PresetSelector() {
       selectedId={selected}
       onPick={(item) => presetStore.set(item.id)}
       previewMode={previewMode}
+      withPreview
       sections={[
         {
           id: "yours",
-          title: "Yours",
+          title: "My systems",
           items: [
             {
               id: YOURS,
@@ -204,8 +205,8 @@ function PresetSelector() {
           ],
         },
         {
-          id: "built-in",
-          title: "Presets",
+          id: "featured",
+          title: "Featured",
           items: PRESETS.map((preset) => ({
             id: preset.id,
             name: preset.name,
