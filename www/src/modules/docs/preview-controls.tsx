@@ -292,15 +292,16 @@ export function PreviewControls({ className }: { className?: string }) {
 }
 
 /**
- * The page-level toolbar of gallery pages (frontmatter `preview`): the preset
- * picker and mode toggle, right-aligned under the page header. Same store, so
- * it stays in sync with every per-demo toolbar.
+ * The intro on gallery pages (frontmatter `preview`): the preset picker sits
+ * in the sentence so it reads as copy, not a toolbar. Same store as every
+ * per-demo toolbar.
  */
 export function PagePreviewControls() {
   return (
-    <div className="flex items-center justify-end gap-3">
+    <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-fg-muted">
+      You&apos;re looking at
       <PresetSelector variant="secondary" />
-      <PreviewModeToggle variant="secondary" />
-    </div>
+      design system.
+    </p>
   )
 }
