@@ -30,7 +30,7 @@ import type { SavedPreset } from "@/modules/studio/preset"
  * built-in preset or one of the user's systems — then hands the snapshot back
  * to the panel to store and apply.
  */
-/** "Start from" entry for the working state when it matches no preset. */
+/** "Based on" entry for the working state when it matches no preset. */
 const CURRENT = "__current"
 
 export function CreatePresetDialog({
@@ -44,14 +44,14 @@ export function CreatePresetDialog({
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   presets: SavedPreset[]
-  /** The active saved preset, if any. */
+  /** The active saved preset, when the working state still matches it. */
   activeId?: string
   /** The working state, encoded. */
   currentState: string
   onCreate: (name: string, state: string) => void
 }) {
-  // Start from what's on screen: the active saved preset, else the built-in
-  // the state matches, else the unsaved working state itself.
+  // Based on what's on screen: the active saved preset (when unedited), else
+  // the built-in the state matches, else the unsaved working state itself.
   const initialBase =
     (activeId && presets.some((p) => p.id === activeId) && activeId) ||
     PRESETS.find((p) => (encodeState(p.state) ?? "") === currentState)?.id ||
@@ -97,8 +97,7 @@ export function CreatePresetDialog({
             New design system
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Name it and pick what to start from. You can change everything
-            after.
+            Give it a name and a starting point. Everything stays editable.
           </DialogDescription>
         </div>
         <form
@@ -118,13 +117,13 @@ export function CreatePresetDialog({
             <Input placeholder="My design system" />
           </TextField>
           <Select
-            aria-label="Start from"
+            aria-label="Based on"
             selectedKey={base}
             onSelectionChange={(key) => {
               if (key != null) setBase(key)
             }}
           >
-            <Label>Start from</Label>
+            <Label>Based on</Label>
             <SelectTrigger className="w-full" />
             <SelectContent>
               {initialBase === CURRENT && (

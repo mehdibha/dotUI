@@ -250,7 +250,7 @@ function PresetPickerContent({
               <SearchIcon />
             </InputGroupAddon>
             <Input
-              placeholder="Search..."
+              placeholder="Search design systems..."
               onInput={(e) => {
                 setQuery(e.currentTarget.value)
                 // Typing moves the highlight to the first match, so from here on
@@ -340,7 +340,7 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="max-h-[inherit] w-[260px] overflow-hidden"
+        className="max-h-[inherit] w-80 overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
@@ -443,10 +443,10 @@ function PresetOptionRow({
  * aligned with it and sized to its content, drawn entirely on the previewed
  * preset's own surface. The body is the landing showcase's Controls card — the
  * same sampler the marketing grid opens with — so the preview and the landing
- * agree on what a design system looks like. It opens once (after the hover
+ * agree on what a design system looks like. It shows once (after the hover
  * delay upstream) and then never moves; swapping presets swaps its content
- * outright — the highlight moves tens of times per open, and animating the
- * swap would only slow it down.
+ * outright — the highlight moves tens of times per open, and animating any
+ * of it would only slow it down.
  */
 function PresetPreviewFlyout({
   item,
@@ -477,10 +477,8 @@ function PresetPreviewFlyout({
           // The Controls card *is* the surface: the shell borrows its bg and
           // sizes to it, so the flyout may run taller than the popover.
           "pointer-events-none absolute top-0 left-full ml-3 flex w-[340px] flex-col overflow-hidden rounded-xl border bg-card shadow-lg",
-          "origin-left transition-[opacity,transform,scale] ease-out will-change-[transform,opacity] motion-reduce:transition-none",
-          isVisible
-            ? "scale-100 opacity-100 duration-200"
-            : "-translate-x-1 scale-97 opacity-0 duration-150",
+          // Instant, like the rest of the panel chrome.
+          !isVisible && "hidden",
         )}
       >
         <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
