@@ -1,31 +1,25 @@
 ---
-title: Introduction
+title: Overview
 description: Build your own design system. Compose it in the studio, preview it live, and export code you own.
 ---
 
-**dotUI is a design-system builder.** You decide every detail — colors, typography, density, the style of each component — and leave with a design system that's actually yours.
+import { LinkButton } from "@/registry/ui/button"
 
-Component libraries come with a look. Ship with one and your app looks like every other app built with it — so you start fighting it: overriding styles, wrapping components, patching decisions that were never yours to begin with.
+**dotUI is a design-system builder, not a component library.** There is no default look to install. You compose your system in the [studio](/studio) — colors, typography, icons, density, radius, the style of each component — and leave with code that is yours.
 
-Copy-paste libraries fixed part of this. You own the files now. But the design inside them is still someone else's: their colors, their radius, their spacing, their taste. Changing the code is easy — changing the _system_ is not.
+Component libraries ship with a look, and every app built on them shares it. Copy-paste libraries let you own the files, but the design inside is still someone else's. dotUI exists so that anyone can build a real design system without a design team, and without spending months on it.
 
-dotUI exists so that **everyone can build their own design system** — without a design team, and without spending months on it.
+## Use the studio
 
-## How it works
+Everything happens in the studio. Build your system there, preview every change on real components, then hit **Export**: it hands you the exact commands for your project, with your design system baked in, or opens it directly in v0. Nothing to configure by hand.
 
-1. **Compose** your system at [dotui.org/studio](https://dotui.org/studio) — colors, typography, icons, density, radius, and the style of each component.
-2. **Preview** every change instantly, on real components.
-3. **Export** it as code you own — into your codebase with the shadcn CLI, or straight into [v0](https://v0.dev). More targets are coming.
+<LinkButton href="/studio" variant="primary" size="lg" className="mt-6">
+  Open the studio
+</LinkButton>
 
-What you get isn't our library with your colors on top. It's your design system, in your codebase, ready to change however you like.
+## Requirements
 
-## What's inside
-
-Every component is accessible out of the box, built on [React Aria](https://react-spectrum.adobe.com/react-aria/) and styled with Tailwind CSS. The API is small and consistent: one `Button` for every trigger, one `Popover` for everything that floats, one `Input` for every field. Learn a component once and you know the whole library.
-
-## Built for the AI era
-
-Because the API is consistent and predictable, AI agents pick it up fast: an agent that has written one component can write the next. And since you own the code, your tools can read it, understand it, and build on it.
+Your project needs [React 19](https://react.dev), [Tailwind CSS 4](https://tailwindcss.com) and [TypeScript 5](https://www.typescriptlang.org/).
 
 ## Get involved
 

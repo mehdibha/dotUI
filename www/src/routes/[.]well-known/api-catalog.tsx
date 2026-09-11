@@ -42,7 +42,7 @@ export const Route = createFileRoute("/.well-known/api-catalog")({
               ],
               "service-doc": [
                 {
-                  href: `${url}/docs/installation`,
+                  href: `${url}/docs`,
                   type: "text/html",
                   title:
                     "How to install and consume dotUI components via the registry and the shadcn CLI.",
