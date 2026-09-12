@@ -5,7 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const segmentedControlVariants = tv({
   slots: {
@@ -17,6 +17,8 @@ const segmentedControlVariants = tv({
   },
 });
 
+const { root, item, indicator, itemContent } = segmentedControlVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface SegmentedControlProps extends Omit<
@@ -25,7 +27,6 @@ interface SegmentedControlProps extends Omit<
 > {}
 
 const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
-  const { root } = segmentedControlVariants();
   return (
     <ToggleButtonGroupPrimitives.ToggleButtonGroup
       data-slot="segmented-control"
@@ -50,7 +51,6 @@ const SegmentedControlItem = ({
   children,
   ...props
 }: SegmentedControlItemProps) => {
-  const { item, indicator, itemContent } = segmentedControlVariants();
   return (
     <ToggleButtonPrimitives.ToggleButton
       data-slot="segmented-control-item"

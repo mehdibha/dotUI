@@ -20,7 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import type { TooltipContentProps } from "@/components/ui/tooltip";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const sidebarVariants = tv({
   slots: {
@@ -66,6 +66,36 @@ const sidebarVariants = tv({
   },
 });
 
+const {
+  wrapper,
+  root,
+  gap,
+  container,
+  inner,
+  mobile,
+  inset,
+  rail,
+  header,
+  footer,
+  content,
+  separator,
+  group,
+  groupLabel,
+  groupAction,
+  groupContent,
+  menu,
+  menuItem,
+  menuButton,
+  menuAction,
+  menuBadge,
+  menuSkeleton,
+  menuSkeletonIcon,
+  menuSkeletonText,
+  menuSub,
+  menuSubItem,
+  menuSubButton,
+} = sidebarVariants();
+
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
@@ -110,7 +140,6 @@ function SidebarProvider({
   children,
   ...props
 }: SidebarProviderProps) {
-  const { wrapper } = sidebarVariants();
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
 
@@ -234,7 +263,6 @@ function Sidebar({
   ...props
 }: SidebarProps) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
-  const { root, gap, container, inner, mobile } = sidebarVariants();
   const headingId = useSlotId();
 
   if (collapsible === "none") {
@@ -312,7 +340,6 @@ function Sidebar({
 interface SidebarInsetProps extends React.ComponentProps<"main"> {}
 
 function SidebarInset({ className, ...props }: SidebarInsetProps) {
-  const { inset } = sidebarVariants();
   return (
     <main
       data-slot="sidebar-inset"
@@ -359,7 +386,6 @@ interface SidebarRailProps extends React.ComponentProps<
 
 function SidebarRail({ className, ...props }: SidebarRailProps) {
   const { toggleSidebar } = useSidebar();
-  const { rail } = sidebarVariants();
   return (
     <ButtonPrimitives.Button
       aria-label="Toggle Sidebar"
@@ -378,7 +404,6 @@ interface SidebarHeaderProps extends React.ComponentProps<
 > {}
 
 function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
-  const { header } = sidebarVariants();
   return (
     <HeaderPrimitives.Header
       data-slot="sidebar-header"
@@ -393,7 +418,6 @@ function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
 interface SidebarFooterProps extends React.ComponentProps<"div"> {}
 
 function SidebarFooter({ className, ...props }: SidebarFooterProps) {
-  const { footer } = sidebarVariants();
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
       <div
@@ -410,7 +434,6 @@ function SidebarFooter({ className, ...props }: SidebarFooterProps) {
 interface SidebarContentProps extends React.ComponentProps<"div"> {}
 
 function SidebarContent({ className, ...props }: SidebarContentProps) {
-  const { content } = sidebarVariants();
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
       <div
@@ -429,7 +452,6 @@ interface SidebarSeparatorProps extends React.ComponentProps<
 > {}
 
 function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
-  const { separator } = sidebarVariants();
   return <Separator className={separator({ className })} {...props} />;
 }
 
@@ -438,7 +460,6 @@ function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
 interface SidebarGroupProps extends React.ComponentProps<"div"> {}
 
 function SidebarGroup({ className, ...props }: SidebarGroupProps) {
-  const { group } = sidebarVariants();
   const headingId = useSlotId();
   return (
     <Provider values={[[HeadingPrimitives.HeadingContext, { id: headingId }]]}>
@@ -460,7 +481,6 @@ interface SidebarGroupLabelProps extends React.ComponentProps<
 > {}
 
 function SidebarGroupLabel({ className, ...props }: SidebarGroupLabelProps) {
-  const { groupLabel } = sidebarVariants();
   return (
     <HeadingPrimitives.Heading
       data-slot="sidebar-group-label"
@@ -477,7 +497,6 @@ interface SidebarGroupActionProps extends React.ComponentProps<
 > {}
 
 function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
-  const { groupAction } = sidebarVariants();
   return (
     <ButtonPrimitives.Button
       data-slot="sidebar-group-action"
@@ -497,7 +516,6 @@ function SidebarGroupContent({
   className,
   ...props
 }: SidebarGroupContentProps) {
-  const { groupContent } = sidebarVariants();
   return (
     <div
       data-slot="sidebar-group-content"
@@ -512,7 +530,6 @@ function SidebarGroupContent({
 interface SidebarMenuProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenu({ className, ...props }: SidebarMenuProps) {
-  const { menu } = sidebarVariants();
   return (
     <ul data-slot="sidebar-menu" className={menu({ className })} {...props} />
   );
@@ -523,7 +540,6 @@ function SidebarMenu({ className, ...props }: SidebarMenuProps) {
 interface SidebarMenuItemProps extends React.ComponentProps<"li"> {}
 
 function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
-  const { menuItem } = sidebarVariants();
   return (
     <li
       data-slot="sidebar-menu-item"
@@ -568,8 +584,6 @@ function SidebarMenuButton({
 }: SidebarMenuButtonProps) {
   const { state, isMobile } = useSidebar();
   const { collapsible } = React.useContext(SidebarItemContext);
-  const { menuButton } = sidebarVariants();
-
   const sharedProps = {
     "data-slot": "sidebar-menu-button",
     "data-size": size,
@@ -634,7 +648,6 @@ function SidebarMenuAction({
   className,
   ...props
 }: SidebarMenuActionProps) {
-  const { menuAction } = sidebarVariants();
   return (
     <ButtonPrimitives.Button
       data-slot="sidebar-menu-action"
@@ -652,7 +665,6 @@ function SidebarMenuAction({
 interface SidebarMenuBadgeProps extends React.ComponentProps<"div"> {}
 
 function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
-  const { menuBadge } = sidebarVariants();
   return (
     <div
       data-slot="sidebar-menu-badge"
@@ -674,9 +686,6 @@ function SidebarMenuSkeleton({
   className,
   ...props
 }: SidebarMenuSkeletonProps) {
-  const { menuSkeleton, menuSkeletonIcon, menuSkeletonText } =
-    sidebarVariants();
-
   // Deterministic per-instance width (50%–90%) derived from the React id so SSR
   // and client render identically — Math.random() here would hydrate-mismatch.
   const id = React.useId();
@@ -708,7 +717,6 @@ function SidebarMenuSkeleton({
 interface SidebarMenuSubProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
-  const { menuSub } = sidebarVariants();
   return (
     <ul
       data-slot="sidebar-menu-sub"
@@ -723,7 +731,6 @@ function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
 interface SidebarMenuSubItemProps extends React.ComponentProps<"li"> {}
 
 function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
-  const { menuSubItem } = sidebarVariants();
   return (
     <li
       data-slot="sidebar-menu-sub-item"
@@ -760,8 +767,6 @@ function SidebarMenuSubButton({
   children,
   ...props
 }: SidebarMenuSubButtonProps) {
-  const { menuSubButton } = sidebarVariants();
-
   const sharedProps = {
     "data-slot": "sidebar-menu-sub-button",
     "data-sidebar": "menu-sub-button",

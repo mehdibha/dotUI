@@ -5,7 +5,7 @@ import * as TagGroupPrimitives from "react-aria-components/TagGroup";
 
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tagGroupVariants = tv({
   slots: {
@@ -16,6 +16,8 @@ const tagGroupVariants = tv({
   },
 });
 
+const { tagGroup, tagList, tag } = tagGroupVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
@@ -23,7 +25,6 @@ interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
 }
 
 function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
-  const { tagGroup } = tagGroupVariants();
   return (
     <TagGroupPrimitives.TagGroup
       data-tag-group=""
@@ -39,7 +40,6 @@ function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
 function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
-  const { tagList } = tagGroupVariants();
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
@@ -56,7 +56,6 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 interface TagProps extends TagGroupPrimitives.TagProps {}
 
 function Tag({ className, ...props }: TagProps) {
-  const { tag } = tagGroupVariants();
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
 

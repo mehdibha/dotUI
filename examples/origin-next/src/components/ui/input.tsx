@@ -59,6 +59,9 @@ const inputVariants = tv({
   },
 });
 
+const { inputGroup, input, textArea, inputGroupAddon, dateInputSegment } =
+  inputVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface InputGroupProps
@@ -79,7 +82,6 @@ const InputGroup = ({
   onTouchEnd,
   ...props
 }: InputGroupProps) => {
-  const { inputGroup } = inputVariants();
   return (
     <GroupPrimitive.Group
       data-input-group=""
@@ -117,7 +119,6 @@ interface InputProps
     VariantProps<typeof inputVariants> {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
-  const { input } = inputVariants();
   return (
     <InputPrimitive.Input
       data-input=""
@@ -138,7 +139,6 @@ interface TextAreaProps extends React.ComponentProps<
 > {}
 
 const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
-  const { textArea } = inputVariants();
   const [inputValue, setInputValue] = useControlledState(
     props.value,
     props.defaultValue ?? "",
@@ -195,7 +195,6 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
 function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
-  const { inputGroupAddon } = inputVariants();
   return (
     <div
       data-input-group-addon=""
@@ -215,7 +214,6 @@ interface DateInputProps
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
-  const { input } = inputVariants();
   return (
     <DateFieldPrimitive.DateInput
       data-input=""
@@ -247,7 +245,6 @@ const normalizeSegmentWhitespace = (text: string) =>
   text.replace(/[\u00A0\u2007\u2009\u202F]/g, " ");
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
-  const { dateInputSegment } = inputVariants();
   return (
     <DateFieldPrimitive.DateSegment
       className={composeRenderProps(className, (className) =>

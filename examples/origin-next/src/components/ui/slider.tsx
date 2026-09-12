@@ -6,7 +6,7 @@ import * as SliderPrimitive from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const sliderVariants = tv({
   slots: {
@@ -39,6 +39,8 @@ const sliderVariants = tv({
   },
 });
 
+const { root, control, track, fill, thumb, output } = sliderVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface SliderProps extends React.ComponentProps<
@@ -46,7 +48,6 @@ interface SliderProps extends React.ComponentProps<
 > {}
 
 const Slider = ({ className, children, ...props }: SliderProps) => {
-  const { root } = sliderVariants();
   const descriptionId = useSlotId();
   return (
     <SliderPrimitive.Slider
@@ -85,7 +86,6 @@ const SliderControl = ({
   className,
   ...props
 }: SliderControlProps) => {
-  const { control } = sliderVariants();
   return (
     <SliderPrimitive.SliderTrack
       data-slider-control=""
@@ -117,7 +117,6 @@ const SliderControl = ({
 interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
-  const { track } = sliderVariants();
   const state = useContext(SliderPrimitive.SliderStateContext);
 
   return (
@@ -139,8 +138,6 @@ interface SliderFillProps extends React.ComponentProps<
 > {}
 
 const SliderFill = ({ className, ...props }: SliderFillProps) => {
-  const { fill } = sliderVariants();
-
   return (
     <SliderPrimitive.SliderFill
       data-slider-fill=""
@@ -159,8 +156,6 @@ interface SliderThumbProps extends React.ComponentProps<
 > {}
 
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
-  const { thumb } = sliderVariants();
-
   return (
     <SliderPrimitive.SliderThumb
       data-slider-thumb=""
@@ -181,7 +176,6 @@ interface SliderOutputProps extends React.ComponentProps<
 > {}
 
 const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
-  const { output } = sliderVariants();
   return (
     <SliderPrimitive.SliderOutput
       data-slider-output=""

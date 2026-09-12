@@ -6,7 +6,7 @@ import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIn
 import * as TabsPrimitives from "react-aria-components/Tabs";
 
 import { createContext } from "@/lib/context";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tabsVariants = tv({
   slots: {
@@ -58,6 +58,8 @@ const tabsVariants = tv({
   },
 });
 
+const { root, list, tab, selectionIndicator, panel } = tabsVariants();
+
 type TabsVariant = "segmented" | "line" | "pill" | "enclosed";
 
 /* -------------------------------------------------------------------------- */
@@ -79,7 +81,6 @@ const [TabListProvider, useTabListContext] = createContext<
 interface TabsProps extends React.ComponentProps<typeof TabsPrimitives.Tabs> {}
 
 const Tabs = ({ className, ...props }: TabsProps) => {
-  const { root } = tabsVariants();
   return (
     <TabsPrimitives.Tabs
       className={composeRenderProps(className, (cn, { orientation }) =>
@@ -103,7 +104,6 @@ interface TabListProps extends React.ComponentProps<
 }
 
 const TabList = ({ className, variant, ...props }: TabListProps) => {
-  const { list } = tabsVariants();
   return (
     <TabListProvider value={variant}>
       <TabsPrimitives.TabList
@@ -121,7 +121,6 @@ const TabList = ({ className, variant, ...props }: TabListProps) => {
 interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
-  const { tab } = tabsVariants();
   const orientation = useTabsContext("Tab");
   const variant = useTabListContext("Tab");
   return (
@@ -155,7 +154,6 @@ interface TabIndicatorProps extends React.ComponentProps<
 > {}
 
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
-  const { selectionIndicator } = tabsVariants();
   const orientation = useTabsContext("TabIndicator");
   const variant = useTabListContext("TabIndicator");
   return (
@@ -177,7 +175,6 @@ interface TabPanelProps extends React.ComponentProps<
 > {}
 
 const TabPanel = ({ className, ...props }: TabPanelProps) => {
-  const { panel } = tabsVariants();
   return (
     <TabsPrimitives.TabPanel
       data-tab-panel

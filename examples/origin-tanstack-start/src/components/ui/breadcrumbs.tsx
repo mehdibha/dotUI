@@ -14,6 +14,8 @@ const breadcrumbsVariants = tv({
   },
 });
 
+const { root, item, link, separator } = breadcrumbsVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface BreadcrumbsProps<
@@ -25,7 +27,6 @@ const Breadcrumbs = <T extends object>({
   className,
   ...props
 }: BreadcrumbsProps<T>) => {
-  const { root } = breadcrumbsVariants();
   return (
     <BreadcrumbsPrimitive.Breadcrumbs
       data-breadcrumbs=""
@@ -41,7 +42,6 @@ interface BreadcrumbItemProps extends React.ComponentProps<
   typeof BreadcrumbsPrimitive.Breadcrumb
 > {}
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
-  const { item } = breadcrumbsVariants();
   return (
     <BreadcrumbsPrimitive.Breadcrumb
       data-breadcrumb-item=""
@@ -59,7 +59,6 @@ interface BreadcrumbLinkProps extends React.ComponentProps<
   typeof BreadcrumbsPrimitive.Link
 > {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
-  const { link } = breadcrumbsVariants();
   return (
     <BreadcrumbsPrimitive.Link
       data-breadcrumb-link=""
@@ -79,7 +78,6 @@ const BreadcrumbSeparator = ({
   className,
   ...props
 }: BreadcrumbSeparatorProps) => {
-  const { separator } = breadcrumbsVariants();
   const glyph = <ChevronRightIcon />;
   return (
     <span

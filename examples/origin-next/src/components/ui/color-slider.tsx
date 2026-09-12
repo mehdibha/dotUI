@@ -8,7 +8,7 @@ import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { ColorThumb } from "@/components/ui/color-thumb";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const colorSliderVariants = tv({
   slots: {
@@ -34,6 +34,8 @@ const colorSliderVariants = tv({
   },
 });
 
+const { root, track, output } = colorSliderVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface ColorSliderProps extends React.ComponentProps<
@@ -41,7 +43,6 @@ interface ColorSliderProps extends React.ComponentProps<
 > {}
 
 const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
-  const { root } = colorSliderVariants();
   const descriptionId = useSlotId();
   return (
     <Provider
@@ -76,7 +77,6 @@ const ColorSliderControl = ({
   style,
   ...props
 }: ColorSliderControlProps) => {
-  const { track } = colorSliderVariants();
   return (
     <SliderPrimitives.SliderTrack
       data-slot="color-slider-control"
@@ -103,7 +103,6 @@ interface ColorSliderOutputProps extends React.ComponentProps<
 > {}
 
 const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
-  const { output } = colorSliderVariants();
   return (
     <SliderPrimitives.SliderOutput
       className={composeRenderProps(className, (className) =>

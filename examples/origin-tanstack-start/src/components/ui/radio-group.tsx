@@ -9,7 +9,7 @@ import { Provider, useSlottedContext } from "react-aria-components/slots";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Label } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const radioGroupVariants = tv({
   slots: {
@@ -22,11 +22,12 @@ const radioGroupVariants = tv({
   },
 });
 
+const { group, root, control, indicator } = radioGroupVariants();
+
 const RadioGroup = ({
   className,
   ...props
 }: RadioGroupPrimitives.RadioGroupProps) => {
-  const { group } = radioGroupVariants();
   return (
     <RadioGroupPrimitives.RadioGroup
       data-field=""
@@ -48,7 +49,6 @@ interface RadioProps extends React.ComponentProps<
 > {}
 
 const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
-  const { root } = radioGroupVariants();
   const autoId = useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
@@ -88,7 +88,6 @@ interface RadioControlProps extends React.ComponentProps<
 > {}
 
 const RadioControl = ({ className, ...props }: RadioControlProps) => {
-  const { control } = radioGroupVariants();
   const labelContext = useSlottedContext(LabelContext);
   const { id: labelId } = labelContext ?? {};
   return (
@@ -118,7 +117,6 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
 interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
-  const { indicator } = radioGroupVariants();
   const ctx = useContext(InternalRadioContext);
   return (
     <span

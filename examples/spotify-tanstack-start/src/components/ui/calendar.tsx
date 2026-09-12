@@ -7,7 +7,7 @@ import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const calendarVariants = tv({
   slots: {
@@ -24,6 +24,18 @@ const calendarVariants = tv({
   },
 });
 
+const {
+  root,
+  header,
+  heading,
+  grid,
+  gridHeader,
+  gridHeaderCell,
+  gridBody,
+  cell,
+  cellInner,
+} = calendarVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface CalendarProps<
@@ -33,7 +45,6 @@ const Calendar = <T extends CalendarPrimitive.DateValue>({
   className,
   ...props
 }: CalendarProps<T>) => {
-  const { root } = calendarVariants();
   return (
     <CalendarPrimitive.Calendar
       data-calendar=""
@@ -73,7 +84,6 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({
   className,
   ...props
 }: RangeCalendarProps<T>) => {
-  const { root } = calendarVariants();
   return (
     <RangeCalendarPrimitive.RangeCalendar
       data-range-calendar=""
@@ -108,7 +118,6 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({
 
 interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
-  const { header } = calendarVariants();
   return (
     <header
       data-calendar-header=""
@@ -136,7 +145,6 @@ interface CalendarHeadingProps extends React.ComponentProps<
   typeof CalendarPrimitive.Heading
 > {}
 const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
-  const { heading } = calendarVariants();
   // The heading text (e.g. a "June – July 2026" range) is formatted with `Intl`, whose separator
   // whitespace differs between the Node SSR runtime and the browser, causing a hydration mismatch.
   // The difference is an invisible space-variant, so suppress the otherwise-harmless warning.
@@ -161,7 +169,6 @@ const CalendarGrid = ({
   weekdayStyle = "narrow",
   ...props
 }: CalendarGridProps) => {
-  const { grid } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarGrid
       data-calendar-grid=""
@@ -193,7 +200,6 @@ const CalendarGridHeader = ({
   children,
   ...props
 }: CalendarGridHeaderProps) => {
-  const { gridHeader } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarGridHeader
       data-calendar-grid-header=""
@@ -214,7 +220,6 @@ const CalendarHeaderCell = ({
   className,
   ...props
 }: CalendarHeaderCellProps) => {
-  const { gridHeaderCell } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarHeaderCell
       data-calendar-header-cell=""
@@ -230,7 +235,6 @@ interface CalendarGridBodyProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGridBody
 > {}
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
-  const { gridBody } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarGridBody
       data-calendar-grid-body=""
@@ -246,7 +250,6 @@ interface CalendarCellProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarCell
 > {}
 const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
-  const { cell, cellInner } = calendarVariants();
   return (
     <CalendarPrimitive.CalendarCell
       data-calendar-cell=""

@@ -14,7 +14,7 @@ import { ArrowUpIcon, ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader } from "@/components/ui/loader";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tableVariants = tv({
   slots: {
@@ -52,6 +52,31 @@ const tableVariants = tv({
       "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
   },
 });
+
+const {
+  container,
+  table,
+  header,
+  selectionColumn,
+  chromeColumn,
+  column,
+  columnContent,
+  columnLabel,
+  resizer,
+  sortIndicator,
+  body,
+  footer,
+  dragButton,
+  dragCell,
+  row,
+  selectionCell,
+  cell,
+  expandButton,
+  expandIcon,
+  dropIndicator,
+  dropIndicatorLine,
+  loadMore,
+} = tableVariants();
 
 class TableLayout<T> extends VirtualizerPrimitives.TableLayout<T> {
   protected override buildRow(
@@ -141,7 +166,6 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
     },
     ref,
   ) => {
-    const { container } = tableVariants();
     const classNames = container({ className });
     const context = React.useMemo(() => ({ resizable }), [resizable]);
 
@@ -183,8 +207,6 @@ interface TableProps extends React.ComponentProps<
 > {}
 
 const Table = ({ className, ...props }: TableProps) => {
-  const { table } = tableVariants();
-
   return (
     <TablePrimitives.Table
       data-slot="table"
@@ -209,7 +231,6 @@ const TableHeader = <T extends object>({
   dependencies,
   ...props
 }: TableHeaderProps<T>) => {
-  const { header, selectionColumn } = tableVariants();
   const { resizable } = React.useContext(TableContainerContext);
   const { selectionBehavior, selectionMode, allowsDragging } =
     TablePrimitives.useTableOptions();
@@ -259,7 +280,6 @@ const TableChromeColumn = ({
   className,
   ...props
 }: InternalColumnProps) => {
-  const { chromeColumn } = tableVariants();
   return (
     <TablePrimitives.Column
       data-slot="table-chrome-column"
@@ -287,8 +307,6 @@ const TableColumn = ({
   className,
   ...props
 }: TableColumnProps) => {
-  const { column, columnContent, columnLabel, resizer, sortIndicator } =
-    tableVariants();
   const { resizable } = React.useContext(TableContainerContext);
   return (
     <TablePrimitives.Column
@@ -341,7 +359,6 @@ const TableBody = <T extends object>({
   dependencies,
   ...props
 }: TableBodyProps<T>) => {
-  const { body } = tableVariants();
   return (
     <TablePrimitives.TableBody
       renderEmptyState={renderEmptyState}
@@ -381,7 +398,6 @@ const TableFooter = <T extends object>({
   items,
   ...props
 }: TableFooterProps<T>) => {
-  const { footer } = tableVariants();
   return (
     <TablePrimitives.TableFooter
       data-slot="table-footer"
@@ -410,7 +426,6 @@ function TableRow<T extends object>({
   dependencies,
   ...props
 }: TableRowProps<T>) {
-  const { dragButton, dragCell, row, selectionCell } = tableVariants();
   const { selectionBehavior, allowsDragging } =
     TablePrimitives.useTableOptions();
 
@@ -465,7 +480,6 @@ const TableCell = ({
   style,
   ...props
 }: TableCellProps) => {
-  const { cell, expandButton, expandIcon } = tableVariants();
   return (
     <TablePrimitives.Cell
       data-slot="table-cell"
@@ -516,8 +530,6 @@ const TableDropIndicator = ({
   className,
   ...props
 }: TableDropIndicatorProps) => {
-  const { dropIndicator, dropIndicatorLine } = tableVariants();
-
   return (
     <DragAndDropPrimitives.DropIndicator
       className={composeRenderProps(className, (cn) =>
@@ -545,7 +557,6 @@ interface TableLoadMoreProps extends React.ComponentProps<
 > {}
 
 const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
-  const { loadMore } = tableVariants();
   return (
     <TablePrimitives.TableLoadMoreItem
       className={loadMore({ className })}

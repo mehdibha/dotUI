@@ -7,7 +7,7 @@ import { useSlottedContext } from "react-aria-components/slots";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerHandle } from "@/components/ui/drawer";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const popoverVariants = tv({
   slots: {
@@ -17,6 +17,8 @@ const popoverVariants = tv({
       "block [&>svg]:size-2.5 [&>svg]:fill-popover [&>svg]:stroke-border placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 hidden",
   },
 });
+
+const { popover, arrow } = popoverVariants();
 
 interface PopoverProps extends React.ComponentProps<
   typeof PopoverPrimitives.Popover
@@ -29,7 +31,6 @@ function Popover({
   placement,
   ...props
 }: PopoverProps) {
-  const { popover } = popoverVariants();
   const context = useSlottedContext(PopoverPrimitives.PopoverContext);
   const isMobile = useIsMobile();
 
@@ -78,7 +79,6 @@ function Popover({
 
 interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
 function PopoverArrow({ className, ...props }: PopoverArrowProps) {
-  const { arrow } = popoverVariants();
   return (
     <PopoverPrimitives.OverlayArrow
       data-slot="popover-arrow"

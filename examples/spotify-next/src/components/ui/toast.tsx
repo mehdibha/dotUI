@@ -9,7 +9,7 @@ import {
   LoaderCircleIcon,
   TriangleAlertIcon,
 } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const toastVariants = tv({
   slots: {
@@ -69,6 +69,19 @@ const toastVariants = tv({
     variant: "neutral",
   },
 });
+
+const {
+  viewport,
+  action,
+  actions,
+  body,
+  content,
+  description,
+  icon,
+  message,
+  title,
+  toast: toastStyle,
+} = toastVariants();
 
 type ToastVariant =
   | "neutral"
@@ -168,8 +181,6 @@ interface ToastListProps {
 
 function ToastList({ position, portalProps }: ToastListProps) {
   const { toasts } = ToastPrimitive.useToastManager<ToastData>();
-  const { viewport } = toastVariants();
-
   return (
     <ToastPrimitive.Portal {...portalProps}>
       <ToastPrimitive.Viewport
@@ -194,18 +205,6 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
   const data = toastItem.data;
   const variant = getToastVariant(toastItem.type);
   const Icon = variant === "neutral" ? null : toastIcons[variant];
-  const {
-    action,
-    actions,
-    body,
-    content,
-    description,
-    icon,
-    message,
-    title,
-    toast: toastStyle,
-  } = toastVariants();
-
   return (
     <ToastPrimitive.Root
       {...data?.rootProps}

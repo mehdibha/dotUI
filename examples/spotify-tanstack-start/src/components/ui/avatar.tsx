@@ -38,6 +38,8 @@ const avatarVariants = tv({
   },
 });
 
+const { root, image, fallback, badge, group, groupCount } = avatarVariants();
+
 const [AvatarContext, useAvatarContext] = createContext<{
   status: ImageLoadingStatus;
   setStatus: (status: ImageLoadingStatus) => void;
@@ -65,8 +67,6 @@ interface AvatarProps
 
 function Avatar({ className, size = "md", ...props }: AvatarProps) {
   const [status, setStatus] = React.useState<ImageLoadingStatus>("idle");
-  const { root } = avatarVariants();
-
   return (
     <AvatarContext value={{ status, setStatus }}>
       <span
@@ -95,8 +95,6 @@ function AvatarImage({
 }: AvatarImageProps) {
   const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin });
   const { setStatus } = useAvatarContext("AvatarImage");
-  const { image } = avatarVariants();
-
   React.useLayoutEffect(() => {
     setStatus(status);
   }, [status, setStatus]);
@@ -125,7 +123,6 @@ const AvatarFallback = ({
   ...props
 }: AvatarFallbackProps) => {
   const { status } = useAvatarContext("AvatarFallback");
-  const { fallback } = avatarVariants();
   if (status !== "loaded")
     return (
       <span
@@ -145,7 +142,6 @@ const AvatarFallback = ({
 interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
 
 const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
-  const { badge } = avatarVariants();
   return (
     <span data-avatar-badge="" className={badge({ className })} {...props} />
   );
@@ -161,7 +157,6 @@ const AvatarGroup = ({
   size = "md",
   ...props
 }: AvatarGroupProps) => {
-  const { group } = avatarVariants();
   return (
     <div
       data-avatar-group=""
@@ -177,7 +172,6 @@ const AvatarGroup = ({
 interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
 
 const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
-  const { groupCount } = avatarVariants();
   return (
     <span
       data-avatar-group-count=""

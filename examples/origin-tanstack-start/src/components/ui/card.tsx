@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const cardVariants = tv({
   slots: {
@@ -15,6 +15,9 @@ const cardVariants = tv({
   },
 });
 
+const { root, header, title, description, action, content, footer } =
+  cardVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface CardProps extends React.ComponentProps<"div"> {
@@ -22,7 +25,6 @@ interface CardProps extends React.ComponentProps<"div"> {
 }
 
 function Card({ className, size = "default", ...props }: CardProps) {
-  const { root } = cardVariants();
   return (
     <div
       data-card=""
@@ -38,7 +40,6 @@ function Card({ className, size = "default", ...props }: CardProps) {
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
 function CardHeader({ className, ...props }: CardHeaderProps) {
-  const { header } = cardVariants();
   return (
     <div data-card-header="" className={header({ className })} {...props} />
   );
@@ -49,7 +50,6 @@ function CardHeader({ className, ...props }: CardHeaderProps) {
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
 function CardTitle({ className, ...props }: CardTitleProps) {
-  const { title } = cardVariants();
   return <div data-card-title="" className={title({ className })} {...props} />;
 }
 
@@ -58,7 +58,6 @@ function CardTitle({ className, ...props }: CardTitleProps) {
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
 function CardDescription({ className, ...props }: CardDescriptionProps) {
-  const { description } = cardVariants();
   return (
     <div
       data-card-description=""
@@ -73,7 +72,6 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
 function CardAction({ className, ...props }: CardActionProps) {
-  const { action } = cardVariants();
   return (
     <div data-card-action="" className={action({ className })} {...props} />
   );
@@ -84,7 +82,6 @@ function CardAction({ className, ...props }: CardActionProps) {
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
 function CardContent({ className, ...props }: CardContentProps) {
-  const { content } = cardVariants();
   return (
     <div data-card-content="" className={content({ className })} {...props} />
   );
@@ -95,7 +92,6 @@ function CardContent({ className, ...props }: CardContentProps) {
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
 function CardFooter({ className, ...props }: CardFooterProps) {
-  const { footer } = cardVariants();
   return (
     <div data-card-footer="" className={footer({ className })} {...props} />
   );

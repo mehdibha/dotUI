@@ -46,12 +46,11 @@ const Badge = ({
   size,
   ...props
 }: BadgeProps) => {
-  const styles = badgeVariants;
   return (
     <span
       role="presentation"
       data-badge=""
-      className={styles({ appearance, variant, size, className })}
+      className={badgeVariants({ appearance, variant, size, className })}
       {...props}
     />
   );

@@ -8,7 +8,7 @@ import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
 import { useOverlay } from "react-aria/useOverlay";
 import { useOverlayTriggerState } from "react-stately";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const drawerVariants = tv({
   slots: {
@@ -59,6 +59,17 @@ const drawerVariants = tv({
     placement: "bottom",
   },
 });
+
+const {
+  backdrop,
+  overlay,
+  popup,
+  viewport,
+  handle,
+  swipeArea,
+  indent,
+  indentBackground,
+} = drawerVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -143,7 +154,6 @@ function Drawer({
   style,
 }: DrawerProps) {
   const isHidden = useIsHidden();
-  const { backdrop, overlay, popup, viewport } = drawerVariants();
   const popupRef = React.useRef<HTMLDivElement>(null);
   const contextState = React.useContext(OverlayTriggerStateContext);
   const localState = useOverlayTriggerState({
@@ -239,7 +249,6 @@ function Drawer({
 interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
 function DrawerHandle({ className, ...props }: DrawerHandleProps) {
-  const { handle } = drawerVariants();
   const placement = React.useContext(DrawerPlacementContext);
   const orientation =
     placement === "top" || placement === "bottom" ? "horizontal" : "vertical";
@@ -262,7 +271,6 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
 interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
 function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
-  const { swipeArea } = drawerVariants();
   const placement = React.useContext(DrawerPlacementContext);
 
   return (
@@ -289,7 +297,6 @@ function DrawerProvider(props: DrawerProviderProps) {
 interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
 function DrawerIndent({ className, ...props }: DrawerIndentProps) {
-  const { indent } = drawerVariants();
   return (
     <DrawerPrimitive.Indent
       className={(state) =>
@@ -309,7 +316,6 @@ function DrawerIndentBackground({
   className,
   ...props
 }: DrawerIndentBackgroundProps) {
-  const { indentBackground } = drawerVariants();
   return (
     <DrawerPrimitive.IndentBackground
       className={(state) =>

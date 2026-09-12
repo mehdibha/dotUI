@@ -1,7 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const bubbleVariants = tv({
   slots: {
@@ -42,12 +42,13 @@ const bubbleVariants = tv({
   },
 });
 
+const { group, root, content, reactions } = bubbleVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface BubbleGroupProps extends React.ComponentProps<"div"> {}
 
 const BubbleGroup = ({ className, ...props }: BubbleGroupProps) => {
-  const { group } = bubbleVariants();
   return (
     <div data-bubble-group="" className={group({ className })} {...props} />
   );
@@ -73,13 +74,12 @@ const Bubble = ({
   align = "start",
   ...props
 }: BubbleProps) => {
-  const { root } = bubbleVariants({ variant });
   return (
     <div
       data-bubble=""
       data-variant={variant}
       data-align={align}
-      className={root({ className })}
+      className={root({ variant, className })}
       {...props}
     />
   );
@@ -90,7 +90,6 @@ const Bubble = ({
 interface BubbleContentProps extends React.ComponentProps<"div"> {}
 
 const BubbleContent = ({ className, ...props }: BubbleContentProps) => {
-  const { content } = bubbleVariants();
   return (
     <div data-bubble-content="" className={content({ className })} {...props} />
   );
@@ -109,7 +108,6 @@ const BubbleReactions = ({
   align = "end",
   ...props
 }: BubbleReactionsProps) => {
-  const { reactions } = bubbleVariants();
   return (
     <div
       data-bubble-reactions=""

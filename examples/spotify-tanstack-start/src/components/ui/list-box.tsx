@@ -34,6 +34,17 @@ const listBoxVariants = tv({
   },
 });
 
+const {
+  root,
+  loadMore,
+  item,
+  indicator,
+  itemLabel,
+  itemDescription,
+  section,
+  sectionTitle,
+} = listBoxVariants();
+
 interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
   isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"];
   onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps["onLoadMore"];
@@ -46,7 +57,6 @@ const ListBox = <T extends object>({
   children,
   ...props
 }: ListBoxProps<T>) => {
-  const { root, loadMore } = listBoxVariants();
   const standalone = !use(ListBoxPrimitive.ListBoxContext);
 
   return (
@@ -84,7 +94,6 @@ const ListBoxItem = <T extends object>({
   textValue: textValueProp,
   ...props
 }: ListBoxItemProps<T>) => {
-  const { item, indicator } = listBoxVariants();
   const textValue =
     textValueProp ||
     (typeof props.children === "string" ? props.children : undefined);
@@ -125,7 +134,6 @@ interface ListBoxItemLabelProps extends React.ComponentProps<
   typeof TextPrimitive.Text
 > {}
 const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
-  const { itemLabel } = listBoxVariants();
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-label=""
@@ -144,7 +152,6 @@ const ListBoxItemDescription = ({
   className,
   ...props
 }: ListBoxItemDescriptionProps) => {
-  const { itemDescription } = listBoxVariants();
   return (
     <ListBoxPrimitive.Text
       data-listbox-item-description=""
@@ -163,7 +170,6 @@ const ListBoxSection = <T extends object>({
   className,
   ...props
 }: ListBoxSectionProps<T>) => {
-  const { section } = listBoxVariants();
   return (
     <ListBoxPrimitive.ListBoxSection
       data-listbox-section=""
@@ -182,7 +188,6 @@ const ListBoxSectionHeader = ({
   className,
   ...props
 }: ListBoxSectionHeaderProps) => {
-  const { sectionTitle } = listBoxVariants();
   return (
     <ListBoxPrimitive.Header
       data-listbox-section-header=""

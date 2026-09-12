@@ -43,6 +43,17 @@ const fieldVariants = tv({
   },
 });
 
+const {
+  fieldset,
+  legend,
+  fieldGroup,
+  field,
+  fieldContent,
+  label,
+  description,
+  fieldError,
+} = fieldVariants();
+
 export { fieldVariants as fieldStyles };
 
 /* -------------------------------------------------------------------------- */
@@ -50,7 +61,6 @@ export { fieldVariants as fieldStyles };
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
 function Fieldset({ className, ...props }: FieldsetProps) {
-  const { fieldset } = fieldVariants();
   return (
     <fieldset
       data-slot="fieldset"
@@ -65,7 +75,6 @@ function Fieldset({ className, ...props }: FieldsetProps) {
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
 function Legend({ className, ...props }: LegendProps) {
-  const { legend } = fieldVariants();
   return (
     <legend data-slot="legend" className={legend({ className })} {...props} />
   );
@@ -76,7 +85,6 @@ function Legend({ className, ...props }: LegendProps) {
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
 function FieldGroup({ className, ...props }: FieldGroupProps) {
-  const { fieldGroup } = fieldVariants();
   return (
     <div
       data-slot="field-group"
@@ -92,7 +100,6 @@ interface FieldProps
   extends React.ComponentProps<"div">, VariantProps<typeof fieldVariants> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
-  const { field } = fieldVariants();
   const inputId = useSlotId();
   const descriptionId = useSlotId();
   return (
@@ -128,7 +135,6 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
 interface FieldContentProps extends React.ComponentProps<"div"> {}
 
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
-  const { fieldContent } = fieldVariants();
   return (
     <div
       data-slot="field-content"
@@ -145,7 +151,6 @@ interface LabelProps extends React.ComponentProps<
 > {}
 
 const Label = ({ children, className, ...props }: LabelProps) => {
-  const { label } = fieldVariants();
   return (
     <LabelPrimitives.Label
       data-slot="label"
@@ -166,7 +171,6 @@ interface DescriptionProps extends Omit<
 > {}
 
 const Description = ({ className, ...props }: DescriptionProps) => {
-  const { description } = fieldVariants();
   return (
     <Text
       data-slot="description"
@@ -184,7 +188,6 @@ interface FieldErrorProps extends React.ComponentProps<
   typeof FieldErrorPrimitives.FieldError
 > {}
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
-  const { fieldError } = fieldVariants();
   return (
     <FieldErrorPrimitives.FieldError
       data-slot="field-error"

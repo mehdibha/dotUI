@@ -56,7 +56,6 @@ interface ToggleButtonProps
 }
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
-  const styles = toggleButtonVariants;
   const {
     variant = "secondary",
     size = "md",
@@ -74,7 +73,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
       data-size={size}
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>
-        styles({
+        toggleButtonVariants({
           variant,
           size,
           isIconOnly,

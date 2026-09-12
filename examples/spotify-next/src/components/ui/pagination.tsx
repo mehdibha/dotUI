@@ -19,11 +19,12 @@ const paginationVariants = tv({
       "flex size-8 items-center justify-center text-fg-muted [&_svg]:size-4",
   },
 });
+
+const { root, list, item, ellipsis } = paginationVariants();
 /* -------------------------------------------------------------------------- */
 
 interface PaginationProps extends React.ComponentProps<"nav"> {}
 const Pagination = ({ className, ...props }: PaginationProps) => {
-  const { root } = paginationVariants();
   return (
     <nav
       aria-label="pagination"
@@ -38,7 +39,6 @@ const Pagination = ({ className, ...props }: PaginationProps) => {
 
 interface PaginationListProps extends React.ComponentProps<"ul"> {}
 const PaginationList = ({ className, ...props }: PaginationListProps) => {
-  const { list } = paginationVariants();
   return (
     <ul
       role="list"
@@ -53,7 +53,6 @@ const PaginationList = ({ className, ...props }: PaginationListProps) => {
 
 interface PaginationItemProps extends React.ComponentProps<"li"> {}
 const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
-  const { item } = paginationVariants();
   return (
     <li data-pagination-item="" className={item({ className })} {...props} />
   );
@@ -142,7 +141,6 @@ const PaginationEllipsis = ({
   className,
   ...props
 }: PaginationEllipsisProps) => {
-  const { ellipsis } = paginationVariants();
   return (
     <span
       aria-hidden="true"

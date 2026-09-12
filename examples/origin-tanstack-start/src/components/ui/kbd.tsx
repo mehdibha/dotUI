@@ -1,7 +1,7 @@
 "use client";
 
 import * as KeyboardPrimitive from "react-aria-components/Keyboard";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const kbdVariants = tv({
   slots: {
@@ -10,12 +10,13 @@ const kbdVariants = tv({
   },
 });
 
+const { group, kbd } = kbdVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
 const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
-  const { group } = kbdVariants();
   return <kbd data-kbd-group="" className={group({ className })} {...props} />;
 };
 
@@ -26,7 +27,6 @@ interface KbdProps extends React.ComponentProps<
 > {}
 
 const Kbd = ({ className, ...props }: KbdProps) => {
-  const { kbd } = kbdVariants();
   return (
     <KeyboardPrimitive.Keyboard
       data-kbd=""

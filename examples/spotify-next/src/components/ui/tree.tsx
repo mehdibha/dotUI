@@ -6,7 +6,7 @@ import * as TreePrimitive from "react-aria-components/Tree";
 
 import { ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const treeVariants = tv({
   slots: {
@@ -32,12 +32,14 @@ const treeVariants = tv({
   },
 });
 
+const { root, item, itemContent, chevron, chevronPlaceholder, label } =
+  treeVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface TreeProps<T> extends TreePrimitive.TreeProps<T> {}
 
 const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
-  const { root } = treeVariants();
   return (
     <TreePrimitive.Tree
       data-tree=""
@@ -55,7 +57,6 @@ const TreeItem = <T extends object>({
   className,
   ...props
 }: TreeItemProps<T>) => {
-  const { item } = treeVariants();
   return (
     <TreePrimitive.TreeItem
       data-tree-item=""
@@ -77,7 +78,6 @@ const TreeItem = <T extends object>({
 interface TreeItemContentProps extends TreePrimitive.TreeItemContentProps {}
 
 const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
-  const { itemContent, chevron, chevronPlaceholder, label } = treeVariants();
   return (
     <TreePrimitive.TreeItemContent {...props}>
       {(renderProps) => {

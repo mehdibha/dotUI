@@ -5,8 +5,8 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buttonStyles as useButtonStyles } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { buttonStyles } from "@/components/ui/button";
+import { tv } from "tailwind-variants";
 
 const questionnaireVariants = tv({
   slots: {
@@ -40,6 +40,27 @@ const questionnaireVariants = tv({
   },
 });
 
+const {
+  root,
+  progress,
+  item,
+  title,
+  description,
+  choices,
+  choice,
+  choiceInput,
+  choiceIndicator,
+  choiceIndicatorDot,
+  choiceIndicatorCheck,
+  choiceContent,
+  shortcut,
+  choiceDescription,
+  inputWrapper,
+  input,
+  error,
+  actions,
+} = questionnaireVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface QuestionnaireProps extends React.ComponentProps<
@@ -47,7 +68,6 @@ interface QuestionnaireProps extends React.ComponentProps<
 > {}
 
 const Questionnaire = ({ className, ...props }: QuestionnaireProps) => {
-  const { root } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Root
       data-questionnaire=""
@@ -67,7 +87,6 @@ const QuestionnaireProgress = ({
   className,
   ...props
 }: QuestionnaireProgressProps) => {
-  const { progress } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Progress
       data-questionnaire-progress=""
@@ -84,7 +103,6 @@ interface QuestionnaireItemProps extends React.ComponentProps<
 > {}
 
 const QuestionnaireItem = ({ className, ...props }: QuestionnaireItemProps) => {
-  const { item } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Item
       data-questionnaire-item=""
@@ -104,7 +122,6 @@ const QuestionnaireTitle = ({
   className,
   ...props
 }: QuestionnaireTitleProps) => {
-  const { title } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Title
       data-questionnaire-title=""
@@ -124,7 +141,6 @@ const QuestionnaireDescription = ({
   className,
   ...props
 }: QuestionnaireDescriptionProps) => {
-  const { description } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Description
       data-questionnaire-description=""
@@ -144,7 +160,6 @@ const QuestionnaireChoices = ({
   className,
   ...props
 }: QuestionnaireChoicesProps) => {
-  const { choices } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Choices
       data-questionnaire-choices=""
@@ -165,15 +180,6 @@ const QuestionnaireChoice = ({
   children,
   ...props
 }: QuestionnaireChoiceProps) => {
-  const {
-    choice,
-    choiceInput,
-    choiceIndicator,
-    choiceIndicatorDot,
-    choiceIndicatorCheck,
-    choiceContent,
-    shortcut,
-  } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Choice
       data-questionnaire-choice=""
@@ -220,7 +226,6 @@ const QuestionnaireChoiceDescription = ({
   className,
   ...props
 }: QuestionnaireChoiceDescriptionProps) => {
-  const { choiceDescription } = questionnaireVariants();
   return (
     <span
       data-questionnaire-choice-description=""
@@ -240,7 +245,6 @@ const QuestionnaireInput = ({
   className,
   ...props
 }: QuestionnaireInputProps) => {
-  const { inputWrapper, input } = questionnaireVariants();
   return (
     <div data-questionnaire-input-wrapper="" className={inputWrapper()}>
       <QuestionnairePrimitive.Input
@@ -262,7 +266,6 @@ const QuestionnaireError = ({
   className,
   ...props
 }: QuestionnaireErrorProps) => {
-  const { error } = questionnaireVariants();
   return (
     <QuestionnairePrimitive.Error
       data-questionnaire-error=""
@@ -280,7 +283,6 @@ const QuestionnaireActions = ({
   className,
   ...props
 }: QuestionnaireActionsProps) => {
-  const { actions } = questionnaireVariants();
   return (
     <div
       data-questionnaire-actions=""
@@ -301,7 +303,6 @@ const QuestionnairePrevious = ({
   children,
   ...props
 }: QuestionnairePreviousProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Previous
       data-questionnaire-previous=""
@@ -329,7 +330,6 @@ const QuestionnaireSkip = ({
   children,
   ...props
 }: QuestionnaireSkipProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Skip
       data-questionnaire-skip=""
@@ -357,7 +357,6 @@ const QuestionnaireNext = ({
   children,
   ...props
 }: QuestionnaireNextProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Next
       data-questionnaire-next=""
@@ -385,7 +384,6 @@ const QuestionnaireSubmit = ({
   children,
   ...props
 }: QuestionnaireSubmitProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Submit
       data-questionnaire-submit=""

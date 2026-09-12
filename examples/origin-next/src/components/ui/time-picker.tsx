@@ -24,8 +24,8 @@ import { useTimeField } from "react-aria/useTimeField";
 import { useOverlayTriggerState } from "react-stately/useOverlayTriggerState";
 import { useTimeFieldState } from "react-stately/useTimeFieldState";
 
-import { fieldStyles as useFieldStyles } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { fieldStyles } from "@/components/ui/field";
+import { tv } from "tailwind-variants";
 
 const timePickerVariants = tv({
   slots: {
@@ -35,6 +35,8 @@ const timePickerVariants = tv({
     item: "flex h-8 w-full shrink-0 items-center justify-center rounded-md text-sm tabular-nums no-highlight cursor-interactive outline-hidden transition-colors hover:bg-accent-muted focus-visible:focus-ring selected:bg-accent selected:text-fg-on-accent disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor)",
   },
 });
+
+const { columns, column, item } = timePickerVariants();
 
 /**
  * A time picker combines a TimeField and a scrollable time-column popover to
@@ -89,7 +91,6 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   onOpenChange,
   ...props
 }: TimePickerProps<T>) => {
-  const fieldStyles = useFieldStyles;
   const { locale } = useLocale();
 
   const state = useTimeFieldState<T>({ ...props, locale });
@@ -203,8 +204,6 @@ const pad = (value: number): string => String(value).padStart(2, "0");
 
 const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   const state = React.useContext(TimeFieldStateContext);
-  const { columns } = timePickerVariants();
-
   if (!state) return null;
 
   const time = state.timeValue;
@@ -309,7 +308,6 @@ const TimeColumn = ({
   selectedKey,
   onSelect,
 }: TimeColumnProps) => {
-  const { column, item } = timePickerVariants();
   const ref = React.useRef<HTMLDivElement>(null);
 
   // Center the selected value when the popover opens.

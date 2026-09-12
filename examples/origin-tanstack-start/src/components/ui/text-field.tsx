@@ -4,14 +4,13 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TextFieldPrimitive from "react-aria-components/TextField";
 
 import { cn } from "@/lib/utils";
-import { fieldStyles as useStyles } from "@/components/ui/field";
+import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
 
 interface TextFieldProps extends TextFieldPrimitive.TextFieldProps {}
 
 const TextField = ({ className, ...props }: TextFieldProps) => {
-  const fieldStyles = useStyles;
   return (
     <TextFieldPrimitive.TextField
       data-field=""

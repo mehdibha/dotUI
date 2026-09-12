@@ -10,7 +10,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import { CheckIcon, MinusIcon } from "lucide-react";
 import { Label } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const checkboxVariants = tv({
   slots: {
@@ -22,6 +22,8 @@ const checkboxVariants = tv({
   },
 });
 
+const { root, control, indicator } = checkboxVariants();
+
 const InternalCheckboxContext =
   createContext<CheckboxPrimitive.CheckboxButtonRenderProps | null>(null);
 
@@ -32,7 +34,6 @@ interface CheckboxProps extends React.ComponentProps<
 > {}
 
 const Checkbox = ({ id: idProp, className, ...props }: CheckboxProps) => {
-  const { root } = checkboxVariants();
   const autoId = useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
@@ -72,7 +73,6 @@ interface CheckboxControlProps extends React.ComponentProps<
 > {}
 
 const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
-  const { control } = checkboxVariants();
   const labelContext = useSlottedContext(LabelContext);
   const { id: labelId } = labelContext ?? {};
   return (
@@ -102,7 +102,6 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
 interface CheckboxIndicatorProps extends React.ComponentProps<"span"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
-  const { indicator } = checkboxVariants();
   const ctx = useContext(InternalCheckboxContext);
   return (
     <span

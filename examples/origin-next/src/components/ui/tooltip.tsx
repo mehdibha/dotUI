@@ -15,6 +15,8 @@ const tooltipVariants = tv({
   },
 });
 
+const { content, arrow } = tooltipVariants();
+
 /* -------------------------------------------------------------------------- */
 interface TooltipProps extends React.ComponentProps<
   typeof TooltipPrimitives.TooltipTrigger
@@ -43,7 +45,6 @@ function TooltipContent({
   className,
   ...props
 }: TooltipContentProps) {
-  const { content } = tooltipVariants();
   return (
     <TooltipPrimitives.Tooltip
       data-slot="tooltip"
@@ -68,7 +69,6 @@ function TooltipContent({
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
 function TooltipArrow({ className }: TooltipArrowProps) {
-  const { arrow } = tooltipVariants();
   return (
     <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
       <svg

@@ -23,6 +23,8 @@ const groupVariants = tv({
   },
 });
 
+const { root, text } = groupVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface GroupProps
@@ -35,7 +37,6 @@ const Group = ({
   className,
   ...props
 }: GroupProps) => {
-  const { root } = groupVariants();
   return (
     <GroupPrimitive.Group
       data-slot="group"
@@ -55,7 +56,6 @@ interface GroupTextProps extends React.ComponentProps<
 > {}
 
 const GroupText = ({ className, ...props }: GroupTextProps) => {
-  const { text } = groupVariants();
   return (
     <TextPrimitive.Text
       data-slot="text"

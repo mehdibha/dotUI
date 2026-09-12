@@ -29,12 +29,13 @@ const emptyVariants = tv({
   },
 });
 
+const { base, header, title, description, content, media } = emptyVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface EmptyProps extends React.ComponentProps<"div"> {}
 
 const Empty = ({ className, ...props }: EmptyProps) => {
-  const { base } = emptyVariants();
   return <div data-slot="empty" className={base({ className })} {...props} />;
 };
 
@@ -43,7 +44,6 @@ const Empty = ({ className, ...props }: EmptyProps) => {
 interface EmptyHeaderProps extends React.ComponentProps<"div"> {}
 
 const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
-  const { header } = emptyVariants();
   return (
     <div
       data-slot="empty-header"
@@ -58,7 +58,6 @@ const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
 interface EmptyTitleProps extends React.ComponentProps<"div"> {}
 
 const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
-  const { title } = emptyVariants();
   return (
     <div data-slot="empty-title" className={title({ className })} {...props} />
   );
@@ -69,7 +68,6 @@ const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
 interface EmptyDescriptionProps extends React.ComponentProps<"div"> {}
 
 const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
-  const { description } = emptyVariants();
   return (
     <div
       data-slot="empty-description"
@@ -84,7 +82,6 @@ const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
 interface EmptyContentProps extends React.ComponentProps<"div"> {}
 
 const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
-  const { content } = emptyVariants();
   return (
     <div
       data-slot="empty-content"
@@ -99,7 +96,6 @@ const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
 interface EmptyMediaProps
   extends React.ComponentProps<"div">, VariantProps<typeof emptyVariants> {}
 const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
-  const { media } = emptyVariants();
   return (
     <div
       data-slot="empty-media"

@@ -6,7 +6,7 @@ import * as SearchFieldPrimitives from "react-aria-components/SearchField";
 
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { fieldStyles as useStyles } from "@/components/ui/field";
+import { fieldStyles } from "@/components/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/components/ui/input";
 
 /* -------------------------------------------------------------------------- */
@@ -22,7 +22,6 @@ const SearchField = ({
   placeholder,
   ...props
 }: SearchFieldProps) => {
-  const fieldStyles = useStyles();
   return (
     <SearchFieldPrimitives.SearchField
       data-search-field=""
@@ -30,7 +29,7 @@ const SearchField = ({
       data-slot="search-field"
       className={composeRenderProps(className, (className) =>
         cn(
-          fieldStyles.field({ className }),
+          fieldStyles().field({ className }),
           "group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
         ),
       )}

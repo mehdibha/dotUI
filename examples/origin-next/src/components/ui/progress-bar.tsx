@@ -3,7 +3,7 @@
 import { type ComponentProps, createContext, use } from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ProgressBarPrimitive from "react-aria-components/ProgressBar";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const progressBarVariants = tv({
   slots: {
@@ -16,6 +16,8 @@ const progressBarVariants = tv({
   variants: {},
   defaultVariants: {},
 });
+
+const { root, track, fill, output } = progressBarVariants();
 
 const ProgressBarContext =
   createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null);
@@ -33,7 +35,6 @@ interface ProgressBarProps extends ComponentProps<
   typeof ProgressBarPrimitive.ProgressBar
 > {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
-  const { root } = progressBarVariants();
   return (
     <ProgressBarPrimitive.ProgressBar
       data-field=""
@@ -61,7 +62,6 @@ const ProgressBarTrack = ({
   className,
   ...props
 }: ProgressBarTrackProps) => {
-  const { track } = progressBarVariants();
   return (
     <div className={track({ className })} {...props}>
       {children ?? <ProgressBarFill />}
@@ -77,7 +77,6 @@ const ProgressBarFill = ({
   style,
   ...props
 }: ProgressBarFillProps) => {
-  const { fill } = progressBarVariants();
   const { isIndeterminate, percentage } =
     useProgressBarContext("ProgressBarControl");
 
@@ -99,7 +98,6 @@ const ProgressBarFill = ({
 
 interface ProgressBarOutputProps extends React.ComponentProps<"span"> {}
 const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
-  const { output } = progressBarVariants();
   const { valueText } = useProgressBarContext("ProgressBarOutput");
 
   return (

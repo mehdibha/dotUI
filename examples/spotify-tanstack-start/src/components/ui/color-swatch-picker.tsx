@@ -5,7 +5,7 @@ import * as ColorSwatchPickerPrimitives from "react-aria-components/ColorSwatchP
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { ColorSwatch } from "@/components/ui/color-swatch";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const colorSwatchPickerVariants = tv({
   slots: {
@@ -14,12 +14,13 @@ const colorSwatchPickerVariants = tv({
   },
 });
 
+const { root, item } = colorSwatchPickerVariants();
+
 interface ColorSwatchPickerProps extends React.ComponentProps<
   typeof ColorSwatchPickerPrimitives.ColorSwatchPicker
 > {}
 
 const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
-  const { root } = colorSwatchPickerVariants();
   return (
     <ColorSwatchPickerPrimitives.ColorSwatchPicker
       className={composeRenderProps(className, (className) =>
@@ -38,7 +39,6 @@ const ColorSwatchPickerItem = ({
   style,
   ...props
 }: ColorSwatchPickerItemProps) => {
-  const { item } = colorSwatchPickerVariants();
   return (
     <ColorSwatchPickerPrimitives.ColorSwatchPickerItem
       className={composeRenderProps(className, (className) =>

@@ -20,6 +20,8 @@ const disclosureVariants = tv({
   },
 });
 
+const { root, panel, heading, button, marker } = disclosureVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface DisclosureProps extends React.ComponentProps<
@@ -27,7 +29,6 @@ interface DisclosureProps extends React.ComponentProps<
 > {}
 
 function Disclosure({ className, ...props }: DisclosureProps) {
-  const { root } = disclosureVariants();
   return (
     <DisclosurePrimitives.Disclosure
       data-disclosure=""
@@ -44,7 +45,6 @@ interface DisclosurePanelProps extends React.ComponentProps<
 > {}
 
 function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
-  const { panel } = disclosureVariants();
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-disclosure-panel=""
@@ -63,7 +63,6 @@ interface DisclosureTriggerProps extends React.ComponentProps<
 > {}
 
 function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
-  const { heading, button, marker } = disclosureVariants();
   const glyph = <ChevronDownIcon />;
   return (
     <HeadingPrimitives.Heading className={heading()}>

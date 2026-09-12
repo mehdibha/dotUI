@@ -3,7 +3,7 @@
 import type * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const attachmentVariants = tv({
   slots: {
@@ -65,6 +65,9 @@ const attachmentVariants = tv({
   },
 });
 
+const { root, media, content, title, description, actions, trigger, group } =
+  attachmentVariants();
+
 /* -------------------------------------------------------------------------- */
 
 interface AttachmentProps extends React.ComponentProps<"div"> {
@@ -80,14 +83,13 @@ const Attachment = ({
   orientation = "horizontal",
   ...props
 }: AttachmentProps) => {
-  const { root } = attachmentVariants({ size, orientation });
   return (
     <div
       data-attachment=""
       data-state={state}
       data-size={size}
       data-orientation={orientation}
-      className={root({ className })}
+      className={root({ size, orientation, className })}
       {...props}
     />
   );
@@ -104,12 +106,11 @@ const AttachmentMedia = ({
   variant = "icon",
   ...props
 }: AttachmentMediaProps) => {
-  const { media } = attachmentVariants({ mediaVariant: variant });
   return (
     <div
       data-attachment-media=""
       data-variant={variant}
-      className={media({ className })}
+      className={media({ mediaVariant: variant, className })}
       {...props}
     />
   );
@@ -120,7 +121,6 @@ const AttachmentMedia = ({
 interface AttachmentContentProps extends React.ComponentProps<"div"> {}
 
 const AttachmentContent = ({ className, ...props }: AttachmentContentProps) => {
-  const { content } = attachmentVariants();
   return (
     <div
       data-attachment-content=""
@@ -135,7 +135,6 @@ const AttachmentContent = ({ className, ...props }: AttachmentContentProps) => {
 interface AttachmentTitleProps extends React.ComponentProps<"span"> {}
 
 const AttachmentTitle = ({ className, ...props }: AttachmentTitleProps) => {
-  const { title } = attachmentVariants();
   return (
     <span
       data-attachment-title=""
@@ -153,7 +152,6 @@ const AttachmentDescription = ({
   className,
   ...props
 }: AttachmentDescriptionProps) => {
-  const { description } = attachmentVariants();
   return (
     <span
       data-attachment-description=""
@@ -168,7 +166,6 @@ const AttachmentDescription = ({
 interface AttachmentActionsProps extends React.ComponentProps<"div"> {}
 
 const AttachmentActions = ({ className, ...props }: AttachmentActionsProps) => {
-  const { actions } = attachmentVariants();
   return (
     <div
       data-attachment-actions=""
@@ -207,7 +204,6 @@ const AttachmentTrigger = ({
   type = "button",
   ...props
 }: AttachmentTriggerProps) => {
-  const { trigger } = attachmentVariants();
   return (
     <button
       data-attachment-trigger=""
@@ -223,7 +219,6 @@ const AttachmentTrigger = ({
 interface AttachmentGroupProps extends React.ComponentProps<"div"> {}
 
 const AttachmentGroup = ({ className, ...props }: AttachmentGroupProps) => {
-  const { group } = attachmentVariants();
   return (
     <div data-attachment-group="" className={group({ className })} {...props} />
   );

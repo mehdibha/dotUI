@@ -11,7 +11,7 @@ import * as TextPrimitive from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Input } from "@/components/ui/input";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const otpFieldVariants = tv({
   slots: {
@@ -21,6 +21,8 @@ const otpFieldVariants = tv({
     separator: "",
   },
 });
+
+const { group, root } = otpFieldVariants();
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;
 type FieldValidationResult = NonNullable<
@@ -75,7 +77,6 @@ function OTPField({
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: OTPFieldProps) {
-  const styles = otpFieldVariants();
   const generatedId = React.useId();
   const id = idProp ?? generatedId;
   const labelId = useSlotId();
@@ -139,7 +140,7 @@ function OTPField({
         data-invalid={isInvalid || undefined}
         onValueChange={onChange}
         className={composeRenderProps(className, (className) =>
-          styles.root({ className }),
+          root({ className }),
         )}
       >
         {children ?? (
@@ -158,7 +159,6 @@ function OTPField({
 }
 
 function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
-  const { group } = otpFieldVariants();
   return (
     <div
       data-slot="otp-field-group"

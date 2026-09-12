@@ -59,8 +59,6 @@ const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const styles = buttonVariants;
-
   const renderChildren = composeRenderProps(
     children,
     (children, { isPending }) => (
@@ -86,7 +84,7 @@ const Button = ({
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+        buttonVariants({ variant, size, isIconOnly, className: cn }),
       )}
       {...props}
       // Only wrap provided children: passing a render function when `children`
@@ -114,14 +112,12 @@ const LinkButton = ({
   children,
   ...props
 }: LinkButtonProps) => {
-  const styles = buttonVariants;
-
   return (
     <LinkPrimitive.Link
       data-button=""
       data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>
-        styles({ variant, size, isIconOnly, className: cn }),
+        buttonVariants({ variant, size, isIconOnly, className: cn }),
       )}
       {...props}
     >
