@@ -4,6 +4,7 @@ import type * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const attachmentVariants = tv({
   slots: {
     root: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-lg border border-(--card-border) bg-card text-fg shadow-[var(--shadow-card,0_0_#0000)] transition-colors has-[>a,>button]:hover:bg-muted/50 has-[[data-attachment-trigger]:focus-visible]:focus-ring data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
@@ -64,6 +65,8 @@ const attachmentVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentProps extends React.ComponentProps<"div"> {
   state?: "idle" | "uploading" | "processing" | "error" | "done";
   size?: "xs" | "sm" | "md";
@@ -90,6 +93,8 @@ const Attachment = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentMediaProps extends React.ComponentProps<"div"> {
   variant?: "icon" | "image";
 }
@@ -110,6 +115,8 @@ const AttachmentMedia = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentContentProps extends React.ComponentProps<"div"> {}
 
 const AttachmentContent = ({ className, ...props }: AttachmentContentProps) => {
@@ -123,6 +130,8 @@ const AttachmentContent = ({ className, ...props }: AttachmentContentProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentTitleProps extends React.ComponentProps<"span"> {}
 
 const AttachmentTitle = ({ className, ...props }: AttachmentTitleProps) => {
@@ -135,6 +144,8 @@ const AttachmentTitle = ({ className, ...props }: AttachmentTitleProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface AttachmentDescriptionProps extends React.ComponentProps<"span"> {}
 
@@ -152,6 +163,8 @@ const AttachmentDescription = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentActionsProps extends React.ComponentProps<"div"> {}
 
 const AttachmentActions = ({ className, ...props }: AttachmentActionsProps) => {
@@ -164,6 +177,8 @@ const AttachmentActions = ({ className, ...props }: AttachmentActionsProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface AttachmentActionProps extends React.ComponentProps<typeof Button> {}
 
@@ -183,6 +198,8 @@ const AttachmentAction = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentTriggerProps extends React.ComponentProps<"button"> {}
 
 const AttachmentTrigger = ({
@@ -201,6 +218,8 @@ const AttachmentTrigger = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AttachmentGroupProps extends React.ComponentProps<"div"> {}
 
 const AttachmentGroup = ({ className, ...props }: AttachmentGroupProps) => {
@@ -209,6 +228,8 @@ const AttachmentGroup = ({ className, ...props }: AttachmentGroupProps) => {
     <div data-attachment-group="" className={group({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   AttachmentActionProps,

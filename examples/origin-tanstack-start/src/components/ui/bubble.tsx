@@ -2,6 +2,7 @@
 
 import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const bubbleVariants = tv({
   slots: {
     group: "flex min-w-0 flex-col gap-2",
@@ -41,6 +42,8 @@ const bubbleVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface BubbleGroupProps extends React.ComponentProps<"div"> {}
 
 const BubbleGroup = ({ className, ...props }: BubbleGroupProps) => {
@@ -49,6 +52,8 @@ const BubbleGroup = ({ className, ...props }: BubbleGroupProps) => {
     <div data-bubble-group="" className={group({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface BubbleProps extends React.ComponentProps<"div"> {
   variant?:
@@ -80,6 +85,8 @@ const Bubble = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface BubbleContentProps extends React.ComponentProps<"div"> {}
 
 const BubbleContent = ({ className, ...props }: BubbleContentProps) => {
@@ -88,6 +95,8 @@ const BubbleContent = ({ className, ...props }: BubbleContentProps) => {
     <div data-bubble-content="" className={content({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface BubbleReactionsProps extends React.ComponentProps<"div"> {
   side?: "top" | "bottom";
@@ -111,6 +120,8 @@ const BubbleReactions = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   BubbleContentProps,

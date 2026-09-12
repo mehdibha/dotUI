@@ -9,6 +9,7 @@ import {
 import { LinkButton } from "@/components/ui/button";
 import type { LinkButtonProps } from "@/components/ui/button";
 import { tv } from "tailwind-variants";
+
 const paginationVariants = tv({
   slots: {
     root: "mx-auto flex w-full justify-center",
@@ -18,6 +19,7 @@ const paginationVariants = tv({
       "flex size-8 items-center justify-center text-fg-muted [&_svg]:size-4",
   },
 });
+/* -------------------------------------------------------------------------- */
 
 interface PaginationProps extends React.ComponentProps<"nav"> {}
 const Pagination = ({ className, ...props }: PaginationProps) => {
@@ -32,6 +34,8 @@ const Pagination = ({ className, ...props }: PaginationProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface PaginationListProps extends React.ComponentProps<"ul"> {}
 const PaginationList = ({ className, ...props }: PaginationListProps) => {
   const { list } = paginationVariants();
@@ -45,6 +49,8 @@ const PaginationList = ({ className, ...props }: PaginationListProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface PaginationItemProps extends React.ComponentProps<"li"> {}
 const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
   const { item } = paginationVariants();
@@ -52,6 +58,8 @@ const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
     <li data-pagination-item="" className={item({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface PaginationLinkProps extends LinkButtonProps {
   isActive?: boolean;
@@ -73,6 +81,8 @@ const PaginationLink = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface PaginationPreviousProps extends Omit<
   PaginationLinkProps,
@@ -100,6 +110,8 @@ const PaginationPrevious = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface PaginationNextProps extends Omit<PaginationLinkProps, "children"> {
   children?: React.ReactNode;
 }
@@ -122,6 +134,8 @@ const PaginationNext = ({
     </PaginationLink>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface PaginationEllipsisProps extends React.ComponentProps<"span"> {}
 const PaginationEllipsis = ({

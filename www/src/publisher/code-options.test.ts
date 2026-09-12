@@ -195,25 +195,25 @@ describe("publish + codeOptions", () => {
       meta: { name: "foo", type: "registry:ui" as const },
     }
 
-    // default (sectionComments off): every MARK gone, no separators added.
-    const off = publish({
-      publishable,
-      preset: { density: "default", componentParams: {} },
-    })
-    expect(off.rawContent).not.toContain("MARK")
-    expect(off.rawContent).not.toContain("/* ---")
-
-    // enabled: the Styles marker is still dropped, Separator → a rule.
+    // default (sectionComments on): the Styles marker is dropped, Separator → a rule.
     const on = publish({
       publishable,
-      preset: {
-        density: "default",
-        componentParams: {},
-        codeOptions: { ...DEFAULT_CODE_OPTIONS, sectionComments: true },
-      },
+      preset: { density: "default", componentParams: {} },
     })
     expect(on.rawContent).not.toContain("fooStyles")
     expect(on.rawContent).not.toContain("MARK")
     expect(on.rawContent).toContain("/* ---")
+
+    // disabled: every MARK gone, no separators added.
+    const off = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: {},
+        codeOptions: { ...DEFAULT_CODE_OPTIONS, sectionComments: false },
+      },
+    })
+    expect(off.rawContent).not.toContain("MARK")
+    expect(off.rawContent).not.toContain("/* ---")
   })
 })

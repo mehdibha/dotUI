@@ -7,6 +7,7 @@ import * as TabsPrimitives from "react-aria-components/Tabs";
 
 import { createContext } from "@/lib/context";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const tabsVariants = tv({
   slots: {
     root: "flex gap-2 [--tabs-list-height:2rem]",
@@ -59,6 +60,8 @@ const tabsVariants = tv({
 
 type TabsVariant = "segmented" | "line" | "pill" | "enclosed";
 
+/* -------------------------------------------------------------------------- */
+
 const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
   name: "TabsContext",
 });
@@ -70,6 +73,8 @@ const [TabListProvider, useTabListContext] = createContext<
   name: "TabListContext",
   strict: false,
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface TabsProps extends React.ComponentProps<typeof TabsPrimitives.Tabs> {}
 
@@ -88,6 +93,8 @@ const Tabs = ({ className, ...props }: TabsProps) => {
     </TabsPrimitives.Tabs>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TabListProps extends React.ComponentProps<
   typeof TabsPrimitives.TabList
@@ -108,6 +115,8 @@ const TabList = ({ className, variant, ...props }: TabListProps) => {
     </TabListProvider>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
@@ -139,6 +148,8 @@ const Tab = ({ className, ...props }: TabProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TabIndicatorProps extends React.ComponentProps<
   typeof SelectionIndicatorPrimitives.SelectionIndicator
 > {}
@@ -159,6 +170,8 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TabPanelProps extends React.ComponentProps<
   typeof TabsPrimitives.TabPanel
 > {}
@@ -175,6 +188,8 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   TabIndicatorProps,

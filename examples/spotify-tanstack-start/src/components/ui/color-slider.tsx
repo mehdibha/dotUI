@@ -9,6 +9,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import { ColorThumb } from "@/components/ui/color-thumb";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const colorSliderVariants = tv({
   slots: {
     root: "flex flex-col gap-2",
@@ -32,6 +33,8 @@ const colorSliderVariants = tv({
     orientation: "horizontal",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface ColorSliderProps extends React.ComponentProps<
   typeof ColorSliderPrimitives.ColorSlider
@@ -62,6 +65,8 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ColorSliderControlProps extends React.ComponentProps<
   typeof SliderPrimitives.SliderTrack
 > {}
@@ -91,6 +96,8 @@ const ColorSliderControl = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ColorSliderOutputProps extends React.ComponentProps<
   typeof SliderPrimitives.SliderOutput
 > {}
@@ -106,6 +113,8 @@ const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   ColorSliderControlProps,

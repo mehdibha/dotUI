@@ -6,6 +6,7 @@ import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const menuVariants = tv({
   slots: {
     root: "max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] outline-hidden **:data-separator:my-1 **:data-separator:w-auto text-sm p-1 **:data-separator:-mx-1",
@@ -21,11 +22,15 @@ const menuVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface MenuProps extends MenuPrimitives.MenuTriggerProps {}
 
 const Menu = (props: MenuProps) => {
   return <MenuPrimitives.MenuTrigger {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MenuContentProps<T> extends MenuPrimitives.MenuProps<T> {}
 const MenuContent = <T extends object>({
@@ -44,11 +49,15 @@ const MenuContent = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MenuSubProps extends MenuPrimitives.SubmenuTriggerProps {}
 
 const MenuSub = (props: MenuSubProps) => {
   return <MenuPrimitives.SubmenuTrigger {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T> {
   variant?: "default" | "danger";
@@ -104,6 +113,8 @@ const MenuItem = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MenuItemLabelProps extends React.ComponentProps<
   typeof MenuPrimitives.Text
 > {}
@@ -118,6 +129,8 @@ const MenuItemLabel = ({ className, ...props }: MenuItemLabelProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MenuItemDescriptionProps extends React.ComponentProps<
   typeof MenuPrimitives.Text
@@ -137,6 +150,8 @@ const MenuItemDescription = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({
   children,
@@ -155,6 +170,8 @@ const MenuSection = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MenuSectionHeaderProps extends React.ComponentProps<
   typeof MenuPrimitives.Header
 > {}
@@ -169,6 +186,8 @@ const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   MenuContentProps,

@@ -11,6 +11,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import { Label } from "@/components/ui/field";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const checkboxVariants = tv({
   slots: {
     root: "flex items-center has-data-description:items-start gap-2",
@@ -23,6 +24,8 @@ const checkboxVariants = tv({
 
 const InternalCheckboxContext =
   createContext<CheckboxPrimitive.CheckboxButtonRenderProps | null>(null);
+
+/* -------------------------------------------------------------------------- */
 
 interface CheckboxProps extends React.ComponentProps<
   typeof CheckboxPrimitive.CheckboxField
@@ -122,6 +125,8 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
     </span>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { CheckboxControlProps, CheckboxIndicatorProps, CheckboxProps };
 export { Checkbox, CheckboxControl, CheckboxIndicator };

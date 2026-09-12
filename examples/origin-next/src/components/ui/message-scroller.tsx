@@ -11,6 +11,7 @@ import {
 import { ArrowDownIcon } from "lucide-react";
 import { buttonStyles as useButtonStyles } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const messageScrollerVariants = tv({
   slots: {
     root: "group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden",
@@ -23,6 +24,8 @@ const messageScrollerVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageScrollerProviderProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Provider
 > {}
@@ -30,6 +33,8 @@ interface MessageScrollerProviderProps extends React.ComponentProps<
 const MessageScrollerProvider = (props: MessageScrollerProviderProps) => {
   return <MessageScrollerPrimitive.Provider {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageScrollerProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Root
@@ -45,6 +50,8 @@ const MessageScroller = ({ className, ...props }: MessageScrollerProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageScrollerViewportProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Viewport
@@ -64,6 +71,8 @@ const MessageScrollerViewport = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageScrollerContentProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Content
 > {}
@@ -81,6 +90,8 @@ const MessageScrollerContent = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageScrollerItemProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Item
@@ -101,6 +112,8 @@ const MessageScrollerItem = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageScrollerButtonProps extends React.ComponentProps<
   typeof MessageScrollerPrimitive.Button
@@ -140,6 +153,8 @@ const MessageScrollerButton = ({
     </MessageScrollerPrimitive.Button>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   MessageScrollerButtonProps,

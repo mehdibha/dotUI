@@ -1,5 +1,6 @@
 import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const badgeVariants = tv({
   base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
   variants: {

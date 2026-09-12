@@ -7,6 +7,7 @@ import * as LinkPrimitive from "react-aria-components/Link";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { Loader } from "@/components/ui/loader";
+
 const buttonVariants = tv({
   base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,0_0_#0000)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted disabled:cursor-disabled text-sm *:[svg]:not-with-[size]:size-4",
   variants: {
@@ -42,6 +43,8 @@ const buttonVariants = tv({
 export { buttonVariants as buttonStyles };
 
 type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+/* -------------------------------------------------------------------------- */
 
 interface ButtonProps
   extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
@@ -94,6 +97,8 @@ const Button = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface LinkButtonProps
   extends
     React.ComponentProps<typeof LinkPrimitive.Link>,
@@ -132,6 +137,8 @@ const LinkButton = ({
     </LinkPrimitive.Link>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ButtonProps, LinkButtonProps };
 export { Button, LinkButton };

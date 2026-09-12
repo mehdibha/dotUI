@@ -6,6 +6,7 @@ import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIn
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const segmentedControlVariants = tv({
   slots: {
     root: "inline-flex w-fit items-center justify-center rounded-lg text-fg-muted bg-muted p-[3px]",
@@ -15,6 +16,8 @@ const segmentedControlVariants = tv({
     itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface SegmentedControlProps extends Omit<
   React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
@@ -35,6 +38,8 @@ const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SegmentedControlItemProps extends React.ComponentProps<
   typeof ToggleButtonPrimitives.ToggleButton
@@ -70,6 +75,8 @@ const SegmentedControlItem = ({
     </ToggleButtonPrimitives.ToggleButton>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { SegmentedControlItemProps, SegmentedControlProps };
 export { SegmentedControl, SegmentedControlItem };

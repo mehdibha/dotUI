@@ -10,6 +10,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Label } from "@/components/ui/field";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const radioGroupVariants = tv({
   slots: {
     group: "flex flex-col gap-3",
@@ -36,6 +37,8 @@ const RadioGroup = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 const InternalRadioContext =
   createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
@@ -137,6 +140,8 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
     </span>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
 

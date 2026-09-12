@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { fieldStyles as useStyles } from "@/components/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/components/ui/input";
 
+/* -------------------------------------------------------------------------- */
+
 interface SearchFieldProps extends React.ComponentProps<
   typeof SearchFieldPrimitives.SearchField
 > {
@@ -45,6 +47,8 @@ const SearchField = ({
     </SearchFieldPrimitives.SearchField>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { SearchFieldProps };
 export { SearchField };

@@ -5,6 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import * as TooltipPrimitives from "react-aria-components/Tooltip";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const tooltipVariants = tv({
   slots: {
     content:
@@ -14,6 +15,7 @@ const tooltipVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
 interface TooltipProps extends React.ComponentProps<
   typeof TooltipPrimitives.TooltipTrigger
 > {}
@@ -25,6 +27,8 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
     {...props}
   />
 );
+
+/* -------------------------------------------------------------------------- */
 
 interface TooltipContentProps
   extends
@@ -59,6 +63,8 @@ function TooltipContent({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
 function TooltipArrow({ className }: TooltipArrowProps) {
@@ -77,6 +83,8 @@ function TooltipArrow({ className }: TooltipArrowProps) {
     </PopoverPrimitives.OverlayArrow>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 export type { TooltipContentProps, TooltipProps };
 export { Tooltip, TooltipContent };

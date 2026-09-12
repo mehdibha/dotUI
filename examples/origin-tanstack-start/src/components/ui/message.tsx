@@ -2,6 +2,7 @@
 
 import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const messageVariants = tv({
   slots: {
     group: "flex min-w-0 flex-col gap-2",
@@ -17,6 +18,8 @@ const messageVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageGroupProps extends React.ComponentProps<"div"> {}
 
 const MessageGroup = ({ className, ...props }: MessageGroupProps) => {
@@ -25,6 +28,8 @@ const MessageGroup = ({ className, ...props }: MessageGroupProps) => {
     <div data-message-group="" className={group({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageProps extends React.ComponentProps<"div"> {
   align?: "start" | "end";
@@ -42,6 +47,8 @@ const Message = ({ className, align = "start", ...props }: MessageProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageAvatarProps extends React.ComponentProps<"div"> {}
 
 const MessageAvatar = ({ className, ...props }: MessageAvatarProps) => {
@@ -50,6 +57,8 @@ const MessageAvatar = ({ className, ...props }: MessageAvatarProps) => {
     <div data-message-avatar="" className={avatar({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface MessageContentProps extends React.ComponentProps<"div"> {}
 
@@ -64,6 +73,8 @@ const MessageContent = ({ className, ...props }: MessageContentProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageHeaderProps extends React.ComponentProps<"div"> {}
 
 const MessageHeader = ({ className, ...props }: MessageHeaderProps) => {
@@ -73,6 +84,8 @@ const MessageHeader = ({ className, ...props }: MessageHeaderProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MessageFooterProps extends React.ComponentProps<"div"> {}
 
 const MessageFooter = ({ className, ...props }: MessageFooterProps) => {
@@ -81,6 +94,8 @@ const MessageFooter = ({ className, ...props }: MessageFooterProps) => {
     <div data-message-footer="" className={footer({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   MessageAvatarProps,

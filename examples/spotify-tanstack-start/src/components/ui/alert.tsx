@@ -1,5 +1,6 @@
 import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const alertVariants = tv({
   slots: {
     root: "relative grid w-full items-start px-4 py-3 text-sm rounded-lg has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto] *:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current border bg-card",
@@ -32,6 +33,8 @@ const alertVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface AlertProps
   extends React.ComponentProps<"div">, VariantProps<typeof alertVariants> {}
 
@@ -47,6 +50,8 @@ function Alert({ className, variant, ...props }: AlertProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
@@ -55,6 +60,8 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
     <div data-alert-title="" className={title({ className })} {...props} />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
@@ -69,6 +76,8 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
 function AlertAction({ className, ...props }: AlertActionProps) {
@@ -77,6 +86,8 @@ function AlertAction({ className, ...props }: AlertActionProps) {
     <div data-alert-action="" className={action({ className })} {...props} />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   AlertActionProps,

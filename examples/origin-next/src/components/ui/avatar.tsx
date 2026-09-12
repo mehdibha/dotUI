@@ -6,6 +6,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { useImageLoadingStatus } from "@/hooks/use-image-loading-status";
 import type { ImageLoadingStatus } from "@/hooks/use-image-loading-status";
 import { createContext } from "@/lib/context";
+
 const avatarVariants = tv({
   slots: {
     root: "group/avatar relative inline-flex size-8 shrink-0 rounded-full bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
@@ -57,6 +58,8 @@ function tintOf(children: React.ReactNode): number {
   return Math.abs(hash) % 4;
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface AvatarProps
   extends React.ComponentProps<"span">, VariantProps<typeof avatarVariants> {}
 
@@ -75,6 +78,8 @@ function Avatar({ className, size = "md", ...props }: AvatarProps) {
     </AvatarContext>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
   src?: string;
@@ -110,6 +115,8 @@ function AvatarImage({
   return null;
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 const AvatarFallback = ({
@@ -133,6 +140,8 @@ const AvatarFallback = ({
   return null;
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
 
 const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
@@ -141,6 +150,8 @@ const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
     <span data-avatar-badge="" className={badge({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface AvatarGroupProps
   extends React.ComponentProps<"div">, VariantProps<typeof avatarVariants> {}
@@ -161,6 +172,8 @@ const AvatarGroup = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
 
 const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
@@ -173,6 +186,8 @@ const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   AvatarBadgeProps,

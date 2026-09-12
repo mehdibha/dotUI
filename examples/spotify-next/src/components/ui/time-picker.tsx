@@ -26,6 +26,7 @@ import { useTimeFieldState } from "react-stately/useTimeFieldState";
 
 import { fieldStyles as useFieldStyles } from "@/components/ui/field";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const timePickerVariants = tv({
   slots: {
     columns: "flex h-56 gap-1 p-1",
@@ -72,6 +73,8 @@ const useSlot = (
   const ref = React.useCallback((el: Element | null) => setHasSlot(!!el), []);
   return [ref, hasSlot];
 };
+
+/* -------------------------------------------------------------------------- */
 
 // There is no React Aria `TimePicker` primitive, so we compose one from the
 // same building blocks its `DatePicker` uses: a shared `TimeFieldState` drives
@@ -186,6 +189,8 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TimeColumnOption {
   id: string;
   label: string;
@@ -289,6 +294,8 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TimeColumnProps {
   label: string;
   options: TimeColumnOption[];
@@ -351,6 +358,8 @@ const TimeColumn = ({
     </ListBoxPrimitive.ListBox>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { TimePickerColumnsProps, TimePickerProps };
 export { TimePicker, TimePickerColumns };

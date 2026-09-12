@@ -10,6 +10,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 import { CheckIcon } from "lucide-react";
 import { Loader } from "@/components/ui/loader";
+
 const listBoxVariants = tv({
   slots: {
     root: "max-h-[inherit] scroll-my-1 overflow-y-auto outline-hidden layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row layout-grid:grid layout-grid:gap-1 layout-grid:orientation-vertical:grid-cols-2 layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2 **:data-separator:my-1 **:data-separator:w-auto text-sm p-1 **:data-separator:-mx-1",
@@ -71,6 +72,8 @@ const ListBox = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ListBoxItemProps<T>
   extends
     ListBoxPrimitive.ListBoxItemProps<T>,
@@ -116,6 +119,8 @@ const ListBoxItem = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ListBoxItemLabelProps extends React.ComponentProps<
   typeof TextPrimitive.Text
 > {}
@@ -129,6 +134,8 @@ const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface ListBoxItemDescriptionProps extends React.ComponentProps<
   typeof TextPrimitive.Text
@@ -147,6 +154,8 @@ const ListBoxItemDescription = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ListBoxSectionProps<
   T,
 > extends ListBoxPrimitive.ListBoxSectionProps<T> {}
@@ -164,6 +173,8 @@ const ListBoxSection = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ListBoxSectionHeaderProps extends React.ComponentProps<
   typeof ListBoxPrimitive.Header
 > {}
@@ -180,6 +191,8 @@ const ListBoxSectionHeader = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface ListBoxVirtualizerProps<T> extends Omit<
   VirtualizerPrimitive.VirtualizerProps<T>,

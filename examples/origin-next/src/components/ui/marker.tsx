@@ -2,6 +2,7 @@
 
 import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const markerVariants = tv({
   slots: {
     root: "group/marker relative flex w-full items-center text-left text-fg-muted **:[a]:underline **:[a]:underline-offset-3 **:[a]:hover:text-fg min-h-4 gap-2 text-sm **:[svg]:not-with-[size]:size-4",
@@ -25,6 +26,8 @@ const markerVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface MarkerProps extends React.ComponentProps<"div"> {
   variant?: "default" | "separator" | "border";
 }
@@ -41,6 +44,8 @@ const Marker = ({ className, variant = "default", ...props }: MarkerProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MarkerIconProps extends React.ComponentProps<"span"> {}
 
 const MarkerIcon = ({ className, ...props }: MarkerIconProps) => {
@@ -55,6 +60,8 @@ const MarkerIcon = ({ className, ...props }: MarkerIconProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface MarkerContentProps extends React.ComponentProps<"span"> {}
 
 const MarkerContent = ({ className, ...props }: MarkerContentProps) => {
@@ -67,6 +74,8 @@ const MarkerContent = ({ className, ...props }: MarkerContentProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { MarkerContentProps, MarkerIconProps, MarkerProps };
 export { Marker, MarkerContent, MarkerIcon };

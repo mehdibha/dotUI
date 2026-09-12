@@ -4,6 +4,7 @@ import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { ChevronRightIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
+
 const breadcrumbsVariants = tv({
   slots: {
     root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted",
@@ -12,6 +13,8 @@ const breadcrumbsVariants = tv({
     separator: "[&_svg]:size-4",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface BreadcrumbsProps<
   T extends object,
@@ -32,6 +35,8 @@ const Breadcrumbs = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface BreadcrumbItemProps extends React.ComponentProps<
   typeof BreadcrumbsPrimitive.Breadcrumb
 > {}
@@ -48,6 +53,8 @@ const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface BreadcrumbLinkProps extends React.ComponentProps<
   typeof BreadcrumbsPrimitive.Link
 > {}
@@ -63,6 +70,8 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
 const BreadcrumbSeparator = ({
@@ -83,6 +92,8 @@ const BreadcrumbSeparator = ({
     </span>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   BreadcrumbItemProps,

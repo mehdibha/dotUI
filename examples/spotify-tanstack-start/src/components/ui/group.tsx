@@ -5,6 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as GroupPrimitive from "react-aria-components/Group";
 import * as TextPrimitive from "react-aria-components/Text";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const groupVariants = tv({
   slots: {
     root: "flex w-fit items-stretch has-data-[slot=group]:gap-2 *:hover:z-1 *:focus:z-3 *:focus-visible:z-3 *:has-[input]:z-2 *:[input]:z-2 *:data-label:shrink-0 *:data-label:rounded-md *:data-label:border *:data-label:bg-card *:data-label:px-4",
@@ -21,6 +22,8 @@ const groupVariants = tv({
     },
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface GroupProps
   extends
@@ -45,6 +48,8 @@ const Group = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface GroupTextProps extends React.ComponentProps<
   typeof TextPrimitive.Text
 > {}
@@ -60,6 +65,8 @@ const GroupText = ({ className, ...props }: GroupTextProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { GroupProps, GroupTextProps };
 export { Group, GroupText };

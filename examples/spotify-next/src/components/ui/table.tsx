@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader } from "@/components/ui/loader";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const tableVariants = tv({
   slots: {
     container:
@@ -74,6 +75,8 @@ class TableLayout<T> extends VirtualizerPrimitives.TableLayout<T> {
   }
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface TableVirtualizerProps<T extends object> extends Omit<
   VirtualizerPrimitives.VirtualizerProps<T>,
   "layout"
@@ -113,7 +116,11 @@ const TableVirtualizer = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 const TableContainerContext = React.createContext({ resizable: false });
+
+/* -------------------------------------------------------------------------- */
 
 interface TableContainerProps extends React.ComponentPropsWithoutRef<
   typeof TablePrimitives.ResizableTableContainer
@@ -169,6 +176,8 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
 );
 TableContainer.displayName = "TableContainer";
 
+/* -------------------------------------------------------------------------- */
+
 interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
 > {}
@@ -186,6 +195,8 @@ const Table = ({ className, ...props }: TableProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TableHeaderProps<
   T extends object,
@@ -237,6 +248,8 @@ const TableHeader = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface InternalColumnProps extends React.ComponentProps<
   typeof TablePrimitives.Column
 > {}
@@ -259,6 +272,8 @@ const TableChromeColumn = ({
     </TablePrimitives.Column>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TableColumnProps extends React.ComponentProps<
   typeof TablePrimitives.Column
@@ -307,6 +322,8 @@ const TableColumn = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TableBodyProps<
   T extends object,
 > extends TablePrimitives.TableBodyProps<T> {
@@ -351,6 +368,8 @@ const TableBody = <T extends object>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TableFooterProps<
   T extends object,
 > extends TablePrimitives.TableFooterProps<T> {}
@@ -379,6 +398,8 @@ const TableFooter = <T extends object>({
     </TablePrimitives.TableFooter>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
@@ -432,6 +453,8 @@ function TableRow<T extends object>({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface TableCellProps extends React.ComponentProps<
   typeof TablePrimitives.Cell
 > {}
@@ -483,6 +506,8 @@ const TableCell = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface TableDropIndicatorProps
   extends DragAndDropPrimitives.DropIndicatorProps {}
 
@@ -530,6 +555,8 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
     </TablePrimitives.TableLoadMoreItem>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   TableBodyProps,

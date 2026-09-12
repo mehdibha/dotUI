@@ -12,6 +12,7 @@ import type {
   TokenProps as TokenPrimitiveProps,
 } from "react-aria-components/TokenField";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const tokenFieldVariants = tv({
   slots: {
     root: "group/token-field flex w-full flex-col gap-1.5",
@@ -21,6 +22,8 @@ const tokenFieldVariants = tv({
       "rounded-md bg-accent-muted px-0.5 text-fg-accent data-selected:bg-accent data-selected:text-fg-on-accent",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,
@@ -40,6 +43,8 @@ function TokenField({ className, ...props }: TokenFieldProps) {
   const { root } = tokenFieldVariants();
   return <TokenFieldPrimitive className={root({ className })} {...props} />;
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface TokenInputProps extends Omit<
   TokenInputPrimitiveProps,
@@ -78,6 +83,8 @@ function TokenInput({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
   className?: string;
 }
@@ -87,6 +94,8 @@ function Token({ className, ...props }: TokenProps) {
   const { token } = tokenFieldVariants();
   return <TokenPrimitive className={token({ className })} {...props} />;
 }
+
+/* -------------------------------------------------------------------------- */
 
 export type { TokenFieldProps, TokenInputProps, TokenProps };
 export { Token, TokenField, TokenInput };

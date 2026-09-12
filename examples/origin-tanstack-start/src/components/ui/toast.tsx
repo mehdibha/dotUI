@@ -10,6 +10,7 @@ import {
   TriangleAlertIcon,
 } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const toastVariants = tv({
   slots: {
     viewport:

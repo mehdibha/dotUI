@@ -12,6 +12,7 @@ import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions"
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { useControlledState } from "react-stately/useControlledState";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const inputVariants = tv({
   slots: {
     inputGroup:
@@ -57,6 +58,8 @@ const inputVariants = tv({
     size: "md",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface InputGroupProps
   extends
@@ -106,6 +109,8 @@ const InputGroup = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface InputProps
   extends
     Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
@@ -125,6 +130,8 @@ const Input = ({ className, size, ...props }: InputProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TextAreaProps extends React.ComponentProps<
   typeof TextAreaPrimitive.TextArea
@@ -183,6 +190,8 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
 function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
@@ -195,6 +204,8 @@ function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface DateInputProps
   extends
@@ -221,6 +232,8 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DateSegmentProps extends React.ComponentProps<
   typeof DateFieldPrimitive.DateSegment
 > {}
@@ -246,6 +259,8 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
     </DateFieldPrimitive.DateSegment>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   DateInputProps,

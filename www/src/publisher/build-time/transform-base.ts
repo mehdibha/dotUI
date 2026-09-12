@@ -325,14 +325,14 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   // 6. Ensure `tailwind-variants` import provides both `tv` and `VariantProps`.
   ensureTailwindVariantsImport(sourceFile)
 
-  // 7. Insert the variant declaration after the last import.
+  // 7. Insert the variant declaration after the last import. ts-morph drops a
+  //    leading empty statement, so write the blank line explicitly.
   const lastImport = sourceFile.getImportDeclarations().at(-1)
   const insertIndex = lastImport ? lastImport.getChildIndex() + 1 : 0
-  sourceFile.insertStatements(insertIndex, [
-    "",
-    `const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`,
-    "",
-  ])
+  sourceFile.insertStatements(insertIndex, (writer) => {
+    writer.newLine()
+    writer.writeLine(`const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`)
+  })
 }
 
 function findNextVariantProps(
