@@ -7,7 +7,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { ButtonProps } from "@/components/ui/button";
-import { fieldStyles as useStyles } from "@/components/ui/field";
+import { fieldStyles } from "@/components/ui/field";
 import {
   ListBox,
   ListBoxItem,
@@ -32,7 +32,6 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
-  const fieldStyles = useStyles;
   return (
     <SelectPrimitives.Select
       data-field=""

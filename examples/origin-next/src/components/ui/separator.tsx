@@ -23,14 +23,13 @@ interface SeparatorProps extends React.ComponentProps<
 > {}
 
 const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
-  const styles = separatorVariants;
   const ctx = useSlottedContext(SeparatorPrimitives.SeparatorContext);
 
   return (
     <SeparatorPrimitives.Separator
       data-separator=""
       orientation={orientation}
-      className={styles({
+      className={separatorVariants({
         orientation: orientation ?? ctx?.orientation,
         className,
       })}

@@ -9,7 +9,7 @@ import {
 } from "@shadcn/react/message-scroller";
 
 import { ArrowDownIcon } from "lucide-react";
-import { buttonStyles as useButtonStyles } from "@/components/ui/button";
+import { buttonStyles } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const messageScrollerVariants = tv({
@@ -122,7 +122,6 @@ const MessageScrollerButton = ({
   direction = "end",
   ...props
 }: MessageScrollerButtonProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <MessageScrollerPrimitive.Button
       data-message-scroller-button=""

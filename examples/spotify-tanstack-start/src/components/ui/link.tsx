@@ -23,12 +23,11 @@ interface LinkProps
   extends LinkPrimitives.LinkProps, VariantProps<typeof linkVariants> {}
 
 const Link = ({ variant, ...props }: LinkProps) => {
-  const styles = linkVariants;
   return (
     <LinkPrimitives.Link
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        styles({ variant, className }),
+        linkVariants({ variant, className }),
       )}
     />
   );

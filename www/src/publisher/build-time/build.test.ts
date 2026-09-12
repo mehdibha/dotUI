@@ -138,9 +138,13 @@ describe("transformBase", () => {
     expect(template).toContain(
       `const buttonVariants = tv(${TV_CONFIG_PLACEHOLDER});`,
     )
-    // `useStyles()` is gone, replaced with `buttonVariants`.
+    // `useStyles()` is gone; the local `styles` alias is inlined as
+    // `buttonVariants` at every use.
     expect(template).not.toContain("useStyles")
-    expect(template).toContain("const styles = buttonVariants")
+    expect(template).not.toContain("const styles =")
+    expect(template).toContain(
+      "buttonVariants({ variant, size, isIconOnly, className: cn })",
+    )
     // VariantProps reference is rewritten.
     expect(template).not.toContain("VariantProps<ButtonStyles>")
     expect(template).toContain("VariantProps<typeof buttonVariants>")
@@ -176,6 +180,30 @@ describe("transformBase", () => {
     )
     expect(template).toContain("root({ variant, className })")
     expect(template).not.toContain("markerVariants({")
+  })
+
+  test("otp-field: `styles.root` on an identifier binding joins the hoisted destructure", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "otp-field/base.tsx"),
+      componentName: "otp-field",
+    })
+    expect(template).toContain("const { group, root } = otpFieldVariants();")
+    expect(template).not.toContain("styles.root")
+    expect(template).toContain("root({ className })")
+  })
+
+  test("color-field: cross-component styles import drops its hook alias and local", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "color-field/base.tsx"),
+      componentName: "color-field",
+      hasStylesConfig: false,
+    })
+    expect(template).toContain(
+      'import { fieldStyles } from "@/components/ui/field"',
+    )
+    expect(template).not.toContain("useStyles")
+    expect(template).not.toContain("const fieldStyles =")
+    expect(template).toContain("fieldStyles().field({")
   })
 
   test("toast: aliased slot bindings hoist under their alias", () => {

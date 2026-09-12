@@ -5,7 +5,7 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buttonStyles as useButtonStyles } from "@/components/ui/button";
+import { buttonStyles } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const questionnaireVariants = tv({
@@ -302,7 +302,6 @@ const QuestionnairePrevious = ({
   children,
   ...props
 }: QuestionnairePreviousProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Previous
       data-questionnaire-previous=""
@@ -330,7 +329,6 @@ const QuestionnaireSkip = ({
   children,
   ...props
 }: QuestionnaireSkipProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Skip
       data-questionnaire-skip=""
@@ -358,7 +356,6 @@ const QuestionnaireNext = ({
   children,
   ...props
 }: QuestionnaireNextProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Next
       data-questionnaire-next=""
@@ -386,7 +383,6 @@ const QuestionnaireSubmit = ({
   children,
   ...props
 }: QuestionnaireSubmitProps) => {
-  const buttonStyles = useButtonStyles;
   return (
     <QuestionnairePrimitive.Submit
       data-questionnaire-submit=""

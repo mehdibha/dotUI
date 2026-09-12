@@ -4,7 +4,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitive from "react-aria-components/DateField";
 
 import { cn } from "@/lib/utils";
-import { fieldStyles as useStyles } from "@/components/ui/field";
+import { fieldStyles } from "@/components/ui/field";
 
 /* -------------------------------------------------------------------------- */
 
@@ -16,7 +16,6 @@ const DateField = <T extends DateFieldPrimitive.DateValue>({
   className,
   ...props
 }: DateFieldProps<T>) => {
-  const fieldStyles = useStyles;
   return (
     <DateFieldPrimitive.DateField
       data-date-field=""

@@ -30,7 +30,6 @@ function Command<T extends object>({
   filter,
   ...props
 }: CommandProps<T>) {
-  const styles = commandVariants;
   const { contains } = AutocompletePrimitive.useFilter({
     sensitivity: "base",
     ignorePunctuation: true,
@@ -39,7 +38,11 @@ function Command<T extends object>({
 
   return (
     <AutocompletePrimitive.Autocomplete filter={contains}>
-      <div data-command="" className={styles({ className })} {...props} />
+      <div
+        data-command=""
+        className={commandVariants({ className })}
+        {...props}
+      />
     </AutocompletePrimitive.Autocomplete>
   );
 }

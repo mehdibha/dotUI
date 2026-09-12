@@ -14,11 +14,10 @@ interface ColorThumbProps extends Omit<
   className?: string;
 }
 const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
-  const styles = colorThumbVariants;
   return (
     <ColorThumbPrimitives.ColorThumb
       data-slot="color-thumb"
-      className={styles({ className })}
+      className={colorThumbVariants({ className })}
       {...props}
     />
   );

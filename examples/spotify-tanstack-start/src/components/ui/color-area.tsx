@@ -15,11 +15,10 @@ type ColorAreaProps = React.ComponentProps<
 >;
 
 const ColorArea = ({ className, ...props }: ColorAreaProps) => {
-  const styles = colorAreaVariants;
   return (
     <ColorAreaPrimitives.ColorArea
       className={composeRenderProps(className, (className) =>
-        styles({ className }),
+        colorAreaVariants({ className }),
       )}
       {...props}
     >

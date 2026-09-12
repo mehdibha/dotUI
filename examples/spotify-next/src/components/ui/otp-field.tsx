@@ -21,7 +21,7 @@ const otpFieldVariants = tv({
     separator: "",
   },
 });
-const { group } = otpFieldVariants();
+const { group, root } = otpFieldVariants();
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;
 type FieldValidationResult = NonNullable<
@@ -76,7 +76,6 @@ function OTPField({
   "aria-labelledby": ariaLabelledBy,
   ...props
 }: OTPFieldProps) {
-  const styles = otpFieldVariants();
   const generatedId = React.useId();
   const id = idProp ?? generatedId;
   const labelId = useSlotId();
@@ -140,7 +139,7 @@ function OTPField({
         data-invalid={isInvalid || undefined}
         onValueChange={onChange}
         className={composeRenderProps(className, (className) =>
-          styles.root({ className }),
+          root({ className }),
         )}
       >
         {children ?? (

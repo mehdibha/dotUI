@@ -24,7 +24,7 @@ import { useTimeField } from "react-aria/useTimeField";
 import { useOverlayTriggerState } from "react-stately/useOverlayTriggerState";
 import { useTimeFieldState } from "react-stately/useTimeFieldState";
 
-import { fieldStyles as useFieldStyles } from "@/components/ui/field";
+import { fieldStyles } from "@/components/ui/field";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const timePickerVariants = tv({
@@ -90,7 +90,6 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   onOpenChange,
   ...props
 }: TimePickerProps<T>) => {
-  const fieldStyles = useFieldStyles;
   const { locale } = useLocale();
 
   const state = useTimeFieldState<T>({ ...props, locale });
