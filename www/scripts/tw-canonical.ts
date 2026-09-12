@@ -1,6 +1,6 @@
-// Fails on Tailwind classes that have a shorter canonical spelling — the same
-// check as IntelliSense's `suggestCanonicalClasses`, but runnable in CI.
-// `--fix` rewrites them in place.
+// Reports Tailwind classes that have a shorter canonical spelling — the same
+// check as IntelliSense's `suggestCanonicalClasses`. `--fix` rewrites them in
+// place; `pnpm check:fix` runs it that way.
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
