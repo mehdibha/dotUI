@@ -52,6 +52,7 @@ const tableVariants = tv({
       "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2 [&_[data-slot=loader]_svg]:size-4",
   },
 });
+
 const {
   container,
   table,

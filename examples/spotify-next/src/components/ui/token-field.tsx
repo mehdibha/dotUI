@@ -22,6 +22,7 @@ const tokenFieldVariants = tv({
       "rounded-md bg-accent-muted px-0.5 text-fg-accent data-selected:bg-accent data-selected:text-fg-on-accent",
   },
 });
+
 const { root, input, token } = tokenFieldVariants();
 
 /* -------------------------------------------------------------------------- */

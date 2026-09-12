@@ -64,6 +64,7 @@ const attachmentVariants = tv({
     mediaVariant: "icon",
   },
 });
+
 const { root, media, content, title, description, actions, trigger, group } =
   attachmentVariants();
 

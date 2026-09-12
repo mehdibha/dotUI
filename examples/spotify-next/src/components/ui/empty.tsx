@@ -28,6 +28,7 @@ const emptyVariants = tv({
     variant: "default",
   },
 });
+
 const { base, header, title, description, content, media } = emptyVariants();
 
 /* -------------------------------------------------------------------------- */

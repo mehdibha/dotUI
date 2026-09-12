@@ -13,6 +13,7 @@ const dropZoneVariants = tv({
     label: "text-base",
   },
 });
+
 const { dropzone, label } = dropZoneVariants();
 
 /* -------------------------------------------------------------------------- */

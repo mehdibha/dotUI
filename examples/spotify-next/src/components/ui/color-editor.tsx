@@ -26,6 +26,7 @@ const colorEditorVariants = tv({
     fieldGroup: "flex flex-1 items-center gap-2",
   },
 });
+
 const { root, area, fields, fieldGroup } = colorEditorVariants();
 
 /* -------------------------------------------------------------------------- */

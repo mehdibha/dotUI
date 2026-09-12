@@ -19,6 +19,7 @@ const paginationVariants = tv({
       "flex size-8 items-center justify-center text-fg-muted [&_svg]:size-4",
   },
 });
+
 const { root, list, item, ellipsis } = paginationVariants();
 /* -------------------------------------------------------------------------- */
 

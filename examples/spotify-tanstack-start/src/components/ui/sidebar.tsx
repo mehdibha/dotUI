@@ -65,6 +65,7 @@ const sidebarVariants = tv({
       "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-muted data-[active]:font-medium data-[active]:text-fg data-[size=md]:text-sm data-[size=sm]:text-xs group-data-[collapsible=icon]:hidden [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted",
   },
 });
+
 const {
   wrapper,
   root,

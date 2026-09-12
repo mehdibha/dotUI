@@ -33,6 +33,7 @@ const colorSliderVariants = tv({
     orientation: "horizontal",
   },
 });
+
 const { root, track, output } = colorSliderVariants();
 
 /* -------------------------------------------------------------------------- */

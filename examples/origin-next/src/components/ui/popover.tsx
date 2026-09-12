@@ -17,6 +17,7 @@ const popoverVariants = tv({
       "block [&>svg]:size-2.5 [&>svg]:fill-popover [&>svg]:stroke-border placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 hidden",
   },
 });
+
 const { popover, arrow } = popoverVariants();
 
 interface PopoverProps extends React.ComponentProps<

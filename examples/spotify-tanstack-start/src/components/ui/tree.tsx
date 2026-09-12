@@ -31,6 +31,7 @@ const treeVariants = tv({
     interactive: false,
   },
 });
+
 const { root, item, itemContent, chevron, chevronPlaceholder, label } =
   treeVariants();
 

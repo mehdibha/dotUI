@@ -699,6 +699,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     writer.newLine()
     writer.writeLine(`const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`)
     if (hoist.order.length > 0) {
+      writer.newLine()
       const names = hoist.order
         .map((b) => (b.slot === b.local ? b.slot : `${b.slot}: ${b.local}`))
         .join(", ")

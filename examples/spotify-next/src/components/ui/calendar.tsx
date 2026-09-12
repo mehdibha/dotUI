@@ -23,6 +23,7 @@ const calendarVariants = tv({
       "flex size-full items-center justify-center focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent rounded-(--cell-radius)",
   },
 });
+
 const {
   root,
   header,

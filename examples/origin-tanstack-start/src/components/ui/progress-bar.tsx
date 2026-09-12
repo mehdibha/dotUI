@@ -16,6 +16,7 @@ const progressBarVariants = tv({
   variants: {},
   defaultVariants: {},
 });
+
 const { root, track, fill, output } = progressBarVariants();
 
 const ProgressBarContext =

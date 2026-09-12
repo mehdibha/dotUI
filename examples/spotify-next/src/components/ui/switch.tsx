@@ -41,6 +41,7 @@ const switchVariants = tv({
     size: "md",
   },
 });
+
 const { root, control, indicator, thumb } = switchVariants();
 
 const SwitchStyleContext = createContext<VariantProps<typeof switchVariants>>(

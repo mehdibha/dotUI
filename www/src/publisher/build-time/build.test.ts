@@ -164,7 +164,7 @@ describe("transformBase", () => {
     // Per-component `const { root } = useStyles()()` destructures are hoisted
     // into one module-level destructure right after the tv() declaration.
     expect(template).toContain(
-      `const alertVariants = tv(${TV_CONFIG_PLACEHOLDER});\nconst { root, title, description, action } = alertVariants();`,
+      `const alertVariants = tv(${TV_CONFIG_PLACEHOLDER});\n\nconst { root, title, description, action } = alertVariants();`,
     )
     // …and no per-component call remains.
     expect(template.match(/alertVariants\(\)/g)).toHaveLength(1)

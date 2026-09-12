@@ -17,6 +17,7 @@ const messageVariants = tv({
       "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-data-[align=end]/message:justify-end group-has-[[data-variant=ghost]]/message:px-0 px-3 text-xs",
   },
 });
+
 const { group, root, avatar, content, header, footer } = messageVariants();
 
 /* -------------------------------------------------------------------------- */

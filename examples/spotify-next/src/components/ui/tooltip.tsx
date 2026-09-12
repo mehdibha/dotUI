@@ -14,6 +14,7 @@ const tooltipVariants = tv({
       "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 [&>svg]:fill-tooltip",
   },
 });
+
 const { content, arrow } = tooltipVariants();
 
 /* -------------------------------------------------------------------------- */

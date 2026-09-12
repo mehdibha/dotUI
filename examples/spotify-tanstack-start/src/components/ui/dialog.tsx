@@ -22,6 +22,7 @@ const dialogVariants = tv({
     closeButton: "absolute top-2 right-2",
   },
 });
+
 const { content, closeButton, header, title, description, body, footer } =
   dialogVariants();
 

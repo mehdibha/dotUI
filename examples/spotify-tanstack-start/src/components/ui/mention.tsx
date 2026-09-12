@@ -22,6 +22,7 @@ const mentionVariants = tv({
     root: "group/mention",
   },
 });
+
 const { root } = mentionVariants();
 
 /* -------------------------------------------------------------------------- */

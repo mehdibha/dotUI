@@ -21,6 +21,7 @@ const menuVariants = tv({
     sectionTitle: "font-medium text-fg-muted py-1 px-1.5 text-xs",
   },
 });
+
 const {
   root,
   item,

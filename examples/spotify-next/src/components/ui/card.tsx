@@ -14,6 +14,7 @@ const cardVariants = tv({
       "flex items-center rounded-b-xl px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
   },
 });
+
 const { root, header, title, description, action, content, footer } =
   cardVariants();
 

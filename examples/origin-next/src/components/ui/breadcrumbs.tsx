@@ -13,6 +13,7 @@ const breadcrumbsVariants = tv({
     separator: "[&_svg]:size-4",
   },
 });
+
 const { root, item, link, separator } = breadcrumbsVariants();
 
 /* -------------------------------------------------------------------------- */

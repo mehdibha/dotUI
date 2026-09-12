@@ -38,6 +38,7 @@ const sliderVariants = tv({
     orientation: "horizontal",
   },
 });
+
 const { root, control, track, fill, thumb, output } = sliderVariants();
 
 /* -------------------------------------------------------------------------- */

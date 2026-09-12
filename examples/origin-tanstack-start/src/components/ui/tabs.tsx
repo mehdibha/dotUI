@@ -57,6 +57,7 @@ const tabsVariants = tv({
     variant: "segmented",
   },
 });
+
 const { root, list, tab, selectionIndicator, panel } = tabsVariants();
 
 type TabsVariant = "segmented" | "line" | "pill" | "enclosed";

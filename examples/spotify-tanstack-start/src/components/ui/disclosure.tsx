@@ -19,6 +19,7 @@ const disclosureVariants = tv({
       "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
   },
 });
+
 const { root, panel, heading, button, marker } = disclosureVariants();
 
 /* -------------------------------------------------------------------------- */

@@ -37,6 +37,7 @@ const avatarVariants = tv({
     },
   },
 });
+
 const { root, image, fallback, badge, group, groupCount } = avatarVariants();
 
 const [AvatarContext, useAvatarContext] = createContext<{

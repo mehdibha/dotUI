@@ -16,6 +16,7 @@ const segmentedControlVariants = tv({
     itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
   },
 });
+
 const { root, item, indicator, itemContent } = segmentedControlVariants();
 
 /* -------------------------------------------------------------------------- */

@@ -21,6 +21,7 @@ const otpFieldVariants = tv({
     separator: "",
   },
 });
+
 const { group, root } = otpFieldVariants();
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;
