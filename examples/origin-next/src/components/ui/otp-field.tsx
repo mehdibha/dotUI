@@ -21,6 +21,7 @@ const otpFieldVariants = tv({
     separator: "",
   },
 });
+const { group } = otpFieldVariants();
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;
 type FieldValidationResult = NonNullable<
@@ -158,7 +159,6 @@ function OTPField({
 }
 
 function OTPFieldGroup({ className, ...props }: OTPFieldGroupProps) {
-  const { group } = otpFieldVariants();
   return (
     <div
       data-slot="otp-field-group"

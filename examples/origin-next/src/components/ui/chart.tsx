@@ -37,6 +37,7 @@ const chartVariants = tv({
     container: "relative",
   },
 });
+const { container } = chartVariants();
 
 /* Chart core: the host, the house defaults, and the frame every chart family
    composes. No mark is imported here — families own theirs, so a bar chart
@@ -865,7 +866,6 @@ export function Chart<TDatum, TXValue extends ChartValue>({
   ...props
 }: ChartProps<TDatum, TXValue>) {
   const draw = useRef<ReturnType<typeof createDrawEntrance> | null>(null);
-  const { container } = chartVariants();
   return (
     <div className={container({ className })}>
       <RendererChart

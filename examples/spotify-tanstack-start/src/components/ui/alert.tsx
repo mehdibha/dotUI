@@ -32,6 +32,7 @@ const alertVariants = tv({
     variant: "neutral",
   },
 });
+const { root, title, description, action } = alertVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -39,7 +40,6 @@ interface AlertProps
   extends React.ComponentProps<"div">, VariantProps<typeof alertVariants> {}
 
 function Alert({ className, variant, ...props }: AlertProps) {
-  const { root } = alertVariants();
   return (
     <div
       data-alert=""
@@ -55,7 +55,6 @@ function Alert({ className, variant, ...props }: AlertProps) {
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
-  const { title } = alertVariants();
   return (
     <div data-alert-title="" className={title({ className })} {...props} />
   );
@@ -66,7 +65,6 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
 function AlertDescription({ className, ...props }: AlertDescriptionProps) {
-  const { description } = alertVariants();
   return (
     <div
       data-alert-description=""
@@ -81,7 +79,6 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
 function AlertAction({ className, ...props }: AlertActionProps) {
-  const { action } = alertVariants();
   return (
     <div data-alert-action="" className={action({ className })} {...props} />
   );

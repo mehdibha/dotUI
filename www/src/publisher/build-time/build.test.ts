@@ -157,10 +157,34 @@ describe("transformBase", () => {
 
     expect(variantIdent).toBe("alertVariants")
     expect(template).not.toContain("useStyles")
-    // `const { root } = useStyles()()` → `const { root } = alertVariants()`.
-    expect(template).toMatch(/const\s*\{\s*root\s*\}\s*=\s*alertVariants\(\)/)
+    // Per-component `const { root } = useStyles()()` destructures are hoisted
+    // into one module-level destructure right after the tv() declaration.
     expect(template).toContain(
-      `const alertVariants = tv(${TV_CONFIG_PLACEHOLDER});`,
+      `const alertVariants = tv(${TV_CONFIG_PLACEHOLDER});\nconst { root, title, description, action } = alertVariants();`,
+    )
+    // …and no per-component call remains.
+    expect(template.match(/alertVariants\(\)/g)).toHaveLength(1)
+  })
+
+  test("marker: outer variant props move into the hoisted slot's calls", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "marker/base.tsx"),
+      componentName: "marker",
+    })
+    expect(template).toContain(
+      "const { root, icon, content } = markerVariants();",
+    )
+    expect(template).toContain("root({ variant, className })")
+    expect(template).not.toContain("markerVariants({")
+  })
+
+  test("toast: aliased slot bindings hoist under their alias", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "toast/base.tsx"),
+      componentName: "toast",
+    })
+    expect(template).toMatch(
+      /^const \{ .*toast: toastStyle.* \} = toastVariants\(\);$/m,
     )
   })
 

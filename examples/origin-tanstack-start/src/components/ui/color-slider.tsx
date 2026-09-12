@@ -33,6 +33,7 @@ const colorSliderVariants = tv({
     orientation: "horizontal",
   },
 });
+const { root, track, output } = colorSliderVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -41,7 +42,6 @@ interface ColorSliderProps extends React.ComponentProps<
 > {}
 
 const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
-  const { root } = colorSliderVariants();
   const descriptionId = useSlotId();
   return (
     <Provider
@@ -76,7 +76,6 @@ const ColorSliderControl = ({
   style,
   ...props
 }: ColorSliderControlProps) => {
-  const { track } = colorSliderVariants();
   return (
     <SliderPrimitives.SliderTrack
       data-slot="color-slider-control"
@@ -103,7 +102,6 @@ interface ColorSliderOutputProps extends React.ComponentProps<
 > {}
 
 const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
-  const { output } = colorSliderVariants();
   return (
     <SliderPrimitives.SliderOutput
       className={composeRenderProps(className, (className) =>

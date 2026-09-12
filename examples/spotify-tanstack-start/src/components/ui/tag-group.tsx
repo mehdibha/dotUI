@@ -15,6 +15,7 @@ const tagGroupVariants = tv({
     tag: "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-md font-medium whitespace-nowrap outline-hidden transition-colors select-ui data-react-aria-pressable:cursor-interactive **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:focus-ring data-href:cursor-interactive data-selection-mode:disabled:cursor-disabled text-xs/relaxed **:[svg]:not-with-[size]:size-3 has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg group-data-[size=sm]/tag-group:h-4.25 h-5.25 px-1.5 group-data-[size=lg]/tag-group:h-6.25 group-data-[size=lg]/tag-group:text-sm bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-accent-muted selected:text-fg-accent",
   },
 });
+const { tagGroup, tagList, tag } = tagGroupVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -23,7 +24,6 @@ interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
 }
 
 function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
-  const { tagGroup } = tagGroupVariants();
   return (
     <TagGroupPrimitives.TagGroup
       data-tag-group=""
@@ -39,7 +39,6 @@ function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
 function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
-  const { tagList } = tagGroupVariants();
   return (
     <TagGroupPrimitives.TagList
       data-tag-list=""
@@ -56,7 +55,6 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 interface TagProps extends TagGroupPrimitives.TagProps {}
 
 function Tag({ className, ...props }: TagProps) {
-  const { tag } = tagGroupVariants();
   const textValue =
     typeof props.children === "string" ? props.children : undefined;
 

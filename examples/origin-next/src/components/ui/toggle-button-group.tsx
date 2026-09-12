@@ -22,6 +22,7 @@ const toggleButtonGroupVariants = tv({
     },
   },
 });
+const { root } = toggleButtonGroupVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -38,7 +39,6 @@ const ToggleButtonGroup = ({
   className,
   ...props
 }: ToggleButtonGroupProps) => {
-  const { root } = toggleButtonGroupVariants();
   return (
     <ToggleButtonProvider variant={variant} size={size} isIconOnly={isIconOnly}>
       <ToggleButtonGroupPrimitives.ToggleButtonGroup

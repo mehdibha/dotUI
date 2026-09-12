@@ -16,6 +16,7 @@ const segmentedControlVariants = tv({
     itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
   },
 });
+const { root, item, indicator, itemContent } = segmentedControlVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -25,7 +26,6 @@ interface SegmentedControlProps extends Omit<
 > {}
 
 const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {
-  const { root } = segmentedControlVariants();
   return (
     <ToggleButtonGroupPrimitives.ToggleButtonGroup
       data-slot="segmented-control"
@@ -50,7 +50,6 @@ const SegmentedControlItem = ({
   children,
   ...props
 }: SegmentedControlItemProps) => {
-  const { item, indicator, itemContent } = segmentedControlVariants();
   return (
     <ToggleButtonPrimitives.ToggleButton
       data-slot="segmented-control-item"

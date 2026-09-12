@@ -19,6 +19,7 @@ const disclosureVariants = tv({
       "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
   },
 });
+const { root, panel, heading, button, marker } = disclosureVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -27,7 +28,6 @@ interface DisclosureProps extends React.ComponentProps<
 > {}
 
 function Disclosure({ className, ...props }: DisclosureProps) {
-  const { root } = disclosureVariants();
   return (
     <DisclosurePrimitives.Disclosure
       data-disclosure=""
@@ -44,7 +44,6 @@ interface DisclosurePanelProps extends React.ComponentProps<
 > {}
 
 function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
-  const { panel } = disclosureVariants();
   return (
     <DisclosurePrimitives.DisclosurePanel
       data-disclosure-panel=""
@@ -63,7 +62,6 @@ interface DisclosureTriggerProps extends React.ComponentProps<
 > {}
 
 function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
-  const { heading, button, marker } = disclosureVariants();
   const glyph = <ChevronDownIcon />;
   return (
     <HeadingPrimitives.Heading className={heading()}>

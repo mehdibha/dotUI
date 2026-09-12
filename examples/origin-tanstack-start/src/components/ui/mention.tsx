@@ -22,6 +22,7 @@ const mentionVariants = tv({
     root: "group/mention",
   },
 });
+const { root } = mentionVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -77,7 +78,6 @@ function Mention({
   onChange,
   ...props
 }: MentionProps) {
-  const { root } = mentionVariants();
   const { startsWith } = AutocompletePrimitive.useFilter({
     sensitivity: "base",
   });

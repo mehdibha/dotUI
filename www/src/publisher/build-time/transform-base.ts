@@ -109,6 +109,169 @@ function resolveStylesHookCalls(
   }
 }
 
+/* ----------------------- slot hoisting ----------------------- */
+
+/** `foo` or `foo: bar` — the binding-pattern entry for one slot. */
+type SlotBinding = { slot: string; local: string }
+
+/**
+ * The published styles function is a plain `tv()` const, so slot functions
+ * are the same for every render — each component's
+ * `const { root } = useStyles()()` can become one module-level destructure
+ * right after the `tv()` declaration. Removes every hoistable statement and
+ * returns the union of their bindings (in first-seen order).
+ *
+ * A statement is hoisted only when it's safe and mechanical:
+ *   - `useStyles()()` (own-styles hook), destructured into an object pattern;
+ *   - an outer variant-props argument, if any, is an object literal and every
+ *     use of the bound slots inside the enclosing function is a call whose
+ *     argument is absent or an object literal — the props are moved into
+ *     those calls (`root({ className })` → `root({ variant, className })`);
+ *   - no local name collides with a module-level value or an earlier hoisted
+ *     slot bound under a different name.
+ * Anything else is left in place for the plain `useStyles()` → `<var>`
+ * rewrite that follows.
+ */
+function hoistSlotDestructures(sourceFile: SourceFile): SlotBinding[] {
+  const moduleNames = new Set<string>()
+  for (const imp of sourceFile.getImportDeclarations()) {
+    const def = imp.getDefaultImport()
+    if (def) moduleNames.add(def.getText())
+    const ns = imp.getNamespaceImport()
+    if (ns) moduleNames.add(ns.getText())
+    for (const n of imp.getNamedImports()) {
+      moduleNames.add(n.getAliasNode()?.getText() ?? n.getName())
+    }
+  }
+  for (const stmt of sourceFile.getStatements()) {
+    if (stmt.isKind(SyntaxKind.VariableStatement)) {
+      for (const decl of stmt.getDeclarations()) {
+        for (const id of decl
+          .getNameNode()
+          .getDescendantsOfKind(SyntaxKind.Identifier)) {
+          moduleNames.add(id.getText())
+        }
+        if (decl.getNameNode().isKind(SyntaxKind.Identifier)) {
+          moduleNames.add(decl.getName())
+        }
+      }
+    } else if (
+      stmt.isKind(SyntaxKind.FunctionDeclaration) ||
+      stmt.isKind(SyntaxKind.ClassDeclaration)
+    ) {
+      const name = stmt.getName()
+      if (name) moduleNames.add(name)
+    }
+  }
+
+  const hoisted = new Map<string, string>() // slot → local
+  const order: SlotBinding[] = []
+
+  for (const stmt of sourceFile.getDescendantsOfKind(
+    SyntaxKind.VariableStatement,
+  )) {
+    if (stmt.wasForgotten()) continue
+    if (stmt.getParent().isKind(SyntaxKind.SourceFile)) continue
+    const decls = stmt.getDeclarations()
+    if (decls.length !== 1) continue
+    const decl = decls[0]!
+    const pattern = decl.getNameNode()
+    if (!pattern.isKind(SyntaxKind.ObjectBindingPattern)) continue
+    const outer = decl.getInitializer()
+    if (!outer?.isKind(SyntaxKind.CallExpression)) continue
+    const inner = outer.getExpression()
+    if (
+      !inner.isKind(SyntaxKind.CallExpression) ||
+      inner.getExpression().getText() !== "useStyles" ||
+      inner.getArguments().length !== 0
+    )
+      continue
+
+    const outerArgs = outer.getArguments()
+    if (outerArgs.length > 1) continue
+    const props = outerArgs[0]
+    if (props && !props.isKind(SyntaxKind.ObjectLiteralExpression)) continue
+
+    const bindings: SlotBinding[] = []
+    let ok = true
+    for (const el of pattern.getElements()) {
+      if (el.getDotDotDotToken() || el.getInitializer()) {
+        ok = false
+        break
+      }
+      const local = el.getNameNode().getText()
+      const slot = el.getPropertyNameNode()?.getText() ?? local
+      const seen = hoisted.get(slot)
+      if (seen ? seen !== local : moduleNames.has(local)) {
+        ok = false
+        break
+      }
+      bindings.push({ slot, local })
+    }
+    if (!ok) continue
+
+    // Uses of the bound slots inside the enclosing function body.
+    const scope = stmt.getFirstAncestor(
+      (n) =>
+        Node.isFunctionDeclaration(n) ||
+        Node.isFunctionExpression(n) ||
+        Node.isArrowFunction(n),
+    )
+    if (!scope) continue
+    const locals = new Set(bindings.map((b) => b.local))
+    const uses = scope
+      .getDescendantsOfKind(SyntaxKind.Identifier)
+      .filter(
+        (id) =>
+          locals.has(id.getText()) &&
+          !id.getFirstAncestorByKind(SyntaxKind.ObjectBindingPattern),
+      )
+    const calls = uses.map((id) => {
+      const parent = id.getParent()
+      return parent.isKind(SyntaxKind.CallExpression) &&
+        parent.getExpression() === id
+        ? parent
+        : undefined
+    })
+    if (props) {
+      // Every use must be a call we can merge the props into.
+      const mergeable = calls.every((call) => {
+        if (!call) return false
+        const args = call.getArguments()
+        return (
+          args.length === 0 ||
+          (args.length === 1 &&
+            args[0]!.isKind(SyntaxKind.ObjectLiteralExpression))
+        )
+      })
+      if (!mergeable) continue
+      const propsText = props
+        .getProperties()
+        .map((p) => p.getText())
+        .join(", ")
+      for (const call of calls) {
+        const arg = call!.getArguments()[0]
+        if (arg?.isKind(SyntaxKind.ObjectLiteralExpression)) {
+          const rest = arg.getProperties().map((p) => p.getText())
+          arg.replaceWithText(`{ ${[propsText, ...rest].join(", ")} }`)
+        } else {
+          call!.addArgument(`{ ${propsText} }`)
+        }
+      }
+    }
+
+    for (const b of bindings) {
+      if (!hoisted.has(b.slot)) {
+        hoisted.set(b.slot, b.local)
+        order.push(b)
+      }
+    }
+    stmt.remove()
+  }
+
+  return order
+}
+
 /* ----------------------- main transform ----------------------- */
 
 export interface TransformBaseInput {
@@ -254,7 +417,10 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     next.replaceWithText(`typeof ${variantIdent}`)
   }
 
-  // 2. Replace `useStyles()` call sites.
+  // 2a. Hoist `const { root } = useStyles()()` destructures to module level.
+  const slotBindings = hoistSlotDestructures(sourceFile)
+
+  // 2. Replace the remaining `useStyles()` call sites.
   for (const call of sourceFile.getDescendantsOfKind(
     SyntaxKind.CallExpression,
   )) {
@@ -332,6 +498,12 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   sourceFile.insertStatements(insertIndex, (writer) => {
     writer.newLine()
     writer.writeLine(`const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`)
+    if (slotBindings.length > 0) {
+      const names = slotBindings
+        .map((b) => (b.slot === b.local ? b.slot : `${b.slot}: ${b.local}`))
+        .join(", ")
+      writer.writeLine(`const { ${names} } = ${variantIdent}();`)
+    }
   })
 }
 

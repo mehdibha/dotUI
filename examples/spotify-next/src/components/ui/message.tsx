@@ -17,13 +17,13 @@ const messageVariants = tv({
       "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-data-[align=end]/message:justify-end group-has-[[data-variant=ghost]]/message:px-0 px-3 text-xs",
   },
 });
+const { group, root, avatar, content, header, footer } = messageVariants();
 
 /* -------------------------------------------------------------------------- */
 
 interface MessageGroupProps extends React.ComponentProps<"div"> {}
 
 const MessageGroup = ({ className, ...props }: MessageGroupProps) => {
-  const { group } = messageVariants();
   return (
     <div data-message-group="" className={group({ className })} {...props} />
   );
@@ -36,7 +36,6 @@ interface MessageProps extends React.ComponentProps<"div"> {
 }
 
 const Message = ({ className, align = "start", ...props }: MessageProps) => {
-  const { root } = messageVariants();
   return (
     <div
       data-message=""
@@ -52,7 +51,6 @@ const Message = ({ className, align = "start", ...props }: MessageProps) => {
 interface MessageAvatarProps extends React.ComponentProps<"div"> {}
 
 const MessageAvatar = ({ className, ...props }: MessageAvatarProps) => {
-  const { avatar } = messageVariants();
   return (
     <div data-message-avatar="" className={avatar({ className })} {...props} />
   );
@@ -63,7 +61,6 @@ const MessageAvatar = ({ className, ...props }: MessageAvatarProps) => {
 interface MessageContentProps extends React.ComponentProps<"div"> {}
 
 const MessageContent = ({ className, ...props }: MessageContentProps) => {
-  const { content } = messageVariants();
   return (
     <div
       data-message-content=""
@@ -78,7 +75,6 @@ const MessageContent = ({ className, ...props }: MessageContentProps) => {
 interface MessageHeaderProps extends React.ComponentProps<"div"> {}
 
 const MessageHeader = ({ className, ...props }: MessageHeaderProps) => {
-  const { header } = messageVariants();
   return (
     <div data-message-header="" className={header({ className })} {...props} />
   );
@@ -89,7 +85,6 @@ const MessageHeader = ({ className, ...props }: MessageHeaderProps) => {
 interface MessageFooterProps extends React.ComponentProps<"div"> {}
 
 const MessageFooter = ({ className, ...props }: MessageFooterProps) => {
-  const { footer } = messageVariants();
   return (
     <div data-message-footer="" className={footer({ className })} {...props} />
   );

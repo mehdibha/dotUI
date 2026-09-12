@@ -41,6 +41,7 @@ const switchVariants = tv({
     size: "md",
   },
 });
+const { root, control, indicator, thumb } = switchVariants();
 
 const SwitchStyleContext = createContext<VariantProps<typeof switchVariants>>(
   {},
@@ -59,7 +60,6 @@ interface SwitchProps
     VariantProps<typeof switchVariants> {}
 
 const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
-  const { root } = switchVariants();
   const autoId = useId();
   const id = idProp ?? autoId;
   const labelId = useSlotId();
@@ -108,7 +108,6 @@ const SwitchControl = ({
   size: sizeProp,
   ...props
 }: SwitchControlProps) => {
-  const { control } = switchVariants();
   const labelContext = useSlottedContext(LabelContext);
   const styleContext = useContext(SwitchStyleContext);
   const { id: labelId } = labelContext ?? {};
@@ -142,7 +141,6 @@ const SwitchControl = ({
 interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
-  const { indicator } = switchVariants();
   const ctx = useContext(InternalSwitchContext);
 
   if (!ctx) {
@@ -179,7 +177,6 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
-  const { thumb } = switchVariants();
   const ctx = useContext(InternalSwitchContext);
 
   return (

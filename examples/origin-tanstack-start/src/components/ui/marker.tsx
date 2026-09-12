@@ -25,6 +25,7 @@ const markerVariants = tv({
     variant: "default",
   },
 });
+const { root, icon, content } = markerVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -33,12 +34,11 @@ interface MarkerProps extends React.ComponentProps<"div"> {
 }
 
 const Marker = ({ className, variant = "default", ...props }: MarkerProps) => {
-  const { root } = markerVariants({ variant });
   return (
     <div
       data-marker=""
       data-variant={variant}
-      className={root({ className })}
+      className={root({ variant, className })}
       {...props}
     />
   );
@@ -49,7 +49,6 @@ const Marker = ({ className, variant = "default", ...props }: MarkerProps) => {
 interface MarkerIconProps extends React.ComponentProps<"span"> {}
 
 const MarkerIcon = ({ className, ...props }: MarkerIconProps) => {
-  const { icon } = markerVariants();
   return (
     <span
       data-marker-icon=""
@@ -65,7 +64,6 @@ const MarkerIcon = ({ className, ...props }: MarkerIconProps) => {
 interface MarkerContentProps extends React.ComponentProps<"span"> {}
 
 const MarkerContent = ({ className, ...props }: MarkerContentProps) => {
-  const { content } = markerVariants();
   return (
     <span
       data-marker-content=""

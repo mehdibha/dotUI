@@ -23,6 +23,7 @@ const messageScrollerVariants = tv({
       "absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 transition-[translate,scale,opacity] duration-200 data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full data-[direction=start]:*:[svg]:rotate-180",
   },
 });
+const { root, viewport, content, item, button } = messageScrollerVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -41,7 +42,6 @@ interface MessageScrollerProps extends React.ComponentProps<
 > {}
 
 const MessageScroller = ({ className, ...props }: MessageScrollerProps) => {
-  const { root } = messageScrollerVariants();
   return (
     <MessageScrollerPrimitive.Root
       data-message-scroller=""
@@ -61,7 +61,6 @@ const MessageScrollerViewport = ({
   className,
   ...props
 }: MessageScrollerViewportProps) => {
-  const { viewport } = messageScrollerVariants();
   return (
     <MessageScrollerPrimitive.Viewport
       data-message-scroller-viewport=""
@@ -81,7 +80,6 @@ const MessageScrollerContent = ({
   className,
   ...props
 }: MessageScrollerContentProps) => {
-  const { content } = messageScrollerVariants();
   return (
     <MessageScrollerPrimitive.Content
       data-message-scroller-content=""
@@ -102,7 +100,6 @@ const MessageScrollerItem = ({
   scrollAnchor = false,
   ...props
 }: MessageScrollerItemProps) => {
-  const { item } = messageScrollerVariants();
   return (
     <MessageScrollerPrimitive.Item
       data-message-scroller-item=""
@@ -125,7 +122,6 @@ const MessageScrollerButton = ({
   direction = "end",
   ...props
 }: MessageScrollerButtonProps) => {
-  const { button } = messageScrollerVariants();
   const buttonStyles = useButtonStyles;
   return (
     <MessageScrollerPrimitive.Button

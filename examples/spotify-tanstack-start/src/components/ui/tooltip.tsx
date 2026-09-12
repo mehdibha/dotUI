@@ -14,6 +14,7 @@ const tooltipVariants = tv({
       "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 [&>svg]:fill-tooltip",
   },
 });
+const { content, arrow } = tooltipVariants();
 
 /* -------------------------------------------------------------------------- */
 interface TooltipProps extends React.ComponentProps<
@@ -43,7 +44,6 @@ function TooltipContent({
   className,
   ...props
 }: TooltipContentProps) {
-  const { content } = tooltipVariants();
   return (
     <TooltipPrimitives.Tooltip
       data-slot="tooltip"
@@ -68,7 +68,6 @@ function TooltipContent({
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
 function TooltipArrow({ className }: TooltipArrowProps) {
-  const { arrow } = tooltipVariants();
   return (
     <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
       <svg

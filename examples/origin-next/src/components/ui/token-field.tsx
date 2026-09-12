@@ -22,6 +22,7 @@ const tokenFieldVariants = tv({
       "rounded-md bg-accent-muted px-0.5 text-fg-accent data-selected:bg-accent data-selected:text-fg-on-accent",
   },
 });
+const { root, input, token } = tokenFieldVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -40,7 +41,6 @@ interface TokenFieldProps extends Omit<
  * you want a visible label.
  */
 function TokenField({ className, ...props }: TokenFieldProps) {
-  const { root } = tokenFieldVariants();
   return <TokenFieldPrimitive className={root({ className })} {...props} />;
 }
 
@@ -70,7 +70,6 @@ function TokenInput({
   children,
   ...props
 }: TokenInputProps) {
-  const { input } = tokenFieldVariants();
   return (
     <TokenInputPrimitive
       data-token-input=""
@@ -91,7 +90,6 @@ interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
 
 /** An inline token within a `TokenInput`. */
 function Token({ className, ...props }: TokenProps) {
-  const { token } = tokenFieldVariants();
   return <TokenPrimitive className={token({ className })} {...props} />;
 }
 

@@ -26,6 +26,7 @@ const colorEditorVariants = tv({
     fieldGroup: "flex flex-1 items-center gap-2",
   },
 });
+const { root, area, fields, fieldGroup } = colorEditorVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -55,7 +56,6 @@ const ColorEditor = ({
   ...props
 }: ColorEditorProps) => {
   const state = React.use(ColorPickerPrimitives.ColorPickerStateContext);
-  const { root } = colorEditorVariants();
   const content = (
     <div className={root({ className })} {...props}>
       {children ?? (
@@ -94,7 +94,6 @@ const ColorEditorArea = ({
   className,
   ...props
 }: ColorEditorAreaProps) => {
-  const { area } = colorEditorVariants();
   return (
     <div className={area({ className })} {...props}>
       {props.children ?? (
@@ -155,7 +154,6 @@ const ColorEditorFields = ({
     defaultFormat,
     onFormatChange,
   );
-  const { fields, fieldGroup } = colorEditorVariants();
   return (
     <div
       className={fields({

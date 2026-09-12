@@ -18,6 +18,7 @@ const modalVariants = tv({
       "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-xl border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-modal,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)] sm:max-w-sm max-h-[calc(var(--visual-viewport-height)-2rem)] sm:max-h-[calc(var(--visual-viewport-height)*.9)] transition-[opacity,scale] duration-enter ease-enter exiting:duration-exit exiting:ease-out motion-reduce:transition-none entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
   },
 });
+const { overlay, modal, backdrop, viewport } = modalVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -51,7 +52,6 @@ const ModalOverlay = ({
   isDismissable = true,
   ...props
 }: ModalOverlayProps) => {
-  const { overlay } = modalVariants();
   return (
     <ModalPrimitives.ModalOverlay
       isDismissable={isDismissable}
@@ -71,7 +71,6 @@ interface ModalPanelProps extends React.ComponentProps<
   typeof ModalPrimitives.Modal
 > {}
 const ModalPanel = ({ children, className, ...props }: ModalPanelProps) => {
-  const { modal } = modalVariants();
   return (
     <ModalPrimitives.Modal
       data-modal=""
@@ -87,13 +86,11 @@ const ModalPanel = ({ children, className, ...props }: ModalPanelProps) => {
 
 interface ModalBackdropProps extends React.ComponentProps<"div"> {}
 const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => {
-  const { backdrop } = modalVariants();
   return <div className={backdrop({ className })} {...props} />;
 };
 
 interface ModalViewportProps extends React.ComponentProps<"div"> {}
 const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
-  const { viewport } = modalVariants();
   return (
     <div
       data-slot="modal-viewport"

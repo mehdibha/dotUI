@@ -21,6 +21,16 @@ const menuVariants = tv({
     sectionTitle: "font-medium text-fg-muted py-1 px-1.5 text-xs",
   },
 });
+const {
+  root,
+  item,
+  indicator,
+  submenuIndicator,
+  itemLabel,
+  itemDescription,
+  section,
+  sectionTitle,
+} = menuVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -37,7 +47,6 @@ const MenuContent = <T extends object>({
   className,
   ...props
 }: MenuContentProps<T>) => {
-  const { root } = menuVariants();
   return (
     <MenuPrimitives.Menu
       data-menu-content=""
@@ -69,7 +78,6 @@ const MenuItem = <T extends object>({
   textValue: textValueProp,
   ...props
 }: MenuItemProps<T>) => {
-  const { item, indicator, submenuIndicator } = menuVariants();
   const textValue =
     textValueProp ||
     (typeof props.children === "string" ? props.children : undefined);
@@ -119,7 +127,6 @@ interface MenuItemLabelProps extends React.ComponentProps<
   typeof MenuPrimitives.Text
 > {}
 const MenuItemLabel = ({ className, ...props }: MenuItemLabelProps) => {
-  const { itemLabel } = menuVariants();
   return (
     <MenuPrimitives.Text
       data-menu-item-label=""
@@ -139,7 +146,6 @@ const MenuItemDescription = ({
   className,
   ...props
 }: MenuItemDescriptionProps) => {
-  const { itemDescription } = menuVariants();
   return (
     <MenuPrimitives.Text
       data-menu-item-description=""
@@ -158,7 +164,6 @@ const MenuSection = <T extends object>({
   className,
   ...props
 }: MenuSectionProps<T>) => {
-  const { section } = menuVariants();
   return (
     <MenuPrimitives.MenuSection
       data-menu-section=""
@@ -177,7 +182,6 @@ interface MenuSectionHeaderProps extends React.ComponentProps<
 > {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
-  const { sectionTitle } = menuVariants();
   return (
     <MenuPrimitives.Header
       data-menu-section-header=""

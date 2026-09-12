@@ -22,6 +22,8 @@ const dialogVariants = tv({
     closeButton: "absolute top-2 right-2",
   },
 });
+const { content, closeButton, header, title, description, body, footer } =
+  dialogVariants();
 
 /* -------------------------------------------------------------------------- */
 
@@ -47,7 +49,6 @@ const DialogContent = ({
   showCloseButton = false,
   ...props
 }: DialogContentProps) => {
-  const { content, closeButton } = dialogVariants();
   return (
     <DialogPrimitive.Dialog
       data-slot="dialog-content"
@@ -80,7 +81,6 @@ const DialogContent = ({
 interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
 const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
-  const { header } = dialogVariants();
   return (
     <header
       data-slot="dialog-header"
@@ -97,7 +97,6 @@ interface DialogTitleProps extends React.ComponentProps<
 > {}
 
 const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
-  const { title } = dialogVariants();
   return (
     <DialogPrimitive.Heading
       slot="title"
@@ -116,7 +115,6 @@ interface DialogDescriptionProps extends Omit<
 > {}
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
-  const { description } = dialogVariants();
   return (
     <TextPrimitives.Text
       data-slot="dialog-description"
@@ -131,8 +129,6 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 const DialogBody = ({ className, ...props }: DialogBodyProps) => {
-  const { body } = dialogVariants();
-
   return (
     <div data-slot="dialog-body" className={body({ className })} {...props} />
   );
@@ -151,7 +147,6 @@ const DialogInset = (props: DialogInsetProps) => {
 type DialogFooterProps = React.ComponentProps<"footer">;
 
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
-  const { footer } = dialogVariants();
   return (
     <footer
       data-slot="dialog-footer"
