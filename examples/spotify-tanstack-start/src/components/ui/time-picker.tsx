@@ -25,7 +25,7 @@ import { useOverlayTriggerState } from "react-stately/useOverlayTriggerState";
 import { useTimeFieldState } from "react-stately/useTimeFieldState";
 
 import { fieldStyles } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const timePickerVariants = tv({
   slots: {

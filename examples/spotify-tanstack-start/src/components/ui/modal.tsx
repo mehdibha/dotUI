@@ -4,7 +4,7 @@ import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ModalPrimitives from "react-aria-components/Modal";
 import { useIsHidden } from "react-aria/private/collections/Hidden";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const modalVariants = tv({
   slots: {

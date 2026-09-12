@@ -14,7 +14,7 @@ import { ArrowUpIcon, ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader } from "@/components/ui/loader";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tableVariants = tv({
   slots: {

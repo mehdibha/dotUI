@@ -4,7 +4,7 @@ import type * as React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DropZonePrimitives from "react-aria-components/DropZone";
 import * as TextPrimitives from "react-aria-components/Text";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const dropZoneVariants = tv({
   slots: {

@@ -6,7 +6,7 @@ import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIn
 import * as TabsPrimitives from "react-aria-components/Tabs";
 
 import { createContext } from "@/lib/context";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tabsVariants = tv({
   slots: {

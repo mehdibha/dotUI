@@ -5,7 +5,7 @@ import * as TagGroupPrimitives from "react-aria-components/TagGroup";
 
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tagGroupVariants = tv({
   slots: {

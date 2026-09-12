@@ -3,7 +3,7 @@
 import { type ComponentProps, createContext, use } from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ProgressBarPrimitive from "react-aria-components/ProgressBar";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const progressBarVariants = tv({
   slots: {

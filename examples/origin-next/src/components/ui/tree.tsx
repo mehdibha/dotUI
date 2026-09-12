@@ -6,7 +6,7 @@ import * as TreePrimitive from "react-aria-components/Tree";
 
 import { ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const treeVariants = tv({
   slots: {

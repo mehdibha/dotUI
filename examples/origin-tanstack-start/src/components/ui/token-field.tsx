@@ -11,7 +11,7 @@ import type {
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
 } from "react-aria-components/TokenField";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tokenFieldVariants = tv({
   slots: {

@@ -10,7 +10,7 @@ import {
 
 import { ArrowDownIcon } from "lucide-react";
 import { buttonStyles } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const messageScrollerVariants = tv({
   slots: {

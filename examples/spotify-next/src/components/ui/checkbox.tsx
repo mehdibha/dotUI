@@ -10,7 +10,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import { CheckIcon, MinusIcon } from "lucide-react";
 import { Label } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const checkboxVariants = tv({
   slots: {

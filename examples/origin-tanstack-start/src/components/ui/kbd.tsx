@@ -1,7 +1,7 @@
 "use client";
 
 import * as KeyboardPrimitive from "react-aria-components/Keyboard";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const kbdVariants = tv({
   slots: {

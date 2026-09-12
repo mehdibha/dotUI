@@ -6,7 +6,7 @@ import * as SliderPrimitive from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const sliderVariants = tv({
   slots: {

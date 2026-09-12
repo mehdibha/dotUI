@@ -8,7 +8,7 @@ import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { ColorThumb } from "@/components/ui/color-thumb";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const colorSliderVariants = tv({
   slots: {

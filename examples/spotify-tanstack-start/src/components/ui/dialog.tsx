@@ -7,7 +7,7 @@ import * as TextPrimitives from "react-aria-components/Text";
 
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const dialogVariants = tv({
   slots: {

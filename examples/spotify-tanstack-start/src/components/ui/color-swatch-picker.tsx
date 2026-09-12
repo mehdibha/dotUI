@@ -5,7 +5,7 @@ import * as ColorSwatchPickerPrimitives from "react-aria-components/ColorSwatchP
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { ColorSwatch } from "@/components/ui/color-swatch";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const colorSwatchPickerVariants = tv({
   slots: {

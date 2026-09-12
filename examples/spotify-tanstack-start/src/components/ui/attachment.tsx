@@ -3,7 +3,7 @@
 import type * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const attachmentVariants = tv({
   slots: {

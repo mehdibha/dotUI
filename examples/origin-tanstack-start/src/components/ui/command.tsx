@@ -9,7 +9,7 @@ import {
   ListBoxSectionHeader,
 } from "@/components/ui/list-box";
 import { SearchField } from "@/components/ui/search-field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const commandVariants = tv({
   base: "group/command flex w-full flex-col gap-1 text-fg max-h-[inherit] **:data-search-field:shrink-0 **:data-listbox:min-h-0 **:data-listbox:overflow-y-auto in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2 in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2 **:data-listbox-item:py-1.5 **:data-listbox-section-header:py-1.5 **:data-listbox-section-header:font-medium **:data-search-field:px-2 **:data-search-field:pt-2 **:data-search-field:pb-0 **:data-listbox:scroll-py-2 **:data-listbox:pt-0 **:data-listbox:pb-2 **:data-listbox:**:data-separator:my-2 **:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(2))))] **:data-listbox:px-2 **:data-listbox:**:data-separator:-mx-2 in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2 in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",

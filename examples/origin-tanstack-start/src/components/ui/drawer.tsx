@@ -8,7 +8,7 @@ import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
 import { useOverlay } from "react-aria/useOverlay";
 import { useOverlayTriggerState } from "react-stately";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const drawerVariants = tv({
   slots: {

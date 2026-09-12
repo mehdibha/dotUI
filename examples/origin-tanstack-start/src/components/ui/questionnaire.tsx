@@ -6,7 +6,7 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonStyles } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const questionnaireVariants = tv({
   slots: {

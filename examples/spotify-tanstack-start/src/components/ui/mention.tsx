@@ -15,7 +15,7 @@ import { useControlledState } from "react-stately/useControlledState";
 import type { PopoverProps } from "@/components/ui/popover";
 import { TokenField } from "@/components/ui/token-field";
 import type { TokenFieldProps } from "@/components/ui/token-field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const mentionVariants = tv({
   slots: {

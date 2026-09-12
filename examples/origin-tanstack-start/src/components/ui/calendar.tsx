@@ -7,7 +7,7 @@ import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const calendarVariants = tv({
   slots: {

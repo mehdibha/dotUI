@@ -5,7 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const segmentedControlVariants = tv({
   slots: {

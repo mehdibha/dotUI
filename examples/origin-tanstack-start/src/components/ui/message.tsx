@@ -1,7 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const messageVariants = tv({
   slots: {

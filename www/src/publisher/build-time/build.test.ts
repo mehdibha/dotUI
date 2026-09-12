@@ -216,6 +216,23 @@ describe("transformBase", () => {
     )
   })
 
+  test("tailwind-variants import: adds `tv`, keeps `VariantProps` only when used", () => {
+    const accordion = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "accordion/base.tsx"),
+      componentName: "accordion",
+    }).template
+    expect(accordion).toContain('import { tv } from "tailwind-variants"')
+    expect(accordion).not.toContain("VariantProps")
+
+    const button = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "button/base.tsx"),
+      componentName: "button",
+    }).template
+    expect(button).toContain(
+      'import { type VariantProps, tv } from "tailwind-variants"',
+    )
+  })
+
   test("loader ring variant: transform works on variant base files", () => {
     const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "loader/base.ring.tsx"),

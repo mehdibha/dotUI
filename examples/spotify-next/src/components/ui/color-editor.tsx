@@ -16,7 +16,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const colorEditorVariants = tv({
   slots: {

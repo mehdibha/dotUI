@@ -20,7 +20,7 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import type { TooltipContentProps } from "@/components/ui/tooltip";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const sidebarVariants = tv({
   slots: {

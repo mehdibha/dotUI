@@ -7,7 +7,7 @@ import { useSlottedContext } from "react-aria-components/slots";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerHandle } from "@/components/ui/drawer";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const popoverVariants = tv({
   slots: {

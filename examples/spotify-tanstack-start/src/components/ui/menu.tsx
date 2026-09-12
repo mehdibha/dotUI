@@ -5,7 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const menuVariants = tv({
   slots: {

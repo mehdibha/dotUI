@@ -12,7 +12,7 @@
  *
  * produces:
  *
- *   import { tv, type VariantProps } from "tailwind-variants";
+ *   import { tv, type VariantProps } from "tailwind-variants"; // tv added
  *   const buttonVariants = tv(__TV_CONFIG__);
  *   type ButtonVariants = VariantProps<typeof buttonVariants>;
  *   ...
@@ -688,7 +688,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     hoist,
   })
 
-  // 6. Ensure `tailwind-variants` import provides both `tv` and `VariantProps`.
+  // 6. Ensure `tailwind-variants` import provides `tv`.
   ensureTailwindVariantsImport(sourceFile)
 
   // 7. Insert the variant declaration after the last import. ts-morph drops a
@@ -732,19 +732,19 @@ function findNextVariantProps(
   return undefined
 }
 
+/** The injected `tv()` needs `tv`; whatever else the source imported from
+ *  tailwind-variants (`VariantProps`, when used) is kept as authored. */
 function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
   const existing = sourceFile.getImportDeclaration(
     (imp) => imp.getModuleSpecifierValue() === "tailwind-variants",
   )
   if (existing) {
-    // Make sure both `tv` and `VariantProps` are present.
     ensureNamedImport(existing, "tv", false)
-    ensureNamedImport(existing, "VariantProps", true)
     return
   }
   sourceFile.addImportDeclaration({
     moduleSpecifier: "tailwind-variants",
-    namedImports: [{ name: "tv" }, { name: "VariantProps", isTypeOnly: true }],
+    namedImports: [{ name: "tv" }],
   })
 }
 

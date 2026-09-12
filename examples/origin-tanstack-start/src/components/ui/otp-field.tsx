@@ -11,7 +11,7 @@ import * as TextPrimitive from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Input } from "@/components/ui/input";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const otpFieldVariants = tv({
   slots: {

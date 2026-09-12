@@ -9,7 +9,7 @@ import { Provider, useSlottedContext } from "react-aria-components/slots";
 import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Label } from "@/components/ui/field";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const radioGroupVariants = tv({
   slots: {
