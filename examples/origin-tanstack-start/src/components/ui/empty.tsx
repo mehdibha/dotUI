@@ -1,5 +1,6 @@
 import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
+
 const emptyVariants = tv({
   slots: {
     base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-xl p-6",
@@ -28,12 +29,16 @@ const emptyVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface EmptyProps extends React.ComponentProps<"div"> {}
 
 const Empty = ({ className, ...props }: EmptyProps) => {
   const { base } = emptyVariants();
   return <div data-slot="empty" className={base({ className })} {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface EmptyHeaderProps extends React.ComponentProps<"div"> {}
 
@@ -48,6 +53,8 @@ const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface EmptyTitleProps extends React.ComponentProps<"div"> {}
 
 const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
@@ -56,6 +63,8 @@ const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
     <div data-slot="empty-title" className={title({ className })} {...props} />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface EmptyDescriptionProps extends React.ComponentProps<"div"> {}
 
@@ -70,6 +79,8 @@ const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface EmptyContentProps extends React.ComponentProps<"div"> {}
 
 const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
@@ -83,6 +94,8 @@ const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface EmptyMediaProps
   extends React.ComponentProps<"div">, VariantProps<typeof emptyVariants> {}
 const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
@@ -95,6 +108,8 @@ const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   EmptyContentProps,

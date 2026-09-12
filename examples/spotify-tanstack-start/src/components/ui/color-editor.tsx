@@ -17,6 +17,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const colorEditorVariants = tv({
   slots: {
     root: "flex w-fit flex-col gap-2",
@@ -25,6 +26,8 @@ const colorEditorVariants = tv({
     fieldGroup: "flex flex-1 items-center gap-2",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 type ColorFormat = "hex" | "rgb" | "hsl" | "hsb";
 
@@ -80,6 +83,8 @@ const ColorEditor = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface ColorEditorAreaProps extends React.ComponentProps<"div"> {
   showAlphaChannel?: boolean;
 }
@@ -124,6 +129,8 @@ const ColorEditorArea = ({
     </div>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface ColorEditorFieldsProps extends Omit<
   React.ComponentProps<"div">,
@@ -193,6 +200,8 @@ const ColorEditorFields = ({
     </div>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ColorEditorAreaProps, ColorEditorFieldsProps, ColorEditorProps };
 export { ColorEditor, ColorEditorArea, ColorEditorFields };

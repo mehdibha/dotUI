@@ -60,8 +60,8 @@ describe("codeOptions end-to-end (preset → publish → format)", () => {
   test("sectionComments survives the codec round-trip", async () => {
     const { decoded } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
-      sectionComments: true,
+      sectionComments: false,
     })
-    expect(decoded?.sectionComments).toBe(true)
+    expect(decoded?.sectionComments).toBe(false)
   })
 })

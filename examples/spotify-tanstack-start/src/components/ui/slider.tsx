@@ -7,6 +7,7 @@ import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import { useSlotId } from "react-aria/private/utils/useId";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const sliderVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
@@ -37,6 +38,8 @@ const sliderVariants = tv({
     orientation: "horizontal",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface SliderProps extends React.ComponentProps<
   typeof SliderPrimitive.Slider
@@ -70,6 +73,8 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
     </SliderPrimitive.Slider>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SliderControlProps extends React.ComponentProps<
   typeof SliderPrimitive.SliderTrack
@@ -107,6 +112,8 @@ const SliderControl = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
@@ -125,6 +132,8 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface SliderFillProps extends React.ComponentProps<
   typeof SliderPrimitive.SliderFill
 > {}
@@ -142,6 +151,8 @@ const SliderFill = ({ className, ...props }: SliderFillProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SliderThumbProps extends React.ComponentProps<
   typeof SliderPrimitive.SliderThumb
@@ -162,6 +173,8 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SliderOutputProps extends React.ComponentProps<
   typeof SliderPrimitive.SliderOutput
@@ -186,6 +199,8 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
     </SliderPrimitive.SliderOutput>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   SliderControlProps,

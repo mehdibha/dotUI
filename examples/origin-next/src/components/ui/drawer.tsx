@@ -9,6 +9,7 @@ import { ClearPressResponder } from "react-aria/private/interactions/PressRespon
 import { useOverlay } from "react-aria/useOverlay";
 import { useOverlayTriggerState } from "react-stately";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const drawerVariants = tv({
   slots: {
     overlay:
@@ -58,6 +59,8 @@ const drawerVariants = tv({
     placement: "bottom",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 type DrawerPlacement = "top" | "bottom" | "left" | "right";
 
@@ -231,6 +234,8 @@ function Drawer({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
 function DrawerHandle({ className, ...props }: DrawerHandleProps) {
@@ -252,6 +257,8 @@ function DrawerHandle({ className, ...props }: DrawerHandleProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
 function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
@@ -269,11 +276,15 @@ function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
 function DrawerProvider(props: DrawerProviderProps) {
   return <DrawerPrimitive.Provider {...props} />;
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
@@ -288,6 +299,8 @@ function DrawerIndent({ className, ...props }: DrawerIndentProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface DrawerIndentBackgroundProps
   extends DrawerPrimitive.IndentBackground.Props {}

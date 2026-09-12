@@ -6,6 +6,8 @@ import * as TimeFieldPrimitive from "react-aria-components/TimeField";
 import { cn } from "@/lib/utils";
 import { fieldStyles as useStyles } from "@/components/ui/field";
 
+/* -------------------------------------------------------------------------- */
+
 interface TimeFieldProps<
   T extends TimeFieldPrimitive.TimeValue,
 > extends TimeFieldPrimitive.TimeFieldProps<T> {}
@@ -26,6 +28,8 @@ const TimeField = <T extends TimeFieldPrimitive.TimeValue>({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { TimeFieldProps };
 export { TimeField };

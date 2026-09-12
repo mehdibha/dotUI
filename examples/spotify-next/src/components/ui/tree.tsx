@@ -7,6 +7,7 @@ import * as TreePrimitive from "react-aria-components/Tree";
 import { ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const treeVariants = tv({
   slots: {
     root: "flex max-h-[inherit] flex-col gap-px overflow-auto outline-hidden [--tree-indent:--spacing(4)] data-empty:items-center data-empty:justify-center text-sm",
@@ -31,6 +32,8 @@ const treeVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface TreeProps<T> extends TreePrimitive.TreeProps<T> {}
 
 const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
@@ -43,6 +46,8 @@ const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TreeItemProps<T> extends TreePrimitive.TreeItemProps<T> {}
 
@@ -66,6 +71,8 @@ const TreeItem = <T extends object>({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface TreeItemContentProps extends TreePrimitive.TreeItemContentProps {}
 
@@ -112,6 +119,8 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
     </TreePrimitive.TreeItemContent>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { TreeItemContentProps, TreeItemProps, TreeProps };
 export { Tree, TreeItem, TreeItemContent };

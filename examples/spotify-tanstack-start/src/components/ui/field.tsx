@@ -11,6 +11,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { Text } from "@/components/ui/text";
+
 const fieldVariants = tv({
   slots: {
     fieldset: "",
@@ -44,6 +45,8 @@ const fieldVariants = tv({
 
 export { fieldVariants as fieldStyles };
 
+/* -------------------------------------------------------------------------- */
+
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
 function Fieldset({ className, ...props }: FieldsetProps) {
@@ -57,6 +60,8 @@ function Fieldset({ className, ...props }: FieldsetProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
 function Legend({ className, ...props }: LegendProps) {
@@ -65,6 +70,8 @@ function Legend({ className, ...props }: LegendProps) {
     <legend data-slot="legend" className={legend({ className })} {...props} />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
@@ -78,6 +85,8 @@ function FieldGroup({ className, ...props }: FieldGroupProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface FieldProps
   extends React.ComponentProps<"div">, VariantProps<typeof fieldVariants> {}
@@ -114,6 +123,8 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface FieldContentProps extends React.ComponentProps<"div"> {}
 
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
@@ -126,6 +137,8 @@ const FieldContent = ({ className, ...props }: FieldContentProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface LabelProps extends React.ComponentProps<
   typeof LabelPrimitives.Label
@@ -145,6 +158,8 @@ const Label = ({ children, className, ...props }: LabelProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DescriptionProps extends Omit<
   React.ComponentProps<typeof Text>,
   "slot"
@@ -163,6 +178,8 @@ const Description = ({ className, ...props }: DescriptionProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface FieldErrorProps extends React.ComponentProps<
   typeof FieldErrorPrimitives.FieldError
 > {}
@@ -179,6 +196,8 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   DescriptionProps,

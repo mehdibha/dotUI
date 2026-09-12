@@ -10,6 +10,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 import { type VariantProps, tv } from "tailwind-variants";
 
 import { Label } from "@/components/ui/field";
+
 const switchVariants = tv({
   slots: {
     root: "flex items-center has-data-description:items-start gap-2",
@@ -49,6 +50,8 @@ const InternalSwitchContext = createContext<
       VariantProps<typeof switchVariants>)
   | null
 >(null);
+
+/* -------------------------------------------------------------------------- */
 
 interface SwitchProps
   extends
@@ -93,6 +96,8 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface SwitchControlProps
   extends
     React.ComponentProps<typeof SwitchPrimitive.SwitchButton>,
@@ -132,6 +137,8 @@ const SwitchControl = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
@@ -167,6 +174,8 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
@@ -190,6 +199,8 @@ const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   SwitchControlProps,

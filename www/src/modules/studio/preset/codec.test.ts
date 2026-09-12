@@ -80,7 +80,7 @@ describe("preset codec — legacy migration", () => {
         "--icon-stroke-width": "1.5",
       },
       i: "tabler",
-      o: { ...DEFAULT_CODE_OPTIONS, sectionComments: true },
+      o: { ...DEFAULT_CODE_OPTIONS, sectionComments: false },
     })
     const { state, codeOptions } = decodePreset(encoded)
     expect(state.brand).toBe("#5e6ad2")
@@ -93,7 +93,7 @@ describe("preset codec — legacy migration", () => {
     expect(state.bodyFont).toBe("Inter")
     expect(state.iconLibrary).toBe("tabler")
     expect(state.iconStroke).toBe(1.5)
-    expect(codeOptions?.sectionComments).toBe(true)
+    expect(codeOptions?.sectionComments).toBe(false)
   })
 
   it("migrates a v1 color recipe through the v2 migration first", () => {

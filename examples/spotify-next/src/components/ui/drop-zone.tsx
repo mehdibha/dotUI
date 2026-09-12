@@ -5,6 +5,7 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DropZonePrimitives from "react-aria-components/DropZone";
 import * as TextPrimitives from "react-aria-components/Text";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const dropZoneVariants = tv({
   slots: {
     dropzone:
@@ -12,6 +13,8 @@ const dropZoneVariants = tv({
     label: "text-base",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface DropZoneProps extends React.ComponentProps<
   typeof DropZonePrimitives.DropZone
@@ -28,6 +31,8 @@ const DropZone = ({ className, ...props }: DropZoneProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DropZoneLabelProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
   "slot"
@@ -42,6 +47,8 @@ const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { DropZoneLabelProps, DropZoneProps };
 export { DropZone, DropZoneLabel };

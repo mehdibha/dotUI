@@ -2,6 +2,7 @@
 
 import * as KeyboardPrimitive from "react-aria-components/Keyboard";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const kbdVariants = tv({
   slots: {
     group: "inline-flex items-center gap-1",
@@ -9,12 +10,16 @@ const kbdVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
 const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
   const { group } = kbdVariants();
   return <kbd data-kbd-group="" className={group({ className })} {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface KbdProps extends React.ComponentProps<
   typeof KeyboardPrimitive.Keyboard
@@ -30,6 +35,8 @@ const Kbd = ({ className, ...props }: KbdProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { KbdGroupProps, KbdProps };
 export { Kbd, KbdGroup };

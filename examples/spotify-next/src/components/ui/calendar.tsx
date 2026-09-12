@@ -8,6 +8,7 @@ import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const calendarVariants = tv({
   slots: {
     root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--calendar-cell-radius)] [--cell-size:var(--calendar-cell-size)]",
@@ -22,6 +23,8 @@ const calendarVariants = tv({
       "flex size-full items-center justify-center focus-reset transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-accent-muted in-focus-visible:focus-ring in-data-calendar:contents in-selection-start:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:text-fg-on-accent in-selection-end:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent rounded-(--cell-radius)",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface CalendarProps<
   T extends CalendarPrimitive.DateValue,
@@ -61,6 +64,8 @@ const Calendar = <T extends CalendarPrimitive.DateValue>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface RangeCalendarProps<
   T extends CalendarPrimitive.DateValue,
 > extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
@@ -99,6 +104,8 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
   const { header } = calendarVariants();
@@ -123,6 +130,8 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface CalendarHeadingProps extends React.ComponentProps<
   typeof CalendarPrimitive.Heading
 > {}
@@ -140,6 +149,8 @@ const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface CalendarGridProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGrid
@@ -172,6 +183,8 @@ const CalendarGrid = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface CalendarGridHeaderProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGridHeader
 > {}
@@ -192,6 +205,8 @@ const CalendarGridHeader = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface CalendarHeaderCellProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarHeaderCell
 > {}
@@ -209,6 +224,8 @@ const CalendarHeaderCell = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface CalendarGridBodyProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarGridBody
 > {}
@@ -222,6 +239,8 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface CalendarCellProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarCell
@@ -246,6 +265,8 @@ const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
     </CalendarPrimitive.CalendarCell>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   CalendarCellProps,

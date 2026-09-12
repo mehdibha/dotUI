@@ -8,6 +8,7 @@ import * as TextPrimitives from "react-aria-components/Text";
 import { XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const dialogVariants = tv({
   slots: {
     content:
@@ -22,6 +23,8 @@ const dialogVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface DialogProps extends React.ComponentProps<
   typeof DialogPrimitive.DialogTrigger
 > {}
@@ -29,6 +32,8 @@ interface DialogProps extends React.ComponentProps<
 const Dialog = (props: DialogProps) => {
   return <DialogPrimitive.DialogTrigger {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface DialogContentProps extends React.ComponentProps<
   typeof DialogPrimitive.Dialog
@@ -70,6 +75,8 @@ const DialogContent = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
 const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
@@ -82,6 +89,8 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface DialogTitleProps extends React.ComponentProps<
   typeof DialogPrimitive.Heading
@@ -99,6 +108,8 @@ const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DialogDescriptionProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
   "slot"
@@ -115,6 +126,8 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 const DialogBody = ({ className, ...props }: DialogBodyProps) => {
@@ -125,11 +138,15 @@ const DialogBody = ({ className, ...props }: DialogBodyProps) => {
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 type DialogInsetProps = React.ComponentProps<"div">;
 
 const DialogInset = (props: DialogInsetProps) => {
   return <div data-slot="dialog-inset" {...props} />;
 };
+
+/* -------------------------------------------------------------------------- */
 
 type DialogFooterProps = React.ComponentProps<"footer">;
 
@@ -143,6 +160,8 @@ const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   DialogBodyProps,

@@ -6,6 +6,8 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { fieldStyles as useStyles } from "@/components/ui/field";
 
+/* -------------------------------------------------------------------------- */
+
 interface ColorFieldProps extends React.ComponentProps<
   typeof ColorFieldPrimitives.ColorField
 > {}
@@ -22,6 +24,8 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { ColorFieldProps };
 export { ColorField };

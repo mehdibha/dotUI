@@ -16,11 +16,14 @@ import type { PopoverProps } from "@/components/ui/popover";
 import { TokenField } from "@/components/ui/token-field";
 import type { TokenFieldProps } from "@/components/ui/token-field";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const mentionVariants = tv({
   slots: {
     root: "group/mention",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface MentionState {
   /** The trigger text that opened the suggestions (e.g. `"@"` or `"/"`), or null while closed. */
@@ -230,6 +233,8 @@ function Mention({
 }
 
 const emptyValue = new TokenFieldValue([]);
+
+/* -------------------------------------------------------------------------- */
 
 export type { MentionProps, MentionState };
 export { Mention };

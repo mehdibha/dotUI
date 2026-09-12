@@ -21,6 +21,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import type { TooltipContentProps } from "@/components/ui/tooltip";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const sidebarVariants = tv({
   slots: {
     wrapper:
@@ -91,6 +92,8 @@ const [SidebarContext, useSidebarContext] = createContext<SidebarContextValue>({
 function useSidebar(): SidebarContextValue {
   return useSidebarContext("useSidebar");
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarProviderProps extends React.ComponentProps<"div"> {
   defaultOpen?: boolean;
@@ -175,6 +178,8 @@ function SidebarProvider({
     </SidebarContext>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 type SidebarCollapsible = "offcanvas" | "icon" | "none";
 
@@ -302,6 +307,8 @@ function Sidebar({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarInsetProps extends React.ComponentProps<"main"> {}
 
 function SidebarInset({ className, ...props }: SidebarInsetProps) {
@@ -314,6 +321,8 @@ function SidebarInset({ className, ...props }: SidebarInsetProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarTriggerProps extends React.ComponentProps<typeof Button> {}
 
@@ -342,6 +351,8 @@ function SidebarTrigger({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarRailProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {}
@@ -360,6 +371,8 @@ function SidebarRail({ className, ...props }: SidebarRailProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarHeaderProps extends React.ComponentProps<
   typeof HeaderPrimitives.Header
 > {}
@@ -374,6 +387,8 @@ function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarFooterProps extends React.ComponentProps<"div"> {}
 
@@ -390,6 +405,8 @@ function SidebarFooter({ className, ...props }: SidebarFooterProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarContentProps extends React.ComponentProps<"div"> {}
 
 function SidebarContent({ className, ...props }: SidebarContentProps) {
@@ -405,6 +422,8 @@ function SidebarContent({ className, ...props }: SidebarContentProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarSeparatorProps extends React.ComponentProps<
   typeof Separator
 > {}
@@ -413,6 +432,8 @@ function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
   const { separator } = sidebarVariants();
   return <Separator className={separator({ className })} {...props} />;
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarGroupProps extends React.ComponentProps<"div"> {}
 
@@ -432,6 +453,8 @@ function SidebarGroup({ className, ...props }: SidebarGroupProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarGroupLabelProps extends React.ComponentProps<
   typeof HeadingPrimitives.Heading
 > {}
@@ -446,6 +469,8 @@ function SidebarGroupLabel({ className, ...props }: SidebarGroupLabelProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarGroupActionProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
@@ -464,6 +489,8 @@ function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarGroupContentProps extends React.ComponentProps<"div"> {}
 
 function SidebarGroupContent({
@@ -480,6 +507,8 @@ function SidebarGroupContent({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarMenuProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenu({ className, ...props }: SidebarMenuProps) {
@@ -488,6 +517,8 @@ function SidebarMenu({ className, ...props }: SidebarMenuProps) {
     <ul data-slot="sidebar-menu" className={menu({ className })} {...props} />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarMenuItemProps extends React.ComponentProps<"li"> {}
 
@@ -501,6 +532,8 @@ function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarMenuButtonProps extends Omit<
   React.ComponentProps<typeof ButtonPrimitives.Button>,
@@ -587,6 +620,8 @@ function SidebarMenuButton({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarMenuActionProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
 > {
@@ -612,6 +647,8 @@ function SidebarMenuAction({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarMenuBadgeProps extends React.ComponentProps<"div"> {}
 
 function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
@@ -624,6 +661,8 @@ function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarMenuSkeletonProps extends React.ComponentProps<"div"> {
   /** Render a leading icon-sized placeholder. */
@@ -664,6 +703,8 @@ function SidebarMenuSkeleton({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarMenuSubProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
@@ -677,6 +718,8 @@ function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
   );
 }
 
+/* -------------------------------------------------------------------------- */
+
 interface SidebarMenuSubItemProps extends React.ComponentProps<"li"> {}
 
 function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
@@ -689,6 +732,8 @@ function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface SidebarMenuSubButtonProps extends Omit<
   React.ComponentProps<typeof ButtonPrimitives.Button>,
@@ -745,6 +790,8 @@ function SidebarMenuSubButton({
     </ButtonPrimitives.Button>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   SidebarContentProps,

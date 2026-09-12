@@ -7,6 +7,7 @@ import { CheckIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonStyles as useButtonStyles } from "@/components/ui/button";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const questionnaireVariants = tv({
   slots: {
     root: "flex w-full min-w-0 flex-col gap-4 [--questionnaire-title-gap:--spacing(4)]",
@@ -39,6 +40,8 @@ const questionnaireVariants = tv({
   },
 });
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Root
 > {}
@@ -53,6 +56,8 @@ const Questionnaire = ({ className, ...props }: QuestionnaireProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnaireProgressProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Progress
@@ -72,6 +77,8 @@ const QuestionnaireProgress = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireItemProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Item
 > {}
@@ -86,6 +93,8 @@ const QuestionnaireItem = ({ className, ...props }: QuestionnaireItemProps) => {
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnaireTitleProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Title
@@ -105,6 +114,8 @@ const QuestionnaireTitle = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireDescriptionProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Description
 > {}
@@ -123,6 +134,8 @@ const QuestionnaireDescription = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireChoicesProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Choices
 > {}
@@ -140,6 +153,8 @@ const QuestionnaireChoices = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnaireChoiceProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Choice
@@ -197,6 +212,8 @@ const QuestionnaireChoice = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireChoiceDescriptionProps extends React.ComponentProps<"span"> {}
 
 const QuestionnaireChoiceDescription = ({
@@ -212,6 +229,8 @@ const QuestionnaireChoiceDescription = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnaireInputProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Input
@@ -233,6 +252,8 @@ const QuestionnaireInput = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireErrorProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Error
 > {}
@@ -251,6 +272,8 @@ const QuestionnaireError = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireActionsProps extends React.ComponentProps<"div"> {}
 
 const QuestionnaireActions = ({
@@ -266,6 +289,8 @@ const QuestionnaireActions = ({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnairePreviousProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Previous
@@ -293,6 +318,8 @@ const QuestionnairePrevious = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireSkipProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Skip
 > {}
@@ -318,6 +345,8 @@ const QuestionnaireSkip = ({
     </QuestionnairePrimitive.Skip>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface QuestionnaireNextProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Next
@@ -345,6 +374,8 @@ const QuestionnaireNext = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 interface QuestionnaireSubmitProps extends React.ComponentProps<
   typeof QuestionnairePrimitive.Submit
 > {}
@@ -370,6 +401,8 @@ const QuestionnaireSubmit = ({
     </QuestionnairePrimitive.Submit>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type {
   QuestionnaireActionsProps,

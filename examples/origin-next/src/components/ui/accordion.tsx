@@ -1,6 +1,7 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as AccordionPrimitives from "react-aria-components/DisclosureGroup";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const accordionVariants = tv({
   base: "flex w-full flex-col **:data-disclosure:not-last:border-b",
 });

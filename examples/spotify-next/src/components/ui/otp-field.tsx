@@ -12,6 +12,7 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import { Input } from "@/components/ui/input";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const otpFieldVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 group/otp-field **:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",

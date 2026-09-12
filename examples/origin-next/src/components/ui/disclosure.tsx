@@ -6,6 +6,7 @@ import * as DisclosurePrimitives from "react-aria-components/Disclosure";
 import * as HeadingPrimitives from "react-aria-components/Heading";
 import { ChevronDownIcon } from "lucide-react";
 import { tv } from "tailwind-variants";
+
 const disclosureVariants = tv({
   slots: {
     root: "group/disclosure w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
@@ -18,6 +19,8 @@ const disclosureVariants = tv({
       "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
   },
 });
+
+/* -------------------------------------------------------------------------- */
 
 interface DisclosureProps extends React.ComponentProps<
   typeof DisclosurePrimitives.Disclosure
@@ -33,6 +36,8 @@ function Disclosure({ className, ...props }: DisclosureProps) {
     />
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface DisclosurePanelProps extends React.ComponentProps<
   typeof DisclosurePrimitives.DisclosurePanel
@@ -50,6 +55,8 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
     </DisclosurePrimitives.DisclosurePanel>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 interface DisclosureTriggerProps extends React.ComponentProps<
   typeof ButtonPrimitives.Button
@@ -80,6 +87,8 @@ function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
     </HeadingPrimitives.Heading>
   );
 }
+
+/* -------------------------------------------------------------------------- */
 
 export type { DisclosurePanelProps, DisclosureProps, DisclosureTriggerProps };
 export { Disclosure, DisclosurePanel, DisclosureTrigger };

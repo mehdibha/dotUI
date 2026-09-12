@@ -19,6 +19,8 @@ import type { ListBoxProps } from "@/components/ui/list-box";
 import { Popover } from "@/components/ui/popover";
 import type { PopoverProps } from "@/components/ui/popover";
 
+/* -------------------------------------------------------------------------- */
+
 type SelectSelectionMode = "single" | "multiple";
 
 interface SelectProps<
@@ -44,6 +46,8 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+
 const SelectTrigger = (props: ButtonProps) => {
   return (
     <Button {...props}>
@@ -58,6 +62,8 @@ const SelectTrigger = (props: ButtonProps) => {
     </Button>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SelectValueProps<
   T extends object,
@@ -87,6 +93,8 @@ const SelectValue = <T extends object>({
     </SelectPrimitives.SelectValue>
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 interface SelectContentProps<T extends object>
   extends

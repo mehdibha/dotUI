@@ -4,6 +4,7 @@ import type React from "react";
 import * as SeparatorPrimitives from "react-aria-components/Separator";
 import { useSlottedContext } from "react-aria-components/slots";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const separatorVariants = tv({
   base: "separator shrink-0 border-0 bg-border",
   variants: {

@@ -31,6 +31,7 @@ import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip";
 import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal";
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale";
 import { tv, type VariantProps } from "tailwind-variants";
+
 const chartVariants = tv({
   slots: {
     container: "relative",

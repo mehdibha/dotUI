@@ -6,6 +6,8 @@ import * as DateFieldPrimitive from "react-aria-components/DateField";
 import { cn } from "@/lib/utils";
 import { fieldStyles as useStyles } from "@/components/ui/field";
 
+/* -------------------------------------------------------------------------- */
+
 interface DateFieldProps<
   T extends DateFieldPrimitive.DateValue,
 > extends DateFieldPrimitive.DateFieldProps<T> {}
@@ -26,6 +28,8 @@ const DateField = <T extends DateFieldPrimitive.DateValue>({
     />
   );
 };
+
+/* -------------------------------------------------------------------------- */
 
 export type { DateFieldProps };
 export { DateField };
