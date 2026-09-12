@@ -44,17 +44,17 @@ async function exportButton(codeOptions: typeof DEFAULT_CODE_OPTIONS) {
 }
 
 describe("codeOptions end-to-end (preset → publish → format)", () => {
-  test("classArrays:false collapses tv class lists in the exported file", async () => {
+  test("classArrays:true keeps grouped tv class lists in the exported file", async () => {
     const { decoded, code } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
-      classArrays: false,
+      classArrays: true,
     })
 
     // codec round-trip preserved the option
-    expect(decoded?.classArrays).toBe(false)
+    expect(decoded?.classArrays).toBe(true)
 
-    // base groups are joined into one string (no array-element split)
-    expect(code).toContain("select-none focus-reset focus-visible:focus-ring")
+    // base groups stay separate array elements
+    expect(code).toContain('"focus-reset focus-visible:focus-ring",')
   })
 
   test("sectionComments survives the codec round-trip", async () => {

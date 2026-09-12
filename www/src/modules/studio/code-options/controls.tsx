@@ -114,8 +114,8 @@ export function CodeOptionsControls() {
         description="tv() base & slot classes"
         value={opts.classArrays ? "arrays" : "string"}
         options={[
-          { value: "arrays", label: "Arrays" },
           { value: "string", label: "String" },
+          { value: "arrays", label: "Arrays" },
         ]}
         onChange={(v) => setCodeOption("classArrays", v === "arrays")}
       />

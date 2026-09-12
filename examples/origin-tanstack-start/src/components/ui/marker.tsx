@@ -4,16 +4,10 @@ import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 const markerVariants = tv({
   slots: {
-    root: [
-      "group/marker relative flex w-full items-center text-left text-fg-muted",
-      "**:[a]:underline **:[a]:underline-offset-3 **:[a]:hover:text-fg",
-      "min-h-4 gap-2 text-sm **:[svg]:not-with-[size]:size-4",
-    ],
-    icon: ["shrink-0", "size-4"],
-    content: [
-      "min-w-0 wrap-break-word",
-      "group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center",
-    ],
+    root: "group/marker relative flex w-full items-center text-left text-fg-muted **:[a]:underline **:[a]:underline-offset-3 **:[a]:hover:text-fg min-h-4 gap-2 text-sm **:[svg]:not-with-[size]:size-4",
+    icon: "shrink-0 size-4",
+    content:
+      "min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center",
   },
   variants: {
     variant: {
@@ -22,7 +16,7 @@ const markerVariants = tv({
         root: "before:mr-1 before:h-px before:min-w-0 before:flex-1 before:bg-border after:ml-1 after:h-px after:min-w-0 after:flex-1 after:bg-border",
       },
       border: {
-        root: ["border-b", "pb-2"],
+        root: "border-b pb-2",
       },
     },
   },

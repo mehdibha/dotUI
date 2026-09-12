@@ -4,29 +4,16 @@ import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 const messageVariants = tv({
   slots: {
-    group: ["flex min-w-0 flex-col", "gap-2"],
-    root: [
-      "group/message relative flex w-full min-w-0 data-[align=end]:flex-row-reverse",
-      "gap-2 text-sm",
-    ],
+    group: "flex min-w-0 flex-col gap-2",
+    root: "group/message relative flex w-full min-w-0 data-[align=end]:flex-row-reverse gap-2 text-sm",
     avatar:
       "flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-[[data-message-footer]]/message:-translate-y-8",
-    content: [
-      "flex w-full min-w-0 flex-col wrap-break-word",
-      "group-data-[align=end]/message:*:self-end",
-      "gap-2.5",
-    ],
-    header: [
-      "flex max-w-full min-w-0 items-center font-medium text-fg-muted",
-      "group-has-[[data-variant=ghost]]/message:px-0",
-      "px-3 text-xs",
-    ],
-    footer: [
-      "flex max-w-full min-w-0 items-center font-medium text-fg-muted",
-      "group-data-[align=end]/message:justify-end",
-      "group-has-[[data-variant=ghost]]/message:px-0",
-      "px-3 text-xs",
-    ],
+    content:
+      "flex w-full min-w-0 flex-col wrap-break-word group-data-[align=end]/message:*:self-end gap-2.5",
+    header:
+      "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-has-[[data-variant=ghost]]/message:px-0 px-3 text-xs",
+    footer:
+      "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-data-[align=end]/message:justify-end group-has-[[data-variant=ghost]]/message:px-0 px-3 text-xs",
   },
 });
 

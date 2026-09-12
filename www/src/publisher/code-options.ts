@@ -42,14 +42,14 @@ export interface CodeOptions {
 }
 
 /**
- * Defaults preserve the source's authored shape (grouped class arrays) with a
- * clean, separator-free file — a sensible starting point the user can tweak.
+ * Defaults ship one class string per slot/variant (the shadcn convention) in a
+ * clean, separator-free file; grouped arrays are an opt-in.
  *
  * Kept as a complete object (every field present) so the codec can diff the
  * whole recipe against this default — an untouched config encodes to nothing.
  */
 export const DEFAULT_CODE_OPTIONS: CodeOptions = {
-  classArrays: true,
+  classArrays: false,
   sectionComments: false,
 }
 

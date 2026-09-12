@@ -12,38 +12,15 @@ import { CheckIcon } from "lucide-react";
 import { Loader } from "@/components/ui/loader";
 const listBoxVariants = tv({
   slots: {
-    root: [
-      "max-h-[inherit] scroll-my-1 overflow-y-auto outline-hidden",
-      "layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row",
-      "layout-grid:grid layout-grid:gap-1",
-      "layout-grid:orientation-vertical:grid-cols-2",
-      "layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2",
-      "**:data-separator:my-1 **:data-separator:w-auto",
-      "text-sm",
-      "p-1 **:data-separator:-mx-1",
-    ],
-    item: [
-      "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
-      "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
-      "focus-visible:bg-highlight focus-visible:text-fg-on-highlight",
-      "disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
-      "has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
-      "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
-      "gap-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
-      "data-selection-mode:pr-8",
-      "rounded-md",
-      "px-1.5",
-    ],
-    indicator: [
-      "pointer-events-none absolute flex items-center justify-center",
-      "right-2",
-    ],
+    root: "max-h-[inherit] scroll-my-1 overflow-y-auto outline-hidden layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row layout-grid:grid layout-grid:gap-1 layout-grid:orientation-vertical:grid-cols-2 layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2 **:data-separator:my-1 **:data-separator:w-auto text-sm p-1 **:data-separator:-mx-1",
+    item: "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0 hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight focus-visible:bg-highlight focus-visible:text-fg-on-highlight disabled:text-(--disabled-fg,currentColor) disabled:**:text-current has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2 *:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted gap-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4 data-selection-mode:pr-8 rounded-md px-1.5",
+    indicator:
+      "pointer-events-none absolute flex items-center justify-center right-2",
     itemLabel: "",
     itemDescription: "text-fg-muted",
     loadMore: "flex w-full items-center justify-center py-1 text-fg-muted",
     section: "scroll-my-1",
-    sectionTitle: ["text-fg-muted", "py-1", "px-1.5", "text-xs"],
+    sectionTitle: "text-fg-muted py-1 px-1.5 text-xs",
   },
   variants: {
     variant: {

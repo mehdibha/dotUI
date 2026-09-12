@@ -5,11 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 const kbdVariants = tv({
   slots: {
     group: "inline-flex items-center gap-1",
-    kbd: [
-      "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-ui",
-      "**:[svg]:not-with-[size]:size-3",
-      "h-5 min-w-5 rounded-sm bg-muted px-1 font-sans text-xs font-medium",
-    ],
+    kbd: "pointer-events-none inline-flex w-fit items-center justify-center gap-1 text-fg-muted select-ui **:[svg]:not-with-[size]:size-3 h-5 min-w-5 rounded-sm bg-muted px-1 font-sans text-xs font-medium",
   },
 });
 
