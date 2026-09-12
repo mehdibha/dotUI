@@ -14,45 +14,14 @@ import { useControlledState } from "react-stately/useControlledState";
 import { type VariantProps, tv } from "tailwind-variants";
 const inputVariants = tv({
   slots: {
-    inputGroup: [
-      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
-      "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
-      "**:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none",
-      "**:data-date-input:px-0 **:data-input:px-0",
-      "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
-      "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
-      "has-data-textarea:px-0",
-      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
-      "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
-      "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
-    ],
-    inputGroupAddon: [
-      "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
-      "text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
-      "group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
-      "**:data-button:rounded-[max(var(--radius-sm),calc(var(--input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-      "group-has-data-textarea/input-group:px-(--edge-to-text)",
-      "group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text)",
-      "group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-      "group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text)",
-      "group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text)",
-      "group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
-      "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
-    ],
-    input: [
-      "inline-flex w-full cursor-text items-center outline-none",
-      "h-(--input-h) in-data-input-group:h-auto",
-      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
-      "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
-    ],
-    textArea: [
-      "min-h-16 w-full resize-none py-(--top-to-text) outline-none",
-      "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
-      "text-base sm:text-sm",
-      "rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
-    ],
+    inputGroup:
+      "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center **:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0 **:data-input-control:has-[~[data-input-control]]:w-auto **:data-input-control:has-[~[data-input-control]]:flex-none **:data-date-input:px-0 **:data-input:px-0 has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-textarea:px-0 disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents text-base sm:text-sm rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
+    inputGroupAddon:
+      "flex cursor-text items-center justify-center gap-(--addon-gap) select-none text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size) group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start **:data-button:rounded-[max(var(--radius-sm),calc(var(--input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-textarea/input-group:px-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text) group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
+    input:
+      "inline-flex w-full cursor-text items-center outline-none h-(--input-h) in-data-input-group:h-auto disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) text-base sm:text-sm rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
+    textArea:
+      "min-h-16 w-full resize-none py-(--top-to-text) outline-none disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) text-base sm:text-sm rounded-md border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field)) focus:focus-input focus:not-invalid:border-border-focus",
     dateInputSegment:
       "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
   },

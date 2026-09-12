@@ -38,11 +38,11 @@ describe("preset codec — studio state", () => {
   it("round-trips the code options separately from the state", () => {
     const encoded = encodePreset({
       state: DEFAULTS,
-      codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: false },
+      codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: true },
     })
     const decoded = decodePreset(encoded ?? "")
     expect(decoded.state).toEqual(DEFAULTS)
-    expect(decoded.codeOptions?.classArrays).toBe(false)
+    expect(decoded.codeOptions?.classArrays).toBe(true)
   })
 
   it("drops unknown keys and wrongly typed values", () => {

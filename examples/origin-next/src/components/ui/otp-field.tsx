@@ -14,14 +14,9 @@ import { Input } from "@/components/ui/input";
 import { tv, type VariantProps } from "tailwind-variants";
 const otpFieldVariants = tv({
   slots: {
-    root: [
-      "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 group/otp-field",
-      "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
-    ],
-    group: [
-      "flex",
-      "w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
-    ],
+    root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 group/otp-field **:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
+    group:
+      "flex w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
     separator: "",
   },
 });

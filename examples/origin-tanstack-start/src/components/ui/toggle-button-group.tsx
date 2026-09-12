@@ -8,11 +8,7 @@ import { ToggleButtonProvider } from "@/components/ui/toggle-button";
 import type { toggleButtonStyles } from "@/components/ui/toggle-button";
 const toggleButtonGroupVariants = tv({
   slots: {
-    root: [
-      "flex w-fit items-stretch",
-      "*:data-button:min-w-0 *:data-button:shrink-0 *:data-button:shadow-none",
-      "*:data-button:hover:z-10 *:data-button:focus-visible:z-20 *:data-button:selected:z-10 *:data-button:selected:focus-visible:z-20",
-    ],
+    root: "flex w-fit items-stretch *:data-button:min-w-0 *:data-button:shrink-0 *:data-button:shadow-none *:data-button:hover:z-10 *:data-button:focus-visible:z-20 *:data-button:selected:z-10 *:data-button:selected:focus-visible:z-20",
   },
   variants: {
     orientation: {

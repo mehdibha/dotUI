@@ -165,28 +165,27 @@ describe("applySectionComments", () => {
 /* ============================================================ */
 
 describe("publish + codeOptions", () => {
-  test("default options preserve grouped class arrays as array elements", () => {
+  test("default options collapse grouped arrays to one string", () => {
     const { rawContent } = publish({
       publishable: buttonPublishable,
       preset: { density: "default", componentParams: {} },
-    })
-    // classArrays defaults to true → each group is its own quoted array entry.
-    expect(rawContent).toContain('"focus-reset focus-visible:focus-ring",')
-  })
-
-  test("classArrays:false collapses grouped arrays to one string", () => {
-    const { rawContent } = publish({
-      publishable: buttonPublishable,
-      preset: {
-        density: "default",
-        componentParams: {},
-        codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: false },
-      },
     })
     // base groups are joined inline (no array element boundary between them).
     expect(rawContent).toContain(
       "select-none focus-reset focus-visible:focus-ring",
     )
+  })
+
+  test("classArrays:true preserves grouped class arrays as array elements", () => {
+    const { rawContent } = publish({
+      publishable: buttonPublishable,
+      preset: {
+        density: "default",
+        componentParams: {},
+        codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: true },
+      },
+    })
+    expect(rawContent).toContain('"focus-reset focus-visible:focus-ring",')
   })
 
   test("drops the internal Styles marker; section separators follow the flag", () => {

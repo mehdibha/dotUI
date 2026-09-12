@@ -4,20 +4,12 @@ import type * as React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 const bubbleVariants = tv({
   slots: {
-    group: ["flex min-w-0 flex-col", "gap-2"],
-    root: [
-      "group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1",
-      "group-data-[align=end]/message:self-end data-[align=end]:self-end",
-    ],
-    content: [
-      "w-fit max-w-full min-w-0 overflow-hidden rounded-lg border border-transparent wrap-break-word",
-      "group-data-[align=end]/bubble:self-end",
-      "px-3 py-2 text-sm leading-relaxed",
-    ],
-    reactions: [
-      "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 ring-bg has-[button]:p-0 data-[align=end]:right-3 data-[align=start]:left-3 data-[side=bottom]:bottom-0 data-[side=bottom]:translate-y-3/4 data-[side=top]:top-0 data-[side=top]:-translate-y-3/4",
-      "text-sm ring-3",
-    ],
+    group: "flex min-w-0 flex-col gap-2",
+    root: "group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end",
+    content:
+      "w-fit max-w-full min-w-0 overflow-hidden rounded-lg border border-transparent wrap-break-word group-data-[align=end]/bubble:self-end px-3 py-2 text-sm leading-relaxed",
+    reactions:
+      "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 ring-bg has-[button]:p-0 data-[align=end]:right-3 data-[align=start]:left-3 data-[side=bottom]:bottom-0 data-[side=bottom]:translate-y-3/4 data-[side=top]:top-0 data-[side=top]:-translate-y-3/4 text-sm ring-3",
   },
   variants: {
     variant: {

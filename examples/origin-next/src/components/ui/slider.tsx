@@ -15,14 +15,10 @@ const sliderVariants = tv({
     track:
       "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
     fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
-    thumb: [
-      "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
-      "size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
-    ],
-    output: [
-      "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
-      "text-sm",
-    ],
+    thumb:
+      "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor) size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
+    output:
+      "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted)) text-sm",
   },
   variants: {
     orientation: {

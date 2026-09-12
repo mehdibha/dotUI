@@ -10,11 +10,8 @@ const disclosureVariants = tv({
   slots: {
     root: "group/disclosure w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
     heading: "flex",
-    button: [
-      "focus-reset focus-visible:focus-ring",
-      "flex flex-1 cursor-interactive items-start gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
-      "justify-between",
-    ],
+    button:
+      "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between",
     marker:
       "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200 **:[svg]:size-4",
     panel:
