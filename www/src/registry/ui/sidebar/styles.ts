@@ -28,8 +28,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       // around the gap while the panel can slide/resize independently.
       container: [
         "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-250 ease-fluid-out md:flex",
-        "group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]",
-        "group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+        "group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width)",
+        "group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width)",
         "group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
         "group-data-[variant=sidebar]:group-data-[side=left]:border-r group-data-[variant=sidebar]:group-data-[side=right]:border-l",
         "group-data-[variant=floating]:p-2 group-data-[variant=inset]:p-2",
@@ -79,7 +79,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
         "disabled:pointer-events-none disabled:opacity-50",
-        "data-[active]:bg-muted data-[active]:font-medium data-[active]:text-fg",
+        "data-active:bg-muted data-active:font-medium data-active:text-fg",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
         "group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
@@ -91,7 +91,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "after:absolute after:-inset-2 md:after:hidden",
         "peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=md]/menu-button:top-1.5 peer-data-[size=sm]/menu-button:top-1",
         "group-data-[collapsible=icon]:hidden",
-        "data-[show-on-hover]:group-focus-within/menu-item:opacity-100 data-[show-on-hover]:group-hover/menu-item:opacity-100 data-[show-on-hover]:focus-within:opacity-100 data-[show-on-hover]:md:opacity-0",
+        "data-show-on-hover:group-focus-within/menu-item:opacity-100 data-show-on-hover:group-hover/menu-item:opacity-100 data-show-on-hover:focus-within:opacity-100 data-show-on-hover:md:opacity-0",
       ],
       menuBadge: [
         "pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-fg-muted tabular-nums select-ui",
@@ -110,7 +110,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
         "disabled:pointer-events-none disabled:opacity-50",
-        "data-[active]:bg-muted data-[active]:font-medium data-[active]:text-fg",
+        "data-active:bg-muted data-active:font-medium data-active:text-fg",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
         "group-data-[collapsible=icon]:hidden",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted",

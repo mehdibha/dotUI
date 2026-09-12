@@ -34,7 +34,7 @@ const items = [
 
 export default function Demo() {
   return (
-    <SidebarProvider className="h-[28rem] min-h-0 overflow-hidden rounded-lg border">
+    <SidebarProvider className="h-112 min-h-0 overflow-hidden rounded-lg border">
       <Sidebar>
         <SidebarHeader>
           <SidebarMenu>

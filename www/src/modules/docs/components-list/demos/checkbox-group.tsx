@@ -6,7 +6,7 @@ export function CheckboxGroupDemo() {
   return (
     <CheckboxGroup defaultValue={["updates", "security"]}>
       <Label>Notification Preferences</Label>
-      <FieldGroup className="[container-type:normal]!">
+      <FieldGroup className="@container-normal!">
         <Checkbox value="updates">
           <CheckboxControl />
           <Label>Product Updates</Label>

@@ -324,7 +324,7 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
 
         {message.chart && (
           <div className="w-full max-w-sm overflow-hidden rounded-lg border">
-            <div className="flex aspect-[16/9] items-center justify-center bg-muted text-fg-muted">
+            <div className="flex aspect-video items-center justify-center bg-muted text-fg-muted">
               <ChartLineIcon className="size-8" />
             </div>
             <div className="flex items-center justify-between gap-2 border-t px-3 py-2">

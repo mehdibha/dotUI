@@ -15,7 +15,8 @@
     "clean": "git clean -xdf .output .nitro .cache .turbo node_modules",
     "build:references": "tsx scripts/api-docs-builder/src/index.ts",
     "probe:registry": "tsx scripts/registry-probe.ts",
-    "preview:example": "tsx scripts/preview-example.ts"
+    "preview:example": "tsx scripts/preview-example.ts",
+    "check:tailwind": "tsx scripts/tw-canonical.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
@@ -81,6 +82,8 @@
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.13",
+    "@tailwindcss/node": "catalog:",
+    "@tailwindcss/oxide": "catalog:",
     "@types/node": "catalog:",
     "@types/pako": "^2.0.4",
     "@types/react": "catalog:",

@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 
 const cardVariants = tv({
   slots: {
-    root: "group/card flex flex-col rounded-xl border border-(--card-border) bg-card shadow-[var(--shadow-card,0_0_#0000)] [--surface-radius:var(--card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-xl *:[img]:last:rounded-b-xl gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
+    root: "group/card flex flex-col rounded-xl border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-radius:var(--card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-xl *:[img]:last:rounded-b-xl gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
     header:
       "group/card-header @container/card-header grid auto-rows-min items-start rounded-t-xl has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto] gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
     title: "font-heading text-base leading-snug font-medium",

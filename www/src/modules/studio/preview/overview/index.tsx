@@ -210,7 +210,7 @@ function Cover({
       {/* Brand panel — the accent as a confident color field over its own ramp. */}
       <div className="overflow-hidden rounded-2xl border shadow-sm">
         <div
-          className="flex aspect-[16/10] flex-col justify-between p-5"
+          className="flex aspect-16/10 flex-col justify-between p-5"
           style={{
             background: "var(--accent-700)",
             color: "var(--on-accent-700)",

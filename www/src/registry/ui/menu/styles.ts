@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
         "focus:bg-highlight focus:text-fg-on-highlight",
         "disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
         "has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2",
-        "data-has-submenu:pr-8",
+        "has-submenu:pr-8",
         "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
         // danger
         "data-[variant=danger]:text-fg-danger data-[variant=danger]:focus:bg-danger-muted",

@@ -178,13 +178,13 @@ export const SkeletonRail = memo(function SkeletonRail({
         "absolute inset-y-0 hidden w-(--rail-w) overflow-hidden opacity-70 lg:block",
         "[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]",
         side === "left"
-          ? "right-full mr-(--rail-gap) [mask-image:linear-gradient(to_left,black_92%,transparent)]"
-          : "left-full ml-(--rail-gap) [mask-image:linear-gradient(to_right,black_92%,transparent)]",
+          ? "right-full mr-(--rail-gap) mask-[linear-gradient(to_left,black_92%,transparent)]"
+          : "left-full ml-(--rail-gap) mask-[linear-gradient(to_right,black_92%,transparent)]",
       )}
     >
       {/* Same bottom fade as the grid, sized by the rail (not the taller,
           clipped column) so both fade in lockstep. */}
-      <div className="absolute inset-0 [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))]">
+      <div className="absolute inset-0 mask-[linear-gradient(to_bottom,black_calc(100%-var(--mask-solid)),transparent_calc(100%-var(--mask-clear)))]">
         <div className="absolute inset-x-0 top-0 grid grid-cols-2 gap-(--rail-gap) opacity-45">
           <RailColumn cards={colA} />
           <RailColumn cards={colB} />

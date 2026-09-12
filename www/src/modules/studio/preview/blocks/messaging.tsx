@@ -388,7 +388,7 @@ function DayDivider({ label }: { label: string }) {
 function AttachmentTile({ attachment }: { attachment: Attachment }) {
   return (
     <div className="flex w-44 max-w-full flex-col gap-1.5">
-      <div className="flex aspect-[4/3] items-center justify-center rounded-md bg-bg text-fg-muted">
+      <div className="flex aspect-4/3 items-center justify-center rounded-md bg-bg text-fg-muted">
         <ImageIcon className="size-6" />
       </div>
       <span className="flex min-w-0 items-baseline gap-1 text-xs text-fg-muted">

@@ -19,13 +19,13 @@ const { useStyles, styles } = createStyles(chartMeta, {
       dashed: {
         slots: {
           container:
-            "[&_.ts-chart__grid]:[stroke-dasharray:3_3] [&_[data-ts-key^='ring:']]:[stroke-dasharray:3_3] [&_[data-ts-key^='spoke:']]:[stroke-dasharray:3_3]",
+            "**:data-[ts-key^='ring:']:[stroke-dasharray:3_3] **:data-[ts-key^='spoke:']:[stroke-dasharray:3_3] [&_.ts-chart__grid]:[stroke-dasharray:3_3]",
         },
       },
       none: {
         slots: {
           container:
-            "[&_.ts-chart__grid]:hidden [&_[data-ts-key^='ring:']]:hidden [&_[data-ts-key^='spoke:']]:hidden",
+            "**:data-[ts-key^='ring:']:hidden **:data-[ts-key^='spoke:']:hidden [&_.ts-chart__grid]:hidden",
         },
       },
     },

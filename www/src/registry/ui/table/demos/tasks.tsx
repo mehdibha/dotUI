@@ -379,7 +379,7 @@ const taskColumns: ColumnDef<Task>[] = [
     meta: {
       name: "Title",
       minWidth: 420,
-      cellClassName: "min-w-[26rem]",
+      cellClassName: "min-w-104",
     } satisfies TaskColumnMeta,
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">

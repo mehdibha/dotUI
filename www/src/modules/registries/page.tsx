@@ -498,7 +498,7 @@ export function RegistriesPage() {
   }, [])
 
   return (
-    <div className="mx-auto flex min-h-svh w-full max-w-[110rem] flex-col gap-5 px-4 py-8 sm:px-6">
+    <div className="mx-auto flex min-h-svh w-full max-w-440 flex-col gap-5 px-4 py-8 sm:px-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-xl font-semibold">shadcn registry directory</h1>
         <p className="max-w-3xl text-sm text-fg-muted">

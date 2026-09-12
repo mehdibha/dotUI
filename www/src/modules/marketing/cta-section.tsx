@@ -4,7 +4,7 @@ import { LinkButton } from "@/registry/ui/button"
 export function CtaSection() {
   return (
     <section className="flex flex-col items-center text-center">
-      <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance text-fg antialiased sm:text-[3rem] sm:leading-[3.5rem]">
+      <h2 className="font-features-['calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance text-fg antialiased sm:text-[3rem] sm:leading-14">
         <span className="block">Your design system,</span>
         <span className="block text-fg-muted">one click away.</span>
       </h2>

@@ -5,7 +5,7 @@ import disclosureMeta from "./meta"
 const { useStyles, styles } = createStyles(disclosureMeta, {
   base: {
     slots: {
-      root: "group/disclosure w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
+      root: "group/disclosure w-full disabled:text-(--disabled-fg,currentColor) **:data-button:[[slot=trigger]]:w-full **:data-button:[[slot=trigger]]:justify-between **:data-button:[[slot=trigger]]:text-left disabled:**:[svg]:text-(--disabled-fg,currentColor)",
       heading: "flex",
       button: [
         "focus-reset focus-visible:focus-ring",

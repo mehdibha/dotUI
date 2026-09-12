@@ -6,10 +6,7 @@ import { TimeField } from "@/registry/ui/time-field"
 
 export function TimeFieldDemo() {
   return (
-    <TimeField
-      defaultValue={new Time(11, 45)}
-      className="w-full max-w-[11.5rem]"
-    >
+    <TimeField defaultValue={new Time(11, 45)} className="w-full max-w-46">
       <Label>Event time</Label>
       <DateInput className="w-full" />
     </TimeField>

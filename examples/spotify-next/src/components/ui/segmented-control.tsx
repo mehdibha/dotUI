@@ -13,7 +13,7 @@ const segmentedControlVariants = tv({
     item: "relative isolate inline-flex cursor-default items-center justify-center rounded-md border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-1.5 px-2.5 py-1 text-sm has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4 selected:text-fg-on-selected",
     indicator:
       "pointer-events-none absolute inset-0 rounded-md ease-out motion-safe:transition-[translate,width,height] bg-selected shadow-sm",
-    itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
+    itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
   },
 });
 

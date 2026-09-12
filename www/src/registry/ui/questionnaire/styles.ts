@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
     slots: {
       root: "flex w-full min-w-0 flex-col",
       progress:
-        "min-h-[1lh] w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums",
+        "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums",
       item: "flex min-w-0 flex-col border-0 p-0 focus-reset",
       title:
         "font-medium text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
@@ -25,7 +25,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
       choiceIndicator: [
         "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--questionnaire-indicator-radius) border border-border-control",
-        "group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5",
+        "group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5",
         "group-data-[type=radio]/questionnaire-choice:rounded-full",
         "group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
       ],
@@ -36,7 +36,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceContent: "flex min-w-0 flex-1 flex-col leading-snug",
       choiceDescription: "text-fg-muted",
       shortcut:
-        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--radius-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
+        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--radius-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
       inputWrapper: "group/questionnaire-input relative w-full min-w-0",
       input: [
         "w-full min-w-0 rounded-(--questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none",

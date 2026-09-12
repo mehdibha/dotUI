@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(messageScrollerMeta, {
       content: "flex h-max min-h-full flex-col",
       item: "min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto]",
       button: [
-        "absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2",
+        "absolute inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2",
         "transition-[translate,scale,opacity] duration-200",
         "data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)]",
         "data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)]",

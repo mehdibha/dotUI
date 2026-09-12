@@ -58,7 +58,7 @@ export const clientLoader = browserCollections.docs.createClientLoader({
               // pinned to the viewport edge (aligned with the header's menu
               // button) instead of trailing the capped column.
               full
-                ? "mr-auto max-w-4xl lg:mx-auto lg:max-w-[60rem] lg:px-8"
+                ? "mr-auto max-w-4xl lg:mx-auto lg:max-w-240 lg:px-8"
                 : "mx-auto max-w-2xl lg:px-0",
             )}
           >

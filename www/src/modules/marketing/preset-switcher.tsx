@@ -50,7 +50,7 @@ export function PresetSwitcher({
     <div className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
       <SegmentedControl
         aria-label="Preview design system"
-        className="mx-auto bg-transparent p-0 [&_[data-segmented-control-indicator]]:rounded-(--indicator-radius) [&_[data-segmented-control-indicator]]:bg-(--indicator-bg) [&_[data-segmented-control-indicator]]:motion-safe:transition-[translate,width,height,border-radius,background-color]"
+        className="mx-auto bg-transparent p-0 **:data-segmented-control-indicator:rounded-(--indicator-radius) **:data-segmented-control-indicator:bg-(--indicator-bg) **:data-segmented-control-indicator:motion-safe:transition-[translate,width,height,border-radius,background-color]"
         style={indicatorStyle}
         selectedKeys={activeId ? [activeId] : []}
         onSelectionChange={handleChange}

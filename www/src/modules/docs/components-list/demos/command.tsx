@@ -24,7 +24,7 @@ import { Separator } from "@/registry/ui/separator"
 export function CommandDemo() {
   return (
     <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
-      <Card className="w-full max-w-[17rem] p-0">
+      <Card className="w-full max-w-68 p-0">
         <Command aria-label="Command menu">
           <SearchField aria-label="Search">
             <InputGroup>

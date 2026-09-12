@@ -216,7 +216,7 @@ export default function Demo() {
                         </span>
                       </span>
                     </TableCell>
-                    <TableCell className="max-w-[28rem] text-fg-muted">
+                    <TableCell className="max-w-md text-fg-muted">
                       <span className="block truncate">
                         {issue.description}
                       </span>

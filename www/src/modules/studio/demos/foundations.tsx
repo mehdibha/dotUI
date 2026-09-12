@@ -53,7 +53,7 @@ export function ShapeDemo() {
   return (
     <span
       aria-hidden
-      className="relative size-5 shrink-0 overflow-hidden [mask-image:linear-gradient(225deg,black_35%,transparent_85%)]"
+      className="relative size-5 shrink-0 overflow-hidden mask-[linear-gradient(225deg,black_35%,transparent_85%)]"
     >
       <span className="absolute top-0 right-0 size-8 rounded-tr-[10px] border-t-2 border-r-2 border-fg/50" />
     </span>

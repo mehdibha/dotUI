@@ -24,9 +24,9 @@ export function ComboboxDemo() {
     >
       <OverlayPreview
         variant="menu"
-        surfaceClassName="w-full max-w-[11.5rem] p-0"
+        surfaceClassName="w-full max-w-46 p-0"
         trigger={
-          <Field className="w-full max-w-[11.5rem]">
+          <Field className="w-full max-w-46">
             <Label>Country</Label>
             <InputGroup>
               <Input placeholder="Search countries..." />

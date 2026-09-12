@@ -7,7 +7,7 @@ import {
 
 export function ProgressBarDemo() {
   return (
-    <ProgressBar value={66} className="w-full max-w-[11.5rem]">
+    <ProgressBar value={66} className="w-full max-w-46">
       <div className="flex items-center justify-between gap-2">
         <Label>Uploading…</Label>
         <ProgressBarOutput />

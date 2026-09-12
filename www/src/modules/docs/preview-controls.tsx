@@ -68,7 +68,7 @@ export function usePreviewPending() {
  * call usePreviewPending() to clear the flag.
  */
 export const previewPendingClass =
-  "transition-opacity duration-200 [[data-preview-pending]_&]:opacity-0"
+  "transition-opacity duration-200 in-data-preview-pending:opacity-0"
 
 /**
  * Covers a preview until hydration applies the stored preset/mode. Rendered on
@@ -80,7 +80,7 @@ export function PreviewVeil() {
   return (
     <div
       aria-hidden
-      className="absolute inset-0 z-20 hidden items-center justify-center rounded-[inherit] bg-bg [[data-preview-pending]_&]:flex"
+      className="absolute inset-0 z-20 hidden items-center justify-center rounded-[inherit] bg-bg in-data-preview-pending:flex"
     >
       <Loader />
     </div>

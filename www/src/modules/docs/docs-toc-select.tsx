@@ -57,7 +57,7 @@ function TocSelect({
       onSelectionChange={(key) => scrollToSection(String(key))}
       className={cn("flex", className)}
     >
-      <Button className="flex items-center gap-1.5 text-sm text-fg-muted transition-colors outline-none hover:text-fg data-pressed:text-fg">
+      <Button className="flex items-center gap-1.5 text-sm text-fg-muted transition-colors outline-none hover:text-fg pressed:text-fg">
         <ProgressCircle value={progress} className="shrink-0" />
         <span className="max-w-36 truncate">{active?.title ?? ""}</span>
         <ChevronDownIcon className="size-4 shrink-0" />

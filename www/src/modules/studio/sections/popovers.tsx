@@ -125,7 +125,7 @@ export function PopoversHero({ state }: { state: StudioState }) {
         </span>
         <div className="relative w-48 rounded-lg border border-border/60 bg-card text-[0.8125rem] shadow-lg">
           {state.popoverTip === "tip" && (
-            <span className="absolute -top-[4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
+            <span className="absolute top-[-4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
           )}
           <div className="flex flex-col gap-1 p-3">
             <span
