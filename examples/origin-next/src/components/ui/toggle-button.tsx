@@ -8,7 +8,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { createVariantsContext } from "@/lib/context";
 
 const toggleButtonVariants = tv({
-  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,0_0_#0000)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm *:[svg]:not-with-[size]:size-4 selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
+  base: "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-md bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-(--shadow-control,0_0_#0000) transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected)) text-sm *:[svg]:not-with-[size]:size-4 selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
   variants: {
     variant: {
       primary:

@@ -9,7 +9,7 @@ import toggleButtonMeta from "./meta"
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
     base: [
-      "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,0_0_#0000)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui",
+      "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-(--shadow-control,0_0_#0000) transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui",
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",

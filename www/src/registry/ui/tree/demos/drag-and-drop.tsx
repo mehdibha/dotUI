@@ -49,7 +49,7 @@ export default function Demo() {
     renderDropIndicator: (target) => (
       <DropIndicator
         target={target}
-        className="z-10 h-0.5 rounded-full bg-transparent outline-hidden data-drop-target:bg-accent"
+        className="z-10 h-0.5 rounded-full bg-transparent outline-hidden drop-target:bg-accent"
       />
     ),
     onMove(e) {

@@ -384,7 +384,7 @@ export function PreviewPanel({
         className={cn(
           "relative min-h-0 flex-1 overflow-auto",
           constrained &&
-            "bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]",
+            "bg-neutral bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] bg-size-[14px_14px]",
         )}
       >
         {/* Centred with `mx-auto`, not `justify-center`: auto margins collapse to

@@ -18,7 +18,7 @@ const SURFACE_FRAME: Record<SurfaceVariant, string> = {
   menu: "rounded-(--popover-radius) border bg-popover p-1 shadow-md",
   modal:
     "rounded-(--modal-radius) border bg-(--modal-background) p-4 text-sm shadow-lg",
-  drawer: "rounded-t-(--radius-xl) border-t bg-bg p-4 text-sm shadow-lg",
+  drawer: "rounded-t-xl border-t bg-bg p-4 text-sm shadow-lg",
   tooltip:
     "rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
 }
@@ -118,10 +118,7 @@ export function OverlayPreview({
           <div className="absolute inset-0 flex items-center justify-center p-6">
             <Surface
               variant="modal"
-              className={cn(
-                "w-full max-w-[13rem] scale-[0.85]",
-                surfaceClassName,
-              )}
+              className={cn("w-full max-w-52 scale-[0.85]", surfaceClassName)}
             >
               {children}
             </Surface>

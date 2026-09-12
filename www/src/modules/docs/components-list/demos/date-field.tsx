@@ -8,7 +8,7 @@ export function DateFieldDemo() {
   return (
     <DateField
       defaultValue={parseDate("2024-06-12")}
-      className="w-full max-w-[11.5rem]"
+      className="w-full max-w-46"
     >
       <Label>Meeting date</Label>
       <DateInput className="w-full" />

@@ -49,7 +49,7 @@ const Draggable = ({ text }: { text: string }) => {
         {...dragProps}
         type="button"
         data-dragging={isDragging || undefined}
-        className="rounded-sm border bg-muted p-2 transition-all hover:scale-105 data-dragging:opacity-50"
+        className="rounded-sm border bg-muted p-2 transition-all hover:scale-105 dragging:opacity-50"
       >
         {text}
       </button>

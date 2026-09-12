@@ -12,7 +12,7 @@ const questionnaireVariants = tv({
   slots: {
     root: "flex w-full min-w-0 flex-col gap-4 [--questionnaire-title-gap:--spacing(4)]",
     progress:
-      "min-h-[1lh] w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums text-xs",
+      "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums text-xs",
     item: "flex min-w-0 flex-col border-0 p-0 focus-reset gap-4",
     title:
       "font-medium text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap) text-base leading-snug",
@@ -22,7 +22,7 @@ const questionnaireVariants = tv({
       "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-md border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-primary/40 data-checked:bg-muted data-invalid:border-border-danger has-[>input:focus-visible]:focus-ring data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50 gap-2.5 px-3 py-2.5 text-sm",
     choiceInput: "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
     choiceIndicator:
-      "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
+      "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
     choiceIndicatorDot:
       "hidden size-2 rounded-full bg-fg-on-primary group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
     choiceIndicatorCheck:
@@ -30,7 +30,7 @@ const questionnaireVariants = tv({
     choiceContent: "flex min-w-0 flex-1 flex-col leading-snug gap-0.5",
     choiceDescription: "text-fg-muted",
     shortcut:
-      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-md border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
+      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-md border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
       "w-full min-w-0 rounded-md border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none placeholder:text-fg-muted focus:focus-input focus:not-aria-invalid:border-border-focus aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted disabled:pointer-events-none disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) disabled:text-(--disabled-fg,currentColor) h-8 px-2.5 py-1 text-base md:text-sm",

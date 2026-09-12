@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
       columns: "flex h-56 gap-1 p-1",
       column: [
         "flex w-14 scroll-py-1 flex-col gap-0.5 overflow-y-auto outline-hidden",
-        "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "scrollbar-none [&::-webkit-scrollbar]:hidden",
       ],
       item: [
         "flex h-8 w-full shrink-0 items-center justify-center rounded-md text-sm tabular-nums no-highlight",

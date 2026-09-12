@@ -116,7 +116,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
             <Suspense fallback={<div className={chartFootprint} />}>
               <div
                 className={cn(
-                  "w-full animate-in duration-300 fade-in [&_*]:pointer-events-none [&>div]:w-full",
+                  "w-full animate-in duration-300 fade-in **:pointer-events-none [&>div]:w-full",
                   isPolar &&
                     "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
                 )}

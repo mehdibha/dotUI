@@ -145,7 +145,7 @@ export const mdxComponents: MDXComponents = {
   th: ({ className, ...props }) => (
     <th
       className={cn(
-        "px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        "px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right",
         className,
       )}
       {...props}
@@ -154,7 +154,7 @@ export const mdxComponents: MDXComponents = {
   td: ({ className, ...props }) => (
     <td
       className={cn(
-        "px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right",
+        "px-4 py-2 text-left whitespace-nowrap [[align=center]]:text-center [[align=right]]:text-right",
         className,
       )}
       {...props}

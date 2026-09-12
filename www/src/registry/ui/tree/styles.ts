@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
       item: [
         "group/tree-item relative flex w-full items-center rounded-(--tree-item-radius) outline-hidden select-ui",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        "focus-visible:outline-(length:--focus-ring-width) focus-visible:outline-offset-[calc(var(--focus-ring-width)*-1)] focus-visible:outline-(color:--focus-ring-color) focus-visible:outline-solid",
+        "focus-visible:outline-(length:--focus-ring-width) focus-visible:-outline-offset-(--focus-ring-width) focus-visible:outline-(--focus-ring-color) focus-visible:outline-solid",
         "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",
         "drop-target:bg-accent-muted drop-target:text-fg",
         "dragging:opacity-60",
@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
       ],
       itemContent: [
         "flex min-w-0 flex-1 items-center gap-1.5",
-        "[padding-inline-start:calc((var(--tree-item-level)_-_1)_*_var(--tree-indent))]",
+        "ps-[calc((var(--tree-item-level)-1)*var(--tree-indent))]",
       ],
       chevron:
         "flex size-4 shrink-0 cursor-interactive items-center justify-center text-fg-muted outline-hidden",

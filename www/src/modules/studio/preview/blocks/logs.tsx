@@ -1246,7 +1246,7 @@ export default function LogsBlock() {
           </CardHeader>
           <CardContent className="px-0">
             <div className="overflow-x-auto">
-              <div className="md:min-w-[36rem]">
+              <div className="md:min-w-xl">
                 <div className="hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b px-3 py-2 pl-[calc(0.75rem+2px)] text-[10px] font-medium tracking-widest text-fg-muted uppercase md:grid">
                   <span>Time</span>
                   <span>Level</span>

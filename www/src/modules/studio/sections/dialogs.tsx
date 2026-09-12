@@ -23,7 +23,7 @@ import type { Studio, StudioState } from "../state"
 /* The engine's modal backdrop slices, at hero scale. */
 export const BACKDROP = {
   dim: "bg-overlay/40 backdrop-blur-[1.5px]",
-  blur: "bg-overlay/20 backdrop-blur-[4px]",
+  blur: "bg-overlay/20 backdrop-blur-xs",
   none: "",
 }
 

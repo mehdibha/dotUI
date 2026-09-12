@@ -114,7 +114,7 @@ export function Header({ className, items = [] }: HeaderProps) {
               viewBox="0 0 16 16"
               fill="currentColor"
               aria-hidden
-              className="**:[rect]:origin-center **:[rect]:transition-transform **:[rect]:duration-[160ms] **:[rect]:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              className="**:[rect]:origin-center **:[rect]:transition-transform **:[rect]:duration-160 **:[rect]:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <rect
                 x="1"
@@ -122,7 +122,7 @@ export function Header({ className, items = [] }: HeaderProps) {
                 width="14"
                 height="1"
                 rx="0.5"
-                className="-translate-y-[3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-45"
+                className="translate-y-[-3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-45"
               />
               <rect
                 x="1"

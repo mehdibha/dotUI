@@ -6,7 +6,7 @@ import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 export function RadioGroupDemo() {
   return (
     <RadioGroup aria-label="Size" defaultValue="medium">
-      <FieldGroup className="[container-type:normal]!">
+      <FieldGroup className="@container-normal!">
         <Radio value="small">
           <RadioControl />
           <Label>Small</Label>

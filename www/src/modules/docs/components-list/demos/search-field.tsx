@@ -8,7 +8,7 @@ export function SearchFieldDemo() {
     <SearchField
       aria-label="Search"
       defaultValue="Invoices"
-      className="w-full max-w-[11.5rem]"
+      className="w-full max-w-46"
     >
       <InputGroup className="w-full">
         <InputGroupAddon>

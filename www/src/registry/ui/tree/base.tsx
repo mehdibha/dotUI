@@ -79,7 +79,7 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
               <ButtonPrimitive.Button slot="chevron" className={chevron()}>
                 <ChevronRightIcon
                   aria-hidden
-                  className="transition-transform duration-200 group-data-[expanded]/tree-item:rotate-90"
+                  className="transition-transform duration-200 group-data-expanded/tree-item:rotate-90"
                 />
               </ButtonPrimitive.Button>
             ) : (

@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       // it behind the content (which is `z-10`).
       indicator:
         "pointer-events-none absolute inset-0 rounded-md ease-out motion-safe:transition-[translate,width,height]",
-      itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
+      itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
     },
   },
   density: {

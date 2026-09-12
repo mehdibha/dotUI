@@ -137,7 +137,7 @@ const Tab = ({ className, ...props }: TabProps) => {
           <TabIndicator />
           <span
             data-tab-content=""
-            className="relative z-10 inline-flex items-center [gap:inherit]"
+            className="relative z-10 inline-flex items-center gap-[inherit]"
           >
             {children}
           </span>

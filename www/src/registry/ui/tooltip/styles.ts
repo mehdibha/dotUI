@@ -39,7 +39,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       surface: {
         slots: {
           content:
-            "border bg-popover text-fg shadow-[var(--shadow-popover,var(--shadow-md))]",
+            "border bg-popover text-fg shadow-(--shadow-popover,var(--shadow-md))",
           arrow:
             "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover [&>svg]:stroke-border",
         },

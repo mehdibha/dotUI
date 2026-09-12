@@ -11,9 +11,9 @@ import { tv } from "tailwind-variants";
 const treeVariants = tv({
   slots: {
     root: "flex max-h-[inherit] flex-col gap-px overflow-auto outline-hidden [--tree-indent:--spacing(4)] data-empty:items-center data-empty:justify-center text-sm",
-    item: "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:outline-(length:--focus-ring-width) focus-visible:outline-offset-[calc(var(--focus-ring-width)*-1)] focus-visible:outline-(color:--focus-ring-color) focus-visible:outline-solid selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover drop-target:bg-accent-muted drop-target:text-fg dragging:opacity-60 disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-8 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+    item: "group/tree-item relative flex w-full items-center rounded-md outline-hidden select-ui **:[svg]:pointer-events-none **:[svg]:shrink-0 focus-visible:outline-(length:--focus-ring-width) focus-visible:-outline-offset-(--focus-ring-width) focus-visible:outline-(--focus-ring-color) focus-visible:outline-solid selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover drop-target:bg-accent-muted drop-target:text-fg dragging:opacity-60 disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current min-h-8 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
     itemContent:
-      "flex min-w-0 flex-1 items-center gap-1.5 [padding-inline-start:calc((var(--tree-item-level)_-_1)_*_var(--tree-indent))]",
+      "flex min-w-0 flex-1 items-center gap-1.5 ps-[calc((var(--tree-item-level)-1)*var(--tree-indent))]",
     chevron:
       "flex size-4 shrink-0 cursor-interactive items-center justify-center text-fg-muted outline-hidden",
     chevronPlaceholder: "size-4 shrink-0",
@@ -102,7 +102,7 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
               <ButtonPrimitive.Button slot="chevron" className={chevron()}>
                 <ChevronRightIcon
                   aria-hidden
-                  className="transition-transform duration-200 group-data-[expanded]/tree-item:rotate-90"
+                  className="transition-transform duration-200 group-data-expanded/tree-item:rotate-90"
                 />
               </ButtonPrimitive.Button>
             ) : (

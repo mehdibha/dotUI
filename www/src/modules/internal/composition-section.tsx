@@ -85,7 +85,7 @@ export function CompositionSection() {
         <div className="flex flex-col items-start">
           <ol
             ref={railRef}
-            className="relative no-scrollbar h-80 max-w-54 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5"
+            className="relative no-scrollbar h-80 max-w-54 self-stretch overflow-y-auto mask-[linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5"
             {...pauseHandlers}
           >
             {/* One indicator for the whole rail — it travels to the active
@@ -144,7 +144,7 @@ export function CompositionSection() {
             <div className="relative flex min-h-56 items-center justify-center p-6">
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
+                className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] mask-[radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-size-[14px_14px]"
               />
               <div className="relative flex w-full justify-center">
                 {current.preview}

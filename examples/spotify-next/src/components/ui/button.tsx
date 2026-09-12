@@ -9,7 +9,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { Loader } from "@/components/ui/loader";
 
 const buttonVariants = tv({
-  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,0_0_#0000)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted disabled:cursor-disabled text-sm *:[svg]:not-with-[size]:size-4",
+  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-(--shadow-control,0_0_#0000) transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted disabled:cursor-disabled text-sm *:[svg]:not-with-[size]:size-4",
   variants: {
     variant: {
       primary:

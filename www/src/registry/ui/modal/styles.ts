@@ -19,9 +19,9 @@ const { useStyles, styles } = createStyles(modalMeta, {
       ],
       backdrop: ["absolute inset-0"],
       viewport:
-        "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
+        "@container-size sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-modal,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)]",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)]",
       ],
     },
   },
@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
         slots: {
           viewport: "items-center",
           modal:
-            "max-h-[calc(var(--visual-viewport-height)-2rem)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
+            "max-h-[calc(var(--visual-viewport-height)-2rem)] sm:max-h-[calc(var(--visual-viewport-height)*0.9)]",
         },
       },
       top: {

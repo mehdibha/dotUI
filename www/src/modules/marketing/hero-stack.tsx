@@ -125,7 +125,7 @@ function SharedTooltip() {
               sideOffset={6}
               className="transition-transform duration-200 ease-out"
             >
-              <Tooltip.Popup className="rounded-(--tooltip-radius) border border-border bg-neutral px-3 py-1.5 text-xs text-fg-on-neutral shadow-[var(--shadow-overlay,none)] transition-[opacity,scale] duration-150 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
+              <Tooltip.Popup className="rounded-(--tooltip-radius) border border-border bg-neutral px-3 py-1.5 text-xs text-fg-on-neutral shadow-(--shadow-overlay,none) transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0">
                 <TipLabel tool={tool} dir={dir} />
               </Tooltip.Popup>
             </Tooltip.Positioner>

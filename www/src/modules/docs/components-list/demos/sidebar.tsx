@@ -37,7 +37,7 @@ export function SidebarDemo() {
   return (
     <div className="absolute inset-0 pt-4 pl-4">
       <SidebarProvider
-        className="h-80 min-h-0 w-[26rem] overflow-hidden rounded-lg border"
+        className="h-80 min-h-0 w-104 overflow-hidden rounded-lg border"
         style={{ "--sidebar-width": "12.5rem" } as React.CSSProperties}
       >
         <Sidebar>

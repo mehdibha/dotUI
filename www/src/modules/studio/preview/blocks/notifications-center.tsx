@@ -656,7 +656,7 @@ export default function NotificationsCenter() {
       <Tabs
         selectedKey={tab}
         onSelectionChange={(key) => setTab(key as TabId)}
-        className="relative flex h-full max-h-[46rem] w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-modal,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)]"
+        className="relative flex h-full max-h-184 w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [backdrop-filter:var(--overlay-backdrop-filter,none)]"
       >
         <header className="shrink-0 border-b">
           <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">

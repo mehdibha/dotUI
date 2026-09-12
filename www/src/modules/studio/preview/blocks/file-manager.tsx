@@ -649,7 +649,7 @@ function FileTile({ file }: { file: FileEntry }) {
           <Card className="h-full gap-0 overflow-hidden p-0 transition-colors hover:border-border-control">
             <div
               className={cn(
-                "flex aspect-[16/9] items-center justify-center border-b",
+                "flex aspect-video items-center justify-center border-b",
                 kind.tone,
               )}
             >
@@ -950,7 +950,7 @@ export default function FileManager() {
   return (
     <div className="min-h-screen bg-bg text-fg">
       <header className="sticky top-0 z-20 border-b bg-bg/90 backdrop-blur">
-        <div className="mx-auto flex h-14 w-full max-w-[100rem] items-center gap-3 px-4 sm:px-6">
+        <div className="mx-auto flex h-14 w-full max-w-400 items-center gap-3 px-4 sm:px-6">
           <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
             <FolderIcon className="size-4" />
           </div>
@@ -977,7 +977,7 @@ export default function FileManager() {
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-[100rem] gap-6 px-4 py-5 sm:px-6">
+      <div className="mx-auto flex w-full max-w-400 gap-6 px-4 py-5 sm:px-6">
         <aside className="hidden w-60 shrink-0 flex-col gap-4 lg:flex">
           <NewFolderDialog />
           <FolderTree folderId={folderId} onOpen={openFolder} />

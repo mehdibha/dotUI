@@ -28,9 +28,9 @@ export function Cards() {
       <DesignSystemProvider scoped color={preset.color}>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-[calc(50%-50vw)] -top-56 bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_24rem)]"
+          className="pointer-events-none absolute inset-x-[calc(50%-50vw)] -top-56 bottom-0 -z-20 mask-[linear-gradient(to_bottom,transparent,black_24rem)]"
         >
-          <div className="size-full bg-(--preset-wash-bg) [mask-image:linear-gradient(to_bottom,black_calc(100%-24rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
+          <div className="size-full bg-(--preset-wash-bg) mask-[linear-gradient(to_bottom,black_calc(100%-24rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
         </div>
       </DesignSystemProvider>
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
@@ -47,7 +47,7 @@ export function Cards() {
           short of its own right-edge fade. */}
       <div className="relative -mx-4 pl-(--crop-pl) [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] sm:-mx-6 sm:[--crop-pl:--spacing(6)] lg:mx-0 lg:pl-0">
         <SkeletonRail side="left" />
-        <div className="[mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))]">
+        <div className="mask-[linear-gradient(to_bottom,black_calc(100%-var(--mask-solid)),transparent_calc(100%-var(--mask-clear)))]">
           <DesignSystemProvider
             scoped
             params={preset.componentParams}
@@ -56,7 +56,7 @@ export function Cards() {
             color={preset.color}
             icons={preset.icons}
           >
-            <CardsGrid className="relative z-20 w-max [zoom:0.8] [mask-image:linear-gradient(to_right,black_calc(125vw_-_1.25*var(--crop-pl)_-_1.25*var(--edge-fade)),transparent_calc(125vw_-_1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:[zoom:1] lg:[mask-image:none]" />
+            <CardsGrid className="relative z-20 w-max zoom-[0.8] mask-[linear-gradient(to_right,black_calc(125vw-1.25*var(--crop-pl)-1.25*var(--edge-fade)),transparent_calc(125vw-1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:zoom-[1] lg:mask-none" />
           </DesignSystemProvider>
         </div>
         <SkeletonRail side="right" />
