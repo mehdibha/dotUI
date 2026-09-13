@@ -22,7 +22,12 @@ import {
   ZapIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Accordion } from "@/registry/ui/accordion"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from "@/registry/ui/accordion"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
@@ -36,11 +41,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   Empty,
@@ -450,9 +450,9 @@ function FiltersPanel({
         allowsMultipleExpanded
         defaultExpandedKeys={["category", "license", "size", "topics"]}
       >
-        <Disclosure id="category">
-          <DisclosureTrigger>Category</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem id="category">
+          <AccordionTrigger>Category</AccordionTrigger>
+          <AccordionPanel>
             <CheckboxGroup
               aria-label="Category"
               value={filters.categories}
@@ -472,12 +472,12 @@ function FiltersPanel({
                 ))}
               </FieldGroup>
             </CheckboxGroup>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
 
-        <Disclosure id="license">
-          <DisclosureTrigger>License</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem id="license">
+          <AccordionTrigger>License</AccordionTrigger>
+          <AccordionPanel>
             <CheckboxGroup
               aria-label="License"
               value={filters.licenses}
@@ -497,12 +497,12 @@ function FiltersPanel({
                 ))}
               </FieldGroup>
             </CheckboxGroup>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
 
-        <Disclosure id="size">
-          <DisclosureTrigger>Bundle size</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem id="size">
+          <AccordionTrigger>Bundle size</AccordionTrigger>
+          <AccordionPanel>
             <Slider
               value={filters.size}
               onChange={(value) =>
@@ -521,12 +521,12 @@ function FiltersPanel({
               <SliderControl />
               <Description>Kilobytes shipped to the browser.</Description>
             </Slider>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
 
-        <Disclosure id="topics">
-          <DisclosureTrigger>Topics</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem id="topics">
+          <AccordionTrigger>Topics</AccordionTrigger>
+          <AccordionPanel>
             <TagGroup
               size="sm"
               selectionMode="multiple"
@@ -547,8 +547,8 @@ function FiltersPanel({
                 ))}
               </TagList>
             </TagGroup>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
       </Accordion>
 
       <Switch

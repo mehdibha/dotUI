@@ -341,6 +341,12 @@ export const componentsData: ComponentCategory[] = [
         status: "done",
       },
       {
+        name: "Collapsible",
+        slug: "collapsible",
+        href: "/docs/components/collapsible",
+        status: "in review",
+      },
+      {
         name: "Avatar",
         slug: "avatar",
         href: "/docs/components/avatar",

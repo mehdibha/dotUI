@@ -1,9 +1,7 @@
 "use client"
 
-/* Accordion — one literal language for accordion and disclosure (disclosure
-   is the single-item primitive; every decision here applies to both).
-   Container: divided — hairline-separated full-bleed rows (shadcn, Radix
-   Themes, Spectrum) — vs boxed — one bordered surface with internal
+/* Accordion — Container: divided — hairline-separated full-bleed rows
+   (shadcn, Radix Themes, Spectrum) — vs boxed — one bordered surface with internal
    dividers (Ant, Bootstrap, HeroUI bordered) — vs cards — each item its own
    separated card (Material expansion panels, HeroUI splitted, marketing
    FAQs). Marker: chevron (shadcn, Radix, Spectrum, Carbon) vs plus/minus

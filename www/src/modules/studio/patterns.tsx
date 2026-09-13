@@ -9,11 +9,11 @@ import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
+import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
 import { ColorArea } from "@/registry/ui/color-area"
 import { ColorField } from "@/registry/ui/color-field"
 import { ColorSlider } from "@/registry/ui/color-slider"
 import { DialogContent } from "@/registry/ui/dialog"
-import { Disclosure, DisclosurePanel } from "@/registry/ui/disclosure"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
@@ -57,7 +57,7 @@ export function DetailRow({
   children: React.ReactNode
 }) {
   return (
-    <Disclosure
+    <Collapsible
       id={id ?? label}
       defaultExpanded={defaultExpanded}
       className="w-full rounded-xl bg-muted"
@@ -72,13 +72,13 @@ export function DetailRow({
         <span className={ROW_LABEL}>{label}</span>
         <span className="flex shrink-0 items-center gap-1.5">
           {summary && <span className={ROW_VALUE}>{summary}</span>}
-          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/disclosure:rotate-180" />
+          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
         </span>
       </RacButton>
-      <DisclosurePanel className="text-inherit">
+      <CollapsiblePanel className="text-inherit">
         <div className="flex flex-col px-2 pb-1.5">{children}</div>
-      </DisclosurePanel>
-    </Disclosure>
+      </CollapsiblePanel>
+    </Collapsible>
   )
 }
 

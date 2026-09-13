@@ -1,6 +1,6 @@
 {
-  "name": "DisclosurePanelProps",
-  "description": "A DisclosurePanel provides the content for a disclosure.",
+  "name": "CollapsiblePanelProps",
+  "description": "A CollapsiblePanel holds the content that shows and hides.",
   "props": {
     "aria-describedby": {
       "type": "string",
@@ -186,12 +186,6 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
-    }
-  },
-  "renderProps": {
-    "isFocusVisibleWithin": {
-      "selector": "[data-focus-visible-within]",
-      "description": "Whether keyboard focus is within the disclosure panel."
     }
   },
   "typeLinks": {

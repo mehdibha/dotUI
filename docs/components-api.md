@@ -13407,49 +13407,47 @@ const rows = invoices.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
 ## Accordion
 
-An accordion is a group of `Disclosure`s; expanded state is keyed by each disclosure's `id`.
+An accordion is a group of `AccordionItem`s; expanded state is keyed by each item's `id`.
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
 ```
 
 ```tsx
 <Accordion className="max-w-lg" defaultExpandedKeys={["getting-started"]}>
-  <Disclosure id="getting-started">
-    <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
-    <DisclosurePanel>
+  <AccordionItem id="getting-started">
+    <AccordionTrigger>How do I get started with DotUI?</AccordionTrigger>
+    <AccordionPanel>
       Install the package, then import the components you need.
-    </DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="free-to-use">
-    <DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
-    <DisclosurePanel>Yes, DotUI is completely free and open source.</DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="customization">
-    <DisclosureTrigger>Can I customize the components?</DisclosureTrigger>
-    <DisclosurePanel>All components use Tailwind Variants for styling.</DisclosurePanel>
-  </Disclosure>
+    </AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="free-to-use">
+    <AccordionTrigger>Is DotUI free to use?</AccordionTrigger>
+    <AccordionPanel>Yes, DotUI is completely free and open source.</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="customization">
+    <AccordionTrigger>Can I customize the components?</AccordionTrigger>
+    <AccordionPanel>All components use Tailwind Variants for styling.</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
 ## Accordion allows multiple expanded
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
 ```
 
 ```tsx
 <Accordion allowsMultipleExpanded className="max-w-xs" defaultExpandedKeys={["getting-started"]}>
-  <Disclosure id="getting-started">
-    <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
-    <DisclosurePanel>Install the package, then import the components you need.</DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="free-to-use">
-    <DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
-    <DisclosurePanel>Yes, DotUI is completely free and open source.</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem id="getting-started">
+    <AccordionTrigger>How do I get started with DotUI?</AccordionTrigger>
+    <AccordionPanel>Install the package, then import the components you need.</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="free-to-use">
+    <AccordionTrigger>Is DotUI free to use?</AccordionTrigger>
+    <AccordionPanel>Yes, DotUI is completely free and open source.</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
@@ -13458,8 +13456,7 @@ import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/
 ```tsx
 import { useState } from "react"
 
-import { Accordion } from "@/components/ui/accordion"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
 ```
 
 ```tsx
@@ -13469,51 +13466,49 @@ const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set(["getting-
   expandedKeys={expandedKeys}
   onExpandedChange={(keys) => setExpandedKeys(keys as Set<string>)}
 >
-  <Disclosure id="getting-started">
-    <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
-    <DisclosurePanel>Install the package, then import the components you need.</DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="free-to-use">
-    <DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
-    <DisclosurePanel>Yes, DotUI is completely free and open source.</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem id="getting-started">
+    <AccordionTrigger>How do I get started with DotUI?</AccordionTrigger>
+    <AccordionPanel>Install the package, then import the components you need.</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="free-to-use">
+    <AccordionTrigger>Is DotUI free to use?</AccordionTrigger>
+    <AccordionPanel>Yes, DotUI is completely free and open source.</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
 ## Accordion disabled
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
 ```
 
 ```tsx
 <Accordion className="max-w-xs" defaultExpandedKeys={["getting-started"]} isDisabled>
-  <Disclosure id="getting-started">
-    <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
-    <DisclosurePanel>Install the package, then import the components you need.</DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="free-to-use">
-    <DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
-    <DisclosurePanel>Yes, DotUI is completely free and open source.</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem id="getting-started">
+    <AccordionTrigger>How do I get started with DotUI?</AccordionTrigger>
+    <AccordionPanel>Install the package, then import the components you need.</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="free-to-use">
+    <AccordionTrigger>Is DotUI free to use?</AccordionTrigger>
+    <AccordionPanel>Yes, DotUI is completely free and open source.</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
 ## Accordion settings panel (with switches)
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
 import { Description, FieldContent, Label } from "@/components/ui/field"
 import { Switch, SwitchControl, SwitchIndicator } from "@/components/ui/switch"
 ```
 
 ```tsx
 <Accordion className="w-full max-w-xs" defaultExpandedKeys={["Notifications"]}>
-  <Disclosure id="Notifications">
-    <DisclosureTrigger>Notifications</DisclosureTrigger>
-    <DisclosurePanel>
+  <AccordionItem id="Notifications">
+    <AccordionTrigger>Notifications</AccordionTrigger>
+    <AccordionPanel>
       <div className="flex flex-col gap-4">
         <Switch className="w-full" defaultSelected>
           <SwitchControl>
@@ -13534,123 +13529,107 @@ import { Switch, SwitchControl, SwitchIndicator } from "@/components/ui/switch"
           </SwitchControl>
         </Switch>
       </div>
-    </DisclosurePanel>
-  </Disclosure>
-  <Disclosure id="Privacy">
-    <DisclosureTrigger>Privacy</DisclosureTrigger>
-    <DisclosurePanel>{/* ... */}</DisclosurePanel>
-  </Disclosure>
+    </AccordionPanel>
+  </AccordionItem>
+  <AccordionItem id="Privacy">
+    <AccordionTrigger>Privacy</AccordionTrigger>
+    <AccordionPanel>{/* ... */}</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
-## Disclosure
+## Collapsible
+
+A collapsible has no look of its own: put any `Button` with `slot="trigger"` in it, or use the bare `CollapsibleTrigger` for a custom layout.
 
 ```tsx
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { ChevronDownIcon } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import { Collapsible, CollapsiblePanel } from "@/components/ui/collapsible"
 ```
 
 ```tsx
-<Disclosure>
-  <DisclosureTrigger>System requirements</DisclosureTrigger>
-  <DisclosurePanel>
+<Collapsible className="w-full max-w-sm">
+  <Button slot="trigger" variant="quiet" size="sm">
+    System requirements
+    <ChevronDownIcon className="transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+  </Button>
+  <CollapsiblePanel className="px-3 text-sm text-fg-muted">
     Details about system requirements go here. Describes the minimum and
     recommended hardware and software needed.
-  </DisclosurePanel>
-</Disclosure>
+  </CollapsiblePanel>
+</Collapsible>
 ```
 
-## Disclosure default expanded
+## Collapsible default expanded
 
 ```tsx
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+<Collapsible defaultExpanded>
+  <Button slot="trigger" variant="quiet" size="sm">
+    System requirements
+    <ChevronDownIcon className="transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+  </Button>
+  <CollapsiblePanel>…</CollapsiblePanel>
+</Collapsible>
 ```
+
+## Collapsible disabled
 
 ```tsx
-<Disclosure defaultExpanded>
-  <DisclosureTrigger>System requirements</DisclosureTrigger>
-  <DisclosurePanel>Details about system requirements go here.</DisclosurePanel>
-</Disclosure>
+<Collapsible isDisabled>
+  <Button slot="trigger" variant="quiet" size="sm">
+    System requirements
+    <ChevronDownIcon className="transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+  </Button>
+  <CollapsiblePanel>…</CollapsiblePanel>
+</Collapsible>
 ```
 
-## Disclosure disabled
-
-```tsx
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
-```
-
-```tsx
-<Disclosure isDisabled>
-  <DisclosureTrigger>System requirements</DisclosureTrigger>
-  <DisclosurePanel>Details about system requirements go here.</DisclosurePanel>
-</Disclosure>
-```
-
-## Disclosure controlled
+## Collapsible controlled
 
 ```tsx
 import React from "react"
 
 import { Button } from "@/components/ui/button"
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
+import { Collapsible, CollapsiblePanel } from "@/components/ui/collapsible"
 ```
 
 ```tsx
 const [isExpanded, setExpanded] = React.useState(false)
 
-<Disclosure isExpanded={isExpanded} onExpandedChange={setExpanded}>
-  <DisclosureTrigger>System requirements</DisclosureTrigger>
-  <DisclosurePanel>Details about system requirements go here.</DisclosurePanel>
-</Disclosure>
+<Collapsible isExpanded={isExpanded} onExpandedChange={setExpanded}>
+  <Button slot="trigger" variant="quiet" size="sm">
+    System requirements
+  </Button>
+  <CollapsiblePanel>…</CollapsiblePanel>
+</Collapsible>
 <Button size="sm" onPress={() => setExpanded(!isExpanded)}>
   {isExpanded ? "Collapse" : "Expand"}
 </Button>
 ```
 
-## Disclosure custom trigger
+## Collapsible custom trigger
 
-Compose the header from `Heading` and a `slot="trigger"` `Button` instead of `DisclosureTrigger`.
+`CollapsibleTrigger` is an unstyled button: lay out the row yourself.
 
 ```tsx
 import { ChevronDownIcon } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure"
-import { Heading } from "@/components/ui/heading"
+import { Badge } from "@/components/ui/badge"
+import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from "@/components/ui/collapsible"
 ```
 
 ```tsx
-<Disclosure>
-  <Heading>
-    <Button variant="quiet" slot="trigger">
-      System requirements
-      <ChevronDownIcon />
-    </Button>
-  </Heading>
-  <DisclosurePanel className="px-3 pt-2">
-    Details about system requirements go here.
-  </DisclosurePanel>
-</Disclosure>
-```
-
-## Disclosure FAQ list
-
-Independent disclosures stacked with a divider (no accordion grouping).
-
-```tsx
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure"
-```
-
-```tsx
-<div className="w-full max-w-sm">
-  <h3 className="mb-2 text-sm font-medium text-fg-muted">Frequently asked questions</h3>
-  <div className="divide-y divide-border">
-    {faqs.map((faq) => (
-      <Disclosure key={faq.question}>
-        <DisclosureTrigger>{faq.question}</DisclosureTrigger>
-        <DisclosurePanel>{faq.answer}</DisclosurePanel>
-      </Disclosure>
-    ))}
-  </div>
-</div>
+<Collapsible className="rounded-lg border">
+  <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left hover:bg-muted/50">
+    <span className="font-mono text-xs text-fg-muted tabular-nums">12:04:31</span>
+    <Badge variant="danger">error</Badge>
+    <span className="min-w-0 flex-1 truncate font-mono text-xs">Connection refused: payments-db:5432</span>
+    <ChevronDownIcon className="size-4 shrink-0 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+  </CollapsibleTrigger>
+  <CollapsiblePanel>
+    <pre className="border-t px-3 py-2 font-mono text-xs text-fg-muted">…</pre>
+  </CollapsiblePanel>
+</Collapsible>
 ```
 
 ## Breadcrumbs

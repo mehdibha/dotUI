@@ -1,6 +1,6 @@
 {
-  "name": "DisclosureProps",
-  "description": "A disclosure is a collapsible section of content. It is composed of a header\nwith a heading and trigger button, and a panel that contains the content.",
+  "name": "AccordionItemProps",
+  "description": "An AccordionItem is one collapsible section: a heading trigger and a panel.",
   "props": {
     "children": {
       "type": "ReactNode | (values: DisclosureRenderProps) => ReactNode",
@@ -213,20 +213,6 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
-  "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the disclosure is disabled."
-    },
-    "isExpanded": {
-      "selector": "[data-expanded]",
-      "description": "Whether the disclosure is expanded."
-    },
-    "isFocusVisibleWithin": {
-      "selector": "[data-focus-visible-within]",
-      "description": "Whether the disclosure has keyboard focus."
-    }
-  },
   "typeLinks": {
     "DisclosureRenderProps": {
       "type": "interface",
@@ -267,7 +253,7 @@
           "name": "state",
           "value": {
             "type": "identifier",
-            "name": "Disclosure.State"
+            "name": "DisclosureState"
           },
           "optional": false,
           "readonly": false,
@@ -316,8 +302,8 @@
           "name": "state",
           "value": {
             "type": "link",
-            "id": "react-stately/dist/types/src/disclosure/useDisclosureState.d.ts:Disclosure.State",
-            "name": "Disclosure.State"
+            "id": "react-stately/dist/types/src/disclosure/useDisclosureState.d.ts:DisclosureState",
+            "name": "DisclosureState"
           },
           "optional": false,
           "readonly": false,

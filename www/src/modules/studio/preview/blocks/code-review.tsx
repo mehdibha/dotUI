@@ -36,6 +36,11 @@ import { Button } from "@/registry/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/registry/ui/collapsible"
+import {
   Dialog,
   DialogBody,
   DialogContent,
@@ -44,11 +49,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
 import {
   Empty,
   EmptyDescription,
@@ -657,11 +657,12 @@ function ChecksSummary() {
         </ProgressBar>
       </div>
       <Separator />
-      <Disclosure className="px-4">
-        <DisclosureTrigger className="text-sm">
+      <Collapsible className="px-4">
+        <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium">
           Show all checks
-        </DisclosureTrigger>
-        <DisclosurePanel>
+          <ChevronDownIcon className="size-4 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsiblePanel>
           <ul className="flex flex-col">
             {CHECKS.map((check) => (
               <li
@@ -681,8 +682,8 @@ function ChecksSummary() {
               </li>
             ))}
           </ul>
-        </DisclosurePanel>
-      </Disclosure>
+        </CollapsiblePanel>
+      </Collapsible>
     </div>
   )
 }

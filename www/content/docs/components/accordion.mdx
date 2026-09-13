@@ -1,6 +1,6 @@
 ---
 title: Accordion
-description: A grouping of related disclosures that supports both single and multiple expanded items.
+description: A stack of collapsible sections, one or many open at a time.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
@@ -20,37 +20,39 @@ npx shadcn@latest add @dotui/accordion
 ## Anatomy
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion"
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/components/ui/disclosure"
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 ```
 
 ```tsx
 <Accordion>
-  <Disclosure>
-    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-  </Disclosure>
-  <Disclosure>
-    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem>
+    <AccordionTrigger>Heading</AccordionTrigger>
+    <AccordionPanel>Content</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem>
+    <AccordionTrigger>Heading</AccordionTrigger>
+    <AccordionPanel>Content</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
+`AccordionTrigger` renders the heading, the button, and the marker; `AccordionPanel` holds the collapsible content. For a single section with a trigger of your own, use [Collapsible](/docs/components/collapsible).
+
 ## Open state
 
-Expanded items are tracked by each `Disclosure`'s `id`. Give the group `defaultExpandedKeys` for uncontrolled state, or `expandedKeys` with `onExpandedChange` to control it — both are a `Set` of ids. Pass `allowsMultipleExpanded` to let the set hold more than one id at a time.
+Expanded items are tracked by each `AccordionItem`'s `id`. Give the group `defaultExpandedKeys` for uncontrolled state, or `expandedKeys` with `onExpandedChange` to control it — both are a `Set` of ids. Pass `allowsMultipleExpanded` to let the set hold more than one id at a time.
 
 ```tsx
 <Accordion defaultExpandedKeys={["getting-started"]}>
-  <Disclosure id="getting-started">
-    <DisclosureTrigger>How do I get started?</DisclosureTrigger>
-    <DisclosurePanel>…</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem id="getting-started">
+    <AccordionTrigger>How do I get started?</AccordionTrigger>
+    <AccordionPanel>…</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
@@ -67,3 +69,15 @@ Expanded items are tracked by each `Disclosure`'s `id`. Give the group `defaultE
 ### Accordion
 
 <Reference name="accordion" />
+
+### AccordionItem
+
+<Reference name="accordion-item" />
+
+### AccordionTrigger
+
+<Reference name="accordion-trigger" />
+
+### AccordionPanel
+
+<Reference name="accordion-panel" />

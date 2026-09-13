@@ -324,7 +324,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 
 // Accordion-style expand/collapse: grid-rows 0fr→1fr animates the panel to
 // its intrinsic height without measuring (same duration/easing as the
-// registry disclosure). Panels stay mounted, so inert keeps the collapsed
+// registry accordion). Panels stay mounted, so inert keeps the collapsed
 // one's fields out of Tab order and the accessibility tree. Clip is y-only
 // so focus rings aren't cut off at the panel edges. `px-2.5` matches the
 // row's own padding so the fields line up under the radio indicator.

@@ -4,7 +4,7 @@
  * A base file reads a per-value expression through a hook:
  *
  *   const useMarker = createParamValue({
- *     componentName: "disclosure",
+ *     componentName: "accordion",
  *     paramName: "marker",
  *     defaultValue: "chevron",
  *     values: { chevron: <ChevronDownIcon />, plus: <PlusIcon /> },

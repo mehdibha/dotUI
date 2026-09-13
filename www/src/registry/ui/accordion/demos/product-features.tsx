@@ -1,9 +1,9 @@
-import { Accordion } from "@/registry/ui/accordion"
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from "@/registry/ui/accordion"
 
 const categories = [
   {
@@ -39,16 +39,16 @@ export default function Demo() {
       defaultExpandedKeys={["Collaboration"]}
     >
       {categories.map((category) => (
-        <Disclosure key={category.name} id={category.name}>
-          <DisclosureTrigger>{category.name}</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem key={category.name} id={category.name}>
+          <AccordionTrigger>{category.name}</AccordionTrigger>
+          <AccordionPanel>
             <ul className="list-disc space-y-1 pl-4 text-sm text-fg-muted">
               {category.features.map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}
             </ul>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   )
