@@ -118,7 +118,7 @@ describe("emitInitItem", () => {
     expect(baseRegistryCss.css).not.toHaveProperty(":root")
   })
 
-  test("emits preset tokens as :root vars, wrapping token refs in var()", () => {
+  test("emits preset tokens on :root and never ships studio vars", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: {
@@ -126,16 +126,20 @@ describe("emitInitItem", () => {
         componentParams: {},
         tokens: {
           "--radius": "0.5rem",
-          "--btn-radius": "--radius-md",
+          "--corner-shape": "squircle",
+          "--studio-btn-radius": "--radius-md",
         },
       },
       registryRoot: "https://dotui.com",
     })
 
     // Radius rides with the colors; other tokens stay in a plain `:root`
-    // rule, out of reach of shadcn's theme updater.
+    // rule, out of reach of shadcn's theme updater. Studio vars never ship —
+    // the component publisher resolves them into utilities.
     expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
-    expect(item.css?.[":root"]).toEqual({ "--btn-radius": "var(--radius-md)" })
+    expect(item.css?.[":root"]).toEqual({
+      "--corner-shape": "squircle",
+    })
   })
 
   test("flattens preset color tokens to per-mode literals", () => {
@@ -162,7 +166,7 @@ describe("emitInitItem", () => {
             "color-mix(in srgb, light-dark(var(--neutral-25), var(--neutral-100)) 72%, transparent)",
           "--focus-glow":
             "color-mix(in oklab, var(--color-fg) 60%, transparent)",
-          "--btn-radius": "--radius-md",
+          "--studio-btn-radius": "--radius-md",
         },
       },
       registryRoot: "https://dotui.com",
@@ -188,7 +192,6 @@ describe("emitInitItem", () => {
     expect(root).toEqual({
       "--card-border": "transparent",
       "--focus-glow": `color-mix(in oklab, ${light?.["fg"]} 60%, transparent)`,
-      "--btn-radius": "var(--radius-md)",
     })
     expect(darkRule).toEqual({
       "--card-border": expect.stringMatching(OKLCH),

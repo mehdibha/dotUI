@@ -43,11 +43,11 @@ describe("invalid", () => {
   test("drives the field error param; the bar carries its vars", () => {
     const plain = resolveDesignSystem(DEFAULTS)
     expect(plain.componentParams.field?.error).toBe("border")
-    expect(plain.tokens["--field-error-bar"]).toBeUndefined()
+    expect(plain.tokens["--studio-field-error-bar"]).toBeUndefined()
 
     const bar = resolveDesignSystem({ ...DEFAULTS, inputError: "bar" })
     expect(bar.componentParams.field?.error).toBe("bar")
-    expect(bar.tokens["--field-error-bar"]).toBe("3px")
+    expect(bar.tokens["--studio-field-error-bar"]).toBe("3px")
 
     expect(
       resolveDesignSystem({ ...DEFAULTS, inputError: "nope" }).componentParams

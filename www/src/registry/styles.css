@@ -16,6 +16,7 @@
 @import "./ui/questionnaire/styles.css";
 @import "./ui/checkbox/styles.css";
 @import "./ui/color-area/styles.css";
+@import "./ui/color-swatch/styles.css";
 @import "./ui/color-swatch-picker/styles.css";
 @import "./ui/tag-group/styles.css";
 @import "./ui/field/styles.css";

@@ -22,8 +22,8 @@ describe("display chapters (badges, kbd, avatars)", () => {
   it("badge shape re-points the badge and tag radius vars", () => {
     const ds = resolveDesignSystem({ ...DEFAULTS, badgeShape: "rounded" })
     expect(ds.tokens).toEqual({
-      "--badge-radius": "var(--radius-sm)",
-      "--tag-radius": "var(--radius-sm)",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     })
   })
 
@@ -38,7 +38,7 @@ describe("display chapters (badges, kbd, avatars)", () => {
       avatarShape: "rounded",
       avatarFallback: "tinted",
     })
-    expect(ds.tokens).toEqual({ "--avatar-radius": "var(--radius-lg)" })
+    expect(ds.tokens).toEqual({ "--studio-avatar-radius": "var(--radius-lg)" })
     expect(ds.componentParams.avatar).toEqual({ fallback: "tinted" })
   })
 

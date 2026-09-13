@@ -132,7 +132,7 @@ const DEFAULT_PROMPT = new TokenFieldValue([
 // for attachment, a model + effort picker (Fable 5 / High), dictation and voice.
 // Unlike the other showcase cards it isn't wrapped in <Card>; the bordered
 // composer *is* the surface — a short, wide banner across the top of the grid's
-// main region. Every visual goes through design-system tokens (--card-radius,
+// main region. Every visual goes through design-system tokens (--studio-card-radius,
 // bg-card, text-fg-muted…) so it re-themes live with the rest of the grid, and
 // every toolbar action is a live, themed overlay — the "+" tools menu, the model
 // and effort pickers, and the microphone popover — so the card doubles as a
@@ -151,7 +151,7 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-(--card-radius) border bg-card p-2 shadow-sm",
+        "flex flex-col rounded-(--studio-card-radius) border bg-card p-2 shadow-sm",
         className,
       )}
       {...props}

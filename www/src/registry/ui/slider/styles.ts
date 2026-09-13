@@ -8,12 +8,12 @@ const { useStyles, styles } = createStyles(sliderMeta, {
     slots: {
       root: fieldStyles().field(),
       control:
-        "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
+        "relative flex grow cursor-(--studio-slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
       track:
-        "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
-      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
+        "pointer-events-none relative grow overflow-hidden rounded-(--studio-slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
+      fill: "pointer-events-none bg-(--studio-slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--studio-slider-fill-color))",
       thumb: [
-        "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
+        "top-1/2 left-1/2 grid cursor-(--studio-slider-cursor) place-items-center rounded-(--studio-slider-thumb-radius) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--studio-slider-dragging-cursor)",
       ],
       output:
         "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
@@ -57,19 +57,20 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       circle: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
+            "size-(--slider-thumb-size) bg-fg shadow-(--studio-slider-thumb-shadow)",
         },
       },
       outline: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) border-2 border-border-control bg-bg shadow-(--slider-thumb-shadow)",
+            "size-(--slider-thumb-size) border-2 border-border-control bg-bg shadow-(--studio-slider-thumb-shadow)",
         },
       },
       // M3's handle: the fill color, with the track cut away around it.
       bar: {
         slots: {
-          thumb: "bg-(--slider-fill-color) shadow-[0_0_0_3px_var(--color-bg)]",
+          thumb:
+            "bg-(--studio-slider-fill-color) shadow-[0_0_0_3px_var(--color-bg)]",
         },
         variants: {
           orientation: {
@@ -84,7 +85,12 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       },
     },
     track: {
-      thin: {},
+      thin: {
+        slots: {
+          control:
+            "[--slider-size:--spacing(1)] [--slider-thumb-size:--spacing(3)]",
+        },
+      },
       thick: {
         slots: {
           control:

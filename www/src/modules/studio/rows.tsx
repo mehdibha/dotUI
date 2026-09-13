@@ -1124,7 +1124,13 @@ export const SPECIMEN_FIELD =
 
 export function MiniButton({ className }: { className: string }) {
   return (
-    <span className={cn(SPECIMEN_BUTTON, "rounded-(--btn-radius)", className)}>
+    <span
+      className={cn(
+        SPECIMEN_BUTTON,
+        "rounded-(--studio-btn-radius)",
+        className,
+      )}
+    >
       Button
     </span>
   )

@@ -7,7 +7,7 @@
  *
  * Pipeline:
  *   1. flatten         — merge base ← density ← param-value layers
- *   2. resolveClasses  — rewrite surface-var refs to Tailwind suffixes
+ *   2. resolveClasses  — resolve studio-var reads to utilities / values
  *   3. serialize       — render the flat config to a TS literal string
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
@@ -28,9 +28,11 @@ import {
 } from "./code-options"
 import { flatten } from "./flatten"
 import {
-  buildStyleVarMap,
-  pruneResolvedCssVars,
+  assertNoStudioVars,
+  paramVars,
   resolveClasses,
+  resolveCssFields,
+  resolveStudioVars,
   rewriteClassString,
 } from "./resolve-classes"
 import { resolveIconImports } from "./resolve-icons"
@@ -245,8 +247,8 @@ export interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
   /**
-   * Registry-wide styles.css `:root` defaults seeding the class rewriter.
-   * Defaults to the generated aggregate; overridable for tests.
+   * Registry-wide styles.css studio-var defaults. Defaults to the generated
+   * aggregate; overridable for tests.
    */
   styleVarDefaults?: Record<string, string>
 }
@@ -268,15 +270,16 @@ export function publish({
     paramSelections,
   })
 
-  // 2. Rewrite surface-var refs to Tailwind suffixes. The registry-wide
-  // styles.css defaults seed the map (those vars are builder-only
-  // indirection); the preset's tokens overlay them so a retargeted role
-  // (`--radius-control` → 2xl) exports as the utility it resolves to.
-  const varMap = buildStyleVarMap({
+  // 2. Resolve studio vars (the builder's live-tweak indirection) to what the
+  // preset lands on: styles.css defaults ← the selected params' vars ← the
+  // preset's tokens, so a retargeted role (`--studio-radius-control` → 2xl)
+  // exports as the utility it resolves to.
+  const studioVars = resolveStudioVars({
     ...(styleVarDefaults ?? STYLE_VAR_DEFAULTS),
+    ...paramVars(meta, paramSelections),
     ...preset.tokens,
   })
-  let resolved = resolveClasses(flat, varMap)
+  let resolved = resolveClasses(flat, studioVars)
 
   // 2b. Code-style: collapse grouped class arrays to a single string per
   // slot/variant when the user prefers one-line-per-slot tv configs.
@@ -302,9 +305,9 @@ export function publish({
   const iconOptions = { weight: preset.tokens?.["--icon-weight"] }
   content = resolveIconImports(content, preset.icons, iconOptions)
 
-  // 4d. Surface-var refs can also sit in base.tsx markup outside the tv
-  // config (e.g. color-swatch's `rounded-(--color-swatch-radius)`).
-  content = rewriteClassString(content, varMap)
+  // 4d. Studio-var reads can also sit in base.tsx markup outside the tv
+  // config (e.g. color-swatch's `rounded-(--studio-color-swatch-radius)`).
+  content = rewriteClassString(content, studioVars)
 
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
@@ -325,23 +328,17 @@ export function publish({
       content: extra
         ? rewriteClassString(
             resolveIconImports(extra, preset.icons, iconOptions),
-            varMap,
+            studioVars,
           )
         : content,
     }
   })
 
-  // 5a. Drop styles.css declarations the rewrite made dead. Anything still
-  // referenced (calc() chains, plain var() reads) keeps shipping.
-  const externalCorpus = [
-    ...files.map((file) => file.content ?? ""),
-    meta.cssVars ? JSON.stringify(meta.cssVars) : "",
-  ].join("\n")
-  const css = pruneResolvedCssVars(
-    meta.css,
-    new Set(varMap.keys()),
-    externalCorpus,
-  )
+  // 5a. styles.css: drop the studio defaults, resolve the reads in rules that
+  // ship. Nothing studio-prefixed may survive into the item.
+  const css = resolveCssFields(meta.css, studioVars)
+  for (const file of files) assertNoStudioVars(file.content ?? "", file.path)
+  assertNoStudioVars(JSON.stringify([css, meta.cssVars]), `${meta.name} css`)
 
   const registryDependencies = rewriteDeps(
     registryDepsFor(meta, paramSelections),

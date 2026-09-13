@@ -6,7 +6,7 @@
    color engine points those at the primary fill — near-black in dotUI's
    default (the shadcn school), so Neutral is the no-op default and Accent
    re-points them at the accent tokens (the Vercel split: black primary,
-   brand-colored checks). Corner rides on the `--checkbox-radius` surface
+   brand-colored checks). Corner rides on the `--studio-checkbox-radius` surface
    var, resolved to a plain `rounded-*` utility on export. */
 
 import type { Resolved, StudioState } from "./index"
@@ -45,6 +45,6 @@ export function resolveCheckbox(state: StudioState): Resolved {
     tokens["--color-fg-on-selection"] = "var(--color-fg-on-accent)"
   }
   const corner = CORNER_TOKENS[state.checkCorner]
-  if (corner) tokens["--checkbox-radius"] = corner
+  if (corner) tokens["--studio-checkbox-radius"] = corner
   return { tokens }
 }

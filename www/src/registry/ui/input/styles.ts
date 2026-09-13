@@ -29,7 +29,7 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-(--studio-input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -51,7 +51,7 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
@@ -62,7 +62,7 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-(--studio-input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -115,13 +115,13 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
         "has-data-textarea:px-0",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
-        "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
+        "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--studio-input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
       ],
       inputGroupAddon: [
         "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
         "text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
         "group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
-        "**:data-button:rounded-[max(var(--radius-sm),calc(var(--input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+        "**:data-button:rounded-[max(var(--radius-sm),calc(var(--studio-input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
         "group-has-data-textarea/input-group:px-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",

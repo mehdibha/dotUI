@@ -78,7 +78,7 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
                   style={{ height: `${(count / BUCKET_PEAK) * 100}%` }}
                   className={cn(
                     "min-h-0.5 flex-1 rounded-xs transition-colors",
-                    inRange ? "bg-(--slider-fill-color)" : "bg-neutral",
+                    inRange ? "bg-(--studio-slider-fill-color)" : "bg-neutral",
                   )}
                 />
               )

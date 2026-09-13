@@ -22,12 +22,12 @@ const { useStyles, styles } = createStyles(kbdMeta, {
       },
       chip: {
         slots: {
-          kbd: "h-5 min-w-5 rounded-(--kbd-radius) bg-muted px-1 font-sans text-xs font-medium",
+          kbd: "h-5 min-w-5 rounded-(--studio-kbd-radius) bg-muted px-1 font-sans text-xs font-medium",
         },
       },
       keycap: {
         slots: {
-          kbd: "h-5 min-w-5 rounded-(--kbd-radius) border border-b-2 border-border bg-card px-1.5 font-mono text-[0.6875rem]",
+          kbd: "h-5 min-w-5 rounded-(--studio-kbd-radius) border border-b-2 border-border bg-card px-1.5 font-mono text-[0.6875rem]",
         },
       },
     },

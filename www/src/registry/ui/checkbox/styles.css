@@ -1,4 +1,4 @@
 :root {
-  --checkbox-radius: var(--radius-sm);
-  --checkbox-card-radius: var(--radius-surface);
+  --studio-checkbox-radius: var(--radius-sm);
+  --studio-checkbox-card-radius: var(--studio-radius-surface);
 }

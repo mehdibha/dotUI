@@ -45,7 +45,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // --surface-radius: set by whichever rounded surface contains the
           // command (popover, modal, card), so one rule stays concentric
           // everywhere.
-          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--input-radius),calc(var(--surface-radius,var(--radius-surface))-(--spacing(2))))]",
+          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--studio-input-radius),calc(var(--surface-radius,var(--studio-radius-surface))-(--spacing(2))))]",
         ],
       },
       bar: {

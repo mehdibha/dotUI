@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
   base: {
     slots: {
       content: [
-        "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none",
+        "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--studio-tooltip-radius) px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none",
       ],
       arrow: [
         "block [&>svg]:size-2.5",

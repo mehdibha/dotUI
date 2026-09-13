@@ -3,10 +3,11 @@
 }
 
 /* Invalid treatment axis: the bar value runs a danger rule down the left edge
-   of every field root, whatever component renders it. */
+   of every field root, whatever component renders it. Unset (no bar), the
+   declarations are invalid and drop out — live and in the export alike. */
 @layer components {
   [data-field][data-invalid] {
-    border-left: var(--field-error-bar, 0) solid var(--color-border-danger);
-    padding-left: var(--field-error-inset, 0);
+    border-left: var(--studio-field-error-bar) solid var(--color-border-danger);
+    padding-left: var(--studio-field-error-inset);
   }
 }

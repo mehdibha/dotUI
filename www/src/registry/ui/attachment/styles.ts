@@ -6,13 +6,13 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
-        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--attachment-radius) border border-(--card-border) bg-card text-fg shadow-(--shadow-card,0_0_#0000) transition-colors",
+        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--studio-attachment-radius) border border-(--card-border) bg-card text-fg shadow-(--shadow-card,0_0_#0000) transition-colors",
         "has-[>a,>button]:hover:bg-muted/50",
         "has-[[data-attachment-trigger]:focus-visible]:focus-ring",
         "data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
       ],
       media: [
-        "relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-(--radius-item) bg-muted text-fg **:[svg]:pointer-events-none",
+        "relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-(--studio-radius-item) bg-muted text-fg **:[svg]:pointer-events-none",
         "group-data-[state=error]/attachment:bg-danger-muted group-data-[state=error]/attachment:text-fg-danger",
         "group-orientation-vertical/attachment:w-full",
       ],

@@ -1,4 +1,4 @@
 :root {
-  --radio-radius: var(--radius-full);
-  --radio-card-radius: var(--radius-surface);
+  --studio-radio-radius: var(--radius-full);
+  --studio-radio-card-radius: var(--studio-radius-surface);
 }

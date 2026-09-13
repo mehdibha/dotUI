@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       group: ["flex flex-col gap-3"],
       root: ["flex items-center has-data-description:items-start"],
       control: [
-        "relative flex items-center gap-2 rounded-(--radio-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--radio-card-radius)",
+        "relative flex items-center gap-2 rounded-(--studio-radio-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-radio-card-radius)",
         "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [

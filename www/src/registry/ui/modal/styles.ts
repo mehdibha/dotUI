@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       viewport:
         "@container-size sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)]",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--studio-modal-radius)]",
       ],
     },
   },
@@ -93,7 +93,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
         slots: {
           viewport: "max-md:items-end",
           modal: [
-            "max-md:min-w-full max-md:rounded-t-(--modal-radius) max-md:rounded-b-none max-md:border-b-0 max-md:pb-[env(safe-area-inset-bottom)]",
+            "max-md:min-w-full max-md:rounded-t-(--studio-modal-radius) max-md:rounded-b-none max-md:border-b-0 max-md:pb-[env(safe-area-inset-bottom)]",
             "max-md:transition-[opacity,translate] max-md:entering:translate-y-4 max-md:entering:scale-100 max-md:exiting:translate-y-4 max-md:exiting:scale-100",
           ],
         },

@@ -1,91 +1,175 @@
 /**
- * Resolve surface-var references in a flat tv layer.
+ * Resolve `--studio-*` vars out of shipped code.
  *
- * Input class examples (from `styles.ts`):
- *   "rounded-(--alert-radius)"        — Tailwind v4 shorthand for arbitrary CSS var
- *   "bg-(--alert-bg) text-fg"         — multiple utilities, only one is a param ref
+ * Studio vars are the builder's live-tweak indirection: a component reads
+ * `rounded-(--studio-btn-radius)` so the panel can retarget every button at
+ * once by writing one custom property on `:root`. Exported code owns its
+ * values instead, so every read resolves to what the preset lands on:
  *
- * The map `cssVar → tailwindSuffix` is seeded from the registry-wide
- * styles.css defaults (`buildStyleVarMap`) and overridden by the component's
- * scalar-param selections (`buildScalarVarMap`), then matching class tokens
- * rewrite to `rounded-md` etc. Vars that don't resolve (literals, calc
- * chains, tokens outside the static pools) are left alone and keep shipping
- * as declarations — `pruneResolvedCssVars` drops only the ones the rewrite
- * made dead.
+ *   rounded-(--studio-btn-radius)              → rounded-md
+ *   font-(--studio-btn-font-weight)            → font-medium
+ *   shadow-(--studio-slider-thumb-shadow)      → shadow-none
+ *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
+ *
+ * The var → value map follows chains through other studio vars (button →
+ * radius role → ladder rung). Values that name a Tailwind theme token become
+ * the utility's suffix; anything else ships as an arbitrary value. A studio
+ * var that survives into shipped output is a build error — declare a default
+ * in the component's styles.css.
  */
 
-import type { RegistryItem } from "@/registry/types"
+import type { EnumParamDef, RegistryItem } from "@/registry/types"
 
-import { tokenRefToSuffix } from "./token-map"
 import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 
-/* ---------------------------- var → suffix map ---------------------------- */
+export const STUDIO_VAR_PREFIX = "--studio-"
+
+/** Studio var name → its fully resolved CSS value. */
+export type StudioVars = ReadonlyMap<string, string>
+
+/* ------------------------------ var → value ------------------------------ */
+
+/** Preset tokens may name a token bare (`--radius-md`); CSS wants `var()`. */
+function asCssValue(value: string): string {
+  const trimmed = value.trim()
+  return /^--[\w-]+$/.test(trimmed) ? `var(${trimmed})` : trimmed
+}
 
 /**
- * Seed a var → suffix map from the registry-wide styles.css defaults
- * (`--popover-radius: var(--radius-md)` → `md`). Per-surface vars are
- * builder-only indirection — exported code gets the resolved utility class.
- * Only single bare `var(--token)` values resolve; literals and calc() chains
- * are left alone and keep shipping as vars.
+ * Resolve every studio var in `sources` (later entries win) to a final value.
+ * Non-studio entries are ignored, so callers can spread whole token maps in.
  */
-export function buildStyleVarMap(
-  defaults: Record<string, string>,
+export function resolveStudioVars(
+  sources: Record<string, string | undefined>,
 ): Map<string, string> {
-  const map = new Map<string, string>()
-  const bareRef = (value: string) =>
-    /^var\((--[\w-]+)\)$/.exec(value.trim())?.[1]
-  // Follows role hops (--btn-radius → --radius-control → --radius-md) until a
-  // real token or a dead end; depth-capped so a cycle can't hang the build.
-  const refToSuffix = (ref: string, depth = 0): string | undefined => {
-    const direct = tokenRefToSuffix(ref)
-    if (direct !== undefined) return direct
-    if (depth >= 4) return undefined
-    const next = defaults[ref]
-    const nextRef = next === undefined ? undefined : bareRef(next)
-    return nextRef === undefined ? undefined : refToSuffix(nextRef, depth + 1)
+  const raw = new Map<string, string>()
+  for (const [name, value] of Object.entries(sources)) {
+    if (name.startsWith(STUDIO_VAR_PREFIX) && value !== undefined)
+      raw.set(name, asCssValue(value))
   }
-  for (const [cssVar, value] of Object.entries(defaults)) {
-    const ref = bareRef(value)
-    if (!ref) continue
-    const suffix = refToSuffix(ref)
-    if (suffix !== undefined) map.set(cssVar, suffix)
+  const out = new Map<string, string>()
+  const resolve = (name: string, depth: number): string | undefined => {
+    if (out.has(name)) return out.get(name)
+    const value = raw.get(name)
+    if (value === undefined) return undefined
+    if (depth > 8) throw new Error(`Studio var cycle through ${name}`)
+    const { text } = substituteVarReads(value, (ref) => resolve(ref, depth + 1))
+    out.set(name, text)
+    return text
   }
-  return map
+  for (const name of raw.keys()) resolve(name, 0)
+  return out
+}
+
+/** The vars the selected enum-param values carry (`field.error = bar`). */
+export function paramVars(
+  meta: RegistryItem,
+  selections: Record<string, string>,
+): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const [name, def] of Object.entries(meta.params ?? {})) {
+    const enumDef = def as EnumParamDef
+    if (enumDef.kind !== "enum") continue
+    Object.assign(out, enumDef.vars?.[selections[name] ?? enumDef.default])
+  }
+  return out
+}
+
+/* ------------------------------ substitution ----------------------------- */
+
+type Lookup = (name: string) => string | undefined
+
+/**
+ * Replace every `var(--studio-x)` / `var(--studio-x, fallback)` read in
+ * `text` with its value (or the fallback). Reads with no value and no
+ * fallback are left in place and reported.
+ */
+function substituteVarReads(
+  text: string,
+  lookup: Lookup,
+): { text: string; unresolved: string[] } {
+  const unresolved: string[] = []
+  const marker = `var(${STUDIO_VAR_PREFIX}`
+  let out = text
+  let from = 0
+  for (;;) {
+    const start = out.indexOf(marker, from)
+    if (start === -1) break
+    const argStart = start + "var(".length
+    const name = /^--[\w-]+/.exec(out.slice(argStart))?.[0] ?? ""
+    const nameEnd = argStart + name.length
+    // Match the closing paren, skipping nested `calc()` / `var()` in the fallback.
+    let depth = 1
+    let i = nameEnd
+    for (; i < out.length && depth > 0; i++) {
+      if (out[i] === "(") depth++
+      else if (out[i] === ")") depth--
+    }
+    const inner = out.slice(nameEnd, i - 1).trim()
+    const fallback = inner.startsWith(",") ? inner.slice(1).trim() : undefined
+    const value = lookup(name) ?? fallback
+    if (value === undefined) {
+      unresolved.push(name)
+      from = i
+      continue
+    }
+    out = out.slice(0, start) + value + out.slice(i)
+    // A fallback may itself read a studio var — rescan from here.
+    from = start
+  }
+  return { text: out, unresolved }
 }
 
 /* ----------------------------- class rewrite ----------------------------- */
 
-function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+/**
+ * The utility suffix a resolved value maps to, or undefined for an arbitrary
+ * value. Theme tokens map by name (`var(--radius-md)` → `md`); spacing by
+ * multiplier; the two literals the registry's defaults use by utility.
+ */
+function utilitySuffix(utility: string, value: string): string | undefined {
+  const token =
+    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.]+)\)$/.exec(
+      value,
+    )
+  if (token) return token[1]
+  const spacing =
+    /^--spacing\(([\d.]+)\)$/.exec(value) ??
+    /^calc\(var\(--spacing\)\s*\*\s*([\d.]+)\)$/.exec(value)
+  if (spacing) return spacing[1]
+  if (value === "0" && utility.startsWith("rounded")) return "none"
+  if (value === "0 0 #0000" && utility === "shadow") return "none"
+  return undefined
 }
 
-/**
- * Rewrite one class string. For each known (cssVar → suffix) pair, replace
- * `<prefix>-(<cssVar>)` with `<prefix>-<suffix>`. Whitespace-separated tokens
- * outside the pattern are preserved verbatim.
- */
-export function rewriteClassString(
-  input: string,
-  varMap: Map<string, string>,
-): string {
-  if (varMap.size === 0) return input
-  let output = input
-  for (const [cssVar, suffix] of varMap) {
-    const pattern = new RegExp(`-\\(${escapeRegex(cssVar)}\\)`, "g")
-    output = output.replace(pattern, `-${suffix}`)
-  }
-  return output
+/** Rewrite one class string (or any text carrying class names). */
+export function rewriteClassString(input: string, vars: StudioVars): string {
+  if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
+  const shorthand = new RegExp(
+    `([a-z][a-z0-9-]*)-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)`,
+    "g",
+  )
+  const rewritten = input.replace(shorthand, (match, utility, name) => {
+    const value = vars.get(name)
+    if (value === undefined) return match
+    const suffix = utilitySuffix(utility, value)
+    if (suffix !== undefined) return `${utility}-${suffix}`
+    const ref = /^var\((--[\w-]+)\)$/.exec(value)
+    if (ref) return `${utility}-(${ref[1]})`
+    return `${utility}-[${value.replace(/\s+/g, "_")}]`
+  })
+  return substituteVarReads(rewritten, (name) => vars.get(name)).text
 }
 
 function rewriteClassValue(
   value: ClassValue | undefined,
-  varMap: Map<string, string>,
+  vars: StudioVars,
 ): ClassValue | undefined {
   if (value == null || value === false) return value
-  if (typeof value === "string") return rewriteClassString(value, varMap)
+  if (typeof value === "string") return rewriteClassString(value, vars)
   if (Array.isArray(value)) {
     return value.map(
-      (v) => rewriteClassValue(v, varMap) as string | string[],
+      (v) => rewriteClassValue(v, vars) as string | string[],
     ) as ClassValue
   }
   return value
@@ -99,136 +183,35 @@ function isSlotMap(
 
 function rewriteVariantSlice(
   value: VariantSliceValue | undefined,
-  varMap: Map<string, string>,
+  vars: StudioVars,
 ): VariantSliceValue | undefined {
   if (value === undefined) return undefined
   if (isSlotMap(value)) {
     const result: Record<string, ClassValue> = {}
     for (const [slot, slotValue] of Object.entries(value)) {
-      const rewritten = rewriteClassValue(slotValue, varMap)
+      const rewritten = rewriteClassValue(slotValue, vars)
       if (rewritten !== undefined) result[slot] = rewritten
     }
     return result
   }
-  return rewriteClassValue(value, varMap)
-}
-
-/* ----------------------------- css var pruning ---------------------------- */
-
-type CssValue = string | CssObject
-interface CssObject {
-  [key: string]: CssValue
-}
-
-function isReferenced(cssVar: string, corpus: string): boolean {
-  return new RegExp(`${escapeRegex(cssVar)}(?![\\w-])`).test(corpus)
-}
-
-/** Serialize a css object for reference checking, skipping one declaration. */
-function corpusWithout(css: CssObject, skipPath: readonly string[]): string {
-  const parts: string[] = []
-  const walk = (node: CssObject, path: readonly string[]): void => {
-    for (const [key, value] of Object.entries(node)) {
-      const here = [...path, key]
-      if (typeof value === "string") {
-        const skipped =
-          here.length === skipPath.length &&
-          here.every((seg, i) => seg === skipPath[i])
-        if (!skipped) parts.push(key, value)
-      } else {
-        parts.push(key)
-        walk(value, here)
-      }
-    }
-  }
-  walk(css, [])
-  return parts.join("\n")
+  return rewriteClassValue(value, vars)
 }
 
 /**
- * Drop styles.css declarations whose var was resolved away by the class
- * rewriter. A declaration ships only while something still references it —
- * shipped file contents (calc() chains, non-shorthand var() reads) or another
- * surviving css value. Runs to fixpoint so chains (`--a: var(--b)`) prune
- * fully. Vars outside `resolved` are never touched.
- */
-export function pruneResolvedCssVars(
-  css: RegistryItem["css"],
-  resolved: ReadonlySet<string>,
-  externalCorpus: string,
-): RegistryItem["css"] | undefined {
-  if (!css) return css
-  const work = structuredClone(css) as CssObject
-
-  let changed = true
-  while (changed) {
-    changed = false
-    const visit = (node: CssObject, path: readonly string[]): void => {
-      for (const [key, value] of Object.entries(node)) {
-        const here = [...path, key]
-        if (typeof value !== "string") {
-          visit(value, here)
-          continue
-        }
-        if (!key.startsWith("--") || !resolved.has(key)) continue
-        const corpus = externalCorpus + "\n" + corpusWithout(work, here)
-        if (!isReferenced(key, corpus)) {
-          delete node[key]
-          changed = true
-        }
-      }
-    }
-    visit(work, [])
-  }
-
-  const compact = (
-    node: CssObject,
-    original: CssObject,
-  ): CssObject | undefined => {
-    const out: CssObject = {}
-    for (const [key, value] of Object.entries(node)) {
-      if (typeof value === "string") {
-        out[key] = value
-        continue
-      }
-      const originalChild = original[key]
-      const child = compact(
-        value,
-        typeof originalChild === "object" ? originalChild : {},
-      )
-      // Keep originally-empty objects (`@plugin` statements); drop selectors
-      // that pruning emptied out.
-      const wasEmpty =
-        typeof originalChild === "object" &&
-        Object.keys(originalChild).length === 0
-      if (child !== undefined || wasEmpty) out[key] = child ?? {}
-    }
-    return Object.keys(out).length > 0 ? out : undefined
-  }
-
-  return compact(work, css as CssObject) as RegistryItem["css"] | undefined
-}
-
-/**
- * Walk a flat tv layer and rewrite all class strings using `varMap`.
+ * Walk a flat tv layer and rewrite all class strings.
  * Returns a new layer; the input is not mutated.
  */
-export function resolveClasses(
-  layer: TvLayer,
-  varMap: Map<string, string>,
-): TvLayer {
-  if (varMap.size === 0) return layer
-
+export function resolveClasses(layer: TvLayer, vars: StudioVars): TvLayer {
   const out: TvLayer = {}
 
   if (layer.base !== undefined) {
-    out.base = rewriteClassValue(layer.base, varMap)
+    out.base = rewriteClassValue(layer.base, vars)
   }
 
   if (layer.slots) {
     const slots: Record<string, ClassValue> = {}
     for (const [k, v] of Object.entries(layer.slots)) {
-      const rewritten = rewriteClassValue(v, varMap)
+      const rewritten = rewriteClassValue(v, vars)
       if (rewritten !== undefined) slots[k] = rewritten
     }
     out.slots = slots
@@ -239,7 +222,7 @@ export function resolveClasses(
     for (const [variantName, values] of Object.entries(layer.variants)) {
       const valuesOut: Record<string, VariantSliceValue> = {}
       for (const [valueName, sliceValue] of Object.entries(values)) {
-        const rewritten = rewriteVariantSlice(sliceValue, varMap)
+        const rewritten = rewriteVariantSlice(sliceValue, vars)
         if (rewritten !== undefined) valuesOut[valueName] = rewritten
       }
       variants[variantName] = valuesOut
@@ -254,7 +237,7 @@ export function resolveClasses(
       const result: Record<string, unknown> = {}
       for (const [k, v] of Object.entries(cv)) {
         if (k === "class" || k === "className") {
-          const rewritten = rewriteClassValue(v as ClassValue, varMap)
+          const rewritten = rewriteClassValue(v as ClassValue, vars)
           if (rewritten !== undefined) result[k] = rewritten
         } else {
           result[k] = v
@@ -265,4 +248,54 @@ export function resolveClasses(
   }
 
   return out
+}
+
+/* ------------------------------- css fields ------------------------------ */
+
+type CssValue = string | CssObject
+interface CssObject {
+  [key: string]: CssValue
+}
+
+/**
+ * Resolve a registry item's `css` field: the studio defaults themselves are
+ * dropped, reads inside shipped rules are substituted, and a declaration
+ * reading an unset studio var goes too — it's invalid at computed-value time
+ * live, so dropping it is what the browser already does. Selectors emptied by
+ * that are dropped; originally-empty entries (`@plugin` statements) stay.
+ */
+export function resolveCssFields(
+  css: RegistryItem["css"],
+  vars: StudioVars,
+): RegistryItem["css"] | undefined {
+  if (!css) return css
+  const visit = (node: CssObject): CssObject | undefined => {
+    const out: CssObject = {}
+    for (const [key, value] of Object.entries(node)) {
+      if (typeof value === "string") {
+        if (key.startsWith(STUDIO_VAR_PREFIX)) continue
+        const { text, unresolved } = substituteVarReads(value, (name) =>
+          vars.get(name),
+        )
+        if (unresolved.length === 0) out[key] = text
+        continue
+      }
+      const child = visit(value)
+      if (child !== undefined || Object.keys(value).length === 0)
+        out[key] = child ?? {}
+    }
+    return Object.keys(out).length > 0 ? out : undefined
+  }
+  return visit(css as CssObject) as RegistryItem["css"] | undefined
+}
+
+/** Shipped output must carry no studio var — the export owns its values. */
+export function assertNoStudioVars(text: string, where: string): void {
+  const hits = [
+    ...new Set(text.match(new RegExp(`${STUDIO_VAR_PREFIX}[\\w-]+`, "g"))),
+  ]
+  if (hits.length === 0) return
+  throw new Error(
+    `${where}: unresolved studio vars ${hits.join(", ")} — declare a default in the component's styles.css`,
+  )
 }

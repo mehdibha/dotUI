@@ -12,12 +12,12 @@ const sliderVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",
     control:
-      "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
+      "relative flex grow cursor-drag touch-none items-center select-none disabled:cursor-disabled [--slider-size:--spacing(1)] [--slider-thumb-size:--spacing(3)]",
     track:
       "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
-    fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
+    fill: "pointer-events-none bg-primary disabled:bg-(--disabled-selected-bg,var(--color-primary))",
     thumb:
-      "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor) size-(--slider-thumb-size) bg-fg shadow-(--slider-thumb-shadow)",
+      "top-1/2 left-1/2 grid cursor-drag place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-dragging size-(--slider-thumb-size) bg-fg shadow-none",
     output:
       "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted)) text-sm",
   },

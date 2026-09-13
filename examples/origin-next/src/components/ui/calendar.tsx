@@ -11,7 +11,7 @@ import { tv } from "tailwind-variants";
 
 const calendarVariants = tv({
   slots: {
-    root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--calendar-cell-radius)] [--cell-size:var(--calendar-cell-size)]",
+    root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(8)]",
     header: "flex items-center gap-2",
     heading: "flex-1 text-center text-sm font-medium",
     grid: "grid grid-cols-7 gap-y-2",

@@ -43,10 +43,7 @@ export function selectorIn(selectorText: string, tokens: Set<string>): boolean {
   return selectorText.split(",").some((part) => tokens.has(part.trim()))
 }
 
-// The semantic vocabulary's exact prop names. Excluded from the harvest by KEY, not by the
-// `--color-` prefix: component surface vars share the prefix (`--color-area-radius`,
-// `--color-swatch-picker-item-radius`) and must be harvested like any other token, or they
-// stay frozen at `:root` values inside the scope.
+// The semantic vocabulary's exact prop names, excluded from the harvest by KEY.
 const SEMANTIC_COLOR_PROPS = new Set(
   Object.keys(DEFAULT_SEMANTICS).map((name) => `--${name}`),
 )

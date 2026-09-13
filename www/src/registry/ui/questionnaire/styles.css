@@ -1,5 +1,5 @@
 :root {
-  --questionnaire-choice-radius: var(--radius-control);
-  --questionnaire-indicator-radius: var(--radius-sm);
-  --questionnaire-input-radius: var(--radius-control);
+  --studio-questionnaire-choice-radius: var(--studio-radius-control);
+  --studio-questionnaire-indicator-radius: var(--radius-sm);
+  --studio-questionnaire-input-radius: var(--studio-radius-control);
 }

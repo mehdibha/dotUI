@@ -2,8 +2,8 @@
  * Hand-written fixture for the alert component. Exercises:
  *   - slots ({ root, title, description, action })
  *   - enum param `style` with merge-into-base semantics (default/sousse)
- *   - scalar param `radius` (cssVar `--alert-radius`, type radius) — the
- *     publisher should rewrite `rounded-(--alert-radius)` → `rounded-<suffix>`
+ *   - scalar param `radius` (cssVar `--studio-alert-radius`, type radius) — the
+ *     publisher should rewrite `rounded-(--studio-alert-radius)` → `rounded-<suffix>`
  *
  * Kept in sync with:
  *   - www/src/registry/ui/alert/meta.ts
@@ -60,7 +60,7 @@ export const alertPublishable: Publishable = {
       slots: {
         root: [
           "relative grid w-full items-start px-4 py-3",
-          "rounded-(--alert-radius)",
+          "rounded-(--studio-alert-radius)",
           "has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto]",
           "*:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current",
         ],

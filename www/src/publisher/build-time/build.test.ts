@@ -50,7 +50,9 @@ describe("extractStylesConfig", () => {
     const rootStrs = Array.isArray(root) ? root : [root]
     expect(
       rootStrs.some(
-        (s) => typeof s === "string" && s.includes("rounded-(--alert-radius)"),
+        (s) =>
+          typeof s === "string" &&
+          s.includes("rounded-(--studio-alert-radius)"),
       ),
     ).toBe(true)
 
@@ -322,11 +324,11 @@ describe("end-to-end (extract + transform → publish)", () => {
       preset: {
         density: "default",
         componentParams: {},
-        tokens: { "--radius-surface": "var(--radius-md)" },
+        tokens: { "--studio-radius-surface": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")
-    expect(rawContent).not.toContain("rounded-(--alert-radius)")
+    expect(rawContent).not.toContain("rounded-(--studio-alert-radius)")
   })
 
   test("field: declared-but-empty slots (fieldset/legend) survive to the emitted tv config", () => {

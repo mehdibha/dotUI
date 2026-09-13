@@ -53,7 +53,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
           // The selected tab steps one pixel onto the list's edge and paints
           // over it, so tab and content read as one surface.
-          tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--tabs-radius) selected:z-10 selected:border-border selected:bg-bg selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+          tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-bg selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
           selectionIndicator: "hidden",
         },
       },
