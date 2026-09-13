@@ -9,7 +9,6 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import type { DesignSystem } from "@/modules/studio/preset"
@@ -268,29 +267,26 @@ function PreviewModeToggle({
   const next = mode === "light" ? "dark" : "light"
 
   return (
-    <Tooltip>
-      <Button
-        variant={variant}
-        size="sm"
-        isIconOnly
-        aria-label={`Switch preview to ${next} mode`}
-        className={cn(variant === "quiet" && "text-fg-muted", className)}
-        onPress={() => modeStore.set(next)}
-      >
-        {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
-        {stored === "dark" ? (
-          <MoonIcon />
-        ) : stored === "light" ? (
-          <SunIcon />
-        ) : (
-          <>
-            <SunIcon className="block dark:hidden" />
-            <MoonIcon className="hidden dark:block" />
-          </>
-        )}
-      </Button>
-      <TooltipContent>Switch to {next} mode</TooltipContent>
-    </Tooltip>
+    <Button
+      variant={variant}
+      size="sm"
+      isIconOnly
+      aria-label={`Switch preview to ${next} mode`}
+      className={cn(variant === "quiet" && "text-fg-muted", className)}
+      onPress={() => modeStore.set(next)}
+    >
+      {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
+      {stored === "dark" ? (
+        <MoonIcon />
+      ) : stored === "light" ? (
+        <SunIcon />
+      ) : (
+        <>
+          <SunIcon className="block dark:hidden" />
+          <MoonIcon className="hidden dark:block" />
+        </>
+      )}
+    </Button>
   )
 }
 
