@@ -32,11 +32,15 @@ import type { ControlValues, SerializableControl } from "./types"
  * Interactive demo component.
  * Renders the playground, controls, and live code output.
  *
- * The preview is the hero: the demo owns the full card and the controls hide
- * behind a corner toggle. Opening slides a panel in from the right that *pushes*
- * the preview (the flex sibling reflows) rather than overlaying it — animated
- * with the drawer easing (--ease-fluid-out). The panel takes its natural height,
- * so a tall control set extends the card instead of scrolling.
+ * The preview is the hero: closed, the demo reads as one card (preview over
+ * the code bar) and the controls hide behind a corner toggle. Opening splits it
+ * into three detached cards — preview, controls, code — each carrying its own
+ * border and radius, with the controls card sliding in from the right and
+ * *pushing* the preview (the flex sibling reflows) rather than overlaying it.
+ * Everything tweens with the drawer easing (--ease-fluid-out): the panel width,
+ * the gaps, and the corners that were squared where the cards met. The
+ * controls card takes its natural height, so a tall control set extends the
+ * row instead of scrolling.
  *
  * The displayed code is filled from a build-time template-with-holes over the
  * real demo source (see codegen/source-overlay.ts). Preview and code derive
@@ -107,16 +111,24 @@ export function InteractiveDemo({
   }
 
   return (
-    <div className={cn("overflow-hidden rounded-lg border", className)}>
+    <div className={className}>
       <div className="flex flex-col md:flex-row">
         {/* PreviewPanel pins the whole preview column (toolbar + trigger
             included) to the preview mode; the preset only themes the canvas.
+            Closed, its bottom corners square off to meet the code card below.
             While the panel is closed, right padding keeps the mode toggle
             clear of the trigger pinned in the corner. */}
-        <PreviewPanel className="flex min-w-0 flex-1 flex-col">
+        <PreviewPanel
+          className={cn(
+            "flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border transition-[border-radius] duration-300 ease-fluid-out motion-reduce:transition-none",
+            !controlsOpen && "rounded-b-none",
+          )}
+        >
           {/* The panel trigger stays mounted so its visibility can tween;
               `inert` takes it out of the tab order and the a11y tree while
-              hidden. */}
+              hidden. Opening pushes it right, off the preview's edge (the panel
+              clips it), as it fades — it has to outrun the mode toggle, which
+              slides into the corner as the right padding drops. */}
           <span className="contents" inert={controlsOpen}>
             <Tooltip>
               <Button
@@ -125,8 +137,8 @@ export function InteractiveDemo({
                 isIconOnly
                 aria-label="Controls"
                 className={cn(
-                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none",
-                  controlsOpen && "scale-50 opacity-0",
+                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,translate] duration-300 ease-fluid-out motion-reduce:transition-none",
+                  controlsOpen && "translate-x-12 opacity-0",
                 )}
                 onPress={() => setControlsOpen(true)}
               >
@@ -148,49 +160,50 @@ export function InteractiveDemo({
           </DemoPreset>
         </PreviewPanel>
 
-        {/* Controls column — slides in from the right and pushes the preview (the
-            preview is flex-1, so it gives up width as the column grows). The column
-            stretches to the row height and carries the bg/divider, so its surface
-            always fills the panel — no gap while the height animates. */}
+        {/* Controls slot — a bare clip that slides in from the right and pushes
+            the preview (the preview is flex-1, so it gives up width as the slot
+            grows). The margin is the gap to the preview and tweens with the
+            width. The slot carries no border of its own, so it can close to a
+            true zero width instead of leaving a bordered sliver. */}
         <div
           className={cn(
-            "overflow-hidden border-t bg-card transition-[width,opacity,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0 md:border-t-0 md:border-l",
-            "starting:opacity-0 md:starting:w-0",
+            "flex overflow-hidden transition-[width,margin,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0",
+            "starting:mt-0 md:starting:ml-0 md:starting:w-0",
             controlsOpen
-              ? "block w-full opacity-100 md:w-56"
-              : "hidden w-full opacity-0 md:w-0",
+              ? "mt-3 flex w-full md:mt-0 md:ml-3 md:w-56"
+              : "mt-0 hidden w-full md:ml-0 md:w-0",
           )}
         >
-          {/* Inner wrapper animates its height from the closed row height (h-56,
-              = the preview's min height) up to content via interpolate-size. Starting
-              at h-56 (not 0) means the card height isn't clamped by the preview, so it
-              grows in lock-step with the width — same start, duration, and easing. */}
+          {/* The card shrinks with the slot so its border stays whole while
+              collapsing; the fixed-width content inside is what gets clipped, so
+              the controls never reflow mid-slide. Its height animates from the
+              closed row height (h-56, = the preview's min height) up to content via
+              interpolate-size, and min-h-full keeps it filling the row when the
+              preview is taller.
+              Starting at h-56 (not 0) means the card height isn't clamped by the
+              preview, so it grows in lock-step with the width — same start,
+              duration, and easing. */}
           <div
             className={cn(
               "**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
-              "w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-56 starting:h-56",
+              "min-h-full w-full overflow-hidden rounded-lg border bg-card transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none starting:h-56",
               controlsOpen ? "h-auto" : "h-56",
             )}
           >
-            <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-fg-muted">
-                  Controls
-                </span>
-                <Tooltip>
-                  <Button
-                    variant="quiet"
-                    size="sm"
-                    isIconOnly
-                    aria-label="Hide controls"
-                    className="-mr-2 text-fg-muted hover:text-fg"
-                    onPress={() => setControlsOpen(false)}
-                  >
-                    <XIcon className="size-3.5" />
-                  </Button>
-                  <TooltipContent>Hide controls</TooltipContent>
-                </Tooltip>
-              </div>
+            {/* Pinned to the card's inner width (w-56 minus its borders). */}
+            <div className="relative flex w-full flex-col gap-4 px-4 pt-5.5 pb-4 md:w-55.5">
+              {/* Anchored to the pinned content, not the card, so it holds its
+                  place beside the controls while the card collapses. */}
+              <Button
+                variant="quiet"
+                size="xs"
+                isIconOnly
+                aria-label="Hide controls"
+                className="absolute top-2 right-2 text-fg-muted hover:text-fg"
+                onPress={() => setControlsOpen(false)}
+              >
+                <XIcon />
+              </Button>
               <Controls
                 controls={controls}
                 values={values}
@@ -202,9 +215,13 @@ export function InteractiveDemo({
         </div>
       </div>
 
-      {/* Code bar — split from the panel above by a single thin divider */}
+      {/* Code card — closed, it tucks under the preview (top corners squared,
+          borders overlapping into one hairline); open, it detaches below. */}
       <CodeBlock
-        className="rounded-none border-x-0 border-b-0"
+        className={cn(
+          "rounded-lg transition-[border-radius,margin] duration-300 ease-fluid-out motion-reduce:transition-none",
+          controlsOpen ? "mt-3" : "-mt-px rounded-t-none",
+        )}
         actions={
           <Button
             variant="quiet"
