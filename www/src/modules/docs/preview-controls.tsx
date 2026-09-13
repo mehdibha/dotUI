@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import type { DesignSystem } from "@/modules/studio/preset"
+import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
@@ -31,9 +32,29 @@ const YOURS = "yours"
 
 const presetStore = createPersistedStore(
   "dotui:preview-preset",
-  "claude",
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], "claude"),
+  ORIGIN.id,
+  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], ORIGIN.id),
 )
+
+/* The working system counts as the user's own once it diverges from every
+   built-in: a fresh visitor sits on Origin, and a preset applied from the
+   gallery is still that preset. Until then the picker lists no "My systems"
+   and a stored `yours` selection reads as the built-in it matches. */
+const BUILT_IN_BY_STATE = new Map(
+  PRESETS.map((p) => [encodeState(p.state), p.id]),
+)
+
+function useSelectedPreset() {
+  const stored = presetStore.useValue()
+  const yours = useStoredPreset()
+  const builtIn = useMemo(() => {
+    const encoded = encodePreset(yours)
+    return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
+  }, [yours])
+  const own = builtIn === undefined
+  const selected = stored === YOURS && builtIn ? builtIn : stored
+  return { selected, yours, own }
+}
 
 type PreviewMode = "light" | "dark"
 
@@ -116,8 +137,7 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 
 /** The design system the docs previews render in, resolved from the selection. */
 export function useResolvedPreset(): DesignSystem {
-  const selected = presetStore.useValue()
-  const yours = useStoredPreset()
+  const { selected, yours } = useSelectedPreset()
   const yoursResolved = useMemo(() => resolveDesignSystem(yours.state), [yours])
   if (selected === YOURS) return yoursResolved
   return (
@@ -172,9 +192,8 @@ function PresetSelector({
 }: {
   variant?: ButtonProps["variant"]
 }) {
-  const selected = presetStore.useValue()
+  const { selected, yours, own } = useSelectedPreset()
   const previewMode = useForcedPreviewMode()
-  const yours = useStoredPreset()
   const yoursDesignSystem = useMemo(
     () => resolveDesignSystem(yours.state),
     [yours],
@@ -197,17 +216,21 @@ function PresetSelector({
       previewMode={previewMode}
       withPreview
       sections={[
-        {
-          id: "yours",
-          title: "My systems",
-          items: [
-            {
-              id: YOURS,
-              name: yoursName,
-              designSystem: yoursDesignSystem,
-            },
-          ],
-        },
+        ...(own
+          ? [
+              {
+                id: "yours",
+                title: "My systems",
+                items: [
+                  {
+                    id: YOURS,
+                    name: yoursName,
+                    designSystem: yoursDesignSystem,
+                  },
+                ],
+              },
+            ]
+          : []),
         {
           id: "featured",
           title: "Featured",
