@@ -23,17 +23,17 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
   density: {
     compact: {
       slots: {
-        item: "gap-1.5 px-2 py-1 text-xs has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3.5",
+        item: "gap-1.5 px-2 py-1 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 **:[svg]:not-with-[size]:size-3.5",
       },
     },
     default: {
       slots: {
-        item: "gap-1.5 px-2.5 py-1 text-sm has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4",
+        item: "gap-1.5 px-2.5 py-1 text-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 **:[svg]:not-with-[size]:size-4",
       },
     },
     comfortable: {
       slots: {
-        item: "gap-2 px-3 py-1.5 text-sm has-data-icon-end:pr-2.5 has-data-icon-start:pl-2.5 **:[svg]:not-with-[size]:size-4",
+        item: "gap-2 px-3 py-1.5 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 **:[svg]:not-with-[size]:size-4",
       },
     },
   },

@@ -25,7 +25,7 @@ export default function Demo({
       isDisabled={isDisabled}
       aria-label="Toggle pin"
     >
-      <PinIcon data-icon-start="" className="rotate-45" />
+      <PinIcon data-icon="inline-start" className="rotate-45" />
       {children}
     </ToggleButton>
   )

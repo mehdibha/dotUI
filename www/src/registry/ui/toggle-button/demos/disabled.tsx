@@ -4,7 +4,7 @@ import { ToggleButton } from "@/registry/ui/toggle-button"
 export default function Demo() {
   return (
     <ToggleButton isDisabled>
-      <PinIcon data-icon-start="" className="rotate-45" />
+      <PinIcon data-icon="inline-start" className="rotate-45" />
       Pin
     </ToggleButton>
   )

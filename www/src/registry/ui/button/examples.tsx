@@ -41,7 +41,7 @@ const ButtonIconRight = () => {
           {variants.map((variant) => (
             <Button key={variant} size={size} variant={variant}>
               {variant}
-              <ArrowRightIcon data-icon-end="" />
+              <ArrowRightIcon data-icon="inline-end" />
             </Button>
           ))}
         </div>
@@ -57,7 +57,7 @@ const ButtonIconLeft = () => {
         <div key={size} className="flex w-full items-center gap-3">
           {variants.map((variant) => (
             <Button key={variant} size={size} variant={variant}>
-              <ArrowLeftIcon data-icon-start="" />
+              <ArrowLeftIcon data-icon="inline-start" />
               {variant}
             </Button>
           ))}

@@ -199,7 +199,7 @@ function DeeplinkPane({ target }: { target: DeeplinkTarget }) {
         className={cn(buttonStyles({ variant: "primary" }), "mt-4")}
       >
         Open in {target.name}
-        <ArrowUpRightIcon data-icon-end="" />
+        <ArrowUpRightIcon data-icon="inline-end" />
       </a>
     </div>
   )

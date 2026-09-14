@@ -5,12 +5,12 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-2">
       <Button>
-        <UploadIcon data-icon-start="" />
+        <UploadIcon data-icon="inline-start" />
         Upload
       </Button>
       <Button>
         Continue
-        <ArrowRightIcon data-icon-end="" />
+        <ArrowRightIcon data-icon="inline-end" />
       </Button>
     </div>
   )

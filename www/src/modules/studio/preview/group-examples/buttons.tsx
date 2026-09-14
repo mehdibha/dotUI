@@ -34,7 +34,7 @@ export default function ButtonsGroupExamples() {
       <Example title="File Trigger">
         <FileTrigger>
           <Button>
-            <UploadIcon data-icon-start="" />
+            <UploadIcon data-icon="inline-start" />
             Upload file
           </Button>
         </FileTrigger>

@@ -490,11 +490,11 @@ function Hero({
           </p>
           <div className="flex flex-wrap items-center gap-2 pt-1">
             <Button variant="primary" onPress={onPlay}>
-              <PlayIcon data-icon-start="" />
+              <PlayIcon data-icon="inline-start" />
               Play
             </Button>
             <Button variant="secondary" onPress={onShuffle}>
-              <ShuffleIcon data-icon-start="" />
+              <ShuffleIcon data-icon="inline-start" />
               Shuffle
             </Button>
             <Tooltip>

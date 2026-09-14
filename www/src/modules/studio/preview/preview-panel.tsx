@@ -488,7 +488,7 @@ export function PreviewPanel({
                 space to grow into inside the pill's shrink-to-fit box and
                 collapses the value to a sliver. */}
                 <SelectValue className="min-w-0 flex-initial" />
-                <ChevronsUpDownIcon data-icon-end="" />
+                <ChevronsUpDownIcon data-icon="inline-end" />
               </Button>
               {isMobile ? (
                 <Drawer
@@ -688,7 +688,7 @@ export function PreviewPanel({
                   className="rounded-full lg:hidden"
                   onPress={onCustomize}
                 >
-                  <SlidersHorizontalIcon data-icon-start="" />
+                  <SlidersHorizontalIcon data-icon="inline-start" />
                   Customize
                 </Button>
               </>
