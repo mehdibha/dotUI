@@ -1,15 +1,14 @@
 import { Button } from "@/registry/ui/button"
 
-const variants = ["primary", "secondary", "quiet", "warning", "danger"] as const
-
 export default function Demo() {
   return (
-    <div className="grid grid-cols-4 gap-2">
-      {variants.map((variant) => (
-        <Button key={variant} variant={variant}>
-          {variant}
-        </Button>
-      ))}
+    <div className="flex flex-wrap items-center justify-center gap-2">
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="quiet">Quiet</Button>
+      <Button variant="link">Link</Button>
+      <Button variant="warning">Warning</Button>
+      <Button variant="danger">Danger</Button>
     </div>
   )
 }

@@ -30,37 +30,52 @@ npx shadcn@latest add @dotui/button
 
 ## Usage
 
-Button allow users to initiate an action or command with mouse, touch or keyboard interaction.<br/>
-The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
+A button triggers an action. Its label names the action; add an icon for extra context.
 
 ```tsx
-import { Button } from "@dotui/registry/ui/button"
+import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
 <Button>Button</Button>
 ```
 
-## As a link
+## Variants
 
-Use `LinkButton` with `href` to render a navigation control styled as a button. Internal paths integrate with the client router; external URLs render a plain `<a>`.
+Use the `variant` prop to set the visual style of the button.
 
-```tsx
-import { LinkButton } from "@dotui/registry/ui/button"
-```
+<Demo name="button/demos/variants" />
 
-```tsx
-<LinkButton href="/dashboard">Dashboard</LinkButton>
-```
+## Sizes
 
-## Examples
+Use the `size` prop to set the size of the button.
 
-<Examples className="grid-cols-2 md:grid-cols-3">
-  <Example name="button/demos/default" title="Default" />
-  <Example name="button/demos/prefix-and-suffix" title="With Icons" />
-  <Example name="button/demos/loading" title="Loading State" />
-  <Example name="button/demos/link-button" title="Link Button" />
-</Examples>
+<Demo name="button/demos/sizes" />
+
+## With icon
+
+Add the `data-icon-start` or `data-icon-end` attribute to the icon for the correct spacing.
+
+<Demo name="button/demos/prefix-and-suffix" />
+
+## Icon buttons
+
+Use the `isIconOnly` prop for icon-only buttons.<br/>
+Provide an `aria-label` to give the button an accessible name.
+
+<Demo name="button/demos/icon-only" />
+
+## Pending
+
+Use the `isPending` prop to show a loading indicator while an action completes.
+
+<Demo name="button/demos/loading" />
+
+## Link buttons
+
+The Button component always represents a button semantically. To create a link that visually looks like a button, use the `LinkButton` component instead.
+
+<Demo name="button/demos/link-button" />
 
 ## API Reference
 

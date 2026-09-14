@@ -201,6 +201,10 @@ export const DemosIndex: Record<
 		files: ["ui/button/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/button/demos/disabled")),
 	},
+	"button/demos/icon-only": {
+		files: ["ui/button/demos/icon-only.tsx"],
+		component: React.lazy(() => import("@/registry/ui/button/demos/icon-only")),
+	},
 	"button/demos/link-button": {
 		files: ["ui/button/demos/link-button.tsx"],
 		component: React.lazy(() => import("@/registry/ui/button/demos/link-button")),
