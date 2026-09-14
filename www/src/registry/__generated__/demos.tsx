@@ -2841,9 +2841,9 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/disabled")),
 	},
-	"toggle-button/demos/favorite-button": {
-		files: ["ui/toggle-button/demos/favorite-button.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/favorite-button")),
+	"toggle-button/demos/icon-only": {
+		files: ["ui/toggle-button/demos/icon-only.tsx"],
+		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/icon-only")),
 	},
 	"toggle-button/demos/prefix-and-suffix": {
 		files: ["ui/toggle-button/demos/prefix-and-suffix.tsx"],
@@ -2857,21 +2857,9 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/sizes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/sizes")),
 	},
-	"toggle-button/demos/text-formatting-toolbar": {
-		files: ["ui/toggle-button/demos/text-formatting-toolbar.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/text-formatting-toolbar")),
-	},
-	"toggle-button/demos/uncontrolled": {
-		files: ["ui/toggle-button/demos/uncontrolled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/uncontrolled")),
-	},
 	"toggle-button/demos/variants": {
 		files: ["ui/toggle-button/demos/variants.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/variants")),
-	},
-	"toggle-button/demos/view-switcher": {
-		files: ["ui/toggle-button/demos/view-switcher.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/view-switcher")),
 	},
 	"toggle-button-group/demos/default": {
 		files: ["ui/toggle-button-group/demos/default.tsx"],
