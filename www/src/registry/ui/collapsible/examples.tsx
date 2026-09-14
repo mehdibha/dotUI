@@ -1,20 +1,20 @@
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
-import AdvancedComposition from "./demos/advanced-composition"
 import Basic from "./demos/basic"
 import Controlled from "./demos/controlled"
+import CustomTrigger from "./demos/custom-trigger"
 import DefaultExpanded from "./demos/default-expanded"
 import Disabled from "./demos/disabled"
 
-export default function DisclosureExamples() {
+export default function CollapsibleExamples() {
   return (
     <Examples>
-      <Example title="advanced composition">
-        <AdvancedComposition />
-      </Example>
       <Example title="basic">
         <Basic />
+      </Example>
+      <Example title="custom trigger">
+        <CustomTrigger />
       </Example>
       <Example title="controlled">
         <Controlled />

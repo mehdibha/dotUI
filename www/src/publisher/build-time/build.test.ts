@@ -352,12 +352,12 @@ describe("end-to-end (extract + transform → publish)", () => {
 /* ============================================================ */
 
 describe("createParamValue folds", () => {
-  const disclosure = path.join(REGISTRY_UI, "disclosure/base.tsx")
+  const accordion = path.join(REGISTRY_UI, "accordion/base.tsx")
 
-  test("disclosure: the selected marker inlines, the rest and their imports go", () => {
+  test("accordion: the selected marker inlines, the rest and their imports go", () => {
     const chevron = transformBase({
-      baseTsxPath: disclosure,
-      componentName: "disclosure",
+      baseTsxPath: accordion,
+      componentName: "accordion",
       paramSelection: { marker: "chevron" },
     }).template
     expect(chevron).toContain("const glyph = <ChevronDownIcon />")
@@ -366,8 +366,8 @@ describe("createParamValue folds", () => {
     expect(chevron).not.toContain("@/lib/styles")
 
     const plus = transformBase({
-      baseTsxPath: disclosure,
-      componentName: "disclosure",
+      baseTsxPath: accordion,
+      componentName: "accordion",
       paramSelection: { marker: "plus" },
     }).template
     expect(plus).toContain("<PlusIcon")
@@ -399,8 +399,8 @@ describe("createParamValue folds", () => {
 
   test("hooks stay in place without a selection", () => {
     const { template } = transformBase({
-      baseTsxPath: disclosure,
-      componentName: "disclosure",
+      baseTsxPath: accordion,
+      componentName: "accordion",
     })
     expect(template).toContain("createParamValue")
   })

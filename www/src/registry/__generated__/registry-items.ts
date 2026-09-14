@@ -26,6 +26,7 @@ import UiChartRadial from "@/registry/ui/chart-radial/meta";
 import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
+import UiCollapsible from "@/registry/ui/collapsible/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
 import UiColorEditor from "@/registry/ui/color-editor/meta";
 import UiColorField from "@/registry/ui/color-field/meta";
@@ -39,7 +40,6 @@ import UiCommand from "@/registry/ui/command/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
-import UiDisclosure from "@/registry/ui/disclosure/meta";
 import UiDrawer from "@/registry/ui/drawer/meta";
 import UiDropZone from "@/registry/ui/drop-zone/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
@@ -110,6 +110,7 @@ export const registryUi: RegistryItem[] = [
 	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
+	UiCollapsible,
 	UiColorArea,
 	UiColorEditor,
 	UiColorField,
@@ -123,7 +124,6 @@ export const registryUi: RegistryItem[] = [
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
-	UiDisclosure,
 	UiDrawer,
 	UiDropZone,
 	UiEmpty,

@@ -32,6 +32,7 @@ import { FONT_CATALOG, fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
 import { ColorArea } from "@/registry/ui/color-area"
 import { ColorField } from "@/registry/ui/color-field"
 import { ColorPicker } from "@/registry/ui/color-picker"
@@ -43,7 +44,6 @@ import {
 } from "@/registry/ui/color-swatch-picker"
 import { Command } from "@/registry/ui/command"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Disclosure, DisclosurePanel } from "@/registry/ui/disclosure"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
@@ -280,7 +280,7 @@ export function DisclosureRow({
   children?: React.ReactNode
 }) {
   return (
-    <Disclosure
+    <Collapsible
       id={label}
       defaultExpanded={defaultExpanded}
       className={cn(
@@ -303,12 +303,10 @@ export function DisclosureRow({
         <RowLabel label={label} description={description} />
         <span className="flex shrink-0 items-center gap-1.5">
           {value && <span className={ROW_VALUE}>{value}</span>}
-          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/disclosure:rotate-180" />
+          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
         </span>
       </RacButton>
-      {/* `*:pb-0` cancels the panel's built-in bottom pad — spacing is owned
-          here so content bottom matches the row insets. */}
-      <DisclosurePanel className="text-inherit *:pb-0">
+      <CollapsiblePanel className="text-inherit">
         {/* No inset either way: rows inside carry the trigger's own padding,
             so content shares the header's text edges on both sides. */}
         <div
@@ -321,8 +319,8 @@ export function DisclosureRow({
         >
           {children}
         </div>
-      </DisclosurePanel>
-    </Disclosure>
+      </CollapsiblePanel>
+    </Collapsible>
   )
 }
 

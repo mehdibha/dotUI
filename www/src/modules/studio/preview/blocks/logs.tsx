@@ -43,10 +43,10 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/registry/ui/collapsible"
 import {
   Empty,
   EmptyContent,
@@ -794,14 +794,14 @@ function LogRow({ entry }: { entry: LogEntry }) {
   }
 
   return (
-    <Disclosure
+    <Collapsible
       className={cn(
         "border-b border-l-2 last:border-b-0",
         meta.accent,
         entry.level === "error" && "bg-danger-muted/25",
       )}
     >
-      <DisclosureTrigger className="rounded-none px-3 py-2 font-normal hover:bg-muted/50">
+      <CollapsibleTrigger className="w-full px-3 py-2 text-left hover:bg-muted/50">
         <div className="grid w-full grid-cols-[5.5rem_1fr] items-center gap-x-3 gap-y-1 text-left md:grid-cols-[6.5rem_6rem_9rem_1fr]">
           <span className="font-mono text-xs text-fg-muted tabular-nums">
             {entry.time}
@@ -821,8 +821,8 @@ function LogRow({ entry }: { entry: LogEntry }) {
             {entry.message}
           </span>
         </div>
-      </DisclosureTrigger>
-      <DisclosurePanel>
+      </CollapsibleTrigger>
+      <CollapsiblePanel>
         <div className="grid gap-4 px-3 pb-1 lg:grid-cols-2">
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center gap-1.5">
@@ -875,8 +875,8 @@ function LogRow({ entry }: { entry: LogEntry }) {
             </pre>
           </div>
         </div>
-      </DisclosurePanel>
-    </Disclosure>
+      </CollapsiblePanel>
+    </Collapsible>
   )
 }
 

@@ -1,0 +1,86 @@
+---
+title: Collapsible
+description: Shows and hides a section of content from a trigger.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
+wip: true
+---
+
+<InteractiveDemo name="collapsible" controls={["isDisabled"]} />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/collapsible
+```
+
+## Anatomy
+
+```tsx
+import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+```
+
+```tsx
+<Collapsible>
+  <CollapsibleTrigger>Show details</CollapsibleTrigger>
+  <CollapsiblePanel>Content</CollapsiblePanel>
+</Collapsible>
+```
+
+A collapsible carries no look of its own: `CollapsibleTrigger` is a bare button for custom layouts, and any `Button` with `slot="trigger"` works in its place. Style the open state from the root's `group-expanded/collapsible` variant. For a stack of headed sections, use [Accordion](/docs/components/accordion).
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { ChevronDownIcon } from "your-icon-library"
+```
+
+```tsx
+<Collapsible>
+  <Button slot="trigger" variant="quiet">
+    Show details
+    <ChevronDownIcon className="transition-transform group-expanded/collapsible:rotate-180" />
+  </Button>
+  <CollapsiblePanel>Content</CollapsiblePanel>
+</Collapsible>
+```
+
+## Open state
+
+Use `defaultExpanded` for uncontrolled state, or `isExpanded` with `onExpandedChange` to control it.
+
+```tsx
+const [isExpanded, setExpanded] = React.useState(false)
+
+<Collapsible isExpanded={isExpanded} onExpandedChange={setExpanded}>
+  <CollapsibleTrigger>Show details</CollapsibleTrigger>
+  <CollapsiblePanel>…</CollapsiblePanel>
+</Collapsible>
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="collapsible/demos/basic" title="Basic" />
+  <Example name="collapsible/demos/custom-trigger" title="Custom trigger" />
+  <Example name="collapsible/demos/controlled" title="Controlled" />
+  <Example name="collapsible/demos/default-expanded" title="Default expanded" />
+</Examples>
+
+## API Reference
+
+### Collapsible
+
+<Reference name="collapsible" />
+
+### CollapsibleTrigger
+
+<Reference name="collapsible-trigger" />
+
+### CollapsiblePanel
+
+<Reference name="collapsible-panel" />

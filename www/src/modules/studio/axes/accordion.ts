@@ -1,11 +1,9 @@
-/* Accordion — one language for accordion and disclosure: the container
-   groups the items (hairline rows · one bordered surface · a card each), the
-   marker says a trigger opens (chevron · plus/minus) and sits trailing or
-   leading.
+/* Accordion — the container groups the items (hairline rows · one bordered
+   surface · a card each), the marker says a trigger opens (chevron ·
+   plus/minus) and sits trailing or leading.
 
-   Engine: `container` is an enum param on `accordion` (the group), `marker`
-   and `markerPosition` on `disclosure` (the item that renders the trigger) —
-   a standalone disclosure follows the same decisions. */
+   Engine: three enum params on `accordion`. Collapsible is a behavior
+   primitive with no look of its own, so no axis reaches it. */
 
 import type { Resolved, StudioState } from "./index"
 
@@ -43,8 +41,6 @@ export function resolveAccordion(state: StudioState): Resolved {
           state.accordionContainer,
           ACCORDION_DEFAULTS.accordionContainer,
         ),
-      },
-      disclosure: {
         marker: pick(
           MARKER_OPTIONS,
           state.accordionMarker,

@@ -21,10 +21,6 @@ export const DemosIndex: Record<
 		files: ["ui/accordion/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/accordion/demos/controlled")),
 	},
-	"accordion/demos/custom-trigger": {
-		files: ["ui/accordion/demos/custom-trigger.tsx"],
-		component: React.lazy(() => import("@/registry/ui/accordion/demos/custom-trigger")),
-	},
 	"accordion/demos/default-expanded": {
 		files: ["ui/accordion/demos/default-expanded.tsx"],
 		component: React.lazy(() => import("@/registry/ui/accordion/demos/default-expanded")),
@@ -677,6 +673,26 @@ export const DemosIndex: Record<
 		files: ["ui/checkbox-group/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/uncontrolled")),
 	},
+	"collapsible/demos/basic": {
+		files: ["ui/collapsible/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/collapsible/demos/basic")),
+	},
+	"collapsible/demos/controlled": {
+		files: ["ui/collapsible/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/collapsible/demos/controlled")),
+	},
+	"collapsible/demos/custom-trigger": {
+		files: ["ui/collapsible/demos/custom-trigger.tsx"],
+		component: React.lazy(() => import("@/registry/ui/collapsible/demos/custom-trigger")),
+	},
+	"collapsible/demos/default-expanded": {
+		files: ["ui/collapsible/demos/default-expanded.tsx"],
+		component: React.lazy(() => import("@/registry/ui/collapsible/demos/default-expanded")),
+	},
+	"collapsible/demos/disabled": {
+		files: ["ui/collapsible/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/collapsible/demos/disabled")),
+	},
 	"color-area/demos/brand-color": {
 		files: ["ui/color-area/demos/brand-color.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-area/demos/brand-color")),
@@ -1228,34 +1244,6 @@ export const DemosIndex: Record<
 	"dialog/demos/types": {
 		files: ["ui/dialog/demos/types.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/types")),
-	},
-	"disclosure/demos/advanced-composition": {
-		files: ["ui/disclosure/demos/advanced-composition.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/advanced-composition")),
-	},
-	"disclosure/demos/basic": {
-		files: ["ui/disclosure/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/basic")),
-	},
-	"disclosure/demos/controlled": {
-		files: ["ui/disclosure/demos/controlled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/controlled")),
-	},
-	"disclosure/demos/default-expanded": {
-		files: ["ui/disclosure/demos/default-expanded.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/default-expanded")),
-	},
-	"disclosure/demos/disabled": {
-		files: ["ui/disclosure/demos/disabled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/disabled")),
-	},
-	"disclosure/demos/faq-section": {
-		files: ["ui/disclosure/demos/faq-section.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/faq-section")),
-	},
-	"disclosure/demos/feature-details": {
-		files: ["ui/disclosure/demos/feature-details.tsx"],
-		component: React.lazy(() => import("@/registry/ui/disclosure/demos/feature-details")),
 	},
 	"drawer/demos/basic": {
 		files: ["ui/drawer/demos/basic.tsx"],

@@ -1,9 +1,9 @@
-import { Accordion } from "@/registry/ui/accordion"
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from "@/registry/ui/accordion"
 import { Description, FieldContent, Label } from "@/registry/ui/field"
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
@@ -47,9 +47,9 @@ export default function Demo() {
       defaultExpandedKeys={["Notifications"]}
     >
       {sections.map((section) => (
-        <Disclosure key={section.name} id={section.name}>
-          <DisclosureTrigger>{section.name}</DisclosureTrigger>
-          <DisclosurePanel>
+        <AccordionItem key={section.name} id={section.name}>
+          <AccordionTrigger>{section.name}</AccordionTrigger>
+          <AccordionPanel>
             <div className="flex flex-col gap-4">
               {section.settings.map((setting) => (
                 <Switch
@@ -67,8 +67,8 @@ export default function Demo() {
                 </Switch>
               ))}
             </div>
-          </DisclosurePanel>
-        </Disclosure>
+          </AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   )

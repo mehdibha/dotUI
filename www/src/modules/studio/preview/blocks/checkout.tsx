@@ -5,6 +5,7 @@ import { useState } from "react"
 import {
   BoxIcon,
   CheckCircle2Icon,
+  ChevronDownIcon,
   CreditCardIcon,
   ImageIcon,
   InfoIcon,
@@ -27,6 +28,11 @@ import { Button } from "@/registry/ui/button"
 import { Card, CardContent } from "@/registry/ui/card"
 import { Checkbox } from "@/registry/ui/checkbox"
 import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/registry/ui/collapsible"
+import {
   Dialog,
   DialogBody,
   DialogContent,
@@ -35,11 +41,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from "@/registry/ui/disclosure"
 import {
   Description,
   FieldContent,
@@ -388,14 +389,17 @@ export default function Checkout() {
                 </FieldGroup>
               </RadioGroup>
 
-              <Disclosure>
-                <DisclosureTrigger>Add delivery instructions</DisclosureTrigger>
-                <DisclosurePanel>
+              <Collapsible>
+                <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium">
+                  Add delivery instructions
+                  <ChevronDownIcon className="size-4 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+                <CollapsiblePanel>
                   <TextField aria-label="Delivery instructions">
                     <TextArea placeholder="Gate code, safe drop spot, anything the courier should know…" />
                   </TextField>
-                </DisclosurePanel>
-              </Disclosure>
+                </CollapsiblePanel>
+              </Collapsible>
             </Section>
 
             <Section

@@ -884,7 +884,7 @@ describe("depsFromFileImports", () => {
 
 describe("selectPublishable: createParamValue selections", () => {
   const meta: Publishable["meta"] = {
-    name: "disclosure",
+    name: "accordion",
     type: "registry:ui",
     files: [],
     params: {
@@ -911,7 +911,7 @@ describe("selectPublishable: createParamValue selections", () => {
   test("picks the folded template for the preset's value", () => {
     const preset = {
       density: "default",
-      componentParams: { disclosure: { marker: "plus" } },
+      componentParams: { accordion: { marker: "plus" } },
     } as const
     expect(selectPublishable(mod, preset).template).toBe("plus")
   })
@@ -924,7 +924,7 @@ describe("selectPublishable: createParamValue selections", () => {
     expect(
       selectPublishable(mod, {
         density: "default",
-        componentParams: { disclosure: { marker: "bogus" } },
+        componentParams: { accordion: { marker: "bogus" } },
       }).template,
     ).toBe("default")
   })

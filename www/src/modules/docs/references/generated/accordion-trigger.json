@@ -1,6 +1,6 @@
 {
-  "name": "DisclosureTriggerProps",
-  "description": "A DisclosureTrigger provides the trigger for a disclosure.",
+  "name": "AccordionTriggerProps",
+  "description": "An AccordionTrigger renders the item's heading, button, and marker.",
   "props": {
     "onPress": {
       "type": "((e: PressEvent) => void)",
