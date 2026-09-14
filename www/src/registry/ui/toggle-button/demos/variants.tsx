@@ -1,17 +1,11 @@
-import { PinIcon } from "@/registry/__generated__/icons"
 import { ToggleButton } from "@/registry/ui/toggle-button"
-
-const variants = ["primary", "secondary", "quiet"] as const
 
 export default function Demo() {
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {variants.map((variant) => (
-        <ToggleButton key={variant} variant={variant}>
-          <PinIcon data-icon="inline-start" className="rotate-45" />
-          {variant}
-        </ToggleButton>
-      ))}
+    <div className="flex flex-wrap items-center justify-center gap-2">
+      <ToggleButton variant="primary">Primary</ToggleButton>
+      <ToggleButton variant="secondary">Secondary</ToggleButton>
+      <ToggleButton variant="quiet">Quiet</ToggleButton>
     </div>
   )
 }
