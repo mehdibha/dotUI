@@ -41,12 +41,9 @@ import {
 } from "@/registry/theme"
 import type { RegistryItem } from "@/registry/types"
 
-// Relative import: the publisher sits in vite.config's module graph, where
-// value imports through the `@/` alias break vitest/vite startup.
-import { STYLE_VAR_DEFAULTS } from "../registry/__generated__/style-var-defaults"
 import { fontItemNamesForTokens } from "./emit-font"
 import { colorLookup, flattenColorValue } from "./flatten-color"
-import { buildStyleVarMap } from "./resolve-classes"
+import { STUDIO_VAR_PREFIX } from "./resolve-classes"
 import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
@@ -95,8 +92,8 @@ function resolveCssValue(value: string): string {
  * - `root` / `dark`: everything else lands on `:root` (density, component
  *   tokens), same as the live provider, with the dark literal on `.dark`
  *   when it differs — minus `--radius` (it rides in `cssVars.light`) and
- *   builder-only indirection (`--radius-control` and friends), which the
- *   class rewriter has already resolved into utilities.
+ *   studio vars (the builder's live-tweak indirection), which the component
+ *   publisher resolves into utilities.
  * `componentParams` are inlined into component classes at build.
  */
 function splitPresetTokens(
@@ -125,10 +122,9 @@ function splitPresetTokens(
       value,
     ]),
   )
-  const resolved = buildStyleVarMap({ ...STYLE_VAR_DEFAULTS, ...tokens })
   const lookup = colorLookup(engine, literals, tokens)
   for (const [name, raw] of Object.entries(tokens)) {
-    if (name === "--radius" || resolved.has(name)) continue
+    if (name === "--radius" || name.startsWith(STUDIO_VAR_PREFIX)) continue
     const value = resolveCssValue(raw)
     if (themeNames.has(name)) {
       theme[name] = value
@@ -288,6 +284,15 @@ export function mergePresetCssFields(
   // preset token that names a vocabulary entry wins. The faces themselves come
   // from `registry:font` items (init) or, on request, a Google Fonts import (v0).
   Object.assign(theme, split.theme)
+  // shadcn's CSS updater aliases any theme entry whose value mentions
+  // `--color-` as a color token (`--color-disabled-bg: var(----disabled-bg)`).
+  // Point those at the `:root` name behind the vocabulary token instead — the
+  // same value, since `--color-x` is `var(--x)` in the shipped theme.
+  for (const [name, value] of Object.entries(theme)) {
+    theme[name] = value.replace(/var\(--color-([\w-]+)\)/g, (match, token) =>
+      token in light ? `var(--${token})` : match,
+    )
+  }
   if (options.googleFontsImport) {
     const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
     if (fontFamilies.length > 0) {

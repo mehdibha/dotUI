@@ -4,7 +4,7 @@
 
    Engine: `style`, `hover` and `press` are enum params on both `button` and
    `toggle-button` (a synced group — one axis writes both); radius rides on
-   the shared `--btn-radius` var. */
+   the shared `--studio-btn-radius` var. */
 
 import type { Resolved, StudioState } from "./index"
 import { pick } from "./pick"
@@ -63,7 +63,7 @@ export function resolveButtons(state: StudioState): Resolved {
   }
   const tokens: Record<string, string> = {}
   const radius = RADIUS_TOKENS[state.buttonRadius]
-  if (radius) tokens["--btn-radius"] = radius
+  if (radius) tokens["--studio-btn-radius"] = radius
   return {
     tokens,
     params: { button: selection, "toggle-button": selection },

@@ -80,7 +80,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
       inset: {
         slots: {
           root: "p-1 **:data-separator:-mx-1",
-          item: "rounded-(--menu-item-radius)",
+          item: "rounded-(--studio-menu-item-radius)",
         },
         density: {
           compact: { slots: { item: "px-2", sectionTitle: "px-2" } },

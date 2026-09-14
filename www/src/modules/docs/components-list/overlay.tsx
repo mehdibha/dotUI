@@ -14,13 +14,13 @@ export type SurfaceVariant = "popover" | "menu" | "modal" | "drawer" | "tooltip"
 
 const SURFACE_FRAME: Record<SurfaceVariant, string> = {
   popover:
-    "rounded-(--popover-radius) border bg-popover p-2.5 text-xs/relaxed shadow-md",
-  menu: "rounded-(--popover-radius) border bg-popover p-1 shadow-md",
+    "rounded-(--studio-popover-radius) border bg-popover p-2.5 text-xs/relaxed shadow-md",
+  menu: "rounded-(--studio-popover-radius) border bg-popover p-1 shadow-md",
   modal:
-    "rounded-(--modal-radius) border bg-(--modal-background) p-4 text-sm shadow-lg",
+    "rounded-(--studio-modal-radius) border bg-(--studio-modal-background) p-4 text-sm shadow-lg",
   drawer: "rounded-t-xl border-t bg-bg p-4 text-sm shadow-lg",
   tooltip:
-    "rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
+    "rounded-(--studio-tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
 }
 
 // The ancestor data attribute the real Dialog* sub-components key their

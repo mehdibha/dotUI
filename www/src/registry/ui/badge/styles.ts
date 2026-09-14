@@ -10,7 +10,7 @@ import badgeMeta from "./meta"
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {
-    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--badge-radius) text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--studio-badge-radius) text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
     variants: {
       appearance: {
         solid: "bg-(--badge-fill) text-(--badge-fg)",

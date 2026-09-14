@@ -6,8 +6,8 @@
    Engine: `style` is an enum param on both `badge` and `tag-group` (a synced
    group — one axis writes both). On the badge it sets the default of the
    `appearance` prop, which stays API for the products that mix chips; on the
-   tag it is the fill. Shape rides on the `--badge-radius` / `--tag-radius`
-   surface vars (token-field tokens sit on `--tag-radius` too), resolved to
+   tag it is the fill. Shape rides on the `--studio-badge-radius` / `--studio-tag-radius`
+   surface vars (token-field tokens sit on `--studio-tag-radius` too), resolved to
    plain `rounded-*` on export. Pill is the registry default and emits
    nothing: badges are full-round, tags keep their `radius-control` corners. */
 
@@ -44,8 +44,8 @@ export function resolveBadges(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.badgeShape]
   if (radius) {
-    tokens["--badge-radius"] = radius
-    tokens["--tag-radius"] = radius
+    tokens["--studio-badge-radius"] = radius
+    tokens["--studio-tag-radius"] = radius
   }
   return {
     tokens,

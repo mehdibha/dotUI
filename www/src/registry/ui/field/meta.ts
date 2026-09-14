@@ -28,8 +28,8 @@ const fieldMeta = {
       },
       vars: {
         bar: {
-          "--field-error-bar": "3px",
-          "--field-error-inset": "0.625rem",
+          "--studio-field-error-bar": "3px",
+          "--studio-field-error-inset": "0.625rem",
         },
       },
       description: "How a field shows a failed value.",

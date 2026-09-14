@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(alertMeta, {
     slots: {
       root: [
         "relative grid w-full items-start px-4 py-3 text-sm",
-        "rounded-(--alert-radius)",
+        "rounded-(--studio-alert-radius)",
         "has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto]",
         "*:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current",
       ],

@@ -28,9 +28,10 @@ import {
   TV_CONFIG_PLACEHOLDER,
 } from "./publish"
 import {
-  buildStyleVarMap,
-  pruneResolvedCssVars,
+  paramVars,
   resolveClasses,
+  resolveCssFields,
+  resolveStudioVars,
   rewriteClassString,
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
@@ -210,111 +211,168 @@ describe("flatten", () => {
 /* ============================================================ */
 
 describe("resolve-classes", () => {
-  test("rewriteClassString swaps a single var ref to its suffix", () => {
-    const map = new Map([["--alert-radius", "md"]])
-    expect(rewriteClassString("rounded-(--alert-radius) bg-card", map)).toBe(
-      "rounded-md bg-card",
+  test("resolveStudioVars follows chains and normalizes bare token names", () => {
+    const vars = resolveStudioVars({
+      "--studio-radius-control": "var(--radius-md)",
+      "--studio-btn-radius": "var(--studio-radius-control)",
+      "--studio-alert-radius": "--radius-lg",
+      "--radius": "0.5rem",
+    })
+    expect(vars.get("--studio-btn-radius")).toBe("var(--radius-md)")
+    expect(vars.get("--studio-alert-radius")).toBe("var(--radius-lg)")
+    expect(vars.has("--radius")).toBe(false)
+  })
+
+  test("rewriteClassString maps theme tokens to utility suffixes", () => {
+    const vars = resolveStudioVars({
+      "--studio-alert-radius": "var(--radius-md)",
+      "--studio-btn-font-weight": "var(--font-weight-medium)",
+      "--studio-modal-background": "var(--color-popover)",
+      "--studio-slider-cursor": "var(--cursor-drag)",
+    })
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-alert-radius) font-(--studio-btn-font-weight) bg-(--studio-modal-background) dragging:cursor-(--studio-slider-cursor) bg-card",
+        vars,
+      ),
+    ).toBe("rounded-md font-medium bg-popover dragging:cursor-drag bg-card")
+  })
+
+  test("rewriteClassString resolves spacing, the registry's literals, and arbitrary values", () => {
+    const vars = resolveStudioVars({
+      "--studio-cell-size": "--spacing(8)",
+      "--studio-thumb-size": "calc(var(--spacing) * 3)",
+      "--studio-thumb-shadow": "0 0 #0000",
+      "--studio-square": "0",
+      "--studio-odd": "4px",
+      "--studio-passthrough": "var(--surface-radius)",
+    })
+    expect(
+      rewriteClassString(
+        "size-(--studio-cell-size) h-(--studio-thumb-size) shadow-(--studio-thumb-shadow) rounded-r-(--studio-square) rounded-(--studio-odd) rounded-(--studio-passthrough)",
+        vars,
+      ),
+    ).toBe(
+      "size-8 h-3 shadow-none rounded-r-none rounded-[4px] rounded-(--surface-radius)",
     )
   })
 
-  test("rewriteClassString leaves unknown vars alone", () => {
-    const map = new Map([["--alert-radius", "md"]])
-    expect(rewriteClassString("rounded-(--btn-radius) p-2", map)).toBe(
-      "rounded-(--btn-radius) p-2",
+  test("rewriteClassString substitutes non-shorthand reads, honoring fallbacks", () => {
+    const vars = resolveStudioVars({
+      "--studio-card-radius": "var(--radius-xl)",
+      "--studio-fill": "var(--color-primary)",
+    })
+    expect(
+      rewriteClassString(
+        "[--surface-radius:var(--studio-card-radius)] rounded-[calc(var(--studio-card-radius)-1px)] disabled:bg-(--disabled-bg,var(--studio-fill)) w-[var(--studio-missing,--spacing(2))]",
+        vars,
+      ),
+    ).toBe(
+      "[--surface-radius:var(--radius-xl)] rounded-[calc(var(--radius-xl)-1px)] disabled:bg-(--disabled-bg,var(--color-primary)) w-[--spacing(2)]",
+    )
+  })
+
+  test("rewriteClassString leaves undeclared vars alone", () => {
+    const vars = resolveStudioVars({
+      "--studio-alert-radius": "var(--radius-md)",
+    })
+    expect(rewriteClassString("rounded-(--studio-btn-radius) p-2", vars)).toBe(
+      "rounded-(--studio-btn-radius) p-2",
     )
   })
 
   test("resolveClasses rewrites within slot arrays", () => {
-    const map = new Map([["--alert-radius", "lg"]])
+    const vars = resolveStudioVars({
+      "--studio-alert-radius": "var(--radius-lg)",
+    })
     const layer: TvLayer = {
-      slots: { root: ["px-4", "rounded-(--alert-radius)"] },
+      slots: { root: ["px-4", "rounded-(--studio-alert-radius)"] },
     }
-    const out = resolveClasses(layer, map)
+    const out = resolveClasses(layer, vars)
     expect(out.slots?.root).toEqual(["px-4", "rounded-lg"])
   })
 
-  test("buildStyleVarMap resolves bare var refs across token pools", () => {
-    const map = buildStyleVarMap({
-      "--popover-radius": "var(--radius-md)",
-      "--slider-track-radius": "var(--radius-full)",
-      "--slider-cursor": "var(--cursor-interactive)",
-      "--modal-backdrop-blur": "var(--blur-sm)",
-      // literals and calc chains must NOT resolve
-      "--checkbox-radius": "4px",
-      "--switch-radius": "9999px",
-      "--modal-backdrop-opacity": "40%",
-      "--slider-thumb-size": "calc(var(--spacing) * 3)",
-      // var refs outside the static pools must NOT resolve
-      "--modal-background": "var(--color-popover)",
-      "--btn-font-weight": "var(--font-weight-medium)",
+  test("paramVars picks the selected value's vars, defaulting per param", () => {
+    const meta: RegistryItem = {
+      name: "field",
+      type: "registry:ui",
+      params: {
+        error: {
+          kind: "enum",
+          default: "border",
+          values: ["border", "bar"],
+          vars: { bar: { "--studio-field-error-bar": "3px" } },
+        },
+      },
+    }
+    expect(paramVars(meta, {})).toEqual({})
+    expect(paramVars(meta, { error: "bar" })).toEqual({
+      "--studio-field-error-bar": "3px",
     })
-    expect(map.get("--popover-radius")).toBe("md")
-    expect(map.get("--slider-track-radius")).toBe("full")
-    expect(map.get("--slider-cursor")).toBe("interactive")
-    expect(map.get("--modal-backdrop-blur")).toBe("sm")
-    expect(map.size).toBe(4)
   })
 })
 
 /* ============================================================ */
-/* pruneResolvedCssVars                                          */
+/* resolveCssFields                                              */
 /* ============================================================ */
 
-describe("pruneResolvedCssVars", () => {
-  test("drops a resolved declaration nothing references", () => {
-    const out = pruneResolvedCssVars(
-      { ":root": { "--popover-radius": "var(--radius-md)" } },
-      new Set(["--popover-radius"]),
-      'className="rounded-md"',
-    )
-    expect(out).toBeUndefined()
-  })
-
-  test("keeps a resolved declaration still referenced in file content", () => {
-    // input: the shorthand resolved, but calc() chains still read the var.
-    const out = pruneResolvedCssVars(
-      { ":root": { "--input-radius": "var(--radius-md)" } },
-      new Set(["--input-radius"]),
-      "rounded-md rounded-[calc(var(--input-radius)-1px)]",
-    )
-    expect(out).toEqual({ ":root": { "--input-radius": "var(--radius-md)" } })
-  })
-
-  test("never touches unresolved declarations", () => {
-    const css = {
-      ":root": { "--btn-font-weight": "var(--font-weight-medium)" },
-    }
-    const out = pruneResolvedCssVars(css, new Set(["--btn-radius"]), "")
-    expect(out).toEqual(css)
-  })
-
-  test("prunes chains to fixpoint and drops the emptied selector", () => {
-    // --a references --b; once --a drops, --b has no referent either.
-    const out = pruneResolvedCssVars(
+describe("resolveCssFields", () => {
+  test("drops studio defaults and the selector they emptied", () => {
+    const out = resolveCssFields(
       {
-        ":root": { "--a": "var(--b)", "--b": "var(--radius-md)" },
+        ":root": { "--studio-popover-radius": "var(--radius-md)" },
         "@utility skeleton": { position: "relative" },
       },
-      new Set(["--a", "--b"]),
-      "rounded-md",
+      resolveStudioVars({}),
     )
     expect(out).toEqual({ "@utility skeleton": { position: "relative" } })
   })
 
-  test("var-name prefixes do not count as references", () => {
-    // `--btn-radius-sm` in content must not keep `--btn-radius` alive.
-    const out = pruneResolvedCssVars(
-      { ":root": { "--btn-radius": "var(--radius-md)" } },
-      new Set(["--btn-radius"]),
-      "rounded-(--btn-radius-sm)",
+  test("substitutes reads inside shipped rules", () => {
+    const out = resolveCssFields(
+      {
+        "@layer components": {
+          "[data-field][data-invalid]": {
+            "border-left": "var(--studio-field-error-bar) solid red",
+            "padding-left": "var(--studio-field-error-inset)",
+          },
+        },
+      },
+      resolveStudioVars({
+        "--studio-field-error-bar": "3px",
+        "--studio-field-error-inset": "0.625rem",
+      }),
     )
-    expect(out).toBeUndefined()
+    expect(out).toEqual({
+      "@layer components": {
+        "[data-field][data-invalid]": {
+          "border-left": "3px solid red",
+          "padding-left": "0.625rem",
+        },
+      },
+    })
+  })
+
+  test("drops declarations reading an unset studio var, and emptied rules", () => {
+    const out = resolveCssFields(
+      {
+        "@layer components": {
+          "[data-field][data-invalid]": {
+            "border-left": "var(--studio-field-error-bar) solid red",
+          },
+        },
+        "[data-required] [data-label]::after": { content: '"*" / ""' },
+      },
+      resolveStudioVars({}),
+    )
+    expect(out).toEqual({
+      "[data-required] [data-label]::after": { content: '"*" / ""' },
+    })
   })
 
   test("keeps originally-empty objects (@plugin statements)", () => {
     const css = { '@plugin "tailwindcss-foo"': {} }
-    const out = pruneResolvedCssVars(css, new Set(["--x"]), "")
-    expect(out).toEqual(css)
+    expect(resolveCssFields(css, resolveStudioVars({}))).toEqual(css)
   })
 })
 
@@ -532,11 +590,11 @@ describe("publish", () => {
       preset: {
         density: "default",
         componentParams: {},
-        tokens: { "--alert-radius": "var(--radius-md)" },
+        tokens: { "--studio-alert-radius": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")
-    expect(rawContent).not.toContain("rounded-(--alert-radius)")
+    expect(rawContent).not.toContain("rounded-(--studio-alert-radius)")
   })
 
   test("alert: falls back to the styles.css default radius", () => {
@@ -544,7 +602,7 @@ describe("publish", () => {
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // --alert-radius → --radius-surface → --radius-lg → suffix "lg".
+    // --studio-alert-radius → --studio-radius-surface → --radius-lg → suffix "lg".
     expect(rawContent).toContain("rounded-lg")
   })
 
@@ -552,11 +610,13 @@ describe("publish", () => {
     const { item, rawContent } = publish({
       publishable: {
         template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
-        stylesConfig: { base: { base: "rounded-(--popover-radius) border" } },
+        stylesConfig: {
+          base: { base: "rounded-(--studio-popover-radius) border" },
+        },
         meta: {
           name: "popover",
           type: "registry:ui",
-          css: { ":root": { "--popover-radius": "var(--radius-md)" } },
+          css: { ":root": { "--studio-popover-radius": "var(--radius-md)" } },
           files: [
             {
               type: "registry:ui",
@@ -567,10 +627,10 @@ describe("publish", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
-      styleVarDefaults: { "--popover-radius": "var(--radius-md)" },
+      styleVarDefaults: { "--studio-popover-radius": "var(--radius-md)" },
     })
     expect(rawContent).toContain("rounded-md")
-    expect(rawContent).not.toContain("--popover-radius")
+    expect(rawContent).not.toContain("--studio-popover-radius")
     expect(item.css).toBeUndefined()
   })
 
@@ -578,7 +638,7 @@ describe("publish", () => {
     const { rawContent } = publish({
       publishable: {
         template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
-        stylesConfig: { base: { base: "rounded-(--btn-radius)" } },
+        stylesConfig: { base: { base: "rounded-(--studio-btn-radius)" } },
         meta: {
           name: "toggle-button",
           type: "registry:ui",
@@ -593,7 +653,7 @@ describe("publish", () => {
       },
       preset: { density: "default", componentParams: {} },
       // Declared by button/styles.css, not by toggle-button.
-      styleVarDefaults: { "--btn-radius": "var(--radius-md)" },
+      styleVarDefaults: { "--studio-btn-radius": "var(--radius-md)" },
     })
     expect(rawContent).toContain("rounded-md")
   })
@@ -601,7 +661,7 @@ describe("publish", () => {
   test("surface-var refs in template markup (outside the tv config) resolve too", () => {
     const { rawContent } = publish({
       publishable: {
-        template: `const s = ${TV_CONFIG_PLACEHOLDER};\nconst el = <div className="rounded-(--color-swatch-radius)" />;`,
+        template: `const s = ${TV_CONFIG_PLACEHOLDER};\nconst el = <div className="rounded-(--studio-color-swatch-radius)" />;`,
         stylesConfig: { base: {} },
         meta: {
           name: "color-swatch",
@@ -616,10 +676,86 @@ describe("publish", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
-      styleVarDefaults: { "--color-swatch-radius": "var(--radius-sm)" },
+      styleVarDefaults: { "--studio-color-swatch-radius": "var(--radius-sm)" },
     })
     expect(rawContent).toContain("rounded-sm")
-    expect(rawContent).not.toContain("--color-swatch-radius")
+    expect(rawContent).not.toContain("--studio-color-swatch-radius")
+  })
+
+  test("a studio var with no default fails the publish instead of shipping", () => {
+    expect(() =>
+      publish({
+        publishable: {
+          template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
+          stylesConfig: { base: { base: "rounded-(--studio-nope-radius)" } },
+          meta: {
+            name: "nope",
+            type: "registry:ui",
+            files: [
+              {
+                type: "registry:ui",
+                path: "ui/nope/base.tsx",
+                target: "ui/nope.tsx",
+              },
+            ],
+          },
+        },
+        preset: { density: "default", componentParams: {} },
+        styleVarDefaults: {},
+      }),
+    ).toThrow(/--studio-nope-radius/)
+  })
+
+  test("param vars resolve into the shipped css, and an unset one drops its declaration", () => {
+    const publishable: Publishable = {
+      template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
+      stylesConfig: { base: {} },
+      meta: {
+        name: "field",
+        type: "registry:ui",
+        css: {
+          "@layer components": {
+            "[data-field][data-invalid]": {
+              "border-left": "var(--studio-field-error-bar) solid red",
+            },
+          },
+        },
+        params: {
+          error: {
+            kind: "enum",
+            default: "border",
+            values: ["border", "bar"],
+            vars: { bar: { "--studio-field-error-bar": "3px" } },
+          },
+        },
+        files: [
+          {
+            type: "registry:ui",
+            path: "ui/field/base.tsx",
+            target: "ui/field.tsx",
+          },
+        ],
+      },
+    }
+    const bar = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: { field: { error: "bar" } },
+      },
+      styleVarDefaults: {},
+    })
+    expect(bar.item.css).toEqual({
+      "@layer components": {
+        "[data-field][data-invalid]": { "border-left": "3px solid red" },
+      },
+    })
+    const plain = publish({
+      publishable,
+      preset: { density: "default", componentParams: {} },
+      styleVarDefaults: {},
+    })
+    expect(plain.item.css).toBeUndefined()
   })
 
   test("alert: published item drops dotui-only fields (params, group)", () => {

@@ -17,19 +17,19 @@
     --cursor-disabled: not-allowed;
     --cursor-drag: var(--cursor-interactive);
     --cursor-dragging: var(--cursor-interactive);
-    --focus-ring-color: var(--color-border-focus);
+    --focus-ring-color: var(--border-focus);
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
     --focus-ring-inner: 0px;
-    --focus-input-color: var(--color-border-focus-muted);
+    --focus-input-color: var(--border-focus-muted);
     --focus-input-width: 2px;
     --focus-input-offset: 0px;
     --focus-input-inner: 0px;
-    --disabled-bg: var(--color-disabled);
-    --disabled-fg: var(--color-fg-disabled);
-    --disabled-border: var(--color-border);
-    --disabled-selected-bg: var(--color-disabled);
-    --disabled-selected-fg: var(--color-fg-disabled);
+    --disabled-bg: var(--disabled);
+    --disabled-fg: var(--fg-disabled);
+    --disabled-border: var(--border);
+    --disabled-selected-bg: var(--disabled);
+    --disabled-selected-fg: var(--fg-disabled);
     --disabled-unselected-bg: transparent;
     --radius-xs: calc(var(--radius) * 0.25);
     --radius-sm: calc(var(--radius) * 0.5);
@@ -140,13 +140,6 @@
     --color-chart-3: var(--chart-3);
     --color-chart-2: var(--chart-2);
     --color-chart-1: var(--chart-1);
-    --color-disabled-selected-fg: var(----disabled-selected-fg);
-    --color-disabled-selected-bg: var(----disabled-selected-bg);
-    --color-disabled-border: var(----disabled-border);
-    --color-disabled-fg: var(----disabled-fg);
-    --color-disabled-bg: var(----disabled-bg);
-    --color-focus-input-color: var(----focus-input-color);
-    --color-focus-ring-color: var(----focus-ring-color);
     --animate-loader-blades: loader-blades 0.8s steps(8, end) infinite;
     --animate-loader-dots: loader-dots 0.9s ease-in-out infinite;
     --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
@@ -285,20 +278,6 @@
     --chart-8: oklch(0.3424 0.0974 148.67);
     --card-border: var(--color-border);
     --overlay-border: var(--color-border);
-    --input-radius: var(--radius-control);
-    --modal-background: var(--color-popover);
-    --modal-radius: var(--radius-panel);
-    --btn-font-weight: var(--font-weight-medium);
-    --popover-radius: var(--radius-surface);
-    --card-radius: var(--radius-panel);
-    --slider-thumb-size: calc(var(--spacing) * 3);
-    --slider-thumb-shadow: 0 0 #0000;
-    --slider-fill-color: var(--color-primary);
-    --slider-cursor: var(--cursor-drag);
-    --slider-dragging-cursor: var(--cursor-dragging);
-    --slider-size: calc(var(--spacing) * 1);
-    --calendar-cell-radius: var(--radius-md);
-    --calendar-cell-size: --spacing(8);
 }
 
 .dark {
@@ -401,8 +380,6 @@
     --chart-8: oklch(0.4002 0.1139 148.67);
 }
 
-@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
-
 @utility focus-reset {
     @apply ring-0 ring-transparent outline-none;
 }
@@ -484,157 +461,31 @@
     position: relative;
     overflow: hidden;
     background-color: var(--color-muted);
+    background-image: var(--skeleton-image, none);
+    background-size: 300% 100%;
     background-position: 100%;
+    background-repeat: no-repeat;
   &:where(img, video, canvas, svg) {
     content-visibility: hidden;
     }
 }
 
 @utility skeleton--shimmer {
-  &:where(.skeleton),
-  &
-    :where(
-      .skeleton,
-      [data-skeleton],
-      [data-text],
-      [data-label],
-      [data-description],
-      [data-card-title],
-      [data-card-description],
-      [data-menu-item-label],
-      [data-menu-item-description],
-      [data-listbox-item-label],
-      [data-listbox-item-description],
-      [data-button],
-      [data-input-control],
-      [data-badge],
-      [data-tag],
-      [data-kbd],
-      [data-combobox-value],
-      [data-avatar],
-      [data-avatar-group-count],
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      small,
-      strong,
-      em,
-      code,
-      kbd,
-      samp,
-      figcaption,
-      legend
-    ) {
-    overflow: hidden;
-    background-image: linear-gradient(
-      to right,
-      var(--color-muted) 33%,
-      color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
-      var(--color-muted) 66%
-    );
-    background-size: 300% 100%;
-    background-position: 100%;
-    background-repeat: no-repeat;
-    }
+    --skeleton-image: linear-gradient(
+    to right,
+    var(--color-muted) 33%,
+    color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
+    var(--color-muted) 66%
+  );
 }
 
 @utility skeleton--pulse {
-  &:where(.skeleton),
-  &
-    :where(
-      .skeleton,
-      [data-skeleton],
-      [data-text],
-      [data-label],
-      [data-description],
-      [data-card-title],
-      [data-card-description],
-      [data-menu-item-label],
-      [data-menu-item-description],
-      [data-listbox-item-label],
-      [data-listbox-item-description],
-      [data-button],
-      [data-input-control],
-      [data-badge],
-      [data-tag],
-      [data-kbd],
-      [data-combobox-value],
-      [data-avatar],
-      [data-avatar-group-count],
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      small,
-      strong,
-      em,
-      code,
-      kbd,
-      samp,
-      figcaption,
-      legend
-    ) {
-    opacity: 1;
-    }
+    --skeleton-image: none;
 }
 
 @utility skeleton--none {
-  &:where(.skeleton),
-  &
-    :where(
-      .skeleton,
-      [data-skeleton],
-      [data-text],
-      [data-label],
-      [data-description],
-      [data-card-title],
-      [data-card-description],
-      [data-menu-item-label],
-      [data-menu-item-description],
-      [data-listbox-item-label],
-      [data-listbox-item-description],
-      [data-button],
-      [data-input-control],
-      [data-badge],
-      [data-tag],
-      [data-kbd],
-      [data-combobox-value],
-      [data-avatar],
-      [data-avatar-group-count],
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      small,
-      strong,
-      em,
-      code,
-      kbd,
-      samp,
-      figcaption,
-      legend
-    ) {
-    background-image: none;
-    animation: none;
-    }
+    --skeleton-image: none;
 }
   [data-required] [data-label]::after {
     content: "*" / "";
-}
-
-@layer components {
-  [data-field][data-invalid] {
-    border-left: var(--field-error-bar, 0) solid var(--color-border-danger);
-    padding-left: var(--field-error-inset, 0);
-    }
 }

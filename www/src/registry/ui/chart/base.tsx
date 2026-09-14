@@ -756,7 +756,7 @@ const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-background:var(--color-popover)]",
   "[--ts-chart-tooltip-color:var(--color-fg)]",
   "[--ts-chart-tooltip-border:1px_solid_var(--overlay-border)]",
-  "[--ts-chart-tooltip-border-radius:var(--popover-radius)]",
+  "[--ts-chart-tooltip-border-radius:var(--studio-popover-radius)]",
   "[--ts-chart-tooltip-shadow:var(--shadow-popover,var(--shadow-md))]",
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ")

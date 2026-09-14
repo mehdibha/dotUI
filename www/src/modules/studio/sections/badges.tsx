@@ -53,9 +53,9 @@ export const BADGE_SHAPE = {
   rounded: "rounded-[4px]",
 }
 
-/* Pill leaves tags on their registry default (`--tag-radius`: radius-control). */
+/* Pill leaves tags on their registry default (`--studio-tag-radius`: radius-control). */
 const TAG_SHAPE = {
-  pill: "rounded-(--radius-control)",
+  pill: "rounded-(--studio-radius-control)",
   rounded: "rounded-[4px]",
 }
 

@@ -29,10 +29,10 @@ describe("selection controls", () => {
   it("corner rides on the checkbox radius var", () => {
     expect(
       resolveDesignSystem({ ...DEFAULTS, checkCorner: "square" }).tokens,
-    ).toEqual({ "--checkbox-radius": "var(--radius-xs)" })
+    ).toEqual({ "--studio-checkbox-radius": "var(--radius-xs)" })
     expect(
       resolveDesignSystem({ ...DEFAULTS, checkCorner: "circle" }).tokens,
-    ).toEqual({ "--checkbox-radius": "var(--radius-full)" })
+    ).toEqual({ "--studio-checkbox-radius": "var(--radius-full)" })
   })
 
   it("choice cards write the synced card params on all three controls", () => {

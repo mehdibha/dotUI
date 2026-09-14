@@ -17,10 +17,10 @@ const { useStyles, styles } = createStyles(accordionMeta, {
         base: "**:data-disclosure:not-last:border-b",
       },
       boxed: {
-        base: "rounded-(--accordion-radius) border bg-card **:data-disclosure:px-3 **:data-disclosure:not-last:border-b",
+        base: "rounded-(--studio-accordion-radius) border bg-card **:data-disclosure:px-3 **:data-disclosure:not-last:border-b",
       },
       cards: {
-        base: "gap-2 **:data-disclosure:rounded-(--accordion-radius) **:data-disclosure:border **:data-disclosure:bg-card **:data-disclosure:px-3",
+        base: "gap-2 **:data-disclosure:rounded-(--studio-accordion-radius) **:data-disclosure:border **:data-disclosure:bg-card **:data-disclosure:px-3",
       },
     },
   },

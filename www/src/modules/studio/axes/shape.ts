@@ -153,10 +153,10 @@ export const controlRadiusPx = (state: StudioState) =>
   roleRadiusPx(state, "roleControl")
 
 const ROLE_VARS: Record<ShapeRoleKey, string> = {
-  roleControl: "--radius-control",
-  roleItem: "--radius-item",
-  roleSurface: "--radius-surface",
-  rolePanel: "--radius-panel",
+  roleControl: "--studio-radius-control",
+  roleItem: "--studio-radius-item",
+  roleSurface: "--studio-radius-surface",
+  rolePanel: "--studio-radius-panel",
 }
 
 export function resolveShape(state: StudioState): Resolved {

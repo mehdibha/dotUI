@@ -209,7 +209,7 @@ function satisfiableItems(items: RegistryItem[]): RegistryItem[] {
 export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
   const items = satisfiableItems(input.items)
 
-  // Merge every shipped component's css block (`--btn-radius` etc.) into the
+  // Merge every shipped component's css block (skeleton utilities, the field rules) into the
   // theme fields before rendering — v0 would strip them as structured fields.
   const cssFields: RegistryCssFields = {
     css: { ...(input.cssFields.css ?? {}) },

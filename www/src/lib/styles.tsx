@@ -84,8 +84,8 @@ const useIsomorphicLayoutEffect =
 /*
  * Why scoping needs more than overriding `--radius` / the primitive ramps on a wrapper:
  * the design system declares its whole token closure at `:root` — primitive ramps, the
- * semantic `--color-*` vocabulary, AND every component surface var (`--card-radius:
- * var(--radius-lg)`, `--btn-radius`, …). Because those are computed *on `:root`*, they bake in
+ * semantic `--color-*` vocabulary, AND every component surface var (`--studio-card-radius:
+ * var(--radius-lg)`, `--studio-btn-radius`, …). Because those are computed *on `:root`*, they bake in
  * `:root`'s `--radius` / primitives and inherit down frozen; re-pointing them on a
  * descendant does nothing (dark mode escapes this only because `.dark` lives on the same
  * `<html>` element as `:root`). The robust, self-maintaining fix is to clone that closure onto

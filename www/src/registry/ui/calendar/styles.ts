@@ -12,7 +12,7 @@ import calendarMeta from "./meta"
 const { useStyles, styles } = createStyles(calendarMeta, {
   base: {
     slots: {
-      root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--calendar-cell-radius)] [--cell-size:var(--calendar-cell-size)]",
+      root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--studio-calendar-cell-radius)] [--cell-size:--spacing(8)]",
       header: "flex items-center gap-2",
       heading: "flex-1 text-center text-sm font-medium",
       grid: "grid grid-cols-7 gap-y-2",
@@ -44,10 +44,10 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cell: [
             "in-data-calendar:rounded-(--cell-radius)",
             "selection-start:rounded-l-full selection-end:rounded-r-full",
-            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--calendar-range-radius)",
+            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
           ],
           cellInner: "rounded-(--cell-radius)",
         },
@@ -57,10 +57,10 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cell: [
             "in-data-calendar:rounded-full",
             "selection-start:rounded-l-full selection-end:rounded-r-full",
-            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--calendar-range-radius)",
-            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--calendar-range-radius)",
+            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
           ],
           cellInner: "rounded-full",
         },

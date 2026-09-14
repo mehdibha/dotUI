@@ -5,7 +5,7 @@
    a per-entity tinted wash (Radix Themes, Ant, Atlassian) that tells
    stacked strangers apart.
 
-   Engine: shape rides on the `--avatar-radius` surface var, resolved to a
+   Engine: shape rides on the `--studio-avatar-radius` surface var, resolved to a
    plain `rounded-*` on export; `fallback` is an enum param on `avatar`,
    painting by the `data-tint` index the fallback hashes from its text. */
 
@@ -36,7 +36,7 @@ const pick = (options: { value: string }[], value: string, fallback: string) =>
 export function resolveAvatars(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.avatarShape]
-  if (radius) tokens["--avatar-radius"] = radius
+  if (radius) tokens["--studio-avatar-radius"] = radius
   return {
     tokens,
     params: {

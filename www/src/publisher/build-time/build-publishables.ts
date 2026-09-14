@@ -14,6 +14,7 @@ import { format } from "oxfmt"
 
 import type { RegistryItem, RegistryItemFile } from "@/registry/types"
 
+import { STUDIO_VAR_PREFIX } from "../resolve-classes"
 import type { StylesConfig } from "../types"
 import { cssToRegistryFields } from "./css-to-registry-fields"
 import { extractStylesConfig } from "./extract-config"
@@ -80,10 +81,10 @@ export async function buildPublishables({
   )
   written.push(bundlePath)
 
-  // Aggregate every component's styles.css `:root` defaults. The publisher
-  // seeds its class rewriter from this map so per-surface vars (builder-only
-  // indirection) resolve to plain utilities in shipped code — including
-  // cross-component refs like toggle-button's `rounded-(--btn-radius)`.
+  // Aggregate every studio-var default (roles.css + each component's
+  // styles.css `:root`). The publisher resolves reads against this map so
+  // shipped code carries plain utilities — including cross-component refs
+  // like toggle-button's `rounded-(--studio-btn-radius)`.
   const defaultsPath = path.join(
     registryDir,
     "__generated__",
@@ -108,9 +109,12 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
     const root = fields.css?.[":root"]
     if (typeof root !== "object" || root === null) return
     for (const [prop, value] of Object.entries(root)) {
-      if (prop.startsWith("--") && typeof value === "string") {
-        defaults[prop] = value
-      }
+      if (!prop.startsWith("--") || typeof value !== "string") continue
+      if (!prop.startsWith(STUDIO_VAR_PREFIX))
+        throw new Error(
+          `${path.relative(registryDir, cssPath)}: :root may only declare studio vars (${STUDIO_VAR_PREFIX}*), got ${prop}`,
+        )
+      defaults[prop] = value
     }
   }
   // Radius roles — the chain hop between component vars and ladder rungs.
@@ -128,8 +132,8 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
   )
   const raw = [
     `// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`,
-    `// Every component styles.css \`:root\` default, aggregated for the`,
-    `// publisher's class rewriter (see resolve-classes.ts).`,
+    `// Every studio-var default (roles.css + component styles.css), aggregated`,
+    `// for the publisher (see resolve-classes.ts).`,
     ``,
     `export const STYLE_VAR_DEFAULTS: Record<string, string> = ${JSON.stringify(sorted, null, 2)};`,
     ``,

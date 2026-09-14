@@ -90,7 +90,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
       inset: {
         slots: {
           root: "p-1 **:data-separator:-mx-1",
-          item: "rounded-(--list-box-item-radius)",
+          item: "rounded-(--studio-list-box-item-radius)",
         },
         density: {
           compact: { slots: { item: "px-2", sectionTitle: "px-2" } },

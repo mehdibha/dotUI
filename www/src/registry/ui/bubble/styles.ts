@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(bubbleMeta, {
         "group-data-[align=end]/message:self-end data-[align=end]:self-end",
       ],
       content: [
-        "w-fit max-w-full min-w-0 overflow-hidden rounded-(--bubble-radius) border border-transparent wrap-break-word",
+        "w-fit max-w-full min-w-0 overflow-hidden rounded-(--studio-bubble-radius) border border-transparent wrap-break-word",
         "group-data-[align=end]/bubble:self-end",
       ],
       reactions:
