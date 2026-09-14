@@ -3,7 +3,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 
 export default function Demo() {
   return (
-    <Alert variant="info">
+    <Alert variant="info" className="w-full max-w-md">
       <InfoIcon />
       <AlertTitle>Information</AlertTitle>
       <AlertDescription>

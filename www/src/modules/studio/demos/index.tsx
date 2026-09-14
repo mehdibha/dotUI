@@ -17,14 +17,15 @@ import {
   SwitchDemo,
 } from "./actions"
 import {
+  AlertDemo,
   AvatarsDemo,
   BadgesDemo,
   ChartsDemo,
-  NoticesDemo,
   ProgressDemo,
   SkeletonDemo,
   SpinnerDemo,
   TablesDemo,
+  ToastDemo,
 } from "./display"
 import { CalendarDemo, PickersDemo, SlidersDemo } from "./fields"
 import {
@@ -116,7 +117,8 @@ export const CARD_DEMOS: Record<
   tabs: TabsDemo,
   breadcrumbs: BreadcrumbsDemo,
   pagination: PaginationDemo,
-  notices: NoticesDemo,
+  alert: AlertDemo,
+  toast: ToastDemo,
   skeleton: SkeletonDemo,
   spinner: SpinnerDemo,
   progress: ProgressDemo,

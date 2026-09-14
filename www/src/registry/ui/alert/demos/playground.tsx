@@ -21,7 +21,7 @@ export default function Demo({
   icon?: ReactNode
 } = {}) {
   return (
-    <Alert variant={variant} className="max-w-md">
+    <Alert variant={variant} className="w-full max-w-md">
       {icon}
       {title && <AlertTitle>{title}</AlertTitle>}
       {description && <AlertDescription>{description}</AlertDescription>}

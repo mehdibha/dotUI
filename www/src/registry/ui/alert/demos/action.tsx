@@ -10,7 +10,7 @@ import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   return (
-    <Alert>
+    <Alert className="w-full max-w-md">
       <AlertCircleIcon />
       <AlertTitle>Upgrade Required</AlertTitle>
       <AlertDescription>

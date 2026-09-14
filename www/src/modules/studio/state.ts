@@ -11,6 +11,7 @@
 import { DEFAULTS } from "./axes"
 import type { StudioState } from "./axes"
 import { ACCORDION_DEFAULTS } from "./axes/accordion"
+import { ALERT_DEFAULTS } from "./axes/alert"
 import { AVATAR_DEFAULTS } from "./axes/avatars"
 import { BADGE_DEFAULTS } from "./axes/badges"
 import { BREADCRUMB_DEFAULTS } from "./axes/breadcrumbs"
@@ -34,7 +35,6 @@ import { LINK_DEFAULTS } from "./axes/links"
 import { MENU_DEFAULTS } from "./axes/menus"
 import { MOBILE_DEFAULTS } from "./axes/mobile"
 import { MOTION_DEFAULTS } from "./axes/motion"
-import { NOTICE_DEFAULTS } from "./axes/notices"
 import { NUMBER_FIELD_DEFAULTS } from "./axes/number-field"
 import { OTP_FIELD_DEFAULTS } from "./axes/otp-field"
 import { PAGINATION_DEFAULTS } from "./axes/pagination"
@@ -54,6 +54,7 @@ import { SURFACE_DEFAULTS } from "./axes/surfaces"
 import { SWITCH_DEFAULTS } from "./axes/switch"
 import { TABLE_DEFAULTS } from "./axes/tables"
 import { TAB_DEFAULTS } from "./axes/tabs"
+import { TOAST_DEFAULTS } from "./axes/toast"
 import { TOGGLE_DEFAULTS } from "./axes/toggles"
 import { TOOLTIP_DEFAULTS } from "./axes/tooltips"
 import { TYPE_DEFAULTS } from "./axes/type"
@@ -62,6 +63,7 @@ import {
   AccordionHero,
   accordionSummary,
 } from "./sections/accordion"
+import { AlertSection, AlertHero, alertSummary } from "./sections/alert"
 import { AvatarsSection, AvatarsHero, avatarsSummary } from "./sections/avatars"
 import { BadgesSection, BadgesHero, badgesSummary } from "./sections/badges"
 import {
@@ -113,7 +115,6 @@ import { LinksSection, LinksHero, linksSummary } from "./sections/links"
 import { MenusHero, MenusSection, menusSummary } from "./sections/menus"
 import { MobileHero, MobileSection, mobileSummary } from "./sections/mobile"
 import { MotionSection, MotionHero, motionSummary } from "./sections/motion"
-import { NoticesSection, NoticesHero, noticesSummary } from "./sections/notices"
 import {
   NumberFieldSection,
   NumberHero,
@@ -169,6 +170,7 @@ import {
 import { SwitchSection, SwitchHero, switchSummary } from "./sections/switch"
 import { TablesSection, TablesHero, tablesSummary } from "./sections/tables"
 import { TabsSection, TabsHero, tabsSummary } from "./sections/tabs"
+import { ToastSection, ToastHero, toastSummary } from "./sections/toast"
 import { TogglesSection, ToggleHero, togglesSummary } from "./sections/toggles"
 import {
   TooltipsSection,
@@ -324,12 +326,20 @@ export const CHAPTERS: Chapter[] = [
     summary: linksSummary,
   },
   {
-    id: "notices",
-    label: "Notices",
-    defaults: NOTICE_DEFAULTS,
-    Body: NoticesSection,
-    Hero: NoticesHero,
-    summary: noticesSummary,
+    id: "alert",
+    label: "Alert",
+    defaults: ALERT_DEFAULTS,
+    Body: AlertSection,
+    Hero: AlertHero,
+    summary: alertSummary,
+  },
+  {
+    id: "toast",
+    label: "Toast",
+    defaults: TOAST_DEFAULTS,
+    Body: ToastSection,
+    Hero: ToastHero,
+    summary: toastSummary,
   },
   {
     id: "skeleton",
