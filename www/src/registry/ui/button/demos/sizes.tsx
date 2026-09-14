@@ -2,10 +2,11 @@ import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   return (
-    <div className="flex w-full items-center justify-center gap-4">
-      <Button size="sm">Button</Button>
-      <Button size="md">Button</Button>
-      <Button size="lg">Button</Button>
+    <div className="flex flex-wrap items-center justify-center gap-2">
+      <Button size="xs">Extra small</Button>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
     </div>
   )
 }

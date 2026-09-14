@@ -6,7 +6,7 @@ import { Button } from "@/registry/ui/button"
 
 import { CodeBlock, Pre } from "./code-block"
 import { DemoPreset } from "./demo-preset"
-import { PreviewControls, PreviewPanel } from "./preview-controls"
+import { PreviewVeil } from "./preview-controls"
 import { toggleCodeBlock } from "./toggle-code-block"
 
 // ============================================================================
@@ -67,18 +67,12 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 
   return (
     <div {...props}>
-      {/* PreviewPanel pins the whole frame (toolbar included) to the preview
-          mode; the preset only themes the canvas inside DemoPreset. */}
-      <div className="overflow-hidden rounded-t-lg border">
-        <PreviewPanel>
-          <PreviewControls />
-          <DemoPreset>
-            <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 pt-10 sm:p-10 sm:pt-14">
-              <Component />
-            </div>
-          </DemoPreset>
-        </PreviewPanel>
-      </div>
+      <DemoPreset>
+        <div className="relative flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
+          <Component />
+          <PreviewVeil />
+        </div>
+      </DemoPreset>
 
       {/* Code block with toggle */}
       <CodeBlock
