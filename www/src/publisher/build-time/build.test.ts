@@ -41,7 +41,7 @@ describe("extractStylesConfig", () => {
     expect(cfg.density?.comfortable).toBeDefined()
   })
 
-  test("alert: extracts slots, params, surface var references in classes", () => {
+  test("alert: extracts slots and surface var references in classes", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "alert/styles.ts"))
 
     // Slots present on base.
@@ -53,14 +53,7 @@ describe("extractStylesConfig", () => {
         (s) => typeof s === "string" && s.includes("rounded-(--alert-radius)"),
       ),
     ).toBe(true)
-
-    // Every enum value for `style` extracted.
-    expect(Object.keys(cfg.params?.style ?? {}).sort()).toEqual([
-      "accent-bar",
-      "neutral",
-      "tinted",
-      "tinted-border",
-    ])
+    expect(cfg.params).toBeUndefined()
   })
 
   test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {
@@ -305,18 +298,6 @@ describe("end-to-end (extract + transform → publish)", () => {
               target: "ui/alert.tsx",
             },
           ],
-          params: {
-            style: {
-              kind: "enum",
-              default: "neutral",
-              values: [
-                "neutral",
-                "tinted",
-                "tinted-border",
-                "accent-bar",
-              ] as const,
-            },
-          },
         },
       },
       preset: {

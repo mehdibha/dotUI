@@ -23,10 +23,10 @@ const toastVariants = tv({
     icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
     message: "flex min-w-0 flex-1 flex-col gap-0.5",
     title: "text-sm leading-snug font-medium empty:hidden",
-    description: "text-sm leading-snug empty:hidden text-fg-muted",
+    description: "text-sm leading-snug text-fg-muted empty:hidden",
     actions: "ml-2 flex shrink-0 items-center gap-1",
     action:
-      "inline-flex h-7 max-w-32 items-center justify-center rounded-md px-2.5 text-xs font-medium focus-reset transition-colors empty:hidden focus-visible:focus-ring **:[span]:truncate bg-neutral text-fg-on-neutral hover:bg-neutral-hover active:bg-neutral-active",
+      "inline-flex h-7 max-w-32 items-center justify-center rounded-md bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
   },
   variants: {
     position: {

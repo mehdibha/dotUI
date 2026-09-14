@@ -52,7 +52,7 @@ export const GROUPS: Array<{
   // Navigation.
   { ids: ["links", "tabs", "breadcrumbs", "pagination"] },
   // Feedback.
-  { ids: ["notices", "skeleton", "spinner", "progress"] },
+  { ids: ["alert", "toast", "skeleton", "spinner", "progress"] },
   // Display.
   { ids: ["badges", "kbd", "avatars", "tables", "accordion"] },
   // Charts.

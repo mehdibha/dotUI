@@ -12,6 +12,7 @@ import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
 
 import * as accordion from "./accordion"
+import * as alert from "./alert"
 import * as avatars from "./avatars"
 import * as badges from "./badges"
 import * as breadcrumbs from "./breadcrumbs"
@@ -35,7 +36,6 @@ import * as links from "./links"
 import * as menus from "./menus"
 import * as mobile from "./mobile"
 import * as motion from "./motion"
-import * as notices from "./notices"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
@@ -55,6 +55,7 @@ import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
 import * as tabs from "./tabs"
+import * as toast from "./toast"
 import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
@@ -89,7 +90,8 @@ export const DEFAULTS = {
   ...mobile.MOBILE_DEFAULTS,
   ...charts.CHART_DEFAULTS,
   ...links.LINK_DEFAULTS,
-  ...notices.NOTICE_DEFAULTS,
+  ...alert.ALERT_DEFAULTS,
+  ...toast.TOAST_DEFAULTS,
   ...skeleton.SKELETON_DEFAULTS,
   ...spinner.SPINNER_DEFAULTS,
   ...progress.PROGRESS_DEFAULTS,
@@ -141,7 +143,8 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   mobile.resolveMobile,
   charts.resolveCharts,
   links.resolveLinks,
-  notices.resolveNotices,
+  alert.resolveAlert,
+  toast.resolveToast,
   skeleton.resolveSkeleton,
   spinner.resolveSpinner,
   progress.resolveProgress,

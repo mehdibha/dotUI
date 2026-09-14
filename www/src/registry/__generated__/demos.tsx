@@ -49,10 +49,6 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/custom-icon.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/custom-icon")),
 	},
-	"alert/demos/danger": {
-		files: ["ui/alert/demos/danger.tsx"],
-		component: React.lazy(() => import("@/registry/ui/alert/demos/danger")),
-	},
 	"alert/demos/default": {
 		files: ["ui/alert/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/default")),
@@ -64,14 +60,6 @@ export const DemosIndex: Record<
 	"alert/demos/form-error": {
 		files: ["ui/alert/demos/form-error.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/form-error")),
-	},
-	"alert/demos/success": {
-		files: ["ui/alert/demos/success.tsx"],
-		component: React.lazy(() => import("@/registry/ui/alert/demos/success")),
-	},
-	"alert/demos/warning": {
-		files: ["ui/alert/demos/warning.tsx"],
-		component: React.lazy(() => import("@/registry/ui/alert/demos/warning")),
 	},
 	"attachment/demos/attachment": {
 		files: ["ui/attachment/demos/attachment.tsx"],

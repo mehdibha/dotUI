@@ -3,12 +3,22 @@
 /* Display and feedback illustrations — monochrome anatomy schematics (see
    ink.tsx). */
 
-import { CircleCheckIcon } from "lucide-react"
+import { CircleCheckIcon, InfoIcon } from "lucide-react"
 
 import { Bar } from "./ink"
 
+/** One inline alert strip. */
+export function AlertDemo() {
+  return (
+    <span className="flex shrink-0 items-center gap-1.5 rounded-md border border-fg/20 bg-fg/5 px-2 py-1.5 text-[10px] font-medium whitespace-nowrap text-fg/80">
+      <InfoIcon className="size-3 shrink-0 text-fg/60" />
+      Update available
+    </span>
+  )
+}
+
 /** One toast chip. */
-export function NoticesDemo() {
+export function ToastDemo() {
   return (
     <span className="flex shrink-0 items-center gap-1.5 rounded-lg border border-fg/20 bg-card px-2 py-1.5 text-[10px] font-medium whitespace-nowrap text-fg/80 shadow-xs">
       <CircleCheckIcon className="size-3 shrink-0 text-fg/60" />

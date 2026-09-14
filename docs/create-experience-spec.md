@@ -60,7 +60,7 @@ should still leave with a coherent, personal system.
 - *Forms:* Switch · Checkbox · Radio · Choice cards · Input groups · Number field · OTP field · Pickers · Calendar · Sliders
 - *Overlays:* Menus · Dialogs · Popovers · Tooltips
 - *Navigation:* Tabs · Breadcrumbs · Pagination
-- *Feedback:* Notices · Skeleton · Spinner · Progress
+- *Feedback:* Alert · Toast · Skeleton · Spinner · Progress
 - *Display:* Badges · Avatars · Tables · Accordion
 
 **The inheritance rule that makes this work:** refinements inherit from
@@ -149,7 +149,7 @@ recommendation).
 
 **Panel-recommended, not yet adopted:** Selection controls ← switch + checkbox
 + radio (+ choice cards); Pickers ← calendar; Loading ← skeleton + spinner +
-progress; Badges ← kbd; rename Notices → "Alerts & toasts".
+progress; Badges ← kbd.
 
 Answered: Accordion stays solo — accordion and menus share zero state keys or
 recipes; there is no Disclosure family in the code.

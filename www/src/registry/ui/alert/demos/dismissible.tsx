@@ -23,7 +23,7 @@ export default function Demo() {
   }
 
   return (
-    <Alert variant="success">
+    <Alert variant="success" className="w-full max-w-md">
       <CheckCircle2Icon />
       <AlertTitle>Changes saved</AlertTitle>
       <AlertDescription>
