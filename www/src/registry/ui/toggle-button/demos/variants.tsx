@@ -8,7 +8,7 @@ export default function Demo() {
     <div className="flex flex-wrap items-center gap-2">
       {variants.map((variant) => (
         <ToggleButton key={variant} variant={variant}>
-          <PinIcon data-icon-start="" className="rotate-45" />
+          <PinIcon data-icon="inline-start" className="rotate-45" />
           {variant}
         </ToggleButton>
       ))}

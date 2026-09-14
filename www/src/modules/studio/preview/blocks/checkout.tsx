@@ -220,7 +220,7 @@ export default function Checkout() {
               Secure checkout
             </span>
             <Button variant="quiet" size="sm" className="gap-2">
-              <ShoppingBagIcon data-icon-start="" />
+              <ShoppingBagIcon data-icon="inline-start" />
               <span className="tabular-nums">{itemCount}</span>
             </Button>
           </div>
@@ -650,7 +650,7 @@ export default function Checkout() {
 
                   <Dialog>
                     <Button variant="primary" size="lg" className="w-full">
-                      <ShieldCheckIcon data-icon-start="" />
+                      <ShieldCheckIcon data-icon="inline-start" />
                       Place order
                     </Button>
                     <Modal className="max-w-sm">

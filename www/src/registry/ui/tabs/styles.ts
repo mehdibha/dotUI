@@ -66,21 +66,21 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     compact: {
       slots: {
         root: "[--tabs-list-height:2rem]",
-        tab: "gap-1.5 px-1.5 py-0.5 text-xs has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-3.5",
+        tab: "gap-1.5 px-1.5 py-0.5 text-xs has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 **:[svg]:not-with-[size]:size-3.5",
         panel: "text-xs/relaxed",
       },
     },
     default: {
       slots: {
         root: "[--tabs-list-height:2rem]",
-        tab: "gap-1.5 px-1.5 py-0.5 text-sm has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-4",
+        tab: "gap-1.5 px-1.5 py-0.5 text-sm has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 **:[svg]:not-with-[size]:size-4",
         panel: "text-sm",
       },
     },
     comfortable: {
       slots: {
         root: "[--tabs-list-height:2.25rem]",
-        tab: "gap-1.5 px-2 py-1 text-sm has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-4",
+        tab: "gap-1.5 px-2 py-1 text-sm has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 **:[svg]:not-with-[size]:size-4",
         panel: "text-sm",
       },
     },

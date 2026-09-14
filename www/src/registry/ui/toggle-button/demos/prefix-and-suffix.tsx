@@ -5,12 +5,12 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-2">
       <ToggleButton>
-        <PinIcon data-icon-start="" className="rotate-45" />
+        <PinIcon data-icon="inline-start" className="rotate-45" />
         Pin
       </ToggleButton>
       <ToggleButton>
         Pin
-        <PinIcon data-icon-end="" className="rotate-45" />
+        <PinIcon data-icon="inline-end" className="rotate-45" />
       </ToggleButton>
     </div>
   )
