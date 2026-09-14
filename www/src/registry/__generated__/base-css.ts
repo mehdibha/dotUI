@@ -8,7 +8,7 @@ export const baseRegistryCss = {
 		'@import "tw-animate-css"': {},
 		'@plugin "tailwindcss-react-aria-components"': {},
 		'@plugin "tailwindcss-with"': {},
-		"@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *))": {},
+		"@custom-variant dark (&:is(.dark *))": {},
 		"@utility focus-reset": {
 			"@apply ring-0 ring-transparent outline-none": {},
 		},

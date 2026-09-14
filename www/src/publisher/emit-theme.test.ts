@@ -118,6 +118,27 @@ describe("emitInitItem", () => {
     expect(baseRegistryCss.css).not.toHaveProperty(":root")
   })
 
+  test("theme entries never reference vocabulary tokens (shadcn aliases them as junk)", () => {
+    const item = emitInitItem({
+      baseRegistryCss: {
+        cssVars: {
+          theme: {
+            "--disabled-bg": "var(--color-disabled)",
+            "--focus-ring-color": "var(--color-border-focus)",
+          },
+        },
+      },
+      preset: { density: "default", componentParams: {} },
+      registryRoot: "https://dotui.com",
+    })
+    const theme = item.cssVars?.theme ?? {}
+    expect(theme["--disabled-bg"]).toBe("var(--disabled)")
+    expect(theme["--focus-ring-color"]).toBe("var(--border-focus)")
+    for (const [name, value] of Object.entries(theme)) {
+      if (!name.startsWith("--color-")) expect(value).not.toContain("--color-")
+    }
+  })
+
   test("emits preset tokens on :root and never ships studio vars", () => {
     const item = emitInitItem({
       baseRegistryCss,

@@ -3,10 +3,9 @@
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-with";
 
-/* Page mode comes from the `.dark` class; a subtree can pin its own mode with
-   `data-mode="light|dark"` (e.g. a themed preview inside a differently-themed
-   page), which wins over the page class. */
-@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
+/* Identical to shadcn's default so `shadcn init` dedupes it instead of
+   appending a second definition. */
+@custom-variant dark (&:is(.dark *));
 
 @utility focus-reset {
   @apply ring-0 ring-transparent outline-none;

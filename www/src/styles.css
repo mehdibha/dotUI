@@ -8,6 +8,10 @@
 @import "@fontsource/geist-mono";
 @import "./registry/styles.css";
 
+/* Site-only: a subtree can pin its own mode with `data-mode="light|dark"` (a
+   themed preview inside a differently-themed page); the last definition wins. */
+@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
+
 /* Metric-matched fallbacks (capsize) for the fontsource faces above. The webfonts
    load with font-display: swap; without these, the swap reflows the whole page
    and the landing showcase shifts (CLS). Sized so fallback text occupies the
