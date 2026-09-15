@@ -40,29 +40,36 @@ export function buttonRadiusPx(state: StudioState): number {
   }
 }
 
-/* Each family reshapes every fill variant at once — `fill` is one overlay
-   composing with any status fill (primary, warning, danger); quiet and link
-   stay flat, as they do in every system with an aesthetic axis (Radix
-   classic, Untitled UI, Primer, Geist all converge on this). */
+/* Each family is one overlay composing with any status fill; quiet and link
+   stay flat. Spelled here because the panel document never wears the design
+   system (mirrors button/styles.ts). Glossy's translucent fill needs the
+   color in the class, hence the per-fill overrides. */
+const RAISED =
+  "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]"
+const GLOSSY =
+  "relative isolate shadow-sm before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.2),transparent_30%,rgb(255_255_255/0.2))] before:mask-[linear-gradient(#000_0_0),linear-gradient(#000_0_0)] before:mask-exclude before:[mask-clip:content-box,border-box] before:p-[0.75px] after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-[radial-gradient(65%_35%_at_50%_0%,rgb(255_255_255/0.05),transparent_70%),radial-gradient(65%_35%_at_50%_100%,rgb(255_255_255/0.05),transparent_70%)]"
+
 const STYLE_LOOKS = {
   flat: {
     fill: "",
     secondary: "border border-border-control bg-neutral text-fg-on-neutral",
   },
-  outline: {
-    fill: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-    secondary:
-      "border border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
-  },
   raised: {
-    fill: "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+    fill: RAISED,
     secondary:
       "border border-border-control bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
   },
-  elevated: {
-    fill: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
-    secondary:
-      "bg-neutral text-fg-on-neutral shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
+  glossy: {
+    fill: GLOSSY,
+    fills: {
+      primary: "bg-primary/90",
+      warning: "bg-warning/90",
+      danger: "bg-danger/90",
+    },
+    secondary: cn(
+      "border border-transparent bg-neutral/85 text-fg-on-neutral",
+      GLOSSY,
+    ),
   },
 } as const
 
@@ -72,7 +79,13 @@ const FILLS = {
   danger: "bg-danger text-fg-on-danger",
 } as const
 
-export const styleLook = (state: StudioState) =>
+type StyleLook = {
+  fill: string
+  secondary: string
+  fills?: Partial<Record<keyof typeof FILLS, string>>
+}
+
+export const styleLook = (state: StudioState): StyleLook =>
   STYLE_LOOKS[state.buttonStyle as keyof typeof STYLE_LOOKS] ?? STYLE_LOOKS.flat
 
 /* Quiet gains a background on hover in every surveyed system, whatever the
@@ -120,7 +133,7 @@ export function ButtonsHero({ state }: { state: StudioState }) {
           ? "text-fg"
           : variant === "link"
             ? "text-fg underline-offset-4 hover:underline"
-            : cn(FILLS[variant], look.fill)
+            : cn(FILLS[variant], look.fill, look.fills?.[variant])
     return (
       <button
         key={variant}

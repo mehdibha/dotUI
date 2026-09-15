@@ -10,6 +10,7 @@
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import buttonMeta from "../../registry/ui/button/meta"
 import fieldMeta from "../../registry/ui/field/meta"
 import { publish, TV_CONFIG_PLACEHOLDER } from "../publish"
 import { extractStylesConfig } from "./extract-config"
@@ -33,7 +34,11 @@ describe("extractStylesConfig", () => {
 
     // `base.variants.variant.primary` is a string.
     expect(typeof cfg.base.variants?.variant?.primary).toBe("string")
-    expect(cfg.base.variants?.variant?.primary).toContain("bg-primary")
+    expect(cfg.base.variants?.variant?.primary).toContain("text-fg-on-primary")
+    // The fill lives in the `style` param so each family ships one background.
+    expect(cfg.params?.style?.flat?.variants?.variant?.primary).toBe(
+      "bg-primary",
+    )
 
     // All three density entries exist.
     expect(cfg.density?.compact).toBeDefined()
@@ -256,23 +261,12 @@ describe("end-to-end (extract + transform → publish)", () => {
       publishable: {
         template,
         stylesConfig,
-        meta: {
-          name: "button",
-          type: "registry:ui",
-          files: [
-            {
-              type: "registry:ui",
-              path: "ui/button/base.tsx",
-              target: "ui/button.tsx",
-            },
-          ],
-          registryDependencies: ["loader", "focus-styles"],
-        },
+        meta: buttonMeta,
       },
       preset: { density: "default", componentParams: {} },
     })
 
-    expect(rawContent).toContain("bg-primary") // primary variant
+    expect(rawContent).toContain("bg-primary") // primary variant, style=flat
     expect(rawContent).toContain("h-8") // default density size md
     expect(rawContent).not.toContain(TV_CONFIG_PLACEHOLDER)
   })

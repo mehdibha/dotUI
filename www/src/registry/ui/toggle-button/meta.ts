@@ -17,7 +17,7 @@ const toggleButtonMeta = {
     style: {
       kind: "enum",
       default: "flat",
-      values: ["flat", "outline", "raised", "elevated"] as const,
+      values: ["flat", "raised", "glossy"] as const,
     },
     hover: {
       kind: "enum",
