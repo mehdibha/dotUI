@@ -11,20 +11,15 @@
    the occasional bold tracks the tone camp rather than forking free.
    Rejected: collapse/ellipsis — an overflow mechanic whose popup wears Menus'
    language, not a breadcrumb decision; Polaris is worth citing as the null
-   case — no trail at all, a single back arrow. The hero is a 3-crumb trail,
-   current page last, with the middle crumb pinned hovered so the muted
-   camp's sharpen-on-hover actually shows. */
-
-import { MousePointer2Icon } from "lucide-react"
+   case — no trail at all, a single back arrow. */
 
 import {
   SEPARATOR_OPTIONS as SEPARATOR_VALUES,
   TONE_OPTIONS,
 } from "../axes/breadcrumbs"
-import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -63,73 +58,10 @@ const SEPARATOR_OPTIONS: SelectRowOption[] = SEPARATOR_VALUES.map((option) => ({
   illustration: <SeparatorGlyph kind={option.value as "slash" | "chevron"} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-// Rest keeps a live hover: so real pointers behave like the pinned crumb.
-export const CRUMB_REST = {
-  accent: "text-accent hover:underline hover:underline-offset-2",
-  muted: "text-fg-muted hover:text-fg",
-}
-// Accent crumbs hover like links (underline); muted crumbs sharpen to fg.
-const CRUMB_HOVERED = {
-  accent: "text-accent underline underline-offset-2",
-  muted: "text-fg",
-}
-
-export function Separator({ state }: { state: StudioState }) {
-  if (state.breadcrumbSeparator === "slash")
-    return <span className="text-fg-muted/60">/</span>
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      className="size-3.5 text-fg-muted/60"
-    >
-      <path
-        d="m9 6 6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-export function BreadcrumbsHero({ state }: { state: StudioState }) {
-  const tone = state.breadcrumbTone as keyof typeof CRUMB_REST
-  return (
-    <Hero className="flex-row items-center justify-center gap-1.5 py-6 text-[0.8125rem]">
-      <span className={CRUMB_REST[tone]}>Dashboard</span>
-      <Separator state={state} />
-      <span className="relative">
-        <span className={CRUMB_HOVERED[tone]}>Projects</span>
-        <MousePointer2Icon
-          aria-hidden
-          className="absolute -right-2 -bottom-2 size-3 fill-fg text-bg"
-        />
-      </span>
-      <Separator state={state} />
-      <span className="text-fg">Billing</span>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the separator glyph, and the crumb tone. */
-export function breadcrumbsSummary(state: StudioState): string {
-  const separator =
-    SEPARATOR_OPTIONS.find((o) => o.value === state.breadcrumbSeparator)
-      ?.label ?? state.breadcrumbSeparator
-  const tone = state.breadcrumbTone === "accent" ? "Accent" : "Muted"
-  return `${separator} · ${tone} crumbs`
-}
-
 export function BreadcrumbsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <BreadcrumbsHero state={state} />
       <SelectRow
         label="Separator"
         value={state.breadcrumbSeparator}

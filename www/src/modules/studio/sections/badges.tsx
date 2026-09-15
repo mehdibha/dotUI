@@ -11,53 +11,10 @@
    full-round pills (GitHub labels, Geist, Radix radius-full) vs ~4px
    corners (Ant, Bootstrap, Material) — nothing in between shows up. */
 
-import { XIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
-
 import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
-import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-export const BADGE_STYLE = {
-  solid: {
-    neutral: "bg-neutral text-fg-on-neutral",
-    success: "bg-success text-fg-on-success",
-    warning: "bg-warning text-fg-on-warning",
-    danger: "bg-danger text-fg-on-danger",
-  },
-  soft: {
-    neutral: "bg-muted/50 text-fg",
-    success: "bg-success-muted text-fg-success",
-    warning: "bg-warning-muted text-fg-warning",
-    danger: "bg-danger-muted text-fg-danger",
-  },
-  outline: {
-    neutral: "border border-border text-fg",
-    success: "border border-border-success text-fg-success",
-    warning: "border border-border-warning text-fg-warning",
-    danger: "border border-border-danger text-fg-danger",
-  },
-  "soft-outline": {
-    neutral: "border border-border bg-muted/50 text-fg",
-    success: "border border-border-success bg-success-muted text-fg-success",
-    warning: "border border-border-warning bg-warning-muted text-fg-warning",
-    danger: "border border-border-danger bg-danger-muted text-fg-danger",
-  },
-}
-
-export const BADGE_SHAPE = {
-  pill: "rounded-full",
-  rounded: "rounded-[4px]",
-}
-
-/* Pill leaves tags on their registry default (`--studio-tag-radius`: radius-control). */
-const TAG_SHAPE = {
-  pill: "rounded-(--studio-radius-control)",
-  rounded: "rounded-[4px]",
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -94,76 +51,10 @@ const STYLE_ROW_OPTIONS: SelectRowOption[] = STYLE_OPTIONS.map((o) => ({
   illustration: STYLE_GLYPHS[o.value],
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-function Chip({
-  intent,
-  state,
-  dismissible,
-  children,
-}: {
-  intent: keyof (typeof BADGE_STYLE)["soft"]
-  state: StudioState
-  dismissible?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <span
-      className={cn(
-        "flex h-5 items-center gap-1 px-2 text-[0.6875rem] font-medium",
-        BADGE_STYLE[state.badgeStyle as keyof typeof BADGE_STYLE][intent],
-        (dismissible ? TAG_SHAPE : BADGE_SHAPE)[
-          state.badgeShape as keyof typeof BADGE_SHAPE
-        ],
-      )}
-    >
-      {children}
-      {dismissible && <XIcon aria-hidden className="size-3 opacity-60" />}
-    </span>
-  )
-}
-
-export function BadgesHero({ state }: { state: StudioState }) {
-  return (
-    <Hero className="items-start py-4">
-      <div className="flex flex-wrap items-center gap-1.5">
-        <Chip intent="neutral" state={state}>
-          Neutral
-        </Chip>
-        <Chip intent="success" state={state}>
-          Success
-        </Chip>
-        <Chip intent="warning" state={state}>
-          Warning
-        </Chip>
-        <Chip intent="danger" state={state}>
-          Danger
-        </Chip>
-      </div>
-      <div className="flex flex-wrap items-center gap-1.5">
-        <Chip intent="neutral" state={state} dismissible>
-          design
-        </Chip>
-        <Chip intent="neutral" state={state} dismissible>
-          frontend
-        </Chip>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the chip style, and its shape. */
-export function badgesSummary(state: StudioState): string {
-  const label = (options: { value: string; label: string }[], value: string) =>
-    options.find((o) => o.value === value)?.label ?? value
-  return `${label(STYLE_OPTIONS, state.badgeStyle)} · ${label(SHAPE_OPTIONS, state.badgeShape)}`
-}
-
 export function BadgesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <BadgesHero state={state} />
       <SelectRow
         label="Style"
         value={state.badgeStyle}

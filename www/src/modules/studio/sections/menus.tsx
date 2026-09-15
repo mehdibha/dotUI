@@ -19,12 +19,7 @@
    the bare prompt with inset items. Scale: search-led surfaces stay at menu
    scale (shadcn, GitHub's palette) or step up into a hero surface (Raycast,
    Linear's ⌘K) — input, rows and icons grow together. Footers, context chips
-   and per-item shortcut hints are composition, not axes. The hero is the
-   intersection specimen, a searchable picker: every axis lands on it. */
-
-import { CheckIcon, SearchIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
+   and per-item shortcut hints are composition, not axes. */
 
 import {
   HIGHLIGHT_OPTIONS,
@@ -34,7 +29,6 @@ import {
   SCALE_OPTIONS,
   SEARCH_OPTIONS,
 } from "../axes/menus"
-import { Hero } from "../hero"
 import { DetailRow } from "../patterns"
 import {
   ControlGroup,
@@ -44,14 +38,7 @@ import {
   SelectRow,
 } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-import { hoverFx, inputLook, SHELL } from "./inputs"
-import { controlRadiusPx } from "./shape"
-
-const HIGHLIGHT = {
-  neutral: "bg-highlight text-fg-on-highlight",
-  accent: "bg-accent text-fg-on-accent",
-}
+import type { Studio } from "../state"
 
 const optionLabel = (options: { value: string; label: string }[], v: string) =>
   options.find((o) => o.value === v)?.label ?? v
@@ -150,132 +137,6 @@ const HIGHLIGHT_CARDS: SelectRowOption[] = HIGHLIGHT_OPTIONS.map((o) => ({
   illustration: <HighlightGlyph kind={o.value as "neutral" | "accent"} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-function MenuItem({
-  label,
-  state,
-  selected,
-  highlighted,
-}: {
-  label: string
-  state: StudioState
-  selected?: boolean
-  highlighted?: boolean
-}) {
-  const indicator = state.menuIndicator
-  const inset = state.menuInset === "inset"
-  const lg = state.menuScale === "large"
-  return (
-    <div
-      className={cn(
-        "relative flex items-center",
-        lg ? "gap-2 py-2 text-sm" : "gap-1.5 py-1.5 text-[0.8125rem]",
-        inset ? "rounded-md px-2" : "px-3",
-        highlighted
-          ? HIGHLIGHT[state.menuHighlight as keyof typeof HIGHLIGHT]
-          : "text-fg",
-      )}
-    >
-      {/* Leading check reserves its gutter on every item — the Radix/shadcn
-          alignment contract — so the slot renders even unchecked. */}
-      {indicator === "check-start" && (
-        <span
-          className={cn(
-            "flex shrink-0 items-center justify-center",
-            lg ? "size-4" : "size-3.5",
-          )}
-        >
-          {selected && <CheckIcon className={lg ? "size-4" : "size-3.5"} />}
-        </span>
-      )}
-      <span className="flex-1 truncate">{label}</span>
-      {indicator === "check-end" && selected && (
-        <CheckIcon className={cn("shrink-0", lg ? "size-4" : "size-3.5")} />
-      )}
-    </div>
-  )
-}
-
-export function MenusHero({ state }: { state: StudioState }) {
-  const inset = state.menuInset === "inset"
-  const lg = state.menuScale === "large"
-  const search = state.menuSearch
-  const look = inputLook(state.inputStyle, controlRadiusPx(state))
-  return (
-    <Hero className="items-center py-4">
-      <div
-        className={cn(
-          "rounded-lg border border-border/60 bg-card shadow-lg",
-          lg ? "w-52" : "w-44",
-        )}
-      >
-        {search === "field" ? (
-          <div className="p-1 pb-0">
-            <div
-              className={cn(
-                SHELL,
-                lg ? "h-9 gap-2 px-2.5 text-sm" : "h-7 gap-1.5 px-2",
-                look.className,
-                hoverFx(state),
-              )}
-              style={look.style}
-            >
-              <SearchIcon
-                className={cn(
-                  "shrink-0 text-fg-muted",
-                  lg ? "size-4" : "size-3.5",
-                )}
-              />
-              <span className="flex-1 truncate text-fg-muted">Search…</span>
-            </div>
-          </div>
-        ) : (
-          <div
-            className={cn(
-              "flex items-center border-b border-border/60 px-3",
-              lg ? "gap-2 py-2.5 text-sm" : "gap-1.5 py-2 text-[0.8125rem]",
-            )}
-          >
-            {search === "bar" && (
-              <SearchIcon
-                className={cn(
-                  "shrink-0 text-fg-muted",
-                  lg ? "size-4" : "size-3.5",
-                )}
-              />
-            )}
-            <span className="flex-1 truncate text-fg-muted">Search…</span>
-          </div>
-        )}
-        <div className={inset ? "p-1" : "py-1"}>
-          <div
-            className={cn(
-              "pb-1 text-fg-muted",
-              inset ? "px-2" : "px-3",
-              lg ? "pt-2" : "pt-1.5",
-              state.menuLabels === "caps"
-                ? "text-[0.625rem] font-medium tracking-wider uppercase"
-                : "text-[0.6875rem]",
-            )}
-          >
-            Status
-          </div>
-          <MenuItem label="Backlog" state={state} />
-          <MenuItem label="In progress" state={state} selected />
-          <MenuItem label="Done" state={state} highlighted />
-          <MenuItem label="Canceled" state={state} />
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the check placement, and the highlight treatment. */
-export function menusSummary(state: StudioState): string {
-  return `${optionLabel(INDICATOR_OPTIONS, state.menuIndicator)} · ${optionLabel(HIGHLIGHT_OPTIONS, state.menuHighlight)} highlight`
-}
-
 export function MenusSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const detailsModified =
@@ -285,7 +146,6 @@ export function MenusSection({ studio }: { studio: Studio }) {
   return (
     <>
       <ControlGroup>
-        <MenusHero state={state} />
         <SelectRow
           label="Indicator"
           value={state.menuIndicator}

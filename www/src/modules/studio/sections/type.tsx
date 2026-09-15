@@ -15,13 +15,11 @@ import { useLoadedFamilies } from "@/modules/studio/fonts"
 
 import {
   LEADING_OPTIONS,
-  LEADING_VALUES,
   TRACKING_EM,
   TRACKING_OPTIONS,
   TYPE_DEFAULTS,
   WEIGHT_OPTIONS,
 } from "../axes/type"
-import { Hero } from "../hero"
 import { DetailRow, MiniSliderRow } from "../patterns"
 import {
   ControlGroup,
@@ -39,102 +37,16 @@ import type { Studio, StudioState } from "../state"
 
 /** Collapsed-row summary: the face the system reads in, and its base size. */
 export function typeSummary(state: StudioState): string {
-  return `${state.headingFont || state.bodyFont} · ${state.typeBase}px`
+  return state.headingFont || state.bodyFont
 }
-
-type TypeRoleId = "heading" | "body" | "ui" | "code"
 
 /* Hand-tuned ladder, not a modular ratio — every shipped system enumerates its
    steps. Offsets from base give 14/16/20/24/28 at base 16. */
 const HEADING_STEPS = [-2, 0, 4, 8, 12]
-const HERO_STEP = 12
 
 /** A heading step in px: base plus the step's offset. */
 function headingPx(state: StudioState, step: number): number {
   return state.typeBase + step
-}
-
-/** A role's live recipe — heading and body follow the scale axes, UI and code
- *  sizes are the section's constants. */
-function typeRole(state: StudioState, id: TypeRoleId) {
-  switch (id) {
-    case "heading":
-      return {
-        label: "Heading",
-        family: state.headingFont || state.bodyFont,
-        px: headingPx(state, HERO_STEP),
-        weight: Number(state.headingWeight),
-      }
-    case "body":
-      return {
-        label: "Body",
-        family: state.bodyFont,
-        px: state.typeBase,
-        weight: 400,
-      }
-    case "ui":
-      return { label: "UI label", family: state.bodyFont, px: 13, weight: 500 }
-    case "code":
-      return { label: "Code", family: state.monoFont, px: 12, weight: 400 }
-  }
-}
-
-/** Every text role the system ships, live in the chosen faces — heading, body,
- *  UI labels and code. */
-export function TypeHero({ state }: { state: StudioState }) {
-  const heading = typeRole(state, "heading")
-  const body = typeRole(state, "body")
-  const ui = typeRole(state, "ui")
-  const code = typeRole(state, "code")
-  useLoadedFamilies([heading.family, body.family, code.family])
-
-  return (
-    <Hero>
-      <span
-        className="block text-balance text-fg"
-        style={{
-          fontFamily: fontStack(heading.family),
-          fontSize: heading.px,
-          fontWeight: heading.weight,
-          letterSpacing: TRACKING_EM[state.headingTracking],
-          lineHeight: 1.15,
-        }}
-      >
-        Before we knew it
-      </span>
-      <span
-        className="block text-pretty text-fg-muted"
-        style={{
-          fontFamily: fontStack(body.family),
-          fontSize: body.px,
-          lineHeight: LEADING_VALUES[state.bodyLeading],
-        }}
-      >
-        We had left the ground, and the city lights fell away beneath us.
-      </span>
-      <div className="flex items-center gap-2">
-        <span
-          className="flex h-7 shrink-0 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
-          style={{
-            fontFamily: fontStack(ui.family),
-            fontSize: ui.px,
-            fontWeight: ui.weight,
-          }}
-        >
-          Get started
-        </span>
-        <span
-          className="ml-auto flex h-6 shrink-0 items-center rounded-md bg-muted px-2 text-fg-muted"
-          style={{
-            fontFamily: fontStack(code.family),
-            fontSize: code.px,
-          }}
-        >
-          v2.4.0
-        </span>
-      </div>
-    </Hero>
-  )
 }
 
 /** The heading row mirrors the engine's --font-heading contract: absent ('')
@@ -202,7 +114,7 @@ function AutoFontRow({
 
 /** The scale as a glyph ramp — every step of the heading ladder, live. */
 function ScaleLadder({ state }: { state: StudioState }) {
-  const heading = typeRole(state, "heading")
+  const family = state.headingFont || state.bodyFont
   return (
     <div className="flex items-baseline gap-3 overflow-hidden px-2 pt-1.5 pb-1">
       {HEADING_STEPS.map((step) => (
@@ -210,9 +122,9 @@ function ScaleLadder({ state }: { state: StudioState }) {
           key={step}
           className="text-fg"
           style={{
-            fontFamily: fontStack(heading.family),
+            fontFamily: fontStack(family),
             fontSize: headingPx(state, step),
-            fontWeight: heading.weight,
+            fontWeight: Number(state.headingWeight),
             letterSpacing: TRACKING_EM[state.headingTracking],
             lineHeight: 1,
           }}
@@ -239,7 +151,6 @@ export function TypeSection({ studio }: { studio: Studio }) {
   return (
     <>
       <ControlGroup>
-        <TypeHero state={state} />
         <AutoFontRow
           label="Heading"
           value={state.headingFont}

@@ -6,10 +6,9 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { Hero } from "../hero"
 import { ControlGroup } from "../rows"
-import type { Studio, StudioState } from "../state"
-import { fillLabel, FillRow, fillOf, HERO_ROW } from "./checkbox"
+import type { Studio } from "../state"
+import { FillRow } from "./checkbox"
 import type { CheckFill } from "./checkbox"
 
 /* -------------------------------- Specimen --------------------------------- */
@@ -33,38 +32,9 @@ export function DemoRadio({
   )
 }
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function RadioHero({ state }: { state: StudioState }) {
-  const fill = fillOf(state)
-  return (
-    <Hero className="p-4">
-      <span className="text-xs font-medium text-fg-muted">Export format</span>
-      <label className={HERO_ROW}>
-        <DemoRadio selected fill={fill} />
-        PNG
-      </label>
-      <label className={HERO_ROW}>
-        <DemoRadio fill={fill} />
-        SVG
-      </label>
-      <label className={HERO_ROW}>
-        <DemoRadio fill={fill} />
-        PDF
-      </label>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the family fill school, the section's one axis. */
-export function radioSummary(state: StudioState): string {
-  return fillLabel(state)
-}
-
 export function RadioSection({ studio }: { studio: Studio }) {
   return (
     <ControlGroup>
-      <RadioHero state={studio.state} />
       <FillRow studio={studio} />
     </ControlGroup>
   )

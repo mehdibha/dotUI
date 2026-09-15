@@ -8,29 +8,12 @@
    page stays legible. Position is where a dialog rests: the classic modal
    centers, while Linear and Raycast dock it in the upper third — a
    command-palette habit that keeps the top edge fixed so the box never jumps
-   as results grow. The hero is a mini app viewport: skeleton page content
-   behind, the chosen backdrop over it, the dialog card at the chosen
-   position. */
-
-import { cn } from "@/registry/lib/utils"
+   as results grow. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-/* The engine's modal backdrop slices, at hero scale. */
-export const BACKDROP = {
-  dim: "bg-overlay/40 backdrop-blur-[1.5px]",
-  blur: "bg-overlay/20 backdrop-blur-xs",
-  none: "",
-}
-
-export const DIALOG_POSITION = {
-  center: "top-1/2 -translate-y-1/2",
-  top: "top-4",
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -86,59 +69,10 @@ const BACKDROP_ROW_OPTIONS: SelectRowOption[] = BACKDROP_OPTIONS.map((o) => ({
   ),
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function DialogsHero({ state }: { state: StudioState }) {
-  return (
-    <Hero inset={false} className="relative h-44">
-      {/* Page content: what the backdrop dims, frosts, or leaves alone. */}
-      <div className="flex flex-col gap-2 p-3">
-        <div className="h-2 w-20 rounded-full bg-fg/20" />
-        <div className="h-1.5 w-4/5 rounded-full bg-fg/10" />
-        <div className="h-1.5 w-full rounded-full bg-fg/10" />
-        <div className="h-1.5 w-3/5 rounded-full bg-fg/10" />
-      </div>
-      <div
-        className={cn(
-          "absolute inset-0",
-          BACKDROP[state.dialogBackdrop as keyof typeof BACKDROP],
-        )}
-      />
-      <div
-        className={cn(
-          "absolute left-1/2 w-36 -translate-x-1/2 rounded-lg border border-border/60 bg-card p-2.5 shadow-xl",
-          DIALOG_POSITION[state.dialogPosition as keyof typeof DIALOG_POSITION],
-        )}
-      >
-        <div className="h-1.5 w-16 rounded-full bg-fg/60" />
-        <div className="mt-2 h-1.5 w-24 rounded-full bg-fg/15" />
-        <div className="mt-2.5 flex justify-end gap-1.5">
-          <span className="h-4 w-10 rounded-[5px] border border-border bg-muted" />
-          <span className="h-4 w-10 rounded-[5px] bg-accent" />
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the backdrop treatment, and where the dialog rests. */
-export function dialogsSummary(state: StudioState): string {
-  const backdrop =
-    BACKDROP_OPTIONS.find((o) => o.value === state.dialogBackdrop)?.label ??
-    state.dialogBackdrop
-  const position =
-    POSITION_OPTIONS.find((o) => o.value === state.dialogPosition)?.label ??
-    state.dialogPosition
-  const first =
-    state.dialogBackdrop === "none" ? "No backdrop" : `${backdrop} backdrop`
-  return `${first} · ${position}`
-}
-
 export function DialogsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <DialogsHero state={state} />
       <SelectRow
         label="Backdrop"
         value={state.dialogBackdrop}

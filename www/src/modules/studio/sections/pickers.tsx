@@ -10,17 +10,10 @@
    value-display API the registry doesn't have). The listbox belongs to
    Menus. */
 
-import { ChevronDownIcon, ChevronsUpDownIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
-
 import { CARET_OPTIONS } from "../axes/pickers"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-import { hoverFx, inputLook, SHELL } from "./inputs"
-import { controlRadiusPx } from "./shape"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -49,52 +42,10 @@ const OPTIONS: SelectRowOption[] = CARET_OPTIONS.map((o) => ({
   illustration: <CaretGlyph caret={o.value} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function PickersHero({ state }: { state: StudioState }) {
-  const look = inputLook(state.inputStyle, controlRadiusPx(state))
-  const box = cn(SHELL, "gap-2 px-2.5", look.className, hoverFx(state))
-  const Caret =
-    state.pickerCaret === "double" ? ChevronsUpDownIcon : ChevronDownIcon
-  return (
-    <Hero className="items-center py-6">
-      <div className="flex w-full items-center justify-center gap-3">
-        <button
-          type="button"
-          className={cn(box, "w-40 cursor-interactive")}
-          style={look.style}
-        >
-          <span className="flex-1 truncate text-left text-fg">Monthly</span>
-          <Caret className="size-3.5 shrink-0 text-fg-muted" />
-        </button>
-        <button
-          type="button"
-          className={cn(box, "w-40 cursor-interactive")}
-          style={look.style}
-        >
-          <span className="flex-1 truncate text-left text-fg-muted">
-            Search…
-          </span>
-          <Caret className="size-3.5 shrink-0 text-fg-muted" />
-        </button>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the caret glyph. */
-export function pickersSummary(state: StudioState): string {
-  const caret =
-    CARET_OPTIONS.find((o) => o.value === state.pickerCaret)?.label ??
-    state.pickerCaret
-  return `${caret} caret`
-}
-
 export function PickersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <PickersHero state={state} />
       <SelectRow
         label="Caret"
         value={state.pickerCaret}

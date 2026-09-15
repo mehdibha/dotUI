@@ -18,15 +18,10 @@
    Apple/Spectrum vs the anchored web, but a system-wide adaptive decision
    the panel can't preview honestly). */
 
-import { ChevronDownIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
-
 import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -110,57 +105,10 @@ const HEADER_ROW_OPTIONS: SelectRowOption[] = HEADER_OPTIONS.map((o) => ({
   illustration: <HeaderGlyph header={o.value as "title" | "band"} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function PopoversHero({ state }: { state: StudioState }) {
-  const header = state.popoverHeader
-  const title = "Share project"
-  const description = "Anyone with the link can view."
-  return (
-    <Hero className="items-center py-4">
-      <div className="flex flex-col items-center gap-1.5">
-        <span className="flex h-6 items-center gap-1 rounded-md border border-border/60 bg-card px-2 text-xs font-medium text-fg">
-          Share
-          <ChevronDownIcon className="size-3 text-fg-muted" />
-        </span>
-        <div className="relative w-48 rounded-lg border border-border/60 bg-card text-[0.8125rem] shadow-lg">
-          {state.popoverTip === "tip" && (
-            <span className="absolute top-[-4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
-          )}
-          <div className="flex flex-col gap-1 p-3">
-            <span
-              className={cn(
-                "font-medium text-fg",
-                header === "band" &&
-                  "-mx-3 -mt-3 mb-0.5 rounded-t-[7px] border-b border-border/60 bg-muted px-3 py-1.5",
-              )}
-            >
-              {title}
-            </span>
-            <span className="text-xs text-fg-muted">{description}</span>
-            <span className="mt-1 h-6 rounded-md border border-border/60 bg-bg" />
-          </div>
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the header treatment, plus the tip when present. */
-export function popoversSummary(state: StudioState): string {
-  const header =
-    HEADER_OPTIONS.find((o) => o.value === state.popoverHeader)?.label ??
-    state.popoverHeader
-  const parts = [`${header} header`]
-  if (state.popoverTip === "tip") parts.push("Tip")
-  return parts.join(" · ")
-}
-
 export function PopoversSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <PopoversHero state={state} />
       <SelectRow
         label="Tip"
         value={state.popoverTip}

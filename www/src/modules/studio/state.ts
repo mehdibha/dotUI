@@ -58,126 +58,54 @@ import { TOAST_DEFAULTS } from "./axes/toast"
 import { TOGGLE_DEFAULTS } from "./axes/toggles"
 import { TOOLTIP_DEFAULTS } from "./axes/tooltips"
 import { TYPE_DEFAULTS } from "./axes/type"
-import {
-  AccordionSection,
-  AccordionHero,
-  accordionSummary,
-} from "./sections/accordion"
-import { AlertSection, AlertHero, alertSummary } from "./sections/alert"
-import { AvatarsSection, AvatarsHero, avatarsSummary } from "./sections/avatars"
-import { BadgesSection, BadgesHero, badgesSummary } from "./sections/badges"
-import {
-  BreadcrumbsSection,
-  BreadcrumbsHero,
-  breadcrumbsSummary,
-} from "./sections/breadcrumbs"
-import {
-  ButtonGroupsSection,
-  ButtonGroupHero,
-  buttonGroupsSummary,
-} from "./sections/button-groups"
-import { ButtonsHero, ButtonsSection, buttonsSummary } from "./sections/buttons"
-import {
-  CalendarSection,
-  CalendarHero,
-  calendarSummary,
-} from "./sections/calendar"
-import { ChartsHero, ChartsSection, chartsSummary } from "./sections/charts"
-import {
-  CheckboxSection,
-  CheckboxHero,
-  checkboxSummary,
-} from "./sections/checkbox"
-import {
-  ChoiceCardsSection,
-  ChoiceCardsHero,
-  choiceCardsSummary,
-} from "./sections/choice-cards"
+import { AccordionSection } from "./sections/accordion"
+import { AlertSection } from "./sections/alert"
+import { AvatarsSection } from "./sections/avatars"
+import { BadgesSection } from "./sections/badges"
+import { BreadcrumbsSection } from "./sections/breadcrumbs"
+import { ButtonGroupsSection } from "./sections/button-groups"
+import { ButtonsSection } from "./sections/buttons"
+import { CalendarSection } from "./sections/calendar"
+import { ChartsSection } from "./sections/charts"
+import { CheckboxSection } from "./sections/checkbox"
+import { ChoiceCardsSection } from "./sections/choice-cards"
 import { ColorSection, colorSummary } from "./sections/color"
-import { CursorSection, CursorHero, cursorSummary } from "./sections/cursor"
-import { DialogsSection, DialogsHero, dialogsSummary } from "./sections/dialogs"
-import {
-  DisabledSection,
-  DisabledHero,
-  disabledSummary,
-} from "./sections/disabled"
-import { FocusSection, FocusHero, focusSummary } from "./sections/focus"
-import { IconsHero, IconsSection, iconsSummary } from "./sections/icons"
-import {
-  InputGroupsSection,
-  AddonsHero,
-  inputGroupsSummary,
-} from "./sections/input-groups"
-import { FieldHero, InputsSection, inputsSummary } from "./sections/inputs"
-import { InvalidHero, InvalidSection, invalidSummary } from "./sections/invalid"
-import { KbdSection, KbdHero, kbdSummary } from "./sections/kbd"
-import { LinksSection, LinksHero, linksSummary } from "./sections/links"
-import { MenusHero, MenusSection, menusSummary } from "./sections/menus"
-import { MobileHero, MobileSection, mobileSummary } from "./sections/mobile"
-import { MotionSection, MotionHero, motionSummary } from "./sections/motion"
-import {
-  NumberFieldSection,
-  NumberHero,
-  numberFieldSummary,
-} from "./sections/number-field"
-import { OtpFieldSection, OtpHero, otpFieldSummary } from "./sections/otp-field"
-import {
-  PaginationSection,
-  PaginationHero,
-  paginationSummary,
-} from "./sections/pagination"
-import { PickersSection, PickersHero, pickersSummary } from "./sections/pickers"
-import {
-  PopoversSection,
-  PopoversHero,
-  popoversSummary,
-} from "./sections/popovers"
-import {
-  ProgressSection,
-  ProgressHero,
-  progressSummary,
-} from "./sections/progress"
-import { RadioSection, RadioHero, radioSummary } from "./sections/radio"
-import {
-  ScrollbarsSection,
-  ScrollbarsHero,
-  scrollbarsSummary,
-} from "./sections/scrollbars"
-import {
-  SegmentedControlSection,
-  SegmentedHero,
-  segmentedControlSummary,
-} from "./sections/segmented-control"
-import {
-  SelectionSection,
-  SelectionHero,
-  selectionSummary,
-} from "./sections/selection"
-import { ShapeHero, ShapeSection, shapeSummary } from "./sections/shape"
-import {
-  SkeletonSection,
-  SkeletonHero,
-  skeletonSummary,
-} from "./sections/skeleton"
-import { SlidersSection, SlidersHero, slidersSummary } from "./sections/sliders"
-import { SpaceSection, SpaceHero, spaceSummary } from "./sections/space"
-import { SpinnerSection, SpinnerHero, spinnerSummary } from "./sections/spinner"
-import {
-  SurfacesSection,
-  SurfacesHero,
-  surfacesSummary,
-} from "./sections/surfaces"
-import { SwitchSection, SwitchHero, switchSummary } from "./sections/switch"
-import { TablesSection, TablesHero, tablesSummary } from "./sections/tables"
-import { TabsSection, TabsHero, tabsSummary } from "./sections/tabs"
-import { ToastSection, ToastHero, toastSummary } from "./sections/toast"
-import { TogglesSection, ToggleHero, togglesSummary } from "./sections/toggles"
-import {
-  TooltipsSection,
-  TooltipsHero,
-  tooltipsSummary,
-} from "./sections/tooltips"
-import { TypeHero, TypeSection, typeSummary } from "./sections/type"
+import { CursorSection, cursorSummary } from "./sections/cursor"
+import { DialogsSection } from "./sections/dialogs"
+import { DisabledSection, disabledSummary } from "./sections/disabled"
+import { FocusSection, focusSummary } from "./sections/focus"
+import { IconsSection, iconsSummary } from "./sections/icons"
+import { InputGroupsSection } from "./sections/input-groups"
+import { InputsSection } from "./sections/inputs"
+import { InvalidSection, invalidSummary } from "./sections/invalid"
+import { KbdSection } from "./sections/kbd"
+import { LinksSection } from "./sections/links"
+import { MenusSection } from "./sections/menus"
+import { MobileSection, mobileSummary } from "./sections/mobile"
+import { MotionSection, motionSummary } from "./sections/motion"
+import { NumberFieldSection } from "./sections/number-field"
+import { OtpFieldSection } from "./sections/otp-field"
+import { PaginationSection } from "./sections/pagination"
+import { PickersSection } from "./sections/pickers"
+import { PopoversSection } from "./sections/popovers"
+import { ProgressSection } from "./sections/progress"
+import { RadioSection } from "./sections/radio"
+import { ScrollbarsSection, scrollbarsSummary } from "./sections/scrollbars"
+import { SegmentedControlSection } from "./sections/segmented-control"
+import { SelectionSection, selectionSummary } from "./sections/selection"
+import { ShapeSection, shapeSummary } from "./sections/shape"
+import { SkeletonSection } from "./sections/skeleton"
+import { SlidersSection } from "./sections/sliders"
+import { SpaceSection, spaceSummary } from "./sections/space"
+import { SpinnerSection } from "./sections/spinner"
+import { SurfacesSection, surfacesSummary } from "./sections/surfaces"
+import { SwitchSection } from "./sections/switch"
+import { TablesSection } from "./sections/tables"
+import { TabsSection } from "./sections/tabs"
+import { ToastSection } from "./sections/toast"
+import { TogglesSection } from "./sections/toggles"
+import { TooltipsSection } from "./sections/tooltips"
+import { TypeSection, typeSummary } from "./sections/type"
 
 export { DEFAULTS }
 export type { StudioState } from "./axes"
@@ -190,11 +118,8 @@ export interface Chapter {
   label: string
   defaults: Partial<StudioState>
   Body: React.ComponentType<{ studio: Studio }>
-  /** The always-visible specimen atop the stack. Optional only for Color,
-   *  whose rows are the specimen. */
-  Hero?: React.ComponentType<{ state: StudioState }>
-  /** The collapsed row's live value summary. */
-  summary: (state: StudioState) => string
+  /** The index row's live value, for chapters whose demo can't carry it. */
+  summary?: (state: StudioState) => string
 }
 
 export const CHAPTERS: Chapter[] = [
@@ -210,7 +135,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Typography",
     defaults: TYPE_DEFAULTS,
     Body: TypeSection,
-    Hero: TypeHero,
     summary: typeSummary,
   },
   {
@@ -218,7 +142,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Icons",
     defaults: ICON_DEFAULTS,
     Body: IconsSection,
-    Hero: IconsHero,
     summary: iconsSummary,
   },
   {
@@ -226,7 +149,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Shape",
     defaults: SHAPE_DEFAULTS,
     Body: ShapeSection,
-    Hero: ShapeHero,
     summary: shapeSummary,
   },
   {
@@ -234,7 +156,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Space",
     defaults: SPACE_DEFAULTS,
     Body: SpaceSection,
-    Hero: SpaceHero,
     summary: spaceSummary,
   },
   {
@@ -242,7 +163,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Surfaces",
     defaults: SURFACE_DEFAULTS,
     Body: SurfacesSection,
-    Hero: SurfacesHero,
     summary: surfacesSummary,
   },
   {
@@ -250,7 +170,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Focus",
     defaults: FOCUS_DEFAULTS,
     Body: FocusSection,
-    Hero: FocusHero,
     summary: focusSummary,
   },
   {
@@ -258,7 +177,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Cursor",
     defaults: CURSOR_DEFAULTS,
     Body: CursorSection,
-    Hero: CursorHero,
     summary: cursorSummary,
   },
   {
@@ -266,7 +184,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Text selection",
     defaults: SELECTION_DEFAULTS,
     Body: SelectionSection,
-    Hero: SelectionHero,
     summary: selectionSummary,
   },
   {
@@ -274,7 +191,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Scrollbars",
     defaults: SCROLLBAR_DEFAULTS,
     Body: ScrollbarsSection,
-    Hero: ScrollbarsHero,
     summary: scrollbarsSummary,
   },
   {
@@ -282,7 +198,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Disabled",
     defaults: DISABLED_DEFAULTS,
     Body: DisabledSection,
-    Hero: DisabledHero,
     summary: disabledSummary,
   },
   {
@@ -290,7 +205,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Invalid",
     defaults: INVALID_DEFAULTS,
     Body: InvalidSection,
-    Hero: InvalidHero,
     summary: invalidSummary,
   },
   {
@@ -298,15 +212,12 @@ export const CHAPTERS: Chapter[] = [
     label: "Charts",
     defaults: CHART_DEFAULTS,
     Body: ChartsSection,
-    Hero: ChartsHero,
-    summary: chartsSummary,
   },
   {
     id: "motion",
     label: "Motion",
     defaults: MOTION_DEFAULTS,
     Body: MotionSection,
-    Hero: MotionHero,
     summary: motionSummary,
   },
   {
@@ -314,7 +225,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Mobile",
     defaults: MOBILE_DEFAULTS,
     Body: MobileSection,
-    Hero: MobileHero,
     summary: mobileSummary,
   },
   {
@@ -322,263 +232,197 @@ export const CHAPTERS: Chapter[] = [
     label: "Links",
     defaults: LINK_DEFAULTS,
     Body: LinksSection,
-    Hero: LinksHero,
-    summary: linksSummary,
   },
   {
     id: "alert",
     label: "Alert",
     defaults: ALERT_DEFAULTS,
     Body: AlertSection,
-    Hero: AlertHero,
-    summary: alertSummary,
   },
   {
     id: "toast",
     label: "Toast",
     defaults: TOAST_DEFAULTS,
     Body: ToastSection,
-    Hero: ToastHero,
-    summary: toastSummary,
   },
   {
     id: "skeleton",
     label: "Skeleton",
     defaults: SKELETON_DEFAULTS,
     Body: SkeletonSection,
-    Hero: SkeletonHero,
-    summary: skeletonSummary,
   },
   {
     id: "spinner",
     label: "Spinner",
     defaults: SPINNER_DEFAULTS,
     Body: SpinnerSection,
-    Hero: SpinnerHero,
-    summary: spinnerSummary,
   },
   {
     id: "progress",
     label: "Progress",
     defaults: PROGRESS_DEFAULTS,
     Body: ProgressSection,
-    Hero: ProgressHero,
-    summary: progressSummary,
   },
   {
     id: "buttons",
     label: "Buttons",
     defaults: BUTTON_DEFAULTS,
     Body: ButtonsSection,
-    Hero: ButtonsHero,
-    summary: buttonsSummary,
   },
   {
     id: "button-groups",
     label: "Button groups",
     defaults: BUTTON_GROUP_DEFAULTS,
     Body: ButtonGroupsSection,
-    Hero: ButtonGroupHero,
-    summary: buttonGroupsSummary,
   },
   {
     id: "toggles",
     label: "Toggles",
     defaults: TOGGLE_DEFAULTS,
     Body: TogglesSection,
-    Hero: ToggleHero,
-    summary: togglesSummary,
   },
   {
     id: "segmented-control",
     label: "Segmented control",
     defaults: SEGMENTED_DEFAULTS,
     Body: SegmentedControlSection,
-    Hero: SegmentedHero,
-    summary: segmentedControlSummary,
   },
   {
     id: "switch",
     label: "Switch",
     defaults: SWITCH_DEFAULTS,
     Body: SwitchSection,
-    Hero: SwitchHero,
-    summary: switchSummary,
   },
   {
     id: "checkbox",
     label: "Checkbox",
     defaults: CHECKBOX_DEFAULTS,
     Body: CheckboxSection,
-    Hero: CheckboxHero,
-    summary: checkboxSummary,
   },
   {
     id: "radio",
     label: "Radio",
     defaults: RADIO_DEFAULTS,
     Body: RadioSection,
-    Hero: RadioHero,
-    summary: radioSummary,
   },
   {
     id: "choice-cards",
     label: "Choice cards",
     defaults: CHOICE_CARD_DEFAULTS,
     Body: ChoiceCardsSection,
-    Hero: ChoiceCardsHero,
-    summary: choiceCardsSummary,
   },
   {
     id: "inputs",
     label: "Inputs",
     defaults: INPUT_DEFAULTS,
     Body: InputsSection,
-    Hero: FieldHero,
-    summary: inputsSummary,
   },
   {
     id: "input-groups",
     label: "Input groups",
     defaults: INPUT_GROUP_DEFAULTS,
     Body: InputGroupsSection,
-    Hero: AddonsHero,
-    summary: inputGroupsSummary,
   },
   {
     id: "number-field",
     label: "Number field",
     defaults: NUMBER_FIELD_DEFAULTS,
     Body: NumberFieldSection,
-    Hero: NumberHero,
-    summary: numberFieldSummary,
   },
   {
     id: "otp-field",
     label: "OTP field",
     defaults: OTP_FIELD_DEFAULTS,
     Body: OtpFieldSection,
-    Hero: OtpHero,
-    summary: otpFieldSummary,
   },
   {
     id: "pickers",
     label: "Pickers",
     defaults: PICKER_DEFAULTS,
     Body: PickersSection,
-    Hero: PickersHero,
-    summary: pickersSummary,
   },
   {
     id: "calendar",
     label: "Calendar",
     defaults: CALENDAR_DEFAULTS,
     Body: CalendarSection,
-    Hero: CalendarHero,
-    summary: calendarSummary,
   },
   {
     id: "sliders",
     label: "Sliders",
     defaults: SLIDER_DEFAULTS,
     Body: SlidersSection,
-    Hero: SlidersHero,
-    summary: slidersSummary,
   },
   {
     id: "menus",
     label: "Menus",
     defaults: MENU_DEFAULTS,
     Body: MenusSection,
-    Hero: MenusHero,
-    summary: menusSummary,
   },
   {
     id: "dialogs",
     label: "Dialogs",
     defaults: DIALOG_DEFAULTS,
     Body: DialogsSection,
-    Hero: DialogsHero,
-    summary: dialogsSummary,
   },
   {
     id: "popovers",
     label: "Popovers",
     defaults: POPOVER_DEFAULTS,
     Body: PopoversSection,
-    Hero: PopoversHero,
-    summary: popoversSummary,
   },
   {
     id: "tooltips",
     label: "Tooltips",
     defaults: TOOLTIP_DEFAULTS,
     Body: TooltipsSection,
-    Hero: TooltipsHero,
-    summary: tooltipsSummary,
   },
   {
     id: "tabs",
     label: "Tabs",
     defaults: TAB_DEFAULTS,
     Body: TabsSection,
-    Hero: TabsHero,
-    summary: tabsSummary,
   },
   {
     id: "accordion",
     label: "Accordion",
     defaults: ACCORDION_DEFAULTS,
     Body: AccordionSection,
-    Hero: AccordionHero,
-    summary: accordionSummary,
   },
   {
     id: "breadcrumbs",
     label: "Breadcrumbs",
     defaults: BREADCRUMB_DEFAULTS,
     Body: BreadcrumbsSection,
-    Hero: BreadcrumbsHero,
-    summary: breadcrumbsSummary,
   },
   {
     id: "pagination",
     label: "Pagination",
     defaults: PAGINATION_DEFAULTS,
     Body: PaginationSection,
-    Hero: PaginationHero,
-    summary: paginationSummary,
   },
   {
     id: "badges",
     label: "Badges",
     defaults: BADGE_DEFAULTS,
     Body: BadgesSection,
-    Hero: BadgesHero,
-    summary: badgesSummary,
   },
   {
     id: "kbd",
     label: "Kbd",
     defaults: KBD_DEFAULTS,
     Body: KbdSection,
-    Hero: KbdHero,
-    summary: kbdSummary,
   },
   {
     id: "avatars",
     label: "Avatars",
     defaults: AVATAR_DEFAULTS,
     Body: AvatarsSection,
-    Hero: AvatarsHero,
-    summary: avatarsSummary,
   },
   {
     id: "tables",
     label: "Tables",
     defaults: TABLE_DEFAULTS,
     Body: TablesSection,
-    Hero: TablesHero,
-    summary: tablesSummary,
   },
 ]

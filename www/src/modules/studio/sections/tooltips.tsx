@@ -3,23 +3,12 @@
 /* Tooltips — a surface decision of its own, not a copy of the dialog's:
    shadcn, Radix and GitHub invert to a near-black chip (bg-tooltip); MUI's
    gray and Linear's bordered card keep the tooltip on a surface with a
-   hairline. The hero pins the chip to the icon-button it names. */
-
-import { CopyIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
+   hairline. */
 
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-/* The engine's tooltip style slices, at hero scale. */
-export const TOOLTIP = {
-  inverted: "bg-tooltip text-fg-on-tooltip",
-  surface: "border border-border bg-popover text-fg shadow-sm",
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -56,41 +45,10 @@ const TOOLTIP_OPTIONS: SelectRowOption[] = TOOLTIP_STYLE_OPTIONS.map((o) => ({
   illustration: <TooltipGlyph filled={o.value === "inverted"} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function TooltipsHero({ state }: { state: StudioState }) {
-  return (
-    <Hero className="h-24 items-center justify-center">
-      <div className="flex flex-col items-center gap-1.5">
-        <span
-          className={cn(
-            "rounded-md px-1.5 py-0.5 text-[0.6875rem] font-medium",
-            TOOLTIP[state.tooltipStyle as keyof typeof TOOLTIP],
-          )}
-        >
-          Copy
-        </span>
-        <span className="flex size-6 items-center justify-center rounded-md border border-border/60 bg-card">
-          <CopyIcon className="size-3 text-fg-muted" />
-        </span>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the tooltip surface style. */
-export function tooltipsSummary(state: StudioState): string {
-  return (
-    TOOLTIP_OPTIONS.find((o) => o.value === state.tooltipStyle)?.label ??
-    state.tooltipStyle
-  )
-}
-
 export function TooltipsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <TooltipsHero state={state} />
       <SelectRow
         label="Style"
         value={state.tooltipStyle}

@@ -16,34 +16,18 @@
    Gapped/detached segments — Toggle group territory. Fluid vs hug width —
    per-usage prop. Size and radius — Space and Shape. */
 
-import { useState } from "react"
-
-import { cn } from "@/registry/lib/utils"
-
 import { SELECTED_OPTIONS, TRACK_OPTIONS } from "../axes/segmented-control"
-import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-const TRACK_SHELL = {
-  filled: "bg-muted",
-  outline: "border border-border",
-}
-
-/* Raised keeps the hairline ring so the bg-on-bg chip survives dark wells —
-   same rationale as the Toggles chip. */
-const SELECTED_FX = {
-  raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  flat: "bg-selected text-fg-on-selected",
-  inverse: "bg-inverse text-fg-inverse",
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
+type SelectedLook = "raised" | "flat" | "inverse"
+
 /* One ladder: chip weight rises raised → flat → inverse; raised alone gets a
    stroked edge — the light chip reads as a cutout on its darker track. */
-function SelectedGlyph({ look }: { look: keyof typeof SELECTED_FX }) {
+function SelectedGlyph({ look }: { look: SelectedLook }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -84,66 +68,13 @@ function SelectedGlyph({ look }: { look: keyof typeof SELECTED_FX }) {
 
 const SELECTED_ROW_OPTIONS: SelectRowOption[] = SELECTED_OPTIONS.map((o) => ({
   ...o,
-  illustration: <SelectedGlyph look={o.value as keyof typeof SELECTED_FX} />,
+  illustration: <SelectedGlyph look={o.value as SelectedLook} />,
 }))
-
-/* ---------------------------------- Hero ----------------------------------- */
-
-const PERIODS = [
-  ["day", "Day"],
-  ["week", "Week"],
-  ["month", "Month"],
-] as const
-
-export function SegmentedHero({ state }: { state: StudioState }) {
-  const [period, setPeriod] = useState("week")
-  return (
-    <Hero className="items-center py-5">
-      <div
-        className={cn(
-          "flex items-center rounded-lg p-[3px]",
-          TRACK_SHELL[state.segmentedTrack as keyof typeof TRACK_SHELL],
-        )}
-      >
-        {PERIODS.map(([id, label]) => (
-          <button
-            key={id}
-            type="button"
-            aria-pressed={period === id}
-            onClick={() => setPeriod(id)}
-            className={cn(
-              "flex h-7 items-center rounded-md px-3 text-[0.8125rem] font-medium",
-              period === id
-                ? SELECTED_FX[
-                    state.segmentedSelected as keyof typeof SELECTED_FX
-                  ]
-                : "text-fg-muted hover:text-fg",
-            )}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the chip treatment, and the track shell. */
-export function segmentedControlSummary(state: StudioState): string {
-  const selected =
-    SELECTED_OPTIONS.find((o) => o.value === state.segmentedSelected)?.label ??
-    state.segmentedSelected
-  const track =
-    TRACK_OPTIONS.find((o) => o.value === state.segmentedTrack)?.label ??
-    state.segmentedTrack
-  return `${selected} chip · ${track} track`
-}
 
 export function SegmentedControlSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <SegmentedHero state={state} />
       <SelectRow
         label="Selected"
         value={state.segmentedSelected}

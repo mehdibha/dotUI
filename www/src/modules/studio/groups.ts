@@ -29,20 +29,19 @@ const COMPOSITES: CompositeDef[] = [
   },
 ]
 
-export const GROUPS: Array<{
-  ids: string[]
-  compact?: boolean
-}> = [
+export const GROUPS: Array<{ ids: string[]; section?: string }> = [
   // Identity — how the system reads at a glance.
-  { ids: ["color", "typography", "icons", "shape", "space", "surfaces"] },
-  // Page chrome — the browser-level surface, set once. One-line rows: these
-  // are quick set-and-forget axes, not destinations.
-  { ids: ["cursor", "selection", "scrollbars"], compact: true },
+  {
+    ids: ["color", "typography", "icons", "shape", "space", "surfaces"],
+    section: "Foundations",
+  },
+  // Page chrome — the browser-level surface, set once.
+  { ids: ["cursor", "selection", "scrollbars"] },
   // Component states — cross-component treatments every control below wears.
   { ids: ["focus", "invalid", "disabled", "motion", "mobile"] },
   // Component clusters — title + specimen, the demo carries the values.
   // Core components.
-  { ids: ["buttons", "inputs"] },
+  { ids: ["buttons", "inputs"], section: "Components" },
   // Selection controls.
   { ids: ["switch", "checkbox", "radio", "choice-cards"] },
   // Fields.
@@ -66,8 +65,8 @@ export interface IndexChapter {
   members: Chapter[]
   /** Union of every member's defaults — drives the modified dot. */
   defaults: Partial<StudioState>
-  /** The host member's live value summary. */
-  summary: (state: StudioState) => string
+  /** The host member's live value, when its demo can't carry it. */
+  summary?: (state: StudioState) => string
   /** Untitled host body, or all-titled for hostless composites. */
   hostless: boolean
 }
@@ -76,7 +75,7 @@ export interface IndexChapter {
  *  flat chapter list. */
 export function resolveIndex(
   chapters: Chapter[],
-): Array<{ chapters: IndexChapter[]; compact?: boolean }> {
+): Array<{ chapters: IndexChapter[]; section?: string }> {
   const byId = new Map(chapters.map((chapter) => [chapter.id, chapter]))
   const toIndexChapter = (id: string): IndexChapter | undefined => {
     const composite = COMPOSITES.find((c) => c.id === id)
@@ -102,7 +101,7 @@ export function resolveIndex(
       label: composite.label ?? host?.label ?? composite.id,
       members,
       defaults: Object.assign({}, ...members.map((m) => m.defaults)),
-      summary: members[0]?.summary ?? (() => ""),
+      summary: members[0]?.summary,
       hostless: !host,
     }
   }
@@ -110,6 +109,6 @@ export function resolveIndex(
     chapters: group.ids
       .map(toIndexChapter)
       .filter((chapter): chapter is IndexChapter => chapter !== undefined),
-    compact: group.compact,
+    section: group.section,
   }))
 }

@@ -5,15 +5,8 @@
    the pointer on links, even the ones that put the arrow on buttons. Text
    isn't either — the arrow-on-text decision belongs to the Selection
    section, whose switch it rides along with. Each control offers only the
-   cursors a design system would actually pick for it, drawn as cards, with
-   real specimens above wearing the current choices. */
+   cursors a design system would actually pick for it, drawn as cards. */
 
-import { GripVerticalIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
-
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio, StudioState } from "../state"
@@ -245,75 +238,6 @@ const DISABLED_OPTIONS: SelectRowOption[] = [
   },
 ]
 
-const illustration = (options: SelectRowOption[], value: string) =>
-  options.find((o) => o.value === value)?.illustration
-
-/** The drawn cursor pinned to a specimen's corner — keeps the answer visible
- *  without a mouse; hovering the specimen shows the real thing. */
-export function GlyphBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 **:[svg]:size-5"
-    >
-      {children}
-    </span>
-  )
-}
-
-/* One specimen per axis, each wearing the cursor its selection maps to,
-   ordered like the rows read: enabled, disabled, pending, dragging. */
-export function CursorHero({ state }: { state: StudioState }) {
-  const controls = state.cursorControls
-  const grab = state.cursorDragging === "grab"
-  return (
-    <Hero className="flex-row flex-wrap items-center justify-evenly gap-x-4 gap-y-5 py-6">
-      <div className="relative" style={{ cursor: controls }}>
-        <Button variant="secondary" style={{ cursor: controls }}>
-          Button
-        </Button>
-        <GlyphBadge>{illustration(CONTROL_OPTIONS, controls)}</GlyphBadge>
-      </div>
-      <div className="relative" style={{ cursor: state.cursorDisabled }}>
-        <Button
-          variant="secondary"
-          isDisabled
-          style={{ cursor: state.cursorDisabled }}
-        >
-          Button
-        </Button>
-        <GlyphBadge>
-          {illustration(DISABLED_OPTIONS, state.cursorDisabled)}
-        </GlyphBadge>
-      </div>
-      <div className="relative" style={{ cursor: state.cursorPending }}>
-        <Button
-          variant="secondary"
-          isPending
-          style={{ cursor: state.cursorPending }}
-        >
-          Button
-        </Button>
-        <GlyphBadge>
-          {illustration(PENDING_OPTIONS, state.cursorPending)}
-        </GlyphBadge>
-      </div>
-      <div
-        className={cn(
-          "relative flex h-8 items-center rounded-md border border-border px-1 text-fg-muted",
-          grab && "cursor-grab active:cursor-grabbing",
-        )}
-        style={grab ? undefined : { cursor: controls }}
-      >
-        <GripVerticalIcon className="size-4" />
-        <GlyphBadge>
-          {grab ? <OpenHandCursor /> : illustration(CONTROL_OPTIONS, controls)}
-        </GlyphBadge>
-      </div>
-    </Hero>
-  )
-}
-
 /** Collapsed-row summary: the controls cursor alone. */
 export function cursorSummary(state: StudioState): string {
   return (
@@ -326,7 +250,6 @@ export function CursorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <CursorHero state={state} />
       <SelectRow
         label="Controls"
         value={state.cursorControls}

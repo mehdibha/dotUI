@@ -1,6 +1,6 @@
 "use client"
 
-/* Color — the only hero-less chapter: its rows are the specimen. The seeds
+/* Color — its rows are the specimen. The seeds
    and axes land on `ColorConfig` through the axis module; here they resolve
    through the same engine the preview runs, in the panel's own display mode,
    so every swatch and derived "Auto" value is what ships. */
@@ -319,8 +319,7 @@ const SEMANTIC_SEEDS = [
 
 /** Collapsed-row summary: the brand seed and where primary actions draw from. */
 export function colorSummary(state: StudioState): string {
-  const primary = state.primary === "accent" ? "Accent" : "Neutral"
-  return `${state.brand.toUpperCase()} · ${primary} primary`
+  return state.brand.toUpperCase()
 }
 
 export function ColorSection({ studio }: { studio: Studio }) {

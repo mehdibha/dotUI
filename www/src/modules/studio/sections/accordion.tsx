@@ -12,17 +12,14 @@
    fork. Multiple-open is behavior, a prop (Radix type="multiple"); expand
    motion lives in the Motion chapter. */
 
-import { cn } from "@/registry/lib/utils"
-
 import {
   CONTAINER_OPTIONS as CONTAINER_VALUES,
   MARKER_OPTIONS as MARKER_VALUES,
   POSITION_OPTIONS,
 } from "../axes/accordion"
-import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -100,7 +97,7 @@ function MarkerGlyph({ glyph }: { glyph: "chevron" | "plus" }) {
 const CONTAINER_OPTIONS: SelectRowOption[] = CONTAINER_VALUES.map((option) => ({
   ...option,
   illustration: (
-    <ContainerGlyph style={option.value as keyof typeof CONTAINER} />
+    <ContainerGlyph style={option.value as "divided" | "boxed" | "cards"} />
   ),
 }))
 
@@ -109,107 +106,10 @@ const MARKER_OPTIONS: SelectRowOption[] = MARKER_VALUES.map((option) => ({
   illustration: <MarkerGlyph glyph={option.value as "chevron" | "plus"} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export const CONTAINER = {
-  divided: { list: "divide-y divide-border", item: "" },
-  boxed: {
-    list: "divide-y divide-border overflow-hidden rounded-lg border border-border bg-card",
-    item: "px-3",
-  },
-  cards: {
-    list: "gap-2",
-    item: "rounded-lg border border-border bg-card px-3",
-  },
-}
-
-export function Marker({ open, state }: { open: boolean; state: StudioState }) {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      aria-hidden
-      className="size-3 shrink-0 text-fg-muted"
-    >
-      {state.accordionMarker === "chevron" ? (
-        <path d="M2.5 4.25 6 7.75l3.5-3.5" strokeLinejoin="round" />
-      ) : (
-        <path d={open ? "M1.5 6h9" : "M6 1.5v9M1.5 6h9"} />
-      )}
-    </svg>
-  )
-}
-
-function AccordionItem({
-  label,
-  open = false,
-  state,
-}: {
-  label: string
-  open?: boolean
-  state: StudioState
-}) {
-  const container =
-    CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
-  const trailing = state.accordionMarkerPosition === "trailing"
-  return (
-    <div className={container.item}>
-      <div
-        className={cn(
-          "flex items-center gap-2 py-2.5",
-          trailing && "justify-between",
-        )}
-      >
-        {!trailing && <Marker open={open} state={state} />}
-        <span className="text-[0.8125rem] font-medium text-fg">{label}</span>
-        {trailing && <Marker open={open} state={state} />}
-      </div>
-      {open && (
-        <div className="flex flex-col gap-1.5 pb-3">
-          <span className="h-2 w-full rounded-full bg-muted" />
-          <span className="h-2 w-3/4 rounded-full bg-muted" />
-        </div>
-      )}
-    </div>
-  )
-}
-
-export function AccordionHero({ state }: { state: StudioState }) {
-  const container =
-    CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
-  return (
-    <Hero className="px-4 py-4">
-      <div className={cn("flex w-full flex-col", container.list)}>
-        <AccordionItem label="Shipping" state={state} />
-        <AccordionItem label="Returns" open state={state} />
-        <AccordionItem label="Warranty" state={state} />
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the container style, and the marker with its
- *  position. */
-export function accordionSummary(state: StudioState): string {
-  const container =
-    CONTAINER_OPTIONS.find((o) => o.value === state.accordionContainer)
-      ?.label ?? state.accordionContainer
-  const marker =
-    MARKER_OPTIONS.find((o) => o.value === state.accordionMarker)?.label ??
-    state.accordionMarker
-  const position =
-    state.accordionMarkerPosition === "leading" ? "Leading" : "Trailing"
-  return `${container} · ${position} ${marker.toLowerCase()}`
-}
-
 export function AccordionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <AccordionHero state={state} />
       <SelectRow
         label="Container"
         value={state.accordionContainer}

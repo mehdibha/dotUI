@@ -5,17 +5,7 @@
    Shape chapter; fill tone (Polaris tone=success) and percent-label
    placement are props. */
 
-import { useMemo } from "react"
-
-import { DesignSystemProvider } from "@/lib/styles"
-import { ProgressBar } from "@/registry/ui/progress-bar"
-
-import {
-  INDETERMINATE_OPTIONS,
-  resolveProgress,
-  TRACK_OPTIONS,
-} from "../axes/progress"
-import { Hero } from "../hero"
+import { INDETERMINATE_OPTIONS, TRACK_OPTIONS } from "../axes/progress"
 import {
   ControlGroup,
   SegmentedControlRow,
@@ -23,7 +13,7 @@ import {
   SwitchRow,
 } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -77,38 +67,10 @@ const INDETERMINATE_ROW_OPTIONS: SelectRowOption[] = INDETERMINATE_OPTIONS.map(
   (option) => ({ ...option, illustration: GLYPHS[option.value] }),
 )
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-/* The registry bar under a provider carrying only this chapter's params —
-   the hero shows exactly what the preview does. */
-export function ProgressHero({ state }: { state: StudioState }) {
-  const params = useMemo(() => resolveProgress(state).params, [state])
-  return (
-    <Hero className="gap-5 px-5 py-6">
-      <DesignSystemProvider params={params}>
-        <ProgressBar aria-label="Progress" value={60} className="w-full" />
-        <ProgressBar aria-label="Loading" isIndeterminate className="w-full" />
-      </DesignSystemProvider>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the track weight, and the indeterminate motion. */
-export function progressSummary(state: StudioState): string {
-  const track =
-    TRACK_OPTIONS.find((o) => o.value === state.progressTrack)?.label ??
-    state.progressTrack
-  const motion =
-    INDETERMINATE_OPTIONS.find((o) => o.value === state.progressIndeterminate)
-      ?.label ?? state.progressIndeterminate
-  return `${track} track · ${motion} indeterminate`
-}
-
 export function ProgressSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <ProgressHero state={state} />
       <SegmentedControlRow
         label="Track"
         value={state.progressTrack}

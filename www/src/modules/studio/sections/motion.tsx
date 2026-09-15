@@ -4,10 +4,7 @@
    motion shares (Geist ease-out vs Material emphasized vs spring); Speed is
    one multiplier over the duration ramp; Overlays is the entrance pattern
    for floating layers; State changes is whether hover/press color shifts
-   ease or snap — the native-vs-web cue. The hero is self-serve proof: a
-   real menu inside a scoped design system wearing the chapter's resolved
-   tokens and overlay param, its trigger wearing the state timing. Exits
-   stay a plain mirrored curve at a shorter duration — springs are for
+   ease or snap — the native-vs-web cue. Exits stay a plain mirrored curve at a shorter duration — springs are for
    arriving, not leaving. Deliberately absent: a "none" character (Linear's
    stillness is compositional — fast, overlays none, instant states),
    overlayExit as its own row, reducedMotion, which only renders under an OS
@@ -15,23 +12,13 @@
    loading decision that happens to animate. Focus rings never ease —
    pattern constant, not part of the state axis. */
 
-import { useMemo } from "react"
-import { ChevronDownIcon } from "lucide-react"
-
-import { DesignSystemProvider } from "@/lib/styles"
-import { Button } from "@/registry/ui/button"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Popover } from "@/registry/ui/popover"
-
 import {
   CHARACTER_OPTIONS,
   OVERLAY_OPTIONS,
-  resolveMotion,
   SPEED,
   SPEED_OPTIONS,
   STATE_OPTIONS,
 } from "../axes/motion"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio, StudioState } from "../state"
@@ -200,33 +187,6 @@ const STATE_ROWS = withGlyphs(STATE_OPTIONS, {
   smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
 })
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-/* A menu the user opens themselves — self-serve replay, no fake loop. The
-   scoped provider is the engine: the popover reads the overlay param, the
-   tokens ride on the scope and its portal. */
-export function MotionHero({ state }: { state: StudioState }) {
-  const { tokens, params } = useMemo(() => resolveMotion(state), [state])
-  return (
-    <Hero className="flex-row items-center justify-center gap-4 px-4 py-6">
-      <DesignSystemProvider scoped tokens={tokens} params={params}>
-        <Menu>
-          <Button variant="secondary">
-            Menu <ChevronDownIcon />
-          </Button>
-          <Popover placement="bottom start">
-            <MenuContent>
-              <MenuItem>Duplicate</MenuItem>
-              <MenuItem>Rename</MenuItem>
-              <MenuItem>Archive</MenuItem>
-            </MenuContent>
-          </Popover>
-        </Menu>
-      </DesignSystemProvider>
-    </Hero>
-  )
-}
-
 const optionLabel = (
   options: { value: string; label: string }[],
   value: string,
@@ -235,17 +195,13 @@ const optionLabel = (
 /** Collapsed-row summary: the easing character, and the overlay entrance
  *  when overlays animate. */
 export function motionSummary(state: StudioState): string {
-  const character = optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
-  return state.motionOverlay === "none"
-    ? character
-    : `${character} · ${optionLabel(OVERLAY_OPTIONS, state.motionOverlay)} overlays`
+  return optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
 }
 
 export function MotionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <MotionHero state={state} />
       <SelectRow
         label="Character"
         value={state.motionCharacter}

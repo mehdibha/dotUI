@@ -84,8 +84,7 @@ export interface PerMode<T> {
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
  *  of two rungs, the system's hairline, black or the ink at an alpha, or
- *  nothing. The hero paints it from a mode's scales; the resolver writes it
- *  as CSS vars. */
+ *  nothing. The resolver writes it as CSS vars. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "hairline" }
@@ -342,7 +341,7 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
 /* ----------------------------- Serialization ----------------------------- */
 
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
- *  a mode's solved scales (the hero). */
+ *  a mode's solved scales (tests). */
 export interface SurfacePalette {
   step: (step: string) => string
   hairline: string

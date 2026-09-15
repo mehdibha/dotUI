@@ -119,14 +119,11 @@ export function RowLabel({
 /**
  * Fuses adjacent rows into one card: shared surface, hairline separators,
  * only the group's corners round — the grouped-list look. Rows opt in by
- * carrying `data-row` on their surface element; a `data-preview` stage opts
- * in the same way but keeps its own surface and border, becoming the framed
- * specimen the rows below configure. Only its bottom edge squares off — the
- * top corners keep the group's radius, or the clip would shave the frame.
+ * carrying `data-row` on their surface element.
  */
 export function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col gap-px overflow-hidden rounded-lg bg-bg/50 **:data-preview:rounded-b-none **:data-row:rounded-none">
+    <div className="flex w-full flex-col gap-px overflow-hidden rounded-lg bg-bg/50 **:data-row:rounded-none">
       {children}
     </div>
   )

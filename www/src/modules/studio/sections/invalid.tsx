@@ -10,17 +10,10 @@
    rejected: the Focus field recipe recolored — a state of that axis, not a
    new one. */
 
-import { useId } from "react"
-
-import { cn } from "@/registry/lib/utils"
-
 import { ERROR_OPTIONS } from "../axes/invalid"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio, StudioState } from "../state"
-import { BARE_INPUT, ErrorMessage, inputLook, SHELL } from "./inputs"
-import { controlRadiusPx } from "./shape"
 
 function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
   return (
@@ -113,50 +106,6 @@ const ERROR_ROW_OPTIONS: SelectRowOption[] = ERROR_OPTIONS.map((o) => ({
   illustration: <ErrorGlyph kind={o.value as "border" | "message" | "bar"} />,
 }))
 
-/** One failed field wearing the current field style and the treatment. */
-export function InvalidHero({ state }: { state: StudioState }) {
-  const id = useId()
-  const look = inputLook(state.inputStyle, controlRadiusPx(state))
-  const bar = state.inputError === "bar"
-  return (
-    <Hero className="items-center py-5">
-      <div
-        className={cn(
-          "flex w-48 flex-col gap-1.5",
-          bar && "border-l-[3px] border-border-danger pl-2.5",
-        )}
-      >
-        <label htmlFor={id} className="text-xs font-medium text-fg">
-          Username
-        </label>
-        {bar && (
-          <p className="text-xs font-semibold text-fg-danger">
-            Username is taken
-          </p>
-        )}
-        <div
-          className={cn(
-            SHELL,
-            "gap-2 px-2.5",
-            look.className,
-            "border-border-danger",
-          )}
-          style={look.style}
-        >
-          <input
-            id={id}
-            type="text"
-            aria-invalid
-            defaultValue="mehdi"
-            className={BARE_INPUT}
-          />
-        </div>
-        <ErrorMessage state={state} />
-      </div>
-    </Hero>
-  )
-}
-
 /** Collapsed-row summary: the error treatment. */
 export function invalidSummary(state: StudioState): string {
   return (
@@ -169,7 +118,6 @@ export function InvalidSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <InvalidHero state={state} />
       <SelectRow
         label="Treatment"
         value={state.inputError}

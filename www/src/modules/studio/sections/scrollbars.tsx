@@ -10,10 +10,7 @@
    second decision); thumb radius (rides Shape); scrollbar-gutter (layout
    engineering every option needs, no system treats it as a look). */
 
-import type { CSSProperties } from "react"
-
-import { resolveScrollbars, STYLE_OPTIONS } from "../axes/scrollbars"
-import { Hero } from "../hero"
+import { STYLE_OPTIONS } from "../axes/scrollbars"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio, StudioState } from "../state"
@@ -81,50 +78,6 @@ const styleOptions: SelectRowOption[] = STYLE_OPTIONS.map((o) => ({
   illustration: <ScrollbarGlyph kind={o.value} />,
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-const SETTINGS_ROWS: [string, string][] = [
-  ["Appearance", "System"],
-  ["Notifications", "On"],
-  ["Keyboard", "Default"],
-  ["Members", "12"],
-  ["Billing", "Pro"],
-  ["Integrations", "4"],
-  ["Security", "2FA"],
-  ["API tokens", "3"],
-  ["Webhooks", "1"],
-  ["Labels", "18"],
-  ["Templates", "6"],
-  ["Import", "CSV"],
-  ["Archive", "Off"],
-  ["Advanced", ""],
-]
-
-/* A list long enough that the bar renders at rest, tall enough to grab,
-   wearing the engine's own tokens so the bar is the one users will ship. */
-export function ScrollbarsHero({ state }: { state: StudioState }) {
-  return (
-    <Hero inset={false}>
-      <div
-        className="h-44 overflow-y-auto"
-        style={resolveScrollbars(state).tokens as CSSProperties}
-      >
-        <div className="divide-y divide-border/40">
-          {SETTINGS_ROWS.map(([label, value]) => (
-            <div
-              key={label}
-              className="flex items-center justify-between px-3.5 py-2"
-            >
-              <span className="text-[0.8125rem] text-fg">{label}</span>
-              <span className="text-xs text-fg-muted">{value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
 /** Collapsed-row summary: the scrollbar style. */
 export function scrollbarsSummary(state: StudioState): string {
   return (
@@ -137,7 +90,6 @@ export function ScrollbarsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <ScrollbarsHero state={state} />
       <SelectRow
         label="Style"
         value={state.scrollbarStyle}

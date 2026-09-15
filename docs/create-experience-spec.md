@@ -120,12 +120,13 @@ Mehdi's modifications:
 - The index shows exactly **two sections — Foundations, then Components** — a
   **Templates** section is planned (user-picked blocks). Identity emphasis
   survives as ordering, not extra chrome.
-- Index rows are roomy and two-line: **label over its muted value** on the
-  left, a **small state-driven micro-preview** and the chevron on the right.
+- Index rows are one line (Sept 2026): **label, then its muted value** on the
+  left — only where the micro-preview can't carry it (identity, page chrome,
+  component states) — and a **small state-driven micro-preview** on the right.
   Previews render only where a ~16px specimen is honest (real brand color,
   real font, real fill); chapters without one show nothing.
-- The chapter page keeps the full hero — in the panel index the canvas (and
-  the micro-preview) carry the visual load.
+- Chapter pages have no hero (Sept 2026) — the canvas and the micro-preview
+  carry the visual load; the page is controls only.
 
 Structured scroll (variant A) and the stacks served as comparison references;
 the drill-in won and they have been deleted from the studio module.

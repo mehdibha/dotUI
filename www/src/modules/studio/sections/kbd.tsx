@@ -10,56 +10,16 @@
    keycaps go mono (Primer); no system crosses them. Ctrl+K vs ⌘K wording
    is platform mapping, not styling. Menu and list-box items strip the
    chrome and keep the type, so a shortcut hint in a list reads as text in
-   every treatment — the hero's menu row shows that. */
-
-import { cn } from "@/registry/lib/utils"
+   every treatment. */
 
 import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-const TYPE = {
-  text: "font-sans text-xs tracking-widest",
-  chip: "font-sans text-xs font-medium",
-  keycap: "font-mono text-[0.6875rem]",
-}
-
-const CHROME = {
-  text: "",
-  chip: "h-5 min-w-5 justify-center rounded-sm bg-muted px-1",
-  keycap:
-    "h-5 min-w-5 justify-center rounded-[5px] border border-b-2 border-border bg-card px-1.5",
-}
-
-function LabKbd({
-  treatment,
-  bare,
-  children,
-}: {
-  treatment: string
-  /** Inside a menu row: type only, chrome stripped like the registry does. */
-  bare?: boolean
-  children: React.ReactNode
-}) {
-  const t = treatment as keyof typeof TYPE
-  return (
-    <kbd
-      className={cn(
-        "inline-flex items-center text-fg-muted select-none",
-        TYPE[t],
-        !bare && CHROME[t],
-      )}
-    >
-      {children}
-    </kbd>
-  )
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
-function KbdGlyph({ treatment }: { treatment: keyof typeof TYPE }) {
+function KbdGlyph({ treatment }: { treatment: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       {treatment === "chip" && (
@@ -112,44 +72,13 @@ function KbdGlyph({ treatment }: { treatment: keyof typeof TYPE }) {
 
 const TREATMENT_ROW_OPTIONS: SelectRowOption[] = TREATMENT_OPTIONS.map((o) => ({
   ...o,
-  illustration: <KbdGlyph treatment={o.value as keyof typeof TYPE} />,
+  illustration: <KbdGlyph treatment={o.value} />,
 }))
-
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function KbdHero({ state }: { state: StudioState }) {
-  const treatment = state.kbdTreatment
-  return (
-    <Hero className="flex-row items-center justify-evenly py-6">
-      <span className="flex items-center gap-1">
-        <LabKbd treatment={treatment}>⌘</LabKbd>
-        <LabKbd treatment={treatment}>K</LabKbd>
-      </span>
-      <div className="w-44 rounded-lg border border-border/60 bg-card p-1 shadow-sm">
-        <div className="flex items-center justify-between gap-3 px-2 py-1.5">
-          <span className="text-[0.8125rem] text-fg">Duplicate</span>
-          <LabKbd treatment={treatment} bare>
-            ⌘D
-          </LabKbd>
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the shortcut treatment. */
-export function kbdSummary(state: StudioState): string {
-  return (
-    TREATMENT_OPTIONS.find((o) => o.value === state.kbdTreatment)?.label ??
-    state.kbdTreatment
-  )
-}
 
 export function KbdSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <KbdHero state={state} />
       <SelectRow
         label="Treatment"
         value={state.kbdTreatment}

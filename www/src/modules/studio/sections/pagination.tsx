@@ -8,20 +8,10 @@
    Polaris and Carbon simply never number); prev/next labels are content;
    item shape, hover, press and radius inherit Buttons. */
 
-import { cn } from "@/registry/lib/utils"
-
 import { CURRENT_OPTIONS as CURRENT_VALUES } from "../axes/pagination"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-import {
-  buttonRadiusPx,
-  hoverFx,
-  pressFx,
-  SPECIMEN_FX,
-  styleLook,
-} from "./buttons"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -61,81 +51,10 @@ const CURRENT_OPTIONS: SelectRowOption[] = CURRENT_VALUES.map((option) => ({
   ),
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-function Chevron({ dir }: { dir: "prev" | "next" }) {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden className="size-4">
-      <path
-        d={dir === "prev" ? "M9.5 4 5.5 8l4 4" : "M6.5 4l4 4-4 4"}
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-const ITEM =
-  "flex h-8 min-w-8 items-center justify-center px-1 text-[0.8125rem] font-medium"
-
-export function PaginationHero({ state }: { state: StudioState }) {
-  const look = styleLook(state)
-  const radius = buttonRadiusPx(state)
-
-  const quiet = (key: string, children: React.ReactNode) => (
-    <button
-      key={key}
-      type="button"
-      className={cn(
-        ITEM,
-        SPECIMEN_FX,
-        "text-fg",
-        hoverFx(state, "quiet"),
-        pressFx(state, "quiet"),
-      )}
-      style={{ borderRadius: radius }}
-    >
-      {children}
-    </button>
-  )
-
-  const current =
-    state.paginationCurrent === "outline"
-      ? look.secondary
-      : cn("bg-primary text-fg-on-primary", look.fill)
-
-  return (
-    <Hero className="flex-row items-center justify-center gap-1 py-6">
-      {quiet("prev", <Chevron dir="prev" />)}
-      {quiet("1", "1")}
-      <span className={cn(ITEM, current)} style={{ borderRadius: radius }}>
-        2
-      </span>
-      {quiet("3", "3")}
-      <span className={cn(ITEM, "text-fg-muted")} aria-hidden>
-        …
-      </span>
-      {quiet("8", "8")}
-      {quiet("next", <Chevron dir="next" />)}
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the current-page emphasis. */
-export function paginationSummary(state: StudioState): string {
-  const current =
-    CURRENT_OPTIONS.find((o) => o.value === state.paginationCurrent)?.label ??
-    state.paginationCurrent
-  return `${current} current page`
-}
-
 export function PaginationSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <PaginationHero state={state} />
       <SelectRow
         label="Current page"
         value={state.paginationCurrent}

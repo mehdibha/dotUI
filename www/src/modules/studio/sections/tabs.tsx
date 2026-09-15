@@ -10,51 +10,14 @@
    top borders and fuses with the content surface below — browser tabs,
    Chakra's enclosed variant, classic Bootstrap. */
 
-import { cn } from "@/registry/lib/utils"
-
 import { TAB_STYLE_OPTIONS } from "../axes/tabs"
-import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
-
-export const TAB_STRIP = {
-  segmented: "m-2 w-fit rounded-lg bg-muted p-[3px]",
-  line: "gap-4 border-b border-border px-3 pt-1",
-  pill: "gap-1 px-2 py-1.5",
-  enclosed: "items-end px-2 pt-1.5",
-}
-
-export const TAB_FAMILY = {
-  segmented: {
-    base: "rounded-md px-2.5 py-1",
-    idle: "text-fg-muted",
-    selected: "bg-selected font-medium text-fg-on-selected shadow-sm",
-  },
-  line: {
-    base: "py-2",
-    idle: "text-fg-muted",
-    selected:
-      "relative font-medium text-fg after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-fg",
-  },
-  pill: {
-    base: "rounded-full px-2.5 py-1",
-    idle: "text-fg-muted",
-    selected: "bg-muted font-medium text-fg",
-  },
-  enclosed: {
-    base: "rounded-t-lg border px-3 py-1.5",
-    idle: "border-transparent text-fg-muted",
-    /* -mb-px drops the tab one pixel onto the content's top border; its
-       matching fill erases that segment, so tab and surface read as one. */
-    selected:
-      "z-10 -mb-px border-border border-b-0 bg-card font-medium text-fg",
-  },
-}
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
-function TabGlyph({ style }: { style: keyof typeof TAB_FAMILY }) {
+function TabGlyph({ style }: { style: string }) {
   if (style === "segmented")
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -149,56 +112,13 @@ function TabGlyph({ style }: { style: keyof typeof TAB_FAMILY }) {
 
 const TAB_OPTIONS: SelectRowOption[] = TAB_STYLE_OPTIONS.map((option) => ({
   ...option,
-  illustration: <TabGlyph style={option.value as keyof typeof TAB_FAMILY} />,
+  illustration: <TabGlyph style={option.value} />,
 }))
-
-/* ---------------------------------- Hero ----------------------------------- */
-
-const TABS = ["Overview", "Activity", "Settings"]
-
-export function TabsHero({ state }: { state: StudioState }) {
-  const style = state.tabStyle as keyof typeof TAB_FAMILY
-  const tab = TAB_FAMILY[style]
-  return (
-    <Hero inset={false}>
-      <div className={cn("flex text-[0.8125rem]", TAB_STRIP[style])}>
-        {TABS.map((label) => {
-          const selected = label === "Activity"
-          return (
-            <span
-              key={label}
-              className={cn(tab.base, selected ? tab.selected : tab.idle)}
-            >
-              {label}
-            </span>
-          )
-        })}
-      </div>
-      <div
-        className={cn(
-          "flex flex-col gap-2 p-3",
-          style === "enclosed" && "border-t border-border bg-card",
-        )}
-      >
-        <span className="h-2 w-4/5 rounded-full bg-muted" />
-        <span className="h-2 w-3/5 rounded-full bg-muted" />
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the selected-tab style. */
-export function tabsSummary(state: StudioState): string {
-  return (
-    TAB_OPTIONS.find((o) => o.value === state.tabStyle)?.label ?? state.tabStyle
-  )
-}
 
 export function TabsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <TabsHero state={state} />
       <SelectRow
         label="Style"
         value={state.tabStyle}

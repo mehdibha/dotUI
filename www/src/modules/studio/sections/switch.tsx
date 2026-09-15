@@ -9,10 +9,9 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { Hero } from "../hero"
 import { ControlGroup } from "../rows"
-import type { Studio, StudioState } from "../state"
-import { fillLabel, FillRow, fillOf, HERO_ROW } from "./checkbox"
+import type { Studio } from "../state"
+import { FillRow } from "./checkbox"
 import type { CheckFill } from "./checkbox"
 
 /* -------------------------------- Specimen --------------------------------- */
@@ -36,33 +35,9 @@ export function DemoSwitch({
   )
 }
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function SwitchHero({ state }: { state: StudioState }) {
-  const fill = fillOf(state)
-  return (
-    <Hero className="gap-3 p-4">
-      <label className={cn(HERO_ROW, "justify-between")}>
-        Auto-save
-        <DemoSwitch fill={fill} />
-      </label>
-      <label className={cn(HERO_ROW, "justify-between")}>
-        Usage analytics
-        <DemoSwitch on={false} fill={fill} />
-      </label>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the family fill school, the section's one axis. */
-export function switchSummary(state: StudioState): string {
-  return fillLabel(state)
-}
-
 export function SwitchSection({ studio }: { studio: Studio }) {
   return (
     <ControlGroup>
-      <SwitchHero state={studio.state} />
       <FillRow studio={studio} />
     </ControlGroup>
   )

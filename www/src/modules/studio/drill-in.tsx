@@ -3,13 +3,13 @@
 /* The drill-in panel — the chosen frame (Aug 2026). The index is a run of
    UNTITLED family clusters — each fuses its rows into one ControlGroup card,
    and the gaps alone carry the structure (the iOS-Settings grouped look):
-   label over its muted value on the left, a state-driven micro-preview on the
-   right. Weight survives as ordering — identity first. (Per-cluster row
-   heights were tried and reverted — uniform h-14 keeps the scan rhythm.)
+   one line per chapter — label, its muted value where the demo can't carry
+   it, and a state-driven micro-preview on the right. Weight survives as
+   ordering — identity first. (Per-cluster row heights were tried and
+   reverted — uniform h-14 keeps the scan rhythm.)
    Tapping a row swaps panes instantly — control feedback, never gated on
    motion (slide/fade drill-ins were tried and dropped, Aug 2026).
-   The chapter page has room, so the section body renders in its original
-   form — hero inline at the head of its group. */
+   The chapter page renders the section body as-is — controls only. */
 
 import { Fragment, useEffect, useRef, useState } from "react"
 import { ChevronLeftIcon } from "lucide-react"
@@ -22,7 +22,7 @@ import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
-import { ControlGroup, GroupTitle, ROW_LABEL } from "./rows"
+import { ControlGroup, GroupTitle, ROW_LABEL, ROW_VALUE } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, Studio } from "./state"
 
@@ -42,70 +42,15 @@ const CARD =
 function IndexRow({
   chapter,
   studio,
-  compact,
   onPress,
 }: {
   chapter: IndexChapter
   studio: Studio
-  compact?: boolean
   onPress: () => void
 }) {
   const status = studio.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
-  // The label column: title (with its modified dot), and the live value
-  // beneath it — first segment only, one word-ish.
-  const label = (
-    <span
-      className={cn(
-        "flex min-w-0 flex-col items-start gap-px",
-        !compact && "w-24 shrink-0",
-      )}
-    >
-      {/* No truncation: the title row may overflow the w-24 column into the
-          slack before the demo strip, so the chip always sits right after
-          the full title. */}
-      <span className="flex items-center gap-2">
-        <span className={cn(ROW_LABEL, "whitespace-nowrap")}>
-          {chapter.label}
-        </span>
-        {status.modified && (
-          <span
-            aria-label="Modified"
-            className="size-1 shrink-0 rounded-full bg-accent"
-          />
-        )}
-      </span>
-      <span className="max-w-full truncate text-xs text-fg-muted/60">
-        {chapter.summary(studio.state).split(" · ")[0]}
-      </span>
-    </span>
-  )
-  // Compact: one line — title left, specimen right. For the set-and-forget
-  // page-chrome rows; nothing crops, everything fits.
-  if (compact)
-    return (
-      <RacButton
-        data-row
-        data-chapter={chapter.id}
-        onPress={onPress}
-        className={cn(CARD, "flex items-center gap-5")}
-      >
-        {label}
-        <span className="ml-auto flex min-w-0 items-center gap-3">
-          {Demo && (
-            <span
-              aria-hidden
-              className="pointer-events-none flex shrink-0 items-center"
-            >
-              <Demo state={studio.state} />
-            </span>
-          )}
-        </span>
-      </RacButton>
-    )
-
-  // Label left, then the illustration strip. No chevron — tapping is the
-  // only affordance the rows need.
+  const value = chapter.summary?.(studio.state)
   return (
     <RacButton
       data-row
@@ -113,13 +58,27 @@ function IndexRow({
       onPress={onPress}
       className={cn(CARD, "flex items-center gap-5 pr-0")}
     >
-      {label}
+      {/* The modified marker lives in the row's edge, one column down the
+          list, never in the text run where it reads as punctuation. */}
+      {status.modified && (
+        <span
+          aria-label="Modified"
+          className="absolute inset-y-0 left-0 my-auto h-4 w-0.5 rounded-r-full bg-accent"
+        />
+      )}
+      <span className="flex min-w-0 items-center gap-2.5">
+        <span className={cn(ROW_LABEL, "shrink-0 whitespace-nowrap")}>
+          {chapter.label}
+        </span>
+        {value && <span className={cn(ROW_VALUE, "min-w-0")}>{value}</span>}
+      </span>
       {/* A strip that FITS right-aligns (ml-auto) and centers (my-auto); one
-          that OVERFLOWS collapses its auto margins and clips at the edges. */}
+          that OVERFLOWS collapses its auto margins and clips at the edges.
+          Its floor is what a long value truncates against. */}
       {Demo && (
         <span
           aria-hidden
-          className="pointer-events-none ml-auto flex h-full min-w-0 flex-1 overflow-hidden py-1.5"
+          className="pointer-events-none ml-auto flex h-full min-w-28 flex-1 overflow-hidden py-1.5"
         >
           <span className="my-auto ml-auto flex items-center gap-2 pr-3.5">
             <Demo state={studio.state} />
@@ -185,17 +144,19 @@ export function DrillInPanel({
           inert={!!page}
         >
           {index.map((group, i) => (
-            <ControlGroup key={i}>
-              {group.chapters.map((chapter) => (
-                <IndexRow
-                  key={chapter.id}
-                  chapter={chapter}
-                  studio={studio}
-                  compact={group.compact}
-                  onPress={() => setActiveId(chapter.id)}
-                />
-              ))}
-            </ControlGroup>
+            <Fragment key={i}>
+              {group.section && <GroupTitle>{group.section}</GroupTitle>}
+              <ControlGroup>
+                {group.chapters.map((chapter) => (
+                  <IndexRow
+                    key={chapter.id}
+                    chapter={chapter}
+                    studio={studio}
+                    onPress={() => setActiveId(chapter.id)}
+                  />
+                ))}
+              </ControlGroup>
+            </Fragment>
           ))}
         </div>
 

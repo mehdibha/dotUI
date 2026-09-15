@@ -1,19 +1,12 @@
 "use client"
 
 /* Skeleton — how skeletons idle while content loads: shimmer vs pulse vs
-   none. The hero is the registry Skeleton under a provider carrying only
-   this chapter's param — it shows exactly what the preview does. */
+   none. */
 
-import { useMemo } from "react"
-
-import { DesignSystemProvider } from "@/lib/styles"
-import { Skeleton } from "@/registry/ui/skeleton"
-
-import { ANIMATION_OPTIONS, resolveSkeleton } from "../axes/skeleton"
-import { Hero } from "../hero"
+import { ANIMATION_OPTIONS } from "../axes/skeleton"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -90,43 +83,10 @@ const SKELETON_OPTIONS: SelectRowOption[] = ANIMATION_OPTIONS.map((option) => ({
   illustration: GLYPHS[option.value],
 }))
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-/* One content card, wearing the idle treatment. */
-export function SkeletonHero({ state }: { state: StudioState }) {
-  const params = useMemo(() => resolveSkeleton(state).params, [state])
-  return (
-    <Hero>
-      <div className="flex min-h-16 items-center rounded-lg border border-border/60 bg-card p-3">
-        <DesignSystemProvider params={params}>
-          <Skeleton isLoading>
-            <div className="flex items-center gap-2.5">
-              <span data-skeleton="circle" className="size-8" />
-              <div className="flex flex-col gap-1.5">
-                <span data-skeleton="block" className="h-2.5 w-24 rounded-sm" />
-                <span data-skeleton="block" className="h-2.5 w-16 rounded-sm" />
-              </div>
-            </div>
-          </Skeleton>
-        </DesignSystemProvider>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the idle animation. */
-export function skeletonSummary(state: StudioState): string {
-  return (
-    ANIMATION_OPTIONS.find((o) => o.value === state.skeletonAnimation)?.label ??
-    state.skeletonAnimation
-  )
-}
-
 export function SkeletonSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <SkeletonHero state={state} />
       <SelectRow
         label="Animation"
         value={state.skeletonAnimation}

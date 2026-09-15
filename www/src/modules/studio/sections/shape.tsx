@@ -8,21 +8,14 @@
    This section owns radius resolution for the whole panel — Space, Focus,
    Buttons and Inputs read `roleRadiusPx` rather than re-deriving it. */
 
-import type { CSSProperties } from "react"
-
-import { cn } from "@/registry/lib/utils"
-
 import {
   CORNER_SHAPE_OPTIONS,
   cornerShapeStyle,
-  roleRadiusPx,
-  roleRatio,
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
-import { Hero } from "../hero"
 import {
   ControlGroup,
   GroupTitle,
@@ -41,68 +34,7 @@ function rolePxLabel(px: number, ratio: number): string {
   return `${Math.round(px * ratio * 10) / 10}px`
 }
 
-/* Nested-surfaces hero: page → card → popover → item, plus a button on the
-   card — one specimen per role, every corner wearing its resolved radius 1:1. */
-const NEST_BOX = "border border-fg/10 bg-fg/3 shadow-xs"
-
-function RoleLabel({ name, px }: { name: string; px?: string }) {
-  return (
-    <div className="flex items-baseline justify-between gap-3 text-xs text-fg-muted">
-      <span className="truncate">{name}</span>
-      {px && (
-        <span className="shrink-0 font-mono text-[10px] tabular-nums">
-          {px}
-        </span>
-      )}
-    </div>
-  )
-}
-
-export function ShapeHero({ state }: { state: StudioState }) {
-  const px = (key: ShapeRoleKey) =>
-    rolePxLabel(state.radiusPx, roleRatio(state, key))
-  const shape = (key: ShapeRoleKey): CSSProperties => ({
-    borderRadius: roleRadiusPx(state, key),
-    ...cornerShapeStyle(state.cornerShape),
-  })
-  return (
-    <Hero>
-      <div
-        className={cn(NEST_BOX, "flex flex-col gap-2.5 p-3")}
-        style={shape("rolePanel")}
-      >
-        <RoleLabel name="Card" px={px("rolePanel")} />
-        <div
-          className={cn(NEST_BOX, "flex flex-col gap-2 p-2.5")}
-          style={shape("roleSurface")}
-        >
-          <RoleLabel name="Popover" px={px("roleSurface")} />
-          <div
-            className={cn(NEST_BOX, "px-2.5 py-1.5")}
-            style={shape("roleItem")}
-          >
-            <RoleLabel name="Item" px={px("roleItem")} />
-          </div>
-        </div>
-        <div
-          className={cn(
-            NEST_BOX,
-            "flex items-baseline gap-2 self-start px-3 py-1.5",
-          )}
-          style={shape("roleControl")}
-        >
-          <span className="text-xs text-fg-muted">Button</span>
-          <span className="font-mono text-[10px] text-fg-muted tabular-nums">
-            {px("roleControl")}
-          </span>
-        </div>
-      </div>
-    </Hero>
-  )
-}
-
-/** Mini specimen for a character card: its surface + control corners nested,
- *  echoing the section's corner preview. */
+/** Mini specimen for a character card: its surface + control corners nested. */
 function CharacterGlyph({ vector }: { vector: Record<ShapeRoleKey, string> }) {
   const arc = (id: string, size: number) => {
     const ratio = SHAPE_RUNGS[rungIndex(id)]?.ratio ?? 1
@@ -141,7 +73,9 @@ export function shapeSummary(state: StudioState): string {
   const corner =
     CORNER_SHAPE_OPTIONS.find((o) => o.value === state.cornerShape)?.label ??
     state.cornerShape
-  return `${corner} · ${state.radiusPx}px`
+  return state.cornerShape === "round"
+    ? `${state.radiusPx}px`
+    : `${corner} ${state.radiusPx}px`
 }
 
 export function ShapeSection({ studio }: { studio: Studio }) {
@@ -168,7 +102,6 @@ export function ShapeSection({ studio }: { studio: Studio }) {
   return (
     <>
       <ControlGroup>
-        <ShapeHero state={state} />
         {/* Self-demo: the row's own corners wear the value, 1:1. */}
         <SliderRow
           label="Radius"
