@@ -6,6 +6,16 @@ import toggleButtonMeta from "./meta"
    params — change both together. `selected` is the toggle's own look, with
    its own hover/press feedback. */
 
+/* Raised: the Radix classic 3D bevel. Glossy: iOS 26 buttons, fit against a
+   device capture — a translucent fill, a hairline specular ring lit top and
+   bottom, a faint glow pooled at both edges. */
+const RAISED =
+  "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]"
+const RAISED_SECONDARY =
+  "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]"
+const GLOSSY =
+  "isolate shadow-sm before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.2),transparent_30%,rgb(255_255_255/0.2))] before:mask-[linear-gradient(#000_0_0),linear-gradient(#000_0_0)] before:mask-exclude before:[mask-clip:content-box,border-box] before:p-[0.75px] after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-[radial-gradient(65%_35%_at_50%_0%,rgb(255_255_255/0.05),transparent_70%),radial-gradient(65%_35%_at_50%_100%,rgb(255_255_255/0.05),transparent_70%)]"
+
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
     base: [
@@ -17,9 +27,9 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
+          "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
+          "border text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
         quiet:
           "bg-transparent text-fg disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
       },
@@ -74,34 +84,31 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     },
   },
   params: {
+    /* Each family owns the fill it reshapes (quiet and link stay flat, as in
+       every system with an aesthetic axis: Radix classic, Untitled UI, Primer,
+       Geist), so a variant ships exactly one background. */
     style: {
-      flat: {},
-      outline: {
+      flat: {
         variants: {
           variant: {
-            primary:
-              "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-            secondary: "shadow-[0_1px_0_rgb(0_0_0/0.08)]",
+            primary: "bg-primary",
+            secondary: "border-border-control bg-neutral",
           },
         },
       },
       raised: {
         variants: {
           variant: {
-            primary:
-              "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
-            secondary:
-              "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
+            primary: ["bg-primary", RAISED],
+            secondary: ["border-border-control bg-neutral", RAISED_SECONDARY],
           },
         },
       },
-      elevated: {
+      glossy: {
         variants: {
           variant: {
-            primary:
-              "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
-            secondary:
-              "border-transparent shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
+            primary: ["bg-primary/90", GLOSSY],
+            secondary: ["border-transparent bg-neutral/85", GLOSSY],
           },
         },
       },

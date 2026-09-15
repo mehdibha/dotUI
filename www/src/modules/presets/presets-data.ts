@@ -114,8 +114,6 @@ export const PRESETS: Preset[] = [
       radiusPx: 10.64,
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
       bodyFont: "Inter",
-      // Stripe's "floating hairline": a 1px drop shadow riding on the control.
-      buttonStyle: "outline",
     },
   }),
   definePreset({
@@ -202,6 +200,51 @@ export const PRESETS: Preset[] = [
       radiusPx: 6,
       // Notion ships NotionInter, a customized Inter.
       bodyFont: "Inter",
+    },
+  }),
+  definePreset({
+    id: "ios",
+    name: "iOS",
+    description: "System blue, glossy capsules.",
+    swatch: "#007aff",
+    // iOS 26, measured on the simulator (2026-09-14).
+    state: {
+      brand: "#007aff",
+      // systemGray #8e8e93: near-neutral with a faint blue cast.
+      neutralHue: grayHue("#8e8e93"),
+      primary: "accent",
+      // Menus and cards sit around 13–14pt; every control is a continuous-corner
+      // capsule.
+      radiusPx: 14,
+      cornerShape: "squircle",
+      buttonStyle: "glossy",
+      buttonRadius: "pill",
+      buttonHover: "lighten",
+      buttonPress: "scale",
+      // 44pt touch targets, 17pt body, bold tight large titles.
+      density: "comfortable",
+      typeBase: 17,
+      headingWeight: "700",
+      headingTracking: "tight",
+      // SF Pro is proprietary; Inter is the closest free grotesque.
+      bodyFont: "Inter",
+      // Dark runs a true-black page.
+      modes: modes({ dark: 0 }),
+      // Grouped lists: white cards on a gray page, no hairline in light;
+      // translucent floating layers.
+      surfaceStrategy: "adaptive",
+      surfaceDepth: "flat",
+      surfaceCanvas: "tinted",
+      surfaceMaterial: "glass",
+      segmentedSelected: "raised",
+      checkFill: "accent",
+      checkCorner: "circle",
+      inputStyle: "filled",
+      menuIndicator: "check-start",
+      menuScale: "large",
+      motionCharacter: "spring",
+      mobileDialogs: "sheet",
+      scrollbarStyle: "overlay",
     },
   }),
   definePreset({
