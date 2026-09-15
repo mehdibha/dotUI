@@ -1,3 +1,4 @@
+import { Badge } from "@/registry/ui/badge"
 import {
   Table,
   TableBody,
@@ -9,21 +10,32 @@ import {
 } from "@/registry/ui/table"
 
 const columns = [
-  { name: "Name", id: "name", isRowHeader: true },
-  { name: "Role", id: "role" },
+  { name: "Invoice", id: "invoice", isRowHeader: true },
   { name: "Status", id: "status" },
+  { name: "Amount", id: "amount" },
 ]
 
 const data = [
-  { id: 1, name: "John Doe", role: "Developer", status: "Active" },
-  { id: 2, name: "Jane Smith", role: "Designer", status: "Active" },
-  { id: 3, name: "Bob Johnson", role: "Manager", status: "Away" },
+  { id: 1, invoice: "INV-0041", status: "Paid", amount: "$250.00" },
+  { id: 2, invoice: "INV-0042", status: "Pending", amount: "$150.00" },
+  { id: 3, invoice: "INV-0043", status: "Paid", amount: "$350.00" },
+  { id: 4, invoice: "INV-0044", status: "Overdue", amount: "$450.00" },
 ]
+
+const statusVariant = {
+  Paid: "success",
+  Pending: "neutral",
+  Overdue: "danger",
+} as const
 
 export function TableDemo() {
   return (
-    <TableContainer>
-      <Table aria-label="Team members">
+    <TableContainer className="w-72">
+      <Table
+        aria-label="Invoices"
+        selectionMode="multiple"
+        defaultSelectedKeys={[2]}
+      >
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn isRowHeader={column.isRowHeader}>
@@ -34,9 +46,17 @@ export function TableDemo() {
         <TableBody items={data}>
           {(item) => (
             <TableRow columns={columns}>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.role}</TableCell>
-              <TableCell>{item.status}</TableCell>
+              <TableCell>{item.invoice}</TableCell>
+              <TableCell>
+                <Badge
+                  variant={
+                    statusVariant[item.status as keyof typeof statusVariant]
+                  }
+                >
+                  {item.status}
+                </Badge>
+              </TableCell>
+              <TableCell className="tabular-nums">{item.amount}</TableCell>
             </TableRow>
           )}
         </TableBody>

@@ -127,6 +127,7 @@ export const componentsData: ComponentCategory[] = [
         name: "CheckboxGroup",
         slug: "checkbox-group",
         href: "/docs/components/checkbox-group",
+        scale: 0.8,
         status: "done",
       },
       {
@@ -231,7 +232,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Alert",
         slug: "alert",
         href: "/docs/components/alert",
-        scale: 0.8,
+        scale: 0.75,
         status: "done",
       },
       {
@@ -245,6 +246,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Toast",
         slug: "toast",
         href: "/docs/components/toast",
+        scale: 0.8,
         status: "pending",
       },
       {
@@ -319,6 +321,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Pagination",
         slug: "pagination",
         href: "/docs/components/pagination",
+        scale: 0.85,
         status: "in review",
       },
       {
@@ -368,7 +371,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Table",
         slug: "table",
         href: "/docs/components/table",
-        scale: 0.9,
+        scale: 0.75,
         status: "pending",
       },
       {
