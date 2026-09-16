@@ -41,6 +41,8 @@ const radialDefaults = {
   barPadding: 0.2,
   stackPadding: 0.04,
   gridTicks: 4,
+  // The polar grid paints `theme.grid` (currentColor) at full opacity.
+  gridStroke: "var(--color-border)",
   trackFill: "var(--color-muted)",
   labelFontSize: 11,
 } as const;
@@ -248,6 +250,7 @@ export function radialBarChartSpec<TDatum>(
           ticks: options.gridTicks ?? radialDefaults.gridTicks,
           shape: "circle",
           labels: false,
+          stroke: radialDefaults.gridStroke,
         }),
       ]
     : [];

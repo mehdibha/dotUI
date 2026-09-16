@@ -43,10 +43,14 @@ import {
 } from "@/components/ui/chart";
 
 /* Radar geometry the shared defaults do not cover — a radar reads as a shape,
-   so its fill is far heavier than a cartesian area's. */
+   so its fill is far heavier than a cartesian area's and its outline lighter.
+   The polar guides paint `theme.grid` (currentColor) at full opacity, unlike
+   the cartesian grid's 0.11, so rings and spokes take the border token. */
 const radarDefaults = {
   radiusRatio: 0.78,
   fill: 0.6,
+  strokeWidth: 1.5,
+  gridStroke: "var(--color-border)",
   gridTicks: 4,
   /** Half the gap between the two lines of a detailed circumference label. */
   labelLine: 7,
@@ -185,12 +189,20 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
     );
   }
   if (grid) {
-    guides.push(radialGrid({ ticks, shape, labels: false }));
+    guides.push(
+      radialGrid({
+        ticks,
+        shape,
+        labels: false,
+        stroke: radarDefaults.gridStroke,
+      }),
+    );
   }
   if (spokes || axes) {
     guides.push(
       angleGrid({
         labels: axes,
+        stroke: radarDefaults.gridStroke,
         /* Spokes and circumference labels are one guide, so labels without
            spokes means an invisible stroke. */
         strokeOpacity: spokes ? undefined : 0,
@@ -236,7 +248,7 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
         ...channels,
         id: `radar-line-${index}`,
         curve: curveLinearClosed,
-        strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
+        strokeWidth: options.strokeWidth ?? radarDefaults.strokeWidth,
       }),
       ...((options.points ?? chartDefaults.points)
         ? [
