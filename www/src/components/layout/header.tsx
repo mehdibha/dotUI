@@ -52,6 +52,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <ProgressiveBlur />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
+        <MobileMenu items={items} />
         <Logo />
         {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
             here next to the logo instead. Renders null off docs pages. */}
@@ -125,7 +126,6 @@ export function Header({ className, items = [] }: HeaderProps) {
             Open studio
           </LinkButton>
         )}
-        <MobileMenu items={items} />
       </div>
     </header>
   )
