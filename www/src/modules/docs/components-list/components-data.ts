@@ -371,14 +371,14 @@ export const componentsData: ComponentCategory[] = [
         name: "Table",
         slug: "table",
         href: "/docs/components/table",
-        scale: 0.75,
+        scale: 0.5,
         status: "pending",
       },
       {
         name: "Card",
         slug: "card",
         href: "/docs/components/card",
-        fill: true,
+        scale: 0.75,
         status: "done",
       },
       {

@@ -10,16 +10,48 @@ import {
 } from "@/registry/ui/table"
 
 const columns = [
-  { name: "Invoice", id: "invoice", isRowHeader: true },
+  { name: "Customer", id: "customer", isRowHeader: true, allowsSorting: true },
+  { name: "Email", id: "email" },
   { name: "Status", id: "status" },
-  { name: "Amount", id: "amount" },
+  { name: "Amount", id: "amount", className: "text-right" },
 ]
 
 const data = [
-  { id: 1, invoice: "INV-0041", status: "Paid", amount: "$250.00" },
-  { id: 2, invoice: "INV-0042", status: "Pending", amount: "$150.00" },
-  { id: 3, invoice: "INV-0043", status: "Paid", amount: "$350.00" },
-  { id: 4, invoice: "INV-0044", status: "Overdue", amount: "$450.00" },
+  {
+    id: 1,
+    customer: "Ava Chen",
+    email: "ava@acme.com",
+    status: "Paid",
+    amount: "$1,250.00",
+  },
+  {
+    id: 2,
+    customer: "Liam Patel",
+    email: "liam@northwind.io",
+    status: "Pending",
+    amount: "$480.00",
+  },
+  {
+    id: 3,
+    customer: "Maya Rossi",
+    email: "maya@globex.co",
+    status: "Paid",
+    amount: "$3,200.00",
+  },
+  {
+    id: 4,
+    customer: "Noah Kim",
+    email: "noah@initech.dev",
+    status: "Overdue",
+    amount: "$720.00",
+  },
+  {
+    id: 5,
+    customer: "Sofia Alvarez",
+    email: "sofia@umbrella.org",
+    status: "Paid",
+    amount: "$950.00",
+  },
 ]
 
 const statusVariant = {
@@ -30,15 +62,20 @@ const statusVariant = {
 
 export function TableDemo() {
   return (
-    <TableContainer className="w-72">
+    <TableContainer className="w-120">
       <Table
-        aria-label="Invoices"
+        aria-label="Customers"
         selectionMode="multiple"
-        defaultSelectedKeys={[2]}
+        defaultSelectedKeys={[3]}
+        sortDescriptor={{ column: "customer", direction: "ascending" }}
       >
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn isRowHeader={column.isRowHeader}>
+            <TableColumn
+              isRowHeader={column.isRowHeader}
+              allowsSorting={column.allowsSorting}
+              className={column.className}
+            >
               {column.name}
             </TableColumn>
           )}
@@ -46,7 +83,8 @@ export function TableDemo() {
         <TableBody items={data}>
           {(item) => (
             <TableRow columns={columns}>
-              <TableCell>{item.invoice}</TableCell>
+              <TableCell className="font-medium">{item.customer}</TableCell>
+              <TableCell className="text-fg-muted">{item.email}</TableCell>
               <TableCell>
                 <Badge
                   variant={
@@ -56,7 +94,9 @@ export function TableDemo() {
                   {item.status}
                 </Badge>
               </TableCell>
-              <TableCell className="tabular-nums">{item.amount}</TableCell>
+              <TableCell className="text-right tabular-nums">
+                {item.amount}
+              </TableCell>
             </TableRow>
           )}
         </TableBody>
