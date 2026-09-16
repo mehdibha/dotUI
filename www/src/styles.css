@@ -72,6 +72,15 @@
 :root {
   --mobile-menu-width: min(80vw, 20rem);
 }
+
+/* The mobile menu pushes the page aside rather than covering it, so the page
+   must stay at full opacity: hide the drawer's backdrop (the registry Drawer
+   has no per-instance backdrop hook; it's the popup's previous sibling's
+   sibling). Outside-tap dismissal is react-aria's, not the backdrop's. */
+:has(> [role="presentation"] > .mobile-menu)
+  > [role="presentation"]:first-child {
+  visibility: hidden;
+}
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),

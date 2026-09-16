@@ -91,10 +91,11 @@ export function MobileMenu({ items }: { items: PageTree.Node[] }) {
         </svg>
       </Button>
       {/* Same surface as the page it pushes aside: no border, radius or
-          shadow — the pushed page is what gets dimmed and rounded. */}
+          shadow — the pushed page is what gets outlined and rounded. The
+          `mobile-menu` class is the hook styles.css uses to hide the backdrop. */}
       <Drawer
         placement="left"
-        className="w-(--mobile-menu-width) rounded-none border-0 bg-bg shadow-none"
+        className="mobile-menu w-(--mobile-menu-width) rounded-none border-0 bg-bg shadow-none"
       >
         <DialogContent
           aria-label="Menu"
