@@ -66,6 +66,12 @@
 :root {
   view-transition-name: none;
 }
+
+/* Shared by the mobile menu drawer (portaled to body) and the page indent it
+   pushes aside — both must agree on the width. */
+:root {
+  --mobile-menu-width: min(80vw, 20rem);
+}
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
