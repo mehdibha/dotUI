@@ -49,11 +49,13 @@ function AppLayout() {
           Claude-app style: the page slides right by the menu width, follows
           the finger 1:1 while swiping (transition off whenever swipe progress
           is non-zero), and rounds its corner over the dark layer above. The
-          hairline is a spread shadow, not a border, so nothing shifts: it
-          sits outside the box and is only visible while pushed.
+          hairline is an inset spread shadow, not a border, so nothing shifts;
+          inset because the sidebar is opaque and would cover a line drawn
+          outside the box. Active-only, since inset it would otherwise show
+          along the viewport edges.
           Page drawers (docs demos, studio) live under their own provider
           below so they never trigger the push. */}
-      <DrawerIndent className="origin-left shadow-[0_0_0_1px_color-mix(in_oklab,var(--color-fg)_25%,var(--color-bg))] duration-[calc(500ms*var(--indent-transition))] [--header-height:--spacing(14)] [--indent-transition:calc(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1))] data-active:transform-[translate3d(calc(var(--mobile-menu-width)*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:rounded-3xl">
+      <DrawerIndent className="origin-left transition-[transform,border-radius,box-shadow] duration-[calc(500ms*var(--indent-transition))] [--header-height:--spacing(14)] [--indent-transition:calc(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1))] data-active:transform-[translate3d(calc(var(--mobile-menu-width)*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:rounded-3xl data-active:shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--color-fg)_25%,var(--color-bg))]">
         <Header items={items} />
         <DrawerProvider>
           <main id="content">
