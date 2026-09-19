@@ -105,9 +105,9 @@ export const baseRegistryCss = {
 			"--radius-3xl": "calc(var(--radius) * 3)",
 			"--radius-4xl": "calc(var(--radius) * 4)",
 			"--radius-full": "calc(infinity * 1px)",
-			"--font-sans": "var(--font-geist-sans)",
+			"--font-sans": '"Geist", ui-sans-serif, system-ui, sans-serif',
 			"--font-heading": "var(--font-sans)",
-			"--font-mono": "var(--font-geist-mono)",
+			"--font-mono": '"Geist Mono", ui-monospace, "SF Mono", monospace',
 		},
 	},
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">;

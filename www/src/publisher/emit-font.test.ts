@@ -16,6 +16,7 @@ type FontItem = {
     variable: string
     subsets?: string[]
     dependency?: string
+    selector?: string
   }
 }
 
@@ -47,6 +48,9 @@ describe("emitFontItem", () => {
     const mono = emitFontItem("font-mono-jetbrains-mono") as unknown as FontItem
     expect(mono.font.variable).toBe("--font-mono")
     expect(mono.font.family).toMatch(/^'JetBrains Mono Variable', /)
+    // Scoped, so the CLI never puts `font-mono` on <html>.
+    expect(mono.font.selector).toBe("pre, code, kbd, samp")
+    expect(heading.font.selector).toBeUndefined()
   })
 
   test("unknown families and non-font names are not items", () => {

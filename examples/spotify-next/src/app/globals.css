@@ -42,7 +42,7 @@
     --radius-full: calc(infinity * 1px);
     --font-sans: var(--font-sans);
     --font-heading: var(--font-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-mono: var(--font-mono);
     --color-bg: var(--bg);
     --color-muted: var(--muted);
     --color-inverse: var(--inverse);
@@ -443,6 +443,9 @@
     }
   html {
     @apply font-sans font-sans;
+    }
+  pre, code, kbd, samp {
+    @apply font-mono;
     }
 }
   ::selection {

@@ -409,13 +409,11 @@ function PresetOptionRow({
 
   return (
     <>
+      {/* Color only: the dot has no text, and tokens would make the provider
+          fetch the preset's fonts for nothing. */}
       <DesignSystemProvider
         scoped
-        params={designSystem.componentParams}
-        tokens={designSystem.tokens}
-        density={designSystem.density}
         color={designSystem.color}
-        icons={designSystem.icons}
         forcedMode={forcedMode}
       >
         <span

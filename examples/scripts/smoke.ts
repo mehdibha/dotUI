@@ -458,6 +458,9 @@ async function regenerate(
     path.join(cwd, framework.stylesheet),
     '@import "tailwindcss";\n',
   )
+  for (const [file, content] of Object.entries(framework.seeds)) {
+    writeFileSync(path.join(cwd, file), content)
+  }
 
   const shadcnEnv = { ...noProxy(), REGISTRY_URL: shadcnBaseUrl }
   await run(cwd, "pnpm", ["install"])

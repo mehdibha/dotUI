@@ -1,6 +1,12 @@
 import { useEffect } from "react"
 
-import { familyFromStack, FONT_SANS_VAR, googleFontsUrl } from "@/lib/fonts"
+import {
+  DEFAULT_BODY_FAMILY,
+  familyFromStack,
+  FONT_SANS_VAR,
+  googleFontsUrl,
+  siteFontStack,
+} from "@/lib/fonts"
 import { PRESETS } from "@/modules/presets/presets-data"
 
 /**
@@ -11,7 +17,8 @@ import { PRESETS } from "@/modules/presets/presets-data"
 export function presetLabelStack(presetId: string): string {
   const preset = PRESETS.find((p) => p.id === presetId)
   return (
-    preset?.designSystem.tokens[FONT_SANS_VAR] ?? "'Geist Variable', sans-serif"
+    preset?.designSystem.tokens[FONT_SANS_VAR] ??
+    siteFontStack(DEFAULT_BODY_FAMILY)
   )
 }
 

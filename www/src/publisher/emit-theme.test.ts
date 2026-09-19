@@ -242,6 +242,7 @@ describe("emitInitItem", () => {
     expect(item.registryDependencies).toEqual([
       "https://dotui.com/r/font-figtree",
       "https://dotui.com/r/font-heading-figtree",
+      "https://dotui.com/r/font-mono-geist-mono",
     ])
     // shadcn would place a CSS import after `@import "tailwindcss"`, where
     // bundlers drop it — the faces travel as font items instead.
@@ -259,6 +260,22 @@ describe("emitInitItem", () => {
     expect(
       Object.keys(v0.css ?? {}).find((key) => key.startsWith("@import url(")),
     ).toMatch(/fonts\.googleapis\.com.*Figtree/)
+  })
+
+  test("the default faces ship as font items and explicit stacks", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: { density: "default" as const, componentParams: {} },
+      registryRoot: "https://dotui.com",
+    })
+    // The base theme names faces only the site self-hosts; a consumer needs
+    // the items and the stacks.
+    expect(item.registryDependencies).toEqual([
+      "https://dotui.com/r/font-geist",
+      "https://dotui.com/r/font-mono-geist-mono",
+    ])
+    expect(item.cssVars?.theme?.["--font-sans"]).toMatch(/^'Geist'/)
+    expect(item.cssVars?.theme?.["--font-mono"]).toMatch(/^'Geist Mono'/)
   })
 
   test("a custom color recipe re-solves every literal in both modes", () => {

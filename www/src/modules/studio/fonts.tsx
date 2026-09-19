@@ -2,11 +2,18 @@
 
 import { useCallback, useEffect, useRef } from "react"
 
-import { ensureFontStylesheets, loadFontPreview } from "@/lib/fonts"
+import {
+  ensureFontStylesheets,
+  isSelfHosted,
+  loadFontPreviews,
+} from "@/lib/fonts"
 
-/** Load families into THIS document (the panel page, not the preview iframe). */
+/** Load families into THIS document (the panel page, not the preview iframe).
+ *  The defaults are self-hosted here and skipped. */
 export function useLoadedFamilies(families: (string | null)[]) {
-  const key = families.filter(Boolean).join("\n")
+  const key = families
+    .filter((family): family is string => !!family && !isSelfHosted(family))
+    .join("\n")
   useEffect(() => {
     if (key) ensureFontStylesheets(document, key.split("\n"))
   }, [key])
@@ -17,7 +24,8 @@ export function useLoadedFamilies(families: (string | null)[]) {
  * a ~500-font list fetches only the handful actually seen instead of every face
  * up front. Driven by scroll position (rows carry `data-preview-family`); the
  * callback ref wires it when the popover's ListBox mounts and tears it down on
- * unmount. `loadFontPreview` is idempotent, so re-scanning on scroll is cheap.
+ * unmount. `loadFontPreviews` skips what it already requested, so re-scanning
+ * on scroll is cheap.
  */
 export function useLazyFontPreviews() {
   const cleanupRef = useRef<(() => void) | null>(null)
@@ -32,15 +40,17 @@ export function useLazyFontPreviews() {
 
     const loadVisible = () => {
       const box = root.getBoundingClientRect()
+      const visible: string[] = []
       for (const el of root.querySelectorAll<HTMLElement>(
         "[data-preview-family]",
       )) {
         const r = el.getBoundingClientRect()
         if (r.top > box.bottom + 200) break // rows below the window; stop
         if (r.bottom >= box.top - 200 && el.dataset.previewFamily) {
-          loadFontPreview(document, el.dataset.previewFamily)
+          visible.push(el.dataset.previewFamily)
         }
       }
+      loadFontPreviews(document, visible)
     }
 
     let timer: ReturnType<typeof setTimeout> | undefined

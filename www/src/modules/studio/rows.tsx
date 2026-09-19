@@ -28,7 +28,7 @@ import {
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
 
-import { FONT_CATALOG, fontStack } from "@/lib/fonts"
+import { FONT_CATALOG, siteFontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -937,7 +937,7 @@ export function FontListPopover({
                     >
                       <span
                         data-preview-family={font.family}
-                        style={{ fontFamily: fontStack(font.family) }}
+                        style={{ fontFamily: siteFontStack(font.family) }}
                       >
                         {font.family}
                       </span>
@@ -985,7 +985,7 @@ export function FontPickerRow({
         <span className="flex min-w-0 items-center gap-1.5">
           <SelectValue
             className={cn(ROW_VALUE, "text-right")}
-            style={{ fontFamily: fontStack(selectedKey) }}
+            style={{ fontFamily: siteFontStack(selectedKey) }}
           />
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
         </span>

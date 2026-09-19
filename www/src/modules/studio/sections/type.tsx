@@ -6,7 +6,7 @@
 
 import { ChevronsUpDownIcon, RotateCcwIcon } from "lucide-react"
 
-import { fontStack } from "@/lib/fonts"
+import { siteFontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -93,7 +93,7 @@ export function TypeHero({ state }: { state: StudioState }) {
       <span
         className="block text-balance text-fg"
         style={{
-          fontFamily: fontStack(heading.family),
+          fontFamily: siteFontStack(heading.family),
           fontSize: heading.px,
           fontWeight: heading.weight,
           letterSpacing: TRACKING_EM[state.headingTracking],
@@ -105,7 +105,7 @@ export function TypeHero({ state }: { state: StudioState }) {
       <span
         className="block text-pretty text-fg-muted"
         style={{
-          fontFamily: fontStack(body.family),
+          fontFamily: siteFontStack(body.family),
           fontSize: body.px,
           lineHeight: LEADING_VALUES[state.bodyLeading],
         }}
@@ -116,7 +116,7 @@ export function TypeHero({ state }: { state: StudioState }) {
         <span
           className="flex h-7 shrink-0 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
           style={{
-            fontFamily: fontStack(ui.family),
+            fontFamily: siteFontStack(ui.family),
             fontSize: ui.px,
             fontWeight: ui.weight,
           }}
@@ -126,7 +126,7 @@ export function TypeHero({ state }: { state: StudioState }) {
         <span
           className="ml-auto flex h-6 shrink-0 items-center rounded-md bg-muted px-2 text-fg-muted"
           style={{
-            fontFamily: fontStack(code.family),
+            fontFamily: siteFontStack(code.family),
             fontSize: code.px,
           }}
         >
@@ -175,7 +175,7 @@ function AutoFontRow({
             {!value && <span className={ROW_VALUE}>Auto ·</span>}
             <span
               className={cn(ROW_VALUE, "text-right")}
-              style={{ fontFamily: fontStack(resolved) }}
+              style={{ fontFamily: siteFontStack(resolved) }}
             >
               {resolved}
             </span>
@@ -210,7 +210,7 @@ function ScaleLadder({ state }: { state: StudioState }) {
           key={step}
           className="text-fg"
           style={{
-            fontFamily: fontStack(heading.family),
+            fontFamily: siteFontStack(heading.family),
             fontSize: headingPx(state, step),
             fontWeight: heading.weight,
             letterSpacing: TRACKING_EM[state.headingTracking],

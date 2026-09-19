@@ -106,6 +106,11 @@ export function emitFontItem(name: string): RegistryItem | undefined {
       variable,
       subsets: ["latin"],
       dependency: `@fontsource-variable/${fontSlug(family)}`,
+      // Without a selector the CLI treats any `--font-mono` item as the page
+      // face: `font-mono` lands on <html>. Scope it to code elements instead.
+      ...(variable === FONT_MONO_VAR
+        ? { selector: "pre, code, kbd, samp" }
+        : {}),
     },
   }
   return item as unknown as RegistryItem

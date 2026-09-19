@@ -30,6 +30,7 @@ import {
   FONT_TOKEN_VARS,
   fontFamiliesFromTokens,
   googleFontsUrl,
+  withDefaultFontTokens,
 } from "@/lib/fonts"
 import {
   DEFAULT_COLOR_CONFIG,
@@ -146,12 +147,13 @@ function splitPresetTokens(
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
   const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
-  // One `registry:font` item per font token the preset sets. shadcn installs
-  // the face per framework (next/font on Next.js, @fontsource elsewhere) and
-  // sets the token variable — see emit-font.ts for why not a CSS `@import`.
-  const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
-    (name) => `${registryRoot}/r/${name}`,
-  )
+  // One `registry:font` item per font token, the defaults included — the
+  // consumer has no self-hosted Geist. shadcn installs the face per framework
+  // (next/font on Next.js, @fontsource elsewhere) and sets the token variable
+  // — see emit-font.ts for why not a CSS `@import`.
+  const fontDependencies = fontItemNamesForTokens(
+    withDefaultFontTokens(preset.tokens),
+  ).map((name) => `${registryRoot}/r/${name}`)
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
@@ -242,12 +244,15 @@ export function mergePresetCssFields(
     radius: preset.tokens?.["--radius"] ?? DEFAULT_RADIUS,
   }
   const dark: Record<string, string> = { ...base.cssVars?.dark }
+  // Font tokens ship explicit even at their defaults: the base theme's stacks
+  // name faces only the site hosts.
+  const tokens = withDefaultFontTokens(preset.tokens)
   // The color layer: every semantic token flattened to a literal per mode,
   // named shadcn-style in `:root`/`.dark` and aliased into the vocabulary.
   const engine = resolveColorConfig(preset.color ?? DEFAULT_COLOR_CONFIG)
   const literals = semanticLiterals(semanticsFor(preset.color), engine)
   const split = splitPresetTokens(
-    preset,
+    { ...preset, tokens },
     new Set([...FONT_TOKEN_VARS, ...Object.keys(theme)]),
     engine,
     literals,
@@ -294,7 +299,7 @@ export function mergePresetCssFields(
     )
   }
   if (options.googleFontsImport) {
-    const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
+    const fontFamilies = fontFamiliesFromTokens(tokens)
     if (fontFamilies.length > 0) {
       css[`@import url('${googleFontsUrl(fontFamilies)}')`] = {}
     }

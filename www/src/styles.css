@@ -3,9 +3,8 @@
    scroll-fade port we used to maintain inline here. App-only: registry items must
    not rely on these; the shipped base.css doesn't include them. */
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/josefin-sans";
 @import "@fontsource-variable/geist";
-@import "@fontsource/geist-mono";
+@import "@fontsource-variable/geist-mono";
 @import "./registry/styles.css";
 
 /* Site-only: a subtree can pin its own mode with `data-mode="light|dark"` (a
@@ -32,23 +31,13 @@
   line-gap-override: 0%;
   size-adjust: 99.9837%;
 }
-@font-face {
-  font-family: "Josefin Sans Variable Fallback";
-  src: local("Arial"), local("ArialMT");
-  ascent-override: 73.3225%;
-  descent-override: 24.4408%;
-  line-gap-override: 0%;
-  size-adjust: 102.2878%;
-}
 
 @theme {
   --font-sans:
     "Geist Variable", "Geist Variable Fallback", ui-sans-serif, system-ui,
     sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-  --font-josefin:
-    "Josefin Sans Variable", "Josefin Sans Variable Fallback", ui-sans-serif,
-    system-ui, sans-serif;
+  --font-mono:
+    "Geist Mono Variable", "Geist Mono Fallback", ui-monospace, monospace;
 
   --breakpoint-xs: 30rem;
   --breakpoint-3xl: 120rem;

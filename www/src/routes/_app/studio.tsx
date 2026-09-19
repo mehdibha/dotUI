@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
+import { GOOGLE_FONTS_PRECONNECT } from "@/lib/fonts"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ORIGIN } from "@/modules/presets/presets-data"
@@ -44,6 +45,8 @@ const searchDefaults = { preview: "cards" }
 
 export const Route = createFileRoute("/_app/studio")({
   validateSearch: createSearchSchema,
+  // Preset fonts come from Google; warm both origins before the first switch.
+  head: () => ({ links: GOOGLE_FONTS_PRECONNECT }),
   search: {
     middlewares: [stripSearchParams(searchDefaults)],
   },
