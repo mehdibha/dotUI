@@ -9,6 +9,7 @@ import { Separator } from "@/registry/ui/separator"
 import { GitHubIcon } from "@/components/icons/github"
 import { HeaderActionsSlot } from "@/components/layout/header-slot"
 import { Logo } from "@/components/layout/logo"
+import { MobileMenu } from "@/components/layout/mobile-menu"
 import { ProgressiveBlur } from "@/components/progressive-blur"
 import { SearchCommand } from "@/components/search-command"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -51,6 +52,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <ProgressiveBlur />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
+        <MobileMenu items={items} />
         <Logo />
         {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
             here next to the logo instead. Renders null off docs pages. */}
@@ -84,55 +86,9 @@ export function Header({ className, items = [] }: HeaderProps) {
         </nav>
       </div>
       <div className="flex items-center gap-0.5">
-        {/* One dialog, two triggers: RAC's DialogTrigger reaches pressables via
-            context, so the desktop search icon and the mobile menu button share
-            the same search surface — its empty state already lists the full
-            navigation, GitHub and the theme toggle, so mobile needs nothing else. */}
         <SearchCommand keyboardShortcut items={items}>
-          <Button
-            variant="quiet"
-            isIconOnly
-            aria-label="Search docs"
-            className="max-lg:hidden"
-          >
+          <Button variant="quiet" isIconOnly aria-label="Search docs">
             <SearchIcon />
-          </Button>
-          {/* Linear-style two-bar menu icon; no hover/press fill — those
-              states don't exist on touch. Bars sit at the center and shift
-              apart when closed; on open they collapse back and rotate into an
-              X (Linear's 160ms ease-out-quad). order-last keeps it at the far
-              edge past the slot's Export action on /studio. */}
-          <Button
-            variant="quiet"
-            isIconOnly
-            aria-label="Menu"
-            className="order-last hover:bg-transparent lg:hidden pressed:bg-transparent"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              aria-hidden
-              className="**:[rect]:origin-center **:[rect]:transition-transform **:[rect]:duration-160 **:[rect]:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-            >
-              <rect
-                x="1"
-                y="7.5"
-                width="14"
-                height="1"
-                rx="0.5"
-                className="translate-y-[-3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-45"
-              />
-              <rect
-                x="1"
-                y="7.5"
-                width="14"
-                height="1"
-                rx="0.5"
-                className="translate-y-[3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:-rotate-45"
-              />
-            </svg>
           </Button>
         </SearchCommand>
         <a
@@ -159,7 +115,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <HeaderActionsSlot />
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
-            to logo + menu — Studio stays reachable from the menu drawer. */}
+            to logo + search + menu — Studio stays reachable from the menu. */}
         {pathname !== "/studio" && (
           <LinkButton
             href="/studio"
