@@ -4,7 +4,6 @@ description: A toggle button allows a user to toggle a selection on or off.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ToggleButton.html
-wip: true
 ---
 
 <InteractiveDemo
@@ -26,45 +25,46 @@ npx shadcn@latest add @dotui/toggle-button
 
 ## Usage
 
-Use toggle buttons to allow users to toggle a selection on or off, like pinning or starring an item.
+A toggle button switches a selection on or off, like pinning or starring an item.
 
 ```tsx
-import { PinIcon } from "lucide-react"
 import { ToggleButton } from "@/components/ui/toggle-button"
 ```
 
 ```tsx
-<ToggleButton>
-  <PinIcon data-icon="inline-start" />
-  Pin
-</ToggleButton>
+<ToggleButton>Pin</ToggleButton>
 ```
+
+## Variants
+
+Use the `variant` prop to set the visual style of the toggle button.
+
+<Demo name="toggle-button/demos/variants" />
+
+## Sizes
+
+Use the `size` prop to set the size of the toggle button.
+
+<Demo name="toggle-button/demos/sizes" />
+
+## With icon
 
 Add the `data-icon="inline-start"` or `data-icon="inline-end"` attribute to the icon for the correct spacing.
 
+<Demo name="toggle-button/demos/prefix-and-suffix" />
+
+## Icon buttons
+
+Use the `isIconOnly` prop for icon-only toggle buttons.<br/>
+Provide an `aria-label` to give the button an accessible name.
+
+<Demo name="toggle-button/demos/icon-only" />
+
 ## Selection
 
-Use `defaultSelected` for uncontrolled state, or `isSelected` with `onChange` to control it. The value is a boolean.
+Use `defaultSelected` to set the initial state, or `isSelected` with `onChange` to control it.
 
-```tsx
-<ToggleButton defaultSelected>Pin</ToggleButton>
-
-<ToggleButton isSelected={isSelected} onChange={setSelected}>
-  Pin
-</ToggleButton>
-```
-
-## Examples
-
-<Examples className="sm:grid-cols-2 md:grid-cols-3">
-  <Example name="toggle-button/demos/default" title="Default" />
-  <Example name="toggle-button/demos/favorite-button" title="Favorite Toggle" />
-  <Example
-    name="toggle-button/demos/text-formatting-toolbar"
-    title="Text Formatting Toolbar"
-  />
-  <Example name="toggle-button/demos/view-switcher" title="View Switcher" />
-</Examples>
+<Demo name="toggle-button/demos/controlled" />
 
 ## API Reference
 

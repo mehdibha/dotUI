@@ -23,7 +23,6 @@ export default function Demo({
       size={size}
       isIconOnly={isIconOnly}
       isDisabled={isDisabled}
-      aria-label="Toggle pin"
     >
       <PinIcon data-icon="inline-start" className="rotate-45" />
       {children}
