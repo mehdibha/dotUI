@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { GOOGLE_FONTS_PRECONNECT } from "@/lib/fonts"
+import { GOOGLE_FONTS_PRECONNECT } from "@/lib/font-links"
 
 import { PreviewPage } from "./-preview-page"
 

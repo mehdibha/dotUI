@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
-import { GOOGLE_FONTS_PRECONNECT } from "@/lib/fonts"
+import { GOOGLE_FONTS_PRECONNECT } from "@/lib/font-links"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ORIGIN } from "@/modules/presets/presets-data"

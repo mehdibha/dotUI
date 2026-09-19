@@ -37,15 +37,6 @@ const SELF_HOSTED_STACKS: Record<string, string> = {
     "'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, monospace",
 }
 
-export const GOOGLE_FONTS_PRECONNECT = [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous" as const,
-  },
-]
-
 export type FontCategory =
   | "sans-serif"
   | "serif"
