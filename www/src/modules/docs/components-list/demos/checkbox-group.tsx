@@ -1,35 +1,29 @@
-import {
-  Checkbox,
-  CheckboxControl,
-  CheckboxIndicator,
-} from "@/registry/ui/checkbox"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
-import {
-  Description,
-  FieldContent,
-  FieldGroup,
-  Label,
-} from "@/registry/ui/field"
+import { Description, FieldGroup, Label } from "@/registry/ui/field"
 
-const addons = [
-  { id: "seats", label: "Extra seats", description: "$8 per user" },
-  { id: "sso", label: "Single sign-on", description: "$20 per month" },
+const channels = [
+  { id: "email", label: "Email", description: "Weekly digest" },
+  {
+    id: "push",
+    label: "Push",
+    description: "Mentions and replies",
+  },
+  { id: "sms", label: "SMS", description: "Security alerts" },
 ]
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["seats"]} className="w-64">
-      <Label>Add-ons</Label>
+    <CheckboxGroup defaultValue={["email", "push"]} className="w-44">
+      <Label>Notifications</Label>
       <FieldGroup>
-        {addons.map((addon) => (
-          <Checkbox key={addon.id} value={addon.id}>
-            <CheckboxControl>
-              <CheckboxIndicator />
-              <FieldContent>
-                <Label>{addon.label}</Label>
-                <Description>{addon.description}</Description>
-              </FieldContent>
-            </CheckboxControl>
+        {channels.map((channel) => (
+          <Checkbox key={channel.id} value={channel.id} className="items-start">
+            <CheckboxControl />
+            <div className="flex flex-col gap-0.5">
+              <Label>{channel.label}</Label>
+              <Description>{channel.description}</Description>
+            </div>
           </Checkbox>
         ))}
       </FieldGroup>
