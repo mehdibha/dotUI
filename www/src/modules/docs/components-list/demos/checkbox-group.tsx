@@ -3,13 +3,13 @@ import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import { Description, FieldGroup, Label } from "@/registry/ui/field"
 
 const channels = [
-  { id: "email", label: "Email", description: "Weekly digest and receipts" },
+  { id: "email", label: "Email", description: "Weekly digest" },
   {
     id: "push",
     label: "Push",
-    description: "Mentions and replies on your device",
+    description: "Mentions and replies",
   },
-  { id: "sms", label: "SMS", description: "Security alerts only" },
+  { id: "sms", label: "SMS", description: "Security alerts" },
 ]
 
 export function CheckboxGroupDemo() {
