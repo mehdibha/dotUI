@@ -2,24 +2,20 @@
 
 import { Suspense, lazy } from "react"
 
-// Lazy, not a static import: this same demo is dynamically imported via the
-// generated DemosIndex (for /docs/charts and the docs). A module imported both
-// statically and dynamically gets folded into the static chunk, which breaks the
-// dynamic import's default export in production (React #306). Keeping it dynamic
-// here lets Vite code-split it cleanly so both importers resolve it.
-const ChartBarDefault = lazy(
-  () => import("@/registry/ui/chart-bar/demos/default"),
-)
+// Lazy so the charts runtime stays out of the page's static chunk. Sibling
+// chart demos lazy-load registry demos for the same reason (and because a
+// module imported both statically and via DemosIndex breaks in production).
+const ChartBarBrowsers = lazy(() => import("./chart-bar.lazy"))
 
 export function ChartBarDemo() {
   return (
-    <div className="w-[360px] max-w-full">
+    <div className="w-[164px] max-w-full">
       <Suspense
         fallback={
-          <div className="h-64 w-full animate-pulse rounded-xl bg-muted" />
+          <div className="h-[96px] w-full animate-pulse rounded-xl bg-muted" />
         }
       >
-        <ChartBarDefault />
+        <ChartBarBrowsers />
       </Suspense>
     </div>
   )

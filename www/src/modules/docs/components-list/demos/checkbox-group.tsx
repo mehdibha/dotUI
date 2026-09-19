@@ -1,24 +1,37 @@
-import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import {
+  Checkbox,
+  CheckboxControl,
+  CheckboxIndicator,
+} from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
-import { FieldGroup, Label } from "@/registry/ui/field"
+import {
+  Description,
+  FieldContent,
+  FieldGroup,
+  Label,
+} from "@/registry/ui/field"
+
+const addons = [
+  { id: "seats", label: "Extra seats", description: "$8 per user" },
+  { id: "sso", label: "Single sign-on", description: "$20 per month" },
+]
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["updates", "security"]}>
-      <Label>Notification Preferences</Label>
-      <FieldGroup className="@container-normal!">
-        <Checkbox value="updates">
-          <CheckboxControl />
-          <Label>Product Updates</Label>
-        </Checkbox>
-        <Checkbox value="security">
-          <CheckboxControl />
-          <Label>Security Alerts</Label>
-        </Checkbox>
-        <Checkbox value="marketing">
-          <CheckboxControl />
-          <Label>Marketing Emails</Label>
-        </Checkbox>
+    <CheckboxGroup defaultValue={["seats"]} className="w-64">
+      <Label>Add-ons</Label>
+      <FieldGroup>
+        {addons.map((addon) => (
+          <Checkbox key={addon.id} value={addon.id}>
+            <CheckboxControl>
+              <CheckboxIndicator />
+              <FieldContent>
+                <Label>{addon.label}</Label>
+                <Description>{addon.description}</Description>
+              </FieldContent>
+            </CheckboxControl>
+          </Checkbox>
+        ))}
       </FieldGroup>
     </CheckboxGroup>
   )
