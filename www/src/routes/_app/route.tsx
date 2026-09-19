@@ -4,6 +4,7 @@ import { setResponseHeader } from "@tanstack/react-start/server"
 import type * as PageTree from "fumadocs-core/page-tree"
 
 import type { SerializedPageTree } from "@/lib/source"
+import { VercelAnalytics } from "@/components/analytics"
 import { Header } from "@/components/layout/header"
 
 const getPageTree = createServerFn({ method: "GET" }).handler(
@@ -43,6 +44,9 @@ function AppLayout() {
       <main id="content">
         <Outlet />
       </main>
+      {/* Mounted here, not on the root: the /preview iframe and /internal labs
+          render outside _app and would otherwise double-count every page. */}
+      <VercelAnalytics />
     </div>
   )
 }
