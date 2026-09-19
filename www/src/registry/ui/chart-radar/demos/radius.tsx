@@ -18,7 +18,6 @@ export default function ChartRadarRadius() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       radiusRatio={0.62}
       points
       ariaLabel="Desktop visitors, January through June"

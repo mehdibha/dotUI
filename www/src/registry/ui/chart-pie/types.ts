@@ -1,10 +1,9 @@
+import type { PolarMarkLayer } from "@/registry/ui/chart"
 import type {
   ChartFamilyProps,
   ChartFocus,
   ChartTooltipAnchor,
 } from "@/registry/ui/chart/types"
-
-import type { PolarMarkLayer } from "./base"
 
 export type { PolarMarkLayer }
 
@@ -81,12 +80,15 @@ export interface PieChartProps extends ChartFamilyProps {
   cornerRadius?: number
 
   /**
-   * Stroke painted between slices — set it to the page background to separate
-   * them.
+   * Stroke painted between slices.
+   * @default "var(--color-bg)"
    */
   stroke?: string
 
-  /** Width of that stroke, in pixels. */
+  /**
+   * Width of that stroke, in pixels. `0` lets the slices touch.
+   * @default 2
+   */
   strokeWidth?: number
 
   /** Index of a slice pushed out of the ring, to call it out. */
@@ -122,8 +124,7 @@ export interface PieChartProps extends ChartFamilyProps {
   sliceLabelFontSize?: number
 
   /**
-   * Show the color legend. Off by default: a pie usually names its slices with
-   * labels or the tooltip.
+   * Show the color legend below the chart.
    * @default false
    */
   legend?: boolean

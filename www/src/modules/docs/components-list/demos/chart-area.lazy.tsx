@@ -25,7 +25,6 @@ export default function ChartAreaVisitors() {
       points
       height={96}
       grid={false}
-      legend={false}
       ariaLabel="Desktop visitors, January through August"
     />
   )

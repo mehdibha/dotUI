@@ -97,7 +97,7 @@ There is always one more color than cut.
   y="region"
   value="share"
   values
-  formatValue={{ locale: "en-US", number: { style: "percent" } }}
+  formatValue={(value) => `${Math.round(Number(value) * 100)}%`}
   ariaLabel="Feature adoption by region and quarter"
 />
 ```

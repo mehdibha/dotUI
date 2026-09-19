@@ -1,6 +1,7 @@
 "use client"
 
-import { stackY } from "@/registry/ui/chart"
+import type { ChartValue } from "@tanstack/charts"
+
 import { AreaChart } from "@/registry/ui/chart-area"
 
 const data = [
@@ -12,25 +13,21 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-/* `normalize` divides each band by its own x-group total, so the stack fills
-   the plot and reads as share rather than volume. */
-const shares = stackY(data, {
-  x: "month",
-  y: ["desktop", "mobile", "other"],
-  normalize: true,
-})
+const percent = new Intl.NumberFormat("en-US", { style: "percent" })
+const formatPercent = (value: ChartValue) => percent.format(Number(value))
 
+/* `"normalize"` divides each band by its x-group total, so the stack fills
+   the plot and reads as share rather than volume. */
 export default function ChartAreaStackedExpand() {
   return (
     <AreaChart
-      data={shares}
-      x="x"
-      y="top"
-      y1="base"
-      series="series"
-      seriesOrder={["desktop", "mobile", "other"]}
+      data={data}
+      x="month"
+      y={["desktop", "mobile", "other"]}
       labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-      formatY={{ locale: "en-US", number: { style: "percent" } }}
+      stacked="normalize"
+      axes
+      formatY={formatPercent}
       ariaLabel="Share of visitors by device, January through June"
     />
   )

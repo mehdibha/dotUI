@@ -349,6 +349,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-area/demos/gradient.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/gradient")),
 	},
+	"chart-area/demos/interactive": {
+		files: ["ui/chart-area/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/interactive")),
+	},
 	"chart-area/demos/labels": {
 		files: ["ui/chart-area/demos/labels.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/labels")),
@@ -388,6 +392,10 @@ export const DemosIndex: Record<
 	"chart-bar/demos/horizontal": {
 		files: ["ui/chart-bar/demos/horizontal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/horizontal")),
+	},
+	"chart-bar/demos/interactive": {
+		files: ["ui/chart-bar/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/interactive")),
 	},
 	"chart-bar/demos/label-custom": {
 		files: ["ui/chart-bar/demos/label-custom.tsx"],
@@ -449,6 +457,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-line/demos/dots.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots")),
 	},
+	"chart-line/demos/interactive": {
+		files: ["ui/chart-line/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/interactive")),
+	},
 	"chart-line/demos/label-custom": {
 		files: ["ui/chart-line/demos/label-custom.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label-custom")),
@@ -480,6 +492,10 @@ export const DemosIndex: Record<
 	"chart-pie/demos/donut": {
 		files: ["ui/chart-pie/demos/donut.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut")),
+	},
+	"chart-pie/demos/interactive": {
+		files: ["ui/chart-pie/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/interactive")),
 	},
 	"chart-pie/demos/label-custom": {
 		files: ["ui/chart-pie/demos/label-custom.tsx"],

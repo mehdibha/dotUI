@@ -100,7 +100,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats values in the legend, the tooltip, and the cells."
+      "description": "Formats values in the legend, the tooltip, and the cells. Define it outside render."
     },
     "label": {
       "type": "string",
@@ -151,7 +151,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats x tick labels — a function, or serializable `Intl` options."
+      "description": "Formats x tick labels. Define it outside render."
     },
     "formatY": {
       "type": "ChartFormat",
@@ -160,7 +160,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats y tick labels — a function, or serializable `Intl` options."
+      "description": "Formats y tick labels. Define it outside render."
     },
     "marksBefore": {
       "type": "readonly ChartMarkLayer[]",
@@ -328,15 +328,6 @@
       },
       "description": "Pixel radius beyond which the pointer stops matching a point."
     },
-    "tooltipSticky": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Keep the tooltip pinned to the focused position instead of letting it\nfollow the pointer between points.",
-      "default": "true"
-    },
     "tooltip": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -362,8 +353,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Chart height in pixels.",
-      "default": "256"
+      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
     },
     "aspectRatio": {
       "type": "number",
@@ -928,6 +918,43 @@
             }
           },
           "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "primaryPoint": {
+          "type": "property",
+          "name": "primaryPoint",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
+                  "name": "ChartPoint"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "ChartValue"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
           "readonly": false,
           "description": ""
         }

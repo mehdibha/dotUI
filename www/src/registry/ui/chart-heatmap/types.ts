@@ -45,7 +45,7 @@ export interface HeatmapChartProps extends ChartFamilyProps {
    */
   values?: boolean
 
-  /** Formats values in the legend, the tooltip, and the cells. */
+  /** Formats values in the legend, the tooltip, and the cells. Define it outside render. */
   formatValue?: ChartFormat
 
   /** What the value means — the legend title and the tooltip label. */
@@ -69,10 +69,10 @@ export interface HeatmapChartProps extends ChartFamilyProps {
    */
   legend?: boolean
 
-  /** Formats x tick labels — a function, or serializable `Intl` options. */
+  /** Formats x tick labels. Define it outside render. */
   formatX?: ChartFormat
 
-  /** Formats y tick labels — a function, or serializable `Intl` options. */
+  /** Formats y tick labels. Define it outside render. */
   formatY?: ChartFormat
 
   /** Extra mark layers painted under the cells. */

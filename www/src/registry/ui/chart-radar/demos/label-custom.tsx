@@ -20,7 +20,6 @@ export default function ChartRadarLabelCustom() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       axisDetail={(month) => String(values.get(String(month)) ?? "")}
       ariaLabel="Desktop visitors, January through June"
     />

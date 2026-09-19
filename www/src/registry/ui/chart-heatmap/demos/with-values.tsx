@@ -1,5 +1,7 @@
 "use client"
 
+import type { ChartValue } from "@tanstack/charts"
+
 import { HeatmapChart } from "@/registry/ui/chart-heatmap"
 
 /* Few, large cells — the only shape where in-cell numbers stay legible. */
@@ -8,6 +10,12 @@ const regions = [
   { region: "EMEA", quarters: [0.31, 0.29, 0.36, 0.44] },
   { region: "APAC", quarters: [0.18, 0.24, 0.33, 0.39] },
 ]
+
+const percent = new Intl.NumberFormat("en-US", {
+  style: "percent",
+  maximumFractionDigits: 0,
+})
+const formatPercent = (value: ChartValue) => percent.format(Number(value))
 
 const data = regions.flatMap(({ region, quarters }) =>
   quarters.map((share, index) => ({
@@ -25,10 +33,7 @@ export default function ChartHeatmapWithValues() {
       y="region"
       value="share"
       values
-      formatValue={{
-        locale: "en-US",
-        number: { style: "percent", maximumFractionDigits: 0 },
-      }}
+      formatValue={formatPercent}
       label="Adoption"
       ariaLabel="Feature adoption by region and quarter"
       height={180}

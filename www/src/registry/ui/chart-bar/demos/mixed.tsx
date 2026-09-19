@@ -26,9 +26,6 @@ export default function ChartBarMixed() {
         other: "Other",
       }}
       horizontal
-      legend={false}
-      focus="group-y"
-      axes="y"
       ariaLabel="Visitors by browser"
     />
   )

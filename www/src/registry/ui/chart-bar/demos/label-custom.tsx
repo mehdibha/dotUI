@@ -48,9 +48,7 @@ export default function ChartBarLabelCustom() {
       labels={{ desktop: "Desktop" }}
       horizontal
       grid={false}
-      legend={false}
       marks={labels}
-      focus="group-y"
       ariaLabel="Desktop visitors per month, labelled inside each bar"
     />
   )

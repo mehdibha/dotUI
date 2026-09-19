@@ -29,7 +29,7 @@
           }
         ]
       },
-      "description": "Field holding the value. One field draws a ring per row; an array of\nfields stacks the first row's values into a single ring.",
+      "description": "Field holding the value. One field draws a ring per row, innermost\nfirst; an array of fields stacks the first row's values into one ring.",
       "required": true
     },
     "name": {
@@ -136,8 +136,8 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Gap between rings, as a share of a ring's thickness. In stacked mode\n(array `value`) it becomes a per-segment radial inset instead.",
-      "default": "0.2 — 0.04 in stacked mode"
+      "description": "Gap between rings, as a share of a ring's thickness.",
+      "default": "0.2"
     },
     "cornerRadius": {
       "type": "number",
@@ -189,7 +189,8 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Fill of the ring labels."
+      "description": "Fill of the ring labels.",
+      "default": "\"var(--color-fg)\""
     },
     "barLabelFontSize": {
       "type": "number",
@@ -224,7 +225,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the color legend. Turn it on when several rings share the chart.",
+      "description": "Show the color legend below the chart.",
       "default": "false"
     },
     "polarMarksBefore": {
@@ -246,6 +247,12 @@
                 "name": "PolarMark"
               },
               "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
                 {
                   "type": "any"
                 },
@@ -281,6 +288,12 @@
                 "name": "PolarMark"
               },
               "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
                 {
                   "type": "any"
                 },
@@ -328,7 +341,7 @@
           }
         ]
       },
-      "description": "How pointer and keyboard resolve to points. An arc's x value is its\nmid-angle, so bars match by their painted geometry.",
+      "description": "How pointer and keyboard resolve to points. An arc's x value is its\nangle, so bars match by their painted geometry.",
       "default": "\"nearest\""
     },
     "tooltipAnchor": {
@@ -381,15 +394,6 @@
       },
       "description": "Pixel radius beyond which the pointer stops matching a point."
     },
-    "tooltipSticky": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Keep the tooltip pinned to the focused position instead of letting it\nfollow the pointer between points.",
-      "default": "true"
-    },
     "tooltip": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -415,8 +419,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Chart height in pixels.",
-      "default": "256"
+      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
     },
     "aspectRatio": {
       "type": "number",
@@ -867,16 +870,7 @@
           "type": "property",
           "name": "__angleScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "angle"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -906,16 +900,7 @@
           "type": "property",
           "name": "__radiusScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "radius"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -1174,6 +1159,43 @@
             }
           },
           "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "primaryPoint": {
+          "type": "property",
+          "name": "primaryPoint",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
+                  "name": "ChartPoint"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "ChartValue"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
           "readonly": false,
           "description": ""
         }

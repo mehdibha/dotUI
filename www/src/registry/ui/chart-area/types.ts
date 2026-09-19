@@ -24,9 +24,6 @@ export interface AreaChartProps extends ChartFamilyProps {
    */
   y: string | readonly string[]
 
-  /** Lower baseline field. Pair it with the `stackY` helper for stacked areas. */
-  y1?: string
-
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 
@@ -43,6 +40,13 @@ export interface AreaChartProps extends ChartFamilyProps {
   rowKey?: string
 
   /**
+   * Series stacked on one another, in `seriesOrder`. `"normalize"` divides
+   * each band by its own total for a 100% stack.
+   * @default false
+   */
+  stacked?: boolean | "normalize"
+
+  /**
    * Path interpolation between points.
    * @default "natural"
    */
@@ -50,13 +54,13 @@ export interface AreaChartProps extends ChartFamilyProps {
 
   /**
    * Fill opacity, or `'gradient'` to fade the fill out toward the baseline.
-   * @default 0.2
+   * @default 0.4
    */
   fill?: number | "gradient"
 
   /**
    * Stroke width of the upper edge.
-   * @default 2.25
+   * @default 2
    */
   strokeWidth?: number
 
@@ -67,10 +71,10 @@ export interface AreaChartProps extends ChartFamilyProps {
   points?: boolean
 
   /**
-   * Show the axes and their tick labels.
-   * @default false
+   * Show the axes and their tick labels: both, neither, or one.
+   * @default "x"
    */
-  axes?: boolean
+  axes?: boolean | "x" | "y"
 
   /**
    * Show the value-axis grid lines.
@@ -79,15 +83,15 @@ export interface AreaChartProps extends ChartFamilyProps {
   grid?: boolean
 
   /**
-   * Show the color legend. Turn it off for a single series.
-   * @default true
+   * Show the color legend below the plot.
+   * @default false
    */
   legend?: boolean
 
-  /** Formats x tick labels — a function, or serializable `Intl` options. */
+  /** Formats x tick labels. Define it outside render. */
   formatX?: ChartFormat
 
-  /** Formats y tick labels — a function, or serializable `Intl` options. */
+  /** Formats y tick labels. Define it outside render. */
   formatY?: ChartFormat
 
   /** Extra mark layers painted under the areas. */

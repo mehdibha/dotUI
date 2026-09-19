@@ -28,8 +28,6 @@ export default function ChartPieLabelList() {
       sliceLabel="name"
       sliceLabelRadius={0.68}
       sliceLabelFontSize={11}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser, with names on the slices"
     />
   )

@@ -1,10 +1,9 @@
+import type { PolarMarkLayer } from "@/registry/ui/chart"
 import type {
   ChartFamilyProps,
   ChartFocus,
   ChartTooltipAnchor,
 } from "@/registry/ui/chart/types"
-
-import type { PolarMarkLayer } from "./base"
 
 export type { PolarMarkLayer }
 
@@ -18,8 +17,8 @@ export interface RadialBarChartProps extends ChartFamilyProps {
   data: readonly unknown[]
 
   /**
-   * Field holding the value. One field draws a ring per row; an array of
-   * fields stacks the first row's values into a single ring.
+   * Field holding the value. One field draws a ring per row, innermost
+   * first; an array of fields stacks the first row's values into one ring.
    */
   value: string | readonly string[]
 
@@ -63,9 +62,8 @@ export interface RadialBarChartProps extends ChartFamilyProps {
   inset?: number
 
   /**
-   * Gap between rings, as a share of a ring's thickness. In stacked mode
-   * (array `value`) it becomes a per-segment radial inset instead.
-   * @default 0.2 — 0.04 in stacked mode
+   * Gap between rings, as a share of a ring's thickness.
+   * @default 0.2
    */
   barPadding?: number
 
@@ -97,7 +95,10 @@ export interface RadialBarChartProps extends ChartFamilyProps {
    */
   barLabels?: boolean
 
-  /** Fill of the ring labels. */
+  /**
+   * Fill of the ring labels.
+   * @default "var(--color-fg)"
+   */
   barLabelFill?: string
 
   /**
@@ -119,7 +120,7 @@ export interface RadialBarChartProps extends ChartFamilyProps {
   gridTicks?: number
 
   /**
-   * Show the color legend. Turn it on when several rings share the chart.
+   * Show the color legend below the chart.
    * @default false
    */
   legend?: boolean
@@ -132,7 +133,7 @@ export interface RadialBarChartProps extends ChartFamilyProps {
 
   /**
    * How pointer and keyboard resolve to points. An arc's x value is its
-   * mid-angle, so bars match by their painted geometry.
+   * angle, so bars match by their painted geometry.
    * @default "nearest"
    */
   focus?: ChartFocus
