@@ -27,12 +27,12 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
     },
     default: {
       slots: {
-        root: "gap-2",
+        root: "gap-2 has-data-description:**:data-checkbox-indicator:mt-0.5",
       },
     },
     comfortable: {
       slots: {
-        root: "gap-3",
+        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
       },
     },
   },
