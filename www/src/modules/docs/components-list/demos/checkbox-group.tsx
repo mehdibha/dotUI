@@ -14,7 +14,7 @@ const channels = [
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["email", "push"]} className="w-64">
+    <CheckboxGroup defaultValue={["email", "push"]} className="w-fit">
       <Label>Notifications</Label>
       <FieldGroup>
         {channels.map((channel) => (
@@ -22,7 +22,9 @@ export function CheckboxGroupDemo() {
             <CheckboxControl />
             <div className="flex flex-col gap-0.5">
               <Label>{channel.label}</Label>
-              <Description>{channel.description}</Description>
+              <Description className="whitespace-nowrap">
+                {channel.description}
+              </Description>
             </div>
           </Checkbox>
         ))}
