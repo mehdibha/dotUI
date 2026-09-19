@@ -8,6 +8,7 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
+import geistLatin from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url"
 import { ThemeProvider } from "starter-themes"
 
 import { siteConfig } from "@/config/site"
@@ -58,6 +59,15 @@ export const Route = createRootRoute({
       ],
       links: [
         { rel: "stylesheet", href: appCss },
+        // The body face, discovered by the browser only once the stylesheet
+        // has parsed; preloading starts it with the HTML.
+        {
+          rel: "preload",
+          as: "font",
+          type: "font/woff2",
+          href: geistLatin,
+          crossOrigin: "anonymous",
+        },
         {
           rel: "alternate icon",
           type: "image/png",

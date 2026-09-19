@@ -23,9 +23,28 @@ export const FONT_TOKEN_VARS = [
   FONT_MONO_VAR,
 ] as const
 
-/** Families the app self-hosts (fontsource) — the no-token defaults. */
+/** The no-token defaults: Google names, self-hosted on the site (fontsource). */
 export const DEFAULT_BODY_FAMILY = "Geist"
 export const DEFAULT_MONO_FAMILY = "Geist Mono"
+
+/** The site's self-hosted stacks behind the defaults — fontsource registers
+ *  variable faces as "<Family> Variable"; the fallbacks are capsize-matched
+ *  local faces declared in styles.css. */
+const SELF_HOSTED_STACKS: Record<string, string> = {
+  [DEFAULT_BODY_FAMILY]:
+    "'Geist Variable', 'Geist Variable Fallback', ui-sans-serif, system-ui, sans-serif",
+  [DEFAULT_MONO_FAMILY]:
+    "'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, monospace",
+}
+
+export const GOOGLE_FONTS_PRECONNECT = [
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous" as const,
+  },
+]
 
 export type FontCategory =
   | "sans-serif"
@@ -613,6 +632,29 @@ export function fontStack(family: string): string {
   return `'${family}', ${FALLBACK_STACKS[category]}`
 }
 
+/** The stack to render `family` with on the site itself: the self-hosted
+ *  face for a default, the Google face (loaded on demand) for anything else. */
+export function siteFontStack(family: string): string {
+  return SELF_HOSTED_STACKS[family] ?? fontStack(family)
+}
+
+/** Defaults never need a Google stylesheet on the site. */
+export function isSelfHosted(family: string): boolean {
+  return family in SELF_HOSTED_STACKS
+}
+
+/** The token record with the defaults made explicit — what an export ships,
+ *  since a consumer has no self-hosted face to fall back on. */
+export function withDefaultFontTokens(
+  tokens: Record<string, string> = {},
+): Record<string, string> {
+  return {
+    [FONT_SANS_VAR]: fontStack(DEFAULT_BODY_FAMILY),
+    [FONT_MONO_VAR]: fontStack(DEFAULT_MONO_FAMILY),
+    ...tokens,
+  }
+}
+
 /** First family of a stack, unquoted — the display name / load target. */
 export function familyFromStack(stack: string): string {
   const first = stack.split(",")[0] ?? stack
@@ -634,15 +676,15 @@ export function fontFamiliesFromTokens(
 }
 
 /**
- * One css2 stylesheet URL for the given families. The shared 400–700 weight
- * request covers UI text; css2 drops weights a family doesn't ship rather
- * than erroring (verified against the live endpoint).
+ * One css2 stylesheet URL for the given families. The catalog is variable-only,
+ * so the 400–700 range is one face per subset; css2 clamps a range a family
+ * doesn't cover rather than erroring (verified against the live endpoint).
  */
 export function googleFontsUrl(
   families: string[],
   opts: { text?: string; weights?: string } = {},
 ): string {
-  const weights = opts.weights ?? "400;500;600;700"
+  const weights = opts.weights ?? "400..700"
   const params = families
     .map((family) => `family=${family.replaceAll(" ", "+")}:wght@${weights}`)
     .join("&")
@@ -650,20 +692,27 @@ export function googleFontsUrl(
   return `https://fonts.googleapis.com/css2?${params}&display=swap${text}`
 }
 
+const previewsRequested = new WeakMap<Document, Set<string>>()
+
 /**
- * Load one family's preview face, subset (`text=`) to just its own name glyphs
- * — a couple of KB, enough to render that row's label in itself. Idempotent;
- * the picker calls this per row as it scrolls into view, so a ~500-font list
- * fetches only the handful actually seen instead of every face up front.
+ * Load the preview faces of the families a picker scan found on screen, in
+ * one stylesheet: subset (`text=`) to the glyphs of their names — a couple of
+ * KB, enough to render each row's label in itself — so a ~500-font list
+ * fetches only the handful actually seen, one request per scroll stop instead
+ * of one per row. Families already requested in `doc` are skipped.
  */
-export function loadFontPreview(doc: Document, family: string): void {
-  const id = `dotui-font-preview-${family.replaceAll(" ", "-").toLowerCase()}`
-  if (doc.getElementById(id)) return
-  const text = [...new Set([...family])].join("")
+export function loadFontPreviews(doc: Document, families: string[]): void {
+  let requested = previewsRequested.get(doc)
+  if (!requested) previewsRequested.set(doc, (requested = new Set()))
+  const pending = families.filter(
+    (family) => !isSelfHosted(family) && !requested.has(family),
+  )
+  if (pending.length === 0) return
+  for (const family of pending) requested.add(family)
+  const text = [...new Set(pending.join(""))].join("")
   const link = doc.createElement("link")
-  link.id = id
   link.rel = "stylesheet"
-  link.href = googleFontsUrl([family], { text, weights: "400" })
+  link.href = googleFontsUrl(pending, { text, weights: "400" })
   doc.head.append(link)
 }
 

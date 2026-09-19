@@ -29,12 +29,6 @@ const FRAMEWORK_PROVIDED = new Set([
   "tailwindcss",
 ])
 
-/** Font packages referenced from the generated globals.css `@import`s. */
-const FONT_DEPENDENCIES = [
-  "@fontsource-variable/geist",
-  "@fontsource/geist-mono",
-]
-
 /* ------------------------------ css rendering ------------------------------ */
 
 function renderCssEntries(record: CssRecord, indent: string): string[] {
@@ -99,24 +93,11 @@ export function renderStylesheet(
 
 /**
  * The v0 bundle's `globals.css`: the init fields plus every shipped
- * component's `css` block, with the Geist faces from @fontsource.
+ * component's `css` block. The faces arrive through the Google Fonts import
+ * the init fields carry (`googleFontsImport`), defaults included.
  */
 export function renderGlobalsCss(fields: RegistryCssFields): string {
-  return renderStylesheet(fields, {
-    imports: [
-      '@import "@fontsource-variable/geist";',
-      '@import "@fontsource/geist-mono";',
-    ],
-    // The base theme aliases --font-sans to these; the faces come from the
-    // @fontsource imports above.
-    preamble: [
-      "",
-      "@theme {",
-      '  --font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;',
-      '  --font-geist-mono: "Geist Mono", ui-monospace, monospace;',
-      "}",
-    ],
-  })
+  return renderStylesheet(fields)
 }
 
 /** Deep-merge one component's `css` block into the accumulated record. */
@@ -243,10 +224,7 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 
   // Same base deps `shadcn init` would install, since there's no init step
   // here — the plugins and utilities globals.css and lib/utils.ts reference.
-  const dependencies = new Set<string>([
-    ...DEFAULT_DEPENDENCIES,
-    ...FONT_DEPENDENCIES,
-  ])
+  const dependencies = new Set<string>(DEFAULT_DEPENDENCIES)
   for (const item of items) {
     for (const dep of item.dependencies ?? []) dependencies.add(dep)
   }

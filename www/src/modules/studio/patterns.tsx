@@ -7,7 +7,7 @@
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
-import { fontStack } from "@/lib/fonts"
+import { siteFontStack } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
 import { ColorArea } from "@/registry/ui/color-area"
@@ -202,20 +202,20 @@ export function TypeSpecimen({
     <div className="flex items-center gap-3.5 rounded-lg bg-muted px-4 py-3">
       <span
         className="text-2xl/none font-semibold text-fg"
-        style={{ fontFamily: fontStack(heading) }}
+        style={{ fontFamily: siteFontStack(heading) }}
       >
         Ag
       </span>
       <div className="flex min-w-0 flex-col gap-0.5">
         <span
           className="truncate text-[0.8125rem]/tight font-semibold text-fg"
-          style={{ fontFamily: fontStack(heading) }}
+          style={{ fontFamily: siteFontStack(heading) }}
         >
           Almost before we knew it
         </span>
         <span
           className="truncate text-xs/tight text-fg-muted"
-          style={{ fontFamily: fontStack(body) }}
+          style={{ fontFamily: siteFontStack(body) }}
         >
           we had left the ground.
         </span>

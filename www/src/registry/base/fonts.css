@@ -1,5 +1,5 @@
 @theme {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
 }

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { GOOGLE_FONTS_PRECONNECT } from "@/lib/fonts"
+
 import { PreviewPage } from "./-preview-page"
 
 export const Route = createFileRoute("/preview/$slug")({
@@ -15,6 +17,7 @@ export const Route = createFileRoute("/preview/$slug")({
         : undefined,
   }),
   ssr: false,
+  head: () => ({ links: GOOGLE_FONTS_PRECONNECT }),
   loader: async ({ params }) => {
     // The example chunk must resolve here, not in the component: while a
     // loader pends the router keeps the previous preview on screen, whereas a
