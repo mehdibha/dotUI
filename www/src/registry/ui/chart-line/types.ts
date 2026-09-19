@@ -47,7 +47,7 @@ export interface LineChartProps extends ChartFamilyProps {
 
   /**
    * Stroke width of each line.
-   * @default 2.25
+   * @default 2
    */
   strokeWidth?: number
 
@@ -58,10 +58,10 @@ export interface LineChartProps extends ChartFamilyProps {
   points?: boolean
 
   /**
-   * Show the axes and their tick labels.
-   * @default false
+   * Show the axes and their tick labels: both, neither, or one.
+   * @default "x"
    */
-  axes?: boolean
+  axes?: boolean | "x" | "y"
 
   /**
    * Show the value-axis grid lines.
@@ -70,15 +70,15 @@ export interface LineChartProps extends ChartFamilyProps {
   grid?: boolean
 
   /**
-   * Show the color legend. Turn it off for a single series.
-   * @default true
+   * Show the color legend below the plot.
+   * @default false
    */
   legend?: boolean
 
-  /** Formats x tick labels — a function, or serializable `Intl` options. */
+  /** Formats x tick labels. Define it outside render. */
   formatX?: ChartFormat
 
-  /** Formats y tick labels — a function, or serializable `Intl` options. */
+  /** Formats y tick labels. Define it outside render. */
   formatY?: ChartFormat
 
   /** Extra mark layers painted under the lines. */

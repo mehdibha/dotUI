@@ -19,9 +19,6 @@ export default function ChartBarHorizontal() {
       y="desktop"
       labels={{ desktop: "Desktop" }}
       horizontal
-      legend={false}
-      focus="group-y"
-      axes="y"
       ariaLabel="Desktop visitors per month, horizontal bars"
     />
   )

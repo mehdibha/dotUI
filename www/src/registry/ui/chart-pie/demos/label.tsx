@@ -27,8 +27,6 @@ export default function ChartPieLabel() {
       labels={labels}
       sliceLabel="value"
       sliceLabelRadius={0.72}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser, with values on the slices"
     />
   )

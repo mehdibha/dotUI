@@ -23,7 +23,6 @@ export default function ChartLineExamples() {
           x="month"
           y="desktop"
           labels={labels}
-          legend={false}
           points
           ariaLabel="Desktop visitors, January through June"
         />

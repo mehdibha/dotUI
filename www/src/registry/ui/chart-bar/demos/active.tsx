@@ -56,7 +56,6 @@ export default function ChartBarActive() {
       series="browser"
       labels={LABELS}
       fillOpacity={active === null ? 1 : 0.3}
-      legend={false}
       marks={highlight}
       animate={false}
       onFocusChange={(point) => setActive(point?.datum.browser ?? null)}

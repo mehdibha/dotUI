@@ -20,10 +20,8 @@ export default function ChartLineVisitors() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      strokeWidth={2}
       height={92}
       grid={false}
-      legend={false}
       ariaLabel="Desktop visitors, January through August"
     />
   )

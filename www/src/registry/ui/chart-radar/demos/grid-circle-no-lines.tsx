@@ -18,7 +18,6 @@ export default function ChartRadarGridCircleNoLines() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       gridShape="circle"
       spokes={false}
       ariaLabel="Desktop visitors, January through June"

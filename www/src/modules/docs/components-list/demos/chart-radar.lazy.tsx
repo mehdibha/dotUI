@@ -20,7 +20,6 @@ export default function ChartRadarVisitors() {
       labels={{ desktop: "Desktop" }}
       height={132}
       axes={false}
-      legend={false}
       ariaLabel="Desktop visitors, January through June"
     />
   )

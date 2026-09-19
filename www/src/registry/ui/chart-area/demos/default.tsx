@@ -18,7 +18,6 @@ export default function ChartAreaDefault() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       ariaLabel="Desktop visitors, January through June"
     />
   )

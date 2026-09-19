@@ -23,7 +23,6 @@ export default function ChartRadarExamples() {
           x="month"
           y="desktop"
           labels={labels}
-          legend={false}
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>

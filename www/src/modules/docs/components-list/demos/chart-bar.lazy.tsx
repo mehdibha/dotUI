@@ -28,7 +28,6 @@ export default function ChartBarBrowsers() {
       labels={labels}
       height={96}
       grid={false}
-      legend={false}
       ariaLabel="Visitors by browser"
     />
   )
