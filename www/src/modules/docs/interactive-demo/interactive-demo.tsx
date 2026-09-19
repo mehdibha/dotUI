@@ -190,20 +190,23 @@ export function InteractiveDemo({
               controlsOpen ? "h-auto" : "h-56",
             )}
           >
-            {/* Pinned to the card's inner width (w-56 minus its borders). */}
-            <div className="relative flex w-full flex-col gap-4 px-4 pt-5.5 pb-4 md:w-55.5">
-              {/* Anchored to the pinned content, not the card, so it holds its
-                  place beside the controls while the card collapses. */}
-              <Button
-                variant="quiet"
-                size="xs"
-                isIconOnly
-                aria-label="Hide controls"
-                className="absolute top-2 right-2 text-fg-muted hover:text-fg"
-                onPress={() => setControlsOpen(false)}
-              >
-                <XIcon />
-              </Button>
+            {/* Pinned to the card's inner width (w-56 minus its borders). The
+                header row gives the close button its own line, so it never sits
+                over the first control (a switch renders in that same corner). */}
+            <div className="flex w-full flex-col gap-4 px-4 pt-3 pb-4 md:w-55.5">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Controls</span>
+                <Button
+                  variant="quiet"
+                  size="xs"
+                  isIconOnly
+                  aria-label="Hide controls"
+                  className="-mr-2 text-fg-muted hover:text-fg"
+                  onPress={() => setControlsOpen(false)}
+                >
+                  <XIcon />
+                </Button>
+              </div>
               <Controls
                 controls={controls}
                 values={values}
