@@ -9,12 +9,12 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   SlidersHorizontalIcon,
-  XIcon,
 } from "lucide-react"
 import type { PressEvent } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { CodeBlock } from "@/modules/docs/code-block"
 import { renderCode } from "@/modules/docs/codegen/code-template"
@@ -33,7 +33,7 @@ import type { ControlValues, SerializableControl } from "./types"
  * Renders the playground, controls, and live code output.
  *
  * The preview is the hero: closed, the demo reads as one card (preview over
- * the code bar) and the controls hide behind a corner toggle. Opening splits it
+ * the code bar) and the controls hide behind a corner toggle (which also closes them). Opening splits it
  * into three detached cards — preview, controls, code — each carrying its own
  * border and radius, with the controls card sliding in from the right and
  * *pushing* the preview (the flex sibling reflows) rather than overlaying it.
@@ -115,44 +115,31 @@ export function InteractiveDemo({
       <div className="flex flex-col md:flex-row">
         {/* PreviewPanel pins the whole preview column (toolbar + trigger
             included) to the preview mode; the preset only themes the canvas.
-            Closed, its bottom corners square off to meet the code card below.
-            While the panel is closed, right padding keeps the mode toggle
-            clear of the trigger pinned in the corner. */}
+            Closed, its bottom corners square off to meet the code card below. */}
         <PreviewPanel
           className={cn(
             "flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border transition-[border-radius] duration-300 ease-fluid-out motion-reduce:transition-none",
             !controlsOpen && "rounded-b-none",
           )}
         >
-          {/* The panel trigger stays mounted so its visibility can tween;
-              `inert` takes it out of the tab order and the a11y tree while
-              hidden. Opening pushes it right, off the preview's edge (the panel
-              clips it), as it fades — it has to outrun the mode toggle, which
-              slides into the corner as the right padding drops. */}
-          <span className="contents" inert={controlsOpen}>
-            <Tooltip>
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                aria-label="Controls"
-                className={cn(
-                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,translate] duration-300 ease-fluid-out motion-reduce:transition-none",
-                  controlsOpen && "translate-x-12 opacity-0",
-                )}
-                onPress={() => setControlsOpen(true)}
-              >
-                <SlidersHorizontalIcon />
-              </Button>
-              <TooltipContent>Controls</TooltipContent>
-            </Tooltip>
-          </span>
-          <PreviewControls
-            className={cn(
-              "transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none",
-              !controlsOpen && "pr-11",
-            )}
-          />
+          <Tooltip>
+            <ToggleButton
+              variant="quiet"
+              size="sm"
+              isIconOnly
+              aria-label="Controls"
+              className="absolute top-2 right-2 z-10 text-fg-muted"
+              isSelected={controlsOpen}
+              onChange={setControlsOpen}
+            >
+              <SlidersHorizontalIcon />
+            </ToggleButton>
+            <TooltipContent>
+              {controlsOpen ? "Hide controls" : "Show controls"}
+            </TooltipContent>
+          </Tooltip>
+          {/* Right padding keeps the mode toggle clear of the corner toggle. */}
+          <PreviewControls className="pr-11" />
           <DemoPreset>
             <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10 pt-14">
               {previewElement}
@@ -191,19 +178,7 @@ export function InteractiveDemo({
             )}
           >
             {/* Pinned to the card's inner width (w-56 minus its borders). */}
-            <div className="relative flex w-full flex-col gap-4 px-4 pt-5.5 pb-4 md:w-55.5">
-              {/* Anchored to the pinned content, not the card, so it holds its
-                  place beside the controls while the card collapses. */}
-              <Button
-                variant="quiet"
-                size="xs"
-                isIconOnly
-                aria-label="Hide controls"
-                className="absolute top-2 right-2 text-fg-muted hover:text-fg"
-                onPress={() => setControlsOpen(false)}
-              >
-                <XIcon />
-              </Button>
+            <div className="flex w-full flex-col gap-4 p-4 md:w-55.5">
               <Controls
                 controls={controls}
                 values={values}
