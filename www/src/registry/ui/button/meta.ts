@@ -17,7 +17,7 @@ const buttonMeta = {
     style: {
       kind: "enum",
       default: "flat",
-      values: ["flat", "outline", "raised", "elevated"] as const,
+      values: ["flat", "raised", "glossy"] as const,
       description: "The family look every fill variant wears.",
     },
     hover: {

@@ -6,6 +6,16 @@ import buttonMeta from "./meta"
    the base variants are fills only, so each param value ships exactly its
    own classes. Synced with toggle-button — change both together. */
 
+/* Raised: the Radix classic 3D bevel. Glossy: iOS 26 buttons, fit against a
+   device capture — a translucent fill, a hairline specular ring lit top and
+   bottom, a faint glow pooled at both edges. */
+const RAISED =
+  "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]"
+const RAISED_SECONDARY =
+  "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]"
+const GLOSSY =
+  "isolate shadow-sm before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.2),transparent_30%,rgb(255_255_255/0.2))] before:mask-[linear-gradient(#000_0_0),linear-gradient(#000_0_0)] before:mask-exclude before:[mask-clip:content-box,border-box] before:p-[0.75px] after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-[radial-gradient(65%_35%_at_50%_0%,rgb(255_255_255/0.05),transparent_70%),radial-gradient(65%_35%_at_50%_100%,rgb(255_255_255/0.05),transparent_70%)]"
+
 const { useStyles, styles } = createStyles(buttonMeta, {
   base: {
     base: [
@@ -18,16 +28,16 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
+          "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border",
+          "border text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border",
         quiet:
           "bg-transparent text-fg disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
         link: "text-fg underline-offset-4 hover:underline disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
         warning:
-          "bg-warning text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
+          "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
         danger:
-          "bg-danger text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
+          "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger))",
       },
       size: {
         xs: "",
@@ -80,55 +90,41 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     },
   },
   params: {
-    /* Each family reshapes every fill variant at once; quiet and link stay
-       flat, as in every system with an aesthetic axis (Radix classic,
-       Untitled UI, Primer, Geist). */
+    /* Each family owns the fill it reshapes (quiet and link stay flat, as in
+       every system with an aesthetic axis: Radix classic, Untitled UI, Primer,
+       Geist), so a variant ships exactly one background. */
     style: {
-      flat: {},
-      outline: {
+      flat: {
         variants: {
           variant: {
-            primary:
-              "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-            secondary: "shadow-[0_1px_0_rgb(0_0_0/0.08)]",
-            warning:
-              "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-            danger:
-              "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
+            primary: "bg-primary",
+            secondary: "border-border-control bg-neutral",
+            warning: "bg-warning",
+            danger: "bg-danger",
           },
         },
       },
       raised: {
         variants: {
           variant: {
-            primary:
-              "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
-            secondary:
-              "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
-            warning:
-              "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
-            danger:
-              "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+            primary: ["bg-primary", RAISED],
+            secondary: ["border-border-control bg-neutral", RAISED_SECONDARY],
+            warning: ["bg-warning", RAISED],
+            danger: ["bg-danger", RAISED],
           },
         },
       },
-      elevated: {
+      glossy: {
         variants: {
           variant: {
-            primary:
-              "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
-            secondary:
-              "border-transparent shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
-            warning:
-              "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
-            danger:
-              "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
+            primary: ["bg-primary/90", GLOSSY],
+            secondary: ["border-transparent bg-neutral/85", GLOSSY],
+            warning: ["bg-warning/90", GLOSSY],
+            danger: ["bg-danger/90", GLOSSY],
           },
         },
       },
     },
-    /* Quiet gains a background on hover in every surveyed system, whatever
-       the fill variants do. */
     hover: {
       dim: {
         variants: {

@@ -16,13 +16,12 @@ export const BUTTON_DEFAULTS = {
   buttonPress: "dim",
 }
 
-/* Style families from the Aug 2026 survey: flat (Geist), outline (Primer
-   hairline), raised (Radix classic 3D), elevated (Stripe). */
+/* Style families: flat (Geist), raised (Radix classic 3D), glossy (iOS 26
+   buttons, measured on the simulator 2026-09-14). */
 export const STYLE_OPTIONS = [
   { value: "flat", label: "Flat" },
-  { value: "outline", label: "Outline" },
   { value: "raised", label: "Raised" },
-  { value: "elevated", label: "Elevated" },
+  { value: "glossy", label: "Glossy" },
 ]
 
 export const RADIUS_OPTIONS = [

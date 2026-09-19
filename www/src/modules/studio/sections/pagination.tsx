@@ -104,7 +104,7 @@ export function PaginationHero({ state }: { state: StudioState }) {
   const current =
     state.paginationCurrent === "outline"
       ? look.secondary
-      : cn("bg-primary text-fg-on-primary", look.fill)
+      : cn("bg-primary text-fg-on-primary", look.fill, look.fills?.primary)
 
   return (
     <Hero className="flex-row items-center justify-center gap-1 py-6">
