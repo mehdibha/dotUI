@@ -42,13 +42,6 @@ export interface ChartFamilyProps {
   tooltipAnchor?: ChartTooltipAnchor
 
   /**
-   * Keep the tooltip pinned to the focused position instead of letting it
-   * follow the pointer between points.
-   * @default true
-   */
-  tooltipSticky?: boolean
-
-  /**
    * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
    * but lose their live region, so screen readers get silent stops — keep the
    * tooltip unless the chart is decorative.
@@ -65,10 +58,7 @@ export interface ChartFamilyProps {
    */
   animate?: ChartAnimate
 
-  /**
-   * Chart height in pixels.
-   * @default 256
-   */
+  /** Chart height in pixels. Without it the chart is 16:9 of its width. */
   height?: number
 
   /** Width/height ratio, used instead of `height` when set. */

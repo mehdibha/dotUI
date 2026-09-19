@@ -25,7 +25,6 @@ export default function ChartRadarIcons() {
         x="month"
         y={["desktop", "mobile"]}
         labels={labels}
-        legend={false}
         ariaLabel="Desktop and mobile visitors, January through June"
       />
       <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">

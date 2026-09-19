@@ -28,7 +28,6 @@ export default function ChartRadialVisitors() {
       height={108}
       innerRadius={0.3}
       track
-      legend={false}
       ariaLabel="Visitors by browser"
     />
   )

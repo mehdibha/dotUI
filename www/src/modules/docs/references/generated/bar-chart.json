@@ -40,14 +40,6 @@
       "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
       "required": true
     },
-    "y1": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Lower baseline field. Pair it with the `stackY` helper for stacked bars."
-    },
     "series": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -135,8 +127,29 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Side-by-side series inside each category band. Without it, wide-format\nseries draw over one another from zero — stack with `stackY` instead.",
+      "description": "Side-by-side series inside each category band.",
       "default": "true for multi-series wide data, false otherwise"
+    },
+    "stacked": {
+      "type": "\"normalize\" | boolean",
+      "detailedType": "'normalize' | boolean | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "normalize"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      },
+      "description": "Series stacked inside each band, in `seriesOrder`. `\"normalize\"` divides\neach band by its own total for a 100% stack.",
+      "default": "false"
     },
     "radius": {
       "type": "number",
@@ -144,7 +157,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Corner radius in pixels.",
+      "description": "Corner radius in pixels. Stacked bars round only the outer end.",
       "default": "4"
     },
     "inset": {
@@ -164,13 +177,29 @@
       "description": "Bar fill opacity. Dim every bar to highlight one with an extra layer."
     },
     "axes": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+      "type": "\"x\" | \"y\" | boolean",
+      "detailedType": "'x' | 'y' | boolean | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "x"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "y"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
       },
-      "description": "Show the axes and their tick labels.",
-      "default": "false"
+      "description": "Show the axes and their tick labels: both, neither, or one.",
+      "default": "\"x\", or \"y\" when `horizontal` — the category axis"
     },
     "grid": {
       "type": "boolean",
@@ -187,8 +216,8 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the color legend. Turn it off for a single series.",
-      "default": "true"
+      "description": "Show the color legend below the plot.",
+      "default": "false"
     },
     "formatX": {
       "type": "ChartFormat",
@@ -197,7 +226,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats x tick labels — a function, or serializable `Intl` options."
+      "description": "Formats x tick labels. Define it outside render."
     },
     "formatY": {
       "type": "ChartFormat",
@@ -206,7 +235,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats y tick labels — a function, or serializable `Intl` options."
+      "description": "Formats y tick labels. Define it outside render."
     },
     "marksBefore": {
       "type": "readonly ChartMarkLayer[]",
@@ -374,15 +403,6 @@
       "description": "Where the tooltip attaches: to the focused point, to the pointer, or to\nthe center of the focused group.",
       "default": "\"group-center\""
     },
-    "tooltipSticky": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Keep the tooltip pinned to the focused position instead of letting it\nfollow the pointer between points.",
-      "default": "true"
-    },
     "tooltip": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -408,8 +428,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Chart height in pixels.",
-      "default": "256"
+      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
     },
     "aspectRatio": {
       "type": "number",
@@ -974,6 +993,43 @@
             }
           },
           "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "primaryPoint": {
+          "type": "property",
+          "name": "primaryPoint",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
+                  "name": "ChartPoint"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "ChartValue"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
           "readonly": false,
           "description": ""
         }

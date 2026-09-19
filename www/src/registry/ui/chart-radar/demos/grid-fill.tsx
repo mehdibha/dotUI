@@ -18,7 +18,6 @@ export default function ChartRadarGridFill() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       gridFill={0.2}
       fill={0.5}
       ariaLabel="Desktop visitors, January through June"

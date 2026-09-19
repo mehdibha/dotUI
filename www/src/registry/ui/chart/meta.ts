@@ -11,8 +11,8 @@ const chartMeta = {
       target: "ui/chart.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.16.0", "d3-scale"],
-  devDependencies: ["@types/d3-scale"],
+  dependencies: ["@tanstack/charts@0.18.0", "d3-scale", "d3-shape"],
+  devDependencies: ["@types/d3-scale", "@types/d3-shape"],
   params: {
     grid: {
       kind: "enum",

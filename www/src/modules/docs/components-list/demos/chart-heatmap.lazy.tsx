@@ -35,7 +35,6 @@ export default function ChartHeatmapContributions() {
       label="Contributions"
       height={96}
       axes={false}
-      legend={false}
       ariaLabel="Contributions per day over sixteen weeks"
     />
   )

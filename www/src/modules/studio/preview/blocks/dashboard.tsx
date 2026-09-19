@@ -674,7 +674,6 @@ function RevenueChart() {
           y={["revenue", "target"]}
           labels={chartLabels}
           fill="gradient"
-          axes="x"
           formatX={(value) => String(value).slice(0, 3)}
           height={224}
           ariaLabel="Monthly revenue against plan"

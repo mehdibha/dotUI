@@ -128,7 +128,7 @@
         "type": "number"
       },
       "description": "Stroke width of the outline.",
-      "default": "2.25"
+      "default": "1.5"
     },
     "points": {
       "type": "boolean",
@@ -217,7 +217,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "A second, muted label line above each category label — a function, or\nserializable `Intl` options."
+      "description": "A second, muted label line above each category label. Define it outside render."
     },
     "axes": {
       "type": "boolean",
@@ -243,8 +243,8 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the color legend. Turn it off for a single series.",
-      "default": "true"
+      "description": "Show the color legend below the chart.",
+      "default": "false"
     },
     "formatX": {
       "type": "ChartFormat",
@@ -253,7 +253,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats the circumference labels and the tooltip title — a function, or\nserializable `Intl` options."
+      "description": "Formats the circumference labels and the tooltip title. Define it outside render."
     },
     "formatY": {
       "type": "ChartFormat",
@@ -262,7 +262,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats the tooltip values — a function, or serializable `Intl` options."
+      "description": "Formats the tooltip values. Define it outside render."
     },
     "polarMarks": {
       "type": "readonly PolarMarkLayer[]",
@@ -283,6 +283,12 @@
                 "name": "PolarMark"
               },
               "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
                 {
                   "type": "any"
                 },
@@ -383,15 +389,6 @@
       "description": "Where the tooltip attaches: to the focused point, to the pointer, or to\nthe center of the focused group.",
       "default": "\"group-center\""
     },
-    "tooltipSticky": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Keep the tooltip pinned to the focused position instead of letting it\nfollow the pointer between points.",
-      "default": "true"
-    },
     "tooltip": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -417,8 +414,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Chart height in pixels.",
-      "default": "256"
+      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
     },
     "aspectRatio": {
       "type": "number",
@@ -869,16 +865,7 @@
           "type": "property",
           "name": "__angleScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "angle"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -908,16 +895,7 @@
           "type": "property",
           "name": "__radiusScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "radius"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -1176,6 +1154,43 @@
             }
           },
           "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "primaryPoint": {
+          "type": "property",
+          "name": "primaryPoint",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
+                  "name": "ChartPoint"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "ChartValue"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
           "readonly": false,
           "description": ""
         }

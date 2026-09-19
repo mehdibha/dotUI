@@ -25,10 +25,7 @@ export default function ChartPieBrowsers() {
       value="visitors"
       name="browser"
       labels={labels}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       height={108}
-      legend={false}
       ariaLabel="Visitors by browser"
     />
   )

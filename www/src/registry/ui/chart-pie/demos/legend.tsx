@@ -27,8 +27,6 @@ export default function ChartPieLegend() {
       labels={labels}
       legend
       radiusRatio={0.85}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser"
     />
   )

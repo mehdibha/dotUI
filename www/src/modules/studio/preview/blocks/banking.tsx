@@ -658,7 +658,6 @@ function CashflowCard() {
           x="month"
           y={["income", "spending"]}
           labels={cashflowLabels}
-          axes="x"
           formatX={(value) => String(value).slice(0, 3)}
           height={224}
           ariaLabel="Monthly income and spending"

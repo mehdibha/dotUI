@@ -33,7 +33,6 @@ export default function ChartBarLabel() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       marks={labels}
       ariaLabel="Desktop visitors per month, labelled"
     />

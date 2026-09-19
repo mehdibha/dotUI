@@ -74,33 +74,25 @@ Naming the category field as `series` is also how each bar gets its own color, a
 
 ## Stacked bars
 
-`stackY` turns wide rows into long rows carrying the interval each segment spans. Feed it the same fields you would have passed to `y`, then plot `top` over `base`:
-
-```tsx
-import { stackY } from "@/components/ui/chart"
-
-const stacked = stackY(rows, { x: "month", y: ["desktop", "mobile", "tablet"] })
-```
+`stacked` stacks the series inside each band, in `seriesOrder`. Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself, and only the outer end of each stack is rounded.
 
 ```tsx
 <BarChart
-  data={stacked}
-  x="x"
-  y="top"
-  y1="base"
-  series="series"
-  seriesOrder={["desktop", "mobile", "tablet"]}
+  data={data}
+  x="month"
+  y={["desktop", "mobile", "tablet"]}
+  stacked
   ariaLabel="Visitors per month by device, stacked"
 />
 ```
 
-Call `stackY` at module scope — its result is the `data` identity. Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. Add `normalize: true` for a 100% stack, and format the axis as a percentage with `formatY={{ locale: "en-US", number: { style: "percent" } }}`.
+`stacked="normalize"` divides each band by its own total for a 100% stack — format the value axis as a percentage with `formatY`.
 
 ## Orientation and grouping
 
 `horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is still `x`, so `formatX` formats the numbers, and focus groups along the categories automatically.
 
-Multi-series wide data is grouped side by side by default. Set `grouped` to group long-format series too. Without grouping, long-format series that share a category stack from zero automatically, while wide-format series draw over one another — set `y1` (as `stackY` does) when you want to control the interval yourself.
+Multi-series wide data is grouped side by side by default. Set `grouped` to group long-format series too; without grouping or stacking, series that share a category stack from zero.
 
 ## Labels and annotations
 
@@ -154,6 +146,7 @@ Both props are compared by identity, like `data`. A layer that depends on state 
   <Example name="chart-bar/demos/label" title="Labels" />
   <Example name="chart-bar/demos/label-custom" title="Labels inside bars" />
   <Example name="chart-bar/demos/active" title="Highlight on focus" />
+  <Example name="chart-bar/demos/interactive" title="Interactive" />
 </Examples>
 
 ## API Reference

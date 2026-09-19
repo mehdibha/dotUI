@@ -25,9 +25,7 @@ export default function ChartRadialLabel() {
       value="visitors"
       name="browser"
       labels={labels}
-      // A full turn starting at nine o'clock, so labels sit on the left.
-      startAngle={-Math.PI / 2}
-      endAngle={Math.PI * 1.5}
+      // The sweep starts at the top, so the labels stack down the rings.
       innerRadius={0.25}
       radiusRatio={0.95}
       track

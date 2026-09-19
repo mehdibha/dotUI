@@ -1,7 +1,5 @@
-import type { ChartFormat } from "@/registry/ui/chart"
+import type { ChartFormat, PolarMarkLayer } from "@/registry/ui/chart"
 import type { ChartFamilyProps, ChartFocus } from "@/registry/ui/chart/types"
-
-import type { PolarMarkLayer } from "./base"
 
 export type { ChartFormat, PolarMarkLayer }
 
@@ -45,7 +43,7 @@ export interface RadarChartProps extends ChartFamilyProps {
 
   /**
    * Stroke width of the outline.
-   * @default 2.25
+   * @default 1.5
    */
   strokeWidth?: number
 
@@ -91,10 +89,7 @@ export interface RadarChartProps extends ChartFamilyProps {
    */
   spokes?: boolean
 
-  /**
-   * A second, muted label line above each category label — a function, or
-   * serializable `Intl` options.
-   */
+  /** A second, muted label line above each category label. Define it outside render. */
   axisDetail?: ChartFormat
 
   /**
@@ -110,20 +105,15 @@ export interface RadarChartProps extends ChartFamilyProps {
   grid?: boolean
 
   /**
-   * Show the color legend. Turn it off for a single series.
-   * @default true
+   * Show the color legend below the chart.
+   * @default false
    */
   legend?: boolean
 
-  /**
-   * Formats the circumference labels and the tooltip title — a function, or
-   * serializable `Intl` options.
-   */
+  /** Formats the circumference labels and the tooltip title. Define it outside render. */
   formatX?: ChartFormat
 
-  /**
-   * Formats the tooltip values — a function, or serializable `Intl` options.
-   */
+  /** Formats the tooltip values. Define it outside render. */
   formatY?: ChartFormat
 
   /** Extra polar mark layers painted over the series — annotations, rules, labels. */
