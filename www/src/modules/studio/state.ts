@@ -69,7 +69,7 @@ import { CalendarSection } from "./sections/calendar"
 import { ChartsSection } from "./sections/charts"
 import { CheckboxSection } from "./sections/checkbox"
 import { ChoiceCardsSection } from "./sections/choice-cards"
-import { ColorSection, colorSummary } from "./sections/color"
+import { ColorPrimary, ColorSection } from "./sections/color"
 import { CursorSection, cursorSummary } from "./sections/cursor"
 import { DialogsSection } from "./sections/dialogs"
 import { DisabledSection, disabledSummary } from "./sections/disabled"
@@ -117,8 +117,11 @@ export interface Chapter {
   id: string
   label: string
   defaults: Partial<StudioState>
+  /** The rows on the page: the chapter's two or three decisions that matter. */
+  Primary?: React.ComponentType<{ studio: Studio }>
+  /** The rest, behind More. */
   Body: React.ComponentType<{ studio: Studio }>
-  /** The index row's live value, for chapters whose demo can't carry it. */
+  /** The title's muted value while a chapter has no Primary rows yet. */
   summary?: (state: StudioState) => string
 }
 
@@ -127,8 +130,8 @@ export const CHAPTERS: Chapter[] = [
     id: "color",
     label: "Color",
     defaults: COLOR_DEFAULTS,
+    Primary: ColorPrimary,
     Body: ColorSection,
-    summary: colorSummary,
   },
   {
     id: "typography",

@@ -3,7 +3,7 @@
 /* The panel's search — the header's search button opens a popover holding a
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
-   Opens instantly on purpose: it's a frequent gesture. Selecting drills into
+   Opens instantly on purpose: it's a frequent gesture. Selecting scrolls to
    the chapter. ⌘P, not ⌘K — the site header's docs search owns ⌘K
    everywhere, /studio included. */
 

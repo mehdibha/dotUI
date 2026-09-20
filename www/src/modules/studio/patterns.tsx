@@ -10,12 +10,7 @@ import { Button as RacButton } from "react-aria-components"
 import { fontStack } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
-import { ColorArea } from "@/registry/ui/color-area"
-import { ColorField } from "@/registry/ui/color-field"
-import { ColorSlider } from "@/registry/ui/color-slider"
-import { DialogContent } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
-import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
   Slider,
@@ -26,13 +21,7 @@ import {
 } from "@/registry/ui/slider"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
-import {
-  INSTANT_POPOVER,
-  ROW,
-  ROW_LABEL,
-  ROW_VALUE,
-  ROW_OVERLAY_PLACEMENT,
-} from "./rows"
+import { ROW, ROW_LABEL, ROW_VALUE } from "./rows"
 
 /* -------------------------------- Detail row ------------------------------- */
 
@@ -107,34 +96,6 @@ export function PaletteDot({ color }: { color: string }) {
       className="size-2 shrink-0 rounded-full"
       style={{ backgroundColor: color }}
     />
-  )
-}
-
-/* ------------------------------ Mini color row ----------------------------- */
-
-/** Shared picker popover body (area + hue + hex). */
-export function PickerPopoverContent() {
-  return (
-    <Popover placement={ROW_OVERLAY_PLACEMENT} className={INSTANT_POPOVER}>
-      <DialogContent className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <ColorArea
-            colorSpace="hsb"
-            xChannel="saturation"
-            yChannel="brightness"
-          />
-          <ColorSlider
-            orientation="vertical"
-            colorSpace="hsb"
-            channel="hue"
-            className="h-auto self-stretch"
-          />
-        </div>
-        <ColorField aria-label="Hex" className="w-full">
-          <Input size="sm" className="w-full" />
-        </ColorField>
-      </DialogContent>
-    </Popover>
   )
 }
 

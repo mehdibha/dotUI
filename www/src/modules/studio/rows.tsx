@@ -432,7 +432,7 @@ export function SelectRow({
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
  *  controls commit once on release instead of on every frame. */
-function useDraft<T>(committed: T) {
+export function useDraft<T>(committed: T) {
   const [draft, setDraft] = useState(committed)
   const [seed, setSeed] = useState(committed)
   if (seed !== committed) {
@@ -552,55 +552,73 @@ export function ColorPickerRow({
               </span>
             </Button>
           )}
-          <Popover
+          <ColorPickerPopover
+            commit={commit}
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
             placement={tile ? "bottom start" : ROW_OVERLAY_PLACEMENT}
-            className={cn("w-64 min-w-0", INSTANT_POPOVER)}
-          >
-            <DialogContent className="flex flex-col gap-3 p-3">
-              <ColorSwatchPicker
-                className="justify-between gap-0"
-                onChange={commit}
-              >
-                {COLOR_PRESETS.map((preset) => (
-                  <ColorSwatchPickerItem
-                    key={preset}
-                    color={preset}
-                    className="size-5 rounded-full ring-offset-2 ring-offset-popover before:hidden selected:ring-2 selected:ring-(--color)"
-                  />
-                ))}
-              </ColorSwatchPicker>
-              <ColorArea
-                aria-label="Saturation and brightness"
-                colorSpace="hsb"
-                xChannel="saturation"
-                yChannel="brightness"
-                onChangeEnd={commit}
-                className="w-full rounded-xl"
-              />
-              <ColorSlider
-                aria-label="Hue"
-                colorSpace="hsb"
-                channel="hue"
-                onChangeEnd={commit}
-                className="w-full"
-              >
-                <ColorSliderControl className="h-5 rounded-full" />
-              </ColorSlider>
-              <ColorField aria-label="Hex" onChange={commit} className="w-full">
-                <InputGroup size="sm" className="w-full">
-                  <InputGroupAddon>
-                    <ColorSwatch className="size-4 rounded-full" />
-                  </InputGroupAddon>
-                  <Input className="font-mono uppercase" />
-                </InputGroup>
-              </ColorField>
-            </DialogContent>
-          </Popover>
+          />
         </>
       )}
     </ColorPicker>
+  )
+}
+
+/** The seed picker's popover: presets, area, hue, hex. Discrete controls
+ *  commit at once; the area and hue slider commit on release. */
+export function ColorPickerPopover({
+  commit,
+  placement = ROW_OVERLAY_PLACEMENT,
+  children,
+}: {
+  commit: (color: Color | null) => void
+  placement?: React.ComponentProps<typeof Popover>["placement"]
+  /** Rows under the hex field — settings that belong to this one color. */
+  children?: React.ReactNode
+}) {
+  return (
+    <Popover
+      placement={placement}
+      className={cn("w-64 min-w-0", INSTANT_POPOVER)}
+    >
+      <DialogContent className="flex flex-col gap-3 p-3">
+        <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
+          {COLOR_PRESETS.map((preset) => (
+            <ColorSwatchPickerItem
+              key={preset}
+              color={preset}
+              className="size-5 rounded-full ring-offset-2 ring-offset-popover before:hidden selected:ring-2 selected:ring-(--color)"
+            />
+          ))}
+        </ColorSwatchPicker>
+        <ColorArea
+          aria-label="Saturation and brightness"
+          colorSpace="hsb"
+          xChannel="saturation"
+          yChannel="brightness"
+          onChangeEnd={commit}
+          className="w-full rounded-xl"
+        />
+        <ColorSlider
+          aria-label="Hue"
+          colorSpace="hsb"
+          channel="hue"
+          onChangeEnd={commit}
+          className="w-full"
+        >
+          <ColorSliderControl className="h-5 rounded-full" />
+        </ColorSlider>
+        <ColorField aria-label="Hex" onChange={commit} className="w-full">
+          <InputGroup size="sm" className="w-full">
+            <InputGroupAddon>
+              <ColorSwatch className="size-4 rounded-full" />
+            </InputGroupAddon>
+            <Input className="font-mono uppercase" />
+          </InputGroup>
+        </ColorField>
+        {children}
+      </DialogContent>
+    </Popover>
   )
 }
 
@@ -726,6 +744,13 @@ function NeutralSlider({
   )
 }
 
+/** What the row reads back: the family the committed value lands on. */
+export function neutralFamily(value: NeutralValue, brandHue: number) {
+  if (value.tint === 0) return PURE_GRAY.label
+  if (value.hue === null) return "From brand"
+  return nearestFamilyName(value.hue ?? brandHue)
+}
+
 /** Steps 50 / 200 / 400 / 600 / 800 — enough of the scale to recognise it. */
 const TRIGGER_STEPS = [1, 3, 5, 7, 9]
 
@@ -748,6 +773,70 @@ export function NeutralPickerRow({
   /** The resolved neutral scale, lightest step first. */
   ramp: string[]
 }) {
+  return (
+    <Dialog>
+      <Button
+        variant="quiet"
+        data-row=""
+        className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
+      >
+        <RowLabel label={label} description={description} />
+        <span className="flex shrink-0 items-center gap-2.5">
+          <span className={ROW_VALUE}>{neutralFamily(value, brandHue)}</span>
+          <NeutralStrip ramp={ramp} className="w-14" />
+        </span>
+      </Button>
+      <NeutralPickerPopover
+        value={value}
+        onChange={onChange}
+        brandHue={brandHue}
+        ramp={ramp}
+      />
+    </Dialog>
+  )
+}
+
+/** Five steps of the resolved scale in a pill. Hairline: the near-black end
+ *  of a dark ramp would otherwise dissolve into the row and the scale would
+ *  look half as long. */
+export function NeutralStrip({
+  ramp,
+  className,
+}: {
+  ramp: string[]
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        "flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60",
+        className,
+      )}
+    >
+      {TRIGGER_STEPS.map((step) => (
+        <span
+          key={step}
+          className="flex-1"
+          style={{ background: ramp[step] }}
+        />
+      ))}
+    </span>
+  )
+}
+
+/** The neutral's popover: family seeds, then the hue and tint sliders. Must
+ *  render inside a Dialog trigger. */
+export function NeutralPickerPopover({
+  value,
+  onChange,
+  brandHue,
+  ramp,
+}: {
+  value: NeutralValue
+  onChange: (value: NeutralValue) => void
+  brandHue: number
+  ramp: string[]
+}) {
   // Seven dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
@@ -768,121 +857,88 @@ export function NeutralPickerRow({
         ? "brand"
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
-    <Dialog>
-      <Button
-        variant="quiet"
-        data-row=""
-        className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-      >
-        <RowLabel label={label} description={description} />
-        <span className="flex shrink-0 items-center gap-2.5">
-          <span className={ROW_VALUE}>{family}</span>
-          {/* Hairline: the near-black end of a dark ramp would otherwise
-              dissolve into the row and the scale would look half as long. */}
-          <span className="flex h-5 w-14 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
-            {TRIGGER_STEPS.map((step) => (
-              <span
-                key={step}
-                className="flex-1"
-                style={{ background: ramp[step] }}
-              />
-            ))}
-          </span>
-        </span>
-      </Button>
-      <Popover
-        placement={ROW_OVERLAY_PLACEMENT}
-        className={cn("w-64 min-w-0", INSTANT_POPOVER)}
-      >
-        <DialogContent className="flex flex-col gap-3 p-3">
-          {/* Seeds, same as the brand picker: one tap to a known gray family,
-              then the sliders for anything between them. Tapping while flat
-              also restores the lean, or the tap would do nothing visible. */}
-          <RacToggleButtonGroup
-            aria-label="Neutral presets"
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={preset ? [preset] : []}
-            onSelectionChange={(keys) => {
-              const next = keys.values().next().value
-              if (!next) return
-              if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
-              const picked = NEUTRAL_FAMILIES.find(
-                (option) => option.id === next,
-              )
-              // A family tapped while flat also restores the lean, or the tap
-              // would leave the same gray on screen.
-              onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
-            }}
-            className="flex justify-between"
+    <Popover
+      placement={ROW_OVERLAY_PLACEMENT}
+      className={cn("w-64 min-w-0", INSTANT_POPOVER)}
+    >
+      <DialogContent className="flex flex-col gap-3 p-3">
+        {/* Seeds, same as the brand picker: one tap to a known gray family,
+            then the sliders for anything between them. Tapping while flat
+            also restores the lean, or the tap would do nothing visible. */}
+        <RacToggleButtonGroup
+          aria-label="Neutral presets"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={preset ? [preset] : []}
+          onSelectionChange={(keys) => {
+            const next = keys.values().next().value
+            if (!next) return
+            if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
+            const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
+            onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
+          }}
+          className="flex justify-between"
+        >
+          {/* Auto is named, not a dot: following the brand is the default
+              and a gray that quietly tracks another color has to say so. */}
+          <RacToggleButton
+            id="brand"
+            onHoverStart={() => setHovered("From brand")}
+            onHoverEnd={() => setHovered(null)}
+            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
           >
-            {/* Auto is named, not a dot: following the brand is the default
-                and a gray that quietly tracks another color has to say so. */}
+            <span
+              className="size-4 rounded-full"
+              style={{ background: sample(brandHue) }}
+            />
+            Auto
+          </RacToggleButton>
+          {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
             <RacToggleButton
-              id="brand"
-              onHoverStart={() => setHovered("From brand")}
+              key={option.id}
+              id={option.id}
+              aria-label={option.label}
+              onHoverStart={() => setHovered(option.label)}
               onHoverEnd={() => setHovered(null)}
-              className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-            >
-              <span
-                className="size-4 rounded-full"
-                style={{ background: sample(brandHue) }}
-              />
-              Auto
-            </RacToggleButton>
-            {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map(
-              (option) => (
-                <RacToggleButton
-                  key={option.id}
-                  id={option.id}
-                  aria-label={option.label}
-                  onHoverStart={() => setHovered(option.label)}
-                  onHoverEnd={() => setHovered(null)}
-                  style={{
-                    background:
-                      option.hue === null ? sample(0, 0) : sample(option.hue),
-                  }}
-                  className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-popover focus-visible:focus-ring selected:ring-2 selected:ring-accent"
-                />
-              ),
-            )}
-          </RacToggleButtonGroup>
+              style={{
+                background:
+                  option.hue === null ? sample(0, 0) : sample(option.hue),
+              }}
+              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-popover focus-visible:focus-ring selected:ring-2 selected:ring-accent"
+            />
+          ))}
+        </RacToggleButtonGroup>
 
-          <NeutralSlider
-            label="Hue"
-            note={hovered ?? family}
-            value={hue}
-            maxValue={360}
-            step={1}
-            track={HUE_TRACK}
-            thumb={sample(hue)}
-            onChange={setHue}
-            onChangeEnd={(next) => onChange({ ...value, hue: next })}
-          />
+        <NeutralSlider
+          label="Hue"
+          note={hovered ?? family}
+          value={hue}
+          maxValue={360}
+          step={1}
+          track={HUE_TRACK}
+          thumb={sample(hue)}
+          onChange={setHue}
+          onChangeEnd={(next) => onChange({ ...value, hue: next })}
+        />
 
-          <NeutralSlider
-            label="Tint"
-            value={tint}
-            maxValue={MAX_TINT}
-            step={0.05}
-            track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
-            thumb={sample(hue, tint)}
-            onChange={setTint}
-            onChangeEnd={(next) => onChange({ ...value, tint: next })}
-          />
+        <NeutralSlider
+          label="Tint"
+          value={tint}
+          maxValue={MAX_TINT}
+          step={0.05}
+          track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
+          thumb={sample(hue, tint)}
+          onChange={setTint}
+          onChangeEnd={(next) => onChange({ ...value, tint: next })}
+        />
 
-          <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
-            {ramp.map((step) => (
-              <span
-                key={step}
-                className="flex-1"
-                style={{ background: step }}
-              />
-            ))}
-          </div>
-        </DialogContent>
-      </Popover>
-    </Dialog>
+        <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
+          {ramp.map((step) => (
+            <span key={step} className="flex-1" style={{ background: step }} />
+          ))}
+        </div>
+      </DialogContent>
+    </Popover>
   )
 }
 

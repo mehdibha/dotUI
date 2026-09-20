@@ -1,27 +1,21 @@
 "use client"
 
-/* Color — its rows are the specimen. The seeds
-   and axes land on `ColorConfig` through the axis module; here they resolve
-   through the same engine the preview runs, in the panel's own display mode,
-   so every swatch and derived "Auto" value is what ships. */
+/* Color — its rows are the specimen. The seeds and axes land on
+   `ColorConfig` through the axis module; here they resolve through the same
+   engine the preview runs, in the panel's own display mode, so every swatch
+   and derived "Auto" value is what ships. Brand and Neutral lead; roles,
+   semantics, contrast and the two modes follow as one row each; engine
+   tuning waits in Advanced. */
 
 import { useMemo } from "react"
-import {
-  MoonIcon,
-  RotateCcwIcon,
-  SunIcon,
-  TriangleAlertIcon,
-} from "lucide-react"
+import { TriangleAlertIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
-import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
+import { STEPS, toOklch, wcag2 } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
-import { cn } from "@/registry/lib/utils"
 import type { ColorConfig } from "@/registry/theme"
 import { Button } from "@/registry/ui/button"
-import { ColorPicker } from "@/registry/ui/color-picker"
-import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import {
@@ -32,24 +26,16 @@ import {
 } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
-  DetailRow,
-  MiniSliderRow,
-  PaletteDot,
-  PickerPopoverContent,
-  SwatchDots,
-} from "../patterns"
-import {
-  ColorPickerRow,
-  ControlGroup,
-  MiniSegmented,
-  MiniSwitch,
-  NeutralPickerRow,
-  ParamRow,
-  ROW,
-  ROW_LABEL,
-  ROW_VALUE,
-  SegmentedControlRow,
-} from "../rows"
+  DialColor,
+  DialFolder,
+  DialPopover,
+  DialSegmented,
+  DialSlider,
+  DialToggle,
+  DialTrigger,
+} from "../dial"
+import { PaletteDot } from "../patterns"
+import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Config bridge ------------------------------ */
@@ -73,6 +59,19 @@ export function useModeTheme(state: StudioState, mode?: ColorMode) {
   return mode ? theme[mode.polarity] : null
 }
 
+/** The resolved theme in the panel's own mode, so what the rows show is what
+ *  the page around them renders. */
+function usePanelMode(state: StudioState) {
+  const config = useColorConfig(state)
+  const theme = resolveColorConfigCached(config)
+  const { resolvedTheme } = useTheme()
+  return {
+    config,
+    theme,
+    m: theme[resolvedTheme === "dark" ? "dark" : "light"],
+  }
+}
+
 /** WCAG of the untouched borders vs the app background — the border sliders'
  *  stable zero point, measured with any border targets stripped. */
 function useBorderSeeds(config: ColorConfig) {
@@ -86,17 +85,6 @@ function useBorderSeeds(config: ColorConfig) {
     }
     return { "400": ratio("400"), "500": ratio("500"), "600": ratio("600") }
   }, [config])
-}
-
-function cssToHex(css: string): string {
-  return toHex(toOklch(css))
-}
-
-/** A mode's background as CSS without running the engine — for the swatches
- *  in summaries and mode rows (at dot size CIELAB L* on a neutral axis is
- *  indistinguishable from the engine's). */
-function modeBgCss(mode: ColorMode): string {
-  return `studio(${mode.bg}% 0 0)`
 }
 
 /* ----------------------------- Contrast status ----------------------------- */
@@ -121,7 +109,7 @@ function ContrastWarnings({
         variant="quiet"
         isIconOnly
         aria-label={`${warnings.length} contrast warning${warnings.length === 1 ? "" : "s"}`}
-        className="shrink-0 text-fg-warning hover:text-fg-warning"
+        className="size-5 shrink-0 text-fg-warning hover:text-fg-warning"
       >
         <TriangleAlertIcon />
       </Button>
@@ -139,214 +127,84 @@ function ContrastWarnings({
   )
 }
 
-/* -------------------------------- Mode editor ------------------------------- */
-
-/** One mode's block inside the Modes panel: identity row over its two
- *  parameters. */
-function ModeEditor({
-  mode,
-  onChange,
-}: {
-  mode: ColorMode
-  onChange: (mode: ColorMode) => void
-}) {
-  const PolarityIcon = mode.polarity === "light" ? SunIcon : MoonIcon
-  const light = mode.polarity === "light"
-  return (
-    <div className="flex flex-col border-t border-bg/50 pt-1 first:border-t-0 first:pt-0">
-      <div className="flex h-9 items-center gap-2 px-2">
-        <span
-          className="size-3.5 shrink-0 rounded-full ring-1 ring-border/60 ring-inset"
-          style={{ backgroundColor: modeBgCss(mode) }}
-        />
-        <span className="truncate text-xs font-medium text-fg">
-          {mode.name}
-        </span>
-        <PolarityIcon className="size-3 shrink-0 text-fg-muted" />
-      </div>
-      <MiniSliderRow
-        label="Background"
-        value={mode.bg}
-        onChange={(bg) => onChange({ ...mode, bg })}
-        minValue={light ? 90 : 0}
-        maxValue={light ? 100 : 20}
-        step={0.5}
-        format={(v) => (!light && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`)}
-      />
-      <ParamRow label="High contrast">
-        <MiniSwitch
-          ariaLabel={`High contrast for ${mode.name}`}
-          value={mode.contrast === "high"}
-          onChange={(on) =>
-            onChange({ ...mode, contrast: on ? "high" : "default" })
-          }
-        />
-      </ParamRow>
-    </div>
-  )
-}
-
-/* -------------------------------- Auto rows -------------------------------- */
-
-/** A seed row that reads “Auto” (showing the engine's derived color) until
- *  overridden — the panel face of absent-means-default. Reset returns to Auto. */
-function AutoColorRow({
-  label,
-  value,
-  derived,
-  onChange,
-  onReset,
-}: {
-  label: string
-  /** '' = Auto. */
-  value: string
-  /** The engine's derived color while Auto (any CSS color). */
-  derived: string
-  onChange: (hex: string) => void
-  onReset: () => void
-}) {
-  return (
-    <ColorPicker
-      value={value || cssToHex(derived)}
-      onChange={(c) => onChange(c.toString("hex"))}
-    >
-      {({ color }) => (
-        <div
-          data-row=""
-          className={cn(ROW, "flex items-center gap-0.5", value && "pr-1.5")}
-        >
-          <Button
-            variant="quiet"
-            className="flex h-full min-w-0 flex-1 items-center justify-between gap-3 rounded-none px-4 font-normal"
-          >
-            <span className={ROW_LABEL}>{label}</span>
-            <span className="flex shrink-0 items-center gap-2.5">
-              <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
-                {value ? color.toString("hex") : "Auto"}
-              </span>
-              <ColorSwatch className="size-5 rounded-full" />
-            </span>
-          </Button>
-          {value !== "" && (
-            <Button
-              size="xs"
-              variant="quiet"
-              isIconOnly
-              aria-label={`Reset ${label} to auto`}
-              onPress={onReset}
-              className="shrink-0 text-fg-muted"
-            >
-              <RotateCcwIcon />
-            </Button>
-          )}
-          <PickerPopoverContent />
-        </div>
-      )}
-    </ColorPicker>
-  )
-}
-
-/** AutoColorRow on the tile geometry (ColorPickerRow's tile layout) — for the
- *  semantic seeds, three up. Reset appears in the corner once overridden. */
-function AutoColorTile({
-  label,
-  value,
-  derived,
-  onChange,
-  onReset,
-}: {
-  label: string
-  value: string
-  derived: string
-  onChange: (hex: string) => void
-  onReset: () => void
-}) {
-  return (
-    <ColorPicker
-      value={value || cssToHex(derived)}
-      onChange={(c) => onChange(c.toString("hex"))}
-    >
-      {({ color }) => (
-        <div className="relative">
-          <Button
-            variant="quiet"
-            className="flex h-auto w-full items-center justify-between gap-2 rounded-xl bg-muted p-2.5 text-left font-normal hover:bg-highlight pressed:bg-highlight"
-          >
-            <span className="flex min-w-0 flex-col gap-0.5">
-              <span className={ROW_LABEL}>{label}</span>
-              <span
-                className={cn(
-                  ROW_VALUE,
-                  "text-xs",
-                  value && "font-mono uppercase",
-                )}
-              >
-                {value ? color.toString("hex") : "Auto"}
-              </span>
-            </span>
-            <ColorSwatch className="size-5 shrink-0 rounded-full" />
-          </Button>
-          {value !== "" && (
-            <Button
-              size="xs"
-              variant="quiet"
-              isIconOnly
-              aria-label={`Reset ${label} to auto`}
-              onPress={onReset}
-              className="absolute top-1 right-1 text-fg-muted"
-            >
-              <RotateCcwIcon />
-            </Button>
-          )}
-          <PickerPopoverContent />
-        </div>
-      )}
-    </ColorPicker>
-  )
-}
-
 /* --------------------------------- Section --------------------------------- */
-
-const CHARACTER_KEYS = ["vividness", "hueShift"] as const
-
-const CONTRAST_KEYS = ["guarantees", "preserveSeed", "borderContrast"] as const
 
 const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
   { key: "warningSeed", palette: "warning", label: "Warning" },
   { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 
-/** Collapsed-row summary: the brand seed and where primary actions draw from. */
-export function colorSummary(state: StudioState): string {
-  return state.brand.toUpperCase()
+const formatBg = (mode: ColorMode, v: number) =>
+  mode.polarity === "dark" && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`
+
+/** The decisions on the page: the two seeds every other color derives from. */
+export function ColorPrimary({ studio }: { studio: Studio }) {
+  const { state, set, setState } = studio
+  const { theme, m } = usePanelMode(state)
+  const neutral = { hue: state.neutralHue, tint: state.neutralTint }
+  const brandHue = toOklch(state.brand).h
+  const ramp = STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)
+  return (
+    <>
+      <DialColor
+        label="Brand"
+        value={state.brand}
+        onChange={set("brand")}
+        status={
+          <ContrastWarnings
+            warnings={theme.report.warnings}
+            delta={theme.report.seedDelta.accent ?? 0}
+            pinned={state.preserveSeed}
+          />
+        }
+        footer={
+          <DialToggle
+            label="Keep exact"
+            value={state.preserveSeed}
+            onChange={set("preserveSeed")}
+          />
+        }
+      />
+      <DialTrigger
+        label="Neutral"
+        value={
+          <>
+            <span className="truncate">{neutralFamily(neutral, brandHue)}</span>
+            <NeutralStrip ramp={ramp} className="h-5 w-12 rounded-md" />
+          </>
+        }
+      >
+        <NeutralPickerPopover
+          value={neutral}
+          onChange={(next) =>
+            setState({ ...state, neutralHue: next.hue, neutralTint: next.tint })
+          }
+          brandHue={brandHue}
+          ramp={ramp}
+        />
+      </DialTrigger>
+    </>
+  )
 }
 
+/** Roles, semantics, character, contrast, modes; engine tuning in Advanced. */
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
-  const modes = state.modes
-  const config = useColorConfig(state)
-  const theme = resolveColorConfigCached(config)
+  const { state, set } = studio
+  const { config, m } = usePanelMode(state)
   const borderSeeds = useBorderSeeds(config)
-  // Swatches read in the panel's own mode, so what the rows show is what the
-  // page around them renders.
-  const { resolvedTheme } = useTheme()
-  const m = theme[resolvedTheme === "dark" ? "dark" : "light"]
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
-  const selectionDerived =
-    m.scales.selection?.["700"] ??
-    (state.primary === "accent" ? solid("accent") : solid("neutral"))
-
-  const characterModified = CHARACTER_KEYS.some(
-    (key) => state[key] !== COLOR_DEFAULTS[key],
-  )
-  const contrastModified = CONTRAST_KEYS.some(
-    (key) => state[key] !== COLOR_DEFAULTS[key],
-  )
+  const semantic = (palette: string) =>
+    palette === "selection"
+      ? (m.scales.selection?.["700"] ??
+        solid(state.primary === "accent" ? "accent" : "neutral"))
+      : solid(palette)
+  const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
 
   const updateMode = (next: ColorMode) =>
-    set("modes")(modes.map((mode) => (mode.id === next.id ? next : mode)))
+    set("modes")(state.modes.map((mode) => (mode.id === next.id ? next : mode)))
 
   const setBorderContrast = (on: boolean) => {
     set("borderContrast")(on)
@@ -355,113 +213,109 @@ export function ColorSection({ studio }: { studio: Studio }) {
 
   return (
     <>
-      {/* Palette first: the base seeds, then the semantic set three up. */}
-      <ControlGroup>
-        <ColorPickerRow
-          label="Brand"
-          value={state.brand}
-          onChange={set("brand")}
-        />
-        <NeutralPickerRow
-          value={{ hue: state.neutralHue, tint: state.neutralTint }}
-          onChange={(neutral) =>
-            setState({
-              ...state,
-              neutralHue: neutral.hue,
-              neutralTint: neutral.tint,
-            })
-          }
-          brandHue={toOklch(state.brand).h}
-          ramp={STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)}
-        />
-      </ControlGroup>
-      <div className="grid grid-cols-3 gap-1.5">
-        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
-          <AutoColorTile
-            key={key}
-            label={label}
-            value={state[key]}
-            derived={solid(palette)}
-            onChange={set(key)}
-            onReset={() => set(key)("")}
-          />
-        ))}
-      </div>
-      <div className="flex justify-end pr-2 empty:hidden">
-        <ContrastWarnings
-          warnings={theme.report.warnings}
-          delta={theme.report.seedDelta.accent ?? 0}
-          pinned={state.preserveSeed}
-        />
-      </div>
-      {/* Then the role decisions the palette feeds. */}
-      <ControlGroup>
-        <SegmentedControlRow
-          label="Primary"
-          value={state.primary}
-          onChange={set("primary")}
-          options={[
-            {
-              value: "neutral",
-              label: (
-                <>
-                  <PaletteDot color={solid("neutral")} />
-                  Neutral
-                </>
-              ),
-            },
-            {
-              value: "accent",
-              label: (
-                <>
-                  <PaletteDot color={solid("accent")} />
-                  Accent
-                </>
-              ),
-            },
-          ]}
-        />
-        <AutoColorRow
-          label="Selection"
-          value={state.selectionSeed}
-          derived={selectionDerived}
-          onChange={set("selectionSeed")}
-          onReset={() => set("selectionSeed")("")}
-        />
-      </ControlGroup>
-      <DetailRow
-        label="Modes"
-        summary={
-          <span className="flex items-center gap-1.5">
-            <span className={ROW_VALUE}>
-              {modes
-                .map((mode) =>
-                  mode.contrast === "high" ? `${mode.name} HC` : mode.name,
-                )
-                .join(" · ")}
+      <DialSegmented
+        label="Primary"
+        value={state.primary}
+        onChange={set("primary")}
+        options={[
+          {
+            value: "neutral",
+            label: (
+              <>
+                <PaletteDot color={solid("neutral")} />
+                Neutral
+              </>
+            ),
+          },
+          {
+            value: "accent",
+            label: (
+              <>
+                <PaletteDot color={solid("accent")} />
+                Accent
+              </>
+            ),
+          },
+        ]}
+      />
+      <DialTrigger
+        label="Semantics"
+        value={
+          <>
+            <span className="flex items-center gap-1">
+              {SEMANTIC_SEEDS.map(({ key, palette }) => (
+                <PaletteDot key={key} color={semantic(palette)} />
+              ))}
             </span>
-            <SwatchDots colors={modes.map(modeBgCss)} />
-          </span>
+            {semanticsCustom ? "Custom" : "Auto"}
+          </>
         }
       >
-        {modes.map((mode) => (
-          <ModeEditor key={mode.id} mode={mode} onChange={updateMode} />
-        ))}
-      </DetailRow>
-      <DetailRow
-        label="Character"
-        summary={characterModified ? "Custom" : "Default"}
-      >
-        <MiniSliderRow
-          label="Vividness"
-          value={state.vividness}
-          onChange={set("vividness")}
-          minValue={0}
-          maxValue={2}
-          step={0.05}
-          format={(v) => `${v.toFixed(2)}×`}
-        />
-        <MiniSliderRow
+        <DialPopover>
+          {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
+            <DialColor
+              key={key}
+              label={label}
+              value={state[key]}
+              derived={semantic(palette)}
+              onChange={set(key)}
+              onReset={() => set(key)("")}
+            />
+          ))}
+        </DialPopover>
+      </DialTrigger>
+      <DialSlider
+        label="Vividness"
+        value={state.vividness}
+        onChange={set("vividness")}
+        minValue={0}
+        maxValue={2}
+        step={0.05}
+        format={(v) => `${v.toFixed(2)}×`}
+      />
+      <DialSegmented
+        label="Contrast"
+        value={state.guarantees}
+        onChange={set("guarantees")}
+        options={GUARANTEE_OPTIONS}
+      />
+      {state.modes.map((mode) => {
+        const light = mode.polarity === "light"
+        const high = mode.contrast === "high"
+        return (
+          <DialTrigger
+            key={mode.id}
+            label={mode.name}
+            value={
+              <span className="truncate font-mono tabular-nums">
+                {formatBg(mode, mode.bg)}
+                {high && " · High"}
+              </span>
+            }
+          >
+            <DialPopover>
+              <DialSlider
+                label="Background"
+                value={mode.bg}
+                onChange={(bg) => updateMode({ ...mode, bg })}
+                minValue={light ? 90 : 0}
+                maxValue={light ? 100 : 20}
+                step={0.5}
+                format={(v) => formatBg(mode, v)}
+              />
+              <DialToggle
+                label="High contrast"
+                value={high}
+                onChange={(on) =>
+                  updateMode({ ...mode, contrast: on ? "high" : "default" })
+                }
+              />
+            </DialPopover>
+          </DialTrigger>
+        )
+      })}
+      <DialFolder title="Advanced" defaultOpen={false}>
+        <DialSlider
           label="Hue shift"
           value={state.hueShift}
           onChange={set("hueShift")}
@@ -470,36 +324,14 @@ export function ColorSection({ studio }: { studio: Studio }) {
           step={0.1}
           format={(v) => `${v.toFixed(1)}×`}
         />
-      </DetailRow>
-      <DetailRow
-        label="Contrast guarantees"
-        summary={contrastModified ? "Custom" : "Default"}
-      >
-        <ParamRow label="Guarantees">
-          <MiniSegmented
-            ariaLabel="Contrast guarantees"
-            value={state.guarantees}
-            onChange={set("guarantees")}
-            options={GUARANTEE_OPTIONS}
-          />
-        </ParamRow>
-        <ParamRow label="Pin brand seed">
-          <MiniSwitch
-            ariaLabel="Pin exact brand color"
-            value={state.preserveSeed}
-            onChange={set("preserveSeed")}
-          />
-        </ParamRow>
-        <ParamRow label="Custom borders">
-          <MiniSwitch
-            ariaLabel="Custom border contrast"
-            value={state.borderContrast}
-            onChange={setBorderContrast}
-          />
-        </ParamRow>
+        <DialToggle
+          label="Custom borders"
+          value={state.borderContrast}
+          onChange={setBorderContrast}
+        />
         {state.borderContrast &&
           BORDER_JOBS.map(({ key, job, label, maxValue }) => (
-            <MiniSliderRow
+            <DialSlider
               key={key}
               label={label}
               value={state[key] > 0 ? state[key] : borderSeeds[job]}
@@ -510,7 +342,7 @@ export function ColorSection({ studio }: { studio: Studio }) {
               format={(v) => `${v.toFixed(2)}:1`}
             />
           ))}
-      </DetailRow>
+      </DialFolder>
     </>
   )
 }
