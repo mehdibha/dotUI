@@ -34,21 +34,23 @@ describe("selection controls", () => {
     expect(
       resolveDesignSystem({ ...DEFAULTS, checkboxFill: "neutral" }).color,
     ).toBeUndefined()
+    const accentChecks = resolveDesignSystem({
+      ...DEFAULTS,
+      selectionFill: "accent",
+      checkboxFill: "accent",
+    }).color
+    expect(accentChecks?.selection).toBe("accent")
+    expect(accentChecks?.scopes).toEqual({
+      radio: "neutral",
+      switch: "neutral",
+    })
+    // A selection seed paints the selection leaf; a control on that leaf
+    // follows it, a control off it still forks to its own source.
+    const seeded = { ...DEFAULTS, selectionSeed: "#0072f5" }
+    expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
     expect(
-      resolveDesignSystem({
-        ...DEFAULTS,
-        selectionFill: "accent",
-        checkboxFill: "accent",
-      }).color?.scopes,
-    ).toBeUndefined()
-    // Under a selection seed the source is the seed's ramp, so both fork.
-    expect(
-      resolveDesignSystem({
-        ...DEFAULTS,
-        selectionSeed: "#0072f5",
-        checkboxFill: "neutral",
-      }).color?.scopes,
-    ).toEqual({ checkbox: "neutral" })
+      resolveDesignSystem({ ...seeded, checkboxFill: "accent" }).color?.scopes,
+    ).toEqual({ checkbox: "accent" })
   })
 
   it("corner rides on the checkbox radius var", () => {

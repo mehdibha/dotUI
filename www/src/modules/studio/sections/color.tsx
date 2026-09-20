@@ -22,10 +22,11 @@ import {
   BORDER_JOBS,
   buildColorConfig,
   COLOR_DEFAULTS,
-  FILL_OPTIONS,
   GUARANTEE_OPTIONS,
-  selectionSource,
+  PRIMARY_LEAVES,
+  primaryValue,
   SOURCE_OPTIONS,
+  withPrimary,
 } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
@@ -140,12 +141,13 @@ const SEMANTIC_SEEDS = [
   { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 
-/** The controls that can fork off the selection tokens, by chapter. */
-const CONTROL_FILLS = [
-  { key: "checkboxFill", label: "Checkbox" },
-  { key: "radioFill", label: "Radio" },
-  { key: "switchFill", label: "Switch" },
-] as const
+const LEAF_LABELS: Record<(typeof PRIMARY_LEAVES)[number], string> = {
+  primary: "Buttons",
+  checkboxFill: "Checkbox",
+  radioFill: "Radio",
+  switchFill: "Switch",
+  selectionFill: "Selection",
+}
 
 const formatBg = (mode: ColorMode, v: number) =>
   mode.polarity === "dark" && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`
@@ -203,19 +205,26 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
 
 /** Palettes, primary, character, contrast, modes; engine tuning in Advanced. */
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { state, set, setState } = studio
   const { config, m } = usePanelMode(state)
   const borderSeeds = useBorderSeeds(config)
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const semantic = (palette: string) =>
     palette === "selection"
-      ? (m.scales.selection?.["700"] ?? solid(selectionSource(state)))
+      ? (m.scales.selection?.["700"] ?? solid(state.selectionFill))
       : solid(palette)
   const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
-  const primaryCustom =
-    state.selectionFill !== "auto" ||
-    CONTROL_FILLS.some(({ key }) => state[key] !== "auto")
+  const primary = primaryValue(state)
+  const sourceOptions = SOURCE_OPTIONS.map((option) => ({
+    ...option,
+    label: (
+      <>
+        <PaletteDot color={solid(option.value)} />
+        {option.label}
+      </>
+    ),
+  }))
 
   const updateMode = (next: ColorMode) =>
     set("modes")(state.modes.map((mode) => (mode.id === next.id ? next : mode)))
@@ -260,11 +269,13 @@ export function ColorSection({ studio }: { studio: Studio }) {
           <>
             <span className="flex items-center gap-1">
               <PaletteDot color={solid(state.primary)} />
-              <PaletteDot color={semantic("selection")} />
+              {primary === "mixed" && (
+                <PaletteDot color={semantic("selection")} />
+              )}
             </span>
-            {primaryCustom
-              ? "Custom"
-              : state.primary === "accent"
+            {primary === "mixed"
+              ? "Mixed"
+              : primary === "accent"
                 ? "Accent"
                 : "Neutral"}
           </>
@@ -272,33 +283,24 @@ export function ColorSection({ studio }: { studio: Studio }) {
       >
         <DialPopover>
           <DialSegmented
-            label="Actions"
-            value={state.primary}
-            onChange={set("primary")}
-            options={SOURCE_OPTIONS.map((option) => ({
-              ...option,
-              label: (
-                <>
-                  <PaletteDot color={solid(option.value)} />
-                  {option.label}
-                </>
-              ),
-            }))}
-          />
-          <DialSegmented
-            label="Controls"
-            value={state.selectionFill}
-            onChange={set("selectionFill")}
-            options={FILL_OPTIONS}
+            label="All"
+            value={primary === "mixed" ? null : primary}
+            onChange={(source) =>
+              setState({
+                ...state,
+                ...withPrimary(source as "neutral" | "accent"),
+              })
+            }
+            options={sourceOptions}
           />
           <DialGap />
-          {CONTROL_FILLS.map(({ key, label }) => (
+          {PRIMARY_LEAVES.map((leaf) => (
             <DialSegmented
-              key={key}
-              label={label}
-              value={state[key]}
-              onChange={set(key)}
-              options={FILL_OPTIONS}
+              key={leaf}
+              label={LEAF_LABELS[leaf]}
+              value={state[leaf]}
+              onChange={set(leaf)}
+              options={sourceOptions}
             />
           ))}
         </DialPopover>

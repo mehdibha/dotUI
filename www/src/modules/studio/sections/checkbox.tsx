@@ -1,13 +1,12 @@
 "use client"
 
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch),
-   one chapter per control. Fill is per control and Auto by default: the
-   selection tokens (Color → Primary → Controls) paint every check unless a
-   control forks off them. A radio is always a circle and a switch is always
-   a pill, so Corner stops at the box. */
+   one chapter per control. Fill is per control, a leaf of Color's Primary.
+   A radio is always a circle and a switch is always a pill, so Corner stops
+   at the box. */
 
 import { CORNER_OPTIONS } from "../axes/checkbox"
-import { FILL_OPTIONS } from "../axes/color"
+import { SOURCE_OPTIONS } from "../axes/color"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio } from "../state"
@@ -40,7 +39,7 @@ function CornerGlyph({ rx }: { rx: number }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-/** One control's fill: Auto follows the selection tokens. */
+/** One control's fill — the same leaf Color's Primary row shows. */
 export function FillRow({
   studio,
   field,
@@ -53,7 +52,7 @@ export function FillRow({
       label="Fill"
       value={studio.state[field]}
       onChange={studio.set(field)}
-      options={FILL_OPTIONS}
+      options={SOURCE_OPTIONS}
     />
   )
 }

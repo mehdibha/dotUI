@@ -253,7 +253,8 @@ export interface DialOption {
   label: React.ReactNode
 }
 
-/** Label left, a segmented choice right; the moving pill is the only motion. */
+/** Label left, a segmented choice right; the moving pill is the only motion.
+ *  `null` selects nothing — a view over values that disagree. */
 export function DialSegmented({
   label,
   value,
@@ -261,7 +262,7 @@ export function DialSegmented({
   options,
 }: {
   label: string
-  value: string
+  value: string | null
   onChange: (value: string) => void
   options: DialOption[]
 }) {
@@ -272,7 +273,7 @@ export function DialSegmented({
       aria-label={label}
       selectionMode="single"
       disallowEmptySelection
-      selectedKeys={[value]}
+      selectedKeys={value === null ? [] : [value]}
       onSelectionChange={(keys) => {
         const next = keys.values().next().value
         if (next) onChange(next as string)

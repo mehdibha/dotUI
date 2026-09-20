@@ -4,7 +4,7 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { DEFAULTS } from "."
 import { resolveDesignSystem } from "../resolve"
-import { buildColorConfig, isDefaultColorConfig } from "./color"
+import { buildColorConfig, isDefaultColorConfig, withPrimary } from "./color"
 
 const withModes = (
   light: Partial<(typeof DEFAULTS.modes)[number]>,
@@ -27,7 +27,7 @@ describe("color axis", () => {
     const { color } = resolveDesignSystem({
       ...DEFAULTS,
       brand: "#5e6ad2",
-      primary: "accent",
+      ...withPrimary("accent"),
       successSeed: "#16a34a",
       selectionSeed: "#0072f5",
       neutralHue: 250,
@@ -54,7 +54,7 @@ describe("color axis", () => {
       buildColorConfig({ ...DEFAULTS, ...state }).selection
     expect(source({ selectionFill: "neutral" })).toBeUndefined()
     expect(source({ selectionFill: "accent" })).toBe("accent")
-    expect(source({ primary: "accent", selectionFill: "auto" })).toBeUndefined()
+    expect(source(withPrimary("accent"))).toBeUndefined()
     expect(source({ primary: "accent", selectionFill: "neutral" })).toBe(
       "neutral",
     )

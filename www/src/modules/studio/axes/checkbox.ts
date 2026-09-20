@@ -1,8 +1,8 @@
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch
-   ⇄ Choice cards). Fill is per control: Auto follows the selection tokens
-   (Color → Primary → Controls), Neutral / Accent fork this one control off
-   them — Geist runs near-black checkboxes beside a blue toggle. Corner is
-   checkbox-only geometry.
+   ⇄ Choice cards). Fill is per control, a leaf of Color's Primary: on the
+   selection tokens' source it paints with them, off it it forks — Geist runs
+   near-black checkboxes beside a blue toggle. Corner is checkbox-only
+   geometry.
 
    Engine: a fork re-declares the selection tokens under `[data-checkbox]`
    (the recipe's `scopes`), so the component's classes never change. Corner
@@ -13,7 +13,7 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const CHECKBOX_DEFAULTS = {
-  checkboxFill: "auto",
+  checkboxFill: "neutral",
   checkCorner: "rounded",
 }
 

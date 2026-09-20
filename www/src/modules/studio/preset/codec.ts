@@ -11,7 +11,7 @@ import { familyFromStack } from "@/lib/fonts"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { migrateColorConfig } from "@/registry/theme"
-import type { ColorConfig } from "@/registry/theme"
+import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 import {
   DEFAULT_CODE_OPTIONS,
   sanitizeCodeOptions,
@@ -19,6 +19,8 @@ import {
 import type { CodeOptions } from "@/publisher/code-options"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+import { PRIMARY_LEAVES, withPrimary } from "@/modules/studio/axes/color"
+import type { PrimaryLeaf } from "@/modules/studio/axes/color"
 
 /** A studio state plus the exported-code style — everything a preset holds. */
 export interface StudioPreset {
@@ -47,10 +49,10 @@ function fromBase64Url(str: string): Uint8Array {
 
 /* -------------------------------- encode -------------------------------- */
 
-const VERSION = 3
+const VERSION = 4
 
 interface Encoded {
-  v: typeof VERSION
+  v: typeof VERSION | 3
   /** State keys that differ from the defaults, in sorted key order. */
   s?: Partial<StudioState>
   o?: CodeOptions
@@ -88,22 +90,36 @@ export function encodeState(state: StudioState): string | undefined {
 
 /* -------------------------------- decode -------------------------------- */
 
-/** Keys a v3 preset may still carry under an older name. */
-const RENAMED_KEYS: Record<string, string> = {
-  // The family's synced fill became the Controls source (Sep 2026).
-  checkFill: "selectionFill",
+const isSource = (value: unknown): value is PrimaryColorSource =>
+  value === "neutral" || value === "accent"
+
+/**
+ * v3 → v4 (Sep 2026): the Primary leaves. In v3 `primary` was the one
+ * source and the selection tokens followed it, with `checkFill` re-pointing
+ * every check at the accent. Both fan out onto the leaves they painted.
+ */
+function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
+  const stored = { ...raw }
+  const selection = PRIMARY_LEAVES.filter((leaf) => leaf !== "primary")
+  const fill = isSource(stored.checkFill)
+    ? stored.checkFill
+    : stored.primary === "accent"
+      ? "accent"
+      : undefined
+  if (fill) for (const leaf of selection) stored[leaf] ??= fill
+  delete stored.checkFill
+  return stored
 }
 
 /** Keep a stored value only when it has the default's shape. */
 function sanitizeState(raw: unknown): StudioState {
   const state = { ...DEFAULTS } as Record<string, unknown>
   if (!raw || typeof raw !== "object") return state as StudioState
-  const stored = { ...(raw as Record<string, unknown>) }
-  for (const [old, key] of Object.entries(RENAMED_KEYS)) {
-    if (old in stored && !(key in stored)) stored[key] = stored[old]
-  }
+  const stored = raw as Record<string, unknown>
   for (const [key, fallback] of Object.entries(DEFAULTS)) {
     const value = stored[key]
+    if (PRIMARY_LEAVES.includes(key as PrimaryLeaf) && !isSource(value))
+      continue
     if (value === undefined) continue
     if (fallback === null) {
       if (value === null || typeof value === "number") state[key] = value
@@ -121,10 +137,14 @@ export function decodePreset(encoded: string): StudioPreset {
   try {
     const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
     const parsed = JSON.parse(json) as Encoded | LegacyState
-    if ("v" in parsed && parsed.v === VERSION) {
+    if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
       const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
+      const stored =
+        parsed.v === 3 && parsed.s
+          ? migrateV3(parsed.s as Record<string, unknown>)
+          : parsed.s
       return {
-        state: sanitizeState(parsed.s),
+        state: sanitizeState(stored),
         ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
           ? { codeOptions }
           : {}),
@@ -179,8 +199,11 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
   if (color) {
     state.brand = color.seeds.accent
-    if (color.primary === "accent") state.primary = "accent"
-    if (color.selection) state.selectionFill = color.selection
+    // The selection tokens followed the primary unless re-pointed.
+    Object.assign(state, withPrimary(color.primary ?? "neutral"))
+    if (color.selection)
+      for (const leaf of PRIMARY_LEAVES)
+        if (leaf !== "primary") state[leaf] = color.selection
     for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
       const fill = color.scopes?.[scope]
       if (fill) state[key] = fill

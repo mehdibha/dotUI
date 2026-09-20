@@ -57,12 +57,45 @@ describe("preset codec — studio state", () => {
     expect("nope" in state).toBe(false)
   })
 
-  it("reads the family fill under its old key as the Controls source", () => {
-    const { state } = decodePreset(
-      encodeRaw({ v: 3, s: { checkFill: "accent" } }),
+  it("fans a v3 primary and family fill out onto the leaves they painted", () => {
+    const leaves = (s: unknown) => {
+      const { state } = decodePreset(encodeRaw({ v: 3, s }))
+      return [
+        state.primary,
+        state.checkboxFill,
+        state.radioFill,
+        state.switchFill,
+        state.selectionFill,
+      ]
+    }
+    // The selection tokens followed the primary.
+    expect(leaves({ primary: "accent" })).toEqual(Array(5).fill("accent"))
+    // The family fill re-pointed every check, whatever the primary.
+    expect(leaves({ checkFill: "accent" })).toEqual([
+      "neutral",
+      "accent",
+      "accent",
+      "accent",
+      "accent",
+    ])
+    expect(leaves({ primary: "accent", checkFill: "neutral" })).toEqual([
+      "accent",
+      "neutral",
+      "neutral",
+      "neutral",
+      "neutral",
+    ])
+    expect("checkFill" in decodePreset(encodeRaw({ v: 3, s: {} })).state).toBe(
+      false,
     )
-    expect(state.selectionFill).toBe("accent")
-    expect("checkFill" in state).toBe(false)
+  })
+
+  it("keeps a leaf only on a known source", () => {
+    const { state } = decodePreset(
+      encodeRaw({ v: 4, s: { switchFill: "auto", radioFill: "accent" } }),
+    )
+    expect(state.switchFill).toBe("neutral")
+    expect(state.radioFill).toBe("accent")
   })
 
   it("decodes garbage to the defaults", () => {
@@ -95,6 +128,7 @@ describe("preset codec — legacy migration", () => {
     expect(state.brand).toBe("#5e6ad2")
     expect(state.selectionSeed).toBe("#0072f5")
     expect(state.primary).toBe("accent")
+    expect(state.switchFill).toBe("accent")
     expect(state.checkboxFill).toBe("neutral")
     expect(state.vividness).toBe(1.2)
     expect(state.modes.map((m) => m.bg)).toEqual([98, 0])

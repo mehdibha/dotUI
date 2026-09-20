@@ -2,6 +2,7 @@ import { toOklch } from "@dotui/colors"
 
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+import { withPrimary } from "@/modules/studio/axes/color"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -63,7 +64,7 @@ export const PRESETS: Preset[] = [
     // selection + focus ramp.
     state: {
       brand: SELECTION_BLUE,
-      primary: "accent",
+      ...withPrimary("accent"),
       selectionSeed: SELECTION_BLUE,
     },
   }),
@@ -76,7 +77,7 @@ export const PRESETS: Preset[] = [
       brand: "#d97757",
       // Claude neutrals are yellow-warm beige (hue ~96), not orange (issue #484 audit).
       neutralHue: grayHue("#84806f"),
-      primary: "accent",
+      ...withPrimary("accent"),
       radiusPx: 12,
       // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
       // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
@@ -96,7 +97,7 @@ export const PRESETS: Preset[] = [
       // Supabase grays are near-neutral with a faint green cast (hue ~159), not
       // cool blue; measured on production docs CSS (issue #484 audit).
       neutralHue: grayHue("#6d726f"),
-      primary: "accent",
+      ...withPrimary("accent"),
       // Verified against live production CSS: Supabase ships Inter.
       bodyFont: "Inter",
     },
@@ -109,7 +110,7 @@ export const PRESETS: Preset[] = [
     state: {
       brand: "#635bff",
       neutralHue: grayHue("#687385"),
-      primary: "accent",
+      ...withPrimary("accent"),
       // Stripe controls measure ~8px radius (md = 0.75 × base).
       radiusPx: 10.64,
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
@@ -126,7 +127,7 @@ export const PRESETS: Preset[] = [
     state: {
       brand: "#5e6ad2",
       neutralHue: grayHue("#8a8f98"),
-      primary: "accent",
+      ...withPrimary("accent"),
       // Linear ships Inter (verified against live production CSS).
       bodyFont: "Inter",
       // Linear's dark-first page is near-black #08090a.
@@ -145,9 +146,8 @@ export const PRESETS: Preset[] = [
       neutralHue: null,
       neutralTint: 0,
       // Geist runs black CTAs but a blue selection: focus rings + checked
-      // controls — except the checkbox, which stays near-black (gray-1000).
+      // controls.
       selectionSeed: SELECTION_BLUE,
-      checkboxFill: "neutral",
       // Vercel dark runs a true-black page with #0a0a0a panels.
       modes: modes({ dark: 0 }),
       badgeShape: "pill",
@@ -181,7 +181,7 @@ export const PRESETS: Preset[] = [
     state: {
       brand: "#0969da",
       neutralHue: grayHue("#656d76"),
-      primary: "accent",
+      ...withPrimary("accent"),
       // GitHub's brand font, open-sourced and on Google Fonts.
       bodyFont: "Mona Sans",
       // GitHub dark sits on blue-black #0d1117.
@@ -199,7 +199,7 @@ export const PRESETS: Preset[] = [
       // The blue actually measured on Notion CTAs/links; #2383e2 rendered too light.
       brand: "#0075de",
       neutralHue: grayHue("#787774"),
-      primary: "accent",
+      ...withPrimary("accent"),
       radiusPx: 6,
       // Notion ships NotionInter, a customized Inter.
       bodyFont: "Inter",
@@ -215,7 +215,7 @@ export const PRESETS: Preset[] = [
       brand: "#1ed760",
       neutralHue: null,
       neutralTint: 0,
-      primary: "accent",
+      ...withPrimary("accent"),
       radiusPx: 16,
       buttonRadius: "pill",
       // Spotify Circular is proprietary; Figtree is the closest free geometric.
