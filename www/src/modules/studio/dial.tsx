@@ -6,11 +6,12 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
-import { useState } from "react"
 import { ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
+  Disclosure,
+  DisclosurePanel,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -349,17 +350,16 @@ export function DialFolder({
   id?: string
   children: React.ReactNode
 }) {
-  const [own, setOwn] = useState(defaultOpen)
-  const isOpen = open ?? own
-  const toggle = () => {
-    setOwn(!isOpen)
-    onOpenChange?.(!isOpen)
-  }
   return (
-    <div data-folder={id} className="flex w-full shrink-0 flex-col">
+    <Disclosure
+      data-folder={id}
+      defaultExpanded={defaultOpen}
+      isExpanded={open}
+      onExpandedChange={onOpenChange}
+      className="group/folder flex w-full shrink-0 flex-col"
+    >
       <RacButton
-        onPress={toggle}
-        aria-expanded={isOpen}
+        slot="trigger"
         className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-3 text-left focus-reset focus-visible:focus-ring"
       >
         <span className="flex min-w-0 items-center gap-1.5">
@@ -373,9 +373,16 @@ export function DialFolder({
             />
           )}
         </span>
-        <ChevronDownIcon className={cn(DIAL_CHEVRON, isOpen && "rotate-180")} />
+        <ChevronDownIcon
+          className={cn(
+            DIAL_CHEVRON,
+            "transition-transform duration-200 group-expanded/folder:rotate-180",
+          )}
+        />
       </RacButton>
-      {isOpen && <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>}
-    </div>
+      <DisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 duration-300 ease-fluid-out group-expanded/folder:opacity-100 motion-safe:transition-[height,opacity]">
+        <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
+      </DisclosurePanel>
+    </Disclosure>
   )
 }
