@@ -19,7 +19,8 @@ const SURFACE_TOKENS = [
   "--color-bg",
   "--color-card",
   "--color-popover",
-  "--overlay-backdrop-filter",
+  "--popover-alpha",
+  "--popover-backdrop-filter",
 ]
 
 /* Tailwind's md / lg — what popover and modal ship by default. */
@@ -130,12 +131,11 @@ describe("surfaces", () => {
     expect(tokens).not.toHaveProperty("--shadow-popover")
   })
 
-  test("glass makes floating surfaces translucent over a blur", () => {
-    const tokens = tokensFor({ surfaceMaterial: "glass" })
-    expect(tokens["--overlay-backdrop-filter"]).toBe("blur(8px)")
-    expect(tokens["--color-popover"]).toBe(
-      "color-mix(in srgb, light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))) 72%, transparent)",
-    )
+  test("solid turns the popover tier opaque; glass is the default", () => {
+    const tokens = tokensFor({ surfaceMaterial: "solid" })
+    expect(tokens["--popover-alpha"]).toBe("100%")
+    expect(tokens["--popover-backdrop-filter"]).toBe("none")
+    expect(tokens).not.toHaveProperty("--color-popover")
     expect(tokens).not.toHaveProperty("--color-card")
   })
 

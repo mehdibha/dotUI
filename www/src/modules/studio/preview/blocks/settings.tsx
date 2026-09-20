@@ -975,7 +975,7 @@ export default function SettingsBlock() {
     // and card reuse the Modal styles so the fake tracks the axis.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
       <div className={backdrop()} />
-      <SidebarProvider className="relative h-full max-h-184 min-h-0 w-full max-w-5xl overflow-hidden rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg)) [backdrop-filter:var(--overlay-backdrop-filter,none)]">
+      <SidebarProvider className="relative h-full max-h-184 min-h-0 w-full max-w-5xl overflow-hidden rounded-(--studio-modal-radius) border border-(--overlay-border) bg-(--studio-modal-background) shadow-(--shadow-modal,var(--shadow-lg))">
         <SettingsSidebar section={section} onSectionChange={setSection} />
         <Tooltip>
           <Button

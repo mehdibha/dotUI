@@ -16,13 +16,17 @@
    - Edge: the hairline as a border inside the box, or a ring outside it
      (every shadcn style renders overlays ring + shadow — #581).
    - Canvas: white-on-white, or a tinted page surfaces lift off.
-   - Material: solid or glass floating layers.
+   - Material: the popover tier (menus, pickers, popovers) as glass —
+     shadcn's recipe, the surface at 70% over a blurred, saturated backdrop —
+     or solid. Modals and drawers stay solid either way; they sit over a
+     scrim, so there is nothing to see through.
 
    Engine: every combination resolves to the tokens card, popover (menus,
    pickers, chart tooltips), modal and drawer read — an edge per role (`--card-border`,
    `--overlay-border`), a shadow per role (`--shadow-card`, `--shadow-popover`,
    `--shadow-modal`), the surface colors (`--color-bg`, `--color-card`,
-   `--color-popover`) and the floating material (`--overlay-backdrop-filter`).
+   `--color-popover`) and the popover material (`--popover-alpha`,
+   `--popover-backdrop-filter`).
    Shadows are Tailwind's own rungs, so the default recipe IS the registry's
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
@@ -35,7 +39,7 @@ export const SURFACE_DEFAULTS = {
   surfaceShadow: "plain",
   surfaceEdge: "border",
   surfaceCanvas: "same",
-  surfaceMaterial: "solid",
+  surfaceMaterial: "glass",
 }
 
 export const STRATEGY_OPTIONS = [
@@ -70,8 +74,8 @@ export const CANVAS_OPTIONS = [
 ]
 
 export const MATERIAL_OPTIONS = [
-  { value: "solid", label: "Solid" },
   { value: "glass", label: "Glass" },
+  { value: "solid", label: "Solid" },
 ]
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -384,11 +388,6 @@ export function shadowCss(
     .join(", ")
 }
 
-/** Glass: the floating surface color at 72%, over a blurred backdrop. */
-export const glassCss = (bg: string) =>
-  `color-mix(in srgb, ${bg} 72%, transparent)`
-export const GLASS_BACKDROP_FILTER = "blur(8px)"
-
 const TOKEN_PALETTE: SurfacePalette = {
   step: (step) => `var(--neutral-${step})`,
   hairline: "var(--color-border)",
@@ -403,7 +402,6 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
 
 function surfaceTokens(state: StudioState): Record<string, string> {
   const { page, card, popover, modal, glass } = surfaceRecipe(state)
-  const popoverBg = pairCss(popover.bg)
   return {
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
@@ -412,8 +410,9 @@ function surfaceTokens(state: StudioState): Record<string, string> {
     "--shadow-modal": shadowCss(modal.shadow, pairCss),
     "--color-bg": pairCss(page),
     "--color-card": pairCss(card.bg),
-    "--color-popover": glass ? glassCss(popoverBg) : popoverBg,
-    "--overlay-backdrop-filter": glass ? GLASS_BACKDROP_FILTER : "none",
+    "--color-popover": pairCss(popover.bg),
+    "--popover-alpha": glass ? "70%" : "100%",
+    "--popover-backdrop-filter": glass ? "blur(40px) saturate(150%)" : "none",
   }
 }
 

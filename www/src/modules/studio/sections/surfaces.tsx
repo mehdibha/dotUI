@@ -106,7 +106,7 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         />
         <SegmentedControlRow
           label="Material"
-          description="Menus, popovers and dialogs."
+          description="Menus, pickers and popovers."
           value={state.surfaceMaterial}
           onChange={set("surfaceMaterial")}
           options={MATERIAL_OPTIONS}

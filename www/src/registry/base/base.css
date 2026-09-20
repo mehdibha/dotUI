@@ -98,10 +98,14 @@
 
 /* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.
    Their shadows ride `--shadow-card` / `--shadow-popover` / `--shadow-modal`,
-   falling back to the registry's own (none · md · lg). */
+   falling back to the registry's own (none · md · lg). The popover tier
+   (menus, pickers, popovers) is glass: the surface at 70% over a blurred,
+   saturated backdrop. Solid is 100% and none. */
 :root {
   --card-border: var(--color-border);
   --overlay-border: var(--color-border);
+  --popover-alpha: 70%;
+  --popover-backdrop-filter: blur(40px) saturate(150%);
 }
 
 ::selection {

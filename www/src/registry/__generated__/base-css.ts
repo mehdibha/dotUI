@@ -59,6 +59,8 @@ export const baseRegistryCss = {
 		":root": {
 			"--card-border": "var(--color-border)",
 			"--overlay-border": "var(--color-border)",
+			"--popover-alpha": "70%",
+			"--popover-backdrop-filter": "blur(40px) saturate(150%)",
 		},
 		"::selection": {
 			"@apply bg-text-selection text-fg-on-text-selection": {},
