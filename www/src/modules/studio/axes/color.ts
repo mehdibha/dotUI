@@ -7,7 +7,7 @@
    strict in both. */
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
-import type { ColorConfig } from "@/registry/theme"
+import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
 
@@ -38,6 +38,7 @@ const DEFAULT_MODES: ColorMode[] = [
 export const COLOR_DEFAULTS = {
   brand: DEFAULT_COLOR_CONFIG.seeds.accent,
   primary: "neutral",
+  selectionFill: "auto",
   neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",
@@ -53,6 +54,39 @@ export const COLOR_DEFAULTS = {
   border400: 0,
   border500: 0,
   border600: 0,
+}
+
+/* Where the primary actions draw from: the neutral's text end (the shadcn
+   school, black/white) or the brand ramp (Material, Linear, Radix Themes). */
+export const SOURCE_OPTIONS = [
+  { value: "neutral", label: "Neutral" },
+  { value: "accent", label: "Accent" },
+]
+
+/* A fill that can also follow the level above it: the selection tokens
+   follow the primary; each control follows the selection tokens. */
+export const FILL_OPTIONS = [
+  { value: "auto", label: "Auto" },
+  ...SOURCE_OPTIONS,
+]
+
+/** The ramp checked controls draw from: their own choice, else the primary's. */
+export function selectionSource(state: StudioState): PrimaryColorSource {
+  return state.selectionFill === "auto"
+    ? (state.primary as PrimaryColorSource)
+    : (state.selectionFill as PrimaryColorSource)
+}
+
+/** One control's fill as a recipe scope — only when it leaves what the
+ *  selection tokens already paint (a `selection` seed paints neither). */
+export function fillScope(
+  state: StudioState,
+  scope: string,
+  fill: string,
+): Partial<ColorConfig> | undefined {
+  if (fill === "auto") return undefined
+  if (!state.selectionSeed && fill === selectionSource(state)) return undefined
+  return { scopes: { [scope]: fill as PrimaryColorSource } }
 }
 
 export const GUARANTEE_OPTIONS = [
@@ -135,6 +169,10 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       policy === "relaxed" || policy === "strict" ? policy : undefined,
     borders: borderTargets(state, high),
     primary: state.primary === "accent" ? "accent" : undefined,
+    selection:
+      state.selectionFill === "auto" || state.selectionFill === state.primary
+        ? undefined
+        : (state.selectionFill as PrimaryColorSource),
   })
 }
 

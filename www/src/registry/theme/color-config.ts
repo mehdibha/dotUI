@@ -65,6 +65,16 @@ export interface ColorConfig {
    */
   primary?: "accent"
   /**
+   * Ramp the selection tokens (checked controls, selected items, focus) draw
+   * from; absent = the primary's. A `selection` seed overrides both.
+   */
+  selection?: PrimaryColorSource
+  /**
+   * Controls whose checked fill leaves the selection source: the selection
+   * cluster re-declared under `[data-<scope>]` (`checkbox`, `switch`, …).
+   */
+  scopes?: Record<string, PrimaryColorSource>
+  /**
    * Per-token remaps (T5): token name → (palette, job), one destination or a
    * per-mode pair. Applied by the semantic resolver; unknown names are inert.
    */
@@ -140,6 +150,21 @@ function salvageTargetSpec(raw: unknown): TokenTargetSpec | undefined {
 }
 
 /** Salvage the per-token remap table: keep only valid entries, drop empties. */
+const isSource = (value: unknown): value is PrimaryColorSource =>
+  value === "neutral" || value === "accent"
+
+function salvageScopes(
+  raw: unknown,
+): Record<string, PrimaryColorSource> | undefined {
+  if (typeof raw !== "object" || raw === null) return undefined
+  const scopes = Object.fromEntries(
+    Object.entries(raw).filter(
+      ([scope, source]) => /^[a-z][a-z0-9-]*$/.test(scope) && isSource(source),
+    ),
+  ) as Record<string, PrimaryColorSource>
+  return Object.keys(scopes).length > 0 ? scopes : undefined
+}
+
 function salvageOverrides(raw: unknown): TokenOverrides | undefined {
   if (typeof raw !== "object" || raw === null) return undefined
   const overrides: TokenOverrides = {}
@@ -216,6 +241,8 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     algorithm?: string
     knobs?: Record<string, unknown>
     primary?: unknown
+    selection?: unknown
+    scopes?: unknown
   }
 
   if (raw.v === 2) {
@@ -242,6 +269,9 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     const borders = salvageBorders(raw.borders)
     if (borders) config.borders = borders
     if (raw.primary === "accent") config.primary = "accent"
+    if (isSource(raw.selection)) config.selection = raw.selection
+    const scopes = salvageScopes(raw.scopes)
+    if (scopes) config.scopes = scopes
     const overrides = salvageOverrides(raw.overrides)
     if (overrides) config.overrides = overrides
     if (raw.chartPalette === "vivid" || raw.chartPalette === "muted")

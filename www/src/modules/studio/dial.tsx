@@ -68,6 +68,11 @@ export function DialRow({
   )
 }
 
+/** A break between row groups: rows sit 6px apart, groups 16px. */
+export function DialGap() {
+  return <div className="h-1" />
+}
+
 /** A row that opens something: label, its value, a chevron. Wraps the
  *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
  *  values that end in a swatch: the swatch is the affordance, inset like

@@ -1,13 +1,14 @@
-/* Radio — always a circle, so its only axis is the family's synced Fill,
-   resolved once by the Checkbox module (the key is shared, not copied). */
+/* Radio — always a circle, so its only axis is Fill: Auto follows the
+   selection tokens, Neutral / Accent fork the radio off them. See checkbox.ts
+   for the mechanism. */
 
-import { CHECKBOX_DEFAULTS } from "./checkbox"
+import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const RADIO_DEFAULTS = {
-  checkFill: CHECKBOX_DEFAULTS.checkFill,
+  radioFill: "auto",
 }
 
-export function resolveRadio(_state: StudioState): Resolved {
-  return {}
+export function resolveRadio(state: StudioState): Resolved {
+  return { color: fillScope(state, "radio", state.radioFill) }
 }

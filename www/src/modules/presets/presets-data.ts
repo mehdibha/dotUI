@@ -145,8 +145,9 @@ export const PRESETS: Preset[] = [
       neutralHue: null,
       neutralTint: 0,
       // Geist runs black CTAs but a blue selection: focus rings + checked
-      // controls.
+      // controls — except the checkbox, which stays near-black (gray-1000).
       selectionSeed: SELECTION_BLUE,
+      checkboxFill: "neutral",
       // Vercel dark runs a true-black page with #0a0a0a panels.
       modes: modes({ dark: 0 }),
       badgeShape: "pill",

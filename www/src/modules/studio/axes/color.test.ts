@@ -49,6 +49,17 @@ describe("color axis", () => {
     })
   })
 
+  it("stores the selection source only when it leaves the primary's", () => {
+    const source = (state: Partial<typeof DEFAULTS>) =>
+      buildColorConfig({ ...DEFAULTS, ...state }).selection
+    expect(source({ selectionFill: "neutral" })).toBeUndefined()
+    expect(source({ selectionFill: "accent" })).toBe("accent")
+    expect(source({ primary: "accent", selectionFill: "auto" })).toBeUndefined()
+    expect(source({ primary: "accent", selectionFill: "neutral" })).toBe(
+      "neutral",
+    )
+  })
+
   it("maps the mode pair onto per-polarity backgrounds (0 dark = OLED)", () => {
     expect(
       resolveDesignSystem(withModes({ bg: 97 }, { bg: 0 })).color?.background,

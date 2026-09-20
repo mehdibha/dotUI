@@ -88,12 +88,22 @@ export function encodeState(state: StudioState): string | undefined {
 
 /* -------------------------------- decode -------------------------------- */
 
+/** Keys a v3 preset may still carry under an older name. */
+const RENAMED_KEYS: Record<string, string> = {
+  // The family's synced fill became the Controls source (Sep 2026).
+  checkFill: "selectionFill",
+}
+
 /** Keep a stored value only when it has the default's shape. */
 function sanitizeState(raw: unknown): StudioState {
   const state = { ...DEFAULTS } as Record<string, unknown>
   if (!raw || typeof raw !== "object") return state as StudioState
+  const stored = { ...(raw as Record<string, unknown>) }
+  for (const [old, key] of Object.entries(RENAMED_KEYS)) {
+    if (old in stored && !(key in stored)) stored[key] = stored[old]
+  }
   for (const [key, fallback] of Object.entries(DEFAULTS)) {
-    const value = (raw as Record<string, unknown>)[key]
+    const value = stored[key]
     if (value === undefined) continue
     if (fallback === null) {
       if (value === null || typeof value === "number") state[key] = value
@@ -153,6 +163,13 @@ const px = (value: string | undefined): number | undefined => {
   return value.trim().endsWith("rem") ? parsed * 16 : parsed
 }
 
+/** The recipe's control scopes and the axis each one came from. */
+const SCOPE_KEYS: Record<string, keyof StudioState> = {
+  checkbox: "checkboxFill",
+  radio: "radioFill",
+  switch: "switchFill",
+}
+
 /** Best-effort: the axes a resolved system maps back onto. Component params
  *  don't survive — they were a different vocabulary. */
 function migrateLegacy(legacy: LegacyState): StudioPreset {
@@ -163,6 +180,11 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   if (color) {
     state.brand = color.seeds.accent
     if (color.primary === "accent") state.primary = "accent"
+    if (color.selection) state.selectionFill = color.selection
+    for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
+      const fill = color.scopes?.[scope]
+      if (fill) state[key] = fill
+    }
     if (color.seeds.success) state.successSeed = color.seeds.success
     if (color.seeds.warning) state.warningSeed = color.seeds.warning
     if (color.seeds.danger) state.dangerSeed = color.seeds.danger

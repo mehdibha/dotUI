@@ -57,6 +57,14 @@ describe("preset codec — studio state", () => {
     expect("nope" in state).toBe(false)
   })
 
+  it("reads the family fill under its old key as the Controls source", () => {
+    const { state } = decodePreset(
+      encodeRaw({ v: 3, s: { checkFill: "accent" } }),
+    )
+    expect(state.selectionFill).toBe("accent")
+    expect("checkFill" in state).toBe(false)
+  })
+
   it("decodes garbage to the defaults", () => {
     expect(decodePreset("not-a-preset").state).toEqual(DEFAULTS)
     expect(decodePreset(encodeRaw("hello")).state).toEqual(DEFAULTS)
@@ -70,6 +78,7 @@ describe("preset codec — legacy migration", () => {
         v: 2,
         seeds: { accent: "#5e6ad2", selection: "#0072f5" },
         primary: "accent",
+        scopes: { checkbox: "neutral" },
         vividness: 1.2,
         background: { light: 98, dark: "oled" },
       },
@@ -86,6 +95,7 @@ describe("preset codec — legacy migration", () => {
     expect(state.brand).toBe("#5e6ad2")
     expect(state.selectionSeed).toBe("#0072f5")
     expect(state.primary).toBe("accent")
+    expect(state.checkboxFill).toBe("neutral")
     expect(state.vividness).toBe(1.2)
     expect(state.modes.map((m) => m.bg)).toEqual([98, 0])
     expect(state.density).toBe("comfortable")

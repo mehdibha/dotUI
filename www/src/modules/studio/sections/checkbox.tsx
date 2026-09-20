@@ -1,34 +1,16 @@
 "use client"
 
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch),
-   split into one chapter per control but synced on one look, the Button ⇄
-   ToggleButton model. Fill is the family axis and lives here; Radio, Switch
-   and Choice cards re-surface the same key. Neutral wears bg-fg with a
-   bg-colored mark — the near-black fill that inverts per mode — rather than
-   any fixed dark token. A radio is always a circle and a switch is always a
-   pill, so Corner stops at the box. */
+   one chapter per control. Fill is per control and Auto by default: the
+   selection tokens (Color → Primary → Controls) paint every check unless a
+   control forks off them. A radio is always a circle and a switch is always
+   a pill, so Corner stops at the box. */
 
-import { CORNER_OPTIONS, FILL_OPTIONS } from "../axes/checkbox"
+import { CORNER_OPTIONS } from "../axes/checkbox"
+import { FILL_OPTIONS } from "../axes/color"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio } from "../state"
-
-const FILL = {
-  accent: {
-    box: "bg-accent text-fg-on-accent",
-    dot: "bg-fg-on-accent",
-    track: "bg-accent",
-    thumb: "bg-fg-on-accent",
-  },
-  neutral: {
-    box: "bg-fg text-bg",
-    dot: "bg-bg",
-    track: "bg-fg",
-    thumb: "bg-bg",
-  },
-}
-
-export type CheckFill = (typeof FILL)[keyof typeof FILL]
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -58,13 +40,19 @@ function CornerGlyph({ rx }: { rx: number }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-/** The family's synced axis, shown in each chapter — one key, one look. */
-export function FillRow({ studio }: { studio: Studio }) {
+/** One control's fill: Auto follows the selection tokens. */
+export function FillRow({
+  studio,
+  field,
+}: {
+  studio: Studio
+  field: "checkboxFill" | "radioFill" | "switchFill"
+}) {
   return (
     <SegmentedControlRow
       label="Fill"
-      value={studio.state.checkFill}
-      onChange={studio.set("checkFill")}
+      value={studio.state[field]}
+      onChange={studio.set(field)}
       options={FILL_OPTIONS}
     />
   )
@@ -81,7 +69,7 @@ export function CheckboxSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <FillRow studio={studio} />
+      <FillRow studio={studio} field="checkboxFill" />
       <SelectRow
         label="Corner"
         value={state.checkCorner}

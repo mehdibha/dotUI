@@ -99,6 +99,8 @@ interface ColorConfig2 {
   guaranteePolicy?: "relaxed" | "strict" // border misses → warnings / AA on solids (engine D2)
   borders?: Record<string, BorderTargets> // per-palette border placement targets (engine D2)
   primary?: "accent" // role mapping; absent = neutral
+  selection?: "neutral" | "accent" // the selection cluster's source; absent = the primary's
+  scopes?: Record<string, "neutral" | "accent"> // per-control forks, re-declared under `[data-<scope>]`
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
 }
 ```

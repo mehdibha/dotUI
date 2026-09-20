@@ -68,7 +68,8 @@ export interface Resolved {
   params?: Record<string, Record<string, string>>
   density?: Density
   /** A slice of the recipe — a chapter other than Color contributes token
-   *  overrides or border targets; `resolveDesignSystem` completes it. */
+   *  overrides, border targets or a control's fill scope;
+   *  `resolveDesignSystem` completes it. */
   color?: Partial<ColorConfig>
   icons?: IconLibraryName
 }
@@ -191,10 +192,13 @@ function mergeColor(
   const merged: Partial<ColorConfig> = { ...base, ...part }
   const overrides = { ...base.overrides, ...part.overrides }
   const borders = { ...base.borders, ...part.borders }
+  const scopes = { ...base.scopes, ...part.scopes }
   if (Object.keys(overrides).length > 0) merged.overrides = overrides
   else delete merged.overrides
   if (Object.keys(borders).length > 0) merged.borders = borders
   else delete merged.borders
+  if (Object.keys(scopes).length > 0) merged.scopes = scopes
+  else delete merged.scopes
   return merged
 }
 
@@ -212,8 +216,8 @@ export function resolveAll(state: StudioState): ResolvedAll {
     }
     if (part.density) density = part.density
     // Color merges deep on its per-token maps so a chapter other than Color
-    // (Surfaces: border targets, token overrides) can contribute without
-    // owning the recipe.
+    // (Surfaces: border targets, token overrides; a control: its fill scope)
+    // can contribute without owning the recipe.
     if (part.color) color = color ? mergeColor(color, part.color) : part.color
     if (part.icons) icons = part.icons
   }

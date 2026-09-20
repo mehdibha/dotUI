@@ -16,14 +16,39 @@ describe("selection controls", () => {
     expect(ds.componentParams.switch).toEqual({ "card-selected": "tint" })
   })
 
-  it("accent fill re-points the selection tokens at the accent ones", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, checkFill: "accent" })
-    expect(ds.tokens).toEqual({
-      "--color-selection": "var(--color-accent)",
-      "--color-selection-hover": "var(--color-accent-hover)",
-      "--color-selection-muted": "var(--color-accent-muted)",
-      "--color-fg-on-selection": "var(--color-fg-on-accent)",
-    })
+  it("a control's fill forks it off the selection tokens as a recipe scope", () => {
+    const ds = resolveDesignSystem({ ...DEFAULTS, switchFill: "accent" })
+    expect(ds.tokens).toEqual({})
+    expect(ds.color?.scopes).toEqual({ switch: "accent" })
+    expect(
+      resolveDesignSystem({
+        ...DEFAULTS,
+        checkboxFill: "neutral",
+        radioFill: "accent",
+        switchFill: "accent",
+      }).color?.scopes,
+    ).toEqual({ radio: "accent", switch: "accent" })
+  })
+
+  it("a fill matching the selection source is no fork", () => {
+    expect(
+      resolveDesignSystem({ ...DEFAULTS, checkboxFill: "neutral" }).color,
+    ).toBeUndefined()
+    expect(
+      resolveDesignSystem({
+        ...DEFAULTS,
+        selectionFill: "accent",
+        checkboxFill: "accent",
+      }).color?.scopes,
+    ).toBeUndefined()
+    // Under a selection seed the source is the seed's ramp, so both fork.
+    expect(
+      resolveDesignSystem({
+        ...DEFAULTS,
+        selectionSeed: "#0072f5",
+        checkboxFill: "neutral",
+      }).color?.scopes,
+    ).toEqual({ checkbox: "neutral" })
   })
 
   it("corner rides on the checkbox radius var", () => {

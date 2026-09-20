@@ -32,6 +32,7 @@ import {
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
+  scopedSemantics,
   semanticDelta,
   semanticsFor,
 } from "@/registry/theme"
@@ -223,6 +224,10 @@ function buildScopedThemeCss(
             selector: `.dark ${selector}`,
           }),
         ]),
+    // Controls that leave the selection source, under the scope.
+    ...Object.entries(scopedSemantics(color)).map(([scope, vocab]) =>
+      emitCss(vocab, { selector: `${selector} ${scope}` }),
+    ),
   ]
   if (color) {
     let resolved = resolveColorConfigCached(color)
@@ -441,11 +446,15 @@ function DesignSystemProvider({
     // re-declare on plain `:root` (beats the layered `@theme` declarations),
     // plus their per-mode re-points on `.dark`.
     const delta = semanticDelta(color)
-    if (Object.keys(delta).length === 0) return primitives
+    const forks = Object.entries(scopedSemantics(color))
+      .map(([selector, vocab]) => emitCss(vocab, { selector }))
+      .join("")
+    if (Object.keys(delta).length === 0) return primitives + forks
     return (
       primitives +
       emitCss(delta, { selector: ":root" }) +
-      emitDarkOverridesCss(delta, { selector: ".dark" })
+      emitDarkOverridesCss(delta, { selector: ".dark" }) +
+      forks
     )
   }, [scoped, color])
   const themeStyle = themeCss ? (
