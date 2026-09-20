@@ -69,25 +69,29 @@ export function DialRow({
 }
 
 /** A row that opens something: label, its value, a chevron. Wraps the
- *  popover passed as `children` in a Dialog trigger. */
+ *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
+ *  values that end in a swatch: the swatch is the affordance, inset like
+ *  DialColor's. */
 export function DialTrigger({
   label,
   value,
+  chevron = true,
   children,
 }: {
   label: string
   value: React.ReactNode
+  chevron?: boolean
   children: React.ReactNode
 }) {
   return (
     <Dialog>
-      <RacButton className={cn(DIAL_ROW, DIAL_PRESS)}>
+      <RacButton className={cn(DIAL_ROW, DIAL_PRESS, !chevron && "pr-2.5")}>
         <span className={DIAL_LABEL}>{label}</span>
         <span className="flex min-w-0 items-center gap-2">
           <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
             {value}
           </span>
-          <ChevronDownIcon className={DIAL_CHEVRON} />
+          {chevron && <ChevronDownIcon className={DIAL_CHEVRON} />}
         </span>
       </RacButton>
       {children}
@@ -214,7 +218,7 @@ export function DialColor({
           </span>
           {/* The right cluster floats over the row button: it lets clicks
               through except on its own buttons. */}
-          <span className="pointer-events-none relative flex items-center gap-2 pr-3">
+          <span className="pointer-events-none relative flex items-center gap-2 pr-2.5">
             {status && <span className="pointer-events-auto">{status}</span>}
             {onReset && !auto && (
               <RacButton
@@ -228,7 +232,7 @@ export function DialColor({
             <span className={cn(DIAL_VALUE, !auto && "uppercase")}>
               {auto ? "Auto" : color.toString("hex")}
             </span>
-            <ColorSwatch className="size-5 rounded-md border border-fg/15" />
+            <ColorSwatch className="size-4 rounded-full border border-fg/15" />
           </span>
           <ColorPickerPopover commit={commit}>{footer}</ColorPickerPopover>
         </div>

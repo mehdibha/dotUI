@@ -747,7 +747,7 @@ function NeutralSlider({
 /** What the row reads back: the family the committed value lands on. */
 export function neutralFamily(value: NeutralValue, brandHue: number) {
   if (value.tint === 0) return PURE_GRAY.label
-  if (value.hue === null) return "From brand"
+  if (value.hue === null) return "Auto"
   return nearestFamilyName(value.hue ?? brandHue)
 }
 
@@ -848,7 +848,7 @@ export function NeutralPickerPopover({
     tint === 0
       ? PURE_GRAY.label
       : value.hue === null && hue === brandHue
-        ? "From brand"
+        ? "Auto"
         : nearestFamilyName(hue)
   const preset =
     value.tint === 0
@@ -883,7 +883,7 @@ export function NeutralPickerPopover({
               and a gray that quietly tracks another color has to say so. */}
           <RacToggleButton
             id="brand"
-            onHoverStart={() => setHovered("From brand")}
+            onHoverStart={() => setHovered("Auto")}
             onHoverEnd={() => setHovered(null)}
             className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
           >

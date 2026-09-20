@@ -3,9 +3,9 @@
 /* Color — its rows are the specimen. The seeds and axes land on
    `ColorConfig` through the axis module; here they resolve through the same
    engine the preview runs, in the panel's own display mode, so every swatch
-   and derived "Auto" value is what ships. Brand and Neutral lead; roles,
-   semantics, contrast and the two modes follow as one row each; engine
-   tuning waits in Advanced. */
+   and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
+   Semantics; primary, contrast and the two modes follow as one row each;
+   engine tuning waits in Advanced. */
 
 import { useMemo } from "react"
 import { TriangleAlertIcon } from "lucide-react"
@@ -169,10 +169,11 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
       />
       <DialTrigger
         label="Neutral"
+        chevron={false}
         value={
           <>
             <span className="truncate">{neutralFamily(neutral, brandHue)}</span>
-            <NeutralStrip ramp={ramp} className="h-5 w-12 rounded-md" />
+            <NeutralStrip ramp={ramp} className="h-4 w-10" />
           </>
         }
       >
@@ -189,7 +190,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
-/** Roles, semantics, character, contrast, modes; engine tuning in Advanced. */
+/** Palettes, primary, character, contrast, modes; engine tuning in Advanced. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const { config, m } = usePanelMode(state)
@@ -213,31 +214,6 @@ export function ColorSection({ studio }: { studio: Studio }) {
 
   return (
     <>
-      <DialSegmented
-        label="Primary"
-        value={state.primary}
-        onChange={set("primary")}
-        options={[
-          {
-            value: "neutral",
-            label: (
-              <>
-                <PaletteDot color={solid("neutral")} />
-                Neutral
-              </>
-            ),
-          },
-          {
-            value: "accent",
-            label: (
-              <>
-                <PaletteDot color={solid("accent")} />
-                Accent
-              </>
-            ),
-          },
-        ]}
-      />
       <DialTrigger
         label="Semantics"
         value={
@@ -264,6 +240,31 @@ export function ColorSection({ studio }: { studio: Studio }) {
           ))}
         </DialPopover>
       </DialTrigger>
+      <DialSegmented
+        label="Primary"
+        value={state.primary}
+        onChange={set("primary")}
+        options={[
+          {
+            value: "neutral",
+            label: (
+              <>
+                <PaletteDot color={solid("neutral")} />
+                Neutral
+              </>
+            ),
+          },
+          {
+            value: "accent",
+            label: (
+              <>
+                <PaletteDot color={solid("accent")} />
+                Accent
+              </>
+            ),
+          },
+        ]}
+      />
       <DialSlider
         label="Vividness"
         value={state.vividness}
