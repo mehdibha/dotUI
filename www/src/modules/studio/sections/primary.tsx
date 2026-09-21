@@ -1,10 +1,12 @@
 "use client"
 
 /* Primary — the Color chapter's view over every role that paints with a
-   source (axes/color.ts PRIMARY_LEAVES). Two cards write all of them; a row
-   per leaf writes one. Each preview is the role at glyph scale in the
-   engine's own colors, so a choice reads before it lands. */
+   source (axes/color.ts PRIMARY_LEAVES). Two cards write all of them; the
+   third, Custom, is the view of leaves that disagree and opens a row per
+   leaf. Each preview is the role at glyph scale in the engine's own colors,
+   so a choice reads before it lands. */
 
+import { useState } from "react"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -239,10 +241,42 @@ function SourceSwatch({
 
 /* ---------------------------------- Row ----------------------------------- */
 
+/** The cards: a source paints every glyph; Custom shows them disagreeing. */
+const CARDS: { id: PrimaryColorSource | "custom"; label: string }[] = [
+  { id: "neutral", label: "Neutral" },
+  { id: "accent", label: "Accent" },
+  { id: "custom", label: "Custom" },
+]
+
+function CardStrip({
+  ink,
+  card,
+}: {
+  ink: Record<PrimaryColorSource, Ink>
+  card: PrimaryColorSource | "custom"
+}) {
+  const [a, b, c] =
+    card === "custom"
+      ? [ink.neutral, ink.accent, ink.neutral]
+      : [ink[card], ink[card], ink[card]]
+  return (
+    <span className="flex items-center gap-1.5">
+      <CheckboxGlyph ink={a} />
+      <SwitchGlyph ink={b} />
+      <ButtonGlyph ink={c} />
+    </span>
+  )
+}
+
 export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   const { state, set, setState } = studio
   const ink = inks(m)
   const primary = primaryValue(state)
+  // Custom is a view: selected while the leaves disagree, and openable on
+  // its own to reach the rows. A source card writes every leaf and folds
+  // them away; a row edit keeps them open.
+  const [open, setOpen] = useState(false)
+  const rows = open || primary === "mixed"
   const label =
     primary === "mixed" ? "Mixed" : primary === "accent" ? "Accent" : "Neutral"
   return (
@@ -261,62 +295,61 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
           aria-label="Primary"
           selectionMode="single"
           disallowEmptySelection
-          selectedKeys={primary === "mixed" ? [] : [primary]}
+          selectedKeys={[primary === "mixed" ? "custom" : primary]}
           onSelectionChange={(keys) => {
             const next = keys.values().next().value
-            if (next)
+            if (next === "custom") setOpen(true)
+            else if (next) {
+              setOpen(false)
               setState({
                 ...state,
                 ...withSource(PRIMARY_LEAVES, next as PrimaryColorSource),
               })
+            }
           }}
-          className="grid grid-cols-2 gap-1.5"
+          className="grid grid-cols-3 gap-1.5"
         >
-          {SOURCE_OPTIONS.map((option) => {
-            const source = option.value as PrimaryColorSource
+          {CARDS.map((card) => (
+            <RacToggleButton
+              key={card.id}
+              id={card.id}
+              className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-2.5 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
+            >
+              <span className="flex items-center gap-2">
+                <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
+                <span className="text-[13px] font-medium text-fg/85">
+                  {card.label}
+                </span>
+              </span>
+              <CardStrip ink={ink} card={card.id} />
+            </RacToggleButton>
+          ))}
+        </RacToggleButtonGroup>
+        {rows && <DialGap />}
+        {rows &&
+          PRIMARY_LEAVES.map((leaf) => {
+            const Glyph = GLYPHS[leaf]
+            const source = state[leaf] as PrimaryColorSource
             return (
-              <RacToggleButton
-                key={source}
-                id={source}
-                className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-2.5 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
-              >
-                <span className="flex items-center gap-2">
-                  <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
-                  <span className="text-[13px] font-medium text-fg/85">
-                    {option.label}
-                  </span>
+              <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
+                <span className={cn(DIAL_LABEL, "w-[72px]")}>
+                  {LEAF_LABELS[leaf]}
                 </span>
-                <span className="flex items-center gap-2">
-                  <CheckboxGlyph ink={ink[source]} />
-                  <RadioGlyph ink={ink[source]} />
-                  <SwitchGlyph ink={ink[source]} />
-                  <ButtonGlyph ink={ink[source]} />
+                <span className="flex min-w-0 flex-1 items-center">
+                  <Glyph ink={ink[source]} />
                 </span>
-              </RacToggleButton>
+                <SegmentedGroup
+                  label={`${LEAF_LABELS[leaf]} color`}
+                  value={source}
+                  onChange={(next) => {
+                    setOpen(true)
+                    set(leaf)(next)
+                  }}
+                  options={SOURCE_OPTIONS}
+                />
+              </div>
             )
           })}
-        </RacToggleButtonGroup>
-        <DialGap />
-        {PRIMARY_LEAVES.map((leaf) => {
-          const Glyph = GLYPHS[leaf]
-          const source = state[leaf] as PrimaryColorSource
-          return (
-            <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
-              <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center">
-                <Glyph ink={ink[source]} />
-              </span>
-              <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
-                value={source}
-                onChange={set(leaf)}
-                options={SOURCE_OPTIONS}
-              />
-            </div>
-          )
-        })}
       </DialPopover>
     </DialTrigger>
   )
