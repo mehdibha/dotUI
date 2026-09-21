@@ -34,15 +34,15 @@ import {
 
 import {
   ColorPickerPopover,
-  INSTANT_POPOVER,
+  PANEL_POPOVER,
   ROW_OVERLAY_PLACEMENT,
   useDraft,
 } from "./rows"
 
 export const DIAL_ROW =
-  "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg bg-fg/5 px-3"
+  "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
-  "cursor-interactive text-left focus-reset transition-colors hover:bg-fg/10 focus-visible:focus-ring pressed:bg-fg/10"
+  "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/70"
 export const DIAL_VALUE =
   "truncate font-mono text-[13px] font-medium text-fg/70"
@@ -115,7 +115,7 @@ export function DialPopover({
   return (
     <Popover
       placement={ROW_OVERLAY_PLACEMENT}
-      className={cn("w-64 min-w-0", INSTANT_POPOVER, className)}
+      className={cn("w-64 min-w-0", PANEL_POPOVER, className)}
     >
       <DialogContent className="flex flex-col gap-1.5 p-2">
         {children}
@@ -158,8 +158,8 @@ export function DialSlider({
       className="relative w-full shrink-0"
     >
       <SliderControl>
-        <SliderTrack className="relative h-9 overflow-hidden rounded-lg bg-fg/5">
-          <SliderFill className="absolute inset-y-0 left-0 bg-fg/10" />
+        <SliderTrack className="relative h-9 overflow-hidden rounded-lg tint-5">
+          <SliderFill className="absolute inset-y-0 left-0 tint-10" />
         </SliderTrack>
         {/* The fill's edge is the handle; the thumb only shows for keyboard focus. */}
         <SliderThumb className="z-10 h-5 w-[3px] rounded-full bg-fg/90 opacity-0 focus-visible:opacity-100" />

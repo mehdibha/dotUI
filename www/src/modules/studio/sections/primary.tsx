@@ -278,7 +278,7 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
               <RacToggleButton
                 key={source}
                 id={source}
-                className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg bg-fg/5 p-2.5 text-left focus-reset transition-colors hover:bg-fg/10 focus-visible:focus-ring selected:bg-fg/10 selected:inset-ring-1 selected:inset-ring-fg/25"
+                className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-2.5 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
               >
                 <span className="flex items-center gap-2">
                   <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />

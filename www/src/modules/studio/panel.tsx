@@ -71,7 +71,7 @@ export function PanelChrome({
   )
 
   return (
-    <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/10 bg-card px-3 pb-3">
+    <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/10 bg-card px-3 pb-3 [--panel-surface:var(--color-card)]">
       <div className="sticky top-0 z-20 -mx-3 mb-3 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">

@@ -22,7 +22,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
 import type { IndexChapter } from "./groups"
-import { INSTANT_POPOVER } from "./rows"
+import { PANEL_POPOVER } from "./rows"
 
 interface Entry {
   id: string
@@ -141,7 +141,7 @@ export function PanelSearch({
         </Button>
         <TooltipContent>Search ⌘P</TooltipContent>
       </Tooltip>
-      <Popover placement="bottom end" className={INSTANT_POPOVER}>
+      <Popover placement="bottom end" className={PANEL_POPOVER}>
         <Command aria-label="Search" className="w-56">
           {/* Both chain with the Autocomplete's own field props. */}
           <SearchField

@@ -85,8 +85,10 @@ export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 /** What a fixed-height row becomes once it carries a description. */
 export const ROW_DESCRIBED = "h-auto py-2.5"
 
-/** Panel popovers open and close instantly — control feedback, not content. */
-export const INSTANT_POPOVER = "transition-none will-change-auto"
+/** Panel popovers open and close instantly — control feedback, not content —
+ *  and hand the rows inside their surface, so tints mix solid over glass. */
+export const PANEL_POPOVER =
+  "transition-none will-change-auto [--panel-surface:var(--color-popover)]"
 
 /** Where row-attached overlays (pickers, selects, menus) open. */
 export const ROW_OVERLAY_PLACEMENT = "right top" as const
@@ -379,7 +381,7 @@ export function SelectRow({
         </span>
       </Button>
       <Popover
-        className={cn("w-(--trigger-width)", INSTANT_POPOVER)}
+        className={cn("w-(--trigger-width)", PANEL_POPOVER)}
         placement={ROW_OVERLAY_PLACEMENT}
       >
         {layout === "grid" ? (
@@ -579,7 +581,7 @@ export function ColorPickerPopover({
   return (
     <Popover
       placement={placement}
-      className={cn("w-64 min-w-0", INSTANT_POPOVER)}
+      className={cn("w-64 min-w-0", PANEL_POPOVER)}
     >
       <DialogContent className="flex flex-col gap-3 p-3">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
@@ -859,7 +861,7 @@ export function NeutralPickerPopover({
   return (
     <Popover
       placement={ROW_OVERLAY_PLACEMENT}
-      className={cn("w-64 min-w-0", INSTANT_POPOVER)}
+      className={cn("w-64 min-w-0", PANEL_POPOVER)}
     >
       <DialogContent className="flex flex-col gap-3 p-3">
         {/* Seeds, same as the brand picker: one tap to a known gray family,
@@ -955,7 +957,7 @@ export function FontListPopover({
   const listRef = useLazyFontPreviews()
   return (
     <Popover
-      className={cn("w-(--trigger-width) outline-hidden", INSTANT_POPOVER)}
+      className={cn("w-(--trigger-width) outline-hidden", PANEL_POPOVER)}
       placement={ROW_OVERLAY_PLACEMENT}
     >
       <Command>
