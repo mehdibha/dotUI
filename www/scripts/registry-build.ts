@@ -364,7 +364,7 @@ async function buildStudioSearchIndex() {
     const labels = new Set<string>()
     // A row's own label — the tag must not contain another "<" before it.
     for (const [, label = ""] of source.matchAll(
-      /<\w+Row(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+      /<(?:\w+Row|Dial\w+)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
     ))
       labels.add(label)
     for (const [, title = ""] of source.matchAll(

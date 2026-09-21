@@ -74,7 +74,7 @@ import { CursorSection, cursorSummary } from "./sections/cursor"
 import { DialogsSection } from "./sections/dialogs"
 import { DisabledSection, disabledSummary } from "./sections/disabled"
 import { FocusSection, focusSummary } from "./sections/focus"
-import { IconsSection, iconsSummary } from "./sections/icons"
+import { IconsSection } from "./sections/icons"
 import { InputGroupsSection } from "./sections/input-groups"
 import { InputsSection } from "./sections/inputs"
 import { InvalidSection, invalidSummary } from "./sections/invalid"
@@ -144,7 +144,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Icons",
     defaults: ICON_DEFAULTS,
     Body: IconsSection,
-    summary: iconsSummary,
   },
   {
     id: "shape",

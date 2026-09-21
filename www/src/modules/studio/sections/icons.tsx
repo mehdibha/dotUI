@@ -1,34 +1,76 @@
 "use client"
 
-/* Icons — the library, and the weight axis that library exposes. */
+/* Icons — the library, and the one axis that library exposes: stroke width on
+   line sets, weight on Phosphor. Every row carries its own glyphs, drawn by
+   the library it names, so the pick is made by look. */
 
-import type { IconLibraryName } from "@/registry/icons/icon-map"
+import { HeartIcon, SearchIcon, SettingsIcon } from "@/registry/icons"
+import {
+  IconLibraryContext,
+  IconWeightContext,
+} from "@/registry/icons/create-icon"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 
-import { LIBRARY_OPTIONS, STROKE_DEFAULTS, WEIGHT_OPTIONS } from "../axes/icons"
-import { ControlGroup, SelectRow, SliderRow } from "../rows"
-import type { Studio, StudioState } from "../state"
+import {
+  ICON_STROKE_WIDTH_VAR,
+  LIBRARY_OPTIONS,
+  STROKE_DEFAULTS,
+  WEIGHT_OPTIONS,
+} from "../axes/icons"
+import { DialSelect, DialSlider } from "../dial"
+import type { Studio } from "../state"
 
-/** Collapsed-row summary: the library, and the stroke it draws with. */
-export function iconsSummary(state: StudioState): string {
+/** A strip of registry icons drawn by `library`, at `weight` on Phosphor. */
+function Glyphs({
+  library,
+  weight,
+  stroke,
+}: {
+  library: IconLibraryName
+  weight?: PhosphorWeight
+  stroke?: number
+}) {
   return (
-    LIBRARY_OPTIONS.find((o) => o.value === state.iconLibrary)?.label ??
-    state.iconLibrary
+    <IconLibraryContext.Provider value={library}>
+      <IconWeightContext.Provider value={weight}>
+        <span
+          className="flex shrink-0 items-center gap-1.5 **:[svg]:size-4"
+          style={{ [ICON_STROKE_WIDTH_VAR]: stroke } as React.CSSProperties}
+        >
+          <SearchIcon />
+          <SettingsIcon />
+          <HeartIcon />
+        </span>
+      </IconWeightContext.Provider>
+    </IconLibraryContext.Provider>
   )
 }
 
 export function IconsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const library = state.iconLibrary as IconLibraryName
+  const weight = state.iconWeight as PhosphorWeight
+  const strokeDefault = STROKE_DEFAULTS[library]
   return (
-    <ControlGroup>
-      <SelectRow
+    <>
+      <DialSelect
         label="Library"
         value={state.iconLibrary}
         onChange={set("iconLibrary")}
-        options={LIBRARY_OPTIONS}
+        options={LIBRARY_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <Glyphs
+              library={option.value as IconLibraryName}
+              weight={option.value === "phosphor" ? weight : undefined}
+              stroke={option.value === library ? state.iconStroke : undefined}
+            />
+          ),
+        }))}
       />
-      {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
-      {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !== undefined && (
-        <SliderRow
+      {/* Stroke only exists on line sets; Phosphor swaps it for weight. */}
+      {strokeDefault !== undefined && (
+        <DialSlider
           label="Stroke"
           value={state.iconStroke}
           onChange={set("iconStroke")}
@@ -38,14 +80,22 @@ export function IconsSection({ studio }: { studio: Studio }) {
           format={(v) => v.toFixed(2)}
         />
       )}
-      {state.iconLibrary === "phosphor" && (
-        <SelectRow
+      {library === "phosphor" && (
+        <DialSelect
           label="Weight"
           value={state.iconWeight}
           onChange={set("iconWeight")}
-          options={WEIGHT_OPTIONS}
+          options={WEIGHT_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <Glyphs
+                library="phosphor"
+                weight={option.value as PhosphorWeight}
+              />
+            ),
+          }))}
         />
       )}
-    </ControlGroup>
+    </>
   )
 }

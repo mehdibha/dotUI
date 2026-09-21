@@ -7,12 +7,14 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useCallback } from "react"
-import { ChevronDownIcon, RotateCcwIcon } from "lucide-react"
+import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
   Disclosure,
   DisclosurePanel,
+  ListBox as RacListBox,
+  ListBoxItem as RacListBoxItem,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -143,6 +145,82 @@ export function DialPopover({
         {children}
       </DialogContent>
     </PanelPopover>
+  )
+}
+
+/* --------------------------------- Select --------------------------------- */
+
+export interface DialSelectOption {
+  value: string
+  label: string
+  /** A specimen beside the label — glyphs, a swatch. */
+  preview?: React.ReactNode
+}
+
+/** A pick from a short list: the row shows the choice (and its specimen), the
+ *  popover lists every option as a row. Picking keeps the popover up — the
+ *  choice is a comparison against the preview behind it. */
+export function DialSelect({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: DialSelectOption[]
+}) {
+  const selected = options.find((option) => option.value === value)
+  return (
+    <DialTrigger
+      label={label}
+      value={
+        <>
+          <span className="truncate">{selected?.label ?? value}</span>
+          {selected?.preview}
+        </>
+      }
+    >
+      <DialPopover>
+        <RacListBox
+          aria-label={label}
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[value]}
+          onSelectionChange={(keys) => {
+            if (keys === "all") return
+            const next = keys.values().next().value
+            if (next) onChange(next as string)
+          }}
+          className="flex flex-col gap-1.5 outline-hidden"
+        >
+          {options.map((option) => (
+            <RacListBoxItem
+              key={option.value}
+              id={option.value}
+              textValue={option.label}
+              className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
+            >
+              {({ isSelected }) => (
+                <>
+                  <span className={DIAL_LABEL}>{option.label}</span>
+                  <span className="flex min-w-0 items-center gap-2 text-fg/70">
+                    {option.preview}
+                    <CheckIcon
+                      className={cn(
+                        "size-4 shrink-0 text-fg",
+                        !isSelected && "invisible",
+                      )}
+                    />
+                  </span>
+                </>
+              )}
+            </RacListBoxItem>
+          ))}
+        </RacListBox>
+      </DialPopover>
+    </DialTrigger>
   )
 }
 

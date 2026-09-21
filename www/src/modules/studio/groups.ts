@@ -59,7 +59,7 @@ export const GROUPS: string[][] = [
    validated in the new page show. Everything else keeps its axes and section
    (they still feed resolve()) but stays off the page and out of search until
    its turn. */
-const VALIDATED = new Set(["color", "typography"])
+const VALIDATED = new Set(["color", "typography", "icons"])
 
 export interface IndexChapter {
   id: string
