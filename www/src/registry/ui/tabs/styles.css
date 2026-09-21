@@ -1,3 +1,5 @@
 :root {
   --studio-tabs-radius: var(--studio-radius-surface);
+  --studio-tabs-list-radius: var(--studio-radius-surface);
+  --studio-tabs-tab-radius: var(--studio-radius-item);
 }

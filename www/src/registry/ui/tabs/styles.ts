@@ -35,13 +35,14 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       },
       variant: {
         segmented: {
-          list: "rounded-lg bg-muted p-[3px]",
-          tab: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
-          selectionIndicator: "inset-0 rounded-md shadow-sm",
+          list: "rounded-(--studio-tabs-list-radius) bg-muted p-[3px]",
+          tab: "rounded-(--studio-tabs-tab-radius) border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
+          selectionIndicator:
+            "inset-0 rounded-(--studio-tabs-tab-radius) shadow-sm",
         },
         line: {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
-          tab: "rounded-md orientation-horizontal:h-full",
+          tab: "rounded-(--studio-tabs-tab-radius) orientation-horizontal:h-full",
           selectionIndicator:
             "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
         },

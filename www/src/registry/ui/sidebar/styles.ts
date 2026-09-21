@@ -38,14 +38,14 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       inner: [
         "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-fluid-out",
-        "group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
+        "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
       // Mobile panel content (rendered inside a Drawer at < md).
       mobile: "flex h-full w-full flex-col bg-sidebar text-fg",
       // The main content area beside the sidebar.
       inset: [
         "relative flex w-full flex-1 flex-col bg-bg",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm",
+        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius) md:peer-data-[variant=inset]:shadow-sm",
         "md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=left]:peer-data-[state=collapsed]:ml-2",
         "md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:peer-data-[side=right]:peer-data-[state=collapsed]:mr-2",
       ],
@@ -64,11 +64,11 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",
       groupLabel: [
-        "flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] duration-200 ease-fluid-out [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] duration-200 ease-fluid-out [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
       ],
       groupAction: [
-        "absolute top-3.5 right-3 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute top-3.5 right-3 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-(--studio-sidebar-item-radius) p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
         "after:absolute after:-inset-2 md:after:hidden",
         "group-data-[collapsible=icon]:hidden",
       ],
@@ -76,7 +76,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menu: "flex w-full min-w-0 flex-col gap-1",
       menuItem: "group/menu-item relative",
       menuButton: [
-        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
+        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
         "disabled:pointer-events-none disabled:opacity-50",
         "data-active:bg-muted data-active:font-medium data-active:text-fg",
@@ -87,19 +87,20 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
       ],
       menuAction: [
-        "absolute top-1.5 right-1 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
+        "absolute top-1.5 right-1 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-(--studio-sidebar-item-radius) p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0",
         "after:absolute after:-inset-2 md:after:hidden",
         "peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=md]/menu-button:top-1.5 peer-data-[size=sm]/menu-button:top-1",
         "group-data-[collapsible=icon]:hidden",
         "data-show-on-hover:group-focus-within/menu-item:opacity-100 data-show-on-hover:group-hover/menu-item:opacity-100 data-show-on-hover:focus-within:opacity-100 data-show-on-hover:md:opacity-0",
       ],
       menuBadge: [
-        "pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-fg-muted tabular-nums select-ui",
+        "pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-(--studio-sidebar-item-radius) px-1 text-xs font-medium text-fg-muted tabular-nums select-ui",
         "peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=md]/menu-button:top-1.5 peer-data-[size=sm]/menu-button:top-1",
         "group-data-[collapsible=icon]:hidden",
       ],
-      menuSkeleton: "flex h-8 items-center gap-2 rounded-md px-2",
-      menuSkeletonIcon: "size-4 rounded-md",
+      menuSkeleton:
+        "flex h-8 items-center gap-2 rounded-(--studio-sidebar-item-radius) px-2",
+      menuSkeletonIcon: "size-4 rounded-(--studio-sidebar-item-radius)",
       menuSkeletonText: "h-4 max-w-(--skeleton-width) flex-1",
       menuSub: [
         "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
@@ -107,7 +108,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       menuSubItem: "group/menu-sub-item relative",
       menuSubButton: [
-        "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
+        "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
         "disabled:pointer-events-none disabled:opacity-50",
         "data-active:bg-muted data-active:font-medium data-active:text-fg",

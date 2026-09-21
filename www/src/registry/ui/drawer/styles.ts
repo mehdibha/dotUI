@@ -25,25 +25,25 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         top: {
           viewport: "grid grid-rows-[auto_1fr] pb-12",
           popup:
-            "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-xl border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
+            "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-(--studio-drawer-radius) border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
           swipeArea: "inset-x-0 top-0 h-8",
         },
         bottom: {
           viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
           popup:
-            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
           swipeArea: "inset-x-0 bottom-0 h-8",
         },
         left: {
           viewport: "flex justify-start pe-12",
           popup:
-            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-xl border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
+            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-(--studio-drawer-radius) border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
           swipeArea: "inset-y-0 left-0 w-8",
         },
         right: {
           viewport: "flex justify-end ps-12",
           popup:
-            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-xl border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
+            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-(--studio-drawer-radius) border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
           swipeArea: "inset-y-0 right-0 w-8",
         },
       },

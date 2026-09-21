@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(accordionMeta, {
       heading: "flex",
       trigger: [
         "focus-reset focus-visible:focus-ring",
-        "flex flex-1 cursor-interactive items-start gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
+        "flex flex-1 cursor-interactive items-start gap-4 rounded-(--studio-accordion-trigger-radius) py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
       ],
       marker:
         "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200 **:[svg]:size-4",
