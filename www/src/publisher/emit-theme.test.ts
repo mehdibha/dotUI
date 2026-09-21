@@ -147,7 +147,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         tokens: {
           "--radius": "0.5rem",
-          "--corner-shape": "squircle",
+          "--scrollbar-width": "thin",
           "--studio-btn-radius": "--radius-md",
         },
       },
@@ -159,7 +159,7 @@ describe("emitInitItem", () => {
     // the component publisher resolves them into utilities.
     expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
     expect(item.css?.[":root"]).toEqual({
-      "--corner-shape": "squircle",
+      "--scrollbar-width": "thin",
     })
   })
 

@@ -60,8 +60,6 @@
 @layer base {
   * {
     @apply border-border;
-    /* Corner shape axis (progressive enhancement; unsupported → round). */
-    corner-shape: var(--corner-shape, round);
     /* Scrollbar axis: native unless the tokens say thin/themed; the hover
        pair reveals an overlay-style bar while the pointer is over the area. */
     scrollbar-width: var(--scrollbar-width, auto);

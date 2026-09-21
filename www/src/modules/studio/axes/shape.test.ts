@@ -46,10 +46,4 @@ describe("shape axis", () => {
       "--studio-radius-panel": "var(--radius-2xl)",
     })
   })
-
-  test("corner shape ships as its own token", () => {
-    expect(resolve({ cornerShape: "squircle" }).tokens).toEqual({
-      "--corner-shape": "squircle",
-    })
-  })
 })

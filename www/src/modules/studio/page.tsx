@@ -1,8 +1,7 @@
 "use client"
 
-/* The panel's one page (Sept 2026): every chapter a folder. An open folder
-   shows its primary rows first, then the rest of its body. Chapters without
-   primary rows yet fold over their old page body. */
+/* The panel's one page (Sept 2026): every chapter a folder, open by default.
+   An open folder shows its primary rows first, then the rest of its body. */
 
 import { Fragment, useRef, useState } from "react"
 
@@ -59,7 +58,9 @@ export function PanelPage({
   system?: PanelSystem
 }) {
   const index = resolveIndex(chapters)
-  const [open, setOpen] = useState<ReadonlySet<string>>(new Set(["color"]))
+  const [open, setOpen] = useState<ReadonlySet<string>>(
+    () => new Set(index.map((chapter) => chapter.id)),
+  )
   const setChapterOpen = (id: string, next: boolean) =>
     setOpen((prev) => {
       const set = new Set(prev)

@@ -1,21 +1,17 @@
 /* Shape — one base length scales the whole radius ladder; a character picks
-   which rung each role of component wears; corner shape is its own axis.
+   which rung each role of component wears.
 
    Engine: `--radius` is the base every `--radius-*` rung derives from
    (base/theme.css). The four role vars (roles.css) point each role at a rung,
    and every component's `--studio-<c>-radius` points at a role. On publish
    the chain resolves to a plain utility per component — `rounded-md`,
-   `rounded-xl` — and a role at None ships no rounded class at all.
-   `--corner-shape` rides on every rounded box through base.css. */
-
-import type { CSSProperties } from "react"
+   `rounded-xl` — and a role at None ships no rounded class at all. */
 
 import type { Resolved, StudioState } from "./index"
 
 export const SHAPE_DEFAULTS = {
   /** The base radius — the lg rung (popover · menu), in px. */
   radiusPx: 10,
-  cornerShape: "round",
   roleControl: "md",
   roleItem: "auto",
   roleSurface: "lg",
@@ -25,13 +21,6 @@ export const SHAPE_DEFAULTS = {
 /** Where the base slider runs. Square is a character, not a base of 0: at 0
  *  the exported code would still carry rounded classes reading a dead token. */
 export const RADIUS_RANGE = { min: 2, max: 20, step: 0.5 }
-
-// CSS corner-shape values (progressive enhancement; unsupported → round).
-export const CORNER_SHAPE_OPTIONS = [
-  { value: "round", label: "Round" },
-  { value: "squircle", label: "Squircle" },
-  { value: "bevel", label: "Bevel" },
-]
 
 /* The ladder (#575): every rung a ratio of the base. `token` is what a role
    var points at; None resolves to `0`, which the publisher drops. */
@@ -128,10 +117,6 @@ export const SHAPE_CHARACTERS: Array<{
   },
 ]
 
-/* corner-shape is progressive enhancement — unsupported browsers render round. */
-export const cornerShapeStyle = (shape: string): CSSProperties =>
-  shape === "round" ? {} : ({ cornerShape: shape } as CSSProperties)
-
 export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
 
@@ -180,7 +165,5 @@ export function resolveShape(state: StudioState): Resolved {
       tokens[ROLE_VARS[role.key]] =
         SHAPE_RUNGS[rungIndex(rung)]?.token ?? "var(--radius-md)"
   }
-  if (state.cornerShape !== "round")
-    tokens["--corner-shape"] = state.cornerShape
   return { tokens }
 }

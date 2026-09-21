@@ -34,7 +34,6 @@ export const baseRegistryCss = {
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
-				"corner-shape": "var(--corner-shape, round)",
 				"scrollbar-width": "var(--scrollbar-width, auto)",
 				"scrollbar-color": "var(--scrollbar-color, auto)",
 			},
