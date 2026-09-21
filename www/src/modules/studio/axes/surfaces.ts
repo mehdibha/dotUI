@@ -69,7 +69,7 @@ export const EDGE_OPTIONS = [
 ]
 
 export const CANVAS_OPTIONS = [
-  { value: "same", label: "Same" },
+  { value: "same", label: "Plain" },
   { value: "tinted", label: "Tinted" },
 ]
 

@@ -1,131 +1,231 @@
 "use client"
 
-/* Surfaces — the chapter's panel. The recipe lives in the axis module; this
-   file paints it. */
+/* Surfaces — how cards and floating layers separate from the page. Style
+   opens five cards, each the recipe drawn twice, light beside dark: dark
+   behavior is part of a style (shadows die on near-black), so the pick shows
+   both modes instead of asking for them separately. Depth is the one
+   intensity lever; Glass the popover material. Page tint, shadow character
+   and the edge's placement fold under More. */
 
 import { cn } from "@/registry/lib/utils"
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
 
 import {
   CANVAS_OPTIONS,
   DEPTH_OPTIONS,
   EDGE_OPTIONS,
-  MATERIAL_OPTIONS,
   SHADOW_OPTIONS,
+  shadowCss,
   STRATEGY_OPTIONS,
-  SURFACE_DEFAULTS,
+  surfaceColorCss,
+  surfaceRecipe,
 } from "../axes/surfaces"
-import { DetailRow } from "../patterns"
-import { ControlGroup, ROW, ROW_LABEL, SegmentedControlRow } from "../rows"
-import type { SegmentedRowOption } from "../rows"
+import type {
+  Mode,
+  PerMode,
+  SurfaceColor,
+  SurfaceLook,
+  SurfacePalette,
+} from "../axes/surfaces"
+import {
+  DialFolder,
+  DialPopover,
+  DialSegmented,
+  DialSlider,
+  DialToggle,
+  DialTrigger,
+} from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
-/** Five named options don't fit beside a label at row width, so the strategy
- *  row stacks: label line on top, full-width segments beneath. */
-function StackedSegmentedRow({
-  label,
-  value,
-  onChange,
-  options,
+/* The glyph's own neutral ramp, one per mode: grays at the registry's rung
+   lightness, so a style reads the same whichever neutral the system runs. */
+const gray = (l: number) => `oklch(${l} 0 0)`
+const GLYPH_PALETTE: PerMode<SurfacePalette> = {
+  light: {
+    step: (s) =>
+      gray(
+        { "25": 1, "50": 0.985, "100": 0.965, "200": 0.925, "300": 0.87 }[s] ??
+          0.71,
+      ),
+    hairline: gray(0.9),
+    ink: gray(0.15),
+  },
+  dark: {
+    step: (s) =>
+      gray(
+        { "25": 0.13, "50": 0.17, "100": 0.21, "200": 0.26, "300": 0.32 }[s] ??
+          0.42,
+      ),
+    hairline: gray(0.235),
+    ink: gray(0.98),
+  },
+}
+
+/** Shadow offsets at the glyph's scale. */
+const scaleOffset = (offset: string, k: number) =>
+  offset.replace(/(-?[\d.]+)px/g, (_, n) => `${Number(n) * k}px`)
+
+function lookStyle(look: SurfaceLook, mode: Mode, k: number) {
+  const palette = GLYPH_PALETTE[mode]
+  const color = (pair: PerMode<SurfaceColor>) =>
+    surfaceColorCss(pair[mode], palette)
+  return {
+    background: color(look.bg),
+    borderColor: color(look.edge),
+    boxShadow: shadowCss(
+      look.shadow.map((layer) => ({
+        ...layer,
+        offset: scaleOffset(layer.offset, k),
+      })),
+      color,
+    ),
+  }
+}
+
+/** One mode of the recipe: a card on the page with a popover over it. */
+function Half({
+  state,
+  mode,
+  mini,
 }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  options: SegmentedRowOption[]
+  state: StudioState
+  mode: Mode
+  mini?: boolean
 }) {
+  const recipe = surfaceRecipe(state)
+  const palette = GLYPH_PALETTE[mode]
+  const bar = {
+    background: surfaceColorCss({ kind: "ink", alpha: 0.18 }, palette),
+  }
+  const k = mini ? 0.3 : 0.7
   return (
-    <div
-      data-row=""
-      className={cn(ROW, "flex h-auto flex-col items-stretch gap-2 px-4 py-3")}
+    <span
+      className={cn("relative block", mini ? "h-5" : "h-16")}
+      style={{ background: surfaceColorCss(recipe.page[mode], palette) }}
     >
-      <span className={ROW_LABEL}>{label}</span>
-      <SegmentedControl
-        aria-label={label}
-        selectedKeys={[value]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="w-full bg-bg/50 p-0.5"
+      <span
+        className={cn(
+          "absolute flex flex-col gap-1 border",
+          mini
+            ? "inset-x-1 top-1 h-3 rounded-[3px]"
+            : "inset-x-2 top-2 h-9 rounded-[5px] p-1.5",
+        )}
+        style={lookStyle(recipe.card, mode, k)}
       >
-        {options.map((option) => (
-          <SegmentedControlItem
-            key={option.value}
-            id={option.value}
-            className="min-w-0 flex-1 justify-center px-1 text-xs"
-          >
-            {option.label}
-          </SegmentedControlItem>
-        ))}
-      </SegmentedControl>
-    </div>
+        {!mini && (
+          <>
+            <span className="h-1 w-1/2 rounded-full" style={bar} />
+            <span className="h-1 w-1/3 rounded-full" style={bar} />
+          </>
+        )}
+      </span>
+      {!mini && (
+        <span
+          className="absolute right-2 bottom-1.5 flex h-8 w-[52%] flex-col gap-1 rounded-[5px] border p-1"
+          style={lookStyle(recipe.popover, mode, k)}
+        >
+          <span className="h-1.5 w-2/3 rounded-full" style={bar} />
+          <span className="h-1.5 w-1/2 rounded-full" style={bar} />
+        </span>
+      )}
+    </span>
+  )
+}
+
+/** The recipe drawn light beside dark. */
+function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "grid shrink-0 grid-cols-2 overflow-hidden border border-fg/15",
+        mini ? "w-10 rounded" : "w-full rounded-md",
+      )}
+    >
+      <Half state={state} mode="light" mini={mini} />
+      <Half state={state} mode="dark" mini={mini} />
+    </span>
   )
 }
 
 /* --------------------------------- Section --------------------------------- */
 
-const label = (options: SegmentedRowOption[], value: string) =>
-  options.find((o) => o.value === value)?.label ?? value
+const strategyLabel = (value: string) =>
+  STRATEGY_OPTIONS.find((o) => o.value === value)?.label ?? value
 
-/** Collapsed-row summary: the separation strategy. */
 export function surfacesSummary(state: StudioState): string {
-  return (
-    STRATEGY_OPTIONS.find((o) => o.value === state.surfaceStrategy)?.label ??
-    state.surfaceStrategy
-  )
+  return strategyLabel(state.surfaceStrategy)
 }
-
-const DETAIL_ROWS = [
-  { key: "surfaceShadow", label: "Shadow", options: SHADOW_OPTIONS },
-  { key: "surfaceEdge", label: "Edge", options: EDGE_OPTIONS },
-  { key: "surfaceCanvas", label: "Canvas", options: CANVAS_OPTIONS },
-] as const
 
 export function SurfacesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const details = DETAIL_ROWS.filter(
-    (row) => state[row.key] !== SURFACE_DEFAULTS[row.key],
-  ).map((row) => label(row.options, state[row.key]))
+  const depth = Math.max(
+    0,
+    DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
+  )
   return (
     <>
-      <ControlGroup>
-        <StackedSegmentedRow
-          label="Separation"
-          value={state.surfaceStrategy}
-          onChange={set("surfaceStrategy")}
-          options={STRATEGY_OPTIONS}
-        />
-        <SegmentedControlRow
-          label="Depth"
-          value={state.surfaceDepth}
-          onChange={set("surfaceDepth")}
-          options={DEPTH_OPTIONS}
-        />
-        <SegmentedControlRow
-          label="Material"
-          description="Menus, pickers and popovers."
-          value={state.surfaceMaterial}
-          onChange={set("surfaceMaterial")}
-          options={MATERIAL_OPTIONS}
-        />
-      </ControlGroup>
-      <DetailRow
-        label="Details"
-        summary={details.length > 0 ? details.join(" · ") : "Default"}
+      <DialTrigger
+        label="Style"
+        value={
+          <>
+            <span className="truncate">
+              {strategyLabel(state.surfaceStrategy)}
+            </span>
+            <StyleGlyph state={state} mini />
+          </>
+        }
       >
-        {DETAIL_ROWS.map((row) => (
-          <SegmentedControlRow
-            key={row.key}
-            label={row.label}
-            value={state[row.key]}
-            onChange={set(row.key)}
-            options={row.options}
+        <DialPopover className="w-80">
+          <CardGrid
+            label="Style"
+            value={state.surfaceStrategy}
+            onChange={set("surfaceStrategy")}
+            options={STRATEGY_OPTIONS.map((option) => ({
+              id: option.value,
+              label: option.label,
+              children: (
+                <StyleGlyph
+                  state={{ ...state, surfaceStrategy: option.value }}
+                />
+              ),
+            }))}
           />
-        ))}
-      </DetailRow>
+        </DialPopover>
+      </DialTrigger>
+      <DialSlider
+        label="Depth"
+        value={depth}
+        onChange={(i) => set("surfaceDepth")(DEPTH_OPTIONS[i]!.value)}
+        minValue={0}
+        maxValue={DEPTH_OPTIONS.length - 1}
+        step={1}
+        format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
+      />
+      <DialToggle
+        label="Glass"
+        value={state.surfaceMaterial === "glass"}
+        onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
+      />
+      <DialFolder title="More" defaultOpen={false}>
+        <DialSegmented
+          label="Page"
+          value={state.surfaceCanvas}
+          onChange={set("surfaceCanvas")}
+          options={CANVAS_OPTIONS}
+        />
+        <DialSegmented
+          label="Shadow"
+          value={state.surfaceShadow}
+          onChange={set("surfaceShadow")}
+          options={SHADOW_OPTIONS}
+        />
+        <DialSegmented
+          label="Edge"
+          value={state.surfaceEdge}
+          onChange={set("surfaceEdge")}
+          options={EDGE_OPTIONS}
+        />
+      </DialFolder>
     </>
   )
 }

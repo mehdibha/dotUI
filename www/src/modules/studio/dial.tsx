@@ -793,40 +793,51 @@ export function DialFolder({
       defaultExpanded={defaultOpen}
       isExpanded={open}
       onExpandedChange={onOpenChange}
-      className="group/folder flex w-full shrink-0 flex-col"
+      className="flex w-full shrink-0 flex-col"
     >
-      <RacButton
-        slot="trigger"
-        className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-1 text-left focus-reset focus-visible:focus-ring"
-      >
-        <span className="flex min-w-0 items-center gap-1.5">
-          <span className="truncate text-[13px] font-semibold text-fg/70">
-            {title}
-          </span>
-          {modified && (
-            <span
-              aria-label="Modified"
-              className="size-1 rounded-full bg-accent"
-            />
-          )}
-        </span>
-        <span className="flex min-w-0 items-center gap-2">
-          {value && (
-            <span className="truncate text-[13px] font-medium text-fg/50">
-              {value}
+      {({ isExpanded }) => (
+        <>
+          <RacButton
+            slot="trigger"
+            className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-1 text-left focus-reset focus-visible:focus-ring"
+          >
+            <span className="flex min-w-0 items-center gap-1.5">
+              <span className="truncate text-[13px] font-semibold text-fg/70">
+                {title}
+              </span>
+              {modified && (
+                <span
+                  aria-label="Modified"
+                  className="size-1 rounded-full bg-accent"
+                />
+              )}
             </span>
-          )}
-          <ChevronDownIcon
+            <span className="flex min-w-0 items-center gap-2">
+              {value && (
+                <span className="truncate text-[13px] font-medium text-fg/50">
+                  {value}
+                </span>
+              )}
+              <ChevronDownIcon
+                className={cn(
+                  DIAL_CHEVRON,
+                  "transition-transform duration-200",
+                  isExpanded && "rotate-180",
+                )}
+              />
+            </span>
+          </RacButton>
+          {/* Folders nest, so the state comes from the render prop, not a group. */}
+          <DisclosurePanel
             className={cn(
-              DIAL_CHEVRON,
-              "transition-transform duration-200 group-expanded/folder:rotate-180",
+              "h-(--disclosure-panel-height) overflow-clip duration-300 ease-fluid-out motion-safe:transition-[height,opacity]",
+              isExpanded ? "opacity-100" : "opacity-0",
             )}
-          />
-        </span>
-      </RacButton>
-      <DisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 duration-300 ease-fluid-out group-expanded/folder:opacity-100 motion-safe:transition-[height,opacity]">
-        <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
-      </DisclosurePanel>
+          >
+            <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
+          </DisclosurePanel>
+        </>
+      )}
     </Disclosure>
   )
 }
