@@ -131,10 +131,12 @@ describe("surfaces", () => {
     expect(tokens).not.toHaveProperty("--shadow-popover")
   })
 
-  test("solid turns the popover tier opaque; glass is the default", () => {
-    const tokens = tokensFor({ surfaceMaterial: "solid" })
-    expect(tokens["--popover-alpha"]).toBe("100%")
-    expect(tokens["--popover-backdrop-filter"]).toBe("none")
+  test("glass turns the popover tier translucent; solid is the default", () => {
+    const tokens = tokensFor({ surfaceMaterial: "glass" })
+    expect(tokens["--popover-alpha"]).toBe("70%")
+    expect(tokens["--popover-backdrop-filter"]).toBe(
+      "blur(40px) saturate(150%)",
+    )
     expect(tokens).not.toHaveProperty("--color-popover")
     expect(tokens).not.toHaveProperty("--color-card")
   })

@@ -16,9 +16,9 @@
    - Edge: the hairline as a border inside the box, or a ring outside it
      (every shadcn style renders overlays ring + shadow — #581).
    - Canvas: white-on-white, or a tinted page surfaces lift off.
-   - Material: the popover tier (menus, pickers, popovers) as glass —
-     shadcn's recipe, the surface at 70% over a blurred, saturated backdrop —
-     or solid. Modals and drawers stay solid either way; they sit over a
+   - Material: the popover tier (menus, pickers, popovers) solid, or as
+     glass — shadcn's recipe, the surface at 70% over a blurred, saturated
+     backdrop. Modals and drawers stay solid either way; they sit over a
      scrim, so there is nothing to see through.
 
    Engine: every combination resolves to the tokens card, popover (menus,
@@ -39,7 +39,7 @@ export const SURFACE_DEFAULTS = {
   surfaceShadow: "plain",
   surfaceEdge: "border",
   surfaceCanvas: "same",
-  surfaceMaterial: "glass",
+  surfaceMaterial: "solid",
 }
 
 export const STRATEGY_OPTIONS = [
@@ -74,8 +74,8 @@ export const CANVAS_OPTIONS = [
 ]
 
 export const MATERIAL_OPTIONS = [
-  { value: "glass", label: "Glass" },
   { value: "solid", label: "Solid" },
+  { value: "glass", label: "Glass" },
 ]
 
 /* -------------------------------- Recipe --------------------------------- */

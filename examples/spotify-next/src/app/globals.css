@@ -278,8 +278,8 @@
     --chart-8: oklch(0.3424 0.0974 148.67);
     --card-border: var(--color-border);
     --overlay-border: var(--color-border);
-    --popover-alpha: 70%;
-    --popover-backdrop-filter: blur(40px) saturate(150%);
+    --popover-alpha: 100%;
+    --popover-backdrop-filter: none;
 }
 
 .dark {
