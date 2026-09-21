@@ -501,7 +501,7 @@ export function DialFolder({
     >
       <RacButton
         slot="trigger"
-        className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-3 text-left focus-reset focus-visible:focus-ring"
+        className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-1 text-left focus-reset focus-visible:focus-ring"
       >
         <span className="flex min-w-0 items-center gap-1.5">
           <span className="truncate text-[13px] font-semibold text-fg/70">

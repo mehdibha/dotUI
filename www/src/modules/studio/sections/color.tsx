@@ -192,6 +192,9 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
+/* The More folder is hidden until its axes settle. */
+const MORE = false
+
 /** Palettes and primary; the rest folded in More (WIP). */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
@@ -246,86 +249,93 @@ export function ColorSection({ studio }: { studio: Studio }) {
       </DialTrigger>
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
-      <DialGap />
-      <DialFolder title="More (WIP)" defaultOpen={false}>
-        <DialSlider
-          label="Vividness"
-          value={state.vividness}
-          onChange={set("vividness")}
-          minValue={0}
-          maxValue={2}
-          step={0.05}
-          format={(v) => `${v.toFixed(2)}×`}
-        />
-        <DialSegmented
-          label="Contrast"
-          value={state.guarantees}
-          onChange={set("guarantees")}
-          options={GUARANTEE_OPTIONS}
-        />
-        {state.modes.map((mode) => {
-          const light = mode.polarity === "light"
-          const high = mode.contrast === "high"
-          return (
-            <DialTrigger
-              key={mode.id}
-              label={mode.name}
-              value={
-                <span className="truncate font-mono tabular-nums">
-                  {formatBg(mode, mode.bg)}
-                  {high && " · High"}
-                </span>
-              }
-            >
-              <DialPopover>
-                <DialSlider
-                  label="Background"
-                  value={mode.bg}
-                  onChange={(bg) => updateMode({ ...mode, bg })}
-                  minValue={light ? 90 : 0}
-                  maxValue={light ? 100 : 20}
-                  step={0.5}
-                  format={(v) => formatBg(mode, v)}
-                />
-                <DialToggle
-                  label="High contrast"
-                  value={high}
-                  onChange={(on) =>
-                    updateMode({ ...mode, contrast: on ? "high" : "default" })
-                  }
-                />
-              </DialPopover>
-            </DialTrigger>
-          )
-        })}
-        <DialSlider
-          label="Hue shift"
-          value={state.hueShift}
-          onChange={set("hueShift")}
-          minValue={0}
-          maxValue={3}
-          step={0.1}
-          format={(v) => `${v.toFixed(1)}×`}
-        />
-        <DialToggle
-          label="Custom borders"
-          value={state.borderContrast}
-          onChange={setBorderContrast}
-        />
-        {state.borderContrast &&
-          BORDER_JOBS.map(({ key, job, label, maxValue }) => (
+      {MORE && (
+        <>
+          <DialGap />
+          <DialFolder title="More (WIP)" defaultOpen={false}>
             <DialSlider
-              key={key}
-              label={label}
-              value={state[key] > 0 ? state[key] : borderSeeds[job]}
-              onChange={set(key)}
-              minValue={1.05}
-              maxValue={maxValue}
-              step={0.01}
-              format={(v) => `${v.toFixed(2)}:1`}
+              label="Vividness"
+              value={state.vividness}
+              onChange={set("vividness")}
+              minValue={0}
+              maxValue={2}
+              step={0.05}
+              format={(v) => `${v.toFixed(2)}×`}
             />
-          ))}
-      </DialFolder>
+            <DialSegmented
+              label="Contrast"
+              value={state.guarantees}
+              onChange={set("guarantees")}
+              options={GUARANTEE_OPTIONS}
+            />
+            {state.modes.map((mode) => {
+              const light = mode.polarity === "light"
+              const high = mode.contrast === "high"
+              return (
+                <DialTrigger
+                  key={mode.id}
+                  label={mode.name}
+                  value={
+                    <span className="truncate font-mono tabular-nums">
+                      {formatBg(mode, mode.bg)}
+                      {high && " · High"}
+                    </span>
+                  }
+                >
+                  <DialPopover>
+                    <DialSlider
+                      label="Background"
+                      value={mode.bg}
+                      onChange={(bg) => updateMode({ ...mode, bg })}
+                      minValue={light ? 90 : 0}
+                      maxValue={light ? 100 : 20}
+                      step={0.5}
+                      format={(v) => formatBg(mode, v)}
+                    />
+                    <DialToggle
+                      label="High contrast"
+                      value={high}
+                      onChange={(on) =>
+                        updateMode({
+                          ...mode,
+                          contrast: on ? "high" : "default",
+                        })
+                      }
+                    />
+                  </DialPopover>
+                </DialTrigger>
+              )
+            })}
+            <DialSlider
+              label="Hue shift"
+              value={state.hueShift}
+              onChange={set("hueShift")}
+              minValue={0}
+              maxValue={3}
+              step={0.1}
+              format={(v) => `${v.toFixed(1)}×`}
+            />
+            <DialToggle
+              label="Custom borders"
+              value={state.borderContrast}
+              onChange={setBorderContrast}
+            />
+            {state.borderContrast &&
+              BORDER_JOBS.map(({ key, job, label, maxValue }) => (
+                <DialSlider
+                  key={key}
+                  label={label}
+                  value={state[key] > 0 ? state[key] : borderSeeds[job]}
+                  onChange={set(key)}
+                  minValue={1.05}
+                  maxValue={maxValue}
+                  step={0.01}
+                  format={(v) => `${v.toFixed(2)}:1`}
+                />
+              ))}
+          </DialFolder>
+        </>
+      )}
     </>
   )
 }
