@@ -105,7 +105,7 @@ import { TabsSection } from "./sections/tabs"
 import { ToastSection } from "./sections/toast"
 import { TogglesSection } from "./sections/toggles"
 import { TooltipsSection } from "./sections/tooltips"
-import { TypeSection, typeSummary } from "./sections/type"
+import { TypeSection } from "./sections/type"
 
 export { DEFAULTS }
 export type { StudioState } from "./axes"
@@ -138,7 +138,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Typography",
     defaults: TYPE_DEFAULTS,
     Body: TypeSection,
-    summary: typeSummary,
   },
   {
     id: "icons",

@@ -4,7 +4,7 @@
 /** Settings row labels per chapter id, for the panel search. */
 export const SEARCH_INDEX: Record<string, string[]> = {
 	color: [],
-	typography: ["Heading", "Body", "Mono", "Weight", "Tracking", "Scale", "Base size", "Body leading"],
+	typography: ["Heading", "Body", "Mono"],
 	icons: ["Library", "Stroke", "Weight"],
 	shape: ["Radius", "Corners", "Character", "Roles"],
 	space: ["Unit", "Density"],
