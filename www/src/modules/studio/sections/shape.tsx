@@ -7,10 +7,6 @@
    curated path; a hand-set vector reads Custom. */
 
 import { useState } from "react"
-import {
-  ToggleButton as RacToggleButton,
-  ToggleButtonGroup as RacToggleButtonGroup,
-} from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 
@@ -31,6 +27,7 @@ import {
   DialSlider,
   DialTrigger,
 } from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
 const px = (value: number) => `${Math.round(value * 10) / 10}px`
@@ -117,33 +114,19 @@ function CharacterPanel({ studio }: { studio: Studio }) {
   ]
   return (
     <>
-      <RacToggleButtonGroup
-        aria-label="Character"
-        selectionMode="single"
-        selectedKeys={active ? [active] : []}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          const character = SHAPE_CHARACTERS.find((c) => c.id === next)
+      <CardGrid
+        label="Character"
+        value={active}
+        onChange={(id) => {
+          const character = SHAPE_CHARACTERS.find((c) => c.id === id)
           if (character) setState({ ...state, ...character.vector })
         }}
-        className="grid grid-cols-2 gap-1.5"
-      >
-        {SHAPE_CHARACTERS.map((character) => (
-          <RacToggleButton
-            key={character.id}
-            id={character.id}
-            className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
-          >
-            <span className="flex items-center gap-2">
-              <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
-              <span className="text-[13px] font-medium text-fg/85">
-                {character.label}
-              </span>
-            </span>
-            <AppGlyph state={{ ...state, ...character.vector }} />
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
+        options={SHAPE_CHARACTERS.map((character) => ({
+          id: character.id,
+          label: character.label,
+          children: <AppGlyph state={{ ...state, ...character.vector }} />,
+        }))}
+      />
       <DialFolder
         title="Roles"
         open={open}

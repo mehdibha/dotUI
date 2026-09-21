@@ -5,7 +5,11 @@
    rows.tsx. */
 
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
-import { Button as RacButton } from "react-aria-components"
+import {
+  Button as RacButton,
+  ToggleButton as RacToggleButton,
+  ToggleButtonGroup as RacToggleButtonGroup,
+} from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
@@ -206,5 +210,57 @@ export function FilterRow({
         <Input placeholder={placeholder} className="text-[0.8125rem]" />
       </InputGroup>
     </SearchField>
+  )
+}
+
+/* -------------------------------- Card grid -------------------------------- */
+
+export interface CardOption {
+  id: string
+  label: string
+  /** The specimen under the label. */
+  children: React.ReactNode
+}
+
+/** A pick from a few cards, two per row: a radio dot, a label, a specimen.
+ *  `value` undefined selects nothing — a view over values off every card. */
+export function CardGrid({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string | undefined
+  onChange: (id: string) => void
+  options: CardOption[]
+}) {
+  return (
+    <RacToggleButtonGroup
+      aria-label={label}
+      selectionMode="single"
+      selectedKeys={value ? [value] : []}
+      onSelectionChange={(keys) => {
+        const next = keys.values().next().value
+        if (next) onChange(next as string)
+      }}
+      className="grid grid-cols-2 gap-1.5"
+    >
+      {options.map((option) => (
+        <RacToggleButton
+          key={option.id}
+          id={option.id}
+          className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
+        >
+          <span className="flex items-center gap-2">
+            <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
+            <span className="text-[13px] font-medium text-fg/85">
+              {option.label}
+            </span>
+          </span>
+          {option.children}
+        </RacToggleButton>
+      ))}
+    </RacToggleButtonGroup>
   )
 }
