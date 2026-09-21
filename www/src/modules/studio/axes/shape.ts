@@ -1,10 +1,11 @@
-/* Shape — the radius model from the shadcn-styles study (#575): a base length
-   scaling the whole ladder, plus a role→rung vector where a style's shape
-   identity actually lives. Corner shape is its own axis.
+/* Shape — one base length scales the whole radius ladder; a character picks
+   which rung each role of component wears; corner shape is its own axis.
 
-   Engine: `--radius` is the base every `--radius-*` rung derives from; the
-   four role vars (roles.css) retarget rungs per role, and the publisher
-   resolves the whole chain to plain `rounded-*` utilities on export.
+   Engine: `--radius` is the base every `--radius-*` rung derives from
+   (base/theme.css). The four role vars (roles.css) point each role at a rung,
+   and every component's `--studio-<c>-radius` points at a role. On publish
+   the chain resolves to a plain utility per component — `rounded-md`,
+   `rounded-xl` — and a role at None ships no rounded class at all.
    `--corner-shape` rides on every rounded box through base.css. */
 
 import type { CSSProperties } from "react"
@@ -21,6 +22,10 @@ export const SHAPE_DEFAULTS = {
   rolePanel: "xl",
 }
 
+/** Where the base slider runs. Square is a character, not a base of 0: at 0
+ *  the exported code would still carry rounded classes reading a dead token. */
+export const RADIUS_RANGE = { min: 2, max: 20, step: 0.5 }
+
 // CSS corner-shape values (progressive enhancement; unsupported → round).
 export const CORNER_SHAPE_OPTIONS = [
   { value: "round", label: "Round" },
@@ -28,7 +33,8 @@ export const CORNER_SHAPE_OPTIONS = [
   { value: "bevel", label: "Bevel" },
 ]
 
-/* Rung ratios = the #575 ladder. `token` is what a role var points at. */
+/* The ladder (#575): every rung a ratio of the base. `token` is what a role
+   var points at; None resolves to `0`, which the publisher drops. */
 export const SHAPE_RUNGS = [
   { id: "none", label: "None", ratio: 0, token: "0" },
   { id: "xs", label: "xs", ratio: 0.25, token: "var(--radius-xs)" },
@@ -49,16 +55,16 @@ export const SHAPE_ROLES = [
 ] as const
 
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
+export type ShapeVector = Record<ShapeRoleKey, string>
 
-/* Curated role vectors — the 80% path. Each maps to a family from the study
-   (at a 10px base): Square ≈ lyra/sera, Crisp ≈ mira/vega, Standard = dotUI
-   today (nova puts controls one rung up), Soft ≈ rhea, Round ≈ luma/maia.
-   Items default to 'auto' = one rung below Surfaces — true of every rounded
-   shadcn style without exception. */
+/* Curated role vectors — the 80% path, each a family from the shadcn-styles
+   study at a 10px base: Square ≈ lyra/sera, Crisp ≈ mira/vega, Standard =
+   dotUI today, Soft ≈ rhea, Round ≈ luma/maia. Items default to 'auto' = one
+   rung below Surfaces — true of every rounded shadcn style. */
 export const SHAPE_CHARACTERS: Array<{
   id: string
   label: string
-  vector: Record<ShapeRoleKey, string>
+  vector: ShapeVector
 }> = [
   {
     id: "square",
@@ -126,10 +132,17 @@ export const SHAPE_CHARACTERS: Array<{
 export const cornerShapeStyle = (shape: string): CSSProperties =>
   shape === "round" ? {} : ({ cornerShape: shape } as CSSProperties)
 
-const rungIndex = (id: string) => SHAPE_RUNGS.findIndex((r) => r.id === id)
+export const rungIndex = (id: string) =>
+  SHAPE_RUNGS.findIndex((rung) => rung.id === id)
 
-/** A role's rung id with 'auto' resolved: Items ride one rung below Surfaces —
- *  the invariant every rounded shadcn style follows. */
+/** The character whose vector matches the roles, or undefined when custom. */
+export function activeCharacter(state: StudioState): string | undefined {
+  return SHAPE_CHARACTERS.find((character) =>
+    SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
+  )?.id
+}
+
+/** A role's rung id with 'auto' resolved: Items ride one rung below Surfaces. */
 export function roleRung(state: StudioState, key: ShapeRoleKey): string {
   const id = state[key]
   if (id !== "auto") return id
@@ -142,15 +155,12 @@ export function roleRatio(state: StudioState, key: ShapeRoleKey): number {
   return SHAPE_RUNGS[rungIndex(roleRung(state, key))]?.ratio ?? 1
 }
 
-/** A role's resolved radius in px — what every other section reads. Pill
- *  clamps to a value large enough to round any control we specimen. */
+/** A role's resolved radius in px. Pill clamps to a value large enough to
+ *  round any control we specimen. */
 export function roleRadiusPx(state: StudioState, key: ShapeRoleKey): number {
   const ratio = roleRatio(state, key)
   return ratio === Infinity ? 999 : state.radiusPx * ratio
 }
-
-export const controlRadiusPx = (state: StudioState) =>
-  roleRadiusPx(state, "roleControl")
 
 const ROLE_VARS: Record<ShapeRoleKey, string> = {
   roleControl: "--studio-radius-control",

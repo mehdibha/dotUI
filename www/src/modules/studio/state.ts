@@ -93,7 +93,7 @@ import { RadioSection } from "./sections/radio"
 import { ScrollbarsSection, scrollbarsSummary } from "./sections/scrollbars"
 import { SegmentedControlSection } from "./sections/segmented-control"
 import { SelectionSection, selectionSummary } from "./sections/selection"
-import { ShapeSection, shapeSummary } from "./sections/shape"
+import { ShapePrimary, ShapeSection, shapeSummary } from "./sections/shape"
 import { SkeletonSection } from "./sections/skeleton"
 import { SlidersSection } from "./sections/sliders"
 import { SpaceSection, spaceSummary } from "./sections/space"
@@ -149,6 +149,7 @@ export const CHAPTERS: Chapter[] = [
     id: "shape",
     label: "Shape",
     defaults: SHAPE_DEFAULTS,
+    Primary: ShapePrimary,
     Body: ShapeSection,
     summary: shapeSummary,
   },
