@@ -6,9 +6,9 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const SWITCH_DEFAULTS = {
-  switchFill: "neutral",
+  switchColor: "neutral",
 }
 
 export function resolveSwitch(state: StudioState): Resolved {
-  return { color: fillScope(state, "switch", state.switchFill) }
+  return { color: fillScope(state, "switch", state.switchColor) }
 }

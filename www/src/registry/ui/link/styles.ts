@@ -45,9 +45,9 @@ const { useStyles, styles } = createStyles(linkMeta, {
       accent: {
         variants: { variant: { default: "text-fg-accent" } },
       },
-      /* Weight is the only resting cue a foreground link gets — the
+      /* Weight is the only resting cue a neutral link gets — the
          Vercel/Linear pattern against a muted paragraph. */
-      foreground: {
+      neutral: {
         variants: { variant: { default: "font-medium text-fg" } },
       },
     },

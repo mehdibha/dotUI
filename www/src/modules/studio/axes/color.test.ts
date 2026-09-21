@@ -4,7 +4,12 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { DEFAULTS } from "."
 import { resolveDesignSystem } from "../resolve"
-import { buildColorConfig, isDefaultColorConfig, withPrimary } from "./color"
+import {
+  buildColorConfig,
+  isDefaultColorConfig,
+  SOLID_LEAVES,
+  withSource,
+} from "./color"
 
 const withModes = (
   light: Partial<(typeof DEFAULTS.modes)[number]>,
@@ -27,7 +32,7 @@ describe("color axis", () => {
     const { color } = resolveDesignSystem({
       ...DEFAULTS,
       brand: "#5e6ad2",
-      ...withPrimary("accent"),
+      ...withSource(SOLID_LEAVES, "accent"),
       successSeed: "#16a34a",
       selectionSeed: "#0072f5",
       neutralHue: 250,
@@ -52,10 +57,10 @@ describe("color axis", () => {
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
       buildColorConfig({ ...DEFAULTS, ...state }).selection
-    expect(source({ selectionFill: "neutral" })).toBeUndefined()
-    expect(source({ selectionFill: "accent" })).toBe("accent")
-    expect(source(withPrimary("accent"))).toBeUndefined()
-    expect(source({ primary: "accent", selectionFill: "neutral" })).toBe(
+    expect(source({ selectionColor: "neutral" })).toBeUndefined()
+    expect(source({ selectionColor: "accent" })).toBe("accent")
+    expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
+    expect(source({ buttonColor: "accent", selectionColor: "neutral" })).toBe(
       "neutral",
     )
   })

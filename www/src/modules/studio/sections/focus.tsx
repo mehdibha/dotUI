@@ -10,8 +10,8 @@
    and a knob only appears when the chosen style reads it. Menu items
    highlight, no ring. */
 
+import { SOURCE_OPTIONS } from "../axes/color"
 import {
-  FOCUS_COLOR_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_OFFSET_OPTIONS,
   FOCUS_STYLE_OPTIONS,
@@ -34,7 +34,7 @@ const COLOR_VARS = {
   neutral: "var(--neutral-700)",
 } as const
 
-const COLOR_OPTIONS: SegmentedRowOption[] = FOCUS_COLOR_OPTIONS.map(
+const COLOR_OPTIONS: SegmentedRowOption[] = SOURCE_OPTIONS.map(
   ({ value, label }) => ({
     value,
     label: (

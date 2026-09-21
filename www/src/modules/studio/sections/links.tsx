@@ -1,9 +1,10 @@
 "use client"
 
 /* Links — two axes, see axes/links.ts. The combos are left honest:
-   foreground + never barely reads. */
+   neutral + never barely reads. */
 
-import { COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
+import { SOURCE_OPTIONS } from "../axes/color"
+import { UNDERLINE_OPTIONS } from "../axes/links"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Studio } from "../state"
 
@@ -21,7 +22,7 @@ export function LinksSection({ studio }: { studio: Studio }) {
         label="Color"
         value={state.linkColor}
         onChange={set("linkColor")}
-        options={COLOR_OPTIONS}
+        options={SOURCE_OPTIONS}
       />
     </ControlGroup>
   )

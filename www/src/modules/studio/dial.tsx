@@ -105,11 +105,17 @@ export function DialTrigger({
 }
 
 /** What a DialTrigger opens: a run of dial rows beside the row. */
-export function DialPopover({ children }: { children: React.ReactNode }) {
+export function DialPopover({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
   return (
     <Popover
       placement={ROW_OVERLAY_PLACEMENT}
-      className={cn("w-64 min-w-0", INSTANT_POPOVER)}
+      className={cn("w-64 min-w-0", INSTANT_POPOVER, className)}
     >
       <DialogContent className="flex flex-col gap-1.5 p-2">
         {children}
@@ -253,8 +259,50 @@ export interface DialOption {
   label: React.ReactNode
 }
 
-/** Label left, a segmented choice right; the moving pill is the only motion.
- *  `null` selects nothing — a view over values that disagree. */
+/** The segmented choice itself; the moving pill is the only motion. `null`
+ *  selects nothing — a view over values that disagree. */
+export function SegmentedGroup({
+  label,
+  value,
+  onChange,
+  options,
+  className,
+}: {
+  label: string
+  value: string | null
+  onChange: (value: string) => void
+  options: DialOption[]
+  className?: string
+}) {
+  return (
+    <RacToggleButtonGroup
+      aria-label={label}
+      selectionMode="single"
+      disallowEmptySelection
+      selectedKeys={value === null ? [] : [value]}
+      onSelectionChange={(keys) => {
+        const next = keys.values().next().value
+        if (next) onChange(next as string)
+      }}
+      className={cn("relative flex shrink-0 p-0.5", className)}
+    >
+      {options.map((option) => (
+        <RacToggleButton
+          key={option.value}
+          id={option.value}
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring selected:text-fg/95"
+        >
+          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
+          <span className="relative z-10 flex items-center gap-1.5">
+            {option.label}
+          </span>
+        </RacToggleButton>
+      ))}
+    </RacToggleButtonGroup>
+  )
+}
+
+/** Label left, a segmented choice right. */
 export function DialSegmented({
   label,
   value,
@@ -269,33 +317,13 @@ export function DialSegmented({
   // Two options sit beside the label; more stack under it, sharing the width.
   const stacked = options.length > 2
   const group = (
-    <RacToggleButtonGroup
-      aria-label={label}
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={value === null ? [] : [value]}
-      onSelectionChange={(keys) => {
-        const next = keys.values().next().value
-        if (next) onChange(next as string)
-      }}
-      className={cn("relative flex shrink-0 p-0.5", stacked && "w-full")}
-    >
-      {options.map((option) => (
-        <RacToggleButton
-          key={option.value}
-          id={option.value}
-          className={cn(
-            "relative isolate flex h-7 cursor-interactive items-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring selected:text-fg/95",
-            stacked && "flex-1 justify-center",
-          )}
-        >
-          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
-          <span className="relative z-10 flex items-center gap-1.5">
-            {option.label}
-          </span>
-        </RacToggleButton>
-      ))}
-    </RacToggleButtonGroup>
+    <SegmentedGroup
+      label={label}
+      value={value}
+      onChange={onChange}
+      options={options}
+      className={stacked ? "w-full" : undefined}
+    />
   )
   if (stacked) {
     return (

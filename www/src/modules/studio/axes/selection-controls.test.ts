@@ -17,27 +17,27 @@ describe("selection controls", () => {
   })
 
   it("a control's fill forks it off the selection tokens as a recipe scope", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, switchFill: "accent" })
+    const ds = resolveDesignSystem({ ...DEFAULTS, switchColor: "accent" })
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toEqual({ switch: "accent" })
     expect(
       resolveDesignSystem({
         ...DEFAULTS,
-        checkboxFill: "neutral",
-        radioFill: "accent",
-        switchFill: "accent",
+        checkboxColor: "neutral",
+        radioColor: "accent",
+        switchColor: "accent",
       }).color?.scopes,
     ).toEqual({ radio: "accent", switch: "accent" })
   })
 
   it("a fill matching the selection source is no fork", () => {
     expect(
-      resolveDesignSystem({ ...DEFAULTS, checkboxFill: "neutral" }).color,
+      resolveDesignSystem({ ...DEFAULTS, checkboxColor: "neutral" }).color,
     ).toBeUndefined()
     const accentChecks = resolveDesignSystem({
       ...DEFAULTS,
-      selectionFill: "accent",
-      checkboxFill: "accent",
+      selectionColor: "accent",
+      checkboxColor: "accent",
     }).color
     expect(accentChecks?.selection).toBe("accent")
     expect(accentChecks?.scopes).toEqual({
@@ -49,7 +49,7 @@ describe("selection controls", () => {
     const seeded = { ...DEFAULTS, selectionSeed: "#0072f5" }
     expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
     expect(
-      resolveDesignSystem({ ...seeded, checkboxFill: "accent" }).color?.scopes,
+      resolveDesignSystem({ ...seeded, checkboxColor: "accent" }).color?.scopes,
     ).toEqual({ checkbox: "accent" })
   })
 

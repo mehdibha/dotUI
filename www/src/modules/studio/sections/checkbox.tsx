@@ -1,7 +1,7 @@
 "use client"
 
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch),
-   one chapter per control. Fill is per control, a leaf of Color's Primary.
+   one chapter per control. Color is per control, a leaf of Color's Primary.
    A radio is always a circle and a switch is always a pill, so Corner stops
    at the box. */
 
@@ -39,17 +39,17 @@ function CornerGlyph({ rx }: { rx: number }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-/** One control's fill — the same leaf Color's Primary row shows. */
+/** One control's color — the same leaf Color's Primary row shows. */
 export function FillRow({
   studio,
   field,
 }: {
   studio: Studio
-  field: "checkboxFill" | "radioFill" | "switchFill"
+  field: "checkboxColor" | "radioColor" | "switchColor"
 }) {
   return (
     <SegmentedControlRow
-      label="Fill"
+      label="Color"
       value={studio.state[field]}
       onChange={studio.set(field)}
       options={SOURCE_OPTIONS}
@@ -68,7 +68,7 @@ export function CheckboxSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <ControlGroup>
-      <FillRow studio={studio} field="checkboxFill" />
+      <FillRow studio={studio} field="checkboxColor" />
       <SelectRow
         label="Corner"
         value={state.checkCorner}

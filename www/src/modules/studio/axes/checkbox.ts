@@ -13,7 +13,7 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const CHECKBOX_DEFAULTS = {
-  checkboxFill: "neutral",
+  checkboxColor: "neutral",
   checkCorner: "rounded",
 }
 
@@ -34,5 +34,5 @@ export function resolveCheckbox(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   const corner = CORNER_TOKENS[state.checkCorner]
   if (corner) tokens["--studio-checkbox-radius"] = corner
-  return { tokens, color: fillScope(state, "checkbox", state.checkboxFill) }
+  return { tokens, color: fillScope(state, "checkbox", state.checkboxColor) }
 }

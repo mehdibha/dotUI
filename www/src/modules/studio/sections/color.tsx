@@ -23,10 +23,6 @@ import {
   buildColorConfig,
   COLOR_DEFAULTS,
   GUARANTEE_OPTIONS,
-  PRIMARY_LEAVES,
-  primaryValue,
-  SOURCE_OPTIONS,
-  withPrimary,
 } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
@@ -42,6 +38,7 @@ import {
 import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
+import { PrimaryRow } from "./primary"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -141,14 +138,6 @@ const SEMANTIC_SEEDS = [
   { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 
-const LEAF_LABELS: Record<(typeof PRIMARY_LEAVES)[number], string> = {
-  primary: "Buttons",
-  checkboxFill: "Checkbox",
-  radioFill: "Radio",
-  switchFill: "Switch",
-  selectionFill: "Selection",
-}
-
 const formatBg = (mode: ColorMode, v: number) =>
   mode.polarity === "dark" && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`
 
@@ -205,27 +194,20 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
 
 /** Palettes, primary, character, contrast, modes; engine tuning in Advanced. */
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
+  const { state, set } = studio
   const { config, m } = usePanelMode(state)
   const borderSeeds = useBorderSeeds(config)
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const semantic = (palette: string) =>
     palette === "selection"
-      ? (m.scales.selection?.["700"] ?? solid(state.selectionFill))
+      ? (m.scales.selection?.["700"] ??
+        m.scales[state.selectionColor]?.[
+          state.selectionColor === "neutral" ? "950" : "700"
+        ] ??
+        m.background)
       : solid(palette)
   const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
-  const primary = primaryValue(state)
-  const sourceOptions = SOURCE_OPTIONS.map((option) => ({
-    ...option,
-    label: (
-      <>
-        <PaletteDot color={solid(option.value)} />
-        {option.label}
-      </>
-    ),
-  }))
-
   const updateMode = (next: ColorMode) =>
     set("modes")(state.modes.map((mode) => (mode.id === next.id ? next : mode)))
 
@@ -263,48 +245,7 @@ export function ColorSection({ studio }: { studio: Studio }) {
         </DialPopover>
       </DialTrigger>
       <DialGap />
-      <DialTrigger
-        label="Primary"
-        value={
-          <>
-            <span className="flex items-center gap-1">
-              <PaletteDot color={solid(state.primary)} />
-              {primary === "mixed" && (
-                <PaletteDot color={semantic("selection")} />
-              )}
-            </span>
-            {primary === "mixed"
-              ? "Mixed"
-              : primary === "accent"
-                ? "Accent"
-                : "Neutral"}
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSegmented
-            label="All"
-            value={primary === "mixed" ? null : primary}
-            onChange={(source) =>
-              setState({
-                ...state,
-                ...withPrimary(source as "neutral" | "accent"),
-              })
-            }
-            options={sourceOptions}
-          />
-          <DialGap />
-          {PRIMARY_LEAVES.map((leaf) => (
-            <DialSegmented
-              key={leaf}
-              label={LEAF_LABELS[leaf]}
-              value={state[leaf]}
-              onChange={set(leaf)}
-              options={sourceOptions}
-            />
-          ))}
-        </DialPopover>
-      </DialTrigger>
+      <PrimaryRow studio={studio} m={m} />
       <DialGap />
       <DialSlider
         label="Vividness"

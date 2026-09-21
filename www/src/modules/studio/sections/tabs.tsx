@@ -10,8 +10,9 @@
    top borders and fuses with the content surface below — browser tabs,
    Chakra's enclosed variant, classic Bootstrap. */
 
+import { SOURCE_OPTIONS } from "../axes/color"
 import { TAB_STYLE_OPTIONS } from "../axes/tabs"
-import { ControlGroup, SelectRow } from "../rows"
+import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Studio } from "../state"
 
@@ -125,6 +126,12 @@ export function TabsSection({ studio }: { studio: Studio }) {
         onChange={set("tabStyle")}
         options={TAB_OPTIONS}
         layout="grid"
+      />
+      <SegmentedControlRow
+        label="Color"
+        value={state.tabsColor}
+        onChange={set("tabsColor")}
+        options={SOURCE_OPTIONS}
       />
     </ControlGroup>
   )

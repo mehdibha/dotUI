@@ -19,7 +19,11 @@ import {
 import type { CodeOptions } from "@/publisher/code-options"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
-import { PRIMARY_LEAVES, withPrimary } from "@/modules/studio/axes/color"
+import {
+  PRIMARY_LEAVES,
+  SOLID_LEAVES,
+  withSource,
+} from "@/modules/studio/axes/color"
 import type { PrimaryLeaf } from "@/modules/studio/axes/color"
 
 /** A studio state plus the exported-code style — everything a preset holds. */
@@ -95,18 +99,19 @@ const isSource = (value: unknown): value is PrimaryColorSource =>
 
 /**
  * v3 → v4 (Sep 2026): the Primary leaves. In v3 `primary` was the one
- * source and the selection tokens followed it, with `checkFill` re-pointing
- * every check at the accent. Both fan out onto the leaves they painted.
+ * source — the selection tokens and the slider fill followed it — and
+ * `checkFill` re-pointed every check at the accent; a link's neutral was
+ * `foreground`. Each fans out onto the leaves it painted.
  */
 function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
   const stored = { ...raw }
-  const selection = PRIMARY_LEAVES.filter((leaf) => leaf !== "primary")
-  const fill = isSource(stored.checkFill)
-    ? stored.checkFill
-    : stored.primary === "accent"
-      ? "accent"
-      : undefined
-  if (fill) for (const leaf of selection) stored[leaf] ??= fill
+  if (stored.primary === "accent")
+    for (const leaf of SOLID_LEAVES) stored[leaf] ??= "accent"
+  if (isSource(stored.checkFill))
+    for (const leaf of SOLID_LEAVES)
+      if (leaf !== "buttonColor") stored[leaf] = stored.checkFill
+  if (stored.linkColor === "foreground") stored.linkColor = "neutral"
+  delete stored.primary
   delete stored.checkFill
   return stored
 }
@@ -185,9 +190,9 @@ const px = (value: string | undefined): number | undefined => {
 
 /** The recipe's control scopes and the axis each one came from. */
 const SCOPE_KEYS: Record<string, keyof StudioState> = {
-  checkbox: "checkboxFill",
-  radio: "radioFill",
-  switch: "switchFill",
+  checkbox: "checkboxColor",
+  radio: "radioColor",
+  switch: "switchColor",
 }
 
 /** Best-effort: the axes a resolved system maps back onto. Component params
@@ -199,11 +204,13 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
   if (color) {
     state.brand = color.seeds.accent
-    // The selection tokens followed the primary unless re-pointed.
-    Object.assign(state, withPrimary(color.primary ?? "neutral"))
+    // The selection tokens and the slider followed the primary unless
+    // re-pointed.
+    Object.assign(state, withSource(SOLID_LEAVES, color.primary ?? "neutral"))
     if (color.selection)
-      for (const leaf of PRIMARY_LEAVES)
-        if (leaf !== "primary") state[leaf] = color.selection
+      for (const leaf of SOLID_LEAVES)
+        if (leaf !== "buttonColor" && leaf !== "sliderColor")
+          state[leaf] = color.selection
     for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
       const fill = color.scopes?.[scope]
       if (fill) state[key] = fill

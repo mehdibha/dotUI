@@ -3,6 +3,7 @@
 /* Sliders — thumb and track compose freely: circle-on-thick is the classic
    volume slider, bar-on-thin is M3 on a quiet page. */
 
+import { SOURCE_OPTIONS } from "../axes/color"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -79,6 +80,12 @@ export function SlidersSection({ studio }: { studio: Studio }) {
         value={state.sliderTrack}
         onChange={set("sliderTrack")}
         options={TRACK_OPTIONS}
+      />
+      <SegmentedControlRow
+        label="Color"
+        value={state.sliderColor}
+        onChange={set("sliderColor")}
+        options={SOURCE_OPTIONS}
       />
     </ControlGroup>
   )

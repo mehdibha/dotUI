@@ -37,8 +37,8 @@ const DEFAULT_MODES: ColorMode[] = [
    unmeasured (the section seeds it from the untouched ramp on switch-on). */
 export const COLOR_DEFAULTS = {
   brand: DEFAULT_COLOR_CONFIG.seeds.accent,
-  primary: "neutral",
-  selectionFill: "neutral",
+  buttonColor: "neutral",
+  selectionColor: "neutral",
   neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",
@@ -65,14 +65,23 @@ export const SOURCE_OPTIONS = [
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
-   `primary` is the buttons (the primary tokens), `selectionFill` every
-   selected item (the selection tokens); each check control can fork. */
+   Solids fill: the buttons (the primary tokens), every selected item (the
+   selection tokens), each check control, the slider. Inks draw: the selected
+   tab, links, the focus ring. */
+export const SOLID_LEAVES = [
+  "buttonColor",
+  "checkboxColor",
+  "radioColor",
+  "switchColor",
+  "selectionColor",
+  "sliderColor",
+] as const
+
 export const PRIMARY_LEAVES = [
-  "primary",
-  "checkboxFill",
-  "radioFill",
-  "switchFill",
-  "selectionFill",
+  ...SOLID_LEAVES,
+  "tabsColor",
+  "linkColor",
+  "focusColor",
 ] as const
 
 export type PrimaryLeaf = (typeof PRIMARY_LEAVES)[number]
@@ -84,13 +93,15 @@ export function primaryValue(state: StudioState): PrimaryColorSource | "mixed" {
     : "mixed"
 }
 
-/** Every leaf on one source — what presets and the Primary row write. */
-export function withPrimary(
+/** The given leaves on one source. */
+export function withSource<K extends PrimaryLeaf>(
+  leaves: readonly K[],
   source: PrimaryColorSource,
-): Record<PrimaryLeaf, PrimaryColorSource> {
-  return Object.fromEntries(
-    PRIMARY_LEAVES.map((leaf) => [leaf, source]),
-  ) as Record<PrimaryLeaf, PrimaryColorSource>
+): Record<K, PrimaryColorSource> {
+  return Object.fromEntries(leaves.map((leaf) => [leaf, source])) as Record<
+    K,
+    PrimaryColorSource
+  >
 }
 
 /** One control's fill as a recipe scope — only when it leaves the selection
@@ -101,7 +112,7 @@ export function fillScope(
   scope: string,
   fill: string,
 ): Partial<ColorConfig> | undefined {
-  if (fill === state.selectionFill) return undefined
+  if (fill === state.selectionColor) return undefined
   return { scopes: { [scope]: fill as PrimaryColorSource } }
 }
 
@@ -184,11 +195,11 @@ export function buildColorConfig(state: StudioState): ColorConfig {
     guaranteePolicy:
       policy === "relaxed" || policy === "strict" ? policy : undefined,
     borders: borderTargets(state, high),
-    primary: state.primary === "accent" ? "accent" : undefined,
+    primary: state.buttonColor === "accent" ? "accent" : undefined,
     selection:
-      state.selectionFill === state.primary
+      state.selectionColor === state.buttonColor
         ? undefined
-        : (state.selectionFill as PrimaryColorSource),
+        : (state.selectionColor as PrimaryColorSource),
   })
 }
 

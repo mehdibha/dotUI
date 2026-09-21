@@ -6,7 +6,10 @@ import { DEFAULTS } from "./index"
 describe("navigation chapters", () => {
   test("defaults land on the registry defaults and add no tokens", () => {
     const ds = resolveDesignSystem(DEFAULTS)
-    expect(ds.componentParams.tabs).toEqual({ style: "segmented" })
+    expect(ds.componentParams.tabs).toEqual({
+      style: "segmented",
+      color: "neutral",
+    })
     expect(ds.componentParams.accordion).toEqual({
       container: "divided",
       marker: "chevron",
@@ -22,7 +25,14 @@ describe("navigation chapters", () => {
 
   test("tabs: tabStyle sets the tabs style param", () => {
     const ds = resolveDesignSystem({ ...DEFAULTS, tabStyle: "enclosed" })
-    expect(ds.componentParams.tabs).toEqual({ style: "enclosed" })
+    expect(ds.componentParams.tabs).toEqual({
+      style: "enclosed",
+      color: "neutral",
+    })
+    expect(
+      resolveDesignSystem({ ...DEFAULTS, tabsColor: "accent" }).componentParams
+        .tabs,
+    ).toEqual({ style: "segmented", color: "accent" })
   })
 
   test("accordion: container and marker axes set the accordion params", () => {
@@ -55,6 +65,9 @@ describe("navigation chapters", () => {
 
   test("unknown values fall back to the defaults", () => {
     const ds = resolveDesignSystem({ ...DEFAULTS, tabStyle: "underline" })
-    expect(ds.componentParams.tabs).toEqual({ style: "segmented" })
+    expect(ds.componentParams.tabs).toEqual({
+      style: "segmented",
+      color: "neutral",
+    })
   })
 })
