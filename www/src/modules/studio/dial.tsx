@@ -6,8 +6,16 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
-import { useCallback } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
+import {
+  animate,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
@@ -26,13 +34,6 @@ import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import {
-  Slider,
-  SliderControl,
-  SliderFill,
-  SliderThumb,
-  SliderTrack,
-} from "@/registry/ui/slider"
 
 import { ColorPickerPopover, PanelPopover, useDraft } from "./rows"
 
@@ -226,8 +227,33 @@ export function DialSelect({
 
 /* --------------------------------- Slider --------------------------------- */
 
-/** The row is the track: label and value float over the fill. Drags through a
- *  draft and commits on release. */
+/* DialKit's slider: the row is the track, the fill follows the pointer
+   unstepped and springs to the nearest step on release. Hashmarks and a
+   3×20 handle surface only while hovered or held; the handle fades where it
+   would sit under the label or value. Past either end the track stretches. */
+
+const CLICK_THRESHOLD = 3
+const DEAD_ZONE = 32
+const MAX_CURSOR_RANGE = 200
+const MAX_STRETCH = 8
+const LABEL_LEFT = 12
+const VALUE_RIGHT = 12
+const HANDLE_BUFFER = 8
+const SNAP_SPRING = {
+  type: "spring",
+  stiffness: 300,
+  damping: 25,
+  mass: 0.8,
+} as const
+
+/** Clicks near a tenth of the range land on it; elsewhere they stay put. */
+function snapToDecile(raw: number, min: number, max: number) {
+  const t = (raw - min) / (max - min)
+  const nearest = Math.round(t * 10) / 10
+  return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
+}
+
+/** Drags through a draft and commits on release. */
 export function DialSlider({
   label,
   value,
@@ -246,41 +272,311 @@ export function DialSlider({
   format: (value: number) => string
 }) {
   const [draft, setDraft] = useDraft(value)
+  const reducedMotion = useReducedMotion()
+  const range = maxValue - minValue
+  const steps = range / step
+  const toPct = (v: number) => ((v - minValue) / range) * 100
+  const clamp = (v: number) => Math.max(minValue, Math.min(maxValue, v))
+  const round = (v: number) =>
+    clamp(
+      Number(
+        (minValue + Math.round((v - minValue) / step) * step).toPrecision(12),
+      ),
+    )
+
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLSpanElement>(null)
+  const valueRef = useRef<HTMLSpanElement>(null)
+
+  const [interacting, setInteracting] = useState(false)
+  const [dragging, setDragging] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const active = interacting || hovered
+
+  const fillPct = useMotionValue(toPct(value))
+  const stretch = useMotionValue(0)
+  const handleOpacity = useMotionValue(0)
+  const handleScaleX = useMotionValue(0.25)
+  const handleScaleY = useMotionValue(1)
+
+  const fillWidth = useMotionTemplate`${fillPct}%`
+  const handleLeft = useMotionTemplate`max(5px, calc(${fillPct}% - 9px))`
+  const trackWidth = useTransform(
+    stretch,
+    (s) => `calc(100% + ${Math.abs(s)}px)`,
+  )
+  const trackX = useTransform(stretch, (s) => Math.min(s, 0))
+
+  const snapAnim = useRef<{ stop: () => void } | null>(null)
+  const pointerDown = useRef<{ x: number; y: number } | null>(null)
+  const isClick = useRef(true)
+  const rect = useRef<DOMRect | null>(null)
+
+  // Sync the fill from the committed value while idle; a settling snap owns it.
+  useEffect(() => {
+    if (!interacting && !snapAnim.current) fillPct.jump(toPct(value))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, minValue, maxValue])
+
+  const settle = (next: number) => {
+    snapAnim.current?.stop()
+    if (reducedMotion) {
+      fillPct.jump(toPct(next))
+      snapAnim.current = null
+    } else {
+      snapAnim.current = animate(fillPct, toPct(next), {
+        ...SNAP_SPRING,
+        onComplete: () => {
+          snapAnim.current = null
+        },
+      })
+    }
+    setDraft(next)
+    onChange(next)
+  }
+
+  const valueAt = (clientX: number) => {
+    const r = rect.current
+    const el = wrapperRef.current
+    if (!r || !el) return draft
+    const scale = r.width / el.offsetWidth || 1
+    const t = Math.max(
+      0,
+      Math.min(1, (clientX - r.left) / scale / el.offsetWidth),
+    )
+    return minValue + t * range
+  }
+
+  const stretchAt = (clientX: number) => {
+    const r = rect.current
+    if (!r) return 0
+    if (clientX < r.left) {
+      const over = Math.max(0, r.left - clientX - DEAD_ZONE)
+      return -MAX_STRETCH * Math.sqrt(Math.min(over / MAX_CURSOR_RANGE, 1))
+    }
+    if (clientX > r.right) {
+      const over = Math.max(0, clientX - r.right - DEAD_ZONE)
+      return MAX_STRETCH * Math.sqrt(Math.min(over / MAX_CURSOR_RANGE, 1))
+    }
+    return 0
+  }
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return
+    e.preventDefault()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    pointerDown.current = { x: e.clientX, y: e.clientY }
+    isClick.current = true
+    rect.current = wrapperRef.current?.getBoundingClientRect() ?? null
+    setInteracting(true)
+  }
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!interacting || !pointerDown.current) return
+    if (isClick.current) {
+      const dx = e.clientX - pointerDown.current.x
+      const dy = e.clientY - pointerDown.current.y
+      if (Math.hypot(dx, dy) <= CLICK_THRESHOLD) return
+      isClick.current = false
+      setDragging(true)
+    }
+    stretch.jump(stretchAt(e.clientX))
+    const raw = valueAt(e.clientX)
+    snapAnim.current?.stop()
+    snapAnim.current = null
+    fillPct.jump(toPct(raw))
+    setDraft(round(raw))
+  }
+
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!interacting) return
+    const raw = valueAt(e.clientX)
+    settle(
+      round(
+        isClick.current && steps > 10
+          ? snapToDecile(raw, minValue, maxValue)
+          : raw,
+      ),
+    )
+    if (stretch.get() !== 0) {
+      if (reducedMotion) stretch.jump(0)
+      else
+        animate(stretch, 0, {
+          type: "spring",
+          visualDuration: 0.35,
+          bounce: 0.15,
+        })
+    }
+    setInteracting(false)
+    setDragging(false)
+    pointerDown.current = null
+  }
+
+  const onPointerCancel = () => {
+    if (!interacting) return
+    stretch.jump(0)
+    fillPct.jump(toPct(value))
+    setDraft(value)
+    setInteracting(false)
+    setDragging(false)
+    pointerDown.current = null
+  }
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || e.altKey || e.metaKey || e.ctrlKey)
+      return
+    let next: number | undefined
+    if (e.key === "Home") next = minValue
+    else if (e.key === "End") next = maxValue
+    else {
+      const dir = ["ArrowRight", "ArrowUp", "PageUp"].includes(e.key)
+        ? 1
+        : ["ArrowLeft", "ArrowDown", "PageDown"].includes(e.key)
+          ? -1
+          : 0
+      if (!dir) return
+      const amount = e.key.startsWith("Page") || e.shiftKey ? 10 : 1
+      const pos = (draft - minValue) / step
+      const n =
+        dir > 0
+          ? Math.floor(pos + 1e-9) + amount
+          : Math.ceil(pos - 1e-9) - amount
+      next = round(minValue + n * step)
+    }
+    e.preventDefault()
+    e.stopPropagation()
+    snapAnim.current?.stop()
+    snapAnim.current = null
+    fillPct.jump(toPct(next))
+    setDraft(next)
+    onChange(next)
+  }
+
+  // The handle: hidden at rest, half-strength on hover, full while dragging,
+  // and nearly gone where it would cross the label or the value.
+  const pct = toPct(draft)
+  useEffect(() => {
+    const width = trackRef.current?.offsetWidth ?? 0
+    const left =
+      width && labelRef.current
+        ? ((LABEL_LEFT + labelRef.current.offsetWidth + HANDLE_BUFFER) /
+            width) *
+          100
+        : 30
+    const right =
+      width && valueRef.current
+        ? ((width -
+            VALUE_RIGHT -
+            valueRef.current.offsetWidth -
+            HANDLE_BUFFER) /
+            width) *
+          100
+        : 78
+    const dodge = pct < left || pct > right
+    const opacity = !active ? 0 : dodge ? 0.1 : dragging ? 0.9 : 0.5
+    const scaleX = active ? 1 : 0.25
+    const scaleY = active && dodge ? 0.75 : 1
+    if (reducedMotion) {
+      handleOpacity.jump(opacity)
+      handleScaleX.jump(scaleX)
+      handleScaleY.jump(scaleY)
+      return
+    }
+    const controls = [
+      animate(handleOpacity, opacity, { duration: 0.15 }),
+      animate(handleScaleX, scaleX, {
+        type: "spring",
+        visualDuration: 0.25,
+        bounce: 0.15,
+      }),
+      animate(handleScaleY, scaleY, {
+        type: "spring",
+        visualDuration: 0.2,
+        bounce: 0.1,
+      }),
+    ]
+    return () => controls.forEach((c) => c.stop())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, dragging, pct, reducedMotion])
+
+  useEffect(() => () => snapAnim.current?.stop(), [])
+
+  // Nine marks at each tenth, or one per step when the range has ten or fewer.
+  const marks =
+    steps <= 10
+      ? Array.from(
+          { length: Math.max(0, Math.round(steps) - 1) },
+          (_, i) => ((i + 1) * step * 100) / range,
+        )
+      : Array.from({ length: 9 }, (_, i) => (i + 1) * 10)
+
   return (
-    <Slider
-      aria-label={label}
-      value={draft}
-      minValue={minValue}
-      maxValue={maxValue}
-      step={step}
-      onChange={(v) => setDraft(v as number)}
-      onChangeEnd={(v) => onChange(v as number)}
-      className="relative w-full shrink-0"
-    >
-      <SliderControl>
-        <SliderTrack className="relative h-9 overflow-hidden rounded-lg tint-5">
-          <SliderFill className="absolute inset-y-0 left-0 tint-10" />
-        </SliderTrack>
-        {/* The fill's edge is the handle; the thumb only shows for keyboard focus. */}
-        <SliderThumb className="z-10 h-5 w-[3px] rounded-full bg-fg/90 opacity-0 focus-visible:opacity-100" />
-      </SliderControl>
-      <span
-        className={cn(
-          DIAL_LABEL,
-          "pointer-events-none absolute inset-y-0 left-3 z-10 flex items-center",
-        )}
+    <div ref={wrapperRef} className="relative h-9 w-full shrink-0">
+      <motion.div
+        ref={trackRef}
+        role="slider"
+        tabIndex={0}
+        aria-label={label}
+        aria-valuemin={minValue}
+        aria-valuemax={maxValue}
+        aria-valuenow={draft}
+        aria-valuetext={format(draft)}
+        data-active={active || undefined}
+        data-dragging={dragging || undefined}
+        style={{ width: trackWidth, x: trackX }}
+        className="group absolute inset-y-0 left-0 cursor-interactive touch-none overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onKeyDown={onKeyDown}
       >
-        {label}
-      </span>
-      <span
-        className={cn(
-          DIAL_VALUE,
-          "pointer-events-none absolute inset-y-0 right-3 z-10 flex items-center tabular-nums",
-        )}
-      >
-        {format(draft)}
-      </span>
-    </Slider>
+        <div className="pointer-events-none absolute inset-0">
+          {marks.map((left) => (
+            <span
+              key={left}
+              className="absolute top-1/2 h-2 w-px -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent transition-colors duration-200 group-data-active:bg-fg/15"
+              style={{ left: `${left}%` }}
+            />
+          ))}
+        </div>
+        <motion.div
+          style={{ width: fillWidth }}
+          className="pointer-events-none absolute inset-y-0 left-0 tint-10 transition-colors duration-150 group-focus-visible:tint-15 group-data-active:tint-15"
+        />
+        <motion.div
+          style={{
+            left: handleLeft,
+            opacity: handleOpacity,
+            y: "-50%",
+            scaleX: handleScaleX,
+            scaleY: handleScaleY,
+          }}
+          className="pointer-events-none absolute top-1/2 h-5 w-[3px] rounded-full bg-fg/90"
+        />
+        <span
+          ref={labelRef}
+          className={cn(
+            DIAL_LABEL,
+            "pointer-events-none absolute inset-y-0 left-3 flex items-center transition-colors duration-150",
+          )}
+        >
+          {label}
+        </span>
+        <span
+          ref={valueRef}
+          className={cn(
+            DIAL_VALUE,
+            "pointer-events-none absolute inset-y-0 right-3 flex items-center tabular-nums transition-colors duration-150 group-focus-visible:text-fg group-data-active:text-fg",
+          )}
+        >
+          {format(draft)}
+        </span>
+      </motion.div>
+    </div>
   )
 }
 
