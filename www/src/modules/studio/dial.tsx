@@ -6,6 +6,7 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
+import { useCallback } from "react"
 import { ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -23,7 +24,6 @@ import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Popover } from "@/registry/ui/popover"
 import {
   Slider,
   SliderControl,
@@ -32,12 +32,7 @@ import {
   SliderTrack,
 } from "@/registry/ui/slider"
 
-import {
-  ColorPickerPopover,
-  PANEL_POPOVER,
-  ROW_OVERLAY_PLACEMENT,
-  useDraft,
-} from "./rows"
+import { ColorPickerPopover, PanelPopover, useDraft } from "./rows"
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
@@ -104,7 +99,34 @@ export function DialTrigger({
   )
 }
 
-/** What a DialTrigger opens: a run of dial rows beside the row. */
+/** Keeps `data-scrollable` on a scroller current as its rows fold and unfold
+ *  (observed as direct children); scroll-fade-b-in (styles.css) eases on it.
+ *  The first measurement lands without easing — the popover is capped after
+ *  it mounts, and its edge should be in place the frame it appears. */
+function useScrollable() {
+  return useCallback((node: HTMLElement | null) => {
+    if (!node) return
+    let first = true
+    const observer = new ResizeObserver(() => {
+      if (first) node.style.transition = "none"
+      node.toggleAttribute(
+        "data-scrollable",
+        node.scrollHeight > node.clientHeight,
+      )
+      if (first) {
+        void node.offsetHeight
+        node.style.transition = ""
+        first = false
+      }
+    })
+    observer.observe(node)
+    for (const child of node.children) observer.observe(child)
+    return () => observer.disconnect()
+  }, [])
+}
+
+/** What a DialTrigger opens: a run of dial rows beside the row. Capped to the
+ *  panel by PanelPopover, it scrolls inside, fading at the bottom. */
 export function DialPopover({
   className,
   children,
@@ -113,14 +135,14 @@ export function DialPopover({
   children: React.ReactNode
 }) {
   return (
-    <Popover
-      placement={ROW_OVERLAY_PLACEMENT}
-      className={cn("w-64 min-w-0", PANEL_POPOVER, className)}
-    >
-      <DialogContent className="flex flex-col gap-1.5 p-2">
+    <PanelPopover className={cn("w-64 min-w-0", className)}>
+      <DialogContent
+        ref={useScrollable()}
+        className="no-scrollbar flex scroll-fade-b-in flex-col gap-1.5 overflow-y-auto overscroll-contain p-2 [--scroll-fade-reveal:--spacing(6)] scroll-fade-8"
+      >
         {children}
       </DialogContent>
-    </Popover>
+    </PanelPopover>
   )
 }
 
@@ -370,9 +392,11 @@ export function DialToggle({
 
 /* --------------------------------- Folder --------------------------------- */
 
-/** A titled group that folds in place. `open` makes it controlled. */
+/** A titled group that folds in place. `open` makes it controlled; `value`
+ *  summarizes the contents beside the chevron while folded. */
 export function DialFolder({
   title,
+  value,
   defaultOpen = true,
   open,
   onOpenChange,
@@ -381,6 +405,7 @@ export function DialFolder({
   children,
 }: {
   title: string
+  value?: React.ReactNode
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
@@ -411,12 +436,19 @@ export function DialFolder({
             />
           )}
         </span>
-        <ChevronDownIcon
-          className={cn(
-            DIAL_CHEVRON,
-            "transition-transform duration-200 group-expanded/folder:rotate-180",
+        <span className="flex min-w-0 items-center gap-2">
+          {value && (
+            <span className="truncate text-[13px] font-medium text-fg/50">
+              {value}
+            </span>
           )}
-        />
+          <ChevronDownIcon
+            className={cn(
+              DIAL_CHEVRON,
+              "transition-transform duration-200 group-expanded/folder:rotate-180",
+            )}
+          />
+        </span>
       </RacButton>
       <DisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 duration-300 ease-fluid-out group-expanded/folder:opacity-100 motion-safe:transition-[height,opacity]">
         <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>

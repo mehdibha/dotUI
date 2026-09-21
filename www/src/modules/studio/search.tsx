@@ -16,13 +16,12 @@ import { Command } from "@/registry/ui/command"
 import { Dialog } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
-import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
 import type { IndexChapter } from "./groups"
-import { PANEL_POPOVER } from "./rows"
+import { PanelPopover } from "./rows"
 
 interface Entry {
   id: string
@@ -141,7 +140,7 @@ export function PanelSearch({
         </Button>
         <TooltipContent>Search ⌘P</TooltipContent>
       </Tooltip>
-      <Popover placement="bottom end" className={PANEL_POPOVER}>
+      <PanelPopover placement="bottom end">
         <Command aria-label="Search" className="w-56">
           {/* Both chain with the Autocomplete's own field props. */}
           <SearchField
@@ -200,7 +199,7 @@ export function PanelSearch({
             )}
           </ListBox>
         </Command>
-      </Popover>
+      </PanelPopover>
     </Dialog>
   )
 }

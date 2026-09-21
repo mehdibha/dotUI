@@ -99,6 +99,67 @@
   }
 }
 
+/* scroll-fade-b-in — shadcn's scroll-fade-b (bottom edge only, sized by
+   scroll-fade-*, cleared by the scroll timeline near the end) with an edge
+   that eases in and out as the scroller starts and stops overflowing, instead
+   of snapping (a folding section outgrows the reveal range in one frame, and
+   the timeline drops to 0 the frame overflow ends). Animation-driven changes
+   start no transition, so the mask is gated by a registered factor that
+   transitions on `data-scrollable`, kept in sync by the scroller's owner
+   (useScrollable in studio/dial): while scrollable the edge follows the
+   timeline, capped by the factor; once not, the timeline is ignored and the
+   factor alone fades the full edge out. Self-contained because scroll-fade-b
+   sets the mask itself; both on one element would race in the cascade. */
+@property --scroll-fade-in {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@utility scroll-fade-b-in {
+  --scroll-fade-in: 0;
+  --_scroll-fade-active: 0;
+  --_scroll-fade-size-b: var(
+    --scroll-fade-b-size,
+    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+  );
+  --_scroll-fade-edge: min(
+    var(--_scroll-fade-size-b) * var(--scroll-fade-in),
+    var(--scroll-fade-b, 0px) + var(--_scroll-fade-size-b) *
+      (1 - var(--_scroll-fade-active))
+  );
+  --scroll-fade-mask: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - var(--_scroll-fade-edge)),
+    transparent 100%
+  );
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: --scroll-fade-in 200ms ease-out;
+  &[data-scrollable] {
+    --scroll-fade-in: 1;
+    --_scroll-fade-active: 1;
+  }
+  @supports (animation-timeline: scroll()) {
+    animation: scroll-fade-reveal-b 1ms ease-in-out;
+    animation-timeline: scroll(self y);
+    animation-range: calc(
+        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))
+      )
+      100%;
+    animation-fill-mode: both;
+  }
+  @supports not (animation-timeline: scroll()) {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* blur-reveal — scroll-driven reveal for a ProgressiveBlur stack (see
    components/progressive-blur.tsx): the same technique as shadcn's scroll-fade
    utilities (a scroll timeline animating a registered @property), retargeted

@@ -4,8 +4,8 @@
    `ColorConfig` through the axis module; here they resolve through the same
    engine the preview runs, in the panel's own display mode, so every swatch
    and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
-   Semantics; primary, contrast and the two modes follow as one row each;
-   engine tuning waits in Advanced. */
+   Semantics — then Primary; everything else (character, contrast, the two
+   modes, engine tuning) waits folded in More until it's settled. */
 
 import { useMemo } from "react"
 import { TriangleAlertIcon } from "lucide-react"
@@ -192,7 +192,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
-/** Palettes, primary, character, contrast, modes; engine tuning in Advanced. */
+/** Palettes and primary; the rest folded in More (WIP). */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const { config, m } = usePanelMode(state)
@@ -247,57 +247,57 @@ export function ColorSection({ studio }: { studio: Studio }) {
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
       <DialGap />
-      <DialSlider
-        label="Vividness"
-        value={state.vividness}
-        onChange={set("vividness")}
-        minValue={0}
-        maxValue={2}
-        step={0.05}
-        format={(v) => `${v.toFixed(2)}×`}
-      />
-      <DialSegmented
-        label="Contrast"
-        value={state.guarantees}
-        onChange={set("guarantees")}
-        options={GUARANTEE_OPTIONS}
-      />
-      {state.modes.map((mode) => {
-        const light = mode.polarity === "light"
-        const high = mode.contrast === "high"
-        return (
-          <DialTrigger
-            key={mode.id}
-            label={mode.name}
-            value={
-              <span className="truncate font-mono tabular-nums">
-                {formatBg(mode, mode.bg)}
-                {high && " · High"}
-              </span>
-            }
-          >
-            <DialPopover>
-              <DialSlider
-                label="Background"
-                value={mode.bg}
-                onChange={(bg) => updateMode({ ...mode, bg })}
-                minValue={light ? 90 : 0}
-                maxValue={light ? 100 : 20}
-                step={0.5}
-                format={(v) => formatBg(mode, v)}
-              />
-              <DialToggle
-                label="High contrast"
-                value={high}
-                onChange={(on) =>
-                  updateMode({ ...mode, contrast: on ? "high" : "default" })
-                }
-              />
-            </DialPopover>
-          </DialTrigger>
-        )
-      })}
-      <DialFolder title="Advanced" defaultOpen={false}>
+      <DialFolder title="More (WIP)" defaultOpen={false}>
+        <DialSlider
+          label="Vividness"
+          value={state.vividness}
+          onChange={set("vividness")}
+          minValue={0}
+          maxValue={2}
+          step={0.05}
+          format={(v) => `${v.toFixed(2)}×`}
+        />
+        <DialSegmented
+          label="Contrast"
+          value={state.guarantees}
+          onChange={set("guarantees")}
+          options={GUARANTEE_OPTIONS}
+        />
+        {state.modes.map((mode) => {
+          const light = mode.polarity === "light"
+          const high = mode.contrast === "high"
+          return (
+            <DialTrigger
+              key={mode.id}
+              label={mode.name}
+              value={
+                <span className="truncate font-mono tabular-nums">
+                  {formatBg(mode, mode.bg)}
+                  {high && " · High"}
+                </span>
+              }
+            >
+              <DialPopover>
+                <DialSlider
+                  label="Background"
+                  value={mode.bg}
+                  onChange={(bg) => updateMode({ ...mode, bg })}
+                  minValue={light ? 90 : 0}
+                  maxValue={light ? 100 : 20}
+                  step={0.5}
+                  format={(v) => formatBg(mode, v)}
+                />
+                <DialToggle
+                  label="High contrast"
+                  value={high}
+                  onChange={(on) =>
+                    updateMode({ ...mode, contrast: on ? "high" : "default" })
+                  }
+                />
+              </DialPopover>
+            </DialTrigger>
+          )
+        })}
         <DialSlider
           label="Hue shift"
           value={state.hueShift}

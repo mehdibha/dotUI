@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Rows are controlled — value in, callback out. */
 
-import { useState } from "react"
+import { createContext, useContext, useLayoutEffect, useState } from "react"
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -23,9 +23,12 @@ import {
   Button as RacButton,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
+  OverlayTriggerStateContext,
+  PopoverContext,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
+  useSlottedContext,
 } from "react-aria-components"
 
 import { FONT_CATALOG, fontStack } from "@/lib/fonts"
@@ -85,13 +88,56 @@ export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 /** What a fixed-height row becomes once it carries a description. */
 export const ROW_DESCRIBED = "h-auto py-2.5"
 
-/** Panel popovers open and close instantly — control feedback, not content —
- *  and hand the rows inside their surface, so tints mix solid over glass. */
-export const PANEL_POPOVER =
-  "transition-none will-change-auto [--panel-surface:var(--color-popover)]"
-
 /** Where row-attached overlays (pickers, selects, menus) open. */
 export const ROW_OVERLAY_PLACEMENT = "right top" as const
+
+/** The element panel popovers stay within — the panel's own height, so their
+ *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
+export const PanelPopoverBoundary = createContext<Element | null>(null)
+
+/** The least a panel popover keeps when its row sits near the bottom: below
+ *  this it slides up instead of shrinking further. */
+const PANEL_POPOVER_MIN_HEIGHT = 240
+
+/** Panel popovers open and close instantly — control feedback, not content —
+ *  and hand the rows inside their surface, so tints mix solid over glass.
+ *  They stay anchored to their row: react-aria would slide a growing popover
+ *  up to fit before capping its height, so the cap is measured here (row top
+ *  to boundary bottom) and content scrolls inside instead. */
+export function PanelPopover({
+  className,
+  placement = ROW_OVERLAY_PLACEMENT,
+  ...props
+}: Omit<React.ComponentProps<typeof Popover>, "className"> & {
+  className?: string
+}) {
+  const boundary = useContext(PanelPopoverBoundary)
+  const triggerRef = useSlottedContext(PopoverContext)?.triggerRef
+  const isOpen = useContext(OverlayTriggerStateContext)?.isOpen
+  const [maxHeight, setMaxHeight] = useState<number>()
+  useLayoutEffect(() => {
+    const trigger = triggerRef?.current
+    if (!isOpen || !trigger) return
+    const bottom = boundary
+      ? boundary.getBoundingClientRect().bottom
+      : window.innerHeight - 12
+    const room = bottom - trigger.getBoundingClientRect().top
+    setMaxHeight(Math.max(room, PANEL_POPOVER_MIN_HEIGHT))
+  }, [isOpen, boundary, triggerRef])
+  return (
+    <Popover
+      placement={placement}
+      boundaryElement={boundary ?? undefined}
+      containerPadding={boundary ? 0 : undefined}
+      maxHeight={maxHeight}
+      className={cn(
+        "transition-none will-change-auto [--panel-surface:var(--color-popover)]",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
@@ -380,10 +426,7 @@ export function SelectRow({
           <ChevronsUpDownIcon className="size-3.5 text-fg-muted" />
         </span>
       </Button>
-      <Popover
-        className={cn("w-(--trigger-width)", PANEL_POPOVER)}
-        placement={ROW_OVERLAY_PLACEMENT}
-      >
+      <PanelPopover className="w-(--trigger-width)">
         {layout === "grid" ? (
           /* Raw RAC listbox: Select wires it up through context, and
              layout="grid" gives the cards real 2D arrow-key navigation. */
@@ -424,7 +467,7 @@ export function SelectRow({
             ))}
           </ListBox>
         )}
-      </Popover>
+      </PanelPopover>
     </Select>
   )
 }
@@ -579,10 +622,7 @@ export function ColorPickerPopover({
   children?: React.ReactNode
 }) {
   return (
-    <Popover
-      placement={placement}
-      className={cn("w-64 min-w-0", PANEL_POPOVER)}
-    >
+    <PanelPopover placement={placement} className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-3">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
           {COLOR_PRESETS.map((preset) => (
@@ -620,7 +660,7 @@ export function ColorPickerPopover({
         </ColorField>
         {children}
       </DialogContent>
-    </Popover>
+    </PanelPopover>
   )
 }
 
@@ -859,10 +899,7 @@ export function NeutralPickerPopover({
         ? "brand"
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
-    <Popover
-      placement={ROW_OVERLAY_PLACEMENT}
-      className={cn("w-64 min-w-0", PANEL_POPOVER)}
-    >
+    <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-3">
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
@@ -940,7 +977,7 @@ export function NeutralPickerPopover({
           ))}
         </div>
       </DialogContent>
-    </Popover>
+    </PanelPopover>
   )
 }
 
@@ -956,10 +993,7 @@ export function FontListPopover({
 }) {
   const listRef = useLazyFontPreviews()
   return (
-    <Popover
-      className={cn("w-(--trigger-width) outline-hidden", PANEL_POPOVER)}
-      placement={ROW_OVERLAY_PLACEMENT}
-    >
+    <PanelPopover className="w-(--trigger-width) outline-hidden">
       <Command>
         <SearchField autoFocus aria-label="Search fonts">
           <InputGroup>
@@ -1004,7 +1038,7 @@ export function FontListPopover({
           </ListBox>
         </div>
       </Command>
-    </Popover>
+    </PanelPopover>
   )
 }
 

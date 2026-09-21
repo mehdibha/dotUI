@@ -13,6 +13,7 @@ import {
   saveStoredPreset,
 } from "@/modules/studio/preset/storage"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
+import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { useStudio } from "@/modules/studio/use-studio"
 
 export function createSearchSchema(
@@ -56,6 +57,7 @@ function StudioPage() {
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // The user's selected preset is persisted in localStorage so every docs
   // component demo renders in it. Seed the editor from it on open (unless a
@@ -85,10 +87,18 @@ function StudioPage() {
   return (
     // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
     // lines up with the Export button above it.
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
+    <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
-      <StudioPanel className="max-lg:hidden" />
-      <PreviewPanel onCustomize={() => setSheetOpen(true)} />
+      {/* The row is the panel's height: panel popovers stay within it. */}
+      <PanelPopoverBoundary.Provider value={boundary}>
+        <div
+          ref={setBoundary}
+          className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
+        >
+          <StudioPanel className="max-lg:hidden" />
+          <PreviewPanel onCustomize={() => setSheetOpen(true)} />
+        </div>
+      </PanelPopoverBoundary.Provider>
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
           the preview's floating toolbar. */}
