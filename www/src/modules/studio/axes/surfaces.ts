@@ -1,5 +1,5 @@
 /* Surfaces — how cards and floating layers separate from the page (#590).
-   Six decisions, never resolver parameters:
+   Five decisions, never resolver parameters:
 
    - Separation: which means leads (edge, shadow, contrast) and how it shifts
      per mode. Dark behavior lives INSIDE the option — shadows die on
@@ -13,8 +13,6 @@
      elevation move together.
    - Shadow: the shadow's character (plain black, tinted with the ink, a
      key + ambient pair), orthogonal to Depth.
-   - Edge: the hairline as a border inside the box, or a ring outside it
-     (every shadcn style renders overlays ring + shadow — #581).
    - Canvas: white-on-white, or a tinted page surfaces lift off.
    - Material: the popover tier (menus, pickers, popovers) solid, or as
      glass — shadcn's recipe, the surface at 70% over a blurred, saturated
@@ -37,7 +35,6 @@ export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
   surfaceDepth: "subtle",
   surfaceShadow: "plain",
-  surfaceEdge: "border",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
 }
@@ -61,11 +58,6 @@ export const SHADOW_OPTIONS = [
   { value: "plain", label: "Plain" },
   { value: "tinted", label: "Tinted" },
   { value: "layered", label: "Layered" },
-]
-
-export const EDGE_OPTIONS = [
-  { value: "border", label: "Border" },
-  { value: "ring", label: "Ring" },
 ]
 
 export const CANVAS_OPTIONS = [
@@ -231,7 +223,6 @@ type Ladder = Record<Role, [number, number, number, number]>
 export function surfaceRecipe(state: StudioState): SurfaceRecipe {
   const d = Math.max(0, DEPTHS.indexOf(state.surfaceDepth))
   const tinted = state.surfaceCanvas === "tinted"
-  const ring = state.surfaceEdge === "ring"
 
   const look = (role: Role): SurfaceLook => {
     const floating = role !== "card"
@@ -314,11 +305,6 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
       dark,
       state.surfaceShadow,
     )
-    // Ring redraws the edge outside the box — a strategy that paints no edge
-    // has nothing to convert.
-    if (ring && (edge.light.kind !== "none" || edge.dark.kind !== "none"))
-      shadow.unshift({ offset: "0 0 0 1px", color: edge })
-
     // Light lifts via the canvas tint instead, so elevation is dark-only.
     const steps = floating ? OVERLAY_ELEVATION : CARD_ELEVATION
     const lift = Math.min(floating ? 2 : 1, elevation + (tinted ? 1 : 0))
@@ -330,7 +316,7 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
             dark: steps[lift] ?? step("50"),
           }
 
-    return { edge: ring ? both(NONE) : edge, bg, shadow }
+    return { edge, bg, shadow }
   }
 
   return {

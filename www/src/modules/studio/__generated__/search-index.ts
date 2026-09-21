@@ -19,7 +19,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	icons: ["Library", "Stroke", "Weight"],
 	shape: ["Radius", "Character"],
 	space: ["Density", "Unit"],
-	surfaces: ["Style", "Depth", "Glass", "Page", "Shadow", "Edge"],
+	surfaces: ["Style", "Depth", "Glass", "Page", "Shadow"],
 	focus: ["Color", "Style", "Geometry", "Width", "Strength", "Offset", "Gap", "Halo", "Border", "Controls", "Inputs"],
 	cursor: ["Controls", "Pending", "Dragging", "Disabled"],
 	selection: ["UI text", "Highlight"],

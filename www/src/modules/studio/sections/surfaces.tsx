@@ -4,15 +4,14 @@
    opens five cards, each the recipe drawn twice, light beside dark: dark
    behavior is part of a style (shadows die on near-black), so the pick shows
    both modes instead of asking for them separately. Depth is the one
-   intensity lever; Glass the popover material. Page tint, shadow character
-   and the edge's placement fold under More. */
+   intensity lever; Glass the popover material. Page tint and shadow character
+   fold under More. */
 
 import { cn } from "@/registry/lib/utils"
 
 import {
   CANVAS_OPTIONS,
   DEPTH_OPTIONS,
-  EDGE_OPTIONS,
   SHADOW_OPTIONS,
   shadowCss,
   STRATEGY_OPTIONS,
@@ -218,12 +217,6 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
           value={state.surfaceShadow}
           onChange={set("surfaceShadow")}
           options={SHADOW_OPTIONS}
-        />
-        <DialSegmented
-          label="Edge"
-          value={state.surfaceEdge}
-          onChange={set("surfaceEdge")}
-          options={EDGE_OPTIONS}
         />
       </DialFolder>
     </>

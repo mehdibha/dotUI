@@ -69,19 +69,6 @@ describe("surfaces", () => {
     )
   })
 
-  test("ring moves the edge into the shadow", () => {
-    const tokens = tokensFor({ surfaceEdge: "ring" })
-    expect(tokens["--card-border"]).toBe("transparent")
-    expect(tokens["--overlay-border"]).toBe("transparent")
-    expect(tokens["--shadow-card"]).toBe("0 0 0 1px var(--color-border)")
-    expect(tokens["--shadow-popover"]).toBe(
-      `0 0 0 1px var(--color-border), ${SHADOW_MD}`,
-    )
-    expect(tokens["--shadow-modal"]).toBe(
-      `0 0 0 1px var(--color-border), ${SHADOW_LG}`,
-    )
-  })
-
   test("depth moves every role one rung", () => {
     const flat = tokensFor({ surfaceDepth: "flat" })
     expect(flat["--card-border"]).toBe(
