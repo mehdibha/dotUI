@@ -1,22 +1,38 @@
 /**
- * The single export surface for /create: one dialog with a target picker
- * (shadcn CLI, v0, upcoming tools) and the code-style options. The trigger is
- * passed as children (the navbar CTA, the panel studio's footer button).
+ * The export surface for /studio: one compact dialog split by the user's
+ * situation — scaffold a new app, or install into an existing one — with the
+ * shadcn command as the single primary action. The trigger is passed as
+ * children (the header CTA, the panel footer button).
  */
 
 import { useState, type ReactNode } from "react"
-import { ArrowUpRightIcon, CheckIcon, Code2Icon, CopyIcon } from "lucide-react"
-import * as ButtonPrimitives from "react-aria-components/Button"
+import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
+import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 
 import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { cn } from "@/registry/lib/utils"
-import { buttonStyles } from "@/registry/ui/button"
-import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Button, LinkButton } from "@/registry/ui/button"
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+} from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
 import { Modal } from "@/registry/ui/modal"
-import { ToggleButton } from "@/registry/ui/toggle-button"
-import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
-import { ShadcnIcon } from "@/components/icons/shadcn"
+import {
+  Radio,
+  RadioControl,
+  RadioGroup,
+  RadioIndicator,
+} from "@/registry/ui/radio-group"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
 import {
   buildInitCommands,
   buildInstallCommands,
@@ -25,28 +41,43 @@ import {
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
 
-import { CodeOptionsControls, CodeOptionsPreview } from "../code-options"
-import { DEEPLINK_TARGETS, UPCOMING_TARGETS } from "./targets"
-import type { DeeplinkTarget } from "./targets"
+import { CodeOptions } from "./code-options"
+import { OPEN_IN_TARGETS } from "./targets"
 import { useExportUrl } from "./use-export-url"
 
-// Remembered so reopening lands on the tool the user actually exports to.
-const lastTargetStore = createPersistedStore<string>(
-  "dotui-export-target",
-  "shadcn",
-  enumCodec(["shadcn", ...DEEPLINK_TARGETS.map((t) => t.id)], "shadcn"),
+const MODES = ["new", "existing"] as const
+type Mode = (typeof MODES)[number]
+
+/** `shadcn init --template` values the CLI can scaffold. */
+const TEMPLATES = [
+  { id: "next", name: "Next.js" },
+  { id: "start", name: "TanStack Start" },
+  { id: "vite", name: "Vite" },
+  { id: "react-router", name: "React Router" },
+] as const
+type Template = (typeof TEMPLATES)[number]["id"]
+
+// Both remembered: someone with an existing project exports there every time.
+const modeStore = createPersistedStore<Mode>(
+  "dotui-export-mode",
+  "new",
+  enumCodec(MODES, "new"),
+)
+const templateStore = createPersistedStore<Template>(
+  "dotui-export-template",
+  "next",
+  enumCodec(
+    TEMPLATES.map((t) => t.id),
+    "next",
+  ),
 )
 
 export function ExportDialog({ children }: { children: ReactNode }) {
   return (
     <Dialog>
       {children}
-      <Modal className="h-[min(34rem,85svh)] w-[min(58rem,92vw)] sm:max-w-none">
-        <DialogContent
-          showCloseButton
-          aria-label="Export design system"
-          className="gap-0 overflow-hidden p-0"
-        >
+      <Modal className="sm:max-w-md">
+        <DialogContent showCloseButton aria-label="Export design system">
           <ExportDialogBody />
         </DialogContent>
       </Modal>
@@ -55,275 +86,188 @@ export function ExportDialog({ children }: { children: ReactNode }) {
 }
 
 function ExportDialogBody() {
-  const [view, setView] = useState(() => lastTargetStore.get())
+  const [mode, setMode] = useState<Mode>(() => modeStore.get())
+  const [template, setTemplate] = useState<Template>(() => templateStore.get())
+  const packageManager = packageManagerStore.useValue()
+  const presetUrl = useExportUrl()
 
-  function selectTarget(id: string) {
-    setView(id)
-    lastTargetStore.set(id)
-  }
+  const initUrl = presetUrl("/r/init")
+  const command =
+    buildInitCommands(initUrl)[packageManager] +
+    (mode === "new" ? ` --template ${template}` : "")
+  const addCommand = buildInstallCommands(["button"])[packageManager]
 
-  const deeplink = DEEPLINK_TARGETS.find((t) => t.id === view)
+  const { isCopied, copyToClipboard } = useCopyToClipboard()
 
   return (
-    <div className="flex h-full min-h-0 flex-col md:flex-row">
-      {/* On mobile the wrapper insets the strip's scrollport so rows never
-          slide under the close button; `md:contents` dissolves it on desktop. */}
-      <div className="shrink-0 max-md:border-b max-md:pr-12 md:contents">
-        <nav
-          aria-label="Export options"
-          className="flex gap-1 overflow-x-auto p-2 max-md:items-center md:w-48 md:shrink-0 md:flex-col md:overflow-y-auto md:border-r md:p-3"
+    <>
+      <DialogHeader className="pr-8">
+        <SegmentedControl
+          aria-label="Project type"
+          selectedKeys={[mode]}
+          onSelectionChange={(keys) => {
+            const next = [...keys][0] as Mode | undefined
+            if (!next) return
+            setMode(next)
+            modeStore.set(next)
+          }}
         >
-          <SectionLabel className="max-md:hidden">Export to</SectionLabel>
-          <NavRow
-            isSelected={view === "shadcn"}
-            onPress={() => selectTarget("shadcn")}
-          >
-            <ShadcnIcon className="size-4 shrink-0" />
-            shadcn CLI
-          </NavRow>
-          {DEEPLINK_TARGETS.map((target) => (
-            <NavRow
-              key={target.id}
-              label={target.name}
-              isSelected={view === target.id}
-              onPress={() => selectTarget(target.id)}
-            >
-              <span aria-hidden className="flex items-center">
-                {target.wordmark}
-              </span>
-            </NavRow>
-          ))}
-          {UPCOMING_TARGETS.map((target) => (
-            <NavRow
-              key={target.id}
-              label={`${target.name} (coming soon)`}
-              isDisabled
-            >
-              <span aria-hidden className="flex items-center">
-                {target.wordmark}
-              </span>
-              <span className="ml-auto rounded-full border px-1.5 py-px text-[10px] max-md:ml-1">
-                Soon
-              </span>
-            </NavRow>
-          ))}
-          <SectionLabel className="mt-3 max-md:hidden">Options</SectionLabel>
-          <NavRow
-            isSelected={view === "code-style"}
-            onPress={() => setView("code-style")}
-          >
-            <Code2Icon className="size-4 shrink-0" />
-            Code style
-          </NavRow>
-        </nav>
-      </div>
+          <SegmentedControlItem id="new">New project</SegmentedControlItem>
+          <SegmentedControlItem id="existing">
+            Existing project
+          </SegmentedControlItem>
+        </SegmentedControl>
+      </DialogHeader>
 
-      <div className="min-h-0 min-w-0 flex-1">
-        {view === "code-style" ? (
-          <CodeStylePane />
-        ) : deeplink ? (
-          <DeeplinkPane target={deeplink} />
+      <DialogBody className="gap-4 overflow-y-auto">
+        {mode === "new" ? (
+          <Section label="Framework">
+            <RadioGroup
+              aria-label="Framework"
+              value={template}
+              onChange={(value) => {
+                setTemplate(value as Template)
+                templateStore.set(value as Template)
+              }}
+              className="grid grid-cols-2 gap-2"
+            >
+              {TEMPLATES.map((t) => (
+                <Radio key={t.id} value={t.id}>
+                  <RadioControl>
+                    <RadioIndicator />
+                    <Label>{t.name}</Label>
+                  </RadioControl>
+                </Radio>
+              ))}
+            </RadioGroup>
+          </Section>
         ) : (
-          <ShadcnPane />
+          <p className="text-xs text-fg-muted">
+            Run in your project root. Registers the design system in{" "}
+            <code className="font-mono">components.json</code>; every component
+            you add after installs already themed.
+          </p>
         )}
-      </div>
+
+        <Section label="Code style">
+          <CodeOptions />
+        </Section>
+
+        <CommandBlock
+          commands={
+            mode === "new"
+              ? [{ label: "Scaffold", command }]
+              : [
+                  { label: "Register", command },
+                  { label: "Add components", command: addCommand },
+                ]
+          }
+        />
+      </DialogBody>
+
+      <DialogFooter className="flex-col sm:flex-col">
+        <Button
+          variant="primary"
+          className="w-full"
+          onPress={() => copyToClipboard(command)}
+        >
+          {isCopied ? "Copied" : "Copy command"}
+        </Button>
+        {mode === "new"
+          ? OPEN_IN_TARGETS.map((target) => (
+              <LinkButton
+                key={target.id}
+                variant="secondary"
+                href={target.href(presetUrl)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
+                <span className="flex items-center gap-1.5">
+                  Open in
+                  <span aria-label={target.name}>{target.wordmark}</span>
+                </span>
+                <ArrowUpRightIcon data-icon="inline-end" />
+              </LinkButton>
+            ))
+          : null}
+      </DialogFooter>
+    </>
+  )
+}
+
+function Section({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="text-xs font-medium text-fg-muted">{label}</span>
+      {children}
     </div>
   )
 }
 
-/* --------------------------------- Panes -------------------------------- */
-
-function ShadcnPane() {
-  const presetUrl = useExportUrl()
+/**
+ * The commands to run, under a package-manager switch shared with the docs.
+ * Each line copies on its own; the first is what the footer button copies.
+ */
+function CommandBlock({
+  commands,
+}: {
+  commands: { label: string; command: string }[]
+}) {
   const packageManager = packageManagerStore.useValue()
-  const initCommand = buildInitCommands(presetUrl("/r/init"))[packageManager]
-  const addCommand = buildInstallCommands(["button"])[packageManager]
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-5 overflow-y-auto p-5">
-      <header className="pr-8">
-        <h2 className="text-sm font-medium">shadcn CLI</h2>
-        <p className="mt-0.5 text-xs text-fg-muted">
-          Install the design system into your own codebase — you own the code.
-        </p>
-      </header>
-      <ToggleButtonGroup
+    <div className="rounded-md border bg-muted/40">
+      <ToggleButtonGroupPrimitives.ToggleButtonGroup
         aria-label="Package manager"
-        size="sm"
         selectionMode="single"
         disallowEmptySelection
         selectedKeys={[packageManager]}
         onSelectionChange={(keys) => {
-          const next = keys.values().next().value
+          const next = [...keys][0]
           if (typeof next === "string") {
             packageManagerStore.set(next as PackageManager)
           }
         }}
-        className="self-start"
+        className="flex gap-1 border-b px-2 py-1.5"
       >
         {PACKAGE_MANAGERS.map((pm) => (
-          <ToggleButton key={pm} id={pm}>
+          <ToggleButtonPrimitives.ToggleButton
+            key={pm}
+            id={pm}
+            className="rounded-sm px-1.5 py-0.5 font-mono text-xs text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:bg-neutral selected:text-fg"
+          >
             {pm}
-          </ToggleButton>
+          </ToggleButtonPrimitives.ToggleButton>
         ))}
-      </ToggleButtonGroup>
-      <Step
-        n={1}
-        title="Initialize"
-        description="Run in your project root. Registers this design system, so components resolve to it."
-      >
-        <CommandCard command={initCommand} label="Copy init command" />
-      </Step>
-      <Step
-        n={2}
-        title="Add components"
-        description="Every component installs already themed to your system."
-      >
-        <CommandCard command={addCommand} label="Copy add command" />
-      </Step>
-    </div>
-  )
-}
-
-function DeeplinkPane({ target }: { target: DeeplinkTarget }) {
-  const presetUrl = useExportUrl()
-
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-1.5 overflow-y-auto p-8 text-center">
-      <h2 className="text-sm font-medium">Open in {target.name}</h2>
-      <p className="max-w-xs text-xs text-fg-muted">{target.description}</p>
-      <a
-        href={target.href(presetUrl)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(buttonStyles({ variant: "primary" }), "mt-4")}
-      >
-        Open in {target.name}
-        <ArrowUpRightIcon data-icon="inline-end" />
-      </a>
-    </div>
-  )
-}
-
-function CodeStylePane() {
-  return (
-    <div className="flex h-full min-h-0 flex-col md:flex-row">
-      <div className="flex w-full shrink-0 flex-col overflow-y-auto border-b p-5 md:w-72 md:border-r md:border-b-0">
-        <h2 className="text-sm font-medium">Code style</h2>
-        <p className="mt-0.5 mb-4 text-xs text-fg-muted">
-          Shape the exported code to match your codebase — applies to every
-          export target.
-        </p>
-        <CodeOptionsControls />
-      </div>
-      <CodeOptionsPreview />
-    </div>
-  )
-}
-
-/* ------------------------------ Primitives ------------------------------ */
-
-function NavRow({
-  label,
-  isSelected = false,
-  isDisabled = false,
-  onPress,
-  children,
-}: {
-  /** Accessible name for rows whose visible content is a brand wordmark. */
-  label?: string
-  isSelected?: boolean
-  isDisabled?: boolean
-  onPress?: () => void
-  children: ReactNode
-}) {
-  return (
-    <ButtonPrimitives.Button
-      aria-label={label}
-      onPress={onPress}
-      isDisabled={isDisabled}
-      aria-current={isSelected ? "true" : undefined}
-      className={cn(
-        "flex h-8 shrink-0 items-center gap-2 rounded-md px-2.5 text-sm focus-reset transition-colors focus-visible:focus-ring md:w-full",
-        isSelected
-          ? "bg-neutral text-fg"
-          : "text-fg-muted hover:bg-neutral hover:text-fg",
-        isDisabled &&
-          "text-fg-muted/60 hover:bg-transparent hover:text-fg-muted/60",
-      )}
-    >
-      {children}
-    </ButtonPrimitives.Button>
-  )
-}
-
-function Step({
-  n,
-  title,
-  description,
-  children,
-}: {
-  n: number
-  title: string
-  description: string
-  children: ReactNode
-}) {
-  return (
-    <div className="flex gap-3">
-      <span
-        aria-hidden
-        className="mt-px flex size-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-medium text-fg-muted"
-      >
-        {n}
-      </span>
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <div>
-          <h3 className="text-sm">{title}</h3>
-          <p className="mt-0.5 text-xs text-fg-muted">{description}</p>
-        </div>
-        {children}
+      </ToggleButtonGroupPrimitives.ToggleButtonGroup>
+      <div className="flex flex-col divide-y">
+        {commands.map((entry) => (
+          <CommandLine key={entry.label} {...entry} />
+        ))}
       </div>
     </div>
   )
 }
 
-function SectionLabel({
-  className,
-  children,
-}: {
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <div
-      className={cn(
-        "px-2.5 pt-1 pb-1.5 text-[10px] tracking-widest text-fg-muted uppercase",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  )
-}
-
-/** A copy-able command box. Click copies the command to the clipboard. */
-function CommandCard({ command, label }: { command: string; label: string }) {
+function CommandLine({ label, command }: { label: string; command: string }) {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
 
   return (
-    <ButtonPrimitives.Button
-      onPress={() => copyToClipboard(command)}
-      aria-label={label}
-      className="group/command flex w-full items-start gap-2 rounded-md border bg-bg p-2 text-left font-mono text-[11px] leading-tight text-fg-muted focus-reset transition-colors hover:bg-neutral-hover focus-visible:focus-ring"
-    >
-      <span className="min-w-0 flex-1 break-all">{command}</span>
-      <span className="mt-0.5 text-fg-muted/60 group-hover/command:text-fg">
-        {isCopied ? (
-          <CheckIcon className="size-3.5" />
-        ) : (
-          <CopyIcon className="size-3.5" />
-        )}
-      </span>
-    </ButtonPrimitives.Button>
+    <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
+      <code className="min-w-0 flex-1 scrollbar-none overflow-x-auto mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] font-mono text-xs whitespace-nowrap text-fg">
+        {command}
+      </code>
+      <Button
+        variant="quiet"
+        size="xs"
+        isIconOnly
+        aria-label={`Copy ${label.toLowerCase()} command`}
+        onPress={() => copyToClipboard(command)}
+        className={cn(isCopied && "text-fg")}
+      >
+        {isCopied ? <CheckIcon /> : <CopyIcon />}
+      </Button>
+    </div>
   )
 }
