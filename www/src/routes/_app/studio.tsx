@@ -43,6 +43,19 @@ export function createSearchSchema(
 
 const searchDefaults = { preview: "cards" }
 
+/** False on the server and first render, so SSR ships the desktop layout. */
+function useIsBelowLg() {
+  const [isBelow, setIsBelow] = useState(false)
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 1023px)")
+    const onChange = () => setIsBelow(mql.matches)
+    mql.addEventListener("change", onChange)
+    onChange()
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+  return isBelow
+}
+
 export const Route = createFileRoute("/_app/studio")({
   validateSearch: createSearchSchema,
   search: {
@@ -52,11 +65,19 @@ export const Route = createFileRoute("/_app/studio")({
 })
 
 function StudioPage() {
-  const { preset } = Route.useSearch()
+  const { preset, gallery } = Route.useSearch()
   const { preset: current, setPreset, setState } = useStudio()
   // Below `lg` the preview is the whole page and the panel rides over it as a
-  // bottom sheet — edits stay visible on the live stage while adjusting.
+  // bottom sheet — edits stay visible on the live stage while adjusting. One
+  // panel is mounted at a time: each owns the preset picker and ⌘P.
+  const isBelowLg = useIsBelowLg()
   const [sheetOpen, setSheetOpen] = useState(false)
+  useEffect(() => {
+    // The sheet portals out of the layout, so no breakpoint class can hide it.
+    if (!isBelowLg) setSheetOpen(false)
+    // ?gallery= (the /presets redirect) needs the panel that owns the picker.
+    else if (gallery) setSheetOpen(true)
+  }, [isBelowLg, gallery])
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // The user's selected preset is persisted in localStorage so every docs
@@ -95,14 +116,14 @@ function StudioPage() {
           ref={setBoundary}
           className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
         >
-          <StudioPanel className="max-lg:hidden" />
+          {!isBelowLg && <StudioPanel className="max-lg:hidden" />}
           <PreviewPanel onCustomize={() => setSheetOpen(true)} />
         </div>
       </PanelPopoverBoundary.Provider>
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
           the preview's floating toolbar. */}
-      <div className="contents lg:hidden">
+      {isBelowLg && (
         <Drawer
           isOpen={sheetOpen}
           onOpenChange={setSheetOpen}
@@ -116,7 +137,7 @@ function StudioPage() {
             <StudioPanel className="min-h-0 flex-1" />
           </DialogContent>
         </Drawer>
-      </div>
+      )}
     </div>
   )
 }
