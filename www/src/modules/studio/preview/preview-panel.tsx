@@ -170,15 +170,12 @@ export function PreviewPanel({
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
   const SizeIcon = sizeOption.Icon
 
-  // Open the preview in the same light / dark mode the site is currently in. Seeded on
-  // mount rather than via the useState initializer: this page is server-rendered and the
-  // server can't know the client's stored theme (it always resolves "light"), so reading
-  // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
-  // preview mode is toggled independently of the site theme afterwards.
+  // Follow the site's light / dark mode; the pill's toggle overrides it until the
+  // next site toggle. An effect, not the useState initializer: the server can't
+  // know the stored theme, so reading it during render would mismatch on hydration.
   useEffect(() => {
     setPreviewMode(resolvedTheme)
-    // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
-  }, [])
+  }, [resolvedTheme])
 
   // The iframe's document URL, fixed at mount — the preset is baked in so the
   // initial render has the right state. Everything after goes over postMessage
