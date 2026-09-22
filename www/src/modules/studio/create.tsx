@@ -30,7 +30,6 @@ import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { usePanelTweaks } from "./panel-tweaks"
 import { resolveDesignSystem } from "./resolve"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
@@ -50,7 +49,6 @@ const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
-  const { panelStyle } = usePanelTweaks()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const {
@@ -200,9 +198,8 @@ export function StudioPanel({ className }: { className?: string }) {
 
   return (
     <div
-      style={panelStyle}
       className={cn(
-        "relative flex w-full flex-1 flex-col lg:w-(--panel-w) lg:flex-none lg:shrink-0",
+        "relative flex w-full flex-1 flex-col lg:w-64 lg:flex-none lg:shrink-0",
         className,
       )}
     >

@@ -30,7 +30,7 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { ColorPickerPopover, PanelPopover, useDraft } from "./rows"
 
 export const DIAL_ROW =
-  "flex h-(--dial-row-h,2.25rem) w-full shrink-0 items-center justify-between gap-3 rounded-(--dial-row-r,0.5rem) tint-5 px-3"
+  "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/70"
@@ -115,7 +115,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent className="flex min-h-0 flex-col gap-(--dial-gap,0.375rem) overflow-y-auto overscroll-contain p-(--popover-pad,0.5rem)">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
         {children}
       </DialogContent>
     </PanelPopover>
@@ -170,7 +170,7 @@ export function DialSelect({
             const next = keys.values().next().value
             if (next) onChange(next as string)
           }}
-          className="flex flex-col gap-(--dial-gap,0.375rem) outline-hidden"
+          className="flex flex-col gap-1.5 outline-hidden"
         >
           {options.map((option) => (
             <RacListBoxItem
@@ -796,9 +796,7 @@ export function DialFolder({
               isExpanded ? "opacity-100" : "opacity-0",
             )}
           >
-            <div className="flex flex-col gap-(--dial-gap,0.375rem) pb-2.5">
-              {children}
-            </div>
+            <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
           </DisclosurePanel>
         </>
       )}

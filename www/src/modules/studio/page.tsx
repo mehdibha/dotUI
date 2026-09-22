@@ -34,7 +34,7 @@ function ChapterBlock({
           </span>
         )}
       </h2>
-      <div className="flex flex-col gap-(--dial-gap,0.375rem) pb-2.5">
+      <div className="flex flex-col gap-1.5 pb-2.5">
         {Primary && <Primary studio={studio} />}
         <Body studio={studio} />
       </div>
