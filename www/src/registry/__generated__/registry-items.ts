@@ -37,6 +37,7 @@ import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
+import UiComposer from "@/registry/ui/composer/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
@@ -122,6 +123,7 @@ export const registryUi: RegistryItem[] = [
 	UiColorThumb,
 	UiCombobox,
 	UiCommand,
+	UiComposer,
 	UiDateField,
 	UiDatePicker,
 	UiDialog,

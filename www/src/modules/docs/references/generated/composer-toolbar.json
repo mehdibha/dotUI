@@ -1,0 +1,14 @@
+{
+  "name": "ComposerToolbarProps",
+  "description": "The row of actions under the text area.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

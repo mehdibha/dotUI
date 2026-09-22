@@ -1,0 +1,134 @@
+{
+  "name": "ComposerProps",
+  "description": "A composer is the message input of a chat: a growing text area above a row\nof actions, submitted with Enter or the send button.",
+  "extendsElement": "form",
+  "props": {
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The current text (controlled)."
+    },
+    "defaultValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The initial text (uncontrolled).",
+      "default": "''"
+    },
+    "onChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the text changes."
+    },
+    "onSubmit": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called with the text on submit; the text then clears."
+    },
+    "onStop": {
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the send button is pressed as a stop button."
+    },
+    "status": {
+      "type": "\"idle\" | \"streaming\" | \"submitted\"",
+      "detailedType": "'idle' | 'streaming' | 'submitted' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "idle"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "streaming"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "submitted"
+          }
+        ]
+      },
+      "description": "The state of the reply. While `submitted` or `streaming`, submitting is\nblocked and the send button becomes a stop button.",
+      "default": "'idle'"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the composer is disabled.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

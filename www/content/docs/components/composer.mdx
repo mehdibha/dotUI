@@ -1,0 +1,67 @@
+---
+title: Composer
+description: A composer is the message input of a chat — a growing text area above a row of actions.
+wip: true
+---
+
+<InteractiveDemo name="composer" controls={[]} />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/composer
+```
+
+## Usage
+
+Use a composer as the input of a chat or an AI prompt. It pairs with [Message](/docs/components/message), [Bubble](/docs/components/bubble) and [Message Scroller](/docs/components/message-scroller).
+
+```tsx
+import {
+  Composer,
+  ComposerSubmit,
+  ComposerTextArea,
+  ComposerToolbar,
+} from "@/components/ui/composer"
+```
+
+```tsx
+<Composer onSubmit={(text) => send(text)}>
+  <ComposerTextArea aria-label="Message" placeholder="Ask anything" />
+  <ComposerToolbar>
+    <ComposerSubmit />
+  </ComposerToolbar>
+</Composer>
+```
+
+## Anatomy
+
+`Composer` is a form that owns the text. `ComposerTextArea` grows with its content up to a cap, then scrolls. `ComposerToolbar` holds the actions — attachments, a model picker — and `ComposerSubmit` sends. `useComposer()` reads the text and state from any child, e.g. to swap the send button for a voice button while the text is empty.
+
+## Submitting
+
+Enter submits on a keyboard; Shift+Enter adds a line. Touch keyboards keep Return for new lines and send with the button. The text clears after `onSubmit`. Pass `value` and `onChange` to control it.
+
+## Streaming
+
+While a reply is in flight, set `status` to `submitted` or `streaming`: submitting is blocked and `ComposerSubmit` becomes a stop button that calls `onStop`.
+
+<Demo name="composer/demos/streaming" />
+
+## API Reference
+
+### Composer
+
+<Reference name="composer" />
+
+### ComposerTextArea
+
+<Reference name="composer-text-area" />
+
+### ComposerToolbar
+
+<Reference name="composer-toolbar" />
+
+### ComposerSubmit
+
+<Reference name="composer-submit" />

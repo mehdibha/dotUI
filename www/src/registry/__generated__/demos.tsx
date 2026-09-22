@@ -1001,6 +1001,14 @@ export const DemosIndex: Record<
 		files: ["ui/command/demos/with-tag-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/with-tag-group")),
 	},
+	"composer/demos/basic": {
+		files: ["ui/composer/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/composer/demos/basic")),
+	},
+	"composer/demos/streaming": {
+		files: ["ui/composer/demos/streaming.tsx"],
+		component: React.lazy(() => import("@/registry/ui/composer/demos/streaming")),
+	},
 	"date-field/demos/appointment": {
 		files: ["ui/date-field/demos/appointment.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/appointment")),

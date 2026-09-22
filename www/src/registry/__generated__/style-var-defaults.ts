@@ -21,6 +21,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-color-editor-radius": "var(--studio-radius-surface)",
 	"--studio-color-swatch-picker-item-radius": "var(--studio-radius-item)",
 	"--studio-color-swatch-radius": "var(--radius-sm)",
+	"--studio-composer-radius": "var(--studio-radius-surface)",
 	"--studio-drawer-radius": "var(--studio-radius-panel)",
 	"--studio-drop-zone-radius": "var(--studio-radius-control)",
 	"--studio-group-radius": "var(--studio-radius-control)",

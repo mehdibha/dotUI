@@ -153,6 +153,7 @@ import {
 	SlashSquareIcon as LucideSlashSquareIcon,
 	SmileIcon as LucideSmileIcon,
 	SparklesIcon as LucideSparklesIcon,
+	SquareIcon as LucideSquareIcon,
 	SquarePenIcon as LucideSquarePenIcon,
 	StarIcon as LucideStarIcon,
 	SunIcon as LucideSunIcon,
@@ -283,6 +284,14 @@ export const AudioLinesIcon = createIcon(LucideAudioLinesIcon, {
 	tabler: "IconMicrophone",
 	hugeicons: "Mic01Icon",
 	phosphor: "WaveformIcon",
+});
+
+export const SquareIcon = createIcon(LucideSquareIcon, {
+	lucide: "SquareIcon",
+	remix: "RiStopFill",
+	tabler: "IconPlayerStopFilled",
+	hugeicons: "StopIcon",
+	phosphor: "StopIcon",
 });
 
 export const ArrowUpIcon = createIcon(LucideArrowUpIcon, {
