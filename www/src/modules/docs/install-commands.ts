@@ -45,5 +45,6 @@ export function buildInstallCommands(
  * drops `config.registries`.
  */
 export function buildInitCommands(url: string): Record<PackageManager, string> {
-  return runnerCommands(`shadcn@latest init ${url}`)
+  // Quoted: zsh globs the `?` in `?preset=` and aborts with "no matches found".
+  return runnerCommands(`shadcn@latest init "${url}"`)
 }

@@ -6,6 +6,7 @@
  */
 
 import { useState, type ReactNode } from "react"
+import { track } from "@vercel/analytics"
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
@@ -57,6 +58,8 @@ const TEMPLATES = [
 ] as const
 type Template = (typeof TEMPLATES)[number]["id"]
 
+const PROJECT_NAME = "my-app"
+
 // Both remembered: someone with an existing project exports there every time.
 const modeStore = createPersistedStore<Mode>(
   "dotui-export-mode",
@@ -91,13 +94,26 @@ function ExportDialogBody() {
   const packageManager = packageManagerStore.useValue()
   const presetUrl = useExportUrl()
 
-  const initUrl = presetUrl("/r/init")
-  const command =
-    buildInitCommands(initUrl)[packageManager] +
-    (mode === "new" ? ` --template ${template}` : "")
+  const initCommand = buildInitCommands(presetUrl("/r/init"))[packageManager]
   const addCommand = buildInstallCommands(["button"])[packageManager]
+  // The template ships shadcn's cva button; swap in dotUI's so the app builds.
+  const command =
+    mode === "new"
+      ? [
+          `${initCommand} --template ${template} --name ${PROJECT_NAME}`,
+          `cd ${PROJECT_NAME}`,
+          `${addCommand} --overwrite --yes`,
+        ].join(" && ")
+      : initCommand
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
+  const trackCopy = (line: string) =>
+    track("export_command_copied", {
+      mode,
+      template: mode === "new" ? template : null,
+      packageManager,
+      line,
+    })
 
   return (
     <>
@@ -145,7 +161,8 @@ function ExportDialogBody() {
           <p className="text-xs text-fg-muted">
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
-            you add after installs already themed.
+            you add after installs already themed. It replaces your shadcn theme
+            tokens, the CSS variables in your global stylesheet.
           </p>
         )}
 
@@ -162,6 +179,7 @@ function ExportDialogBody() {
                   { label: "Add components", command: addCommand },
                 ]
           }
+          onCopy={trackCopy}
         />
       </DialogBody>
 
@@ -169,7 +187,10 @@ function ExportDialogBody() {
         <Button
           variant="primary"
           className="w-full"
-          onPress={() => copyToClipboard(command)}
+          onPress={() => {
+            copyToClipboard(command)
+            trackCopy("primary")
+          }}
         >
           {isCopied ? "Copied" : "Copy command"}
         </Button>
@@ -182,6 +203,7 @@ function ExportDialogBody() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full"
+                onPress={() => track("export_open_in", { target: target.id })}
               >
                 <span className="flex items-center gap-1.5">
                   Open in
@@ -211,8 +233,10 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
  */
 function CommandBlock({
   commands,
+  onCopy,
 }: {
   commands: { label: string; command: string }[]
+  onCopy: (line: string) => void
 }) {
   const packageManager = packageManagerStore.useValue()
 
@@ -243,27 +267,44 @@ function CommandBlock({
       </ToggleButtonGroupPrimitives.ToggleButtonGroup>
       <div className="flex flex-col divide-y">
         {commands.map((entry) => (
-          <CommandLine key={entry.label} {...entry} />
+          <CommandLine key={entry.label} {...entry} onCopy={onCopy} />
         ))}
       </div>
     </div>
   )
 }
 
-function CommandLine({ label, command }: { label: string; command: string }) {
+function CommandLine({
+  label,
+  command,
+  onCopy,
+}: {
+  label: string
+  command: string
+  onCopy: (line: string) => void
+}) {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
+  const steps = command.split(" && ")
 
   return (
     <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
       <code className="min-w-0 flex-1 scrollbar-none overflow-x-auto mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] font-mono text-xs whitespace-nowrap text-fg">
-        {command}
+        {steps.map((step, i) => (
+          <span key={step} className="block">
+            {step}
+            {i < steps.length - 1 ? " &&" : null}
+          </span>
+        ))}
       </code>
       <Button
         variant="quiet"
         size="xs"
         isIconOnly
         aria-label={`Copy ${label.toLowerCase()} command`}
-        onPress={() => copyToClipboard(command)}
+        onPress={() => {
+          copyToClipboard(command)
+          onCopy(label.toLowerCase())
+        }}
         className={cn(isCopied && "text-fg")}
       >
         {isCopied ? <CheckIcon /> : <CopyIcon />}
