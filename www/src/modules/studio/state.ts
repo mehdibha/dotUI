@@ -72,12 +72,9 @@ import { CheckboxSection } from "./sections/checkbox"
 import { ChoiceCardsSection } from "./sections/choice-cards"
 import { ColorPrimary, ColorSection } from "./sections/color"
 import { DialogsSection } from "./sections/dialogs"
-import { DisabledSection, disabledSummary } from "./sections/disabled"
-import { FocusSection, focusSummary } from "./sections/focus"
 import { IconsSection } from "./sections/icons"
 import { InputGroupsSection } from "./sections/input-groups"
 import { InputsSection } from "./sections/inputs"
-import { InvalidSection, invalidSummary } from "./sections/invalid"
 import { KbdSection } from "./sections/kbd"
 import { LinksSection } from "./sections/links"
 import { MenusSection } from "./sections/menus"
@@ -96,6 +93,7 @@ import { SkeletonSection } from "./sections/skeleton"
 import { SlidersSection } from "./sections/sliders"
 import { SpaceSection, spaceSummary } from "./sections/space"
 import { SpinnerSection } from "./sections/spinner"
+import { StatesSection, statesSummary } from "./sections/states"
 import { SurfacesSection, surfacesSummary } from "./sections/surfaces"
 import { SwitchSection } from "./sections/switch"
 import { TablesSection } from "./sections/tables"
@@ -165,13 +163,6 @@ export const CHAPTERS: Chapter[] = [
     summary: surfacesSummary,
   },
   {
-    id: "focus",
-    label: "Focus",
-    defaults: FOCUS_DEFAULTS,
-    Body: FocusSection,
-    summary: focusSummary,
-  },
-  {
     id: "browser",
     label: "Browser",
     defaults: {
@@ -183,18 +174,11 @@ export const CHAPTERS: Chapter[] = [
     summary: browserSummary,
   },
   {
-    id: "disabled",
-    label: "Disabled",
-    defaults: DISABLED_DEFAULTS,
-    Body: DisabledSection,
-    summary: disabledSummary,
-  },
-  {
-    id: "invalid",
-    label: "Invalid",
-    defaults: INVALID_DEFAULTS,
-    Body: InvalidSection,
-    summary: invalidSummary,
+    id: "states",
+    label: "States",
+    defaults: { ...FOCUS_DEFAULTS, ...DISABLED_DEFAULTS, ...INVALID_DEFAULTS },
+    Body: StatesSection,
+    summary: statesSummary,
   },
   {
     id: "charts",
