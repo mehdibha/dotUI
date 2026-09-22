@@ -88,6 +88,39 @@ export const PRESETS: Preset[] = [
     },
   }),
   definePreset({
+    id: "claude-ios",
+    name: "Claude iOS",
+    description: "Clay on graphite, iOS sheets.",
+    swatch: "#e0916f",
+    // Measured on iPhone captures of the Claude app (dark): page #151515,
+    // grouped cells #20201f, secondary text #97958d (hue ~95), blue checks.
+    state: {
+      brand: "#d97757",
+      neutralHue: grayHue("#97958d"),
+      neutralTint: 0.5,
+      // CTAs are white-on-graphite (neutral); clay is brand only, and the
+      // checks, toggles and focus take iOS blue.
+      selectionSeed: "#5598e7",
+      checkCorner: "circle",
+      // 13px base: 26px grouped sections, 39px sheets, 13px list items.
+      radiusPx: 13,
+      roleControl: "full",
+      roleItem: "lg",
+      roleSurface: "2xl",
+      rolePanel: "3xl",
+      badgeShape: "pill",
+      density: "comfortable",
+      // Anthropic Sans is proprietary; Hanken Grotesk is the closest free cut.
+      bodyFont: "Hanken Grotesk",
+      modes: modes({ light: 98, dark: 7 }),
+      surfaceMaterial: "glass",
+      menuScale: "large",
+      mobileDialogs: "sheet",
+      motionCharacter: "spring",
+      scrollbarStyle: "overlay",
+    },
+  }),
+  definePreset({
     id: "supabase",
     name: "Supabase",
     description: "Emerald on cool gray.",
