@@ -114,6 +114,9 @@ export const PRESETS: Preset[] = [
       bodyFont: "Hanken Grotesk",
       modes: modes({ light: 98, dark: 7 }),
       surfaceMaterial: "glass",
+      // iOS grouped: cards lift off a canvas one rung darker.
+      surfaceCanvas: "tinted",
+      listTint: "selection",
       menuScale: "large",
       mobileDialogs: "sheet",
       dialogSheet: "floating",

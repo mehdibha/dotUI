@@ -25,6 +25,7 @@ import { INPUT_GROUP_DEFAULTS } from "../axes/input-groups"
 import { INPUT_DEFAULTS, STYLE_OPTIONS as INPUT_STYLES } from "../axes/inputs"
 import { KBD_DEFAULTS } from "../axes/kbd"
 import { LINK_DEFAULTS } from "../axes/links"
+import { LIST_DEFAULTS, STYLE_OPTIONS as LIST_STYLES } from "../axes/lists"
 import { HIGHLIGHT_OPTIONS, MENU_DEFAULTS } from "../axes/menus"
 import { NUMBER_FIELD_DEFAULTS } from "../axes/number-field"
 import { OTP_FIELD_DEFAULTS } from "../axes/otp-field"
@@ -54,6 +55,7 @@ import { ButtonsPreview, ButtonsSection } from "./buttons"
 import { ChartsPreview, ChartsSection } from "./charts"
 import { DialogsPreview, DialogsSection } from "./dialogs"
 import { InputsPreview, InputsSection } from "./inputs"
+import { ListsPreview, ListsSection } from "./lists"
 import { LoadingSection } from "./loading"
 import { MenusPreview, MenusSection } from "./menus"
 import { NavigationPreview, NavigationSection } from "./navigation"
@@ -87,6 +89,7 @@ export const COMPONENTS_DEFAULTS = {
   ...POPOVER_DEFAULTS,
   ...TOOLTIP_DEFAULTS,
   ...LINK_DEFAULTS,
+  ...LIST_DEFAULTS,
   ...TAB_DEFAULTS,
   ...BREADCRUMB_DEFAULTS,
   ...PAGINATION_DEFAULTS,
@@ -145,6 +148,12 @@ const FAMILIES: Family[] = [
     summary: (s) => optionLabel(HIGHLIGHT_OPTIONS, s.menuHighlight),
     Preview: MenusPreview,
     Body: MenusSection,
+  },
+  {
+    label: "Lists",
+    summary: (s) => optionLabel(LIST_STYLES, s.listStyle),
+    Preview: ListsPreview,
+    Body: ListsSection,
   },
   {
     label: "Dialogs",

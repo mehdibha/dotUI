@@ -268,6 +268,12 @@ export const componentsData: ComponentCategory[] = [
     slug: "collections",
     components: [
       {
+        name: "List",
+        slug: "list",
+        href: "/docs/components/list",
+        status: "in review",
+      },
+      {
         name: "ListBox",
         slug: "list-box",
         href: "/docs/components/list-box",

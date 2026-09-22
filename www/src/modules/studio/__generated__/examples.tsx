@@ -44,6 +44,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	input: () => import("@/registry/ui/input/examples"),
 	"input-group": () => import("@/registry/ui/input-group/examples"),
 	kbd: () => import("@/registry/ui/kbd/examples"),
+	list: () => import("@/registry/ui/list/examples"),
 	"list-box": () => import("@/registry/ui/list-box/examples"),
 	loader: () => import("@/registry/ui/loader/examples"),
 	marker: () => import("@/registry/ui/marker/examples"),

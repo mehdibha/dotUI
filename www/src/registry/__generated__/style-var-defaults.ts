@@ -27,6 +27,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-input-radius": "var(--studio-radius-control)",
 	"--studio-kbd-radius": "var(--radius-sm)",
 	"--studio-list-box-item-radius": "var(--studio-radius-item)",
+	"--studio-list-radius": "var(--studio-radius-surface)",
 	"--studio-menu-item-radius": "var(--studio-radius-item)",
 	"--studio-modal-background": "var(--color-popover)",
 	"--studio-modal-radius": "var(--studio-radius-panel)",
