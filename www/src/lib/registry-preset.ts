@@ -39,3 +39,19 @@ export async function resolveRequestPreset(
     return defaultPreset()
   }
 }
+
+/**
+ * The agent docs (DESIGN.md, the design-system skill, rule pointers) for a
+ * `?preset=` value; `decodePreset` falls back to the defaults on garbage.
+ */
+export async function requestAgentDocs(
+  encoded: string | undefined,
+): Promise<Array<{ path: string; content: string }>> {
+  const [{ decodePreset, DEFAULT_PRESET }, { buildAgentDocs }] =
+    await Promise.all([
+      import("@/modules/studio/preset/codec"),
+      import("@/modules/studio/export/agent-docs"),
+    ])
+  const state = encoded ? decodePreset(encoded).state : DEFAULT_PRESET.state
+  return buildAgentDocs({ state })
+}

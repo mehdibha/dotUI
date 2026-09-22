@@ -21,7 +21,7 @@ import { mkdirSync, watch, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
+import { requestAgentDocs, resolveRequestPreset } from "@/lib/registry-preset"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
 import { CN_UTILS_TS, emitInitItem } from "@/publisher/emit-theme"
@@ -95,6 +95,8 @@ async function materialize(example: string): Promise<void> {
     }
   }
   write(cwd, "src/lib/utils.ts", CN_UTILS_TS)
+  for (const doc of await requestAgentDocs(encodedPreset))
+    write(cwd, doc.path, doc.content)
 
   // The stylesheet as the init item's CSS fields render; `shadcn init` merges
   // the same fields into the consumer's file. Fonts are not wired here, so a

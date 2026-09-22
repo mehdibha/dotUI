@@ -13,7 +13,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { format } from "oxfmt"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
+import { requestAgentDocs, resolveRequestPreset } from "@/lib/registry-preset"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import useImageLoadingStatusSource from "@/registry/hooks/use-image-loading-status.ts?raw"
@@ -69,6 +69,7 @@ export const Route = createFileRoute("/r/v0")({
             googleFontsImport: true,
           }),
           supportFiles: SUPPORT_FILES,
+          rootFiles: await requestAgentDocs(encodedPreset),
         })
 
         // Same courtesy as /r/$name: users read this code in v0, so run the

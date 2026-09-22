@@ -139,6 +139,11 @@ const GENERATED = [
   "src/components/ui",
   "src/hooks",
   "src/lib",
+  // The agent docs.
+  "DESIGN.md",
+  ".agents",
+  ".claude/rules",
+  ".cursor/rules",
 ]
 
 interface Options {

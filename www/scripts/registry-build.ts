@@ -402,6 +402,73 @@ ${lines.join("\n")}
   )
 }
 
+/** The component catalog the exported agent docs list: each documented
+ *  component's docs title and description, its group, and the components its
+ *  shipped file exports. */
+async function buildAgentCatalog() {
+  const uiDir = path.join(REGISTRY_DIR, "ui")
+  const docsDir = path.join(process.cwd(), "content/docs/components")
+  const targetPath = path.join(
+    process.cwd(),
+    "src/modules/studio/__generated__/agent-catalog.ts",
+  )
+  const entries: string[] = []
+  for (const name of (await fs.readdir(uiDir)).sort()) {
+    const docPath = path.join(docsDir, `${name}.mdx`)
+    // Variant-file items (base.<variant>.tsx) export the same names.
+    if (!existsSync(docPath)) continue
+    const baseFile = (await fs.readdir(path.join(uiDir, name)))
+      .filter((f) => /^base(\.[\w-]+)?\.tsx$/.test(f))
+      .sort()[0]
+    if (!baseFile) continue
+    const basePath = path.join(uiDir, name, baseFile)
+    const doc = await fs.readFile(docPath, "utf8")
+    const title = doc.match(/^title: (.+)$/m)?.[1]?.trim() ?? name
+    const description = doc.match(/^description: (.+)$/m)?.[1]?.trim() ?? ""
+    const meta = await fs.readFile(path.join(uiDir, name, "meta.ts"), "utf8")
+    const group = meta.match(/group: "([\w-]+)"/)?.[1] ?? "other"
+    const source = await fs.readFile(basePath, "utf8")
+    const exports = new Set<string>()
+    for (const [, list = ""] of source.matchAll(/^export \{([^}]+)\}/gm)) {
+      for (const part of list.split(",")) {
+        const exported = part
+          .trim()
+          .split(/\s+as\s+/)
+          .pop()
+          ?.trim()
+        if (exported && /^[A-Z]/.test(exported)) exports.add(exported)
+      }
+    }
+    for (const [, exported = ""] of source.matchAll(
+      /^export (?:function|const) ([A-Z]\w*)/gm,
+    ))
+      exports.add(exported)
+    entries.push(
+      `  ${JSON.stringify({ name, title, description, group, exports: [...exports] })},`,
+    )
+  }
+  const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+
+export interface CatalogEntry {
+  name: string
+  title: string
+  description: string
+  group: string
+  exports: string[]
+}
+
+/** Every documented component, for the exported agent docs. */
+export const AGENT_CATALOG: CatalogEntry[] = [
+${entries.join("\n")}
+]
+`
+  await writeGeneratedFile(targetPath, content)
+  console.log(
+    `  ✓ studio/__generated__/agent-catalog.ts (${entries.length} components)`,
+  )
+}
+
 // ============================================================================
 // Generated item manifest: registryUi / registryLib globbed from meta.ts
 // ============================================================================
@@ -1019,6 +1086,7 @@ async function main() {
     await buildInternalIcons()
     await buildInternalExamples()
     await buildStudioSearchIndex()
+    await buildAgentCatalog()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies

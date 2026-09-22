@@ -9,7 +9,7 @@
 
 import { createFileRoute } from "@tanstack/react-router"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
+import { requestAgentDocs, resolveRequestPreset } from "@/lib/registry-preset"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { emitInitItem } from "@/publisher/emit-theme"
 
@@ -25,13 +25,17 @@ export const Route = createFileRoute("/r/init")({
       GET: async ({ request }) => {
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const preset = await resolveRequestPreset(encodedPreset)
+        const [preset, rootFiles] = await Promise.all([
+          resolveRequestPreset(encodedPreset),
+          requestAgentDocs(encodedPreset),
+        ])
 
         const item = emitInitItem({
           baseRegistryCss,
           preset,
           encodedPreset,
           registryRoot: `${url.protocol}//${url.host}`,
+          rootFiles,
         })
 
         return new Response(JSON.stringify(item, null, 2), {
