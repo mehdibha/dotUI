@@ -179,7 +179,15 @@ export function ColorPickerPopover({
             <InputGroupAddon>
               <ColorSwatch className="size-4 rounded-full" />
             </InputGroupAddon>
-            <Input className="font-mono uppercase" />
+            <Input
+              className="font-mono uppercase"
+              // RAC's ColorField commits on blur only; Enter commits too.
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return
+                e.currentTarget.blur()
+                e.currentTarget.focus()
+              }}
+            />
           </InputGroup>
         </ColorField>
         {children}
