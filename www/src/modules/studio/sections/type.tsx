@@ -20,7 +20,7 @@ import {
   DIAL_VALUE,
 } from "../dial"
 import { FontListPopover } from "../rows"
-import type { Studio } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /** A font role as a dial row: label, the family in its own typeface, the
  *  searchable list under it. With `derived`, '' reads Auto on that family
@@ -82,6 +82,20 @@ function FontRow({
       </div>
       <FontListPopover categories={categories} />
     </Select>
+  )
+}
+
+/** Beside the title: Aa in the heading face. */
+export function TypePreview({ state }: { state: StudioState }) {
+  const heading = state.headingFont || state.bodyFont
+  useLoadedFamilies([heading])
+  return (
+    <span
+      className="text-[15px]/none font-semibold"
+      style={{ fontFamily: fontStack(heading) }}
+    >
+      Aa
+    </span>
   )
 }
 

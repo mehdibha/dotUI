@@ -128,6 +128,23 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
+/** Beside the title: the brand over the neutral it sits on. */
+export function ColorPreview({ state }: { state: StudioState }) {
+  const { m } = usePanelMode(state)
+  const dots = [m.scales.neutral?.["900"], m.scales.accent?.["700"]]
+  return (
+    <span className="flex items-center -space-x-1">
+      {dots.map((color, i) => (
+        <span
+          key={i}
+          className="size-3 rounded-full ring-2 ring-(--panel-surface)"
+          style={{ backgroundColor: color ?? m.background }}
+        />
+      ))}
+    </span>
+  )
+}
+
 /** Semantics and primary. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio

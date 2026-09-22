@@ -155,13 +155,14 @@ const withGlyphs = (
     ),
   }))
 
-const CHARACTERS = withGlyphs(CHARACTER_OPTIONS, {
+const CHARACTER_GLYPHS: Record<string, React.ReactNode> = {
   standard: <CurveGlyph d="M4 20C8 9 12 6 20 6" />,
   emphasized: <CurveGlyph d="M4 20C5 8 9 6 20 6" />,
   spring: (
     <CurveGlyph d="M4 20C6 6 6.5 2 9.5 3.5 12 4.8 12.5 8.2 15 7 17 6 18 6 20 6" />
   ),
-})
+}
+const CHARACTERS = withGlyphs(CHARACTER_OPTIONS, CHARACTER_GLYPHS)
 
 const OVERLAYS = withGlyphs(OVERLAY_OPTIONS, {
   none: <OverlayNoneGlyph />,
@@ -175,6 +176,14 @@ const STATES = withGlyphs(STATE_OPTIONS, {
   quick: <StateGlyph d="M4 18h4c2.5 0 2-12 4.5-12H20" />,
   smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
 })
+
+export function MotionPreview({ state }: { state: StudioState }) {
+  return (
+    <span className="size-4 shrink-0 *:size-full">
+      {CHARACTER_GLYPHS[state.motionCharacter]}
+    </span>
+  )
+}
 
 export function motionSummary(state: StudioState): string {
   return (

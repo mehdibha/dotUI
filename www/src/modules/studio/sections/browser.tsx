@@ -176,6 +176,14 @@ const HIGHLIGHT_OPTIONS = [
 
 /* --------------------------------- Section --------------------------------- */
 
+export function BrowserPreview({ state }: { state: StudioState }) {
+  return (
+    <Glyph>
+      {state.cursorControls === "pointer" ? <HandCursor /> : <ArrowCursor />}
+    </Glyph>
+  )
+}
+
 export function browserSummary(state: StudioState): string {
   return state.cursorControls === "pointer" ? "Hand" : "Arrow"
 }
@@ -196,13 +204,7 @@ export function BrowserSection({ studio }: { studio: Studio }) {
               {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
                 ` · ${changed}`}
             </span>
-            <Glyph>
-              {state.cursorControls === "pointer" ? (
-                <HandCursor />
-              ) : (
-                <ArrowCursor />
-              )}
-            </Glyph>
+            <BrowserPreview state={state} />
           </>
         }
       >

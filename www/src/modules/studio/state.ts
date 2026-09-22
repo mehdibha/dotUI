@@ -63,23 +63,27 @@ import { AlertSection } from "./sections/alert"
 import { AvatarsSection } from "./sections/avatars"
 import { BadgesSection } from "./sections/badges"
 import { BreadcrumbsSection } from "./sections/breadcrumbs"
-import { BrowserSection, browserSummary } from "./sections/browser"
+import {
+  BrowserPreview,
+  BrowserSection,
+  browserSummary,
+} from "./sections/browser"
 import { ButtonGroupsSection } from "./sections/button-groups"
 import { ButtonsSection } from "./sections/buttons"
 import { CalendarSection } from "./sections/calendar"
 import { ChartsSection } from "./sections/charts"
 import { CheckboxSection } from "./sections/checkbox"
 import { ChoiceCardsSection } from "./sections/choice-cards"
-import { ColorPrimary, ColorSection } from "./sections/color"
+import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { DialogsSection } from "./sections/dialogs"
-import { IconsSection } from "./sections/icons"
+import { IconsPreview, IconsSection } from "./sections/icons"
 import { InputGroupsSection } from "./sections/input-groups"
 import { InputsSection } from "./sections/inputs"
 import { KbdSection } from "./sections/kbd"
 import { LinksSection } from "./sections/links"
 import { MenusSection } from "./sections/menus"
-import { MobileSection, mobileSummary } from "./sections/mobile"
-import { MotionSection, motionSummary } from "./sections/motion"
+import { MobilePreview, MobileSection, mobileSummary } from "./sections/mobile"
+import { MotionPreview, MotionSection, motionSummary } from "./sections/motion"
 import { NumberFieldSection } from "./sections/number-field"
 import { OtpFieldSection } from "./sections/otp-field"
 import { PaginationSection } from "./sections/pagination"
@@ -88,20 +92,24 @@ import { PopoversSection } from "./sections/popovers"
 import { ProgressSection } from "./sections/progress"
 import { RadioSection } from "./sections/radio"
 import { SegmentedControlSection } from "./sections/segmented-control"
-import { ShapeSection, shapeSummary } from "./sections/shape"
+import { ShapePreview, ShapeSection, shapeSummary } from "./sections/shape"
 import { SkeletonSection } from "./sections/skeleton"
 import { SlidersSection } from "./sections/sliders"
-import { SpaceSection, spaceSummary } from "./sections/space"
+import { SpacePreview, SpaceSection, spaceSummary } from "./sections/space"
 import { SpinnerSection } from "./sections/spinner"
-import { StatesSection, statesSummary } from "./sections/states"
-import { SurfacesSection, surfacesSummary } from "./sections/surfaces"
+import { StatesPreview, StatesSection, statesSummary } from "./sections/states"
+import {
+  SurfacesPreview,
+  SurfacesSection,
+  surfacesSummary,
+} from "./sections/surfaces"
 import { SwitchSection } from "./sections/switch"
 import { TablesSection } from "./sections/tables"
 import { TabsSection } from "./sections/tabs"
 import { ToastSection } from "./sections/toast"
 import { TogglesSection } from "./sections/toggles"
 import { TooltipsSection } from "./sections/tooltips"
-import { TypeSection } from "./sections/type"
+import { TypePreview, TypeSection } from "./sections/type"
 
 export { DEFAULTS }
 export type { StudioState } from "./axes"
@@ -117,6 +125,8 @@ export interface Chapter {
   Primary?: React.ComponentType<{ studio: Studio }>
   /** The rest of the chapter. */
   Body: React.ComponentType<{ studio: Studio }>
+  /** A glyph-sized specimen of the chapter's state, beside its title. */
+  Preview?: React.ComponentType<{ state: StudioState }>
   /** The title's muted value while a chapter has no Primary rows yet. */
   summary?: (state: StudioState) => string
 }
@@ -128,24 +138,28 @@ export const CHAPTERS: Chapter[] = [
     defaults: COLOR_DEFAULTS,
     Primary: ColorPrimary,
     Body: ColorSection,
+    Preview: ColorPreview,
   },
   {
     id: "typography",
     label: "Typography",
     defaults: TYPE_DEFAULTS,
     Body: TypeSection,
+    Preview: TypePreview,
   },
   {
     id: "icons",
     label: "Icons",
     defaults: ICON_DEFAULTS,
     Body: IconsSection,
+    Preview: IconsPreview,
   },
   {
     id: "shape",
     label: "Shape",
     defaults: SHAPE_DEFAULTS,
     Body: ShapeSection,
+    Preview: ShapePreview,
     summary: shapeSummary,
   },
   {
@@ -153,6 +167,7 @@ export const CHAPTERS: Chapter[] = [
     label: "Space",
     defaults: SPACE_DEFAULTS,
     Body: SpaceSection,
+    Preview: SpacePreview,
     summary: spaceSummary,
   },
   {
@@ -160,6 +175,7 @@ export const CHAPTERS: Chapter[] = [
     label: "Surfaces",
     defaults: SURFACE_DEFAULTS,
     Body: SurfacesSection,
+    Preview: SurfacesPreview,
     summary: surfacesSummary,
   },
   {
@@ -171,6 +187,7 @@ export const CHAPTERS: Chapter[] = [
       ...SCROLLBAR_DEFAULTS,
     },
     Body: BrowserSection,
+    Preview: BrowserPreview,
     summary: browserSummary,
   },
   {
@@ -178,6 +195,7 @@ export const CHAPTERS: Chapter[] = [
     label: "States",
     defaults: { ...FOCUS_DEFAULTS, ...DISABLED_DEFAULTS, ...INVALID_DEFAULTS },
     Body: StatesSection,
+    Preview: StatesPreview,
     summary: statesSummary,
   },
   {
@@ -191,6 +209,7 @@ export const CHAPTERS: Chapter[] = [
     label: "Motion",
     defaults: MOTION_DEFAULTS,
     Body: MotionSection,
+    Preview: MotionPreview,
     summary: motionSummary,
   },
   {
@@ -198,6 +217,7 @@ export const CHAPTERS: Chapter[] = [
     label: "Mobile",
     defaults: MOBILE_DEFAULTS,
     Body: MobileSection,
+    Preview: MobilePreview,
     summary: mobileSummary,
   },
   {

@@ -18,7 +18,7 @@ import {
   WEIGHT_OPTIONS,
 } from "../axes/icons"
 import { DialSelect, DialSlider } from "../dial"
-import type { Studio } from "../state"
+import type { Studio, StudioState } from "../state"
 
 /** A strip of registry icons drawn by `library`, at `weight` on Phosphor. */
 function Glyphs({
@@ -43,6 +43,17 @@ function Glyphs({
         </span>
       </IconWeightContext.Provider>
     </IconLibraryContext.Provider>
+  )
+}
+
+/** Beside the title: the strip as the library draws it. */
+export function IconsPreview({ state }: { state: StudioState }) {
+  return (
+    <Glyphs
+      library={state.iconLibrary as IconLibraryName}
+      weight={state.iconWeight as PhosphorWeight}
+      stroke={state.iconStroke}
+    />
   )
 }
 

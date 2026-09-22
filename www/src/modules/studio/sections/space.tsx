@@ -75,6 +75,23 @@ function AppGlyph({ tier, state }: { tier: DensityTier; state: StudioState }) {
   )
 }
 
+/** The three tiers as bars, the current one lit. */
+export function SpacePreview({ state }: { state: StudioState }) {
+  const tier = densityTier(state.density)
+  return (
+    <span className="flex h-4 items-end gap-0.5" aria-hidden>
+      {DENSITY_TIERS.map((t) => (
+        <span
+          key={t.id}
+          className="w-1 rounded-full bg-fg/25 data-active:bg-fg/80"
+          data-active={t.id === tier.id || undefined}
+          style={{ height: `${(t.control / 9) * 100}%` }}
+        />
+      ))}
+    </span>
+  )
+}
+
 export function spaceSummary(state: StudioState): string {
   return densityTier(state.density).label
 }
@@ -89,16 +106,7 @@ export function SpaceSection({ studio }: { studio: Studio }) {
         value={
           <>
             <span className="truncate">{tier.label}</span>
-            <span className="flex h-4 items-end gap-0.5" aria-hidden>
-              {DENSITY_TIERS.map((t) => (
-                <span
-                  key={t.id}
-                  className="w-1 rounded-full bg-fg/25 data-active:bg-fg/80"
-                  data-active={t.id === tier.id || undefined}
-                  style={{ height: `${(t.control / 9) * 100}%` }}
-                />
-              ))}
-            </span>
+            <SpacePreview state={state} />
           </>
         }
       >

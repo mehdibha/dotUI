@@ -68,8 +68,9 @@ function AppGlyph({ state }: { state: StudioState }) {
   )
 }
 
-/** The trigger's specimen: the surface corner with a control nested inside. */
-function CornerGlyph({ state }: { state: StudioState }) {
+/** The trigger's specimen, and the chapter's: the surface corner with a
+ *  control nested inside. */
+export function ShapePreview({ state }: { state: StudioState }) {
   const arc = (key: ShapeRoleKey, size: number) =>
     Math.min(roleRadiusPx(state, key), size)
   return (
@@ -170,7 +171,7 @@ export function ShapeSection({ studio }: { studio: Studio }) {
             <span className={cn("truncate", !character && "text-fg/50")}>
               {character?.label ?? "Custom"}
             </span>
-            <CornerGlyph state={state} />
+            <ShapePreview state={state} />
           </>
         }
       >

@@ -150,6 +150,10 @@ function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
 const strategyLabel = (value: string) =>
   STRATEGY_OPTIONS.find((o) => o.value === value)?.label ?? value
 
+export function SurfacesPreview({ state }: { state: StudioState }) {
+  return <StyleGlyph state={state} mini />
+}
+
 export function surfacesSummary(state: StudioState): string {
   return strategyLabel(state.surfaceStrategy)
 }

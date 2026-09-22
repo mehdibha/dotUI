@@ -4,9 +4,8 @@
    icons, motion, interaction) sit in their own lesser-weight cluster. Built
    from COMPOSITE index chapters: a composite bundles one or more state.ts
    chapters into a single index card and chapter page — the first member is
-   the host body, later members render as titled subsections, and the card's
-   modified dot covers every member's axes. The flat chapter list in state.ts
-   stays untouched. */
+   the host body, later members render as titled subsections. The flat chapter
+   list in state.ts stays untouched. */
 
 import type { Chapter, StudioState } from "./state"
 
@@ -77,8 +76,6 @@ export interface IndexChapter {
   label: string
   /** ≥1 chapters; the first is the host body, the rest render titled. */
   members: Chapter[]
-  /** Union of every member's defaults — drives the modified dot. */
-  defaults: Partial<StudioState>
   /** The host member's live value, when its demo can't carry it. */
   summary?: (state: StudioState) => string
   /** Untitled host body, or all-titled for hostless composites. */
@@ -98,7 +95,6 @@ export function resolveIndex(chapters: Chapter[]): IndexChapter[] {
             id,
             label: chapter.label,
             members: [chapter],
-            defaults: chapter.defaults,
             summary: chapter.summary,
             hostless: false,
           }
@@ -112,7 +108,6 @@ export function resolveIndex(chapters: Chapter[]): IndexChapter[] {
       id: composite.id,
       label: composite.label ?? host?.label ?? composite.id,
       members,
-      defaults: Object.assign({}, ...members.map((m) => m.defaults)),
       summary: members[0]?.summary,
       hostless: !host,
     }

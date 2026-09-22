@@ -84,6 +84,14 @@ const withGlyphs = (
 const PICKERS = withGlyphs(PICKER_OPTIONS)
 const DIALOGS = withGlyphs(DIALOG_OPTIONS)
 
+export function MobilePreview({ state }: { state: StudioState }) {
+  return (
+    <span className="size-4 shrink-0 *:size-full">
+      <PhoneGlyph layer={state.mobilePickers as Layer} />
+    </span>
+  )
+}
+
 export function mobileSummary(state: StudioState): string {
   return (
     PICKER_OPTIONS.find((o) => o.value === state.mobilePickers)?.label ??
