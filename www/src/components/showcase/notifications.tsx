@@ -59,7 +59,7 @@ export function Notifications({
         <div className="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-x-hidden overflow-y-auto scroll-fade-4">
           <ListBox
             aria-label="Notifications"
-            className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:m-0"
+            className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_[data-separator]]:m-0"
           >
             {visibleNotifications.map((notification, index) => (
               <React.Fragment
