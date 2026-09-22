@@ -1,6 +1,6 @@
 "use client"
 
-/* Motion — how the system moves. Character is the easing personality all
+/* Motion — how the system moves. Easing is the easing personality all
    motion shares (Geist ease-out vs Material emphasized vs spring); Speed is
    one multiplier over the duration ramp; Overlays is the entrance pattern
    for floating layers; State changes is whether hover/press color shifts
@@ -197,7 +197,7 @@ export function MotionSection({ studio }: { studio: Studio }) {
   return (
     <>
       <DialSelect
-        label="Character"
+        label="Easing"
         value={state.motionCharacter}
         onChange={set("motionCharacter")}
         options={CHARACTERS}
