@@ -596,7 +596,7 @@ export function PreviewPanel({
                 size="sm"
                 variant={inspecting ? "primary" : "quiet"}
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={() => setInspecting((v) => !v)}
                 aria-label="Toggle component inspector"
               >
@@ -638,7 +638,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={() => {
                   // Built at click time — the iframe src is frozen at mount, so
                   // it no longer reflects the current preview or mode.
@@ -664,7 +664,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={toggleFullscreen}
                 aria-label="Toggle fullscreen"
               >
