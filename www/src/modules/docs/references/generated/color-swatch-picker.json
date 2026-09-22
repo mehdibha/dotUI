@@ -290,7 +290,7 @@
           "name": "layout",
           "value": {
             "type": "identifier",
-            "name": "\"grid\" | \"stack\""
+            "name": "\"stack\" | \"grid\""
           },
           "optional": false,
           "readonly": false,

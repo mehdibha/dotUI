@@ -1245,6 +1245,10 @@ export const DemosIndex: Record<
 		files: ["ui/dialog/demos/drawer.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/drawer")),
 	},
+	"dialog/demos/header-bar": {
+		files: ["ui/dialog/demos/header-bar.tsx"],
+		component: React.lazy(() => import("@/registry/ui/dialog/demos/header-bar")),
+	},
 	"dialog/demos/inset-content": {
 		files: ["ui/dialog/demos/inset-content.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/inset-content")),

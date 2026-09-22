@@ -7,6 +7,7 @@ export default function Demo() {
       <ToggleButton size="sm">Small</ToggleButton>
       <ToggleButton size="md">Medium</ToggleButton>
       <ToggleButton size="lg">Large</ToggleButton>
+      <ToggleButton size="xl">Extra large</ToggleButton>
     </div>
   )
 }
