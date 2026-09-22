@@ -7,7 +7,7 @@ import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
+import { DEFAULT_PRESET, encodePreset } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -42,6 +42,11 @@ export function createSearchSchema(
 }
 
 const searchDefaults = { preview: "cards" }
+
+/* Origin as encoded before #777 (selection pinned blue), still in returning
+   visitors' storage and shared links; it loads as today's Origin. */
+const LEGACY_ORIGIN =
+  "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
 
 /** False on the server and first render, so SSR ships the desktop layout. */
 function useIsBelowLg() {
@@ -88,10 +93,15 @@ function StudioPage() {
   useEffect(() => {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
-    if (preset) return // a shared / deep-linked preset wins over the saved one
+    // A shared / deep-linked preset wins over the saved one.
+    if (preset) {
+      if (preset === LEGACY_ORIGIN) setState(ORIGIN.state)
+      return
+    }
     const stored = loadStoredPreset()
-    if (stored !== DEFAULT_PRESET) setPreset(stored)
-    else setState(ORIGIN.state)
+    if (stored === DEFAULT_PRESET || encodePreset(stored) === LEGACY_ORIGIN)
+      setState(ORIGIN.state)
+    else setPreset(stored)
   }, [preset, setPreset, setState])
 
   const skipFirstPersist = useRef(true)
