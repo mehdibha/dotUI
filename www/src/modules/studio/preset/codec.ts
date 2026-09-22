@@ -224,7 +224,6 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint
     if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
     if (color.preserveSeed) state.preserveSeed = true
-    if (color.guaranteePolicy) state.guarantees = color.guaranteePolicy
     if (color.background) {
       state.modes = DEFAULTS.modes.map((mode) => {
         const bg = color.background?.[mode.polarity]

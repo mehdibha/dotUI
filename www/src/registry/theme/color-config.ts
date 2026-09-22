@@ -16,9 +16,6 @@ import type {
 } from "./types"
 import { JOB_STEPS, type JobName } from "./types"
 
-/** WCAG ratio vs the app background (1.05–21), one value or per mode. */
-type BorderTarget = number | { light?: number; dark?: number }
-
 export interface ColorConfig {
   v: 2
   seeds: {
@@ -45,20 +42,6 @@ export interface ColorConfig {
   neutralHue?: number
   /** Pin the accent verbatim at the solid step; the report prices it. */
   preserveSeed?: boolean
-  /**
-   * Guarantee policy (engine D2): `relaxed` prices border-floor misses as
-   * warnings; `strict` solves solid labels to the full WCAG 4.5. Stored only
-   * when non-default — absent means the default policy.
-   */
-  guaranteePolicy?: "relaxed" | "strict"
-  /**
-   * Border placement targets (engine D2): WCAG vs the app background per
-   * border job, one value or per-mode values, keyed by palette (`'*'` = all).
-   */
-  borders?: Record<
-    string,
-    { "400"?: BorderTarget; "500"?: BorderTarget; "600"?: BorderTarget }
-  >
   /**
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
    * (brand-colored primary); absent means the default neutral (black/white).
@@ -186,33 +169,6 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
   return Object.keys(overrides).length > 0 ? overrides : undefined
 }
 
-/** Salvage one border target: a clamped ratio or a per-mode pair of them. */
-function salvageBorderTarget(raw: unknown) {
-  if (finite(raw)) return clamp(raw, 1.05, 21)
-  if (typeof raw !== "object" || raw === null) return undefined
-  const pair = raw as { light?: unknown; dark?: unknown }
-  const target: { light?: number; dark?: number } = {}
-  if (finite(pair.light)) target.light = clamp(pair.light, 1.05, 21)
-  if (finite(pair.dark)) target.dark = clamp(pair.dark, 1.05, 21)
-  return Object.keys(target).length > 0 ? target : undefined
-}
-
-/** Salvage the border-target table: keep only valid entries, drop empties. */
-function salvageBorders(raw: unknown): ColorConfig["borders"] {
-  if (typeof raw !== "object" || raw === null) return undefined
-  const borders: NonNullable<ColorConfig["borders"]> = {}
-  for (const [palette, spec] of Object.entries(raw)) {
-    if (typeof spec !== "object" || spec === null) continue
-    const entry: NonNullable<ColorConfig["borders"]>[string] = {}
-    for (const job of ["400", "500", "600"] as const) {
-      const target = salvageBorderTarget((spec as Record<string, unknown>)[job])
-      if (target !== undefined) entry[job] = target
-    }
-    if (Object.keys(entry).length > 0) borders[palette] = entry
-  }
-  return Object.keys(borders).length > 0 ? borders : undefined
-}
-
 /**
  * Migrate any decoded color slice — v2 salvages field by field (a corrupt or
  * out-of-range axis is clamped or dropped, never taking valid siblings with
@@ -235,8 +191,6 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     neutralHue?: unknown
     preserveSeed?: unknown
     overrides?: unknown
-    guaranteePolicy?: unknown
-    borders?: unknown
     chartPalette?: unknown
     algorithm?: string
     knobs?: Record<string, unknown>
@@ -264,10 +218,6 @@ export function migrateColorConfig(input: unknown): ColorConfig {
       config.neutralHue = clamp(raw.neutralHue, 0, 360)
     if (typeof raw.preserveSeed === "boolean")
       config.preserveSeed = raw.preserveSeed
-    if (raw.guaranteePolicy === "relaxed" || raw.guaranteePolicy === "strict")
-      config.guaranteePolicy = raw.guaranteePolicy
-    const borders = salvageBorders(raw.borders)
-    if (borders) config.borders = borders
     if (raw.primary === "accent") config.primary = "accent"
     if (isSource(raw.selection)) config.selection = raw.selection
     const scopes = salvageScopes(raw.scopes)

@@ -191,12 +191,9 @@ function mergeColor(
 ): Partial<ColorConfig> {
   const merged: Partial<ColorConfig> = { ...base, ...part }
   const overrides = { ...base.overrides, ...part.overrides }
-  const borders = { ...base.borders, ...part.borders }
   const scopes = { ...base.scopes, ...part.scopes }
   if (Object.keys(overrides).length > 0) merged.overrides = overrides
   else delete merged.overrides
-  if (Object.keys(borders).length > 0) merged.borders = borders
-  else delete merged.borders
   if (Object.keys(scopes).length > 0) merged.scopes = scopes
   else delete merged.scopes
   return merged

@@ -151,7 +151,6 @@ export const BARS = {
   text950: { wcag: 7.0, lc: 90 },
   /** on-700 / on-800 solid labels (Lc 60 + WCAG UI floor; see SPEC tradeoff). */
   onSolid: { wcag: 3.0, lc: 60 },
-  onSolidStrict: { wcag: 4.5, lc: 60 },
   /** Borders vs 25/50, WCAG-only (APCA can't meter dark borders). */
   border400: 1.3,
   border500: 1.45,

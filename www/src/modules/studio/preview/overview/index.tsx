@@ -45,7 +45,6 @@ import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { ContrastReadout } from "@/modules/studio/preview/contrast"
 
 /* ---------------------------------------------------------------------------
  * The preset overview — a style guide the way a senior designer would present a
@@ -367,9 +366,6 @@ function ColorSection({ resolved }: { resolved: Theme }) {
               <TokenSwatch key={t.token} {...t} />
             ))}
           </div>
-        </div>
-        <div className="rounded-xl border bg-card p-4">
-          <ContrastReadout report={resolved.report} />
         </div>
       </div>
     </div>

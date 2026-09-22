@@ -20,7 +20,7 @@ export type { ThemeOptions } from "./schema"
 export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from "./data"
 
 export { type GuaranteeResult } from "./verify"
-export { type BorderTargets, type Mode } from "./scale"
+export { type Mode } from "./scale"
 
 // Color ops for the semantic layer, the builder UI, and the playground.
 export {

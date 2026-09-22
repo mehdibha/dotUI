@@ -84,8 +84,7 @@ Locked guarantees (all solved in-loop, per hue per mode):
   every solid to L\* ≲ 50 (Radix ships white-on-blue-9 at 3.26; Material gets
   4.5 only by pinning primary at tone 40) — a builder that darkens every
   brand color to pass a meter the industry deliberately overrides fails its
-  own product bar. A `strictOnSolid` option solves the solid darker to reach
-  the full 4.5 for compliance-bound users. Pole rule: white text
+  own product bar. Pole rule: white text
   unless |Lc(white on step 700)| < 40, then dark text
   `oklch(0.25, max(0.08·C₇₀₀, 0.04), H₇₀₀)` (sRGB-clamped). Verified perfect
   precision/recall on all 62 Radix scale-modes, with an empty Lc dead zone of
@@ -104,20 +103,9 @@ Locked guarantees (all solved in-loop, per hue per mode):
 Flexibility axes (defaults are the locked values above; absent = identical
 output):
 
-- `borders` — per-palette border **placement targets** (WCAG vs the app
-  background, per border job, one value or per-mode values; key `'*'` = all
-  palettes). A target replaces the skeleton anchor for that job: solved by
-  bisection to the closest lightness clearing the ratio. Measured need
-  (Geist, vercel.com CSS 2026-07): default hairline 1.20 light / 1.55 dark,
-  emphasized 2.38 light / 5.85 dark — deviations in _both_ directions from
-  our anchors, unreachable by floors or a uniform scalar. A target below the
-  default floor is honored and priced as a report warning; targeted borders
-  verify against their own target (app background only), and the D1
-  monotonicity assert splits into surfaces (1–5) and borders (6–8) — Geist's
-  default border is measurably lighter than its active surface.
-- `guaranteePolicy` — `relaxed` demotes border-floor misses to report
-  warnings (text guarantees never relax); `default` = the floors above;
-  `strict` implies `strictOnSolid`.
+(`borders` placement targets, `guaranteePolicy` and `strictOnSolid` were
+removed Sept 2026 — out of scope for launch; the floors above are the only
+contrast promise.)
 
 CI check: `verify()` runs in-loop at generation time; a scale that cannot meet
 its guarantee moves its solid/text lightness until it does (the engine owns

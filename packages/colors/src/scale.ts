@@ -43,9 +43,6 @@ export interface ScaleColors {
   solidClamped: boolean
 }
 
-/** D2 — border placement targets: WCAG vs the app background, per border job. */
-export type BorderTargets = Partial<Record<"400" | "500" | "600", number>>
-
 export interface ScaleOptions {
   seed: Oklch
   mode: Mode
@@ -56,12 +53,6 @@ export interface ScaleOptions {
   hueShift: number
   /** D8 — neutral only: tint peak chroma (already scaled by neutralTint). */
   tintPeak: number
-  /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
-  strictOnSolid: boolean
-  /** D2 — place border jobs at these WCAG ratios instead of the skeleton. */
-  borderTargets?: BorderTargets
-  /** D2 — relaxed policy: border floors report instead of nudging. */
-  relaxedBorders?: boolean
   /** D7 — pin the seed verbatim at the solid step (light mode). */
   preserveSeed: boolean
   /** Skeleton override for background transposition (L*, jobs 1–8). */
@@ -132,19 +123,19 @@ function darkPole(solid: Oklch): Oklch {
  * to the |Lc(white)| < 40 pole rule on all 62 measured Radix scale-modes,
  * and it resolves the 29.5–60.8 Lc dead zone toward keeping the seed.
  */
-function solveOnColor(solid: Oklch, strict: boolean): Oklch {
-  if (onMeetsBars(WHITE, solid, strict)) return WHITE
+function solveOnColor(solid: Oklch): Oklch {
+  if (onMeetsBars(WHITE, solid)) return WHITE
   let on = darkPole(solid)
   let l = on.l
-  while (!onMeetsBars(on, solid, strict) && l > 0) {
+  while (!onMeetsBars(on, solid) && l > 0) {
     l -= 0.02
     on = fitSrgb({ ...on, l })
   }
   return on
 }
 
-function onMeetsBars(on: Oklch, solid: Oklch, strict: boolean): boolean {
-  const bars = strict ? BARS.onSolidStrict : BARS.onSolid
+function onMeetsBars(on: Oklch, solid: Oklch): boolean {
+  const bars = BARS.onSolid
   return Math.abs(apca(on, solid)) >= bars.lc && wcag2(on, solid) >= bars.wcag
 }
 
@@ -160,15 +151,13 @@ function solveSolid(
   chroma: ChromaModel,
   hueAt: (l: number) => number,
   preserveSeed: boolean,
-  strict: boolean,
 ): { solid: Oklch; on: Oklch; clamped: boolean } {
   let solid = fitSrgb({
     l: seed.l,
     c: preserveSeed ? seed.c : chroma.at(seed.l, 8),
     h: preserveSeed ? seed.h : hueAt(seed.l),
   })
-  if (preserveSeed)
-    return { solid, on: solveOnColor(solid, strict), clamped: false }
+  if (preserveSeed) return { solid, on: solveOnColor(solid), clamped: false }
 
   const anchor = lstarOf(solid)
   const slotted = Math.min(
@@ -178,41 +167,17 @@ function solveSolid(
   const clamped = slotted !== anchor
   if (clamped) solid = solveLstar(slotted, (l) => chroma.at(l, 8), hueAt)
 
-  if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE, clamped }
+  if (onMeetsBars(WHITE, solid)) return { solid, on: WHITE, clamped }
   const dark = darkPole(solid)
-  if (onMeetsBars(dark, solid, strict)) return { solid, on: dark, clamped }
+  if (onMeetsBars(dark, solid)) return { solid, on: dark, clamped }
 
   let targetLstar = lstarOf(solid)
   for (let i = 0; i < 40 && targetLstar > 5; i++) {
     targetLstar -= 1
     solid = solveLstar(targetLstar, (l) => chroma.at(l, 8), hueAt)
-    if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE, clamped }
+    if (onMeetsBars(WHITE, solid)) return { solid, on: WHITE, clamped }
   }
-  return { solid, on: solveOnColor(solid, strict), clamped }
-}
-
-/**
- * D2 — place a border at a WCAG target vs the app background: the closest
- * lightness to the background whose ratio clears the target. Ratio is
- * monotone in L* away from the background, so a bisection converges; an
- * unreachable target lands at the gamut pole and verify reports the miss.
- */
-function solveBorderTarget(
-  target: number,
-  bg: Oklch,
-  chromaAt: (l: number) => number,
-  hueAt: (l: number) => number,
-  mode: Mode,
-): Oklch {
-  let pass = mode === "light" ? 0 : 100 // the away-from-bg pole clears any bar
-  let fail = lstarOf(bg)
-  for (let k = 0; k < 40; k++) {
-    const mid = (pass + fail) / 2
-    const ratio = wcag2(solveLstar(mid, chromaAt, hueAt), bg)
-    if (ratio >= target) pass = mid
-    else fail = mid
-  }
-  return solveLstar(pass, chromaAt, hueAt)
+  return { solid, on: solveOnColor(solid), clamped }
 }
 
 /**
@@ -226,7 +191,6 @@ function hoverSolid(
   on: Oklch,
   mode: Mode,
   chroma: ChromaModel,
-  strict: boolean,
 ): Oklch {
   const delta = 0.03 / (solid.l + 0.1)
   const targetL =
@@ -242,10 +206,10 @@ function hoverSolid(
     const l = solid.l + (targetL - solid.l) * t
     const c = solid.c + (targetC - solid.c) * t
     const hover = fitSrgb({ l, c: Math.min(c, chroma.at(l, 9)), h: solid.h })
-    if (onMeetsBars(on, hover, strict)) return hover
+    if (onMeetsBars(on, hover)) return hover
   }
   // Zero shift really is the solid — a re-fit through the chroma clamp can
-  // land a hair under a strict bar the solid itself already cleared.
+  // land a hair under a bar the solid itself already cleared.
   return solid
 }
 
@@ -280,7 +244,7 @@ function solveText(
 
 /** Build one scale for one mode. */
 export function buildScale(options: ScaleOptions): ScaleColors {
-  const { seed, mode, neutral, vividness, hueShift, strictOnSolid } = options
+  const { seed, mode, neutral, vividness, hueShift } = options
   const chroma: ChromaModel = neutral
     ? neutralChroma(mode, options.tintPeak)
     : chromaticChroma(seed, mode, vividness)
@@ -303,28 +267,13 @@ export function buildScale(options: ScaleOptions): ScaleColors {
 
   // D2 — border floors are guarantees, not skeleton suggestions: 8-bit
   // quantization can land a skeleton step a hair under its bar, so nudge
-  // borders away from the backgrounds until their WCAG floors hold. A
-  // placement target replaces the skeleton anchor outright (solved vs the
-  // app background); relaxed policy keeps anchors as-is and lets verify
-  // report any floor miss.
+  // borders away from the backgrounds until their WCAG floors hold.
   const borderFloors = [
     ["400", 5, BARS.border400],
     ["500", 6, BARS.border500],
     ["600", 7, BARS.border600],
   ] as const
   for (const [name, i, bar] of borderFloors) {
-    const target = options.borderTargets?.[name]
-    if (target !== undefined) {
-      steps[name] = solveBorderTarget(
-        target,
-        steps["25"]!,
-        (l) => chroma.at(l, i),
-        hueAt,
-        mode,
-      )
-      continue
-    }
-    if (options.relaxedBorders) continue
     const meets = () =>
       [steps["25"]!, steps["50"]!].every((bg) => wcag2(steps[name]!, bg) >= bar)
     let lstar = skeleton[i]!
@@ -338,15 +287,9 @@ export function buildScale(options: ScaleOptions): ScaleColors {
   // the identical step-9 across modes) — the dark pass reuses the light solve.
   const { solid, on, clamped } = options.sharedSolid
     ? { ...options.sharedSolid, clamped: false }
-    : solveSolid(
-        seed,
-        chroma,
-        hueAt,
-        options.preserveSeed && mode === "light",
-        strictOnSolid,
-      )
+    : solveSolid(seed, chroma, hueAt, options.preserveSeed && mode === "light")
   steps["700"] = solid
-  steps["800"] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
+  steps["800"] = hoverSolid(solid, on, mode, chroma)
   const on800 = on
 
   // Text (jobs 11–12), solved against this scale's own backgrounds from the
