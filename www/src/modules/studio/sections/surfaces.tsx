@@ -1,18 +1,19 @@
 "use client"
 
-/* Surfaces — how cards and floating layers separate from the page. Style
-   opens five cards, each the recipe drawn twice, light beside dark: dark
-   behavior is part of a style (shadows die on near-black), so the pick shows
-   both modes instead of asking for them separately. Depth is the one
-   intensity lever; Glass the popover material. Page tint and shadow character
-   fold under More. */
+/* Surfaces — the canvas and what sits on it. Style opens five cards, each
+   the recipe drawn twice, light beside dark: dark behavior is part of a style
+   (shadows die on near-black), so the pick shows both modes instead of asking
+   for them separately. Depth is the one intensity lever, Page whether white
+   surfaces lift off a gray page, Glass the popover material. Each mode's
+   background — how white, how black — folds under More. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { modeFor } from "../axes/color"
+import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
   DEPTH_OPTIONS,
-  SHADOW_OPTIONS,
   shadowCss,
   STRATEGY_OPTIONS,
   surfaceColorCss,
@@ -38,7 +39,8 @@ import type { Studio, StudioState } from "../state"
 
 /* The glyph's own neutral ramp, one per mode: grays at the registry's rung
    lightness, so a style reads the same whichever neutral the system runs. */
-const gray = (l: number) => `oklch(${l} 0 0)`
+const gray = (l: number, alpha = 1) =>
+  alpha === 1 ? `oklch(${l} 0 0)` : `oklch(${l} 0 0 / ${alpha})`
 const GLYPH_PALETTE: PerMode<SurfacePalette> = {
   light: {
     step: (s) =>
@@ -47,7 +49,6 @@ const GLYPH_PALETTE: PerMode<SurfacePalette> = {
           0.71,
       ),
     hairline: gray(0.9),
-    ink: gray(0.15),
   },
   dark: {
     step: (s) =>
@@ -56,7 +57,6 @@ const GLYPH_PALETTE: PerMode<SurfacePalette> = {
           0.42,
       ),
     hairline: gray(0.235),
-    ink: gray(0.98),
   },
 }
 
@@ -93,9 +93,7 @@ function Half({
 }) {
   const recipe = surfaceRecipe(state)
   const palette = GLYPH_PALETTE[mode]
-  const bar = {
-    background: surfaceColorCss({ kind: "ink", alpha: 0.18 }, palette),
-  }
+  const bar = { background: gray(mode === "light" ? 0.15 : 0.98, 0.18) }
   const k = mini ? 0.3 : 0.7
   return (
     <span
@@ -155,12 +153,17 @@ export function surfacesSummary(state: StudioState): string {
   return strategyLabel(state.surfaceStrategy)
 }
 
+const formatBg = (mode: ColorMode, v: number) =>
+  mode.polarity === "dark" && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`
+
 export function SurfacesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const depth = Math.max(
     0,
     DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
   )
+  const setBg = (mode: ColorMode) => (bg: number) =>
+    set("modes")(state.modes.map((m) => (m.id === mode.id ? { ...m, bg } : m)))
   return (
     <>
       <DialTrigger
@@ -200,24 +203,34 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         step={1}
         format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
       />
+      <DialSegmented
+        label="Page"
+        value={state.surfaceCanvas}
+        onChange={set("surfaceCanvas")}
+        options={CANVAS_OPTIONS}
+      />
       <DialToggle
         label="Glass"
         value={state.surfaceMaterial === "glass"}
         onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
       />
       <DialFolder title="More" defaultOpen={false}>
-        <DialSegmented
-          label="Page"
-          value={state.surfaceCanvas}
-          onChange={set("surfaceCanvas")}
-          options={CANVAS_OPTIONS}
-        />
-        <DialSegmented
-          label="Shadow"
-          value={state.surfaceShadow}
-          onChange={set("surfaceShadow")}
-          options={SHADOW_OPTIONS}
-        />
+        {(["light", "dark"] as const).map((polarity) => {
+          const mode = modeFor(state, polarity)
+          const light = polarity === "light"
+          return (
+            <DialSlider
+              key={mode.id}
+              label={mode.name}
+              value={mode.bg}
+              onChange={setBg(mode)}
+              minValue={light ? 90 : 0}
+              maxValue={light ? 100 : 20}
+              step={0.5}
+              format={(v) => formatBg(mode, v)}
+            />
+          )
+        })}
       </DialFolder>
     </>
   )
