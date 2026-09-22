@@ -21,6 +21,16 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                 {item.name}
               </h4>
               {item.children.map((child) => {
+                if (child.type === "separator") {
+                  return (
+                    <h5
+                      key={child.$id}
+                      className="mt-4 mb-1 px-2 text-xs font-medium text-fg-muted"
+                    >
+                      {child.name}
+                    </h5>
+                  )
+                }
                 if (child.type !== "page") return null
                 return (
                   <DocsSidebarLink
