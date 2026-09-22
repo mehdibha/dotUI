@@ -120,19 +120,22 @@ export interface DialSelectOption {
   preview?: React.ReactNode
 }
 
-/** A pick from a short list: the row shows the choice (and its specimen), the
- *  popover lists every option as a row. Picking keeps the popover up — the
- *  choice is a comparison against the preview behind it. */
+/** A pick from a short list: the row shows the choice (and its specimen,
+ *  unless the chapter title already carries it), the popover lists every
+ *  option as a row. Picking keeps the popover up — the choice is a
+ *  comparison against the preview behind it. */
 export function DialSelect({
   label,
   value,
   onChange,
   options,
+  rowPreview = true,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialSelectOption[]
+  rowPreview?: boolean
 }) {
   const selected = options.find((option) => option.value === value)
   return (
@@ -141,7 +144,7 @@ export function DialSelect({
       value={
         <>
           <span className="truncate">{selected?.label ?? value}</span>
-          {selected?.preview}
+          {rowPreview && selected?.preview}
         </>
       }
     >

@@ -171,17 +171,7 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
     set("modes")(state.modes.map((m) => (m.id === mode.id ? { ...m, bg } : m)))
   return (
     <>
-      <DialTrigger
-        label="Style"
-        value={
-          <>
-            <span className="truncate">
-              {strategyLabel(state.surfaceStrategy)}
-            </span>
-            <StyleGlyph state={state} mini />
-          </>
-        }
-      >
+      <DialTrigger label="Style" value={strategyLabel(state.surfaceStrategy)}>
         <DialPopover className="w-80">
           <CardGrid
             label="Style"

@@ -108,6 +108,7 @@ export function MobileSection({ studio }: { studio: Studio }) {
         value={state.mobilePickers}
         onChange={set("mobilePickers")}
         options={PICKERS}
+        rowPreview={false}
       />
       <DialSelect
         label="Dialogs"

@@ -101,15 +101,7 @@ export function SpaceSection({ studio }: { studio: Studio }) {
   const tier = densityTier(state.density)
   return (
     <>
-      <DialTrigger
-        label="Density"
-        value={
-          <>
-            <span className="truncate">{tier.label}</span>
-            <SpacePreview state={state} />
-          </>
-        }
-      >
+      <DialTrigger label="Density" value={tier.label}>
         <DialPopover className="w-80">
           <CardGrid
             label="Density"

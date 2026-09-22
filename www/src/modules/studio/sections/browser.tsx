@@ -198,14 +198,11 @@ export function BrowserSection({ studio }: { studio: Studio }) {
       <DialTrigger
         label="Cursor"
         value={
-          <>
-            <span className="truncate">
-              {browserSummary(state)}
-              {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
-                ` · ${changed}`}
-            </span>
-            <BrowserPreview state={state} />
-          </>
+          <span className="truncate">
+            {browserSummary(state)}
+            {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
+              ` · ${changed}`}
+          </span>
         }
       >
         <DialPopover className="w-80">

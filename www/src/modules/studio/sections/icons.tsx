@@ -68,6 +68,7 @@ export function IconsSection({ studio }: { studio: Studio }) {
         label="Library"
         value={state.iconLibrary}
         onChange={set("iconLibrary")}
+        rowPreview={false}
         options={LIBRARY_OPTIONS.map((option) => ({
           ...option,
           preview: (

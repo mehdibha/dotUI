@@ -201,6 +201,7 @@ export function MotionSection({ studio }: { studio: Studio }) {
         value={state.motionCharacter}
         onChange={set("motionCharacter")}
         options={CHARACTERS}
+        rowPreview={false}
       />
       <DialSlider
         label="Speed"
