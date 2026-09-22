@@ -69,7 +69,7 @@ export const BUNDLED_INTO_INIT = new Set([
   "focus-styles",
   // The @theme vocabulary ships in the init item's cssVars.
   "theme",
-  // cn() helper ships as `src/lib/utils.ts` in the init item.
+  // cn() helper ships as `lib/utils.ts` in the init item.
   "utils",
 ])
 
