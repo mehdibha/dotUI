@@ -44,14 +44,11 @@ export function PanelChrome({
   search?: ReactNode
   children: ReactNode
 }) {
-  // The only reset in the panel. It clears the studio axes and the engine
-  // state as one.
+  // The only reset in the panel. The system's reset (guarded over unsaved
+  // work) reapplies Origin, a whole state, so it covers the axes too.
   const whole = studio.section(DEFAULTS)
   const modified = whole.modified || (system?.modified ?? false)
-  const resetAll = () => {
-    whole.onReset()
-    system?.onReset()
-  }
+  const resetAll = system ? system.onReset : whole.onReset
 
   const switcherTrigger = (
     <Button

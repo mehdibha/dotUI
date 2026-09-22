@@ -166,7 +166,7 @@ export function StudioPanel({ className }: { className?: string }) {
     name: displayName,
     dirty: isDirty,
     modified: currentState !== ORIGIN_CANON,
-    onReset: () => pickPreset(ORIGIN.id),
+    onReset: () => guarded(() => pickPreset(ORIGIN.id)),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
       <PresetPicker
