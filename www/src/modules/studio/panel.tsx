@@ -15,8 +15,7 @@ import { DEFAULTS } from "./state"
 import type { Studio } from "./state"
 
 /** The create-engine wiring the chrome acts through. Everything here operates
- *  on the real design system (URL preset + localStorage); the studio's own axes
- *  reset alongside it but aren't persisted until their chapters are wired. */
+ *  on the real design system (URL preset + localStorage). */
 export interface PanelSystem {
   /** What's being edited: the active saved system's name, else the working name. */
   name: string
