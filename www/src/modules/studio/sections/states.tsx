@@ -1,9 +1,9 @@
 "use client"
 
-/* States — the treatments every control wears at once: focus (the ring
-   controls wear, the recipe fields wear), disabled, invalid. The ring's ink
-   is a leaf of Color's Primary, so it is not repeated here; the ring's
-   geometry folds under More and only shows the knobs the chosen style reads.
+/* States — the treatments every control wears at once: focus, disabled,
+   invalid. Focus is one recipe in one popover: the ring controls wear, the
+   layer fields wear, each pick followed by only the knobs that style reads.
+   The ring's ink is a leaf of Color's Primary, so it is not repeated here.
    Menu items highlight, no ring. */
 
 import { cn } from "@/registry/lib/utils"
@@ -15,13 +15,23 @@ import {
   FOCUS_STYLE_OPTIONS,
 } from "../axes/focus"
 import { ERROR_OPTIONS } from "../axes/invalid"
-import { DialFolder, DialSegmented, DialSelect, DialSlider } from "../dial"
+import {
+  DialGap,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialSlider,
+  DialTrigger,
+} from "../dial"
+import { CardGrid } from "../patterns"
+import { GroupTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
 const px = (n: number) => `${n}px`
 
 /* Focus specimens: a control and a field wearing each style, drawn with the
-   panel's own focus ink at a legible fixed geometry. */
+   panel's own focus ink at a legible fixed geometry. Small beside the row's
+   value, larger on the popover's cards. */
 const INK = "var(--color-border-focus)"
 const BG = "var(--color-bg)"
 const halo = (pct: number) => `color-mix(in oklab, ${INK} ${pct}%, transparent)`
@@ -32,10 +42,13 @@ const CONTROL_RINGS: Record<string, string> = {
   duo: `inset 0 0 0 1px ${BG}, 0 0 0 1.5px ${INK}`,
 }
 
-function ControlSpecimen({ style }: { style: string }) {
+const SPECIMEN = "mx-1 block h-3.5 w-6 shrink-0 rounded-[4px]"
+const CARD_SPECIMEN = "mx-auto my-1.5 block h-5 w-10 shrink-0 rounded-md"
+
+function ControlSpecimen({ style, card }: { style: string; card?: boolean }) {
   return (
     <span
-      className="mx-1 block h-3.5 w-6 shrink-0 rounded-[4px] bg-fg/25"
+      className={cn(card ? CARD_SPECIMEN : SPECIMEN, "bg-fg/25")}
       style={{ boxShadow: CONTROL_RINGS[style] }}
     />
   )
@@ -47,10 +60,13 @@ const FIELD_RINGS: Record<string, React.CSSProperties> = {
   border: { borderColor: INK, borderWidth: 2 },
 }
 
-function FieldSpecimen({ style }: { style: string }) {
+function FieldSpecimen({ style, card }: { style: string; card?: boolean }) {
   return (
     <span
-      className="mx-1 block h-3.5 w-6 shrink-0 rounded-[4px] border border-fg/30 bg-bg"
+      className={cn(
+        card ? CARD_SPECIMEN : SPECIMEN,
+        "border border-fg/30 bg-bg",
+      )}
       style={FIELD_RINGS[style]}
     />
   )
@@ -162,32 +178,136 @@ const label = (options: { value: string; label: string }[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value
 
 export function statesSummary(state: StudioState): string {
-  return label(FOCUS_STYLE_OPTIONS, state.focusStyle)
+  return `${label(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${label(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
 }
 
-export function StatesSection({ studio }: { studio: Studio }) {
+/** Mounted with the popover: each pick, then only the knobs its style reads,
+ *  right under it. Labels drop the "Ring"/"Field" prefix — the group carries
+ *  it. A field wearing the control ring has nothing of its own to set. */
+function FocusPanel({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const duo = state.focusStyle === "duo"
   return (
     <>
-      <DialSelect
-        label="Focus"
+      <GroupTitle>Controls</GroupTitle>
+      <CardGrid
+        label="Control focus"
+        columns={3}
         value={state.focusStyle}
         onChange={set("focusStyle")}
         options={FOCUS_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <ControlSpecimen style={option.value} />,
+          id: option.value,
+          label: option.label,
+          children: <ControlSpecimen style={option.value} card />,
         }))}
       />
-      <DialSelect
+      <DialSlider
+        label="Width"
+        value={state.focusWidth}
+        onChange={set("focusWidth")}
+        minValue={1}
+        maxValue={6}
+        step={1}
+        format={px}
+      />
+      {state.focusStyle === "halo" && (
+        <DialSlider
+          label="Strength"
+          value={state.focusHaloStrength}
+          onChange={set("focusHaloStrength")}
+          minValue={10}
+          maxValue={100}
+          step={5}
+          format={(v) => `${v}%`}
+        />
+      )}
+      {!duo && (
+        <DialSegmented
+          label="Offset"
+          value={state.focusOffset}
+          onChange={set("focusOffset")}
+          options={FOCUS_OFFSET_OPTIONS}
+        />
+      )}
+      {!duo && state.focusOffset === "gap" && (
+        <DialSlider
+          label="Gap"
+          value={state.focusGap}
+          onChange={set("focusGap")}
+          minValue={1}
+          maxValue={6}
+          step={1}
+          format={px}
+        />
+      )}
+      <DialGap />
+      <GroupTitle>Fields</GroupTitle>
+      <CardGrid
         label="Field focus"
+        columns={3}
         value={state.focusInputStyle}
         onChange={set("focusInputStyle")}
         options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <FieldSpecimen style={option.value} />,
+          id: option.value,
+          label: option.label,
+          children: <FieldSpecimen style={option.value} card />,
         }))}
       />
+      {state.focusInputStyle === "halo" && (
+        <>
+          <DialSlider
+            label="Width"
+            value={state.focusInputWidth}
+            onChange={set("focusInputWidth")}
+            minValue={1}
+            maxValue={8}
+            step={1}
+            format={px}
+          />
+          <DialSlider
+            label="Strength"
+            value={state.focusInputStrength}
+            onChange={set("focusInputStrength")}
+            minValue={10}
+            maxValue={100}
+            step={5}
+            format={(v) => `${v}%`}
+          />
+        </>
+      )}
+      {state.focusInputStyle === "border" && (
+        <DialSlider
+          label="Width"
+          value={state.focusInputBorderWidth}
+          onChange={set("focusInputBorderWidth")}
+          minValue={1}
+          maxValue={4}
+          step={1}
+          format={px}
+        />
+      )}
+    </>
+  )
+}
+
+export function StatesSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
+  return (
+    <>
+      <DialTrigger
+        label="Focus"
+        value={
+          <>
+            <span className="truncate">{statesSummary(state)}</span>
+            <ControlSpecimen style={state.focusStyle} />
+            <FieldSpecimen style={state.focusInputStyle} />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <FocusPanel studio={studio} />
+        </DialPopover>
+      </DialTrigger>
       <DialSelect
         label="Disabled"
         value={state.disabledTreatment}
@@ -210,80 +330,6 @@ export function StatesSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
-      <DialFolder title="More" defaultOpen={false}>
-        <DialSlider
-          label="Ring width"
-          value={state.focusWidth}
-          onChange={set("focusWidth")}
-          minValue={1}
-          maxValue={6}
-          step={1}
-          format={px}
-        />
-        {state.focusStyle === "halo" && (
-          <DialSlider
-            label="Ring strength"
-            value={state.focusHaloStrength}
-            onChange={set("focusHaloStrength")}
-            minValue={10}
-            maxValue={100}
-            step={5}
-            format={(v) => `${v}%`}
-          />
-        )}
-        {!duo && (
-          <DialSegmented
-            label="Ring offset"
-            value={state.focusOffset}
-            onChange={set("focusOffset")}
-            options={FOCUS_OFFSET_OPTIONS}
-          />
-        )}
-        {!duo && state.focusOffset === "gap" && (
-          <DialSlider
-            label="Ring gap"
-            value={state.focusGap}
-            onChange={set("focusGap")}
-            minValue={1}
-            maxValue={6}
-            step={1}
-            format={px}
-          />
-        )}
-        {state.focusInputStyle === "halo" && (
-          <>
-            <DialSlider
-              label="Field width"
-              value={state.focusInputWidth}
-              onChange={set("focusInputWidth")}
-              minValue={1}
-              maxValue={8}
-              step={1}
-              format={px}
-            />
-            <DialSlider
-              label="Field strength"
-              value={state.focusInputStrength}
-              onChange={set("focusInputStrength")}
-              minValue={10}
-              maxValue={100}
-              step={5}
-              format={(v) => `${v}%`}
-            />
-          </>
-        )}
-        {state.focusInputStyle === "border" && (
-          <DialSlider
-            label="Field border"
-            value={state.focusInputBorderWidth}
-            onChange={set("focusInputBorderWidth")}
-            minValue={1}
-            maxValue={4}
-            step={1}
-            format={px}
-          />
-        )}
-      </DialFolder>
     </>
   )
 }

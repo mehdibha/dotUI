@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Rows are controlled — value in, callback out. */
 
-import { createContext, useContext, useLayoutEffect, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -23,12 +23,9 @@ import {
   Button as RacButton,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
-  OverlayTriggerStateContext,
-  PopoverContext,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
-  useSlottedContext,
 } from "react-aria-components"
 
 import { FONT_CATALOG, fontStack } from "@/lib/fonts"
@@ -95,15 +92,13 @@ export const ROW_OVERLAY_PLACEMENT = "right top" as const
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
 export const PanelPopoverBoundary = createContext<Element | null>(null)
 
-/** The least a panel popover keeps when its row sits near the bottom: below
- *  this it slides up instead of shrinking further. */
-const PANEL_POPOVER_MIN_HEIGHT = 240
-
 /** Panel popovers open and close instantly — control feedback, not content —
  *  and hand the rows inside their surface, so tints mix solid over glass.
- *  They stay anchored to their row: react-aria would slide a growing popover
- *  up to fit before capping its height, so the cap is measured here (row top
- *  to boundary bottom) and content scrolls inside instead. */
+ *  They show everything they hold: react-aria slides one that outgrows the
+ *  room below its row up to fit the boundary. Its inline max-height is
+ *  overridden so the box grows with its content — that growth is what
+ *  react-aria observes to re-slide it; a capped box would never report it.
+ *  The viewport cap is the last resort, where the content scrolls. */
 export function PanelPopover({
   className,
   placement = ROW_OVERLAY_PLACEMENT,
@@ -112,26 +107,13 @@ export function PanelPopover({
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
-  const triggerRef = useSlottedContext(PopoverContext)?.triggerRef
-  const isOpen = useContext(OverlayTriggerStateContext)?.isOpen
-  const [maxHeight, setMaxHeight] = useState<number>()
-  useLayoutEffect(() => {
-    const trigger = triggerRef?.current
-    if (!isOpen || !trigger) return
-    const bottom = boundary
-      ? boundary.getBoundingClientRect().bottom
-      : window.innerHeight - 12
-    const room = bottom - trigger.getBoundingClientRect().top
-    setMaxHeight(Math.max(room, PANEL_POPOVER_MIN_HEIGHT))
-  }, [isOpen, boundary, triggerRef])
   return (
     <Popover
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
-      maxHeight={maxHeight}
       className={cn(
-        "transition-none will-change-auto [--panel-surface:var(--color-popover)]",
+        "flex max-h-[calc(100dvh-24px)]! flex-col transition-none will-change-auto [--panel-surface:var(--color-popover)]",
         className,
       )}
       {...props}

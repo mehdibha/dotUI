@@ -222,18 +222,21 @@ export interface CardOption {
   children: React.ReactNode
 }
 
-/** A pick from a few cards, two per row: a radio dot, a label, a specimen.
- *  `value` undefined selects nothing — a view over values off every card. */
+/** A pick from a few cards, two (or three) per row: a radio dot, a label, a
+ *  specimen. `value` undefined selects nothing — a view over values off every
+ *  card. */
 export function CardGrid({
   label,
   value,
   onChange,
   options,
+  columns = 2,
 }: {
   label: string
   value: string | undefined
   onChange: (id: string) => void
   options: CardOption[]
+  columns?: 2 | 3
 }) {
   return (
     <RacToggleButtonGroup
@@ -244,7 +247,10 @@ export function CardGrid({
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
-      className="grid grid-cols-2 gap-1.5"
+      className={cn(
+        "grid gap-1.5",
+        columns === 3 ? "grid-cols-3" : "grid-cols-2",
+      )}
     >
       {options.map((option) => (
         <RacToggleButton

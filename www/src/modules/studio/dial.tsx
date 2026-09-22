@@ -6,13 +6,7 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -100,34 +94,7 @@ export function DialTrigger({
   )
 }
 
-/** Keeps `data-scrollable` on a scroller current as its rows fold and unfold
- *  (observed as direct children); scroll-fade-b-in (styles.css) eases on it.
- *  The first measurement lands without easing — the popover is capped after
- *  it mounts, and its edge should be in place the frame it appears. */
-function useScrollable() {
-  return useCallback((node: HTMLElement | null) => {
-    if (!node) return
-    let first = true
-    const observer = new ResizeObserver(() => {
-      if (first) node.style.transition = "none"
-      node.toggleAttribute(
-        "data-scrollable",
-        node.scrollHeight > node.clientHeight,
-      )
-      if (first) {
-        void node.offsetHeight
-        node.style.transition = ""
-        first = false
-      }
-    })
-    observer.observe(node)
-    for (const child of node.children) observer.observe(child)
-    return () => observer.disconnect()
-  }, [])
-}
-
-/** What a DialTrigger opens: a run of dial rows beside the row. Capped to the
- *  panel by PanelPopover, it scrolls inside, fading at the bottom. */
+/** What a DialTrigger opens: a run of dial rows beside the row, shown whole. */
 export function DialPopover({
   className,
   children,
@@ -137,10 +104,7 @@ export function DialPopover({
 }) {
   return (
     <PanelPopover className={cn("w-64 min-w-0", className)}>
-      <DialogContent
-        ref={useScrollable()}
-        className="no-scrollbar flex scroll-fade-b-in flex-col gap-1.5 overflow-y-auto overscroll-contain p-2 [--scroll-fade-reveal:--spacing(6)] scroll-fade-8"
-      >
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
         {children}
       </DialogContent>
     </PanelPopover>
