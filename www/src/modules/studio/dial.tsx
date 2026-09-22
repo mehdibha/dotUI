@@ -785,7 +785,7 @@ export function DialFolder({
               isExpanded ? "opacity-100" : "opacity-0",
             )}
           >
-            <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
+            <div className="flex flex-col gap-1.5">{children}</div>
           </DisclosurePanel>
         </>
       )}

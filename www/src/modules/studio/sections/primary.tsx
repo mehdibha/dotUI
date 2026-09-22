@@ -2,12 +2,14 @@
 
 /* Primary — the Color chapter's view over every role that paints with a
    source (axes/color.ts PRIMARY_LEAVES). Two cards write all of them; a
-   folder below holds a row per leaf, and while the leaves disagree no card
-   is selected. Each preview is the role at glyph scale in the engine's own
-   colors, so a choice reads before it lands. */
+   folder below holds a hairline table with a row per leaf, and while the
+   leaves disagree no card is selected. Each preview is the role at glyph
+   scale in the engine's own colors, so a choice reads before it lands. */
 
 import { useState } from "react"
+import { ChevronDownIcon } from "lucide-react"
 import {
+  Button as RacButton,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -16,6 +18,8 @@ import type { ModeOutput } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Select, SelectValue } from "@/registry/ui/select"
 
 import {
   PRIMARY_LEAVES,
@@ -25,13 +29,14 @@ import {
 } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
 import {
+  DIAL_CHEVRON,
   DIAL_LABEL,
-  DIAL_ROW,
+  DIAL_PRESS,
   DialFolder,
   DialPopover,
   DialTrigger,
-  SegmentedGroup,
 } from "../dial"
+import { PanelPopover } from "../rows"
 import type { Studio } from "../state"
 
 const LEAF_LABELS: Record<PrimaryLeaf, string> = {
@@ -239,6 +244,47 @@ function SourceSwatch({
   )
 }
 
+/* --------------------------------- Select --------------------------------- */
+
+/** A leaf's source: a quiet trigger, value and chevron only. */
+function SourceSelect({
+  label,
+  value,
+  onChange,
+}: {
+  label: string
+  value: PrimaryColorSource
+  onChange: (value: PrimaryColorSource) => void
+}) {
+  return (
+    <Select
+      aria-label={label}
+      selectedKey={value}
+      onSelectionChange={(key) => onChange(key as PrimaryColorSource)}
+      className="w-fit"
+    >
+      <RacButton
+        className={cn(
+          DIAL_PRESS,
+          "flex h-7 items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/70",
+        )}
+      >
+        <SelectValue />
+        <ChevronDownIcon className={DIAL_CHEVRON} />
+      </RacButton>
+      <PanelPopover placement="bottom end" offset={4} className="w-32">
+        <ListBox>
+          {SOURCE_OPTIONS.map((option) => (
+            <ListBoxItem key={option.value} id={option.value}>
+              {option.label}
+            </ListBoxItem>
+          ))}
+        </ListBox>
+      </PanelPopover>
+    </Select>
+  )
+}
+
 /* ---------------------------------- Row ----------------------------------- */
 
 const CARDS: { id: PrimaryColorSource; label: string }[] = [
@@ -313,26 +359,33 @@ function PrimaryPanel({
         onOpenChange={setOpen}
         modified={primary === "mixed"}
       >
-        {PRIMARY_LEAVES.map((leaf) => {
-          const Glyph = GLYPHS[leaf]
-          const source = state[leaf] as PrimaryColorSource
-          return (
-            <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
-              <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center">
-                <Glyph ink={ink[source]} />
-              </span>
-              <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
-                value={source}
-                onChange={set(leaf)}
-                options={SOURCE_OPTIONS}
-              />
-            </div>
-          )
-        })}
+        <div className="flex flex-col px-1">
+          <div className="grid h-7 grid-cols-[72px_1fr_auto] items-center gap-2 border-b border-fg/10 text-[11px] font-medium tracking-wider text-fg/50 uppercase">
+            <span>Control</span>
+            <span>Preview</span>
+            <span className="pl-2">Source</span>
+          </div>
+          {PRIMARY_LEAVES.map((leaf) => {
+            const Glyph = GLYPHS[leaf]
+            const source = state[leaf] as PrimaryColorSource
+            return (
+              <div
+                key={leaf}
+                className="grid h-9 grid-cols-[72px_1fr_auto] items-center gap-2"
+              >
+                <span className={DIAL_LABEL}>{LEAF_LABELS[leaf]}</span>
+                <span className="flex min-w-0 items-center">
+                  <Glyph ink={ink[source]} />
+                </span>
+                <SourceSelect
+                  label={`${LEAF_LABELS[leaf]} color`}
+                  value={source}
+                  onChange={set(leaf)}
+                />
+              </div>
+            )
+          })}
+        </div>
       </DialFolder>
     </>
   )
