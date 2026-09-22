@@ -78,6 +78,17 @@
   @apply mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10;
 }
 
+/* The studio panel's tints: solid mixes of the text color into the surface
+   the panel declares (`--panel-surface`: the card, or a popover), so rows
+   and cards stay opaque over a glass popover. */
+@utility tint-* {
+  background-color: color-mix(
+    in oklab,
+    var(--color-fg) calc(--value(integer) * 1%),
+    var(--panel-surface, var(--color-card))
+  );
+}
+
 @utility step {
   counter-increment: step;
 

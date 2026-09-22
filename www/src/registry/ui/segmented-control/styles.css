@@ -1,0 +1,4 @@
+:root {
+  --studio-segmented-control-radius: var(--studio-radius-surface);
+  --studio-segmented-control-item-radius: var(--studio-radius-item);
+}

@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
         "scrollbar-none [&::-webkit-scrollbar]:hidden",
       ],
       item: [
-        "flex h-8 w-full shrink-0 items-center justify-center rounded-md text-sm tabular-nums no-highlight",
+        "flex h-8 w-full shrink-0 items-center justify-center rounded-(--studio-time-picker-item-radius) text-sm tabular-nums no-highlight",
         "cursor-interactive outline-hidden transition-colors",
         "hover:bg-accent-muted",
         "focus-visible:focus-ring",

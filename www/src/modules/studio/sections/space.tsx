@@ -1,99 +1,129 @@
 "use client"
 
-/* Space — the spatial system, on Shape's base-times-recipe model: the unit
-   scales everything, density picks the gap/inset recipe, control size moves
-   the height ladder. All three resolve in the hero's specimen. */
+/* Space — density, then the unit. Density opens three cards, each a small app
+   drawn at that tier's real measurements on the current unit, so the pick is
+   made by feel; the unit slider scales everything under it. */
 
-import { DENSITY_OPTIONS, spaceRecipe } from "../axes/space"
-import { Hero } from "../hero"
-import { ControlGroup, SegmentedControlRow, SliderRow } from "../rows"
+import { roleRadiusPx } from "../axes/shape"
+import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
+import type { DensityTier } from "../axes/space"
+import { DialPopover, DialSlider, DialTrigger } from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
-import { controlRadiusPx, roleRadiusPx } from "./shape"
 
-/** A working mini form wearing the resolved recipe — control heights, the
- *  stack gap and the card inset all derive from unit × density × size, with
- *  radii read from Shape's roles. */
-export function SpaceHero({ state }: { state: StudioState }) {
-  const r = spaceRecipe(state)
-  const controlRadius = controlRadiusPx(state)
+/** A small app at a tier's real measurements and the system's own corners: a
+ *  field and a button (the md control), over a menu of two items, inside a
+ *  card's inset. */
+function AppGlyph({ tier, state }: { tier: DensityTier; state: StudioState }) {
+  const px = (n: number) => n * state.spacingUnit
+  const text = { height: tier.textPx * 0.5, borderRadius: 999 }
+  const radius = (key: Parameters<typeof roleRadiusPx>[1]) => ({
+    borderRadius: roleRadiusPx(state, key),
+  })
   return (
-    <Hero>
-      <div
-        className="flex flex-col border border-border/45 bg-card"
-        style={{
-          gap: r.gap,
-          padding: r.inset,
-          borderRadius: roleRadiusPx(state, "roleSurface"),
-        }}
-      >
+    <span
+      className="flex w-full flex-col border border-fg/15 bg-bg"
+      style={{
+        padding: px(tier.inset) / 2,
+        gap: px(tier.gap),
+        ...radius("rolePanel"),
+      }}
+    >
+      <span className="w-2/5 bg-fg/20" style={text} />
+      <span className="flex" style={{ gap: px(tier.gap) }}>
         <span
-          className="flex w-full items-center border border-border-control bg-field text-[0.8125rem] text-fg-muted"
+          className="flex flex-1 items-center border border-fg/20"
           style={{
-            height: r.controlH,
-            paddingInline: r.padX,
-            borderRadius: controlRadius,
+            height: px(tier.control),
+            paddingInline: px(2),
+            ...radius("roleControl"),
           }}
         >
-          you@example.com
+          <span className="w-1/2 bg-fg/15" style={text} />
         </span>
-        <span className="flex items-center" style={{ gap: r.itemGap }}>
+        <span
+          className="bg-primary"
+          style={{
+            height: px(tier.control),
+            width: px(tier.control) * 1.5,
+            ...radius("roleControl"),
+          }}
+        />
+      </span>
+      <span
+        className="flex flex-col border border-fg/10 bg-card"
+        style={{ padding: px(1), gap: px(0.5), ...radius("roleSurface") }}
+      >
+        {[true, false].map((selected, i) => (
           <span
-            className="flex items-center bg-primary text-[0.8125rem] font-medium text-fg-on-primary"
+            key={i}
+            className="flex items-center"
             style={{
-              height: r.controlH,
-              paddingInline: r.padX,
-              borderRadius: controlRadius,
+              height: px(tier.item),
+              paddingInline: px(2),
+              ...radius("roleItem"),
+              background: selected
+                ? "color-mix(in oklab, var(--color-fg) 10%, transparent)"
+                : undefined,
             }}
           >
-            Save
+            <span className="w-3/5 bg-fg/20" style={text} />
           </span>
-          <span
-            className="flex items-center text-[0.8125rem] font-medium text-fg-muted"
-            style={{
-              height: r.controlH,
-              paddingInline: r.padX,
-              borderRadius: controlRadius,
-            }}
-          >
-            Cancel
-          </span>
-        </span>
-      </div>
-    </Hero>
+        ))}
+      </span>
+    </span>
   )
 }
 
-/** Collapsed-row summary: the density recipe, and the spacing unit. */
+/** The three tiers as bars, the current one lit. */
+export function SpacePreview({ state }: { state: StudioState }) {
+  const tier = densityTier(state.density)
+  return (
+    <span className="flex h-4 items-end gap-0.5" aria-hidden>
+      {DENSITY_TIERS.map((t) => (
+        <span
+          key={t.id}
+          className="w-1 rounded-full bg-fg/25 data-active:bg-fg/80"
+          data-active={t.id === tier.id || undefined}
+          style={{ height: `${(t.control / 9) * 100}%` }}
+        />
+      ))}
+    </span>
+  )
+}
+
 export function spaceSummary(state: StudioState): string {
-  const density =
-    DENSITY_OPTIONS.find((o) => o.value === state.density)?.label ??
-    state.density
-  return `${density} density · ${state.spacingUnit}px unit`
+  return densityTier(state.density).label
 }
 
 export function SpaceSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const tier = densityTier(state.density)
   return (
     <>
-      <ControlGroup>
-        <SpaceHero state={state} />
-        <SliderRow
-          label="Unit"
-          value={state.spacingUnit}
-          onChange={set("spacingUnit")}
-          minValue={3}
-          maxValue={6}
-          step={0.25}
-          ticks={[3.5, 4, 5]}
-          format={(v) => `${v}px`}
-        />
-        <SegmentedControlRow
-          label="Density"
-          value={state.density}
-          onChange={set("density")}
-          options={DENSITY_OPTIONS}
-        />
-      </ControlGroup>
+      <DialTrigger label="Density" value={tier.label}>
+        <DialPopover className="w-80">
+          <CardGrid
+            label="Density"
+            value={tier.id}
+            onChange={set("density")}
+            options={DENSITY_TIERS.map((t) => ({
+              id: t.id,
+              label: t.label,
+              children: <AppGlyph tier={t} state={state} />,
+            }))}
+          />
+        </DialPopover>
+      </DialTrigger>
+      <DialSlider
+        label="Unit"
+        value={state.spacingUnit}
+        onChange={set("spacingUnit")}
+        minValue={UNIT_RANGE.min}
+        maxValue={UNIT_RANGE.max}
+        step={UNIT_RANGE.step}
+        format={(v) => `${v}px`}
+      />
     </>
   )
 }

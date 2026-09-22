@@ -11,7 +11,7 @@ import { familyFromStack } from "@/lib/fonts"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { migrateColorConfig } from "@/registry/theme"
-import type { ColorConfig } from "@/registry/theme"
+import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 import {
   DEFAULT_CODE_OPTIONS,
   sanitizeCodeOptions,
@@ -19,6 +19,12 @@ import {
 import type { CodeOptions } from "@/publisher/code-options"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+import {
+  PRIMARY_LEAVES,
+  SOLID_LEAVES,
+  withSource,
+} from "@/modules/studio/axes/color"
+import type { PrimaryLeaf } from "@/modules/studio/axes/color"
 
 /** A studio state plus the exported-code style — everything a preset holds. */
 export interface StudioPreset {
@@ -47,10 +53,10 @@ function fromBase64Url(str: string): Uint8Array {
 
 /* -------------------------------- encode -------------------------------- */
 
-const VERSION = 3
+const VERSION = 4
 
 interface Encoded {
-  v: typeof VERSION
+  v: typeof VERSION | 3
   /** State keys that differ from the defaults, in sorted key order. */
   s?: Partial<StudioState>
   o?: CodeOptions
@@ -88,12 +94,37 @@ export function encodeState(state: StudioState): string | undefined {
 
 /* -------------------------------- decode -------------------------------- */
 
+const isSource = (value: unknown): value is PrimaryColorSource =>
+  value === "neutral" || value === "accent"
+
+/**
+ * v3 → v4 (Sep 2026): the Primary leaves. In v3 `primary` was the one
+ * source — the selection tokens and the slider fill followed it — and
+ * `checkFill` re-pointed every check at the accent; a link's neutral was
+ * `foreground`. Each fans out onto the leaves it painted.
+ */
+function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
+  const stored = { ...raw }
+  if (stored.primary === "accent")
+    for (const leaf of SOLID_LEAVES) stored[leaf] ??= "accent"
+  if (isSource(stored.checkFill))
+    for (const leaf of SOLID_LEAVES)
+      if (leaf !== "buttonColor") stored[leaf] = stored.checkFill
+  if (stored.linkColor === "foreground") stored.linkColor = "neutral"
+  delete stored.primary
+  delete stored.checkFill
+  return stored
+}
+
 /** Keep a stored value only when it has the default's shape. */
 function sanitizeState(raw: unknown): StudioState {
   const state = { ...DEFAULTS } as Record<string, unknown>
   if (!raw || typeof raw !== "object") return state as StudioState
+  const stored = raw as Record<string, unknown>
   for (const [key, fallback] of Object.entries(DEFAULTS)) {
-    const value = (raw as Record<string, unknown>)[key]
+    const value = stored[key]
+    if (PRIMARY_LEAVES.includes(key as PrimaryLeaf) && !isSource(value))
+      continue
     if (value === undefined) continue
     if (fallback === null) {
       if (value === null || typeof value === "number") state[key] = value
@@ -111,10 +142,14 @@ export function decodePreset(encoded: string): StudioPreset {
   try {
     const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
     const parsed = JSON.parse(json) as Encoded | LegacyState
-    if ("v" in parsed && parsed.v === VERSION) {
+    if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
       const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
+      const stored =
+        parsed.v === 3 && parsed.s
+          ? migrateV3(parsed.s as Record<string, unknown>)
+          : parsed.s
       return {
-        state: sanitizeState(parsed.s),
+        state: sanitizeState(stored),
         ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
           ? { codeOptions }
           : {}),
@@ -153,6 +188,13 @@ const px = (value: string | undefined): number | undefined => {
   return value.trim().endsWith("rem") ? parsed * 16 : parsed
 }
 
+/** The recipe's control scopes and the axis each one came from. */
+const SCOPE_KEYS: Record<string, keyof StudioState> = {
+  checkbox: "checkboxColor",
+  radio: "radioColor",
+  switch: "switchColor",
+}
+
 /** Best-effort: the axes a resolved system maps back onto. Component params
  *  don't survive — they were a different vocabulary. */
 function migrateLegacy(legacy: LegacyState): StudioPreset {
@@ -162,17 +204,25 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
   if (color) {
     state.brand = color.seeds.accent
-    if (color.primary === "accent") state.primary = "accent"
+    // The selection tokens and the slider followed the primary unless
+    // re-pointed.
+    Object.assign(state, withSource(SOLID_LEAVES, color.primary ?? "neutral"))
+    if (color.selection)
+      for (const leaf of SOLID_LEAVES)
+        if (leaf !== "buttonColor" && leaf !== "sliderColor")
+          state[leaf] = color.selection
+    for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
+      const fill = color.scopes?.[scope]
+      if (fill) state[key] = fill
+    }
     if (color.seeds.success) state.successSeed = color.seeds.success
     if (color.seeds.warning) state.warningSeed = color.seeds.warning
     if (color.seeds.danger) state.dangerSeed = color.seeds.danger
     if (color.seeds.selection) state.selectionSeed = color.seeds.selection
     if (color.vividness !== undefined) state.vividness = color.vividness
-    if (color.hueShift !== undefined) state.hueShift = color.hueShift
     if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint
     if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
     if (color.preserveSeed) state.preserveSeed = true
-    if (color.guaranteePolicy) state.guarantees = color.guaranteePolicy
     if (color.background) {
       state.modes = DEFAULTS.modes.map((mode) => {
         const bg = color.background?.[mode.polarity]

@@ -20,6 +20,12 @@ const tabsMeta = {
       description:
         "The default look of a tab list; the `variant` prop overrides it.",
     },
+    color: {
+      kind: "enum",
+      default: "neutral",
+      values: ["neutral", "accent"] as const,
+      description: "The selected tab's ink: the text color, or the brand.",
+    },
   },
 } satisfies RegistryItem
 

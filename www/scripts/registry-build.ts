@@ -357,20 +357,32 @@ async function buildStudioSearchIndex() {
   )) {
     const file = sectionOf.get(body)
     if (!file) continue
-    const source = await fs.readFile(
-      path.join(studioDir, "sections", `${file}.tsx`),
-      "utf8",
-    )
-    const labels = new Set<string>()
-    // A row's own label — the tag must not contain another "<" before it.
-    for (const [, label = ""] of source.matchAll(
-      /<\w+Row(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
-    ))
-      labels.add(label)
-    for (const [, title = ""] of source.matchAll(
-      /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
-    ))
-      labels.add(title.trim())
+    const read = (name: string) =>
+      fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
+    const rowLabels = (source: string) => {
+      const found: string[] = []
+      // A row's own label — the tag must not contain another "<" before it.
+      for (const [, label = ""] of source.matchAll(
+        /<(?:\w+Row|Dial\w+|CardGrid)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+      ))
+        found.push(label)
+      for (const [, title = ""] of source.matchAll(
+        /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
+      ))
+        found.push(title.trim())
+      return found
+    }
+    const source = await read(file)
+    const labels = new Set<string>(rowLabels(source))
+    // A section that composes sibling sections (Components) indexes their
+    // rows too, under the sibling's name.
+    for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g)) {
+      const title = sibling.replace(/-/g, " ")
+      const prefix = title[0]!.toUpperCase() + title.slice(1)
+      labels.add(prefix)
+      for (const label of rowLabels(await read(sibling)))
+        labels.add(`${prefix} › ${label}`)
+    }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
     )

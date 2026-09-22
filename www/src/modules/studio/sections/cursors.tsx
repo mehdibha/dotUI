@@ -1,22 +1,4 @@
-"use client"
-
-/* Cursor — what the pointer becomes over each kind of control: enabled,
-   pending, disabled, draggable. Links are not an axis: every system keeps
-   the pointer on links, even the ones that put the arrow on buttons. Text
-   isn't either — the arrow-on-text decision belongs to the Selection
-   section, whose switch it rides along with. Each control offers only the
-   cursors a design system would actually pick for it, drawn as cards, with
-   real specimens above wearing the current choices. */
-
-import { GripVerticalIcon } from "lucide-react"
-
-import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
-
-import { Hero } from "../hero"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
-import type { Studio, StudioState } from "../state"
+/* macOS cursor drawings for the Browser chapter — see the note on each. */
 
 /* macOS cursor drawings — literal black/white/blue like the real cursors,
    which never theme; the white casing keeps them readable on dark cards.
@@ -47,7 +29,7 @@ export function ArrowCursor() {
 
 /* Extracted from macOS 27's cursors/macos27/pointinghand/cursor.pdf; only the
    outer translate (centering the 32-tile content in the 24 box) is ours. */
-function HandCursor() {
+export function HandCursor() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <g transform="translate(-3.15 -4.72)">
@@ -102,7 +84,7 @@ export function IBeamCursor() {
 
 /* Extracted from cursors/macos27/openhand/cursor.pdf; the knuckle creases
    live in a form XObject the extraction skips. */
-function OpenHandCursor() {
+export function OpenHandCursor() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <g transform="translate(-2.45 -4.1)">
@@ -123,7 +105,7 @@ function OpenHandCursor() {
 
 /* The small arrow the badge cursors share — the not-allowed and busy assets
    draw the identical arrow before their disc. */
-function BadgeArrow() {
+export function BadgeArrow() {
   return (
     <>
       <path
@@ -142,7 +124,7 @@ function BadgeArrow() {
 
 /* The spinning disc from cursors/busybutclickable/cursor.pdf, frame 1 of its
    15-frame strip; the blues are the asset's literal colors. */
-function SpinnerDisc() {
+export function SpinnerDisc() {
   return (
     <>
       <circle cx="14" cy="26" r="9" fill="#00C0ED" />
@@ -162,7 +144,7 @@ function SpinnerDisc() {
 
 /* Arrow + gray disc holding a white prohibition sign; the gradient replaces
    the asset's raster disc fill. */
-function NotAllowedCursor() {
+export function NotAllowedCursor() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <defs>
@@ -198,7 +180,7 @@ function NotAllowedCursor() {
 }
 
 /** Arrow + spinning disc — busy but clickable, what `progress` renders as. */
-function ProgressCursor() {
+export function ProgressCursor() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <g transform="translate(1.81 -2.42) scale(0.755)">
@@ -210,151 +192,12 @@ function ProgressCursor() {
 }
 
 /** The busy disc without the arrow — busy and blocked, what `wait` means. */
-function WaitCursor() {
+export function WaitCursor() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <g transform="translate(-2 -14)">
         <SpinnerDisc />
       </g>
     </svg>
-  )
-}
-
-const CONTROL_OPTIONS: SelectRowOption[] = [
-  { value: "default", label: "Default", illustration: <ArrowCursor /> },
-  { value: "pointer", label: "Pointer", illustration: <HandCursor /> },
-]
-
-const PENDING_OPTIONS: SelectRowOption[] = [
-  { value: "default", label: "Default", illustration: <ArrowCursor /> },
-  { value: "progress", label: "Progress", illustration: <ProgressCursor /> },
-  { value: "wait", label: "Wait", illustration: <WaitCursor /> },
-]
-
-const DRAGGING_OPTIONS: SelectRowOption[] = [
-  { value: "inherit", label: "Inherit", illustration: <ArrowCursor /> },
-  { value: "grab", label: "Grab", illustration: <OpenHandCursor /> },
-]
-
-const DISABLED_OPTIONS: SelectRowOption[] = [
-  { value: "default", label: "Default", illustration: <ArrowCursor /> },
-  {
-    value: "not-allowed",
-    label: "Not allowed",
-    illustration: <NotAllowedCursor />,
-  },
-]
-
-const illustration = (options: SelectRowOption[], value: string) =>
-  options.find((o) => o.value === value)?.illustration
-
-/** The drawn cursor pinned to a specimen's corner — keeps the answer visible
- *  without a mouse; hovering the specimen shows the real thing. */
-export function GlyphBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 **:[svg]:size-5"
-    >
-      {children}
-    </span>
-  )
-}
-
-/* One specimen per axis, each wearing the cursor its selection maps to,
-   ordered like the rows read: enabled, disabled, pending, dragging. */
-export function CursorHero({ state }: { state: StudioState }) {
-  const controls = state.cursorControls
-  const grab = state.cursorDragging === "grab"
-  return (
-    <Hero className="flex-row flex-wrap items-center justify-evenly gap-x-4 gap-y-5 py-6">
-      <div className="relative" style={{ cursor: controls }}>
-        <Button variant="secondary" style={{ cursor: controls }}>
-          Button
-        </Button>
-        <GlyphBadge>{illustration(CONTROL_OPTIONS, controls)}</GlyphBadge>
-      </div>
-      <div className="relative" style={{ cursor: state.cursorDisabled }}>
-        <Button
-          variant="secondary"
-          isDisabled
-          style={{ cursor: state.cursorDisabled }}
-        >
-          Button
-        </Button>
-        <GlyphBadge>
-          {illustration(DISABLED_OPTIONS, state.cursorDisabled)}
-        </GlyphBadge>
-      </div>
-      <div className="relative" style={{ cursor: state.cursorPending }}>
-        <Button
-          variant="secondary"
-          isPending
-          style={{ cursor: state.cursorPending }}
-        >
-          Button
-        </Button>
-        <GlyphBadge>
-          {illustration(PENDING_OPTIONS, state.cursorPending)}
-        </GlyphBadge>
-      </div>
-      <div
-        className={cn(
-          "relative flex h-8 items-center rounded-md border border-border px-1 text-fg-muted",
-          grab && "cursor-grab active:cursor-grabbing",
-        )}
-        style={grab ? undefined : { cursor: controls }}
-      >
-        <GripVerticalIcon className="size-4" />
-        <GlyphBadge>
-          {grab ? <OpenHandCursor /> : illustration(CONTROL_OPTIONS, controls)}
-        </GlyphBadge>
-      </div>
-    </Hero>
-  )
-}
-
-/** Collapsed-row summary: the controls cursor alone. */
-export function cursorSummary(state: StudioState): string {
-  return (
-    CONTROL_OPTIONS.find((o) => o.value === state.cursorControls)?.label ??
-    state.cursorControls
-  )
-}
-
-export function CursorSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  return (
-    <ControlGroup>
-      <CursorHero state={state} />
-      <SelectRow
-        label="Controls"
-        value={state.cursorControls}
-        onChange={set("cursorControls")}
-        options={CONTROL_OPTIONS}
-        layout="grid"
-      />
-      <SelectRow
-        label="Pending"
-        value={state.cursorPending}
-        onChange={set("cursorPending")}
-        options={PENDING_OPTIONS}
-        layout="grid"
-      />
-      <SelectRow
-        label="Dragging"
-        value={state.cursorDragging}
-        onChange={set("cursorDragging")}
-        options={DRAGGING_OPTIONS}
-        layout="grid"
-      />
-      <SelectRow
-        label="Disabled"
-        value={state.cursorDisabled}
-        onChange={set("cursorDisabled")}
-        options={DISABLED_OPTIONS}
-        layout="grid"
-      />
-    </ControlGroup>
   )
 }

@@ -4,7 +4,12 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { DEFAULTS } from "."
 import { resolveDesignSystem } from "../resolve"
-import { buildColorConfig, isDefaultColorConfig } from "./color"
+import {
+  buildColorConfig,
+  isDefaultColorConfig,
+  SOLID_LEAVES,
+  withSource,
+} from "./color"
 
 const withModes = (
   light: Partial<(typeof DEFAULTS.modes)[number]>,
@@ -27,14 +32,13 @@ describe("color axis", () => {
     const { color } = resolveDesignSystem({
       ...DEFAULTS,
       brand: "#5e6ad2",
-      primary: "accent",
+      ...withSource(SOLID_LEAVES, "accent"),
       successSeed: "#16a34a",
       selectionSeed: "#0072f5",
       neutralHue: 250,
       neutralTint: 2,
       vividness: 1.3,
       preserveSeed: true,
-      guarantees: "relaxed",
     })
     expect(color).toEqual({
       v: 2,
@@ -44,9 +48,19 @@ describe("color axis", () => {
       neutralTint: 2,
       neutralHue: 250,
       preserveSeed: true,
-      guaranteePolicy: "relaxed",
       primary: "accent",
     })
+  })
+
+  it("stores the selection source only when it leaves the primary's", () => {
+    const source = (state: Partial<typeof DEFAULTS>) =>
+      buildColorConfig({ ...DEFAULTS, ...state }).selection
+    expect(source({ selectionColor: "neutral" })).toBeUndefined()
+    expect(source({ selectionColor: "accent" })).toBe("accent")
+    expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
+    expect(source({ buttonColor: "accent", selectionColor: "neutral" })).toBe(
+      "neutral",
+    )
   })
 
   it("maps the mode pair onto per-polarity backgrounds (0 dark = OLED)", () => {
@@ -55,38 +69,10 @@ describe("color axis", () => {
     ).toEqual({ light: 97, dark: "oled" })
   })
 
-  it("high contrast on one mode: strict policy, floors on that mode only", () => {
-    const { color } = resolveDesignSystem(withModes({ contrast: "high" }))
-    expect(color?.guaranteePolicy).toBe("strict")
-    expect(color?.borders).toEqual({
-      "*": { "400": { light: 2 }, "500": { light: 3 }, "600": { light: 4.5 } },
-    })
-    const both = resolveDesignSystem(
-      withModes({ contrast: "high" }, { contrast: "high" }),
-    ).color
-    expect(both?.borders).toEqual({ "*": { "400": 2, "500": 3, "600": 4.5 } })
-  })
-
-  it("custom borders fill the modes high contrast does not floor", () => {
-    const { color } = resolveDesignSystem({
-      ...withModes({}, { contrast: "high" }),
-      borderContrast: true,
-      border400: 1.5,
-    })
-    expect(color?.borders).toEqual({
-      "*": {
-        "400": { light: 1.5, dark: 2 },
-        "500": { dark: 3 },
-        "600": { dark: 4.5 },
-      },
-    })
-  })
-
   it("reads a deep-merged default recipe as untouched", () => {
     expect(
       isDefaultColorConfig({
         ...DEFAULT_COLOR_CONFIG,
-        borders: {},
         overrides: {},
       }),
     ).toBe(true)

@@ -4,7 +4,8 @@ import tabsMeta from "./meta"
 
 /* The `variant` prop is per-instance API; the `style` param sets its default
    for the design system. Every look ships, so each value only retargets
-   `defaultVariants`. */
+   `defaultVariants`. The variants carry geometry; `color` paints the selected
+   tab's ink per look — the neutral text (and its washes) or the accent. */
 
 const { useStyles, styles } = createStyles(tabsMeta, {
   base: {
@@ -34,26 +35,27 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       },
       variant: {
         segmented: {
-          list: "rounded-lg bg-muted p-[3px]",
-          tab: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
-          selectionIndicator: "inset-0 rounded-md bg-selected shadow-sm",
+          list: "rounded-(--studio-tabs-list-radius) bg-muted p-[3px]",
+          tab: "rounded-(--studio-tabs-tab-radius) border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
+          selectionIndicator:
+            "inset-0 rounded-(--studio-tabs-tab-radius) shadow-sm",
         },
         line: {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
-          tab: "rounded-md orientation-horizontal:h-full selected:text-fg",
+          tab: "rounded-(--studio-tabs-tab-radius) orientation-horizontal:h-full",
           selectionIndicator:
-            "rounded-full bg-fg orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
+            "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
         },
         pill: {
           list: "gap-1",
-          tab: "rounded-full orientation-horizontal:h-full selected:text-fg",
-          selectionIndicator: "inset-0 rounded-full bg-muted",
+          tab: "rounded-full orientation-horizontal:h-full",
+          selectionIndicator: "inset-0 rounded-full",
         },
         enclosed: {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
           // The selected tab steps one pixel onto the list's edge and paints
           // over it, so tab and content read as one surface.
-          tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-bg selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+          tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-(--studio-tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--studio-tabs-radius) selected:z-10 selected:border-border selected:bg-bg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
           selectionIndicator: "hidden",
         },
       },
@@ -86,6 +88,42 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     },
   },
   params: {
+    color: {
+      neutral: {
+        variants: {
+          variant: {
+            segmented: {
+              tab: "selected:text-fg-on-selected",
+              selectionIndicator: "bg-selected",
+            },
+            line: { tab: "selected:text-fg", selectionIndicator: "bg-fg" },
+            pill: { tab: "selected:text-fg", selectionIndicator: "bg-muted" },
+            enclosed: { tab: "selected:text-fg" },
+          },
+        },
+      },
+      // The tinted signature (Material 3's segmented buttons, Radix Themes'
+      // soft tabs): accent text over an accent wash, a solid accent line.
+      accent: {
+        variants: {
+          variant: {
+            segmented: {
+              tab: "selected:text-fg-accent",
+              selectionIndicator: "bg-accent-muted",
+            },
+            line: {
+              tab: "selected:text-fg-accent",
+              selectionIndicator: "bg-accent",
+            },
+            pill: {
+              tab: "selected:text-fg-accent",
+              selectionIndicator: "bg-accent-muted",
+            },
+            enclosed: { tab: "selected:text-fg-accent" },
+          },
+        },
+      },
+    },
     style: {
       segmented: { defaultVariants: { variant: "segmented" } },
       line: { defaultVariants: { variant: "line" } },

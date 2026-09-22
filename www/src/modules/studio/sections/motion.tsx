@@ -4,36 +4,21 @@
    motion shares (Geist ease-out vs Material emphasized vs spring); Speed is
    one multiplier over the duration ramp; Overlays is the entrance pattern
    for floating layers; State changes is whether hover/press color shifts
-   ease or snap — the native-vs-web cue. The hero is self-serve proof: a
-   real menu inside a scoped design system wearing the chapter's resolved
-   tokens and overlay param, its trigger wearing the state timing. Exits
-   stay a plain mirrored curve at a shorter duration — springs are for
-   arriving, not leaving. Deliberately absent: a "none" character (Linear's
-   stillness is compositional — fast, overlays none, instant states),
-   overlayExit as its own row, reducedMotion, which only renders under an OS
-   media query, and the skeleton idle treatment, which lives in Skeleton — a
-   loading decision that happens to animate. Focus rings never ease —
-   pattern constant, not part of the state axis. */
-
-import { useMemo } from "react"
-import { ChevronDownIcon } from "lucide-react"
-
-import { DesignSystemProvider } from "@/lib/styles"
-import { Button } from "@/registry/ui/button"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Popover } from "@/registry/ui/popover"
+   ease or snap — the native-vs-web cue. Exits stay a plain mirrored curve at
+   a shorter duration — springs are for arriving, not leaving. Deliberately
+   absent: a "none" character (Linear's stillness is compositional — fast,
+   overlays none, instant states), reducedMotion, which only renders under an
+   OS media query, and the skeleton idle treatment, which lives in Skeleton.
+   Focus rings never ease. */
 
 import {
   CHARACTER_OPTIONS,
   OVERLAY_OPTIONS,
-  resolveMotion,
-  SPEED,
-  SPEED_OPTIONS,
+  SPEED_RANGE,
   STATE_OPTIONS,
 } from "../axes/motion"
-import { Hero } from "../hero"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import { DialSelect, DialSlider } from "../dial"
+import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
@@ -57,10 +42,6 @@ function CurveGlyph({ d }: { d: string }) {
       />
     </svg>
   )
-}
-
-function SpeedGlyph({ children }: { children: React.ReactNode }) {
-  return <span className="font-mono text-sm text-fg">{children}</span>
 }
 
 function OverlayNoneGlyph() {
@@ -166,114 +147,83 @@ function StateGlyph({ d }: { d: string }) {
 const withGlyphs = (
   options: { value: string; label: string }[],
   glyphs: Record<string, React.ReactNode>,
-): SelectRowOption[] =>
-  options.map((o) => ({ ...o, illustration: glyphs[o.value] }))
+): DialSelectOption[] =>
+  options.map((o) => ({
+    ...o,
+    preview: (
+      <span className="size-4 shrink-0 *:size-full">{glyphs[o.value]}</span>
+    ),
+  }))
 
-const CHARACTER_ROWS = withGlyphs(CHARACTER_OPTIONS, {
+const CHARACTER_GLYPHS: Record<string, React.ReactNode> = {
   standard: <CurveGlyph d="M4 20C8 9 12 6 20 6" />,
   emphasized: <CurveGlyph d="M4 20C5 8 9 6 20 6" />,
   spring: (
     <CurveGlyph d="M4 20C6 6 6.5 2 9.5 3.5 12 4.8 12.5 8.2 15 7 17 6 18 6 20 6" />
   ),
-})
+}
+const CHARACTERS = withGlyphs(CHARACTER_OPTIONS, CHARACTER_GLYPHS)
 
-const SPEED_ROWS = withGlyphs(
-  SPEED_OPTIONS,
-  Object.fromEntries(
-    Object.entries(SPEED).map(([value, factor]) => [
-      value,
-      <SpeedGlyph key={value}>{factor}×</SpeedGlyph>,
-    ]),
-  ),
-)
-
-const OVERLAY_ROWS = withGlyphs(OVERLAY_OPTIONS, {
+const OVERLAYS = withGlyphs(OVERLAY_OPTIONS, {
   none: <OverlayNoneGlyph />,
   fade: <OverlayFadeGlyph />,
   scale: <OverlayScaleGlyph />,
   slide: <OverlaySlideGlyph />,
 })
 
-const STATE_ROWS = withGlyphs(STATE_OPTIONS, {
+const STATES = withGlyphs(STATE_OPTIONS, {
   instant: <StateGlyph d="M4 18h7V6h9" />,
   quick: <StateGlyph d="M4 18h4c2.5 0 2-12 4.5-12H20" />,
   smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
 })
 
-/* ---------------------------------- Hero ----------------------------------- */
-
-/* A menu the user opens themselves — self-serve replay, no fake loop. The
-   scoped provider is the engine: the popover reads the overlay param, the
-   tokens ride on the scope and its portal. */
-export function MotionHero({ state }: { state: StudioState }) {
-  const { tokens, params } = useMemo(() => resolveMotion(state), [state])
+export function MotionPreview({ state }: { state: StudioState }) {
   return (
-    <Hero className="flex-row items-center justify-center gap-4 px-4 py-6">
-      <DesignSystemProvider scoped tokens={tokens} params={params}>
-        <Menu>
-          <Button variant="secondary">
-            Menu <ChevronDownIcon />
-          </Button>
-          <Popover placement="bottom start">
-            <MenuContent>
-              <MenuItem>Duplicate</MenuItem>
-              <MenuItem>Rename</MenuItem>
-              <MenuItem>Archive</MenuItem>
-            </MenuContent>
-          </Popover>
-        </Menu>
-      </DesignSystemProvider>
-    </Hero>
+    <span className="size-4 shrink-0 *:size-full">
+      {CHARACTER_GLYPHS[state.motionCharacter]}
+    </span>
   )
 }
 
-const optionLabel = (
-  options: { value: string; label: string }[],
-  value: string,
-) => options.find((o) => o.value === value)?.label ?? value
-
-/** Collapsed-row summary: the easing character, and the overlay entrance
- *  when overlays animate. */
 export function motionSummary(state: StudioState): string {
-  const character = optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
-  return state.motionOverlay === "none"
-    ? character
-    : `${character} · ${optionLabel(OVERLAY_OPTIONS, state.motionOverlay)} overlays`
+  return (
+    CHARACTER_OPTIONS.find((o) => o.value === state.motionCharacter)?.label ??
+    state.motionCharacter
+  )
 }
 
 export function MotionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <MotionHero state={state} />
-      <SelectRow
+    <>
+      <DialSelect
         label="Character"
         value={state.motionCharacter}
         onChange={set("motionCharacter")}
-        options={CHARACTER_ROWS}
-        layout="grid"
+        options={CHARACTERS}
+        rowPreview={false}
       />
-      <SelectRow
+      <DialSlider
         label="Speed"
         value={state.motionSpeed}
         onChange={set("motionSpeed")}
-        options={SPEED_ROWS}
-        layout="grid"
+        minValue={SPEED_RANGE.min}
+        maxValue={SPEED_RANGE.max}
+        step={SPEED_RANGE.step}
+        format={(v) => `${v.toFixed(2)}×`}
       />
-      <SelectRow
+      <DialSelect
         label="Overlays"
         value={state.motionOverlay}
         onChange={set("motionOverlay")}
-        options={OVERLAY_ROWS}
-        layout="grid"
+        options={OVERLAYS}
       />
-      <SelectRow
+      <DialSelect
         label="State changes"
         value={state.motionState}
         onChange={set("motionState")}
-        options={STATE_ROWS}
-        layout="grid"
+        options={STATES}
       />
-    </ControlGroup>
+    </>
   )
 }

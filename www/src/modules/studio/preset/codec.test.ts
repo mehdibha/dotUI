@@ -57,6 +57,51 @@ describe("preset codec — studio state", () => {
     expect("nope" in state).toBe(false)
   })
 
+  it("fans a v3 primary and family fill out onto the leaves they painted", () => {
+    const leaves = (s: unknown) => {
+      const { state } = decodePreset(encodeRaw({ v: 3, s }))
+      return [
+        state.buttonColor,
+        state.checkboxColor,
+        state.radioColor,
+        state.switchColor,
+        state.selectionColor,
+        state.sliderColor,
+        state.tabsColor,
+        state.linkColor,
+        state.focusColor,
+      ]
+    }
+    const inks = ["neutral", "accent", "accent"]
+    // The selection tokens and the slider followed the primary.
+    expect(leaves({ primary: "accent" })).toEqual([
+      ...Array(6).fill("accent"),
+      ...inks,
+    ])
+    // The family fill re-pointed every check, whatever the primary.
+    expect(leaves({ checkFill: "accent" })).toEqual([
+      "neutral",
+      ...Array(5).fill("accent"),
+      ...inks,
+    ])
+    expect(leaves({ primary: "accent", checkFill: "neutral" })).toEqual([
+      "accent",
+      ...Array(5).fill("neutral"),
+      ...inks,
+    ])
+    expect(leaves({ linkColor: "foreground" })[7]).toBe("neutral")
+    const { state } = decodePreset(encodeRaw({ v: 3, s: {} }))
+    expect("primary" in state || "checkFill" in state).toBe(false)
+  })
+
+  it("keeps a leaf only on a known source", () => {
+    const { state } = decodePreset(
+      encodeRaw({ v: 4, s: { switchColor: "auto", radioColor: "accent" } }),
+    )
+    expect(state.switchColor).toBe("neutral")
+    expect(state.radioColor).toBe("accent")
+  })
+
   it("decodes garbage to the defaults", () => {
     expect(decodePreset("not-a-preset").state).toEqual(DEFAULTS)
     expect(decodePreset(encodeRaw("hello")).state).toEqual(DEFAULTS)
@@ -70,6 +115,7 @@ describe("preset codec — legacy migration", () => {
         v: 2,
         seeds: { accent: "#5e6ad2", selection: "#0072f5" },
         primary: "accent",
+        scopes: { checkbox: "neutral" },
         vividness: 1.2,
         background: { light: 98, dark: "oled" },
       },
@@ -85,7 +131,10 @@ describe("preset codec — legacy migration", () => {
     const { state, codeOptions } = decodePreset(encoded)
     expect(state.brand).toBe("#5e6ad2")
     expect(state.selectionSeed).toBe("#0072f5")
-    expect(state.primary).toBe("accent")
+    expect(state.buttonColor).toBe("accent")
+    expect(state.sliderColor).toBe("accent")
+    expect(state.switchColor).toBe("accent")
+    expect(state.checkboxColor).toBe("neutral")
     expect(state.vividness).toBe(1.2)
     expect(state.modes.map((m) => m.bg)).toEqual([98, 0])
     expect(state.density).toBe("comfortable")
@@ -108,7 +157,7 @@ describe("preset codec — legacy migration", () => {
     const { state } = decodePreset(encoded)
     expect(state.brand).toBe("#5e6ad2")
     expect(state.vividness).toBe(1.2)
-    expect(state.primary).toBe("accent")
+    expect(state.buttonColor).toBe("accent")
   })
 
   it("ignores an unknown icon library and unparseable tokens", () => {

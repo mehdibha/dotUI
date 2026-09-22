@@ -17,11 +17,11 @@ describe("links axis", () => {
     const system = resolveDesignSystem({
       ...DEFAULTS,
       linkUnderline: "hover",
-      linkColor: "foreground",
+      linkColor: "neutral",
     })
     expect(system.componentParams.link).toEqual({
       underline: "hover",
-      color: "foreground",
+      color: "neutral",
     })
   })
 

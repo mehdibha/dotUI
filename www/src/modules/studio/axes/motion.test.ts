@@ -34,7 +34,7 @@ describe("motion axis", () => {
   test("speed scales every duration, state alone the default one", () => {
     expect(
       motionTokens(
-        resolveDesignSystem({ ...DEFAULTS, motionSpeed: "relaxed" }).tokens,
+        resolveDesignSystem({ ...DEFAULTS, motionSpeed: 1.4 }).tokens,
       ),
     ).toEqual({
       "--transition-duration-enter": "280ms",

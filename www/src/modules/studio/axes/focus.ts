@@ -1,5 +1,5 @@
-/* Focus — the ring recipe: one color, then the ring controls wear and the
-   layer fields wear. Engine: the `--focus-ring-*` / `--focus-input-*` tokens
+/* Focus — the ring recipe: one color (a leaf of Color's Primary), then the
+   ring controls wear and the layer fields wear. Engine: the `--focus-ring-*` / `--focus-input-*` tokens
    in base.css that every `focus-ring` / `focus-input` consumer draws from,
    plus a semantic re-point of `--color-border-focus` for the neutral ink. */
 
@@ -21,11 +21,6 @@ export const FOCUS_DEFAULTS = {
   focusInputStrength: 30,
   focusInputBorderWidth: 1,
 }
-
-export const FOCUS_COLOR_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "neutral", label: "Neutral" },
-]
 
 /** Duo is the two-stroke family (Fluent, GOV.UK): a bg hairline just inside
  *  the edge under a flush ring, so a stroke reads on any fill. */

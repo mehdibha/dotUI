@@ -1,33 +1,20 @@
 "use client"
 
-/* Accordion — Container: divided — hairline-separated full-bleed rows
-   (shadcn, Radix Themes, Spectrum) — vs boxed — one bordered surface with internal
-   dividers (Ant, Bootstrap, HeroUI bordered) — vs cards — each item its own
-   separated card (Material expansion panels, HeroUI splitted, marketing
-   FAQs). Marker: chevron (shadcn, Radix, Spectrum, Carbon) vs plus/minus
-   (GOV.UK lineage, marketing FAQ patterns). Position: trailing (shadcn,
-   Radix, Material) vs leading (GOV.UK, Polaris, Carbon). Rejected:
-   open-item tint — shadcn, Radix, Spectrum, Carbon, Material all leave the
-   open item unfilled; a tinted open row is a product one-off, not a system
-   fork. Multiple-open is behavior, a prop (Radix type="multiple"); expand
-   motion lives in the Motion chapter. */
-
-import { cn } from "@/registry/lib/utils"
+/* Accordion — how the container groups the items, and the marker that says a
+   trigger opens. Expand motion lives in Motion. */
 
 import {
-  CONTAINER_OPTIONS as CONTAINER_VALUES,
-  MARKER_OPTIONS as MARKER_VALUES,
+  CONTAINER_OPTIONS,
+  MARKER_OPTIONS,
   POSITION_OPTIONS,
 } from "../axes/accordion"
-import { Hero } from "../hero"
-import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-/* ------------------------------ Option glyphs ------------------------------ */
+/* -------------------------------- Specimens -------------------------------- */
 
-function ContainerGlyph({ style }: { style: "divided" | "boxed" | "cards" }) {
-  if (style === "cards")
+function ContainerGlyph({ container }: { container: string }) {
+  if (container === "cards")
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         {[3.5, 10, 16.5].map((y) => (
@@ -46,7 +33,7 @@ function ContainerGlyph({ style }: { style: "divided" | "boxed" | "cards" }) {
     )
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {style === "boxed" && (
+      {container === "boxed" && (
         <rect
           x="3.75"
           y="4.25"
@@ -78,7 +65,7 @@ function ContainerGlyph({ style }: { style: "divided" | "boxed" | "cards" }) {
   )
 }
 
-function MarkerGlyph({ glyph }: { glyph: "chevron" | "plus" }) {
+function MarkerGlyph({ marker }: { marker: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -88,148 +75,62 @@ function MarkerGlyph({ glyph }: { glyph: "chevron" | "plus" }) {
       strokeLinecap="round"
       aria-hidden
     >
-      {glyph === "chevron" ? (
-        <path d="M7 10l5 5 5-5" strokeLinejoin="round" />
-      ) : (
+      {marker === "plus" ? (
         <path d="M12 6v12M6 12h12" />
-      )}
-    </svg>
-  )
-}
-
-const CONTAINER_OPTIONS: SelectRowOption[] = CONTAINER_VALUES.map((option) => ({
-  ...option,
-  illustration: (
-    <ContainerGlyph style={option.value as keyof typeof CONTAINER} />
-  ),
-}))
-
-const MARKER_OPTIONS: SelectRowOption[] = MARKER_VALUES.map((option) => ({
-  ...option,
-  illustration: <MarkerGlyph glyph={option.value as "chevron" | "plus"} />,
-}))
-
-/* ---------------------------------- Hero ----------------------------------- */
-
-export const CONTAINER = {
-  divided: { list: "divide-y divide-border", item: "" },
-  boxed: {
-    list: "divide-y divide-border overflow-hidden rounded-lg border border-border bg-card",
-    item: "px-3",
-  },
-  cards: {
-    list: "gap-2",
-    item: "rounded-lg border border-border bg-card px-3",
-  },
-}
-
-export function Marker({ open, state }: { open: boolean; state: StudioState }) {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      aria-hidden
-      className="size-3 shrink-0 text-fg-muted"
-    >
-      {state.accordionMarker === "chevron" ? (
-        <path d="M2.5 4.25 6 7.75l3.5-3.5" strokeLinejoin="round" />
       ) : (
-        <path d={open ? "M1.5 6h9" : "M6 1.5v9M1.5 6h9"} />
+        <path d="M7 10l5 5 5-5" strokeLinejoin="round" />
       )}
     </svg>
   )
 }
 
-function AccordionItem({
-  label,
-  open = false,
-  state,
-}: {
-  label: string
-  open?: boolean
-  state: StudioState
-}) {
-  const container =
-    CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
-  const trailing = state.accordionMarkerPosition === "trailing"
-  return (
-    <div className={container.item}>
-      <div
-        className={cn(
-          "flex items-center gap-2 py-2.5",
-          trailing && "justify-between",
-        )}
-      >
-        {!trailing && <Marker open={open} state={state} />}
-        <span className="text-[0.8125rem] font-medium text-fg">{label}</span>
-        {trailing && <Marker open={open} state={state} />}
-      </div>
-      {open && (
-        <div className="flex flex-col gap-1.5 pb-3">
-          <span className="h-2 w-full rounded-full bg-muted" />
-          <span className="h-2 w-3/4 rounded-full bg-muted" />
-        </div>
-      )}
-    </div>
-  )
-}
+/* --------------------------------- Section --------------------------------- */
 
-export function AccordionHero({ state }: { state: StudioState }) {
-  const container =
-    CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
+export function AccordionPreview({ state }: { state: StudioState }) {
   return (
-    <Hero className="px-4 py-4">
-      <div className={cn("flex w-full flex-col", container.list)}>
-        <AccordionItem label="Shipping" state={state} />
-        <AccordionItem label="Returns" open state={state} />
-        <AccordionItem label="Warranty" state={state} />
-      </div>
-    </Hero>
+    <DialGlyph>
+      <ContainerGlyph container={state.accordionContainer} />
+    </DialGlyph>
   )
-}
-
-/** Collapsed-row summary: the container style, and the marker with its
- *  position. */
-export function accordionSummary(state: StudioState): string {
-  const container =
-    CONTAINER_OPTIONS.find((o) => o.value === state.accordionContainer)
-      ?.label ?? state.accordionContainer
-  const marker =
-    MARKER_OPTIONS.find((o) => o.value === state.accordionMarker)?.label ??
-    state.accordionMarker
-  const position =
-    state.accordionMarkerPosition === "leading" ? "Leading" : "Trailing"
-  return `${container} · ${position} ${marker.toLowerCase()}`
 }
 
 export function AccordionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <AccordionHero state={state} />
-      <SelectRow
+    <>
+      <DialSelect
         label="Container"
         value={state.accordionContainer}
         onChange={set("accordionContainer")}
-        options={CONTAINER_OPTIONS}
-        layout="grid"
+        rowPreview={false}
+        options={CONTAINER_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <ContainerGlyph container={option.value} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <SelectRow
+      <DialSelect
         label="Marker"
         value={state.accordionMarker}
         onChange={set("accordionMarker")}
-        options={MARKER_OPTIONS}
-        layout="grid"
+        options={MARKER_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <MarkerGlyph marker={option.value} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Position"
         value={state.accordionMarkerPosition}
         onChange={set("accordionMarkerPosition")}
         options={POSITION_OPTIONS}
       />
-    </ControlGroup>
+    </>
   )
 }

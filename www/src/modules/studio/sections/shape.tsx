@@ -1,20 +1,18 @@
 "use client"
 
-/* Shape — the radius model from the shadcn-styles study (#575): a base length
-   scaling the whole system, plus a role→rung vector where a style's shape
-   identity actually lives. Corner shape is its own axis. Density lives in
-   Space.
+/* Shape — the base radius, and a character: which rung each role of component
+   wears. The character opens a grid of cards, each a small app drawn at that
+   character's real radii on the current base, so the pick is made by feel.
+   Roles fold under the cards for the system that needs one role off the
+   curated path; a hand-set vector reads Custom. */
 
-   This section owns radius resolution for the whole panel — Space, Focus,
-   Buttons and Inputs read `roleRadiusPx` rather than re-deriving it. */
-
-import type { CSSProperties } from "react"
+import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
 import {
-  CORNER_SHAPE_OPTIONS,
-  cornerShapeStyle,
+  activeCharacter,
+  RADIUS_RANGE,
   roleRadiusPx,
   roleRatio,
   SHAPE_CHARACTERS,
@@ -22,199 +20,163 @@ import {
   SHAPE_RUNGS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
-import { Hero } from "../hero"
 import {
-  ControlGroup,
-  GroupTitle,
-  OptionGridRow,
-  SelectRow,
-  SliderRow,
-} from "../rows"
+  DialFolder,
+  DialPopover,
+  DialSelect,
+  DialSlider,
+  DialTrigger,
+} from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
-export { controlRadiusPx, roleRadiusPx } from "../axes/shape"
+const px = (value: number) => `${Math.round(value * 10) / 10}px`
 
-const rungIndex = (id: string) => SHAPE_RUNGS.findIndex((r) => r.id === id)
-
-function rolePxLabel(px: number, ratio: number): string {
-  if (ratio === Infinity) return "pill"
-  return `${Math.round(px * ratio * 10) / 10}px`
+/** A rung at the current base, as the option label reads it. */
+function rungLabel(label: string, ratio: number, base: number): string {
+  if (ratio === Infinity || ratio === 0) return label
+  return `${label} · ${px(base * ratio)}`
 }
 
-/* Nested-surfaces hero: page → card → popover → item, plus a button on the
-   card — one specimen per role, every corner wearing its resolved radius 1:1. */
-const NEST_BOX = "border border-fg/10 bg-fg/3 shadow-xs"
-
-function RoleLabel({ name, px }: { name: string; px?: string }) {
-  return (
-    <div className="flex items-baseline justify-between gap-3 text-xs text-fg-muted">
-      <span className="truncate">{name}</span>
-      {px && (
-        <span className="shrink-0 font-mono text-[10px] tabular-nums">
-          {px}
-        </span>
-      )}
-    </div>
-  )
-}
-
-export function ShapeHero({ state }: { state: StudioState }) {
-  const px = (key: ShapeRoleKey) =>
-    rolePxLabel(state.radiusPx, roleRatio(state, key))
-  const shape = (key: ShapeRoleKey): CSSProperties => ({
+/** A small app at `state`'s real radii: a panel holding a field and a button
+ *  (controls), over a menu (surface) with its highlighted item. */
+function AppGlyph({ state }: { state: StudioState }) {
+  const radius = (key: ShapeRoleKey) => ({
     borderRadius: roleRadiusPx(state, key),
-    ...cornerShapeStyle(state.cornerShape),
   })
   return (
-    <Hero>
-      <div
-        className={cn(NEST_BOX, "flex flex-col gap-2.5 p-3")}
-        style={shape("rolePanel")}
+    <span
+      className="flex w-full flex-col gap-2 border border-fg/15 bg-bg p-2"
+      style={radius("rolePanel")}
+    >
+      <span className="ml-0.5 h-1.5 w-2/5 rounded-full bg-fg/20" />
+      <span className="flex gap-1.5">
+        <span
+          className="h-5 flex-1 border border-fg/20"
+          style={radius("roleControl")}
+        />
+        <span className="h-5 w-8 bg-primary" style={radius("roleControl")} />
+      </span>
+      <span
+        className="flex flex-col gap-1 border border-fg/10 bg-card p-1"
+        style={radius("roleSurface")}
       >
-        <RoleLabel name="Card" px={px("rolePanel")} />
-        <div
-          className={cn(NEST_BOX, "flex flex-col gap-2 p-2.5")}
-          style={shape("roleSurface")}
-        >
-          <RoleLabel name="Popover" px={px("roleSurface")} />
-          <div
-            className={cn(NEST_BOX, "px-2.5 py-1.5")}
-            style={shape("roleItem")}
-          >
-            <RoleLabel name="Item" px={px("roleItem")} />
-          </div>
-        </div>
-        <div
-          className={cn(
-            NEST_BOX,
-            "flex items-baseline gap-2 self-start px-3 py-1.5",
-          )}
-          style={shape("roleControl")}
-        >
-          <span className="text-xs text-fg-muted">Button</span>
-          <span className="font-mono text-[10px] text-fg-muted tabular-nums">
-            {px("roleControl")}
-          </span>
-        </div>
-      </div>
-    </Hero>
+        <span className="h-3 w-full bg-fg/10" style={radius("roleItem")} />
+        <span className="h-3 w-full" />
+      </span>
+    </span>
   )
 }
 
-/** Mini specimen for a character card: its surface + control corners nested,
- *  echoing the section's corner preview. */
-function CharacterGlyph({ vector }: { vector: Record<ShapeRoleKey, string> }) {
-  const arc = (id: string, size: number) => {
-    const ratio = SHAPE_RUNGS[rungIndex(id)]?.ratio ?? 1
-    return ratio === Infinity ? size : Math.min(ratio * 8, size)
-  }
+/** The chapter's specimen: the surface corner with a control nested inside. */
+export function ShapePreview({ state }: { state: StudioState }) {
+  const arc = (key: ShapeRoleKey, size: number) =>
+    Math.min(roleRadiusPx(state, key), size)
   return (
-    <div className="relative size-6">
-      <div
-        className="absolute top-0 left-0 size-6 border-t-2 border-l-2 border-fg/40"
-        style={{ borderTopLeftRadius: arc(vector.roleSurface, 24) }}
+    <span className="relative block size-5 shrink-0">
+      <span
+        className="absolute top-0 left-0 size-5 border-t-2 border-l-2 border-fg/40"
+        style={{ borderTopLeftRadius: arc("roleSurface", 20) }}
       />
-      <div
-        className="absolute top-0 left-0 size-3.5 border-t-2 border-l-2 border-fg/80"
-        style={{ borderTopLeftRadius: arc(vector.roleControl, 14) }}
+      <span
+        className="absolute top-0 left-0 size-3 border-t-2 border-l-2 border-fg/80"
+        style={{ borderTopLeftRadius: arc("roleControl", 12) }}
       />
-    </div>
+    </span>
   )
 }
 
-const CHARACTER_OPTIONS = SHAPE_CHARACTERS.map((character) => ({
-  id: character.id,
-  label: character.label,
-  preview: <CharacterGlyph vector={character.vector} />,
-}))
-
-/** The character whose vector matches the current roles, if any. */
-function activeCharacter(state: StudioState): string {
-  const match = SHAPE_CHARACTERS.find((character) =>
-    SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
-  )
-  return match?.id ?? ""
-}
-
-/** Collapsed-row summary: the corner shape, and the base radius. */
 export function shapeSummary(state: StudioState): string {
-  const corner =
-    CORNER_SHAPE_OPTIONS.find((o) => o.value === state.cornerShape)?.label ??
-    state.cornerShape
-  return `${corner} · ${state.radiusPx}px`
+  const character =
+    SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
+    "Custom"
+  return `${character} · ${px(state.radiusPx)}`
 }
 
-export function ShapeSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const autoRatio =
-    SHAPE_RUNGS[Math.max(0, rungIndex(state.roleSurface) - 1)]?.ratio ?? 0
-  const rungOptions = (allowAuto: boolean) => [
-    ...(allowAuto
+/** Mounted with the popover, so Roles opens on a custom vector each time. */
+function CharacterPanel({ studio }: { studio: Studio }) {
+  const { state, set, setState } = studio
+  const active = activeCharacter(state)
+  const [open, setOpen] = useState(active === undefined)
+  const options = (key: ShapeRoleKey) => [
+    ...(key === "roleItem"
       ? [
           {
             value: "auto",
-            label: `Auto · ${rolePxLabel(state.radiusPx, autoRatio)}`,
+            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, roleItem: "auto" }, key))}`,
           },
         ]
       : []),
     ...SHAPE_RUNGS.map(({ id, label, ratio }) => ({
       value: id,
-      label:
-        ratio === Infinity
-          ? label
-          : `${label} · ${rolePxLabel(state.radiusPx, ratio)}`,
+      label: rungLabel(label, ratio, state.radiusPx),
     })),
   ]
   return (
     <>
-      <ControlGroup>
-        <ShapeHero state={state} />
-        {/* Self-demo: the row's own corners wear the value, 1:1. */}
-        <SliderRow
-          label="Radius"
-          value={state.radiusPx}
-          onChange={set("radiusPx")}
-          minValue={0}
-          maxValue={16}
-          step={0.5}
-          ticks={[4, 8, 10, 12]}
-          format={(v) => `${v}px`}
-          trackStyle={{
-            borderRadius: `${state.radiusPx}px`,
-            ...cornerShapeStyle(state.cornerShape),
-          }}
-        />
-        <SelectRow
-          label="Corners"
-          value={state.cornerShape}
-          onChange={set("cornerShape")}
-          options={CORNER_SHAPE_OPTIONS}
-        />
-      </ControlGroup>
-      <OptionGridRow
+      <CardGrid
         label="Character"
-        value={activeCharacter(state)}
+        value={active}
         onChange={(id) => {
           const character = SHAPE_CHARACTERS.find((c) => c.id === id)
-          if (!character) return
-          for (const { key } of SHAPE_ROLES) set(key)(character.vector[key])
+          if (character) setState({ ...state, ...character.vector })
         }}
-        options={CHARACTER_OPTIONS}
-        columns={3}
+        options={SHAPE_CHARACTERS.map((character) => ({
+          id: character.id,
+          label: character.label,
+          children: <AppGlyph state={{ ...state, ...character.vector }} />,
+        }))}
       />
-      <GroupTitle>Roles</GroupTitle>
-      <ControlGroup>
-        {SHAPE_ROLES.map(({ key, label, example }) => (
-          <SelectRow
+      <DialFolder
+        title="Roles"
+        open={open}
+        onOpenChange={setOpen}
+        modified={active === undefined}
+      >
+        {SHAPE_ROLES.map(({ key, label }) => (
+          <DialSelect
             key={key}
             label={label}
-            description={example}
             value={state[key]}
             onChange={set(key)}
-            options={rungOptions(key === "roleItem")}
+            options={options(key)}
           />
         ))}
-      </ControlGroup>
+      </DialFolder>
+    </>
+  )
+}
+
+export function ShapeSection({ studio }: { studio: Studio }) {
+  const { state, set } = studio
+  const character = SHAPE_CHARACTERS.find(
+    (c) => c.id === activeCharacter(state),
+  )
+  return (
+    <>
+      <DialSlider
+        label="Radius"
+        value={state.radiusPx}
+        onChange={set("radiusPx")}
+        minValue={RADIUS_RANGE.min}
+        maxValue={RADIUS_RANGE.max}
+        step={RADIUS_RANGE.step}
+        format={px}
+      />
+      <DialTrigger
+        label="Character"
+        value={
+          <>
+            <span className={cn("truncate", !character && "text-fg/50")}>
+              {character?.label ?? "Custom"}
+            </span>
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <CharacterPanel studio={studio} />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

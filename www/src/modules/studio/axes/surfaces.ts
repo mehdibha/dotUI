@@ -1,48 +1,51 @@
 /* Surfaces — how cards and floating layers separate from the page (#590).
-   Six decisions, never resolver parameters:
+   Five decisions, never resolver parameters:
 
    - Separation: which means leads (edge, shadow, contrast) and how it shifts
      per mode. Dark behavior lives INSIDE the option — shadows die on
      near-black, so each strategy encodes its own dark translation (12-system
      survey, 2026-08-09): Hairline ≈ shadcn/Geist, Adaptive ≈ Radix Themes/
      Primer (shadow-led light → hairline + elevation dark), Shadow ≈ Fluent/
-     Spectrum (shadows strengthen in dark), Outline ≈ Linear, Tonal ≈
-     Material 3 (contrast-led in BOTH modes, containers darker than the page
-     in light).
+     Spectrum (shadows strengthen in dark), Tonal ≈ Material 3 (contrast-led
+     in BOTH modes, containers darker than the page in light). Linear is
+     Hairline at a raised depth.
    - Depth: the one intensity lever — hairline weight, shadow size and dark
-     elevation move together.
-   - Shadow: the shadow's character (plain black, tinted with the ink, a
-     key + ambient pair), orthogonal to Depth.
-   - Edge: the hairline as a border inside the box, or a ring outside it
-     (every shadcn style renders overlays ring + shadow — #581).
-   - Canvas: white-on-white, or a tinted page surfaces lift off.
-   - Material: solid or glass floating layers.
+     elevation move together. Shadow-led systems (Fluent, Material,
+     Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
+   - Canvas: white-on-white, or a tinted page white surfaces lift off (Vercel,
+     Stripe, Apple); dark lifts the same surfaces a full rung instead.
+   - Modes: each mode's background L* — how white the light page is, how
+     black the dark one (OLED at 0). The color engine reads it.
+   - Material: the popover tier (menus, pickers, popovers) solid, or as
+     glass — shadcn's recipe, the surface at 70% over a blurred, saturated
+     backdrop. Modals and drawers stay solid either way; they sit over a
+     scrim, so there is nothing to see through.
 
    Engine: every combination resolves to the tokens card, popover (menus,
    pickers, chart tooltips), modal and drawer read — an edge per role (`--card-border`,
    `--overlay-border`), a shadow per role (`--shadow-card`, `--shadow-popover`,
    `--shadow-modal`), the surface colors (`--color-bg`, `--color-card`,
-   `--color-popover`) and the floating material (`--overlay-backdrop-filter`).
+   `--color-popover`) and the popover material (`--popover-alpha`,
+   `--popover-backdrop-filter`).
    Shadows are Tailwind's own rungs, so the default recipe IS the registry's
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
+import { DEFAULT_MODES } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
   surfaceDepth: "subtle",
-  surfaceShadow: "plain",
-  surfaceEdge: "border",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
+  modes: DEFAULT_MODES,
 }
 
 export const STRATEGY_OPTIONS = [
   { value: "hairline", label: "Hairline" },
   { value: "adaptive", label: "Adaptive" },
   { value: "shadow", label: "Shadow" },
-  { value: "outline", label: "Outline" },
   { value: "tonal", label: "Tonal" },
 ]
 
@@ -53,19 +56,8 @@ export const DEPTH_OPTIONS = [
   { value: "floating", label: "Floating" },
 ]
 
-export const SHADOW_OPTIONS = [
-  { value: "plain", label: "Plain" },
-  { value: "tinted", label: "Tinted" },
-  { value: "layered", label: "Layered" },
-]
-
-export const EDGE_OPTIONS = [
-  { value: "border", label: "Border" },
-  { value: "ring", label: "Ring" },
-]
-
 export const CANVAS_OPTIONS = [
-  { value: "same", label: "Same" },
+  { value: "same", label: "Plain" },
   { value: "tinted", label: "Tinted" },
 ]
 
@@ -83,16 +75,14 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, the system's hairline, black or the ink at an alpha, or
- *  nothing. The hero paints it from a mode's scales; the resolver writes it
- *  as CSS vars. */
+ *  of two rungs, the system's hairline, black at an alpha, or nothing. The
+ *  resolver writes it as CSS vars. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "hairline" }
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
   | { kind: "shade"; alpha: number }
-  | { kind: "ink"; alpha: number }
 
 export interface ShadowLayer {
   offset: string
@@ -188,18 +178,13 @@ function shadowLayers(
   rung: number,
   weight: number,
   dark: DarkCast,
-  character: string,
+  layered: boolean,
 ): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
   const color = (alpha: number): PerMode<SurfaceColor> => {
     const light = Math.min(alpha * weight, 0.7)
     return {
-      // Tint only reads in light — a dark-mode shadow stays black either way.
-      // The ink is lighter than pure black, so the alpha compensates upward.
-      light:
-        character === "tinted"
-          ? { kind: "ink", alpha: Math.min(light * 1.25, 0.8) }
-          : { kind: "shade", alpha: light },
+      light: { kind: "shade", alpha: light },
       dark:
         dark === "none"
           ? NONE
@@ -214,7 +199,7 @@ function shadowLayers(
     color: color(alpha),
   }))
   const key = layers[0]
-  if (character === "layered" && key)
+  if (layered && key)
     out.push({ offset: AMBIENT[rung] ?? "", color: color(key[1] * 0.5) })
   return out
 }
@@ -228,7 +213,6 @@ type Ladder = Record<Role, [number, number, number, number]>
 export function surfaceRecipe(state: StudioState): SurfaceRecipe {
   const d = Math.max(0, DEPTHS.indexOf(state.surfaceDepth))
   const tinted = state.surfaceCanvas === "tinted"
-  const ring = state.surfaceEdge === "ring"
 
   const look = (role: Role): SurfaceLook => {
     const floating = role !== "card"
@@ -278,9 +262,9 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
         dark = "harder"
         elevation = (floating ? 1 : 0) + (d >= 2 ? 1 : 0)
         break
-      case "tonal":
-        // Contrast-led in BOTH modes: containers step off the page by
-        // background alone, shadows subordinate (floating layers only).
+      default:
+        // Tonal: contrast-led in BOTH modes — containers step off the page
+        // by background alone, shadows subordinate (floating layers only).
         tonal = floating
           ? ([55, 70, 85, 100][d] ?? 70)
           : ([25, 35, 50, 60][d] ?? 35)
@@ -290,35 +274,21 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
           modal: [0, 3, 4, 5],
         }
         weight = 0.8
-        break
-      default:
-        // Outline: a solid step on overlays in dark + heavy shadow.
-        edge = floating
-          ? { light: HAIRLINE, dark: step("400") }
-          : both(HAIRLINE)
-        ladder = {
-          card: [0, 2, 3, 4],
-          popover: [3, 4, 5, 6],
-          modal: [4, 5, 6, 6],
-        }
-        weight = 1.5
-        if (floating && d >= 1) elevation = 1
     }
 
     const shadow = shadowLayers(
       ladder[role][d] ?? 0,
       weight,
       dark,
-      state.surfaceShadow,
+      state.surfaceStrategy === "shadow",
     )
-    // Ring redraws the edge outside the box — a strategy that paints no edge
-    // has nothing to convert.
-    if (ring && (edge.light.kind !== "none" || edge.dark.kind !== "none"))
-      shadow.unshift({ offset: "0 0 0 1px", color: edge })
-
-    // Light lifts via the canvas tint instead, so elevation is dark-only.
+    // Light lifts via the canvas tint instead, so elevation is dark-only;
+    // a tinted canvas lifts cards a full rung there.
     const steps = floating ? OVERLAY_ELEVATION : CARD_ELEVATION
-    const lift = Math.min(floating ? 2 : 1, elevation + (tinted ? 1 : 0))
+    const lift = Math.min(
+      floating ? 2 : 1 + (tinted ? 1 : 0),
+      elevation + (tinted ? (floating ? 1 : 2) : 0),
+    )
     const bg: PerMode<SurfaceColor> =
       tonal !== null
         ? both(mix("50", "100", 100 - tonal))
@@ -327,11 +297,14 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
             dark: steps[lift] ?? step("50"),
           }
 
-    return { edge: ring ? both(NONE) : edge, bg, shadow }
+    return { edge, bg, shadow }
   }
 
   return {
-    page: { light: tinted ? step("50") : step("25"), dark: step("25") },
+    page: {
+      light: tinted ? mix("50", "100", 50) : step("25"),
+      dark: step("25"),
+    },
     card: look("card"),
     popover: look("popover"),
     modal: look("modal"),
@@ -342,11 +315,10 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
 /* ----------------------------- Serialization ----------------------------- */
 
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
- *  a mode's solved scales (the hero). */
+ *  a mode's solved scales (tests). */
 export interface SurfacePalette {
   step: (step: string) => string
   hairline: string
-  ink: string
 }
 
 const alpha = (value: number) => String(Math.round(value * 1000) / 1000)
@@ -366,8 +338,6 @@ export function surfaceColorCss(
       return `color-mix(in oklab, ${palette.step(color.a)} ${color.weight}%, ${palette.step(color.b)})`
     case "shade":
       return `rgb(0 0 0 / ${alpha(color.alpha)})`
-    case "ink":
-      return `color-mix(in srgb, ${palette.ink} ${Math.round(color.alpha * 100)}%, transparent)`
   }
 }
 
@@ -385,15 +355,9 @@ export function shadowCss(
     .join(", ")
 }
 
-/** Glass: the floating surface color at 72%, over a blurred backdrop. */
-export const glassCss = (bg: string) =>
-  `color-mix(in srgb, ${bg} 72%, transparent)`
-export const GLASS_BACKDROP_FILTER = "blur(8px)"
-
 const TOKEN_PALETTE: SurfacePalette = {
   step: (step) => `var(--neutral-${step})`,
   hairline: "var(--color-border)",
-  ink: "var(--color-fg)",
 }
 
 function pairCss(pair: PerMode<SurfaceColor>): string {
@@ -404,7 +368,6 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
 
 function surfaceTokens(state: StudioState): Record<string, string> {
   const { page, card, popover, modal, glass } = surfaceRecipe(state)
-  const popoverBg = pairCss(popover.bg)
   return {
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
@@ -413,8 +376,9 @@ function surfaceTokens(state: StudioState): Record<string, string> {
     "--shadow-modal": shadowCss(modal.shadow, pairCss),
     "--color-bg": pairCss(page),
     "--color-card": pairCss(card.bg),
-    "--color-popover": glass ? glassCss(popoverBg) : popoverBg,
-    "--overlay-backdrop-filter": glass ? GLASS_BACKDROP_FILTER : "none",
+    "--color-popover": pairCss(popover.bg),
+    "--popover-alpha": glass ? "70%" : "100%",
+    "--popover-backdrop-filter": glass ? "blur(40px) saturate(150%)" : "none",
   }
 }
 

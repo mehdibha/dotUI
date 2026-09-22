@@ -1,12 +1,10 @@
 "use client"
 
-/* Icons — the library, and the weight axis that library exposes. The hero is
-   the set itself: real registry icons, so switching library actually swaps the
-   glyphs rather than restyling a stand-in. */
+/* Icons — the library, and the one axis that library exposes: stroke width on
+   line sets, weight on Phosphor. Every row carries its own glyphs, drawn by
+   the library it names, so the pick is made by look. */
 
-import type { CSSProperties } from "react"
-
-import * as registryIcons from "@/registry/icons"
+import { HeartIcon, SearchIcon, SettingsIcon } from "@/registry/icons"
 import {
   IconLibraryContext,
   IconWeightContext,
@@ -19,122 +17,72 @@ import {
   STROKE_DEFAULTS,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
-import { Hero } from "../hero"
-import { ControlGroup, SelectRow, SliderRow } from "../rows"
+import { DialSelect, DialSlider } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-/** Renders children as real icons of a library: context + stroke var in one. */
-function IconScope({
+/** A strip of registry icons drawn by `library`, at `weight` on Phosphor. */
+function Glyphs({
   library,
   weight,
   stroke,
-  className,
-  children,
 }: {
   library: IconLibraryName
   weight?: PhosphorWeight
   stroke?: number
-  className?: string
-  children: React.ReactNode
 }) {
   return (
     <IconLibraryContext.Provider value={library}>
       <IconWeightContext.Provider value={weight}>
         <span
-          className={className}
-          style={
-            stroke !== undefined
-              ? ({
-                  [ICON_STROKE_WIDTH_VAR]: String(stroke),
-                } as CSSProperties)
-              : undefined
-          }
+          className="flex shrink-0 items-center gap-1.5 **:[svg]:size-4"
+          style={{ [ICON_STROKE_WIDTH_VAR]: stroke } as React.CSSProperties}
         >
-          {children}
+          <SearchIcon />
+          <SettingsIcon />
+          <HeartIcon />
         </span>
       </IconWeightContext.Provider>
     </IconLibraryContext.Provider>
   )
 }
 
-const SPECIMEN = [
-  ["Home", registryIcons.HomeIcon],
-  ["Search", registryIcons.SearchIcon],
-  ["Heart", registryIcons.HeartIcon],
-  ["Star", registryIcons.StarIcon],
-  ["Bell", registryIcons.BellIcon],
-  ["Mail", registryIcons.MailIcon],
-  ["Calendar", registryIcons.CalendarIcon],
-  ["Settings", registryIcons.SettingsIcon],
-  ["User", registryIcons.UserIcon],
-  ["Folder", registryIcons.FolderIcon],
-  ["Camera", registryIcons.CameraIcon],
-  ["Image", registryIcons.ImageIcon],
-  ["Trash", registryIcons.TrashIcon],
-  ["Pencil", registryIcons.PencilIcon],
-  ["Share", registryIcons.ShareIcon],
-  ["Download", registryIcons.DownloadIcon],
-  ["Clock", registryIcons.ClockIcon],
-  ["Copy", registryIcons.CopyIcon],
-  ["Link", registryIcons.LinkIcon],
-  ["Tag", registryIcons.TagIcon],
-  ["Bookmark", registryIcons.BookmarkIcon],
-  ["Message", registryIcons.MessageSquareIcon],
-  ["Globe", registryIcons.GlobeIcon],
-  ["Layers", registryIcons.LayersIcon],
-] as const
-
-/** Rows of real registry icons in the current library, stroke and weight. No
- *  inspect verb — the set itself is the specimen, so the space goes to more
- *  glyphs instead of a readout. */
-export function IconsHero({ state }: { state: StudioState }) {
-  const library = state.iconLibrary as IconLibraryName
-  const weight =
-    library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
-
+/** Beside the title: the strip as the library draws it. */
+export function IconsPreview({ state }: { state: StudioState }) {
   return (
-    <Hero inset={false}>
-      <IconScope
-        library={library}
-        weight={weight}
-        stroke={state.iconStroke}
-        className="grid w-full grid-cols-8 gap-0.5 p-2"
-      >
-        {SPECIMEN.map(([label, Icon]) => (
-          <span
-            key={label}
-            className="flex aspect-square items-center justify-center rounded-lg text-fg"
-          >
-            <Icon size={16} />
-          </span>
-        ))}
-      </IconScope>
-    </Hero>
+    <Glyphs
+      library={state.iconLibrary as IconLibraryName}
+      weight={state.iconWeight as PhosphorWeight}
+      stroke={state.iconStroke}
+    />
   )
-}
-
-/** Collapsed-row summary: the library, and the stroke it draws with. */
-export function iconsSummary(state: StudioState): string {
-  const library =
-    LIBRARY_OPTIONS.find((o) => o.value === state.iconLibrary)?.label ??
-    state.iconLibrary
-  return `${library} · Stroke ${state.iconStroke}`
 }
 
 export function IconsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const library = state.iconLibrary as IconLibraryName
+  const weight = state.iconWeight as PhosphorWeight
+  const strokeDefault = STROKE_DEFAULTS[library]
   return (
-    <ControlGroup>
-      <IconsHero state={state} />
-      <SelectRow
+    <>
+      <DialSelect
         label="Library"
         value={state.iconLibrary}
         onChange={set("iconLibrary")}
-        options={LIBRARY_OPTIONS}
+        rowPreview={false}
+        options={LIBRARY_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <Glyphs
+              library={option.value as IconLibraryName}
+              weight={option.value === "phosphor" ? weight : undefined}
+              stroke={option.value === library ? state.iconStroke : undefined}
+            />
+          ),
+        }))}
       />
-      {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
-      {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !== undefined && (
-        <SliderRow
+      {/* Stroke only exists on line sets; Phosphor swaps it for weight. */}
+      {strokeDefault !== undefined && (
+        <DialSlider
           label="Stroke"
           value={state.iconStroke}
           onChange={set("iconStroke")}
@@ -144,14 +92,22 @@ export function IconsSection({ studio }: { studio: Studio }) {
           format={(v) => v.toFixed(2)}
         />
       )}
-      {state.iconLibrary === "phosphor" && (
-        <SelectRow
+      {library === "phosphor" && (
+        <DialSelect
           label="Weight"
           value={state.iconWeight}
           onChange={set("iconWeight")}
-          options={WEIGHT_OPTIONS}
+          options={WEIGHT_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <Glyphs
+                library="phosphor"
+                weight={option.value as PhosphorWeight}
+              />
+            ),
+          }))}
         />
       )}
-    </ControlGroup>
+    </>
   )
 }

@@ -16,14 +16,41 @@ describe("selection controls", () => {
     expect(ds.componentParams.switch).toEqual({ "card-selected": "tint" })
   })
 
-  it("accent fill re-points the selection tokens at the accent ones", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, checkFill: "accent" })
-    expect(ds.tokens).toEqual({
-      "--color-selection": "var(--color-accent)",
-      "--color-selection-hover": "var(--color-accent-hover)",
-      "--color-selection-muted": "var(--color-accent-muted)",
-      "--color-fg-on-selection": "var(--color-fg-on-accent)",
+  it("a control's fill forks it off the selection tokens as a recipe scope", () => {
+    const ds = resolveDesignSystem({ ...DEFAULTS, switchColor: "accent" })
+    expect(ds.tokens).toEqual({})
+    expect(ds.color?.scopes).toEqual({ switch: "accent" })
+    expect(
+      resolveDesignSystem({
+        ...DEFAULTS,
+        checkboxColor: "neutral",
+        radioColor: "accent",
+        switchColor: "accent",
+      }).color?.scopes,
+    ).toEqual({ radio: "accent", switch: "accent" })
+  })
+
+  it("a fill matching the selection source is no fork", () => {
+    expect(
+      resolveDesignSystem({ ...DEFAULTS, checkboxColor: "neutral" }).color,
+    ).toBeUndefined()
+    const accentChecks = resolveDesignSystem({
+      ...DEFAULTS,
+      selectionColor: "accent",
+      checkboxColor: "accent",
+    }).color
+    expect(accentChecks?.selection).toBe("accent")
+    expect(accentChecks?.scopes).toEqual({
+      radio: "neutral",
+      switch: "neutral",
     })
+    // A selection seed paints the selection leaf; a control on that leaf
+    // follows it, a control off it still forks to its own source.
+    const seeded = { ...DEFAULTS, selectionSeed: "#0072f5" }
+    expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
+    expect(
+      resolveDesignSystem({ ...seeded, checkboxColor: "accent" }).color?.scopes,
+    ).toEqual({ checkbox: "accent" })
   })
 
   it("corner rides on the checkbox radius var", () => {

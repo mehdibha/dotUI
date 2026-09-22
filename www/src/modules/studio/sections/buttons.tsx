@@ -1,194 +1,280 @@
 "use client"
 
-/* Buttons — the synced family's shared axes: Button sets the look, and the
-   Button groups and Toggles sections reuse it through the helpers exported
-   here. Style is a family look reshaping every fill variant at once; the
-   variant enum stays API. */
+/* Buttons — the family: Button sets the look that Toggle, Group and
+   Segmented control reuse. Style opens the button recipe whole — the family
+   cards, then radius, hover and press. Color is a leaf of Color's Primary. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { SEPARATOR_OPTIONS } from "../axes/button-groups"
 import {
   HOVER_OPTIONS,
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
   STYLE_OPTIONS,
 } from "../axes/buttons"
-import { Hero } from "../hero"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import {
+  SELECTED_OPTIONS as SEGMENT_OPTIONS,
+  TRACK_OPTIONS,
+} from "../axes/segmented-control"
+import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
+import {
+  DialGap,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
-import { controlRadiusPx } from "./shape"
 
-const optionLabel = (options: SelectRowOption[], value: string) =>
-  options.find((o) => o.value === value)?.label ?? value
+/* -------------------------------- Specimens -------------------------------- */
 
-/** Collapsed-row summary: the style family, and the press feel. */
-export function buttonsSummary(state: StudioState): string {
-  return `${optionLabel(STYLE_OPTIONS, state.buttonStyle)} · ${optionLabel(PRESS_OPTIONS, state.buttonPress)} press`
-}
-
-export function buttonRadiusPx(state: StudioState): number {
-  switch (state.buttonRadius) {
-    case "sharp":
-      return 0
-    case "round":
-      return state.radiusPx
-    case "pill":
-      return 999
-    default:
-      return controlRadiusPx(state)
-  }
-}
-
-/* Each family reshapes every fill variant at once — `fill` is one overlay
-   composing with any status fill (primary, warning, danger); quiet and link
-   stay flat, as they do in every system with an aesthetic axis (Radix
-   classic, Untitled UI, Primer, Geist all converge on this). */
-const STYLE_LOOKS = {
-  flat: {
-    fill: "",
-    secondary: "border border-border-control bg-neutral text-fg-on-neutral",
-  },
+/* Each family's shadow recipe, as the registry's button styles.ts draws it. */
+const FLAT = { primary: "", secondary: "" }
+const FAMILY: Record<string, { primary: string; secondary: string }> = {
+  flat: FLAT,
   outline: {
-    fill: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-    secondary:
-      "border border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
+    primary: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
+    secondary: "shadow-[0_1px_0_rgb(0_0_0/0.08)]",
   },
   raised: {
-    fill: "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+    primary:
+      "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
     secondary:
-      "border border-border-control bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
+      "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
   },
   elevated: {
-    fill: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
+    primary: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
     secondary:
-      "bg-neutral text-fg-on-neutral shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
+      "border-transparent shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
   },
-} as const
-
-const FILLS = {
-  primary: "bg-primary text-fg-on-primary",
-  warning: "bg-warning text-fg-on-warning",
-  danger: "bg-danger text-fg-on-danger",
-} as const
-
-export const styleLook = (state: StudioState) =>
-  STYLE_LOOKS[state.buttonStyle as keyof typeof STYLE_LOOKS] ?? STYLE_LOOKS.flat
-
-/* Quiet gains a background on hover in every surveyed system, whatever the
-   fill variants do — so both dim and lighten resolve to a fill for it. */
-export function hoverFx(state: StudioState, tier: "fill" | "quiet"): string {
-  if (state.buttonHover === "none") return ""
-  if (tier === "quiet") return "hover:bg-highlight"
-  return state.buttonHover === "lighten"
-    ? "hover:brightness-110"
-    : "hover:brightness-95"
 }
 
-/* Press is uniform across variants (the Linear precedent). */
-export function pressFx(state: StudioState, tier: "fill" | "quiet"): string {
-  switch (state.buttonPress) {
-    case "dim":
-      return tier === "quiet" ? "active:bg-inverse/15" : "active:brightness-90"
-    case "scale":
-      return "active:scale-[0.97]"
-    case "push":
-      return "active:translate-y-px"
-    default:
-      return ""
-  }
-}
-
-export const SPECIMEN_FX =
-  "cursor-interactive focus-reset transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-150 focus-visible:focus-ring"
-
-/** The section's specimen: the full variant ladder wearing one style — the
- *  neutral row, then the status fills. Hover and press demo for real; link
- *  only underlines, whatever the axes say. */
-export function ButtonsHero({ state }: { state: StudioState }) {
-  const look = styleLook(state)
-  const radius = buttonRadiusPx(state)
-
-  const specimen = (
-    variant: keyof typeof FILLS | "secondary" | "quiet" | "link",
-    label: string,
-  ) => {
-    const skin =
-      variant === "secondary"
-        ? look.secondary
-        : variant === "quiet"
-          ? "text-fg"
-          : variant === "link"
-            ? "text-fg underline-offset-4 hover:underline"
-            : cn(FILLS[variant], look.fill)
-    return (
-      <button
-        key={variant}
-        type="button"
-        className={cn(
-          "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap",
-          SPECIMEN_FX,
-          skin,
-          variant !== "link" &&
-            cn(
-              hoverFx(state, variant === "quiet" ? "quiet" : "fill"),
-              pressFx(state, variant === "quiet" ? "quiet" : "fill"),
-            ),
-        )}
-        style={{ borderRadius: radius }}
-      >
-        {label}
-      </button>
-    )
-  }
-
+/** A primary button in one family; on a card, a secondary beside it. */
+function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
+  const family = FAMILY[style] ?? FLAT
+  const size = card ? "h-6 px-2.5 text-[11px]" : "h-4 px-1.5 text-[9px]"
   return (
-    <Hero className="items-center py-5">
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2">
-          {specimen("primary", "Get started")}
-          {specimen("secondary", "Preview")}
-          {specimen("quiet", "Docs")}
-        </div>
-        <div className="flex items-center gap-2">
-          {specimen("warning", "Reset")}
-          {specimen("danger", "Delete")}
-          {specimen("link", "Learn more")}
-        </div>
-      </div>
-    </Hero>
+    <span
+      className={cn(
+        "flex shrink-0 items-center gap-1.5",
+        card && "justify-center py-1.5",
+      )}
+    >
+      <span
+        className={cn(
+          "flex items-center rounded-md bg-primary font-semibold text-fg-on-primary",
+          size,
+          family.primary,
+        )}
+      >
+        Save
+      </span>
+      {card && (
+        <span
+          className={cn(
+            "flex items-center rounded-md border border-border-control bg-neutral font-medium text-fg-on-neutral",
+            size,
+            family.secondary,
+          )}
+        >
+          Cancel
+        </span>
+      )}
+    </span>
   )
+}
+
+const TOGGLE_LOOK: Record<string, string> = {
+  fill: "bg-selected text-fg-on-selected",
+  chip: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
+  inverse: "bg-inverse text-fg-inverse",
+}
+
+/** A selected toggle wearing one look. */
+function ToggleGlyph({ look }: { look: string }) {
+  return (
+    <span
+      className={cn(
+        "flex h-4 shrink-0 items-center rounded-[4px] px-1.5 text-[9px] font-semibold",
+        TOGGLE_LOOK[look],
+      )}
+    >
+      Aa
+    </span>
+  )
+}
+
+/** Three attached segments, divided as the separator says. */
+function GroupGlyph({ separator }: { separator: string }) {
+  const divider =
+    separator === "divider"
+      ? "border-l border-fg/30"
+      : separator === "auto"
+        ? "border-l border-fg/12"
+        : ""
+  return (
+    <span className="flex h-4 shrink-0 overflow-hidden rounded-[4px] border border-fg/30">
+      {[0, 1, 2].map((i) => (
+        <span key={i} className={cn("w-2.5", i > 0 && divider)} />
+      ))}
+    </span>
+  )
+}
+
+const CHIP: Record<string, string> = {
+  raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
+  flat: "bg-selected text-fg-on-selected",
+  inverse: "bg-inverse text-fg-inverse",
+}
+
+/** A three-segment control: the chip against its track. */
+function SegmentedGlyph({
+  selected,
+  track,
+  card,
+}: {
+  selected: string
+  track: string
+  card?: boolean
+}) {
+  return (
+    <span
+      className={cn(
+        "flex shrink-0 rounded-[5px] p-[2px]",
+        track === "outline" ? "border border-border" : "bg-muted",
+        card && "mx-auto my-1.5",
+      )}
+    >
+      {["A", "B", "C"].map((letter, i) => (
+        <span
+          key={letter}
+          className={cn(
+            "flex items-center rounded-[3px] font-medium text-fg-muted",
+            card ? "h-5 px-2 text-[11px]" : "h-3 px-1 text-[8px]",
+            i === 0 && CHIP[selected],
+          )}
+        >
+          {letter}
+        </span>
+      ))}
+    </span>
+  )
+}
+
+/* --------------------------------- Section --------------------------------- */
+
+export function ButtonsPreview({ state }: { state: StudioState }) {
+  return <ButtonGlyph style={state.buttonStyle} />
 }
 
 export function ButtonsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <ButtonsHero state={state} />
-      <SelectRow
+    <>
+      <DialTrigger
         label="Style"
-        value={state.buttonStyle}
-        onChange={set("buttonStyle")}
-        options={STYLE_OPTIONS}
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(STYLE_OPTIONS, state.buttonStyle)}
+            </span>
+            <ButtonGlyph style={state.buttonStyle} />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <CardGrid
+            label="Style"
+            value={state.buttonStyle}
+            onChange={set("buttonStyle")}
+            options={STYLE_OPTIONS.map((option) => ({
+              id: option.value,
+              label: option.label,
+              children: <ButtonGlyph style={option.value} card />,
+            }))}
+          />
+          <DialGap />
+          <DialSegmented
+            label="Radius"
+            value={state.buttonRadius}
+            onChange={set("buttonRadius")}
+            options={RADIUS_OPTIONS}
+          />
+          <DialSegmented
+            label="Hover"
+            value={state.buttonHover}
+            onChange={set("buttonHover")}
+            options={HOVER_OPTIONS}
+          />
+          <DialSegmented
+            label="Press"
+            value={state.buttonPress}
+            onChange={set("buttonPress")}
+            options={PRESS_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+      <DialSelect
+        label="Toggles"
+        value={state.toggleSelected}
+        onChange={set("toggleSelected")}
+        options={TOGGLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <ToggleGlyph look={option.value} />,
+        }))}
       />
-      <SelectRow
-        label="Radius"
-        value={state.buttonRadius}
-        onChange={set("buttonRadius")}
-        options={RADIUS_OPTIONS}
+      <DialSelect
+        label="Groups"
+        value={state.groupSeparator}
+        onChange={set("groupSeparator")}
+        options={SEPARATOR_OPTIONS.map((option) => ({
+          ...option,
+          preview: <GroupGlyph separator={option.value} />,
+        }))}
       />
-      <SelectRow
-        label="Hover"
-        value={state.buttonHover}
-        onChange={set("buttonHover")}
-        options={HOVER_OPTIONS}
-      />
-      <SelectRow
-        label="Press"
-        value={state.buttonPress}
-        onChange={set("buttonPress")}
-        options={PRESS_OPTIONS}
-      />
-    </ControlGroup>
+      <DialTrigger
+        label="Segmented"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(SEGMENT_OPTIONS, state.segmentedSelected)}
+            </span>
+            <SegmentedGlyph
+              selected={state.segmentedSelected}
+              track={state.segmentedTrack}
+            />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <CardGrid
+            label="Selected"
+            columns={3}
+            value={state.segmentedSelected}
+            onChange={set("segmentedSelected")}
+            options={SEGMENT_OPTIONS.map((option) => ({
+              id: option.value,
+              label: option.label,
+              children: (
+                <SegmentedGlyph
+                  selected={option.value}
+                  track={state.segmentedTrack}
+                  card
+                />
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Track"
+            value={state.segmentedTrack}
+            onChange={set("segmentedTrack")}
+            options={TRACK_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+    </>
   )
 }

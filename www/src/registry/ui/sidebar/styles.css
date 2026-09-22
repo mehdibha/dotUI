@@ -1,0 +1,5 @@
+:root {
+  --studio-sidebar-radius: var(--studio-radius-surface);
+  --studio-sidebar-inset-radius: var(--studio-radius-panel);
+  --studio-sidebar-item-radius: var(--studio-radius-item);
+}

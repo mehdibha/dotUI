@@ -1,0 +1,4 @@
+:root {
+  --studio-toast-radius: var(--studio-radius-surface);
+  --studio-toast-action-radius: var(--studio-radius-control);
+}

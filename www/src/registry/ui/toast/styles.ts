@@ -11,10 +11,10 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "data-[position*=center]:left-1/2 data-[position*=center]:-translate-x-1/2 data-[position*=left]:left-(--toast-inset) data-[position*=right]:right-(--toast-inset)",
       ],
       toast: [
-        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-lg shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
+        "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
         "[transition:transform_500ms_cubic-bezier(.22,1,.36,1),opacity_500ms,height_150ms,background-color_500ms,border-color_500ms]",
-        "before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_0_rgb(0_0_0/0.04)]",
+        "before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--studio-toast-radius)-1px)] before:shadow-[0_1px_0_rgb(0_0_0/0.04)]",
         "after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full",
         "data-ending-style:opacity-0 data-limited:opacity-0",
         "data-expanded:h-(--toast-height)",
@@ -49,7 +49,7 @@ const { useStyles, styles } = createStyles(toastMeta, {
       description: "text-sm leading-snug text-fg-muted empty:hidden",
       actions: "ml-2 flex shrink-0 items-center gap-1",
       action:
-        "inline-flex h-7 max-w-32 items-center justify-center rounded-md bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
+        "inline-flex h-7 max-w-32 items-center justify-center rounded-(--studio-toast-action-radius) bg-neutral px-2.5 text-xs font-medium text-fg-on-neutral focus-reset transition-colors empty:hidden hover:bg-neutral-hover focus-visible:focus-ring active:bg-neutral-active **:[span]:truncate",
     },
     variants: {
       position: {

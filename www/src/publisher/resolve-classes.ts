@@ -125,7 +125,7 @@ function substituteVarReads(
 /**
  * The utility suffix a resolved value maps to, or undefined for an arbitrary
  * value. Theme tokens map by name (`var(--radius-md)` → `md`); spacing by
- * multiplier; the two literals the registry's defaults use by utility.
+ * multiplier; the shadow literal the registry's defaults use by utility.
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
@@ -137,27 +137,43 @@ function utilitySuffix(utility: string, value: string): string | undefined {
     /^--spacing\(([\d.]+)\)$/.exec(value) ??
     /^calc\(var\(--spacing\)\s*\*\s*([\d.]+)\)$/.exec(value)
   if (spacing) return spacing[1]
-  if (value === "0" && utility.startsWith("rounded")) return "none"
   if (value === "0 0 #0000" && utility === "shadow") return "none"
   return undefined
 }
 
-/** Rewrite one class string (or any text carrying class names). */
+/**
+ * Rewrite one class string (or any text carrying class names). A rounded
+ * utility whose var resolves to `0` is dropped with its variant prefix — a
+ * square system ships no rounded class, not `rounded-none`.
+ */
 export function rewriteClassString(input: string, vars: StudioVars): string {
   if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
+  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · var · trail
   const shorthand = new RegExp(
-    `([a-z][a-z0-9-]*)-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)`,
+    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)([a-z][a-z0-9-]*)-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
     "g",
   )
-  const rewritten = input.replace(shorthand, (match, utility, name) => {
-    const value = vars.get(name)
-    if (value === undefined) return match
-    const suffix = utilitySuffix(utility, value)
-    if (suffix !== undefined) return `${utility}-${suffix}`
-    const ref = /^var\((--[\w-]+)\)$/.exec(value)
-    if (ref) return `${utility}-(${ref[1]})`
-    return `${utility}-[${value.replace(/\s+/g, "_")}]`
-  })
+  let dropped = false
+  let rewritten = input.replace(
+    shorthand,
+    (match, lead, variants, utility, name, trail) => {
+      const value = vars.get(name)
+      if (value === undefined) return match
+      if (value === "0" && utility.startsWith("rounded")) {
+        dropped = true
+        return lead && trail ? " " : ""
+      }
+      const suffix = utilitySuffix(utility, value)
+      if (suffix !== undefined)
+        return `${lead}${variants}${utility}-${suffix}${trail}`
+      const ref = /^var\((--[\w-]+)\)$/.exec(value)
+      if (ref) return `${lead}${variants}${utility}-(${ref[1]})${trail}`
+      return `${lead}${variants}${utility}-[${value.replace(/\s+/g, "_")}]${trail}`
+    },
+  )
+  // A drop at either end of a class string leaves a stray space; file
+  // content (markup around the tv config) keeps its whitespace.
+  if (dropped && !/["'`\n]/.test(input)) rewritten = rewritten.trim()
   return substituteVarReads(rewritten, (name) => vars.get(name)).text
 }
 
@@ -168,9 +184,10 @@ function rewriteClassValue(
   if (value == null || value === false) return value
   if (typeof value === "string") return rewriteClassString(value, vars)
   if (Array.isArray(value)) {
-    return value.map(
-      (v) => rewriteClassValue(v, vars) as string | string[],
-    ) as ClassValue
+    // A dropped rounded class can empty a group; the group goes with it.
+    return value
+      .map((v) => rewriteClassValue(v, vars) as string | string[])
+      .filter((v) => v !== "") as ClassValue
   }
   return value
 }

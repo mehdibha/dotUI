@@ -44,9 +44,6 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.neutralHue !== undefined) options.neutralHue = config.neutralHue
   if (config.preserveSeed !== undefined)
     options.preserveSeed = config.preserveSeed
-  if (config.guaranteePolicy !== undefined)
-    options.guaranteePolicy = config.guaranteePolicy
-  if (config.borders !== undefined) options.borders = config.borders
   if (config.chartPalette !== undefined)
     options.chartPalette = config.chartPalette
   return options
