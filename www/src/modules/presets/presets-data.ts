@@ -49,7 +49,7 @@ function definePreset(
   return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 
-/** Geist's measured blue: Vercel's selection ramp, Origin's accent + selection. */
+/** Geist's measured blue: Vercel's selection ramp, Origin's brand. */
 const SELECTION_BLUE = "#0072f5"
 
 export const PRESETS: Preset[] = [
@@ -59,13 +59,12 @@ export const PRESETS: Preset[] = [
     name: "Origin",
     description: "dotUI blue, the starting point.",
     swatch: SELECTION_BLUE,
-    // Tracks the builder defaults on every axis but the brand blue, which
-    // drives the accent ramp, the primary-action tokens, and the split
-    // selection + focus ramp.
+    // Tracks the builder defaults on every axis but the brand blue. No
+    // selection seed: selection and focus follow the brand, so a new brand
+    // repaints the checked controls too.
     state: {
       brand: SELECTION_BLUE,
       ...withSource(SOLID_LEAVES, "accent"),
-      selectionSeed: SELECTION_BLUE,
     },
   }),
   definePreset({
