@@ -38,7 +38,18 @@ export const DIAL_VALUE =
   "truncate font-mono text-[13px] font-medium text-fg/70"
 export const DIAL_CHEVRON = "size-4 shrink-0 text-fg/60"
 
+/** The option's label, or the raw value when it is off the list. */
+export const optionLabel = (
+  options: { value: string; label: string }[],
+  value: string,
+) => options.find((o) => o.value === value)?.label ?? value
+
 /* ---------------------------------- Rows ---------------------------------- */
+
+/** A 16px SVG specimen beside a row's value or an option's label. */
+export function DialGlyph({ children }: { children: React.ReactNode }) {
+  return <span className="size-4 shrink-0 *:size-full">{children}</span>
+}
 
 /** Label left, control right. */
 export function DialRow({

@@ -1,25 +1,16 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page, shared by Dialog, Drawer and
-   Popover. Backdrop is the loudest split: shadcn/Radix and Vaul drop a plain
-   black scrim (~black/50) over the page; Apple sheets, visionOS and Arc dim
-   less but frost what's behind with a backdrop blur; Linear's dialogs and
-   palettes use no scrim at all — elevation is carried by shadow alone, the
-   page stays legible. Position is where a dialog rests: the classic modal
-   centers, while Linear and Raycast dock it in the upper third — a
-   command-palette habit that keeps the top edge fixed so the box never jumps
-   as results grow. */
+/* Dialogs — how modal layers meet the page: the scrim under them, and where
+   a dialog rests. Backdrop writes Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
-import type { Studio } from "../state"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import type { Studio, StudioState } from "../state"
 
-/* ------------------------------ Option glyphs ------------------------------ */
+/* -------------------------------- Specimens -------------------------------- */
 
-/** The viewport with its scrim treatment: what the page reads like under the
- *  open layer — dimmed away, frosted, or crisp with only a shadow between. */
-function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
+/** The viewport under an open layer: dimmed away, frosted, or crisp. */
+function BackdropGlyph({ backdrop }: { backdrop: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -32,19 +23,19 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
         strokeWidth="1.5"
         opacity=".45"
       />
-      {treatment !== "dim" && (
+      {backdrop !== "dim" && (
         <g
           stroke="currentColor"
           strokeLinecap="round"
-          strokeWidth={treatment === "blur" ? 2.25 : 1.25}
-          opacity={treatment === "blur" ? 0.25 : 0.45}
+          strokeWidth={backdrop === "blur" ? 2.25 : 1.25}
+          opacity={backdrop === "blur" ? 0.25 : 0.45}
         >
           <path d="M6 8.5h6" />
           <path d="M6 15.5h5" />
           <path d="M15 15.5h3" />
         </g>
       )}
-      {treatment !== "none" && (
+      {backdrop !== "none" && (
         <rect
           x="3.75"
           y="5.75"
@@ -52,7 +43,7 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
           height="12.5"
           rx="1.5"
           fill="currentColor"
-          fillOpacity={treatment === "dim" ? 0.32 : 0.15}
+          fillOpacity={backdrop === "dim" ? 0.32 : 0.15}
         />
       )}
       <rect x="8.5" y="9" width="7" height="5.5" rx="1" fill="currentColor" />
@@ -60,32 +51,40 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
   )
 }
 
-/* --------------------------------- Options --------------------------------- */
+/* --------------------------------- Section --------------------------------- */
 
-const BACKDROP_ROW_OPTIONS: SelectRowOption[] = BACKDROP_OPTIONS.map((o) => ({
-  ...o,
-  illustration: (
-    <BackdropGlyph treatment={o.value as "dim" | "blur" | "none"} />
-  ),
-}))
+export function DialogsPreview({ state }: { state: StudioState }) {
+  return (
+    <DialGlyph>
+      <BackdropGlyph backdrop={state.dialogBackdrop} />
+    </DialGlyph>
+  )
+}
 
 export function DialogsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SelectRow
+    <>
+      <DialSelect
         label="Backdrop"
         value={state.dialogBackdrop}
         onChange={set("dialogBackdrop")}
-        options={BACKDROP_ROW_OPTIONS}
-        layout="grid"
+        rowPreview={false}
+        options={BACKDROP_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <BackdropGlyph backdrop={option.value} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Position"
         value={state.dialogPosition}
         onChange={set("dialogPosition")}
         options={POSITION_OPTIONS}
       />
-    </ControlGroup>
+    </>
   )
 }

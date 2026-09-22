@@ -141,16 +141,23 @@ is never split; thinness alone is never grounds for a merge (named chapters
 like Tooltips stay findable); merged cards must SHOW their absorbed members
 and future search must index absorbed names.
 
-**Adopted (Mehdi):** 43 → 35 chapters via composite index chapters
-(`groups.ts` COMPOSITES): **Interaction** ← cursor + selection +
-scrollbars + disabled (new, hostless); **Buttons** ← button-groups + toggles +
-segmented-control; **Inputs** ← input-groups + number-field + otp-field;
-**Links** moved to Components (overriding the panel's Typography-merge
-recommendation).
-
-**Panel-recommended, not yet adopted:** Selection controls ← switch + checkbox
-+ radio (+ choice cards); Pickers ← calendar; Loading ← skeleton + spinner +
-progress; Badges ← kbd.
+**Adopted (Sept 2026):** the page shows the identity and page-chrome
+chapters, then one **Components** chapter: one row per family (Buttons,
+Inputs, Selection controls, Pickers, Sliders, Menus, Dialogs, Popovers,
+Navigation, Loading, Badges, Avatars, Tables, Accordion, Charts), each row
+carrying the family's headline value and specimen and opening the family's
+whole recipe in a popover. Inside, a decision is a picker (a row showing the
+value and a glyph, its options in a nested popover) or specimen cards with the
+dependent knobs under them, so a new option never adds a row to the page.
+Families absorb their followers — Buttons ← button-groups + toggles +
+segmented-control; Inputs ← input-groups + number-field + otp-field;
+Selection controls ← checkbox + radio + switch + choice-cards; Pickers ←
+calendar; Popovers ← tooltips; Navigation ← links + tabs + breadcrumbs +
+pagination; Loading ← skeleton + spinner + progress; Badges ← kbd. Alert and
+Toast have no axes and stay off the page. Per-control colors (checkbox, switch,
+slider, tabs, links…) are leaves of Color › Primary and are not repeated.
+The composite-index machinery is gone; `state.ts` lists the chapters in page
+order.
 
 Answered: Accordion stays solo — accordion and menus share zero state keys or
 recipes; there is no Disclosure family in the code.

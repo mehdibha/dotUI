@@ -11,7 +11,7 @@
    anchored to the input. */
 
 import { DIALOG_OPTIONS, PICKER_OPTIONS } from "../axes/mobile"
-import { DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
@@ -75,9 +75,9 @@ const withGlyphs = (
   options.map((o) => ({
     ...o,
     preview: (
-      <span className="size-4 shrink-0 *:size-full">
+      <DialGlyph>
         <PhoneGlyph layer={o.value as Layer} />
-      </span>
+      </DialGlyph>
     ),
   }))
 
@@ -86,9 +86,9 @@ const DIALOGS = withGlyphs(DIALOG_OPTIONS)
 
 export function MobilePreview({ state }: { state: StudioState }) {
   return (
-    <span className="size-4 shrink-0 *:size-full">
+    <DialGlyph>
       <PhoneGlyph layer={state.mobilePickers as Layer} />
-    </span>
+    </DialGlyph>
   )
 }
 

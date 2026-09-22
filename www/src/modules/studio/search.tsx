@@ -20,45 +20,35 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
-import type { IndexChapter } from "./groups"
 import { PanelPopover } from "./rows"
+import type { Chapter } from "./state"
 
 interface Entry {
   id: string
   chapterId: string
-  /** The category — the chapter, or "Chapter › Member" for composites. */
+  /** The chapter. */
   category: string
-  /** A settings row inside it; absent for the category itself. */
+  /** A settings row inside it; absent for the chapter itself. */
   axis?: string
 }
 
-/** The categories: every chapter, plus each composite's non-host members. */
-function categories(chapters: IndexChapter[]): Entry[] {
-  return chapters.flatMap((chapter) => [
-    { id: chapter.id, chapterId: chapter.id, category: chapter.label },
-    ...chapter.members
-      .filter((m) => chapter.members.length > 1 && m.label !== chapter.label)
-      .map((m) => ({
-        id: `${chapter.id}/${m.id}`,
-        chapterId: chapter.id,
-        category: `${chapter.label} › ${m.label}`,
-      })),
-  ])
+function categories(chapters: Chapter[]): Entry[] {
+  return chapters.map((chapter) => ({
+    id: chapter.id,
+    chapterId: chapter.id,
+    category: chapter.label,
+  }))
 }
 
-/** Every settings row, under its category. */
-function axes(chapters: IndexChapter[]): Entry[] {
+/** Every settings row, under its chapter. */
+function axes(chapters: Chapter[]): Entry[] {
   return chapters.flatMap((chapter) =>
-    chapter.members.flatMap((m) => {
-      const nested = chapter.members.length > 1 && m.label !== chapter.label
-      const category = nested ? `${chapter.label} › ${m.label}` : chapter.label
-      return (SEARCH_INDEX[m.id] ?? []).map((axis) => ({
-        id: `${chapter.id}/${m.id}/${axis}`,
-        chapterId: chapter.id,
-        category,
-        axis,
-      }))
-    }),
+    (SEARCH_INDEX[chapter.id] ?? []).map((axis) => ({
+      id: `${chapter.id}/${axis}`,
+      chapterId: chapter.id,
+      category: chapter.label,
+      axis,
+    })),
   )
 }
 
@@ -83,7 +73,7 @@ export function PanelSearch({
   chapters,
   onOpenChapter,
 }: {
-  chapters: IndexChapter[]
+  chapters: Chapter[]
   onOpenChapter: (id: string) => void
 }) {
   const [isOpen, setOpen] = useState(false)
@@ -92,9 +82,9 @@ export function PanelSearch({
     sensitivity: "base",
     ignorePunctuation: true,
   })
-  // Categories first: a query that names one lists categories only. Nested
-  // axes surface only when nothing at that level matches — searching "color"
-  // means the Color chapter, not every row called Color. Filtered here, not
+  // Chapters first: a query that names one lists chapters only. Rows surface
+  // only when no chapter matches — searching "color" means the Color chapter,
+  // not every row called Color. Filtered here, not
   // left to the Autocomplete, so the list is right even if the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()

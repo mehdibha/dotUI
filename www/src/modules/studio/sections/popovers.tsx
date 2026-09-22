@@ -1,32 +1,18 @@
 "use client"
 
-/* Popovers — the anchored panel's own decisions, past what Surfaces
-   (elevation), Menus (items) and Motion (entrance) already own. Two axes
-   from a 22-system survey (2026-08). Tip: the arrow pointing at the
-   trigger — mandatory in Cloudscape, default in Ant, Bootstrap, Apple and
-   styled Spectrum; absent in shadcn, Radix Themes, M3 (never), Fluent,
-   Polaris, Linear — and Primer's newer AnchoredOverlay drops its classic
-   caret, so arrowless is the modern default. Tooltips arrow independently:
-   every styled system with both arrows the tooltip and flattens the popover,
-   so the tooltip's tip is its own axis, never synced. Header: how a popover
-   titles itself — freeform content (Radix Themes, Mantine, Polaris), a plain
-   title + muted description (shadcn v4 PopoverHeader, Base UI), or a tinted
-   divided band (Bootstrap popover-header, Ant title) — freeform content is
-   how a popover is composed, not styled, so it isn't an option. Rejected: close X
-   (Cloudscape is the lone default-on; everywhere else light-dismiss), offset
-   (0–8px cluster — recipe constant), popover→sheet on mobile (real split,
-   Apple/Spectrum vs the anchored web, but a system-wide adaptive decision
-   the panel can't preview honestly). */
+/* Popovers — the anchored panel's own decisions past Surfaces, Menus and
+   Motion: the arrow at the trigger and how a title sits. The tooltip is a
+   surface decision of its own, never synced to the popover's. */
 
-import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
-import type { Studio } from "../state"
+import { HEADER_OPTIONS } from "../axes/popovers"
+import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
+import { DialGlyph, DialSegmented, DialSelect, DialToggle } from "../dial"
+import type { Studio, StudioState } from "../state"
 
-/* ------------------------------ Option glyphs ------------------------------ */
+/* -------------------------------- Specimens -------------------------------- */
 
 /** The panel over the trigger it's anchored to, with or without the tip. */
-function TipGlyph({ tip }: { tip?: boolean }) {
+function TipGlyph({ tip }: { tip: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -57,72 +43,70 @@ function TipGlyph({ tip }: { tip?: boolean }) {
   )
 }
 
-/** The panel's title treatment: a leading title, or a band. */
-function HeaderGlyph({ header }: { header: "title" | "band" }) {
+/** The chip with its caret, over the thing it names. */
+function TooltipGlyph({ filled }: { filled: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
-        x="4"
-        y="4.5"
-        width="16"
-        height="15"
+        x="5"
+        y="5.5"
+        width="14"
+        height="7"
         rx="2"
-        stroke="currentColor"
+        fill={filled ? "currentColor" : "none"}
+        stroke={filled ? "none" : "currentColor"}
         strokeWidth="1.5"
-      />
-      {header === "band" && (
-        <>
-          <path d="M5.5 6.25h13v3h-13z" fill="currentColor" opacity=".15" />
-          <path d="M4 10.5h16" stroke="currentColor" strokeWidth="1" />
-        </>
-      )}
-      <path
-        d="M7 8h7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
       />
       <path
-        d="M7 13h10M7 16h6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity=".45"
+        d="M10.3 12.5 12 15l1.7-2.5Z"
+        fill="currentColor"
+        stroke={filled ? "none" : "currentColor"}
+        strokeWidth={filled ? 0 : 1.5}
+        strokeLinejoin="round"
       />
+      <circle cx="12" cy="19" r="1.5" fill="currentColor" opacity=".45" />
     </svg>
   )
 }
 
-/* --------------------------------- Options --------------------------------- */
+/* --------------------------------- Section --------------------------------- */
 
-const TIP_ROW_OPTIONS: SelectRowOption[] = TIP_OPTIONS.map((o) => ({
-  ...o,
-  illustration: <TipGlyph tip={o.value === "tip"} />,
-}))
-
-const HEADER_ROW_OPTIONS: SelectRowOption[] = HEADER_OPTIONS.map((o) => ({
-  ...o,
-  illustration: <HeaderGlyph header={o.value as "title" | "band"} />,
-}))
+export function PopoversPreview({ state }: { state: StudioState }) {
+  return (
+    <DialGlyph>
+      <TipGlyph tip={state.popoverTip === "tip"} />
+    </DialGlyph>
+  )
+}
 
 export function PopoversSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SelectRow
-        label="Tip"
-        value={state.popoverTip}
-        onChange={set("popoverTip")}
-        options={TIP_ROW_OPTIONS}
-        layout="grid"
+    <>
+      <DialToggle
+        label="Arrow"
+        value={state.popoverTip === "tip"}
+        onChange={(on) => set("popoverTip")(on ? "tip" : "none")}
       />
-      <SelectRow
+      <DialSegmented
         label="Header"
         value={state.popoverHeader}
         onChange={set("popoverHeader")}
-        options={HEADER_ROW_OPTIONS}
-        layout="grid"
+        options={HEADER_OPTIONS}
       />
-    </ControlGroup>
+      <DialSelect
+        label="Tooltip"
+        value={state.tooltipStyle}
+        onChange={set("tooltipStyle")}
+        options={TOOLTIP_STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <TooltipGlyph filled={option.value === "inverted"} />
+            </DialGlyph>
+          ),
+        }))}
+      />
+    </>
   )
 }

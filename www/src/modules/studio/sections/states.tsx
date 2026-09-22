@@ -17,6 +17,7 @@ import {
 import { ERROR_OPTIONS } from "../axes/invalid"
 import {
   DialGap,
+  DialGlyph,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -328,9 +329,9 @@ export function StatesSection({ studio }: { studio: Studio }) {
         options={ERROR_OPTIONS.map((option) => ({
           ...option,
           preview: (
-            <span className="size-4 shrink-0 *:size-full">
+            <DialGlyph>
               <ErrorGlyph kind={option.value as "border" | "message" | "bar"} />
-            </span>
+            </DialGlyph>
           ),
         }))}
       />

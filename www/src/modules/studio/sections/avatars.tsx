@@ -1,35 +1,52 @@
 "use client"
 
-/* Avatars — two axes. Shape: circle is the people-first default (GitHub
-   users, Slack DMs, Google, Material) while the rounded square ≈ squircle
-   marks entities — Slack workspaces, GitHub orgs, Notion pages, Linear
-   teams — and some systems (Linear, Notion) run it for people too, so it's
-   a real fork, not a per-instance prop. Fallback: what initials sit on when
-   no image loads — a per-entity tinted wash (Radix Themes, Ant Design,
-   Atlassian all hash the entity to a color, so adjacent avatars differ) vs
-   one uniform gray (Geist, shadcn) that keeps fallbacks quiet at the cost
-   of telling stacked strangers apart. */
+/* Avatars — circle for people, the rounded square for entities; initials on
+   one gray or a per-entity tint. */
+
+import { cn } from "@/registry/lib/utils"
 
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
-import { ControlGroup, SegmentedControlRow } from "../rows"
-import type { Studio } from "../state"
+import { DialSegmented } from "../dial"
+import type { Studio, StudioState } from "../state"
+
+function AvatarGlyph({ shape, fallback }: { shape: string; fallback: string }) {
+  return (
+    <span
+      className={cn(
+        "flex size-4 shrink-0 items-center justify-center text-[7px] font-semibold",
+        shape === "circle" ? "rounded-full" : "rounded-[5px]",
+        fallback === "tinted"
+          ? "bg-accent-muted text-fg-accent"
+          : "bg-muted text-fg-muted",
+      )}
+    >
+      AB
+    </span>
+  )
+}
+
+export function AvatarsPreview({ state }: { state: StudioState }) {
+  return (
+    <AvatarGlyph shape={state.avatarShape} fallback={state.avatarFallback} />
+  )
+}
 
 export function AvatarsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SegmentedControlRow
+    <>
+      <DialSegmented
         label="Shape"
         value={state.avatarShape}
         onChange={set("avatarShape")}
         options={SHAPE_OPTIONS}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Fallback"
         value={state.avatarFallback}
         onChange={set("avatarFallback")}
         options={FALLBACK_OPTIONS}
       />
-    </ControlGroup>
+    </>
   )
 }

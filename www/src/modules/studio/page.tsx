@@ -4,13 +4,10 @@
    the chapter's specimen beside it, then its primary rows and the rest of
    its body. Nothing folds — search scrolls to a chapter, it never opens one. */
 
-import { Fragment, useRef } from "react"
+import { useRef } from "react"
 
-import { resolveIndex } from "./groups"
-import type { IndexChapter } from "./groups"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
-import { GroupTitle } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, Studio } from "./state"
 
@@ -18,18 +15,10 @@ function ChapterBlock({
   chapter,
   studio,
 }: {
-  chapter: IndexChapter
+  chapter: Chapter
   studio: Studio
 }) {
-  const host = chapter.members[0]
-  const Primary = chapter.hostless ? undefined : host?.Primary
-  const Preview = chapter.hostless ? undefined : host?.Preview
-  const body = chapter.members.map((member, i) => (
-    <Fragment key={member.id}>
-      {(chapter.hostless || i > 0) && <GroupTitle>{member.label}</GroupTitle>}
-      <member.Body studio={studio} />
-    </Fragment>
-  ))
+  const { Primary, Body, Preview } = chapter
   return (
     <section
       data-chapter={chapter.id}
@@ -47,7 +36,7 @@ function ChapterBlock({
       </h2>
       <div className="flex flex-col gap-(--dial-gap,0.375rem) pb-2.5">
         {Primary && <Primary studio={studio} />}
-        {body}
+        <Body studio={studio} />
       </div>
     </section>
   )
@@ -62,7 +51,6 @@ export function PanelPage({
   studio: Studio
   system?: PanelSystem
 }) {
-  const index = resolveIndex(chapters)
   const rootRef = useRef<HTMLDivElement>(null)
   const reveal = (id: string) =>
     rootRef.current
@@ -74,9 +62,9 @@ export function PanelPage({
       <PanelChrome
         studio={studio}
         system={system}
-        search={<PanelSearch chapters={index} onOpenChapter={reveal} />}
+        search={<PanelSearch chapters={chapters} onOpenChapter={reveal} />}
       >
-        {index.map((chapter) => (
+        {chapters.map((chapter) => (
           <ChapterBlock key={chapter.id} chapter={chapter} studio={studio} />
         ))}
       </PanelChrome>

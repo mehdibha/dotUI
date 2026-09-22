@@ -1,21 +1,29 @@
 "use client"
 
-/* Pickers — the trigger caret shared by select and combobox: chevron-down
-   (Material, Spectrum, Carbon, Radix Themes, Geist) vs chevrons-up-down
-   (macOS pop-up buttons, shadcn combobox); triangle carets are dead and
-   "none" unattested, so two options only. Rejected: trigger shell (Inputs
-   owns the field shell), clear affordance (Ant allowClear / MUI clearable =
-   prop), date trigger field-vs-button (the date picker ships a shell; its
-   trigger is the consumer's composition, and a button trigger would need a
-   value-display API the registry doesn't have). The listbox belongs to
-   Menus. */
+/* Pickers — the trigger caret select and combobox share, and the calendar's
+   month grid. The field shell comes from Inputs, the listbox from Menus. */
 
+import { cn } from "@/registry/lib/utils"
+
+import {
+  DAY_SHAPE_OPTIONS,
+  TODAY_OPTIONS,
+  WEEKDAY_OPTIONS,
+} from "../axes/calendar"
 import { CARET_OPTIONS } from "../axes/pickers"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
-import type { Studio } from "../state"
+import {
+  DialGap,
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
+import { CardGrid } from "../patterns"
+import type { Studio, StudioState } from "../state"
 
-/* ------------------------------ Option glyphs ------------------------------ */
+/* -------------------------------- Specimens -------------------------------- */
 
 function CaretGlyph({ caret }: { caret: string }) {
   return (
@@ -28,31 +36,149 @@ function CaretGlyph({ caret }: { caret: string }) {
       strokeLinejoin="round"
       aria-hidden
     >
-      {caret === "chevron" ? (
-        <path d="m6 9 6 6 6-6" />
-      ) : (
+      {caret === "double" ? (
         <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+      ) : (
+        <path d="m6 9 6 6 6-6" />
       )}
     </svg>
   )
 }
 
-const OPTIONS: SelectRowOption[] = CARET_OPTIONS.map((o) => ({
-  ...o,
-  illustration: <CaretGlyph caret={o.value} />,
-}))
+const DAY_RADIUS: Record<string, string> = {
+  rounded: "rounded-[3px]",
+  circle: "rounded-full",
+  square: "rounded-none",
+}
+
+/** Two weeks of cells with one day selected in the shape. */
+function MonthGlyph({ shape }: { shape: string }) {
+  return (
+    <span className="my-1 grid w-full grid-cols-7 gap-1 px-1">
+      {Array.from({ length: 14 }, (_, i) => (
+        <span
+          key={i}
+          className={cn(
+            "aspect-square w-full",
+            DAY_RADIUS[shape],
+            i === 9 ? "bg-primary" : "bg-fg/8",
+          )}
+        />
+      ))}
+    </span>
+  )
+}
+
+function TodayGlyph({ marker }: { marker: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {marker === "ring" && (
+        <circle
+          cx="12"
+          cy="12"
+          r="7.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      )}
+      {marker === "fill" && (
+        <circle cx="12" cy="12" r="8" fill="currentColor" opacity=".22" />
+      )}
+      <text
+        x="12"
+        y="12.5"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize="9"
+        fontWeight={marker === "numeral" ? 650 : 500}
+        fill="currentColor"
+        className={marker === "numeral" ? "text-fg-accent" : undefined}
+      >
+        17
+      </text>
+    </svg>
+  )
+}
+
+/* --------------------------------- Section --------------------------------- */
+
+export function PickersPreview({ state }: { state: StudioState }) {
+  return (
+    <DialGlyph>
+      <CaretGlyph caret={state.pickerCaret} />
+    </DialGlyph>
+  )
+}
 
 export function PickersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SelectRow
+    <>
+      <DialSelect
         label="Caret"
         value={state.pickerCaret}
         onChange={set("pickerCaret")}
-        options={OPTIONS}
-        layout="grid"
+        rowPreview={false}
+        options={CARET_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <CaretGlyph caret={option.value} />
+            </DialGlyph>
+          ),
+        }))}
       />
-    </ControlGroup>
+      <DialTrigger
+        label="Calendar"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(DAY_SHAPE_OPTIONS, state.calendarDayShape)} ·{" "}
+              {optionLabel(TODAY_OPTIONS, state.calendarToday)}
+            </span>
+            <span
+              className={cn(
+                "size-3.5 shrink-0 bg-primary",
+                DAY_RADIUS[state.calendarDayShape],
+              )}
+            />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <CardGrid
+            label="Day shape"
+            columns={3}
+            value={state.calendarDayShape}
+            onChange={set("calendarDayShape")}
+            options={DAY_SHAPE_OPTIONS.map((option) => ({
+              id: option.value,
+              label: option.label,
+              children: <MonthGlyph shape={option.value} />,
+            }))}
+          />
+          <DialGap />
+          <DialSelect
+            label="Today"
+            value={state.calendarToday}
+            onChange={set("calendarToday")}
+            options={TODAY_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <TodayGlyph marker={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Weekdays"
+            value={state.calendarWeekdays}
+            onChange={set("calendarWeekdays")}
+            options={WEEKDAY_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+    </>
   )
 }

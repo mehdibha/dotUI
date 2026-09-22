@@ -1,17 +1,17 @@
 "use client"
 
 /* Sliders — thumb and track compose freely: circle-on-thick is the classic
-   volume slider, bar-on-thin is M3 on a quiet page. */
+   volume slider, bar-on-thin is M3 on a quiet page. The fill's color is a
+   leaf of Color's Primary. */
 
-import { SOURCE_OPTIONS } from "../axes/color"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
-import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
-import type { Studio } from "../state"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import type { Studio, StudioState } from "../state"
 
-/* ------------------------------ Option glyphs ------------------------------ */
+/* -------------------------------- Specimens -------------------------------- */
 
-function ThumbGlyph({ thumb }: { thumb: string }) {
+function ThumbGlyph({ thumb, track }: { thumb: string; track: string }) {
+  const weight = track === "thick" ? 5 : 2
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       {thumb === "bar" ? (
@@ -19,7 +19,7 @@ function ThumbGlyph({ thumb }: { thumb: string }) {
           <path
             d="M3 12h5.5M15.5 12h5.5"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={weight}
             strokeLinecap="round"
             opacity=".4"
           />
@@ -37,7 +37,7 @@ function ThumbGlyph({ thumb }: { thumb: string }) {
           <path
             d="M3 12h18"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={weight}
             strokeLinecap="round"
             opacity=".4"
           />
@@ -59,34 +59,40 @@ function ThumbGlyph({ thumb }: { thumb: string }) {
   )
 }
 
-const THUMB_SELECT_OPTIONS: SelectRowOption[] = THUMB_OPTIONS.map((o) => ({
-  ...o,
-  illustration: <ThumbGlyph thumb={o.value} />,
-}))
+/* --------------------------------- Section --------------------------------- */
+
+export function SlidersPreview({ state }: { state: StudioState }) {
+  return (
+    <DialGlyph>
+      <ThumbGlyph thumb={state.sliderThumb} track={state.sliderTrack} />
+    </DialGlyph>
+  )
+}
 
 export function SlidersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SelectRow
+    <>
+      <DialSelect
         label="Thumb"
         value={state.sliderThumb}
         onChange={set("sliderThumb")}
-        options={THUMB_SELECT_OPTIONS}
-        layout="grid"
+        rowPreview={false}
+        options={THUMB_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <ThumbGlyph thumb={option.value} track={state.sliderTrack} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Track"
         value={state.sliderTrack}
         onChange={set("sliderTrack")}
         options={TRACK_OPTIONS}
       />
-      <SegmentedControlRow
-        label="Color"
-        value={state.sliderColor}
-        onChange={set("sliderColor")}
-        options={SOURCE_OPTIONS}
-      />
-    </ControlGroup>
+    </>
   )
 }
