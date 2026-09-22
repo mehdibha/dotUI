@@ -9,71 +9,92 @@ interface PersistedStoreCodec<T> {
 }
 
 /**
- * A localStorage-backed value as a `useSyncExternalStore` hook. Memory is the
- * source of truth: writes update it and notify subscribers even when
- * persistence fails (private mode, quota), and reads never hit storage on the
- * render path. Same-tab writes notify through a per-key custom event (the
- * native `storage` event only fires in other tabs); the server and the first
- * client render see `fallback` so hydration matches.
+ * A localStorage-backed value as a `useSyncExternalStore` hook. Memory mirrors
+ * the last raw string seen in storage: it re-reads whenever nothing keeps it in
+ * sync (no subscriber, so no `storage` listener) and before every `update`, so
+ * a write never sends back a value another tab has since replaced. Writes still
+ * apply in memory when persistence fails (private mode, quota). The server and
+ * the first client render see `fallback` so hydration matches.
  */
 export function createPersistedStore<T>(
   key: string,
   fallback: T,
   { decode, encode }: PersistedStoreCodec<T>,
 ) {
-  const changeEvent = `${key}:change`
-
-  let initialized = false
+  const listeners = new Set<() => void>()
   let value = fallback
+  // undefined until storage was first read; null when the key is absent.
+  let raw: string | null | undefined
 
-  function read(): T {
+  function sync(): boolean {
+    if (typeof window === "undefined") return false
+    let next: string | null
     try {
-      const raw = window.localStorage.getItem(key)
-      return raw === null ? fallback : decode(raw)
+      next = window.localStorage.getItem(key)
     } catch {
-      return fallback
+      return false
     }
+    if (next === raw) return false
+    raw = next
+    try {
+      value = next === null ? fallback : decode(next)
+    } catch {
+      value = fallback
+    }
+    return true
+  }
+
+  function emit() {
+    for (const listener of listeners) listener()
+  }
+
+  function onStorage(e: StorageEvent) {
+    if ((e.key === null || e.key === key) && sync()) emit()
   }
 
   function get(): T {
-    if (!initialized && typeof window !== "undefined") {
-      value = read()
-      initialized = true
-    }
+    if (listeners.size === 0) sync()
     return value
   }
 
   function set(next: T): void {
-    initialized = true
+    // Baseline `raw` so a failed write isn't undone by the next re-read.
+    if (raw === undefined) sync()
     value = next
     try {
       const encoded = encode(next)
       if (encoded === null) window.localStorage.removeItem(key)
       else window.localStorage.setItem(key, encoded)
+      raw = encoded
     } catch {
       // Best-effort persistence; the in-memory value still applies.
     }
-    window.dispatchEvent(new Event(changeEvent))
+    emit()
+  }
+
+  /** Read-modify-write against the latest stored value. */
+  function update(fn: (current: T) => T): void {
+    const changed = sync()
+    const next = fn(value)
+    if (next !== value) set(next)
+    else if (changed) emit()
   }
 
   function subscribe(onChange: () => void): () => void {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key !== null && e.key !== key) return
-      value = read()
-      initialized = true
-      onChange()
+    if (listeners.size === 0) {
+      sync()
+      window.addEventListener("storage", onStorage)
     }
-    window.addEventListener("storage", onStorage)
-    window.addEventListener(changeEvent, onChange)
+    listeners.add(onChange)
     return () => {
-      window.removeEventListener("storage", onStorage)
-      window.removeEventListener(changeEvent, onChange)
+      listeners.delete(onChange)
+      if (listeners.size === 0) window.removeEventListener("storage", onStorage)
     }
   }
 
   const useValue = (): T => useSyncExternalStore(subscribe, get, () => fallback)
 
-  return { get, set, useValue }
+  return { get, set, update, subscribe, useValue }
 }
 
 /** Codec for a closed string set. Unknown stored values decode to the fallback; the fallback clears the key. */

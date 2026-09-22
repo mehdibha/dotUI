@@ -12,18 +12,39 @@ export interface SavedPreset {
   updatedAt: number
 }
 
+function isSavedPreset(value: unknown): value is SavedPreset {
+  if (typeof value !== "object" || value === null) return false
+  const p = value as Record<string, unknown>
+  return (
+    typeof p.id === "string" &&
+    typeof p.name === "string" &&
+    typeof p.state === "string" &&
+    Number.isFinite(p.createdAt) &&
+    Number.isFinite(p.updatedAt)
+  )
+}
+
+function decodeSavedPresets(raw: string): SavedPreset[] {
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed.filter(isSavedPreset) : []
+  } catch {
+    return []
+  }
+}
+
+// randomUUID only exists in secure contexts; LAN dev over http has none.
+function newId(): string {
+  return typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+}
+
 const presetsStore = createPersistedStore<SavedPreset[]>(
   "dotui:my-presets",
   [],
   {
-    decode: (raw) => {
-      try {
-        const parsed = JSON.parse(raw)
-        return Array.isArray(parsed) ? (parsed as SavedPreset[]) : []
-      } catch {
-        return []
-      }
-    },
+    decode: decodeSavedPresets,
     encode: (presets) => (presets.length > 0 ? JSON.stringify(presets) : null),
   },
 )
@@ -38,77 +59,67 @@ const activeStore = createPersistedStore<string | undefined>(
   },
 )
 
-export function useMyPresets() {
-  const presets = presetsStore.useValue()
-  const activeId = activeStore.useValue()
+export function savePreset(name: string, state: string): void {
+  const id = newId()
+  const now = Date.now()
+  presetsStore.update((presets) => [
+    ...presets,
+    { id, name, state, createdAt: now, updatedAt: now },
+  ])
+  activeStore.set(id)
+}
 
-  function save(name: string, state: string): string {
-    const id = crypto.randomUUID()
+export function updatePreset(id: string, state: string, name?: string): void {
+  presetsStore.update((presets) =>
+    presets.map((p) =>
+      p.id === id
+        ? { ...p, state, name: name ?? p.name, updatedAt: Date.now() }
+        : p,
+    ),
+  )
+  activeStore.set(id)
+}
+
+export function renamePreset(id: string, name: string): void {
+  presetsStore.update((presets) =>
+    presets.map((p) =>
+      p.id === id ? { ...p, name, updatedAt: Date.now() } : p,
+    ),
+  )
+}
+
+export function duplicatePreset(id: string): void {
+  presetsStore.update((presets) => {
+    const source = presets.find((p) => p.id === id)
+    if (!source) return presets
     const now = Date.now()
-    presetsStore.set([
-      ...presetsStore.get(),
-      { id, name, state, createdAt: now, updatedAt: now },
-    ])
-    activeStore.set(id)
-    return id
-  }
-
-  function update(id: string, state: string, name?: string) {
-    presetsStore.set(
-      presetsStore
-        .get()
-        .map((p) =>
-          p.id === id
-            ? { ...p, state, name: name ?? p.name, updatedAt: Date.now() }
-            : p,
-        ),
-    )
-    activeStore.set(id)
-  }
-
-  function rename(id: string, name: string) {
-    presetsStore.set(
-      presetsStore
-        .get()
-        .map((p) => (p.id === id ? { ...p, name, updatedAt: Date.now() } : p)),
-    )
-  }
-
-  function duplicate(id: string): string | undefined {
-    const source = presetsStore.get().find((p) => p.id === id)
-    if (!source) return undefined
-    const newId = crypto.randomUUID()
-    const now = Date.now()
-    presetsStore.set([
-      ...presetsStore.get(),
+    return [
+      ...presets,
       {
-        id: newId,
+        id: newId(),
         name: `${source.name} copy`,
         state: source.state,
         createdAt: now,
         updatedAt: now,
       },
-    ])
-    return newId
-  }
+    ]
+  })
+}
 
-  function remove(id: string) {
-    presetsStore.set(presetsStore.get().filter((p) => p.id !== id))
-    if (activeStore.get() === id) activeStore.set(undefined)
-  }
+export function removePreset(id: string): void {
+  presetsStore.update((presets) => presets.filter((p) => p.id !== id))
+  activeStore.update((active) => (active === id ? undefined : active))
+}
 
-  function setActive(id: string | undefined) {
-    activeStore.set(id)
-  }
-
+export function useMyPresets() {
   return {
-    presets,
-    activeId,
-    save,
-    update,
-    rename,
-    duplicate,
-    remove,
-    setActive,
+    presets: presetsStore.useValue(),
+    activeId: activeStore.useValue(),
+    save: savePreset,
+    update: updatePreset,
+    rename: renamePreset,
+    duplicate: duplicatePreset,
+    remove: removePreset,
+    setActive: activeStore.set,
   }
 }
