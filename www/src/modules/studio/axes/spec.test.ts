@@ -63,8 +63,8 @@ describe.each(specs)("$name", ({ spec }) => {
       const axis = (spec.axes as Record<string, ChapterSpec["axes"][never]>)[
         key
       ]
-      expect(axis, `${recipe.id}: ${key} is not an axis`).toBeDefined()
-      expect(checkAxisValue(axis!, value)).toBe(undefined)
+      if (!axis) throw new Error(`${recipe.id}: ${key} is not an axis`)
+      expect(checkAxisValue(axis, value)).toBe(undefined)
     }
   })
 })

@@ -1,7 +1,7 @@
 "use client"
 
-/* Pickers — the trigger caret select and combobox share, and the calendar's
-   month grid. The field shell comes from Inputs, the listbox from Menus. */
+/* Pickers — the select trigger's caret and the calendar's month grid. The
+   field shell comes from Inputs, the listbox from Menus. */
 
 import { cn } from "@/registry/lib/utils"
 

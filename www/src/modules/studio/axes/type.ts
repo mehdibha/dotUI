@@ -11,6 +11,7 @@ import {
 } from "@/lib/fonts"
 
 import type { Resolved, StudioState } from "./index"
+import type { ChapterSpec } from "./spec"
 
 export const TYPE_DEFAULTS = {
   // heading mirrors --font-heading: '' = Auto, follows body.
@@ -31,3 +32,51 @@ export function resolveType(state: StudioState): Resolved {
     tokens["--font-mono"] = fontStack(state.monoFont)
   return { tokens }
 }
+
+export const TYPE_SPEC = {
+  label: "Typography",
+  description:
+    "The three font roles — heading, body and mono — each a family from " +
+    "the Google Fonts catalog, shipped as `--font-heading`, `--font-sans` " +
+    "and `--font-mono`.",
+  axes: {
+    headingFont: {
+      label: "Heading",
+      description:
+        "The face for h1–h6 and the titles of Card, Dialog and Empty. " +
+        "Weights and sizes stay with each component.",
+      value: { type: "font" },
+      auto: "Follows Body — `--font-heading` falls back to `--font-sans`.",
+      guidance:
+        "Material 3 splits a brand face (display, headline, large titles) " +
+        "from a plain face (body, labels); shadcn/ui's builder (heading " +
+        "'inherit' by default) and Radix Themes (`--heading-font-family` " +
+        "defaults to the body family) make the split optional, as here. " +
+        "Leave it on Auto for product UIs; pick a serif or display face " +
+        "only when the brand is editorial or expressive — headings are few " +
+        "in an app, so the face carries less than in marketing.",
+    },
+    bodyFont: {
+      label: "Body",
+      description:
+        "The face of all UI and running text — every control, label and " +
+        "paragraph inherits it.",
+      value: { type: "font" },
+      guidance:
+        "Material 3 defaults to Roboto, shadcn/ui's builder to Inter, " +
+        "dotUI to Geist. " +
+        "Pick a sans with tabular figures and a large x-height for dense " +
+        "UIs; a serif body suits reading-first products, not dashboards.",
+    },
+    monoFont: {
+      label: "Mono",
+      description: "The monospace face — code, Kbd keys and OTP field digits.",
+      value: { type: "font" },
+      guidance:
+        "Radix Themes (`--code-font-family`) and shadcn/ui (`--font-mono`) " +
+        "expose it as its own token; Material 3 has no mono role. A mono " +
+        "from the body's own superfamily (Geist Mono with Geist, IBM Plex " +
+        "Mono with Plex Sans) reads most coherent.",
+    },
+  },
+} satisfies ChapterSpec<typeof TYPE_DEFAULTS>

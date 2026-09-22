@@ -24,7 +24,7 @@ describe("list_axes", () => {
 
   test("a chapter comes back in full with defaults", () => {
     const [shape] = listAxes(["shape"]).chapters
-    const radius = shape!.axes.find((a) => a.key === "radiusPx")
+    const radius = shape?.axes.find((a) => a.key === "radiusPx")
     expect(radius).toMatchObject({ default: 10, value: { type: "number" } })
     expect(shape).toHaveProperty("recipes")
   })
@@ -91,7 +91,7 @@ describe("set_axes", () => {
 describe("presets and links", () => {
   test("presets decode to their own state", () => {
     const [origin] = listPresets().presets
-    expect(decodePreset(origin!.preset).state.brand).toBe("#0072f5")
+    expect(decodePreset(origin?.preset ?? "").state.brand).toBe("#0072f5")
   })
 
   test("links carry the preset", () => {

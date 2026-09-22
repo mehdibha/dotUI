@@ -6,6 +6,7 @@
    Engine: `separator` and `tone` are enum params on `breadcrumbs`. */
 
 import type { Resolved, StudioState } from "./index"
+import type { ChapterSpec } from "./spec"
 
 export const BREADCRUMB_DEFAULTS = {
   breadcrumbSeparator: "chevron",
@@ -13,13 +14,37 @@ export const BREADCRUMB_DEFAULTS = {
 }
 
 export const SEPARATOR_OPTIONS = [
-  { value: "slash", label: "Slash" },
-  { value: "chevron", label: "Chevron" },
+  {
+    value: "slash",
+    label: "Slash",
+    description: "A plain “/” character between crumbs.",
+    seenIn: ["Carbon", "Ant Design"],
+  },
+  {
+    value: "chevron",
+    label: "Chevron",
+    description:
+      "A 16px right-chevron icon from the icon library between crumbs.",
+    seenIn: ["shadcn/ui", "Spectrum 2"],
+  },
 ]
 
 export const TONE_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "muted", label: "Muted" },
+  {
+    value: "accent",
+    label: "Accent",
+    description:
+      "Ancestor crumbs are accent-colored links that underline on hover.",
+    seenIn: ["Carbon"],
+  },
+  {
+    value: "muted",
+    label: "Muted",
+    description:
+      "Ancestor crumbs are muted text that sharpens to the text color on " +
+      "hover.",
+    seenIn: ["shadcn/ui", "Spectrum 2", "Ant Design"],
+  },
 ]
 
 const pick = (options: { value: string }[], value: string, fallback: string) =>
@@ -43,3 +68,32 @@ export function resolveBreadcrumbs(state: StudioState): Resolved {
     },
   }
 }
+
+export const BREADCRUMB_SPEC = {
+  label: "Breadcrumbs",
+  description:
+    "The breadcrumb trail's separator glyph and how loud its ancestor links " +
+    "are. The current crumb is always plain text in the text color.",
+  axes: {
+    breadcrumbSeparator: {
+      label: "Separator",
+      description: "The glyph drawn between crumbs.",
+      value: { type: "enum", options: SEPARATOR_OPTIONS },
+      guidance:
+        "An even split: Carbon and Ant use a slash, shadcn and Spectrum 2 a " +
+        "chevron. Slash reads like a file path and suits developer tools; " +
+        "the chevron reads as hierarchy and follows the icon library's " +
+        "stroke.",
+    },
+    breadcrumbTone: {
+      label: "Crumbs",
+      description:
+        "How the ancestor crumbs (every crumb but the current) read.",
+      value: { type: "enum", options: TONE_OPTIONS },
+      guidance:
+        "3 of 4 systems checked (shadcn, Spectrum 2, Ant) mute the " +
+        "ancestors so the trail recedes; Carbon paints them as regular " +
+        "accent links. Accent suits link-dense, content-first sites.",
+    },
+  },
+} satisfies ChapterSpec<typeof BREADCRUMB_DEFAULTS>

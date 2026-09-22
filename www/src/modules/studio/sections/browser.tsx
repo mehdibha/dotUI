@@ -7,8 +7,15 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { CURSOR_DEFAULTS } from "../axes/cursor"
+import {
+  CONTROLS_OPTIONS,
+  CURSOR_DEFAULTS,
+  DISABLED_OPTIONS,
+  DRAGGING_OPTIONS,
+  PENDING_OPTIONS,
+} from "../axes/cursor"
 import { STYLE_OPTIONS } from "../axes/scrollbars"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import {
   DialPopover,
   DialSegmented,
@@ -41,53 +48,45 @@ function Glyph({
   )
 }
 
-const cursor = (
-  value: string,
-  label: string,
-  glyph: React.ReactNode,
-): DialOption => ({
-  value,
-  label: (
-    <>
-      <Glyph>{glyph}</Glyph>
-      {label}
-    </>
-  ),
-})
+const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
+  default: <ArrowCursor />,
+  inherit: <ArrowCursor />,
+  pointer: <HandCursor />,
+  progress: <ProgressCursor />,
+  wait: <WaitCursor />,
+  grab: <OpenHandCursor />,
+  "not-allowed": <NotAllowedCursor />,
+}
+
+const cursors = (
+  options: readonly { value: string; label: string }[],
+): DialOption[] =>
+  options.map(({ value, label }) => ({
+    value,
+    label: (
+      <>
+        <Glyph>{CURSOR_GLYPHS[value]}</Glyph>
+        {label}
+      </>
+    ),
+  }))
 
 const CURSOR_ROWS = [
   {
     key: "cursorControls",
     label: "Controls",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("pointer", "Hand", <HandCursor />),
-    ],
+    options: cursors(CONTROLS_OPTIONS),
   },
-  {
-    key: "cursorPending",
-    label: "Pending",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("progress", "Progress", <ProgressCursor />),
-      cursor("wait", "Wait", <WaitCursor />),
-    ],
-  },
+  { key: "cursorPending", label: "Pending", options: cursors(PENDING_OPTIONS) },
   {
     key: "cursorDragging",
     label: "Dragging",
-    options: [
-      cursor("inherit", "Arrow", <ArrowCursor />),
-      cursor("grab", "Grab", <OpenHandCursor />),
-    ],
+    options: cursors(DRAGGING_OPTIONS),
   },
   {
     key: "cursorDisabled",
     label: "Disabled",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("not-allowed", "Blocked", <NotAllowedCursor />),
-    ],
+    options: cursors(DISABLED_OPTIONS),
   },
 ] as const
 
@@ -153,26 +152,18 @@ function ScrollbarGlyph({ kind }: { kind: string }) {
 
 /* Painted words, not cursors: the option is the highlight itself. The blue
    depicts the OS default, which is literal like the cursor drawings. */
-const HIGHLIGHT_OPTIONS = [
-  {
-    value: "accent",
-    label: "Accent",
-    preview: (
-      <span className="rounded-xs bg-text-selection px-1 text-[11px] text-fg-on-text-selection">
-        Aa
-      </span>
-    ),
-  },
-  {
-    value: "browser",
-    label: "Browser",
-    preview: (
-      <span className="rounded-xs bg-[#B3D7FF] px-1 text-[11px] text-[#1B1B1F]">
-        Aa
-      </span>
-    ),
-  },
-]
+const HIGHLIGHT_PREVIEWS: Record<string, React.ReactNode> = {
+  accent: (
+    <span className="rounded-xs bg-text-selection px-1 text-[11px] text-fg-on-text-selection">
+      Aa
+    </span>
+  ),
+  browser: (
+    <span className="rounded-xs bg-[#B3D7FF] px-1 text-[11px] text-[#1B1B1F]">
+      Aa
+    </span>
+  ),
+}
 
 /* --------------------------------- Section --------------------------------- */
 
@@ -212,7 +203,7 @@ export function BrowserSection({ studio }: { studio: Studio }) {
               label={row.label}
               value={state[row.key]}
               onChange={set(row.key)}
-              options={[...row.options]}
+              options={row.options}
             />
           ))}
         </DialPopover>
@@ -226,7 +217,11 @@ export function BrowserSection({ studio }: { studio: Studio }) {
         label="Highlight"
         value={state.selectionHighlight}
         onChange={set("selectionHighlight")}
-        options={HIGHLIGHT_OPTIONS}
+        options={HIGHLIGHT_OPTIONS.map(({ value, label }) => ({
+          value,
+          label,
+          preview: HIGHLIGHT_PREVIEWS[value],
+        }))}
       />
       <DialSelect
         label="Scrollbars"

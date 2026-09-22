@@ -7,6 +7,7 @@
    `--spacing`, written on `:root` — live and in the exported theme alike. */
 
 import type { Resolved, StudioState } from "./index"
+import type { ChapterSpec } from "./spec"
 
 export const SPACE_DEFAULTS = {
   density: "default",
@@ -24,6 +25,10 @@ export const DENSITY_TIERS = [
   {
     id: "compact",
     label: "Compact",
+    description:
+      "28px controls and menu items with 12px text; tighter gaps and " +
+      "paddings throughout.",
+    seenIn: ["shadcn/ui", "Ant Design"],
     control: 7,
     item: 7,
     inset: 4,
@@ -33,6 +38,8 @@ export const DENSITY_TIERS = [
   {
     id: "default",
     label: "Default",
+    description: "32px controls and 28px menu items with 14px text.",
+    seenIn: ["shadcn/ui", "Ant Design"],
     control: 8,
     item: 8,
     inset: 4,
@@ -42,6 +49,10 @@ export const DENSITY_TIERS = [
   {
     id: "comfortable",
     label: "Comfortable",
+    description:
+      "36px controls and 32px menu items with 14px text, and roomier card " +
+      "and dialog insets.",
+    seenIn: ["shadcn/ui"],
     control: 9,
     item: 9,
     inset: 6,
@@ -61,3 +72,49 @@ export function resolveSpace(state: StudioState): Resolved {
     tokens["--spacing"] = `${state.spacingUnit / 16}rem`
   return { tokens, density: densityTier(state.density).id }
 }
+
+export const SPACE_SPEC = {
+  label: "Space",
+  description:
+    "How dense the system is: which tier of component sizes every " +
+    "component wears, and the spacing unit all sizes, paddings and gaps " +
+    "are multiples of.",
+  axes: {
+    density: {
+      label: "Density",
+      description:
+        "One of three hand-tuned size tiers: control and item heights, " +
+        "paddings, gaps, and the text size inside controls and cards. " +
+        "Heights are counted in spacing units, so they also scale with Unit.",
+      value: {
+        type: "enum",
+        options: DENSITY_TIERS.map(({ id, label, description, seenIn }) => ({
+          value: id,
+          label,
+          description,
+          seenIn,
+        })),
+      },
+      guidance:
+        "shadcn/ui ships all three as styles (Mira, Nova, Vega at 28, 32 " +
+        "and 36px buttons). Ant Design's compact algorithm drops controls " +
+        "32→28px and text 14→12px; Cloudscape's compact mode only tightens " +
+        "paddings and margins; Material 3 steps heights down 4dp per " +
+        "density level. Compact suits dashboards and data-heavy tools, " +
+        "Comfortable consumer products.",
+    },
+    spacingUnit: {
+      label: "Unit",
+      description:
+        "Tailwind's --spacing: the length every spacing utility multiplies, " +
+        "so it scales control heights, paddings, gaps and sizes together. " +
+        "Text and radius don't follow it.",
+      value: { type: "number", unit: "px", ...UNIT_RANGE },
+      guidance:
+        "4px is the base in Tailwind, Ant Design (sizeUnit), Cloudscape and " +
+        "Radix Themes, whose scaling setting (90–110%) is the same idea " +
+        "applied to text as well. Below 4px tightens a dense tool; above " +
+        "suits touch-first products.",
+    },
+  },
+} satisfies ChapterSpec<typeof SPACE_DEFAULTS>

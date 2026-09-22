@@ -8,6 +8,7 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
+import type { AxisSpec, ChapterSpec } from "./spec"
 
 export interface ColorMode {
   id: string
@@ -23,6 +24,13 @@ export const DEFAULT_MODES: ColorMode[] = [
   { id: "light", name: "Light", polarity: "light", bg: 99 },
   { id: "dark", name: "Dark", polarity: "dark", bg: 2 },
 ]
+
+/** Where each mode's background L* runs — the engine's accepted range. */
+export const MODE_BG_RANGE = {
+  light: { min: 90, max: 100 },
+  dark: { min: 0, max: 20 },
+  step: 0.5,
+}
 
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
@@ -42,9 +50,23 @@ export const COLOR_DEFAULTS = {
 /* What a role draws from: the neutral's text end (the shadcn school,
    black/white) or the brand ramp (Material, Linear, Radix Themes). */
 export const SOURCE_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "accent", label: "Accent" },
+  {
+    value: "neutral",
+    label: "Neutral",
+    description:
+      "The neutral's darkest step — near-black in light mode, near-white " +
+      "in dark — with the page color on it.",
+  },
+  {
+    value: "accent",
+    label: "Accent",
+    description:
+      "The brand ramp's solid step, with a label color solved for contrast.",
+  },
 ]
+
+/** Where the Vividness slider runs. */
+export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
@@ -68,6 +90,18 @@ export const PRIMARY_LEAVES = [
 ] as const
 
 export type PrimaryLeaf = (typeof PRIMARY_LEAVES)[number]
+
+export const PRIMARY_LEAF_LABELS: Record<PrimaryLeaf, string> = {
+  buttonColor: "Buttons",
+  checkboxColor: "Checkbox",
+  radioColor: "Radio",
+  switchColor: "Switch",
+  selectionColor: "Selection",
+  sliderColor: "Slider",
+  tabsColor: "Tabs",
+  linkColor: "Links",
+  focusColor: "Focus ring",
+}
 
 export function primaryValue(state: StudioState): PrimaryColorSource | "mixed" {
   const first = state[PRIMARY_LEAVES[0]]
@@ -130,8 +164,14 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       selection: state.selectionSeed || undefined,
     }),
     background: compact({
-      light: light.bg === 99 ? undefined : clamp(light.bg, 90, 100),
-      dark: dark.bg === 0 ? ("oled" as const) : clamp(dark.bg, 0, 20),
+      light:
+        light.bg === 99
+          ? undefined
+          : clamp(light.bg, MODE_BG_RANGE.light.min, MODE_BG_RANGE.light.max),
+      dark:
+        dark.bg === 0
+          ? ("oled" as const)
+          : clamp(dark.bg, MODE_BG_RANGE.dark.min, MODE_BG_RANGE.dark.max),
     }),
     vividness: state.vividness === 1 ? undefined : state.vividness,
     neutralTint: state.neutralTint === 1 ? undefined : state.neutralTint,
@@ -172,3 +212,188 @@ export function isDefaultColorConfig(config: ColorConfig): boolean {
 export function resolveColor(state: StudioState): Resolved {
   return { color: buildColorConfig(state) }
 }
+
+const statusSeed = (
+  label: string,
+  paints: string,
+  fallback: string,
+): AxisSpec => ({
+  label,
+  description: `Seed of the ${label.toLowerCase()} palette — ${paints}.`,
+  value: { type: "color" },
+  auto:
+    `The engine's default ${fallback}, chosen for color-vision-deficiency ` +
+    "separation from the other status hues.",
+})
+
+export const COLOR_SPEC = {
+  label: "Color",
+  description:
+    "The palette engine's inputs: a brand seed, a neutral that leans toward " +
+    "a hue, optional status and selection seeds, and which ramp the solid " +
+    "roles paint with. Every palette is a 12-step ramp generated per mode; " +
+    "dark is its own pass, not an inversion.",
+  axes: {
+    brand: {
+      label: "Brand",
+      description:
+        "The brand color. The accent ramp is built from it: the solid step " +
+        "sits at the seed's own lightness (clamped so labels stay legible) " +
+        "and chroma, and the neutral leans toward its hue unless Neutral " +
+        "hue is set. Paints every role set to Accent (links and the focus " +
+        "ring by default; the focus ring moves to the Selection seed when " +
+        "one is set), and always the calendar's and time picker's selected " +
+        "values, drop-target highlights in drop zones and trees, and the " +
+        "text-selection highlight.",
+      value: { type: "color" },
+      guidance:
+        "Radix Themes picks from 26 named accents; Material 3 derives " +
+        "every palette from one source color, as here. A muted seed gives " +
+        "a muted ramp by design — raise Vividness rather than picking a " +
+        "louder seed. A near-gray seed yields gray ramps and an untinted " +
+        "neutral.",
+    },
+    buttonColor: {
+      label: PRIMARY_LEAF_LABELS.buttonColor,
+      description:
+        "What the primary tokens fill with: the primary button and toggle " +
+        "button, the progress bar, the avatar badge, the primary chat " +
+        "bubble, the checked questionnaire choice, and the slider unless " +
+        "the Slider leaf forks. A leaf of Primary.",
+      value: {
+        type: "enum",
+        options: SOURCE_OPTIONS.map((option) => ({
+          ...option,
+          seenIn:
+            option.value === "neutral"
+              ? ["shadcn/ui", "Geist"]
+              : ["Radix Themes", "Material 3"],
+        })),
+      },
+      guidance:
+        "Of 4 checked, shadcn/ui and Geist fill the primary button " +
+        "near-black; Radix Themes (accent step 9) and Material 3 (primary) " +
+        "fill it with the brand. Neutral suits tool UIs where the brand is " +
+        "kept for links and focus; accent suits brand-forward products.",
+    },
+    selectionColor: {
+      label: PRIMARY_LEAF_LABELS.selectionColor,
+      description:
+        "The source of the root selection tokens (color-selection*), which " +
+        "app code can use. Checkbox, radio and switch each have their own " +
+        "leaf: a control whose leaf equals this value paints with these " +
+        "tokens (and follows the Selection seed when one is set); a control " +
+        "on another value is scoped to its own source. Changing this alone " +
+        "repaints no registry component — it decides which checked " +
+        "controls follow the Selection seed.",
+      value: {
+        type: "enum",
+        options: SOURCE_OPTIONS.map((option) => ({
+          ...option,
+          seenIn:
+            option.value === "neutral"
+              ? ["shadcn/ui", "Carbon"]
+              : ["Radix Themes", "Material 3"],
+        })),
+      },
+      guidance:
+        "Of 4 checked, shadcn/ui (primary, near-black) and Carbon " +
+        "(icon-primary) check in neutral; Radix Themes and Material 3 in " +
+        "the brand. Keep it on the same source as Buttons unless checked " +
+        "controls need their own voice.",
+    },
+    neutralHue: {
+      label: "Neutral hue",
+      description:
+        "The OKLCH hue the neutral ramp leans toward — the tint of every " +
+        "gray: page, surfaces, borders, text.",
+      value: { type: "number", min: 0, max: 360, step: 1, unit: "°" },
+      auto:
+        "Follows the brand's hue. A near-gray brand leaves the neutral " +
+        "untinted.",
+      guidance:
+        "Material 3 and Radix Themes (gray 'auto': mauve for reds and " +
+        "purples, slate for blues, sage for greens, sand for yellows) both " +
+        "pair the gray with the accent's hue by default. shadcn/ui instead " +
+        "offers named grays — Neutral, Stone, Zinc, Mauve, Olive, Mist, " +
+        "Taupe — picked apart from the theme. The panel's families sit at " +
+        "Taupe 30°, Stone 60°, Olive 130°, Mist 250°, Zinc 286°, Mauve 320°.",
+    },
+    neutralTint: {
+      label: "Neutral tint",
+      description:
+        "How far the neutral leans toward its hue — a multiplier on the " +
+        "engine's tint peak (about 0.016 OKLCH chroma). 0 is a pure gray.",
+      value: { type: "number", min: 0, max: 2, step: 0.05, unit: "×" },
+      guidance:
+        "Material 3's neutral runs at HCT chroma 6 by default, 2 in its " +
+        "Neutral scheme and 0 in Monochrome; shadcn/ui's default Neutral " +
+        "is a pure gray (0). Use 0 for a stark, Vercel-like monochrome; " +
+        "1 reads as gray with a temperature; above 1.5 the neutral becomes " +
+        "visibly colored.",
+    },
+    successSeed: statusSeed(
+      "Success",
+      "success badges, alerts, toasts and an avatar fallback tint",
+      "#6ac48c",
+    ),
+    warningSeed: statusSeed(
+      "Warning",
+      "the warning button, warning badges, alerts, toasts and an avatar " +
+        "fallback tint",
+      "#eab308",
+    ),
+    dangerSeed: statusSeed(
+      "Danger",
+      "the danger button, field errors, danger badges, alerts and toasts",
+      "#ef4444",
+    ),
+    selectionSeed: {
+      label: "Selection",
+      description:
+        "Moves the selection tokens onto their own ramp, built from this " +
+        "seed: checkbox, radio and switch on the Selection leaf fill with " +
+        "its solid step instead of neutral or accent. It also takes over " +
+        "the focus color (color-border-focus): with Focus ring on Accent, " +
+        "the focus ring and focused field borders switch from the brand to " +
+        "this seed.",
+      value: { type: "color" },
+      auto:
+        "No ramp of its own — the selection tokens draw from the Selection " +
+        "leaf's source.",
+      guidance:
+        "Use it when checked controls carry a hue that is neither the " +
+        "brand nor gray: Apple HIG switches default to green, Carbon's " +
+        "toggle fills with its success green while its checkbox stays " +
+        "near-black. To split like Carbon, set the seed and move the " +
+        "controls that should stay neutral off the Selection leaf.",
+    },
+    vividness: {
+      label: "Vividness",
+      description:
+        "Scales the chroma of every generated chromatic ramp — brand, " +
+        "status and selection. 1 is the engine's fitted curve; 0 is gray.",
+      value: { type: "number", unit: "×", ...VIVIDNESS_RANGE },
+      guidance:
+        "The engine calibrates 1 to Radix Colors and about 1.33 to " +
+        "Tailwind's palette. Material 3 makes the same call as scheme " +
+        "variants: primary chroma 0 (Monochrome), 12 (Neutral), 36 (Tonal " +
+        "Spot, the default) and up to the gamut (Vibrant). Below 0.8 reads " +
+        "calm and corporate; above 1.3 reads playful.",
+    },
+    preserveSeed: {
+      label: "Keep exact",
+      description:
+        "Pins the brand's solid step to the exact seed in light mode, " +
+        "instead of re-fitting its lightness and chroma to the ramp. Dark " +
+        "mode still re-solves. The label on it can then miss its contrast " +
+        "target; the engine reports it.",
+      value: { type: "boolean" },
+      guidance:
+        "Material 3 offers both: Tonal Spot replaces the source chroma, " +
+        "while Fidelity and Content keep it and place the source color in " +
+        "primary container. Turn it on when brand guidelines require the " +
+        "exact hex on buttons; leave it off for ramps that stay even.",
+    },
+  },
+} satisfies ChapterSpec<typeof COLOR_DEFAULTS>

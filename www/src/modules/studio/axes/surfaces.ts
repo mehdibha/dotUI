@@ -31,8 +31,9 @@
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
-import { DEFAULT_MODES } from "./color"
+import { DEFAULT_MODES, MODE_BG_RANGE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import type { ChapterSpec } from "./spec"
 
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
@@ -43,27 +44,108 @@ export const SURFACE_DEFAULTS = {
 }
 
 export const STRATEGY_OPTIONS = [
-  { value: "hairline", label: "Hairline" },
-  { value: "adaptive", label: "Adaptive" },
-  { value: "shadow", label: "Shadow" },
-  { value: "tonal", label: "Tonal" },
+  {
+    value: "hairline",
+    label: "Hairline",
+    description:
+      "A 1px neutral edge on cards and floating layers in both modes; " +
+      "shadows stay secondary, with none on cards until Raised.",
+    seenIn: ["shadcn/ui", "Geist"],
+  },
+  {
+    value: "adaptive",
+    label: "Adaptive",
+    description:
+      "Shadow-led in light: no edges, cards carry a small shadow. In dark " +
+      "the shadows drop out; a hairline edge on every surface and lighter " +
+      "floating layers take over.",
+    seenIn: ["Primer", "Radix Themes", "Atlassian"],
+  },
+  {
+    value: "shadow",
+    label: "Shadow",
+    description:
+      "No edges; a key + ambient shadow pair on every surface, cards " +
+      "included, about twice as dark in dark mode, where floating layers " +
+      "also step lighter.",
+    seenIn: ["Fluent 2", "Spectrum 2"],
+  },
+  {
+    value: "tonal",
+    label: "Tonal",
+    description:
+      "No edges; cards and floating layers step off the page by " +
+      "background tone alone — on a Plain page a shade darker than the " +
+      "page in light, lighter in dark. Only floating layers keep a soft " +
+      "shadow, from Subtle up.",
+    seenIn: ["Material 3"],
+  },
 ]
 
 export const DEPTH_OPTIONS = [
-  { value: "flat", label: "Flat" },
-  { value: "subtle", label: "Subtle" },
-  { value: "raised", label: "Raised" },
-  { value: "floating", label: "Floating" },
+  {
+    value: "flat",
+    label: "Flat",
+    description:
+      "The quietest: a lighter edge and the style's smallest shadows.",
+  },
+  {
+    value: "subtle",
+    label: "Subtle",
+    description:
+      "The registry's own look under Hairline — the standard hairline, " +
+      "popovers at shadow-md, modals at shadow-lg, cards flat.",
+  },
+  {
+    value: "raised",
+    label: "Raised",
+    description:
+      "A heavier edge and one shadow rung up (cards gain a small one); in " +
+      "dark, floating layers step a shade lighter.",
+  },
+  {
+    value: "floating",
+    label: "Floating",
+    description:
+      "The strongest edge and largest shadows — modals up to shadow-2xl.",
+  },
 ]
 
 export const CANVAS_OPTIONS = [
-  { value: "same", label: "Plain" },
-  { value: "tinted", label: "Tinted" },
+  {
+    value: "same",
+    label: "Plain",
+    description:
+      "Page and cards share near-identical whites; cards separate by edge " +
+      "or shadow alone.",
+    seenIn: ["shadcn/ui"],
+  },
+  {
+    value: "tinted",
+    label: "Tinted",
+    description:
+      "A light-gray page with cards on the whitest step (Tonal keeps its " +
+      "own card tone). In dark the page stays put and cards and floating " +
+      "layers lift one rung further than on Plain.",
+    seenIn: ["Apple HIG"],
+  },
 ]
 
 export const MATERIAL_OPTIONS = [
-  { value: "solid", label: "Solid" },
-  { value: "glass", label: "Glass" },
+  {
+    value: "solid",
+    label: "Solid",
+    description: "Popovers, menus, selects and pickers are opaque.",
+    seenIn: ["Material 3"],
+  },
+  {
+    value: "glass",
+    label: "Glass",
+    description:
+      "The popover tier at 70% opacity over a 40px blur and 150% " +
+      "saturation of what's behind. Modals and drawers stay opaque.",
+    seenIn: ["shadcn/ui", "Radix Themes", "Apple HIG"],
+  },
 ]
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -391,3 +473,90 @@ export function resolveSurfaces(state: StudioState): Resolved {
   }
   return { tokens }
 }
+
+export const SURFACE_SPEC = {
+  label: "Surfaces",
+  description:
+    "How cards and floating layers (popovers, menus, modals) separate " +
+    "from the page: which means leads — edge, shadow or tone — and how it " +
+    "translates to dark, how strong it is, the page behind them, the " +
+    "popover material, and each mode's background lightness.",
+  axes: {
+    surfaceStrategy: {
+      label: "Style",
+      description:
+        "Which means separates surfaces from the page, with its dark-mode " +
+        "translation built in — shadows barely read on near-black, so each " +
+        "style decides what replaces them.",
+      value: { type: "enum", options: STRATEGY_OPTIONS },
+      guidance:
+        "Of 8 systems checked: shadcn/ui and Geist are edge-led in both " +
+        "modes; Primer, Radix Themes and Atlassian lean on shadows in light " +
+        "and turn up edges or surface lightness in dark; Fluent 2 and " +
+        "Spectrum 2 stay shadow-led and darken shadows 2–3× in dark; " +
+        "Material 3 separates by surface tone. Hairline suits dense tool " +
+        "UIs, Shadow and Adaptive softer consumer products, Tonal a " +
+        "Material look.",
+    },
+    surfaceDepth: {
+      label: "Depth",
+      description:
+        "The one intensity lever: edge weight, shadow size and dark-mode " +
+        "lift move together, for every surface role at once.",
+      value: { type: "enum", options: DEPTH_OPTIONS },
+      guidance:
+        "Fluent 2 ships six shadow steps and Primer splits resting from " +
+        "floating shadows; here the roles keep their order and Depth moves " +
+        "the whole ladder. Flat or Subtle for tools and dashboards, Raised " +
+        "or Floating when cards are the interface (boards, feeds).",
+    },
+    surfaceCanvas: {
+      label: "Page",
+      description:
+        "Whether the page is the same white as its cards or a tinted gray " +
+        "they lift off.",
+      value: { type: "enum", options: CANVAS_OPTIONS },
+      guidance:
+        "shadcn/ui's page and card share one white; Apple HIG pairs a " +
+        "gray grouped background with white rows, and Atlassian's sunken " +
+        "surface makes the same move for wells like Kanban columns. Tinted " +
+        "suits settings pages and card-heavy dashboards; Plain suits " +
+        "document-like pages.",
+    },
+    surfaceMaterial: {
+      label: "Glass",
+      description:
+        "Whether the popover tier — menus, selects, comboboxes, pickers, " +
+        "popovers — is opaque or translucent over a blur.",
+      value: { type: "enum", options: MATERIAL_OPTIONS },
+      guidance:
+        "shadcn/ui offers translucent menus as a builder option (off by " +
+        "default); Radix Themes defaults its panels — cards, dialogs and " +
+        "menus — to translucent; Apple HIG puts popovers on Liquid Glass. " +
+        "Glass only shows over content: on a plain page it reads as a " +
+        "slightly grayer solid.",
+    },
+    modes: {
+      label: "Backgrounds",
+      description:
+        "Each mode's page background lightness (CIELAB L*). The color " +
+        "engine rebuilds every ramp around it, so surfaces, borders and " +
+        "text keep their contrast.",
+      value: {
+        type: "json",
+        shape:
+          "[{ id, name, polarity: 'light' | 'dark', bg }] — one entry per " +
+          `polarity. bg is L*: light ${MODE_BG_RANGE.light.min}–` +
+          `${MODE_BG_RANGE.light.max} (default 99), dark ` +
+          `${MODE_BG_RANGE.dark.min}–${MODE_BG_RANGE.dark.max} (default 2; ` +
+          `0 is OLED black), in steps of ${MODE_BG_RANGE.step}.`,
+      },
+      guidance:
+        "Material 3 sets the light page at tone 98 and dark at tone 6 " +
+        "(tone ≈ L*); shadcn/ui's dark background is oklch 0.145 (≈ L* 3); " +
+        "Geist's dark page is pure black. 2–6 keeps dark shadows and " +
+        "lifted surfaces readable; 0 suits OLED or cinematic looks; a " +
+        "light page under 97 reads as tinted gray.",
+    },
+  },
+} satisfies ChapterSpec<typeof SURFACE_DEFAULTS>

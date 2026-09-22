@@ -12,6 +12,7 @@ import {
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 
 import {
+  ICON_STROKE_RANGE,
   ICON_STROKE_WIDTH_VAR,
   LIBRARY_OPTIONS,
   STROKE_DEFAULTS,
@@ -86,9 +87,9 @@ export function IconsSection({ studio }: { studio: Studio }) {
           label="Stroke"
           value={state.iconStroke}
           onChange={set("iconStroke")}
-          minValue={1}
-          maxValue={3}
-          step={0.25}
+          minValue={ICON_STROKE_RANGE.min}
+          maxValue={ICON_STROKE_RANGE.max}
+          step={ICON_STROKE_RANGE.step}
           format={(v) => v.toFixed(2)}
         />
       )}
