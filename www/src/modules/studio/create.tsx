@@ -47,7 +47,14 @@ function canon(state: string): string {
    global reset returns to, and what the modified dot diffs against. */
 const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
 
-export function StudioPanel({ className }: { className?: string }) {
+export function StudioPanel({
+  className,
+  galleryReady = true,
+}: {
+  className?: string
+  /** False while the layout is unknown, so ?gallery= opens only in the panel that stays. */
+  galleryReady?: boolean
+}) {
   const studio = useStudio()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -170,7 +177,7 @@ export function StudioPanel({ className }: { className?: string }) {
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
       <PresetPicker
-        isOpen={gallery === true}
+        isOpen={gallery === true && galleryReady}
         onOpenChange={setGalleryOpen}
         sections={pickerSections}
         selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}

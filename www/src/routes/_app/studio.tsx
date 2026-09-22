@@ -48,9 +48,9 @@ const searchDefaults = { preview: "cards" }
 const LEGACY_ORIGIN =
   "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
 
-/** False on the server and first render, so SSR ships the desktop layout. */
+/** Undefined on the server and first render (SSR ships the desktop layout). */
 function useIsBelowLg() {
-  const [isBelow, setIsBelow] = useState(false)
+  const [isBelow, setIsBelow] = useState<boolean>()
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 1023px)")
     const onChange = () => setIsBelow(mql.matches)
@@ -78,8 +78,8 @@ function StudioPage() {
   const isBelowLg = useIsBelowLg()
   const [sheetOpen, setSheetOpen] = useState(false)
   useEffect(() => {
-    // The sheet portals out of the layout, so no breakpoint class can hide it.
-    if (!isBelowLg) setSheetOpen(false)
+    // The sheet portals out of the layout: close it past lg.
+    if (isBelowLg === false) setSheetOpen(false)
     // ?gallery= (the /presets redirect) needs the panel that owns the picker.
     else if (gallery) setSheetOpen(true)
   }, [isBelowLg, gallery])
@@ -126,7 +126,12 @@ function StudioPage() {
           ref={setBoundary}
           className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
         >
-          {!isBelowLg && <StudioPanel className="max-lg:hidden" />}
+          {!isBelowLg && (
+            <StudioPanel
+              className="max-lg:hidden"
+              galleryReady={isBelowLg !== undefined}
+            />
+          )}
           <PreviewPanel onCustomize={() => setSheetOpen(true)} />
         </div>
       </PanelPopoverBoundary.Provider>
