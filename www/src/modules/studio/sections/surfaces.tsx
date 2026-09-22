@@ -5,7 +5,8 @@
    (shadows die on near-black), so the pick shows both modes instead of asking
    for them separately. Depth is the one intensity lever, Page whether white
    surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — folds under More. */
+   background — how white, how black — sits under Style, whose cards draw
+   both modes. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -27,7 +28,7 @@ import type {
   SurfacePalette,
 } from "../axes/surfaces"
 import {
-  DialFolder,
+  DialGap,
   DialPopover,
   DialSegmented,
   DialSlider,
@@ -192,6 +193,23 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
               ),
             }))}
           />
+          <DialGap />
+          {(["light", "dark"] as const).map((polarity) => {
+            const mode = modeFor(state, polarity)
+            const light = polarity === "light"
+            return (
+              <DialSlider
+                key={mode.id}
+                label={`${mode.name} background`}
+                value={mode.bg}
+                onChange={setBg(mode)}
+                minValue={light ? 90 : 0}
+                maxValue={light ? 100 : 20}
+                step={0.5}
+                format={(v) => formatBg(mode, v)}
+              />
+            )
+          })}
         </DialPopover>
       </DialTrigger>
       <DialSlider
@@ -214,24 +232,6 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         value={state.surfaceMaterial === "glass"}
         onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
       />
-      <DialFolder title="More" defaultOpen={false}>
-        {(["light", "dark"] as const).map((polarity) => {
-          const mode = modeFor(state, polarity)
-          const light = polarity === "light"
-          return (
-            <DialSlider
-              key={mode.id}
-              label={mode.name}
-              value={mode.bg}
-              onChange={setBg(mode)}
-              minValue={light ? 90 : 0}
-              maxValue={light ? 100 : 20}
-              step={0.5}
-              format={(v) => formatBg(mode, v)}
-            />
-          )
-        })}
-      </DialFolder>
     </>
   )
 }

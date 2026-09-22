@@ -4,7 +4,7 @@
    `ColorConfig` through the axis module; here they resolve through the same
    engine the preview runs, in the panel's own display mode, so every swatch
    and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
-   Semantics — then Primary; Vividness folds in More. */
+   Semantics — then Primary; Vividness sits under Brand, its seed. */
 
 import { useMemo } from "react"
 import { useTheme } from "starter-themes"
@@ -18,7 +18,6 @@ import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   DialColor,
-  DialFolder,
   DialGap,
   DialPopover,
   DialSlider,
@@ -88,11 +87,22 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
         value={state.brand}
         onChange={set("brand")}
         footer={
-          <DialToggle
-            label="Keep exact"
-            value={state.preserveSeed}
-            onChange={set("preserveSeed")}
-          />
+          <>
+            <DialToggle
+              label="Keep exact"
+              value={state.preserveSeed}
+              onChange={set("preserveSeed")}
+            />
+            <DialSlider
+              label="Vividness"
+              value={state.vividness}
+              onChange={set("vividness")}
+              minValue={0}
+              maxValue={2}
+              step={0.05}
+              format={(v) => `${v.toFixed(2)}×`}
+            />
+          </>
         }
       />
       <DialTrigger
@@ -118,7 +128,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
-/** Palettes and primary; the engine's one character knob folded in More. */
+/** Semantics and primary. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const { m } = usePanelMode(state)
@@ -163,18 +173,6 @@ export function ColorSection({ studio }: { studio: Studio }) {
       </DialTrigger>
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
-      <DialGap />
-      <DialFolder title="More" defaultOpen={false}>
-        <DialSlider
-          label="Vividness"
-          value={state.vividness}
-          onChange={set("vividness")}
-          minValue={0}
-          maxValue={2}
-          step={0.05}
-          format={(v) => `${v.toFixed(2)}×`}
-        />
-      </DialFolder>
     </>
   )
 }

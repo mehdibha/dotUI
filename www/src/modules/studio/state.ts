@@ -115,7 +115,7 @@ export interface Chapter {
   defaults: Partial<StudioState>
   /** The rows on the page: the chapter's two or three decisions that matter. */
   Primary?: React.ComponentType<{ studio: Studio }>
-  /** The rest, behind More. */
+  /** The rest of the chapter. */
   Body: React.ComponentType<{ studio: Studio }>
   /** The title's muted value while a chapter has no Primary rows yet. */
   summary?: (state: StudioState) => string
