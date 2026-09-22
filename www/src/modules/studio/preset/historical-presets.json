@@ -1,0 +1,896 @@
+[
+  {
+    "id": "legacy-color-v1-vercel",
+    "format": "legacy",
+    "encoded": "Hc5JDoMwDAXQu7hbqCiUgth23UOYDBCRocqgLlDuXht747xvyTkhw3JC20aUpqRWo8ghwgLdfYTagKRRBPclhgYE76LdQjR5dxSFw4qdgqSUTBx6VXJES9FtGrgpRCGUz0yPiZv3C1lKbH0vxlGR_TB64zc2hevQzWQS_abiRfpJRWS8DgzDOvf6xX88fFiv42KPweGnWDrWNeCMf19Cr1rrHw",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.vercel.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #737373 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-supabase",
+    "format": "legacy",
+    "encoded": "Lc3BDoMgDIDhd-muHgxOR3ybggXJEBbQmMXw7mvNevz-pr3AwnwBRp9L2NcNZsjvaFfooBItVWKiYy8YOT0m81K654jWUtqFBrJOk-wfbLWKKWXHUezEkkLyYoRm6DXbgslTuck9eZhCcvm-ZbRyE7QOPiVsWL6M_0-t_QA",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.supabase.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #6b7280 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-material",
+    "format": "legacy",
+    "encoded": "Lc7bDoIwDAbgd6m3YhAYQ96m7IBL2Ga6EWMI725r7FXz_W3aAyrMBzQNoQ17aTyamglmuN-0gvMKlnuTo89UcdkcXMHIAm5rplCfkeOI1VHAjbPinC2SJ7dXYprhoh960LKIxrhUhUatWhxkfmcrRazrjFIy9kZKIa1iDpe-ndgsptXRj_zAxRSSzwL9MnV-lFdfFCLSh_F_6Ty_",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.material.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #79747e is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-linear",
+    "format": "legacy",
+    "encoded": "Lc3BDoMgDIDhd-muHhYchvk2tRQlUzCAWRbju69d1uP3t-kJHkagvO1IDTogGE_Adc4ltmWTlF8rLRIqs68aEx-t4Crp5tCFp5OIRJyakuUBvdH9Q6xWNWPIWhZ7Y0kxzWqMU3_XU49p5vKj8JARiilkhX5yJgxwdbCXuGH5CP4_XdcX",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.linear.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-claude",
+    "format": "legacy",
+    "encoded": "Lc5RDsIgDIDhu9TXzSgTwd2mA7YRNzCFxZhld7c18vj9bcoOFfod2pbQx620I7qaCXq4njUcDTipuEyZYp1X9vxc3AwNlBB8kZjCVgkXTieLVhnLEZ0LqQr5hzHayPzGVoqYUk7rwPZGSjFNYgGH7iKrHtMU6EfjjR9TTGMW6Aarxrv86kVxRfow_i8dxxc",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.claude.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #8a8278 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-rose",
+    "format": "legacy",
+    "encoded": "LY7dCoMwDEbfJbtVmFU38W3SPy2r7UgrY4jvvkSW3IRzPpIcUGE-oG0JbdhL69HUTDCDgrMBy4PJm89UUUcHDRhJY1wyhbpurPMrmpVFcc4WkcntlTCyuj2tNEs0xqUqyHWdHSbJ78xKEaaUGUdZ_kFKIS1XDnV_l5zFtDi6kB-4GIXks4BeT8o_5M83hQ3py_B_6Tx_",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.rose.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #7d7d7d is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-color-v1-contrast",
+    "format": "legacy",
+    "encoded": "Lc7bCoMwDIDhd8ludThdPb1NrK0raDrSigzx3ZeMNXffH0hPyDCeUJaMc9hT6dHmyDBCde8MXAVYzbgukUN-bRJspMyYMhSQnJuTdnK72Cr11j1kUCJa6ygrVWZo20H3d7GU1OraGuPEDmQKtKg5nJqqF5uRFsc_8k95QoF8VGimvvatfuzNYUP-CP4vXdcX",
+    "sources": [
+      {
+        "commit": "1ce2ffb4604a000b16872465de8f4d125d4ed502",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.contrast.designSystem), last commit before the color v2 recipe (#449)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #71717a is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-origin",
+    "format": "legacy",
+    "encoded": "q1ZKVrKqVipTsjLSUSpOTU0pBnETk5NT80qUrJSUDQzMjdJMlUByOanJJZn5eUiitTpKSYnJ2elF-aV5KSB9KYlF2UCTgOIFRZm5iUWVQMVQs2prAQ",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.origin.designSystem), last commit before the studio state codec (#715)"
+      },
+      {
+        "commit": "7bd48d20e9d61ddb049bf41c07021e35b86c7604",
+        "path": "examples/origin-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "7bd48d20e9d61ddb049bf41c07021e35b86c7604",
+        "path": "examples/origin-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ],
+    "knownWrong": [
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-claude",
+    "format": "legacy",
+    "encoded": "Pc5NDoMgEAXgq5Dpwg00ptH6c4Gma09AcVRSxWaAJsZ494LR7ngPPmZWcFCvIEQ3GycGlK02PdSQNLMnhaxB0h3LEs68FjYGzh44U68lZ3sGfmorjY30aRzSIUJ1MrtYh5PwOhz_9a4pTPWRptciJ5xg46DiWl-obxwsYmtjlEqhCfvCpa2KIi8CNugdyTF2ZVam9y7al1TvnmZv2qhG3Q8BVWW4-ZCeJC3h-fHXtv0A",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.claude.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #84806f is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-supabase",
+    "format": "legacy",
+    "encoded": "PYxBCsMgEEWvEn4X2YybFJLiDXoMMSMIiS3OWAjBu1dD6e7_B--dUNgTxoRXUiMuCSzGZ1LOIw0lXsgI5xhokEOUd1Nim3-MSvC98YGdCMK8Sr_Oe04tjtudfXgwCImLZrd1Nq_LNF_uO8fd5aPBn1HrFw",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.supabase.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #6d726f is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-stripe",
+    "format": "legacy",
+    "encoded": "PY5RCoMwDIavUrIHN2idVaziDXaMWutWmFXSdpuId18rYw-B5Atf8m_goduAsXG2njlpHXSQ3azXmFESzIGY02hGStzqvJ5YMLH9Y6DRRjmYkNQiF6JGPR3UPeQwv5mKp3F-xi3e-zMXhDekFORKipyLCykIXz6pYKegUpoXdCUFp_Xg0iiV0jbGhJOo6n5MH60OHuXzYG1TtXVyFzSTxDXCn7HvXw",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.stripe.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #687385 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-linear",
+    "format": "legacy",
+    "encoded": "PY9BDoMwDAS_gtwDl-SC1Irygz7DJKZNgQQ5CRJC_L0OauuTd7U7lndI0O2g9RB80hF9hA7qh0_EtaqyOy0did2gqrjFRLPOTta_DYcCUxgrdI2CSGRjkWgMeYHD5Uo3tA0o8JQT41S8Ftvh3pZuj2Z8csjelpZFHoUj_sJuRt4k_CUpCCsxO0sn34QpsO4DW-KiF5woJZL874yCd-hFyxevUoVD5gM",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.linear.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-vercel",
+    "format": "legacy",
+    "encoded": "rVF7S8MwEP8q5fzHQaJZO9fRb3N5rK3LmpDHdIx-d3MtKiKIgjk47vH73Ss38NDdQKLuDRkB9ZgjdMD5avJjthZmBsqdzzhpAsV0tQUNDcwlkSjEeRxQuxeuMBQMiOrgX6vtvii-Kyr08l5UJI-VeBC7DStmTZmmJszhO2a_AfZZ111MsHj9t9K0EQ1-ga5mEI3RkVxUykxlI7jbtiRlhMnkFNBSrG1IgPDWqDS6iaJCtPXxiSpKVKc-uLyeSWM4QSdKnIYPozZLC-WsC1y6oE0g36M1KdE93zsxeHay-HnkA1HX8y-snhh27If0MzVmmawh_PxBXr_mV3T0_ivXO79M8kd6eW8",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.vercel.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "legacy-component-params-dropped: badge.radius=--radius-full, command.style=3 are dropped",
+      "lossy-legacy-migration: the neutral seed #737373 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-airbnb",
+    "format": "legacy",
+    "encoded": "PU7LCsIwEPyVsB56yYoPqtJP8CT4BdtkI8G0lTwEKf13NwplL7Mzw8zM8IJuhp7sgyuIZH1J0AHiH6IrIcCyaMhVR3TTmDHRWE3NLZSkrvSkmEndhWy0Kv4nY-LonVbpkzIPWLzAlQa9FkjMbns6tZEHkBYrv5kGN0liH1iMpva-oTtoSMw21ZeM4VEGwca546U1Yhu55Eihcud9PRm9fAE",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.airbnb.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
+      "lossy-legacy-migration: the neutral seed #717171 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-github",
+    "format": "legacy",
+    "encoded": "fZBBbgMhDEWvMnIX2UDVRs1UmTt01RMYMFMaAiMDkaIodw-eqbKsV_b3t5_sGyww3cCgm0kSRhdagQm03lLtW4xwvyuo0tfa5phZm8yOWPtsV_fLux89GVDd4HOqumASffeVEw7fvdipoYVV1oU4eDWUa6l01i309ClDB1kBXWDaKyhErkiJ1lKqQno7jkeHnZSoVcYo2ngY3ecoswbtaebckpMph3yC6eP10DsLhzPytdv_dinIF2IOjlbCdpcPFNfRGOaf9eIFI9Xan_MEKvjNRvYsizazUDfOf95-O1Op_ZE9Hg",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.github.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
+      "lossy-legacy-migration: the neutral seed #656d76 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-notion",
+    "format": "legacy",
+    "encoded": "PY9BCoMwEEWvItOFm6RIW0nxBh4jJiNN0UQmiSDi3TuRtrOa_8j7Q3ZI0O0g5Rh8klH7CB3UvU9ItaiyO5GMSG4UVdxiwllmx-sfg2CbtHW5qM31rlrCGQ4BpjSv0N0EREQbS9TGoOeTcGka1Vpk22NOpKfC1FMp9SjuQm7WtDH8GgLCikTO4tljwhRIDoEsUsmLnjAl5Pe_OgHvMHDmP7yKCgfPBw",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.notion.designSystem), last commit before the studio state codec (#715)"
+      }
+    ],
+    "knownWrong": [
+      "lossy-legacy-migration: the neutral seed #787774 is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-spotify",
+    "format": "legacy",
+    "encoded": "PY3RCsMgDEV_ZWQPfTGw7qGDfsD-w9VYAtYVo4NS_PeZbpS83BxzvDusMO7wsm4mDck6LgIjIP4i-hICVAMc15L1RPIW2i14DoEc1PZ2cET_jhnFRvW7J885EXXmUviAKJTYm4tskmnBwi2eGMzZ2OQ-0aKdk_77gfFuQIic6GqniWIrhGtP7jHcmhmp5GSDssHqqLsmXmzaGvwbtX4B",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodePreset(PRESETS.spotify.designSystem), last commit before the studio state codec (#715)"
+      },
+      {
+        "commit": "7bd48d20e9d61ddb049bf41c07021e35b86c7604",
+        "path": "examples/spotify-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "7bd48d20e9d61ddb049bf41c07021e35b86c7604",
+        "path": "examples/spotify-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ],
+    "knownWrong": [
+      "legacy-component-params-dropped: badge.radius=--radius-full, input.style=filled are dropped",
+      "lossy-legacy-migration: the neutral seed #6a6a6a is dropped",
+      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
+    ]
+  },
+  {
+    "id": "legacy-origin-code-options",
+    "format": "legacy",
+    "encoded": "TY1LCsJADEDvErddlIIIsxNPEjOplM5HkqlQyty9ibhwmZeXlwMIwgEfCNMAyhzVRyTi0iDAZRxv03wF3yWmttTyR_sAT6T1JXUr0e8iymol429ZMspu8q9lrLpCCVXvIrjbpxmTsre_5UfN2VTjTTbu_QQ",
+    "sources": [
+      {
+        "commit": "49f4a0f7ab1db1adaa5135ba9c3b64ab14bf9e49",
+        "path": "www/src/modules/create/preset/codec.ts",
+        "how": "encodePreset({...ORIGIN.designSystem, codeOptions:{classArrays:false, sectionComments:true}})"
+      }
+    ]
+  },
+  {
+    "id": "v3-origin",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUSooysxNLKoEiiUmJ6fmlQCFilNzUpNLMvPzglNTkRXX1gIA",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.origin.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.origin.state)"
+      },
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "examples/origin-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "examples/origin-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ]
+  },
+  {
+    "id": "v3-claude",
+    "format": "v3",
+    "encoded": "bY89C8IwEIb_ipxrF-tHbWYRBQfBURyuzVmDbSLXRJTS_-4FC3ZwfL8e7jp4gpon0ILqoHD6vXXWg4K99cSQQMFoteipzrNsmYlzI9TGVkPv5AKXNDkRm-tkIXHjNAns3IGJu9pUNy-2xYZEHgb5cDWy8e9Ro6hA5esESgEzthGu6Yqh9tAnA00j33-wzVeNWEMeUel_0kXWFMSud0EY-Ur2bBrkOMeyJBtvYXkxtMcXqFna9x8",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.claude.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.claude.state)"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
+    ]
+  },
+  {
+    "id": "v3-supabase",
+    "format": "v3",
+    "encoded": "DYtNCoAgFAbv8rV1UQgRHiDqGP68ICiNlwYi3r23nGGm4YPRCi9Mg0uhrilmGOwxE0PBsY1BeNDkj4XERCqZ7bUVgpnmUeHh87ZcJbLek9y9_w",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.supabase.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.supabase.state)"
+      }
+    ]
+  },
+  {
+    "id": "v3-stripe",
+    "format": "v3",
+    "encoded": "FcxBCsIwEIXhuzy3QarVLHIA0V3BEyRNCoE4kelEDKV3d1y-j8e_4QM3GqxwG0KN_VZJ4PAgSQyDwJ6i7oMdr2FZ_tJEKj2ll6Rem5RMSZ1SE_bl3pTPdjB4c3557nry85y0asA-5rZOX7jTcLSXff8B",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.stripe.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.stripe.state)"
+      }
+    ]
+  },
+  {
+    "id": "v3-linear",
+    "format": "v3",
+    "encoded": "FY1BDsIwDAT_slx7CqKHPACVMy9wE1MiBQcZp1JV9e-4x50d7e5YEa8Dfog75pa3exNDxEOMFQNmJcmeLzceKYeTdLMmU1u9j6hleRuLc-FuSnXqjBjGMOCr5UO6uUQpsa_6S9cXJX66aLycVetWizCO4w8",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.linear.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.linear.state)"
+      }
+    ],
+    "knownWrong": [
+      "stale-enum-kept-and-misresolved: surfaceStrategy 'outline' (removed in #766) is kept and resolves as Tonal"
+    ]
+  },
+  {
+    "id": "v3-vercel",
+    "format": "v3",
+    "encoded": "bY8xD4IwEIX_y7l2QI0hdNXRTTfjcNADG0tr2oPEEP67B5LIYG569977kjdAD3qvIIEeoIzoDWjYbPPpQEEbDIl1G8BOhrPNg-XtsSWR50W-gsNo-b1KlA3oolBQBc8RE4tlqMbOMYxqoRmMzx_s9FUr1uJPqOw_6S5t6uTtrtbzHEvkqGIb_IVo3pJl-a4-CCd1scaKjuh7lE3AUpHIOH4A",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.vercel.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.vercel.state)"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
+    ]
+  },
+  {
+    "id": "v3-airbnb",
+    "format": "v3",
+    "encoded": "FcxBCsIwFIThq5RxG6TSKpIDuHBVsBd4aRIIxgTykmIpvbvP7fcPs2OFHhQYeofJdnvkVKExxcbdk95UKnUvSgwFUyhZaSfvh_t1EbEucaib2JI_PsvWRCeeXKuF4hz-X71CIRsaT1_oS3--jcfxAw",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.airbnb.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.airbnb.state)"
+      }
+    ]
+  },
+  {
+    "id": "v3-github",
+    "format": "v3",
+    "encoded": "bY9LC8IwEIT_iqzXIL4qJGcRD3ryKB62TazBPCRNhFLy391gwR48zszON-wAbxAbBh2IAWov-4N3EQScvcPZBV0HDOqATpI3X_Idl0iO9VJR4zqALoHR7SOS7dAqkqdRvrzBoGM_uahbEJwzaGglYFeWpLpjMhEyG2kSw_MH23_VhDXmBbVdVP9ZN-qrRLY5JqKsqxUhgrYYCgGbRtGXOX8A",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.github.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.github.state)"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
+    ]
+  },
+  {
+    "id": "v3-notion",
+    "format": "v3",
+    "encoded": "DYvBDkAwEAX_5bn2QASxHyDc_MJq9yChZNsKEf-ux5nMvLhAtUEAvVgO9wyHjyBMPorCYFH2LnNRll3jJBsvKSpvYxJQXxmcuu6sT27YWsmzgbJbU5hvUPt9Pw",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.notion.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.notion.state)"
+      }
+    ]
+  },
+  {
+    "id": "v3-spotify",
+    "format": "v3",
+    "encoded": "HcxBCsIwEIXhuzy3WbQIFXKArkW9QNqMMhCTMk6KofTuTt1-vPdvWOHPDh_4DVOJbSxZ4THyS4UIDpOEHE1OPcXL0B1SVUu-hcjVblg4JVPOS9W7tkRmTzOKppmqSkgPPqqdwyL8DtJsEuaZDB3kH7p-4fth338",
+    "sources": [
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.spotify.state)"
+      },
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.spotify.state)"
+      },
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "examples/spotify-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "59fd7f0be83473b10c93a3fe3910e932ecd194b3",
+        "path": "examples/spotify-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ]
+  },
+  {
+    "id": "v3-motion-fast",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVsrNL8nMzwsuSE1NUbJSSkssLlGqrQUA",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{motionSpeed:'fast'}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: motionSpeed 'fast' (x0.75 durations) decodes to 1"
+    ]
+  },
+  {
+    "id": "v3-motion-relaxed",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVsrNL8nMzwsuSE1NUbJSKkrNSawAsmprAQ",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{motionSpeed:'relaxed'}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: motionSpeed 'relaxed' (x1.4 durations) decodes to 1"
+    ]
+  },
+  {
+    "id": "v3-mobile-adapt-off",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVsrNT8rMSXVMSSwoUbJKS8wpTq2tBQA",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{mobileAdapt:false}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: mobileAdapt:false is dropped, so popover.mobile flips from popover to drawer"
+    ]
+  },
+  {
+    "id": "v3-type-scale",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVkrKT6n0SU1MycxLV7JSKkrNSaxITVHSUcqAiIUUJSZnQ-RKMtMzShAy4algvpWSuYEBULSksiDVKbE4VcnK0LS2FgA",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{headingWeight:'700', headingTracking:'tight', typeBase:15, bodyLeading:'relaxed'}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: headingWeight, headingTracking, typeBase and bodyLeading are dropped"
+    ]
+  },
+  {
+    "id": "v3-corner-squircle",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVkrOL8pLLQrOSCxIVbJSKi4szSxKzklVqq0FAA",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{cornerShape:'squircle'}})"
+      }
+    ],
+    "knownWrong": ["v766-unmigrated-removals: cornerShape is dropped"]
+  },
+  {
+    "id": "v3-surface-layered-ring",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqViouLUpLTE51TUlPVbJSKsrMS1fSgQkGZySm5JcDhXMSK1OLUlOUamsB",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{surfaceShadow:'layered', surfaceEdge:'ring'}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: surfaceShadow and surfaceEdge are dropped"
+    ]
+  },
+  {
+    "id": "v3-contrast-strict",
+    "format": "v3",
+    "encoded": "bYyxDsIgGAbf5ZsZjE5ldnRzNA6_hQKxBQN_TQzh3YWUxA6Ol7tcxhvyJJAgM8xKkTxrXQmJoxsZAnbVV-smhjwILEE1e8twqkazM7Y1nhZd8dLxFWaKjj-74mEgh0FgDJ4jpXqDrQpF9JWi-PydzhvtRt23z_HP5l7KFw",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{guarantees:'strict', hueShift:0, modes[].contrast:'high'}})"
+      }
+    ],
+    "knownWrong": [
+      "v766-unmigrated-removals: guarantees and hueShift are dropped, and the stale modes[].contrast:'high' fields are kept inside state.modes"
+    ]
+  },
+  {
+    "id": "v3-check-fill",
+    "format": "v3",
+    "encoded": "q1YqU7Iy1lEqVrKqVkrOSE3OdsvMyVGyUkpMTk7NK1GqrQUA",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodeState({...DEFAULTS, ...{checkFill:'accent'}})"
+      }
+    ]
+  },
+  {
+    "id": "v3-origin-code-options",
+    "format": "v3",
+    "encoded": "TYxLCoNAEAXv8rKdhUSCMDvxCJ6gM7YgzCd0TwIic_e0rtwWVXXgB987KPyBt1Be4PHouuG5vuDwkS2R7MYoBM7VkHLkULeSZ-a73BzKOQmRVEcR2u1Z5ctncgVTSckehleKyq39AQ",
+    "sources": [
+      {
+        "commit": "f365cc10bed225e0cd84d5b275439aa32992cf24",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "encodePreset({state: ORIGIN.state, codeOptions:{classArrays:true, sectionComments:false}})"
+      }
+    ]
+  },
+  {
+    "id": "v4-origin",
+    "format": "v4",
+    "encoded": "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.origin.state)"
+      },
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "examples/origin-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "examples/origin-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ]
+  },
+  {
+    "id": "v4-claude",
+    "format": "v4",
+    "encoded": "bZBNa8MwDIb_StGuvrR0TePrRtmgh0GPowfH1hJT1xqKvbWE_PfKLLCy7Ph-PJbkAb5ArxX0oAdoyF13FBNoeI0JGRQ0bKIT_eDqqnqsipNTovhEgVh8Yy0KoMB2aE8NXWZBh8b52E7vHiizxcUB2X8s1hKfyaEMfx_AlznBt12hojmjyP0kPykY9ul612ha0PV2VBPoDJ9-uecfdYdNeaFW41GKmBOb8JKlXm8UsGxJs-WLm_u3C-jlSj4JA9rk_7m-D94hz-1vn2z3xx7HGw",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.claude.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-supabase",
+    "format": "v4",
+    "encoded": "bczBCgIxDATQfxmvPSiKSK-C6Ge0aWSLpYE2dZVl_916tR7zZiYLnrAHgwq7wEt4XyQrLG5ZucDAF5dDvzd7pvuJv9JUJZ8lSenuiLgPDGhienh5DUHmpsWla2PY3XFrUFyIMtQqJyaNfz7XFAOXkeeoNP3wun4A",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.supabase.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-stripe",
+    "format": "v4",
+    "encoded": "bc7NCsIwEATgd1mvRepfDrkKojfBJ8jPlgZDFpKNtpS-u8nBi_E4HzMwC7xAHjtIIBfQZOcLBQYJt8AYoQMdVbAlb8ThpIehSmamcCZPsbgyBsvgyw-ePRamzN4FLG5GNE9NUzMImDkqf82lvxd9B1FZR02tak73CeSu34r6FD0adn8uJO8sxpbfjs34w-v6AQ",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.stripe.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-linear",
+    "format": "v4",
+    "encoded": "bc2xDsIwDATQfzFrpwg6ZAWh8hluYkhEFCPHKaCq_046sFDGe7rTzTCB3XdQwM4wsn-fOStYuGQlgQ5Gwexb3h2oR29Wqaqcj5xYmqNz1AZfHniilVO8BaXc3AVy95Ffm0GmqoJpqATW9KYDQR95UyuUyGn881hS9CRbrnJFRyd6aGguGAv51Z9RXfipL8sH",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.linear.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-vercel",
+    "format": "v4",
+    "encoded": "TY69CsIwFIXf5bpmiKKUZtXRTTdxuG1uazBNJU0LEvLu3mjAcqbz88GJsIDaC5hARWg8Og0KNtsqCwQMoyaubhFMLqzpH4FjhwOxPRf7Gi16E96rRdODquskCqjRP__c6edWWOkzJdOdhzQHj_ZqXOCE75GlNpjRXYi-D6Wsdt2BkWn2HbZ0RLcgP4XACE9S-gA",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.vercel.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-airbnb",
+    "format": "v4",
+    "encoded": "FcxBCsIwFIThq5RxG6RiFckBXLgq2Au8NAkEYwJ5SWkpvbvP7fcPs2OBHhQYeofJdnvmVKExxsbdiz5UKnVvSgwFUyhZaSfvr4_bLGJd4lA3sTl_fZatiU48uVYLxSn8v3qFQjY0HlfoS3--D8fxAw",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.airbnb.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-github",
+    "format": "v4",
+    "encoded": "bY89C8IwEIb_ipxrEJVWSFZFHHRyFIdrEmxompM0VUvpfzfFgsU6vs_dcx8tPEAkDCoQLWSkmj25AAJO5HB2RlcBg8yjU5HNl3zDFfakDoHcliz5yFFKHSUGMteyyOg1KZSkdNxwacH0g6y55T12WOoYj0O8k0VvQjPqyG4gOO_YICr0xdfbfdJIG-q9lSzS7hpbdR082kMdhXW6YuBRGZocWGmrZTB_fqqsUdpP8dMEmf_grnsD",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.github.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-notion",
+    "format": "v4",
+    "encoded": "bc7LCgIxDAXQf7luuxjBB3YriO78hT4CUywNtOk4Msy_29lalzk34WbBBH1QKNALLPvPjZNA45GEMhRsNsm3eTcM56OnTaoIpytHzs2Nc9QOFNxI7mV57oJEVbKJ90rQl71CNj5wt7VpLc8Z-tSeoUhOwp-WEoOn3PM7iBt_eF2_",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.notion.state)"
+      }
+    ]
+  },
+  {
+    "id": "v4-spotify",
+    "format": "v4",
+    "encoded": "bc7BCsIwDAbgd4nXHTaQCb0KO4v6Al0bXTC0o0t1Y-zdzQQvzuvHnz__DE8w-wIGMDO00U9NDAIGGrpLQoQC2mSDV9lV6A91uUoWieEYOSZ16xzqyZfP1lPWNuiJWdV16B5tHDdxCn2Wi0yMqjcNo1cNmCVZvtK6oiwgaV3c3KbPk9MIpqp1OzI6oT-TBiaPacsvEtf98LK8AQ",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/presets/presets-data.ts",
+        "how": "encodeState(PRESETS.spotify.state)"
+      },
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "examples/spotify-next/components.json",
+        "how": "committed @dotui registry URL"
+      },
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "examples/spotify-tanstack-start/components.json",
+        "how": "committed @dotui registry URL"
+      }
+    ]
+  },
+  {
+    "id": "crafted-garbage",
+    "format": "crafted",
+    "encoded": "not-a-preset",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "not base64url deflate"
+      }
+    ],
+    "knownWrong": [
+      "silent-garbage-fallback: decodes to DEFAULTS instead of failing"
+    ]
+  },
+  {
+    "id": "crafted-truncated",
+    "format": "crafted",
+    "encoded": "bY89C8IwEIb_ipxrEJVWSFZFHHRyFIdrEmxompM0VUvpfzfFgsU6vs_dcx8tPEAkDCoQLWSkmj25AAJO5HB2RlcBg8yjU5HNl3zDFfakDoHcliz5yFFKHSUGMteyyOg1KZSkdNxwacH0g6y55T12WOoYj0O8k0VvQjPqyG4gOO_YICr0xdfbfdJIG-q9lSzS7hpbdR082kMdhXW6YuBRGZocWGmrZTB_fqqsUdpP8dMEmf_gr",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "v4-github minus its last 3 chars"
+      }
+    ],
+    "knownWrong": [
+      "silent-garbage-fallback: decodes to DEFAULTS instead of failing"
+    ]
+  },
+  {
+    "id": "crafted-newer-version",
+    "format": "crafted",
+    "encoded": "q1YqU7Iy1VEqVrKqVkoqSsxLUbJSUk5NMwECpdpaAA",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:5, s:{brand:'#ef4444'}}"
+      }
+    ],
+    "knownWrong": [
+      "forward-version-collapses-to-defaults: an unknown version decodes to DEFAULTS instead of failing"
+    ]
+  },
+  {
+    "id": "crafted-bogus-enums",
+    "format": "crafted",
+    "encoded": "q1YqU7Iy0VEqVrKqVsrNT8rMSXXJTMzJTwcKKMXHJ-WnlxbHxysBFZQWpSUmp7qkFpRkoEjV1gIA",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:4, s:{mobileDialogs:'__bogus__', surfaceDepth:'__bogus__'}}"
+      }
+    ],
+    "knownWrong": [
+      "stale-enum-kept-and-misresolved: invalid enums are kept; surfaceDepth resolves as flat and mobileDialogs reaches the registry params"
+    ]
+  },
+  {
+    "id": "crafted-css-injection",
+    "format": "crafted",
+    "encoded": "NcoxCsMwDAXQq4i_ZLG3TvIYyBmypo0LhmAF2S0NxnePPHR9vIYv-OFQwA2vjxbRWXJVOUxwSso1auhP2a-2p3Ie28VZcoTDsMWuvXVyVKKmd6BOw6nRf9Poxqwi1dz7H9OE3m8",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:4, s:{cursorControls:'pointer;}body{display:none', bodyFont:<quote break-out>}}"
+      }
+    ],
+    "knownWrong": [
+      "typeof-only-validation: raw CSS reaches the cursor and font tokens"
+    ]
+  },
+  {
+    "id": "crafted-out-of-range",
+    "format": "crafted",
+    "encoded": "q1YqU7Iy0VEqVrKqVipKTMksLQ6oULLSNTQwMNBRSstPLi32zCsoLQkuKUrNSy_JULICyQBBbS0A",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:4, s:{radiusPx:-1000, focusInputStrength:1e6}}"
+      }
+    ],
+    "knownWrong": [
+      "typeof-only-validation: out-of-range numbers are kept and emitted"
+    ]
+  },
+  {
+    "id": "crafted-bad-seed",
+    "format": "crafted",
+    "encoded": "q1YqU7Iy0VEqVrKqVipOzUlNLsnMzwtOTU1RslKqqqpSqq0FAA",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:4, s:{selectionSeed:'zzz'}}"
+      }
+    ],
+    "knownWrong": ["typeof-only-validation: an unparseable color seed is kept"]
+  },
+  {
+    "id": "crafted-bad-modes",
+    "format": "crafted",
+    "encoded": "q1YqU7Iy0VEqVrKqVsrNT0kFMqLzSnNyYmtrAQ",
+    "sources": [
+      {
+        "commit": "d920209e838edbb46afcbb36b681d3f368bcf0cb",
+        "path": "www/src/modules/studio/preset/codec.ts",
+        "how": "{v:4, s:{modes:[null]}}"
+      }
+    ],
+    "knownWrong": [
+      "typeof-only-validation: a malformed modes array is kept and crashes the resolver"
+    ]
+  }
+]
