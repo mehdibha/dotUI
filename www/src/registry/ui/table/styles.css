@@ -1,0 +1,4 @@
+:root {
+  --studio-table-radius: var(--studio-radius-control);
+  --studio-table-cell-radius: var(--studio-radius-item);
+}

@@ -63,6 +63,8 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-slider-track-radius": "var(--studio-radius-pill)",
 	"--studio-switch-card-radius": "var(--studio-radius-surface)",
 	"--studio-switch-radius": "var(--radius-full)",
+	"--studio-table-cell-radius": "var(--studio-radius-item)",
+	"--studio-table-radius": "var(--studio-radius-control)",
 	"--studio-tabs-list-radius": "var(--studio-radius-surface)",
 	"--studio-tabs-radius": "var(--studio-radius-surface)",
 	"--studio-tabs-tab-radius": "var(--studio-radius-item)",
