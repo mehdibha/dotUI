@@ -2,6 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { setResponseHeader } from "@tanstack/react-start/server"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import type * as PageTree from "fumadocs-core/page-tree"
 
 import type { SerializedPageTree } from "@/lib/source"
@@ -46,6 +47,7 @@ function AppLayout() {
       </main>
       {/* Not on the root: the /preview iframe renders outside _app. */}
       <Analytics />
+      <SpeedInsights />
     </div>
   )
 }
