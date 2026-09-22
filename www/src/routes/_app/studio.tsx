@@ -82,16 +82,17 @@ function StudioPage() {
   return (
     // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
     // lines up with the Export button above it.
-    <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 lg:p-6 lg:pt-2 lg:pr-4">
+    <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 max-sm:px-2 max-sm:pb-2 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
       {/* The row is the panel's height: panel popovers stay within it. */}
       <PanelPopoverBoundary.Provider value={boundary}>
         <div
           ref={setBoundary}
-          className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
+          className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6 [@media(max-height:500px)]:flex-row"
         >
-          {/* Below `lg` the panel docks under the preview. */}
-          <StudioPanel className="max-lg:order-last max-lg:flex-none" />
+          {/* Below `lg` the panel docks under the preview; on short screens
+              (a phone on its side) it sits beside it instead. */}
+          <StudioPanel className="max-lg:flex-none [@media(max-height:500px)]:w-64 [@media(max-width:1023px)_and_(min-height:501px)]:order-last" />
           <PreviewPanel />
         </div>
       </PanelPopoverBoundary.Provider>

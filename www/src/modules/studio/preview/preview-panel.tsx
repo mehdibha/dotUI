@@ -365,7 +365,7 @@ export function PreviewPanel({ className }: { className?: string }) {
     <div
       ref={panelRef}
       className={cn(
-        "relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-bg shadow-xs",
+        "relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-bg shadow-xs max-lg:rounded-[14px] max-lg:shadow-none",
         className,
       )}
     >
@@ -423,7 +423,7 @@ export function PreviewPanel({ className }: { className?: string }) {
           // rounded-[20px] renders like rounded-full (half the 40px pill) but,
           // unlike calc(infinity*1px), interpolates visibly during the tuck —
           // react-grab's trick for its edge collapse.
-          "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out",
+          "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out max-lg:right-3 max-lg:left-auto max-lg:translate-x-0",
           toolbarHidden
             ? // Tucked into the panel's bottom edge as a react-grab-style tab:
               // flush, squared toward the edge, the chevron button IS the tab.
@@ -582,13 +582,14 @@ export function PreviewPanel({ className }: { className?: string }) {
             <div className="h-4 w-px shrink-0 bg-border" />
 
             {/* Component inspector — hover the preview to see the dotUI component
-            under the cursor with its props; click jumps to its params. */}
+            under the cursor with its props; click jumps to its params.
+            Pointer-driven, so desktop only. */}
             <Tooltip delay={0}>
               <Button
                 size="sm"
                 variant={inspecting ? "primary" : "quiet"}
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-lg:hidden"
                 onPress={() => setInspecting((v) => !v)}
                 aria-label="Toggle component inspector"
               >
@@ -656,7 +657,8 @@ export function PreviewPanel({ className }: { className?: string }) {
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                // iOS Safari can't fullscreen an element.
+                className="rounded-full max-lg:hidden"
                 onPress={toggleFullscreen}
                 aria-label="Toggle fullscreen"
               >

@@ -36,15 +36,15 @@ export interface PanelSystem {
 export function PanelChrome({
   studio,
   system,
-  search,
+  actions,
   strip,
   className,
   children,
 }: {
   studio: Studio
   system?: PanelSystem
-  /** Search trigger + overlay, supplied by the page (it owns navigation). */
-  search?: ReactNode
+  /** Search and the dock toggle, supplied by the page (it owns navigation). */
+  actions?: ReactNode
   /** Mobile chapter navigation, pinned under the header. */
   strip?: ReactNode
   className?: string
@@ -83,7 +83,7 @@ export function PanelChrome({
         className,
       )}
     >
-      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2">
+      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-1.5 max-lg:py-1.5">
         <div className="flex items-center justify-between gap-2">
           {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
           <span className="flex shrink-0 items-center">
@@ -94,12 +94,12 @@ export function PanelChrome({
                 isIconOnly
                 aria-label="Reset design system"
                 onPress={resetAll}
-                className="text-fg-muted"
+                className="text-fg-muted pointer-coarse:size-9"
               >
                 <RotateCcwIcon />
               </Button>
             )}
-            {search ?? (
+            {actions ?? (
               <Button
                 size="sm"
                 variant="quiet"

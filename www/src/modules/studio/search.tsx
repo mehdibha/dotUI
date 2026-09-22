@@ -125,13 +125,23 @@ export function PanelSearch({
   return (
     <Dialog isOpen={isOpen} onOpenChange={close}>
       <Tooltip delay={300}>
-        <Button size="sm" variant="quiet" isIconOnly aria-label="Search">
+        <Button
+          size="sm"
+          variant="quiet"
+          isIconOnly
+          aria-label="Search"
+          className="pointer-coarse:size-9"
+        >
           <SearchIcon />
         </Button>
         <TooltipContent>Search ⌘P</TooltipContent>
       </Tooltip>
-      <PanelPopover placement="bottom end">
-        <Command aria-label="Search" className="w-56">
+      {/* Docked, a fixed height: results never push the field around. */}
+      <PanelPopover placement="bottom end" className="max-lg:h-72">
+        <Command
+          aria-label="Search"
+          className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1"
+        >
           {/* Both chain with the Autocomplete's own field props. */}
           <SearchField
             autoFocus
@@ -155,7 +165,7 @@ export function PanelSearch({
               doubles as the prompt. */}
           <ListBox
             aria-label="Settings"
-            className="max-h-64 overscroll-contain"
+            className="max-h-64 overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1"
             items={items}
             dependencies={[query]}
             renderEmptyState={() => (

@@ -57,7 +57,10 @@ export function CardGrid({
       }}
       className={cn(
         "grid gap-1.5",
-        columns === 3 ? "grid-cols-3" : "grid-cols-2",
+        // The docked popover spans a portrait screen: three across keeps it short.
+        columns === 3
+          ? "grid-cols-3"
+          : "grid-cols-2 [@media(max-width:1023px)_and_(min-height:501px)]:grid-cols-3",
       )}
     >
       {options.map((option) => (
