@@ -217,13 +217,30 @@ function CanvasColumn({
   return (
     <div
       className={cn(
-        "flex flex-col gap-(--gap) p-px [contain-intrinsic-size:340px_1200px] [content-visibility:auto]",
+        "contents lg:flex lg:flex-col lg:gap-(--gap) lg:p-px lg:[contain-intrinsic-size:340px_1200px] lg:[content-visibility:auto]",
         className,
       )}
     >
       {cards.map((key) => (
-        <div key={key}>{CARDS[key]}</div>
+        <FlowCard key={key}>{CARDS[key]}</FlowCard>
       ))}
+    </div>
+  )
+}
+
+// Below lg (the Mobile and Tablet device sizes, narrow stages) the columns
+// dissolve into a flowing multi-column list, so the device preview reflows
+// instead of cropping a desktop canvas.
+function FlowCard({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className={cn("break-inside-avoid pb-(--gap) lg:pb-0", className)}>
+      {children}
     </div>
   )
 }
@@ -233,25 +250,27 @@ export function CardsCanvas() {
     <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
-      <div className="flex w-full min-w-max justify-center">
+      <div className="flex w-full justify-center lg:min-w-max">
         {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
             so tightening --gap keeps cards life-size instead of growing them. */}
-        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2208px]">
+        <div className="w-full columns-[20rem] gap-(--gap) p-(--gap) lg:grid lg:w-[2208px] lg:grid-cols-6 lg:items-start">
           <CanvasColumn cards={CANVAS_1} />
           <CanvasColumn cards={CANVAS_2} />
-          <div className="col-span-2 flex flex-col gap-(--gap) p-px [contain-intrinsic-size:790px_1200px] [content-visibility:auto]">
-            <AiPrompt />
-            <div className="grid grid-cols-2 items-start gap-(--gap)">
-              <div className="flex flex-col gap-(--gap)">
-                {CANVAS_WIDE_LEFT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
-                ))}
-              </div>
-              <div className="flex flex-col gap-(--gap)">
-                {CANVAS_WIDE_RIGHT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
-                ))}
-              </div>
+          <div className="contents lg:col-span-2 lg:flex lg:flex-col lg:gap-(--gap) lg:p-px lg:[contain-intrinsic-size:790px_1200px] lg:[content-visibility:auto]">
+            <FlowCard className="[column-span:all]">
+              <AiPrompt />
+            </FlowCard>
+            <div className="contents lg:grid lg:grid-cols-2 lg:items-start lg:gap-(--gap)">
+              {[CANVAS_WIDE_LEFT, CANVAS_WIDE_RIGHT].map((cards) => (
+                <div
+                  key={cards[0]}
+                  className="contents lg:flex lg:flex-col lg:gap-(--gap)"
+                >
+                  {cards.map((key) => (
+                    <FlowCard key={key}>{CARDS[key]}</FlowCard>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
           <CanvasColumn cards={CANVAS_5} />
