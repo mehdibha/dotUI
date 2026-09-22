@@ -6,9 +6,9 @@
      near-black, so each strategy encodes its own dark translation (12-system
      survey, 2026-08-09): Hairline ≈ shadcn/Geist, Adaptive ≈ Radix Themes/
      Primer (shadow-led light → hairline + elevation dark), Shadow ≈ Fluent/
-     Spectrum (shadows strengthen in dark), Outline ≈ Linear, Tonal ≈
-     Material 3 (contrast-led in BOTH modes, containers darker than the page
-     in light).
+     Spectrum (shadows strengthen in dark), Tonal ≈ Material 3 (contrast-led
+     in BOTH modes, containers darker than the page in light). Linear is
+     Hairline at a raised depth.
    - Depth: the one intensity lever — hairline weight, shadow size and dark
      elevation move together. Shadow-led systems (Fluent, Material,
      Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
@@ -46,7 +46,6 @@ export const STRATEGY_OPTIONS = [
   { value: "hairline", label: "Hairline" },
   { value: "adaptive", label: "Adaptive" },
   { value: "shadow", label: "Shadow" },
-  { value: "outline", label: "Outline" },
   { value: "tonal", label: "Tonal" },
 ]
 
@@ -263,9 +262,9 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
         dark = "harder"
         elevation = (floating ? 1 : 0) + (d >= 2 ? 1 : 0)
         break
-      case "tonal":
-        // Contrast-led in BOTH modes: containers step off the page by
-        // background alone, shadows subordinate (floating layers only).
+      default:
+        // Tonal: contrast-led in BOTH modes — containers step off the page
+        // by background alone, shadows subordinate (floating layers only).
         tonal = floating
           ? ([55, 70, 85, 100][d] ?? 70)
           : ([25, 35, 50, 60][d] ?? 35)
@@ -275,19 +274,6 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
           modal: [0, 3, 4, 5],
         }
         weight = 0.8
-        break
-      default:
-        // Outline: a solid step on overlays in dark + heavy shadow.
-        edge = floating
-          ? { light: HAIRLINE, dark: step("400") }
-          : both(HAIRLINE)
-        ladder = {
-          card: [0, 2, 3, 4],
-          popover: [3, 4, 5, 6],
-          modal: [4, 5, 6, 6],
-        }
-        weight = 1.5
-        if (floating && d >= 1) elevation = 1
     }
 
     const shadow = shadowLayers(

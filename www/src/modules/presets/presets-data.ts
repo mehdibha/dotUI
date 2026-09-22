@@ -133,7 +133,7 @@ export const PRESETS: Preset[] = [
       // Linear's dark-first page is near-black #08090a.
       modes: modes({ dark: 2 }),
       buttonHover: "lighten",
-      surfaceStrategy: "outline",
+      surfaceDepth: "raised",
     },
   }),
   definePreset({
