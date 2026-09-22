@@ -8,6 +8,7 @@
    `rounded-xl` — and a role at None ships no rounded class at all. */
 
 import type { Resolved, StudioState } from "./index"
+import type { AxisSpec, ChapterSpec } from "./spec"
 
 export const SHAPE_DEFAULTS = {
   /** The base radius — the lg rung (popover · menu), in px. */
@@ -167,3 +168,63 @@ export function resolveShape(state: StudioState): Resolved {
   }
   return { tokens }
 }
+
+const RUNG_OPTIONS = SHAPE_RUNGS.map(({ id, label, ratio }) => ({
+  value: id,
+  label,
+  description:
+    ratio === 0
+      ? "Square corners."
+      : ratio === Infinity
+        ? "Fully rounded ends — a capsule."
+        : `${ratio}× the base radius.`,
+}))
+
+const role = (label: string, wears: string): AxisSpec => ({
+  label,
+  description: `Which rung of the radius ladder ${wears} wear.`,
+  value: { type: "enum", options: RUNG_OPTIONS },
+})
+
+export const SHAPE_SPEC = {
+  label: "Shape",
+  description:
+    "Corner radius. One base length scales a ladder of rungs (xs … 3xl, " +
+    "pill); four roles pick a rung each, so nested corners stay concentric.",
+  axes: {
+    radiusPx: {
+      label: "Base radius",
+      description:
+        "The lg rung in px — popovers and menus at the Standard character. " +
+        "Every other rung is a ratio of it.",
+      value: { type: "number", unit: "px", ...RADIUS_RANGE },
+      guidance:
+        "6–8px reads crisp and tool-like, 10px is shadcn's default, 12px+ " +
+        "reads soft and consumer. Go square with the roles, not with a 0 base.",
+    },
+    rolePanel: role("Panels", "dialogs, cards and sheets"),
+    roleSurface: role("Surfaces", "popovers, menus and toasts"),
+    roleControl: role("Controls", "buttons, inputs, selects and toggles"),
+    roleItem: {
+      ...role("Items", "menu items, list rows and options"),
+      value: {
+        type: "enum",
+        options: [
+          {
+            value: "auto",
+            label: "Auto",
+            description:
+              "One rung below Surfaces, so an item nests concentrically in " +
+              "its menu.",
+          },
+          ...RUNG_OPTIONS,
+        ],
+      },
+    },
+  },
+  recipes: SHAPE_CHARACTERS.map(({ id, label, vector }) => ({
+    id,
+    label,
+    set: vector,
+  })),
+} satisfies ChapterSpec<typeof SHAPE_DEFAULTS>
