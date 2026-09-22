@@ -73,6 +73,8 @@ import {
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 import { useLazyFontPreviews, useLoadedFamilies } from "@/modules/studio/fonts"
 
+import { usePanelTweaks } from "./panel-tweaks"
+
 /* -------------------------------- Shared shell --------------------------- */
 
 export const ROW = "h-11 w-full rounded-xl bg-muted transition-colors"
@@ -87,12 +89,6 @@ export const ROW_DESCRIBED = "h-auto py-2.5"
 
 /** Where row-attached overlays (pickers, selects, menus) open. */
 export const ROW_OVERLAY_PLACEMENT = "right top" as const
-
-/* A popover sits off the panel's edge by the panel's own padding, not off its
-   row: rows end at the padding, so the offset crosses it and the border. */
-const PANEL_PADDING = 8
-const PANEL_BORDER = 1
-const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
 
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
@@ -114,14 +110,18 @@ export function PanelPopover({
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
+  // A popover sits off the panel's edge by the panel's own padding, not off
+  // its row: rows end at the padding, so the offset crosses it and the border.
+  const tweaks = usePanelTweaks()
   return (
     <Popover
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
-      offset={boundary ? PANEL_POPOVER_OFFSET : undefined}
+      offset={boundary ? tweaks.popoverOffset : undefined}
+      style={tweaks.popoverStyle}
       className={cn(
-        "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/10 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
+        "flex max-h-[calc(100dvh-24px)]! flex-col rounded-(--panel-radius) border-(length:--panel-border-w) border-(--panel-border-color) bg-card shadow-(--popover-shadow) transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
       )}
       {...props}
@@ -613,7 +613,7 @@ export function ColorPickerPopover({
 }) {
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-(--popover-pad,0.5rem)">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
           {COLOR_PRESETS.map((preset) => (
             <ColorSwatchPickerItem
@@ -890,7 +890,7 @@ export function NeutralPickerPopover({
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-(--popover-pad,0.5rem)">
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}
