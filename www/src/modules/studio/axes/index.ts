@@ -50,6 +50,7 @@ import * as shape from "./shape"
 import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
+import type { ChapterSpec } from "./spec"
 import * as spinner from "./spinner"
 import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
@@ -220,3 +221,8 @@ export function resolveAll(state: StudioState): ResolvedAll {
   }
   return { tokens, params, density, color, icons }
 }
+
+/** What every axis means, by chapter — the catalog agents read over MCP. */
+export const CATALOG: Array<ChapterSpec & { id: string }> = [
+  { id: "shape", ...shape.SHAPE_SPEC },
+]

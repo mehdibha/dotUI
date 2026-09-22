@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as OgRouteImport } from './routes/og'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
@@ -48,6 +49,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const OgRoute = OgRouteImport.update({
   id: '/og',
   path: '/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/home.md': typeof HomeDotmdRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
@@ -261,6 +269,7 @@ export interface FileRoutesById {
   '/home.md': typeof HomeDotmdRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/mcp': typeof McpRoute
   '/og': typeof OgRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
@@ -295,6 +304,7 @@ export interface FileRouteTypes {
     | '/home.md'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/docs'
@@ -325,6 +335,7 @@ export interface FileRouteTypes {
     | '/home.md'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/docs'
@@ -357,6 +368,7 @@ export interface FileRouteTypes {
     | '/home.md'
     | '/llms-full.txt'
     | '/llms.txt'
+    | '/mcp'
     | '/og'
     | '/sitemap.xml'
     | '/_app/docs'
@@ -390,6 +402,7 @@ export interface RootRouteChildren {
   HomeDotmdRoute: typeof HomeDotmdRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
+  McpRoute: typeof McpRoute
   OgRoute: typeof OgRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
@@ -423,6 +436,13 @@ declare module '@tanstack/react-router' {
       path: '/og'
       fullPath: '/og'
       preLoaderRoute: typeof OgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -667,6 +687,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeDotmdRoute: HomeDotmdRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
+  McpRoute: McpRoute,
   OgRoute: OgRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,

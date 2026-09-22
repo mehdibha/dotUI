@@ -13,7 +13,7 @@ import { docsSource } from "@/lib/source"
 // Returned as text/plain; charset=utf-8 — the spec's recommendation and the most
 // broadly compatible content type for this file.
 
-const SUMMARY = `dotUI is a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Generate a branded UI library in minutes with the style editor, then consume it through the shadcn CLI, the registry endpoint (${siteConfig.url}/r/{name}), or AI tooling like v0. Append .md to any docs URL for its raw markdown, or read ${siteConfig.url}/llms-full.txt for the entire documentation in a single file.`
+const SUMMARY = `dotUI is a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Generate a branded UI library in minutes with the style editor, then consume it through the shadcn CLI, the registry endpoint (${siteConfig.url}/r/{name}), or AI tooling like v0. Append .md to any docs URL for its raw markdown, or read ${siteConfig.url}/llms-full.txt for the entire documentation in a single file. Agents can design a system end to end through the MCP server at ${siteConfig.url}/mcp (streamable HTTP): list the axes, set them, preview, export.`
 
 type DocLink = { url: string; data: { title?: string; description?: string } }
 

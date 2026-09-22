@@ -48,7 +48,9 @@ export interface AxisRecipe {
   set: Record<string, unknown>
 }
 
-export interface ChapterSpec<Defaults extends object = object> {
+export interface ChapterSpec<
+  Defaults extends object = Record<string, unknown>,
+> {
   label: string
   description: string
   axes: { [K in keyof Defaults]: AxisSpec }
