@@ -17,7 +17,9 @@ import { InternalHeader } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/highlight-compare")({
   component: import.meta.env.DEV ? HighlightCompare : undefined,
-  head: () => ({ meta: [{ title: "Highlight compare · Internal · dotUI" }] }),
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Highlight compare · Internal · dotUI" }] })
+    : undefined,
 })
 
 // Every playground source the docs highlight at runtime, old (shiki) vs new

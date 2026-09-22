@@ -4,5 +4,7 @@ import { PresetLab } from "@/modules/preset-lab/page"
 
 export const Route = createFileRoute("/internal/preset-lab")({
   component: import.meta.env.DEV ? PresetLab : undefined,
-  head: () => ({ meta: [{ title: "Preset Lab · dotUI" }] }),
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Preset Lab · dotUI" }] })
+    : undefined,
 })

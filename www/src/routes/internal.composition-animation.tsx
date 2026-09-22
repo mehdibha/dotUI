@@ -5,7 +5,9 @@ import { InternalShell } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/composition-animation")({
   component: import.meta.env.DEV ? CompositionAnimationDemo : undefined,
-  head: () => ({ meta: [{ title: "Composition animation · dotUI" }] }),
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Composition animation · dotUI" }] })
+    : undefined,
 })
 
 function CompositionAnimationDemo() {

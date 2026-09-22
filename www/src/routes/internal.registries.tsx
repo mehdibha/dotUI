@@ -4,5 +4,7 @@ import { RegistriesPage } from "@/modules/registries/page"
 
 export const Route = createFileRoute("/internal/registries")({
   component: import.meta.env.DEV ? RegistriesPage : undefined,
-  head: () => ({ meta: [{ title: "Registry directory · dotUI" }] }),
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Registry directory · dotUI" }] })
+    : undefined,
 })
