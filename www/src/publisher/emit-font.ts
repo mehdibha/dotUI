@@ -4,8 +4,8 @@
  * shadcn installs a font per framework from one of these — on Next.js it wires
  * `next/font/google` into the root layout, elsewhere it adds the `@fontsource`
  * package and imports it — and sets the token's CSS variable either way. The
- * init item references one per font token the preset sets (see emit-theme)
- * instead of appending a Google Fonts `@import url()` to the consumer's
+ * init item references one per font role, Geist defaults included (see
+ * emit-theme), instead of appending a Google Fonts `@import url()` to the consumer's
  * stylesheet: shadcn's CSS updater inserts registry imports after
  * `@import "tailwindcss"`, which is invalid once Tailwind expands, and
  * bundlers drop it silently (the examples smoke caught this).
@@ -106,6 +106,11 @@ export function emitFontItem(name: string): RegistryItem | undefined {
       variable,
       subsets: ["latin"],
       dependency: `@fontsource-variable/${fontSlug(family)}`,
+      // Without a selector shadcn applies `font-mono` to <html>, turning the
+      // whole page monospace.
+      ...(variable === FONT_MONO_VAR
+        ? { selector: "code, kbd, samp, pre" }
+        : {}),
     },
   }
   return item as unknown as RegistryItem

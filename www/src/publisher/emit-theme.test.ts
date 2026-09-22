@@ -50,6 +50,11 @@ describe("emitInitItem", () => {
     )
     expect(item.files?.map((file) => file.target)).toEqual(["src/lib/utils.ts"])
     expect(JSON.stringify(item)).not.toContain("dotui-base.css")
+    // Nothing else loads the default faces in a consumer project.
+    expect(item.registryDependencies).toEqual([
+      "https://dotui.com/r/font-geist",
+      "https://dotui.com/r/font-mono-geist-mono",
+    ])
   })
 
   test("ships semantic tokens as per-mode literals in the shadcn shape", () => {
@@ -242,6 +247,7 @@ describe("emitInitItem", () => {
     expect(item.registryDependencies).toEqual([
       "https://dotui.com/r/font-figtree",
       "https://dotui.com/r/font-heading-figtree",
+      "https://dotui.com/r/font-mono-geist-mono",
     ])
     // shadcn would place a CSS import after `@import "tailwindcss"`, where
     // bundlers drop it — the faces travel as font items instead.

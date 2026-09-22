@@ -27,8 +27,13 @@
 import type { Theme } from "@dotui/colors"
 
 import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
   FONT_TOKEN_VARS,
   fontFamiliesFromTokens,
+  fontStack,
   googleFontsUrl,
 } from "@/lib/fonts"
 import {
@@ -147,12 +152,15 @@ function splitPresetTokens(
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
   const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
-  // One `registry:font` item per font token the preset sets. shadcn installs
-  // the face per framework (next/font on Next.js, @fontsource elsewhere) and
-  // sets the token variable — see emit-font.ts for why not a CSS `@import`.
-  const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
-    (name) => `${registryRoot}/r/${name}`,
-  )
+  // One `registry:font` item per font role, defaults included: nothing else
+  // loads the face. shadcn installs it per framework (next/font on Next.js,
+  // @fontsource elsewhere) and sets the token variable — see emit-font.ts for
+  // why not a CSS `@import`.
+  const fontDependencies = fontItemNamesForTokens({
+    [FONT_SANS_VAR]: fontStack(DEFAULT_BODY_FAMILY),
+    [FONT_MONO_VAR]: fontStack(DEFAULT_MONO_FAMILY),
+    ...preset.tokens,
+  }).map((name) => `${registryRoot}/r/${name}`)
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from

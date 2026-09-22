@@ -51,9 +51,6 @@ export const baseRegistryCss = {
 			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
 				opacity: "var(--disabled-opacity, 1)",
 			},
-			html: {
-				"@apply font-sans": {},
-			},
 		},
 		":root": {
 			"--card-border": "var(--color-border)",
@@ -106,9 +103,9 @@ export const baseRegistryCss = {
 			"--radius-3xl": "calc(var(--radius) * 3)",
 			"--radius-4xl": "calc(var(--radius) * 4)",
 			"--radius-full": "calc(infinity * 1px)",
-			"--font-sans": "var(--font-geist-sans)",
+			"--font-sans": 'var(--font-geist-sans, "Geist Variable", system-ui, sans-serif)',
 			"--font-heading": "var(--font-sans)",
-			"--font-mono": "var(--font-geist-mono)",
+			"--font-mono": 'var(--font-geist-mono, "Geist Mono Variable", monospace)',
 		},
 	},
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">;
