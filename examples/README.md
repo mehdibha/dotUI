@@ -54,6 +54,14 @@ cd examples/spotify-tanstack-start && pnpm install && pnpm dev   # terminal 2
 
 `examples:preview` runs the publisher in-process for every item, exactly as `/r/<name>` serves it, and writes the files where the CLI would put them, plus the stylesheet rendered from the init item's CSS fields; `--watch` re-runs on changes under `www/src/registry` and `www/src/publisher`, so the template's dev server hot-reloads the real components. Component files come out byte-identical to what the CLI installs. The stylesheet does not: `shadcn init` merges the same fields into the consumer's file in its own layout and wires the preset's fonts per framework, which the preview skips. It is a preview of the output, never the output itself — regenerate with `pnpm smoke:examples` before committing, and don't commit what the preview wrote.
 
+The same preview writes into any app outside `examples/` — a scaffold you're building against a preset:
+
+```bash
+pnpm examples:preview --dir ../my-app --preset claude --watch
+```
+
+`--stylesheet` overrides the default `src/styles.css`. Watch mode also re-runs when a preset in `www/src/modules/presets` changes.
+
 ## CI
 
 `.github/workflows/examples.yml` runs on every pull request and merge-group run. It decides in-job whether the change can reach consumer output (the registry, the publisher, `/r/*`, presets, `packages/colors`, `examples/`); if so, one job per template regenerates it from scratch with the real CLI, builds, type-checks, and then requires the result to match what is committed. A stale template fails the check, with the diff in the job summary and the full patch as an artifact: run `pnpm smoke:examples` and commit. Nothing is committed by CI. Trigger the workflow manually with an `origin` input to regenerate from a preview URL.
