@@ -1,4 +1,5 @@
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import { readFileSync } from "node:fs"
 import path from "node:path"
 import tailwindcss from "@tailwindcss/vite"
 import viteReact from "@vitejs/plugin-react"
@@ -31,6 +32,30 @@ function rootClosure(): Plugin {
   }
 }
 
+// routes/internal.tsx 404s /internal/* outside dev; builds also stub the tool
+// routes so their code and reference screenshots never ship.
+function stubInternalRoutes(): Plugin {
+  return {
+    name: "dotui-stub-internal-routes",
+    apply: "build",
+    enforce: "pre",
+    load: {
+      filter: { id: /\/src\/routes\/internal\.[^/]+\.tsx(\?|$)/ },
+      handler(id) {
+        const file = id.replace(/\?.*/, "")
+        const routePath = /createFileRoute\(("[^"]+")\)/.exec(
+          readFileSync(file, "utf8"),
+        )?.[1]
+        if (!routePath) this.error(`no createFileRoute path in ${file}`)
+        return [
+          `import { createFileRoute } from "@tanstack/react-router"`,
+          `export const Route = createFileRoute(${routePath})({})`,
+        ].join("\n")
+      },
+    },
+  }
+}
+
 export default defineConfig({
   server: {
     port: 4444,
@@ -56,6 +81,7 @@ export default defineConfig({
   },
   plugins: [
     rootClosure(),
+    stubInternalRoutes(),
     mdx(await import("./source.config")),
     nitro({
       preset: process.env.VERCEL ? "vercel" : "node",
@@ -78,7 +104,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
-        filter: ({ path }) => !path.includes("?"),
+        filter: ({ path }) =>
+          !path.includes("?") && !path.startsWith("/internal"),
       },
     }),
     viteReact(),

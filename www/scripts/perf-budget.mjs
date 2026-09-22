@@ -86,16 +86,11 @@ if (!entry) {
   process.exit(2)
 }
 
-const excluded = []
 const scopes = [...budget.rules, { ...budget.default, match: "(default)" }].map(
   (rule) => ({ rule, worst: null, worstPreloads: 0, count: 0 }),
 )
 
 for (const page of pages) {
-  if (budget.exclude.some((pattern) => matches(pattern, page.route))) {
-    excluded.push(page.route)
-    continue
-  }
   const scope =
     scopes.find((s) => matches(s.rule.match, page.route)) ?? scopes.at(-1)
   const measured = { route: page.route, ...firstLoad(page.html) }
@@ -139,9 +134,7 @@ for (const scope of scopes) {
   )
 }
 
-console.log(
-  `\nperf budget — ${pub} (${pages.length - excluded.length} pages, ${excluded.length} excluded)\n`,
-)
+console.log(`\nperf budget — ${pub} (${pages.length} pages)\n`)
 for (const r of rows) {
   console.log(
     `${r.label.padEnd(14)} ${r.detail.padEnd(38)} ${r.actual.padEnd(20)} ${r.failed ? "❌ over" : "✅ ok"}`,
