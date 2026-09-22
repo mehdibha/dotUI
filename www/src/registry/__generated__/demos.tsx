@@ -1301,6 +1301,10 @@ export const DemosIndex: Record<
 		files: ["ui/drawer/demos/scrollable.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drawer/demos/scrollable")),
 	},
+	"drawer/demos/snap-points": {
+		files: ["ui/drawer/demos/snap-points.tsx"],
+		component: React.lazy(() => import("@/registry/ui/drawer/demos/snap-points")),
+	},
 	"drawer/demos/with-form": {
 		files: ["ui/drawer/demos/with-form.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drawer/demos/with-form")),

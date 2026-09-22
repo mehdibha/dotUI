@@ -27,6 +27,17 @@ export interface DrawerProps {
    * @default true
    */
   swipeToDismiss?: boolean
+  /**
+   * Heights the drawer rests at: fractions of the viewport (0–1), pixels, or
+   * `px`/`rem` strings. Bottom and top drawers only.
+   */
+  snapPoints?: DrawerPrimitive.Root.Props["snapPoints"]
+  /** The active snap point (controlled). */
+  snapPoint?: DrawerPrimitive.Root.Props["snapPoint"]
+  /** The snap point the drawer opens at (uncontrolled). */
+  defaultSnapPoint?: DrawerPrimitive.Root.Props["defaultSnapPoint"]
+  /** Handler that is called when the drawer settles on a snap point. */
+  onSnapPointChange?: DrawerPrimitive.Root.Props["onSnapPointChange"]
   /** Whether outside interaction closes the drawer. @default true */
   isDismissable?: boolean
   /** Whether pressing Escape is suppressed. @default false */
@@ -48,7 +59,15 @@ export interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 export interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
 /** Wraps page content; scales/translates while a drawer is open. */
-export interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
+export interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {
+  /**
+   * How the page moves while a drawer is open: scale back behind a sheet, or
+   * slide aside by `--drawer-indent-push` for a side menu. Set that variable
+   * where both the page and the drawer (portaled) read it, e.g. `:root`.
+   * @default 'scale'
+   */
+  effect?: "scale" | "push"
+}
 
 /** The dark layer behind the indented content. */
 export interface DrawerIndentBackgroundProps

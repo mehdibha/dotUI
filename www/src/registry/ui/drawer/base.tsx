@@ -78,6 +78,10 @@ interface DrawerProps {
   isDismissable?: boolean
   isKeyboardDismissDisabled?: boolean
   swipeToDismiss?: boolean
+  snapPoints?: DrawerPrimitive.Root.Props["snapPoints"]
+  snapPoint?: DrawerPrimitive.Root.Props["snapPoint"]
+  defaultSnapPoint?: DrawerPrimitive.Root.Props["defaultSnapPoint"]
+  onSnapPointChange?: DrawerPrimitive.Root.Props["onSnapPointChange"]
   className?: DrawerPrimitive.Popup.Props["className"]
   style?: DrawerPrimitive.Popup.Props["style"]
   children?: React.ReactNode
@@ -93,6 +97,10 @@ function Drawer({
   onOpenChange,
   placement = "bottom",
   swipeToDismiss = true,
+  snapPoints,
+  snapPoint,
+  defaultSnapPoint,
+  onSnapPointChange,
   style,
 }: DrawerProps) {
   const isHidden = useIsHidden()
@@ -142,6 +150,10 @@ function Drawer({
           else state.close()
         }}
         swipeDirection={swipeDirectionMap[placement]}
+        snapPoints={snapPoints}
+        snapPoint={snapPoint}
+        defaultSnapPoint={defaultSnapPoint}
+        onSnapPointChange={onSnapPointChange}
       >
         {/* Keyboard-aware focus/scroll handling: publishes --drawer-keyboard-inset
             on the viewport while the software keyboard is open. */}
@@ -239,14 +251,20 @@ function DrawerProvider(props: DrawerProviderProps) {
 
 // MARK: Separator
 
-interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
+interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {
+  effect?: "scale" | "push"
+}
 
-function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+function DrawerIndent({
+  className,
+  effect = "scale",
+  ...props
+}: DrawerIndentProps) {
   const { indent } = useStyles()()
   return (
     <DrawerPrimitive.Indent
       className={(state) =>
-        indent({ className: resolveClassName(className, state) })
+        indent({ effect, className: resolveClassName(className, state) })
       }
       {...props}
     />

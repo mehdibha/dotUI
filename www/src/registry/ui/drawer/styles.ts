@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         "mx-auto my-2 shrink-0 cursor-drag touch-none rounded-full bg-fg/20 select-none active:cursor-dragging orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
       swipeArea: "fixed z-50 touch-none",
       indent:
-        "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] duration-500 ease-fluid-out data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-2xl",
+        "relative z-1 min-h-screen bg-bg transition-[transform,border-radius,box-shadow] ease-fluid-out data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none",
       indentBackground:
         "pointer-events-none fixed inset-0 z-0 bg-overlay transition-opacity duration-500 ease-fluid-out data-inactive:opacity-0 data-active:opacity-100",
     },
@@ -31,7 +31,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         bottom: {
           viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
           popup:
-            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(calc(var(--drawer-snap-point-offset,0px)+var(--drawer-swipe-movement-y,0px)))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
           swipeArea: "inset-x-0 bottom-0 h-8",
         },
         left: {
@@ -47,9 +47,23 @@ const { useStyles, styles } = createStyles(drawerMeta, {
           swipeArea: "inset-y-0 right-0 w-8",
         },
       },
+      /* What the page behind does while a drawer is open: scale back under a
+         sheet (iOS), or slide aside by --drawer-indent-push for a side menu.
+         Transitions drop to zero while a swipe drives the progress. */
+      effect: {
+        scale: {
+          indent:
+            "duration-500 data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-2xl",
+        },
+        push: {
+          indent:
+            "origin-left duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] [--drawer-indent-push:min(85vw,--spacing(80))] data-active:transform-[translate3d(calc(var(--drawer-indent-push)*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:overflow-hidden data-active:rounded-(--studio-drawer-radius) data-active:shadow-[inset_0_0_0_1px_var(--color-border-control)]",
+        },
+      },
     },
     defaultVariants: {
       placement: "bottom",
+      effect: "scale",
     },
   },
   density: {
@@ -58,6 +72,17 @@ const { useStyles, styles } = createStyles(drawerMeta, {
     comfortable: {},
   },
   params: {
+    /* iOS 26 floats a bottom sheet inside the screen edges until it expands
+       to its largest snap point; Vaul/shadcn dock it edge to edge. */
+    sheet: {
+      attached: {},
+      floating: {
+        slots: {
+          popup:
+            "data-[swipe-direction=down]:mx-2 data-[swipe-direction=down]:w-auto data-[swipe-direction=down]:rounded-b-(--studio-drawer-radius) data-[swipe-direction=down]:data-expanded:mx-0 data-[swipe-direction=down]:data-expanded:rounded-b-none",
+        },
+      },
+    },
     backdrop: {
       dim: { slots: { backdrop: "bg-overlay/70" } },
       blur: { slots: { backdrop: "bg-overlay/50 backdrop-blur-sm" } },

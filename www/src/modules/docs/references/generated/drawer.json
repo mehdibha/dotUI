@@ -83,6 +83,122 @@
       "description": "Whether the user can drag the drawer to dismiss it.",
       "default": "true"
     },
+    "snapPoints": {
+      "type": "DrawerSnapPoint[]",
+      "detailedType": "DrawerSnapPoint[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "identifier",
+              "name": "DrawerSnapPoint"
+            }
+          }
+        ]
+      },
+      "description": "Heights the drawer rests at: fractions of the viewport (0–1), pixels, or\n`px`/`rem` strings. Bottom and top drawers only."
+    },
+    "snapPoint": {
+      "type": "DrawerSnapPoint | null",
+      "detailedType": "DrawerSnapPoint | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "The active snap point (controlled)."
+    },
+    "defaultSnapPoint": {
+      "type": "DrawerSnapPoint | null",
+      "detailedType": "DrawerSnapPoint | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "The snap point the drawer opens at (uncontrolled)."
+    },
+    "onSnapPointChange": {
+      "type": "((snapPoint: DrawerSnapPoint | null, eventDetails: DrawerRootSnapPointChangeEventDetails) => void)",
+      "detailedType": "| ((\n    snapPoint: DrawerSnapPoint | null,\n    eventDetails: DrawerRootSnapPointChangeEventDetails,\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "snapPoint",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "eventDetails",
+                "value": {
+                  "type": "identifier",
+                  "name": "DrawerRootSnapPointChangeEventDetails"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the drawer settles on a snap point."
+    },
     "isDismissable": {
       "type": "boolean",
       "detailedType": "boolean | undefined",

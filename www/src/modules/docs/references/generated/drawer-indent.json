@@ -2,6 +2,25 @@
   "name": "DrawerIndentProps",
   "description": "Wraps page content; scales/translates while a drawer is open.",
   "props": {
+    "effect": {
+      "type": "\"push\" | \"scale\"",
+      "detailedType": "'push' | 'scale' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "push"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "scale"
+          }
+        ]
+      },
+      "description": "How the page moves while a drawer is open: scale back behind a sheet, or\nslide aside by `--drawer-indent-push` for a side menu. Set that variable\nwhere both the page and the drawer (portaled) read it, e.g. `:root`.",
+      "default": "'scale'"
+    },
     "className": {
       "type": "string | ((state: DrawerIndentState) => string | undefined)",
       "detailedType": "| string\n| ((state: DrawerIndentState) => string | undefined)\n| undefined",
