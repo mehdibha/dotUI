@@ -6,16 +6,14 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import {
-  animate,
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useTransform,
-} from "motion/react"
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react"
+import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
@@ -230,7 +228,9 @@ export function DialSelect({
 /* DialKit's slider: the row is the track, the fill follows the pointer
    unstepped and springs to the nearest step on release. Hashmarks and a
    3×20 handle surface only while hovered or held; the handle fades where it
-   would sit under the label or value. Past either end the track stretches. */
+   would sit under the label or value. Past either end the track stretches.
+   Springs are CSS `linear()` transitions — no animation library in the
+   panel's bundle. */
 
 const CLICK_THRESHOLD = 3
 const DEAD_ZONE = 32
@@ -239,18 +239,30 @@ const MAX_STRETCH = 8
 const LABEL_LEFT = 12
 const VALUE_RIGHT = 12
 const HANDLE_BUFFER = 8
-const SNAP_SPRING = {
-  type: "spring",
-  stiffness: 300,
-  damping: 25,
-  mass: 0.8,
-} as const
+/* A lightly bounced spring, ~6% overshoot. */
+const SPRING =
+  "linear(0, 0.26 8%, 0.62 20%, 0.9 32%, 1.04 44%, 1.06 52%, 1.03 64%, 1 78%, 0.995 88%, 1)"
+const SNAP = `width 420ms ${SPRING}`
+const RELAX = `width 350ms ${SPRING}, translate 350ms ${SPRING}`
 
 /** Clicks near a tenth of the range land on it; elsewhere they stay put. */
 function snapToDecile(raw: number, min: number, max: number) {
   const t = (raw - min) / (max - min)
   const nearest = Math.round(t * 10) / 10
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
+}
+
+const REDUCED = "(prefers-reduced-motion: reduce)"
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    (notify) => {
+      const query = window.matchMedia(REDUCED)
+      query.addEventListener("change", notify)
+      return () => query.removeEventListener("change", notify)
+    },
+    () => window.matchMedia(REDUCED).matches,
+    () => false,
+  )
 }
 
 /** Drags through a draft and commits on release. */
@@ -272,7 +284,7 @@ export function DialSlider({
   format: (value: number) => string
 }) {
   const [draft, setDraft] = useDraft(value)
-  const reducedMotion = useReducedMotion()
+  const reducedMotion = usePrefersReducedMotion()
   const range = maxValue - minValue
   const steps = range / step
   const toPct = (v: number) => ((v - minValue) / range) * 100
@@ -286,6 +298,8 @@ export function DialSlider({
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
+  const fillRef = useRef<HTMLDivElement>(null)
+  const handleRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
   const valueRef = useRef<HTMLSpanElement>(null)
 
@@ -294,44 +308,43 @@ export function DialSlider({
   const [hovered, setHovered] = useState(false)
   const active = interacting || hovered
 
-  const fillPct = useMotionValue(toPct(value))
-  const stretch = useMotionValue(0)
-  const handleOpacity = useMotionValue(0)
-  const handleScaleX = useMotionValue(0.25)
-  const handleScaleY = useMotionValue(1)
-
-  const fillWidth = useMotionTemplate`${fillPct}%`
-  const handleLeft = useMotionTemplate`max(5px, calc(${fillPct}% - 9px))`
-  const trackWidth = useTransform(
-    stretch,
-    (s) => `calc(100% + ${Math.abs(s)}px)`,
-  )
-  const trackX = useTransform(stretch, (s) => Math.min(s, 0))
-
-  const snapAnim = useRef<{ stop: () => void } | null>(null)
   const pointerDown = useRef<{ x: number; y: number } | null>(null)
   const isClick = useRef(true)
   const rect = useRef<DOMRect | null>(null)
+  const committed = useRef(value)
 
-  // Sync the fill from the committed value while idle; a settling snap owns it.
+  /* The fill and the handle move together, off React: written straight to
+     style, with the snap transition only on release. */
+  const paint = (pct: number, transition = "none") => {
+    const fill = fillRef.current
+    const handle = handleRef.current
+    if (!fill || !handle) return
+    const t = reducedMotion ? "none" : transition
+    fill.style.transition = t
+    handle.style.transition = t.replace(/width/g, "left")
+    fill.style.width = `${pct}%`
+    handle.style.left = `max(5px, calc(${pct}% - 9px))`
+  }
+
+  const stretchTo = (s: number, relax = false) => {
+    const track = trackRef.current
+    if (!track) return
+    track.style.transition = relax && !reducedMotion ? RELAX : "none"
+    track.style.width = `calc(100% + ${Math.abs(s)}px)`
+    track.style.translate = `${Math.min(s, 0)}px 0`
+  }
+
+  // Sync the fill when the value changes from outside (reset, a preset); a
+  // value this slider just committed is already painted, mid-snap.
   useEffect(() => {
-    if (!interacting && !snapAnim.current) fillPct.jump(toPct(value))
+    if (!interacting && value !== committed.current) paint(toPct(value))
+    committed.current = value
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, minValue, maxValue])
 
   const settle = (next: number) => {
-    snapAnim.current?.stop()
-    if (reducedMotion) {
-      fillPct.jump(toPct(next))
-      snapAnim.current = null
-    } else {
-      snapAnim.current = animate(fillPct, toPct(next), {
-        ...SNAP_SPRING,
-        onComplete: () => {
-          snapAnim.current = null
-        },
-      })
-    }
+    committed.current = next
+    paint(toPct(next), SNAP)
     setDraft(next)
     onChange(next)
   }
@@ -381,11 +394,9 @@ export function DialSlider({
       isClick.current = false
       setDragging(true)
     }
-    stretch.jump(stretchAt(e.clientX))
+    stretchTo(stretchAt(e.clientX))
     const raw = valueAt(e.clientX)
-    snapAnim.current?.stop()
-    snapAnim.current = null
-    fillPct.jump(toPct(raw))
+    paint(toPct(raw))
     setDraft(round(raw))
   }
 
@@ -399,15 +410,7 @@ export function DialSlider({
           : raw,
       ),
     )
-    if (stretch.get() !== 0) {
-      if (reducedMotion) stretch.jump(0)
-      else
-        animate(stretch, 0, {
-          type: "spring",
-          visualDuration: 0.35,
-          bounce: 0.15,
-        })
-    }
+    stretchTo(0, true)
     setInteracting(false)
     setDragging(false)
     pointerDown.current = null
@@ -415,8 +418,8 @@ export function DialSlider({
 
   const onPointerCancel = () => {
     if (!interacting) return
-    stretch.jump(0)
-    fillPct.jump(toPct(value))
+    stretchTo(0)
+    paint(toPct(value))
     setDraft(value)
     setInteracting(false)
     setDragging(false)
@@ -446,9 +449,8 @@ export function DialSlider({
     }
     e.preventDefault()
     e.stopPropagation()
-    snapAnim.current?.stop()
-    snapAnim.current = null
-    fillPct.jump(toPct(next))
+    committed.current = next
+    paint(toPct(next))
     setDraft(next)
     onChange(next)
   }
@@ -456,6 +458,7 @@ export function DialSlider({
   // The handle: hidden at rest, half-strength on hover, full while dragging,
   // and nearly gone where it would cross the label or the value.
   const pct = toPct(draft)
+  const [handleLook, setHandleLook] = useState({ opacity: 0, x: 0.25, y: 1 })
   useEffect(() => {
     const width = trackRef.current?.offsetWidth ?? 0
     const left =
@@ -474,33 +477,12 @@ export function DialSlider({
           100
         : 78
     const dodge = pct < left || pct > right
-    const opacity = !active ? 0 : dodge ? 0.1 : dragging ? 0.9 : 0.5
-    const scaleX = active ? 1 : 0.25
-    const scaleY = active && dodge ? 0.75 : 1
-    if (reducedMotion) {
-      handleOpacity.jump(opacity)
-      handleScaleX.jump(scaleX)
-      handleScaleY.jump(scaleY)
-      return
-    }
-    const controls = [
-      animate(handleOpacity, opacity, { duration: 0.15 }),
-      animate(handleScaleX, scaleX, {
-        type: "spring",
-        visualDuration: 0.25,
-        bounce: 0.15,
-      }),
-      animate(handleScaleY, scaleY, {
-        type: "spring",
-        visualDuration: 0.2,
-        bounce: 0.1,
-      }),
-    ]
-    return () => controls.forEach((c) => c.stop())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, dragging, pct, reducedMotion])
-
-  useEffect(() => () => snapAnim.current?.stop(), [])
+    setHandleLook({
+      opacity: !active ? 0 : dodge ? 0.1 : dragging ? 0.9 : 0.5,
+      x: active ? 1 : 0.25,
+      y: active && dodge ? 0.75 : 1,
+    })
+  }, [active, dragging, pct])
 
   // Nine marks at each tenth, or one per step when the range has ten or fewer.
   const marks =
@@ -513,7 +495,7 @@ export function DialSlider({
 
   return (
     <div ref={wrapperRef} className="relative h-9 w-full shrink-0">
-      <motion.div
+      <div
         ref={trackRef}
         role="slider"
         tabIndex={0}
@@ -524,8 +506,7 @@ export function DialSlider({
         aria-valuetext={format(draft)}
         data-active={active || undefined}
         data-dragging={dragging || undefined}
-        style={{ width: trackWidth, x: trackX }}
-        className="group absolute inset-y-0 left-0 cursor-interactive touch-none overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
+        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-none overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -543,19 +524,22 @@ export function DialSlider({
             />
           ))}
         </div>
-        <motion.div
-          style={{ width: fillWidth }}
+        <div
+          ref={fillRef}
+          style={{ width: `${toPct(value)}%` }}
           className="pointer-events-none absolute inset-y-0 left-0 tint-10 transition-colors duration-150 group-focus-visible:tint-15 group-data-active:tint-15"
         />
-        <motion.div
+        <div
+          ref={handleRef}
           style={{
-            left: handleLeft,
-            opacity: handleOpacity,
-            y: "-50%",
-            scaleX: handleScaleX,
-            scaleY: handleScaleY,
+            left: `max(5px, calc(${toPct(value)}% - 9px))`,
+            opacity: handleLook.opacity,
+            scale: `${handleLook.x} ${handleLook.y}`,
+            transitionProperty: "opacity, scale",
+            transitionDuration: reducedMotion ? "0s" : "150ms, 250ms",
+            transitionTimingFunction: `ease, ${SPRING}`,
           }}
-          className="pointer-events-none absolute top-1/2 h-5 w-[3px] rounded-full bg-fg/90"
+          className="pointer-events-none absolute top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-fg/90"
         />
         <span
           ref={labelRef}
@@ -575,7 +559,7 @@ export function DialSlider({
         >
           {format(draft)}
         </span>
-      </motion.div>
+      </div>
     </div>
   )
 }
