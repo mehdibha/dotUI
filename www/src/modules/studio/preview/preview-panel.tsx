@@ -479,7 +479,7 @@ export function PreviewPanel({
               <Button
                 size="sm"
                 variant="quiet"
-                className="max-w-44 rounded-full"
+                className="max-w-44 rounded-full max-sm:max-w-24"
               >
                 {/* flex-initial overrides the base flex-1 (basis-0), which has no
                 space to grow into inside the pill's shrink-to-fit box and
