@@ -68,6 +68,8 @@ const VALIDATED = new Set([
   "surfaces",
   "browser",
   "states",
+  "motion",
+  "mobile",
 ])
 
 export interface IndexChapter {

@@ -1,19 +1,18 @@
 "use client"
 
-/* Mobile — how overlays adapt below the touch line. Off is a real option
-   (Radix Themes renders the same everywhere) and empties the chapter down to
-   the switch. Pickers is the loudest split: shadcn/Vaul and most product
-   apps slide selects, menus and date pickers into a bottom drawer, Geist
-   keeps the popover anchored. Dialogs split again: the classic modal stays
-   centered, iOS-style systems drop it to a sheet. Deliberately baseline,
-   never axes: the mobile line itself (the
-   768px viewport breakpoint), hover styles only under (hover: hover), 16px
-   inputs against iOS zoom, safe-area insets, keyboard-aware sheets.
-   Comboboxes have no row: their list stays anchored to the input. */
+/* Mobile — how overlays adapt below the touch line. Pickers is the loudest
+   split: shadcn/Vaul and most product apps slide selects, menus and date
+   pickers into a bottom drawer, Geist keeps the popover anchored. Dialogs
+   split again: the classic modal stays centered, iOS-style systems drop it
+   to a sheet. Popover + Center is Radix Themes' "same everywhere".
+   Deliberately baseline, never axes: the mobile line itself (768px), hover
+   styles only under (hover: hover), 16px inputs against iOS zoom, safe-area
+   insets, keyboard-aware sheets. Comboboxes have no row: their list stays
+   anchored to the input. */
 
 import { DIALOG_OPTIONS, PICKER_OPTIONS } from "../axes/mobile"
-import { ControlGroup, SelectRow, SwitchRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import { DialSelect } from "../dial"
+import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 type Layer = "drawer" | "popover" | "center" | "sheet"
@@ -70,52 +69,44 @@ function PhoneGlyph({ layer }: { layer: Layer }) {
   )
 }
 
-const withGlyphs = (options: SelectRowOption[]): SelectRowOption[] =>
+const withGlyphs = (
+  options: { value: string; label: string }[],
+): DialSelectOption[] =>
   options.map((o) => ({
     ...o,
-    illustration: <PhoneGlyph layer={o.value as Layer} />,
+    preview: (
+      <span className="size-4 shrink-0 *:size-full">
+        <PhoneGlyph layer={o.value as Layer} />
+      </span>
+    ),
   }))
 
 const PICKERS = withGlyphs(PICKER_OPTIONS)
 const DIALOGS = withGlyphs(DIALOG_OPTIONS)
 
-/** Collapsed-row summary: off, or what pickers and dialogs become. */
 export function mobileSummary(state: StudioState): string {
-  if (!state.mobileAdapt) return "Off"
-  const pickers =
+  return (
     PICKER_OPTIONS.find((o) => o.value === state.mobilePickers)?.label ??
     state.mobilePickers
-  return `${pickers} pickers`
+  )
 }
 
 export function MobileSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SwitchRow
-        label="Adapt for touch"
-        description="Pickers and dialogs change shape below the mobile line."
-        value={state.mobileAdapt}
-        onChange={set("mobileAdapt")}
+    <>
+      <DialSelect
+        label="Pickers"
+        value={state.mobilePickers}
+        onChange={set("mobilePickers")}
+        options={PICKERS}
       />
-      {state.mobileAdapt && (
-        <>
-          <SelectRow
-            label="Pickers & menus"
-            value={state.mobilePickers}
-            onChange={set("mobilePickers")}
-            options={PICKERS}
-            layout="grid"
-          />
-          <SelectRow
-            label="Dialogs"
-            value={state.mobileDialogs}
-            onChange={set("mobileDialogs")}
-            options={DIALOGS}
-            layout="grid"
-          />
-        </>
-      )}
-    </ControlGroup>
+      <DialSelect
+        label="Dialogs"
+        value={state.mobileDialogs}
+        onChange={set("mobileDialogs")}
+        options={DIALOGS}
+      />
+    </>
   )
 }

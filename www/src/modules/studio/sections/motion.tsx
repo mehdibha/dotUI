@@ -4,23 +4,21 @@
    motion shares (Geist ease-out vs Material emphasized vs spring); Speed is
    one multiplier over the duration ramp; Overlays is the entrance pattern
    for floating layers; State changes is whether hover/press color shifts
-   ease or snap — the native-vs-web cue. Exits stay a plain mirrored curve at a shorter duration — springs are for
-   arriving, not leaving. Deliberately absent: a "none" character (Linear's
-   stillness is compositional — fast, overlays none, instant states),
-   overlayExit as its own row, reducedMotion, which only renders under an OS
-   media query, and the skeleton idle treatment, which lives in Skeleton — a
-   loading decision that happens to animate. Focus rings never ease —
-   pattern constant, not part of the state axis. */
+   ease or snap — the native-vs-web cue. Exits stay a plain mirrored curve at
+   a shorter duration — springs are for arriving, not leaving. Deliberately
+   absent: a "none" character (Linear's stillness is compositional — fast,
+   overlays none, instant states), reducedMotion, which only renders under an
+   OS media query, and the skeleton idle treatment, which lives in Skeleton.
+   Focus rings never ease. */
 
 import {
   CHARACTER_OPTIONS,
   OVERLAY_OPTIONS,
-  SPEED,
-  SPEED_OPTIONS,
+  SPEED_RANGE,
   STATE_OPTIONS,
 } from "../axes/motion"
-import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import { DialSelect, DialSlider } from "../dial"
+import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
@@ -44,10 +42,6 @@ function CurveGlyph({ d }: { d: string }) {
       />
     </svg>
   )
-}
-
-function SpeedGlyph({ children }: { children: React.ReactNode }) {
-  return <span className="font-mono text-sm text-fg">{children}</span>
 }
 
 function OverlayNoneGlyph() {
@@ -153,10 +147,15 @@ function StateGlyph({ d }: { d: string }) {
 const withGlyphs = (
   options: { value: string; label: string }[],
   glyphs: Record<string, React.ReactNode>,
-): SelectRowOption[] =>
-  options.map((o) => ({ ...o, illustration: glyphs[o.value] }))
+): DialSelectOption[] =>
+  options.map((o) => ({
+    ...o,
+    preview: (
+      <span className="size-4 shrink-0 *:size-full">{glyphs[o.value]}</span>
+    ),
+  }))
 
-const CHARACTER_ROWS = withGlyphs(CHARACTER_OPTIONS, {
+const CHARACTERS = withGlyphs(CHARACTER_OPTIONS, {
   standard: <CurveGlyph d="M4 20C8 9 12 6 20 6" />,
   emphasized: <CurveGlyph d="M4 20C5 8 9 6 20 6" />,
   spring: (
@@ -164,72 +163,57 @@ const CHARACTER_ROWS = withGlyphs(CHARACTER_OPTIONS, {
   ),
 })
 
-const SPEED_ROWS = withGlyphs(
-  SPEED_OPTIONS,
-  Object.fromEntries(
-    Object.entries(SPEED).map(([value, factor]) => [
-      value,
-      <SpeedGlyph key={value}>{factor}×</SpeedGlyph>,
-    ]),
-  ),
-)
-
-const OVERLAY_ROWS = withGlyphs(OVERLAY_OPTIONS, {
+const OVERLAYS = withGlyphs(OVERLAY_OPTIONS, {
   none: <OverlayNoneGlyph />,
   fade: <OverlayFadeGlyph />,
   scale: <OverlayScaleGlyph />,
   slide: <OverlaySlideGlyph />,
 })
 
-const STATE_ROWS = withGlyphs(STATE_OPTIONS, {
+const STATES = withGlyphs(STATE_OPTIONS, {
   instant: <StateGlyph d="M4 18h7V6h9" />,
   quick: <StateGlyph d="M4 18h4c2.5 0 2-12 4.5-12H20" />,
   smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
 })
 
-const optionLabel = (
-  options: { value: string; label: string }[],
-  value: string,
-) => options.find((o) => o.value === value)?.label ?? value
-
-/** Collapsed-row summary: the easing character, and the overlay entrance
- *  when overlays animate. */
 export function motionSummary(state: StudioState): string {
-  return optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
+  return (
+    CHARACTER_OPTIONS.find((o) => o.value === state.motionCharacter)?.label ??
+    state.motionCharacter
+  )
 }
 
 export function MotionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <SelectRow
+    <>
+      <DialSelect
         label="Character"
         value={state.motionCharacter}
         onChange={set("motionCharacter")}
-        options={CHARACTER_ROWS}
-        layout="grid"
+        options={CHARACTERS}
       />
-      <SelectRow
+      <DialSlider
         label="Speed"
         value={state.motionSpeed}
         onChange={set("motionSpeed")}
-        options={SPEED_ROWS}
-        layout="grid"
+        minValue={SPEED_RANGE.min}
+        maxValue={SPEED_RANGE.max}
+        step={SPEED_RANGE.step}
+        format={(v) => `${v.toFixed(2)}×`}
       />
-      <SelectRow
+      <DialSelect
         label="Overlays"
         value={state.motionOverlay}
         onChange={set("motionOverlay")}
-        options={OVERLAY_ROWS}
-        layout="grid"
+        options={OVERLAYS}
       />
-      <SelectRow
+      <DialSelect
         label="State changes"
         value={state.motionState}
         onChange={set("motionState")}
-        options={STATE_ROWS}
-        layout="grid"
+        options={STATES}
       />
-    </ControlGroup>
+    </>
   )
 }

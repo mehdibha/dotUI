@@ -25,7 +25,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	],
 	charts: ["Palette", "Grid"],
 	motion: ["Character", "Speed", "Overlays", "State changes"],
-	mobile: ["Adapt for touch", "Pickers & menus", "Dialogs"],
+	mobile: ["Pickers", "Dialogs"],
 	links: ["Underline", "Color"],
 	alert: [],
 	toast: [],

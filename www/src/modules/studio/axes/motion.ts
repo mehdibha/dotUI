@@ -1,6 +1,6 @@
 /* Motion — how the system moves. Character is the easing personality every
-   entrance shares; Speed is one multiplier over the duration ramp; Overlays
-   is the entrance pattern of floating layers; State changes is how long a
+   entrance shares; Speed is one multiplier over the duration ramp (0.5–2×);
+   Overlays is the entrance pattern of floating layers; State changes is how long a
    hover/press/selection shift takes to settle — the native-vs-web cue.
 
    Engine: three `@theme` tokens in base.css — `--ease-enter` and the
@@ -15,7 +15,7 @@ import type { Resolved, StudioState } from "./index"
 
 export const MOTION_DEFAULTS = {
   motionCharacter: "standard",
-  motionSpeed: "default",
+  motionSpeed: 1,
   motionOverlay: "scale",
   motionState: "smooth",
 }
@@ -37,8 +37,6 @@ export const CHARACTER = {
   spring: { ease: SPRING, enterMs: 450, exitMs: 200 },
 }
 
-export const SPEED = { fast: 0.75, default: 1, relaxed: 1.4 }
-
 /* Smooth mirrors Tailwind's default transition duration. */
 export const STATE_MS = { instant: 0, quick: 100, smooth: 150 }
 
@@ -48,11 +46,7 @@ export const CHARACTER_OPTIONS = [
   { value: "spring", label: "Spring" },
 ]
 
-export const SPEED_OPTIONS = [
-  { value: "fast", label: "Fast" },
-  { value: "default", label: "Default" },
-  { value: "relaxed", label: "Relaxed" },
-]
+export const SPEED_RANGE = { min: 0.5, max: 2, step: 0.05 }
 
 export const OVERLAY_OPTIONS = [
   { value: "none", label: "None" },
@@ -73,7 +67,10 @@ const key = <T extends object>(table: T, value: string, fallback: keyof T) =>
 /** The timing a state resolves to: the curve and the three durations. */
 export function motionTiming(state: StudioState) {
   const character = CHARACTER[key(CHARACTER, state.motionCharacter, "standard")]
-  const speed = SPEED[key(SPEED, state.motionSpeed, "default")]
+  const speed =
+    typeof state.motionSpeed === "number"
+      ? Math.min(SPEED_RANGE.max, Math.max(SPEED_RANGE.min, state.motionSpeed))
+      : 1
   const stateMs = STATE_MS[key(STATE_MS, state.motionState, "smooth")]
   return {
     ease: character.ease,
