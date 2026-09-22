@@ -4,8 +4,7 @@
    `ColorConfig` through the axis module; here they resolve through the same
    engine the preview runs, in the panel's own display mode, so every swatch
    and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
-   Semantics — then Primary; everything else (character, contrast, the two
-   modes, engine tuning) waits folded in More until it's settled. */
+   Semantics — then Primary; Vividness folds in More. */
 
 import { useMemo } from "react"
 import { useTheme } from "starter-themes"
@@ -119,10 +118,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
-/* The More folder is hidden until its axes settle. */
-const MORE = false
-
-/** Palettes and primary; the rest folded in More (WIP). */
+/** Palettes and primary; the engine's one character knob folded in More. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const { m } = usePanelMode(state)
@@ -167,31 +163,18 @@ export function ColorSection({ studio }: { studio: Studio }) {
       </DialTrigger>
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
-      {MORE && (
-        <>
-          <DialGap />
-          <DialFolder title="More (WIP)" defaultOpen={false}>
-            <DialSlider
-              label="Vividness"
-              value={state.vividness}
-              onChange={set("vividness")}
-              minValue={0}
-              maxValue={2}
-              step={0.05}
-              format={(v) => `${v.toFixed(2)}×`}
-            />
-            <DialSlider
-              label="Hue shift"
-              value={state.hueShift}
-              onChange={set("hueShift")}
-              minValue={0}
-              maxValue={3}
-              step={0.1}
-              format={(v) => `${v.toFixed(1)}×`}
-            />
-          </DialFolder>
-        </>
-      )}
+      <DialGap />
+      <DialFolder title="More" defaultOpen={false}>
+        <DialSlider
+          label="Vividness"
+          value={state.vividness}
+          onChange={set("vividness")}
+          minValue={0}
+          maxValue={2}
+          step={0.05}
+          format={(v) => `${v.toFixed(2)}×`}
+        />
+      </DialFolder>
     </>
   )
 }

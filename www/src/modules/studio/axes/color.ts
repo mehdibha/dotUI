@@ -35,7 +35,6 @@ export const COLOR_DEFAULTS = {
   dangerSeed: "",
   selectionSeed: "",
   vividness: 1,
-  hueShift: 1,
   neutralTint: 1,
   preserveSeed: false,
 }
@@ -135,7 +134,6 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       dark: dark.bg === 0 ? ("oled" as const) : clamp(dark.bg, 0, 20),
     }),
     vividness: state.vividness === 1 ? undefined : state.vividness,
-    hueShift: state.hueShift === 1 ? undefined : state.hueShift,
     neutralTint: state.neutralTint === 1 ? undefined : state.neutralTint,
     neutralHue: state.neutralHue ?? undefined,
     preserveSeed: state.preserveSeed || undefined,

@@ -220,7 +220,6 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     if (color.seeds.danger) state.dangerSeed = color.seeds.danger
     if (color.seeds.selection) state.selectionSeed = color.seeds.selection
     if (color.vividness !== undefined) state.vividness = color.vividness
-    if (color.hueShift !== undefined) state.hueShift = color.hueShift
     if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint
     if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
     if (color.preserveSeed) state.preserveSeed = true
