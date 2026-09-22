@@ -33,7 +33,7 @@ export const GROUPS: string[][] = [
   // Identity — how the system reads at a glance.
   ["color", "typography", "icons", "shape", "space", "surfaces"],
   // Page chrome — the browser-level surface, set once.
-  ["cursor", "selection", "scrollbars"],
+  ["browser"],
   // Component states — cross-component treatments every control below wears.
   ["focus", "invalid", "disabled", "motion", "mobile"],
   // Component clusters — title + specimen, the demo carries the values.
@@ -66,6 +66,7 @@ const VALIDATED = new Set([
   "shape",
   "space",
   "surfaces",
+  "browser",
 ])
 
 export interface IndexChapter {

@@ -63,6 +63,7 @@ import { AlertSection } from "./sections/alert"
 import { AvatarsSection } from "./sections/avatars"
 import { BadgesSection } from "./sections/badges"
 import { BreadcrumbsSection } from "./sections/breadcrumbs"
+import { BrowserSection, browserSummary } from "./sections/browser"
 import { ButtonGroupsSection } from "./sections/button-groups"
 import { ButtonsSection } from "./sections/buttons"
 import { CalendarSection } from "./sections/calendar"
@@ -70,7 +71,6 @@ import { ChartsSection } from "./sections/charts"
 import { CheckboxSection } from "./sections/checkbox"
 import { ChoiceCardsSection } from "./sections/choice-cards"
 import { ColorPrimary, ColorSection } from "./sections/color"
-import { CursorSection, cursorSummary } from "./sections/cursor"
 import { DialogsSection } from "./sections/dialogs"
 import { DisabledSection, disabledSummary } from "./sections/disabled"
 import { FocusSection, focusSummary } from "./sections/focus"
@@ -90,9 +90,7 @@ import { PickersSection } from "./sections/pickers"
 import { PopoversSection } from "./sections/popovers"
 import { ProgressSection } from "./sections/progress"
 import { RadioSection } from "./sections/radio"
-import { ScrollbarsSection, scrollbarsSummary } from "./sections/scrollbars"
 import { SegmentedControlSection } from "./sections/segmented-control"
-import { SelectionSection, selectionSummary } from "./sections/selection"
 import { ShapeSection, shapeSummary } from "./sections/shape"
 import { SkeletonSection } from "./sections/skeleton"
 import { SlidersSection } from "./sections/sliders"
@@ -174,25 +172,15 @@ export const CHAPTERS: Chapter[] = [
     summary: focusSummary,
   },
   {
-    id: "cursor",
-    label: "Cursor",
-    defaults: CURSOR_DEFAULTS,
-    Body: CursorSection,
-    summary: cursorSummary,
-  },
-  {
-    id: "selection",
-    label: "Text selection",
-    defaults: SELECTION_DEFAULTS,
-    Body: SelectionSection,
-    summary: selectionSummary,
-  },
-  {
-    id: "scrollbars",
-    label: "Scrollbars",
-    defaults: SCROLLBAR_DEFAULTS,
-    Body: ScrollbarsSection,
-    summary: scrollbarsSummary,
+    id: "browser",
+    label: "Browser",
+    defaults: {
+      ...CURSOR_DEFAULTS,
+      ...SELECTION_DEFAULTS,
+      ...SCROLLBAR_DEFAULTS,
+    },
+    Body: BrowserSection,
+    summary: browserSummary,
   },
   {
     id: "disabled",
