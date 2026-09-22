@@ -71,8 +71,11 @@ export function StudioPanel({
   const storedName = useDesignSystemName()
   const [saveOpen, setSaveOpen] = useState(false)
   const [createOpen, setCreateOpen] = useState(false)
-  // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
-  const [pending, setPending] = useState<(() => void) | null>(null)
+  // A pick, create or reset held back by the unsaved-changes guard, awaiting save/discard.
+  const [pending, setPending] = useState<{
+    action: () => void
+    reset?: boolean
+  } | null>(null)
 
   // The header names what's being edited: the active saved system (dotted when
   // edited past its snapshot), else the standalone design-system name.
@@ -155,8 +158,8 @@ export function StudioPanel({
   }
 
   // Replacing the state over unsaved work asks first; over clean state it's instant.
-  function guarded(action: () => void) {
-    if (isDirty) setPending(() => action)
+  function guarded(action: () => void, reset?: boolean) {
+    if (isDirty) setPending({ action, reset })
     else action()
   }
 
@@ -165,7 +168,7 @@ export function StudioPanel({
       if (activeSaved) update(activeSaved.id, currentState)
       else save(displayName, currentState)
     }
-    pending?.()
+    pending?.action()
     setPending(null)
   }
 
@@ -173,7 +176,7 @@ export function StudioPanel({
     name: displayName,
     dirty: isDirty,
     modified: currentState !== ORIGIN_CANON,
-    onReset: () => guarded(() => pickPreset(ORIGIN.id)),
+    onReset: () => guarded(() => pickPreset(ORIGIN.id), true),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
       <PresetPicker
@@ -219,6 +222,10 @@ export function StudioPanel({
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}
+        {...(pending?.reset && {
+          title: "Reset to Origin?",
+          description: "Resetting will discard your unsaved changes.",
+        })}
         onOpenChange={(open) => {
           if (!open) setPending(null)
         }}
