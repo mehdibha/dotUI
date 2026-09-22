@@ -19,6 +19,7 @@ import type { StudioPreset } from "@/modules/studio/preset/codec"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
+import { record, redo, undo, useHistory } from "./history"
 import { resolveDesignSystem } from "./resolve"
 
 const routeApi = getRouteApi("/_app/studio")
@@ -38,6 +39,11 @@ export interface Studio {
     key: K,
     value: CodeOptions[K],
   ) => void
+  /** Steps through edits; see history.ts. */
+  undo: () => void
+  redo: () => void
+  canUndo: boolean
+  canRedo: boolean
   /** Modified-vs-default and reset for one section, from its defaults slice. */
   section: (defaults: Partial<StudioState>) => {
     modified: boolean
@@ -62,14 +68,26 @@ export function useStudio(): Studio {
   const preset = decodeCached(encoded)
   const { state } = preset
 
+  const history = useHistory()
+
+  const show = useCallback(
+    (next: string | undefined) =>
+      navigate({
+        search: (prev) => ({ ...prev, preset: next || undefined }),
+        replace: true,
+      }),
+    [navigate],
+  )
+
   const setPreset = useCallback(
     (next: StudioPreset) => {
-      navigate({
-        search: (prev) => ({ ...prev, preset: encodePreset(next) }),
-        replace: true,
-      })
+      const nextEncoded = encodePreset(next)
+      if (nextEncoded === encoded) return
+      // No preset yet means the page is still seeding its first state.
+      if (encoded !== undefined) record(encoded)
+      show(nextEncoded)
     },
-    [navigate],
+    [encoded, show],
   )
 
   const designSystem = useMemo(() => resolveDesignSystem(state), [state])
@@ -94,6 +112,10 @@ export function useStudio(): Studio {
       key: K,
       value: CodeOptions[K],
     ) => setPreset({ ...preset, codeOptions: { ...codeOptions, [key]: value } })
+    const step = (move: typeof undo) => () => {
+      const next = move(encoded)
+      if (next !== null) show(next)
+    }
     return {
       state,
       preset,
@@ -104,7 +126,11 @@ export function useStudio(): Studio {
       setPreset,
       codeOptions,
       setCodeOption,
+      undo: step(undo),
+      redo: step(redo),
+      canUndo: history.canUndo,
+      canRedo: history.canRedo,
       section,
     }
-  }, [state, preset, encoded, designSystem, setPreset])
+  }, [state, preset, encoded, designSystem, setPreset, show, history])
 }

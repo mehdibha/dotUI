@@ -7,6 +7,7 @@ import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
+import { useHistoryShortcuts } from "@/modules/studio/history"
 import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
@@ -53,7 +54,8 @@ export const Route = createFileRoute("/_app/studio")({
 
 function StudioPage() {
   const { preset } = Route.useSearch()
-  const { preset: current, setPreset, setState } = useStudio()
+  const { preset: current, setPreset, setState, undo, redo } = useStudio()
+  useHistoryShortcuts(undo, redo)
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)

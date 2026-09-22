@@ -38,5 +38,6 @@ const nameStore = createPersistedStore<string>(
   },
 )
 
+export const loadDesignSystemName = nameStore.get
 export const saveDesignSystemName = nameStore.set
 export const useDesignSystemName = nameStore.useValue

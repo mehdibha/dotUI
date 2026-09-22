@@ -7,7 +7,7 @@ export {
   type StudioPreset,
 } from "./codec"
 export { DEFAULTS } from "./defaults"
-export { type SavedPreset, useMyPresets } from "./my-presets"
+export { type SavedPreset, uniqueName, useMyPresets } from "./my-presets"
 export {
   pingIframe,
   type PreviewMode,
