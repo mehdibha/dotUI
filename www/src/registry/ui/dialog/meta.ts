@@ -11,7 +11,7 @@ const dialogMeta = {
       target: "ui/dialog.tsx",
     },
   ],
-  registryDependencies: ["responsive", "modal", "drawer", "popover", "button"],
+  registryDependencies: ["button"],
   params: {
     header: {
       kind: "enum",
