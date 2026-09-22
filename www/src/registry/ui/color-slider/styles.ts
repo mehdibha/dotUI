@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(colorSliderMeta, {
       root: "flex flex-col gap-2",
       output: "text-sm text-fg-muted tabular-nums",
       track:
-        "relative rounded-md disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-[slot=color-thumb]:top-1/2 orientation-vertical:**:data-[slot=color-thumb]:left-1/2",
+        "relative rounded-(--studio-color-slider-radius) disabled:[background:var(--color-disabled)]! orientation-horizontal:**:data-[slot=color-thumb]:top-1/2 orientation-vertical:**:data-[slot=color-thumb]:left-1/2",
     },
     variants: {
       orientation: {

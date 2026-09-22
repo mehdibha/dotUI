@@ -24,7 +24,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           media: "bg-transparent",
         },
         icon: {
-          media: "rounded-md bg-muted text-fg",
+          media: "rounded-(--studio-empty-media-radius) bg-muted text-fg",
         },
       },
     },
@@ -35,7 +35,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
   density: {
     compact: {
       slots: {
-        base: "gap-4 rounded-xl p-6",
+        base: "gap-4 rounded-(--studio-empty-radius) p-6",
         header: "gap-1",
         title: "text-sm",
         description: "text-xs/relaxed",
@@ -52,7 +52,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
     },
     default: {
       slots: {
-        base: "gap-4 rounded-xl p-6",
+        base: "gap-4 rounded-(--studio-empty-radius) p-6",
         header: "gap-2",
         title: "text-base",
         description: "text-sm/relaxed",
@@ -69,7 +69,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
     },
     comfortable: {
       slots: {
-        base: "gap-4 rounded-lg p-12",
+        base: "gap-4 rounded-(--studio-empty-radius) p-12",
         title: "text-lg",
         description: "text-sm/relaxed",
         content: "text-sm",

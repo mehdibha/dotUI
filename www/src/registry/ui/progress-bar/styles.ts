@@ -7,7 +7,8 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
   base: {
     slots: {
       root: fieldStyles().field(),
-      track: "relative flex w-full items-center overflow-x-hidden rounded-full",
+      track:
+        "relative flex w-full items-center overflow-x-hidden rounded-(--studio-progress-radius)",
       fill: "h-full w-full bg-primary transition-all",
       output: "ml-auto text-fg-muted tabular-nums",
     },
@@ -68,8 +69,8 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
       cut: {
         slots: {
           track:
-            "after:absolute after:top-1/2 after:right-0 after:size-1 after:-translate-y-1/2 after:rounded-full after:bg-primary",
-          fill: "relative rounded-full before:absolute before:top-0 before:right-[calc(100%+4px)] before:h-full before:w-screen before:rounded-full before:bg-muted after:absolute after:top-0 after:left-[calc(100%+4px)] after:h-full after:w-screen after:rounded-full after:bg-muted",
+            "after:absolute after:top-1/2 after:right-0 after:size-1 after:-translate-y-1/2 after:rounded-(--studio-progress-radius) after:bg-primary",
+          fill: "relative rounded-(--studio-progress-radius) before:absolute before:top-0 before:right-[calc(100%+4px)] before:h-full before:w-screen before:rounded-(--studio-progress-radius) before:bg-muted after:absolute after:top-0 after:left-[calc(100%+4px)] after:h-full after:w-screen after:rounded-(--studio-progress-radius) after:bg-muted",
         },
       },
     },

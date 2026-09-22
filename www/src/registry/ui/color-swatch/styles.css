@@ -1,3 +1,3 @@
 :root {
-  --studio-color-swatch-radius: var(--radius-sm);
+  --studio-color-swatch-radius: var(--studio-radius-detail);
 }
