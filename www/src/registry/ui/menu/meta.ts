@@ -11,6 +11,7 @@ const menuMeta = {
       target: "ui/menu.tsx",
     },
   ],
+  registryDependencies: ["popover"],
   params: {
     indicator: {
       kind: "enum",

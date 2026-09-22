@@ -11,6 +11,7 @@ const groupMeta = {
       target: "ui/group.tsx",
     },
   ],
+  registryDependencies: ["button"],
   // Synced with toggle-button-group: the studio's Button groups axis writes both.
   params: {
     separator: {
