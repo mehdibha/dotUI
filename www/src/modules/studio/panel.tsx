@@ -9,6 +9,7 @@
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
+import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
 import { DEFAULTS } from "./state"
@@ -36,12 +37,17 @@ export function PanelChrome({
   studio,
   system,
   search,
+  strip,
+  className,
   children,
 }: {
   studio: Studio
   system?: PanelSystem
   /** Search trigger + overlay, supplied by the page (it owns navigation). */
   search?: ReactNode
+  /** Mobile chapter navigation, pinned under the header. */
+  strip?: ReactNode
+  className?: string
   children: ReactNode
 }) {
   // The only reset in the panel. It clears the studio axes and the engine
@@ -71,33 +77,41 @@ export function PanelChrome({
   )
 
   return (
-    <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)]">
-      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
-        {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
-        <span className="flex shrink-0 items-center">
-          {modified && (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Reset design system"
-              onPress={resetAll}
-              className="text-fg-muted"
-            >
-              <RotateCcwIcon />
-            </Button>
-          )}
-          {search ?? (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Search settings"
-            >
-              <SearchIcon />
-            </Button>
-          )}
-        </span>
+    <div
+      className={cn(
+        "relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)]",
+        className,
+      )}
+    >
+      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2">
+        <div className="flex items-center justify-between gap-2">
+          {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
+          <span className="flex shrink-0 items-center">
+            {modified && (
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Reset design system"
+                onPress={resetAll}
+                className="text-fg-muted"
+              >
+                <RotateCcwIcon />
+              </Button>
+            )}
+            {search ?? (
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Search settings"
+              >
+                <SearchIcon />
+              </Button>
+            )}
+          </span>
+        </div>
+        {strip}
       </div>
       {children}
     </div>

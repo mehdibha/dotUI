@@ -8,7 +8,6 @@ import {
   MinimizeIcon,
   MonitorIcon,
   MoonIcon,
-  SlidersHorizontalIcon,
   SmartphoneIcon,
   SquareDashedMousePointerIcon,
   SunIcon,
@@ -94,14 +93,7 @@ function PillTooltipContent({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function PreviewPanel({
-  className,
-  onCustomize,
-}: {
-  className?: string
-  /** Mobile only — opens the customize sheet from the floating toolbar. */
-  onCustomize?: () => void
-}) {
+export function PreviewPanel({ className }: { className?: string }) {
   const { preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const { designSystem } = useStudio()
@@ -677,22 +669,6 @@ export function PreviewPanel({
                 </span>
               </PillTooltipContent>
             </Tooltip>
-
-            {/* Mobile — the customize sheet joins the pill so the page has a single
-            floating cluster instead of two stacked bottom-center controls. */}
-            {onCustomize && (
-              <>
-                <div className="h-4 w-px shrink-0 bg-border lg:hidden" />
-                <Button
-                  size="sm"
-                  className="rounded-full lg:hidden"
-                  onPress={onCustomize}
-                >
-                  <SlidersHorizontalIcon data-icon="inline-start" />
-                  Customize
-                </Button>
-              </>
-            )}
           </div>
         </div>
 

@@ -4,7 +4,12 @@
    color seed, the neutral, the font list. Everything is controlled — value
    in, callback out. */
 
-import { createContext, useContext, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -33,7 +38,8 @@ import {
   ListBoxSection,
   ListBoxSectionHeader,
 } from "@/registry/ui/list-box"
-import { Popover } from "@/registry/ui/popover"
+// Anchored at every width: a picker never covers the live preview.
+import { Popover } from "@/registry/ui/popover/base.popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
   Slider,
@@ -51,6 +57,21 @@ const ROW_OVERLAY_PLACEMENT = "right top" as const
 const PANEL_PADDING = 8
 const PANEL_BORDER = 1
 const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
+
+/* Below `lg` the panel docks under the preview, so its popovers open upward
+   over the preview instead of beside the panel. */
+const DOCKED_QUERY = "(max-width: 1023px)"
+function useDocked() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mql = window.matchMedia(DOCKED_QUERY)
+      mql.addEventListener("change", onChange)
+      return () => mql.removeEventListener("change", onChange)
+    },
+    () => window.matchMedia(DOCKED_QUERY).matches,
+    () => false,
+  )
+}
 
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
@@ -72,12 +93,13 @@ export function PanelPopover({
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
+  const docked = useDocked()
   return (
     <Popover
-      placement={placement}
+      placement={docked ? "top" : placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
-      offset={boundary ? PANEL_POPOVER_OFFSET : undefined}
+      offset={docked ? 8 : boundary ? PANEL_POPOVER_OFFSET : undefined}
       className={cn(
         "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
