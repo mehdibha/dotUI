@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-with";
@@ -40,9 +42,9 @@
     --radius-3xl: calc(var(--radius) * 3);
     --radius-4xl: calc(var(--radius) * 4);
     --radius-full: calc(infinity * 1px);
-    --font-sans: var(--font-geist-sans);
+    --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
     --font-heading: var(--font-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', monospace;
     --color-bg: var(--bg);
     --color-muted: var(--muted);
     --color-inverse: var(--inverse);
@@ -444,6 +446,9 @@
     }
   html {
     @apply font-sans;
+    }
+  code, kbd, samp, pre {
+    @apply font-mono;
     }
 }
   ::selection {
