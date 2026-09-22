@@ -1,21 +1,8 @@
-import { lazy, Suspense } from "react"
 import { createFileRoute } from "@tanstack/react-router"
 
-const RegistriesPage = lazy(() =>
-  import("@/modules/registries/page").then((m) => ({
-    default: m.RegistriesPage,
-  })),
-)
+import { RegistriesPage } from "@/modules/registries/page"
 
 export const Route = createFileRoute("/internal/registries")({
-  component: RouteComponent,
+  component: import.meta.env.DEV ? RegistriesPage : undefined,
   head: () => ({ meta: [{ title: "Registry directory · dotUI" }] }),
 })
-
-function RouteComponent() {
-  return (
-    <Suspense fallback={null}>
-      <RegistriesPage />
-    </Suspense>
-  )
-}

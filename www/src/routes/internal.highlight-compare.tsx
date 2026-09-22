@@ -16,27 +16,13 @@ import { highlightTsx } from "@/modules/docs/highlight"
 import { InternalHeader } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/highlight-compare")({
-  component: HighlightCompare,
+  component: import.meta.env.DEV ? HighlightCompare : undefined,
   head: () => ({ meta: [{ title: "Highlight compare · Internal · dotUI" }] }),
 })
 
 // Every playground source the docs highlight at runtime, old (shiki) vs new
 // (sugar-high), with each character whose color differs marked in the new
 // column. Temporary — review aid for the sugar-high migration.
-
-const shiki = createHighlighterCoreSync({
-  langs: [tsx],
-  themes: [githubLight, githubDark],
-  engine: createJavaScriptRegexEngine({ forgiving: true }),
-})
-
-function highlightShiki(code: string): Root {
-  return shiki.codeToHast(code, {
-    lang: "tsx",
-    themes: { light: "github-light", dark: "github-dark" },
-    defaultColor: false,
-  })
-}
 
 const sources = import.meta.glob("/src/registry/ui/*/demos/playground.tsx", {
   query: "?raw",
@@ -145,10 +131,19 @@ interface Sample {
 }
 
 function buildSamples(): Sample[] {
+  const shiki = createHighlighterCoreSync({
+    langs: [tsx],
+    themes: [githubLight, githubDark],
+    engine: createJavaScriptRegexEngine({ forgiving: true }),
+  })
   return Object.entries(sources)
     .map(([file, code]) => {
       const name = file.split("/ui/")[1]?.split("/")[0] ?? file
-      const old = highlightShiki(code)
+      const old = shiki.codeToHast(code, {
+        lang: "tsx",
+        themes: { light: "github-light", dark: "github-dark" },
+        defaultColor: false,
+      })
       const next = highlightTsx(code)
       const a = flatten(old)
       const b = flatten(next)

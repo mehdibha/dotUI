@@ -7,15 +7,11 @@
 
 import * as React from "react"
 import {
-  BuildingIcon,
-  CircleHelpIcon,
   ExternalLinkIcon,
   InfoIcon,
   ListFilterIcon,
   SearchIcon,
   Settings2Icon,
-  UserIcon,
-  UserRoundCogIcon,
   XIcon,
 } from "lucide-react"
 import type { Selection } from "react-aria-components"
@@ -42,49 +38,12 @@ import {
   TableRow,
 } from "@/registry/ui/table"
 
-import { registries, type Maintainer, type Registry } from "./data"
-
-type BadgeVariant =
-  | "accent"
-  | "danger"
-  | "info"
-  | "neutral"
-  | "success"
-  | "warning"
+import { registries, type Registry } from "./data"
 
 interface Option {
   value: string
   label: string
 }
-
-const MAINTAINERS: (Option & {
-  variant: BadgeVariant
-  icon: typeof UserIcon
-})[] = [
-  { value: "company", label: "Company", variant: "accent", icon: BuildingIcon },
-  {
-    value: "solo-business",
-    label: "Solo business",
-    variant: "warning",
-    icon: UserRoundCogIcon,
-  },
-  {
-    value: "individual",
-    label: "Individual",
-    variant: "neutral",
-    icon: UserIcon,
-  },
-  {
-    value: "unclear",
-    label: "Unclear",
-    variant: "info",
-    icon: CircleHelpIcon,
-  },
-]
-
-const MAINTAINER_BY_VALUE = Object.fromEntries(
-  MAINTAINERS.map((option) => [option.value, option]),
-) as Record<Maintainer, (typeof MAINTAINERS)[number]>
 
 const CATEGORIES: Option[] = [
   { value: "components", label: "Components" },
@@ -102,17 +61,6 @@ const CATEGORIES: Option[] = [
   { value: "theming", label: "Theming" },
   { value: "utilities", label: "Utilities" },
   { value: "specialty", label: "Specialty" },
-]
-
-const ENTITY_KINDS: Option[] = [
-  { value: "big-tech", label: "Big tech" },
-  { value: "startup-saas", label: "SaaS startup" },
-  { value: "product-company", label: "Product company" },
-  { value: "agency-studio", label: "Agency / studio" },
-  { value: "oss-org", label: "Open-source org" },
-  { value: "solo-business", label: "Solo business" },
-  { value: "individual", label: "Individual" },
-  { value: "unknown", label: "Unknown" },
 ]
 
 const FRAMEWORKS: Option[] = [
@@ -138,12 +86,6 @@ const PRICINGS: Option[] = [
   { value: "freemium", label: "Freemium" },
   { value: "paid", label: "Paid" },
   { value: "unknown", label: "Unknown" },
-]
-
-const CONFIDENCES: Option[] = [
-  { value: "high", label: "High" },
-  { value: "medium", label: "Medium" },
-  { value: "low", label: "Low" },
 ]
 
 const TAGS: Option[] = [
@@ -173,18 +115,6 @@ interface Facet {
 
 const FACETS: Facet[] = [
   {
-    id: "maintainer",
-    title: "Maintainer",
-    options: MAINTAINERS,
-    values: (r) => [r.maintainer],
-  },
-  {
-    id: "entityKind",
-    title: "Org type",
-    options: ENTITY_KINDS,
-    values: (r) => [r.entityKind],
-  },
-  {
     id: "category",
     title: "Library type",
     options: CATEGORIES,
@@ -204,20 +134,7 @@ const FACETS: Facet[] = [
     values: (r) => [r.pricing],
   },
   { id: "tags", title: "Tags", options: TAGS, values: (r) => r.tags },
-  {
-    id: "confidence",
-    title: "Audit confidence",
-    options: CONFIDENCES,
-    values: (r) => [r.confidence],
-  },
 ]
-
-const MAINTAINER_RANK: Record<Maintainer, number> = {
-  company: 0,
-  "solo-business": 1,
-  individual: 2,
-  unclear: 3,
-}
 
 interface Column {
   id: string
@@ -225,7 +142,7 @@ interface Column {
   width?: number
   minWidth?: number
   isRowHeader?: boolean
-  sortValue?: (registry: Registry) => number | string
+  sortValue?: (registry: Registry) => string
   hiddenByDefault?: boolean
   alwaysVisible?: boolean
   cell: (registry: Registry) => React.ReactNode
@@ -271,45 +188,6 @@ const COLUMNS: Column[] = [
       <Badge variant="neutral" className="font-normal">
         {labelOf(CATEGORIES, r.category)}
       </Badge>
-    ),
-  },
-  {
-    id: "maintainer",
-    name: "Maintainer",
-    width: 150,
-    minWidth: 120,
-    sortValue: (r) => MAINTAINER_RANK[r.maintainer],
-    cell: (r) => {
-      const option = MAINTAINER_BY_VALUE[r.maintainer]
-      const Icon = option.icon
-
-      return (
-        <Badge variant={option.variant}>
-          <Icon />
-          {option.label}
-        </Badge>
-      )
-    },
-  },
-  {
-    id: "entity",
-    name: "Built by",
-    width: 230,
-    minWidth: 160,
-    sortValue: (r) => r.entity.toLowerCase(),
-    cell: (r) => <span className="truncate">{r.entity}</span>,
-  },
-  {
-    id: "entityKind",
-    name: "Org type",
-    width: 150,
-    minWidth: 110,
-    hiddenByDefault: true,
-    sortValue: (r) => r.entityKind,
-    cell: (r) => (
-      <span className="truncate text-fg-muted">
-        {labelOf(ENTITY_KINDS, r.entityKind)}
-      </span>
     ),
   },
   {
@@ -367,19 +245,6 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: "confidence",
-    name: "Confidence",
-    width: 120,
-    minWidth: 100,
-    hiddenByDefault: true,
-    sortValue: (r) => ({ high: 0, medium: 1, low: 2 })[r.confidence],
-    cell: (r) => (
-      <span className="truncate text-fg-muted">
-        {labelOf(CONFIDENCES, r.confidence)}
-      </span>
-    ),
-  },
-  {
     id: "details",
     name: "Details",
     width: 48,
@@ -406,7 +271,7 @@ export function RegistriesPage() {
   >({})
   const [visibleIds, setVisibleIds] = React.useState(DEFAULT_VISIBLE)
   const [sort, setSort] = React.useState<SortDescriptor>({
-    column: "maintainer",
+    column: "name",
     direction: "ascending",
   })
 
@@ -442,15 +307,11 @@ export function RegistriesPage() {
     const { sortValue } = column
     const direction = sort.direction === "descending" ? -1 : 1
 
-    return [...rows].sort((a, b) => {
-      const left = sortValue(a)
-      const right = sortValue(b)
-      const order =
-        typeof left === "number" && typeof right === "number"
-          ? left - right
-          : String(left).localeCompare(String(right))
-      return (order || a.name.localeCompare(b.name)) * direction
-    })
+    return [...rows].sort(
+      (a, b) =>
+        (sortValue(a).localeCompare(sortValue(b)) ||
+          a.name.localeCompare(b.name)) * direction,
+    )
   }, [rows, sort])
 
   const visibleColumns = React.useMemo(
@@ -480,18 +341,6 @@ export function RegistriesPage() {
     })
   }, [])
 
-  const toggleMaintainer = React.useCallback((value: string) => {
-    setSelections((current) => {
-      const next = { ...current }
-      const active = new Set(current.maintainer ?? [])
-      if (active.has(value)) active.delete(value)
-      else active.add(value)
-      if (active.size === 0) delete next.maintainer
-      else next.maintainer = active
-      return next
-    })
-  }, [])
-
   const reset = React.useCallback(() => {
     setSelections({})
     setQuery("")
@@ -510,36 +359,12 @@ export function RegistriesPage() {
           >
             ui.shadcn.com/docs/directory
           </Link>
-          , each audited for who actually maintains it. Install any of them with{" "}
+          . Install any of them with{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-xs">
             npx shadcn add @name/item
           </code>
           .
         </p>
-        <div className="mt-1 flex flex-wrap items-center gap-2">
-          {MAINTAINERS.map((option) => {
-            const isActive = selections.maintainer?.has(option.value) ?? false
-            const Icon = option.icon
-
-            return (
-              <Button
-                key={option.value}
-                size="sm"
-                variant={isActive ? "primary" : "secondary"}
-                onPress={() => toggleMaintainer(option.value)}
-              >
-                <Icon />
-                {option.label}
-                <span className="font-mono text-xs opacity-70">
-                  {
-                    registries.filter((r) => r.maintainer === option.value)
-                      .length
-                  }
-                </span>
-              </Button>
-            )
-          })}
-        </div>
       </header>
 
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
@@ -554,7 +379,7 @@ export function RegistriesPage() {
               <InputGroupAddon>
                 <SearchIcon />
               </InputGroupAddon>
-              <Input placeholder="Search name, maker, description…" size="sm" />
+              <Input placeholder="Search name, description…" size="sm" />
             </InputGroup>
           </SearchField>
           {FACETS.map((facet) => (
@@ -749,8 +574,6 @@ function ColumnsMenu({
 }
 
 function DetailsPopover({ registry }: { registry: Registry }) {
-  const option = MAINTAINER_BY_VALUE[registry.maintainer]
-
   return (
     <Dialog>
       <Button
@@ -763,30 +586,13 @@ function DetailsPopover({ registry }: { registry: Registry }) {
       </Button>
       <Popover placement="bottom end" className="w-96">
         <DialogContent aria-label={`@${registry.name}`} className="gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-sm">@{registry.name}</span>
-            <Badge variant={option.variant} size="sm">
-              {option.label}
-            </Badge>
-          </div>
+          <span className="font-mono text-sm">@{registry.name}</span>
           <p className="text-sm text-fg-muted">{registry.description}</p>
           <div className="flex flex-col gap-1 text-sm">
-            <DetailRow label="Built by" value={registry.entity} />
-            <DetailRow
-              label="Org type"
-              value={labelOf(ENTITY_KINDS, registry.entityKind)}
-            />
             <DetailRow
               label="Type"
               value={labelOf(CATEGORIES, registry.category)}
             />
-            <DetailRow
-              label="Confidence"
-              value={labelOf(CONFIDENCES, registry.confidence)}
-            />
-          </div>
-          <div className="rounded-md bg-muted p-2 text-xs leading-relaxed text-fg-muted">
-            {registry.evidence}
           </div>
           <Link
             href={registry.homepage}
@@ -819,7 +625,6 @@ function labelOf(options: Option[], value: string) {
 function searchTextOf(registry: Registry) {
   return [
     registry.name,
-    registry.entity,
     registry.summary,
     registry.description,
     registry.tags.join(" "),

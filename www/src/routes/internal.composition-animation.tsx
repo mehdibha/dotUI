@@ -4,7 +4,7 @@ import { CompositionSection } from "@/modules/internal/composition-section"
 import { InternalShell } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/composition-animation")({
-  component: CompositionAnimationDemo,
+  component: import.meta.env.DEV ? CompositionAnimationDemo : undefined,
   head: () => ({ meta: [{ title: "Composition animation · dotUI" }] }),
 })
 
