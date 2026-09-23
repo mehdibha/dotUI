@@ -85,12 +85,17 @@ function StudioPage() {
   // shared ?preset= link is being viewed), then persist back as it's edited.
   // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
+  const skipPersists = useRef(1)
   useEffect(() => {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
     // A shared / deep-linked preset wins over the saved one.
     if (preset) {
-      if (preset === LEGACY_ORIGIN) setState(ORIGIN.state)
+      if (preset === LEGACY_ORIGIN) {
+        // Still the link's initial value, not an edit to persist.
+        skipPersists.current++
+        setState(ORIGIN.state)
+      }
       return
     }
     const stored = loadStoredPreset()
@@ -99,12 +104,11 @@ function StudioPage() {
     else setPreset(stored)
   }, [preset, setPreset, setState])
 
-  const skipFirstPersist = useRef(true)
   useEffect(() => {
     // Skip the initial value so merely opening a shared link doesn't overwrite
     // the saved preset; persist once the user actually changes something.
-    if (skipFirstPersist.current) {
-      skipFirstPersist.current = false
+    if (skipPersists.current > 0) {
+      skipPersists.current--
       return
     }
     saveStoredPreset(current)
