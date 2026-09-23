@@ -28,7 +28,7 @@ import { CN_UTILS_TS, emitInitItem } from "@/publisher/emit-theme"
 import { renderStylesheet } from "@/publisher/emit-v0"
 import { consumerPath, publishItem } from "@/publisher/serve"
 import { PRESETS } from "@/modules/presets/catalog"
-import { encodeState } from "@/modules/studio/preset/codec"
+import { encodeQuery } from "@/modules/studio/preset/codec"
 
 const WWW_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const REPO_DIR = path.resolve(WWW_DIR, "..")
@@ -77,10 +77,11 @@ async function materialize(example: string): Promise<void> {
   const source = PRESETS.find((p) => p.id === presetId)
   if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
   const cwd = path.join(EXAMPLES_DIR, example)
-  const encodedPreset = encodeState(source.state)
-  const resolved = await resolveRequestPreset(encodedPreset)
+  const resolved = await resolveRequestPreset(
+    new URLSearchParams(encodeQuery(source, source)),
+  )
   if (!resolved.ok) throw new Error(`${example}: ${resolved.reason} preset`)
-  const { preset } = resolved
+  const { preset, query } = resolved
 
   let files = 0
   for (const name of PUBLISHABLE_NAMES) {
@@ -88,7 +89,7 @@ async function materialize(example: string): Promise<void> {
       name,
       preset,
       origin: "https://dotui.org",
-      encodedPreset,
+      query,
     })
     for (const file of item?.files ?? []) {
       if (file.content == null) continue
@@ -104,7 +105,7 @@ async function materialize(example: string): Promise<void> {
   const init = emitInitItem({
     baseRegistryCss,
     preset,
-    encodedPreset,
+    query,
     registryRoot: "https://dotui.org",
   })
   write(

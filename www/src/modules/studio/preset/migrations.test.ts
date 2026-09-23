@@ -16,7 +16,7 @@ function encodeRaw(payload: unknown): string {
 }
 
 function decoded(payload: unknown) {
-  const result = decode(encodeRaw(payload))
+  const result = decode({ preset: encodeRaw(payload) })
   if (!result.ok) throw new Error(result.reason)
   return result
 }
@@ -24,7 +24,7 @@ function decoded(payload: unknown) {
 const v3State = (s: Record<string, unknown>) => decoded({ v: 3, s })
 
 describe("baselines", () => {
-  it("has one frozen baseline per version and a migration between each", () => {
+  it("has one frozen baseline per blob version and a migration between each", () => {
     expect(Object.keys(BASELINES).map(Number)).toEqual([3, 4])
     expect(3 + MIGRATIONS.length).toBe(VERSION)
   })

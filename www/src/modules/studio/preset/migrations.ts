@@ -1,8 +1,9 @@
-/* How strings from older codec versions reach today's state. A version's
+/* How strings from older codec versions reach today's state. A v3/v4 blob's
    diff decodes against that version's frozen defaults (baselines/*.json,
-   recovered from git history — never the live DEFAULTS), then MIGRATIONS
-   lift the full state one version at a time. A setting with no successor is
-   named in `dropped` unless it was still at its old default. */
+   recovered from git history — never the live DEFAULTS); from v5 on, a code
+   diffs against a built-in revision, which carries its own version. MIGRATIONS
+   then lift the full state one version at a time. A setting with no successor
+   is named in `dropped` unless it was still at its old default. */
 
 import { toOklch } from "@dotui/colors"
 
@@ -110,22 +111,30 @@ function v3ToV4(raw: State, dropped: string[]): State {
   return carry(state, v3.state, v4.state, dropped)
 }
 
+/** v4 → v5 moved codes onto built-in revisions; the state is unchanged. */
+const v4ToV5: Migration = (state) => state
+
 /** MIGRATIONS[i] lifts a full state from version FIRST + i to the next.
  *  Append-only: removing or renaming an axis or an option adds one. */
-export const MIGRATIONS: Migration[] = [v3ToV4]
+export const MIGRATIONS: Migration[] = [v3ToV4, v4ToV5]
 
 export const VERSION = FIRST + MIGRATIONS.length
 
-/** A full state of version `from`, lifted to VERSION. */
-export function migrate(state: State, from: number, dropped: string[]) {
+/** A full state of version `from`, lifted to version `to`. */
+export function migrate(
+  state: State,
+  from: number,
+  dropped: string[],
+  to = VERSION,
+) {
   let lifted = state
-  for (let version = from; version < VERSION; version++)
+  for (let version = from; version < to; version++)
     lifted = (MIGRATIONS[version - FIRST] as Migration)(lifted, dropped)
   return lifted
 }
 
-/** The current version's frozen defaults; a key added since takes its live
- *  default (an addition must not change the look of older strings). */
+/** v4's frozen defaults, the last blob baseline; a key added since takes its
+ *  live default (an addition must not change the look of older strings). */
 export function currentBaseline(frozen: State = v4.state): StudioState {
   const state: State = { ...DEFAULTS }
   for (const key of Object.keys(DEFAULTS))

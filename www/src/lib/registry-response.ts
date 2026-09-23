@@ -31,15 +31,19 @@ export const notFound = (name: string) =>
 const PRESET_ERRORS: Record<PresetFailure, [number, string]> = {
   corrupt: [
     400,
-    "The ?preset= value is not a preset code; it may have been cut off. Copy the command from dotui.org/studio again.",
+    "The preset in this URL is not a preset code; it may have been cut off. Copy the command from dotui.org/studio again.",
   ],
   invalid: [
     422,
-    "The ?preset= value decodes, but not to a dotUI design system. Copy the command from dotui.org/studio again.",
+    "The preset in this URL decodes, but not to a dotUI design system. Copy the command from dotui.org/studio again.",
   ],
   "newer-version": [
     422,
-    "The ?preset= value comes from a newer version of dotUI than this registry serves.",
+    "The preset in this URL comes from a newer version of dotUI than this registry serves.",
+  ],
+  "unknown-preset": [
+    422,
+    "The ?preset= value names a preset this registry doesn't serve; it may come from a newer version of dotUI.",
   ],
 }
 

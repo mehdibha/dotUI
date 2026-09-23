@@ -2,10 +2,19 @@ import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
+import { REVISIONS } from "@/modules/presets/built-ins"
 import { PRESETS } from "@/modules/presets/catalog"
 import { DEFAULTS } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
 
-import { decode, decodePreset, encodePreset, encodeState } from "./codec"
+import {
+  decode,
+  decodePreset,
+  encodePreset,
+  encodeQuery,
+  encodeState,
+  readParams,
+} from "./codec"
 import { currentBaseline } from "./migrations"
 
 /** Encode an arbitrary payload with the same deflate+base64url pipeline as
@@ -57,21 +66,24 @@ describe("preset codec — studio state", () => {
   })
 
   it("drops unknown keys and invalid values, and names them", () => {
-    const result = decode(
-      encodeRaw({
+    const result = decode({
+      preset: encodeRaw({
         v: 3,
         s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
       }),
-    )
+    })
     if (!result.ok) throw new Error(result.reason)
     expect(result.state).toEqual({ ...currentBaseline(), brand: "#ef4444" })
     expect(result.dropped).toEqual(["nope", "radiusPx", "modes"])
   })
 
   it("keeps a leaf only on a known source", () => {
-    const result = decode(
-      encodeRaw({ v: 4, s: { switchColor: "auto", radioColor: "accent" } }),
-    )
+    const result = decode({
+      preset: encodeRaw({
+        v: 4,
+        s: { switchColor: "auto", radioColor: "accent" },
+      }),
+    })
     if (!result.ok) throw new Error(result.reason)
     expect(result.state.switchColor).toBe("neutral")
     expect(result.state.radioColor).toBe("accent")
@@ -79,35 +91,23 @@ describe("preset codec — studio state", () => {
   })
 
   it("fails on a string that is not a preset", () => {
-    for (const encoded of ["not-a-preset", "%%%", ""])
-      expect(decode(encoded)).toEqual({ ok: false, reason: "corrupt" })
+    expect(decode({ preset: "%%%" })).toEqual({ ok: false, reason: "corrupt" })
     for (const payload of [
       "hello",
       [1],
       null,
       { v: 4, s: "x" },
       { v: 2, s: {} },
+      { v: 5, s: {} },
       { v: "4" },
+      { v: 4.5 },
       { nope: 1 },
       { t: { "--radius": 12 } },
     ])
-      expect(decode(encodeRaw(payload))).toEqual({
+      expect(decode({ preset: encodeRaw(payload) })).toEqual({
         ok: false,
         reason: "invalid",
       })
-  })
-
-  it("fails on a version newer than this codec", () => {
-    for (const encoded of [
-      encodeRaw({ v: 5, s: { brand: "#ef4444" } }),
-      "v5.q1YqU7Iy1VEqVrKqVkoqSsxLUbJSUk5NMwECpdpaAA",
-      "v12.x",
-    ])
-      expect(decode(encoded)).toEqual({ ok: false, reason: "newer-version" })
-    expect(decode(encodeRaw({ v: 4.5 }))).toEqual({
-      ok: false,
-      reason: "invalid",
-    })
   })
 
   it("still decodes garbage to the defaults through decodePreset", () => {
@@ -167,12 +167,12 @@ describe("preset codec — legacy migration", () => {
   })
 
   it("names an unknown icon library and unparseable tokens", () => {
-    const result = decode(
-      encodeRaw({
+    const result = decode({
+      preset: encodeRaw({
         i: "heroicons",
         t: { "--radius": "big", "--cursor-interactive": "text" },
       }),
-    )
+    })
     if (!result.ok) throw new Error(result.reason)
     expect(result.state).toEqual({
       ...currentBaseline(),
@@ -202,5 +202,162 @@ describe("preset codec — canonical encoding", () => {
     const b = encodeState({ ...DEFAULTS, brand: "#ef4444", radiusPx: 12 })
     expect(a).toBeTypeOf("string")
     expect(b).toBe(a)
+  })
+})
+
+/* ------------------------------- grammar ------------------------------- */
+
+const LINEAR = PRESETS.find((p) => p.id === "linear") as (typeof PRESETS)[0]
+const LINEAR_1 = { id: "linear", rev: 1 }
+
+const params = (query: string) => readParams(new URLSearchParams(query))
+
+describe("preset codec — grammar", () => {
+  it("names a pristine built-in by its id, pinned to its revision", () => {
+    expect(encodeQuery({ state: DEFAULTS })).toBe("preset=origin@1")
+    expect(encodeQuery({ state: LINEAR.state }, LINEAR_1)).toBe(
+      "preset=linear@1",
+    )
+    for (const preset of ["linear", "linear@1"])
+      expect(decode({ preset })).toEqual({
+        ok: true,
+        base: LINEAR_1,
+        state: LINEAR.state,
+        dropped: [],
+      })
+  })
+
+  it("reads no preset as Origin's latest revision", () => {
+    expect(decode({})).toEqual({
+      ok: true,
+      base: { id: "origin", rev: 1 },
+      state: DEFAULTS,
+      dropped: [],
+    })
+  })
+
+  it("carries the diff against the base revision in a v5 code", () => {
+    const state = { ...LINEAR.state, radiusPx: 4, brand: "#ef4444" }
+    const query = encodeQuery({ state }, LINEAR_1)
+    expect(query).toBe(
+      `preset=linear@1&d=v5.${encodeRaw({ brand: "#ef4444", radiusPx: 4 })}`,
+    )
+    expect(decode(params(query))).toEqual({
+      ok: true,
+      base: LINEAR_1,
+      state,
+      dropped: [],
+    })
+  })
+
+  it("writes one string per state and base", () => {
+    const state = { ...LINEAR.state, radiusPx: 4, density: "compact" }
+    const reordered = Object.fromEntries(
+      Object.entries(state)
+        .reverse()
+        .map(([key, value]) => [
+          key,
+          key === "modes"
+            ? (value as object[]).map((mode) =>
+                Object.fromEntries(Object.entries(mode).reverse()),
+              )
+            : value,
+        ]),
+    ) as StudioState
+    const query = encodeQuery({ state }, LINEAR_1)
+    expect(encodeQuery({ state: reordered }, LINEAR_1)).toBe(query)
+    const decoded = decode(params(query))
+    if (!decoded.ok) throw new Error(decoded.reason)
+    expect(encodeQuery(decoded, decoded.base)).toBe(query)
+  })
+
+  it("keeps a diff on the revision it was written against", () => {
+    const revisions = REVISIONS.linear ?? []
+    const [first] = revisions
+    if (!first) throw new Error("no linear@1")
+    const query = encodeQuery(
+      { state: { ...LINEAR.state, radiusPx: 4 } },
+      LINEAR_1,
+    )
+    revisions.push({
+      rev: 2,
+      version: first.version,
+      state: { ...first.state, radiusPx: 20, brand: "#10b981" },
+    })
+    try {
+      const pinned = decode(params(query))
+      if (!pinned.ok) throw new Error(pinned.reason)
+      expect(pinned.base).toEqual(LINEAR_1)
+      expect(pinned.state).toEqual({ ...LINEAR.state, radiusPx: 4 })
+      const pristine = decode({ preset: "linear" })
+      if (!pristine.ok) throw new Error(pristine.reason)
+      expect(pristine.base).toEqual({ id: "linear", rev: 2 })
+      expect(pristine.state.brand).toBe("#10b981")
+    } finally {
+      revisions.pop()
+    }
+  })
+
+  it("drops invalid values to the base revision's", () => {
+    const d = `v5.${encodeRaw({ radiusPx: "big", brand: "#ef4444", nope: 1 })}`
+    expect(decode({ preset: "linear@1", d })).toEqual({
+      ok: true,
+      base: LINEAR_1,
+      state: { ...LINEAR.state, brand: "#ef4444" },
+      dropped: ["radiusPx", "nope"],
+    })
+  })
+
+  it("carries code options in their own param", () => {
+    const query = encodeQuery({
+      state: DEFAULTS,
+      codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: true },
+    })
+    expect(query).toBe(
+      `preset=origin@1&code=${encodeRaw({ classArrays: true })}`,
+    )
+    const decoded = decode(params(query))
+    if (!decoded.ok) throw new Error(decoded.reason)
+    expect(decoded.codeOptions).toEqual({
+      ...DEFAULT_CODE_OPTIONS,
+      classArrays: true,
+    })
+    expect(
+      decode({ code: encodeRaw({ classArrays: "yes", tabs: true }) }),
+    ).toMatchObject({ ok: true, dropped: ["code.classArrays", "code.tabs"] })
+    expect(
+      encodeQuery({ state: DEFAULTS, codeOptions: DEFAULT_CODE_OPTIONS }),
+    ).toBe("preset=origin@1")
+  })
+
+  it("rebases a legacy blob onto Origin's latest revision", () => {
+    const blob = encodeState({ ...DEFAULTS, brand: "#ef4444" }) as string
+    const decoded = decode({ preset: blob })
+    if (!decoded.ok) throw new Error(decoded.reason)
+    expect(decoded.base).toEqual({ id: "origin", rev: 1 })
+    expect(encodeQuery(decoded, decoded.base)).toBe(
+      `preset=origin@1&d=v5.${encodeRaw({ brand: "#ef4444" })}`,
+    )
+  })
+
+  it.each([
+    ["unknown-preset", { preset: "nope" }],
+    ["unknown-preset", { preset: "linear@9" }],
+    ["unknown-preset", { preset: "constructor" }],
+    ["invalid", { preset: "linear", d: `v5.${encodeRaw({})}` }],
+    ["invalid", { d: `v5.${encodeRaw({})}` }],
+    ["invalid", { preset: "linear@1", d: `v4.${encodeRaw({})}` }],
+    ["invalid", { preset: "linear@1", d: `v5.${encodeRaw([1])}` }],
+    [
+      "invalid",
+      { preset: encodeState(LINEAR.state), d: `v5.${encodeRaw({})}` },
+    ],
+    ["newer-version", { preset: "linear@1", d: `v6.${encodeRaw({})}` }],
+    ["corrupt", { preset: "linear@1", d: encodeRaw({}) }],
+    ["corrupt", { preset: "linear@1", d: "v5.q1Yq" }],
+    ["corrupt", { preset: "linear@1", code: "%%%" }],
+    ["corrupt", { preset: "linear@01" }],
+  ] as const)("fails with %s on %j", (reason, input) => {
+    expect(decode(input)).toEqual({ ok: false, reason })
   })
 })

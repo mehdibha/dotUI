@@ -4,7 +4,13 @@ import { resolveRequestPreset } from "@/lib/registry-preset"
 import { PRESETS } from "@/modules/presets/catalog"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
-import { canonicalize, decode, encodeState } from "./codec"
+import {
+  canonicalize,
+  decode,
+  encodeQuery,
+  encodeState,
+  readParams,
+} from "./codec"
 import fixtures from "./historical-presets.json"
 
 describe("historical preset strings", () => {
@@ -14,12 +20,13 @@ describe("historical preset strings", () => {
   })
 
   for (const fixture of fixtures) {
+    const search = new URLSearchParams({ preset: fixture.encoded })
     it(`decodes ${fixture.id}`, async () => {
-      const result = decode(fixture.encoded)
+      const result = decode({ preset: fixture.encoded })
       if (!result.ok) {
         expect({ reason: result.reason }).toMatchSnapshot()
         // /r/* rejects it rather than serving the defaults
-        expect(await resolveRequestPreset(fixture.encoded)).toEqual(result)
+        expect(await resolveRequestPreset(search)).toEqual(result)
         return
       }
       const designSystem = resolveDesignSystem(result.state)
@@ -29,9 +36,21 @@ describe("historical preset strings", () => {
         codeOptions: result.codeOptions,
         designSystem,
       }).toMatchSnapshot()
-      expect(await resolveRequestPreset(fixture.encoded)).toEqual({
+      expect(await resolveRequestPreset(search)).toEqual({
         ok: true,
         preset: { ...designSystem, codeOptions: result.codeOptions },
+        query: encodeQuery(result, result.base),
+      })
+    })
+
+    it(`rewrites ${fixture.id} in the grammar without a change`, () => {
+      const result = decode({ preset: fixture.encoded })
+      if (!result.ok) return
+      const query = encodeQuery(result, result.base)
+      expect(query).toMatch(/^preset=origin@1(&d=v5\.[\w-]+)?(&code=[\w-]+)?$/)
+      expect(decode(readParams(new URLSearchParams(query)))).toEqual({
+        ...result,
+        dropped: [],
       })
     })
   }
@@ -43,7 +62,9 @@ describe("v3 built-ins", () => {
     const id = v4.id.replace("v4-", "")
     it(`migrates ${id} onto its v4 encoding`, () => {
       const v3 = fixtures.find((f) => f.id === `v3-${id}`)
-      expect(v3 && decode(v3.encoded)).toEqual(decode(v4.encoded))
+      expect(v3 && decode({ preset: v3.encoded })).toEqual(
+        decode({ preset: v4.encoded }),
+      )
     })
   }
 })
@@ -53,6 +74,7 @@ describe("built-in presets", () => {
     it(`resolves ${preset.id}`, () => {
       expect({
         encoded: encodeState(preset.state),
+        query: encodeQuery(preset, preset),
         state: preset.state,
         designSystem: preset.designSystem,
       }).toMatchSnapshot()

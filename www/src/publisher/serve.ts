@@ -29,8 +29,8 @@ export interface PublishItemInput {
   preset: PublishPreset
   /** Origin transitive deps resolve to, e.g. `https://dotui.org`. */
   origin: string
-  /** Encoded preset carried on transitive dep URLs. */
-  encodedPreset?: string
+  /** The preset's query (without `?`) transitive dep URLs carry. */
+  query: string
 }
 
 /** The published item for `name`, or `undefined` when no publishable exists. */
@@ -47,7 +47,7 @@ export async function publishItem(
     // Transitive deps point back at this origin with the same preset.
     deps: {
       origin: input.origin,
-      query: input.encodedPreset ? `?preset=${input.encodedPreset}` : "",
+      query: `?${input.query}`,
       known: KNOWN_NAMES,
     },
   })

@@ -41,7 +41,7 @@ async function buildFixture(): Promise<void> {
   rmSync(FIXTURE_DIR, { recursive: true, force: true })
   mkdirSync(FIXTURE_DIR, { recursive: true })
 
-  const resolved = await resolveRequestPreset(undefined)
+  const resolved = await resolveRequestPreset(new URLSearchParams())
   if (!resolved.ok) throw new Error(resolved.reason)
   const { preset } = resolved
 

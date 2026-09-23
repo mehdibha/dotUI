@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { siteConfig } from "@/config/site"
+import { encodeQuery } from "@/modules/studio/preset/codec"
 import { useStudio } from "@/modules/studio/use-studio"
 
 import type { PresetUrl } from "./types"
@@ -29,24 +30,20 @@ function getRegistryHost(): string {
 
 /**
  * Returns a `presetUrl(path)` builder that resolves a registry path against the
- * right host and appends the current design system as `?preset=<encoded>` —
- * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=…`.
+ * right host and appends the current design system's rev-pinned query —
+ * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=origin@1&d=v5.…`.
  *
  * The host hydrates in an effect (SSR renders the default host, the client then
  * swaps to the live origin) so the URL stays stable across hydration.
  */
 export function useExportUrl(): PresetUrl {
-  const { encoded } = useStudio()
+  const { preset } = useStudio()
+  const query = useMemo(() => encodeQuery(preset), [preset])
   const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
 
   useEffect(() => {
     setHost(getRegistryHost())
   }, [])
 
-  return useMemo(() => {
-    return (path: string) => {
-      const base = `${host}${path}`
-      return encoded ? `${base}?preset=${encoded}` : base
-    }
-  }, [encoded, host])
+  return useCallback((path: string) => `${host}${path}?${query}`, [host, query])
 }

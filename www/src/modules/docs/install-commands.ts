@@ -42,8 +42,8 @@ export function buildInstallCommands(
  * is the only command that merges the item's `config.registries` into the
  * consumer's components.json, so a later `shadcn add @dotui/<name>` resolves
  * with the same preset baked in. `add` on an existing components.json silently
- * drops `config.registries`.
+ * drops `config.registries`. Quoted: the URL's `?` and `&` are shell syntax.
  */
 export function buildInitCommands(url: string): Record<PackageManager, string> {
-  return runnerCommands(`shadcn@latest init ${url}`)
+  return runnerCommands(`shadcn@latest init "${url}"`)
 }

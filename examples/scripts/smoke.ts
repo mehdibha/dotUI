@@ -8,7 +8,7 @@
  * files. Per template:
  *   1. Remove everything a previous run generated.
  *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
- *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
+ *   3. `shadcn init <origin>/r/init?preset=<id>@<rev>` — the exact command the docs
  *      give, with the template's preset baked in.
  *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
@@ -26,8 +26,8 @@
  * With no `--origin` the script builds the registry and serves this checkout
  * with the www dev server (reusing one already running on its port). Pass a
  * Vercel preview or production to regenerate from a deployment instead. Preset
- * encoding always comes from this checkout (`www/scripts/encode-preset.ts`),
- * the same way the create page encodes it in the browser.
+ * queries always come from this checkout (`www/scripts/encode-preset.ts`),
+ * the same way the studio encodes them in the browser.
  *
  * Runs offline: the CLI's own base fetches (its style list and base color) are
  * answered from `shadcn-base/`, vendored from shadcn-ui/ui, through the CLI's
@@ -331,11 +331,12 @@ async function fetchJson<T>(url: string, attempts = 5): Promise<T> {
 }
 
 /**
- * Encoded `?preset=` values by preset id, from this checkout's preset data.
+ * Registry queries (`preset=<id>@<rev>…`) by preset id, from this checkout's
+ * preset data.
  * Runs tsx directly: through `pnpm exec`, an engine warning lands on stdout
  * and corrupts the JSON.
  */
-function encodePresets(ids: string[]): Record<string, string> {
+function presetQueries(ids: string[]): Record<string, string> {
   const result = spawnSync(
     path.join(REPO_DIR, "www/node_modules/.bin/tsx"),
     ["scripts/encode-preset.ts", ...ids],
@@ -354,10 +355,10 @@ function encodePresets(ids: string[]): Record<string, string> {
 /** Whether the init item for this preset pulls in `registry:font` items. */
 async function initHasFonts(
   origin: string,
-  encodedPreset: string,
+  presetQuery: string,
 ): Promise<boolean> {
   const item = await fetchJson<{ registryDependencies?: string[] }>(
-    `${origin}/r/init?preset=${encodedPreset}`,
+    `${origin}/r/init?${presetQuery}`,
   )
   return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
 }
@@ -439,7 +440,7 @@ function stabilizePackageJson(cwd: string, before: string): void {
 async function regenerate(
   example: string,
   origin: string,
-  encodedPreset: string,
+  presetQuery: string,
   names: string[],
   shadcnBaseUrl: string,
   build: boolean,
@@ -448,7 +449,7 @@ async function regenerate(
   const framework = FRAMEWORKS[frameworkName]
   const cwd = path.join(EXAMPLES_DIR, example)
   console.log(`\n=== ${example} ===`)
-  const expectFonts = await initHasFonts(origin, encodedPreset)
+  const expectFonts = await initHasFonts(origin, presetQuery)
   const packageJsonBefore = readFileSync(path.join(cwd, "package.json"), "utf8")
 
   for (const generated of GENERATED) {
@@ -464,13 +465,7 @@ async function regenerate(
   await run(
     cwd,
     "pnpm",
-    [
-      "dlx",
-      SHADCN,
-      "init",
-      `${origin}/r/init?preset=${encodedPreset}`,
-      "--yes",
-    ],
+    ["dlx", SHADCN, "init", `${origin}/r/init?${presetQuery}`, "--yes"],
     shadcnEnv,
   )
   await run(
@@ -509,7 +504,7 @@ async function main() {
   const presetIds = [
     ...new Set(options.examples.map((name) => EXAMPLES[name]!.preset)),
   ]
-  const encoded = encodePresets(presetIds)
+  const queries = presetQueries(presetIds)
   const names = await registryNames(origin)
   console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
   const shadcnBase = await serveShadcnBase()
@@ -520,7 +515,7 @@ async function main() {
       await regenerate(
         example,
         origin,
-        encoded[EXAMPLES[example]!.preset]!,
+        queries[EXAMPLES[example]!.preset]!,
         names,
         shadcnBase.url,
         options.build,

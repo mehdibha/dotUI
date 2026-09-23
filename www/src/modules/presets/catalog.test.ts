@@ -2,12 +2,13 @@ import { createHash } from "node:crypto"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULTS, validateState } from "@/modules/studio/axes"
-import { VERSION } from "@/modules/studio/preset/migrations"
+import { migrate, VERSION } from "@/modules/studio/preset/migrations"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 import { PRESET_CATALOG } from "./__generated__/catalog"
-import { loadRevision, ORIGIN, PRESETS, REVISIONS } from "./catalog"
-import type { PresetRevision } from "./catalog"
+import { loadRevision, REVISIONS } from "./built-ins"
+import type { PresetRevision } from "./built-ins"
+import { ORIGIN, PRESETS } from "./catalog"
 
 /* A published revision is immutable: links and installs pin it. To change a
    preset, append a revision to revisions/<id>.json and pin its hash here. */
@@ -66,11 +67,8 @@ describe("preset catalog", () => {
   it("stores full, valid states", () => {
     for (const revisions of Object.values(REVISIONS))
       for (const revision of revisions) {
-        if (revision.version !== VERSION) continue
-        expect(validateState(revision.state)).toEqual({
-          state: revision.state,
-          dropped: [],
-        })
+        const lifted = migrate(revision.state, revision.version, [])
+        expect(validateState(lifted)).toEqual({ state: lifted, dropped: [] })
       }
   })
 

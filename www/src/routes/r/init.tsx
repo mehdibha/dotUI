@@ -1,8 +1,8 @@
 /**
- * GET /r/init[?preset=…]
+ * GET /r/init[?preset=<id>@<rev>&d=…&code=…]
  *
  * Returns the `registry:base` item that `npx shadcn init <this-url>` consumes.
- * The preset query param (compressed base64url) bakes into the consumer's
+ * The preset's canonical, rev-pinned query bakes into the consumer's
  * `components.json` so `shadcn add @dotui/<name>` requests hit the matching
  * /r/$name endpoint with the same preset attached.
  */
@@ -23,15 +23,14 @@ export const Route = createFileRoute("/r/init")({
     handlers: {
       GET: registryHandler(async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const resolved = await resolveRequestPreset(encodedPreset)
+        const resolved = await resolveRequestPreset(url.searchParams)
         if (!resolved.ok) return invalidPreset(resolved.reason)
 
         return registryJson(
           emitInitItem({
             baseRegistryCss,
             preset: resolved.preset,
-            encodedPreset,
+            query: resolved.query,
             registryRoot: `${url.protocol}//${url.host}`,
           }),
         )

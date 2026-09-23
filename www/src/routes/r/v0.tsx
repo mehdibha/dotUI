@@ -1,5 +1,5 @@
 /**
- * GET /r/v0[?preset=…]
+ * GET /r/v0[?preset=<id>@<rev>&d=…&code=…]
  *
  * Returns a single registry item that materializes a whole Next.js project —
  * every published dotUI component, the preset's theme baked into a real
@@ -51,8 +51,7 @@ export const Route = createFileRoute("/r/v0")({
     handlers: {
       GET: registryHandler(async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const resolved = await resolveRequestPreset(encodedPreset)
+        const resolved = await resolveRequestPreset(url.searchParams)
         if (!resolved.ok) return invalidPreset(resolved.reason)
         const { preset } = resolved
 

@@ -1,16 +1,15 @@
 /**
- * Print the `?preset=` value for built-in presets, as JSON keyed by id.
+ * Print the registry query for built-in presets, as JSON keyed by id — e.g.
+ * `{"spotify":"preset=spotify@1"}`, rev-pinned like every export.
  *
- * The registry identifies a preset only by its encoded design system (the
- * compressed base64url the create page bakes into `components.json`), never
- * by name. Anything outside the app that needs a preset URL — the examples
- * smoke — goes through this so the encoding lives in one place.
+ * Anything outside the app that needs a preset URL — the examples smoke —
+ * goes through this so the grammar lives in one place (the codec).
  *
  * Usage:  tsx scripts/encode-preset.ts origin spotify
  */
 
 import { PRESETS } from "@/modules/presets/catalog"
-import { encodeState } from "@/modules/studio/preset/codec"
+import { encodeQuery } from "@/modules/studio/preset/codec"
 
 const ids = process.argv.slice(2)
 if (ids.length === 0) {
@@ -27,7 +26,6 @@ for (const id of ids) {
     )
     process.exit(2)
   }
-  // The default system encodes to nothing: a bare `?preset=`.
-  out[id] = encodeState(preset.state) ?? ""
+  out[id] = encodeQuery(preset, preset)
 }
 console.log(JSON.stringify(out))

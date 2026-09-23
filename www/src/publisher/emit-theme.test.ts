@@ -27,6 +27,8 @@ const baseRegistryCss = {
   },
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">
 
+const QUERY = "preset=origin@1"
+
 const OKLCH = /^oklch\([\d.]+ [\d.]+ [\d.]+\)$/
 
 /** The OKLCH hue of a literal. */
@@ -39,6 +41,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -48,7 +51,7 @@ describe("emitInitItem", () => {
     expect(item.dependencies).not.toContain("tailwindcss-autocontrast")
     expect((item as InitItemConfig).config?.tailwind?.cssVariables).toBe(true)
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=",
+      `https://dotui.com/r/{name}?${QUERY}`,
     )
     expect(item.files?.map((file) => file.target)).toEqual(["src/lib/utils.ts"])
     expect(JSON.stringify(item)).not.toContain("dotui-base.css")
@@ -62,6 +65,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#0072f5" } },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
     const { theme, light, dark } = item.cssVars ?? {}
@@ -100,16 +104,16 @@ describe("emitInitItem", () => {
     expect(dark?.["chart-8"]).toMatch(OKLCH)
   })
 
-  test("writes the preset into the @dotui registry URL string", () => {
+  test("writes the preset query into the @dotui registry URL string", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      encodedPreset: "abc123",
+      query: "preset=linear@1&d=v5.abc",
       registryRoot: "https://dotui.com",
     })
 
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=abc123",
+      "https://dotui.com/r/{name}?preset=linear@1&d=v5.abc",
     )
   })
 
@@ -117,6 +121,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "compact", componentParams: {} },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -135,6 +140,7 @@ describe("emitInitItem", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
     const theme = item.cssVars?.theme ?? {}
@@ -157,6 +163,7 @@ describe("emitInitItem", () => {
           "--studio-btn-radius": "--radius-md",
         },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -196,6 +203,7 @@ describe("emitInitItem", () => {
           "--studio-btn-radius": "--radius-md",
         },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
     const { theme, light, dark } = item.cssVars ?? {}
@@ -242,6 +250,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset,
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -275,6 +284,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#ef4444" } },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -299,6 +309,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#3ecf8e" }, primary: "accent" },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 
@@ -318,6 +329,7 @@ describe("emitInitItem", () => {
       emitInitItem({
         baseRegistryCss,
         preset: { density: "default", componentParams: {}, color },
+        query: QUERY,
         registryRoot: "https://dotui.com",
       }).cssVars
     const cssVars = emit()
@@ -338,6 +350,7 @@ describe("emitInitItem", () => {
           scopes: { checkbox: "neutral" },
         },
       },
+      query: QUERY,
       registryRoot: "https://dotui.com",
     })
 

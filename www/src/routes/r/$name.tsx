@@ -1,8 +1,8 @@
 /**
- * GET /r/$name[?preset=…]
+ * GET /r/$name[?preset=<id>@<rev>&d=…&code=…]
  *
  * Returns the resolved shadcn registry item for one dotui component. The
- * preset query param drives:
+ * preset drives:
  *   - density selection (folded into class lists)
  *   - per-component enum-merge choices
  *   - scalar param values (rewritten inline into Tailwind suffixes)
@@ -38,14 +38,13 @@ export const Route = createFileRoute("/r/$name")({
         }
 
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const resolved = await resolveRequestPreset(encodedPreset)
+        const resolved = await resolveRequestPreset(url.searchParams)
         if (!resolved.ok) return invalidPreset(resolved.reason)
         const item = await publishItem({
           name,
           preset: resolved.preset,
           origin: `${url.protocol}//${url.host}`,
-          encodedPreset,
+          query: resolved.query,
         })
         return item ? registryJson(item) : notFound(name)
       }),

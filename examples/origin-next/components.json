@@ -20,6 +20,6 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@dotui": "https://dotui.org/r/{name}?preset="
+    "@dotui": "https://dotui.org/r/{name}?preset=origin@1"
   }
 }

@@ -8,10 +8,9 @@ import { VERSION } from "./migrations"
 
 const SNAPSHOT = new URL("./schema-snapshot.json", import.meta.url)
 
-const HOW = `Stored strings still hold the old value. Bump the codec version: freeze
-DEFAULTS into preset/baselines/v<next>.json, append a MIGRATIONS step in
-preset/migrations.ts that maps the old values onto their successors (or names
-them in \`dropped\`), then pin the new schema:
+const HOW = `Stored strings still hold the old value. Bump the codec version: append
+a MIGRATIONS step in preset/migrations.ts that maps the old values onto their
+successors (or names them in \`dropped\`), then pin the new schema:
   UPDATE_SCHEMA_SNAPSHOT=1 pnpm vitest run schema-compat && pnpm check:fix`
 
 /** What `now` no longer accepts that `pinned` did. */

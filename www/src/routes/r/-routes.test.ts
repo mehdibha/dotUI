@@ -28,11 +28,22 @@ const encodeRaw = (payload: unknown) =>
     .replace(/\//g, "_")
     .replace(/=+$/, "")
 
-const PRESETS = {
-  corrupt: fixture("crafted-truncated"),
-  invalid: encodeRaw({ v: 4, s: "not-a-diff" }),
-  "newer-version": fixture("crafted-newer-version"),
+const QUERIES = {
+  corrupt: `preset=${fixture("crafted-truncated")}`,
+  invalid: `preset=${encodeRaw({ v: 4, s: "not-a-diff" })}`,
+  "newer-version": `preset=origin@1&d=v6.${encodeRaw({})}`,
+  "unknown-preset": "preset=nope@1",
 }
+
+const REJECTED = [
+  ["corrupt", 400],
+  ["invalid", 422],
+  ["newer-version", 422],
+  ["unknown-preset", 422],
+] as const
+
+/** Linear, retuned: the grammar's canonical form of an edited preset. */
+const LINEAR_EDITED = `preset=linear@1&d=v5.${encodeRaw({ radiusPx: 4 })}&code=${encodeRaw({ classArrays: true })}`
 
 type Handler = (context: {
   request: Request
@@ -67,10 +78,10 @@ async function expectError(response: Response, status: number) {
 }
 
 describe("/r/init", () => {
-  it("serves the default preset without a param", async () => {
+  it("pins Origin's latest revision without a param", async () => {
     const item = await expectCached(await get(InitRoute, "/r/init"))
     expect(item.config.registries["@dotui"]).toBe(
-      "https://dotui.org/r/{name}?preset=",
+      "https://dotui.org/r/{name}?preset=origin@1",
     )
   })
 
@@ -87,23 +98,34 @@ describe("/r/init", () => {
     await expectCached(await get(InitRoute, "/r/init?preset="))
   })
 
-  it("carries a valid preset into components.json", async () => {
-    const preset = fixture("v4-github")
-    const item = await expectCached(
-      await get(InitRoute, `/r/init?preset=${preset}`),
+  it("carries the canonical query into components.json", async () => {
+    const registry = async (query: string) =>
+      (await expectCached(await get(InitRoute, `/r/init?${query}`))).config
+        .registries["@dotui"]
+    expect(await registry(LINEAR_EDITED)).toBe(
+      `https://dotui.org/r/{name}?${LINEAR_EDITED}`,
     )
-    expect(item.config.registries["@dotui"]).toBe(
-      `https://dotui.org/r/{name}?preset=${preset}`,
+    expect(await registry("preset=github")).toBe(
+      "https://dotui.org/r/{name}?preset=github@1",
     )
   })
 
-  it.each([
-    ["corrupt", 400],
-    ["invalid", 422],
-    ["newer-version", 422],
-  ] as const)("rejects a %s preset with %i", async (reason, status) => {
+  it("rewrites a legacy blob into the grammar", async () => {
+    const legacy = await expectCached(
+      await get(InitRoute, `/r/init?preset=${fixture("v4-github")}`),
+    )
+    const pinned = await expectCached(
+      await get(InitRoute, "/r/init?preset=github@1"),
+    )
+    expect(legacy.config.registries["@dotui"]).toMatch(
+      /^https:\/\/dotui\.org\/r\/\{name\}\?preset=origin@1&d=v5\.[\w-]+$/,
+    )
+    expect(legacy.cssVars).toEqual(pinned.cssVars)
+  })
+
+  it.each(REJECTED)("rejects a %s preset with %i", async (reason, status) => {
     const body = await expectError(
-      await get(InitRoute, `/r/init?preset=${PRESETS[reason]}`),
+      await get(InitRoute, `/r/init?${QUERIES[reason]}`),
       status,
     )
     expect(body.error).toBe("Invalid preset")
@@ -129,26 +151,23 @@ describe("/r/init", () => {
 describe("/r/$name", () => {
   it("serves a component without a preset", async () => {
     const item = await expectCached(await get(ItemRoute, "/r/button", "button"))
-    expect(item.registryDependencies).toEqual(["https://dotui.org/r/loader"])
-  })
-
-  it("carries a valid preset onto dependency URLs", async () => {
-    const preset = fixture("v4-github")
-    const item = await expectCached(
-      await get(ItemRoute, `/r/button?preset=${preset}`, "button"),
-    )
     expect(item.registryDependencies).toEqual([
-      `https://dotui.org/r/loader?preset=${preset}`,
+      "https://dotui.org/r/loader?preset=origin@1",
     ])
   })
 
-  it.each([
-    ["corrupt", 400],
-    ["invalid", 422],
-    ["newer-version", 422],
-  ] as const)("rejects a %s preset with %i", async (reason, status) => {
+  it("carries the canonical query onto dependency URLs", async () => {
+    const item = await expectCached(
+      await get(ItemRoute, `/r/button?${LINEAR_EDITED}`, "button"),
+    )
+    expect(item.registryDependencies).toEqual([
+      `https://dotui.org/r/loader?${LINEAR_EDITED}`,
+    ])
+  })
+
+  it.each(REJECTED)("rejects a %s preset with %i", async (reason, status) => {
     await expectError(
-      await get(ItemRoute, `/r/button?preset=${PRESETS[reason]}`, "button"),
+      await get(ItemRoute, `/r/button?${QUERIES[reason]}`, "button"),
       status,
     )
   })
@@ -159,11 +178,7 @@ describe("/r/$name", () => {
 
   it("serves font items regardless of the preset", async () => {
     const item = await expectCached(
-      await get(
-        ItemRoute,
-        `/r/font-inter?preset=${PRESETS.corrupt}`,
-        "font-inter",
-      ),
+      await get(ItemRoute, `/r/font-inter?${QUERIES.corrupt}`, "font-inter"),
     )
     expect(item.type).toBe("registry:font")
     await expectError(await get(ItemRoute, "/r/font-nope", "font-nope"), 404)
@@ -184,15 +199,8 @@ describe("/r/v0", () => {
     expect(item.files.length).toBeGreaterThan(0)
   })
 
-  it.each([
-    ["corrupt", 400],
-    ["invalid", 422],
-    ["newer-version", 422],
-  ] as const)("rejects a %s preset with %i", async (reason, status) => {
-    await expectError(
-      await get(V0Route, `/r/v0?preset=${PRESETS[reason]}`),
-      status,
-    )
+  it.each(REJECTED)("rejects a %s preset with %i", async (reason, status) => {
+    await expectError(await get(V0Route, `/r/v0?${QUERIES[reason]}`), status)
   })
 })
 
