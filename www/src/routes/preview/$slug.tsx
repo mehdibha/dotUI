@@ -15,6 +15,12 @@ export const Route = createFileRoute("/preview/$slug")({
         : undefined,
   }),
   ssr: false,
+  // Outside _app, whose loader sets this for every other page. Every shared
+  // /studio link loads one of these, so cache each URL at the edge until the
+  // next deploy's purge.
+  headers: () => ({
+    "Cache-Control": "public, max-age=0, must-revalidate, s-maxage=31536000",
+  }),
   loader: async ({ params }) => {
     // The example chunk must resolve here, not in the component: while a
     // loader pends the router keeps the previous preview on screen, whereas a
