@@ -1,11 +1,10 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
 import * as FormPrimitives from "react-aria-components/Form"
 
 import { Button } from "@/registry/ui/button"
 import { Card, CardContent, CardFooter } from "@/registry/ui/card"
-import { Combobox } from "@/registry/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/registry/ui/combobox"
 import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
@@ -31,9 +30,7 @@ export default function Demo() {
             <InputGroup>
               <Input placeholder="Select a framework" />
               <InputGroupAddon>
-                <Button variant="quiet" isIconOnly>
-                  <ChevronDownIcon />
-                </Button>
+                <ComboboxTrigger />
               </InputGroupAddon>
             </InputGroup>
             <Popover>

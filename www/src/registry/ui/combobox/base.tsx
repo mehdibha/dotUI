@@ -3,7 +3,10 @@
 import * as ComboBoxPrimitive from "react-aria-components/ComboBox"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
+import { ChevronDownIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import type { ButtonProps } from "@/registry/ui/button"
 import { fieldStyles } from "@/registry/ui/field"
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -54,5 +57,16 @@ const ComboboxValue = <T extends object>({
   )
 }
 
-export type { ComboboxProps }
-export { Combobox, ComboboxValue }
+/* -----------------------------------------------------------------------------------------------*/
+
+interface ComboboxTriggerProps extends Omit<ButtonProps, "children"> {}
+const ComboboxTrigger = (props: ComboboxTriggerProps) => {
+  return (
+    <Button variant="quiet" isIconOnly {...props}>
+      <ChevronDownIcon />
+    </Button>
+  )
+}
+
+export type { ComboboxProps, ComboboxTriggerProps }
+export { Combobox, ComboboxTrigger, ComboboxValue }

@@ -1,8 +1,9 @@
-/* Pickers — the trigger caret the select wears: chevron-down or
+/* Pickers — the trigger caret Select and Combobox wear: chevron-down or
    chevrons-up-down.
 
-   Engine: `caret` is an enum param on `select`; its non-default value swaps
-   the trigger icon in the shipped file (select/meta.ts `source`). */
+   Engine: `caret` is an enum param on `select` and `combobox`; its
+   non-default value swaps the trigger icon in each shipped file (meta.ts
+   `source`). */
 
 import type { Resolved, StudioState } from "./index"
 import type { ChapterSpec } from "./spec"
@@ -32,20 +33,20 @@ export function resolvePickers(state: StudioState): Resolved {
   const caret = CARET_OPTIONS.some((o) => o.value === state.pickerCaret)
     ? state.pickerCaret
     : "chevron"
-  return { params: { select: { caret } } }
+  return { params: { select: { caret }, combobox: { caret } } }
 }
 
 export const PICKER_SPEC = {
   label: "Pickers",
   description:
-    "The select trigger's caret. The trigger shell comes from Inputs, the " +
-    "open list from Menus.",
+    "The caret on Select and Combobox triggers. The trigger shell comes " +
+    "from Inputs, the open list from Menus.",
   axes: {
     pickerCaret: {
       label: "Caret",
       description:
-        "The icon at the end of a Select trigger. Combobox triggers are " +
-        "composed per use and keep their own icon.",
+        "The icon at the end of a Select trigger and on a Combobox's " +
+        "open button — both always wear the same one.",
       value: { type: "enum", options: CARET_OPTIONS },
       guidance:
         "5 of 8 checked systems use the down chevron. Up-down says the list " +

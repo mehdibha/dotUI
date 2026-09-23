@@ -1,9 +1,10 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
-
-import { Button } from "@/registry/ui/button"
-import { Combobox, ComboboxValue } from "@/registry/ui/combobox"
+import {
+  Combobox,
+  ComboboxTrigger,
+  ComboboxValue,
+} from "@/registry/ui/combobox"
 import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
@@ -33,9 +34,7 @@ export default function Demo() {
       <InputGroup>
         <Input placeholder="Select frameworks" />
         <InputGroupAddon>
-          <Button variant="quiet" isIconOnly>
-            <ChevronDownIcon />
-          </Button>
+          <ComboboxTrigger />
         </InputGroupAddon>
       </InputGroup>
       <ComboboxValue<Framework>>
