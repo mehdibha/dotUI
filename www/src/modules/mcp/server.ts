@@ -33,7 +33,7 @@ Workflow:
 
 Set the foundations (color, type, shape, space, surfaces) before component chapters, and keep one coherent point of view.
 
-Reporting to the user: describe only what \`nonDefault\` lists — \`noop\` values are defaults, not decisions. Before stating a color, size or contrast, quote the value check returned, not what you asked for.`
+Reporting to the user: describe only what \`nonDefault\` lists; \`noop\` keys were already at that value, so restating a default is not a decision. Before stating a color, size or contrast, quote the value check returned, not what you asked for.`
 
 const text = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value) }],

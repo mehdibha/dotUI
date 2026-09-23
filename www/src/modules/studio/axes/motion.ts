@@ -198,8 +198,8 @@ export const MOTION_SPEC = {
         "turns Standard's 200ms entrance into 250ms, 0.8× into 160ms.",
       value: { type: "number", unit: "×", ...SPEED_RANGE },
       caution:
-        "Higher = slower: 1.2 lengthens every duration by 20%; below 1 is " +
-        "faster.",
+        "Higher = slower: it multiplies overlay entrance, exit and " +
+        "state-change durations (1.2 = 20% longer); below 1 is faster.",
       guidance:
         "Ant Design exposes the same idea as motionUnit (0.1s), one base " +
         "step all durations scale from. Checked popover entrances run " +
