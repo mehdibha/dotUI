@@ -1,4 +1,5 @@
 export {
+  canonicalize,
   DEFAULT_PRESET,
   decodePreset,
   decodeState,

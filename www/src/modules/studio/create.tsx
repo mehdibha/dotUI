@@ -15,8 +15,8 @@ import { PresetPicker } from "@/modules/presets/preset-picker"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
 import {
+  canonicalize,
   decodePreset,
-  encodePreset,
   encodeState,
   useMyPresets,
 } from "@/modules/studio/preset"
@@ -35,13 +35,6 @@ import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 
 const routeApi = getRouteApi("/_app/studio")
-
-/* The codec is canonical (encode∘decode = identity), but states from storage
-   may predate it — one roundtrip normalizes those. */
-function canon(state: string): string {
-  if (!state) return ""
-  return encodePreset(decodePreset(state)) ?? ""
-}
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
@@ -74,9 +67,9 @@ export function StudioPanel({ className }: { className?: string }) {
     () => new Set(PRESETS.map((p) => encodeState(p.state) ?? "")),
     [],
   )
-  const currentState = studio.encoded ?? ""
+  const currentState = canonicalize(studio.encoded)
   const isDirty = activeSaved
-    ? canon(activeSaved.state) !== currentState
+    ? canonicalize(activeSaved.state) !== currentState
     : currentState !== "" && !builtInStates.has(currentState)
 
   const pickerSections = useMemo(() => {

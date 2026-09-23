@@ -1,7 +1,8 @@
 /* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
    localStorage and `components.json`. The default system encodes to nothing;
    anything else stores its diff against the current version's frozen
-   defaults. Canonical — encode∘decode is byte-identity. Decoding reads older
+   defaults. Strings encoded now round-trip byte for byte; older strings don't,
+   so compare them through `canonicalize`. Decoding reads older
    versions and the pre-studio shape through the migrations, validates every
    value against the axis schema and says what it dropped. */
 
@@ -184,6 +185,12 @@ export function decodePreset(encoded: string): StudioPreset {
   if (!result.ok) return DEFAULT_PRESET
   const { state, codeOptions } = result
   return codeOptions ? { state, codeOptions } : { state }
+}
+
+/** The string today's encoder writes for `encoded`'s preset ("" for the default system). */
+export function canonicalize(encoded: string | undefined): string {
+  if (!encoded) return ""
+  return encodePreset(decodePreset(encoded)) ?? ""
 }
 
 export function decodeState(encoded: string): StudioState {
