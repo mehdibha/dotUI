@@ -43,10 +43,6 @@ function canon(state: string): string {
   return encodePreset(decodePreset(state)) ?? ""
 }
 
-/* Origin is the panel's baseline: what first-time users start on, what the
-   global reset returns to, and what the modified dot diffs against. */
-const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
-
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const { gallery } = routeApi.useSearch()
@@ -70,7 +66,7 @@ export function StudioPanel({ className }: { className?: string }) {
   // The header names what's being edited: the active saved system (dotted when
   // edited past its snapshot), else the standalone design-system name.
   const activeSaved = presets.find((p) => p.id === activeId)
-  const displayName = activeSaved?.name ?? storedName
+  const displayName = activeSaved?.name ?? (storedName || ORIGIN.name)
 
   // Built-in presets are re-loadable from the gallery, so a freshly applied one
   // isn't unsaved work — only edits past it (or past a saved snapshot) are.
@@ -164,7 +160,6 @@ export function StudioPanel({ className }: { className?: string }) {
   const system: PanelSystem = {
     name: displayName,
     dirty: isDirty,
-    modified: currentState !== ORIGIN_CANON,
     onReset: () => pickPreset(ORIGIN.id),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
@@ -207,7 +202,7 @@ export function StudioPanel({ className }: { className?: string }) {
       <CreatePresetDialog
         isOpen={createOpen}
         onOpenChange={setCreateOpen}
-        onCreate={(name) => guarded(() => createPreset(name, ORIGIN_CANON))}
+        onCreate={(name) => guarded(() => createPreset(name, ""))}
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}

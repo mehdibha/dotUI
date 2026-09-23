@@ -4,7 +4,6 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { ORIGIN } from "@/modules/presets/catalog"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
 import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
@@ -53,7 +52,7 @@ export const Route = createFileRoute("/_app/studio")({
 
 function StudioPage() {
   const { preset } = Route.useSearch()
-  const { preset: current, setPreset, setState } = useStudio()
+  const { preset: current, setPreset } = useStudio()
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -62,7 +61,6 @@ function StudioPage() {
   // The user's selected preset is persisted in localStorage so every docs
   // component demo renders in it. Seed the editor from it on open (unless a
   // shared ?preset= link is being viewed), then persist back as it's edited.
-  // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
   useEffect(() => {
     if (seededFromStorage.current) return
@@ -70,8 +68,7 @@ function StudioPage() {
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
     if (stored !== DEFAULT_PRESET) setPreset(stored)
-    else setState(ORIGIN.state)
-  }, [preset, setPreset, setState])
+  }, [preset, setPreset])
 
   const skipFirstPersist = useRef(true)
   useEffect(() => {

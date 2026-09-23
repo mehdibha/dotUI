@@ -5,9 +5,9 @@
    Pure and React-free — shared by the panel, the preview iframe, the docs
    demos and the /r/* registry routes. */
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import type { ColorConfig } from "@/registry/theme"
 import { registryUi } from "@/registry/ui/registry"
-import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/studio/preset/defaults"
+import { REGISTRY_PARAM_DEFAULTS } from "@/modules/studio/preset/defaults"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { resolveAll } from "./axes"
@@ -30,9 +30,7 @@ for (const item of registryUi) {
 export function resolveDesignSystem(state: StudioState): DesignSystem {
   const resolved = resolveAll(state)
   const componentParams: Record<string, Record<string, string>> = {}
-  for (const [component, defaults] of Object.entries(
-    REGISTRY_DEFAULTS.componentParams,
-  )) {
+  for (const [component, defaults] of Object.entries(REGISTRY_PARAM_DEFAULTS)) {
     componentParams[component] = { ...defaults, ...resolved.params[component] }
   }
   // Params for components without registry defaults still ride through.
@@ -46,23 +44,19 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
     const byParam = enumVars.get(component)
     if (!byParam) continue
     for (const [paramName, value] of Object.entries(selections)) {
-      if (value === REGISTRY_DEFAULTS.componentParams[component]?.[paramName])
-        continue
+      if (value === REGISTRY_PARAM_DEFAULTS[component]?.[paramName]) continue
       Object.assign(tokens, byParam[paramName]?.[value])
     }
   }
+  // The color chapter writes a whole recipe; other chapters add to it.
+  const color = resolved.color as ColorConfig | undefined
   return {
     componentParams,
     tokens,
     density: resolved.density ?? "default",
-    // The default recipe is the floor under a partial slice; a recipe equal to
-    // the default stays absent so scoped providers and the export keep the
-    // shipped `base/colors.css`.
-    color: (() => {
-      if (!resolved.color) return undefined
-      const merged = { ...DEFAULT_COLOR_CONFIG, ...resolved.color }
-      return isDefaultColorConfig(merged) ? undefined : merged
-    })(),
+    // The default recipe stays absent so scoped providers and the export keep
+    // the shipped `base/colors.css`.
+    color: color && !isDefaultColorConfig(color) ? color : undefined,
     icons: resolved.icons,
   }
 }

@@ -1,7 +1,10 @@
 import { describe, expect, test } from "vitest"
 
 import { resolveDesignSystem } from "../resolve"
+import { SOLID_LEAVES, withSource } from "./color"
 import { DEFAULTS } from "./index"
+
+const NEUTRAL = { ...DEFAULTS, ...withSource(SOLID_LEAVES, "neutral") }
 
 describe("sliders axis", () => {
   test("defaults resolve to the registry defaults and no tokens", () => {
@@ -25,14 +28,14 @@ describe("sliders axis", () => {
 
   test("the fill leaves the buttons' source through the slider fill var", () => {
     expect(
-      resolveDesignSystem({ ...DEFAULTS, sliderColor: "accent" }).tokens,
+      resolveDesignSystem({ ...NEUTRAL, sliderColor: "accent" }).tokens,
     ).toEqual({ "--studio-slider-fill-color": "var(--color-accent)" })
     expect(
-      resolveDesignSystem({ ...DEFAULTS, buttonColor: "accent" }).tokens,
+      resolveDesignSystem({ ...NEUTRAL, buttonColor: "accent" }).tokens,
     ).toEqual({ "--studio-slider-fill-color": "var(--color-inverse)" })
     expect(
       resolveDesignSystem({
-        ...DEFAULTS,
+        ...NEUTRAL,
         buttonColor: "accent",
         sliderColor: "accent",
       }).tokens,

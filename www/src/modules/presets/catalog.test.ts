@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto"
 import { describe, expect, it } from "vitest"
 
-import { validateState } from "@/modules/studio/axes"
+import { DEFAULTS, validateState } from "@/modules/studio/axes"
 import { VERSION } from "@/modules/studio/preset/migrations"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -94,6 +94,13 @@ describe("preset catalog", () => {
     expect(new Set(ids).size).toBe(ids.length)
     for (const id of ids) expect(id).toMatch(/^[a-z0-9-]+$/)
     expect(ORIGIN.id).toBe("origin")
+  })
+
+  it("makes origin@latest the axis defaults", () => {
+    expect(ORIGIN.state).toEqual(DEFAULTS)
+    // …so it ships the base palette (`base/colors.css`) and no tokens.
+    expect(ORIGIN.designSystem.color).toBeUndefined()
+    expect(ORIGIN.designSystem.tokens).toEqual({})
   })
 
   it("credits the brand of every preset but Origin", () => {

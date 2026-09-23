@@ -18,7 +18,7 @@ import type { Schema } from "./schema"
 export const SLIDER_DEFAULTS = {
   sliderThumb: "circle",
   sliderTrack: "thin",
-  sliderColor: "neutral",
+  sliderColor: "accent",
 }
 
 const FILL_TOKENS = {

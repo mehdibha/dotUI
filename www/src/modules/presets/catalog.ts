@@ -161,5 +161,5 @@ export const PRESETS: Preset[] = CATALOG.map(({ revisions, ...meta }) => {
   }
 })
 
-/** The default preset — what /studio starts on for first-time users. */
+/** The default preset: its latest revision is the axis defaults. */
 export const ORIGIN = PRESETS[0] as Preset

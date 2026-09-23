@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest"
 
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import type { ColorConfig } from "@/registry/theme"
 import type { RegistryItem } from "@/registry/types"
 
 import { emitInitItem, mergePresetCssFields } from "./emit-theme"
@@ -55,7 +57,11 @@ describe("emitInitItem", () => {
   test("ships semantic tokens as per-mode literals in the shadcn shape", () => {
     const item = emitInitItem({
       baseRegistryCss,
-      preset: { density: "default", componentParams: {} },
+      preset: {
+        density: "default",
+        componentParams: {},
+        color: { v: 2, seeds: { accent: "#0072f5" } },
+      },
       registryRoot: "https://dotui.com",
     })
     const { theme, light, dark } = item.cssVars ?? {}
@@ -305,6 +311,18 @@ describe("emitInitItem", () => {
     expect(baseRegistryCss.cssVars.theme).toEqual({
       "--radius-lg": "var(--radius)",
     })
+  })
+
+  test("no recipe ships the default one, sources included", () => {
+    const emit = (color?: ColorConfig) =>
+      emitInitItem({
+        baseRegistryCss,
+        preset: { density: "default", componentParams: {}, color },
+        registryRoot: "https://dotui.com",
+      }).cssVars
+    const cssVars = emit()
+    expect(cssVars).toEqual(emit(DEFAULT_COLOR_CONFIG))
+    expect(cssVars?.light?.["primary"]).toBe(cssVars?.light?.["accent"])
   })
 
   test("a selection source and control forks re-declare the cluster per scope", () => {

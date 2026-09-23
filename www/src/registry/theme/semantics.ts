@@ -10,6 +10,7 @@
  * modes by construction — no more reversed-ramp casualties).
  */
 
+import { DEFAULT_COLOR_CONFIG } from "./color-config"
 import type {
   PrimaryColorSource,
   SemanticTarget,
@@ -248,9 +249,6 @@ export function semanticVocabulary(
   }
 }
 
-/** The default vocabulary (neutral primary). */
-export const DEFAULT_SEMANTICS = semanticVocabulary("neutral")
-
 const specTarget = (spec: TokenTargetSpec): SemanticTarget => ({
   ref: { palette: spec.palette, step: JOB_STEPS[spec.job] },
 })
@@ -301,28 +299,32 @@ type ColorSlice = {
   seeds?: { selection?: string }
 }
 
-/** The one resolver every emitter goes through (T4): sources + overrides. */
+/** The one resolver every emitter goes through (T4): sources + overrides.
+ *  No recipe is the default one. */
 export function semanticsFor(
-  color: ColorSlice | undefined,
+  color: ColorSlice = DEFAULT_COLOR_CONFIG,
 ): SemanticVocabulary {
-  const primary = color?.primary ?? "neutral"
+  const primary = color.primary ?? "neutral"
   return applyTokenOverrides(
     semanticVocabulary(
       primary,
-      color?.selection ?? primary,
-      Boolean(color?.seeds?.selection),
+      color.selection ?? primary,
+      Boolean(color.seeds?.selection),
     ),
-    color?.overrides,
+    color.overrides,
   )
 }
+
+/** The default recipe's vocabulary — the one `base/colors.css` ships. */
+export const DEFAULT_SEMANTICS = semanticsFor()
 
 /** The selection cluster re-declared per component scope (`scopes`), keyed
  *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
 export function scopedSemantics(
-  color: ColorSlice | undefined,
+  color: ColorSlice = DEFAULT_COLOR_CONFIG,
 ): Record<string, SemanticVocabulary> {
   return Object.fromEntries(
-    Object.entries(color?.scopes ?? {}).map(([scope, source]) => [
+    Object.entries(color.scopes ?? {}).map(([scope, source]) => [
       `[data-${scope}]`,
       selectionCluster(source),
     ]),

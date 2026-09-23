@@ -27,11 +27,7 @@ for (const id of ids) {
     )
     process.exit(2)
   }
-  const encoded = encodeState(preset.state)
-  if (!encoded) {
-    console.error(`error: preset "${id}" encodes to nothing`)
-    process.exit(2)
-  }
-  out[id] = encoded
+  // The default system encodes to nothing: a bare `?preset=`.
+  out[id] = encodeState(preset.state) ?? ""
 }
 console.log(JSON.stringify(out))

@@ -6,7 +6,7 @@ import type { Resolved, StudioState } from "./index"
 import type { Schema } from "./schema"
 
 export const RADIO_DEFAULTS = {
-  radioColor: "neutral",
+  radioColor: "accent",
 }
 
 export const RADIO_SCHEMA: Schema<typeof RADIO_DEFAULTS> = {

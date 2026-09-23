@@ -35,13 +35,13 @@ export const MODE_BG_RANGE = {
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
   brand: DEFAULT_COLOR_CONFIG.seeds.accent,
-  buttonColor: "neutral",
-  selectionColor: "neutral",
+  buttonColor: "accent",
+  selectionColor: "accent",
   neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",
   dangerSeed: "",
-  selectionSeed: "",
+  selectionSeed: DEFAULT_COLOR_CONFIG.seeds.selection ?? "",
   vividness: 1,
   neutralTint: 1,
   preserveSeed: false,

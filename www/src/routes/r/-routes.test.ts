@@ -74,6 +74,15 @@ describe("/r/init", () => {
     )
   })
 
+  it("serves Origin without a param", async () => {
+    const bare = await expectCached(await get(InitRoute, "/r/init"))
+    const origin = await expectCached(
+      await get(InitRoute, `/r/init?preset=${fixture("v4-origin")}`),
+    )
+    expect(bare.cssVars).toEqual(origin.cssVars)
+    expect(bare.css).toEqual(origin.css)
+  })
+
   it("treats an empty param as absent", async () => {
     await expectCached(await get(InitRoute, "/r/init?preset="))
   })

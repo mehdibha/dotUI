@@ -14,7 +14,6 @@ import { PresetPicker } from "@/modules/presets/preset-picker"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
 import {
-  DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
   useStoredPreset,
 } from "@/modules/studio/preset/storage"
@@ -46,10 +45,10 @@ const BUILT_IN_BY_STATE = new Map(
 function useSelectedPreset() {
   const stored = presetStore.useValue()
   const yours = useStoredPreset()
-  const builtIn = useMemo(() => {
-    const encoded = encodePreset(yours)
-    return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
-  }, [yours])
+  const builtIn = useMemo(
+    () => BUILT_IN_BY_STATE.get(encodePreset(yours)),
+    [yours],
+  )
   const own = builtIn === undefined
   const selected = stored === YOURS && builtIn ? builtIn : stored
   return { selected, yours, own }
@@ -193,7 +192,7 @@ function PresetSelector({
 }) {
   const { selected, yours, own } = useSelectedPreset()
   const previewMode = useForcedPreviewMode()
-  const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
+  const yoursName = useDesignSystemName().trim() || ORIGIN.name
   const sections = useMemo(() => {
     const yoursItem = {
       id: YOURS,

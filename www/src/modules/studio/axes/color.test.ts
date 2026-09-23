@@ -54,7 +54,11 @@ describe("color axis", () => {
 
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
-      buildColorConfig({ ...DEFAULTS, ...state }).selection
+      buildColorConfig({
+        ...DEFAULTS,
+        ...withSource(SOLID_LEAVES, "neutral"),
+        ...state,
+      }).selection
     expect(source({ selectionColor: "neutral" })).toBeUndefined()
     expect(source({ selectionColor: "accent" })).toBe("accent")
     expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
@@ -77,7 +81,7 @@ describe("color axis", () => {
       }),
     ).toBe(true)
     expect(
-      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: "accent" }),
+      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: undefined }),
     ).toBe(false)
   })
 })

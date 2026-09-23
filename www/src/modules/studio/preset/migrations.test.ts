@@ -147,7 +147,7 @@ describe("legacy", () => {
   it("decodes against the pre-studio defaults", () => {
     const { state, codeOptions } = decoded({ d: "compact" })
     expect(state).toEqual({
-      ...DEFAULTS,
+      ...currentBaseline(),
       density: "compact",
       // The registry's badge radius was --radius-md.
       badgeShape: "rounded",

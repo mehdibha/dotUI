@@ -54,7 +54,6 @@ export const PRESET_CATALOG: PresetSummary[] = [
 			},
 			tokens: {},
 			density: "default",
-			color: { v: 2, seeds: { accent: "#0072f5", selection: "#0072f5" }, background: { dark: 2 }, primary: "accent" },
 		},
 	},
 	{

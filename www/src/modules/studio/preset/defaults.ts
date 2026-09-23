@@ -1,20 +1,16 @@
 import { registryUi } from "@/registry/ui/registry"
 
-import type { DesignSystem } from "./types"
-
-function deriveDefaults(): DesignSystem {
-  const componentParams: Record<string, Record<string, string>> = {}
-
-  for (const item of registryUi) {
-    if (!item.params) continue
-    const entries: Record<string, string> = {}
-    for (const [paramName, def] of Object.entries(item.params)) {
-      entries[paramName] = def.default
-    }
-    if (Object.keys(entries).length > 0) componentParams[item.name] = entries
-  }
-
-  return { componentParams, tokens: {}, density: "default" }
-}
-
-export const DEFAULTS: DesignSystem = deriveDefaults()
+/** Every registry item's enum param defaults, by component — the floor under
+ *  a resolved design system's component params. */
+export const REGISTRY_PARAM_DEFAULTS: Record<
+  string,
+  Record<string, string>
+> = Object.fromEntries(
+  registryUi.flatMap((item) => {
+    const params = Object.entries(item.params ?? {})
+    if (params.length === 0) return []
+    return [
+      [item.name, Object.fromEntries(params.map(([n, d]) => [n, d.default]))],
+    ]
+  }),
+)

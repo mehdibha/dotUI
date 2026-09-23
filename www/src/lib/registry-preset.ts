@@ -10,20 +10,18 @@ export type RequestPreset =
   | { ok: true; preset: PublishPreset }
   | { ok: false; reason: PresetFailure }
 
-export function defaultPreset(): PublishPreset {
-  return { density: "default", componentParams: {} }
-}
-
-/** An absent or empty param is the default preset; anything else must decode. */
+/** An absent or empty param is the default system; anything else must decode. */
 export async function resolveRequestPreset(
   encoded: string | undefined,
 ): Promise<RequestPreset> {
-  if (!encoded) return { ok: true, preset: defaultPreset() }
-  const [{ decode }, { resolveDesignSystem }] = await Promise.all([
-    import("@/modules/studio/preset/codec"),
-    import("@/modules/studio/resolve"),
-  ])
-  const result = decode(encoded)
+  const [{ decode, DEFAULT_PRESET }, { resolveDesignSystem }] =
+    await Promise.all([
+      import("@/modules/studio/preset/codec"),
+      import("@/modules/studio/resolve"),
+    ])
+  const result = encoded
+    ? decode(encoded)
+    : { ok: true as const, ...DEFAULT_PRESET }
   if (!result.ok) return result
   const ds = resolveDesignSystem(result.state)
   return {

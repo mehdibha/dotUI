@@ -1,7 +1,7 @@
 /* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
-   localStorage and `components.json`. Only the diff against the current
-   version's frozen defaults is stored, so an untouched system encodes to
-   nothing. Canonical — encode∘decode is byte-identity. Decoding reads older
+   localStorage and `components.json`. The default system encodes to nothing;
+   anything else stores its diff against the current version's frozen
+   defaults. Canonical — encode∘decode is byte-identity. Decoding reads older
    versions and the pre-studio shape through the migrations, validates every
    value against the axis schema and says what it dropped. */
 
@@ -74,16 +74,20 @@ function diffState(state: StudioState): Partial<StudioState> {
   return diff as Partial<StudioState>
 }
 
-/** `undefined` when everything matches the baseline (no preset needed). */
+/** `undefined` for the default system (no preset needed). */
 export function encodePreset(preset: StudioPreset): string | undefined {
+  const codeOptions = sanitizeCodeOptions(
+    preset.codeOptions ?? DEFAULT_CODE_OPTIONS,
+  )
+  const isDefault = (Object.keys(DEFAULTS) as Array<keyof StudioState>).every(
+    (key) => same(preset.state[key], DEFAULTS[key]),
+  )
+  if (isDefault && same(codeOptions, DEFAULT_CODE_OPTIONS)) return undefined
+  // The frozen baseline is not the default system: an empty diff still encodes.
   const compact: Encoded = { v: VERSION }
   const diff = diffState(preset.state)
   if (Object.keys(diff).length > 0) compact.s = diff
-  if (preset.codeOptions) {
-    const codeOptions = sanitizeCodeOptions(preset.codeOptions)
-    if (!same(codeOptions, BASELINE_CODE_OPTIONS)) compact.o = codeOptions
-  }
-  if (!compact.s && !compact.o) return undefined
+  if (!same(codeOptions, BASELINE_CODE_OPTIONS)) compact.o = codeOptions
   return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
 }
 

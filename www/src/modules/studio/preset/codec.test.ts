@@ -6,6 +6,7 @@ import { PRESETS } from "@/modules/presets/catalog"
 import { DEFAULTS } from "@/modules/studio/axes"
 
 import { decode, decodePreset, encodePreset, encodeState } from "./codec"
+import { currentBaseline } from "./migrations"
 
 /** Encode an arbitrary payload with the same deflate+base64url pipeline as
  *  `encodePreset`, bypassing its typing — for crafting stale/garbage presets. */
@@ -21,6 +22,16 @@ describe("preset codec — studio state", () => {
     expect(
       encodePreset({ state: DEFAULTS, codeOptions: DEFAULT_CODE_OPTIONS }),
     ).toBeUndefined()
+    const reordered = Object.fromEntries(Object.entries(DEFAULTS).reverse())
+    expect(encodeState(reordered as typeof DEFAULTS)).toBeUndefined()
+  })
+
+  it("encodes a state on the frozen baseline, which is not the default", () => {
+    const baseline = currentBaseline()
+    expect(baseline).not.toEqual(DEFAULTS)
+    const encoded = encodeState(baseline)
+    expect(encoded).toBeTypeOf("string")
+    expect(decodePreset(encoded ?? "").state).toEqual(baseline)
   })
 
   it("round-trips a modified state", () => {
@@ -53,7 +64,7 @@ describe("preset codec — studio state", () => {
       }),
     )
     if (!result.ok) throw new Error(result.reason)
-    expect(result.state).toEqual({ ...DEFAULTS, brand: "#ef4444" })
+    expect(result.state).toEqual({ ...currentBaseline(), brand: "#ef4444" })
     expect(result.dropped).toEqual(["nope", "radiusPx", "modes"])
   })
 
@@ -163,7 +174,10 @@ describe("preset codec — legacy migration", () => {
       }),
     )
     if (!result.ok) throw new Error(result.reason)
-    expect(result.state).toEqual({ ...DEFAULTS, badgeShape: "rounded" })
+    expect(result.state).toEqual({
+      ...currentBaseline(),
+      badgeShape: "rounded",
+    })
     expect(result.dropped).toEqual([
       "t.--radius",
       "iconLibrary",

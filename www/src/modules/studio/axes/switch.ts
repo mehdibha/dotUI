@@ -7,7 +7,7 @@ import type { Resolved, StudioState } from "./index"
 import type { Schema } from "./schema"
 
 export const SWITCH_DEFAULTS = {
-  switchColor: "neutral",
+  switchColor: "accent",
 }
 
 export const SWITCH_SCHEMA: Schema<typeof SWITCH_DEFAULTS> = {

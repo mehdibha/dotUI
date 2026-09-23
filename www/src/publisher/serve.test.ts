@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
+import { resolveRequestPreset } from "@/lib/registry-preset"
 
 import { publishItem } from "./serve"
 import type { PublishItemInput } from "./serve"
@@ -36,9 +36,11 @@ test("concurrent requests keep their own dep origin and preset", async () => {
 })
 
 test("a request without a preset emits dep URLs without a query", async () => {
+  const resolved = await resolveRequestPreset(undefined)
+  if (!resolved.ok) throw new Error(resolved.reason)
   const item = await publishItem({
     name: "button",
-    preset: defaultPreset(),
+    preset: resolved.preset,
     origin: "https://dotui.org",
   })
   expect(item?.registryDependencies).toEqual(["https://dotui.org/r/loader"])

@@ -1573,17 +1573,7 @@ exports[`built-in presets > resolves notion 1`] = `
 exports[`built-in presets > resolves origin 1`] = `
 {
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -1745,7 +1735,7 @@ exports[`built-in presets > resolves origin 1`] = `
     "icons": undefined,
     "tokens": {},
   },
-  "encoded": "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA",
+  "encoded": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -3137,7 +3127,15 @@ exports[`historical preset strings > decodes crafted-bad-modes 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -3440,7 +3438,15 @@ exports[`historical preset strings > decodes crafted-bad-seed 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -3743,7 +3749,15 @@ exports[`historical preset strings > decodes crafted-bogus-enums 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -4047,7 +4061,15 @@ exports[`historical preset strings > decodes crafted-css-injection 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -4363,7 +4385,15 @@ exports[`historical preset strings > decodes crafted-out-of-range 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -8526,17 +8556,7 @@ exports[`historical preset strings > decodes legacy-origin 1`] = `
     "sectionComments": false,
   },
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -8840,17 +8860,7 @@ exports[`historical preset strings > decodes legacy-origin-code-options 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -11367,7 +11377,15 @@ exports[`historical preset strings > decodes v3-contrast-strict 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -11672,7 +11690,15 @@ exports[`historical preset strings > decodes v3-corner-squircle 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -12607,7 +12633,15 @@ exports[`historical preset strings > decodes v3-mobile-adapt-off 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -12908,7 +12942,15 @@ exports[`historical preset strings > decodes v3-motion-fast 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -13213,7 +13255,15 @@ exports[`historical preset strings > decodes v3-motion-relaxed 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -13832,17 +13882,7 @@ exports[`historical preset strings > decodes v3-origin 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -14146,17 +14186,7 @@ exports[`historical preset strings > decodes v3-origin-code-options 1`] = `
     "sectionComments": false,
   },
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -15399,7 +15429,15 @@ exports[`historical preset strings > decodes v3-surface-layered-ring 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -15703,7 +15741,15 @@ exports[`historical preset strings > decodes v3-type-scale 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": undefined,
+    "color": {
+      "background": {
+        "dark": 2,
+      },
+      "seeds": {
+        "accent": "#438cd6",
+      },
+      "v": 2,
+    },
     "componentParams": {
       "accordion": {
         "container": "divided",
@@ -17899,17 +17945,7 @@ exports[`historical preset strings > decodes v4-origin 1`] = `
 {
   "codeOptions": undefined,
   "designSystem": {
-    "color": {
-      "background": {
-        "dark": 2,
-      },
-      "primary": "accent",
-      "seeds": {
-        "accent": "#0072f5",
-        "selection": "#0072f5",
-      },
-      "v": 2,
-    },
+    "color": undefined,
     "componentParams": {
       "accordion": {
         "container": "divided",

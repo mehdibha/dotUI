@@ -22,8 +22,6 @@ export interface PanelSystem {
   name: string
   /** Edits past the active saved snapshot (or any built-in) — unsaved work. */
   dirty: boolean
-  /** Engine state differs from the defaults. */
-  modified: boolean
   onReset: () => void
   onSave: () => void
   /** Wraps the header name button in the preset picker's trigger. */
@@ -44,14 +42,9 @@ export function PanelChrome({
   search?: ReactNode
   children: ReactNode
 }) {
-  // The only reset in the panel. It clears the studio axes and the engine
-  // state as one.
+  // The only reset in the panel, back to the default system.
   const whole = studio.section(DEFAULTS)
-  const modified = whole.modified || (system?.modified ?? false)
-  const resetAll = () => {
-    whole.onReset()
-    system?.onReset()
-  }
+  const resetAll = system?.onReset ?? whole.onReset
 
   const switcherTrigger = (
     <Button
@@ -75,7 +68,7 @@ export function PanelChrome({
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">
-          {modified && (
+          {whole.modified && (
             <Button
               size="sm"
               variant="quiet"

@@ -15,7 +15,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
+import { resolveRequestPreset } from "@/lib/registry-preset"
 import {
   publishables,
   PUBLISHABLE_NAMES,
@@ -41,7 +41,9 @@ async function buildFixture(): Promise<void> {
   rmSync(FIXTURE_DIR, { recursive: true, force: true })
   mkdirSync(FIXTURE_DIR, { recursive: true })
 
-  const preset = defaultPreset()
+  const resolved = await resolveRequestPreset(undefined)
+  if (!resolved.ok) throw new Error(resolved.reason)
+  const { preset } = resolved
 
   for (const name of PUBLISHABLE_NAMES) {
     const loader = publishables[name]
