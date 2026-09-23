@@ -19,7 +19,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
         primary:
           "bg-primary text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
+          "border bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
         quiet:
           "bg-transparent text-fg disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
       },
@@ -78,6 +78,16 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     },
   },
   params: {
+    /* Secondary buttons outlined on a quiet fill (shadcn, Geist, Primer), or
+       a borderless gray fill (iOS, Material tonal, Radix soft). */
+    secondary: {
+      outline: {
+        variants: { variant: { secondary: "border-border-control" } },
+      },
+      filled: {
+        variants: { variant: { secondary: "border-transparent" } },
+      },
+    },
     style: {
       flat: {},
       outline: {

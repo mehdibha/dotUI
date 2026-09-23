@@ -11,6 +11,7 @@ import {
   HOVER_OPTIONS,
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
+  SECONDARY_OPTIONS,
   STYLE_OPTIONS,
 } from "../axes/buttons"
 import {
@@ -197,6 +198,12 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             }))}
           />
           <DialGap />
+          <DialSegmented
+            label="Secondary"
+            value={state.buttonSecondary}
+            onChange={set("buttonSecondary")}
+            options={SECONDARY_OPTIONS}
+          />
           <DialSegmented
             label="Radius"
             value={state.buttonRadius}

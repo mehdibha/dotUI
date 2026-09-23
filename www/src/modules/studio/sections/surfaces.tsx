@@ -14,6 +14,7 @@ import { modeFor } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
+  FILL_OPTIONS,
   DEPTH_OPTIONS,
   shadowCss,
   STRATEGY_OPTIONS,
@@ -220,6 +221,12 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         value={state.surfaceCanvas}
         onChange={set("surfaceCanvas")}
         options={CANVAS_OPTIONS}
+      />
+      <DialSegmented
+        label="Fills"
+        value={state.surfaceFills}
+        onChange={set("surfaceFills")}
+        options={FILL_OPTIONS}
       />
       <DialToggle
         label="Glass"

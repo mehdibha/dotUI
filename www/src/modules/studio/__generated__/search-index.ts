@@ -8,7 +8,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	icons: ["Library", "Stroke", "Weight"],
 	shape: ["Character", "Radius"],
 	space: ["Density", "Unit"],
-	surfaces: ["Style", "Depth", "Page", "Glass"],
+	surfaces: ["Style", "Depth", "Page", "Fills", "Glass"],
 	browser: ["Cursor", "Selectable", "Highlight", "Scrollbars", "Cursors"],
 	states: [
 		"Control focus",
@@ -39,6 +39,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Badges › Kbd",
 		"Buttons",
 		"Buttons › Style",
+		"Buttons › Secondary",
 		"Buttons › Radius",
 		"Buttons › Hover",
 		"Buttons › Press",

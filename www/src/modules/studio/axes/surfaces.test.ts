@@ -4,6 +4,7 @@ import { resolveDesignSystem } from "../resolve"
 import { DEFAULTS } from "./index"
 import {
   NO_SHADOW,
+  resolveSurfaces,
   shadowCss,
   surfaceColorCss,
   surfaceRecipe,
@@ -127,5 +128,23 @@ describe("surfaces", () => {
     expect(tokens["--shadow-popover"]).toBe(NO_SHADOW)
     expect(tokens["--shadow-modal"]).toBe(NO_SHADOW)
     for (const value of Object.values(tokens)) expect(value).not.toBe("none")
+  })
+})
+
+describe("fills", () => {
+  test("subtle leaves the palette recipe untouched", () => {
+    expect(resolveSurfaces(DEFAULTS).color).toBeUndefined()
+  })
+
+  test("strong lifts control fills, two rungs in dark", () => {
+    const overrides = resolveSurfaces({ ...DEFAULTS, surfaceFills: "strong" })
+      .color?.overrides
+    expect(overrides?.["color-neutral"]).toEqual({
+      light: { palette: "neutral", job: "ui-hover" },
+      dark: { palette: "neutral", job: "ui-active" },
+    })
+    expect(overrides?.["color-field"]).toEqual({
+      dark: { palette: "neutral", job: "ui-hover" },
+    })
   })
 })

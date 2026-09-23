@@ -14,6 +14,13 @@ const buttonMeta = {
   registryDependencies: ["loader", "focus-styles"],
   // Synced with toggle-button: the studio's Buttons axes write both.
   params: {
+    secondary: {
+      kind: "enum",
+      default: "outline",
+      values: ["outline", "filled"] as const,
+      description:
+        "Whether the secondary variant is outlined or a borderless fill.",
+    },
     style: {
       kind: "enum",
       default: "flat",
