@@ -102,9 +102,9 @@ export function PreviewPanel({
   /** Mobile only — opens the customize sheet from the floating toolbar. */
   onCustomize?: () => void
 }) {
-  const { preview, preset } = routeApi.useSearch()
+  const { preview } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem } = useStudio()
+  const { designSystem, encoded: preset } = useStudio()
   const { resolvedTheme } = useTheme()
 
   const panelRef = useRef<HTMLDivElement>(null)
