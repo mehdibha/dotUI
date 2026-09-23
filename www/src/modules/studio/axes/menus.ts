@@ -232,7 +232,7 @@ export const MENU_SPEC = {
         "uppercase headings. Caps reads as a dense, technical tool.",
     },
     menuSearch: {
-      label: "Search",
+      label: "Command palette search",
       description:
         "The command palette's search chrome: a boxed field, a full-width " +
         "bar, or a bare prompt.",
@@ -243,10 +243,12 @@ export const MENU_SPEC = {
         "spotlight surface, Field as a searchable menu.",
     },
     menuScale: {
-      label: "Scale",
+      label: "Command palette scale",
       description:
-        "Whether the command palette is sized like a dropdown menu or steps " +
-        "up to a hero surface.",
+        "Command palette only: whether the Command component (in a " +
+        "popover, dialog or drawer) is sized like a dropdown menu or steps " +
+        "up to a hero surface. Menus and Select and ComboBox listboxes " +
+        "keep their density size.",
       value: { type: "enum", options: SCALE_OPTIONS },
       guidance:
         "shadcn/ui's CommandDialog steps its input to 48px and its rows " +

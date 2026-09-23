@@ -39,8 +39,9 @@ export function resolvePickers(state: StudioState): Resolved {
 export const PICKER_SPEC = {
   label: "Pickers",
   description:
-    "The caret on Select and Combobox triggers. The trigger shell comes " +
-    "from Inputs, the open list from Menus.",
+    "The caret on Select and Combobox triggers. The Combobox shell comes " +
+    "from Inputs; the Select trigger is a secondary button styled by " +
+    "Buttons. The open list comes from Menus.",
   axes: {
     pickerCaret: {
       label: "Caret",

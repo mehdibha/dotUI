@@ -105,7 +105,9 @@ export const INPUT_SPEC = {
   description:
     "The shell every text-entry field wears — text field, text area, search, " +
     "combobox, date and number fields, OTP cells — and how it answers the " +
-    "pointer. Focus and invalid styling live in States.",
+    "pointer. Select triggers are not fields: they render as secondary " +
+    "buttons and follow Buttons, so a Line or Filled form still shows " +
+    "boxed Selects. Focus and invalid styling live in States.",
   axes: {
     inputStyle: {
       label: "Style",

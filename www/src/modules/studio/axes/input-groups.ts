@@ -1,6 +1,6 @@
 /* Input groups — how a prefix/suffix sits in the field: floating inside the
-   shell (shadcn, Geist, Linear, Polaris) or a tinted cell attached to the
-   edge (Bootstrap input-group, Ant addonBefore/After). Bootstrap and Ant
+   shell (shadcn, Radix Themes) or a tinted cell attached to the edge
+   (Bootstrap input-group, Ant addonBefore/After). Bootstrap and Ant
    always divide the cell from the input; a few designs let the fill run into
    the field, so the hairline is a choice.
 

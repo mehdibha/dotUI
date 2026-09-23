@@ -193,15 +193,16 @@ export const MOTION_SPEC = {
     motionSpeed: {
       label: "Speed",
       description:
-        "One multiplier over every duration — entrances, exits and state " +
-        "changes. 1× is the character's own timing.",
+        "Higher = slower: a multiplier on every duration — entrances, " +
+        "exits and state changes. 1× is the character's own timing; 1.25× " +
+        "turns Standard's 200ms entrance into 250ms, 0.8× into 160ms.",
       value: { type: "number", unit: "×", ...SPEED_RANGE },
       guidance:
         "Ant Design exposes the same idea as motionUnit (0.1s), one base " +
         "step all durations scale from. Checked popover entrances run " +
         "100–200ms: shadcn/ui 100ms, HeroUI 150ms, Radix Themes 160ms, " +
-        "Primer and Spectrum 2 200ms. Go below 1× for keyboard-driven " +
-        "tools, above for calm consumer products.",
+        "Primer and Spectrum 2 200ms. Go below 1× (faster) for " +
+        "keyboard-driven tools, above (slower) for calm consumer products.",
     },
     motionOverlay: {
       label: "Overlays",

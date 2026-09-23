@@ -36,9 +36,11 @@ export function resolveType(state: StudioState): Resolved {
 export const TYPE_SPEC = {
   label: "Typography",
   description:
-    "The three font roles — heading, body and mono — each a family from " +
-    "the Google Fonts catalog, shipped as `--font-heading`, `--font-sans` " +
-    "and `--font-mono`.",
+    "The three font roles — heading, body and mono — shipped as " +
+    "`--font-heading`, `--font-sans` and `--font-mono`. Each takes a " +
+    "family from a curated catalog: the Google Fonts families with a " +
+    "variable weight axis (about 540). Static-only families, such as IBM " +
+    "Plex Mono, aren't in it. Text sizes are fixed by density, not here.",
   axes: {
     headingFont: {
       label: "Heading",
@@ -65,8 +67,11 @@ export const TYPE_SPEC = {
       guidance:
         "Material 3 defaults to Roboto, shadcn/ui's builder to Inter, " +
         "dotUI to Geist. " +
-        "Pick a sans with tabular figures and a large x-height for dense " +
-        "UIs; a serif body suits reading-first products, not dashboards.",
+        "Pick a sans with a large x-height for dense UIs; a serif body " +
+        "suits reading-first products, not dashboards. The font's figures " +
+        "don't align columns on their own: tabular-nums is only set on a " +
+        "few readouts (slider and progress values, OTP and time-picker " +
+        "digits), not on tables, number fields or body text.",
     },
     monoFont: {
       label: "Mono",
@@ -75,8 +80,9 @@ export const TYPE_SPEC = {
       guidance:
         "Radix Themes (`--code-font-family`) and shadcn/ui (`--font-mono`) " +
         "expose it as its own token; Material 3 has no mono role. A mono " +
-        "from the body's own superfamily (Geist Mono with Geist, IBM Plex " +
-        "Mono with Plex Sans) reads most coherent.",
+        "from the body's own superfamily (Geist Mono with Geist, Roboto " +
+        "Mono with Roboto, Red Hat Mono with Red Hat Text) reads most " +
+        "coherent.",
     },
   },
 } satisfies ChapterSpec<typeof TYPE_DEFAULTS>

@@ -32,7 +32,9 @@ export const STYLE_OPTIONS = [
     value: "soft",
     label: "Soft",
     description:
-      "A pale wash of the intent with intent-colored text, no border.",
+      "A pale wash of the intent with intent-colored text, no border. The " +
+      "neutral badge's wash is half the muted fill — barely visible on a " +
+      "card, so neutral chips on cards want Outline or Soft outline.",
     seenIn: ["Radix Themes", "Chakra UI", "Fluent 2", "Spectrum 2"],
   },
   {

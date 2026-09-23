@@ -8,8 +8,7 @@
      Primer (shadow-led light over a faint ring → brighter edge, elevation
      and a tighter shadow in dark), Shadow ≈ Fluent/Spectrum (shadows
      strengthen in dark), Tonal ≈ Material 3 (contrast-led in BOTH modes,
-     containers darker than the page in light). Linear is Hairline at a
-     raised depth.
+     containers darker than the page in light).
    - Depth: the one intensity lever — hairline weight, shadow size and dark
      elevation move together. Shadow-led systems (Fluent, Material,
      Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
@@ -51,7 +50,7 @@ export const STRATEGY_OPTIONS = [
     description:
       "A 1px neutral edge on cards and floating layers in both modes; " +
       "shadows stay secondary, with none on cards until Raised.",
-    seenIn: ["shadcn/ui", "Geist"],
+    seenIn: ["shadcn/ui", "Geist", "Linear"],
   },
   {
     value: "adaptive",
@@ -524,8 +523,11 @@ export const SURFACE_SPEC = {
         "style decides what replaces them.",
       value: { type: "enum", options: STRATEGY_OPTIONS },
       guidance:
-        "Of 8 systems checked: shadcn/ui and Geist are edge-led in both " +
-        "modes; Primer, Radix Themes and Atlassian lean on shadows in light " +
+        "Of 9 systems checked: shadcn/ui, Geist and Linear are edge-led in " +
+        "both modes (Linear barely uses shadows and lifts dark surfaces by " +
+        "lightness: Hairline at Raised is closest, the first depth where " +
+        "floating layers step lighter in dark, at the cost of a small card " +
+        "shadow); Primer, Radix Themes and Atlassian lean on shadows in light " +
         "and turn up edges or surface lightness in dark; Fluent 2 and " +
         "Spectrum 2 stay shadow-led and darken shadows 2–3× in dark; " +
         "Material 3 separates by surface tone. Hairline suits dense tool " +
