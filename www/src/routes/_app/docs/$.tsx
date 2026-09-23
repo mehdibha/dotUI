@@ -23,17 +23,61 @@ function ogEyebrow(url: string) {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
+type Moved = { to: string; hash?: string }
+
 /** Removed docs pages → where their content lives now. */
-const MOVED: Record<string, { to: string; hash?: string }> = {
+const MOVED: Record<string, Moved> = {
+  cli: { to: "installation" },
+  introduction: { to: "" },
+  "getting-started/installation": { to: "installation" },
+  "getting-started/cli": { to: "installation" },
+  "getting-started/api-reference/cli": { to: "installation" },
   "components/chart": { to: "charts" },
   "components/chat": { to: "components/message" },
   "components/context-menu": { to: "components/menu", hash: "triggers" },
   "components/disclosure": { to: "components/collapsible" },
+  "components/feedback/progress": { to: "components/progress-bar" },
+}
+
+// Component pages sat in category folders until Aug 2025.
+const OLD_CATEGORIES = new Set([
+  "buttons",
+  "colors",
+  "data-display",
+  "dates",
+  "drag-and-drop",
+  "feedback",
+  "inputs",
+  "layout",
+  "menus-and-selection",
+  "navigation",
+  "overlay",
+])
+const DROPPED = new Set([
+  "aspect-ratio",
+  "date-range-picker",
+  "range-calendar",
+  "scroll-area",
+])
+
+function movedTo(splat: string): Moved | undefined {
+  if (MOVED[splat]) return MOVED[splat]
+  if (splat.startsWith("getting-started/")) return { to: "" }
+  const [root, category, name, ...rest] = splat.split("/")
+  if (
+    root === "components" &&
+    OLD_CATEGORIES.has(category ?? "") &&
+    name &&
+    !rest.length &&
+    !DROPPED.has(name)
+  ) {
+    return { to: `components/${name}` }
+  }
 }
 
 export const Route = createFileRoute("/_app/docs/$")({
   beforeLoad: ({ params }) => {
-    const moved = params._splat ? MOVED[params._splat] : undefined
+    const moved = params._splat ? movedTo(params._splat) : undefined
     if (moved) {
       throw redirect({
         to: "/docs/$",
