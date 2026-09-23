@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
       /* Snap sheets report their snap position as swipe progress; like iOS,
          keep the scrim at every detent and let the exit transition fade it. */
       backdrop:
-        "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0 not-data-ending-style:not-data-starting-style:in-data-snap-points:opacity-100",
+        "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out not-data-ending-style:not-data-starting-style:in-data-snap-points:opacity-100 data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0",
       viewport: "@container-size fixed inset-0 z-10 touch-none",
       popup:
         "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [transition-property:transform,box-shadow,height,background-color,margin,padding] duration-[calc(500ms*var(--drawer-swipe-strength,1))] ease-fluid-out will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
@@ -50,8 +50,9 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         },
       },
       /* What the page behind does while a drawer is open: scale back under a
-         sheet (iOS), or slide aside by --drawer-indent-push for a side menu.
-         Transitions drop to zero while a swipe drives the progress. */
+         sheet (iOS), or slide aside by --drawer-indent-push for a side menu,
+         its content fading back (Claude, ChatGPT). Transitions drop to zero
+         while a swipe drives the progress. */
       effect: {
         scale: {
           indent:
@@ -59,7 +60,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         },
         push: {
           indent:
-            "origin-left duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] data-active:transform-[translate3d(calc(var(--drawer-indent-push,min(85vw,--spacing(80)))*(1-var(--drawer-swipe-progress,0))),0,0)] *:transition-opacity *:duration-[inherit] data-active:overflow-hidden data-active:rounded-(--studio-drawer-radius) data-active:*:opacity-[calc(0.4+0.6*var(--drawer-swipe-progress,0))] data-active:shadow-[inset_0_0_0_1px_var(--color-border-control)]",
+            "origin-left duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] *:transition-opacity *:duration-[inherit] data-active:transform-[translate3d(calc(var(--drawer-indent-push,min(85vw,--spacing(80)))*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:overflow-hidden data-active:rounded-(--studio-drawer-radius) data-active:shadow-[inset_0_0_0_1px_var(--color-border-control)] data-active:*:opacity-[calc(0.4+0.6*var(--drawer-swipe-progress,0))]",
         },
       },
     },
