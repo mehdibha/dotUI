@@ -3302,7 +3302,6 @@ exports[`historical preset strings > decodes crafted-bad-modes 1`] = `
   "dropped": [
     "modes",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -3606,7 +3605,6 @@ exports[`historical preset strings > decodes crafted-bad-seed 1`] = `
   "dropped": [
     "selectionSeed",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -3911,7 +3909,6 @@ exports[`historical preset strings > decodes crafted-bogus-enums 1`] = `
     "surfaceDepth",
     "mobileDialogs",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -4216,7 +4213,6 @@ exports[`historical preset strings > decodes crafted-css-injection 1`] = `
     "bodyFont",
     "cursorControls",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -4353,18 +4349,12 @@ exports[`historical preset strings > decodes crafted-css-injection 1`] = `
 
 exports[`historical preset strings > decodes crafted-garbage 1`] = `
 {
-  "knownWrong": [
-    "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS",
-  ],
   "reason": "corrupt",
 }
 `;
 
 exports[`historical preset strings > decodes crafted-newer-version 1`] = `
 {
-  "knownWrong": [
-    "forward-version-collapses-to-defaults: decode fails as newer-version, but /r/* still serves DEFAULTS",
-  ],
   "reason": "newer-version",
 }
 `;
@@ -4539,7 +4529,6 @@ exports[`historical preset strings > decodes crafted-out-of-range 1`] = `
     "radiusPx",
     "focusInputStrength",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -4676,9 +4665,6 @@ exports[`historical preset strings > decodes crafted-out-of-range 1`] = `
 
 exports[`historical preset strings > decodes crafted-truncated 1`] = `
 {
-  "knownWrong": [
-    "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS",
-  ],
   "reason": "corrupt",
 }
 `;
@@ -4865,7 +4851,6 @@ exports[`historical preset strings > decodes legacy-airbnb 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5187,7 +5172,6 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5509,7 +5493,6 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5833,7 +5816,6 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
   "dropped": [
     "c.algorithm",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6155,7 +6137,6 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6479,7 +6460,6 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
   "dropped": [
     "c.algorithm",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6801,7 +6781,6 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7123,7 +7102,6 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7447,7 +7425,6 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
   "dropped": [
     "c.knobs.minChroma",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7767,7 +7744,6 @@ exports[`historical preset strings > decodes legacy-github 1`] = `
     "t.--color-border-focus",
     "c.overrides",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8088,7 +8064,6 @@ exports[`historical preset strings > decodes legacy-linear 1`] = `
   "dropped": [
     "c.overrides",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8410,7 +8385,6 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
   "dropped": [
     "c.overrides",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8728,7 +8702,6 @@ exports[`historical preset strings > decodes legacy-origin 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9043,7 +9016,6 @@ exports[`historical preset strings > decodes legacy-origin-code-options 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9361,7 +9333,6 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9683,7 +9654,6 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
   "dropped": [
     "t.--shadow-control",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -10002,7 +9972,6 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -10321,7 +10290,6 @@ exports[`historical preset strings > decodes legacy-vercel 1`] = `
     "t.--shadow-overlay",
     "c.overrides",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -10635,7 +10603,6 @@ exports[`historical preset strings > decodes v3-airbnb 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -10946,7 +10913,6 @@ exports[`historical preset strings > decodes v3-check-fill 1`] = `
     "tokens": {},
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -11263,7 +11229,6 @@ exports[`historical preset strings > decodes v3-claude 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -11569,7 +11534,6 @@ exports[`historical preset strings > decodes v3-contrast-strict 1`] = `
     "hueShift",
     "guarantees",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -11873,7 +11837,6 @@ exports[`historical preset strings > decodes v3-corner-squircle 1`] = `
   "dropped": [
     "cornerShape",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12187,7 +12150,6 @@ exports[`historical preset strings > decodes v3-github 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12507,7 +12469,6 @@ exports[`historical preset strings > decodes v3-linear 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12809,7 +12770,6 @@ exports[`historical preset strings > decodes v3-mobile-adapt-off 1`] = `
     "tokens": {},
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -13115,7 +13075,6 @@ exports[`historical preset strings > decodes v3-motion-fast 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -13421,7 +13380,6 @@ exports[`historical preset strings > decodes v3-motion-relaxed 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -13736,7 +13694,6 @@ exports[`historical preset strings > decodes v3-notion 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -14048,7 +14005,6 @@ exports[`historical preset strings > decodes v3-origin 1`] = `
     "tokens": {},
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -14363,7 +14319,6 @@ exports[`historical preset strings > decodes v3-origin-code-options 1`] = `
     "tokens": {},
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -14679,7 +14634,6 @@ exports[`historical preset strings > decodes v3-spotify 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -14994,7 +14948,6 @@ exports[`historical preset strings > decodes v3-stripe 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -15308,7 +15261,6 @@ exports[`historical preset strings > decodes v3-supabase 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -15613,7 +15565,6 @@ exports[`historical preset strings > decodes v3-surface-layered-ring 1`] = `
     "surfaceShadow",
     "surfaceEdge",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -15920,7 +15871,6 @@ exports[`historical preset strings > decodes v3-type-scale 1`] = `
     "typeBase",
     "bodyLeading",
   ],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -16236,7 +16186,6 @@ exports[`historical preset strings > decodes v3-vercel 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -16550,7 +16499,6 @@ exports[`historical preset strings > decodes v4-airbnb 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -16867,7 +16815,6 @@ exports[`historical preset strings > decodes v4-claude 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -17181,7 +17128,6 @@ exports[`historical preset strings > decodes v4-github 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -17501,7 +17447,6 @@ exports[`historical preset strings > decodes v4-linear 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -17816,7 +17761,6 @@ exports[`historical preset strings > decodes v4-notion 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -18128,7 +18072,6 @@ exports[`historical preset strings > decodes v4-origin 1`] = `
     "tokens": {},
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -18444,7 +18387,6 @@ exports[`historical preset strings > decodes v4-spotify 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -18759,7 +18701,6 @@ exports[`historical preset strings > decodes v4-stripe 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -19073,7 +19014,6 @@ exports[`historical preset strings > decodes v4-supabase 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -19389,7 +19329,6 @@ exports[`historical preset strings > decodes v4-vercel 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",

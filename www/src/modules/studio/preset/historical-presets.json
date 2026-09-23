@@ -683,9 +683,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "not base64url deflate"
       }
-    ],
-    "knownWrong": [
-      "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS"
     ]
   },
   {
@@ -698,9 +695,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "v4-github minus its last 3 chars"
       }
-    ],
-    "knownWrong": [
-      "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS"
     ]
   },
   {
@@ -713,9 +707,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:5, s:{brand:'#ef4444'}}"
       }
-    ],
-    "knownWrong": [
-      "forward-version-collapses-to-defaults: decode fails as newer-version, but /r/* still serves DEFAULTS"
     ]
   },
   {

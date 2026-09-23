@@ -14,6 +14,11 @@ import { createFileRoute } from "@tanstack/react-router"
 import { format } from "oxfmt"
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
+import {
+  invalidPreset,
+  registryHandler,
+  registryJson,
+} from "@/lib/registry-response"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import useImageLoadingStatusSource from "@/registry/hooks/use-image-loading-status.ts?raw"
@@ -25,12 +30,6 @@ import type { RegistryItem } from "@/registry/types"
 import { mergePresetCssFields } from "@/publisher/emit-theme"
 import { buildV0Item, rewriteRegistryImports } from "@/publisher/emit-v0"
 import { publish, selectPublishable } from "@/publisher/publish"
-
-const JSON_HEADERS = {
-  "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control":
-    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
-}
 
 /**
  * Registry support modules shipped straight from source. Published component
@@ -50,10 +49,12 @@ const SUPPORT_FILES: Record<string, string> = Object.fromEntries(
 export const Route = createFileRoute("/r/v0")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: registryHandler(async ({ request }) => {
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const preset = await resolveRequestPreset(encodedPreset)
+        const resolved = await resolveRequestPreset(encodedPreset)
+        if (!resolved.ok) return invalidPreset(resolved.reason)
+        const { preset } = resolved
 
         const items = await Promise.all(
           Object.values(publishables).map(async (loader) => {
@@ -87,10 +88,8 @@ export const Route = createFileRoute("/r/v0")({
           }),
         )
 
-        return new Response(JSON.stringify(item, null, 2), {
-          headers: JSON_HEADERS,
-        })
-      },
+        return registryJson(item)
+      }),
     },
   },
 })

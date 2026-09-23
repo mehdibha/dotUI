@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest"
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
 import { PRESETS } from "@/modules/presets/presets-data"
-import { DEFAULTS } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 import { decode, encodeState } from "./codec"
@@ -17,24 +16,22 @@ describe("historical preset strings", () => {
   for (const fixture of fixtures) {
     it(`decodes ${fixture.id}`, async () => {
       const result = decode(fixture.encoded)
-      const designSystem = resolveDesignSystem(
-        result.ok ? result.state : DEFAULTS,
-      )
+      if (!result.ok) {
+        expect({ reason: result.reason }).toMatchSnapshot()
+        // /r/* rejects it rather than serving the defaults
+        expect(await resolveRequestPreset(fixture.encoded)).toEqual(result)
+        return
+      }
+      const designSystem = resolveDesignSystem(result.state)
       expect({
-        knownWrong: fixture.knownWrong,
-        ...(result.ok
-          ? {
-              dropped: result.dropped,
-              state: result.state,
-              codeOptions: result.codeOptions,
-              designSystem,
-            }
-          : { reason: result.reason }),
+        dropped: result.dropped,
+        state: result.state,
+        codeOptions: result.codeOptions,
+        designSystem,
       }).toMatchSnapshot()
-      // /r/* ships the same resolution, still the defaults on a failed decode
       expect(await resolveRequestPreset(fixture.encoded)).toEqual({
-        ...designSystem,
-        codeOptions: result.ok ? result.codeOptions : undefined,
+        ok: true,
+        preset: { ...designSystem, codeOptions: result.codeOptions },
       })
     })
   }

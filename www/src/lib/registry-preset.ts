@@ -1,41 +1,40 @@
-/**
- * Shared `?preset=` resolution for the `/r/*` registry routes.
- *
- * Each handler reads the compressed-base64url `preset` query param and turns it
- * into the publisher's `PublishPreset`. The studio codec and resolver are
- * imported lazily so they stay out of the route handlers' eager server graph.
- */
+/* `?preset=` resolution for the `/r/*` routes. The studio codec and resolver
+   load lazily to stay out of the handlers' eager server graph. */
 
 import type { PublishPreset } from "@/publisher/types"
+import type { DecodeResult } from "@/modules/studio/preset/codec"
+
+export type PresetFailure = Extract<DecodeResult, { ok: false }>["reason"]
+
+export type RequestPreset =
+  | { ok: true; preset: PublishPreset }
+  | { ok: false; reason: PresetFailure }
 
 export function defaultPreset(): PublishPreset {
   return { density: "default", componentParams: {} }
 }
 
-/**
- * Resolve a `?preset=` value to a `PublishPreset`, falling back to the default
- * preset when the param is absent or fails to decode.
- */
+/** An absent or empty param is the default preset; anything else must decode. */
 export async function resolveRequestPreset(
   encoded: string | undefined,
-): Promise<PublishPreset> {
-  if (!encoded) return defaultPreset()
-  try {
-    const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
-      import("@/modules/studio/preset/codec"),
-      import("@/modules/studio/resolve"),
-    ])
-    const preset = decodePreset(encoded)
-    const ds = resolveDesignSystem(preset.state)
-    return {
+): Promise<RequestPreset> {
+  if (!encoded) return { ok: true, preset: defaultPreset() }
+  const [{ decode }, { resolveDesignSystem }] = await Promise.all([
+    import("@/modules/studio/preset/codec"),
+    import("@/modules/studio/resolve"),
+  ])
+  const result = decode(encoded)
+  if (!result.ok) return result
+  const ds = resolveDesignSystem(result.state)
+  return {
+    ok: true,
+    preset: {
       color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
       tokens: ds.tokens,
-      codeOptions: preset.codeOptions,
+      codeOptions: result.codeOptions,
       icons: ds.icons,
-    }
-  } catch {
-    return defaultPreset()
+    },
   }
 }

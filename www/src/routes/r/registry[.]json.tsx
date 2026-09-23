@@ -25,15 +25,10 @@
 
 import { createFileRoute } from "@tanstack/react-router"
 
+import { registryHandler, registryJson } from "@/lib/registry-response"
 import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
 import { registryUi } from "@/registry/__generated__/registry-items"
 import { registryDepsFor } from "@/publisher/publish"
-
-const JSON_HEADERS = {
-  "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control":
-    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
-}
 
 const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
 
@@ -59,7 +54,7 @@ function toIndexItem(name: string) {
 export const Route = createFileRoute("/r/registry.json")({
   server: {
     handlers: {
-      GET: ({ request }) => {
+      GET: registryHandler(({ request }) => {
         const url = new URL(request.url)
         const homepage = `${url.protocol}//${url.host}`
 
@@ -74,10 +69,8 @@ export const Route = createFileRoute("/r/registry.json")({
           items,
         }
 
-        return new Response(JSON.stringify(registry, null, 2), {
-          headers: JSON_HEADERS,
-        })
-      },
+        return registryJson(registry)
+      }),
     },
   },
 })
