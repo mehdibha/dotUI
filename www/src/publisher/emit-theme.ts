@@ -217,7 +217,8 @@ function registryConfigUrl(
   registryRoot: string,
   encodedPreset: string | undefined,
 ): string {
-  return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
+  const query = encodedPreset ? `?preset=${encodedPreset}` : ""
+  return `${registryRoot}/r/{name}${query}`
 }
 
 /** `color-fg-on-primary` → `fg-on-primary`: the `:root` name behind a token. */
