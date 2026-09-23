@@ -108,7 +108,7 @@ The drawer dismisses on swipe, outside interaction, and Escape. Disable each wit
 
 ## Indent
 
-`DrawerIndent` wraps the page behind the drawers of its `DrawerProvider`. By default it scales back under a sheet; `effect="push"` slides it aside for a side menu, by `--drawer-indent-push`. Set that variable where both the page and the portaled drawer read it, and size the drawer with it. Give sheets their own provider so they don't push the page too.
+`DrawerIndent` wraps the page behind the drawers of its `DrawerProvider`. By default it scales back under a sheet; `effect="push"` slides it aside for a side menu, by `--drawer-indent-push`, and fades its content — pair it with `hasBackdrop={false}` on the side drawer so no scrim covers the page too. Set that variable where both the page and the portaled drawer read it, and size the drawer with it. Give sheets their own provider so they don't push the page too.
 
 ```tsx
 <DrawerProvider>
