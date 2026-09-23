@@ -76,7 +76,7 @@ function StudioPage() {
     // The sheet portals out of the layout: close it past lg.
     if (isBelowLg === false) setSheetOpen(false)
     // ?gallery= (the /presets redirect) needs the panel that owns the picker.
-    else if (gallery) setSheetOpen(true)
+    else if (isBelowLg && gallery) setSheetOpen(true)
   }, [isBelowLg, gallery])
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
