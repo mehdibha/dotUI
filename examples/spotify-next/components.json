@@ -20,6 +20,6 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@dotui": "https://dotui.org/r/{name}?preset=spotify@1"
+    "@dotui": "https://dotui.org/r/{name}?preset=spotify@2"
   }
 }

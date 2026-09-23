@@ -106,7 +106,7 @@ describe("/r/init", () => {
       `https://dotui.org/r/{name}?${LINEAR_EDITED}`,
     )
     expect(await registry("preset=github")).toBe(
-      "https://dotui.org/r/{name}?preset=github@1",
+      "https://dotui.org/r/{name}?preset=github@2",
     )
   })
 

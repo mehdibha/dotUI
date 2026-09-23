@@ -15,14 +15,23 @@ import { ORIGIN, PRESETS } from "./catalog"
 const PINNED: Record<string, string> = {
   "origin@1": "cdde4a622ecb19ad",
   "claude@1": "7d1c14de2540f492",
+  "claude@2": "b38c6ef00f260d0d",
   "supabase@1": "f66f0c99c49017eb",
+  "supabase@2": "8cfe1a43b7866d46",
   "stripe@1": "a6a41413f0ca596b",
+  "stripe@2": "4b15bf1dfc438518",
   "linear@1": "77f7226d9f56f447",
+  "linear@2": "3ec570ce78cf3aed",
   "vercel@1": "6ce976902dcfcb83",
+  "vercel@2": "62daa0e41d057da1",
   "airbnb@1": "a24b46befbfe8d5d",
+  "airbnb@2": "dc1a95f54a2b2ce2",
   "github@1": "9baa7e9f54c5d2ae",
+  "github@2": "065b2e4daa9183d4",
   "notion@1": "5288d7c7b6426f84",
+  "notion@2": "131afac9a4987928",
   "spotify@1": "93cf711c969d4fd4",
+  "spotify@2": "d4848cbf43ca403f",
 }
 
 /** JSON with sorted keys, so the hash tracks content, not layout. */

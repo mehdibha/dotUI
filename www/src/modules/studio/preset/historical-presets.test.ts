@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
-import { PRESETS } from "@/modules/presets/catalog"
+import { REVISIONS } from "@/modules/presets/built-ins"
 import { arrive } from "@/modules/studio/doc"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -65,15 +65,19 @@ describe("v3 built-ins", () => {
 })
 
 describe("built-in presets", () => {
-  for (const preset of PRESETS) {
-    it(`resolves ${preset.id}`, () => {
-      expect({
-        query: encodeQuery(preset.state, { base: preset }),
-        state: preset.state,
-        designSystem: preset.designSystem,
-      }).toMatchSnapshot()
-    })
-  }
+  // Every published revision, so a pinned link's look can't drift.
+  for (const [id, revisions] of Object.entries(REVISIONS))
+    for (const { rev } of revisions) {
+      it(`resolves ${id}@${rev}`, () => {
+        const decoded = decode({ preset: `${id}@${rev}` })
+        if (!decoded.ok) throw new Error(decoded.reason)
+        expect({
+          query: encodeQuery(decoded.state, decoded),
+          state: decoded.state,
+          designSystem: resolveDesignSystem(decoded.state),
+        }).toMatchSnapshot()
+      })
+    }
 })
 
 describe("stored built-in strings", () => {
@@ -82,11 +86,12 @@ describe("stored built-in strings", () => {
     (f) => f.format === "v3" || f.format === "v4",
   )) {
     const id = fixture.id.replace(/^v[34]-/, "")
-    if (!PRESETS.some((p) => p.id === id)) continue
+    const revisions = REVISIONS[id]
+    if (!revisions) continue
+    // Written before any later revision, so they open as rev 1.
+    const preset = revisions.length === 1 ? id : `${id}@1`
     it(`opens ${fixture.id} as its built-in`, () => {
-      expect(arrive({ preset: fixture.encoded }).redirect).toEqual({
-        preset: id,
-      })
+      expect(arrive({ preset: fixture.encoded }).redirect).toEqual({ preset })
     })
   }
 })

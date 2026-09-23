@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/field";
 
 const switchVariants = tv({
   slots: {
-    root: "flex items-center has-data-description:items-start gap-2",
+    root: "flex items-center has-data-description:items-start gap-3",
     control:
       "relative flex items-center gap-2 rounded-full focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-lg transition-colors duration-75 has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
     indicator:

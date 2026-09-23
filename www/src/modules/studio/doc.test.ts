@@ -35,19 +35,19 @@ function legacy(diff: object) {
 
 const ORIGIN_1 = { id: "origin", rev: 1 }
 const LINEAR = PRESETS.find((p) => p.id === "linear") as (typeof PRESETS)[0]
-const LINEAR_1 = { id: "linear", rev: 1 }
-const edited = docSearch({ ...LINEAR.state, radiusPx: 4 }, LINEAR_1)
+const LINEAR_2 = { id: "linear", rev: 2 }
+const edited = docSearch({ ...LINEAR.state, radiusPx: 4 }, LINEAR_2)
 
 describe("studio document", () => {
   it("writes a pristine built-in by its id and pins edits to its revision", () => {
-    expect(docSearch(LINEAR.state, LINEAR_1)).toEqual({ preset: "linear" })
+    expect(docSearch(LINEAR.state, LINEAR_2)).toEqual({ preset: "linear" })
     expect(edited).toEqual({
-      preset: "linear@1",
+      preset: "linear@2",
       d: `v5.${encodeRaw({ radiusPx: 4 })}`,
     })
     const doc = readDoc(edited)
     expect(doc).toMatchObject({
-      base: LINEAR_1,
+      base: LINEAR_2,
       baseName: "Linear",
       baseState: LINEAR.state,
       modified: true,
@@ -58,7 +58,7 @@ describe("studio document", () => {
   it("stores params as one query and reads blobs back as legacy", () => {
     const search = { ...edited, name: "Acme Co", system: "k3f9" }
     const query = docQuery(search)
-    expect(query).toBe(`preset=linear@1&d=${edited.d}&name=Acme+Co&system=k3f9`)
+    expect(query).toBe(`preset=linear@2&d=${edited.d}&name=Acme+Co&system=k3f9`)
     expect(parseStored(query)).toEqual(search)
     expect(parseStored("q1YqUbI")).toEqual({ preset: "q1YqUbI" })
   })
@@ -79,7 +79,8 @@ describe("studio document", () => {
   it("reads a saved record's design canonically, blobs included", () => {
     const { blob, state } = legacy({ brand: "#ef4444" })
     expect(storedDesign(blob)).toEqual(docSearch(state, ORIGIN_1))
-    expect(storedDesign("preset=linear@1")).toEqual({ preset: "linear" })
+    expect(storedDesign("preset=linear@2")).toEqual({ preset: "linear" })
+    expect(storedDesign("preset=linear@1")).toEqual({ preset: "linear@1" })
     expect(storedDesign("preset=nope")).toBeUndefined()
   })
 })
@@ -87,6 +88,7 @@ describe("studio document", () => {
 describe("arriving at /studio", () => {
   it("renders a canonical document as is", () => {
     expect(arrive({ preset: "linear" })).toEqual({})
+    expect(arrive({ preset: "linear@1" })).toEqual({})
     expect(arrive({ ...edited, name: "Acme" })).toEqual({})
   })
 
@@ -129,11 +131,11 @@ describe("arriving at /studio", () => {
   })
 
   it("drops a pinned revision that is the latest and a no-op diff", () => {
-    expect(arrive({ preset: "linear@1" })).toEqual({
+    expect(arrive({ preset: "linear@2" })).toEqual({
       redirect: { preset: "linear" },
     })
     const d = `v5.${encodeRaw({ radiusPx: 4, brand: LINEAR.state.brand })}`
-    expect(arrive({ preset: "linear@1", d })).toEqual({ redirect: edited })
+    expect(arrive({ preset: "linear@2", d })).toEqual({ redirect: edited })
   })
 
   it("opens the base preset when a code is broken", () => {
@@ -184,7 +186,7 @@ describe("ownership", () => {
 
   it("carries ownership across edits unless a document is adopted", () => {
     const from = { preset: "stripe@1", d: `v5.${encodeRaw({ radiusPx: 2 })}` }
-    const next = { ...encodeDesign({ ...DEFAULTS, radiusPx: 3 }, LINEAR_1) }
+    const next = { ...encodeDesign({ ...DEFAULTS, radiusPx: 3 }, LINEAR_2) }
     expect(handOver(from, false, next, false)).toBe(false)
     expect(ownerOf(next, { working: docQuery(next), saved: false })).toBe(false)
     const adopted = { preset: "airbnb" }

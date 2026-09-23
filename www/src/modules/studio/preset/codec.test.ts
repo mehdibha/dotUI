@@ -2,12 +2,12 @@ import { deflateRaw, inflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import { REVISIONS } from "@/modules/presets/built-ins"
+import { loadRevision, REVISIONS } from "@/modules/presets/built-ins"
 import { PRESETS } from "@/modules/presets/catalog"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
-import { decode, encodeDesign, encodeQuery, readParams } from "./codec"
+import { decode, encodeDesign, encodeQuery, readParams, stateOf } from "./codec"
 import { currentBaseline, same } from "./migrations"
 
 /** An arbitrary payload through the codec's deflate+base64url pipeline — for
@@ -187,29 +187,30 @@ describe("preset codec — legacy migration", () => {
 
 const LINEAR = PRESETS.find((p) => p.id === "linear") as (typeof PRESETS)[0]
 const LINEAR_1 = { id: "linear", rev: 1 }
+const LINEAR_2 = { id: "linear", rev: 2 }
 
 const params = (query: string) => readParams(new URLSearchParams(query))
 
 describe("preset codec — grammar", () => {
   it("names a pristine built-in by its id, pinned to its revision", () => {
     expect(encodeQuery(DEFAULTS)).toBe("preset=origin@1")
-    expect(encodeQuery(LINEAR.state, { base: LINEAR_1 })).toBe(
-      "preset=linear@1",
+    expect(encodeQuery(LINEAR.state, { base: LINEAR_2 })).toBe(
+      "preset=linear@2",
     )
-    for (const preset of ["linear", "linear@1"])
+    for (const preset of ["linear", "linear@2"])
       expect(decode({ preset })).toEqual({
         ok: true,
-        base: LINEAR_1,
+        base: LINEAR_2,
         state: LINEAR.state,
         dropped: [],
       })
   })
 
   it("names a pristine latest built-in by its bare id in the studio", () => {
-    expect(encodeDesign(LINEAR.state, LINEAR_1)).toEqual({ preset: "linear" })
+    expect(encodeDesign(LINEAR.state, LINEAR_2)).toEqual({ preset: "linear" })
     const state = { ...LINEAR.state, radiusPx: 4 }
-    expect(encodeDesign(state, LINEAR_1)).toEqual({
-      preset: "linear@1",
+    expect(encodeDesign(state, LINEAR_2)).toEqual({
+      preset: "linear@2",
       d: `v5.${encodeRaw({ radiusPx: 4 })}`,
     })
   })
@@ -225,13 +226,13 @@ describe("preset codec — grammar", () => {
 
   it("carries the diff against the base revision in a v5 code", () => {
     const state = { ...LINEAR.state, radiusPx: 4, brand: "#ef4444" }
-    const query = encodeQuery(state, { base: LINEAR_1 })
+    const query = encodeQuery(state, { base: LINEAR_2 })
     expect(query).toBe(
-      `preset=linear@1&d=v5.${encodeRaw({ brand: "#ef4444", radiusPx: 4 })}`,
+      `preset=linear@2&d=v5.${encodeRaw({ brand: "#ef4444", radiusPx: 4 })}`,
     )
     expect(decode(params(query))).toEqual({
       ok: true,
-      base: LINEAR_1,
+      base: LINEAR_2,
       state,
       dropped: [],
     })
@@ -251,49 +252,58 @@ describe("preset codec — grammar", () => {
             : value,
         ]),
     ) as StudioState
-    const query = encodeQuery(state, { base: LINEAR_1 })
-    expect(encodeQuery(reordered, { base: LINEAR_1 })).toBe(query)
+    const query = encodeQuery(state, { base: LINEAR_2 })
+    expect(encodeQuery(reordered, { base: LINEAR_2 })).toBe(query)
     const decoded = decode(params(query))
     if (!decoded.ok) throw new Error(decoded.reason)
     expect(encodeQuery(decoded.state, decoded)).toBe(query)
   })
 
   it("keeps a diff on the revision it was written against", () => {
-    const revisions = REVISIONS.linear ?? []
-    const [first] = revisions
-    if (!first) throw new Error("no linear@1")
-    const query = encodeQuery(
-      { ...LINEAR.state, radiusPx: 4 },
-      { base: LINEAR_1 },
-    )
-    revisions.push({
-      rev: 2,
-      version: first.version,
-      state: { ...first.state, radiusPx: 20, brand: "#10b981" },
+    const rev1 = stateOf(LINEAR_1)
+    expect(rev1).not.toEqual(LINEAR.state)
+    const query = encodeQuery({ ...rev1, radiusPx: 4 }, { base: LINEAR_1 })
+    expect(query).toBe(`preset=linear@1&d=v5.${encodeRaw({ radiusPx: 4 })}`)
+    expect(decode(params(query))).toEqual({
+      ok: true,
+      base: LINEAR_1,
+      state: { ...rev1, radiusPx: 4 },
+      dropped: [],
     })
-    try {
-      const pinned = decode(params(query))
-      if (!pinned.ok) throw new Error(pinned.reason)
-      expect(pinned.base).toEqual(LINEAR_1)
-      expect(pinned.state).toEqual({ ...LINEAR.state, radiusPx: 4 })
-      const pristine = decode({ preset: "linear" })
-      if (!pristine.ok) throw new Error(pristine.reason)
-      expect(pristine.base).toEqual({ id: "linear", rev: 2 })
-      expect(pristine.state.brand).toBe("#10b981")
-      // A pristine older revision stays pinned: its bare id means the latest.
-      expect(encodeDesign(LINEAR.state, LINEAR_1)).toEqual({
-        preset: "linear@1",
-      })
-    } finally {
-      revisions.pop()
-    }
+    expect(decode({ preset: "linear" })).toMatchObject({
+      base: LINEAR_2,
+      state: LINEAR.state,
+    })
+    // A pristine older revision stays pinned: its bare id means the latest.
+    expect(encodeDesign(rev1, LINEAR_1)).toEqual({ preset: "linear@1" })
+  })
+
+  it("reads every published revision exactly as stored", () => {
+    for (const [id, revisions] of Object.entries(REVISIONS))
+      for (const revision of revisions) {
+        const base = { id, rev: revision.rev }
+        const { state } = loadRevision(revision)
+        expect(decode({ preset: `${id}@${revision.rev}` })).toEqual({
+          ok: true,
+          base,
+          state,
+          dropped: [],
+        })
+        const d = `v5.${encodeRaw({ radiusPx: 3 })}`
+        expect(decode({ preset: `${id}@${revision.rev}`, d })).toEqual({
+          ok: true,
+          base,
+          state: { ...state, radiusPx: 3 },
+          dropped: [],
+        })
+      }
   })
 
   it("drops invalid values to the base revision's", () => {
     const d = `v5.${encodeRaw({ radiusPx: "big", brand: "#ef4444", nope: 1 })}`
-    expect(decode({ preset: "linear@1", d })).toEqual({
+    expect(decode({ preset: "linear@2", d })).toEqual({
       ok: true,
-      base: LINEAR_1,
+      base: LINEAR_2,
       state: { ...LINEAR.state, brand: "#ef4444" },
       dropped: ["radiusPx", "nope"],
     })

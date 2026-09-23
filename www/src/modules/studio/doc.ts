@@ -11,14 +11,7 @@
 import { BUILT_INS } from "@/modules/presets/built-ins"
 
 import type { StudioState } from "./axes"
-import {
-  decode,
-  encodeDesign,
-  isRef,
-  latest,
-  ORIGIN_ID,
-  stateOf,
-} from "./preset/codec"
+import { decode, encodeDesign, isRef, ORIGIN_ID, stateOf } from "./preset/codec"
 import type { DecodeResult, PresetRef } from "./preset/codec"
 
 export interface DocSearch {
@@ -95,12 +88,13 @@ export function docSearch(
 const nameOf = (id: string) =>
   BUILT_INS.find((preset) => preset.id === id)?.name ?? id
 
-/** A legacy state that is exactly a built-in reads as that built-in. */
+/** A legacy state that is exactly a built-in revision reads as that one. */
 function rebase(state: StudioState, base: PresetRef): PresetRef {
-  for (const { id } of BUILT_INS) {
-    const ref = latest(id)
-    if (!encodeDesign(state, ref).d) return ref
-  }
+  for (const { id, revisions } of BUILT_INS)
+    for (const { rev } of [...revisions].reverse()) {
+      const ref = { id, rev }
+      if (!encodeDesign(state, ref).d) return ref
+    }
   return base
 }
 
