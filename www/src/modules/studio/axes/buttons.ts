@@ -2,7 +2,10 @@
    Button groups and Toggles sections reuse it. Style is a family look
    reshaping every fill variant at once; the variant enum stays API.
 
-   Engine: `style`, `hover` and `press` are enum params on both `button` and
+   Secondary: outlined on a quiet fill (shadcn, Geist, Primer) or a borderless
+   gray fill (iOS, Material tonal, Radix soft).
+
+   Engine: `secondary`, `style`, `hover` and `press` are enum params on both `button` and
    `toggle-button` (a synced group — one axis writes both); radius rides on
    the shared `--studio-btn-radius` var. */
 
@@ -11,6 +14,7 @@ import { pick } from "./pick"
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
+  buttonSecondary: "outline",
   buttonRadius: "auto",
   buttonHover: "dim",
   buttonPress: "dim",
@@ -23,6 +27,11 @@ export const STYLE_OPTIONS = [
   { value: "outline", label: "Outline" },
   { value: "raised", label: "Raised" },
   { value: "elevated", label: "Elevated" },
+]
+
+export const SECONDARY_OPTIONS = [
+  { value: "outline", label: "Outline" },
+  { value: "filled", label: "Filled" },
 ]
 
 export const RADIUS_OPTIONS = [
@@ -57,6 +66,7 @@ const RADIUS_TOKENS: Record<string, string> = {
 
 export function resolveButtons(state: StudioState): Resolved {
   const selection = {
+    secondary: pick(SECONDARY_OPTIONS, state.buttonSecondary, "outline"),
     style: pick(STYLE_OPTIONS, state.buttonStyle, "flat"),
     hover: pick(HOVER_OPTIONS, state.buttonHover, "dim"),
     press: pick(PRESS_OPTIONS, state.buttonPress, "dim"),

@@ -116,6 +116,10 @@ export const PRESETS: Preset[] = [
       surfaceMaterial: "glass",
       // iOS grouped: cards lift off a canvas one rung darker.
       surfaceCanvas: "tinted",
+      // Gray fills without borders, lifted two rungs in dark (#343434 bar
+      // buttons on the #151515 page).
+      surfaceFills: "strong",
+      buttonSecondary: "filled",
       listTint: "selection",
       menuScale: "large",
       mobileDialogs: "sheet",
@@ -189,6 +193,10 @@ export const PRESETS: Preset[] = [
       modes: modes({ dark: 0 }),
       badgeShape: "pill",
       surfaceCanvas: "tinted",
+      // Gray fills without borders, lifted two rungs in dark (#343434 bar
+      // buttons on the #151515 page).
+      surfaceFills: "strong",
+      buttonSecondary: "filled",
     },
   }),
   definePreset({

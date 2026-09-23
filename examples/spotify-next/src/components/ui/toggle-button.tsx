@@ -14,7 +14,7 @@ const toggleButtonVariants = tv({
       primary:
         "bg-primary text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected)) hover:bg-primary-hover pressed:bg-primary-active",
       secondary:
-        "border border-border-control bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) hover:bg-neutral-hover pressed:bg-neutral-active",
+        "border bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border-border-control hover:bg-neutral-hover pressed:bg-neutral-active",
       quiet:
         "bg-transparent text-fg disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) hover:bg-inverse/10 pressed:bg-inverse/20",
     },

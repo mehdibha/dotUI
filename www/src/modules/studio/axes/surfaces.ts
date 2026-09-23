@@ -16,6 +16,10 @@
      Stripe, Apple); dark lifts the same surfaces a full rung instead.
    - Modes: each mode's background L* — how white the light page is, how
      black the dark one (OLED at 0). The color engine reads it.
+   - Fills: how far control and field fills sit from the page. Subtle is
+     the registry's quiet wash; strong steps them up the ramp (a full two
+     rungs in dark) — iOS gray fills, Material tonal containers — so
+     borderless controls still read as shapes.
    - Material: the popover tier (menus, pickers, popovers) solid, or as
      glass — shadcn's recipe, the surface at 70% over a blurred, saturated
      backdrop. Modals and drawers stay solid either way; they sit over a
@@ -31,6 +35,8 @@
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
+import type { TokenOverrides } from "@/registry/theme"
+
 import { DEFAULT_MODES } from "./color"
 import type { Resolved, StudioState } from "./index"
 
@@ -39,6 +45,7 @@ export const SURFACE_DEFAULTS = {
   surfaceDepth: "subtle",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
+  surfaceFills: "subtle",
   modes: DEFAULT_MODES,
 }
 
@@ -60,6 +67,28 @@ export const CANVAS_OPTIONS = [
   { value: "same", label: "Plain" },
   { value: "tinted", label: "Tinted" },
 ]
+
+export const FILL_OPTIONS = [
+  { value: "subtle", label: "Subtle" },
+  { value: "strong", label: "Strong" },
+]
+
+const STRONG_FILLS: TokenOverrides = {
+  "color-neutral": {
+    light: { palette: "neutral", job: "ui-hover" },
+    dark: { palette: "neutral", job: "ui-active" },
+  },
+  "color-neutral-hover": {
+    light: { palette: "neutral", job: "ui-active" },
+    dark: { palette: "neutral", job: "border-subtle" },
+  },
+  "color-neutral-active": {
+    light: { palette: "neutral", job: "border-subtle" },
+    dark: { palette: "neutral", job: "border-interactive" },
+  },
+  "color-field": { dark: { palette: "neutral", job: "ui-hover" } },
+  "color-muted": { dark: { palette: "neutral", job: "ui-hover" } },
+}
 
 export const MATERIAL_OPTIONS = [
   { value: "solid", label: "Solid" },
@@ -389,5 +418,7 @@ export function resolveSurfaces(state: StudioState): Resolved {
   for (const [name, value] of Object.entries(surfaceTokens(state))) {
     if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
   }
-  return { tokens }
+  return state.surfaceFills === "strong"
+    ? { tokens, color: { overrides: STRONG_FILLS } }
+    : { tokens }
 }
