@@ -17,15 +17,21 @@ const MAX_HEIGHT = 2000
 const JPEG_QUALITY = 70
 const LAUNCH_TIMEOUT = 30_000
 const PAGE_TIMEOUT = 25_000
+/** Below PAGE_TIMEOUT, so a frozen browser fails the call instead of hanging
+ *  it for puppeteer's default 180s. */
+const PROTOCOL_TIMEOUT = 20_000
 const MAX_PAGES = 2
 
 /** Over a pipe, Chrome exits with this process, even when it is killed. */
-const pipe = true
+const options = { pipe: true, protocolTimeout: PROTOCOL_TIMEOUT }
 
 async function launch(): Promise<Browser> {
   const puppeteer = await import("puppeteer-core")
   if (process.env.CHROME_PATH)
-    return puppeteer.launch({ executablePath: process.env.CHROME_PATH, pipe })
+    return puppeteer.launch({
+      ...options,
+      executablePath: process.env.CHROME_PATH,
+    })
   if (process.platform === "linux") {
     const { default: chromium } = await import("@sparticuz/chromium-min")
     return puppeteer.launch({
@@ -35,7 +41,7 @@ async function launch(): Promise<Browser> {
       }),
       executablePath: await chromium.executablePath(CHROMIUM_PACK_URL),
       headless: "shell",
-      pipe,
+      ...options,
     })
   }
   // Local development: the repo's full puppeteer (a root devDependency) and
@@ -44,23 +50,48 @@ async function launch(): Promise<Browser> {
   const { default: full } = (await import(/* @vite-ignore */ local)) as {
     default: typeof puppeteer
   }
-  return full.launch({ pipe })
+  return full.launch(options)
 }
 
 let browser: Promise<Browser> | undefined
 
 function getBrowser() {
-  browser ??= withTimeout(launch(), LAUNCH_TIMEOUT, "Launching the browser")
+  if (browser) return browser
+  const launching: Promise<Browser> = withTimeout(
+    launch(),
+    LAUNCH_TIMEOUT,
+    "Launching the browser",
+  )
     .then((b) => {
-      b.on("disconnected", () => (browser = undefined))
+      b.on("disconnected", () => forget(launching))
       return b
     })
     .catch((error: unknown) => {
-      browser = undefined
+      forget(launching)
       throw error
     })
-  return browser
+  return (browser = launching)
 }
+
+/** Only if it is still the current one: a relaunch may have replaced it. */
+function forget(which: Promise<Browser>) {
+  if (browser === which) browser = undefined
+}
+
+/** A timed-out browser may be wedged: drop it so the next call relaunches. */
+function discard(which: Promise<Browser>, b: Browser) {
+  forget(which)
+  void b.close().catch(() => {})
+  b.process()?.kill("SIGKILL")
+}
+
+class TimedOut extends ToolError {}
+
+const isTimeout = (error: unknown) =>
+  error instanceof TimedOut ||
+  (error instanceof Error &&
+    (error.name === "TimeoutError" ||
+      (error.name === "ProtocolError" && error.message.includes("timed out"))))
 
 let active = 0
 const queue: (() => void)[] = []
@@ -82,7 +113,7 @@ function withTimeout<T>(promise: Promise<T>, ms: number, what: string) {
     promise,
     new Promise<never>((_, reject) => {
       timer = setTimeout(
-        () => reject(new ToolError(`${what} timed out after ${ms / 1000}s.`)),
+        () => reject(new TimedOut(`${what} timed out after ${ms / 1000}s.`)),
         ms,
       )
     }),
@@ -219,29 +250,30 @@ async function capture(page: Page, url: string, section?: string) {
 }
 
 export const screenshot: Screenshotter = async ({ url, section }) => {
-  let browser: Browser
+  const launching = getBrowser()
+  let b: Browser
   try {
-    browser = await getBrowser()
+    b = await launching
   } catch (error) {
     throw new ToolError(`render is unavailable here: ${message(error)}`)
   }
   const release = await acquire()
-  const page = await browser.newPage().catch((error: unknown) => {
-    release()
-    throw new ToolError(`render is unavailable here: ${message(error)}`)
-  })
+  const render = async () => {
+    const page = await b.newPage()
+    try {
+      return await capture(page, url, section)
+    } finally {
+      void page.close().catch(() => {})
+    }
+  }
   try {
-    return await withTimeout(
-      capture(page, url, section),
-      PAGE_TIMEOUT,
-      `Rendering ${url}`,
-    )
+    return await withTimeout(render(), PAGE_TIMEOUT, `Rendering ${url}`)
   } catch (error) {
+    if (isTimeout(error)) discard(launching, b)
     if (error instanceof ToolError) throw error
     throw new ToolError(`Rendering ${url} failed: ${message(error)}`)
   } finally {
     release()
-    void page.close().catch(() => {})
   }
 }
 
