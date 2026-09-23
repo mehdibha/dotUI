@@ -134,9 +134,8 @@ describe("preset codec — strings minted before Origin became the default", () 
 
   it("keeps their bytes", () => {
     expect(encodePreset(decodePreset(PINNED_ORIGIN))).toBe(PINNED_ORIGIN)
-    expect(encodeState(PRESETS.find((p) => p.id === "spotify")!.state)).toBe(
-      SPOTIFY,
-    )
+    const spotify = PRESETS.find((p) => p.id === "spotify")
+    expect(spotify && encodeState(spotify.state)).toBe(SPOTIFY)
   })
 })
 

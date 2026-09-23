@@ -43,10 +43,6 @@ function canon(state: string): string {
   return encodePreset(decodePreset(state)) ?? ""
 }
 
-/* Origin is the panel's baseline: what first-time users start on, what the
-   global reset returns to, and what the modified dot diffs against. */
-const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
-
 export function StudioPanel({
   className,
   galleryReady = true,
@@ -175,7 +171,8 @@ export function StudioPanel({
   const system: PanelSystem = {
     name: displayName,
     dirty: isDirty,
-    modified: currentState !== ORIGIN_CANON,
+    // Origin is the defaults, which encode to nothing.
+    modified: currentState !== "",
     onReset: () => guarded(() => pickPreset(ORIGIN.id), true),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
@@ -218,7 +215,7 @@ export function StudioPanel({
       <CreatePresetDialog
         isOpen={createOpen}
         onOpenChange={setCreateOpen}
-        onCreate={(name) => guarded(() => createPreset(name, ORIGIN_CANON))}
+        onCreate={(name) => guarded(() => createPreset(name, ""))}
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}

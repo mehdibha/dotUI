@@ -67,9 +67,9 @@ export interface Resolved {
   /** Registry param selections: component → param → value. */
   params?: Record<string, Record<string, string>>
   density?: Density
-  /** A slice of the recipe — a chapter other than Color contributes token
-   *  overrides, border targets or a control's fill scope;
-   *  `resolveDesignSystem` completes it. */
+  /** A slice of the recipe — Color contributes the full recipe; another
+   *  chapter adds token overrides, border targets or a control's fill scope
+   *  on top. */
   color?: Partial<ColorConfig>
   icons?: IconLibraryName
 }
