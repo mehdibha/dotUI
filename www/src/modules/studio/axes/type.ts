@@ -68,10 +68,12 @@ export const TYPE_SPEC = {
         "Material 3 defaults to Roboto, shadcn/ui's builder to Inter, " +
         "dotUI to Geist. " +
         "Pick a sans with a large x-height for dense UIs; a serif body " +
-        "suits reading-first products, not dashboards. The font's figures " +
-        "don't align columns on their own: tabular-nums is only set on a " +
-        "few readouts (slider and progress values, OTP and time-picker " +
-        "digits), not on tables, number fields or body text.",
+        "suits reading-first products, not dashboards. Whether digits align " +
+        "depends on the font's default figures (Roboto and Nunito default " +
+        "to tabular; Inter, Geist and Public Sans are proportional). dotUI " +
+        "sets tabular-nums only on a few readouts (slider and progress " +
+        "values, OTP and time-picker digits), not on tables, number fields " +
+        "or body text.",
     },
     monoFont: {
       label: "Mono",

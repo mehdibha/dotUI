@@ -247,7 +247,8 @@ export const COLOR_SPEC = {
     "radioColor, switchColor, sliderColor, tabsColor, linkColor, " +
     "focusColor — each stored on its own; the studio's Primary control " +
     "reads them as one value (or mixed) and sets them together. The info " +
-    "palette has no seed: it is always the engine's blue (#4862ff).",
+    "palette has no seed here: it is always generated from the engine's " +
+    "blue (#4862ff), scaled by Vividness like the status palettes.",
   axes: {
     brand: {
       label: "Brand",
@@ -270,10 +271,12 @@ export const COLOR_SPEC = {
         "louder seed. A near-gray seed yields gray ramps and an untinted " +
         "neutral. Status hues don't move away from the brand: a green " +
         "brand lands on top of success, a red one on danger — reseed the " +
-        "status to separate them. For a black-and-white system don't seed a near-black " +
-        "brand: keep the Primary control on Neutral (near-black in light, " +
-        "near-white in dark) and give Brand the hue links, focus and " +
-        "selection highlights should carry.",
+        "status to separate them. For a black-and-white system don't seed a " +
+        "near-black brand: leave Buttons and the other solid leaves " +
+        "(Checkbox, Radio, Switch, Slider, Tabs) on Neutral, their default, " +
+        "and give Brand the hue that links, the focus ring and selection " +
+        "highlights should carry. Setting the Primary control to Neutral " +
+        "moves links and focus off the brand too.",
     },
     buttonColor: {
       label: PRIMARY_LEAF_LABELS.buttonColor,
@@ -393,8 +396,8 @@ export const COLOR_SPEC = {
       description:
         "Pins the brand's solid step to the exact seed instead of fitting " +
         "its lightness and chroma to the ramp — in both modes, since the " +
-        "solid step is shared across them. Hover, border and text steps " +
-        "still come from the ramp. The label on it can then miss its 3:1 / " +
+        "solid step is shared across them. Hover shifts from the pinned " +
+        "color; border and text steps still come from the ramp. The label on it can then miss its 3:1 / " +
         "Lc 60 target, and nothing here warns: check it yourself.",
       value: { type: "boolean" },
       guidance:
