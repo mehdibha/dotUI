@@ -59,7 +59,7 @@ export interface EmitThemeInput {
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
   preset: PublishPreset
-  /** Encoded preset string — gets put in `config.registries.@dotui` as `?preset=…`. */
+  /** Canonical encoded preset (never the raw param) for `config.registries.@dotui`. */
   encodedPreset?: string
   /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
   registryRoot: string

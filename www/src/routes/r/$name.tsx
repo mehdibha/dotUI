@@ -43,10 +43,12 @@ export const Route = createFileRoute("/r/$name")({
         }
 
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
+        const { preset, encodedPreset } = await resolveRequestPreset(
+          url.searchParams.get("preset") ?? undefined,
+        )
         const item = await publishItem({
           name,
-          preset: await resolveRequestPreset(encodedPreset),
+          preset,
           origin: `${url.protocol}//${url.host}`,
           encodedPreset,
         })

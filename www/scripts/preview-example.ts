@@ -77,8 +77,9 @@ async function materialize(example: string): Promise<void> {
   const source = PRESETS.find((p) => p.id === presetId)
   if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
   const cwd = path.join(EXAMPLES_DIR, example)
-  const encodedPreset = encodeState(source.state)
-  const preset = await resolveRequestPreset(encodedPreset)
+  const { preset, encodedPreset } = await resolveRequestPreset(
+    encodeState(source.state),
+  )
 
   let files = 0
   for (const name of PUBLISHABLE_NAMES) {

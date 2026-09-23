@@ -52,8 +52,9 @@ export const Route = createFileRoute("/r/v0")({
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const preset = await resolveRequestPreset(encodedPreset)
+        const { preset } = await resolveRequestPreset(
+          url.searchParams.get("preset") ?? undefined,
+        )
 
         const items = await Promise.all(
           Object.values(publishables).map(async (loader) => {
