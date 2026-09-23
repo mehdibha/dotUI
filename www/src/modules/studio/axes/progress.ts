@@ -2,7 +2,8 @@
    Material 3's cut track (gap + stop dot).
 
    Engine: three enum params on `progress-bar` (`track`, `indeterminate`,
-   `gap`). */
+   `gap`). The ends read `--studio-progress-radius`: pill, or square when
+   Shape's Controls role is None. */
 
 import type { Resolved, StudioState } from "./index"
 import type { ChapterSpec } from "./spec"
@@ -51,6 +52,10 @@ const pick = (options: { value: string }[], value: string, fallback: string) =>
 
 export function resolveProgress(state: StudioState): Resolved {
   return {
+    tokens:
+      state.roleControl === "none"
+        ? { "--studio-progress-radius": "0" }
+        : undefined,
     params: {
       "progress-bar": {
         track: pick(TRACK_OPTIONS, state.progressTrack, "thin"),
@@ -70,7 +75,8 @@ export const PROGRESS_SPEC = {
   description:
     "The linear progress bar: its thickness, how it moves when the amount " +
     "is unknown, and Material 3's split track. The fill is the primary " +
-    "color; ends are always fully rounded.",
+    "color. Its ends follow Shape: pill-shaped, or square when the " +
+    "Controls role is None.",
   axes: {
     progressTrack: {
       label: "Track",
@@ -97,7 +103,7 @@ export const PROGRESS_SPEC = {
       description:
         "Material 3's split track: a 4px gap on each side of the fill " +
         "separates it from the remaining track, and a 4px stop dot marks " +
-        "the end.",
+        "the end of determinate bars.",
       value: { type: "boolean" },
       guidance:
         "Material 3 only (4dp gap, 4dp stop indicator). Turn it on for " +

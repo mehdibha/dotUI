@@ -37,6 +37,7 @@ describe("shape axis", () => {
       "--studio-radius-item": "0",
       "--studio-radius-surface": "0",
       "--studio-radius-panel": "0",
+      "--studio-progress-radius": "0",
     })
   })
 
