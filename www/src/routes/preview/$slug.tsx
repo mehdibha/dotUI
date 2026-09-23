@@ -7,8 +7,8 @@ export const Route = createFileRoute("/preview/$slug")({
     search: Record<string, unknown>,
   ): { preset?: string; mode?: "light" | "dark" } => ({
     preset: typeof search.preset === "string" ? search.preset : undefined,
-    // Initial display mode, baked in by the /create parent (read directly from
-    // location by usePreviewForcedTheme; declared so the router keeps it).
+    // Initial display mode (read directly from location by
+    // usePreviewForcedTheme; declared so the router keeps it).
     mode:
       search.mode === "light" || search.mode === "dark"
         ? search.mode
