@@ -13,7 +13,8 @@
      elevation move together. Shadow-led systems (Fluent, Material,
      Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
    - Canvas: white-on-white, or a tinted page white surfaces lift off (Vercel,
-     Stripe, Apple); dark lifts the same surfaces a full rung instead.
+     Stripe, Apple); dark lifts the same surfaces a rung instead, cards only
+     to the mid rung below the neutral fills.
    - Modes: each mode's background L* — how white the light page is, how
      black the dark one (OLED at 0). The color engine reads it.
    - Material: the popover tier (menus, pickers, popovers) solid, or as
@@ -126,8 +127,10 @@ export const CANVAS_OPTIONS = [
     label: "Tinted",
     description:
       "A light-gray page with cards on the whitest step (Tonal keeps its " +
-      "own card tone). In dark the page stays put and cards and floating " +
-      "layers lift one rung further than on Plain.",
+      "own card tone). In dark the page stays put, cards sit on the rung " +
+      "between the plain card and the neutral fills (so fields and muted " +
+      "fills still read on them), and floating layers lift one rung " +
+      "further than on Plain.",
     seenIn: ["Apple HIG"],
   },
 ]
@@ -215,9 +218,9 @@ const EDGE_FAINT = [
 ]
 
 /* Dark elevation ladders. Step 0 is the registry default (theme.css: card =
-   50, popover = a rung between 50 and 100); cards cap a step below floating
-   surfaces so the ladder never flattens. */
-const CARD_ELEVATION = [step("50"), mix("50", "100", 50), step("100")]
+   50, popover = a rung between 50 and 100). Cards stop at the mid rung: 100
+   is the neutral fill (muted, field, soft badges), which would vanish on it. */
+const CARD_ELEVATION = [step("50"), mix("50", "100", 50)]
 const OVERLAY_ELEVATION = [
   mix("50", "100", 50),
   step("100"),
@@ -397,13 +400,9 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
       dark,
       state.surfaceStrategy === "shadow",
     )
-    // Light lifts via the canvas tint instead, so elevation is dark-only;
-    // a tinted canvas lifts cards a full rung there.
+    // Light lifts via the canvas tint instead, so elevation is dark-only.
     const steps = floating ? OVERLAY_ELEVATION : CARD_ELEVATION
-    const lift = Math.min(
-      floating ? 2 : 1 + (tinted ? 1 : 0),
-      elevation + (tinted ? (floating ? 1 : 2) : 0),
-    )
+    const lift = Math.min(steps.length - 1, elevation + (tinted ? 1 : 0))
     const bg: PerMode<SurfaceColor> =
       tonal !== null
         ? both(mix("50", "100", 100 - tonal))

@@ -289,13 +289,11 @@ describe("check", () => {
     expect(problems).not.toMatch(/primaryColor/)
   })
 
-  test("flags neutral fills that vanish on cards", () => {
+  test("a tinted canvas keeps neutral fills visible on dark cards", () => {
     const { preset } = setAxes(ORIGIN, {
       set: { surfaceCanvas: "tinted" },
     })
-    expect(check(preset).problems.join()).toMatch(
-      /dark: neutral fills .* indistinguishable/,
-    )
+    expect(check(preset).problems.join()).not.toMatch(/neutral fills/)
   })
 
   test("a deliberate Primary fork isn't warned about", () => {

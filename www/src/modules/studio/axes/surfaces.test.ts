@@ -87,18 +87,32 @@ describe("surfaces", () => {
     )
   })
 
-  test("tinted canvas lifts white cards off a gray page, a full rung in dark", () => {
+  test("tinted canvas lifts white cards off a gray page, a rung in dark", () => {
     const tokens = tokensFor({ surfaceCanvas: "tinted" })
     expect(tokens["--color-bg"]).toBe(
       "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), var(--neutral-25))",
     )
     expect(tokens["--color-card"]).toBe(
-      "light-dark(var(--neutral-25), var(--neutral-100))",
+      "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-25), var(--neutral-100))",
     )
     expect(tokens).not.toHaveProperty("--shadow-popover")
+  })
+
+  test("no combination puts a dark card on the neutral fill (neutral 100)", () => {
+    for (const surfaceStrategy of ["hairline", "adaptive", "shadow", "tonal"])
+      for (const surfaceDepth of ["flat", "subtle", "raised", "floating"])
+        for (const surfaceCanvas of ["same", "tinted"]) {
+          const { card } = surfaceRecipe({
+            ...DEFAULTS,
+            surfaceStrategy,
+            surfaceDepth,
+            surfaceCanvas,
+          })
+          expect(card.bg.dark).not.toEqual({ kind: "step", step: "100" })
+        }
   })
 
   test("glass turns the popover tier translucent; solid is the default", () => {
