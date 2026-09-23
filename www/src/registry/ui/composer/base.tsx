@@ -34,6 +34,28 @@ function useComposer() {
   return context
 }
 
+/**
+ * Focus the text area without letting iOS pan the page to reveal it: a
+ * composer pinned to the bottom sits under the keyboard's final position, so
+ * WebKit scrolls the whole page up while the keyboard animates, then the page
+ * snaps back. Focusing while the field is painted far above the viewport (for
+ * this one synchronous call, never rendered) gives WebKit nothing to reveal.
+ * Base UI's drawer keyboard provider uses the same technique.
+ */
+function focusWithoutPan(input: HTMLTextAreaElement) {
+  const { opacity, transform, transition } = input.style
+  input.style.transition = "none"
+  input.style.opacity = "0"
+  input.style.transform = "translateY(-2000px)"
+  try {
+    input.focus({ preventScroll: true })
+  } finally {
+    input.style.opacity = opacity
+    input.style.transform = transform
+    input.style.transition = transition
+  }
+}
+
 // MARK: Separator
 
 interface ComposerProps extends Omit<
@@ -68,6 +90,7 @@ function Composer({
     onChange,
   )
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
+  const touchStart = React.useRef<{ x: number; y: number } | null>(null)
   const isEmpty = value.trim() === ""
 
   const submit = () => {
@@ -98,10 +121,32 @@ function Composer({
           submit()
         }}
         onPointerDown={(event) => {
+          if (event.pointerType !== "mouse") return
           const target = event.target as HTMLElement
           if (target.closest("button,a,input,textarea,[role='button']")) return
           event.preventDefault()
           textAreaRef.current?.focus()
+        }}
+        onTouchStart={(event) => {
+          const touch = event.touches[0]
+          touchStart.current = touch
+            ? { x: touch.clientX, y: touch.clientY }
+            : null
+        }}
+        onTouchEnd={(event) => {
+          const input = textAreaRef.current
+          const touch = event.changedTouches[0]
+          const start = touchStart.current
+          touchStart.current = null
+          if (!input || !touch || !start || isDisabled) return
+          if (Math.hypot(touch.clientX - start.x, touch.clientY - start.y) > 10)
+            return
+          const target = event.target as HTMLElement
+          if (target.closest("button,a,input,[role='button']")) return
+          // Already focused: let the tap place the caret.
+          if (document.activeElement === input) return
+          event.preventDefault()
+          focusWithoutPan(input)
         }}
         {...props}
       >
