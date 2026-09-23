@@ -40,6 +40,17 @@ describe("historical preset strings", () => {
   }
 })
 
+describe("v3 built-ins", () => {
+  // #766 re-encoded every built-in by hand; the migration must agree.
+  for (const v4 of fixtures.filter((f) => f.format === "v4")) {
+    const id = v4.id.replace("v4-", "")
+    it(`migrates ${id} onto its v4 encoding`, () => {
+      const v3 = fixtures.find((f) => f.id === `v3-${id}`)
+      expect(v3 && decode(v3.encoded)).toEqual(decode(v4.encoded))
+    })
+  }
+})
+
 describe("built-in presets", () => {
   for (const preset of PRESETS) {
     it(`resolves ${preset.id}`, () => {

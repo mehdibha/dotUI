@@ -1,0 +1,512 @@
+{
+  "version": 4,
+  "schema": {
+    "brand": {
+      "kind": "color"
+    },
+    "buttonColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "selectionColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "neutralHue": {
+      "kind": "number",
+      "min": 0,
+      "max": 360,
+      "nullable": true
+    },
+    "successSeed": {
+      "kind": "color",
+      "auto": true
+    },
+    "warningSeed": {
+      "kind": "color",
+      "auto": true
+    },
+    "dangerSeed": {
+      "kind": "color",
+      "auto": true
+    },
+    "selectionSeed": {
+      "kind": "color",
+      "auto": true
+    },
+    "vividness": {
+      "kind": "number",
+      "min": 0,
+      "max": 2
+    },
+    "neutralTint": {
+      "kind": "number",
+      "min": 0,
+      "max": 2
+    },
+    "preserveSeed": {
+      "kind": "boolean"
+    },
+    "headingFont": {
+      "kind": "font",
+      "auto": true
+    },
+    "bodyFont": {
+      "kind": "font"
+    },
+    "monoFont": {
+      "kind": "font"
+    },
+    "iconLibrary": {
+      "kind": "enum",
+      "options": ["lucide", "phosphor", "tabler", "remix", "hugeicons"]
+    },
+    "iconStroke": {
+      "kind": "number",
+      "min": 1,
+      "max": 3
+    },
+    "iconWeight": {
+      "kind": "enum",
+      "options": ["thin", "light", "regular", "bold", "fill", "duotone"]
+    },
+    "radiusPx": {
+      "kind": "number",
+      "min": 2,
+      "max": 20
+    },
+    "roleControl": {
+      "kind": "enum",
+      "options": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "full"]
+    },
+    "roleItem": {
+      "kind": "enum",
+      "options": [
+        "auto",
+        "none",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "full"
+      ]
+    },
+    "roleSurface": {
+      "kind": "enum",
+      "options": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "full"]
+    },
+    "rolePanel": {
+      "kind": "enum",
+      "options": ["none", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "full"]
+    },
+    "density": {
+      "kind": "enum",
+      "options": ["compact", "default", "comfortable"]
+    },
+    "spacingUnit": {
+      "kind": "number",
+      "min": 3,
+      "max": 6
+    },
+    "surfaceStrategy": {
+      "kind": "enum",
+      "options": ["hairline", "adaptive", "shadow", "tonal"]
+    },
+    "surfaceDepth": {
+      "kind": "enum",
+      "options": ["flat", "subtle", "raised", "floating"]
+    },
+    "surfaceCanvas": {
+      "kind": "enum",
+      "options": ["same", "tinted"]
+    },
+    "surfaceMaterial": {
+      "kind": "enum",
+      "options": ["solid", "glass"]
+    },
+    "modes": {
+      "kind": "modes",
+      "modes": [
+        {
+          "id": "light",
+          "name": "Light",
+          "polarity": "light",
+          "bg": 99
+        },
+        {
+          "id": "dark",
+          "name": "Dark",
+          "polarity": "dark",
+          "bg": 2
+        }
+      ],
+      "bg": {
+        "light": {
+          "min": 90,
+          "max": 100
+        },
+        "dark": {
+          "min": 0,
+          "max": 20
+        }
+      }
+    },
+    "focusColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "focusStyle": {
+      "kind": "enum",
+      "options": ["ring", "halo", "duo"]
+    },
+    "focusWidth": {
+      "kind": "number",
+      "min": 1,
+      "max": 6
+    },
+    "focusOffset": {
+      "kind": "enum",
+      "options": ["inset", "flush", "gap"]
+    },
+    "focusGap": {
+      "kind": "number",
+      "min": 1,
+      "max": 6
+    },
+    "focusHaloStrength": {
+      "kind": "number",
+      "min": 10,
+      "max": 100
+    },
+    "focusInputStyle": {
+      "kind": "enum",
+      "options": ["halo", "ring", "border"]
+    },
+    "focusInputWidth": {
+      "kind": "number",
+      "min": 1,
+      "max": 8
+    },
+    "focusInputStrength": {
+      "kind": "number",
+      "min": 10,
+      "max": 100
+    },
+    "focusInputBorderWidth": {
+      "kind": "number",
+      "min": 1,
+      "max": 4
+    },
+    "cursorControls": {
+      "kind": "enum",
+      "options": ["default", "pointer"]
+    },
+    "cursorPending": {
+      "kind": "enum",
+      "options": ["default", "progress", "wait"]
+    },
+    "cursorDragging": {
+      "kind": "enum",
+      "options": ["inherit", "grab"]
+    },
+    "cursorDisabled": {
+      "kind": "enum",
+      "options": ["default", "not-allowed"]
+    },
+    "selectionUiText": {
+      "kind": "enum",
+      "options": ["none", "selectable"]
+    },
+    "selectionHighlight": {
+      "kind": "enum",
+      "options": ["accent", "browser"]
+    },
+    "scrollbarStyle": {
+      "kind": "enum",
+      "options": ["native", "thin", "overlay"]
+    },
+    "disabledTreatment": {
+      "kind": "enum",
+      "options": ["solid", "fade", "alpha"]
+    },
+    "inputError": {
+      "kind": "enum",
+      "options": ["border", "message", "bar"]
+    },
+    "motionCharacter": {
+      "kind": "enum",
+      "options": ["standard", "emphasized", "spring"]
+    },
+    "motionSpeed": {
+      "kind": "number",
+      "min": 0.5,
+      "max": 2
+    },
+    "motionOverlay": {
+      "kind": "enum",
+      "options": ["none", "fade", "scale", "slide"]
+    },
+    "motionState": {
+      "kind": "enum",
+      "options": ["instant", "quick", "smooth"]
+    },
+    "mobilePickers": {
+      "kind": "enum",
+      "options": ["drawer", "popover"]
+    },
+    "mobileDialogs": {
+      "kind": "enum",
+      "options": ["center", "sheet"]
+    },
+    "chartPalette": {
+      "kind": "enum",
+      "options": ["mono", "vivid", "muted"]
+    },
+    "chartGrid": {
+      "kind": "enum",
+      "options": ["solid", "dashed", "none"]
+    },
+    "linkUnderline": {
+      "kind": "enum",
+      "options": ["always", "hover", "never"]
+    },
+    "linkColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "skeletonAnimation": {
+      "kind": "enum",
+      "options": ["shimmer", "pulse", "none"]
+    },
+    "spinnerStyle": {
+      "kind": "enum",
+      "options": ["ring", "blades", "dots"]
+    },
+    "progressTrack": {
+      "kind": "enum",
+      "options": ["thin", "thick"]
+    },
+    "progressIndeterminate": {
+      "kind": "enum",
+      "options": ["slide", "pulse"]
+    },
+    "progressGap": {
+      "kind": "boolean"
+    },
+    "buttonStyle": {
+      "kind": "enum",
+      "options": ["flat", "outline", "raised", "elevated"]
+    },
+    "buttonRadius": {
+      "kind": "enum",
+      "options": ["auto", "sharp", "round", "pill"]
+    },
+    "buttonHover": {
+      "kind": "enum",
+      "options": ["dim", "lighten", "none"]
+    },
+    "buttonPress": {
+      "kind": "enum",
+      "options": ["dim", "scale", "push", "none"]
+    },
+    "groupSeparator": {
+      "kind": "enum",
+      "options": ["auto", "divider", "none"]
+    },
+    "toggleSelected": {
+      "kind": "enum",
+      "options": ["fill", "chip", "inverse"]
+    },
+    "segmentedSelected": {
+      "kind": "enum",
+      "options": ["raised", "flat", "inverse"]
+    },
+    "segmentedTrack": {
+      "kind": "enum",
+      "options": ["filled", "outline"]
+    },
+    "switchColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "checkboxColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "checkCorner": {
+      "kind": "enum",
+      "options": ["rounded", "square", "circle"]
+    },
+    "radioColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "cardSelected": {
+      "kind": "enum",
+      "options": ["outline", "tint", "outline-tint"]
+    },
+    "cardControl": {
+      "kind": "enum",
+      "options": ["start", "end", "hidden"]
+    },
+    "inputStyle": {
+      "kind": "enum",
+      "options": ["outline", "line", "filled-line-bottom", "filled"]
+    },
+    "inputHover": {
+      "kind": "enum",
+      "options": ["none", "border", "tint"]
+    },
+    "addonLayout": {
+      "kind": "enum",
+      "options": ["inside", "boxed"]
+    },
+    "addonDivider": {
+      "kind": "enum",
+      "options": ["hairline", "none"]
+    },
+    "numberLayout": {
+      "kind": "enum",
+      "options": ["right", "split", "stacked"]
+    },
+    "otpStyle": {
+      "kind": "enum",
+      "options": ["group", "boxes", "underline"]
+    },
+    "pickerCaret": {
+      "kind": "enum",
+      "options": ["chevron", "double"]
+    },
+    "calendarDayShape": {
+      "kind": "enum",
+      "options": ["rounded", "circle", "square"]
+    },
+    "calendarToday": {
+      "kind": "enum",
+      "options": ["none", "ring", "fill", "numeral"]
+    },
+    "calendarWeekdays": {
+      "kind": "enum",
+      "options": ["single", "double", "triple"]
+    },
+    "sliderThumb": {
+      "kind": "enum",
+      "options": ["circle", "outline", "bar"]
+    },
+    "sliderTrack": {
+      "kind": "enum",
+      "options": ["thin", "thick"]
+    },
+    "sliderColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "menuIndicator": {
+      "kind": "enum",
+      "options": ["check-start", "check-end"]
+    },
+    "menuHighlight": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "menuInset": {
+      "kind": "enum",
+      "options": ["inset", "full-bleed"]
+    },
+    "menuLabels": {
+      "kind": "enum",
+      "options": ["sentence", "caps"]
+    },
+    "menuSearch": {
+      "kind": "enum",
+      "options": ["field", "bar", "prompt"]
+    },
+    "menuScale": {
+      "kind": "enum",
+      "options": ["default", "large"]
+    },
+    "dialogBackdrop": {
+      "kind": "enum",
+      "options": ["dim", "blur", "none"]
+    },
+    "dialogPosition": {
+      "kind": "enum",
+      "options": ["center", "top"]
+    },
+    "popoverTip": {
+      "kind": "enum",
+      "options": ["none", "tip"]
+    },
+    "popoverHeader": {
+      "kind": "enum",
+      "options": ["title", "band"]
+    },
+    "tooltipStyle": {
+      "kind": "enum",
+      "options": ["inverted", "surface"]
+    },
+    "tabStyle": {
+      "kind": "enum",
+      "options": ["segmented", "line", "pill", "enclosed"]
+    },
+    "tabsColor": {
+      "kind": "enum",
+      "options": ["neutral", "accent"]
+    },
+    "accordionContainer": {
+      "kind": "enum",
+      "options": ["divided", "boxed", "cards"]
+    },
+    "accordionMarker": {
+      "kind": "enum",
+      "options": ["chevron", "plus"]
+    },
+    "accordionMarkerPosition": {
+      "kind": "enum",
+      "options": ["leading", "trailing"]
+    },
+    "breadcrumbSeparator": {
+      "kind": "enum",
+      "options": ["slash", "chevron"]
+    },
+    "breadcrumbTone": {
+      "kind": "enum",
+      "options": ["accent", "muted"]
+    },
+    "paginationCurrent": {
+      "kind": "enum",
+      "options": ["filled", "outline"]
+    },
+    "badgeStyle": {
+      "kind": "enum",
+      "options": ["solid", "soft", "outline", "soft-outline"]
+    },
+    "badgeShape": {
+      "kind": "enum",
+      "options": ["pill", "rounded"]
+    },
+    "kbdTreatment": {
+      "kind": "enum",
+      "options": ["text", "chip", "keycap"]
+    },
+    "avatarShape": {
+      "kind": "enum",
+      "options": ["circle", "rounded"]
+    },
+    "avatarFallback": {
+      "kind": "enum",
+      "options": ["neutral", "tinted"]
+    },
+    "tableSeparation": {
+      "kind": "enum",
+      "options": ["lines", "striped", "plain"]
+    },
+    "tableHeader": {
+      "kind": "enum",
+      "options": ["plain", "filled"]
+    }
+  }
+}

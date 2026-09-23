@@ -54,44 +54,7 @@ describe("preset codec — studio state", () => {
     )
     if (!result.ok) throw new Error(result.reason)
     expect(result.state).toEqual({ ...DEFAULTS, brand: "#ef4444" })
-    expect(result.dropped).toEqual(["radiusPx", "modes", "nope"])
-  })
-
-  it("fans a v3 primary and family fill out onto the leaves they painted", () => {
-    const leaves = (s: unknown) => {
-      const { state } = decodePreset(encodeRaw({ v: 3, s }))
-      return [
-        state.buttonColor,
-        state.checkboxColor,
-        state.radioColor,
-        state.switchColor,
-        state.selectionColor,
-        state.sliderColor,
-        state.tabsColor,
-        state.linkColor,
-        state.focusColor,
-      ]
-    }
-    const inks = ["neutral", "accent", "accent"]
-    // The selection tokens and the slider followed the primary.
-    expect(leaves({ primary: "accent" })).toEqual([
-      ...Array(6).fill("accent"),
-      ...inks,
-    ])
-    // The family fill re-pointed every check, whatever the primary.
-    expect(leaves({ checkFill: "accent" })).toEqual([
-      "neutral",
-      ...Array(5).fill("accent"),
-      ...inks,
-    ])
-    expect(leaves({ primary: "accent", checkFill: "neutral" })).toEqual([
-      "accent",
-      ...Array(5).fill("neutral"),
-      ...inks,
-    ])
-    expect(leaves({ linkColor: "foreground" })[7]).toBe("neutral")
-    const { state } = decodePreset(encodeRaw({ v: 3, s: {} }))
-    expect("primary" in state || "checkFill" in state).toBe(false)
+    expect(result.dropped).toEqual(["nope", "radiusPx", "modes"])
   })
 
   it("keeps a leaf only on a known source", () => {
@@ -124,9 +87,15 @@ describe("preset codec — studio state", () => {
   })
 
   it("fails on a version newer than this codec", () => {
-    expect(decode(encodeRaw({ v: 5, s: { brand: "#ef4444" } }))).toEqual({
+    for (const encoded of [
+      encodeRaw({ v: 5, s: { brand: "#ef4444" } }),
+      "v5.q1YqU7Iy1VEqVrKqVkoqSsxLUbJSUk5NMwECpdpaAA",
+      "v12.x",
+    ])
+      expect(decode(encoded)).toEqual({ ok: false, reason: "newer-version" })
+    expect(decode(encodeRaw({ v: 4.5 }))).toEqual({
       ok: false,
-      reason: "newer-version",
+      reason: "invalid",
     })
   })
 
@@ -143,7 +112,6 @@ describe("preset codec — legacy migration", () => {
         v: 2,
         seeds: { accent: "#5e6ad2", selection: "#0072f5" },
         primary: "accent",
-        scopes: { checkbox: "neutral" },
         vividness: 1.2,
         background: { light: 98, dark: "oled" },
       },
@@ -162,7 +130,6 @@ describe("preset codec — legacy migration", () => {
     expect(state.buttonColor).toBe("accent")
     expect(state.sliderColor).toBe("accent")
     expect(state.switchColor).toBe("accent")
-    expect(state.checkboxColor).toBe("neutral")
     expect(state.vividness).toBe(1.2)
     expect(state.modes.map((m) => m.bg)).toEqual([98, 0])
     expect(state.density).toBe("comfortable")
@@ -188,7 +155,7 @@ describe("preset codec — legacy migration", () => {
     expect(state.buttonColor).toBe("accent")
   })
 
-  it("ignores an unknown icon library and unparseable tokens", () => {
+  it("names an unknown icon library and unparseable tokens", () => {
     const result = decode(
       encodeRaw({
         i: "heroicons",
@@ -196,8 +163,12 @@ describe("preset codec — legacy migration", () => {
       }),
     )
     if (!result.ok) throw new Error(result.reason)
-    expect(result.state).toEqual(DEFAULTS)
-    expect(result.dropped).toEqual(["iconLibrary", "cursorControls"])
+    expect(result.state).toEqual({ ...DEFAULTS, badgeShape: "rounded" })
+    expect(result.dropped).toEqual([
+      "t.--radius",
+      "iconLibrary",
+      "cursorControls",
+    ])
   })
 })
 

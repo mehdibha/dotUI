@@ -4685,12 +4685,16 @@ exports[`historical preset strings > decodes crafted-truncated 1`] = `
 
 exports[`historical preset strings > decodes legacy-airbnb 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralTint": 0,
       "seeds": {
         "accent": "#ff385c",
       },
@@ -4861,11 +4865,7 @@ exports[`historical preset strings > decodes legacy-airbnb 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": [
-    "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
-    "lossy-legacy-migration: the neutral seed #717171 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -4940,7 +4940,7 @@ exports[`historical preset strings > decodes legacy-airbnb 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -4952,7 +4952,7 @@ exports[`historical preset strings > decodes legacy-airbnb 1`] = `
     "motionSpeed": 1,
     "motionState": "smooth",
     "neutralHue": null,
-    "neutralTint": 1,
+    "neutralTint": 0,
     "numberLayout": "right",
     "otpStyle": "group",
     "paginationCurrent": "outline",
@@ -5002,13 +5002,17 @@ exports[`historical preset strings > decodes legacy-airbnb 1`] = `
 
 exports[`historical preset strings > decodes legacy-claude 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
         "light": 98,
       },
+      "neutralHue": 96,
       "primary": "accent",
       "seeds": {
         "accent": "#d97757",
@@ -5178,13 +5182,12 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
       "--font-heading": "'Source Serif 4', ui-serif, Georgia, serif",
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
       "--radius": "0.75rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #84806f is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5193,7 +5196,7 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Inter",
     "brand": "#d97757",
@@ -5259,7 +5262,7 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -5270,7 +5273,7 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 96,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -5321,12 +5324,16 @@ exports[`historical preset strings > decodes legacy-claude 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 74,
       "primary": "accent",
       "seeds": {
         "accent": "#d97757",
@@ -5495,13 +5502,14 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.75rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #8a8278 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5510,7 +5518,7 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#d97757",
@@ -5576,7 +5584,7 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -5587,7 +5595,7 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 74,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -5600,7 +5608,7 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 12,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -5638,12 +5646,16 @@ exports[`historical preset strings > decodes legacy-color-v1-claude 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 286,
       "primary": "accent",
       "seeds": {
         "accent": "#059669",
@@ -5812,13 +5824,16 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.375rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #71717a is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "c.algorithm",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -5827,7 +5842,7 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#059669",
@@ -5893,7 +5908,7 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -5904,7 +5919,7 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 286,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -5917,7 +5932,7 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 6,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -5955,12 +5970,16 @@ exports[`historical preset strings > decodes legacy-color-v1-contrast 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 262,
       "primary": "accent",
       "seeds": {
         "accent": "#5e6ad2",
@@ -6129,13 +6148,14 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
     },
     "density": "compact",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.5rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6144,7 +6164,7 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#5e6ad2",
@@ -6210,7 +6230,7 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -6221,7 +6241,7 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 262,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -6234,7 +6254,7 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 8,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -6272,12 +6292,16 @@ exports[`historical preset strings > decodes legacy-color-v1-linear 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 308,
       "primary": "accent",
       "seeds": {
         "accent": "#6750a4",
@@ -6446,13 +6470,16 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
     },
     "density": "comfortable",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.875rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #79747e is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "c.algorithm",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6461,7 +6488,7 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#6750a4",
@@ -6527,7 +6554,7 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -6538,7 +6565,7 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 308,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -6551,7 +6578,7 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 14,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -6589,12 +6616,16 @@ exports[`historical preset strings > decodes legacy-color-v1-material 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralTint": 0,
       "primary": "accent",
       "seeds": {
         "accent": "#e11d48",
@@ -6763,13 +6794,14 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
     },
     "density": "comfortable",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "1rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #7d7d7d is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -6778,7 +6810,7 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#e11d48",
@@ -6844,7 +6876,7 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -6856,7 +6888,7 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
     "motionSpeed": 1,
     "motionState": "smooth",
     "neutralHue": null,
-    "neutralTint": 1,
+    "neutralTint": 0,
     "numberLayout": "right",
     "otpStyle": "group",
     "paginationCurrent": "outline",
@@ -6868,7 +6900,7 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 16,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -6906,12 +6938,16 @@ exports[`historical preset strings > decodes legacy-color-v1-rose 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 264,
       "primary": "accent",
       "seeds": {
         "accent": "#3ecf8e",
@@ -7080,13 +7116,14 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.5rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #6b7280 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7095,7 +7132,7 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#3ecf8e",
@@ -7161,7 +7198,7 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -7172,7 +7209,7 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 264,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -7185,7 +7222,7 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "accent",
-    "radiusPx": 10,
+    "radiusPx": 8,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -7223,12 +7260,16 @@ exports[`historical preset strings > decodes legacy-color-v1-supabase 1`] = `
 
 exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralTint": 0,
       "seeds": {
         "accent": "#171717",
         "danger": "#ef4444",
@@ -7397,13 +7438,16 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
     },
     "density": "compact",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--radius": "0.25rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #737373 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "c.knobs.minChroma",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7412,7 +7456,7 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#171717",
@@ -7478,7 +7522,7 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -7490,7 +7534,7 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
     "motionSpeed": 1,
     "motionState": "smooth",
     "neutralHue": null,
-    "neutralTint": 1,
+    "neutralTint": 0,
     "numberLayout": "right",
     "otpStyle": "group",
     "paginationCurrent": "outline",
@@ -7502,7 +7546,7 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
     "progressIndeterminate": "slide",
     "progressTrack": "thin",
     "radioColor": "neutral",
-    "radiusPx": 10,
+    "radiusPx": 4,
     "roleControl": "md",
     "roleItem": "auto",
     "rolePanel": "xl",
@@ -7540,12 +7584,16 @@ exports[`historical preset strings > decodes legacy-color-v1-vercel 1`] = `
 
 exports[`historical preset strings > decodes legacy-github 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
         "dark": 4.5,
       },
+      "neutralHue": 251,
       "primary": "accent",
       "seeds": {
         "accent": "#0969da",
@@ -7715,12 +7763,11 @@ exports[`historical preset strings > decodes legacy-github 1`] = `
       "--font-sans": "'Mona Sans', ui-sans-serif, system-ui, sans-serif",
     },
   },
-  "dropped": [],
-  "knownWrong": [
-    "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
-    "lossy-legacy-migration: the neutral seed #656d76 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "t.--color-border-focus",
+    "c.overrides",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -7806,7 +7853,7 @@ exports[`historical preset strings > decodes legacy-github 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 251,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -7857,12 +7904,16 @@ exports[`historical preset strings > decodes legacy-github 1`] = `
 
 exports[`historical preset strings > decodes legacy-linear 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
         "dark": 2,
       },
+      "neutralHue": 262,
       "primary": "accent",
       "seeds": {
         "accent": "#5e6ad2",
@@ -8030,13 +8081,14 @@ exports[`historical preset strings > decodes legacy-linear 1`] = `
     "icons": undefined,
     "tokens": {
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "c.overrides",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8045,7 +8097,7 @@ exports[`historical preset strings > decodes legacy-linear 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Inter",
     "brand": "#5e6ad2",
@@ -8122,7 +8174,7 @@ exports[`historical preset strings > decodes legacy-linear 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 262,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -8173,12 +8225,16 @@ exports[`historical preset strings > decodes legacy-linear 1`] = `
 
 exports[`historical preset strings > decodes legacy-notion 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 91,
       "primary": "accent",
       "seeds": {
         "accent": "#0075de",
@@ -8347,13 +8403,14 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
     "tokens": {
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
       "--radius": "0.375rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #787774 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "c.overrides",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8362,7 +8419,7 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Inter",
     "brand": "#0075de",
@@ -8428,7 +8485,7 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -8439,7 +8496,7 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 91,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -8490,7 +8547,10 @@ exports[`historical preset strings > decodes legacy-notion 1`] = `
 
 exports[`historical preset strings > decodes legacy-origin 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
@@ -8662,12 +8722,13 @@ exports[`historical preset strings > decodes legacy-origin 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
-  "knownWrong": [
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -8676,7 +8737,7 @@ exports[`historical preset strings > decodes legacy-origin 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#0072f5",
@@ -8976,7 +9037,10 @@ exports[`historical preset strings > decodes legacy-origin-code-options 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
+    },
   },
   "dropped": [],
   "knownWrong": undefined,
@@ -8988,7 +9052,7 @@ exports[`historical preset strings > decodes legacy-origin-code-options 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Geist",
     "brand": "#0072f5",
@@ -9116,12 +9180,16 @@ exports[`historical preset strings > decodes legacy-origin-code-options 1`] = `
 
 exports[`historical preset strings > decodes legacy-spotify 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralTint": 0,
       "primary": "accent",
       "seeds": {
         "accent": "#1ed760",
@@ -9187,7 +9255,7 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
       "input": {
         "addon": "inside",
         "hover": "none",
-        "style": "outline",
+        "style": "filled",
       },
       "kbd": {
         "treatment": "chip",
@@ -9293,11 +9361,7 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
     },
   },
   "dropped": [],
-  "knownWrong": [
-    "legacy-component-params-dropped: badge.radius=--radius-full, input.style=filled are dropped",
-    "lossy-legacy-migration: the neutral seed #6a6a6a is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9352,7 +9416,7 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
     "iconWeight": "regular",
     "inputError": "border",
     "inputHover": "none",
-    "inputStyle": "outline",
+    "inputStyle": "filled",
     "kbdTreatment": "chip",
     "linkColor": "accent",
     "linkUnderline": "never",
@@ -9372,7 +9436,7 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -9384,7 +9448,7 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
     "motionSpeed": 1,
     "motionState": "smooth",
     "neutralHue": null,
-    "neutralTint": 1,
+    "neutralTint": 0,
     "numberLayout": "right",
     "otpStyle": "group",
     "paginationCurrent": "outline",
@@ -9434,12 +9498,16 @@ exports[`historical preset strings > decodes legacy-spotify 1`] = `
 
 exports[`historical preset strings > decodes legacy-stripe 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 260,
       "primary": "accent",
       "seeds": {
         "accent": "#635bff",
@@ -9608,13 +9676,14 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
     "tokens": {
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
       "--radius": "0.665rem",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     },
   },
-  "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #687385 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "t.--shadow-control",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9623,7 +9692,7 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Inter",
     "brand": "#635bff",
@@ -9689,7 +9758,7 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -9700,7 +9769,7 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 260,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -9751,12 +9820,16 @@ exports[`historical preset strings > decodes legacy-stripe 1`] = `
 
 exports[`historical preset strings > decodes legacy-supabase 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
-        "dark": 2,
+        "dark": 6,
       },
+      "neutralHue": 160,
       "primary": "accent",
       "seeds": {
         "accent": "#3ecf8e",
@@ -9924,13 +9997,12 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
     "icons": undefined,
     "tokens": {
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
+      "--studio-badge-radius": "var(--radius-sm)",
+      "--studio-tag-radius": "var(--radius-sm)",
     },
   },
   "dropped": [],
-  "knownWrong": [
-    "lossy-legacy-migration: the neutral seed #6d726f is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -9939,7 +10011,7 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
     "addonLayout": "inside",
     "avatarFallback": "neutral",
     "avatarShape": "circle",
-    "badgeShape": "pill",
+    "badgeShape": "rounded",
     "badgeStyle": "solid",
     "bodyFont": "Inter",
     "brand": "#3ecf8e",
@@ -10005,7 +10077,7 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
         "polarity": "light",
       },
       {
-        "bg": 2,
+        "bg": 6,
         "id": "dark",
         "name": "Dark",
         "polarity": "dark",
@@ -10016,7 +10088,7 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
     "motionOverlay": "scale",
     "motionSpeed": 1,
     "motionState": "smooth",
-    "neutralHue": null,
+    "neutralHue": 160,
     "neutralTint": 1,
     "numberLayout": "right",
     "otpStyle": "group",
@@ -10067,12 +10139,16 @@ exports[`historical preset strings > decodes legacy-supabase 1`] = `
 
 exports[`historical preset strings > decodes legacy-vercel 1`] = `
 {
-  "codeOptions": undefined,
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false,
+  },
   "designSystem": {
     "color": {
       "background": {
         "dark": "oled",
       },
+      "neutralTint": 0,
       "seeds": {
         "accent": "#171717",
         "selection": "#0072f5",
@@ -10121,7 +10197,7 @@ exports[`historical preset strings > decodes legacy-vercel 1`] = `
       "command": {
         "inset": "inset",
         "scale": "default",
-        "search": "field",
+        "search": "bar",
       },
       "dialog": {
         "header": "title",
@@ -10240,12 +10316,12 @@ exports[`historical preset strings > decodes legacy-vercel 1`] = `
     "icons": undefined,
     "tokens": {},
   },
-  "dropped": [],
-  "knownWrong": [
-    "legacy-component-params-dropped: badge.radius=--radius-full, command.style=3 are dropped",
-    "lossy-legacy-migration: the neutral seed #737373 is dropped",
-    "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults",
+  "dropped": [
+    "t.--shadow-card",
+    "t.--shadow-overlay",
+    "c.overrides",
   ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -10309,7 +10385,7 @@ exports[`historical preset strings > decodes legacy-vercel 1`] = `
     "menuInset": "inset",
     "menuLabels": "sentence",
     "menuScale": "default",
-    "menuSearch": "field",
+    "menuSearch": "bar",
     "mobileDialogs": "center",
     "mobilePickers": "drawer",
     "modes": [
@@ -10332,7 +10408,7 @@ exports[`historical preset strings > decodes legacy-vercel 1`] = `
     "motionSpeed": 1,
     "motionState": "smooth",
     "neutralHue": null,
-    "neutralTint": 1,
+    "neutralTint": 0,
     "numberLayout": "right",
     "otpStyle": "group",
     "paginationCurrent": "outline",
@@ -10867,9 +10943,7 @@ exports[`historical preset strings > decodes v3-check-fill 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {
-      "--studio-slider-fill-color": "var(--color-accent)",
-    },
+    "tokens": {},
   },
   "dropped": [],
   "knownWrong": undefined,
@@ -10984,7 +11058,7 @@ exports[`historical preset strings > decodes v3-check-fill 1`] = `
     "selectionSeed": "",
     "selectionUiText": "none",
     "skeletonAnimation": "shimmer",
-    "sliderColor": "accent",
+    "sliderColor": "neutral",
     "sliderThumb": "circle",
     "sliderTrack": "thin",
     "spacingUnit": 4,
@@ -11188,9 +11262,7 @@ exports[`historical preset strings > decodes v3-claude 1`] = `
       "--radius": "0.75rem",
     },
   },
-  "dropped": [
-    "modes.contrast",
-  ],
+  "dropped": [],
   "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
@@ -11494,12 +11566,10 @@ exports[`historical preset strings > decodes v3-contrast-strict 1`] = `
   },
   "dropped": [
     "modes.contrast",
-    "guarantees",
     "hueShift",
+    "guarantees",
   ],
-  "knownWrong": [
-    "v766-unmigrated-removals: guarantees, hueShift and the modes[].contrast:'high' fields are dropped with no migration",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -11803,9 +11873,7 @@ exports[`historical preset strings > decodes v3-corner-squircle 1`] = `
   "dropped": [
     "cornerShape",
   ],
-  "knownWrong": [
-    "v766-unmigrated-removals: cornerShape is dropped",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12118,9 +12186,7 @@ exports[`historical preset strings > decodes v3-github 1`] = `
       "--font-sans": "'Mona Sans', ui-sans-serif, system-ui, sans-serif",
     },
   },
-  "dropped": [
-    "modes.contrast",
-  ],
+  "dropped": [],
   "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
@@ -12431,15 +12497,17 @@ exports[`historical preset strings > decodes v3-linear 1`] = `
     "density": "default",
     "icons": undefined,
     "tokens": {
+      "--card-border": "light-dark(var(--neutral-300), var(--neutral-200))",
+      "--color-popover": "light-dark(var(--neutral-50), var(--neutral-100))",
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
+      "--overlay-border": "light-dark(var(--neutral-300), var(--neutral-200))",
+      "--shadow-card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "--shadow-modal": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+      "--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     },
   },
-  "dropped": [
-    "surfaceStrategy",
-  ],
-  "knownWrong": [
-    "v766-unmigrated-removals: surfaceStrategy 'outline' (removed in #766) is dropped to the default instead of migrating to its successor",
-  ],
+  "dropped": [],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12558,7 +12626,7 @@ exports[`historical preset strings > decodes v3-linear 1`] = `
     "spinnerStyle": "ring",
     "successSeed": "",
     "surfaceCanvas": "same",
-    "surfaceDepth": "subtle",
+    "surfaceDepth": "raised",
     "surfaceMaterial": "solid",
     "surfaceStrategy": "hairline",
     "switchColor": "accent",
@@ -12678,7 +12746,7 @@ exports[`historical preset strings > decodes v3-mobile-adapt-off 1`] = `
         "current": "outline",
       },
       "popover": {
-        "mobile": "drawer",
+        "mobile": "popover",
         "motion": "scale",
         "tip": "none",
       },
@@ -12740,12 +12808,8 @@ exports[`historical preset strings > decodes v3-mobile-adapt-off 1`] = `
     "icons": undefined,
     "tokens": {},
   },
-  "dropped": [
-    "mobileAdapt",
-  ],
-  "knownWrong": [
-    "v766-unmigrated-removals: mobileAdapt:false is dropped, so popover.mobile flips from popover to drawer",
-  ],
+  "dropped": [],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -12811,7 +12875,7 @@ exports[`historical preset strings > decodes v3-mobile-adapt-off 1`] = `
     "menuScale": "default",
     "menuSearch": "field",
     "mobileDialogs": "center",
-    "mobilePickers": "drawer",
+    "mobilePickers": "popover",
     "modes": [
       {
         "bg": 99,
@@ -13044,14 +13108,14 @@ exports[`historical preset strings > decodes v3-motion-fast 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--default-transition-duration": "113ms",
+      "--transition-duration-enter": "150ms",
+      "--transition-duration-exit": "113ms",
+    },
   },
-  "dropped": [
-    "motionSpeed",
-  ],
-  "knownWrong": [
-    "v766-unmigrated-removals: motionSpeed 'fast' (x0.75 durations) decodes to 1",
-  ],
+  "dropped": [],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -13135,7 +13199,7 @@ exports[`historical preset strings > decodes v3-motion-fast 1`] = `
     "monoFont": "Geist Mono",
     "motionCharacter": "standard",
     "motionOverlay": "scale",
-    "motionSpeed": 1,
+    "motionSpeed": 0.75,
     "motionState": "smooth",
     "neutralHue": null,
     "neutralTint": 1,
@@ -13350,14 +13414,14 @@ exports[`historical preset strings > decodes v3-motion-relaxed 1`] = `
     },
     "density": "default",
     "icons": undefined,
-    "tokens": {},
+    "tokens": {
+      "--default-transition-duration": "210ms",
+      "--transition-duration-enter": "280ms",
+      "--transition-duration-exit": "210ms",
+    },
   },
-  "dropped": [
-    "motionSpeed",
-  ],
-  "knownWrong": [
-    "v766-unmigrated-removals: motionSpeed 'relaxed' (x1.4 durations) decodes to 1",
-  ],
+  "dropped": [],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -13441,7 +13505,7 @@ exports[`historical preset strings > decodes v3-motion-relaxed 1`] = `
     "monoFont": "Geist Mono",
     "motionCharacter": "standard",
     "motionOverlay": "scale",
-    "motionSpeed": 1,
+    "motionSpeed": 1.4,
     "motionState": "smooth",
     "neutralHue": null,
     "neutralTint": 1,
@@ -15546,12 +15610,10 @@ exports[`historical preset strings > decodes v3-surface-layered-ring 1`] = `
     "tokens": {},
   },
   "dropped": [
-    "surfaceEdge",
     "surfaceShadow",
+    "surfaceEdge",
   ],
-  "knownWrong": [
-    "v766-unmigrated-removals: surfaceShadow and surfaceEdge are dropped",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -15853,14 +15915,12 @@ exports[`historical preset strings > decodes v3-type-scale 1`] = `
     "tokens": {},
   },
   "dropped": [
-    "bodyLeading",
-    "headingTracking",
     "headingWeight",
+    "headingTracking",
     "typeBase",
+    "bodyLeading",
   ],
-  "knownWrong": [
-    "v766-unmigrated-removals: headingWeight, headingTracking, typeBase and bodyLeading are dropped",
-  ],
+  "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",
     "accordionMarker": "chevron",
@@ -16175,9 +16235,7 @@ exports[`historical preset strings > decodes v3-vercel 1`] = `
       "--color-popover": "light-dark(var(--neutral-25), var(--neutral-100))",
     },
   },
-  "dropped": [
-    "modes.contrast",
-  ],
+  "dropped": [],
   "knownWrong": undefined,
   "state": {
     "accordionContainer": "divided",

@@ -9,10 +9,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.vercel.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #737373 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -25,10 +21,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.supabase.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #6b7280 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -41,10 +33,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.material.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #79747e is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -57,10 +45,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.linear.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -73,10 +57,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.claude.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #8a8278 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -89,10 +69,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.rose.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #7d7d7d is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -105,10 +81,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.contrast.designSystem), last commit before the color v2 recipe (#449)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #71717a is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -131,9 +103,6 @@
         "path": "examples/origin-tanstack-start/components.json",
         "how": "committed @dotui registry URL"
       }
-    ],
-    "knownWrong": [
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -146,10 +115,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.claude.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #84806f is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -162,10 +127,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.supabase.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #6d726f is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -178,10 +139,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.stripe.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #687385 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -194,10 +151,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.linear.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #8a8f98 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -210,11 +163,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.vercel.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "legacy-component-params-dropped: badge.radius=--radius-full, command.style=3 are dropped",
-      "lossy-legacy-migration: the neutral seed #737373 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -227,11 +175,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.airbnb.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
-      "lossy-legacy-migration: the neutral seed #717171 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -244,11 +187,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.github.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "legacy-component-params-dropped: badge.radius=--radius-full are dropped",
-      "lossy-legacy-migration: the neutral seed #656d76 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -261,10 +199,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodePreset(PRESETS.notion.designSystem), last commit before the studio state codec (#715)"
       }
-    ],
-    "knownWrong": [
-      "lossy-legacy-migration: the neutral seed #787774 is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -287,11 +221,6 @@
         "path": "examples/spotify-tanstack-start/components.json",
         "how": "committed @dotui registry URL"
       }
-    ],
-    "knownWrong": [
-      "legacy-component-params-dropped: badge.radius=--radius-full, input.style=filled are dropped",
-      "lossy-legacy-migration: the neutral seed #6a6a6a is dropped",
-      "moving-baseline: encoded before #743/#744 under the code-style defaults {classArrays:true, sectionComments:false}; decodes to today's defaults"
     ]
   },
   {
@@ -399,9 +328,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodeState(PRESETS.linear.state)"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: surfaceStrategy 'outline' (removed in #766) is dropped to the default instead of migrating to its successor"
     ]
   },
   {
@@ -509,9 +435,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{motionSpeed:'fast'}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: motionSpeed 'fast' (x0.75 durations) decodes to 1"
     ]
   },
   {
@@ -524,9 +447,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{motionSpeed:'relaxed'}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: motionSpeed 'relaxed' (x1.4 durations) decodes to 1"
     ]
   },
   {
@@ -539,9 +459,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{mobileAdapt:false}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: mobileAdapt:false is dropped, so popover.mobile flips from popover to drawer"
     ]
   },
   {
@@ -554,9 +471,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{headingWeight:'700', headingTracking:'tight', typeBase:15, bodyLeading:'relaxed'}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: headingWeight, headingTracking, typeBase and bodyLeading are dropped"
     ]
   },
   {
@@ -569,8 +483,7 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{cornerShape:'squircle'}})"
       }
-    ],
-    "knownWrong": ["v766-unmigrated-removals: cornerShape is dropped"]
+    ]
   },
   {
     "id": "v3-surface-layered-ring",
@@ -582,9 +495,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{surfaceShadow:'layered', surfaceEdge:'ring'}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: surfaceShadow and surfaceEdge are dropped"
     ]
   },
   {
@@ -597,9 +507,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "encodeState({...DEFAULTS, ...{guarantees:'strict', hueShift:0, modes[].contrast:'high'}})"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: guarantees, hueShift and the modes[].contrast:'high' fields are dropped with no migration"
     ]
   },
   {

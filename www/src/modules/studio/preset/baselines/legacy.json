@@ -1,0 +1,41 @@
+{
+  "codeOptions": {
+    "classArrays": true,
+    "sectionComments": false
+  },
+  "componentParams": {
+    "avatar": {
+      "radius": "--radius-full"
+    },
+    "badge": {
+      "radius": "--radius-md"
+    },
+    "checkbox": {
+      "radius": "--radius-sm"
+    },
+    "command": {
+      "style": "1"
+    },
+    "input": {
+      "style": "outline"
+    },
+    "list-box": {
+      "highlight": "subtle"
+    },
+    "menu": {
+      "highlight": "subtle"
+    },
+    "skeleton": {
+      "animation": "shimmer"
+    },
+    "slider": {
+      "thumb-style": "solid"
+    }
+  },
+  "engineBackground": {
+    "light": 99,
+    "dark": 6
+  },
+  "infoSeed": "#3b82f6",
+  "radiusFactorPx": 8
+}
