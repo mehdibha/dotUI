@@ -51,9 +51,9 @@ const { useStyles, styles } = createStyles(drawerMeta, {
       },
       /* What the page behind does while a drawer is open: scale back under a
          sheet (iOS), or slide aside by --drawer-indent-push for a side menu,
-         its content fading back under a veil of the page color (Claude,
-         ChatGPT) — a veil, so the page's own transitions stay untouched. Transitions drop to zero
-         while a swipe drives the progress. */
+         its content fading under a veil of the page color (Claude, ChatGPT)
+         so the page's own transitions stay untouched. Transitions drop to
+         zero while a swipe drives the progress. */
       effect: {
         scale: {
           indent:
