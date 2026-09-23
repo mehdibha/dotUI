@@ -1,24 +1,31 @@
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
-import { FieldGroup, Label } from "@/registry/ui/field"
+import { Description, FieldGroup, Label } from "@/registry/ui/field"
+
+const channels = [
+  { id: "email", label: "Email", description: "Weekly digest" },
+  {
+    id: "push",
+    label: "Push",
+    description: "Mentions and replies",
+  },
+  { id: "sms", label: "SMS", description: "Security alerts" },
+]
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["updates", "security"]}>
-      <Label>Notification Preferences</Label>
-      <FieldGroup className="@container-normal!">
-        <Checkbox value="updates">
-          <CheckboxControl />
-          <Label>Product Updates</Label>
-        </Checkbox>
-        <Checkbox value="security">
-          <CheckboxControl />
-          <Label>Security Alerts</Label>
-        </Checkbox>
-        <Checkbox value="marketing">
-          <CheckboxControl />
-          <Label>Marketing Emails</Label>
-        </Checkbox>
+    <CheckboxGroup defaultValue={["email", "push"]} className="w-44">
+      <Label>Notifications</Label>
+      <FieldGroup>
+        {channels.map((channel) => (
+          <Checkbox key={channel.id} value={channel.id} className="items-start">
+            <CheckboxControl />
+            <div className="flex flex-col gap-0.5">
+              <Label>{channel.label}</Label>
+              <Description>{channel.description}</Description>
+            </div>
+          </Checkbox>
+        ))}
       </FieldGroup>
     </CheckboxGroup>
   )

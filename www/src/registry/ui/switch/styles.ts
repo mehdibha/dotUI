@@ -23,14 +23,17 @@ const { useStyles, styles } = createStyles(switchMeta, {
     variants: {
       size: {
         sm: {
+          root: "has-data-description:**:data-label:mt-[calc((1.25rem-1lh)/2)]",
           indicator: "h-5 w-9",
           thumb: "size-4 pressed:w-5 selected:ml-4 selected:pressed:ml-3",
         },
         md: {
+          root: "has-data-description:**:data-label:mt-[calc((1.5rem-1lh)/2)]",
           indicator: "h-6 w-11",
           thumb: "size-5 pressed:w-6 selected:ml-5 selected:pressed:ml-4",
         },
         lg: {
+          root: "has-data-description:**:data-label:mt-[calc((1.75rem-1lh)/2)]",
           indicator: "h-7 w-13",
           thumb: "size-6 pressed:w-7 selected:ml-6 selected:pressed:ml-5",
         },

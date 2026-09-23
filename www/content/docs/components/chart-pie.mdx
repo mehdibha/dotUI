@@ -58,7 +58,7 @@ Radii are ratios, never pixels, so a pie keeps its proportions at every size.
 - `startAngle` and `endAngle` are radians clockwise from twelve o'clock. `endAngle={Math.PI}` draws a semicircle.
 - `padAngle` opens a gap between slices, `cornerRadius` rounds their corners.
 
-Slices touch by default. To separate them the way a printed chart does, stroke them with the page background:
+Slices are separated by a stroke in the page background; `strokeWidth={0}` lets them touch, and `stroke` changes the color.
 
 ```tsx
 <PieChart
@@ -66,8 +66,7 @@ Slices touch by default. To separate them the way a printed chart does, stroke t
   value="visitors"
   name="browser"
   innerRadius={0.55}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
+  strokeWidth={0}
   ariaLabel="Visitors by browser"
 />
 ```
@@ -149,6 +148,7 @@ Slices sweep in through their angles on first client paint, one after another, a
   <Example name="chart-pie/demos/legend" title="Legend" />
   <Example name="chart-pie/demos/separator-none" title="No Separator" />
   <Example name="chart-pie/demos/stacked" title="Stacked Rings" />
+  <Example name="chart-pie/demos/interactive" title="Interactive" />
 </Examples>
 
 ## API Reference

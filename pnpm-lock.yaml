@@ -168,8 +168,8 @@ importers:
         specifier: 'catalog:'
         version: 4.3.0(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)(yaml@2.9.0))
       '@tanstack/charts':
-        specifier: 0.16.0
-        version: 0.16.0(preact@10.29.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(solid-js@1.9.10)
+        specifier: 0.18.0
+        version: 0.18.0(preact@10.29.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(solid-js@1.9.10)
       '@tanstack/react-devtools':
         specifier: ^0.10.5
         version: 0.10.5(@types/react-dom@19.2.1(@types/react@19.2.2))(@types/react@19.2.2)(bufferutil@4.1.0)(csstype@3.2.3)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(solid-js@1.9.10)
@@ -191,9 +191,15 @@ importers:
       '@tanstack/router-plugin':
         specifier: 'catalog:'
         version: 1.168.2(@tanstack/react-router@1.170.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)(yaml@2.9.0))
+      '@vercel/analytics':
+        specifier: ^2.0.1
+        version: 2.0.1(next@16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
       '@vercel/og':
         specifier: ^0.11.1
         version: 0.11.1
+      '@vercel/speed-insights':
+        specifier: ^2.0.0
+        version: 2.0.0(next@16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
       d3-scale:
         specifier: ^4.0.2
         version: 4.0.2
@@ -2416,8 +2422,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@tanstack/charts@0.16.0':
-    resolution: {integrity: sha512-adG4sVaWjSqGsp/8YU5q7AjoYoPaivVseDjWWcV4osKemfTHnGFlPqlymxbhWxk1BF3p5Rewgqs4BlgZAXve8g==}
+  '@tanstack/charts@0.18.0':
+    resolution: {integrity: sha512-JzJ0nkdpZWPla1FPEo6YY6spMRkkVxvtpAF+zvwATV1DpwHegvW7N55Pyts6Gu+do+RmnCAtnOWIcQAwtNAOaw==}
     peerDependencies:
       '@angular/core': '>=19'
       '@angular/platform-browser': '>=19'
@@ -2425,8 +2431,8 @@ packages:
       lit: '>=3.1.3'
       octane: ^0.1.13
       preact: '>=10'
-      react: ^19.0.0
-      react-dom: ^19.0.0
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
       react-native: ^0.86.0
       react-native-svg: '>=15.15.4 <16'
       solid-js: '>=1.8'
@@ -2930,6 +2936,35 @@ packages:
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
     deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
+  '@vercel/analytics@2.0.1':
+    resolution: {integrity: sha512-MTQG6V9qQrt1tsDeF+2Uoo5aPjqbVPys1xvnIftXSJYG2SrwXRHnqEvVoYID7BTruDz4lCd2Z7rM1BdkUehk2g==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      nuxt: '>= 3'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      nuxt:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
+
   '@vercel/config@0.5.0':
     resolution: {integrity: sha512-92yapoNoNhdiKgSz0DUwZiJ05xx8WZWS7cdVhcjAPU9dDXwns4xY5mll04IRE3kjwLqnmxcR+mdG7vGFL7hV+A==}
     hasBin: true
@@ -2945,6 +2980,32 @@ packages:
 
   '@vercel/routing-utils@6.2.0':
     resolution: {integrity: sha512-YI2cGYZmJKEyGSEgf5Fw5rVuW7X1bTOQ7/pnLRNTFMH3YB3qqP5erCLCJGv2kIvNo1iQAPINHQRJj6ykEdGoPg==}
+
+  '@vercel/speed-insights@2.0.0':
+    resolution: {integrity: sha512-jwkNcrTeafWxjmWq4AHBaptSqZiJkYU5adLC9QBSqeim0GcqDMgN5Ievh8OG1rJ6W3A4l1oiP7qr9CWxGuzu3w==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      nuxt: '>= 3'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      nuxt:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@vitejs/plugin-react@6.0.2':
     resolution: {integrity: sha512-DlSMqo4WhThw4vB8Mpn0Woe9J+Jfq1geJ61AKW0QEgLzGMNwtIMdxbDUzLxcun8W7NbJO0e2Jg/Nxm3cCSVzzg==}
@@ -8053,7 +8114,7 @@ snapshots:
       tailwindcss: 4.3.0
       vite: 8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)(yaml@2.9.0)
 
-  '@tanstack/charts@0.16.0(preact@10.29.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(solid-js@1.9.10)':
+  '@tanstack/charts@0.18.0(preact@10.29.1)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(solid-js@1.9.10)':
     dependencies:
       '@types/d3-force': 3.0.10
       '@types/d3-geo': 3.1.1
@@ -8597,6 +8658,11 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
+  '@vercel/analytics@2.0.1(next@16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)':
+    optionalDependencies:
+      next: 16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react: 19.2.1
+
   '@vercel/config@0.5.0':
     dependencies:
       '@vercel/routing-utils': 6.2.0
@@ -8625,6 +8691,11 @@ snapshots:
       path-to-regexp-updated: path-to-regexp@6.3.0
     optionalDependencies:
       ajv: 6.15.0
+
+  '@vercel/speed-insights@2.0.0(next@16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)':
+    optionalDependencies:
+      next: 16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react: 19.2.1
 
   '@vitejs/plugin-react@6.0.2(babel-plugin-react-compiler@1.0.0)(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:

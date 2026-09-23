@@ -11,8 +11,7 @@ const chartLineMeta = {
       target: "ui/chart-line.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.16.0", "d3-shape"],
-  devDependencies: ["@types/d3-shape"],
+  dependencies: ["@tanstack/charts@0.18.0"],
   registryDependencies: ["chart"],
 } satisfies RegistryItem
 

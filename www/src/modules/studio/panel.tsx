@@ -1,10 +1,10 @@
 "use client"
 
-/* The panel chrome: one enclosed surface — header (system switcher, global
-   reset, search) and footer (save, export) are flush hairline bars on the
-   card. The drill-in frame supplies the middle. Real behavior arrives through
-   `system` (wired by StudioPanel on /create); without it the chrome stays
-   the studio's inert design shell. */
+/* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
+   whole, its header pinned — the system switcher on the left, global reset
+   and search on the right — over a hairline. Real behavior arrives through
+   `system` (wired by StudioPanel on /studio); without it the chrome is the
+   studio's inert design shell. */
 
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
@@ -28,13 +28,10 @@ export interface PanelSystem {
   onSave: () => void
   /** Wraps the header name button in the preset picker's trigger. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
-  /** Wraps the footer Export button in the export dialog's trigger. */
+  /** Wraps the Export button in the export dialog's trigger. */
   renderExport: (trigger: ReactNode) => ReactNode
 }
 
-/** Header + footer. Children own the middle region (and its
- *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
- *  (44px header, 52px footer, plus the body's 12px gap). */
 export function PanelChrome({
   studio,
   system,
@@ -43,12 +40,12 @@ export function PanelChrome({
 }: {
   studio: Studio
   system?: PanelSystem
-  /** Search trigger + overlay, supplied by the frame (it owns navigation). */
+  /** Search trigger + overlay, supplied by the page (it owns navigation). */
   search?: ReactNode
-  children: React.ReactNode
+  children: ReactNode
 }) {
-  // The only reset in the panel — chapters carry a modified dot, never a
-  // button of their own. It clears the studio axes and the engine state as one.
+  // The only reset in the panel. It clears the studio axes and the engine
+  // state as one.
   const whole = studio.section(DEFAULTS)
   const modified = whole.modified || (system?.modified ?? false)
   const resetAll = () => {
@@ -73,16 +70,9 @@ export function PanelChrome({
     </Button>
   )
 
-  const exportButton = (
-    <Button variant="primary" size="sm" className="flex-1">
-      Export
-    </Button>
-  )
-
   return (
-    <div className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border/45 bg-card">
-      {/* Header bar — flush to the panel, content dips under it. */}
-      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-2 backdrop-blur-sm">
+    <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)]">
+      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">
           {modified && (
@@ -109,16 +99,7 @@ export function PanelChrome({
           )}
         </span>
       </div>
-
       {children}
-
-      {/* Footer bar — same treatment as the header. */}
-      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 border-t border-border/45 bg-card/85 p-3 backdrop-blur-sm">
-        <Button size="sm" className="flex-1" onPress={system?.onSave}>
-          Save
-        </Button>
-        {system ? system.renderExport(exportButton) : exportButton}
-      </div>
     </div>
   )
 }

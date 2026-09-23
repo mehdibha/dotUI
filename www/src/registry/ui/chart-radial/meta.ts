@@ -11,8 +11,8 @@ const chartRadialMeta = {
       target: "ui/chart-radial.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.16.0", "d3-scale", "d3-shape"],
-  devDependencies: ["@types/d3-scale", "@types/d3-shape"],
+  dependencies: ["@tanstack/charts@0.18.0", "d3-scale"],
+  devDependencies: ["@types/d3-scale"],
   registryDependencies: ["chart"],
 } satisfies RegistryItem
 

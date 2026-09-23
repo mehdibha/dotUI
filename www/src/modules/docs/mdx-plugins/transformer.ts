@@ -130,11 +130,49 @@ function getFunctionBody(sourceFile: SourceFile): string | null {
   if (!expression) return null
 
   // Handle parenthesized expressions: return (...);
-  if (Node.isParenthesizedExpression(expression)) {
-    return expression.getExpression().getText()
+  const jsx = Node.isParenthesizedExpression(expression)
+    ? expression.getExpression()
+    : expression
+
+  return unwrapLayoutRoot(jsx) ?? jsx.getText()
+}
+
+/**
+ * A root fragment or `<div className="…">` only lays the demo out; the preview
+ * shows its children instead. Anything else (a form, a div with handlers) stays.
+ */
+function unwrapLayoutRoot(node: Node): string | null {
+  let children: Node[]
+  if (Node.isJsxFragment(node)) {
+    children = node.getJsxChildren()
+  } else if (Node.isJsxElement(node)) {
+    const opening = node.getOpeningElement()
+    if (opening.getTagNameNode().getText() !== "div") return null
+    const isLayoutOnly = opening
+      .getAttributes()
+      .every(
+        (attr) =>
+          Node.isJsxAttribute(attr) &&
+          attr.getNameNode().getText() === "className",
+      )
+    if (!isLayoutOnly) return null
+    children = node.getJsxChildren()
+  } else {
+    return null
   }
 
-  return expression.getText()
+  const kept = children.filter(
+    (child) =>
+      !(Node.isJsxText(child) && child.containsOnlyTriviaWhiteSpaces()),
+  )
+  const first = kept[0]
+  const last = kept[kept.length - 1]
+  if (!first || !last) return null
+
+  return node
+    .getSourceFile()
+    .getFullText()
+    .slice(first.getStart(), last.getEnd())
 }
 
 /**

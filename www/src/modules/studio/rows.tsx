@@ -1,29 +1,13 @@
 "use client"
 
-/* Panel rows — one visual language (compact row, label left, value +
-   control right) applied to every interaction model the panel needs: triggers,
-   drag surfaces, toggles, steppers, specimen grids, drill-in navigation, and
-   the grouped-list container that fuses rows into cards.
-   Rows are controlled — value in, callback out. */
+/* The panel's popover shell, and the pickers too specific for dial.tsx: the
+   color seed, the neutral, the font list. Everything is controlled — value
+   in, callback out. */
 
-import { useState } from "react"
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsUpDownIcon,
-  RotateCcwIcon,
-  SearchIcon,
-  XIcon,
-} from "lucide-react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { createContext, useContext, useState } from "react"
+import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
-  Button as RacButton,
-  ListBox as RacListBox,
-  ListBoxItem as RacListBoxItem,
-  SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -32,10 +16,8 @@ import { FONT_CATALOG, fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { Collapsible, CollapsiblePanel } from "@/registry/ui/collapsible"
 import { ColorArea } from "@/registry/ui/color-area"
 import { ColorField } from "@/registry/ui/color-field"
-import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import {
@@ -43,7 +25,7 @@ import {
   ColorSwatchPickerItem,
 } from "@/registry/ui/color-swatch-picker"
 import { Command } from "@/registry/ui/command"
-import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { DialogContent } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
@@ -51,87 +33,64 @@ import {
   ListBoxSection,
   ListBoxSectionHeader,
 } from "@/registry/ui/list-box"
-import {
-  NumberField,
-  NumberFieldDecrement,
-  NumberFieldIncrement,
-} from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
-import { Select, SelectValue } from "@/registry/ui/select"
-import {
   Slider,
   SliderControl,
-  SliderFill,
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
-import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
-import { useLazyFontPreviews, useLoadedFamilies } from "@/modules/studio/fonts"
+import { useLazyFontPreviews } from "@/modules/studio/fonts"
 
-/* -------------------------------- Shared shell --------------------------- */
+/** Where row-attached overlays open. */
+const ROW_OVERLAY_PLACEMENT = "right top" as const
 
-export const ROW = "h-11 w-full rounded-xl bg-muted transition-colors"
-export const ROW_TRIGGER = cn(
-  ROW,
-  "flex items-center justify-between gap-3 px-4 text-left hover:bg-highlight pressed:bg-highlight",
-)
-export const ROW_LABEL = "truncate text-[0.8125rem] font-medium text-fg"
-export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
-/** What a fixed-height row becomes once it carries a description. */
-export const ROW_DESCRIBED = "h-auto py-2.5"
+/* A popover sits off the panel's edge by the panel's own padding, not off its
+   row: rows end at the padding, so the offset crosses it and the border. */
+const PANEL_PADDING = 8
+const PANEL_BORDER = 1
+const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
 
-/** Panel popovers open and close instantly — control feedback, not content. */
-export const INSTANT_POPOVER = "transition-none will-change-auto"
+/** The element panel popovers stay within — the panel's own height, so their
+ *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
+export const PanelPopoverBoundary = createContext<Element | null>(null)
 
-/** Where row-attached overlays (pickers, selects, menus) open. */
-export const ROW_OVERLAY_PLACEMENT = "right top" as const
+/** Panel popovers open and close instantly — control feedback, not content —
+ *  and wear the panel's own surface, raised: its card, hairline, radius and
+ *  padding, never the design system's popover recipe (that lives in the
+ *  preview). They show everything they hold: react-aria slides one that outgrows the
+ *  room below its row up to fit the boundary. Its inline max-height is
+ *  overridden so the box grows with its content — that growth is what
+ *  react-aria observes to re-slide it; a capped box would never report it.
+ *  The viewport cap is the last resort, where the content scrolls. */
+export function PanelPopover({
+  className,
+  placement = ROW_OVERLAY_PLACEMENT,
+  ...props
+}: Omit<React.ComponentProps<typeof Popover>, "className"> & {
+  className?: string
+}) {
+  const boundary = useContext(PanelPopoverBoundary)
+  return (
+    <Popover
+      placement={placement}
+      boundaryElement={boundary ?? undefined}
+      containerPadding={boundary ? 0 : undefined}
+      offset={boundary ? PANEL_POPOVER_OFFSET : undefined}
+      className={cn(
+        "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
  *  `text-left` is explicit — stacked, the label stretches to the column width
  *  and would otherwise inherit a `<button>`'s centered text. */
-export function RowLabel({
-  label,
-  description,
-}: {
-  label: string
-  description?: string
-}) {
-  return (
-    <span className="flex min-w-0 flex-col gap-0.5 text-left">
-      <span className={ROW_LABEL}>{label}</span>
-      {description && (
-        <span className="text-xs/snug text-pretty text-fg-muted">
-          {description}
-        </span>
-      )}
-    </span>
-  )
-}
-
-/* ------------------------------ Control group ----------------------------- */
-
-/**
- * Fuses adjacent rows into one card: shared surface, hairline separators,
- * only the group's corners round — the grouped-list look. Rows opt in by
- * carrying `data-row` on their surface element; a `data-preview` stage opts
- * in the same way but keeps its own surface and border, becoming the framed
- * specimen the rows below configure. Only its bottom edge squares off — the
- * top corners keep the group's radius, or the clip would shave the frame.
- */
-export function ControlGroup({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex w-full flex-col gap-px overflow-hidden rounded-lg bg-bg/50 **:data-preview:rounded-b-none **:data-row:rounded-none">
-      {children}
-    </div>
-  )
-}
-
 /* ------------------------------- Group title ------------------------------ */
 
 /** The line that opens a group: what the rows under it configure. Quieter than
@@ -145,297 +104,12 @@ export function GroupTitle({ children }: { children: React.ReactNode }) {
   )
 }
 
-/* ------------------------------ Section header ---------------------------- */
-
-/** A section marker: quiet uppercase label, modified dot, reset on the right. */
-export function SectionHeader({
-  label,
-  modified,
-  onReset,
-  className,
-}: {
-  label: string
-  modified?: boolean
-  onReset?: () => void
-  className?: string
-}) {
-  return (
-    <div
-      className={cn(
-        "mt-3 flex h-7 items-center gap-1.5 px-1 first:mt-0",
-        className,
-      )}
-    >
-      <span className="text-[11px] font-semibold tracking-wider text-fg-muted uppercase">
-        {label}
-      </span>
-      {modified && (
-        <>
-          <span
-            aria-label="Modified"
-            className="size-1 rounded-full bg-accent"
-          />
-          {onReset && (
-            <Button
-              size="xs"
-              variant="quiet"
-              isIconOnly
-              aria-label={`Reset ${label.toLowerCase()}`}
-              onPress={onReset}
-              className="ml-auto text-fg-muted"
-            >
-              <RotateCcwIcon />
-            </Button>
-          )}
-        </>
-      )}
-    </div>
-  )
-}
-
-/* -------------------------------- Action row ------------------------------- */
-
-/** A verb as a row: centered label, accent for actions, danger for destructive. */
-export function ActionRow({
-  label,
-  onPress,
-  destructive,
-}: {
-  label: string
-  onPress: () => void
-  destructive?: boolean
-}) {
-  return (
-    <RacButton
-      data-row=""
-      onPress={onPress}
-      className={cn(
-        ROW,
-        "flex cursor-interactive items-center justify-center px-4 text-[0.8125rem] font-medium focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight",
-        destructive ? "text-danger" : "text-accent",
-      )}
-    >
-      {label}
-    </RacButton>
-  )
-}
-
-/* -------------------------------- Drill-in row ----------------------------- */
-
-/** A navigation row: label left, current value + chevron right, pushes a
- *  sub-panel. Depth lives here; the accordion handles breadth. */
-export function DrillInRow({
-  label,
-  description,
-  value,
-  onPress,
-}: {
-  label: string
-  description?: string
-  value?: React.ReactNode
-  onPress: () => void
-}) {
-  return (
-    <RacButton
-      data-row=""
-      onPress={onPress}
-      className={cn(
-        ROW_TRIGGER,
-        "cursor-interactive focus-reset focus-visible:focus-ring",
-        description && ROW_DESCRIBED,
-      )}
-    >
-      <RowLabel label={label} description={description} />
-      <span className="flex min-w-0 shrink-0 items-center gap-1.5">
-        {value && <span className={ROW_VALUE}>{value}</span>}
-        <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
-      </span>
-    </RacButton>
-  )
-}
-
-/* ------------------------------ Disclosure row ---------------------------- */
-
-/**
- * A row that opens in place: label left, current value and chevron right, its
- * own rows inside. The panel's answer to depth that shouldn't cost a
- * sub-panel — DrillInRow pushes, this one unfolds.
- */
-export function DisclosureRow({
-  label,
-  description,
-  value,
-  defaultExpanded,
-  inset,
-  children,
-}: {
-  label: string
-  description?: string
-  /** What the row reads back while collapsed. */
-  value?: React.ReactNode
-  defaultExpanded?: boolean
-  /** Drops the content onto a recessed, hairlined surface — separates the
-   *  panel from its rows when the flat look reads as one long card. */
-  inset?: boolean
-  children?: React.ReactNode
-}) {
-  return (
-    <Collapsible
-      id={label}
-      defaultExpanded={defaultExpanded}
-      className={cn(
-        "w-full rounded-xl bg-muted",
-        // The root owns the recessed surface; the header keeps its own row
-        // fill and reads as raised on it, content rows clear theirs below.
-        inset &&
-          "bg-[color-mix(in_oklab,var(--color-card),var(--color-muted))]",
-      )}
-    >
-      <RacButton
-        slot="trigger"
-        data-row=""
-        className={cn(
-          ROW_TRIGGER,
-          "cursor-interactive focus-reset focus-visible:focus-ring",
-          description && ROW_DESCRIBED,
-        )}
-      >
-        <RowLabel label={label} description={description} />
-        <span className="flex shrink-0 items-center gap-1.5">
-          {value && <span className={ROW_VALUE}>{value}</span>}
-          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
-        </span>
-      </RacButton>
-      <CollapsiblePanel className="text-inherit">
-        {/* No inset either way: rows inside carry the trigger's own padding,
-            so content shares the header's text edges on both sides. */}
-        <div
-          className={cn(
-            "flex flex-col pb-2",
-            // Symmetric padding: the raised header needs the same breathing
-            // room above the content as below it.
-            inset && "pt-2 **:data-row:bg-transparent",
-          )}
-        >
-          {children}
-        </div>
-      </CollapsiblePanel>
-    </Collapsible>
-  )
-}
-
-/* --------------------------------- Select -------------------------------- */
-
-export interface SelectRowOption {
-  value: string
-  label: string
-  /** Optional glyph shown before the label in the list and in the trigger. */
-  icon?: React.ReactNode
-  /** Grid layout only: the artwork drawn on the card. Falls back to `icon`. */
-  illustration?: React.ReactNode
-}
-
-/** A listbox trigger shaped as a settings row: label left, value + chevrons right. */
-export function SelectRow({
-  label,
-  description,
-  value,
-  onChange,
-  options,
-  layout = "list",
-}: {
-  label: string
-  description?: string
-  value: string
-  onChange: (value: string) => void
-  options: SelectRowOption[]
-  /** `grid` swaps the dropdown list for illustrated cards — artwork on top,
-   *  label below — with 2D arrow-key navigation. Pick by look, in a popover. */
-  layout?: "list" | "grid"
-}) {
-  const selected = options.find((o) => o.value === value)
-  return (
-    <Select
-      selectedKey={value}
-      onSelectionChange={(key) => onChange(key as string)}
-      /* The popover stays up after a pick: choosing a style is comparison,
-         not commitment — you step through the options against the specimen
-         behind them, then dismiss when one wins. */
-      shouldCloseOnSelect={false}
-      aria-label={label}
-      className="w-full"
-    >
-      <Button
-        variant="quiet"
-        data-row=""
-        className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-      >
-        <RowLabel label={label} description={description} />
-        <span className="flex shrink-0 items-center gap-1.5">
-          {selected?.icon && (
-            <span className="text-fg-muted **:[svg]:size-3.5">
-              {selected.icon}
-            </span>
-          )}
-          <SelectValue className={cn(ROW_VALUE, "text-right")} />
-          <ChevronsUpDownIcon className="size-3.5 text-fg-muted" />
-        </span>
-      </Button>
-      <Popover
-        className={cn("w-(--trigger-width)", INSTANT_POPOVER)}
-        placement={ROW_OVERLAY_PLACEMENT}
-      >
-        {layout === "grid" ? (
-          /* Raw RAC listbox: Select wires it up through context, and
-             layout="grid" gives the cards real 2D arrow-key navigation. */
-          <RacListBox
-            layout="grid"
-            className="grid max-h-[inherit] grid-cols-2 gap-2 overflow-auto p-2 outline-hidden"
-          >
-            {options.map((opt) => (
-              <RacListBoxItem
-                key={opt.value}
-                id={opt.value}
-                textValue={opt.label}
-                className="relative flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg"
-              >
-                {({ isSelected }) => (
-                  <>
-                    {isSelected && (
-                      <CheckIcon className="absolute top-2 right-2 size-3.5" />
-                    )}
-                    <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
-                      {opt.illustration ?? opt.icon}
-                    </span>
-                    <span className="truncate text-xs">{opt.label}</span>
-                  </>
-                )}
-              </RacListBoxItem>
-            ))}
-          </RacListBox>
-        ) : (
-          <ListBox>
-            {options.map((opt) => (
-              <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
-                <span className="flex items-center gap-2 **:[svg]:size-4">
-                  {opt.icon}
-                  {opt.label}
-                </span>
-              </ListBoxItem>
-            ))}
-          </ListBox>
-        )}
-      </Popover>
-    </Select>
-  )
-}
-
 /* ------------------------------- Drafting -------------------------------- */
 
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
  *  controls commit once on release instead of on every frame. */
-function useDraft<T>(committed: T) {
+export function useDraft<T>(committed: T) {
   const [draft, setDraft] = useState(committed)
   const [seed, setSeed] = useState(committed)
   if (seed !== committed) {
@@ -459,151 +133,58 @@ const COLOR_PRESETS = [
   "#EC4899",
   "#F43F5E",
 ]
-
-/** A color-picker trigger shaped as a settings row: label left, hex + swatch right. */
-export function ColorPickerRow({
-  label,
-  description,
-  layout = "row",
-  value,
-  onChange,
-  ramp,
+/** The seed picker's popover: presets, area, hue, hex. Discrete controls
+ *  commit at once; the area and hue slider commit on release. */
+export function ColorPickerPopover({
+  commit,
+  placement = ROW_OVERLAY_PLACEMENT,
+  children,
 }: {
-  label: string
-  description?: string
-  /** `tile` trades the row's width for height: the swatch becomes the face of
-   *  the control, big enough to judge the color rather than identify it.
-   *  `palette` keeps the row line and adds the resolved scale under it —
-   *  the seed and what it becomes, in one trigger. Requires `ramp`. */
-  layout?: "row" | "tile" | "palette"
-  value: string
-  onChange: (hex: string) => void
-  /** The resolved scale the seed produces, lightest step first (`palette`). */
-  ramp?: string[]
+  commit: (color: Color | null) => void
+  placement?: React.ComponentProps<typeof Popover>["placement"]
+  /** Rows under the hex field — settings that belong to this one color. */
+  children?: React.ReactNode
 }) {
-  const tile = layout === "tile"
-  const palette = layout === "palette"
-  // The area and hue slider drag through the draft; the recipe resolves on
-  // release. Swatches and the hex field are discrete, so they commit at once.
-  const [draft, setDraft] = useDraft<string | Color>(value)
-  const commit = (color: Color | null) =>
-    color && onChange(color.toString("hex"))
   return (
-    <ColorPicker value={draft} onChange={setDraft}>
-      {({ color }) => (
-        <>
-          {tile ? (
-            <Button
-              variant="quiet"
-              className="flex h-auto w-full items-center justify-between gap-3 rounded-xl bg-muted p-3 text-left hover:bg-highlight pressed:bg-highlight"
-            >
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className={ROW_LABEL}>{label}</span>
-                <span className={cn(ROW_VALUE, "font-mono text-xs uppercase")}>
-                  {color.toString("hex")}
-                </span>
-                {description && (
-                  <span className="text-xs/snug text-pretty text-fg-muted">
-                    {description}
-                  </span>
-                )}
-              </span>
-              <ColorSwatch className="size-5 shrink-0 rounded-full" />
-            </Button>
-          ) : palette ? (
-            <Button
-              variant="quiet"
-              data-row=""
-              className={cn(
-                ROW,
-                "flex h-auto flex-col items-stretch gap-2.5 px-4 py-3 text-left hover:bg-highlight pressed:bg-highlight",
-              )}
-            >
-              <span className="flex items-center justify-between gap-3">
-                <RowLabel label={label} description={description} />
-                <span className="flex shrink-0 items-center gap-2.5">
-                  <span className={cn(ROW_VALUE, "font-mono uppercase")}>
-                    {color.toString("hex")}
-                  </span>
-                  <ColorSwatch className="size-5 rounded-full" />
-                </span>
-              </span>
-              {/* Hairline: the near-white end would otherwise dissolve into
-                  the row and the scale would look short. */}
-              <span className="flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
-                {ramp?.map((step, i) => (
-                  <span
-                    key={i}
-                    className="flex-1"
-                    style={{ background: step }}
-                  />
-                ))}
-              </span>
-            </Button>
-          ) : (
-            <Button
-              variant="quiet"
-              data-row=""
-              className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-            >
-              <RowLabel label={label} description={description} />
-              <span className="flex shrink-0 items-center gap-2.5">
-                <span className={cn(ROW_VALUE, "font-mono uppercase")}>
-                  {color.toString("hex")}
-                </span>
-                <ColorSwatch className="size-5 rounded-full" />
-              </span>
-            </Button>
-          )}
-          <Popover
-            // A tile is as wide as the picker, so opening below it keeps the
-            // two edges aligned; a row has no width to align to.
-            placement={tile ? "bottom start" : ROW_OVERLAY_PLACEMENT}
-            className={cn("w-64 min-w-0", INSTANT_POPOVER)}
-          >
-            <DialogContent className="flex flex-col gap-3 p-3">
-              <ColorSwatchPicker
-                className="justify-between gap-0"
-                onChange={commit}
-              >
-                {COLOR_PRESETS.map((preset) => (
-                  <ColorSwatchPickerItem
-                    key={preset}
-                    color={preset}
-                    className="size-5 rounded-full ring-offset-2 ring-offset-popover before:hidden selected:ring-2 selected:ring-(--color)"
-                  />
-                ))}
-              </ColorSwatchPicker>
-              <ColorArea
-                aria-label="Saturation and brightness"
-                colorSpace="hsb"
-                xChannel="saturation"
-                yChannel="brightness"
-                onChangeEnd={commit}
-                className="w-full rounded-xl"
-              />
-              <ColorSlider
-                aria-label="Hue"
-                colorSpace="hsb"
-                channel="hue"
-                onChangeEnd={commit}
-                className="w-full"
-              >
-                <ColorSliderControl className="h-5 rounded-full" />
-              </ColorSlider>
-              <ColorField aria-label="Hex" onChange={commit} className="w-full">
-                <InputGroup size="sm" className="w-full">
-                  <InputGroupAddon>
-                    <ColorSwatch className="size-4 rounded-full" />
-                  </InputGroupAddon>
-                  <Input className="font-mono uppercase" />
-                </InputGroup>
-              </ColorField>
-            </DialogContent>
-          </Popover>
-        </>
-      )}
-    </ColorPicker>
+    <PanelPopover placement={placement} className="w-64 min-w-0">
+      <DialogContent className="flex flex-col gap-3 p-2">
+        <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
+          {COLOR_PRESETS.map((preset) => (
+            <ColorSwatchPickerItem
+              key={preset}
+              color={preset}
+              className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden selected:ring-2 selected:ring-(--color)"
+            />
+          ))}
+        </ColorSwatchPicker>
+        <ColorArea
+          aria-label="Saturation and brightness"
+          colorSpace="hsb"
+          xChannel="saturation"
+          yChannel="brightness"
+          onChangeEnd={commit}
+          className="w-full rounded-xl"
+        />
+        <ColorSlider
+          aria-label="Hue"
+          colorSpace="hsb"
+          channel="hue"
+          onChangeEnd={commit}
+          className="w-full"
+        >
+          <ColorSliderControl className="h-5 rounded-full" />
+        </ColorSlider>
+        <ColorField aria-label="Hex" onChange={commit} className="w-full">
+          <InputGroup size="sm" className="w-full">
+            <InputGroupAddon>
+              <ColorSwatch className="size-4 rounded-full" />
+            </InputGroupAddon>
+            <Input className="font-mono uppercase" />
+          </InputGroup>
+        </ColorField>
+        {children}
+      </DialogContent>
+    </PanelPopover>
   )
 }
 
@@ -729,26 +310,54 @@ function NeutralSlider({
   )
 }
 
+/** What the row reads back: the family the committed value lands on. */
+export function neutralFamily(value: NeutralValue, brandHue: number) {
+  if (value.tint === 0) return PURE_GRAY.label
+  if (value.hue === null) return "Auto"
+  return nearestFamilyName(value.hue ?? brandHue)
+}
+
 /** Steps 50 / 200 / 400 / 600 / 800 — enough of the scale to recognise it. */
 const TRIGGER_STEPS = [1, 3, 5, 7, 9]
+/** Five steps of the resolved scale in a pill. Hairline: the near-black end
+ *  of a dark ramp would otherwise dissolve into the row and the scale would
+ *  look half as long. */
+export function NeutralStrip({
+  ramp,
+  className,
+}: {
+  ramp: string[]
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        "flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60",
+        className,
+      )}
+    >
+      {TRIGGER_STEPS.map((step) => (
+        <span
+          key={step}
+          className="flex-1"
+          style={{ background: ramp[step] }}
+        />
+      ))}
+    </span>
+  )
+}
 
-/** The neutral as a row: its scale on the right, opening the two axes that
- *  produce it. The preview is the resolved scale, not a restatement of inputs. */
-export function NeutralPickerRow({
-  label = "Neutral",
-  description,
+/** The neutral's popover: family seeds, then the hue and tint sliders. Must
+ *  render inside a Dialog trigger. */
+export function NeutralPickerPopover({
   value,
   onChange,
   brandHue,
   ramp,
 }: {
-  label?: string
-  description?: string
   value: NeutralValue
   onChange: (value: NeutralValue) => void
-  /** The brand's OKLCH hue — what the `Brand` tint follows. */
   brandHue: number
-  /** The resolved neutral scale, lightest step first. */
   ramp: string[]
 }) {
   // Seven dots can't carry their names at 20px, so the Hue readout speaks for
@@ -762,7 +371,7 @@ export function NeutralPickerRow({
     tint === 0
       ? PURE_GRAY.label
       : value.hue === null && hue === brandHue
-        ? "From brand"
+        ? "Auto"
         : nearestFamilyName(hue)
   const preset =
     value.tint === 0
@@ -771,121 +380,85 @@ export function NeutralPickerRow({
         ? "brand"
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
-    <Dialog>
-      <Button
-        variant="quiet"
-        data-row=""
-        className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-      >
-        <RowLabel label={label} description={description} />
-        <span className="flex shrink-0 items-center gap-2.5">
-          <span className={ROW_VALUE}>{family}</span>
-          {/* Hairline: the near-black end of a dark ramp would otherwise
-              dissolve into the row and the scale would look half as long. */}
-          <span className="flex h-5 w-14 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
-            {TRIGGER_STEPS.map((step) => (
-              <span
-                key={step}
-                className="flex-1"
-                style={{ background: ramp[step] }}
-              />
-            ))}
-          </span>
-        </span>
-      </Button>
-      <Popover
-        placement={ROW_OVERLAY_PLACEMENT}
-        className={cn("w-64 min-w-0", INSTANT_POPOVER)}
-      >
-        <DialogContent className="flex flex-col gap-3 p-3">
-          {/* Seeds, same as the brand picker: one tap to a known gray family,
-              then the sliders for anything between them. Tapping while flat
-              also restores the lean, or the tap would do nothing visible. */}
-          <RacToggleButtonGroup
-            aria-label="Neutral presets"
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={preset ? [preset] : []}
-            onSelectionChange={(keys) => {
-              const next = keys.values().next().value
-              if (!next) return
-              if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
-              const picked = NEUTRAL_FAMILIES.find(
-                (option) => option.id === next,
-              )
-              // A family tapped while flat also restores the lean, or the tap
-              // would leave the same gray on screen.
-              onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
-            }}
-            className="flex justify-between"
+    <PanelPopover className="w-64 min-w-0">
+      <DialogContent className="flex flex-col gap-3 p-2">
+        {/* Seeds, same as the brand picker: one tap to a known gray family,
+            then the sliders for anything between them. Tapping while flat
+            also restores the lean, or the tap would do nothing visible. */}
+        <RacToggleButtonGroup
+          aria-label="Neutral presets"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={preset ? [preset] : []}
+          onSelectionChange={(keys) => {
+            const next = keys.values().next().value
+            if (!next) return
+            if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
+            const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
+            onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
+          }}
+          className="flex justify-between"
+        >
+          {/* Auto is named, not a dot: following the brand is the default
+              and a gray that quietly tracks another color has to say so. */}
+          <RacToggleButton
+            id="brand"
+            onHoverStart={() => setHovered("Auto")}
+            onHoverEnd={() => setHovered(null)}
+            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
           >
-            {/* Auto is named, not a dot: following the brand is the default
-                and a gray that quietly tracks another color has to say so. */}
+            <span
+              className="size-4 rounded-full"
+              style={{ background: sample(brandHue) }}
+            />
+            Auto
+          </RacToggleButton>
+          {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
             <RacToggleButton
-              id="brand"
-              onHoverStart={() => setHovered("From brand")}
+              key={option.id}
+              id={option.id}
+              aria-label={option.label}
+              onHoverStart={() => setHovered(option.label)}
               onHoverEnd={() => setHovered(null)}
-              className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-            >
-              <span
-                className="size-4 rounded-full"
-                style={{ background: sample(brandHue) }}
-              />
-              Auto
-            </RacToggleButton>
-            {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map(
-              (option) => (
-                <RacToggleButton
-                  key={option.id}
-                  id={option.id}
-                  aria-label={option.label}
-                  onHoverStart={() => setHovered(option.label)}
-                  onHoverEnd={() => setHovered(null)}
-                  style={{
-                    background:
-                      option.hue === null ? sample(0, 0) : sample(option.hue),
-                  }}
-                  className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-popover focus-visible:focus-ring selected:ring-2 selected:ring-accent"
-                />
-              ),
-            )}
-          </RacToggleButtonGroup>
+              style={{
+                background:
+                  option.hue === null ? sample(0, 0) : sample(option.hue),
+              }}
+              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring selected:ring-2 selected:ring-accent"
+            />
+          ))}
+        </RacToggleButtonGroup>
 
-          <NeutralSlider
-            label="Hue"
-            note={hovered ?? family}
-            value={hue}
-            maxValue={360}
-            step={1}
-            track={HUE_TRACK}
-            thumb={sample(hue)}
-            onChange={setHue}
-            onChangeEnd={(next) => onChange({ ...value, hue: next })}
-          />
+        <NeutralSlider
+          label="Hue"
+          note={hovered ?? family}
+          value={hue}
+          maxValue={360}
+          step={1}
+          track={HUE_TRACK}
+          thumb={sample(hue)}
+          onChange={setHue}
+          onChangeEnd={(next) => onChange({ ...value, hue: next })}
+        />
 
-          <NeutralSlider
-            label="Tint"
-            value={tint}
-            maxValue={MAX_TINT}
-            step={0.05}
-            track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
-            thumb={sample(hue, tint)}
-            onChange={setTint}
-            onChangeEnd={(next) => onChange({ ...value, tint: next })}
-          />
+        <NeutralSlider
+          label="Tint"
+          value={tint}
+          maxValue={MAX_TINT}
+          step={0.05}
+          track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
+          thumb={sample(hue, tint)}
+          onChange={setTint}
+          onChangeEnd={(next) => onChange({ ...value, tint: next })}
+        />
 
-          <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
-            {ramp.map((step) => (
-              <span
-                key={step}
-                className="flex-1"
-                style={{ background: step }}
-              />
-            ))}
-          </div>
-        </DialogContent>
-      </Popover>
-    </Dialog>
+        <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
+          {ramp.map((step) => (
+            <span key={step} className="flex-1" style={{ background: step }} />
+          ))}
+        </div>
+      </DialogContent>
+    </PanelPopover>
   )
 }
 
@@ -901,10 +474,7 @@ export function FontListPopover({
 }) {
   const listRef = useLazyFontPreviews()
   return (
-    <Popover
-      className={cn("w-(--trigger-width) outline-hidden", INSTANT_POPOVER)}
-      placement={ROW_OVERLAY_PLACEMENT}
-    >
+    <PanelPopover className="w-(--trigger-width) outline-hidden">
       <Command>
         <SearchField autoFocus aria-label="Search fonts">
           <InputGroup>
@@ -949,686 +519,6 @@ export function FontListPopover({
           </ListBox>
         </div>
       </Command>
-    </Popover>
-  )
-}
-
-/** A searchable font trigger shaped as a settings row: label left, the family
- *  itself set in its own typeface on the right — the row doubles as a specimen. */
-export function FontPickerRow({
-  label,
-  description,
-  categories,
-  selectedKey,
-  onChange,
-}: {
-  label: string
-  description?: string
-  categories: FontCategory[]
-  selectedKey: string
-  onChange: (family: string) => void
-}) {
-  useLoadedFamilies([selectedKey])
-  return (
-    <Select
-      className="w-full"
-      selectedKey={selectedKey}
-      onSelectionChange={(key) => onChange(key as string)}
-      aria-label={label}
-    >
-      <Button
-        variant="quiet"
-        data-row=""
-        className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-      >
-        <RowLabel label={label} description={description} />
-        <span className="flex min-w-0 items-center gap-1.5">
-          <SelectValue
-            className={cn(ROW_VALUE, "text-right")}
-            style={{ fontFamily: fontStack(selectedKey) }}
-          />
-          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
-        </span>
-      </Button>
-      <FontListPopover categories={categories} />
-    </Select>
-  )
-}
-
-/* ---------------------------------- Slider --------------------------------- */
-
-/** A full-bleed slider shaped as a settings row: the entire pill is the drag
- *  surface, label and value float on top, the fill reads as row progress. */
-export function SliderRow({
-  label,
-  description,
-  value,
-  onChange,
-  minValue = 0,
-  maxValue = 1,
-  step = 0.05,
-  format = (v: number) => v.toFixed(2),
-  trackStyle,
-  ticks,
-}: {
-  label: string
-  /** Sits under the pill, not beside the label: the whole row is the drag
-   *  surface here, so a second line inside it would be dragged, not read. */
-  description?: string
-  value: number
-  onChange: (value: number) => void
-  minValue?: number
-  maxValue?: number
-  step?: number
-  format?: (value: number) => string
-  /** Style the track from the current value — lets the control demo itself
-   *  (e.g. the Radius row rounding its own corners as you drag). */
-  trackStyle?: React.CSSProperties
-  /** Values worth stopping at, marked on the track as faint dots. */
-  ticks?: number[]
-}) {
-  return (
-    <div className="flex w-full flex-col gap-1.5">
-      <Slider
-        aria-label={label}
-        value={value}
-        minValue={minValue}
-        maxValue={maxValue}
-        step={step}
-        onChange={(v) => onChange(v as number)}
-        className="relative w-full"
-      >
-        <SliderControl>
-          <SliderTrack
-            data-row=""
-            className={cn(ROW, "relative overflow-hidden")}
-            style={trackStyle}
-          >
-            <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
-            {ticks?.map((tick) => (
-              <span
-                key={tick}
-                className="absolute top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/20"
-                style={{
-                  left: `${((tick - minValue) / (maxValue - minValue)) * 100}%`,
-                }}
-              />
-            ))}
-          </SliderTrack>
-          <SliderThumb className="z-10 h-5 w-0.5 rounded-full bg-fg/25" />
-        </SliderControl>
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-between px-4">
-          <span className={ROW_LABEL}>{label}</span>
-          <span className={cn(ROW_VALUE, "font-mono tabular-nums")}>
-            {format(value)}
-          </span>
-        </div>
-      </Slider>
-      {description && (
-        <span className="px-4 text-xs/snug text-pretty text-fg-muted">
-          {description}
-        </span>
-      )}
-    </div>
-  )
-}
-
-/* ---------------------------------- Switch --------------------------------- */
-
-/** A switch shaped as a settings row: the whole pill toggles, knob on the right. */
-export function SwitchRow({
-  label,
-  description,
-  value,
-  onChange,
-}: {
-  label: string
-  /** One line on what the switch actually changes — for axes whose name isn't
-   *  self-evident. The row grows to fit it; short labels stay one line. */
-  description?: string
-  value: boolean
-  onChange: (value: boolean) => void
-}) {
-  return (
-    <Switch
-      aria-label={label}
-      size="sm"
-      isSelected={value}
-      onChange={onChange}
-      className="w-full"
-    >
-      <SwitchControl
-        data-row=""
-        className={cn(ROW_TRIGGER, "border-0", description && ROW_DESCRIBED)}
-      >
-        <RowLabel label={label} description={description} />
-        <SwitchIndicator className="bg-highlight selected:bg-accent" />
-      </SwitchControl>
-    </Switch>
-  )
-}
-
-/* -------------------------------- Specimens -------------------------------- */
-
-/* The metrics every specimen shares, so the same component reads identically
-   whether it sits in an option card or on a preview stage. Surface and radius
-   stay with the caller — those are what a specimen is there to show. */
-export const SPECIMEN_BUTTON =
-  "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium"
-export const SPECIMEN_FIELD =
-  "flex h-8 w-full min-w-0 items-center px-2.5 text-[0.8125rem]"
-
-/* Spans, not real controls: a button can't nest in the option card's toggle. */
-
-export function MiniButton({ className }: { className: string }) {
-  return (
-    <span
-      className={cn(
-        SPECIMEN_BUTTON,
-        "rounded-(--studio-btn-radius)",
-        className,
-      )}
-    >
-      Button
-    </span>
-  )
-}
-
-export function MiniInput({ className }: { className: string }) {
-  return (
-    <span className={cn(SPECIMEN_FIELD, "text-fg-muted", className)}>
-      Value
-    </span>
-  )
-}
-
-/* ------------------------------- Option grid ------------------------------- */
-
-export interface OptionGridItem {
-  id: string
-  label: string
-  /** Renders the option's mini specimen inside the card. */
-  preview: React.ReactNode
-}
-
-/** The bare specimen grid — shared by the inline row and the expandable row. */
-function OptionGrid({
-  ariaLabel,
-  value,
-  onChange,
-  options,
-  columns = 2,
-  variant = "card",
-}: {
-  ariaLabel: string
-  value: string
-  onChange: (id: string) => void
-  options: OptionGridItem[]
-  columns?: number
-  /** `plain` drops the card surface: specimens sit right on the panel. */
-  variant?: "card" | "plain"
-}) {
-  return (
-    // A listbox, not a toggle group: grid layout gives the cards 2-D arrow-key
-    // navigation, which a ToggleButtonGroup (1-D) can't.
-    <RacListBox
-      aria-label={ariaLabel}
-      layout="grid"
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[value]}
-      onSelectionChange={(keys) => {
-        if (keys === "all") return
-        const next = keys.values().next().value
-        if (next) onChange(next as string)
-      }}
-      className="grid gap-1.5"
-      style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
-    >
-      {options.map((option) => (
-        <RacListBoxItem
-          key={option.id}
-          id={option.id}
-          aria-label={option.label}
-          textValue={option.label}
-          className={cn(
-            "relative flex min-w-0 cursor-interactive items-center justify-center rounded-lg p-4 focus-reset transition-transform after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:bg-white/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]",
-            variant === "card"
-              ? "bg-bg selected:inset-ring selected:inset-ring-accent"
-              : "border border-border transition-[background-color,transform] selected:bg-white/10",
-          )}
-        >
-          <span className="flex w-full min-w-0 items-center justify-center">
-            {option.preview}
-          </span>
-        </RacListBoxItem>
-      ))}
-    </RacListBox>
-  )
-}
-
-/**
- * A tall row whose body is a grid of selectable cards, each rendering its
- * option as a mini specimen — pick by look, not by name.
- */
-export function OptionGridRow({
-  label,
-  description,
-  value,
-  onChange,
-  options,
-  columns,
-  variant,
-}: {
-  label: string
-  description?: string
-  value: string
-  onChange: (id: string) => void
-  options: OptionGridItem[]
-  columns?: number
-  /** `plain` drops the card surface: specimens sit right on the panel. */
-  variant?: "card" | "plain"
-}) {
-  const selected = options.find((o) => o.id === value)
-  return (
-    <div className="w-full rounded-xl bg-muted p-2">
-      {/* mb-1 + the h-8 line box's slack ≈ the 10px header-to-content gap the
-          palette row sets with gap-2.5; the described padding lands there too. */}
-      <div
-        className={cn(
-          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
-          description && "h-auto py-1.5",
-        )}
-      >
-        <RowLabel label={label} description={description} />
-        <span className={ROW_VALUE}>{selected?.label}</span>
-      </div>
-      <OptionGrid
-        ariaLabel={label}
-        value={value}
-        onChange={onChange}
-        options={options}
-        columns={columns}
-        variant={variant}
-      />
-    </div>
-  )
-}
-
-/* ------------------------------ Option pager ------------------------------- */
-
-/** The step chevron shared by both arrow placements. */
-function PagerArrowButton({
-  direction,
-  onPress,
-}: {
-  direction: -1 | 1
-  onPress: () => void
-}) {
-  const Icon = direction === 1 ? ChevronRightIcon : ChevronLeftIcon
-  return (
-    <RacButton
-      aria-label={direction === 1 ? "Next option" : "Previous option"}
-      onPress={onPress}
-      className="flex size-7 shrink-0 cursor-interactive items-center justify-center rounded-md text-fg-muted focus-reset transition-colors hover:bg-white/5 hover:text-fg focus-visible:focus-ring pressed:bg-white/10"
-    >
-      <Icon className="size-3.5" />
-    </RacButton>
-  )
-}
-
-/**
- * OptionGridRow's purpose in a single card: one option's specimen at a time,
- * chevrons stepping through the rest. Stepping is selecting — landing on an
- * option picks it — and the ends wrap. For sets too long for a grid.
- */
-export function OptionPagerRow({
-  label,
-  description,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  description?: string
-  value: string
-  onChange: (id: string) => void
-  options: OptionGridItem[]
-}) {
-  const index = Math.max(
-    0,
-    options.findIndex((option) => option.id === value),
-  )
-  const selected = options[index]
-  // The chevron pressed decides which side the incoming specimen enters from.
-  const [direction, setDirection] = useState(1)
-  const reducedMotion = useReducedMotion()
-  const offset = reducedMotion ? 0 : direction * 60
-  const step = (delta: number) => {
-    const next = options[(index + delta + options.length) % options.length]
-    if (next) {
-      setDirection(delta)
-      onChange(next.id)
-    }
-  }
-  return (
-    <div className="w-full rounded-xl bg-muted p-2">
-      {/* Same 10px header-to-content rhythm as OptionGridRow. */}
-      <div
-        className={cn(
-          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
-          description && "h-auto py-1.5",
-        )}
-      >
-        <RowLabel label={label} description={description} />
-        <span aria-live="polite" className={ROW_VALUE}>
-          {selected?.label}
-        </span>
-      </div>
-      <div className="flex items-center gap-1">
-        <PagerArrowButton direction={-1} onPress={() => step(-1)} />
-        {/* The frame is the constant — specimens slide through it from the
-            side of the chevron pressed; the accent dot below marks selection. */}
-        <div className="relative min-w-0 flex-1 overflow-hidden rounded-lg bg-bg p-4">
-          <AnimatePresence initial={false} custom={offset} mode="popLayout">
-            <motion.span
-              key={selected?.id}
-              custom={offset}
-              variants={{
-                enter: (o: number) => ({ x: `${o}%`, opacity: 0 }),
-                center: { x: "0%", opacity: 1 },
-                exit: (o: number) => ({ x: `${-o}%`, opacity: 0 }),
-              }}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
-              className="flex w-full min-w-0 items-center justify-center"
-            >
-              {selected?.preview}
-            </motion.span>
-          </AnimatePresence>
-        </div>
-        <PagerArrowButton direction={1} onPress={() => step(1)} />
-      </div>
-      <div className="flex items-center justify-center gap-1.5 pt-2 pb-1">
-        {options.map((option) => (
-          <span
-            key={option.id}
-            className={cn(
-              "h-1.5 rounded-full transition-[width,background-color] duration-200 ease-out",
-              option.id === value ? "w-3 bg-accent" : "w-1.5 bg-fg/20",
-            )}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* -------------------------------- Segmented -------------------------------- */
-
-export interface SegmentedRowOption {
-  value: string
-  /** Text or an icon glyph. Icon-only segments must set `ariaLabel`. */
-  label: React.ReactNode
-  ariaLabel?: string
-}
-
-/**
- * A segmented control shaped as a settings row: label left, joined pills
- * right. Built on the real `ui/segmented-control` rather than a hand-styled
- * toggle group — one implementation to keep in step with the registry.
- */
-export function SegmentedControlRow({
-  label,
-  description,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  description?: string
-  value: string
-  onChange: (value: string) => void
-  options: SegmentedRowOption[]
-}) {
-  return (
-    <div
-      data-row=""
-      className={cn(
-        ROW,
-        // Wraps: a control too wide for the label's line drops under it,
-        // right-aligned, instead of clipping.
-        "flex h-auto min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-1.5 py-1.5 pr-1.5 pl-4",
-        description && ROW_DESCRIBED,
-      )}
-    >
-      <RowLabel label={label} description={description} />
-      <SegmentedControl
-        aria-label={label}
-        selectedKeys={[value]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="ml-auto shrink-0 bg-bg/50 p-0.5"
-      >
-        {options.map((option) => (
-          <SegmentedControlItem
-            key={option.value}
-            id={option.value}
-            aria-label={option.ariaLabel}
-            className="text-xs"
-          >
-            {option.label}
-          </SegmentedControlItem>
-        ))}
-      </SegmentedControl>
-    </div>
-  )
-}
-
-/* --------------------------------- Stepper --------------------------------- */
-
-/** A numeric stepper shaped as a settings row: label left, − value + right. */
-export function StepperRow({
-  label,
-  description,
-  value,
-  onChange,
-  minValue,
-  maxValue,
-  step = 1,
-  unit,
-}: {
-  label: string
-  description?: string
-  value: number
-  onChange: (value: number) => void
-  minValue?: number
-  maxValue?: number
-  step?: number
-  unit?: string
-}) {
-  return (
-    <NumberField
-      aria-label={label}
-      value={value}
-      onChange={onChange}
-      minValue={minValue}
-      maxValue={maxValue}
-      step={step}
-      className="w-full"
-    >
-      <div
-        data-row=""
-        className={cn(
-          ROW,
-          // pr-2 matches the 8px the 28px group leaves above and below it, so
-          // the control sits equally inset on all three sides.
-          "flex items-center justify-between gap-3 pr-2 pl-4",
-          description && ROW_DESCRIBED,
-        )}
-      >
-        <RowLabel label={label} description={description} />
-        {/* Value first, then the pair that nudges it: the number reads as the
-            row's value like any other row, instead of being split by its own
-            controls. */}
-        <div className="flex shrink-0 items-center gap-2">
-          <div className="flex items-baseline gap-0.5">
-            <Input className="h-7 w-8 border-0 bg-transparent p-0 text-right text-[0.8125rem] tabular-nums" />
-            {unit && <span className={cn(ROW_VALUE, "text-xs")}>{unit}</span>}
-          </div>
-          {/* The surface sits on each button, not on a wrapper, so the 1px gap
-              between them lets the row show through as the hairline. Outer
-              corners round, inner corners square: one widget, two halves. */}
-          <div className="flex items-center gap-px">
-            <NumberFieldDecrement
-              variant="quiet"
-              size="sm"
-              className="size-7 rounded-l-lg rounded-r-none bg-bg/50 hover:bg-bg/75"
-            />
-            <NumberFieldIncrement
-              variant="quiet"
-              size="sm"
-              className="size-7 rounded-l-none rounded-r-lg bg-bg/50 hover:bg-bg/75"
-            />
-          </div>
-        </div>
-      </div>
-    </NumberField>
-  )
-}
-
-/* ------------------------------ Param controls ----------------------------- */
-
-/** A quiet sub-row inside an expanded component panel: label left, control right. */
-export function ParamRow({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex h-9 items-center justify-between gap-3 px-2">
-      <span className="truncate text-xs text-fg-muted">{label}</span>
-      {children}
-    </div>
-  )
-}
-
-/** A compact segmented control sized for ParamRow. */
-export function MiniSegmented({
-  ariaLabel,
-  value,
-  onChange,
-  options,
-}: {
-  ariaLabel: string
-  value: string
-  onChange: (value: string) => void
-  options: SegmentedRowOption[]
-}) {
-  return (
-    <RacToggleButtonGroup
-      aria-label={ariaLabel}
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[value]}
-      onSelectionChange={(keys) => {
-        const next = keys.values().next().value
-        if (next) onChange(next as string)
-      }}
-      className="flex h-7 shrink-0 items-center gap-0.5 rounded-md bg-bg/50 p-0.5"
-    >
-      {options.map((option) => (
-        <RacToggleButton
-          key={option.value}
-          id={option.value}
-          aria-label={option.ariaLabel}
-          className="relative isolate flex h-6 cursor-interactive items-center rounded-sm px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
-        >
-          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-sm bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
-          <span className="relative z-10 flex items-center">
-            {option.label}
-          </span>
-        </RacToggleButton>
-      ))}
-    </RacToggleButtonGroup>
-  )
-}
-
-/** A compact switch sized for ParamRow. */
-export function MiniSwitch({
-  ariaLabel,
-  value,
-  onChange,
-}: {
-  ariaLabel: string
-  value: boolean
-  onChange: (value: boolean) => void
-}) {
-  return (
-    <Switch
-      aria-label={ariaLabel}
-      size="sm"
-      isSelected={value}
-      onChange={onChange}
-    >
-      <SwitchControl>
-        <SwitchIndicator className="bg-bg/50 selected:bg-accent" />
-      </SwitchControl>
-    </Switch>
-  )
-}
-
-/* ----------------------------- Component row ------------------------------- */
-
-/**
- * A component's entry in the panel: a collapsed pill (name + current style),
- * expanding in place to the style grid. The answer to "inline grid vs popover"
- * at 20+ components: grids exist, but only one at a time is open.
- */
-export function ComponentRow({
-  name,
-  description,
-  value,
-  onChange,
-  options,
-  columns,
-  defaultExpanded,
-  children,
-}: {
-  name: string
-  description?: string
-  value: string
-  onChange: (id: string) => void
-  options: OptionGridItem[]
-  columns?: number
-  defaultExpanded?: boolean
-  /** Per-component params (ParamRow items) rendered under the style grid. */
-  children?: React.ReactNode
-}) {
-  const selected = options.find((o) => o.id === value)
-  return (
-    <DisclosureRow
-      label={name}
-      description={description}
-      value={selected?.label}
-      defaultExpanded={defaultExpanded}
-    >
-      <div className="flex flex-col gap-1 px-2">
-        <OptionGrid
-          ariaLabel={`${name} style`}
-          value={value}
-          onChange={onChange}
-          options={options}
-          columns={columns}
-        />
-        {children}
-      </div>
-    </DisclosureRow>
+    </PanelPopover>
   )
 }

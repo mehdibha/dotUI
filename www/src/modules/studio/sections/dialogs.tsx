@@ -1,42 +1,16 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page, shared by Dialog, Drawer and
-   Popover. Backdrop is the loudest split: shadcn/Radix and Vaul drop a plain
-   black scrim (~black/50) over the page; Apple sheets, visionOS and Arc dim
-   less but frost what's behind with a backdrop blur; Linear's dialogs and
-   palettes use no scrim at all — elevation is carried by shadow alone, the
-   page stays legible. Position is where a dialog rests: the classic modal
-   centers, while Linear and Raycast dock it in the upper third — a
-   command-palette habit that keeps the top edge fixed so the box never jumps
-   as results grow. The hero is a mini app viewport: skeleton page content
-   behind, the chosen backdrop over it, the dialog card at the chosen
-   position. */
-
-import { cn } from "@/registry/lib/utils"
+/* Dialogs — how modal layers meet the page: the scrim under them, and where
+   a dialog rests. Backdrop writes Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { Hero } from "../hero"
-import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-/* The engine's modal backdrop slices, at hero scale. */
-export const BACKDROP = {
-  dim: "bg-overlay/40 backdrop-blur-[1.5px]",
-  blur: "bg-overlay/20 backdrop-blur-xs",
-  none: "",
-}
+/* -------------------------------- Specimens -------------------------------- */
 
-export const DIALOG_POSITION = {
-  center: "top-1/2 -translate-y-1/2",
-  top: "top-4",
-}
-
-/* ------------------------------ Option glyphs ------------------------------ */
-
-/** The viewport with its scrim treatment: what the page reads like under the
- *  open layer — dimmed away, frosted, or crisp with only a shadow between. */
-function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
+/** The viewport under an open layer: dimmed away, frosted, or crisp. */
+function BackdropGlyph({ backdrop }: { backdrop: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -49,19 +23,19 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
         strokeWidth="1.5"
         opacity=".45"
       />
-      {treatment !== "dim" && (
+      {backdrop !== "dim" && (
         <g
           stroke="currentColor"
           strokeLinecap="round"
-          strokeWidth={treatment === "blur" ? 2.25 : 1.25}
-          opacity={treatment === "blur" ? 0.25 : 0.45}
+          strokeWidth={backdrop === "blur" ? 2.25 : 1.25}
+          opacity={backdrop === "blur" ? 0.25 : 0.45}
         >
           <path d="M6 8.5h6" />
           <path d="M6 15.5h5" />
           <path d="M15 15.5h3" />
         </g>
       )}
-      {treatment !== "none" && (
+      {backdrop !== "none" && (
         <rect
           x="3.75"
           y="5.75"
@@ -69,7 +43,7 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
           height="12.5"
           rx="1.5"
           fill="currentColor"
-          fillOpacity={treatment === "dim" ? 0.32 : 0.15}
+          fillOpacity={backdrop === "dim" ? 0.32 : 0.15}
         />
       )}
       <rect x="8.5" y="9" width="7" height="5.5" rx="1" fill="currentColor" />
@@ -77,81 +51,40 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
   )
 }
 
-/* --------------------------------- Options --------------------------------- */
+/* --------------------------------- Section --------------------------------- */
 
-const BACKDROP_ROW_OPTIONS: SelectRowOption[] = BACKDROP_OPTIONS.map((o) => ({
-  ...o,
-  illustration: (
-    <BackdropGlyph treatment={o.value as "dim" | "blur" | "none"} />
-  ),
-}))
-
-/* ---------------------------------- Hero ----------------------------------- */
-
-export function DialogsHero({ state }: { state: StudioState }) {
+export function DialogsPreview({ state }: { state: StudioState }) {
   return (
-    <Hero inset={false} className="relative h-44">
-      {/* Page content: what the backdrop dims, frosts, or leaves alone. */}
-      <div className="flex flex-col gap-2 p-3">
-        <div className="h-2 w-20 rounded-full bg-fg/20" />
-        <div className="h-1.5 w-4/5 rounded-full bg-fg/10" />
-        <div className="h-1.5 w-full rounded-full bg-fg/10" />
-        <div className="h-1.5 w-3/5 rounded-full bg-fg/10" />
-      </div>
-      <div
-        className={cn(
-          "absolute inset-0",
-          BACKDROP[state.dialogBackdrop as keyof typeof BACKDROP],
-        )}
-      />
-      <div
-        className={cn(
-          "absolute left-1/2 w-36 -translate-x-1/2 rounded-lg border border-border/60 bg-card p-2.5 shadow-xl",
-          DIALOG_POSITION[state.dialogPosition as keyof typeof DIALOG_POSITION],
-        )}
-      >
-        <div className="h-1.5 w-16 rounded-full bg-fg/60" />
-        <div className="mt-2 h-1.5 w-24 rounded-full bg-fg/15" />
-        <div className="mt-2.5 flex justify-end gap-1.5">
-          <span className="h-4 w-10 rounded-[5px] border border-border bg-muted" />
-          <span className="h-4 w-10 rounded-[5px] bg-accent" />
-        </div>
-      </div>
-    </Hero>
+    <DialGlyph>
+      <BackdropGlyph backdrop={state.dialogBackdrop} />
+    </DialGlyph>
   )
-}
-
-/** Collapsed-row summary: the backdrop treatment, and where the dialog rests. */
-export function dialogsSummary(state: StudioState): string {
-  const backdrop =
-    BACKDROP_OPTIONS.find((o) => o.value === state.dialogBackdrop)?.label ??
-    state.dialogBackdrop
-  const position =
-    POSITION_OPTIONS.find((o) => o.value === state.dialogPosition)?.label ??
-    state.dialogPosition
-  const first =
-    state.dialogBackdrop === "none" ? "No backdrop" : `${backdrop} backdrop`
-  return `${first} · ${position}`
 }
 
 export function DialogsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <DialogsHero state={state} />
-      <SelectRow
+    <>
+      <DialSelect
         label="Backdrop"
         value={state.dialogBackdrop}
         onChange={set("dialogBackdrop")}
-        options={BACKDROP_ROW_OPTIONS}
-        layout="grid"
+        rowPreview={false}
+        options={BACKDROP_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <BackdropGlyph backdrop={option.value} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Position"
         value={state.dialogPosition}
         onChange={set("dialogPosition")}
         options={POSITION_OPTIONS}
       />
-    </ControlGroup>
+    </>
   )
 }

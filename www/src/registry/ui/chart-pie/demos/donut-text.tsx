@@ -28,8 +28,6 @@ export default function ChartPieDonutText() {
       name="browser"
       labels={labels}
       innerRadius={0.6}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser, with the total in the centre"
     >
       {/* The hole is an HTML overlay, so the total is real text, not a label

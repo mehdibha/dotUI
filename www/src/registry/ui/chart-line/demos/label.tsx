@@ -32,7 +32,6 @@ export default function ChartLineLabel() {
       x="month"
       y="desktop"
       labels={{ desktop: SERIES }}
-      legend={false}
       points
       marks={[labels]}
       ariaLabel="Desktop visitors, January through June"

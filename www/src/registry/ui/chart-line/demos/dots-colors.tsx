@@ -34,7 +34,6 @@ export default function ChartLineDotsColors() {
       x="browser"
       y="visitors"
       labels={{ visitors: SERIES }}
-      legend={false}
       marks={dots}
       ariaLabel="Visitors by browser"
     />

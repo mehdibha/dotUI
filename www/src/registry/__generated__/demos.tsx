@@ -349,6 +349,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-area/demos/gradient.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/gradient")),
 	},
+	"chart-area/demos/interactive": {
+		files: ["ui/chart-area/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/interactive")),
+	},
 	"chart-area/demos/labels": {
 		files: ["ui/chart-area/demos/labels.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/labels")),
@@ -388,6 +392,10 @@ export const DemosIndex: Record<
 	"chart-bar/demos/horizontal": {
 		files: ["ui/chart-bar/demos/horizontal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/horizontal")),
+	},
+	"chart-bar/demos/interactive": {
+		files: ["ui/chart-bar/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/interactive")),
 	},
 	"chart-bar/demos/label-custom": {
 		files: ["ui/chart-bar/demos/label-custom.tsx"],
@@ -449,6 +457,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-line/demos/dots.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots")),
 	},
+	"chart-line/demos/interactive": {
+		files: ["ui/chart-line/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/interactive")),
+	},
 	"chart-line/demos/label-custom": {
 		files: ["ui/chart-line/demos/label-custom.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label-custom")),
@@ -480,6 +492,10 @@ export const DemosIndex: Record<
 	"chart-pie/demos/donut": {
 		files: ["ui/chart-pie/demos/donut.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut")),
+	},
+	"chart-pie/demos/interactive": {
+		files: ["ui/chart-pie/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/interactive")),
 	},
 	"chart-pie/demos/label-custom": {
 		files: ["ui/chart-pie/demos/label-custom.tsx"],
@@ -2841,9 +2857,9 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/disabled")),
 	},
-	"toggle-button/demos/favorite-button": {
-		files: ["ui/toggle-button/demos/favorite-button.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/favorite-button")),
+	"toggle-button/demos/icon-only": {
+		files: ["ui/toggle-button/demos/icon-only.tsx"],
+		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/icon-only")),
 	},
 	"toggle-button/demos/prefix-and-suffix": {
 		files: ["ui/toggle-button/demos/prefix-and-suffix.tsx"],
@@ -2857,21 +2873,9 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/sizes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/sizes")),
 	},
-	"toggle-button/demos/text-formatting-toolbar": {
-		files: ["ui/toggle-button/demos/text-formatting-toolbar.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/text-formatting-toolbar")),
-	},
-	"toggle-button/demos/uncontrolled": {
-		files: ["ui/toggle-button/demos/uncontrolled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/uncontrolled")),
-	},
 	"toggle-button/demos/variants": {
 		files: ["ui/toggle-button/demos/variants.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/variants")),
-	},
-	"toggle-button/demos/view-switcher": {
-		files: ["ui/toggle-button/demos/view-switcher.tsx"],
-		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/view-switcher")),
 	},
 	"toggle-button-group/demos/default": {
 		files: ["ui/toggle-button-group/demos/default.tsx"],

@@ -19,7 +19,8 @@ const SURFACE_TOKENS = [
   "--color-bg",
   "--color-card",
   "--color-popover",
-  "--overlay-backdrop-filter",
+  "--popover-alpha",
+  "--popover-backdrop-filter",
 ]
 
 /* Tailwind's md / lg — what popover and modal ship by default. */
@@ -39,46 +40,12 @@ describe("surfaces", () => {
 
   test("the default recipe is the registry's look (card none · popover md · modal lg)", () => {
     const { card, popover, modal } = surfaceRecipe(DEFAULTS)
-    const palette = { step: (s: string) => s, hairline: "", ink: "" }
+    const palette = { step: (s: string) => s, hairline: "" }
     const plain = (pair: PerMode<SurfaceColor>) =>
       surfaceColorCss(pair.light, palette)
     expect(shadowCss(card.shadow, plain)).toBe(NO_SHADOW)
     expect(shadowCss(popover.shadow, plain)).toBe(SHADOW_MD)
     expect(shadowCss(modal.shadow, plain)).toBe(SHADOW_LG)
-  })
-
-  test("a secondary axis changes only the shadow's character, not its size", () => {
-    const tokens = tokensFor({ surfaceShadow: "tinted" })
-    expect(tokens).not.toHaveProperty("--shadow-card")
-    // The tint reads in light only; dark keeps the registry's black.
-    const ink =
-      "light-dark(color-mix(in srgb, var(--color-fg) 13%, transparent), rgb(0 0 0 / 0.1))"
-    expect(tokens["--shadow-popover"]).toBe(
-      `0 4px 6px -1px ${ink}, 0 2px 4px -2px ${ink}`,
-    )
-    expect(tokens["--shadow-modal"]).toBe(
-      `0 10px 15px -3px ${ink}, 0 4px 6px -4px ${ink}`,
-    )
-  })
-
-  test("layered adds an ambient layer under the rung", () => {
-    const tokens = tokensFor({ surfaceShadow: "layered" })
-    expect(tokens["--shadow-popover"]).toBe(
-      `${SHADOW_MD}, 0 8px 24px 4px rgb(0 0 0 / 0.05)`,
-    )
-  })
-
-  test("ring moves the edge into the shadow", () => {
-    const tokens = tokensFor({ surfaceEdge: "ring" })
-    expect(tokens["--card-border"]).toBe("transparent")
-    expect(tokens["--overlay-border"]).toBe("transparent")
-    expect(tokens["--shadow-card"]).toBe("0 0 0 1px var(--color-border)")
-    expect(tokens["--shadow-popover"]).toBe(
-      `0 0 0 1px var(--color-border), ${SHADOW_MD}`,
-    )
-    expect(tokens["--shadow-modal"]).toBe(
-      `0 0 0 1px var(--color-border), ${SHADOW_LG}`,
-    )
   })
 
   test("depth moves every role one rung", () => {
@@ -108,21 +75,22 @@ describe("surfaces", () => {
     )
   })
 
-  test("shadow casts harder in dark", () => {
+  test("shadow casts harder in dark, with an ambient layer under the key", () => {
     const tokens = tokensFor({ surfaceStrategy: "shadow" })
     expect(tokens["--card-border"]).toBe("transparent")
+    const key = "light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.264))"
     expect(tokens["--shadow-card"]).toBe(
-      "0 4px 6px -1px light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.264)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.264))",
+      `0 4px 6px -1px ${key}, 0 2px 4px -2px ${key}, 0 8px 24px 4px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.132))`,
     )
   })
 
-  test("tinted canvas lifts cards in light and elevates them in dark", () => {
+  test("tinted canvas lifts white cards off a gray page, a full rung in dark", () => {
     const tokens = tokensFor({ surfaceCanvas: "tinted" })
     expect(tokens["--color-bg"]).toBe(
-      "light-dark(var(--neutral-50), var(--neutral-25))",
+      "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), var(--neutral-25))",
     )
     expect(tokens["--color-card"]).toBe(
-      "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+      "light-dark(var(--neutral-25), var(--neutral-100))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-25), var(--neutral-100))",
@@ -130,12 +98,13 @@ describe("surfaces", () => {
     expect(tokens).not.toHaveProperty("--shadow-popover")
   })
 
-  test("glass makes floating surfaces translucent over a blur", () => {
+  test("glass turns the popover tier translucent; solid is the default", () => {
     const tokens = tokensFor({ surfaceMaterial: "glass" })
-    expect(tokens["--overlay-backdrop-filter"]).toBe("blur(8px)")
-    expect(tokens["--color-popover"]).toBe(
-      "color-mix(in srgb, light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))) 72%, transparent)",
+    expect(tokens["--popover-alpha"]).toBe("70%")
+    expect(tokens["--popover-backdrop-filter"]).toBe(
+      "blur(40px) saturate(150%)",
     )
+    expect(tokens).not.toHaveProperty("--color-popover")
     expect(tokens).not.toHaveProperty("--color-card")
   })
 

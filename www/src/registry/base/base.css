@@ -60,8 +60,6 @@
 @layer base {
   * {
     @apply border-border;
-    /* Corner shape axis (progressive enhancement; unsupported → round). */
-    corner-shape: var(--corner-shape, round);
     /* Scrollbar axis: native unless the tokens say thin/themed; the hover
        pair reveals an overlay-style bar while the pointer is over the area. */
     scrollbar-width: var(--scrollbar-width, auto);
@@ -98,10 +96,14 @@
 
 /* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.
    Their shadows ride `--shadow-card` / `--shadow-popover` / `--shadow-modal`,
-   falling back to the registry's own (none · md · lg). */
+   falling back to the registry's own (none · md · lg). The popover tier
+   (menus, pickers, popovers) is solid; glass is the surface at 70% over a
+   blurred, saturated backdrop. */
 :root {
   --card-border: var(--color-border);
   --overlay-border: var(--color-border);
+  --popover-alpha: 100%;
+  --popover-backdrop-filter: none;
 }
 
 ::selection {

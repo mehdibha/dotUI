@@ -34,7 +34,6 @@ export const baseRegistryCss = {
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
-				"corner-shape": "var(--corner-shape, round)",
 				"scrollbar-width": "var(--scrollbar-width, auto)",
 				"scrollbar-color": "var(--scrollbar-color, auto)",
 			},
@@ -59,6 +58,8 @@ export const baseRegistryCss = {
 		":root": {
 			"--card-border": "var(--color-border)",
 			"--overlay-border": "var(--color-border)",
+			"--popover-alpha": "100%",
+			"--popover-backdrop-filter": "none",
 		},
 		"::selection": {
 			"@apply bg-text-selection text-fg-on-text-selection": {},

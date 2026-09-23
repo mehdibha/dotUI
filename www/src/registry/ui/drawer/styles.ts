@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0",
       viewport: "@container-size fixed inset-0 z-10 touch-none",
       popup:
-        "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [backdrop-filter:var(--overlay-backdrop-filter,none)] [transition-property:transform,box-shadow,height,background-color,margin,padding] duration-[calc(500ms*var(--drawer-swipe-strength,1))] ease-fluid-out will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
+        "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [transition-property:transform,box-shadow,height,background-color,margin,padding] duration-[calc(500ms*var(--drawer-swipe-strength,1))] ease-fluid-out will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
       handle:
         "mx-auto my-2 shrink-0 cursor-drag touch-none rounded-full bg-fg/20 select-none active:cursor-dragging orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
       swipeArea: "fixed z-50 touch-none",
@@ -25,25 +25,25 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         top: {
           viewport: "grid grid-rows-[auto_1fr] pb-12",
           popup:
-            "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-xl border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
+            "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-(--studio-drawer-radius) border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
           swipeArea: "inset-x-0 top-0 h-8",
         },
         bottom: {
           viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
           popup:
-            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+            "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-(--studio-drawer-radius) border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
           swipeArea: "inset-x-0 bottom-0 h-8",
         },
         left: {
           viewport: "flex justify-start pe-12",
           popup:
-            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-xl border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
+            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-(--studio-drawer-radius) border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
           swipeArea: "inset-y-0 left-0 w-8",
         },
         right: {
           viewport: "flex justify-end ps-12",
           popup:
-            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-xl border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
+            "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-(--studio-drawer-radius) border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
           swipeArea: "inset-y-0 right-0 w-8",
         },
       },

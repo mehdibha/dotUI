@@ -3,7 +3,7 @@
 /* The panel's search — the header's search button opens a popover holding a
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
-   Opens instantly on purpose: it's a frequent gesture. Selecting drills into
+   Opens instantly on purpose: it's a frequent gesture. Selecting scrolls to
    the chapter. ⌘P, not ⌘K — the site header's docs search owns ⌘K
    everywhere, /studio included. */
 
@@ -16,50 +16,39 @@ import { Command } from "@/registry/ui/command"
 import { Dialog } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
-import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
-import type { IndexChapter } from "./groups"
-import { INSTANT_POPOVER } from "./rows"
+import { PanelPopover } from "./rows"
+import type { Chapter } from "./state"
 
 interface Entry {
   id: string
   chapterId: string
-  /** The category — the chapter, or "Chapter › Member" for composites. */
+  /** The chapter. */
   category: string
-  /** A settings row inside it; absent for the category itself. */
+  /** A settings row inside it; absent for the chapter itself. */
   axis?: string
 }
 
-/** The categories: every chapter, plus each composite's non-host members. */
-function categories(chapters: IndexChapter[]): Entry[] {
-  return chapters.flatMap((chapter) => [
-    { id: chapter.id, chapterId: chapter.id, category: chapter.label },
-    ...chapter.members
-      .filter((m) => chapter.members.length > 1 && m.label !== chapter.label)
-      .map((m) => ({
-        id: `${chapter.id}/${m.id}`,
-        chapterId: chapter.id,
-        category: `${chapter.label} › ${m.label}`,
-      })),
-  ])
+function categories(chapters: Chapter[]): Entry[] {
+  return chapters.map((chapter) => ({
+    id: chapter.id,
+    chapterId: chapter.id,
+    category: chapter.label,
+  }))
 }
 
-/** Every settings row, under its category. */
-function axes(chapters: IndexChapter[]): Entry[] {
+/** Every settings row, under its chapter. */
+function axes(chapters: Chapter[]): Entry[] {
   return chapters.flatMap((chapter) =>
-    chapter.members.flatMap((m) => {
-      const nested = chapter.members.length > 1 && m.label !== chapter.label
-      const category = nested ? `${chapter.label} › ${m.label}` : chapter.label
-      return (SEARCH_INDEX[m.id] ?? []).map((axis) => ({
-        id: `${chapter.id}/${m.id}/${axis}`,
-        chapterId: chapter.id,
-        category,
-        axis,
-      }))
-    }),
+    (SEARCH_INDEX[chapter.id] ?? []).map((axis) => ({
+      id: `${chapter.id}/${axis}`,
+      chapterId: chapter.id,
+      category: chapter.label,
+      axis,
+    })),
   )
 }
 
@@ -84,7 +73,7 @@ export function PanelSearch({
   chapters,
   onOpenChapter,
 }: {
-  chapters: IndexChapter[]
+  chapters: Chapter[]
   onOpenChapter: (id: string) => void
 }) {
   const [isOpen, setOpen] = useState(false)
@@ -93,9 +82,9 @@ export function PanelSearch({
     sensitivity: "base",
     ignorePunctuation: true,
   })
-  // Categories first: a query that names one lists categories only. Nested
-  // axes surface only when nothing at that level matches — searching "color"
-  // means the Color chapter, not every row called Color. Filtered here, not
+  // Chapters first: a query that names one lists chapters only. Rows surface
+  // only when no chapter matches — searching "color" means the Color chapter,
+  // not every row called Color. Filtered here, not
   // left to the Autocomplete, so the list is right even if the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()
@@ -141,7 +130,7 @@ export function PanelSearch({
         </Button>
         <TooltipContent>Search ⌘P</TooltipContent>
       </Tooltip>
-      <Popover placement="bottom end" className={INSTANT_POPOVER}>
+      <PanelPopover placement="bottom end">
         <Command aria-label="Search" className="w-56">
           {/* Both chain with the Autocomplete's own field props. */}
           <SearchField
@@ -200,7 +189,7 @@ export function PanelSearch({
             )}
           </ListBox>
         </Command>
-      </Popover>
+      </PanelPopover>
     </Dialog>
   )
 }

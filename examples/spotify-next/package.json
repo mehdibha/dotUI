@@ -12,7 +12,7 @@
     "@base-ui/react": "^1.7.0",
     "@internationalized/date": "^3.12.4",
     "@shadcn/react": "^0.3.1",
-    "@tanstack/charts": "0.16.0",
+    "@tanstack/charts": "0.18.0",
     "d3-scale": "^4.0.2",
     "d3-shape": "^3.2.0",
     "lucide-react": "^1.39.0",

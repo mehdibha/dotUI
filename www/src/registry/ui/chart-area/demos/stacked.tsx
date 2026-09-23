@@ -1,6 +1,5 @@
 "use client"
 
-import { stackY } from "@/registry/ui/chart"
 import { AreaChart } from "@/registry/ui/chart-area"
 
 const data = [
@@ -12,23 +11,14 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-/* Stacking is a data transform, not a chart flag: wide rows in, one long row
-   per band out, carrying `base`/`top` plus its own `value` for the tooltip. */
-const stacked = stackY(data, {
-  x: "month",
-  y: ["desktop", "mobile", "other"],
-})
-
 export default function ChartAreaStacked() {
   return (
     <AreaChart
-      data={stacked}
-      x="x"
-      y="top"
-      y1="base"
-      series="series"
-      seriesOrder={["desktop", "mobile", "other"]}
+      data={data}
+      x="month"
+      y={["desktop", "mobile", "other"]}
       labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
+      stacked
       ariaLabel="Visitors by device, stacked, January through June"
     />
   )

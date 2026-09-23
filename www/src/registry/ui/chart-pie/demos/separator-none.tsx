@@ -18,8 +18,7 @@ const labels = {
   other: "Other",
 }
 
-/* No stroke and no pad angle: the slices meet edge to edge. Compare with the
-   donut demo, which separates them with a background-colored stroke. */
+// No separator stroke: the slices meet edge to edge.
 export default function ChartPieSeparatorNone() {
   return (
     <PieChart
@@ -27,7 +26,7 @@ export default function ChartPieSeparatorNone() {
       value="visitors"
       name="browser"
       labels={labels}
-      padAngle={0}
+      strokeWidth={0}
       ariaLabel="Visitors by browser, without slice separators"
     />
   )

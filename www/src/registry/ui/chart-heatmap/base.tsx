@@ -11,9 +11,8 @@ import type {
   ChartComponentProps,
   ChartFormat,
   ChartMarkLayer,
-  ChartSpecOf,
+  ChartSpec,
   ChartXField,
-  ChartXValueOf,
   ChartYField,
 } from "@/registry/ui/chart"
 import {
@@ -23,16 +22,12 @@ import {
   decorative,
   finiteOrNull,
   paletteColor,
-  resolveFormat,
   useChartDefinition,
 } from "@/registry/ui/chart"
 
-/* One rectangle per row: two categorical axes, and the value on the color
-   scale. Both scales are band scales, so the grid is the chart. */
-
-/* A sequential ramp mixed from a single palette slot: the low half fades into
-   the surface, the high half toward the foreground. Both ends therefore invert
-   with the theme, which keeps luminance monotone in light and dark. */
+/* A sequential ramp mixed from one palette slot: the low half fades into the
+   surface, the high half toward the foreground, so luminance stays monotone
+   in light and dark. */
 export function heatmapColors(
   color: string = paletteColor(0),
   steps: number = 5,
@@ -49,20 +44,19 @@ export function heatmapColors(
 
 const HEATMAP_COLORS = /* @__PURE__ */ heatmapColors()
 
-/* Black or white ink, whichever the cell under it can carry — resolved by the
-   browser from the cell's own lightness, so it stays right in both themes and
-   for any ramp. The 0.58 crossover measures ≥ 4.9:1 across the default ramp. */
+// Black or white ink from the cell's own lightness; the 0.58 crossover
+// measures ≥ 4.9:1 across the default ramp.
 function contrastInk(color: string): string {
   return `oklch(from ${color} calc((0.58 - l) * 100) 0 0)`
 }
 
 /* The cell edges are the grid, so `grid` is dropped rather than ignored. */
-export interface HeatmapChartSpecOptions<
-  TDatum,
-  TXField extends ChartXField<TDatum>,
-> extends Omit<ChartBaseSpecOptions<TDatum>, "grid"> {
+export interface HeatmapChartSpecOptions<TDatum> extends Omit<
+  ChartBaseSpecOptions<TDatum>,
+  "grid"
+> {
   /** Field holding the column category. */
-  x: TXField
+  x: ChartXField<TDatum>
   /** Field holding the row category. */
   y: ChartXField<TDatum>
   /** Numeric field the color scale reads. */
@@ -82,15 +76,11 @@ export interface HeatmapChartSpecOptions<
   labelY?: string
 }
 
-function fieldReader<TDatum>(field: string) {
-  return (row: TDatum) => finiteOrNull((row as Record<string, unknown>)[field])
-}
-
-/* Which ramp step a value lands on. It rebuilds the chart's own color scale
-   over step indices — nicened domain included — rather than re-deriving the
-   cuts, so a label can never disagree with the cell under it. */
+/* Which ramp step a value lands on: the chart's own color scale rebuilt over
+   step indices, nicened domain included, so a label never disagrees with the
+   cell under it. */
 function binner<TDatum>(
-  options: HeatmapChartSpecOptions<TDatum, ChartXField<TDatum>>,
+  options: HeatmapChartSpecOptions<TDatum>,
   read: (row: TDatum) => number | null,
   steps: number,
 ): (row: TDatum) => number {
@@ -117,43 +107,22 @@ function binner<TDatum>(
   return (row) => scale(read(row) ?? minimum)
 }
 
-/* The value written inside each cell, inked against the cell it sits on. */
-function valueLabels<TDatum>(
-  options: HeatmapChartSpecOptions<TDatum, ChartXField<TDatum>>,
-  read: (row: TDatum) => number | null,
-  print: (row: TDatum) => string | null,
-  colors: readonly string[],
-): ChartMarkLayer {
-  const bin = binner(options, read, colors.length)
-  return decorative(
-    text(options.data, {
-      x: options.x,
-      y: options.y,
-      text: print,
-      fill: (row: TDatum) => contrastInk(colors[bin(row)] ?? paletteColor(0)),
-      fontSize: 11,
-    }),
-  )
-}
-
-export function heatmapChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
-  options: HeatmapChartSpecOptions<TDatum, TXField>,
+export function heatmapChartSpec<TDatum>(
+  options: HeatmapChartSpecOptions<TDatum>,
   ctx: ChartBuildContext,
-): ChartSpecOf<TDatum, ChartXValueOf<TDatum, TXField>> {
+): ChartSpec<TDatum> {
   const colors = options.colors ?? HEATMAP_COLORS
-  const format = resolveFormat(options.formatValue)
-  const read = fieldReader<TDatum>(options.value)
+  const format = options.formatValue ?? String
+  const read = (row: TDatum) => finiteOrNull(row[options.value as keyof TDatum])
   const print = (row: TDatum) => {
     const value = read(row)
-    if (value === null) return null
-    return format ? format(value) : String(value)
+    return value === null ? null : format(value)
   }
   const cells: ChartMarkLayer = cell(options.data, {
     x: options.x,
     y: options.y,
     color: read,
-    // The tooltip titles a point with its group, and a cell's group is its
-    // own value — otherwise the reading is the one thing it would not show.
+    // The tooltip titles a point with its group; a cell's group is its value.
     z: (row: TDatum) => {
       const value = print(row)
       if (value === null) return null
@@ -163,58 +132,67 @@ export function heatmapChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
     radius: chartDefaults.cellRadius,
     inset: chartDefaults.cellInset,
   })
-  return {
-    // Axes on by default: row/column labels are the cells' identity.
-    ...chartFrame({ ...options, axes: options.axes ?? true }, ctx, {
-      // Band scales with d3's zero padding: cells tile the plot, and the
-      // inset above cuts the gutter. `nice` is not a band-scale operation.
-      x: { scale: scaleBand, nice: false, label: options.labelX },
-      y: { scale: scaleBand, nice: false, label: options.labelY },
-      grid: "none",
-      color: {
-        scale: options.thresholds
-          ? scaleThreshold<number, string>
-          : scaleQuantize<string>,
-        domain: options.thresholds,
-        range: colors,
-        nice: options.thresholds ? undefined : true,
-        legend: colorLegend({ label: options.label, format }),
-      },
+  const bin = binner(options, read, colors.length)
+  const values: ChartMarkLayer = decorative(
+    text(options.data, {
+      x: options.x,
+      y: options.y,
+      text: print,
+      fill: (row: TDatum) => contrastInk(colors[bin(row)] ?? paletteColor(0)),
+      fontSize: 11,
     }),
+  )
+  return {
+    // Axes and legend on by default: the labels are the cells' identity and
+    // the ramp is the only key to the color.
+    ...chartFrame(
+      {
+        ...options,
+        axes: options.axes ?? true,
+        legend: options.legend ?? true,
+      },
+      ctx,
+      {
+        x: { scale: scaleBand, nice: false, label: options.labelX },
+        y: { scale: scaleBand, nice: false, label: options.labelY },
+        grid: "none",
+        color: {
+          scale: options.thresholds
+            ? scaleThreshold<number, string>
+            : scaleQuantize<string>,
+          domain: options.thresholds,
+          range: colors,
+          nice: options.thresholds ? undefined : true,
+          legend: colorLegend({
+            label: options.label,
+            format: options.formatValue,
+          }),
+        },
+      },
+    ),
     marks: [
       ...(options.marksBefore ?? []),
       cells,
-      ...(options.values ? [valueLabels(options, read, print, colors)] : []),
+      ...(options.values ? [values] : []),
       ...(options.marks ?? []),
     ],
   }
 }
 
-export type HeatmapChartProps<
-  TDatum,
-  TXField extends ChartXField<TDatum>,
-> = ChartComponentProps<
-  HeatmapChartSpecOptions<TDatum, TXField>,
-  TDatum,
-  ChartXValueOf<TDatum, TXField>
+export type HeatmapChartProps<TDatum> = ChartComponentProps<
+  HeatmapChartSpecOptions<TDatum>,
+  TDatum
 >
 
-export function HeatmapChart<TDatum, TXField extends ChartXField<TDatum>>(
-  props: HeatmapChartProps<TDatum, TXField>,
-) {
+export function HeatmapChart<TDatum>(props: HeatmapChartProps<TDatum>) {
   const { definition, host, children } = useChartDefinition<
     TDatum,
-    ChartXValueOf<TDatum, TXField>,
-    HeatmapChartSpecOptions<TDatum, TXField>
-  >(
-    {
-      ...props,
-      // A cell is read on its own, not against its column.
-      focus: props.focus ?? "nearest",
-      tooltipAnchor: props.tooltipAnchor ?? "point",
-    },
-    heatmapChartSpec,
-  )
+    HeatmapChartSpecOptions<TDatum>
+  >(props, heatmapChartSpec, {
+    // A cell is read on its own, not against its column.
+    focus: "nearest",
+    tooltipAnchor: "point",
+  })
   return (
     <Chart definition={definition} {...host}>
       {children}

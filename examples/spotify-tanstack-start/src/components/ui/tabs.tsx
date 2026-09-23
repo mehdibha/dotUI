@@ -33,13 +33,13 @@ const tabsVariants = tv({
       segmented: {
         list: "rounded-lg bg-muted p-[3px]",
         tab: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
-        selectionIndicator: "inset-0 rounded-md bg-selected shadow-sm",
+        selectionIndicator: "inset-0 rounded-md shadow-sm bg-selected",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
         tab: "rounded-md orientation-horizontal:h-full selected:text-fg",
         selectionIndicator:
-          "rounded-full bg-fg orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
+          "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 bg-fg",
       },
       pill: {
         list: "gap-1",
@@ -48,7 +48,7 @@ const tabsVariants = tv({
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
-        tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-bg selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+        tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-bg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent selected:text-fg",
         selectionIndicator: "hidden",
       },
     },

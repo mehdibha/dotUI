@@ -28,8 +28,6 @@ export default function ChartPieExamples() {
           value="visitors"
           name="browser"
           labels={labels}
-          stroke="var(--color-bg)"
-          strokeWidth={2}
           ariaLabel="Visitors by browser"
         />
       </Example>
@@ -43,8 +41,6 @@ export default function ChartPieExamples() {
           innerRadius={0.55}
           radiusRatio={0.85}
           legend
-          stroke="var(--color-bg)"
-          strokeWidth={2}
           ariaLabel="Visitors by browser, donut"
         />
       </Example>

@@ -162,7 +162,8 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Stroke painted between slices — set it to the page background to separate\nthem."
+      "description": "Stroke painted between slices.",
+      "default": "\"var(--color-bg)\""
     },
     "strokeWidth": {
       "type": "number",
@@ -170,7 +171,8 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Width of that stroke, in pixels."
+      "description": "Width of that stroke, in pixels. `0` lets the slices touch.",
+      "default": "2"
     },
     "activeIndex": {
       "type": "number",
@@ -244,7 +246,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the color legend. Off by default: a pie usually names its slices with\nlabels or the tooltip.",
+      "description": "Show the color legend below the chart.",
       "default": "false"
     },
     "polarMarks": {
@@ -266,6 +268,12 @@
                 "name": "PolarMark"
               },
               "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
                 {
                   "type": "any"
                 },
@@ -366,15 +374,6 @@
       },
       "description": "Pixel radius beyond which the pointer stops matching a point."
     },
-    "tooltipSticky": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Keep the tooltip pinned to the focused position instead of letting it\nfollow the pointer between points.",
-      "default": "true"
-    },
     "tooltip": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -400,8 +399,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Chart height in pixels.",
-      "default": "256"
+      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
     },
     "aspectRatio": {
       "type": "number",
@@ -852,16 +850,7 @@
           "type": "property",
           "name": "__angleScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "angle"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -891,16 +880,7 @@
           "type": "property",
           "name": "__radiusScaleId",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "radius"
-              },
-              {
-                "type": "undefined"
-              }
-            ]
+            "type": "any"
           },
           "optional": true,
           "readonly": false,
@@ -1159,6 +1139,43 @@
             }
           },
           "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "primaryPoint": {
+          "type": "property",
+          "name": "primaryPoint",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
+                  "name": "ChartPoint"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "ChartValue"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "number"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
           "readonly": false,
           "description": ""
         }

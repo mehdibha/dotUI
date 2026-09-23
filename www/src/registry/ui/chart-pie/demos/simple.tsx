@@ -25,8 +25,6 @@ export default function ChartPieSimple() {
       value="visitors"
       name="browser"
       labels={labels}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser"
     />
   )

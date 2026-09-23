@@ -1,6 +1,7 @@
 import { Button } from "@/registry/ui/button"
 import {
   DialogBody,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -16,10 +17,13 @@ export function ModalDemo() {
     <OverlayPreview
       variant="modal"
       page={<PageMock />}
-      surfaceClassName="space-y-3"
+      surfaceClassName="flex flex-col gap-4"
     >
       <DialogHeader>
         <DialogTitle>Edit username</DialogTitle>
+        <DialogDescription>
+          Your username is visible to everyone in the workspace.
+        </DialogDescription>
       </DialogHeader>
       <DialogBody>
         <TextField defaultValue="@mehdibha" className="w-full">
@@ -29,7 +33,7 @@ export function ModalDemo() {
       </DialogBody>
       <DialogFooter className="flex-row! justify-end">
         <Button variant="quiet">Cancel</Button>
-        <Button variant="primary">Apply</Button>
+        <Button variant="primary">Save</Button>
       </DialogFooter>
     </OverlayPreview>
   )

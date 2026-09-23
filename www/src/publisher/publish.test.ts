@@ -252,9 +252,7 @@ describe("resolve-classes", () => {
         "size-(--studio-cell-size) h-(--studio-thumb-size) shadow-(--studio-thumb-shadow) rounded-r-(--studio-square) rounded-(--studio-odd) rounded-(--studio-passthrough)",
         vars,
       ),
-    ).toBe(
-      "size-8 h-3 shadow-none rounded-r-none rounded-[4px] rounded-(--surface-radius)",
-    )
+    ).toBe("size-8 h-3 shadow-none rounded-[4px] rounded-(--surface-radius)")
   })
 
   test("rewriteClassString substitutes non-shorthand reads, honoring fallbacks", () => {
@@ -270,6 +268,31 @@ describe("resolve-classes", () => {
     ).toBe(
       "[--surface-radius:var(--radius-xl)] rounded-[calc(var(--radius-xl)-1px)] disabled:bg-(--disabled-bg,var(--color-primary)) w-[--spacing(2)]",
     )
+  })
+
+  test("rewriteClassString drops a rounded class that resolves to 0", () => {
+    const vars = resolveStudioVars({
+      "--studio-radius-control": "0",
+      "--studio-btn-radius": "var(--studio-radius-control)",
+      "--studio-modal-radius": "0",
+      "--studio-slider-thumb-shadow": "0 0 #0000",
+    })
+    expect(
+      rewriteClassString("px-4 rounded-(--studio-btn-radius) h-9", vars),
+    ).toBe("px-4 h-9")
+    expect(rewriteClassString("rounded-(--studio-btn-radius) h-9", vars)).toBe(
+      "h-9",
+    )
+    expect(rewriteClassString("px-4 rounded-(--studio-btn-radius)", vars)).toBe(
+      "px-4",
+    )
+    // The variant chain goes with it; a var declaration stays a declaration.
+    expect(
+      rewriteClassString(
+        "flex max-md:rounded-t-(--studio-modal-radius) [--surface-radius:var(--studio-modal-radius)] *:[img]:first:rounded-t-(--studio-modal-radius) shadow-(--studio-slider-thumb-shadow)",
+        vars,
+      ),
+    ).toBe("flex [--surface-radius:0] shadow-none")
   })
 
   test("rewriteClassString leaves undeclared vars alone", () => {

@@ -18,7 +18,6 @@ export default function ChartRadarGridCustom() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       gridShape="circle"
       gridFill={0.2}
       fill={1}

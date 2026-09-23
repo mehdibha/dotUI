@@ -2,21 +2,18 @@
 
 import { Suspense, lazy } from "react"
 
-// Lazy on purpose — see the note in chart-bar.tsx: a module imported both
-// statically here and dynamically via DemosIndex breaks in production.
-const ChartRadarDefault = lazy(
-  () => import("@/registry/ui/chart-radar/demos/default"),
-)
+// Lazy on purpose — see the note in chart-bar.tsx.
+const ChartRadarVisitors = lazy(() => import("./chart-radar.lazy"))
 
 export function ChartRadarDemo() {
   return (
-    <div className="w-[360px] max-w-full">
+    <div className="w-[240px] max-w-full">
       <Suspense
         fallback={
-          <div className="h-64 w-full animate-pulse rounded-xl bg-muted" />
+          <div className="h-[132px] w-full animate-pulse rounded-xl bg-muted" />
         }
       >
-        <ChartRadarDefault />
+        <ChartRadarVisitors />
       </Suspense>
     </div>
   )

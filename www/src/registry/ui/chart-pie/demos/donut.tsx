@@ -26,8 +26,6 @@ export default function ChartPieDonut() {
       name="browser"
       labels={labels}
       innerRadius={0.55}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser"
     />
   )

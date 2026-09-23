@@ -1,6 +1,6 @@
 "use client"
 
-/* The studio panel mounted in /studio's slot: the drill-in panel over the
+/* The studio panel mounted in /studio's slot: the panel page over the
    studio state, with the chrome (switcher, reset, search, save, export) wired
    to presets and export. The switcher is the PresetPicker (saved systems +
    built-in presets, live previews, unsaved-changes guard), reachable at
@@ -28,7 +28,7 @@ import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
 import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
 import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
-import { DrillInPanel } from "./drill-in"
+import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
 import { CHAPTERS } from "./state"
@@ -199,11 +199,11 @@ export function StudioPanel({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative flex w-full flex-1 flex-col lg:w-76 lg:flex-none lg:shrink-0",
+        "relative flex w-full flex-1 flex-col lg:w-64 lg:flex-none lg:shrink-0",
         className,
       )}
     >
-      <DrillInPanel chapters={CHAPTERS} studio={studio} system={system} />
+      <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
       <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
       <CreatePresetDialog
         isOpen={createOpen}

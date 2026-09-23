@@ -1,13 +1,14 @@
-/* Switch — always a pill, so its only axis is the family's synced Fill,
-   resolved once by the Checkbox module (the key is shared, not copied). */
+/* Switch — always a pill, so its only axis is Fill, a leaf of Color's
+   Primary (Geist's blue toggle beside near-black checkboxes). See checkbox.ts
+   for the mechanism. */
 
-import { CHECKBOX_DEFAULTS } from "./checkbox"
+import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const SWITCH_DEFAULTS = {
-  checkFill: CHECKBOX_DEFAULTS.checkFill,
+  switchColor: "neutral",
 }
 
-export function resolveSwitch(_state: StudioState): Resolved {
-  return {}
+export function resolveSwitch(state: StudioState): Resolved {
+  return { color: fillScope(state, "switch", state.switchColor) }
 }

@@ -1,41 +1,67 @@
+import { CaptionsIcon } from "@/registry/__generated__/icons"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { Label } from "@/registry/ui/field"
-import { Input } from "@/registry/ui/input"
-import { TextField } from "@/registry/ui/text-field"
 
 export function CardDemo() {
   return (
-    <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Create project</CardTitle>
-          <CardDescription>
-            Deploy your new project in one click.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <TextField className="w-full">
-            <Label>Name</Label>
-            <Input placeholder="my-app" />
-          </TextField>
-          <TextField className="w-full">
-            <Label>Framework</Label>
-            <Input placeholder="Next.js" />
-          </TextField>
-        </CardContent>
-        <CardFooter className="justify-end gap-2">
-          <Button variant="quiet">Cancel</Button>
-          <Button variant="primary">Create</Button>
-        </CardFooter>
-      </Card>
-    </div>
+    <Card className="w-80">
+      <CardHeader>
+        <CardTitle>Meeting notes</CardTitle>
+        <CardDescription>Transcript from the client call.</CardDescription>
+        <CardAction>
+          <Button variant="secondary" size="sm">
+            <CaptionsIcon />
+            Transcribe
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <CardContent>
+        <p>
+          Client requested a dashboard redesign with a focus on mobile
+          responsiveness. Timeline: 6 weeks.
+        </p>
+      </CardContent>
+      <CardFooter className="justify-between">
+        <AvatarGroup>
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Avatar>
+            <AvatarImage
+              src="https://github.com/maxleiter.png"
+              alt="@maxleiter"
+            />
+            <AvatarFallback>LR</AvatarFallback>
+          </Avatar>
+          <Avatar>
+            <AvatarImage
+              src="https://github.com/evilrabbit.png"
+              alt="@evilrabbit"
+            />
+            <AvatarFallback>ER</AvatarFallback>
+          </Avatar>
+          <AvatarGroupCount>+8</AvatarGroupCount>
+        </AvatarGroup>
+        <Button variant="primary" size="sm">
+          Open
+        </Button>
+      </CardFooter>
+    </Card>
   )
 }

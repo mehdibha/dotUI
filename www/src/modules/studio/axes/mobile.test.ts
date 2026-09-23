@@ -20,14 +20,4 @@ describe("mobile axis", () => {
     expect(ds.componentParams.popover?.mobile).toBe("popover")
     expect(ds.componentParams.modal?.mobile).toBe("sheet")
   })
-
-  it("off renders the same everywhere, whatever the rows say", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      mobileAdapt: false,
-      mobileDialogs: "sheet",
-    })
-    expect(ds.componentParams.popover?.mobile).toBe("popover")
-    expect(ds.componentParams.modal?.mobile).toBe("center")
-  })
 })

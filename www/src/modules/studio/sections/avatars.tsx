@@ -1,112 +1,52 @@
 "use client"
 
-/* Avatars — two axes. Shape: circle is the people-first default (GitHub
-   users, Slack DMs, Google, Material) while the rounded square ≈ squircle
-   marks entities — Slack workspaces, GitHub orgs, Notion pages, Linear
-   teams — and some systems (Linear, Notion) run it for people too, so it's
-   a real fork, not a per-instance prop. Fallback: what initials sit on when
-   no image loads — a per-entity tinted wash (Radix Themes, Ant Design,
-   Atlassian all hash the entity to a color, so adjacent avatars differ) vs
-   one uniform gray (Geist, shadcn) that keeps fallbacks quiet at the cost
-   of telling stacked strangers apart. The hero is where both axes earn
-   their keep: an overlapping stack — the tinted wash separating neighbors
-   or the gray fusing them — plus a standalone with a presence dot, whose
-   corner the shape decides. */
+/* Avatars — circle for people, the rounded square for entities; initials on
+   one gray or a per-entity tint. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
-import { Hero } from "../hero"
-import { ControlGroup, SegmentedControlRow } from "../rows"
+import { DialSegmented } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-const SHAPE = {
-  circle: "rounded-full",
-  rounded: "rounded-lg",
-}
-
-/* Stand-ins for the registry's per-entity hash: its four washes, cycled. */
-const TINTS = [
-  "bg-accent-muted text-fg-accent",
-  "bg-success-muted text-fg-success",
-  "bg-warning-muted text-fg-warning",
-  "bg-info-muted text-fg-info",
-]
-
-export function LabAvatar({
-  initials,
-  index,
-  state,
-  className,
-}: {
-  initials: string
-  /** Position in the entity list — what the tinted wash hashes on. */
-  index: number
-  state: StudioState
-  className?: string
-}) {
+function AvatarGlyph({ shape, fallback }: { shape: string; fallback: string }) {
   return (
     <span
       className={cn(
-        "flex size-8 shrink-0 items-center justify-center text-[0.6875rem] font-medium",
-        SHAPE[state.avatarShape as keyof typeof SHAPE],
-        state.avatarFallback === "tinted"
-          ? TINTS[index % TINTS.length]
+        "flex size-4 shrink-0 items-center justify-center text-[7px] font-semibold",
+        shape === "circle" ? "rounded-full" : "rounded-[5px]",
+        fallback === "tinted"
+          ? "bg-accent-muted text-fg-accent"
           : "bg-muted text-fg-muted",
-        className,
       )}
     >
-      {initials}
+      AB
     </span>
   )
 }
 
-export function AvatarsHero({ state }: { state: StudioState }) {
+export function AvatarsPreview({ state }: { state: StudioState }) {
   return (
-    <Hero className="flex-row items-center justify-evenly py-6">
-      <div className="flex -space-x-2">
-        {["MB", "AK", "JL"].map((initials, i) => (
-          <LabAvatar
-            key={initials}
-            initials={initials}
-            index={i}
-            state={state}
-            className="ring-2 ring-bg"
-          />
-        ))}
-      </div>
-      <span className="relative">
-        <LabAvatar initials="ES" index={0} state={state} />
-        <span className="absolute right-0 bottom-0 size-2.5 rounded-full bg-success ring-2 ring-bg" />
-      </span>
-    </Hero>
+    <AvatarGlyph shape={state.avatarShape} fallback={state.avatarFallback} />
   )
-}
-
-/** Collapsed-row summary: the avatar shape, and the fallback treatment. */
-export function avatarsSummary(state: StudioState): string {
-  const shape = state.avatarShape === "rounded" ? "Rounded" : "Circle"
-  const fallback = state.avatarFallback === "neutral" ? "Neutral" : "Tinted"
-  return `${shape} · ${fallback} fallback`
 }
 
 export function AvatarsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <ControlGroup>
-      <AvatarsHero state={state} />
-      <SegmentedControlRow
+    <>
+      <DialSegmented
         label="Shape"
         value={state.avatarShape}
         onChange={set("avatarShape")}
         options={SHAPE_OPTIONS}
       />
-      <SegmentedControlRow
+      <DialSegmented
         label="Fallback"
         value={state.avatarFallback}
         onChange={set("avatarFallback")}
         options={FALLBACK_OPTIONS}
       />
-    </ControlGroup>
+    </>
   )
 }

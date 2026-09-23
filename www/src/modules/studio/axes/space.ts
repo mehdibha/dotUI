@@ -1,6 +1,10 @@
-/* Space — the spatial system: the unit scales everything (Tailwind's
-   `--spacing`), density picks the gap/inset recipe (the registry's three
-   density tiers). */
+/* Space — density picks which of the registry's three hand-tuned tiers every
+   component wears (heights, insets, gaps, and the text size that rides with
+   them); the unit scales every spacing utility under it.
+
+   Engine: `density` selects the tier layer `useStyles` composes live and the
+   publisher flattens into the shipped classes. The unit is Tailwind's
+   `--spacing`, written on `:root` — live and in the exported theme alike. */
 
 import type { Resolved, StudioState } from "./index"
 
@@ -10,41 +14,50 @@ export const SPACE_DEFAULTS = {
   spacingUnit: 4,
 }
 
-export const DENSITY_OPTIONS = [
-  { value: "compact", label: "Compact" },
-  { value: "default", label: "Default" },
-  { value: "comfortable", label: "Comfortable" },
-]
+/** Where the unit slider runs: 3px is a dense desktop tool, 6px a touch UI. */
+export const UNIT_RANGE = { min: 3, max: 6, step: 0.25 }
 
-export const DENSITY_FACTORS: Record<string, number> = {
-  compact: 0.75,
-  default: 1,
-  comfortable: 1.25,
-}
+/** The tiers as the registry ships them, in spacing units, so a specimen at
+ *  the current unit reads what the components will measure: the md control
+ *  (button, input), a menu item, a card's inset, and the text size. */
+export const DENSITY_TIERS = [
+  {
+    id: "compact",
+    label: "Compact",
+    control: 7,
+    item: 7,
+    inset: 4,
+    gap: 1,
+    textPx: 12,
+  },
+  {
+    id: "default",
+    label: "Default",
+    control: 8,
+    item: 8,
+    inset: 4,
+    gap: 1.5,
+    textPx: 14,
+  },
+  {
+    id: "comfortable",
+    label: "Comfortable",
+    control: 9,
+    item: 9,
+    inset: 6,
+    gap: 1.5,
+    textPx: 14,
+  },
+] as const
 
-const spacePx = (n: number) => Math.round(n * 2) / 2
+export type DensityTier = (typeof DENSITY_TIERS)[number]
 
-/** The specimen recipe: control height, paddings and gaps from unit × density. */
-export function spaceRecipe(state: StudioState) {
-  const unit = state.spacingUnit
-  const factor = DENSITY_FACTORS[state.density] ?? 1
-  return {
-    unit,
-    controlH: spacePx(8 * unit),
-    padX: spacePx(2.5 * unit * factor),
-    itemGap: spacePx(unit * factor),
-    gap: spacePx(2 * unit * factor),
-    inset: spacePx(3 * unit * factor),
-  }
-}
+export const densityTier = (id: string): DensityTier =>
+  DENSITY_TIERS.find((tier) => tier.id === id) ?? DENSITY_TIERS[1]
 
 export function resolveSpace(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
   if (state.spacingUnit !== SPACE_DEFAULTS.spacingUnit)
     tokens["--spacing"] = `${state.spacingUnit / 16}rem`
-  const density =
-    state.density === "compact" || state.density === "comfortable"
-      ? state.density
-      : "default"
-  return { tokens, density }
+  return { tokens, density: densityTier(state.density).id }
 }

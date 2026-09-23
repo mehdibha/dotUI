@@ -147,7 +147,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         tokens: {
           "--radius": "0.5rem",
-          "--corner-shape": "squircle",
+          "--scrollbar-width": "thin",
           "--studio-btn-radius": "--radius-md",
         },
       },
@@ -159,7 +159,7 @@ describe("emitInitItem", () => {
     // the component publisher resolves them into utilities.
     expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
     expect(item.css?.[":root"]).toEqual({
-      "--corner-shape": "squircle",
+      "--scrollbar-width": "thin",
     })
   })
 
@@ -305,5 +305,39 @@ describe("emitInitItem", () => {
     expect(baseRegistryCss.cssVars.theme).toEqual({
       "--radius-lg": "var(--radius)",
     })
+  })
+
+  test("a selection source and control forks re-declare the cluster per scope", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: {
+        density: "default",
+        componentParams: {},
+        color: {
+          v: 2,
+          seeds: { accent: "#3ecf8e" },
+          selection: "accent",
+          scopes: { checkbox: "neutral" },
+        },
+      },
+      registryRoot: "https://dotui.com",
+    })
+
+    const light = item.cssVars?.light ?? {}
+    const dark = item.cssVars?.dark ?? {}
+    // Black buttons, accent checks …
+    expect(light["primary"]).toBe(light["fg"])
+    expect(light["selection"]).toBe(light["accent"])
+    expect(light["fg-on-selection"]).toBe(light["fg-on-accent"])
+    // … except the checkbox, which goes back to the inverse surface.
+    const css = item.css as Record<string, Record<string, string>>
+    expect(css["[data-checkbox]"]).toEqual({
+      "--selection": light["fg"],
+      "--selection-hover": expect.stringMatching(OKLCH),
+      "--selection-muted": light["highlight"],
+      "--fg-on-selection": light["bg"],
+    })
+    expect(css[".dark [data-checkbox]"]?.["--selection"]).toBe(dark["fg"])
+    expect(css[".dark [data-checkbox]"]?.["--fg-on-selection"]).toBe(dark["bg"])
   })
 })

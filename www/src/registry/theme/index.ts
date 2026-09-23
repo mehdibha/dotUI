@@ -22,9 +22,9 @@ export { JOB_STEPS } from "./types"
 export {
   applyTokenOverrides,
   DEFAULT_SEMANTICS,
+  scopedSemantics,
   semanticDelta,
   semanticsFor,
-  semanticsWithPrimary,
   semanticVocabulary,
 } from "./semantics"
 export { colorTokenNames } from "./params"

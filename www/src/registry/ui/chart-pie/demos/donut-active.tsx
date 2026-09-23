@@ -30,8 +30,6 @@ export default function ChartPieDonutActive() {
       // Static, so the highlighted slice reads without hovering.
       activeIndex={0}
       activeOffset={0.12}
-      stroke="var(--color-bg)"
-      strokeWidth={2}
       ariaLabel="Visitors by browser, with Chrome highlighted"
     />
   )

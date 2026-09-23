@@ -18,7 +18,6 @@ export default function ChartLineDots() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       points
       ariaLabel="Desktop visitors, January through June"
     />

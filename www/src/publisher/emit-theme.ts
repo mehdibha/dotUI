@@ -36,6 +36,7 @@ import {
   DEFAULT_RADIUS,
   type ModeName,
   resolveColorConfig,
+  scopedSemantics,
   semanticLiterals,
   semanticsFor,
 } from "@/registry/theme"
@@ -273,6 +274,22 @@ export function mergePresetCssFields(
   }
   Object.assign(light, split.semantic.light)
   Object.assign(dark, split.semantic.dark)
+  // Controls that leave the selection source: the cluster's `:root` names
+  // re-declared on the component, per mode.
+  for (const [selector, vocab] of Object.entries(
+    scopedSemantics(preset.color),
+  )) {
+    const scoped = semanticLiterals(vocab, engine)
+    for (const mode of ["light", "dark"] as const) {
+      css[mode === "dark" ? `.dark ${selector}` : selector] =
+        Object.fromEntries(
+          Object.entries(scoped[mode]).map(([name, value]) => [
+            `--${rootVar(name)}`,
+            value,
+          ]),
+        )
+    }
+  }
   engine.charts.light.categorical.forEach((color, i) => {
     light[`chart-${i + 1}`] = color
   })

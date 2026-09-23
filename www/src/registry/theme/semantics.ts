@@ -85,67 +85,74 @@ function statusCluster(palette: string): SemanticVocabulary {
   }
 }
 
+/** The solid one source paints: the accent ramp, or the neutral's text end
+ *  as an inverse surface (black/white, text on it is the app background). */
+function sourceFill(source: PrimaryColorSource) {
+  const accent = source === "accent"
+  return {
+    fill: bg(accent ? ref("accent", "700") : ref("neutral", "950"), PRIMARY),
+    hover: bg(
+      accent
+        ? ref("accent", "800")
+        : mix(ref("neutral", "950"), 90, ref("neutral", "25")),
+      PRIMARY,
+    ),
+    active: bg(
+      accent
+        ? mix(ref("accent", "800"), 88, ref("neutral", "950"))
+        : mix(ref("neutral", "950"), 80, ref("neutral", "25")),
+      PRIMARY,
+    ),
+    muted: bg(accent ? ref("accent", "100") : ref("neutral", "200"), PRIMARY),
+    on: {
+      target: accent ? on("accent", "700") : ref("neutral", "25"),
+      category: "foreground",
+    } satisfies SemanticToken,
+    fgDisabled: fg(
+      accent ? ref("accent", "400") : ref("neutral", "500"),
+      PRIMARY,
+    ),
+  }
+}
+
+/** Checked-control fills (switch/checkbox/radio), the selected choice card's
+ *  wash, and focus — drawn from `source`. */
+export function selectionCluster(
+  source: PrimaryColorSource,
+): SemanticVocabulary {
+  const fill = sourceFill(source)
+  return {
+    "color-selection": fill.fill,
+    "color-selection-hover": fill.hover,
+    "color-selection-muted": fill.muted,
+    "color-fg-on-selection": fill.on,
+  }
+}
+
 /**
- * Build the vocabulary for a primary source. `neutral` (default) renders
- * black/white primary actions from the text end of the neutral ladder;
- * `accent` renders brand-colored solids. One table, no emitter special-cases.
+ * Build the vocabulary: the primary cluster from `primary`, the selection
+ * cluster from `selection` (the primary's by default), until a `selection`
+ * seed moves the latter onto its own ramp (Vercel: black primary, blue
+ * selection). One table, no emitter special-cases.
  */
 export function semanticVocabulary(
   primary: PrimaryColorSource = "neutral",
+  selection: PrimaryColorSource = primary,
   hasSelection = false,
 ): SemanticVocabulary {
-  // The primary fill/hover/on/muted set — shared by the primary cluster and, by
-  // default, the selection cluster (they only diverge under a `selection` seed).
-  const isAccent = primary === "accent"
-  const primaryFill = isAccent
-    ? bg(ref("accent", "700"), PRIMARY)
-    : // The inverse surface: high-contrast text step as a background.
-      bg(ref("neutral", "950"), PRIMARY)
-  const primaryFillHover = isAccent
-    ? bg(ref("accent", "800"), PRIMARY)
-    : bg(mix(ref("neutral", "950"), 90, ref("neutral", "25")), PRIMARY)
-  const primaryFillOn: SemanticToken = isAccent
-    ? { target: on("accent", "700"), category: "foreground" }
-    : // Text on the inverse surface is the app background by construction.
-      { target: ref("neutral", "25"), category: "foreground" }
-  const primaryFillMuted = isAccent
-    ? bg(ref("accent", "100"), PRIMARY)
-    : bg(ref("neutral", "200"), PRIMARY)
+  const fill = sourceFill(primary)
+  const primaryCluster: SemanticVocabulary = {
+    "color-primary": fill.fill,
+    "color-primary-hover": fill.hover,
+    "color-primary-active": fill.active,
+    "color-primary-muted": fill.muted,
+    // The disabled fill stays neutral whatever the primary draws from.
+    "color-primary-disabled": bg(ref("neutral", "300"), PRIMARY),
+    "color-fg-on-primary": fill.on,
+    "color-fg-primary-disabled": fill.fgDisabled,
+  }
 
-  // The disabled fill stays neutral whatever the primary draws from.
-  const primaryFillDisabled = bg(ref("neutral", "300"), PRIMARY)
-
-  const primaryCluster: SemanticVocabulary = isAccent
-    ? {
-        "color-primary": primaryFill,
-        "color-primary-hover": primaryFillHover,
-        "color-primary-active": bg(
-          mix(ref("accent", "800"), 88, ref("neutral", "950")),
-          PRIMARY,
-        ),
-        "color-primary-muted": primaryFillMuted,
-        "color-primary-disabled": primaryFillDisabled,
-        "color-fg-on-primary": primaryFillOn,
-        "color-fg-primary-disabled": fg(ref("accent", "400"), PRIMARY),
-      }
-    : {
-        "color-primary": primaryFill,
-        "color-primary-hover": primaryFillHover,
-        "color-primary-active": bg(
-          mix(ref("neutral", "950"), 80, ref("neutral", "25")),
-          PRIMARY,
-        ),
-        "color-primary-muted": primaryFillMuted,
-        "color-primary-disabled": primaryFillDisabled,
-        "color-fg-on-primary": primaryFillOn,
-        "color-fg-primary-disabled": fg(ref("neutral", "500"), PRIMARY),
-      }
-
-  // Checked-control fills (switch/checkbox/radio), the selected choice card's
-  // wash, and focus draw from here. Defaults to the primary targets — nothing
-  // shifts — until a `selection` seed splits them onto their own ramp (Vercel:
-  // black primary, blue selection).
-  const selectionCluster: SemanticVocabulary = hasSelection
+  const selection_: SemanticVocabulary = hasSelection
     ? {
         "color-selection": bg(ref("selection", "700"), SELECTION),
         "color-selection-hover": bg(ref("selection", "800"), SELECTION),
@@ -155,12 +162,7 @@ export function semanticVocabulary(
           category: "foreground",
         },
       }
-    : {
-        "color-selection": primaryFill,
-        "color-selection-hover": primaryFillHover,
-        "color-selection-muted": primaryFillMuted,
-        "color-fg-on-selection": primaryFillOn,
-      }
+    : selectionCluster(selection)
 
   return {
     // ---- surfaces / backgrounds ----
@@ -179,7 +181,7 @@ export function semanticVocabulary(
     "color-neutral-hover": bg(ref("neutral", "200"), ["neutral"]),
     "color-neutral-active": bg(ref("neutral", "300"), ["neutral"]),
     ...primaryCluster,
-    ...selectionCluster,
+    ...selection_,
     ...statusCluster("success"),
     ...statusCluster("danger"),
     ...statusCluster("warning"),
@@ -249,13 +251,6 @@ export function semanticVocabulary(
 /** The default vocabulary (neutral primary). */
 export const DEFAULT_SEMANTICS = semanticVocabulary("neutral")
 
-/** The vocabulary with the primary cluster drawing from `source`. */
-export function semanticsWithPrimary(
-  source: PrimaryColorSource | undefined,
-): SemanticVocabulary {
-  return semanticVocabulary(source ?? "neutral")
-}
-
 const specTarget = (spec: TokenTargetSpec): SemanticTarget => ({
   ref: { palette: spec.palette, step: JOB_STEPS[spec.job] },
 })
@@ -297,23 +292,40 @@ export function applyTokenOverrides(
   return out
 }
 
-/** A color slice carries the presence of an optional `selection` seed. */
+/** The recipe fields the vocabulary reads. */
 type ColorSlice = {
   primary?: PrimaryColorSource
+  selection?: PrimaryColorSource
+  scopes?: Record<string, PrimaryColorSource>
   overrides?: TokenOverrides
   seeds?: { selection?: string }
 }
 
-/** The one resolver every emitter goes through (T4): primary + overrides. */
+/** The one resolver every emitter goes through (T4): sources + overrides. */
 export function semanticsFor(
   color: ColorSlice | undefined,
 ): SemanticVocabulary {
+  const primary = color?.primary ?? "neutral"
   return applyTokenOverrides(
     semanticVocabulary(
-      color?.primary ?? "neutral",
+      primary,
+      color?.selection ?? primary,
       Boolean(color?.seeds?.selection),
     ),
     color?.overrides,
+  )
+}
+
+/** The selection cluster re-declared per component scope (`scopes`), keyed
+ *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
+export function scopedSemantics(
+  color: ColorSlice | undefined,
+): Record<string, SemanticVocabulary> {
+  return Object.fromEntries(
+    Object.entries(color?.scopes ?? {}).map(([scope, source]) => [
+      `[data-${scope}]`,
+      selectionCluster(source),
+    ]),
   )
 }
 

@@ -39,7 +39,6 @@ export function Example() {
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
-      legend={false}
       ariaLabel="Desktop visitors by month"
     />
   )
@@ -82,27 +81,20 @@ Series take colors from `--chart-1` through `--chart-8` in order. A `null` value
 
 ## Stacking
 
-Stacking is a data transform, not a chart flag: `stackY` turns wide rows into one long row per band, carrying the `base` and `top` of the band it should fill plus its own `value` for the tooltip. Call it outside your component, then read those fields.
-
-```tsx
-import { stackY } from "@/components/ui/chart"
-
-const stacked = stackY(data, { x: "month", y: ["desktop", "mobile", "other"] })
-```
+`stacked` stacks the series on one another, in `seriesOrder`; the tooltip still reports each band's own value.
 
 ```tsx
 <AreaChart
-  data={stacked}
-  x="x"
-  y="top"
-  y1="base"
-  series="series"
+  data={data}
+  x="month"
+  y={["desktop", "mobile", "other"]}
   labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
+  stacked
   ariaLabel="Visitors by device, stacked"
 />
 ```
 
-Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. Add `normalize: true` for a 100% stack — each band is divided by its own x-group total — and format the value axis as a percentage with `formatY`.
+Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. `stacked="normalize"` divides each band by its own x-group total for a 100% stack — format the value axis as a percentage with `formatY`.
 
 ## Shape
 
@@ -149,6 +141,7 @@ const target = ruleY([200], { strokeDasharray: "4 4" })
   <Example name="chart-area/demos/axes" title="Axis Formatting" />
   <Example name="chart-area/demos/linear" title="Linear" />
   <Example name="chart-area/demos/step" title="Step" />
+  <Example name="chart-area/demos/interactive" title="Interactive" />
 </Examples>
 
 ## API Reference

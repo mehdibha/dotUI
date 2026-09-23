@@ -20,9 +20,6 @@ export interface BarChartProps extends ChartFamilyProps {
    */
   y: string | readonly string[]
 
-  /** Lower baseline field. Pair it with the `stackY` helper for stacked bars. */
-  y1?: string
-
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 
@@ -46,14 +43,20 @@ export interface BarChartProps extends ChartFamilyProps {
   horizontal?: boolean
 
   /**
-   * Side-by-side series inside each category band. Without it, wide-format
-   * series draw over one another from zero — stack with `stackY` instead.
+   * Side-by-side series inside each category band.
    * @default true for multi-series wide data, false otherwise
    */
   grouped?: boolean
 
   /**
-   * Corner radius in pixels.
+   * Series stacked inside each band, in `seriesOrder`. `"normalize"` divides
+   * each band by its own total for a 100% stack.
+   * @default false
+   */
+  stacked?: boolean | "normalize"
+
+  /**
+   * Corner radius in pixels. Stacked bars round only the outer end.
    * @default 4
    */
   radius?: number
@@ -65,10 +68,10 @@ export interface BarChartProps extends ChartFamilyProps {
   fillOpacity?: number
 
   /**
-   * Show the axes and their tick labels.
-   * @default false
+   * Show the axes and their tick labels: both, neither, or one.
+   * @default "x", or "y" when `horizontal` — the category axis
    */
-  axes?: boolean
+  axes?: boolean | "x" | "y"
 
   /**
    * Show the value-axis grid lines.
@@ -77,15 +80,15 @@ export interface BarChartProps extends ChartFamilyProps {
   grid?: boolean
 
   /**
-   * Show the color legend. Turn it off for a single series.
-   * @default true
+   * Show the color legend below the plot.
+   * @default false
    */
   legend?: boolean
 
-  /** Formats x tick labels — a function, or serializable `Intl` options. */
+  /** Formats x tick labels. Define it outside render. */
   formatX?: ChartFormat
 
-  /** Formats y tick labels — a function, or serializable `Intl` options. */
+  /** Formats y tick labels. Define it outside render. */
   formatY?: ChartFormat
 
   /** Extra mark layers painted under the bars. */

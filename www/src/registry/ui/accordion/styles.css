@@ -1,3 +1,4 @@
 :root {
   --studio-accordion-radius: var(--studio-radius-panel);
+  --studio-accordion-trigger-radius: var(--studio-radius-item);
 }

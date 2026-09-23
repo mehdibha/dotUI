@@ -115,10 +115,12 @@ export function OverlayPreview({
           )}
         />
         {variant === "modal" ? (
-          <div className="absolute inset-0 flex items-center justify-center p-6">
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* A real-width modal (the default density max-w-sm) scaled down,
+                so it reads as a dialog over a page rather than a card. */}
             <Surface
               variant="modal"
-              className={cn("w-full max-w-52 scale-[0.85]", surfaceClassName)}
+              className={cn("w-96 shrink-0 scale-[0.55]", surfaceClassName)}
             >
               {children}
             </Surface>

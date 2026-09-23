@@ -21,15 +21,6 @@ const colorString = z.string().refine(
   { message: "not a parsable CSS color" },
 )
 
-const borderTargetRatio = z.number().min(1.05).max(21)
-const borderTargetValue = z.union([
-  borderTargetRatio,
-  z.object({
-    light: borderTargetRatio.optional(),
-    dark: borderTargetRatio.optional(),
-  }),
-])
-
 export const themeOptionsSchema = z.object({
   seeds: z
     .object({
@@ -57,30 +48,6 @@ export const themeOptionsSchema = z.object({
       light: z.number().min(90).max(100).optional(),
       dark: z.union([z.number().min(0).max(20), z.literal("oled")]).optional(),
     })
-    .optional(),
-  /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
-  strictOnSolid: z.boolean().optional(),
-  /**
-   * D2 — guarantee policy: `relaxed` reports border-floor misses as warnings
-   * instead of failing the build (text guarantees never relax); `strict`
-   * implies `strictOnSolid`. Absent = `default`.
-   */
-  guaranteePolicy: z.enum(["relaxed", "default", "strict"]).optional(),
-  /**
-   * D2 — per-palette border placement targets: WCAG vs the app background,
-   * per border job, one value or per-mode values. Key `'*'` applies to every
-   * palette without its own entry. A target below the default floor is
-   * honored and priced as a report warning.
-   */
-  borders: z
-    .record(
-      z.string(),
-      z.object({
-        "400": borderTargetValue.optional(),
-        "500": borderTargetValue.optional(),
-        "600": borderTargetValue.optional(),
-      }),
-    )
     .optional(),
   /**
    * D11 — the categorical series strategy: `tonal` (default) shades one brand

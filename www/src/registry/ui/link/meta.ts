@@ -22,8 +22,9 @@ const linkMeta = {
     color: {
       kind: "enum",
       default: "accent",
-      values: ["accent", "foreground"] as const,
-      description: "The color the default link wears.",
+      values: ["accent", "neutral"] as const,
+      description:
+        "The color the default link wears: the brand, or the text's own.",
     },
   },
 } satisfies RegistryItem
