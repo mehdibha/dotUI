@@ -105,6 +105,7 @@ export function SpaceSection({ studio }: { studio: Studio }) {
         <DialPopover className="w-80">
           <CardGrid
             label="Density"
+            columns={3}
             value={tier.id}
             onChange={set("density")}
             options={DENSITY_TIERS.map((t) => ({

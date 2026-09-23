@@ -70,7 +70,7 @@ function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
           family.primary,
         )}
       >
-        Save
+        {card ? "Primary" : "Button"}
       </span>
       {card && (
         <span
@@ -80,7 +80,7 @@ function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
             family.secondary,
           )}
         >
-          Cancel
+          Secondary
         </span>
       )}
     </span>

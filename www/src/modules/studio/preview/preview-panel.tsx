@@ -545,6 +545,11 @@ export function PreviewPanel({
                     <ListBoxItem key={id} id={id} textValue={label}>
                       <Icon />
                       {label}
+                      {id !== "desktop" && (
+                        <span className="ml-auto pl-3 text-fg-muted tabular-nums">
+                          {DEVICE_WIDTHS[id]}
+                        </span>
+                      )}
                     </ListBoxItem>
                   ))}
                 </ListBox>
@@ -596,7 +601,7 @@ export function PreviewPanel({
                 size="sm"
                 variant={inspecting ? "primary" : "quiet"}
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-lg:hidden"
                 onPress={() => setInspecting((v) => !v)}
                 aria-label="Toggle component inspector"
               >
@@ -664,7 +669,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-lg:hidden"
                 onPress={toggleFullscreen}
                 aria-label="Toggle fullscreen"
               >

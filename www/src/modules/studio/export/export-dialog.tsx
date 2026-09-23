@@ -11,6 +11,7 @@ import {
   CheckIcon,
   ChevronDownIcon,
   CopyIcon,
+  DownloadIcon,
 } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
@@ -299,6 +300,15 @@ interface RegistryInit {
   }
 }
 
+function download(filename: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], { type: "text/css" }))
+  const link = document.createElement("a")
+  link.href = url
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
 function cssBlock(selector: string, vars: Record<string, string> = {}) {
   const lines = Object.entries(vars).map(
     ([key, value]) => `  --${key}: ${value};`,
@@ -356,18 +366,30 @@ function ThemeCss() {
                 ? `Installs ${item.dependencies.join(", ")}`
                 : "globals.css"}
             </span>
-            <Button
-              variant="quiet"
-              size="xs"
-              isIconOnly
-              aria-label="Copy theme CSS"
-              isDisabled={!item}
-              onPress={() => copyToClipboard(css)}
-            >
-              {isCopied ? <CheckIcon /> : <CopyIcon />}
-            </Button>
+            <span className="flex shrink-0">
+              <Button
+                variant="quiet"
+                size="xs"
+                isIconOnly
+                aria-label="Download theme CSS"
+                isDisabled={!item}
+                onPress={() => download("theme.css", css)}
+              >
+                <DownloadIcon />
+              </Button>
+              <Button
+                variant="quiet"
+                size="xs"
+                isIconOnly
+                aria-label="Copy theme CSS"
+                isDisabled={!item}
+                onPress={() => copyToClipboard(css)}
+              >
+                {isCopied ? <CheckIcon /> : <CopyIcon />}
+              </Button>
+            </span>
           </div>
-          <pre className="max-h-56 overflow-auto px-3 py-2 font-mono text-xs text-fg">
+          <pre className="max-h-[40vh] overflow-auto px-3 py-2 font-mono text-xs text-fg">
             {item ? css : "Loading…"}
           </pre>
         </div>

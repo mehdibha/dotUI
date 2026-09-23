@@ -30,7 +30,7 @@ function ChipGlyph({ style, shape }: { style: string; shape: string }) {
         CHIP[style],
       )}
     >
-      New
+      Badge
     </span>
   )
 }

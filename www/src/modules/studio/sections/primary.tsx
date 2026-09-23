@@ -104,7 +104,7 @@ function ButtonGlyph({ ink }: { ink: Ink }) {
       className="flex h-5 items-center rounded-md px-2 text-[10.5px] font-semibold"
       style={{ background: ink.fill, color: ink.on }}
     >
-      Save
+      Button
     </span>
   )
 }
