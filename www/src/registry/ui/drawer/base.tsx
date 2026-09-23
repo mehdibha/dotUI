@@ -160,7 +160,10 @@ function Drawer({
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
-              <div className={overlay()}>
+              <div
+                className={overlay()}
+                data-snap-points={snapPoints?.length ? "" : undefined}
+              >
                 <DrawerPrimitive.Backdrop className={backdrop()} />
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
