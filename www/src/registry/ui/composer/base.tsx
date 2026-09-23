@@ -202,6 +202,9 @@ function ComposerSubmit({
       variant="primary"
       isIconOnly
       aria-label={busy ? "Stop" : "Send"}
+      // Keep focus (and the software keyboard) in the text area: a blur
+      // would close the keyboard and shift the layout mid-tap.
+      preventFocusOnPress
       isDisabled={isDisabled || (busy ? !stop : isEmpty)}
       onPress={(event) => {
         onPress?.(event)

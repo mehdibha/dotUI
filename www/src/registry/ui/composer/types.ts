@@ -44,6 +44,7 @@ export interface ComposerToolbarProps extends React.ComponentProps<"div"> {}
 
 /**
  * The send button: disabled while the text is empty, a stop button while a
- * reply is in flight.
+ * reply is in flight. Pressing it leaves focus in the text area, so a touch
+ * keyboard stays open between messages.
  */
 export interface ComposerSubmitProps extends ButtonProps {}
