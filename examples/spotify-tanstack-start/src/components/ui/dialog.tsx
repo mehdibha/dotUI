@@ -21,6 +21,18 @@ const dialogVariants = tv({
     footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
     closeButton: "absolute top-2 right-2",
   },
+  variants: {
+    layout: {
+      stack: {},
+      bar: {
+        header:
+          "grid grid-cols-[1fr_auto_1fr] items-center gap-2 *:first:justify-self-start *:last:justify-self-end *:data-[slot=dialog-heading]:col-start-2 *:data-[slot=dialog-heading]:justify-self-center *:data-[slot=dialog-heading]:text-center",
+      },
+    },
+  },
+  defaultVariants: {
+    layout: "stack",
+  },
 });
 
 const { content, closeButton, header, title, description, body, footer } =
@@ -79,13 +91,16 @@ const DialogContent = ({
 
 /* -------------------------------------------------------------------------- */
 
-interface DialogHeaderProps extends React.ComponentProps<"header"> {}
+interface DialogHeaderProps extends React.ComponentProps<"header"> {
+  layout?: "stack" | "bar";
+}
 
-const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
+const DialogHeader = ({ className, layout, ...props }: DialogHeaderProps) => {
   return (
     <header
       data-slot="dialog-header"
-      className={header({ className })}
+      data-layout={layout}
+      className={header({ layout, className })}
       {...props}
     />
   );

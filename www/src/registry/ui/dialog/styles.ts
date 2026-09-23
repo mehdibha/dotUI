@@ -14,6 +14,20 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
       closeButton: "absolute",
     },
+    variants: {
+      /* bar: a centered title between a leading and a trailing action, the
+         navigation bar of an iOS sheet or a Material full-screen dialog. */
+      layout: {
+        stack: {},
+        bar: {
+          header:
+            "grid grid-cols-[1fr_auto_1fr] items-center gap-2 *:first:justify-self-start *:last:justify-self-end *:data-[slot=dialog-heading]:col-start-2 *:data-[slot=dialog-heading]:justify-self-center *:data-[slot=dialog-heading]:text-center",
+        },
+      },
+    },
+    defaultVariants: {
+      layout: "stack",
+    },
   },
   density: {
     compact: {
