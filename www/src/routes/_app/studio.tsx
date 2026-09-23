@@ -7,7 +7,11 @@ import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { LEGACY_ORIGIN, ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET, encodePreset } from "@/modules/studio/preset/codec"
+import {
+  DEFAULT_PRESET,
+  decodePreset,
+  encodePreset,
+} from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -89,12 +93,17 @@ function StudioPage() {
   useEffect(() => {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
-    // A shared / deep-linked preset wins over the saved one.
+    // A shared / deep-linked preset wins over the saved one. An old link
+    // loads in today's encoding (the pinned Origin as Origin, which is none).
     if (preset) {
-      if (preset === LEGACY_ORIGIN) {
+      const next =
+        preset === LEGACY_ORIGIN
+          ? { state: ORIGIN.state }
+          : decodePreset(preset)
+      if (encodePreset(next) !== preset) {
         // Still the link's initial value, not an edit to persist.
         skipPersists.current++
-        setState(ORIGIN.state)
+        setPreset(next)
       }
       return
     }
