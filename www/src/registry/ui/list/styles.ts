@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(listMeta, {
     slots: {
       root: "flex flex-col outline-hidden",
       item: [
-        "relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center px-(--list-px) text-fg outline-hidden select-ui [--list-separator:var(--list-px)] has-data-[slot=list-item-icon]:[--list-separator:calc(var(--list-px)+var(--list-icon)+--spacing(3))]",
+        "relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto_auto] content-center items-center px-(--list-px) text-fg outline-hidden select-ui [--list-separator:var(--list-px)] has-data-[slot=list-item-icon]:[--list-separator:calc(var(--list-px)+var(--list-icon)+--spacing(3))]",
         "after:pointer-events-none after:absolute after:start-(--list-separator) after:end-0 after:bottom-0 after:h-px after:bg-border [&:not(:has(+[data-list-item]))]:after:hidden",
         "hover:cursor-interactive hover:bg-highlight focus-visible:bg-highlight disabled:text-(--disabled-fg,var(--color-fg-disabled)) disabled:**:text-current pressed:bg-highlight",
       ],
