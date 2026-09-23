@@ -13,6 +13,12 @@ const drawerMeta = {
     },
   ],
   params: {
+    sheet: {
+      kind: "enum",
+      default: "attached",
+      values: ["attached", "floating"] as const,
+      description: "How a bottom sheet meets the screen edges.",
+    },
     backdrop: {
       kind: "enum",
       default: "dim",

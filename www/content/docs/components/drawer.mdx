@@ -96,6 +96,31 @@ The drawer dismisses on swipe, outside interaction, and Escape. Disable each wit
 </Drawer>
 ```
 
+## Snap points
+
+`snapPoints` lets a bottom (or top) drawer rest at several heights: fractions of the viewport between 0 and 1, pixel numbers, or `px`/`rem` strings. Give the drawer the height of its largest point; it opens at the first unless `defaultSnapPoint` (or a controlled `snapPoint` with `onSnapPointChange`) says otherwise.
+
+```tsx
+<Drawer snapPoints={[0.5, 1]} className="h-[calc(100dvh-3rem)]">
+  <DialogContent>...</DialogContent>
+</Drawer>
+```
+
+## Indent
+
+`DrawerIndent` wraps the page behind the drawers of its `DrawerProvider`. By default it scales back under a sheet; `effect="push"` slides it aside for a side menu, by `--drawer-indent-push`, and fades its content — pair it with `hasBackdrop={false}` on the side drawer so no scrim covers the page too. Set that variable where both the page and the portaled drawer read it, and size the drawer with it. Give sheets their own provider so they don't push the page too.
+
+```tsx
+<DrawerProvider>
+  <DrawerIndentBackground />
+  <DrawerIndent effect="push">
+    <DrawerProvider>
+      <DrawerIndent>{page}</DrawerIndent>
+    </DrawerProvider>
+  </DrawerIndent>
+</DrawerProvider>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">
@@ -103,6 +128,7 @@ The drawer dismisses on swipe, outside interaction, and Escape. Disable each wit
   <Example name="drawer/demos/dialog-parts" title="Settings Panel" />
   <Example name="drawer/demos/nested" title="Nested Drawers" />
   <Example name="drawer/demos/scrollable" title="Scrollable Content" />
+  <Example name="drawer/demos/snap-points" title="Snap Points" />
   <Example name="drawer/demos/with-form" title="Form Drawer" />
 </Examples>
 

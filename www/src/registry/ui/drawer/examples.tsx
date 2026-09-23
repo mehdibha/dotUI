@@ -10,6 +10,7 @@ import Nested from "./demos/nested"
 import NonDismissable from "./demos/non-dismissable"
 import Placement from "./demos/placement"
 import Scrollable from "./demos/scrollable"
+import SnapPoints from "./demos/snap-points"
 import WithForm from "./demos/with-form"
 
 export default function DrawerExamples() {
@@ -23,6 +24,9 @@ export default function DrawerExamples() {
       </Example>
       <Example title="placement">
         <Placement />
+      </Example>
+      <Example title="snap points">
+        <SnapPoints />
       </Example>
       <Example title="indent">
         <Indent />

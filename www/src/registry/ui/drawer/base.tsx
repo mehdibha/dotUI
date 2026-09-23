@@ -53,10 +53,24 @@ function DrawerPopupElement({
   // react-aria press: the content moves with the finger, so the pointer stays
   // over the target, and the drawer claims the gesture before the browser
   // would fire pointercancel. Releasing then fires onPress. Cancel in-flight
-  // presses the way the platform does when a gesture is taken over.
+  // presses the way the platform does when a gesture is taken over — once the
+  // finger has moved past the touch slop, since a touch reports swiping from
+  // the moment it lands and a plain tap must still press.
   React.useEffect(() => {
     if (!swiping) return
-    document.dispatchEvent(new PointerEvent("pointercancel"))
+    let origin: { x: number; y: number } | null = null
+    const onMove = (event: PointerEvent) => {
+      origin ??= { x: event.clientX, y: event.clientY }
+      const distance = Math.hypot(
+        event.clientX - origin.x,
+        event.clientY - origin.y,
+      )
+      if (distance < 8) return
+      document.removeEventListener("pointermove", onMove, true)
+      document.dispatchEvent(new PointerEvent("pointercancel"))
+    }
+    document.addEventListener("pointermove", onMove, true)
+    return () => document.removeEventListener("pointermove", onMove, true)
   }, [swiping])
 
   return <div {...props} />
@@ -78,6 +92,11 @@ interface DrawerProps {
   isDismissable?: boolean
   isKeyboardDismissDisabled?: boolean
   swipeToDismiss?: boolean
+  hasBackdrop?: boolean
+  snapPoints?: DrawerPrimitive.Root.Props["snapPoints"]
+  snapPoint?: DrawerPrimitive.Root.Props["snapPoint"]
+  defaultSnapPoint?: DrawerPrimitive.Root.Props["defaultSnapPoint"]
+  onSnapPointChange?: DrawerPrimitive.Root.Props["onSnapPointChange"]
   className?: DrawerPrimitive.Popup.Props["className"]
   style?: DrawerPrimitive.Popup.Props["style"]
   children?: React.ReactNode
@@ -93,6 +112,11 @@ function Drawer({
   onOpenChange,
   placement = "bottom",
   swipeToDismiss = true,
+  hasBackdrop = true,
+  snapPoints,
+  snapPoint,
+  defaultSnapPoint,
+  onSnapPointChange,
   style,
 }: DrawerProps) {
   const isHidden = useIsHidden()
@@ -142,14 +166,23 @@ function Drawer({
           else state.close()
         }}
         swipeDirection={swipeDirectionMap[placement]}
+        snapPoints={snapPoints}
+        snapPoint={snapPoint}
+        defaultSnapPoint={defaultSnapPoint}
+        onSnapPointChange={onSnapPointChange}
       >
         {/* Keyboard-aware focus/scroll handling: publishes --drawer-keyboard-inset
             on the viewport while the software keyboard is open. */}
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
-              <div className={overlay()}>
-                <DrawerPrimitive.Backdrop className={backdrop()} />
+              <div
+                className={overlay()}
+                data-snap-points={snapPoints?.length ? "" : undefined}
+              >
+                {hasBackdrop && (
+                  <DrawerPrimitive.Backdrop className={backdrop()} />
+                )}
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
                     data-drawer=""
@@ -239,14 +272,20 @@ function DrawerProvider(props: DrawerProviderProps) {
 
 // MARK: Separator
 
-interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
+interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {
+  effect?: "scale" | "push"
+}
 
-function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+function DrawerIndent({
+  className,
+  effect = "scale",
+  ...props
+}: DrawerIndentProps) {
   const { indent } = useStyles()()
   return (
     <DrawerPrimitive.Indent
       className={(state) =>
-        indent({ className: resolveClassName(className, state) })
+        indent({ effect, className: resolveClassName(className, state) })
       }
       {...props}
     />

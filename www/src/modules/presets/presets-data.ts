@@ -116,6 +116,7 @@ export const PRESETS: Preset[] = [
       surfaceMaterial: "glass",
       menuScale: "large",
       mobileDialogs: "sheet",
+      dialogSheet: "floating",
       motionCharacter: "spring",
       scrollbarStyle: "overlay",
     },
