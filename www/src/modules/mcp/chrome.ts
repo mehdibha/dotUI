@@ -188,6 +188,9 @@ async function settle(sectionTitle: string | undefined, maxHeight: number) {
     throw new Error("The page rendered nothing.")
   if (document.body.innerText.trim() === "Preview not found")
     throw new Error("Preview not found.")
+  // The app's error boundary: a screenshot of it would pass for the design.
+  if (document.body.innerText.includes("Something went wrong."))
+    throw new Error(`${APP_ERROR}${document.body.innerText.trim()}`)
 
   let top = 0
   let height = document.documentElement.scrollHeight
@@ -224,6 +227,8 @@ async function settle(sectionTitle: string | undefined, maxHeight: number) {
   }
 }
 
+const APP_ERROR = "app-error: "
+
 async function capture(page: Page, url: string, section?: string) {
   const { origin, searchParams } = new URL(url)
   const mode = searchParams.get("mode") === "dark" ? "dark" : "light"
@@ -258,12 +263,32 @@ export const screenshot: Screenshotter = async ({ url, section }) => {
     throw new ToolError(`render is unavailable here: ${message(error)}`)
   }
   const release = await acquire()
-  const render = async () => {
+  const shoot = async (cache: boolean) => {
     const page = await b.newPage()
     try {
+      await page.setCacheEnabled(cache)
       return await capture(page, url, section)
     } finally {
       void page.close().catch(() => {})
+    }
+  }
+  // The warm browser shares one HTTP cache: a chunk that 404ed while a
+  // deployment was propagating stays broken until fetched fresh.
+  const render = async () => {
+    try {
+      return await shoot(true)
+    } catch (error) {
+      if (!message(error).includes(APP_ERROR)) throw error
+      try {
+        return await shoot(false)
+      } catch (retry) {
+        throw new ToolError(
+          `The page crashed while rendering: ${message(retry)
+            .replace(/.*app-error: /s, "")
+            .replace(/\s+/g, " ")
+            .slice(0, 300)}`,
+        )
+      }
     }
   }
   try {
