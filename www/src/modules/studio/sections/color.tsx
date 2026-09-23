@@ -78,6 +78,7 @@ const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
   { key: "warningSeed", palette: "warning", label: "Warning" },
   { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "infoSeed", palette: "info", label: "Info" },
   { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 

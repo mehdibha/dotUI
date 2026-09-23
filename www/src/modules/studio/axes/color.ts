@@ -40,6 +40,7 @@ export const COLOR_DEFAULTS = {
   successSeed: "",
   warningSeed: "",
   dangerSeed: "",
+  infoSeed: "",
   selectionSeed: "",
   vividness: 1,
   neutralTint: 1,
@@ -171,6 +172,7 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       success: state.successSeed || undefined,
       warning: state.warningSeed || undefined,
       danger: state.dangerSeed || undefined,
+      info: state.infoSeed || undefined,
       selection: state.selectionSeed || undefined,
     }),
     background: compact({
@@ -240,15 +242,13 @@ export const COLOR_SPEC = {
   label: "Color",
   description:
     "The palette engine's inputs: a brand seed, a neutral that leans toward " +
-    "a hue, optional status and selection seeds, and which ramp the solid " +
-    "roles paint with. Every palette is a 12-step ramp generated per mode; " +
+    "a hue, optional status (success, warning, danger, info) and selection " +
+    "seeds, and which ramp the solid roles paint with. Every palette is a 12-step ramp generated per mode; " +
     "dark is its own pass, not an inversion. Which roles paint with the " +
     "brand is split over eight leaves — buttonColor, checkboxColor, " +
     "radioColor, switchColor, sliderColor, tabsColor, linkColor, " +
     "focusColor — each stored on its own; the studio's Primary control " +
-    "reads them as one value (or mixed) and sets them together. The info " +
-    "palette has no seed here: it is always generated from the engine's " +
-    "blue (#4862ff), scaled by Vividness like the status palettes.",
+    "reads them as one value (or mixed) and sets them together.",
   axes: {
     brand: {
       label: "Brand",
@@ -357,6 +357,22 @@ export const COLOR_SPEC = {
       "the danger button, field errors, danger badges, alerts and toasts",
       "#ef4444",
     ),
+    infoSeed: {
+      ...statusSeed(
+        "Info",
+        "info badges, alerts, toasts and an avatar fallback tint",
+        "periwinkle blue #4862ff",
+      ),
+      guidance:
+        "Carbon (support-info is blue 70 beside its blue 60 interactive " +
+        "color) and Primer (the info Banner paints with the accent tokens) " +
+        "keep info on the brand's hue. For a calm system, set it to the " +
+        "brand so informational states read as the product speaking; pick " +
+        "a distinct blue only when the brand is far from blue and info " +
+        "should stand apart. Left on Auto, the vivid periwinkle can clash " +
+        "with a muted or warm palette, and sits a near-miss away from a " +
+        "blue or indigo brand.",
+    },
     selectionSeed: {
       label: "Selection",
       description:

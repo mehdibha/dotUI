@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { DEFAULTS } from "."
+import { decodeState, encodeState } from "../preset/codec"
 import { resolveDesignSystem } from "../resolve"
 import {
   buildColorConfig,
@@ -34,6 +35,7 @@ describe("color axis", () => {
       brand: "#5e6ad2",
       ...withSource(SOLID_LEAVES, "accent"),
       successSeed: "#16a34a",
+      infoSeed: "#5e6ad2",
       selectionSeed: "#0072f5",
       neutralHue: 250,
       neutralTint: 2,
@@ -42,7 +44,12 @@ describe("color axis", () => {
     })
     expect(color).toEqual({
       v: 2,
-      seeds: { accent: "#5e6ad2", success: "#16a34a", selection: "#0072f5" },
+      seeds: {
+        accent: "#5e6ad2",
+        success: "#16a34a",
+        info: "#5e6ad2",
+        selection: "#0072f5",
+      },
       background: { dark: 2 },
       vividness: 1.3,
       neutralTint: 2,
@@ -50,6 +57,14 @@ describe("color axis", () => {
       preserveSeed: true,
       primary: "accent",
     })
+  })
+
+  it("round-trips the info seed through the preset codec", () => {
+    const state = { ...DEFAULTS, infoSeed: "#0d9488" }
+    const encoded = encodeState(state)
+    expect(encoded).toBeDefined()
+    expect(decodeState(encoded as string)).toEqual(state)
+    expect(encodeState({ ...DEFAULTS, infoSeed: "" })).toBeUndefined()
   })
 
   it("derives the selection source from the checks' majority", () => {
