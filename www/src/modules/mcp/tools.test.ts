@@ -119,7 +119,7 @@ describe("list_axes", () => {
 
 describe("set_axes", () => {
   test("applies values and round-trips through the preset", () => {
-    const { preset, nonDefault, applied } = setAxes(ORIGIN, {
+    const { preset, nonDefault, applied } = setAxes({
       set: { radiusPx: 6, roleControl: "sm" },
     })
     expect(decodePreset(preset).state).toMatchObject({
@@ -134,8 +134,8 @@ describe("set_axes", () => {
   })
 
   test("applied is this call's delta; nonDefault is cumulative", () => {
-    const first = setAxes(ORIGIN, { set: { radiusPx: 6 } })
-    const second = setAxes(ORIGIN, {
+    const first = setAxes({ set: { radiusPx: 6 } })
+    const second = setAxes({
       preset: first.preset,
       set: { density: "compact" },
     })
@@ -147,7 +147,7 @@ describe("set_axes", () => {
   })
 
   test("restated values are reported as noop", () => {
-    const result = setAxes(ORIGIN, {
+    const result = setAxes({
       set: { radiusPx: 10, density: "compact", buttonStyle: "flat" },
     })
     expect(result.noop).toEqual(["radiusPx", "buttonStyle"])
@@ -155,7 +155,7 @@ describe("set_axes", () => {
   })
 
   test("reports what moved in the resolved system", () => {
-    const { effects } = setAxes(ORIGIN, { set: { radiusPx: 12 } })
+    const { effects } = setAxes({ set: { radiusPx: 12 } })
     expect(effects.tokens["--radius"]).toEqual({
       from: undefined,
       to: "0.75rem",
@@ -163,7 +163,7 @@ describe("set_axes", () => {
   })
 
   test("builder-only vars surface as the param they drive", () => {
-    const { effects } = setAxes(ORIGIN, {
+    const { effects } = setAxes({
       set: { buttonRadius: "pill", roleControl: "sm" },
     })
     expect(JSON.stringify(effects)).not.toContain("--studio-")
@@ -179,7 +179,7 @@ describe("set_axes", () => {
 
   test("is atomic, lists every problem and says the rest was valid", () => {
     const run = () =>
-      setAxes(ORIGIN, {
+      setAxes({
         set: {
           radiusPx: 999,
           roleControl: "huge",
@@ -194,34 +194,34 @@ describe("set_axes", () => {
   })
 
   test("suggests the axis a near-miss key meant", () => {
-    expect(() => setAxes(ORIGIN, { set: { radius: 8 } })).toThrow(/radiusPx/)
+    expect(() => setAxes({ set: { radius: 8 } })).toThrow(/radiusPx/)
   })
 
   test("suggests catalog fonts for a family it lacks", () => {
-    expect(() =>
-      setAxes(ORIGIN, { set: { monoFont: "IBM Plex Mono" } }),
-    ).toThrow(/curated set of Google variable fonts — closest: .*Mono/)
+    expect(() => setAxes({ set: { monoFont: "IBM Plex Mono" } })).toThrow(
+      /curated set of Google variable fonts — closest: .*Mono/,
+    )
     const mono = nearFonts("IBM Plex Mono")
     expect(mono[0]).toBe("Geist Mono")
     expect(mono).not.toContain("IBM Plex Sans")
-    expect(() => setAxes(ORIGIN, { set: { monoFont: "Menlo" } })).toThrow(
+    expect(() => setAxes({ set: { monoFont: "Menlo" } })).toThrow(
       /closest: Geist Mono, JetBrains Mono/,
     )
     expect(nearFonts("inter")[0]).toBe("Inter")
   })
 
   test("resets axes and whole chapters", () => {
-    const { preset } = setAxes(ORIGIN, {
+    const { preset } = setAxes({
       set: { radiusPx: 6, roleControl: "sm" },
     })
-    const one = setAxes(ORIGIN, { preset, reset: ["radiusPx"] })
+    const one = setAxes({ preset, reset: ["radiusPx"] })
     expect(one.nonDefault.shape).toEqual({ roleControl: "sm" })
-    const all = setAxes(ORIGIN, { preset, reset: ["shape"] })
+    const all = setAxes({ preset, reset: ["shape"] })
     expect(all.preset).toBe("")
   })
 
   test("primaryColor writes every leaf; explicit leaves win", () => {
-    const { preset, warnings } = setAxes(ORIGIN, {
+    const { preset, warnings } = setAxes({
       set: { primaryColor: "accent", tabsColor: "neutral" },
     })
     const { state } = decodePreset(preset)
@@ -230,55 +230,52 @@ describe("set_axes", () => {
     expect(getDesign(ORIGIN, preset).primaryColor).toBe("mixed")
     expect(warnings?.join() ?? "").not.toMatch(/Mixed Primary/)
 
-    const all = setAxes(ORIGIN, { set: { primaryColor: "accent" } })
+    const all = setAxes({ set: { primaryColor: "accent" } })
     expect(getDesign(ORIGIN, all.preset).primaryColor).toBe("accent")
     expect(all.warnings?.join() ?? "").not.toMatch(/Mixed Primary/)
     expect(
-      setAxes(ORIGIN, { preset: all.preset, set: { primaryColor: "accent" } })
-        .noop,
+      setAxes({ preset: all.preset, set: { primaryColor: "accent" } }).noop,
     ).toEqual(["primaryColor"])
-    expect(() => setAxes(ORIGIN, { set: { primaryColor: "brand" } })).toThrow(
+    expect(() => setAxes({ set: { primaryColor: "brand" } })).toThrow(
       /primaryColor: expected one of neutral, accent/,
     )
   })
 
   test("applying a cautioned value echoes its caution", () => {
-    const { warnings, preset } = setAxes(ORIGIN, {
+    const { warnings, preset } = setAxes({
       set: { checkCorner: "circle", motionSpeed: 1.2, density: "compact" },
     })
     expect(warnings).toEqual([
       expect.stringMatching(/^checkCorner "circle": .*radio/),
       expect.stringMatching(/^motionSpeed 1\.2: Higher = slower/),
     ])
-    const again = setAxes(ORIGIN, { preset, set: { checkCorner: "circle" } })
+    const again = setAxes({ preset, set: { checkCorner: "circle" } })
     expect(again.warnings).toBeUndefined()
-    expect(
-      setAxes(ORIGIN, { set: { checkCorner: "square" } }),
-    ).not.toHaveProperty("warnings")
-  })
-
-  test("results carry no links", () => {
-    expect(setAxes(ORIGIN, { set: { radiusPx: 6 } })).not.toHaveProperty(
-      "links",
+    expect(setAxes({ set: { checkCorner: "square" } })).not.toHaveProperty(
+      "warnings",
     )
   })
 
+  test("results carry no links", () => {
+    expect(setAxes({ set: { radiusPx: 6 } })).not.toHaveProperty("links")
+  })
+
   test("brand buttons beside neutral checks warn", () => {
-    const { warnings } = setAxes(ORIGIN, { set: { buttonColor: "accent" } })
+    const { warnings } = setAxes({ set: { buttonColor: "accent" } })
     expect(warnings?.join()).toMatch(
       /Mixed Primary: buttons are accent but checkboxColor, radioColor, switchColor, sliderColor, tabsColor are still neutral/,
     )
   })
 
   test("code options ride in the preset", () => {
-    const { preset } = setAxes(ORIGIN, { codeOptions: { classArrays: true } })
+    const { preset } = setAxes({ codeOptions: { classArrays: true } })
     expect(getDesign(ORIGIN, preset).codeOptions.classArrays).toBe(true)
   })
 
   test("every chapter's recipes apply cleanly", () => {
     for (const chapter of CATALOG)
       for (const recipe of chapter.recipes ?? [])
-        expect(() => setAxes(ORIGIN, { set: recipe.set })).not.toThrow()
+        expect(() => setAxes({ set: recipe.set })).not.toThrow()
   })
 })
 
@@ -306,18 +303,18 @@ describe("check", () => {
   })
 
   test("catches a brand that collides with a status hue", () => {
-    const { preset } = setAxes(ORIGIN, { set: { brand: "#22c55e" } })
+    const { preset } = setAxes({ set: { brand: "#22c55e" } })
     expect(check(preset).problems.join()).toMatch(
       /brand and success share a hue/,
     )
   })
 
   test("catches an auto info hue beside the brand, quiet once info matches it", () => {
-    const { preset } = setAxes(ORIGIN, { set: { brand: "#5e6ad2" } })
+    const { preset } = setAxes({ set: { brand: "#5e6ad2" } })
     expect(check(preset).problems.join()).toMatch(
       /brand and info share a hue.*move the info seed/,
     )
-    const matched = setAxes(ORIGIN, { preset, set: { infoSeed: "#5e6ad2" } })
+    const matched = setAxes({ preset, set: { infoSeed: "#5e6ad2" } })
     const result = check(matched.preset)
     expect(result.problems.join()).not.toMatch(/info/)
     expect(result.hues.info).toBe(result.hues.brand)
@@ -326,7 +323,7 @@ describe("check", () => {
 
   test("catches a set info seed a near-miss from the brand", () => {
     for (const infoSeed of ["#3b82f6", "#4862ff"]) {
-      const { preset } = setAxes(ORIGIN, {
+      const { preset } = setAxes({
         set: { brand: "#5e6ad2", infoSeed },
       })
       expect(check(preset).problems.join()).toMatch(
@@ -336,21 +333,21 @@ describe("check", () => {
   })
 
   test("sees an untinted neutral", () => {
-    const { preset } = setAxes(ORIGIN, { set: { neutralTint: 0 } })
+    const { preset } = setAxes({ set: { neutralTint: 0 } })
     const result = check(preset)
     expect(result.neutralTinted).toEqual({ light: false, dark: false })
     expect(result.light.neutralChroma.bg).toBe(0)
   })
 
   test("flags a near-black brand the engine pulls toward gray", () => {
-    const { preset } = setAxes(ORIGIN, { set: { brand: "#141414" } })
+    const { preset } = setAxes({ set: { brand: "#141414" } })
     expect(check(preset).problems.join()).toMatch(
       /renders visibly off its seed.*use primaryColor: "neutral"/,
     )
   })
 
   test("a neutral Primary isn't told to go neutral", () => {
-    const { preset } = setAxes(ORIGIN, {
+    const { preset } = setAxes({
       set: { brand: "#141414", primaryColor: "neutral" },
     })
     const problems = check(preset).problems.join()
@@ -359,18 +356,18 @@ describe("check", () => {
   })
 
   test("a tinted canvas keeps neutral fills visible on dark cards", () => {
-    const { preset } = setAxes(ORIGIN, {
+    const { preset } = setAxes({
       set: { surfaceCanvas: "tinted" },
     })
     expect(check(preset).problems.join()).not.toMatch(/neutral fills/)
   })
 
   test("a deliberate Primary fork isn't warned about", () => {
-    const fork = setAxes(ORIGIN, {
+    const fork = setAxes({
       set: { primaryColor: "accent", tabsColor: "neutral" },
     })
     expect(fork.warnings?.join() ?? "").not.toMatch(/Mixed Primary/)
-    const half = setAxes(ORIGIN, { set: { buttonColor: "accent" } })
+    const half = setAxes({ set: { buttonColor: "accent" } })
     expect(half.warnings?.join()).toMatch(/Mixed Primary/)
     expect(check(half.preset).notes?.join()).toMatch(/Mixed Primary/)
     expect(check(half.preset).problems.join()).not.toMatch(/Mixed Primary/)
@@ -380,7 +377,7 @@ describe("check", () => {
     const vercel = listPresets().presets.find((p) => p.id === "vercel")
     const result = check(vercel?.preset)
     expect(result.light.colors.card).not.toBe(check().light.colors.card)
-    const pill = setAxes(ORIGIN, { set: { roleControl: "full" } })
+    const pill = setAxes({ set: { roleControl: "full" } })
     expect(check(pill.preset).radiusPx.control).toBe("full")
   })
 })
@@ -392,7 +389,7 @@ describe("presets and links", () => {
   })
 
   test("links carry the preset and an explicit mode", () => {
-    const { preset } = setAxes(ORIGIN, { set: { radiusPx: 6 } })
+    const { preset } = setAxes({ set: { radiusPx: 6 } })
     const urls = previewUrls(ORIGIN, preset)
     expect(urls.studio).toBe(`${ORIGIN}/studio?preset=${preset}`)
     expect(urls.url).toBe(

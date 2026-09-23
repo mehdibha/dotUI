@@ -364,16 +364,12 @@ function effects(before: StudioState, after: StudioState) {
   }
 }
 
-/** `_origin` is unused since links left the result; kept for callers. */
-export function setAxes(
-  _origin: string,
-  input: {
-    preset?: string
-    set?: Record<string, unknown>
-    reset?: string[]
-    codeOptions?: Partial<CodeOptions>
-  },
-) {
+export function setAxes(input: {
+  preset?: string
+  set?: Record<string, unknown>
+  reset?: string[]
+  codeOptions?: Partial<CodeOptions>
+}) {
   const decoded = decode(input.preset)
   const before = decoded.state
   const errors: string[] = []

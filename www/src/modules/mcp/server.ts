@@ -128,7 +128,7 @@ function createServer(origin: string, registryOrigin: string) {
       },
       annotations: { readOnlyHint: true },
     },
-    (input) => run(() => setAxes(origin, input)),
+    (input) => run(() => setAxes(input)),
   )
 
   server.registerTool(
