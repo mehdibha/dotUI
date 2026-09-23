@@ -193,6 +193,15 @@ describe("set_axes", () => {
     expect(run).toThrow(/Every other key in this call was valid/)
   })
 
+  test("a mistyped preset fails instead of resetting the design", () => {
+    const { preset } = setAxes({ set: { radiusPx: 6 } })
+    const typo = `${preset.slice(0, 10)}#${preset.slice(11)}`
+    expect(() => setAxes({ preset: typo, set: { radiusPx: 8 } })).toThrow(
+      /could not be decoded/,
+    )
+    expect(() => check("not-a-preset")).toThrow(/could not be decoded/)
+  })
+
   test("suggests the axis a near-miss key meant", () => {
     expect(() => setAxes({ set: { radius: 8 } })).toThrow(/radiusPx/)
   })
@@ -245,9 +254,9 @@ describe("set_axes", () => {
     const { warnings, preset } = setAxes({
       set: { checkCorner: "circle", motionSpeed: 1.2, density: "compact" },
     })
+    // Axis-level cautions (motionSpeed) live in the overview, not in warnings.
     expect(warnings).toEqual([
       expect.stringMatching(/^checkCorner "circle": .*radio/),
-      expect.stringMatching(/^motionSpeed 1\.2: Higher = slower/),
     ])
     const again = setAxes({ preset, set: { checkCorner: "circle" } })
     expect(again.warnings).toBeUndefined()
@@ -309,16 +318,16 @@ describe("check", () => {
     )
   })
 
-  test("catches an auto info hue beside the brand, quiet once info matches it", () => {
+  test("catches info on or beside the brand hue, quiet once it steps off", () => {
     const { preset } = setAxes({ set: { brand: "#5e6ad2" } })
     expect(check(preset).problems.join()).toMatch(
-      /brand and info share a hue.*move the info seed/,
+      /brand and info share a hue.*move the info seed a step off the brand/,
     )
+    // Info equal to the brand reads as accent: still flagged.
     const matched = setAxes({ preset, set: { infoSeed: "#5e6ad2" } })
-    const result = check(matched.preset)
-    expect(result.problems.join()).not.toMatch(/info/)
-    expect(result.hues.info).toBe(result.hues.brand)
-    expect(result.light.colors.info).toBe(result.light.colors.accent)
+    expect(check(matched.preset).problems.join()).toMatch(/brand and info/)
+    const apart = setAxes({ preset, set: { infoSeed: "#0ea5e9" } })
+    expect(check(apart.preset).problems.join()).not.toMatch(/brand and info/)
   })
 
   test("catches a set info seed a near-miss from the brand", () => {

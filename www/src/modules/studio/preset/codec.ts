@@ -138,25 +138,32 @@ function sanitizeState(raw: unknown): StudioState {
   return state as StudioState
 }
 
+/** Throws when the string isn't a preset — for callers that must not
+ *  mistake a typo for the default system (the MCP). */
+export function decodePresetStrict(encoded: string): StudioPreset {
+  const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
+  const parsed = JSON.parse(json) as Encoded | LegacyState
+  if (!parsed || typeof parsed !== "object") throw new Error("not a preset")
+  if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
+    const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
+    const stored =
+      parsed.v === 3 && parsed.s
+        ? migrateV3(parsed.s as Record<string, unknown>)
+        : parsed.s
+    return {
+      state: sanitizeState(stored),
+      ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+        ? { codeOptions }
+        : {}),
+    }
+  }
+  return migrateLegacy(parsed as LegacyState)
+}
+
 /** Falls back to the defaults on any error. */
 export function decodePreset(encoded: string): StudioPreset {
   try {
-    const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
-    const parsed = JSON.parse(json) as Encoded | LegacyState
-    if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
-      const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
-      const stored =
-        parsed.v === 3 && parsed.s
-          ? migrateV3(parsed.s as Record<string, unknown>)
-          : parsed.s
-      return {
-        state: sanitizeState(stored),
-        ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
-          ? { codeOptions }
-          : {}),
-      }
-    }
-    return migrateLegacy(parsed as LegacyState)
+    return decodePresetStrict(encoded)
   } catch {
     return DEFAULT_PRESET
   }

@@ -24,7 +24,7 @@ import {
 import { checkAxisValue } from "@/modules/studio/axes/spec"
 import type { AxisSpec } from "@/modules/studio/axes/spec"
 import {
-  decodePreset,
+  decodePresetStrict,
   diffState,
   encodePreset,
 } from "@/modules/studio/preset/codec"
@@ -74,8 +74,18 @@ const chapterAxes = (chapter: (typeof CATALOG)[number]) =>
 const defaultOf = (key: string) =>
   key === PRIMARY_KEY ? null : DEFAULTS[key as keyof StudioState]
 
-const decode = (preset: string | undefined): StudioPreset =>
-  preset ? decodePreset(preset) : { state: DEFAULTS }
+/** A preset that fails to decode is an error, never the default system: a
+ *  one-character typo would otherwise wipe every decision silently. */
+function decode(preset: string | undefined): StudioPreset {
+  if (!preset) return { state: DEFAULTS }
+  try {
+    return decodePresetStrict(preset)
+  } catch {
+    throw new ToolError(
+      "The preset could not be decoded — it was probably mistyped or truncated. Pass the exact `preset` string the last successful call returned.",
+    )
+  }
+}
 
 const encode = (preset: StudioPreset) => encodePreset(preset) ?? ""
 
@@ -172,9 +182,9 @@ const briefEntry = (key: string, spec: AxisSpec) => ({
   ...cautions(spec),
 })
 
-/** The caution a value springs, if any. */
+/** The caution a chosen option springs. Axis-level cautions describe the
+ *  axis, not a value, so the overview shows them and set_axes doesn't. */
 function cautionFor(spec: AxisSpec | undefined, value: unknown) {
-  if (spec?.caution) return spec.caution
   if (spec?.value.type === "enum")
     return spec.value.options.find((option) => option.value === value)?.caution
 }

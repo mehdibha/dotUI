@@ -366,10 +366,11 @@ export const COLOR_SPEC = {
       guidance:
         "Carbon (support-info is blue 70 beside its blue 60 interactive " +
         "color) and Primer (the info Banner paints with the accent tokens) " +
-        "keep info on the brand's hue. For a calm system, set it to the " +
-        "brand so informational states read as the product speaking; pick " +
-        "a distinct blue only when the brand is far from blue and info " +
-        "should stand apart. Left on Auto, the vivid periwinkle can clash " +
+        "keep info close to the brand's hue, but not on it: info equal to " +
+        "the brand makes info badges indistinguishable from accent badges " +
+        "and falls out of sync when the brand changes. Pick a blue a step " +
+        "away from the brand (lighter, calmer or a few degrees of hue off) " +
+        "for calm systems. Left on Auto, the vivid periwinkle can clash " +
         "with a muted or warm palette, and sits a near-miss away from a " +
         "blue or indigo brand.",
     },

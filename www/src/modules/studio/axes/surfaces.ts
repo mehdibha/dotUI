@@ -171,9 +171,10 @@ export const CONTROL_BORDER_OPTIONS = [
     value: "strong",
     label: "Strong",
     description:
-      "The same edges on neutral 800 (hover 900), which clear 3:1 against " +
-      "cards and the page in both modes across the whole background " +
-      "range — WCAG 1.4.11 for control boundaries.",
+      "Every field, checkbox, radio, secondary and toggle button outlined " +
+      "in mid-gray (about #737373 light, #8d8d8d dark): heavier and more " +
+      "institutional, Carbon/GOV.UK-like. Clears 3:1 against cards and " +
+      "the page in both modes (WCAG 1.4.11).",
     seenIn: ["Carbon", "Material 3", "Atlassian", "GOV.UK"],
   },
 ]
@@ -616,14 +617,15 @@ export const SURFACE_SPEC = {
         "dividers keep the hairline.",
       value: { type: "enum", options: CONTROL_BORDER_OPTIONS },
       guidance:
-        "Subtle fails WCAG 1.4.11 (3:1 for the boundary a user needs to " +
-        "find a control) in both modes; Strong passes. shadcn/ui, Geist " +
-        "and Primer keep light gray edges; Carbon (gray 50), Material 3 " +
-        "(outline), Atlassian (border.input) and GOV.UK (black) clear 3:1; " +
-        "Fluent 2 splits it — accessible checks and a strong field bottom " +
-        "edge on subtle sides. Pick Strong for public-sector, health, " +
-        "finance or any audience that includes low vision; Subtle for a " +
-        "quiet tool look.",
+        "A look decision first: Strong outlines every control in mid-gray " +
+        "and reads heavier and more boxed; Subtle keeps the quiet, modern " +
+        "look of shadcn/ui, Geist and Primer. Carbon (gray 50), Material 3 " +
+        "(outline), Atlassian (border.input) and GOV.UK (black) use strong " +
+        "edges; Fluent 2 splits it. Subtle misses WCAG 1.4.11's 3:1 for " +
+        "control boundaries (about 1.4:1), as do shadcn/ui and Geist. Pick " +
+        "Strong when the brief asks for accessibility, low vision or " +
+        "public-sector compliance — not by industry — and keep Subtle for " +
+        "calm, restrained or modern briefs.",
     },
     modes: {
       label: "Backgrounds",

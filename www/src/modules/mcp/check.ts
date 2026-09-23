@@ -20,6 +20,7 @@ import { PRIMARY_LEAVES, primaryValue } from "@/modules/studio/axes/color"
 import { roleRadiusPx } from "@/modules/studio/axes/shape"
 import type { ShapeRoleKey } from "@/modules/studio/axes/shape"
 import { densityTier } from "@/modules/studio/axes/space"
+import { diffState } from "@/modules/studio/preset/codec"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 /** The `--color-*` tokens reported, by their Tailwind name (`bg-card`,
@@ -49,6 +50,25 @@ const COLORS = [
 ] as const
 
 const STATUSES = ["success", "warning", "danger", "info"] as const
+
+/* The axes behind each measured color: a failure the design reaches through
+   one of these is the design's, however close it lands to the defaults'. */
+const COLOR_AXES = ["vividness", "preserveSeed"]
+const NEUTRAL_AXES = ["neutralHue", "neutralTint", "modes", "surfaceCanvas"]
+const DRIVERS: Record<string, string[]> = {
+  primary: ["brand", "buttonColor", ...COLOR_AXES, ...NEUTRAL_AXES],
+  accent: ["brand", ...COLOR_AXES],
+  "fg-accent": ["brand", "linkColor", ...COLOR_AXES, ...NEUTRAL_AXES],
+  danger: ["dangerSeed", ...COLOR_AXES],
+  success: ["successSeed", ...COLOR_AXES],
+  warning: ["warningSeed", ...COLOR_AXES],
+  info: ["infoSeed", ...COLOR_AXES],
+  "border-control": ["controlBorder", ...NEUTRAL_AXES],
+}
+const driversOf = (token: string) =>
+  DRIVERS[token] ??
+  DRIVERS[token.replace(/^fg-on-|^fg-|-muted$/g, "")] ??
+  NEUTRAL_AXES
 const HUE_COLLISION_DEG = 20
 /** Below this chroma a hue doesn't read, so it can't collide. */
 const CHROMATIC = 0.04
@@ -75,6 +95,24 @@ function pairs(state: StudioState): Pair[] {
   return [
     { fg: "fg-on-primary", bg: "primary", min: 4.5, what: "primary labels" },
     { fg: "fg-on-danger", bg: "danger", min: 4.5, what: "danger labels" },
+    ...STATUSES.flatMap((status) => [
+      ...(status === "danger"
+        ? []
+        : [
+            {
+              fg: `fg-on-${status}`,
+              bg: status,
+              min: 4.5,
+              what: `solid ${status} badge labels`,
+            },
+          ]),
+      {
+        fg: `fg-${status}`,
+        bg: `${status}-muted`,
+        min: 4.5,
+        what: `soft ${status} badge and alert text`,
+      },
+    ]),
     { fg: "fg-on-accent", bg: "accent", min: 4.5, what: "accent labels" },
     { fg: "fg", bg: "bg", min: 4.5, what: "body text" },
     { fg: "fg-muted", bg: "card", min: 4.5, what: "muted text on cards" },
@@ -155,7 +193,10 @@ function measureMode(
     }),
   )
   const contrast: Record<string, Contrast> = {}
-  const failures: Record<string, { ratio: number; message: string }> = {}
+  const failures: Record<
+    string,
+    { ratio: number; message: string; tokens: string[] }
+  > = {}
   for (const pair of pairs(state)) {
     const fg = color(pair.fg)
     const bg = color(pair.bg)
@@ -168,6 +209,7 @@ function measureMode(
         failures[id] = {
           ratio,
           message: `${mode}: ${pair.what} are indistinguishable (${ratio}:1, ${pair.fg} on ${pair.bg})`,
+          tokens: [pair.fg, pair.bg],
         }
       continue
     }
@@ -181,6 +223,7 @@ function measureMode(
       failures[id] = {
         ratio,
         message: `${mode}: ${pair.what} ${ratio}:1, needs ${pair.min}:1 (${pair.fg} on ${pair.bg})`,
+        tokens: [pair.fg, pair.bg],
       }
   }
   const chroma = (name: string) => round(color(name)?.c ?? 0, 4)
@@ -273,16 +316,22 @@ function radius(state: StudioState, key: ShapeRoleKey): number | "full" {
 export function checkDesign(state: StudioState) {
   const { read, light, dark } = measure(state)
   const known = baselineFailures()
+  const changed = diffState(state)
   const problems: string[] = []
   const inDefaults: string[] = []
   for (const [mode, result] of [
     ["light", light],
     ["dark", dark],
   ] as const)
-    for (const [id, { ratio, message }] of Object.entries(result.failures)) {
+    for (const [id, { ratio, message, tokens }] of Object.entries(
+      result.failures,
+    )) {
       const floor = known.get(`${mode}:${id}`)
-      // Failing as the defaults do, no worse: not this design's doing.
-      ;(floor !== undefined && ratio >= floor - 0.05
+      const touched = tokens.some((token) =>
+        driversOf(token).some((axis) => axis in changed),
+      )
+      // Failing as the defaults do, through axes this design didn't move.
+      ;(floor !== undefined && ratio >= floor - 0.05 && !touched
         ? inDefaults
         : problems
       ).push(message)
@@ -300,12 +349,18 @@ export function checkDesign(state: StudioState) {
 
   const { hues, collisions } = statusHues(read)
   for (const [name, apart] of collisions) {
-    // Info on the brand's own hue is Carbon's and Primer's choice; a near-miss is not.
-    if (name === "info" && apart < 3) continue
     const floor = known.get(`hue:${name}`)
-    ;(floor !== undefined && apart >= floor ? inDefaults : problems).push(
+    const touched = ["brand", ...driversOf(name)].some(
+      (axis) => axis in changed,
+    )
+    ;(floor !== undefined && apart >= floor && !touched
+      ? inDefaults
+      : problems
+    ).push(
       `brand and ${name} share a hue (${apart}° apart): ${name} states read as brand — move the ${name} seed${
-        name === "info" ? ", or set it to the brand to match on purpose" : ""
+        name === "info"
+          ? " a step off the brand (lighter, calmer or a few degrees of hue away)"
+          : ""
       }`,
     )
   }
