@@ -63,13 +63,15 @@ const DRIVERS: Record<string, string[]> = {
   success: ["successSeed", ...COLOR_AXES],
   warning: ["warningSeed", ...COLOR_AXES],
   info: ["infoSeed", ...COLOR_AXES],
-  "border-control": ["controlBorder", ...NEUTRAL_AXES],
+  "border-control": ["controlBorder", "modes", "surfaceCanvas"],
 }
 const driversOf = (token: string) =>
   DRIVERS[token] ??
   DRIVERS[token.replace(/^fg-on-|^fg-|-muted$/g, "")] ??
   NEUTRAL_AXES
 const HUE_COLLISION_DEG = 20
+/** Two intents need more room than brand vs intent: warning beside danger. */
+const INTENT_APART_DEG = 30
 /** Below this chroma a hue doesn't read, so it can't collide. */
 const CHROMATIC = 0.04
 /** Neutral surfaces under this chroma read as pure gray. */
@@ -285,7 +287,17 @@ function statusHues(
     const apart = hueDistance(brand.h, status.h)
     if (apart < HUE_COLLISION_DEG) collisions.set(name, round(apart, 0))
   }
-  return { hues, collisions }
+  // Intents must read apart from each other too: warning beside danger.
+  const alike: Array<[string, string, number]> = []
+  for (const [i, a] of STATUSES.entries())
+    for (const b of STATUSES.slice(i + 1)) {
+      const x = parse(read(a, "light"))
+      const y = parse(read(b, "light"))
+      if (!x || !y || x.c < CHROMATIC || y.c < CHROMATIC) continue
+      const apart = hueDistance(x.h, y.h)
+      if (apart < INTENT_APART_DEG) alike.push([a, b, round(apart, 0)])
+    }
+  return { hues, collisions, alike }
 }
 
 let baseline: Map<string, number> | undefined
@@ -327,9 +339,8 @@ export function checkDesign(state: StudioState) {
       result.failures,
     )) {
       const floor = known.get(`${mode}:${id}`)
-      const touched = tokens.some((token) =>
-        driversOf(token).some((axis) => axis in changed),
-      )
+      // Blame the measured color (the label, the border), not its backdrop.
+      const touched = driversOf(tokens[0] ?? "").some((axis) => axis in changed)
       // Failing as the defaults do, through axes this design didn't move.
       ;(floor !== undefined && ratio >= floor - 0.05 && !touched
         ? inDefaults
@@ -357,23 +368,26 @@ export function checkDesign(state: StudioState) {
       ? inDefaults
       : problems
     ).push(
-      `brand and ${name} share a hue (${apart}° apart): ${name} states read as brand — move the ${name} seed${
-        name === "info"
-          ? " a step off the brand (lighter, calmer or a few degrees of hue away)"
-          : ""
-      }`,
+      `brand and ${name} share a hue (${apart}° apart): ${name} states read as brand — move the ${name} seed at least ${HUE_COLLISION_DEG}° of hue from the brand (lightness or chroma alone doesn't separate them)`,
     )
   }
+  for (const [a, b, apart] of statusHues(read).alike)
+    problems.push(
+      `${a} and ${b} share a hue (${apart}° apart): the two intents read alike — move one seed at least ${INTENT_APART_DEG}° of hue away`,
+    )
   const notes = primaryWarnings(state)
 
   const tier = densityTier(state.density)
   const unit = state.spacingUnit
-  const control = radius(state, "roleControl")
+  const controlHeight = round(tier.control * unit, 2)
+  const capsule = (px: number | "full") =>
+    px === "full" || px >= controlHeight / 2 ? "full" : px
+  const control = capsule(radius(state, "roleControl"))
   const button =
     state.buttonRadius === "sharp"
       ? 0
       : state.buttonRadius === "round"
-        ? state.radiusPx
+        ? capsule(state.radiusPx)
         : state.buttonRadius === "pill"
           ? "full"
           : control
@@ -394,7 +408,7 @@ export function checkDesign(state: StudioState) {
     size: {
       density: tier.id,
       unitPx: unit,
-      controlHeightPx: round(tier.control * unit, 2),
+      controlHeightPx: controlHeight,
       controlTextPx: tier.textPx,
     },
     radiusPx: {

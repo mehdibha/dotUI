@@ -321,7 +321,7 @@ describe("check", () => {
   test("catches info on or beside the brand hue, quiet once it steps off", () => {
     const { preset } = setAxes({ set: { brand: "#5e6ad2" } })
     expect(check(preset).problems.join()).toMatch(
-      /brand and info share a hue.*move the info seed a step off the brand/,
+      /brand and info share a hue.*move the info seed at least 20° of hue/,
     )
     // Info equal to the brand reads as accent: still flagged.
     const matched = setAxes({ preset, set: { infoSeed: "#5e6ad2" } })
@@ -339,6 +339,27 @@ describe("check", () => {
         /brand and info share a hue.*move the info seed/,
       )
     }
+  })
+
+  test("catches two intents on one hue", () => {
+    const { preset } = setAxes({
+      set: { warningSeed: "#f97316", dangerSeed: "#ef4444" },
+    })
+    expect(check(preset).problems.join()).toMatch(
+      /warning and danger share a hue.*read alike/,
+    )
+    expect(check().problems.join()).not.toMatch(/read alike/)
+  })
+
+  test("reports a capsule when the control radius passes half its height", () => {
+    const { preset } = setAxes({ set: { radiusPx: 20, roleControl: "lg" } })
+    expect(check(preset).radiusPx.control).toBe("full")
+    expect(check().radiusPx.control).not.toBe("full")
+  })
+
+  test("neutral tint alone doesn't blame the subtle control border", () => {
+    const { preset } = setAxes({ set: { neutralHue: 250, neutralTint: 1.3 } })
+    expect(check(preset).problems.join()).not.toMatch(/control borders/)
   })
 
   test("sees an untinted neutral", () => {

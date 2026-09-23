@@ -116,6 +116,9 @@ export const INPUT_SPEC = {
         "box closed by an underline, or a borderless filled box. Its corners " +
         "follow the Controls radius role.",
       value: { type: "enum", options: STYLE_OPTIONS },
+      caution:
+        "Text fields only: Select triggers keep their own boxed shell " +
+        "under every style.",
       guidance:
         "Outline is the default in 10 of 12 checked systems; Carbon's " +
         "default is the filled box with a bottom line, and Material 3 ships " +

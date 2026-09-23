@@ -368,9 +368,9 @@ export const COLOR_SPEC = {
         "color) and Primer (the info Banner paints with the accent tokens) " +
         "keep info close to the brand's hue, but not on it: info equal to " +
         "the brand makes info badges indistinguishable from accent badges " +
-        "and falls out of sync when the brand changes. Pick a blue a step " +
-        "away from the brand (lighter, calmer or a few degrees of hue off) " +
-        "for calm systems. Left on Auto, the vivid periwinkle can clash " +
+        "and falls out of sync when the brand changes. For calm systems " +
+        "pick a blue at least 20° of hue from the brand — lightness or " +
+        "chroma alone doesn't separate them. Left on Auto, the vivid periwinkle can clash " +
         "with a muted or warm palette, and sits a near-miss away from a " +
         "blue or indigo brand.",
     },
