@@ -15,7 +15,7 @@ import type { Resolved, StudioState } from "./index"
 export const SLIDER_DEFAULTS = {
   sliderThumb: "circle",
   sliderTrack: "thin",
-  sliderColor: "neutral",
+  sliderColor: "accent",
 }
 
 const FILL_TOKENS: Record<string, string> = {

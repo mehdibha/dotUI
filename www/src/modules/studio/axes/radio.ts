@@ -5,7 +5,7 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const RADIO_DEFAULTS = {
-  radioColor: "neutral",
+  radioColor: "accent",
 }
 
 export function resolveRadio(state: StudioState): Resolved {

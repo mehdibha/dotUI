@@ -1,5 +1,6 @@
 /**
- * Print the `?preset=` value for built-in presets, as JSON keyed by id.
+ * Print the `?preset=` value for built-in presets, as JSON keyed by id — ""
+ * for one that is the defaults (Origin), which needs no param.
  *
  * The registry identifies a preset only by its encoded design system (the
  * compressed base64url the create page bakes into `components.json`), never
@@ -27,11 +28,6 @@ for (const id of ids) {
     )
     process.exit(2)
   }
-  const encoded = encodeState(preset.state)
-  if (!encoded) {
-    console.error(`error: preset "${id}" encodes to nothing`)
-    process.exit(2)
-  }
-  out[id] = encoded
+  out[id] = encodeState(preset.state) ?? ""
 }
 console.log(JSON.stringify(out))

@@ -143,6 +143,7 @@ export const PRESETS: Preset[] = [
       brand: "#171717",
       neutralHue: null,
       neutralTint: 0,
+      ...withSource(SOLID_LEAVES, "neutral"),
       // Geist runs black CTAs but a blue selection: focus rings + checked
       // controls.
       selectionSeed: SELECTION_BLUE,
@@ -161,6 +162,7 @@ export const PRESETS: Preset[] = [
       brand: "#ff385c",
       neutralHue: null,
       neutralTint: 0,
+      ...withSource(SOLID_LEAVES, "neutral"),
       // Airbnb's primary CTA and selection controls are near-black (#222); Rausch
       // stays the accent for badges, links, prices (issue #484 audit).
       // Controls measure 8px radius (md = 0.75 × base), not 12.

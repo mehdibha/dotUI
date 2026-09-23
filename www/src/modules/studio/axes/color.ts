@@ -27,8 +27,8 @@ export const DEFAULT_MODES: ColorMode[] = [
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
   brand: DEFAULT_COLOR_CONFIG.seeds.accent,
-  buttonColor: "neutral",
-  selectionColor: "neutral",
+  buttonColor: "accent",
+  selectionColor: "accent",
   neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",

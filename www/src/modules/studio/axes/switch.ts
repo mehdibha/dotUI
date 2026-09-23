@@ -6,7 +6,7 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const SWITCH_DEFAULTS = {
-  switchColor: "neutral",
+  switchColor: "accent",
 }
 
 export function resolveSwitch(state: StudioState): Resolved {

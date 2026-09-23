@@ -10,6 +10,7 @@
  * modes by construction — no more reversed-ramp casualties).
  */
 
+import { DEFAULT_COLOR_CONFIG } from "./color-config"
 import type {
   PrimaryColorSource,
   SemanticTarget,
@@ -248,8 +249,8 @@ export function semanticVocabulary(
   }
 }
 
-/** The default vocabulary (neutral primary). */
-export const DEFAULT_SEMANTICS = semanticVocabulary("neutral")
+/** The default vocabulary (accent primary). */
+export const DEFAULT_SEMANTICS = semanticsFor(DEFAULT_COLOR_CONFIG)
 
 const specTarget = (spec: TokenTargetSpec): SemanticTarget => ({
   ref: { palette: spec.palette, step: JOB_STEPS[spec.job] },
@@ -303,7 +304,7 @@ type ColorSlice = {
 
 /** The one resolver every emitter goes through (T4): sources + overrides. */
 export function semanticsFor(
-  color: ColorSlice | undefined,
+  color: ColorSlice = DEFAULT_COLOR_CONFIG,
 ): SemanticVocabulary {
   const primary = color?.primary ?? "neutral"
   return applyTokenOverrides(
