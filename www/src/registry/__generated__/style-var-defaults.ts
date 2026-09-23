@@ -31,6 +31,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-modal-background": "var(--color-popover)",
 	"--studio-modal-radius": "var(--studio-radius-panel)",
 	"--studio-popover-radius": "var(--studio-radius-surface)",
+	"--studio-progress-radius": "var(--radius-full)",
 	"--studio-questionnaire-choice-radius": "var(--studio-radius-control)",
 	"--studio-questionnaire-indicator-radius": "var(--radius-sm)",
 	"--studio-questionnaire-input-radius": "var(--studio-radius-control)",
