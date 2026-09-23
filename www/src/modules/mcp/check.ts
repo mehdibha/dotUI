@@ -300,8 +300,8 @@ export function checkDesign(state: StudioState) {
 
   const { hues, collisions } = statusHues(read)
   for (const [name, apart] of collisions) {
-    // A set info seed near the brand is Carbon's and Primer's choice, not a slip.
-    if (name === "info" && state.infoSeed) continue
+    // Info on the brand's own hue is Carbon's and Primer's choice; a near-miss is not.
+    if (name === "info" && apart < 3) continue
     const floor = known.get(`hue:${name}`)
     ;(floor !== undefined && apart >= floor ? inDefaults : problems).push(
       `brand and ${name} share a hue (${apart}° apart): ${name} states read as brand — move the ${name} seed${

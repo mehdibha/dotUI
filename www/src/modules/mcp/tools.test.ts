@@ -312,7 +312,7 @@ describe("check", () => {
     )
   })
 
-  test("catches an auto info hue beside the brand, quiet once info is set", () => {
+  test("catches an auto info hue beside the brand, quiet once info matches it", () => {
     const { preset } = setAxes(ORIGIN, { set: { brand: "#5e6ad2" } })
     expect(check(preset).problems.join()).toMatch(
       /brand and info share a hue.*move the info seed/,
@@ -322,6 +322,17 @@ describe("check", () => {
     expect(result.problems.join()).not.toMatch(/info/)
     expect(result.hues.info).toBe(result.hues.brand)
     expect(result.light.colors.info).toBe(result.light.colors.accent)
+  })
+
+  test("catches a set info seed a near-miss from the brand", () => {
+    for (const infoSeed of ["#3b82f6", "#4862ff"]) {
+      const { preset } = setAxes(ORIGIN, {
+        set: { brand: "#5e6ad2", infoSeed },
+      })
+      expect(check(preset).problems.join()).toMatch(
+        /brand and info share a hue.*move the info seed/,
+      )
+    }
   })
 
   test("sees an untinted neutral", () => {
