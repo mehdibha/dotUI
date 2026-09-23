@@ -59,6 +59,55 @@ export interface ChapterSpec<
 
 const FONT_FAMILIES = new Set(FONT_CATALOG.map((font) => font.family))
 
+function editDistance(a: string, b: string): number {
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i)
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i]
+    for (let j = 1; j <= b.length; j++)
+      row[j] = Math.min(
+        (prev[j] ?? 0) + 1,
+        (row[j - 1] ?? 0) + 1,
+        (prev[j - 1] ?? 0) + (a[i - 1] === b[j - 1] ? 0 : 1),
+      )
+    prev = row
+  }
+  return prev[b.length] ?? 0
+}
+
+/** Catalog families closest to `query`: those sharing a word (a "Mono" query
+ *  favors monospace faces), else near spellings, else the most-used faces of
+ *  the category the name suggests. The catalog lists most-used first. */
+export function nearFonts(query: string, limit = 5): string[] {
+  const needle = query.trim().toLowerCase()
+  const words = needle.split(/\s+/)
+  const category = words.some((word) => word === "mono" || word === "code")
+    ? "mono"
+    : words.includes("serif")
+      ? "serif"
+      : "sans-serif"
+  const scored = FONT_CATALOG.map((font) => {
+    const name = font.family.toLowerCase()
+    const own = name.split(/\s+/)
+    return {
+      family: font.family,
+      shared:
+        words.filter((word) => own.includes(word)).length * 2 +
+        (category === "mono" && font.category === "mono" ? 1 : 0),
+      distance:
+        editDistance(name, needle) / Math.max(name.length, needle.length),
+      category: font.category,
+    }
+  })
+  const sharing = scored.filter((font) => font.shared >= 2)
+  const spelled = scored.filter((font) => font.distance <= 0.34)
+  const picked = sharing.length
+    ? sharing.sort((a, b) => b.shared - a.shared)
+    : spelled.length
+      ? spelled.sort((a, b) => a.distance - b.distance)
+      : scored.filter((font) => font.category === category)
+  return picked.slice(0, limit).map((font) => font.family)
+}
+
 /** `undefined` when `value` fits the spec, else why not. */
 export function checkAxisValue(
   spec: AxisSpec,
@@ -88,9 +137,12 @@ export function checkAxisValue(
       }
       return
     case "font":
-      return typeof value === "string" && FONT_FAMILIES.has(value)
-        ? undefined
-        : "expected a family from the font catalog"
+      if (typeof value === "string" && FONT_FAMILIES.has(value)) return
+      return `expected a family from the font catalog, a curated set of Google variable fonts${
+        typeof value === "string" && value.trim()
+          ? ` — closest: ${nearFonts(value).join(", ")}`
+          : ""
+      }`
     case "json":
       return value !== undefined && value !== null
         ? undefined
