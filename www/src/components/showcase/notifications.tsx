@@ -1,7 +1,7 @@
 import React from "react"
 
 import { cn } from "@/registry/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
@@ -69,10 +69,6 @@ export function Notifications({
                 <ListBoxItem textValue={notification.text}>
                   <div className="flex items-start gap-3 py-2">
                     <Avatar size="md" className="shrink-0">
-                      <AvatarImage
-                        src={notification.user.avatar}
-                        alt={notification.user.name}
-                      />
                       <AvatarFallback>
                         {notification.user.name
                           .split(" ")
@@ -117,10 +113,7 @@ export function Notifications({
 
 const notifications = [
   {
-    user: {
-      name: "Guillermo Rauch",
-      avatar: "https://avatars.githubusercontent.com/rauchg?size=96",
-    },
+    user: { name: "Maya Lindqvist" },
     text: "starred your repository dotUI.",
     content: (
       <>
@@ -131,14 +124,11 @@ const notifications = [
     timestamp: "2 hours ago",
   },
   {
-    user: {
-      name: "Lee Robinson",
-      avatar: "https://avatars.githubusercontent.com/leerob?size=96",
-    },
-    text: "invited you to the Vercel GitHub organization.",
+    user: { name: "Theo Marchetti" },
+    text: "invited you to the Acme GitHub organization.",
     content: (
       <>
-        invited you to join <span className="font-semibold">Cursor</span> on
+        invited you to join <span className="font-semibold">Acme</span> on
         GitHub.
       </>
     ),
@@ -147,15 +137,12 @@ const notifications = [
     timestamp: "7 hours ago",
   },
   {
-    user: {
-      name: "Tim Neutkens",
-      avatar: "https://avatars.githubusercontent.com/timneutkens?size=96",
-    },
-    text: "published a new release v14.2.0-canary on vercel/next.js.",
+    user: { name: "Priya Raman" },
+    text: "published a new release v2.4.0-canary on acme/web.",
     content: (
       <>
-        published <span className="font-semibold">v14.2.0-canary</span> on
-        <span className="font-semibold"> vercel/next.js</span>.
+        published <span className="font-semibold">v2.4.0-canary</span> on
+        <span className="font-semibold"> acme/web</span>.
       </>
     ),
     read: false,
@@ -163,10 +150,7 @@ const notifications = [
     timestamp: "Yesterday",
   },
   {
-    user: {
-      name: "Steven Tey",
-      avatar: "https://avatars.githubusercontent.com/steven-tey?size=96",
-    },
+    user: { name: "Jonas Albers" },
     text: "opened a pull request: Improve docs.",
     content: (
       <>
@@ -180,10 +164,7 @@ const notifications = [
     timestamp: "Yesterday",
   },
   {
-    user: {
-      name: "Shu Ding",
-      avatar: "https://avatars.githubusercontent.com/shuding?size=96",
-    },
+    user: { name: "Lena Okafor" },
     text: "starred your repository dotUI.",
     content: (
       <>
@@ -194,10 +175,7 @@ const notifications = [
     timestamp: "2 days ago",
   },
   {
-    user: {
-      name: "Delba de Oliveira",
-      avatar: "https://avatars.githubusercontent.com/delbaoliveira?size=96",
-    },
+    user: { name: "Sam Whitfield" },
     text: "commented on issue: Add theme presets.",
     content: (
       <>
