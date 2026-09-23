@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site"
 import { encodeQuery } from "@/modules/studio/preset/codec"
 import { useStudio } from "@/modules/studio/use-studio"
 
+import { useCodeOptions } from "./code-options-store"
 import type { PresetUrl } from "./types"
 
 const DEFAULT_REGISTRY_HOST: string = siteConfig.url
@@ -30,15 +31,20 @@ function getRegistryHost(): string {
 
 /**
  * Returns a `presetUrl(path)` builder that resolves a registry path against the
- * right host and appends the current design system's rev-pinned query —
- * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=origin@1&d=v5.…`.
+ * right host and appends the current design system's rev-pinned query and the
+ * user's code options —
+ * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=origin@1&d=v5.…&code=…`.
  *
  * The host hydrates in an effect (SSR renders the default host, the client then
  * swaps to the live origin) so the URL stays stable across hydration.
  */
 export function useExportUrl(): PresetUrl {
-  const { preset } = useStudio()
-  const query = useMemo(() => encodeQuery(preset), [preset])
+  const { state } = useStudio()
+  const codeOptions = useCodeOptions()
+  const query = useMemo(
+    () => encodeQuery(state, { codeOptions }),
+    [state, codeOptions],
+  )
   const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
 
   useEffect(() => {

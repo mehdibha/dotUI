@@ -4,9 +4,9 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { DEFAULTS } from "@/modules/studio/axes"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/_app/studio")({
 
 function StudioPage() {
   const { preset } = Route.useSearch()
-  const { preset: current, setPreset } = useStudio()
+  const { state: current, setState } = useStudio()
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -67,8 +67,8 @@ function StudioPage() {
     seededFromStorage.current = true
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
-    if (stored !== DEFAULT_PRESET) setPreset(stored)
-  }, [preset, setPreset])
+    if (stored !== DEFAULTS) setState(stored)
+  }, [preset, setState])
 
   const skipFirstPersist = useRef(true)
   useEffect(() => {

@@ -1,12 +1,4 @@
-export {
-  canonicalize,
-  DEFAULT_PRESET,
-  decodePreset,
-  decodeState,
-  encodePreset,
-  encodeState,
-  type StudioPreset,
-} from "./codec"
+export { canonicalize, decodeState, encodeState } from "./codec"
 export { type SavedPreset, useMyPresets } from "./my-presets"
 export {
   pingIframe,
@@ -26,9 +18,4 @@ export {
   useIsEmbeddedPreview,
   usePreviewForcedTheme,
 } from "./iframe-sync"
-export type {
-  CodeOptions,
-  Density,
-  DesignSystem,
-  IconLibraryName,
-} from "./types"
+export type { Density, DesignSystem, IconLibraryName } from "./types"

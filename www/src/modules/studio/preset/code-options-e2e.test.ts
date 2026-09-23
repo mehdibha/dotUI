@@ -1,8 +1,7 @@
 /**
- * End-to-end test of the codeOptions seam: a DesignSystem with custom code
- * options is encoded to a preset, decoded back, fed to the publisher, and
- * formatted — proving the choices a user makes in /create reach the exported
- * source. Exercises codec ↔ publish ↔ oxfmt together (the parts the unit
+ * End-to-end test of the codeOptions seam: custom code options are encoded
+ * into an export query, decoded back, fed to the publisher, and formatted —
+ * proving the choices a user makes in /studio reach the exported source. Exercises codec ↔ publish ↔ oxfmt together (the parts the unit
  * specs cover in isolation).
  */
 
@@ -15,19 +14,22 @@ import { publish } from "@/publisher/publish"
 import { DEFAULTS } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
-import { decodePreset, encodePreset } from "./codec"
+import { decode, encodeQuery, readParams } from "./codec"
 
 // Mirrors the fixed baseline the /r/$name route uses (formatting isn't a
 // codeOptions axis — the consumer reformats with their own rules).
 const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 async function exportButton(codeOptions: typeof DEFAULT_CODE_OPTIONS) {
-  // 1. Encode the user's design system (with code options) to a preset blob.
-  const encoded = encodePreset({ state: DEFAULTS, codeOptions })
-  expect(encoded, "non-default code options must produce a preset").toBeTruthy()
+  // 1. Encode the export query, code options included.
+  const query = encodeQuery(DEFAULTS, { codeOptions })
+  expect(query, "non-default code options must reach the query").toContain(
+    "&code=",
+  )
 
   // 2. Decode it back the way a /r/* route does.
-  const decoded = decodePreset(encoded as string)
+  const decoded = decode(readParams(new URLSearchParams(query)))
+  if (!decoded.ok) throw new Error(decoded.reason)
   const ds = resolveDesignSystem(decoded.state)
 
   // 3. Publish + format exactly like routes/r/$name.tsx.

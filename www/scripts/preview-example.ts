@@ -78,7 +78,7 @@ async function materialize(example: string): Promise<void> {
   if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
   const cwd = path.join(EXAMPLES_DIR, example)
   const resolved = await resolveRequestPreset(
-    new URLSearchParams(encodeQuery(source, source)),
+    new URLSearchParams(encodeQuery(source.state, { base: source })),
   )
   if (!resolved.ok) throw new Error(`${example}: ${resolved.reason} preset`)
   const { preset, query } = resolved

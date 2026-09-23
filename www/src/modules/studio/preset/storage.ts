@@ -1,24 +1,22 @@
 "use client"
 
 import { createPersistedStore } from "@/lib/persisted-store"
+import { DEFAULTS } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
 
-import { DEFAULT_PRESET, decodePreset, encodePreset } from "./codec"
-import type { StudioPreset } from "./codec"
+import { decodeState, encodeState } from "./codec"
 
 /**
  * The user's design system, persisted as the same compact string /studio uses
  * in its `?preset=` param (see codec.ts) so presets round-trip between the two.
  * The /studio page writes it as the user customizes; docs previews read it live.
- * `encodePreset` returns undefined when everything matches the defaults, which
- * clears the key instead of storing an empty diff.
+ * `encodeState` returns undefined for the default system, which clears the key
+ * instead of storing an empty diff.
  */
-const presetStore = createPersistedStore<StudioPreset>(
+const presetStore = createPersistedStore<StudioState>(
   "dotui:preset",
-  DEFAULT_PRESET,
-  {
-    decode: decodePreset,
-    encode: (preset) => encodePreset(preset) ?? null,
-  },
+  DEFAULTS,
+  { decode: decodeState, encode: (state) => encodeState(state) ?? null },
 )
 
 export const loadStoredPreset = presetStore.get

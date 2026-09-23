@@ -8,16 +8,10 @@
 import { useCallback, useMemo } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
-import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import type { CodeOptions } from "@/publisher/code-options"
-import {
-  DEFAULT_PRESET,
-  decodePreset,
-  encodePreset,
-} from "@/modules/studio/preset/codec"
-import type { StudioPreset } from "@/modules/studio/preset/codec"
+import { decodeState, encodeState } from "@/modules/studio/preset/codec"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
+import { DEFAULTS } from "./axes"
 import type { StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"
 
@@ -25,19 +19,12 @@ const routeApi = getRouteApi("/_app/studio")
 
 export interface Studio {
   state: StudioState
-  /** The whole preset (state + code style), and its encoded form. */
-  preset: StudioPreset
+  /** `state`'s `?preset=` string. */
   encoded: string | undefined
   /** The engine's view: what the preview renders and the export ships. */
   designSystem: DesignSystem
   set: <K extends keyof StudioState>(key: K) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
-  setPreset: (preset: StudioPreset) => void
-  codeOptions: CodeOptions
-  setCodeOption: <K extends keyof CodeOptions>(
-    key: K,
-    value: CodeOptions[K],
-  ) => void
   /** Modified-vs-default and reset for one section, from its defaults slice. */
   section: (defaults: Partial<StudioState>) => {
     modified: boolean
@@ -45,27 +32,26 @@ export interface Studio {
   }
 }
 
-const decodeCache = new Map<string, StudioPreset>()
-function decodeCached(encoded: string | undefined): StudioPreset {
-  if (!encoded) return DEFAULT_PRESET
-  let preset = decodeCache.get(encoded)
-  if (!preset) {
-    preset = decodePreset(encoded)
-    decodeCache.set(encoded, preset)
+const decodeCache = new Map<string, StudioState>()
+function decodeCached(encoded: string | undefined): StudioState {
+  if (!encoded) return DEFAULTS
+  let state = decodeCache.get(encoded)
+  if (!state) {
+    state = decodeState(encoded)
+    decodeCache.set(encoded, state)
   }
-  return preset
+  return state
 }
 
 export function useStudio(): Studio {
   const { preset: encoded } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const preset = decodeCached(encoded)
-  const { state } = preset
+  const state = decodeCached(encoded)
 
-  const setPreset = useCallback(
-    (next: StudioPreset) => {
+  const setState = useCallback(
+    (next: StudioState) => {
       navigate({
-        search: (prev) => ({ ...prev, preset: encodePreset(next) }),
+        search: (prev) => ({ ...prev, preset: encodeState(next) }),
         replace: true,
       })
     },
@@ -75,8 +61,6 @@ export function useStudio(): Studio {
   const designSystem = useMemo(() => resolveDesignSystem(state), [state])
 
   return useMemo(() => {
-    const setState = (next: StudioState) =>
-      setPreset({ ...preset, state: next })
     const set =
       <K extends keyof StudioState>(key: K) =>
       (value: StudioState[K]) =>
@@ -89,22 +73,6 @@ export function useStudio(): Studio {
       ),
       onReset: () => setState({ ...state, ...defaults }),
     })
-    const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
-    const setCodeOption = <K extends keyof CodeOptions>(
-      key: K,
-      value: CodeOptions[K],
-    ) => setPreset({ ...preset, codeOptions: { ...codeOptions, [key]: value } })
-    return {
-      state,
-      preset,
-      encoded,
-      designSystem,
-      set,
-      setState,
-      setPreset,
-      codeOptions,
-      setCodeOption,
-      section,
-    }
-  }, [state, preset, encoded, designSystem, setPreset])
+    return { state, encoded, designSystem, set, setState, section }
+  }, [state, encoded, designSystem, setState])
 }

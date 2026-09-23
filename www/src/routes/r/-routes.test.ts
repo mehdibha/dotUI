@@ -165,6 +165,25 @@ describe("/r/$name", () => {
     ])
   })
 
+  it("honors a legacy blob's code options unless code= is given", async () => {
+    const blob = `preset=${fixture("v3-origin-code-options")}`
+    const button = async (query: string) => {
+      const item = await expectCached(
+        await get(ItemRoute, `/r/button?${query}`, "button"),
+      )
+      return {
+        dep: item.registryDependencies[0],
+        content: item.files[0].content,
+      }
+    }
+    const legacy = await button(blob)
+    expect(legacy.dep).toMatch(/&code=[\w-]+$/)
+    expect(legacy.content).not.toContain("/* ---")
+    const overridden = await button(`${blob}&code=${encodeRaw({})}`)
+    expect(overridden.dep).toBe(legacy.dep.replace(/&code=[\w-]+$/, ""))
+    expect(overridden.content).toContain("/* ---")
+  })
+
   it.each(REJECTED)("rejects a %s preset with %i", async (reason, status) => {
     await expectError(
       await get(ItemRoute, `/r/button?${QUERIES[reason]}`, "button"),

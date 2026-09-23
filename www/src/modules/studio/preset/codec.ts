@@ -8,9 +8,10 @@
    A payload is base64url(deflateRaw(JSON)) with sorted keys, so a state has
    one string per base. Any other `preset=` value is a legacy blob (a v3/v4
    diff against frozen defaults, or the pre-studio shape) that decodes through
-   the migrations. The studio still writes blobs until its URL moves to the
-   grammar. Decoding validates every value against the axis schema and says
-   what it dropped. */
+   the migrations; its `o` code options apply unless `code=` is given. The
+   studio still writes blobs, state only, until its URL moves to the grammar.
+   Decoding validates every value against the axis schema and says what it
+   dropped. */
 
 import { deflateRaw, inflateRaw } from "pako"
 
@@ -34,16 +35,7 @@ import {
   same,
   VERSION,
 } from "./migrations"
-import type { Baseline, LegacyState } from "./migrations"
-
-/** A studio state plus the exported-code style — everything a preset holds. */
-export interface StudioPreset {
-  state: StudioState
-  /** `undefined` means the default code style. */
-  codeOptions?: CodeOptions
-}
-
-export const DEFAULT_PRESET: StudioPreset = { state: DEFAULTS }
+import type { LegacyState } from "./migrations"
 
 /** A built-in preset revision. */
 export interface PresetRef {
@@ -64,14 +56,17 @@ export function readParams(search: URLSearchParams): PresetParams {
 }
 
 export type DecodeResult =
-  | (StudioPreset & {
+  | {
       ok: true
       /** The revision the state builds on. */
       base: PresetRef
+      state: StudioState
+      /** `undefined` means the default code style. */
+      codeOptions?: CodeOptions
       /** Settings the string carried that didn't survive migration or
        *  validation. */
       dropped: string[]
-    })
+    }
   | {
       ok: false
       reason: "corrupt" | "invalid" | "newer-version" | "unknown-preset"
@@ -162,20 +157,20 @@ const CODE = /^v(\d+)\.(.*)$/
 /** The first version whose codes diff against a built-in revision. */
 const FIRST_CODE_VERSION = 5
 
-/** The grammar's query for `preset` on `base`, rev-pinned, without `?`. */
+/** The grammar's query for `state` on `base`, rev-pinned, without `?`. */
 export function encodeQuery(
-  preset: StudioPreset,
-  base: PresetRef = latest(ORIGIN_ID),
+  state: StudioState,
+  {
+    base = latest(ORIGIN_ID),
+    codeOptions,
+  }: { base?: PresetRef; codeOptions?: CodeOptions } = {},
 ): string {
   const revision = revisionOf(base.id, base.rev)
   if (!revision) throw new Error(`no built-in preset ${base.id}@${base.rev}`)
   const params = [`preset=${base.id}@${base.rev}`]
-  const state = diff(preset.state, baseState(base.id, revision))
-  if (Object.keys(state).length > 0) params.push(`d=v${VERSION}.${pack(state)}`)
-  const code = diff(
-    sanitizeCodeOptions(preset.codeOptions),
-    DEFAULT_CODE_OPTIONS,
-  )
+  const d = diff(state, baseState(base.id, revision))
+  if (Object.keys(d).length > 0) params.push(`d=v${VERSION}.${pack(d)}`)
+  const code = diff(sanitizeCodeOptions(codeOptions), DEFAULT_CODE_OPTIONS)
   if (Object.keys(code).length > 0) params.push(`code=${pack(code)}`)
   return params.join("&")
 }
@@ -225,39 +220,42 @@ function decodeDiff(
   return { state, dropped: [...dropped, ...invalid] }
 }
 
-export function decode({ preset, d, code }: PresetParams): DecodeResult {
+type Design = Omit<Extract<DecodeResult, { ok: true }>, "ok">
+
+function decodeDesign(preset?: string, d?: string): Failure | Design {
   const ref = REF.exec(preset || ORIGIN_ID)
-  if (!ref) return d || code ? INVALID : decodeBlob(preset as string)
+  if (!ref) return d ? INVALID : decodeBlob(preset as string)
   const [, id = ORIGIN_ID, pinned] = ref
   const revision = revisionOf(id, pinned ? Number(pinned) : undefined)
   if (!revision) return { ok: false, reason: "unknown-preset" }
   // An unpinned diff would drift when the preset gets a new revision.
   if (d && !pinned) return INVALID
+  const base = { id, rev: revision.rev }
+  if (!d) return { base, state: baseState(id, revision), dropped: [] }
+  const design = decodeDiff(id, revision, d)
+  return "ok" in design ? design : { base, ...design }
+}
 
-  const design = d
-    ? decodeDiff(id, revision, d)
-    : { state: baseState(id, revision), dropped: [] }
+export function decode({ preset, d, code }: PresetParams): DecodeResult {
+  const design = decodeDesign(preset, d)
   if ("ok" in design) return design
-  let raw: unknown
+  const { base, state, dropped } = design
+  let codeOptions = design.codeOptions
   if (code) {
+    let raw: unknown
     try {
       raw = unpack(code)
     } catch {
       return CORRUPT
     }
+    codeOptions = readCodeOptions(raw, DEFAULT_CODE_OPTIONS, "code", dropped)
   }
-  const codeOptions = readCodeOptions(
-    raw,
-    DEFAULT_CODE_OPTIONS,
-    "code",
-    design.dropped,
-  )
   return {
     ok: true,
-    base: { id, rev: revision.rev },
-    state: design.state,
+    base,
+    state,
     ...(codeOptions ? { codeOptions } : {}),
-    dropped: design.dropped,
+    dropped,
   }
 }
 
@@ -266,15 +264,11 @@ export function decode({ preset, d, code }: PresetParams): DecodeResult {
 /** The last version whose strings are blobs. */
 const BLOB_VERSION = 4
 const BASELINE = currentBaseline()
-const { codeOptions: BASELINE_CODE_OPTIONS } = BASELINES[
-  BLOB_VERSION
-] as Baseline
 
 interface Encoded {
   v: number
   /** State keys that differ from the baseline, in sorted key order. */
   s?: Partial<StudioState>
-  o?: CodeOptions
 }
 
 /** The keys of `state` that differ from the baseline, sorted. */
@@ -287,26 +281,17 @@ function diffState(state: StudioState): Partial<StudioState> {
   return out as Partial<StudioState>
 }
 
-/** The studio's blob for `preset`; `undefined` for the default system. */
-export function encodePreset(preset: StudioPreset): string | undefined {
-  const codeOptions = sanitizeCodeOptions(
-    preset.codeOptions ?? DEFAULT_CODE_OPTIONS,
-  )
+/** The studio's blob for `state`; `undefined` for the default system. */
+export function encodeState(state: StudioState): string | undefined {
   const isDefault = (Object.keys(DEFAULTS) as Array<keyof StudioState>).every(
-    (key) => same(preset.state[key], DEFAULTS[key]),
+    (key) => same(state[key], DEFAULTS[key]),
   )
-  if (isDefault && same(codeOptions, DEFAULT_CODE_OPTIONS)) return undefined
+  if (isDefault) return undefined
   // The frozen baseline is not the default system: an empty diff still encodes.
   const compact: Encoded = { v: BLOB_VERSION }
-  const s = diffState(preset.state)
+  const s = diffState(state)
   if (Object.keys(s).length > 0) compact.s = s
-  if (!same(codeOptions, BASELINE_CODE_OPTIONS)) compact.o = codeOptions
   return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
-}
-
-/** Encode a bare state (default code style). */
-export function encodeState(state: StudioState): string | undefined {
-  return encodePreset({ state })
 }
 
 const LEGACY_KEYS = new Set(["p", "t", "d", "c", "o", "i"])
@@ -319,7 +304,7 @@ const isLegacy = (
     (isRecord(value.t) &&
       Object.values(value.t).every((token) => typeof token === "string")))
 
-function decodeBlob(encoded: string): DecodeResult {
+function decodeBlob(encoded: string): Failure | Design {
   let parsed: unknown
   try {
     parsed = unpack(encoded)
@@ -352,7 +337,6 @@ function decodeBlob(encoded: string): DecodeResult {
   dropped.push(...invalid)
   const options = readCodeOptions(parsed.o, codeOptions, "o", dropped)
   return {
-    ok: true,
     base: latest(ORIGIN_ID),
     state,
     ...(options ? { codeOptions: options } : {}),
@@ -360,20 +344,14 @@ function decodeBlob(encoded: string): DecodeResult {
   }
 }
 
-/** The preset a `preset=` value names; the defaults when it fails to decode. */
-export function decodePreset(value: string): StudioPreset {
+/** The state a `preset=` value names; the defaults when it fails to decode. */
+export function decodeState(value: string): StudioState {
   const result = decode({ preset: value })
-  if (!result.ok) return DEFAULT_PRESET
-  const { state, codeOptions } = result
-  return codeOptions ? { state, codeOptions } : { state }
+  return result.ok ? result.state : DEFAULTS
 }
 
-/** The blob today's encoder writes for `encoded`'s preset ("" for the default system). */
+/** The blob today's encoder writes for `encoded`'s state ("" for the default system). */
 export function canonicalize(encoded: string | undefined): string {
   if (!encoded) return ""
-  return encodePreset(decodePreset(encoded)) ?? ""
-}
-
-export function decodeState(encoded: string): StudioState {
-  return decodePreset(encoded).state
+  return encodeState(decodeState(encoded)) ?? ""
 }

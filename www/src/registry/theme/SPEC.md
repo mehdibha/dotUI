@@ -103,7 +103,7 @@ interface ColorConfig2 {
 }
 ```
 
-Old presets (`c.algorithm` present) migrate in `decodePreset`: seeds carry
+Old presets (`c.algorithm` present) migrate in the preset codec: seeds carry
 over, `primary` carries over, `chromaMult → vividness`, `hueTorsion →
 hueShift`; other knobs drop. Old URLs/localStorage/components.json keep
 producing a sensible theme — never silent `DEFAULTS` wipes. `sanitizeColor`

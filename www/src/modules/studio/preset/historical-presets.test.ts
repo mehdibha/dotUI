@@ -39,14 +39,14 @@ describe("historical preset strings", () => {
       expect(await resolveRequestPreset(search)).toEqual({
         ok: true,
         preset: { ...designSystem, codeOptions: result.codeOptions },
-        query: encodeQuery(result, result.base),
+        query: encodeQuery(result.state, result),
       })
     })
 
     it(`rewrites ${fixture.id} in the grammar without a change`, () => {
       const result = decode({ preset: fixture.encoded })
       if (!result.ok) return
-      const query = encodeQuery(result, result.base)
+      const query = encodeQuery(result.state, result)
       expect(query).toMatch(/^preset=origin@1(&d=v5\.[\w-]+)?(&code=[\w-]+)?$/)
       expect(decode(readParams(new URLSearchParams(query)))).toEqual({
         ...result,
@@ -74,7 +74,7 @@ describe("built-in presets", () => {
     it(`resolves ${preset.id}`, () => {
       expect({
         encoded: encodeState(preset.state),
-        query: encodeQuery(preset, preset),
+        query: encodeQuery(preset.state, { base: preset }),
         state: preset.state,
         designSystem: preset.designSystem,
       }).toMatchSnapshot()

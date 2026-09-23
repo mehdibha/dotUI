@@ -16,7 +16,7 @@ import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
 import {
   canonicalize,
-  decodePreset,
+  decodeState,
   encodeState,
   useMyPresets,
 } from "@/modules/studio/preset"
@@ -77,7 +77,7 @@ export function StudioPanel({ className }: { className?: string }) {
       id: "mine",
       title: "My systems",
       items: presets.map((saved) => {
-        const { state } = decodePreset(saved.state)
+        const state = decodeState(saved.state)
         return {
           id: saved.id,
           name: saved.name,

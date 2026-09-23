@@ -38,6 +38,6 @@ export async function resolveRequestPreset(
       codeOptions: result.codeOptions,
       icons: ds.icons,
     },
-    query: encodeQuery(result, result.base),
+    query: encodeQuery(result.state, result),
   }
 }

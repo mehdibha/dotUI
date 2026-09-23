@@ -26,6 +26,6 @@ for (const id of ids) {
     )
     process.exit(2)
   }
-  out[id] = encodeQuery(preset, preset)
+  out[id] = encodeQuery(preset.state, { base: preset })
 }
 console.log(JSON.stringify(out))

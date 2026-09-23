@@ -19,7 +19,7 @@ import v4 from "./baselines/v4.json"
 
 type State = Record<string, unknown>
 
-export interface Baseline {
+interface Baseline {
   state: State
   codeOptions: CodeOptions
 }
