@@ -40,8 +40,13 @@ export function SavePresetDialog({
   // Never a second "Linear" beside the built-in one, or a saved twin.
   const taken = [...PRESETS.map((p) => p.name), ...presets.map((p) => p.name)]
   const [name, setName] = useState("")
+  // An edited built-in (or an untitled link) is new work: ask for its name
+  // rather than suggest "Origin 2".
+  const isOwnName =
+    storedName !== "Untitled" && !PRESETS.some((p) => p.name === storedName)
   useEffect(() => {
-    if (isOpen) setName(active?.name ?? uniqueName(storedName, taken))
+    if (!isOpen) return
+    setName(active?.name ?? (isOwnName ? uniqueName(storedName, taken) : ""))
     // eslint-disable-next-line react-hooks/exhaustive-deps -- on open
   }, [isOpen, active?.name, storedName])
 

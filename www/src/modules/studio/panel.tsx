@@ -9,6 +9,7 @@
 import type { ReactNode } from "react"
 import {
   ChevronsUpDownIcon,
+  Redo2Icon,
   RotateCcwIcon,
   SaveIcon,
   SearchIcon,
@@ -103,6 +104,18 @@ export function PanelChrome({
               className="text-fg-muted"
             >
               <Undo2Icon />
+            </Button>
+          )}
+          {studio.canRedo && (
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              aria-label="Redo"
+              onPress={studio.redo}
+              className="text-fg-muted"
+            >
+              <Redo2Icon />
             </Button>
           )}
           {modified && (
