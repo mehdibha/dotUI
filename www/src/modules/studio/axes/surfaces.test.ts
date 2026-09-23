@@ -68,10 +68,10 @@ describe("surfaces", () => {
       "light-dark(var(--neutral-100), var(--neutral-200))",
     )
     expect(tokens["--shadow-card"]).toBe(
-      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px 0 light-dark(transparent, rgb(0 0 0 / 0.11))",
+      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px 0 light-dark(transparent, rgb(0 0 0 / 0.2))",
     )
     expect(tokens["--shadow-popover"]).toBe(
-      "0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -1px light-dark(transparent, rgb(0 0 0 / 0.22)), 0 2px 4px -2px light-dark(transparent, rgb(0 0 0 / 0.22))",
+      "0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -1px light-dark(transparent, rgb(0 0 0 / 0.4)), 0 2px 4px -2px light-dark(transparent, rgb(0 0 0 / 0.4))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-50), var(--neutral-100))",
@@ -81,9 +81,9 @@ describe("surfaces", () => {
   test("shadow casts harder in dark, with an ambient layer under the key", () => {
     const tokens = tokensFor({ surfaceStrategy: "shadow" })
     expect(tokens["--card-border"]).toBe("transparent")
-    const key = "light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.264))"
+    const key = "light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.36))"
     expect(tokens["--shadow-card"]).toBe(
-      `0 4px 6px -1px ${key}, 0 2px 4px -2px ${key}, 0 8px 24px 4px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.132))`,
+      `0 4px 6px -1px ${key}, 0 2px 4px -2px ${key}, 0 8px 24px 4px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.18))`,
     )
   })
 

@@ -68,7 +68,7 @@ export const STRATEGY_OPTIONS = [
     label: "Shadow",
     description:
       "No edges; a key + ambient shadow pair on every surface, cards " +
-      "included, about twice as dark in dark mode, where floating layers " +
+      "included, about three times as dark in dark mode, where floating layers " +
       "also step lighter.",
     seenIn: ["Fluent 2", "Spectrum 2"],
   },
@@ -262,9 +262,12 @@ const AMBIENT = [
 
 /** How a strategy's shadows translate to dark: unchanged (shadcn ships the
  *  same shadow-md on near-black), harder (a shadow that reads on white
- *  vanishes on near-black), or tighter — one rung smaller, cast harder, the
- *  way Primer and Radix Themes shrink blur while raising alpha in dark. */
+ *  vanishes on near-black; Spectrum's dark drop shadows are ~3× darker), or
+ *  tighter — one rung smaller at ~0.4 alpha, the way Primer and Radix Themes
+ *  shrink blur while raising alpha in dark. */
 type DarkCast = "same" | "harder" | "tighter"
+
+const DARK_ALPHA: Record<DarkCast, number> = { same: 1, harder: 3, tighter: 4 }
 
 const onlyIn =
   (mode: Mode) =>
@@ -282,17 +285,25 @@ function shadowLayers(
   if (dark === "tighter")
     return [
       ...shadowLayers(rung, weight, "same", layered).map(onlyIn("light")),
-      ...shadowLayers(rung - 1, weight, "harder", layered).map(onlyIn("dark")),
+      ...layersAt(rung - 1, weight, DARK_ALPHA.tighter, layered).map(
+        onlyIn("dark"),
+      ),
     ]
+  return layersAt(rung, weight, DARK_ALPHA[dark], layered)
+}
+
+function layersAt(
+  rung: number,
+  weight: number,
+  darkAlpha: number,
+  layered: boolean,
+): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
   const color = (alpha: number): PerMode<SurfaceColor> => {
     const light = Math.min(alpha * weight, 0.7)
     return {
       light: { kind: "shade", alpha: light },
-      dark: {
-        kind: "shade",
-        alpha: dark === "harder" ? Math.min(light * 2.2, 0.6) : light,
-      },
+      dark: { kind: "shade", alpha: Math.min(light * darkAlpha, 0.6) },
     }
   }
   const out: ShadowLayer[] = layers.map(([offset, alpha]) => ({
