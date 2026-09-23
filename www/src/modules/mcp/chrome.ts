@@ -19,10 +19,13 @@ const LAUNCH_TIMEOUT = 30_000
 const PAGE_TIMEOUT = 25_000
 const MAX_PAGES = 2
 
+/** Over a pipe, Chrome exits with this process, even when it is killed. */
+const pipe = true
+
 async function launch(): Promise<Browser> {
   const puppeteer = await import("puppeteer-core")
   if (process.env.CHROME_PATH)
-    return puppeteer.launch({ executablePath: process.env.CHROME_PATH })
+    return puppeteer.launch({ executablePath: process.env.CHROME_PATH, pipe })
   if (process.platform === "linux") {
     const { default: chromium } = await import("@sparticuz/chromium-min")
     return puppeteer.launch({
@@ -32,6 +35,7 @@ async function launch(): Promise<Browser> {
       }),
       executablePath: await chromium.executablePath(CHROMIUM_PACK_URL),
       headless: "shell",
+      pipe,
     })
   }
   // Local development: the repo's full puppeteer (a root devDependency) and
@@ -40,7 +44,7 @@ async function launch(): Promise<Browser> {
   const { default: full } = (await import(/* @vite-ignore */ local)) as {
     default: typeof puppeteer
   }
-  return full.launch()
+  return full.launch({ pipe })
 }
 
 let browser: Promise<Browser> | undefined
