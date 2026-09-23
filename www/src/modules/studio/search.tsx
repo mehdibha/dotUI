@@ -3,9 +3,10 @@
 /* The panel's search — the header's search button opens a popover holding a
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
-   Opens instantly on purpose: it's a frequent gesture. Selecting scrolls to
-   the chapter. ⌘P, not ⌘K — the site header's docs search owns ⌘K
-   everywhere, /studio included. */
+   Docked, the field sits at the bottom, on the keyboard, and an empty query
+   lists the chapters. Opens instantly on purpose: it's a frequent gesture.
+   Selecting scrolls to the chapter. ⌘P, not ⌘K — the site header's docs
+   search owns ⌘K everywhere, /studio included. */
 
 import { useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
@@ -20,7 +21,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
-import { PanelPopover } from "./rows"
+import { PanelPopover, useDocked, useMedia } from "./rows"
 import type { Chapter } from "./state"
 
 interface Entry {
@@ -74,8 +75,10 @@ export function PanelSearch({
   onOpenChapter,
 }: {
   chapters: Chapter[]
-  onOpenChapter: (id: string) => void
+  onOpenChapter: (id: string, axis?: string) => void
 }) {
+  const docked = useDocked()
+  const coarse = useMedia("(pointer: coarse)")
   const [isOpen, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const { contains } = useFilter({
@@ -88,14 +91,14 @@ export function PanelSearch({
   // left to the Autocomplete, so the list is right even if the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()
-    if (!needle) return []
+    if (!needle) return docked ? categories(chapters) : []
     const cats = categories(chapters).filter((c) =>
       contains(c.category, needle),
     )
     return cats.length > 0
       ? cats
       : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
-  }, [chapters, query, contains])
+  }, [chapters, query, contains, docked])
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
   // `preventDefault` also suppresses the browser's print dialog; `repeat`
@@ -112,9 +115,9 @@ export function PanelSearch({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  function jump(id: string) {
+  function jump(entry: Entry) {
     setOpen(false)
-    onOpenChapter(id)
+    onOpenChapter(entry.chapterId, entry.axis)
   }
 
   function close(open: boolean) {
@@ -122,25 +125,33 @@ export function PanelSearch({
     if (!open) setQuery("")
   }
 
+  const trigger = (
+    <Button
+      size="sm"
+      variant="quiet"
+      isIconOnly
+      aria-label="Search"
+      className="pointer-coarse:size-9"
+    >
+      <SearchIcon />
+    </Button>
+  )
+
   return (
     <Dialog isOpen={isOpen} onOpenChange={close}>
-      <Tooltip delay={300}>
-        <Button
-          size="sm"
-          variant="quiet"
-          isIconOnly
-          aria-label="Search"
-          className="pointer-coarse:size-9"
-        >
-          <SearchIcon />
-        </Button>
-        <TooltipContent>Search ⌘P</TooltipContent>
-      </Tooltip>
+      {coarse ? (
+        trigger
+      ) : (
+        <Tooltip delay={300}>
+          {trigger}
+          <TooltipContent>Search ⌘P</TooltipContent>
+        </Tooltip>
+      )}
       {/* Docked, a fixed height: results never push the field around. */}
       <PanelPopover placement="bottom end" className="max-lg:h-72">
         <Command
           aria-label="Search"
-          className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1"
+          className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1 max-lg:flex-col-reverse"
         >
           {/* Both chain with the Autocomplete's own field props. */}
           <SearchField
@@ -178,7 +189,7 @@ export function PanelSearch({
               <ListBoxItem
                 id={entry.id}
                 textValue={entry.axis ?? entry.category}
-                onAction={() => jump(entry.chapterId)}
+                onAction={() => jump(entry)}
                 className="flex-col items-start gap-0"
               >
                 {entry.axis ? (

@@ -13,6 +13,8 @@ import {
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
+  composeRenderProps,
+  OverlayTriggerStateContext,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -80,6 +82,30 @@ export const PanelPopoverBoundary = createContext<Element | null>(null)
 /** The docked panel's positioned wrapper, which docked popovers portal into. */
 export const DockLayer = createContext<Element | null>(null)
 
+/** The row a popover edits, named over it when docked — the sheet covers it. */
+export const PanelPopoverTitle = createContext<string | null>(null)
+
+function DockedTitle({ title }: { title: string }) {
+  const state = useContext(OverlayTriggerStateContext)
+  return (
+    <div className="flex h-9 shrink-0 items-center justify-between pr-1 pl-3">
+      <span className="truncate text-xs font-medium text-fg-muted">
+        {title}
+      </span>
+      <Button
+        size="sm"
+        variant="quiet"
+        isIconOnly
+        aria-label="Close"
+        onPress={() => state?.close()}
+        className="pointer-coarse:size-9"
+      >
+        <XIcon />
+      </Button>
+    </div>
+  )
+}
+
 /** Panel popovers open and close instantly — control feedback, not content —
  *  and wear the panel's own surface, raised: its card, hairline, radius and
  *  padding, never the design system's popover recipe (that lives in the
@@ -88,16 +114,19 @@ export const DockLayer = createContext<Element | null>(null)
  *  overridden so the box grows with its content — that growth is what
  *  react-aria observes to re-slide it; a capped box would never report it.
  *  The viewport cap is the last resort, where the content scrolls. Docked,
- *  the popover is pinned over the dock's bottom edge at the dock's width. */
+ *  the popover covers the dock's rows at its width, rising over the preview
+ *  when it holds more, and names the row it edits. */
 export function PanelPopover({
   className,
   placement = ROW_OVERLAY_PLACEMENT,
+  children,
   ...props
 }: Omit<React.ComponentProps<typeof Popover>, "className"> & {
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
   const layer = useContext(DockLayer)
+  const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
   return (
     <Popover
@@ -111,10 +140,19 @@ export function PanelPopover({
         "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
         docked &&
-          "absolute! inset-x-0! top-auto! bottom-0! max-h-[42svh]! w-auto! max-w-none! min-w-0! [@media(max-height:500px)]:max-h-full!",
+          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! [@media(max-height:500px)]:top-(--dock-chrome)! [@media(max-height:500px)]:bottom-0! [@media(max-height:500px)]:max-h-none! [@media(max-height:500px)]:rounded-t-none [@media(max-height:500px)]:border-t-0 [@media(min-height:501px)]:top-auto! [@media(min-height:501px)]:bottom-(--dock-chrome)! [@media(min-height:501px)]:max-h-[42svh]! [@media(min-height:501px)]:min-h-[calc(100%-var(--dock-chrome))] [@media(min-height:501px)]:rounded-b-none [@media(min-height:501px)]:border-b-0",
       )}
       {...props}
-    />
+    >
+      {docked && title
+        ? composeRenderProps(children, (children) => (
+            <>
+              <DockedTitle title={title} />
+              {children}
+            </>
+          ))
+        : children}
+    </Popover>
   )
 }
 
@@ -508,7 +546,9 @@ export function FontListPopover({
   const finePointer = useMedia("(pointer: fine)")
   return (
     <PanelPopover className="w-(--trigger-width) outline-hidden">
-      <Command>
+      {/* Docked, the list fills the sheet over the field, which sits on the
+          keyboard. */}
+      <Command className="max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
         <SearchField autoFocus={finePointer} aria-label="Search fonts">
           <InputGroup>
             <InputGroupAddon>
@@ -525,7 +565,7 @@ export function FontListPopover({
         {/* The `display:contents` wrapper hands the lazy-preview observer the
             listbox scroll container (ListBox forwards no ref). */}
         <div ref={listRef} className="contents">
-          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain">
+          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1">
             {categories.map((category) => (
               <ListBoxSection key={category}>
                 <ListBoxSectionHeader className="capitalize">
@@ -537,6 +577,7 @@ export function FontListPopover({
                       key={font.family}
                       id={font.family}
                       textValue={font.family}
+                      className="pointer-coarse:min-h-11"
                     >
                       <span
                         data-preview-family={font.family}

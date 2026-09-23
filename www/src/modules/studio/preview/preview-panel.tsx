@@ -8,6 +8,7 @@ import {
   MinimizeIcon,
   MonitorIcon,
   MoonIcon,
+  PanelsTopLeftIcon,
   SmartphoneIcon,
   SquareDashedMousePointerIcon,
   SunIcon,
@@ -423,12 +424,12 @@ export function PreviewPanel({ className }: { className?: string }) {
           // rounded-[20px] renders like rounded-full (half the 40px pill) but,
           // unlike calc(infinity*1px), interpolates visibly during the tuck —
           // react-grab's trick for its edge collapse.
-          "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out max-lg:right-3 max-lg:left-auto max-lg:translate-x-0",
+          "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out max-lg:right-2 max-lg:left-auto max-lg:translate-x-0",
           toolbarHidden
             ? // Tucked into the panel's bottom edge as a react-grab-style tab:
               // flush, squared toward the edge, the chevron button IS the tab.
               "bottom-0 rounded-[10px] rounded-b-none border-b-0 p-0"
-            : "bottom-3 gap-1 rounded-[20px] p-1",
+            : "bottom-3 gap-1 rounded-[20px] p-1 max-lg:bottom-2",
         )}
       >
         {/* Collapsible content — slides shut toward the chevron, react-grab
@@ -471,16 +472,21 @@ export function PreviewPanel({ className }: { className?: string }) {
               // trigger inside the pill's shrink-to-fit absolute box.
               className="w-fit min-w-0"
             >
+              {/* Icon-only on phones: the pill floats over a narrow preview. */}
               <Button
                 size="sm"
                 variant="quiet"
-                className="max-w-44 rounded-full"
+                className="max-w-44 rounded-full max-sm:w-8 max-sm:px-0"
               >
                 {/* flex-initial overrides the base flex-1 (basis-0), which has no
                 space to grow into inside the pill's shrink-to-fit box and
                 collapses the value to a sliver. */}
-                <SelectValue className="min-w-0 flex-initial" />
-                <ChevronsUpDownIcon data-icon="inline-end" />
+                <SelectValue className="min-w-0 flex-initial max-sm:sr-only" />
+                <ChevronsUpDownIcon
+                  data-icon="inline-end"
+                  className="max-sm:hidden"
+                />
+                <PanelsTopLeftIcon className="sm:hidden" />
               </Button>
               {isMobile ? (
                 <Drawer
@@ -579,7 +585,7 @@ export function PreviewPanel({ className }: { className?: string }) {
               </Popover>
             </Menu>
 
-            <div className="h-4 w-px shrink-0 bg-border" />
+            <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
 
             {/* Component inspector — hover the preview to see the dotUI component
             under the cursor with its props; click jumps to its params.

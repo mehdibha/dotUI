@@ -88,7 +88,7 @@ function StudioPage() {
       <PanelPopoverBoundary.Provider value={boundary}>
         <div
           ref={setBoundary}
-          className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6 [@media(max-height:500px)]:flex-row"
+          className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 [@media(max-height:500px)]:flex-row"
         >
           {/* Below `lg` the panel docks under the preview; on short screens
               (a phone on its side) it sits beside it instead. */}
