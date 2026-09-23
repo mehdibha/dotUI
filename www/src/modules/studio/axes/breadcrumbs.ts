@@ -6,6 +6,8 @@
    Engine: `separator` and `tone` are enum params on `breadcrumbs`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const BREADCRUMB_DEFAULTS = {
   breadcrumbSeparator: "chevron",
@@ -22,23 +24,17 @@ export const TONE_OPTIONS = [
   { value: "muted", label: "Muted" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const BREADCRUMB_SCHEMA: Schema<typeof BREADCRUMB_DEFAULTS> = {
+  breadcrumbSeparator: oneOf(SEPARATOR_OPTIONS),
+  breadcrumbTone: oneOf(TONE_OPTIONS),
+}
 
 export function resolveBreadcrumbs(state: StudioState): Resolved {
   return {
     params: {
       breadcrumbs: {
-        separator: pick(
-          SEPARATOR_OPTIONS,
-          state.breadcrumbSeparator,
-          BREADCRUMB_DEFAULTS.breadcrumbSeparator,
-        ),
-        tone: pick(
-          TONE_OPTIONS,
-          state.breadcrumbTone,
-          BREADCRUMB_DEFAULTS.breadcrumbTone,
-        ),
+        separator: state.breadcrumbSeparator,
+        tone: state.breadcrumbTone,
       },
     },
   }

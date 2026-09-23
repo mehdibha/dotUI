@@ -348,9 +348,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodeState(PRESETS.claude.state)"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
     ]
   },
   {
@@ -404,7 +401,7 @@
       }
     ],
     "knownWrong": [
-      "stale-enum-kept-and-misresolved: surfaceStrategy 'outline' (removed in #766) is kept and resolves as Tonal"
+      "v766-unmigrated-removals: surfaceStrategy 'outline' (removed in #766) is dropped to the default instead of migrating to its successor"
     ]
   },
   {
@@ -422,9 +419,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodeState(PRESETS.vercel.state)"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
     ]
   },
   {
@@ -459,9 +453,6 @@
         "path": "www/src/modules/presets/presets-data.ts",
         "how": "encodeState(PRESETS.github.state)"
       }
-    ],
-    "knownWrong": [
-      "v766-unmigrated-removals: the removed modes[].contrast field is kept inside state.modes"
     ]
   },
   {
@@ -608,7 +599,7 @@
       }
     ],
     "knownWrong": [
-      "v766-unmigrated-removals: guarantees and hueShift are dropped, and the stale modes[].contrast:'high' fields are kept inside state.modes"
+      "v766-unmigrated-removals: guarantees, hueShift and the modes[].contrast:'high' fields are dropped with no migration"
     ]
   },
   {
@@ -787,7 +778,7 @@
       }
     ],
     "knownWrong": [
-      "silent-garbage-fallback: decodes to DEFAULTS instead of failing"
+      "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS"
     ]
   },
   {
@@ -802,7 +793,7 @@
       }
     ],
     "knownWrong": [
-      "silent-garbage-fallback: decodes to DEFAULTS instead of failing"
+      "silent-garbage-fallback: decode fails as corrupt, but /r/* still serves DEFAULTS"
     ]
   },
   {
@@ -817,7 +808,7 @@
       }
     ],
     "knownWrong": [
-      "forward-version-collapses-to-defaults: an unknown version decodes to DEFAULTS instead of failing"
+      "forward-version-collapses-to-defaults: decode fails as newer-version, but /r/* still serves DEFAULTS"
     ]
   },
   {
@@ -830,9 +821,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:4, s:{mobileDialogs:'__bogus__', surfaceDepth:'__bogus__'}}"
       }
-    ],
-    "knownWrong": [
-      "stale-enum-kept-and-misresolved: invalid enums are kept; surfaceDepth resolves as flat and mobileDialogs reaches the registry params"
     ]
   },
   {
@@ -845,9 +833,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:4, s:{cursorControls:'pointer;}body{display:none', bodyFont:<quote break-out>}}"
       }
-    ],
-    "knownWrong": [
-      "typeof-only-validation: raw CSS reaches the cursor and font tokens"
     ]
   },
   {
@@ -860,9 +845,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:4, s:{radiusPx:-1000, focusInputStrength:1e6}}"
       }
-    ],
-    "knownWrong": [
-      "typeof-only-validation: out-of-range numbers are kept and emitted"
     ]
   },
   {
@@ -875,8 +857,7 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:4, s:{selectionSeed:'zzz'}}"
       }
-    ],
-    "knownWrong": ["typeof-only-validation: an unparseable color seed is kept"]
+    ]
   },
   {
     "id": "crafted-bad-modes",
@@ -888,9 +869,6 @@
         "path": "www/src/modules/studio/preset/codec.ts",
         "how": "{v:4, s:{modes:[null]}}"
       }
-    ],
-    "knownWrong": [
-      "typeof-only-validation: a malformed modes array is kept and crashes the resolver"
     ]
   }
 ]

@@ -8,6 +8,8 @@
    `gap`); end caps ride the global Shape chapter. */
 
 import type { Resolved, StudioState } from "./index"
+import { BOOLEAN, oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const PROGRESS_DEFAULTS = {
   progressTrack: "thin",
@@ -25,19 +27,18 @@ export const INDETERMINATE_OPTIONS = [
   { value: "pulse", label: "Pulse" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const PROGRESS_SCHEMA: Schema<typeof PROGRESS_DEFAULTS> = {
+  progressTrack: oneOf(TRACK_OPTIONS),
+  progressIndeterminate: oneOf(INDETERMINATE_OPTIONS),
+  progressGap: BOOLEAN,
+}
 
 export function resolveProgress(state: StudioState): Resolved {
   return {
     params: {
       "progress-bar": {
-        track: pick(TRACK_OPTIONS, state.progressTrack, "thin"),
-        indeterminate: pick(
-          INDETERMINATE_OPTIONS,
-          state.progressIndeterminate,
-          "slide",
-        ),
+        track: state.progressTrack,
+        indeterminate: state.progressIndeterminate,
         gap: state.progressGap ? "cut" : "none",
       },
     },

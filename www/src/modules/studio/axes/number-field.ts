@@ -6,7 +6,8 @@
    differ in structure, not classes. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./inputs"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const NUMBER_FIELD_DEFAULTS = {
   numberLayout: "right",
@@ -18,12 +19,10 @@ export const NUMBER_LAYOUT_OPTIONS = [
   { value: "stacked", label: "Stacked" },
 ]
 
+export const NUMBER_FIELD_SCHEMA: Schema<typeof NUMBER_FIELD_DEFAULTS> = {
+  numberLayout: oneOf(NUMBER_LAYOUT_OPTIONS),
+}
+
 export function resolveNumberField(state: StudioState): Resolved {
-  return {
-    params: {
-      "number-field": {
-        steppers: pick(NUMBER_LAYOUT_OPTIONS, state.numberLayout, "right"),
-      },
-    },
-  }
+  return { params: { "number-field": { steppers: state.numberLayout } } }
 }

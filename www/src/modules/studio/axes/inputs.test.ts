@@ -53,14 +53,4 @@ describe("inputs chapter group", () => {
     expect(system.componentParams["number-field"]?.steppers).toBe("stacked")
     expect(system.componentParams["otp-field"]?.cells).toBe("underline")
   })
-
-  it("falls back to defaults on unknown values", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      inputStyle: "nope",
-      numberLayout: "nope",
-    })
-    expect(system.componentParams.input?.style).toBe("outline")
-    expect(system.componentParams["number-field"]?.steppers).toBe("right")
-  })
 })

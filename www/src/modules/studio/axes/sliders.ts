@@ -10,7 +10,10 @@
    buttons' source. The color-slider stays out: its track is a gradient
    swatch and its thumb the shared color-thumb, so no axis applies. */
 
+import { SOURCE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const SLIDER_DEFAULTS = {
   sliderThumb: "circle",
@@ -18,7 +21,7 @@ export const SLIDER_DEFAULTS = {
   sliderColor: "neutral",
 }
 
-const FILL_TOKENS: Record<string, string> = {
+const FILL_TOKENS = {
   neutral: "var(--color-inverse)",
   accent: "var(--color-accent)",
 }
@@ -34,21 +37,23 @@ export const TRACK_OPTIONS = [
   { value: "thick", label: "Thick" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const SLIDER_SCHEMA: Schema<typeof SLIDER_DEFAULTS> = {
+  sliderThumb: oneOf(THUMB_OPTIONS),
+  sliderTrack: oneOf(TRACK_OPTIONS),
+  sliderColor: SOURCE,
+}
 
 export function resolveSliders(state: StudioState): Resolved {
-  const fill = FILL_TOKENS[state.sliderColor]
   return {
     params: {
-      slider: {
-        thumb: pick(THUMB_OPTIONS, state.sliderThumb, "circle"),
-        track: pick(TRACK_OPTIONS, state.sliderTrack, "thin"),
-      },
+      slider: { thumb: state.sliderThumb, track: state.sliderTrack },
     },
     tokens:
-      fill && state.sliderColor !== state.buttonColor
-        ? { "--studio-slider-fill-color": fill }
+      state.sliderColor !== state.buttonColor
+        ? {
+            "--studio-slider-fill-color":
+              FILL_TOKENS[state.sliderColor as keyof typeof FILL_TOKENS],
+          }
         : undefined,
   }
 }

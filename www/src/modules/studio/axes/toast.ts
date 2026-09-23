@@ -2,8 +2,11 @@
    dropped and the chapter will be rebuilt from preset evidence. */
 
 import type { Resolved, StudioState } from "./index"
+import type { Schema } from "./schema"
 
 export const TOAST_DEFAULTS = {}
+
+export const TOAST_SCHEMA: Schema<typeof TOAST_DEFAULTS> = {}
 
 export function resolveToast(_state: StudioState): Resolved {
   return {}

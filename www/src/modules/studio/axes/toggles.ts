@@ -6,6 +6,8 @@
    Engine: `selected` enum param on `toggle-button`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const TOGGLE_DEFAULTS = {
   toggleSelected: "fill",
@@ -17,11 +19,10 @@ export const SELECTED_OPTIONS = [
   { value: "inverse", label: "Inverse" },
 ]
 
+export const TOGGLE_SCHEMA: Schema<typeof TOGGLE_DEFAULTS> = {
+  toggleSelected: oneOf(SELECTED_OPTIONS),
+}
+
 export function resolveToggles(state: StudioState): Resolved {
-  const selected = SELECTED_OPTIONS.some(
-    (o) => o.value === state.toggleSelected,
-  )
-    ? state.toggleSelected
-    : "fill"
-  return { params: { "toggle-button": { selected } } }
+  return { params: { "toggle-button": { selected: state.toggleSelected } } }
 }

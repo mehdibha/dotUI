@@ -5,7 +5,7 @@ import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import { DEFAULTS } from "@/modules/studio/axes"
 
-import { decodePreset, encodePreset, encodeState } from "./codec"
+import { decode, decodePreset, encodePreset, encodeState } from "./codec"
 
 /** Encode an arbitrary payload with the same deflate+base64url pipeline as
  *  `encodePreset`, bypassing its typing — for crafting stale/garbage presets. */
@@ -45,16 +45,16 @@ describe("preset codec — studio state", () => {
     expect(decoded.codeOptions?.classArrays).toBe(true)
   })
 
-  it("drops unknown keys and wrongly typed values", () => {
-    const encoded = encodeRaw({
-      v: 3,
-      s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
-    })
-    const { state } = decodePreset(encoded)
-    expect(state.brand).toBe("#ef4444")
-    expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
-    expect(state.modes).toEqual(DEFAULTS.modes)
-    expect("nope" in state).toBe(false)
+  it("drops unknown keys and invalid values, and names them", () => {
+    const result = decode(
+      encodeRaw({
+        v: 3,
+        s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
+      }),
+    )
+    if (!result.ok) throw new Error(result.reason)
+    expect(result.state).toEqual({ ...DEFAULTS, brand: "#ef4444" })
+    expect(result.dropped).toEqual(["radiusPx", "modes", "nope"])
   })
 
   it("fans a v3 primary and family fill out onto the leaves they painted", () => {
@@ -95,16 +95,44 @@ describe("preset codec — studio state", () => {
   })
 
   it("keeps a leaf only on a known source", () => {
-    const { state } = decodePreset(
+    const result = decode(
       encodeRaw({ v: 4, s: { switchColor: "auto", radioColor: "accent" } }),
     )
-    expect(state.switchColor).toBe("neutral")
-    expect(state.radioColor).toBe("accent")
+    if (!result.ok) throw new Error(result.reason)
+    expect(result.state.switchColor).toBe("neutral")
+    expect(result.state.radioColor).toBe("accent")
+    expect(result.dropped).toEqual(["switchColor"])
   })
 
-  it("decodes garbage to the defaults", () => {
-    expect(decodePreset("not-a-preset").state).toEqual(DEFAULTS)
-    expect(decodePreset(encodeRaw("hello")).state).toEqual(DEFAULTS)
+  it("fails on a string that is not a preset", () => {
+    for (const encoded of ["not-a-preset", "%%%", ""])
+      expect(decode(encoded)).toEqual({ ok: false, reason: "corrupt" })
+    for (const payload of [
+      "hello",
+      [1],
+      null,
+      { v: 4, s: "x" },
+      { v: 2, s: {} },
+      { v: "4" },
+      { nope: 1 },
+      { t: { "--radius": 12 } },
+    ])
+      expect(decode(encodeRaw(payload))).toEqual({
+        ok: false,
+        reason: "invalid",
+      })
+  })
+
+  it("fails on a version newer than this codec", () => {
+    expect(decode(encodeRaw({ v: 5, s: { brand: "#ef4444" } }))).toEqual({
+      ok: false,
+      reason: "newer-version",
+    })
+  })
+
+  it("still decodes garbage to the defaults through decodePreset", () => {
+    expect(decodePreset("not-a-preset")).toEqual({ state: DEFAULTS })
+    expect(decodePreset(encodeRaw({ v: 5 }))).toEqual({ state: DEFAULTS })
   })
 })
 
@@ -161,10 +189,15 @@ describe("preset codec — legacy migration", () => {
   })
 
   it("ignores an unknown icon library and unparseable tokens", () => {
-    const encoded = encodeRaw({ i: "heroicons", t: { "--radius": "big" } })
-    const { state } = decodePreset(encoded)
-    expect(state.iconLibrary).toBe(DEFAULTS.iconLibrary)
-    expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
+    const result = decode(
+      encodeRaw({
+        i: "heroicons",
+        t: { "--radius": "big", "--cursor-interactive": "text" },
+      }),
+    )
+    if (!result.ok) throw new Error(result.reason)
+    expect(result.state).toEqual(DEFAULTS)
+    expect(result.dropped).toEqual(["iconLibrary", "cursorControls"])
   })
 })
 

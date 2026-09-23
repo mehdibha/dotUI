@@ -13,9 +13,8 @@ describe("space axis", () => {
     expect(system.density).toBe("default")
   })
 
-  test("density selects a registry tier; unknown values fall back", () => {
+  test("density selects a registry tier", () => {
     expect(resolve({ density: "compact" }).density).toBe("compact")
-    expect(resolve({ density: "cozy" }).density).toBe("default")
   })
 
   test("the unit lands on Tailwind's --spacing in rem", () => {

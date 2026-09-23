@@ -10,6 +10,8 @@
    grid's `weekdayStyle` and header label (calendar/meta.ts `source`). */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const CALENDAR_DEFAULTS = {
   calendarDayShape: "rounded",
@@ -36,16 +38,19 @@ export const WEEKDAY_OPTIONS = [
   { value: "triple", label: "Sun" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const CALENDAR_SCHEMA: Schema<typeof CALENDAR_DEFAULTS> = {
+  calendarDayShape: oneOf(DAY_SHAPE_OPTIONS),
+  calendarToday: oneOf(TODAY_OPTIONS),
+  calendarWeekdays: oneOf(WEEKDAY_OPTIONS),
+}
 
 export function resolveCalendar(state: StudioState): Resolved {
   return {
     params: {
       calendar: {
-        dayShape: pick(DAY_SHAPE_OPTIONS, state.calendarDayShape, "rounded"),
-        today: pick(TODAY_OPTIONS, state.calendarToday, "none"),
-        weekdays: pick(WEEKDAY_OPTIONS, state.calendarWeekdays, "single"),
+        dayShape: state.calendarDayShape,
+        today: state.calendarToday,
+        weekdays: state.calendarWeekdays,
       },
     },
   }

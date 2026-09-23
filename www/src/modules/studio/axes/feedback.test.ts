@@ -34,16 +34,4 @@ describe("feedback chapters (skeleton · spinner · progress)", () => {
     })
     expect(ds.tokens).toEqual({})
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      skeletonAnimation: "wave",
-      spinnerStyle: "bars",
-      progressTrack: "huge",
-    })
-    expect(ds.componentParams.skeleton).toEqual({ animation: "shimmer" })
-    expect(ds.componentParams.loader).toEqual({ style: "ring" })
-    expect(ds.componentParams["progress-bar"]?.track).toBe("thin")
-  })
 })

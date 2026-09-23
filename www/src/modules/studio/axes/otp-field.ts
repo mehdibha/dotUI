@@ -5,7 +5,8 @@
    Engine: `otp-field.cells` styles the OTPFieldGroup that lays the inputs out. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./inputs"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const OTP_FIELD_DEFAULTS = {
   otpStyle: "group",
@@ -17,10 +18,10 @@ export const OTP_STYLE_OPTIONS = [
   { value: "underline", label: "Underline" },
 ]
 
+export const OTP_FIELD_SCHEMA: Schema<typeof OTP_FIELD_DEFAULTS> = {
+  otpStyle: oneOf(OTP_STYLE_OPTIONS),
+}
+
 export function resolveOtpField(state: StudioState): Resolved {
-  return {
-    params: {
-      "otp-field": { cells: pick(OTP_STYLE_OPTIONS, state.otpStyle, "group") },
-    },
-  }
+  return { params: { "otp-field": { cells: state.otpStyle } } }
 }

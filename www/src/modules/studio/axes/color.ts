@@ -8,6 +8,8 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
+import { BOOLEAN, oneOf, range } from "./schema"
+import type { AxisSpec, Schema } from "./schema"
 
 export interface ColorMode {
   id: string
@@ -23,6 +25,12 @@ export const DEFAULT_MODES: ColorMode[] = [
   { id: "light", name: "Light", polarity: "light", bg: 99 },
   { id: "dark", name: "Dark", polarity: "dark", bg: 2 },
 ]
+
+/** Where each mode's background L* can sit. */
+export const MODE_BG_RANGE = {
+  light: { min: 90, max: 100 },
+  dark: { min: 0, max: 20 },
+}
 
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
@@ -45,6 +53,29 @@ export const SOURCE_OPTIONS = [
   { value: "neutral", label: "Neutral" },
   { value: "accent", label: "Accent" },
 ]
+
+/** A Primary leaf: every chapter owning one validates it with this. */
+export const SOURCE = oneOf(SOURCE_OPTIONS)
+
+export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
+export const HUE_RANGE = { min: 0, max: 360, step: 1 }
+export const TINT_RANGE = { min: 0, max: 2, step: 0.05 }
+
+const SEED: AxisSpec = { kind: "color", auto: true }
+
+export const COLOR_SCHEMA: Schema<typeof COLOR_DEFAULTS> = {
+  brand: { kind: "color" },
+  buttonColor: SOURCE,
+  selectionColor: SOURCE,
+  neutralHue: range(HUE_RANGE, true),
+  successSeed: SEED,
+  warningSeed: SEED,
+  dangerSeed: SEED,
+  selectionSeed: SEED,
+  vividness: range(VIVIDNESS_RANGE),
+  neutralTint: range(TINT_RANGE),
+  preserveSeed: BOOLEAN,
+}
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
@@ -99,16 +130,9 @@ export function fillScope(
   return { scopes: { [scope]: fill as PrimaryColorSource } }
 }
 
-/** One polarity's mode; the default when a stored pair lost it. */
-export function modeFor(state: StudioState, polarity: ColorMode["polarity"]) {
-  return (
-    state.modes.find((mode) => mode.polarity === polarity) ??
-    (DEFAULT_MODES.find((mode) => mode.polarity === polarity) as ColorMode)
-  )
-}
-
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value))
+/** One polarity's mode. */
+export const modeFor = (state: StudioState, polarity: ColorMode["polarity"]) =>
+  state.modes.find((mode) => mode.polarity === polarity) as ColorMode
 
 /** Drops undefined entries so absent stays absent (the config's "default"). */
 function compact<T extends object>(value: T): T {
@@ -130,8 +154,8 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       selection: state.selectionSeed || undefined,
     }),
     background: compact({
-      light: light.bg === 99 ? undefined : clamp(light.bg, 90, 100),
-      dark: dark.bg === 0 ? ("oled" as const) : clamp(dark.bg, 0, 20),
+      light: light.bg === 99 ? undefined : light.bg,
+      dark: dark.bg === 0 ? ("oled" as const) : dark.bg,
     }),
     vividness: state.vividness === 1 ? undefined : state.vividness,
     neutralTint: state.neutralTint === 1 ? undefined : state.neutralTint,

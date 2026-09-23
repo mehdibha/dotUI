@@ -62,12 +62,4 @@ describe("navigation chapters", () => {
     })
     expect(ds.componentParams.pagination).toEqual({ current: "filled" })
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, tabStyle: "underline" })
-    expect(ds.componentParams.tabs).toEqual({
-      style: "segmented",
-      color: "neutral",
-    })
-  })
 })

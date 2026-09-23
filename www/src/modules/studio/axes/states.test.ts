@@ -48,10 +48,5 @@ describe("invalid", () => {
     const bar = resolveDesignSystem({ ...DEFAULTS, inputError: "bar" })
     expect(bar.componentParams.field?.error).toBe("bar")
     expect(bar.tokens["--studio-field-error-bar"]).toBe("3px")
-
-    expect(
-      resolveDesignSystem({ ...DEFAULTS, inputError: "nope" }).componentParams
-        .field?.error,
-    ).toBe("border")
   })
 })

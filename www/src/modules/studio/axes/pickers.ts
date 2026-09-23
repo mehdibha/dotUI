@@ -6,6 +6,8 @@
    the trigger icon in the shipped file (select/meta.ts `source`). */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const PICKER_DEFAULTS = {
   pickerCaret: "chevron",
@@ -16,9 +18,10 @@ export const CARET_OPTIONS = [
   { value: "double", label: "Up-down" },
 ]
 
+export const PICKER_SCHEMA: Schema<typeof PICKER_DEFAULTS> = {
+  pickerCaret: oneOf(CARET_OPTIONS),
+}
+
 export function resolvePickers(state: StudioState): Resolved {
-  const caret = CARET_OPTIONS.some((o) => o.value === state.pickerCaret)
-    ? state.pickerCaret
-    : "chevron"
-  return { params: { select: { caret } } }
+  return { params: { select: { caret: state.pickerCaret } } }
 }

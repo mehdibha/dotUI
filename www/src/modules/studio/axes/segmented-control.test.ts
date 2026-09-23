@@ -24,16 +24,4 @@ describe("segmented control axis", () => {
       track: "outline",
     })
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const { componentParams } = resolveDesignSystem({
-      ...DEFAULTS,
-      segmentedSelected: "underline",
-      segmentedTrack: "gapped",
-    })
-    expect(componentParams["segmented-control"]).toEqual({
-      selected: "flat",
-      track: "filled",
-    })
-  })
 })

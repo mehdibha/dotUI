@@ -23,12 +23,4 @@ describe("button groups axis", () => {
       )
     }
   })
-
-  test("unknown values fall back to auto", () => {
-    const { componentParams } = resolveDesignSystem({
-      ...DEFAULTS,
-      groupSeparator: "dotted",
-    })
-    expect(componentParams.group?.separator).toBe("auto")
-  })
 })

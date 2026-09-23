@@ -4,6 +4,8 @@
    Engine: `separation` and `header` are enum params on `table`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const TABLE_DEFAULTS = {
   tableSeparation: "lines",
@@ -26,15 +28,17 @@ export const HEADER_OPTIONS = [
   { value: "filled", label: "Filled" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const TABLE_SCHEMA: Schema<typeof TABLE_DEFAULTS> = {
+  tableSeparation: oneOf(SEPARATION_OPTIONS),
+  tableHeader: oneOf(HEADER_OPTIONS),
+}
 
 export function resolveTables(state: StudioState): Resolved {
   return {
     params: {
       table: {
-        separation: pick(SEPARATION_OPTIONS, state.tableSeparation, "lines"),
-        header: pick(HEADER_OPTIONS, state.tableHeader, "plain"),
+        separation: state.tableSeparation,
+        header: state.tableHeader,
       },
     },
   }

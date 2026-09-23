@@ -10,6 +10,8 @@
    painting by the `data-tint` index the fallback hashes from its text. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const AVATAR_DEFAULTS = {
   avatarShape: "circle",
@@ -30,8 +32,10 @@ const SHAPE_TOKENS: Record<string, string> = {
   rounded: "var(--radius-lg)",
 }
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const AVATAR_SCHEMA: Schema<typeof AVATAR_DEFAULTS> = {
+  avatarShape: oneOf(SHAPE_OPTIONS),
+  avatarFallback: oneOf(FALLBACK_OPTIONS),
+}
 
 export function resolveAvatars(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
@@ -40,9 +44,7 @@ export function resolveAvatars(state: StudioState): Resolved {
   return {
     tokens,
     params: {
-      avatar: {
-        fallback: pick(FALLBACK_OPTIONS, state.avatarFallback, "neutral"),
-      },
+      avatar: { fallback: state.avatarFallback },
     },
   }
 }

@@ -38,9 +38,4 @@ describe("sliders axis", () => {
       }).tokens,
     ).toEqual({})
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, sliderThumb: "square" })
-    expect(ds.componentParams.slider?.thumb).toBe("circle")
-  })
 })

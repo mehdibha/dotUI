@@ -5,7 +5,10 @@
 
 import type { TokenOverrides } from "@/registry/theme"
 
+import { SOURCE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { Schema } from "./schema"
 
 /* Defaults mirror base.css: a 2px accent ring over a 2px bg gap; fields wear
    a 2px muted halo. */
@@ -44,6 +47,25 @@ export const FOCUS_OFFSET_OPTIONS = [
   { value: "flush", label: "Flush" },
   { value: "gap", label: "Gap" },
 ]
+
+export const FOCUS_WIDTH_RANGE = { min: 1, max: 6, step: 1 }
+export const FOCUS_GAP_RANGE = { min: 1, max: 6, step: 1 }
+export const FOCUS_STRENGTH_RANGE = { min: 10, max: 100, step: 5 }
+export const FOCUS_INPUT_WIDTH_RANGE = { min: 1, max: 8, step: 1 }
+export const FOCUS_INPUT_BORDER_RANGE = { min: 1, max: 4, step: 1 }
+
+export const FOCUS_SCHEMA: Schema<typeof FOCUS_DEFAULTS> = {
+  focusColor: SOURCE,
+  focusStyle: oneOf(FOCUS_STYLE_OPTIONS),
+  focusWidth: range(FOCUS_WIDTH_RANGE),
+  focusOffset: oneOf(FOCUS_OFFSET_OPTIONS),
+  focusGap: range(FOCUS_GAP_RANGE),
+  focusHaloStrength: range(FOCUS_STRENGTH_RANGE),
+  focusInputStyle: oneOf(FOCUS_INPUT_STYLE_OPTIONS),
+  focusInputWidth: range(FOCUS_INPUT_WIDTH_RANGE),
+  focusInputStrength: range(FOCUS_STRENGTH_RANGE),
+  focusInputBorderWidth: range(FOCUS_INPUT_BORDER_RANGE),
+}
 
 export const mixFocus = (color: string, pct: number) =>
   `color-mix(in oklab, ${color} ${pct}%, transparent)`

@@ -6,6 +6,8 @@
    active link's button variant. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const PAGINATION_DEFAULTS = {
   paginationCurrent: "outline",
@@ -16,11 +18,10 @@ export const CURRENT_OPTIONS = [
   { value: "outline", label: "Outline" },
 ]
 
+export const PAGINATION_SCHEMA: Schema<typeof PAGINATION_DEFAULTS> = {
+  paginationCurrent: oneOf(CURRENT_OPTIONS),
+}
+
 export function resolvePagination(state: StudioState): Resolved {
-  const current = CURRENT_OPTIONS.some(
-    (o) => o.value === state.paginationCurrent,
-  )
-    ? state.paginationCurrent
-    : PAGINATION_DEFAULTS.paginationCurrent
-  return { params: { pagination: { current } } }
+  return { params: { pagination: { current: state.paginationCurrent } } }
 }

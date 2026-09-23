@@ -5,6 +5,8 @@
    `--scrollbar-color-hover` while the pointer is over the area. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const SCROLLBAR_DEFAULTS = {
   scrollbarStyle: "native",
@@ -15,6 +17,10 @@ export const STYLE_OPTIONS = [
   { value: "thin", label: "Thin" },
   { value: "overlay", label: "Hover reveal" },
 ]
+
+export const SCROLLBAR_SCHEMA: Schema<typeof SCROLLBAR_DEFAULTS> = {
+  scrollbarStyle: oneOf(STYLE_OPTIONS),
+}
 
 const THUMB = "var(--color-border) transparent"
 

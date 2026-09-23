@@ -41,16 +41,4 @@ describe("display chapters (badges, kbd, avatars)", () => {
     expect(ds.tokens).toEqual({ "--studio-avatar-radius": "var(--radius-lg)" })
     expect(ds.componentParams.avatar).toEqual({ fallback: "tinted" })
   })
-
-  it("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      badgeStyle: "neon",
-      kbdTreatment: "glow",
-      avatarFallback: "rainbow",
-    })
-    expect(ds.componentParams.badge?.style).toBe("solid")
-    expect(ds.componentParams.kbd?.treatment).toBe("chip")
-    expect(ds.componentParams.avatar?.fallback).toBe("neutral")
-  })
 })

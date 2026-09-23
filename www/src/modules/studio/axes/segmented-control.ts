@@ -6,6 +6,8 @@
    Engine: `selected` and `track` enum params on `segmented-control`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const SEGMENTED_DEFAULTS = {
   segmentedSelected: "flat",
@@ -23,15 +25,17 @@ export const TRACK_OPTIONS = [
   { value: "outline", label: "Outline" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const SEGMENTED_SCHEMA: Schema<typeof SEGMENTED_DEFAULTS> = {
+  segmentedSelected: oneOf(SELECTED_OPTIONS),
+  segmentedTrack: oneOf(TRACK_OPTIONS),
+}
 
 export function resolveSegmentedControl(state: StudioState): Resolved {
   return {
     params: {
       "segmented-control": {
-        selected: pick(SELECTED_OPTIONS, state.segmentedSelected, "flat"),
-        track: pick(TRACK_OPTIONS, state.segmentedTrack, "filled"),
+        selected: state.segmentedSelected,
+        track: state.segmentedTrack,
       },
     },
   }

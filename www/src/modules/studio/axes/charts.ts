@@ -9,6 +9,8 @@
 import type { ColorConfig } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const CHART_DEFAULTS = {
   chartPalette: "mono",
@@ -30,17 +32,9 @@ export const GRID_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-/** A stored value outside the list (e.g. the pre-rename `auto`) reads as the default. */
-export function paletteOption(value: string): string {
-  return PALETTE_OPTIONS.some((o) => o.value === value)
-    ? value
-    : CHART_DEFAULTS.chartPalette
-}
-
-export function gridOption(value: string): string {
-  return GRID_OPTIONS.some((o) => o.value === value)
-    ? value
-    : CHART_DEFAULTS.chartGrid
+export const CHART_SCHEMA: Schema<typeof CHART_DEFAULTS> = {
+  chartPalette: oneOf(PALETTE_OPTIONS),
+  chartGrid: oneOf(GRID_OPTIONS),
 }
 
 /** The recipe's series strategy for a palette option; `undefined` is the
@@ -51,10 +45,9 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
 
 export function resolveCharts(state: StudioState): Resolved {
   const chartPalette = chartPaletteOf(state.chartPalette)
-  const grid = gridOption(state.chartGrid)
   return {
     // A recipe slice, not a recipe: resolve.ts completes it against the default.
     ...(chartPalette ? { color: { chartPalette } as ColorConfig } : {}),
-    params: { chart: { grid } },
+    params: { chart: { grid: state.chartGrid } },
   }
 }

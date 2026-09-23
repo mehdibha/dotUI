@@ -1,7 +1,8 @@
 /* The studio's design-system state, and how it becomes a design system.
 
    Each axis module owns one chapter's slice: its defaults (the state shape),
-   its option vocabularies, and `resolve` — the pure mapping from that slice
+   its option vocabularies, the schema stored values are validated against,
+   and `resolve` — the pure mapping from that slice
    to what the engine consumes: global tokens (CSS vars), per-component
    registry params, the density tier, the color recipe, the icon library. No
    React here: the same resolver runs in the panel, the preview, the docs
@@ -43,6 +44,8 @@ import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as radio from "./radio"
+import { parseAxis } from "./schema"
+import type { Schema } from "./schema"
 import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
@@ -126,6 +129,78 @@ export const DEFAULTS = {
 }
 
 export type StudioState = typeof DEFAULTS
+
+export const SCHEMA: Schema<StudioState> = {
+  ...color.COLOR_SCHEMA,
+  ...type.TYPE_SCHEMA,
+  ...icons.ICON_SCHEMA,
+  ...shape.SHAPE_SCHEMA,
+  ...space.SPACE_SCHEMA,
+  ...surfaces.SURFACE_SCHEMA,
+  ...focus.FOCUS_SCHEMA,
+  ...cursor.CURSOR_SCHEMA,
+  ...selection.SELECTION_SCHEMA,
+  ...scrollbars.SCROLLBAR_SCHEMA,
+  ...disabled.DISABLED_SCHEMA,
+  ...invalid.INVALID_SCHEMA,
+  ...motion.MOTION_SCHEMA,
+  ...mobile.MOBILE_SCHEMA,
+  ...charts.CHART_SCHEMA,
+  ...links.LINK_SCHEMA,
+  ...alert.ALERT_SCHEMA,
+  ...toast.TOAST_SCHEMA,
+  ...skeleton.SKELETON_SCHEMA,
+  ...spinner.SPINNER_SCHEMA,
+  ...progress.PROGRESS_SCHEMA,
+  ...buttons.BUTTON_SCHEMA,
+  ...buttonGroups.BUTTON_GROUP_SCHEMA,
+  ...toggles.TOGGLE_SCHEMA,
+  ...segmentedControl.SEGMENTED_SCHEMA,
+  ...switchAxis.SWITCH_SCHEMA,
+  ...checkbox.CHECKBOX_SCHEMA,
+  ...radio.RADIO_SCHEMA,
+  ...choiceCards.CHOICE_CARD_SCHEMA,
+  ...inputs.INPUT_SCHEMA,
+  ...inputGroups.INPUT_GROUP_SCHEMA,
+  ...numberField.NUMBER_FIELD_SCHEMA,
+  ...otpField.OTP_FIELD_SCHEMA,
+  ...pickers.PICKER_SCHEMA,
+  ...calendar.CALENDAR_SCHEMA,
+  ...sliders.SLIDER_SCHEMA,
+  ...menus.MENU_SCHEMA,
+  ...dialogs.DIALOG_SCHEMA,
+  ...popovers.POPOVER_SCHEMA,
+  ...tooltips.TOOLTIP_SCHEMA,
+  ...tabs.TAB_SCHEMA,
+  ...accordion.ACCORDION_SCHEMA,
+  ...breadcrumbs.BREADCRUMB_SCHEMA,
+  ...pagination.PAGINATION_SCHEMA,
+  ...badges.BADGE_SCHEMA,
+  ...kbd.KBD_SCHEMA,
+  ...avatars.AVATAR_SCHEMA,
+  ...tables.TABLE_SCHEMA,
+}
+
+/** `raw` checked against the schema: an invalid value falls back to `base`'s,
+ *  and `dropped` names every setting that didn't survive. */
+export function validateState(
+  raw: Record<string, unknown>,
+  base: StudioState = DEFAULTS,
+): { state: StudioState; dropped: string[] } {
+  const state: Record<string, unknown> = { ...base }
+  const dropped: string[] = []
+  for (const [key, spec] of Object.entries(SCHEMA)) {
+    if (raw[key] === undefined) continue
+    const stale = new Set<string>()
+    const value = parseAxis(spec, raw[key], stale)
+    if (value === undefined) dropped.push(key)
+    else state[key] = value
+    for (const field of stale) dropped.push(`${key}.${field}`)
+  }
+  for (const key of Object.keys(raw))
+    if (!Object.hasOwn(SCHEMA, key)) dropped.push(key)
+  return { state: state as StudioState, dropped }
+}
 
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   color.resolveColor,

@@ -31,8 +31,10 @@
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
-import { DEFAULT_MODES } from "./color"
+import { DEFAULT_MODES, MODE_BG_RANGE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
@@ -65,6 +67,14 @@ export const MATERIAL_OPTIONS = [
   { value: "solid", label: "Solid" },
   { value: "glass", label: "Glass" },
 ]
+
+export const SURFACE_SCHEMA: Schema<typeof SURFACE_DEFAULTS> = {
+  surfaceStrategy: oneOf(STRATEGY_OPTIONS),
+  surfaceDepth: oneOf(DEPTH_OPTIONS),
+  surfaceCanvas: oneOf(CANVAS_OPTIONS),
+  surfaceMaterial: oneOf(MATERIAL_OPTIONS),
+  modes: { kind: "modes", modes: DEFAULT_MODES, bg: MODE_BG_RANGE },
+}
 
 /* -------------------------------- Recipe --------------------------------- */
 
@@ -117,7 +127,7 @@ const mix = (a: string, b: string, weight: number): SurfaceColor =>
       : { kind: "mix", a, b, weight }
 const both = <T>(value: T): PerMode<T> => ({ light: value, dark: value })
 
-const DEPTHS = ["flat", "subtle", "raised", "floating"]
+const DEPTHS = DEPTH_OPTIONS.map((option) => option.value)
 
 /* Hairline weight per depth, as neutral rungs — the registry's own hairline
    (theme.css `color-border`) is the subtle step. */
@@ -211,7 +221,7 @@ type Ladder = Record<Role, [number, number, number, number]>
  *  dark elevation together from the depth lever, so no combination of the
  *  axes can contradict itself. */
 export function surfaceRecipe(state: StudioState): SurfaceRecipe {
-  const d = Math.max(0, DEPTHS.indexOf(state.surfaceDepth))
+  const d = DEPTHS.indexOf(state.surfaceDepth)
   const tinted = state.surfaceCanvas === "tinted"
 
   const look = (role: Role): SurfaceLook => {

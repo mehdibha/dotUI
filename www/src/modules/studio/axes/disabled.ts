@@ -11,6 +11,8 @@
    recolor treatments re-point them. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const DISABLED_DEFAULTS = {
   disabledTreatment: "solid",
@@ -21,6 +23,10 @@ export const TREATMENT_OPTIONS = [
   { value: "fade", label: "Fade" },
   { value: "alpha", label: "Alpha" },
 ]
+
+export const DISABLED_SCHEMA: Schema<typeof DISABLED_DEFAULTS> = {
+  disabledTreatment: oneOf(TREATMENT_OPTIONS),
+}
 
 const DISABLED_TOKENS = [
   "--disabled-bg",

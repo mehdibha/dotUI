@@ -25,16 +25,4 @@ describe("tables axis", () => {
     })
     expect(system.tokens).toEqual({})
   })
-
-  it("falls back to the defaults on unknown values", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      tableSeparation: "zebra",
-      tableHeader: "loud",
-    })
-    expect(system.componentParams.table).toEqual({
-      separation: "lines",
-      header: "plain",
-    })
-  })
 })

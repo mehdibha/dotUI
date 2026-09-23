@@ -7,7 +7,13 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { CURSOR_DEFAULTS } from "../axes/cursor"
+import {
+  CONTROLS_OPTIONS,
+  CURSOR_DEFAULTS,
+  DISABLED_OPTIONS,
+  DRAGGING_OPTIONS,
+  PENDING_OPTIONS,
+} from "../axes/cursor"
 import { STYLE_OPTIONS } from "../axes/scrollbars"
 import {
   DialPopover,
@@ -41,53 +47,43 @@ function Glyph({
   )
 }
 
-const cursor = (
-  value: string,
-  label: string,
-  glyph: React.ReactNode,
-): DialOption => ({
-  value,
-  label: (
-    <>
-      <Glyph>{glyph}</Glyph>
-      {label}
-    </>
-  ),
-})
+const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
+  default: <ArrowCursor />,
+  inherit: <ArrowCursor />,
+  pointer: <HandCursor />,
+  progress: <ProgressCursor />,
+  wait: <WaitCursor />,
+  grab: <OpenHandCursor />,
+  "not-allowed": <NotAllowedCursor />,
+}
+
+const cursors = (options: { value: string; label: string }[]): DialOption[] =>
+  options.map(({ value, label }) => ({
+    value,
+    label: (
+      <>
+        <Glyph>{CURSOR_GLYPHS[value]}</Glyph>
+        {label}
+      </>
+    ),
+  }))
 
 const CURSOR_ROWS = [
   {
     key: "cursorControls",
     label: "Controls",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("pointer", "Hand", <HandCursor />),
-    ],
+    options: cursors(CONTROLS_OPTIONS),
   },
-  {
-    key: "cursorPending",
-    label: "Pending",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("progress", "Progress", <ProgressCursor />),
-      cursor("wait", "Wait", <WaitCursor />),
-    ],
-  },
+  { key: "cursorPending", label: "Pending", options: cursors(PENDING_OPTIONS) },
   {
     key: "cursorDragging",
     label: "Dragging",
-    options: [
-      cursor("inherit", "Arrow", <ArrowCursor />),
-      cursor("grab", "Grab", <OpenHandCursor />),
-    ],
+    options: cursors(DRAGGING_OPTIONS),
   },
   {
     key: "cursorDisabled",
     label: "Disabled",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("not-allowed", "Blocked", <NotAllowedCursor />),
-    ],
+    options: cursors(DISABLED_OPTIONS),
   },
 ] as const
 
@@ -212,7 +208,7 @@ export function BrowserSection({ studio }: { studio: Studio }) {
               label={row.label}
               value={state[row.key]}
               onChange={set(row.key)}
-              options={[...row.options]}
+              options={row.options}
             />
           ))}
         </DialPopover>

@@ -9,8 +9,10 @@
    default variant; quiet keeps its own underlined, neutral look. Defaults
    mirror the registry: accent, no underline. */
 
-import { SOURCE_OPTIONS } from "./color"
+import { SOURCE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const LINK_DEFAULTS = {
   linkUnderline: "never",
@@ -23,20 +25,15 @@ export const UNDERLINE_OPTIONS = [
   { value: "never", label: "Never" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const LINK_SCHEMA: Schema<typeof LINK_DEFAULTS> = {
+  linkUnderline: oneOf(UNDERLINE_OPTIONS),
+  linkColor: SOURCE,
+}
 
 export function resolveLinks(state: StudioState): Resolved {
   return {
     params: {
-      link: {
-        underline: pick(
-          UNDERLINE_OPTIONS,
-          state.linkUnderline,
-          LINK_DEFAULTS.linkUnderline,
-        ),
-        color: pick(SOURCE_OPTIONS, state.linkColor, LINK_DEFAULTS.linkColor),
-      },
+      link: { underline: state.linkUnderline, color: state.linkColor },
     },
   }
 }

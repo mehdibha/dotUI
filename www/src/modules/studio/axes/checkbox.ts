@@ -9,8 +9,10 @@
    rides on the `--studio-checkbox-radius` surface var, resolved to a plain
    `rounded-*` utility on export. */
 
-import { fillScope } from "./color"
+import { fillScope, SOURCE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const CHECKBOX_DEFAULTS = {
   checkboxColor: "neutral",
@@ -24,6 +26,11 @@ export const CORNER_OPTIONS = [
   { value: "square", label: "Square" },
   { value: "circle", label: "Circle" },
 ]
+
+export const CHECKBOX_SCHEMA: Schema<typeof CHECKBOX_DEFAULTS> = {
+  checkboxColor: SOURCE,
+  checkCorner: oneOf(CORNER_OPTIONS),
+}
 
 const CORNER_TOKENS: Record<string, string> = {
   square: "var(--radius-xs)",

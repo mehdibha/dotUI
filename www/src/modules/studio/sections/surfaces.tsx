@@ -10,7 +10,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { modeFor } from "../axes/color"
+import { MODE_BG_RANGE, modeFor } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
@@ -163,10 +163,7 @@ const formatBg = (mode: ColorMode, v: number) =>
 
 export function SurfacesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const depth = Math.max(
-    0,
-    DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
-  )
+  const depth = DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth)
   const setBg = (mode: ColorMode) => (bg: number) =>
     set("modes")(state.modes.map((m) => (m.id === mode.id ? { ...m, bg } : m)))
   return (
@@ -190,15 +187,14 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
           <DialGap />
           {(["light", "dark"] as const).map((polarity) => {
             const mode = modeFor(state, polarity)
-            const light = polarity === "light"
             return (
               <DialSlider
                 key={mode.id}
                 label={`${mode.name} background`}
                 value={mode.bg}
                 onChange={setBg(mode)}
-                minValue={light ? 90 : 0}
-                maxValue={light ? 100 : 20}
+                minValue={MODE_BG_RANGE[polarity].min}
+                maxValue={MODE_BG_RANGE[polarity].max}
                 step={0.5}
                 format={(v) => formatBg(mode, v)}
               />

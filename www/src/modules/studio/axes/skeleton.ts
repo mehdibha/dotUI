@@ -5,6 +5,8 @@
    Engine: `animation` is an enum param on `skeleton`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const SKELETON_DEFAULTS = {
   skeletonAnimation: "shimmer",
@@ -16,11 +18,10 @@ export const ANIMATION_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
+export const SKELETON_SCHEMA: Schema<typeof SKELETON_DEFAULTS> = {
+  skeletonAnimation: oneOf(ANIMATION_OPTIONS),
+}
+
 export function resolveSkeleton(state: StudioState): Resolved {
-  const animation = ANIMATION_OPTIONS.some(
-    (o) => o.value === state.skeletonAnimation,
-  )
-    ? state.skeletonAnimation
-    : SKELETON_DEFAULTS.skeletonAnimation
-  return { params: { skeleton: { animation } } }
+  return { params: { skeleton: { animation: state.skeletonAnimation } } }
 }

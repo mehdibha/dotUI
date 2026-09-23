@@ -6,6 +6,8 @@
    primitive with no look of its own, so no axis reaches it. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const ACCORDION_DEFAULTS = {
   accordionContainer: "divided",
@@ -29,28 +31,19 @@ export const POSITION_OPTIONS = [
   { value: "trailing", label: "Trailing" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const ACCORDION_SCHEMA: Schema<typeof ACCORDION_DEFAULTS> = {
+  accordionContainer: oneOf(CONTAINER_OPTIONS),
+  accordionMarker: oneOf(MARKER_OPTIONS),
+  accordionMarkerPosition: oneOf(POSITION_OPTIONS),
+}
 
 export function resolveAccordion(state: StudioState): Resolved {
   return {
     params: {
       accordion: {
-        container: pick(
-          CONTAINER_OPTIONS,
-          state.accordionContainer,
-          ACCORDION_DEFAULTS.accordionContainer,
-        ),
-        marker: pick(
-          MARKER_OPTIONS,
-          state.accordionMarker,
-          ACCORDION_DEFAULTS.accordionMarker,
-        ),
-        markerPosition: pick(
-          POSITION_OPTIONS,
-          state.accordionMarkerPosition,
-          ACCORDION_DEFAULTS.accordionMarkerPosition,
-        ),
+        container: state.accordionContainer,
+        marker: state.accordionMarker,
+        markerPosition: state.accordionMarkerPosition,
       },
     },
   }

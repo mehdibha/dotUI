@@ -1,20 +1,12 @@
 import { describe, expect, it } from "vitest"
 
-import { defaultPreset, resolveRequestPreset } from "@/lib/registry-preset"
+import { resolveRequestPreset } from "@/lib/registry-preset"
 import { PRESETS } from "@/modules/presets/presets-data"
-import type { StudioState } from "@/modules/studio/axes"
+import { DEFAULTS } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
-import { decodePreset, encodeState } from "./codec"
+import { decode, encodeState } from "./codec"
 import fixtures from "./historical-presets.json"
-
-function resolve(state: StudioState) {
-  try {
-    return resolveDesignSystem(state)
-  } catch (error) {
-    return { error: String(error) }
-  }
-}
 
 describe("historical preset strings", () => {
   it("are unique", () => {
@@ -24,20 +16,26 @@ describe("historical preset strings", () => {
 
   for (const fixture of fixtures) {
     it(`decodes ${fixture.id}`, async () => {
-      const { state, codeOptions } = decodePreset(fixture.encoded)
-      const designSystem = resolve(state)
+      const result = decode(fixture.encoded)
+      const designSystem = resolveDesignSystem(
+        result.ok ? result.state : DEFAULTS,
+      )
       expect({
         knownWrong: fixture.knownWrong,
-        state,
-        codeOptions,
-        designSystem,
+        ...(result.ok
+          ? {
+              dropped: result.dropped,
+              state: result.state,
+              codeOptions: result.codeOptions,
+              designSystem,
+            }
+          : { reason: result.reason }),
       }).toMatchSnapshot()
-      // /r/* ships the same resolution
-      expect(await resolveRequestPreset(fixture.encoded)).toEqual(
-        "error" in designSystem
-          ? defaultPreset()
-          : { ...designSystem, codeOptions },
-      )
+      // /r/* ships the same resolution, still the defaults on a failed decode
+      expect(await resolveRequestPreset(fixture.encoded)).toEqual({
+        ...designSystem,
+        codeOptions: result.ok ? result.codeOptions : undefined,
+      })
     })
   }
 })

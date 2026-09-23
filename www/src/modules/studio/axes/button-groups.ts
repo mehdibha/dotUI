@@ -6,6 +6,8 @@
    Engine: `separator` enum param on `group` and `toggle-button-group`. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const BUTTON_GROUP_DEFAULTS = {
   groupSeparator: "auto",
@@ -17,12 +19,12 @@ export const SEPARATOR_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
+export const BUTTON_GROUP_SCHEMA: Schema<typeof BUTTON_GROUP_DEFAULTS> = {
+  groupSeparator: oneOf(SEPARATOR_OPTIONS),
+}
+
 export function resolveButtonGroups(state: StudioState): Resolved {
-  const separator = SEPARATOR_OPTIONS.some(
-    (o) => o.value === state.groupSeparator,
-  )
-    ? state.groupSeparator
-    : "auto"
+  const separator = state.groupSeparator
   return {
     params: {
       group: { separator },

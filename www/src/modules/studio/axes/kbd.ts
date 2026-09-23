@@ -11,6 +11,8 @@
    as text in every treatment. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const KBD_DEFAULTS = {
   kbdTreatment: "chip",
@@ -22,13 +24,10 @@ export const TREATMENT_OPTIONS = [
   { value: "keycap", label: "Keycap" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const KBD_SCHEMA: Schema<typeof KBD_DEFAULTS> = {
+  kbdTreatment: oneOf(TREATMENT_OPTIONS),
+}
 
 export function resolveKbd(state: StudioState): Resolved {
-  return {
-    params: {
-      kbd: { treatment: pick(TREATMENT_OPTIONS, state.kbdTreatment, "chip") },
-    },
-  }
+  return { params: { kbd: { treatment: state.kbdTreatment } } }
 }

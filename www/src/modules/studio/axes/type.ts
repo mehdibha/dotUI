@@ -11,12 +11,19 @@ import {
 } from "@/lib/fonts"
 
 import type { Resolved, StudioState } from "./index"
+import type { Schema } from "./schema"
 
 export const TYPE_DEFAULTS = {
   // heading mirrors --font-heading: '' = Auto, follows body.
   headingFont: "",
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
+}
+
+export const TYPE_SCHEMA: Schema<typeof TYPE_DEFAULTS> = {
+  headingFont: { kind: "font", auto: true },
+  bodyFont: { kind: "font" },
+  monoFont: { kind: "font" },
 }
 
 export function resolveType(state: StudioState): Resolved {

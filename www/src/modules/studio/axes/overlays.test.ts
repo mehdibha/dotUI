@@ -40,14 +40,10 @@ describe("overlays chapters", () => {
     expect(ds.componentParams.dialog).toMatchObject({ header: "band" })
   })
 
-  test("tooltips: style on tooltip; unknown values fall back", () => {
+  test("tooltips: style on tooltip", () => {
     expect(
       resolveDesignSystem({ ...DEFAULTS, tooltipStyle: "surface" })
         .componentParams.tooltip,
     ).toMatchObject({ style: "surface" })
-    expect(
-      resolveDesignSystem({ ...DEFAULTS, tooltipStyle: "translucid" })
-        .componentParams.tooltip,
-    ).toMatchObject({ style: "inverted" })
   })
 })

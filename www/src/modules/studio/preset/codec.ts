@@ -1,14 +1,13 @@
 /* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
    localStorage and `components.json`. Only the diff against the defaults is
    stored, so an untouched system encodes to nothing. Canonical — encode∘decode
-   is byte-identity — and tolerant: garbage decodes to the defaults, and the
-   pre-studio shape (a resolved design system) migrates onto the axes it maps
-   to. */
+   is byte-identity. Decoding validates every value against the axis schema
+   and says what it dropped; the pre-studio shape (a resolved design system)
+   migrates onto the axes it maps to. */
 
 import { deflateRaw, inflateRaw } from "pako"
 
 import { familyFromStack } from "@/lib/fonts"
-import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { migrateColorConfig } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
@@ -17,14 +16,9 @@ import {
   sanitizeCodeOptions,
 } from "@/publisher/code-options"
 import type { CodeOptions } from "@/publisher/code-options"
-import { DEFAULTS } from "@/modules/studio/axes"
+import { DEFAULTS, validateState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
-import {
-  PRIMARY_LEAVES,
-  SOLID_LEAVES,
-  withSource,
-} from "@/modules/studio/axes/color"
-import type { PrimaryLeaf } from "@/modules/studio/axes/color"
+import { SOLID_LEAVES, withSource } from "@/modules/studio/axes/color"
 
 /** A studio state plus the exported-code style — everything a preset holds. */
 export interface StudioPreset {
@@ -94,6 +88,17 @@ export function encodeState(state: StudioState): string | undefined {
 
 /* -------------------------------- decode -------------------------------- */
 
+export type DecodeResult =
+  | (StudioPreset & {
+      ok: true
+      /** Settings the string carried that didn't survive validation. */
+      dropped: string[]
+    })
+  | { ok: false; reason: "corrupt" | "invalid" | "newer-version" }
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value)
+
 const isSource = (value: unknown): value is PrimaryColorSource =>
   value === "neutral" || value === "accent"
 
@@ -116,49 +121,61 @@ function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
   return stored
 }
 
-/** Keep a stored value only when it has the default's shape. */
-function sanitizeState(raw: unknown): StudioState {
-  const state = { ...DEFAULTS } as Record<string, unknown>
-  if (!raw || typeof raw !== "object") return state as StudioState
-  const stored = raw as Record<string, unknown>
-  for (const [key, fallback] of Object.entries(DEFAULTS)) {
-    const value = stored[key]
-    if (PRIMARY_LEAVES.includes(key as PrimaryLeaf) && !isSource(value))
-      continue
-    if (value === undefined) continue
-    if (fallback === null) {
-      if (value === null || typeof value === "number") state[key] = value
-    } else if (Array.isArray(fallback)) {
-      if (Array.isArray(value)) state[key] = value
-    } else if (typeof value === typeof fallback) {
-      state[key] = value
-    }
+function withCodeOptions(
+  state: StudioState,
+  dropped: string[],
+  raw: unknown,
+): DecodeResult {
+  const codeOptions = raw === undefined ? undefined : sanitizeCodeOptions(raw)
+  return {
+    ok: true,
+    state,
+    ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+      ? { codeOptions }
+      : {}),
+    dropped,
   }
-  return state as StudioState
 }
 
-/** Falls back to the defaults on any error. */
-export function decodePreset(encoded: string): StudioPreset {
+const LEGACY_KEYS = new Set(["p", "t", "d", "c", "o", "i"])
+
+const isLegacy = (value: Record<string, unknown>): value is LegacyState =>
+  Object.keys(value).every((key) => LEGACY_KEYS.has(key)) &&
+  (value.t === undefined ||
+    (isRecord(value.t) &&
+      Object.values(value.t).every((token) => typeof token === "string")))
+
+export function decode(encoded: string): DecodeResult {
+  let parsed: unknown
   try {
-    const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
-    const parsed = JSON.parse(json) as Encoded | LegacyState
-    if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
-      const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
-      const stored =
-        parsed.v === 3 && parsed.s
-          ? migrateV3(parsed.s as Record<string, unknown>)
-          : parsed.s
-      return {
-        state: sanitizeState(stored),
-        ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
-          ? { codeOptions }
-          : {}),
-      }
-    }
-    return migrateLegacy(parsed as LegacyState)
+    parsed = JSON.parse(inflateRaw(fromBase64Url(encoded), { to: "string" }))
   } catch {
-    return DEFAULT_PRESET
+    return { ok: false, reason: "corrupt" }
   }
+  if (!isRecord(parsed)) return { ok: false, reason: "invalid" }
+  if (!("v" in parsed)) {
+    if (!isLegacy(parsed)) return { ok: false, reason: "invalid" }
+    const { state, dropped } = validateState(migrateLegacy(parsed))
+    return withCodeOptions(state, dropped, parsed.o)
+  }
+  if (typeof parsed.v === "number" && parsed.v > VERSION)
+    return { ok: false, reason: "newer-version" }
+  if (parsed.v !== VERSION && parsed.v !== 3)
+    return { ok: false, reason: "invalid" }
+  const stored = parsed.s ?? {}
+  if (!isRecord(stored)) return { ok: false, reason: "invalid" }
+  const { state, dropped } = validateState(
+    parsed.v === 3 ? migrateV3(stored) : stored,
+  )
+  return withCodeOptions(state, dropped, parsed.o)
+}
+
+/** The decoded preset; the defaults when it fails to decode. */
+export function decodePreset(encoded: string): StudioPreset {
+  const result = decode(encoded)
+  if (!result.ok) return DEFAULT_PRESET
+  const { state, codeOptions } = result
+  return codeOptions ? { state, codeOptions } : { state }
 }
 
 export function decodeState(encoded: string): StudioState {
@@ -172,7 +189,7 @@ export function decodeState(encoded: string): StudioState {
  *   p = component params · t = global tokens · d = density · c = color
  *   recipe · o = code options · i = icon library
  */
-interface LegacyState {
+type LegacyState = {
   p?: Record<string, Record<string, string>>
   t?: Record<string, string>
   d?: string
@@ -197,8 +214,8 @@ const SCOPE_KEYS: Record<string, keyof StudioState> = {
 
 /** Best-effort: the axes a resolved system maps back onto. Component params
  *  don't survive — they were a different vocabulary. */
-function migrateLegacy(legacy: LegacyState): StudioPreset {
-  const state: Record<string, unknown> = { ...DEFAULTS }
+function migrateLegacy(legacy: LegacyState): Record<string, unknown> {
+  const state: Record<string, unknown> = {}
   const tokens = legacy.t ?? {}
 
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
@@ -245,8 +262,7 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   if (tokens["--font-mono"])
     state.monoFont = familyFromStack(tokens["--font-mono"])
 
-  if (legacy.i && iconLibraries.some((lib) => lib.name === legacy.i))
-    state.iconLibrary = legacy.i
+  if (legacy.i) state.iconLibrary = legacy.i
   const stroke = px(tokens["--icon-stroke-width"])
   if (stroke !== undefined) state.iconStroke = stroke
   if (tokens["--icon-weight"]) state.iconWeight = tokens["--icon-weight"]
@@ -255,12 +271,5 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     state.cursorControls = tokens["--cursor-interactive"]
   if (tokens["--cursor-disabled"])
     state.cursorDisabled = tokens["--cursor-disabled"]
-
-  const codeOptions = legacy.o ? sanitizeCodeOptions(legacy.o) : undefined
-  return {
-    state: sanitizeState(state),
-    ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
-      ? { codeOptions }
-      : {}),
-  }
+  return state
 }

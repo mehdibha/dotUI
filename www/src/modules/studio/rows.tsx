@@ -43,6 +43,8 @@ import {
 } from "@/registry/ui/slider"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
 
+import { HUE_RANGE, TINT_RANGE } from "./axes/color"
+
 /** Where row-attached overlays open. */
 const ROW_OVERLAY_PLACEMENT = "right top" as const
 
@@ -202,7 +204,7 @@ export interface NeutralValue {
 }
 
 /** The far end of the tint slider: twice the engine's default lean. */
-const MAX_TINT = 2
+const MAX_TINT = TINT_RANGE.max
 
 /** The untinted gray — an option with a name, not the absence of one. */
 const PURE_GRAY = { id: "neutral", label: "Neutral" }
@@ -433,8 +435,8 @@ export function NeutralPickerPopover({
           label="Hue"
           note={hovered ?? family}
           value={hue}
-          maxValue={360}
-          step={1}
+          maxValue={HUE_RANGE.max}
+          step={HUE_RANGE.step}
           track={HUE_TRACK}
           thumb={sample(hue)}
           onChange={setHue}
@@ -445,7 +447,7 @@ export function NeutralPickerPopover({
           label="Tint"
           value={tint}
           maxValue={MAX_TINT}
-          step={0.05}
+          step={TINT_RANGE.step}
           track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
           thumb={sample(hue, tint)}
           onChange={setTint}

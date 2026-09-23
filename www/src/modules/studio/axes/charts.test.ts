@@ -3,8 +3,7 @@ import { describe, expect, it } from "vitest"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
-import { gridOption, paletteOption } from "./charts"
-import { DEFAULTS } from "./index"
+import { DEFAULTS, validateState } from "./index"
 
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and the grid solid", () => {
@@ -29,15 +28,10 @@ describe("charts axes", () => {
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
   })
 
-  it("a stored value outside the options (the pre-rename `auto`) reads as the default", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      chartPalette: "auto",
-      chartGrid: "dotted",
-    })
-    expect(ds).toEqual(resolveDesignSystem(DEFAULTS))
-    expect(paletteOption("auto")).toBe("mono")
-    expect(gridOption("dotted")).toBe("solid")
+  it("a stored value outside the options (the pre-rename `auto`) is dropped", () => {
+    expect(
+      validateState({ chartPalette: "auto", chartGrid: "dotted" }),
+    ).toEqual({ state: DEFAULTS, dropped: ["chartPalette", "chartGrid"] })
   })
 
   it("the grid is a param on the chart container", () => {

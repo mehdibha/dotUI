@@ -24,16 +24,4 @@ describe("links axis", () => {
       color: "neutral",
     })
   })
-
-  it("falls back to the defaults on unknown values", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      linkUnderline: "sometimes",
-      linkColor: "pink",
-    })
-    expect(system.componentParams.link).toEqual({
-      underline: "never",
-      color: "accent",
-    })
-  })
 })

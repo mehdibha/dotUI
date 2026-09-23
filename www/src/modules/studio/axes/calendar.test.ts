@@ -30,14 +30,4 @@ describe("calendar + pickers axes", () => {
     })
     expect(ds.componentParams.select).toEqual({ caret: "double" })
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      calendarDayShape: "hexagon",
-      pickerCaret: "triangle",
-    })
-    expect(ds.componentParams.calendar?.dayShape).toBe("rounded")
-    expect(ds.componentParams.select?.caret).toBe("chevron")
-  })
 })

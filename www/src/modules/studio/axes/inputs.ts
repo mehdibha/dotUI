@@ -6,6 +6,8 @@
    focus and invalid keep their own border). */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const INPUT_DEFAULTS = {
   inputStyle: "outline",
@@ -27,19 +29,15 @@ export const HOVER_OPTIONS = [
   { value: "tint", label: "Tint" },
 ]
 
-export const pick = (
-  options: { value: string }[],
-  value: string,
-  fallback: string,
-) => (options.some((o) => o.value === value) ? value : fallback)
+export const INPUT_SCHEMA: Schema<typeof INPUT_DEFAULTS> = {
+  inputStyle: oneOf(STYLE_OPTIONS),
+  inputHover: oneOf(HOVER_OPTIONS),
+}
 
 export function resolveInputs(state: StudioState): Resolved {
   return {
     params: {
-      input: {
-        style: pick(STYLE_OPTIONS, state.inputStyle, "outline"),
-        hover: pick(HOVER_OPTIONS, state.inputHover, "none"),
-      },
+      input: { style: state.inputStyle, hover: state.inputHover },
     },
   }
 }

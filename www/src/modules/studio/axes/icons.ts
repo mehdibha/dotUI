@@ -6,6 +6,8 @@
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { Schema } from "./schema"
 
 export const ICON_DEFAULTS = {
   iconLibrary: "lucide",
@@ -30,6 +32,14 @@ export const WEIGHT_OPTIONS = [
   { value: "duotone", label: "Duotone" },
 ]
 
+export const STROKE_RANGE = { min: 1, max: 3, step: 0.25 }
+
+export const ICON_SCHEMA: Schema<typeof ICON_DEFAULTS> = {
+  iconLibrary: oneOf(LIBRARY_OPTIONS),
+  iconStroke: range(STROKE_RANGE),
+  iconWeight: oneOf(WEIGHT_OPTIONS),
+}
+
 export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"
 export const ICON_WEIGHT_VAR = "--icon-weight"
 
@@ -41,9 +51,7 @@ export const STROKE_DEFAULTS: Partial<Record<IconLibraryName, number>> = {
 }
 
 export function resolveIcons(state: StudioState): Resolved {
-  const library = LIBRARY_OPTIONS.some((o) => o.value === state.iconLibrary)
-    ? (state.iconLibrary as IconLibraryName)
-    : "lucide"
+  const library = state.iconLibrary as IconLibraryName
   const tokens: Record<string, string> = {}
   const strokeDefault = STROKE_DEFAULTS[library]
   if (strokeDefault !== undefined && state.iconStroke !== strokeDefault)

@@ -49,10 +49,4 @@ describe("menus axis", () => {
       "--color-fg-on-highlight": "var(--on-accent-700)",
     })
   })
-
-  it("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, menuHighlight: "edge" })
-    expect(ds.componentParams.menu?.highlight).toBe("neutral")
-    expect(ds.tokens).toEqual({})
-  })
 })

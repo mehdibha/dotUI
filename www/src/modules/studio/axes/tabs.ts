@@ -7,8 +7,10 @@
    `variant` prop's values, the param sets the default. Color is a leaf of
    Color's Primary: the `color` param paints the selected tab's ink per look. */
 
-import { SOURCE_OPTIONS } from "./color"
+import { SOURCE } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { Schema } from "./schema"
 
 export const TAB_DEFAULTS = {
   tabStyle: "segmented",
@@ -22,12 +24,11 @@ export const TAB_STYLE_OPTIONS = [
   { value: "enclosed", label: "Enclosed" },
 ]
 
+export const TAB_SCHEMA: Schema<typeof TAB_DEFAULTS> = {
+  tabStyle: oneOf(TAB_STYLE_OPTIONS),
+  tabsColor: SOURCE,
+}
+
 export function resolveTabs(state: StudioState): Resolved {
-  const style = TAB_STYLE_OPTIONS.some((o) => o.value === state.tabStyle)
-    ? state.tabStyle
-    : TAB_DEFAULTS.tabStyle
-  const color = SOURCE_OPTIONS.some((o) => o.value === state.tabsColor)
-    ? state.tabsColor
-    : TAB_DEFAULTS.tabsColor
-  return { params: { tabs: { style, color } } }
+  return { params: { tabs: { style: state.tabStyle, color: state.tabsColor } } }
 }
