@@ -17,7 +17,8 @@ const { useStyles, styles } = createStyles(listMeta, {
       ],
       itemIcon:
         "col-start-1 row-span-2 row-start-1 me-3 flex items-center justify-center text-fg-muted *:[svg]:size-(--list-icon) *:[svg]:shrink-0",
-      itemLabel: "col-start-2 row-start-1 truncate",
+      itemLabel:
+        "col-start-2 row-start-1 truncate [&:not(:has(~[data-slot=list-item-description]))]:row-span-2 [&:not(:has(~[data-slot=list-item-description]))]:self-center",
       itemDescription: "col-start-2 row-start-2 text-fg-muted",
       itemValue:
         "col-start-3 row-span-2 row-start-1 ms-3 flex items-center gap-2 text-fg-muted",
