@@ -249,9 +249,6 @@ export function semanticVocabulary(
   }
 }
 
-/** The default vocabulary (accent primary). */
-export const DEFAULT_SEMANTICS = semanticsFor(DEFAULT_COLOR_CONFIG)
-
 const specTarget = (spec: TokenTargetSpec): SemanticTarget => ({
   ref: { palette: spec.palette, step: JOB_STEPS[spec.job] },
 })
@@ -306,16 +303,19 @@ type ColorSlice = {
 export function semanticsFor(
   color: ColorSlice = DEFAULT_COLOR_CONFIG,
 ): SemanticVocabulary {
-  const primary = color?.primary ?? "neutral"
+  const primary = color.primary ?? "neutral"
   return applyTokenOverrides(
     semanticVocabulary(
       primary,
-      color?.selection ?? primary,
-      Boolean(color?.seeds?.selection),
+      color.selection ?? primary,
+      Boolean(color.seeds?.selection),
     ),
-    color?.overrides,
+    color.overrides,
   )
 }
+
+/** The default vocabulary (accent primary). */
+export const DEFAULT_SEMANTICS = semanticsFor(DEFAULT_COLOR_CONFIG)
 
 /** The selection cluster re-declared per component scope (`scopes`), keyed
  *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
