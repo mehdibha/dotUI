@@ -256,7 +256,7 @@ export function CardsCanvas() {
     <div className="min-h-svh bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
       {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
           so tightening --gap keeps cards life-size instead of growing them. */}
-      <div className="mx-auto columns-[20rem] gap-(--gap) p-(--gap) min-[2208px]:grid min-[2208px]:w-[2208px] min-[2208px]:grid-cols-6 min-[2208px]:items-start">
+      <div className="mx-auto gap-(--gap) p-(--gap) min-[2208px]:grid min-[2208px]:w-[2208px] min-[2208px]:grid-cols-6 min-[2208px]:items-start sm:columns-[20rem]">
         <div className="contents min-[2208px]:col-span-2 min-[2208px]:col-start-3 min-[2208px]:row-start-1 min-[2208px]:flex min-[2208px]:flex-col min-[2208px]:gap-(--gap) min-[2208px]:p-px min-[2208px]:[contain-intrinsic-size:790px_1200px] min-[2208px]:[content-visibility:auto]">
           <FlowCard className="[column-span:all]">
             <AiPrompt />
