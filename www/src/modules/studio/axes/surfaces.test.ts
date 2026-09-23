@@ -62,13 +62,16 @@ describe("surfaces", () => {
     expect(raised["--shadow-popover"]).toBe(SHADOW_LG)
   })
 
-  test("adaptive is shadow-only in light and hairline in dark", () => {
+  test("adaptive re-weights: faint ring + shadow in light, brighter edge + tighter shadow in dark", () => {
     const tokens = tokensFor({ surfaceStrategy: "adaptive" })
     expect(tokens["--card-border"]).toBe(
-      "light-dark(transparent, var(--neutral-200))",
+      "light-dark(var(--neutral-100), var(--neutral-200))",
     )
     expect(tokens["--shadow-card"]).toBe(
-      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent)",
+      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px 0 light-dark(transparent, rgb(0 0 0 / 0.11))",
+    )
+    expect(tokens["--shadow-popover"]).toBe(
+      "0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -1px light-dark(transparent, rgb(0 0 0 / 0.22)), 0 2px 4px -2px light-dark(transparent, rgb(0 0 0 / 0.22))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-50), var(--neutral-100))",

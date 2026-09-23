@@ -5,10 +5,11 @@
      per mode. Dark behavior lives INSIDE the option — shadows die on
      near-black, so each strategy encodes its own dark translation (12-system
      survey, 2026-08-09): Hairline ≈ shadcn/Geist, Adaptive ≈ Radix Themes/
-     Primer (shadow-led light → hairline + elevation dark), Shadow ≈ Fluent/
-     Spectrum (shadows strengthen in dark), Tonal ≈ Material 3 (contrast-led
-     in BOTH modes, containers darker than the page in light). Linear is
-     Hairline at a raised depth.
+     Primer (shadow-led light over a faint ring → brighter edge, elevation
+     and a tighter shadow in dark), Shadow ≈ Fluent/Spectrum (shadows
+     strengthen in dark), Tonal ≈ Material 3 (contrast-led in BOTH modes,
+     containers darker than the page in light). Linear is Hairline at a
+     raised depth.
    - Depth: the one intensity lever — hairline weight, shadow size and dark
      elevation move together. Shadow-led systems (Fluent, Material,
      Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
@@ -56,9 +57,10 @@ export const STRATEGY_OPTIONS = [
     value: "adaptive",
     label: "Adaptive",
     description:
-      "Shadow-led in light: no edges, cards carry a small shadow. In dark " +
-      "the shadows drop out; a hairline edge on every surface and lighter " +
-      "floating layers take over.",
+      "Shadow-led in light: a faint ring, lighter than Hairline's edge, " +
+      "and a small shadow on cards. In dark the balance flips: a brighter " +
+      "edge and lighter floating layers lead, and shadows stay one size " +
+      "smaller but darker (cards at Flat lose theirs).",
     seenIn: ["Primer", "Radix Themes", "Atlassian"],
   },
   {
@@ -205,6 +207,13 @@ const DEPTHS = ["flat", "subtle", "raised", "floating"]
    (theme.css `color-border`) is the subtle step. */
 const EDGE_LIGHT = [step("200"), HAIRLINE, step("300"), step("400")]
 const EDGE_DARK = [step("100"), HAIRLINE, step("200"), step("300")]
+/* Adaptive's light edge: Radix Themes' gray-a3 ring lands on rung 100. */
+const EDGE_FAINT = [
+  mix("50", "100", 50),
+  step("100"),
+  mix("100", "200", 50),
+  step("200"),
+]
 
 /* Dark elevation ladders. Step 0 is the registry default (theme.css: card =
    50, popover = a rung between 50 and 100); cards cap a step below floating
@@ -252,9 +261,17 @@ const AMBIENT = [
 ]
 
 /** How a strategy's shadows translate to dark: unchanged (shadcn ships the
- *  same shadow-md on near-black), gone (dark leans on hairline + elevation),
- *  or harder (a shadow that reads on white vanishes on near-black). */
-type DarkCast = "same" | "none" | "harder"
+ *  same shadow-md on near-black), harder (a shadow that reads on white
+ *  vanishes on near-black), or tighter — one rung smaller, cast harder, the
+ *  way Primer and Radix Themes shrink blur while raising alpha in dark. */
+type DarkCast = "same" | "harder" | "tighter"
+
+const onlyIn =
+  (mode: Mode) =>
+  (layer: ShadowLayer): ShadowLayer => ({
+    offset: layer.offset,
+    color: { ...both(NONE), [mode]: layer.color[mode] },
+  })
 
 function shadowLayers(
   rung: number,
@@ -262,18 +279,20 @@ function shadowLayers(
   dark: DarkCast,
   layered: boolean,
 ): ShadowLayer[] {
+  if (dark === "tighter")
+    return [
+      ...shadowLayers(rung, weight, "same", layered).map(onlyIn("light")),
+      ...shadowLayers(rung - 1, weight, "harder", layered).map(onlyIn("dark")),
+    ]
   const layers = RUNGS[rung] ?? []
   const color = (alpha: number): PerMode<SurfaceColor> => {
     const light = Math.min(alpha * weight, 0.7)
     return {
       light: { kind: "shade", alpha: light },
-      dark:
-        dark === "none"
-          ? NONE
-          : {
-              kind: "shade",
-              alpha: dark === "harder" ? Math.min(light * 2.2, 0.6) : light,
-            },
+      dark: {
+        kind: "shade",
+        alpha: dark === "harder" ? Math.min(light * 2.2, 0.6) : light,
+      },
     }
   }
   const out: ShadowLayer[] = layers.map(([offset, alpha]) => ({
@@ -323,14 +342,18 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
         if (floating && d >= 2) elevation = 1
         break
       case "adaptive":
-        // Shadow-only in light; dark swaps the means to hairline + elevation.
-        edge = { light: NONE, dark: EDGE_DARK[Math.min(d + 1, 3)] ?? HAIRLINE }
+        // Shadow-led in light over a faint ring; dark re-weights toward a
+        // brighter edge + elevation with a tighter shadow kept.
+        edge = {
+          light: EDGE_FAINT[d] ?? HAIRLINE,
+          dark: EDGE_DARK[Math.min(d + 1, 3)] ?? HAIRLINE,
+        }
         ladder = {
           card: [1, 2, 3, 4],
           popover: [3, 4, 5, 6],
           modal: [4, 5, 6, 6],
         }
-        dark = "none"
+        dark = "tighter"
         if (floating && d >= 1) elevation = 1
         break
       case "shadow":
