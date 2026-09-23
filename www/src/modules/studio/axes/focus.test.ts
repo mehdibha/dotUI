@@ -80,14 +80,13 @@ describe("focus axis", () => {
     })
   })
 
-  test("neutral re-points the focus pair over the default recipe", () => {
+  test("neutral re-points the focus color over the default recipe", () => {
     const system = resolve({ focusColor: "neutral" })
     expect(system.tokens).toEqual({})
     expect(system.color).toEqual({
       ...DEFAULT_COLOR_CONFIG,
       overrides: {
         "color-border-focus": { palette: "neutral", job: "solid" },
-        "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
       },
     })
   })

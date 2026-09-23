@@ -65,7 +65,7 @@ describe("emitInitItem", () => {
       "--radius-lg": "var(--radius)",
       "--color-bg": "var(--bg)",
       "--color-fg-on-primary": "var(--fg-on-primary)",
-      "--color-border-focus-muted": "var(--border-focus-muted)",
+      "--color-border-focus": "var(--border-focus)",
     })
     // … and every name resolves to a literal in both modes.
     for (const name of Object.keys(theme ?? {}).filter((n) =>

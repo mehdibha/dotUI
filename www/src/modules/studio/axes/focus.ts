@@ -145,11 +145,10 @@ export const mixFocus = (color: string, pct: number) =>
 
 const px = (n: number) => `${n}px`
 
-/* The neutral ink re-points the focus pair to the neutral ramp at the steps
-   the accent pair sits on (solid = 700, ui-active = 300). */
+/* The neutral ink re-points the focus color to the neutral ramp at the step
+   the accent sits on (solid = 700). */
 const NEUTRAL_FOCUS: TokenOverrides = {
   "color-border-focus": { palette: "neutral", job: "solid" },
-  "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 }
 
 export function resolveFocus(state: StudioState): Resolved {

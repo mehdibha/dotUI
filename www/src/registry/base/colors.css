@@ -286,7 +286,6 @@
 	--color-border-control: var(--neutral-400);
 	--color-border-control-hover: var(--neutral-500);
 	--color-border-focus: var(--accent-700);
-	--color-border-focus-muted: var(--accent-300);
 	--color-tooltip: var(--neutral-950);
 	--color-fg-on-tooltip: var(--neutral-25);
 	--color-card: var(--neutral-50);
