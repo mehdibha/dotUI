@@ -442,6 +442,10 @@
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
     }
+  :root {
+    --font-sans: var(--font-geist-sans, "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif);
+    --font-mono: var(--font-geist-mono, "Geist Mono Variable", "Geist Mono", ui-monospace, monospace);
+    }
   html {
     @apply font-sans;
     }
