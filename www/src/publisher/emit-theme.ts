@@ -75,6 +75,13 @@ export const DEFAULT_DEPENDENCIES = [
   "tailwindcss-with",
 ]
 
+const DEFAULT_FONT_FALLBACKS = {
+  [FONT_SANS_VAR]:
+    'var(--font-geist-sans, "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif)',
+  [FONT_MONO_VAR]:
+    'var(--font-geist-mono, "Geist Mono Variable", "Geist Mono", ui-monospace, monospace)',
+}
+
 export const CN_UTILS_TS = `import { cn as cnBase } from "tailwind-variants";
 
 // Narrowed to \`string\`: React Aria className render props reject \`undefined\`.
@@ -151,7 +158,7 @@ function splitPresetTokens(
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
   const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
-  const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
+  const { css = {}, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
   // One `registry:font` item per font role, defaults included: nothing else
   // loads the face. shadcn installs it per framework (next/font on Next.js,
   // @fontsource elsewhere) and sets the token variable — see emit-font.ts for
@@ -161,6 +168,22 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     [FONT_MONO_VAR]: fontStack(DEFAULT_MONO_FAMILY),
     ...preset.tokens,
   }).map((name) => `${registryRoot}/r/${name}`)
+  // shadcn skips a layout that already imports Geist under create-next-app's
+  // `--font-geist-*` names, yet still points the theme token at itself. A
+  // base-layer default keeps the face; a wired next/font variable still wins.
+  const fontFallbacks = Object.entries(DEFAULT_FONT_FALLBACKS).filter(
+    ([variable]) => !preset.tokens?.[variable],
+  )
+  if (fontFallbacks.length > 0) {
+    const layer = (css["@layer base"] ?? {}) as Record<string, unknown>
+    css["@layer base"] = {
+      ...layer,
+      ":root": {
+        ...(layer[":root"] as object | undefined),
+        ...Object.fromEntries(fontFallbacks),
+      },
+    }
+  }
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
