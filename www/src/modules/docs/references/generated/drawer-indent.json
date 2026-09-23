@@ -18,7 +18,7 @@
           }
         ]
       },
-      "description": "How the page moves while a drawer is open: scale back behind a sheet, or\nslide aside by `--drawer-indent-push` for a side menu. Set that variable\nwhere both the page and the drawer (portaled) read it, e.g. `:root`.",
+      "description": "How the page moves while a drawer is open: scale back behind a sheet, or\nslide aside by `--drawer-indent-push` for a side menu, fading its content. Set that variable\nwhere both the page and the drawer (portaled) read it, e.g. `:root`.",
       "default": "'scale'"
     },
     "className": {

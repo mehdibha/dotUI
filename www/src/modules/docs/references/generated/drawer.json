@@ -83,6 +83,15 @@
       "description": "Whether the user can drag the drawer to dismiss it.",
       "default": "true"
     },
+    "hasBackdrop": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether a scrim covers the page. Turn it off when the page shows the\ndrawer some other way, e.g. a `DrawerIndent` that pushes it aside.",
+      "default": "true"
+    },
     "snapPoints": {
       "type": "DrawerSnapPoint[]",
       "detailedType": "DrawerSnapPoint[] | undefined",
