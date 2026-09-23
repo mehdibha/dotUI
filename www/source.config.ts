@@ -5,6 +5,7 @@ import lastModified from "fumadocs-mdx/plugins/last-modified"
 import { z } from "zod"
 
 import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform"
+import { remarkInstallPrerequisite } from "./src/modules/docs/mdx-plugins/remark-install-prerequisite"
 
 export const docs = defineDocs({
   dir: "content/docs",
@@ -50,6 +51,7 @@ export default defineConfig({
       },
       tab: true,
     },
+    remarkPlugins: [remarkInstallPrerequisite],
     rehypePlugins: [rehypeTransform],
     // ```npm blocks become package-manager tabs. `persist` adds `groupId` so
     // <CodeBlockTabs> binds them to the shared packageManagerStore (pnpm by
