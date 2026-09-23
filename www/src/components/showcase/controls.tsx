@@ -50,8 +50,8 @@ import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 export function Controls({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("", className)} {...props}>
-      <CardContent className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
+      <CardContent className="@container space-y-4">
+        <div className="flex items-center gap-2">
           <Button variant="primary">
             Button
             <ArrowRightIcon />
@@ -95,11 +95,13 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
             </NumberFieldGroup>
           </NumberField>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
           <div className="flex items-center gap-2">
             <Badge variant="accent">Badge</Badge>
             <Badge variant="neutral">Neutral</Badge>
-            <Badge variant="accent">Subtle</Badge>
+            <Badge variant="accent" className="@max-[15.5rem]:hidden">
+              Subtle
+            </Badge>
           </div>
           <AvatarGroup size="sm" className="*:data-avatar:ring-card">
             <Avatar size="sm">
@@ -111,7 +113,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
             <AvatarGroupCount className="ring-card">+3</AvatarGroupCount>
           </AvatarGroup>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
           <ToggleButtonGroup
             aria-label="Text formatting"
             defaultSelectedKeys={["bold"]}
@@ -126,7 +128,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
               <UnderlineIcon />
             </ToggleButton>
           </ToggleButtonGroup>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 @max-[15.5rem]:gap-2">
             <Checkbox aria-label="Checkbox" defaultSelected />
             <Switch aria-label="Switch" defaultSelected />
             <RadioGroup
@@ -146,10 +148,10 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
           </div>
         </Slider>
         <Separator />
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
           <Link href="#" className="text-sm">
             All components
-            <ArrowRightIcon className="size-3.5" />
+            <ArrowRightIcon className="size-3.5 @max-[15.5rem]:hidden" />
           </Link>
           <Group>
             <Button>Actions</Button>
