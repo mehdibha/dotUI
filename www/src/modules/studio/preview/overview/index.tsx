@@ -43,6 +43,7 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
+import { LIBRARY_OPTIONS } from "@/modules/studio/axes/icons"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
 
@@ -899,7 +900,13 @@ export function PresetOverview({
           ? bodyFamily
           : `${headingFamily} · ${bodyFamily}`,
     },
-    { label: "Icons", value: "Lucide" },
+    {
+      label: "Icons",
+      value:
+        LIBRARY_OPTIONS.find(
+          (lib) => lib.value === (designSystem.icons ?? "lucide"),
+        )?.label ?? "Lucide",
+    },
   ]
 
   return (
