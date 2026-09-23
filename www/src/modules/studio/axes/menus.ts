@@ -154,6 +154,9 @@ export const SCALE_OPTIONS = [
       "A 44px input with base-size text, taller rows and 20px icons — a " +
       "hero surface.",
     seenIn: ["shadcn/ui"],
+    caution:
+      "Command palette only: menus and Select and ComboBox lists keep their " +
+      "density size.",
   },
 ]
 

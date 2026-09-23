@@ -23,6 +23,8 @@ export const PICKER_OPTIONS = [
       "On phones, every modal popover (selects, menus, submenus, date " +
       "pickers and popover dialogs) opens as a bottom drawer with a drag " +
       "handle instead of a floating popover.",
+    caution:
+      "Viewports under 768px only: tablets (iPad is 768px+) keep popovers.",
   },
   {
     value: "popover",
@@ -46,6 +48,9 @@ export const DIALOG_OPTIONS = [
       "On phones, dialogs dock to the bottom edge at full width, square at " +
       "the bottom, and rise in from below.",
     seenIn: ["HeroUI", "coss ui"],
+    caution:
+      "Viewports under 768px only: tablets (iPad is 768px+) keep centered " +
+      "dialogs.",
   },
 ]
 

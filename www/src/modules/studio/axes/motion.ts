@@ -197,6 +197,9 @@ export const MOTION_SPEC = {
         "exits and state changes. 1× is the character's own timing; 1.25× " +
         "turns Standard's 200ms entrance into 250ms, 0.8× into 160ms.",
       value: { type: "number", unit: "×", ...SPEED_RANGE },
+      caution:
+        "Higher = slower: 1.2 lengthens every duration by 20%; below 1 is " +
+        "faster.",
       guidance:
         "Ant Design exposes the same idea as motionUnit (0.1s), one base " +
         "step all durations scale from. Checked popover entrances run " +

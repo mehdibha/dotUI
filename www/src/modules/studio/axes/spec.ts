@@ -16,6 +16,8 @@ export interface AxisOption {
   /** Design systems that ship this choice, as named in
    *  docs/design-system-references.md. */
   seenIn?: readonly string[]
+  /** A trap picking it by name springs, in one sentence. */
+  caution?: string
 }
 
 export type AxisValue =
@@ -38,6 +40,8 @@ export interface AxisSpec {
   auto?: string
   /** How systems split on it and when to pick what. */
   guidance?: string
+  /** A trap any value springs, in one sentence. */
+  caution?: string
 }
 
 /** A named combination of axes — a panel shortcut like Shape's characters. */

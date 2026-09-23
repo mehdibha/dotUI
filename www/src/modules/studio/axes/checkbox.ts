@@ -39,6 +39,8 @@ export const CORNER_OPTIONS = [
     label: "Circle",
     description: "A round box, like a task-list check.",
     seenIn: ["Fluent 2"],
+    caution:
+      "Radios are circles too: beside a radio group, checkboxes read as radios.",
   },
 ]
 

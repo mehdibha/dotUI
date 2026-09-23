@@ -36,6 +36,9 @@ export const STYLE_OPTIONS = [
       "neutral badge's wash is half the muted fill — barely visible on a " +
       "card, so neutral chips on cards want Outline or Soft outline.",
     seenIn: ["Radix Themes", "Chakra UI", "Fluent 2", "Spectrum 2"],
+    caution:
+      "On cards the neutral chip's gray wash all but vanishes, so it reads " +
+      "as plain text; Soft outline adds a border.",
   },
   {
     value: "outline",
