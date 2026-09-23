@@ -88,7 +88,7 @@ export function PanelChrome({
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 [@media(max-width:1023px)_and_(min-height:501px)]:top-auto [@media(max-width:1023px)_and_(min-height:501px)]:bottom-0 [@media(max-width:1023px)_and_(min-height:501px)]:order-last [@media(max-width:1023px)_and_(min-height:501px)]:border-t [@media(max-width:1023px)_and_(min-height:501px)]:border-b-0">
         <div className="flex items-center justify-between gap-2">
           {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
-          <span className="flex shrink-0 items-center">
+          <span className="flex shrink-0 items-center pointer-coarse:gap-1">
             {modified && (
               <Button
                 size="sm"
@@ -96,7 +96,7 @@ export function PanelChrome({
                 isIconOnly
                 aria-label="Reset design system"
                 onPress={resetAll}
-                className="text-fg-muted pointer-coarse:size-9"
+                className="text-fg-muted pointer-coarse:data-icon-only:size-9"
               >
                 <RotateCcwIcon />
               </Button>

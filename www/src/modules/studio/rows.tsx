@@ -88,17 +88,15 @@ export const PanelPopoverTitle = createContext<string | null>(null)
 function DockedTitle({ title }: { title: string }) {
   const state = useContext(OverlayTriggerStateContext)
   return (
-    <div className="flex h-9 shrink-0 items-center justify-between pr-1 pl-3">
-      <span className="truncate text-xs font-medium text-fg-muted">
-        {title}
-      </span>
+    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3">
+      <span className="truncate text-sm font-medium text-fg">{title}</span>
       <Button
         size="sm"
         variant="quiet"
         isIconOnly
         aria-label="Close"
         onPress={() => state?.close()}
-        className="pointer-coarse:size-9"
+        className="pointer-coarse:data-icon-only:size-9"
       >
         <XIcon />
       </Button>
@@ -140,7 +138,7 @@ export function PanelPopover({
         "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
         docked &&
-          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! [@media(max-height:500px)]:top-(--dock-chrome)! [@media(max-height:500px)]:bottom-0! [@media(max-height:500px)]:max-h-none! [@media(max-height:500px)]:rounded-t-none [@media(max-height:500px)]:border-t-0 [@media(min-height:501px)]:top-auto! [@media(min-height:501px)]:bottom-(--dock-chrome)! [@media(min-height:501px)]:max-h-[42svh]! [@media(min-height:501px)]:min-h-[calc(100%-var(--dock-chrome))] [@media(min-height:501px)]:rounded-b-none [@media(min-height:501px)]:border-b-0",
+          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-y-auto overscroll-contain [@media(max-height:500px)]:top-(--dock-chrome)! [@media(max-height:500px)]:bottom-0! [@media(max-height:500px)]:max-h-none! [@media(max-height:500px)]:rounded-t-none [@media(max-height:500px)]:border-t-0 [@media(min-height:501px)]:top-auto! [@media(min-height:501px)]:bottom-(--dock-chrome)! [@media(min-height:501px)]:max-h-[42svh]! [@media(min-height:501px)]:min-h-[calc(100%-var(--dock-chrome))] [@media(min-height:501px)]:rounded-b-none [@media(min-height:501px)]:border-b-0",
       )}
       {...props}
     >
@@ -216,7 +214,7 @@ export function ColorPickerPopover({
 }) {
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
           {COLOR_PRESETS.map((preset) => (
             <ColorSwatchPickerItem
@@ -232,7 +230,7 @@ export function ColorPickerPopover({
           xChannel="saturation"
           yChannel="brightness"
           onChangeEnd={commit}
-          className="w-full rounded-xl"
+          className="w-full rounded-xl max-lg:aspect-auto max-lg:h-28 max-lg:shrink-0"
         />
         <ColorSlider
           aria-label="Hue"

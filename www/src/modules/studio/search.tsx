@@ -4,7 +4,7 @@
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
    Docked, the field sits at the bottom, on the keyboard, and an empty query
-   lists the chapters. Opens instantly on purpose: it's a frequent gesture.
+   lists every row under its chapter. Opens instantly on purpose: it's a frequent gesture.
    Selecting scrolls to the chapter. ⌘P, not ⌘K — the site header's docs
    search owns ⌘K everywhere, /studio included. */
 
@@ -16,12 +16,17 @@ import { Button } from "@/registry/ui/button"
 import { Command } from "@/registry/ui/command"
 import { Dialog } from "@/registry/ui/dialog"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from "@/registry/ui/list-box"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { SEARCH_INDEX } from "./__generated__/search-index"
-import { PanelPopover, useDocked, useMedia } from "./rows"
+import { PanelPopover, PanelPopoverTitle, useDocked, useMedia } from "./rows"
 import type { Chapter } from "./state"
 
 interface Entry {
@@ -91,14 +96,15 @@ export function PanelSearch({
   // left to the Autocomplete, so the list is right even if the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()
-    if (!needle) return docked ? categories(chapters) : []
+    if (!needle) return []
     const cats = categories(chapters).filter((c) =>
       contains(c.category, needle),
     )
     return cats.length > 0
       ? cats
       : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
-  }, [chapters, query, contains, docked])
+  }, [chapters, query, contains])
+  const index = docked && !query.trim()
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
   // `preventDefault` also suppresses the browser's print dialog; `repeat`
@@ -125,13 +131,30 @@ export function PanelSearch({
     if (!open) setQuery("")
   }
 
+  const item = (entry: Entry) => (
+    <ListBoxItem
+      key={entry.id}
+      id={entry.id}
+      textValue={entry.axis ?? entry.category}
+      onAction={() => jump(entry)}
+      className="flex-col items-start justify-center gap-0 pointer-coarse:min-h-11"
+    >
+      {entry.axis && !index && (
+        <span className="truncate text-xs text-fg-muted">{entry.category}</span>
+      )}
+      <span className="truncate">
+        <Highlight text={entry.axis ?? entry.category} query={query} />
+      </span>
+    </ListBoxItem>
+  )
+
   const trigger = (
     <Button
       size="sm"
       variant="quiet"
       isIconOnly
       aria-label="Search"
-      className="pointer-coarse:size-9"
+      className="pointer-coarse:data-icon-only:size-9"
     >
       <SearchIcon />
     </Button>
@@ -148,69 +171,58 @@ export function PanelSearch({
         </Tooltip>
       )}
       {/* Docked, a fixed height: results never push the field around. */}
-      <PanelPopover placement="bottom end" className="max-lg:h-72">
-        <Command
-          aria-label="Search"
-          className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1 max-lg:flex-col-reverse"
-        >
-          {/* Both chain with the Autocomplete's own field props. */}
-          <SearchField
-            autoFocus
+      <PanelPopoverTitle.Provider value="Search">
+        <PanelPopover placement="bottom end" className="max-lg:h-72">
+          <Command
             aria-label="Search"
-            value={query}
-            onChange={setQuery}
+            className="w-56 max-lg:min-h-0 max-lg:w-auto max-lg:flex-1 max-lg:flex-col-reverse"
           >
-            <InputGroup>
-              <InputGroupAddon>
-                <SearchIcon />
-              </InputGroupAddon>
-              <Input placeholder="Search…" />
-              <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
-                <Button variant="quiet" isIconOnly>
-                  <XIcon aria-hidden="true" />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </SearchField>
-          {/* An empty query hands the listbox no items, so the empty state
-              doubles as the prompt. */}
-          <ListBox
-            aria-label="Settings"
-            className="max-h-64 overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1"
-            items={items}
-            dependencies={[query]}
-            renderEmptyState={() => (
-              <div className="px-3 py-6 text-center text-sm text-fg-muted">
-                {query.trim() ? "No results" : "Type to search"}
-              </div>
-            )}
-          >
-            {(entry) => (
-              <ListBoxItem
-                id={entry.id}
-                textValue={entry.axis ?? entry.category}
-                onAction={() => jump(entry)}
-                className="flex-col items-start gap-0"
-              >
-                {entry.axis ? (
-                  <>
-                    <span className="truncate text-xs text-fg-muted">
-                      {entry.category}
-                    </span>
-                    <span className="truncate">
-                      <Highlight text={entry.axis} query={query} />
-                    </span>
-                  </>
-                ) : (
-                  <span className="truncate">
-                    <Highlight text={entry.category} query={query} />
-                  </span>
-                )}
-              </ListBoxItem>
-            )}
-          </ListBox>
-        </Command>
-      </PanelPopover>
+            {/* Both chain with the Autocomplete's own field props. */}
+            <SearchField
+              autoFocus
+              aria-label="Search"
+              value={query}
+              onChange={setQuery}
+            >
+              <InputGroup>
+                <InputGroupAddon>
+                  <SearchIcon />
+                </InputGroupAddon>
+                <Input placeholder="Search…" />
+                <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
+                  <Button variant="quiet" isIconOnly>
+                    <XIcon aria-hidden="true" />
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </SearchField>
+            {/* An empty query hands the listbox no items, so the empty state
+                doubles as the prompt. */}
+            <ListBox
+              aria-label="Settings"
+              className="max-h-64 overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1"
+              items={index ? undefined : items}
+              dependencies={[query]}
+              renderEmptyState={() => (
+                <div className="px-3 py-6 text-center text-sm text-fg-muted">
+                  {query.trim() ? "No results" : "Type to search"}
+                </div>
+              )}
+            >
+              {index
+                ? chapters.map((chapter) => (
+                    <ListBoxSection key={chapter.id} id={chapter.id}>
+                      <ListBoxSectionHeader>
+                        {chapter.label}
+                      </ListBoxSectionHeader>
+                      {axes([chapter]).map(item)}
+                    </ListBoxSection>
+                  ))
+                : item}
+            </ListBox>
+          </Command>
+        </PanelPopover>
+      </PanelPopoverTitle.Provider>
     </Dialog>
   )
 }

@@ -6,10 +6,14 @@
 
    Below `lg` the same page is a dock under the preview (beside it on short
    screens): one chapter's rows, hugged, over a chapter strip that scrolls
-   sideways. The header's chevron tucks it to its strip. */
+   sideways. The header's toggle tucks it to its strip. */
 
 import { useEffect, useRef, useState } from "react"
-import { ChevronDownIcon } from "lucide-react"
+import {
+  ChevronRightIcon,
+  PanelBottomCloseIcon,
+  PanelBottomOpenIcon,
+} from "lucide-react"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -110,32 +114,44 @@ function ChapterStrip({
   }, [active])
 
   return (
-    <RacToggleButtonGroup
-      ref={ref}
-      aria-label="Chapters"
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[active]}
-      style={{
-        // Faded, not erased: a cut-off chip is the cue that the strip scrolls.
-        maskImage: `linear-gradient(to right, ${edges.start ? "rgb(0 0 0/0.3)" : "#000"}, #000 24px, #000 calc(100% - 24px), ${edges.end ? "rgb(0 0 0/0.3)" : "#000"})`,
-      }}
-      className="relative -mx-2 no-scrollbar flex gap-1 overflow-x-auto px-2 pt-1 lg:hidden"
-    >
-      {chapters.map((chapter) => (
-        <RacToggleButton
-          key={chapter.id}
-          id={chapter.id}
-          onPress={() => onChange(chapter.id)}
-          className={cn(
-            "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 focus-reset hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
-            open ? "selected:tint-10" : "selected:tint-5",
-          )}
+    <div className="relative -mx-2 lg:hidden">
+      <RacToggleButtonGroup
+        ref={ref}
+        aria-label="Chapters"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[active]}
+        style={{
+          // Faded, not erased: a cut-off chip is the cue that the strip scrolls.
+          maskImage: `linear-gradient(to right, ${edges.start ? "rgb(0 0 0/0.3)" : "#000"}, #000 24px, #000 calc(100% - 24px), ${edges.end ? "rgb(0 0 0/0.3)" : "#000"})`,
+        }}
+        className="relative no-scrollbar flex gap-1 overflow-x-auto px-2 pt-1"
+      >
+        {chapters.map((chapter) => (
+          <RacToggleButton
+            key={chapter.id}
+            id={chapter.id}
+            onPress={() => onChange(chapter.id)}
+            className={cn(
+              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 focus-reset hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
+              open ? "selected:tint-10" : "selected:tint-5",
+            )}
+          >
+            {chapter.label}
+          </RacToggleButton>
+        ))}
+      </RacToggleButtonGroup>
+      {/* The same cue at every width, whether or not a chip happens to peek.
+          Visual only: swipes and taps reach the strip under it. */}
+      {edges.end && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute right-0 bottom-0 flex h-8 w-10 items-center justify-end bg-linear-to-l from-card from-50% to-transparent pr-1.5 text-fg/50 pointer-coarse:h-9"
         >
-          {chapter.label}
-        </RacToggleButton>
-      ))}
-    </RacToggleButtonGroup>
+          <ChevronRightIcon className="size-4" />
+        </span>
+      )}
+    </div>
   )
 }
 
@@ -194,6 +210,26 @@ export function PanelPage({
       )
     })
   }
+
+  // An open docked picker leaves the chrome in view but inert: a tap there
+  // lands on this layer and only closes the picker. Once it has closed (not
+  // after a drag that ends here), replay the tap on the button under it.
+  const replay = (event: React.PointerEvent) => {
+    if (event.target !== event.currentTarget) return
+    const header = layer?.firstElementChild?.firstElementChild
+    const { clientX: x, clientY: y } = event
+    const button = [...(header?.querySelectorAll("button") ?? [])].find(
+      (button) => {
+        const r = button.getBoundingClientRect()
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
+      },
+    )
+    if (!button) return
+    requestAnimationFrame(() => {
+      if (!button.closest("[inert]")) button.click()
+    })
+  }
+
   const reveal = (id: string, axis?: string) => {
     if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
     layer
@@ -206,6 +242,7 @@ export function PanelPage({
       {/* Docked, the positioned box row popovers portal into. */}
       <div
         ref={setLayer}
+        onPointerUp={replay}
         className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
       >
         <PanelChrome
@@ -221,9 +258,9 @@ export function PanelPage({
                 aria-label={open ? "Collapse panel" : "Expand panel"}
                 aria-expanded={open}
                 onPress={() => setOpen(!open)}
-                className="lg:hidden pointer-coarse:size-9"
+                className="lg:hidden pointer-coarse:data-icon-only:size-9"
               >
-                <ChevronDownIcon className={cn(!open && "rotate-180")} />
+                {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
               </Button>
             </>
           }
