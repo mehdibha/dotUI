@@ -15,6 +15,7 @@ import {
   readDoc,
   resetSearch,
   storedDesign,
+  storedQuery,
 } from "./doc"
 import { decode, encodeDesign } from "./preset/codec"
 
@@ -61,6 +62,24 @@ describe("studio document", () => {
     expect(query).toBe(`preset=linear@2&d=${edited.d}&name=Acme+Co&system=k3f9`)
     expect(parseStored(query)).toEqual(search)
     expect(parseStored("q1YqUbI")).toEqual({ preset: "q1YqUbI" })
+  })
+
+  it("stores a document rev-pinned and reads a stored bare id as rev 1", () => {
+    expect(storedQuery({ preset: "linear", system: "k3f9" })).toBe(
+      "preset=linear@2&system=k3f9",
+    )
+    expect(storedQuery(edited)).toBe(docQuery(edited))
+    expect(parseStored("preset=linear&system=k3f9")).toEqual({
+      preset: "linear@1",
+      system: "k3f9",
+    })
+    expect(storedDesign("preset=linear")).toEqual({ preset: "linear@1" })
+    expect(arrive({}, "preset=linear")).toEqual({
+      redirect: { preset: "linear@1" },
+    })
+    expect(arrive({}, "preset=linear@2")).toEqual({
+      redirect: { preset: "linear" },
+    })
   })
 
   it("resets to the base revision, keeping the saved system", () => {
@@ -182,6 +201,10 @@ describe("ownership", () => {
     const saved = { ...edited, system: "mine" }
     expect(ownerOf(saved, { saved: true })).toBe(true)
     expect(ownerOf({ preset: "vercel" }, { saved: false })).toBe(true)
+    const named = { preset: "notion", name: "Acme" }
+    expect(ownerOf(named, { working: storedQuery(named), saved: false })).toBe(
+      true,
+    )
   })
 
   it("carries ownership across edits unless a document is adopted", () => {

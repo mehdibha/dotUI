@@ -1,3 +1,7 @@
+/** Origin's latest revision: what the SSR'd previews render. The working
+ *  store pins it; a bare id there reads as rev 1 (see studio/doc.ts). */
+export const ORIGIN_REV = 1
+
 /**
  * Pre-paint check: do the SSR'd previews (Origin, in the site theme) show the
  * wrong system or mode for this reader? That is a picked system other than
@@ -8,4 +12,4 @@
  * dependency-free: the root route imports it. Keys: preview-selection.ts,
  * preview-controls.tsx, studio/preset/storage.ts, and starter-themes' `theme`.
  */
-export const PREVIEW_PENDING_SCRIPT = `(function(){try{var s=localStorage,m=s.getItem("dotui:preview-mode"),t=s.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";if(m===t){s.removeItem("dotui:preview-mode");m=null}var p=s.getItem("dotui:preview-preset"),w,q;if(!p||p==="yours"){w=s.getItem("dotui:preset");q=w?new URLSearchParams(w):null;p=q&&(q.get("preset")!=="origin"||q.has("d"))}else p=p!=="origin";if(m||p)document.documentElement.setAttribute("data-preview-pending","")}catch(e){}})()`
+export const PREVIEW_PENDING_SCRIPT = `(function(){try{var s=localStorage,m=s.getItem("dotui:preview-mode"),t=s.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";if(m===t){s.removeItem("dotui:preview-mode");m=null}var p=s.getItem("dotui:preview-preset"),w,q,r;if(!p||p==="yours"){w=s.getItem("dotui:preset");q=w?new URLSearchParams(w):null;r=q&&q.get("preset");if(r==="origin")r="origin@1";p=q&&(r!=="origin@${ORIGIN_REV}"||q.has("d"))}else p=p!=="origin";if(m||p)document.documentElement.setAttribute("data-preview-pending","")}catch(e){}})()`

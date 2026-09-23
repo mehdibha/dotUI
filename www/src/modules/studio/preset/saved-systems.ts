@@ -11,13 +11,14 @@ import {
 } from "@/modules/studio/doc"
 import type { DocSearch } from "@/modules/studio/doc"
 
-import { isRef } from "./codec"
+import { isRef, pinRef } from "./codec"
 
 /** A named design system the user saved from the studio. */
 export interface SavedSystem {
   id: string
   name: string
-  /** Its design, as the studio's `preset=` and `d=` (see studio/doc.ts). */
+  /** Its design, as the studio's `preset=` (rev-pinned) and `d=` (see
+   *  studio/doc.ts). */
   preset: string
   d?: string
   updatedAt: number
@@ -38,8 +39,10 @@ const LEGACY_KEYS = [
 const CODE = /^v\d+\.[\w-]+$/
 const NONE: SavedSystem[] = []
 
+/** A canonical design as records store it: rev-pinned, so a saved system
+ *  never follows a newer revision. */
 const designFields = ({ preset, d }: DocSearch) => ({
-  preset: preset as string,
+  preset: pinRef(preset as string),
   ...(d ? { d } : {}),
 })
 
@@ -61,9 +64,11 @@ function toSystem(value: unknown): SavedSystem | undefined {
     !Number.isFinite(updatedAt)
   )
     return undefined
+  // A bare id was stored before rev 2 existed.
+  const pinned = pinRef(preset, 1)
   return d === undefined
-    ? { id: cleanId, name: cleanedName, preset, updatedAt }
-    : { id: cleanId, name: cleanedName, preset, d, updatedAt }
+    ? { id: cleanId, name: cleanedName, preset: pinned, updatedAt }
+    : { id: cleanId, name: cleanedName, preset: pinned, d, updatedAt }
 }
 
 /** A store's valid records, first of each id; `undefined` if it isn't one. */

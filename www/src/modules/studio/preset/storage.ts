@@ -7,9 +7,9 @@ import type { StudioDoc } from "@/modules/studio/doc"
 import { ORIGIN_ID } from "./codec"
 
 /**
- * This browser's working design system: the studio query of the document a
- * tab last edited as its own (see studio/doc.ts), or a legacy blob from
- * before the grammar. A bare /studio reopens it, and docs previews render
+ * This browser's working design system: the rev-pinned studio query of the
+ * document a tab last edited as its own (see studio/doc.ts), or a legacy blob
+ * from before the grammar. A bare /studio reopens it, and docs previews render
  * it unless the reader picks another system (see docs/preview-selection.ts).
  */
 const workingStore = createPersistedStore<string | undefined>(

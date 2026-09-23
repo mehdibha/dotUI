@@ -2,7 +2,7 @@
    Runs in the route's beforeLoad, so a redirect lands before anything
    renders; what the redirect lost waits here for the page to announce. */
 
-import { arrive, docQuery } from "./doc"
+import { arrive, storedQuery } from "./doc"
 import type { DocSearch, Notice } from "./doc"
 import { loadWorking, saveWorking } from "./preset/storage"
 
@@ -19,8 +19,8 @@ export function settle(
   // A bare /studio reopened the working document: store its canonical form,
   // so the tab reads as its owner.
   const bare = !search.preset && !search.d
-  if (bare && working && working !== docQuery(redirect))
-    saveWorking(docQuery(redirect))
+  if (bare && working && working !== storedQuery(redirect))
+    saveWorking(storedQuery(redirect))
   pending = notice
   return redirect
 }

@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { PREVIEW_PENDING_SCRIPT } from "./preview-pending"
+import { latest } from "@/modules/studio/preset/codec"
+
+import { ORIGIN_REV, PREVIEW_PENDING_SCRIPT } from "./preview-pending"
 
 /** Runs the head script over `storage`; returns whether it flagged pending. */
 function run(storage: Record<string, string>, systemDark = false) {
@@ -25,12 +27,17 @@ describe("preview pending script", () => {
     expect(run({}).pending).toBe(false)
     expect(run({ "dotui:preview-preset": "origin" }).pending).toBe(false)
     expect(run({ "dotui:preset": "preset=origin" }).pending).toBe(false)
+    expect(run({ "dotui:preset": "preset=origin@1" }).pending).toBe(false)
     expect(
       run({
         "dotui:preview-preset": "yours",
         "dotui:preset": "preset=origin&system=k3f9",
       }).pending,
     ).toBe(false)
+  })
+
+  it("knows Origin's latest revision", () => {
+    expect(ORIGIN_REV).toBe(latest("origin").rev)
   })
 
   it("flags a picked or working system other than pristine Origin", () => {

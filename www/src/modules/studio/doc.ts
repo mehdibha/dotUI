@@ -11,7 +11,14 @@
 import { BUILT_INS } from "@/modules/presets/built-ins"
 
 import type { StudioState } from "./axes"
-import { decode, encodeDesign, isRef, ORIGIN_ID, stateOf } from "./preset/codec"
+import {
+  decode,
+  encodeDesign,
+  isRef,
+  ORIGIN_ID,
+  pinRef,
+  stateOf,
+} from "./preset/codec"
 import type { DecodeResult, PresetRef } from "./preset/codec"
 
 export interface DocSearch {
@@ -61,15 +68,24 @@ export function docQuery(search: DocSearch): string {
   return params.toString().replaceAll("%40", "@")
 }
 
-/** Just the design: what saved records store and dirty checks compare. */
+/** Just the design: what dirty checks compare. */
 export const designQuery = ({ preset, d }: DocSearch) => docQuery({ preset, d })
 
-/** A stored string back into params; anything but a query is a legacy blob. */
+/** `search` as this browser stores it: rev-pinned, so a stored document never
+ *  follows a newer revision. Only the URL names the latest by its bare id. */
+export const storedQuery = (search: DocSearch) =>
+  docQuery(
+    search.preset ? { ...search, preset: pinRef(search.preset) } : search,
+  )
+
+/** A stored string back into params; anything but a query is a legacy blob.
+ *  A bare id was stored before rev 2 existed, so it reads as rev 1. */
 export function parseStored(value: string): DocSearch {
   if (!value.startsWith("preset=")) return { preset: value }
   const params = new URLSearchParams(value)
   const search: DocSearch = {}
   for (const key of KEYS) search[key] = params.get(key) || undefined
+  if (search.preset) search.preset = pinRef(search.preset, 1)
   return search
 }
 
@@ -219,7 +235,7 @@ export function ownerOf(
   if (owned === undefined) {
     owned =
       saved ||
-      working === key ||
+      working === storedQuery(search) ||
       (search.d === undefined && search.name === undefined)
     remember(key, owned)
   }

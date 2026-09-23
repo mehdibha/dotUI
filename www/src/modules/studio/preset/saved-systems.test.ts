@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { installFakeWindow } from "@/lib/test-fake-window"
 
 import { storedDesign } from "../doc"
+import { pinRef } from "./codec"
 import HISTORICAL from "./historical-presets.json"
 import type { SavedSystem } from "./saved-systems"
 
@@ -23,7 +24,7 @@ async function load() {
 }
 
 function record(id: string, name = id): SavedSystem {
-  return { id, name, preset: "origin", updatedAt: 1 }
+  return { id, name, preset: "origin@1", updatedAt: 1 }
 }
 
 const store = (systems: unknown[]) => JSON.stringify({ v: 1, systems })
@@ -65,8 +66,8 @@ describe("saved systems", () => {
     win.otherTab(KEY, store([record("acme", "Acme"), record("beta", "Beta")]))
     updateSystem("acme", { preset: "linear", name: "Ignored", system: "x" })
     expect(stored().map((s) => [s.id, s.name, s.preset])).toEqual([
-      ["acme", "Acme", "linear"],
-      ["beta", "Beta", "origin"],
+      ["acme", "Acme", "linear@2"],
+      ["beta", "Beta", "origin@1"],
     ])
 
     win.otherTab(KEY, store([...stored(), record("c", "C")]))
@@ -99,6 +100,27 @@ describe("saved systems", () => {
         updatedAt: expect.any(Number),
       },
     ])
+  })
+
+  it("pins a pristine built-in to its latest revision", async () => {
+    const { designOf, saveSystem, updateSystem } = await load()
+    const id = saveSystem("Acme", { preset: "linear" })
+    expect(stored()[0]?.preset).toBe("linear@2")
+
+    updateSystem(id, { preset: "vercel" })
+    expect(stored()[0]?.preset).toBe("vercel@2")
+    const [saved] = stored()
+    expect(saved && designOf(saved)).toEqual({ preset: "vercel" })
+  })
+
+  it("reads a bare id stored before pinning as rev 1", async () => {
+    win.seed(KEY, store([{ ...record("a"), preset: "linear" }]))
+    const { designOf, exportSystems } = await load()
+
+    const [saved] = (JSON.parse(exportSystems()) as { systems: SavedSystem[] })
+      .systems
+    expect(saved?.preset).toBe("linear@1")
+    expect(saved && designOf(saved)).toEqual({ preset: "linear@1" })
   })
 
   it("drops invalid records instead of crashing", async () => {
@@ -189,11 +211,14 @@ describe("migrating the old keys", () => {
     const { saveSystem } = await load()
     saveSystem("New", { preset: "origin" })
 
-    const design = (state: string) => storedDesign(state)
+    const design = (state: string) => {
+      const { preset = "", d } = storedDesign(state) ?? {}
+      return { preset: pinRef(preset), d }
+    }
     expect(stored()).toEqual([
       { id: "v3", name: "From v3", ...design(blob("v3-linear")), updatedAt: 5 },
       { id: "v4", name: "From v4", ...design(blob("v4-claude")), updatedAt: 5 },
-      { id: "query", name: "From a query", preset: "linear", updatedAt: 5 },
+      { id: "query", name: "From a query", preset: "linear@1", updatedAt: 5 },
       expect.objectContaining({ name: "New" }),
     ])
     expect(stored()[0]?.preset).toMatch(/^[a-z0-9-]+(@\d+)?$/)
@@ -272,6 +297,14 @@ describe("export and import", () => {
     expect(systems.map((s) => s.name)).toEqual(["A", "B", "Other B", "C"])
     expect(systems[2]?.id).not.toBe("b")
     expect(systems[3]?.id).toBe("c")
+  })
+
+  it("pins an imported bare id to rev 1", async () => {
+    const { importSystems } = await load()
+
+    importSystems(store([{ ...record("a"), preset: "linear" }]))
+
+    expect(stored().map((s) => s.preset)).toEqual(["linear@1"])
   })
 
   it("rejects files that aren't an export", async () => {

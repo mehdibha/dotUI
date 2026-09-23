@@ -165,6 +165,13 @@ const REF = /^([a-z0-9-]+)(?:@([1-9]\d*))?$/
 
 /** Whether `preset` names a built-in (rather than holding a legacy blob). */
 export const isRef = (preset: string) => REF.test(preset)
+
+/** `preset` rev-pinned: a bare id takes `rev`, by default its latest. */
+export function pinRef(preset: string, rev = revisionOf(preset)?.rev): string {
+  return rev !== undefined && isRef(preset) && !preset.includes("@")
+    ? `${preset}@${rev}`
+    : preset
+}
 const CODE = /^v(\d+)\.(.*)$/
 /** The first version whose codes diff against a built-in revision. */
 const FIRST_CODE_VERSION = 5

@@ -42,6 +42,16 @@ describe("studio arrival", () => {
     expect(win.read(WORKING_KEY)).toBe(`preset=origin@1&d=${target?.d}`)
   })
 
+  it("stores the working document rev-pinned", async () => {
+    win.seed(WORKING_KEY, "preset=linear")
+    expect((await load()).settle({}, false)).toEqual({ preset: "linear@1" })
+    expect(win.read(WORKING_KEY)).toBe("preset=linear@1")
+
+    win.seed(WORKING_KEY, "preset=linear@2")
+    expect((await load()).settle({}, false)).toEqual({ preset: "linear" })
+    expect(win.read(WORKING_KEY)).toBe("preset=linear@2")
+  })
+
   it("hands the page a redirect's notice once", async () => {
     const { settle, takeNotice } = await load()
     settle({ preset: encodeRaw({ v: 4, s: { nope: 1 } }) }, false)

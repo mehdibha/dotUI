@@ -12,7 +12,14 @@ import { getRouteApi } from "@tanstack/react-router"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
-import { docQuery, docSearch, handOver, isDirty, ownerOf, readDoc } from "./doc"
+import {
+  docSearch,
+  handOver,
+  isDirty,
+  ownerOf,
+  readDoc,
+  storedQuery,
+} from "./doc"
 import type { DocSearch, StudioDoc } from "./doc"
 import { designOf, useSavedSystems } from "./preset/saved-systems"
 import type { SavedSystem } from "./preset/saved-systems"
@@ -89,7 +96,7 @@ export function useStudio(): Studio {
   const commit = useCallback(
     (next: DocSearch, { adopt = false } = {}) => {
       const { search: from, owned = false } = current.current
-      if (handOver(from, owned, next, adopt)) saveWorking(docQuery(next))
+      if (handOver(from, owned, next, adopt)) saveWorking(storedQuery(next))
       void navigate({
         search: (prev) => ({
           ...prev,
