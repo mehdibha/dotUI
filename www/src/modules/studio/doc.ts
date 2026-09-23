@@ -52,9 +52,10 @@ export type Notice =
 const KEYS = ["preset", "d", "name", "system"] as const
 const SYSTEM_ID = /^[\w-]{1,64}$/
 
-const cleanName = (name?: string) =>
+export const cleanName = (name?: string) =>
   name?.replace(/\s+/g, " ").trim().slice(0, 64) || undefined
-const cleanSystem = (id?: string) => (id && SYSTEM_ID.test(id) ? id : undefined)
+export const cleanSystem = (id?: string) =>
+  id && SYSTEM_ID.test(id) ? id : undefined
 
 /** The document params as one string, in a fixed order, spelled like the
  *  address bar (see router.tsx). */

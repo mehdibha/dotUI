@@ -12,18 +12,10 @@ import { getRouteApi } from "@tanstack/react-router"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
-import {
-  docQuery,
-  docSearch,
-  handOver,
-  isDirty,
-  ownerOf,
-  readDoc,
-  storedDesign,
-} from "./doc"
+import { docQuery, docSearch, handOver, isDirty, ownerOf, readDoc } from "./doc"
 import type { DocSearch, StudioDoc } from "./doc"
-import { useMyPresets } from "./preset/my-presets"
-import type { SavedPreset } from "./preset/my-presets"
+import { designOf, useSavedSystems } from "./preset/saved-systems"
+import type { SavedSystem } from "./preset/saved-systems"
 import { saveWorking, useWorking } from "./preset/storage"
 import { resolveDesignSystem } from "./resolve"
 
@@ -40,7 +32,7 @@ export interface Studio {
    *  hydrated, as the server can't read this browser's storage. */
   owned: boolean | undefined
   /** The saved system this tab edits. */
-  saved: SavedPreset | undefined
+  saved: SavedSystem | undefined
   /** Unsaved work: past the saved system, else past the base preset. */
   dirty: boolean
   /** The header's name for the document. */
@@ -62,7 +54,7 @@ const useHydrated = () =>
 function labelOf(
   doc: StudioDoc,
   owned: boolean | undefined,
-  saved: SavedPreset | undefined,
+  saved: SavedSystem | undefined,
 ) {
   if (saved) return saved.name
   const name = doc.name ?? doc.baseName
@@ -79,15 +71,14 @@ export function useStudio(): Studio {
     [preset, d, name, system],
   )
   const doc = readDoc(search)
-  const { presets } = useMyPresets()
-  const saved = presets.find((p) => p.id === doc.system)
+  const saved = useSavedSystems().find((s) => s.id === doc.system)
   const hydrated = useHydrated()
   const working = useWorking()
   const owned = hydrated
     ? ownerOf(search, { working, saved: saved !== undefined })
     : undefined
   const savedDesign = useMemo(
-    () => (saved ? storedDesign(saved.state) : undefined),
+    () => (saved ? designOf(saved) : undefined),
     [saved],
   )
 

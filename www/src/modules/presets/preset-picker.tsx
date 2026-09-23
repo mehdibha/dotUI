@@ -63,6 +63,8 @@ interface PresetPickerProps {
   renderItemActions?: (item: PresetPickerItem) => ReactNode
   /** Adds a "+ New" button beside the search field; pressing it closes the picker first. */
   onCreate?: () => void
+  /** Trails the search row (e.g. the saved systems' backup menu). */
+  toolbar?: ReactNode
 }
 
 /**
@@ -87,6 +89,7 @@ export function PresetPicker({
   withPreview = false,
   renderItemActions,
   onCreate,
+  toolbar,
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
@@ -108,6 +111,7 @@ export function PresetPicker({
           withPreview={withPreview}
           renderItemActions={renderItemActions}
           onCreate={onCreate}
+          toolbar={toolbar}
         />
       )}
     </DialogContent>
@@ -147,6 +151,7 @@ function PresetPickerContent({
   withPreview,
   renderItemActions,
   onCreate,
+  toolbar,
 }: {
   sections: PresetPickerSection[]
   selectedId?: string
@@ -157,6 +162,7 @@ function PresetPickerContent({
   withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
   onCreate?: () => void
+  toolbar?: ReactNode
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
@@ -280,6 +286,7 @@ function PresetPickerContent({
             New
           </Button>
         )}
+        {toolbar}
       </div>
       <CommandContent
         aria-label="Design systems"

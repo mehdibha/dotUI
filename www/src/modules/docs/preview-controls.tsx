@@ -12,7 +12,7 @@ import { Loader } from "@/registry/ui/loader"
 import { ORIGIN, PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { useMyPresets } from "@/modules/studio/preset/my-presets"
+import { useSavedSystems } from "@/modules/studio/preset/saved-systems"
 import { useWorkingDoc } from "@/modules/studio/preset/storage"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -181,9 +181,10 @@ function PresetSelector({
 }) {
   const { selected, doc, own } = useSelectedPreset()
   const previewMode = useForcedPreviewMode()
-  const { presets } = useMyPresets()
   const yoursName =
-    presets.find((p) => p.id === doc.system)?.name ?? doc.name ?? doc.baseName
+    useSavedSystems().find((s) => s.id === doc.system)?.name ??
+    doc.name ??
+    doc.baseName
   const sections = useMemo(() => {
     const yoursItem = {
       id: YOURS,

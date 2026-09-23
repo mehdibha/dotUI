@@ -12,21 +12,22 @@ import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { TextField } from "@/registry/ui/text-field"
-import { docQuery, storedDesign } from "@/modules/studio/doc"
-import type { SavedPreset } from "@/modules/studio/preset"
+import { docQuery } from "@/modules/studio/doc"
+import { designOf } from "@/modules/studio/preset/saved-systems"
+import type { SavedSystem } from "@/modules/studio/preset/saved-systems"
 
 /**
- * The actions menu on a saved preset's picker row: rename / duplicate / copy
+ * The actions menu on a saved system's picker row: rename / duplicate / copy
  * link / delete. Lives on the row's trailing edge, so pressing it must not
- * apply the preset — the menu button handles its own press.
+ * apply the system — the menu button handles its own press.
  */
-export function SavedPresetActions({
+export function SavedSystemActions({
   saved,
   onRename,
   onDuplicate,
   onDelete,
 }: {
-  saved: SavedPreset
+  saved: SavedSystem
   onRename: (name: string) => void
   onDuplicate: () => void
   onDelete: () => void
@@ -39,7 +40,7 @@ export function SavedPresetActions({
     else if (key === "duplicate") onDuplicate()
     else if (key === "copy") {
       // Record ids are this browser's: the link carries the name instead.
-      const query = docQuery({ ...storedDesign(saved.state), name: saved.name })
+      const query = docQuery({ ...designOf(saved), name: saved.name })
       copyToClipboard(`${window.location.origin}/studio?${query}`)
     } else if (key === "delete") onDelete()
   }
@@ -67,7 +68,7 @@ export function SavedPresetActions({
           </MenuContent>
         </Popover>
       </Menu>
-      <RenamePresetDialog
+      <RenameDialog
         isOpen={renameOpen}
         onOpenChange={setRenameOpen}
         currentName={saved.name}
@@ -77,7 +78,41 @@ export function SavedPresetActions({
   )
 }
 
-function RenamePresetDialog({
+/** Backs up and restores every saved system as a JSON file. */
+export function SavedSystemsMenu({
+  canExport,
+  onExport,
+  onImport,
+}: {
+  canExport: boolean
+  onExport: () => void
+  onImport: () => void
+}) {
+  return (
+    <Menu>
+      <Button
+        variant="secondary"
+        size="md"
+        isIconOnly
+        aria-label="Saved systems backup"
+        className="mt-2 shrink-0"
+      >
+        <MoreHorizontalIcon />
+      </Button>
+      <Popover placement="bottom end">
+        <MenuContent
+          disabledKeys={canExport ? [] : ["export"]}
+          onAction={(key) => (key === "export" ? onExport() : onImport())}
+        >
+          <MenuItem id="export">Export saved systems</MenuItem>
+          <MenuItem id="import">Import saved systems…</MenuItem>
+        </MenuContent>
+      </Popover>
+    </Menu>
+  )
+}
+
+function RenameDialog({
   isOpen,
   onOpenChange,
   currentName,
@@ -89,6 +124,12 @@ function RenamePresetDialog({
   onRename: (name: string) => void
 }) {
   const [name, setName] = useState(currentName)
+  // The field resets on every open (the modal stays mounted between opens).
+  const [wasOpen, setWasOpen] = useState(isOpen)
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen)
+    if (isOpen) setName(currentName)
+  }
 
   function submit() {
     const trimmed = name.trim()
@@ -99,10 +140,7 @@ function RenamePresetDialog({
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={(open) => {
-        if (open) setName(currentName)
-        onOpenChange(open)
-      }}
+      onOpenChange={onOpenChange}
       className="w-full sm:max-w-sm"
     >
       <DialogContent

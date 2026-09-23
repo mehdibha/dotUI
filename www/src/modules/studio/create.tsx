@@ -5,7 +5,7 @@
    presets. The switcher is the PresetPicker (saved systems + built-in
    presets, live previews, unsaved-changes guard), reachable at ?gallery=. */
 
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
@@ -13,13 +13,27 @@ import { toastManager } from "@/registry/ui/toast"
 import { PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
-import { useMyPresets } from "@/modules/studio/preset"
 import { ORIGIN_ID } from "@/modules/studio/preset/codec"
+import {
+  designOf,
+  duplicateSystem,
+  exportSystems,
+  importSystems,
+  removeSystem,
+  renameSystem,
+  saveSystem,
+  updateSystem,
+  useSavedSystems,
+} from "@/modules/studio/preset/saved-systems"
+import type { SavedSystem } from "@/modules/studio/preset/saved-systems"
 import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
-import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
+import {
+  SavedSystemActions,
+  SavedSystemsMenu,
+} from "@/modules/studio/saved-system-actions"
 import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
-import { designQuery, readDoc, resetSearch, storedDesign } from "./doc"
+import { readDoc, resetSearch } from "./doc"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
@@ -33,7 +47,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const { doc, search, saved, commit } = studio
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { presets, save, update, rename, duplicate, remove } = useMyPresets()
+  const systems = useSavedSystems()
   const [saveOpen, setSaveOpen] = useState(false)
   const [createOpen, setCreateOpen] = useState(false)
   // An action held back by the unsaved-changes guard, awaiting save/discard.
@@ -43,8 +57,8 @@ export function StudioPanel({ className }: { className?: string }) {
     const mine = {
       id: "mine",
       title: "My systems",
-      items: presets.map((record) => {
-        const { state } = readDoc(storedDesign(record.state) ?? {})
+      items: systems.map((record) => {
+        const { state } = readDoc(designOf(record) ?? {})
         return {
           id: record.id,
           name: record.name,
@@ -58,8 +72,8 @@ export function StudioPanel({ className }: { className?: string }) {
       title: "Featured",
       items: PRESETS.map((p) => ({ ...p, resolve: () => p.designSystem })),
     }
-    return presets.length > 0 ? [mine, featured] : [featured]
-  }, [presets])
+    return systems.length > 0 ? [mine, featured] : [featured]
+  }, [systems])
 
   function setGalleryOpen(open: boolean) {
     navigate({
@@ -69,9 +83,9 @@ export function StudioPanel({ className }: { className?: string }) {
   }
 
   function pick(id: string) {
-    const record = presets.find((p) => p.id === id)
+    const record = systems.find((s) => s.id === id)
     if (record) {
-      const design = storedDesign(record.state) ?? { preset: ORIGIN_ID }
+      const design = designOf(record) ?? { preset: ORIGIN_ID }
       commit({ ...design, system: record.id }, { adopt: true })
     } else if (PRESETS.some((p) => p.id === id)) {
       commit({ preset: id }, { adopt: true })
@@ -79,12 +93,48 @@ export function StudioPanel({ className }: { className?: string }) {
   }
 
   function saveNew(name: string) {
-    const design = designQuery(search)
     commit(
-      { ...search, name: undefined, system: save(name, design) },
-      {
-        adopt: true,
-      },
+      { ...search, name: undefined, system: saveSystem(name, search) },
+      { adopt: true },
+    )
+  }
+
+  function remove(record: SavedSystem) {
+    const undo = removeSystem(record.id)
+    if (!undo) return
+    toastManager.add({
+      title: `Deleted “${record.name}”`,
+      actionProps: { children: "Undo", onClick: undo },
+    })
+  }
+
+  const importInput = useRef<HTMLInputElement>(null)
+
+  function exportAll() {
+    const url = URL.createObjectURL(
+      new Blob([exportSystems()], { type: "application/json" }),
+    )
+    const link = document.createElement("a")
+    link.href = url
+    link.download = "dotui-systems.json"
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  async function importFile(file: File) {
+    const added = importSystems(await file.text())
+    toastManager.add(
+      added === undefined
+        ? {
+            title: "This file isn't a saved systems export",
+            type: "warning",
+          }
+        : {
+            title:
+              added === 1
+                ? "Imported 1 design system"
+                : `Imported ${added} design systems`,
+          },
     )
   }
 
@@ -107,8 +157,8 @@ export function StudioPanel({ className }: { className?: string }) {
 
   function resolvePending(saveFirst: boolean) {
     if (saveFirst) {
-      if (saved) update(saved.id, designQuery(search))
-      else save(newName, designQuery(search))
+      if (saved) updateSystem(saved.id, search)
+      else saveSystem(newName, search)
     }
     pending?.()
     setPending(null)
@@ -130,16 +180,23 @@ export function StudioPanel({ className }: { className?: string }) {
         selectedId={saved?.id ?? doc.base.id}
         onPick={(item) => guarded(() => pick(item.id))}
         onCreate={() => setCreateOpen(true)}
+        toolbar={
+          <SavedSystemsMenu
+            canExport={systems.length > 0}
+            onExport={exportAll}
+            onImport={() => importInput.current?.click()}
+          />
+        }
         withPreview
         renderItemActions={(item) => {
-          const record = presets.find((p) => p.id === item.id)
+          const record = systems.find((s) => s.id === item.id)
           if (!record) return null
           return (
-            <SavedPresetActions
+            <SavedSystemActions
               saved={record}
-              onRename={(name) => rename(record.id, name)}
-              onDuplicate={() => duplicate(record.id)}
-              onDelete={() => remove(record.id)}
+              onRename={(name) => renameSystem(record.id, name)}
+              onDuplicate={() => duplicateSystem(record.id)}
+              onDelete={() => remove(record)}
             />
           )
         }}
@@ -160,10 +217,10 @@ export function StudioPanel({ className }: { className?: string }) {
       <SavePresetDialog
         isOpen={saveOpen}
         onOpenChange={setSaveOpen}
-        defaultName={saved?.name ?? doc.name ?? ""}
+        defaultName={newName}
         updateTarget={saved?.name}
         onSaveNew={saveNew}
-        onUpdate={() => saved && update(saved.id, designQuery(search))}
+        onUpdate={() => saved && updateSystem(saved.id, search)}
       />
       <CreatePresetDialog
         isOpen={createOpen}
@@ -171,11 +228,25 @@ export function StudioPanel({ className }: { className?: string }) {
         onCreate={(name) =>
           guarded(() =>
             commit(
-              { preset: ORIGIN_ID, system: save(name, `preset=${ORIGIN_ID}`) },
+              {
+                preset: ORIGIN_ID,
+                system: saveSystem(name, { preset: ORIGIN_ID }),
+              },
               { adopt: true },
             ),
           )
         }
+      />
+      <input
+        ref={importInput}
+        type="file"
+        accept="application/json,.json"
+        hidden
+        onChange={(e) => {
+          const file = e.currentTarget.files?.[0]
+          e.currentTarget.value = ""
+          if (file) void importFile(file)
+        }}
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}

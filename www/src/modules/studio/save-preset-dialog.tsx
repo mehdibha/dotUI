@@ -14,9 +14,8 @@ import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
 
 /**
- * Saves the document as a new named system; when the tab edits a saved
- * system, it also offers to update that one in place. The name field belongs
- * to "save as new" only: Update never renames.
+ * Saves the document. A tab editing a saved system first offers to update it
+ * in place, which never renames; "Save as new" owns the name field.
  */
 export function SavePresetDialog({
   isOpen,
@@ -35,11 +34,15 @@ export function SavePresetDialog({
   onUpdate: () => void
 }) {
   const [name, setName] = useState(defaultName)
-  // The field resets on every open (the modal stays mounted between opens).
+  const [naming, setNaming] = useState(!updateTarget)
+  // Each open starts over (the modal stays mounted between opens).
   const [wasOpen, setWasOpen] = useState(isOpen)
   if (isOpen !== wasOpen) {
     setWasOpen(isOpen)
-    if (isOpen) setName(defaultName)
+    if (isOpen) {
+      setName(defaultName)
+      setNaming(!updateTarget)
+    }
   }
 
   const trimmed = name.trim()
@@ -65,53 +68,64 @@ export function SavePresetDialog({
             Save design system
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Store the current design system under a name you can come back to.
+            {naming
+              ? "Store the current design system under a name you can come back to."
+              : `Save your changes to “${updateTarget}”, or keep them as a new design system.`}
           </DialogDescription>
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            saveNew()
-          }}
-        >
-          <TextField
-            autoFocus
-            aria-label="Name"
-            value={name}
-            onChange={setName}
-          >
-            <Label>Name</Label>
-            <Input placeholder="My design system" />
-          </TextField>
-        </form>
-        <div className="flex justify-end gap-2">
-          {updateTarget ? (
-            <>
-              <Button size="sm" onPress={saveNew} isDisabled={!trimmed}>
-                Save as new
+        {naming ? (
+          <>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                saveNew()
+              }}
+            >
+              <TextField
+                autoFocus
+                aria-label="Name"
+                value={name}
+                onChange={setName}
+              >
+                <Label>Name</Label>
+                <Input
+                  placeholder="My design system"
+                  onFocus={(e) => e.currentTarget.select()}
+                />
+              </TextField>
+            </form>
+            <div className="flex justify-end gap-2">
+              <Button size="sm" onPress={() => onOpenChange(false)}>
+                Cancel
               </Button>
               <Button
                 size="sm"
                 variant="primary"
-                onPress={() => {
-                  onUpdate()
-                  onOpenChange(false)
-                }}
+                onPress={saveNew}
+                isDisabled={!trimmed}
               >
-                Update “{updateTarget}”
+                Save as new
               </Button>
-            </>
-          ) : (
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-end gap-2">
+            <Button size="sm" onPress={() => setNaming(true)}>
+              Save as new…
+            </Button>
             <Button
+              autoFocus
               size="sm"
               variant="primary"
-              onPress={saveNew}
-              isDisabled={!trimmed}
+              onPress={() => {
+                onUpdate()
+                onOpenChange(false)
+              }}
             >
-              Save
+              Update “{updateTarget}”
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </DialogContent>
     </Modal>
   )
