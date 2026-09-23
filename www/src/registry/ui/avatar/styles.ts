@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(avatarMeta, {
       image: "aspect-square size-full rounded-[inherit] object-cover",
       fallback: [
         "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-ui group-data-[size=sm]/avatar:text-xs",
-        "group-data-[size=sm]/avatar-group:text-[0.625rem] group-data-[size=md]/avatar-group:text-xs",
+        "group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem]",
       ],
       badge: [
         "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg select-ui with-[left]:right-auto with-[top]:bottom-auto",
