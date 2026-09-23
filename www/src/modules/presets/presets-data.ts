@@ -226,3 +226,8 @@ export const PRESETS: Preset[] = [
 
 /** The default preset — what /studio starts on for first-time users. */
 export const ORIGIN = PRESETS[0]!
+
+/** Origin as encoded before #777 (selection pinned blue), still in returning
+ *  visitors' storage and shared links; it loads as today's Origin. */
+export const LEGACY_ORIGIN =
+  "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"

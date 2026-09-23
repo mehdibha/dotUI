@@ -4,7 +4,7 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { LEGACY_ORIGIN, ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
 import { DEFAULT_PRESET, encodePreset } from "@/modules/studio/preset/codec"
@@ -42,11 +42,6 @@ export function createSearchSchema(
 }
 
 const searchDefaults = { preview: "cards" }
-
-/* Origin as encoded before #777 (selection pinned blue), still in returning
-   visitors' storage and shared links; it loads as today's Origin. */
-const LEGACY_ORIGIN =
-  "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
 
 /** Undefined on the server and first render (SSR ships the desktop layout). */
 function useIsBelowLg() {
