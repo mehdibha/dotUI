@@ -254,7 +254,35 @@ async function capture(page: Page, url: string, section?: string) {
   return { jpeg, ...box } satisfies Shot
 }
 
-export const screenshot: Screenshotter = async ({ url, section }) => {
+/** A slow page trips the protocol timeout too; only a browser that stops
+ *  answering is frozen, and replacing it kills every render in flight. */
+async function frozen(b: Browser) {
+  const answer = b.version().then(
+    () => false,
+    () => true,
+  )
+  const silence = new Promise<boolean>((resolve) =>
+    setTimeout(() => resolve(true), 3_000),
+  )
+  return Promise.race([answer, silence])
+}
+
+/** The page or browser went away mid-render (a replaced browser). */
+const lostTarget = (error: unknown) =>
+  /Target closed|frame was detached|Session closed|Connection closed/i.test(
+    message(error),
+  )
+
+export const screenshot: Screenshotter = async (shot) => {
+  try {
+    return await screenshotOnce(shot)
+  } catch (error) {
+    if (!lostTarget(error)) throw error
+    return screenshotOnce(shot)
+  }
+}
+
+const screenshotOnce: Screenshotter = async ({ url, section }) => {
   const launching = getBrowser()
   let b: Browser
   try {
@@ -294,7 +322,7 @@ export const screenshot: Screenshotter = async ({ url, section }) => {
   try {
     return await withTimeout(render(), PAGE_TIMEOUT, `Rendering ${url}`)
   } catch (error) {
-    if (isTimeout(error)) discard(launching, b)
+    if (isTimeout(error) && (await frozen(b))) discard(launching, b)
     if (error instanceof ToolError) throw error
     throw new ToolError(`Rendering ${url} failed: ${message(error)}`)
   } finally {
