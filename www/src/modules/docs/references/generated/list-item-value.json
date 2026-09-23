@@ -1,0 +1,14 @@
+{
+  "name": "ListItemValueProps",
+  "description": "Trailing content: a value, a badge, a switch.",
+  "extendsElement": "span",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

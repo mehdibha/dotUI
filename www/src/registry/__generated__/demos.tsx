@@ -1605,6 +1605,18 @@ export const DemosIndex: Record<
 		files: ["ui/link/demos/with-icon.tsx"],
 		component: React.lazy(() => import("@/registry/ui/link/demos/with-icon")),
 	},
+	"list/demos/basic": {
+		files: ["ui/list/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/list/demos/basic")),
+	},
+	"list/demos/sections": {
+		files: ["ui/list/demos/sections.tsx"],
+		component: React.lazy(() => import("@/registry/ui/list/demos/sections")),
+	},
+	"list/demos/selection": {
+		files: ["ui/list/demos/selection.tsx"],
+		component: React.lazy(() => import("@/registry/ui/list/demos/selection")),
+	},
 	"list-box/demos/async": {
 		files: ["ui/list-box/demos/async.tsx"],
 		component: React.lazy(() => import("@/registry/ui/list-box/demos/async")),

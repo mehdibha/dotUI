@@ -50,6 +50,7 @@ import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
+import UiList from "@/registry/ui/list/meta";
 import UiLoader from "@/registry/ui/loader/meta";
 import UiMarker from "@/registry/ui/marker/meta";
 import UiMention from "@/registry/ui/mention/meta";
@@ -133,6 +134,7 @@ export const registryUi: RegistryItem[] = [
 	UiInput,
 	UiKbd,
 	UiLink,
+	UiList,
 	UiListBox,
 	UiLoader,
 	UiMarker,
