@@ -71,7 +71,7 @@ const routes = [
   // /studio is prerendered without a query, so its static HTML can't hydrate a
   // ?preset= or ?preview= link: those render on the server instead.
   ...["preset", "preview"].map((key) => ({
-    src: "/studio",
+    src: "/studio/?",
     has: [{ type: "query", key }],
     dest: "/__server",
   })),
