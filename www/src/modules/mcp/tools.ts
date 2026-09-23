@@ -70,10 +70,9 @@ const chapterAxes = (chapter: (typeof CATALOG)[number]) =>
     chapter.id === "color" ? [[PRIMARY_KEY, PRIMARY_SPEC]] : [],
   )
 
+/** primaryColor is a shortcut over the leaves, so it has no default. */
 const defaultOf = (key: string) =>
-  key === PRIMARY_KEY
-    ? primaryValue(DEFAULTS)
-    : DEFAULTS[key as keyof StudioState]
+  key === PRIMARY_KEY ? null : DEFAULTS[key as keyof StudioState]
 
 const decode = (preset: string | undefined): StudioPreset =>
   preset ? decodePreset(preset) : { state: DEFAULTS }
@@ -416,7 +415,12 @@ export function setAxes(
       applied[key] = { from: before[key], to: state[key] }
   const moved = effects(before, state)
   const problems = moved.colorChanged ? checkDesign(state).problems : []
-  const warnings = [...new Set([...primaryWarnings(state), ...problems])]
+  const explicit = new Set(Object.keys(input.set ?? {}))
+  const forked =
+    explicit.has("buttonColor") || explicit.has(PRIMARY_KEY)
+      ? primaryWarnings(state, explicit)
+      : []
+  const warnings = [...new Set([...forked, ...problems])]
   return {
     preset: encoded,
     applied,

@@ -73,7 +73,7 @@ describe("list_axes", () => {
     expect(color?.axes.find((a) => a.key === "primaryColor")).toMatchObject({
       type: "enum",
       values: ["neutral", "accent"],
-      default: "mixed",
+      default: null,
     })
   })
 
@@ -203,10 +203,7 @@ describe("set_axes", () => {
     for (const leaf of PRIMARY_LEAVES)
       expect(state[leaf]).toBe(leaf === "tabsColor" ? "neutral" : "accent")
     expect(getDesign(ORIGIN, preset).primaryColor).toBe("mixed")
-    expect(warnings?.join()).toMatch(
-      /Mixed Primary: buttons are accent but tabsColor is still neutral/,
-    )
-    expect(warnings?.join()).not.toMatch(/Geist/)
+    expect(warnings?.join() ?? "").not.toMatch(/Mixed Primary/)
 
     const all = setAxes(ORIGIN, { set: { primaryColor: "accent" } })
     expect(getDesign(ORIGIN, all.preset).primaryColor).toBe("accent")
@@ -272,7 +269,7 @@ describe("check", () => {
   test("sees an untinted neutral", () => {
     const { preset } = setAxes(ORIGIN, { set: { neutralTint: 0 } })
     const result = check(preset)
-    expect(result.neutralTinted).toBe(false)
+    expect(result.neutralTinted).toEqual({ light: false, dark: false })
     expect(result.light.neutralChroma.bg).toBe(0)
   })
 
@@ -290,6 +287,26 @@ describe("check", () => {
     const problems = check(preset).problems.join()
     expect(problems).toMatch(/renders visibly off its seed.*preserveSeed/)
     expect(problems).not.toMatch(/primaryColor/)
+  })
+
+  test("flags neutral fills that vanish on cards", () => {
+    const { preset } = setAxes(ORIGIN, {
+      set: { surfaceCanvas: "tinted" },
+    })
+    expect(check(preset).problems.join()).toMatch(
+      /dark: neutral fills .* indistinguishable/,
+    )
+  })
+
+  test("a deliberate Primary fork isn't warned about", () => {
+    const fork = setAxes(ORIGIN, {
+      set: { primaryColor: "accent", tabsColor: "neutral" },
+    })
+    expect(fork.warnings?.join() ?? "").not.toMatch(/Mixed Primary/)
+    const half = setAxes(ORIGIN, { set: { buttonColor: "accent" } })
+    expect(half.warnings?.join()).toMatch(/Mixed Primary/)
+    expect(check(half.preset).notes?.join()).toMatch(/Mixed Primary/)
+    expect(check(half.preset).problems.join()).not.toMatch(/Mixed Primary/)
   })
 
   test("follows preset token re-points and pill shapes", () => {

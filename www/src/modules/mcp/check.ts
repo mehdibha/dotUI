@@ -64,8 +64,13 @@ interface Pair {
   bg: string
   /** WCAG 2 minimum; absent = reported, not judged. */
   min?: number
+  /** Fills that only need to differ from their surface, not meet a ratio. */
+  distinct?: boolean
   what: string
 }
+
+/** Below this ratio two fills read as the same color. */
+const INDISTINCT = 1.03
 
 function pairs(state: StudioState): Pair[] {
   const link = state.linkColor === "neutral" ? "fg" : "fg-accent"
@@ -80,13 +85,13 @@ function pairs(state: StudioState): Pair[] {
       fg: "border-control",
       bg: "card",
       min: 3,
-      what: "control borders (inputs, checkboxes, radios) on cards",
+      what: "control borders and the off switch track on cards",
     },
     {
       fg: "neutral",
       bg: "card",
-      min: 3,
-      what: "the off switch track on cards",
+      distinct: true,
+      what: "neutral fills (muted areas, fields, soft badges, avatars, keycaps) on cards",
     },
     // Only a borderless filled field is identified by its fill alone.
     {
@@ -117,12 +122,16 @@ const hueDistance = (a: number, b: number) => {
 
 /** Brand-colored buttons beside neutral selection controls — usually a
  *  half-applied brand move rather than a choice. */
-export function primaryWarnings(state: StudioState): string[] {
+export function primaryWarnings(
+  state: StudioState,
+  deliberate: ReadonlySet<string> = new Set(),
+): string[] {
   if (state.buttonColor !== "accent") return []
   const neutral = PRIMARY_LEAVES.filter(
     (leaf) =>
       leaf !== "linkColor" &&
       leaf !== "focusColor" &&
+      !deliberate.has(leaf) &&
       state[leaf] === "neutral",
   )
   if (!neutral.length) return []
@@ -155,6 +164,15 @@ function measureMode(
     if (!fg || !bg) continue
     const id = `${pair.fg}/${pair.bg}`
     const ratio = round(wcag2(fg, bg), 2)
+    if (pair.distinct) {
+      contrast[id] = { ratio }
+      if (ratio < INDISTINCT)
+        failures[id] = {
+          ratio,
+          message: `${mode}: ${pair.what} are indistinguishable (${ratio}:1, ${pair.fg} on ${pair.bg})`,
+        }
+      continue
+    }
     if (pair.min === undefined) {
       contrast[id] = { ratio }
       continue
@@ -277,7 +295,7 @@ export function checkDesign(state: StudioState) {
         `brand and ${name} share a hue (${round(apart, 0)}° apart): ${name} states read as brand — move the ${name} seed`,
       )
   }
-  problems.push(...primaryWarnings(state))
+  const notes = primaryWarnings(state)
 
   const tier = densityTier(state.density)
   const unit = state.spacingUnit
@@ -295,12 +313,14 @@ export function checkDesign(state: StudioState) {
   return {
     light: strip(light),
     dark: strip(dark),
-    neutralTinted:
-      Math.max(
-        light.neutralChroma.bg,
-        light.neutralChroma.card,
-        light.neutralChroma.border,
-      ) >= VISIBLE_TINT,
+    neutralTinted: {
+      light:
+        Math.max(light.neutralChroma.bg, light.neutralChroma.card) >=
+        VISIBLE_TINT,
+      dark:
+        Math.max(dark.neutralChroma.bg, dark.neutralChroma.card) >=
+        VISIBLE_TINT,
+    },
     hues,
     size: {
       density: tier.id,
@@ -318,5 +338,6 @@ export function checkDesign(state: StudioState) {
     },
     problems,
     inDefaults,
+    ...(notes.length ? { notes } : {}),
   }
 }

@@ -134,7 +134,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Check",
       description:
-        "Verify the design system without a browser, from the real engine. Per mode (light, dark): the resolved hex of the --color-* tokens the components read (bg, card, popover, field, border, border-control, fg, fg-muted, primary, accent, danger, statuses; `neutral` is the off switch track), WCAG 2 contrast for the pairs that matter with pass/fail (4.5 text, 3 non-text), neutral chroma (under 0.005 reads as pure gray) and the brand seed's ΔEok to the rendered accent. Also brand vs status hues, control height and text size, radii in px, and `problems` in plain words (`inDefaults`: failures the default system has too).",
+        "Verify the design system without a browser, from the real engine. Per mode (light, dark): the resolved hex of the --color-* tokens the components read (bg, card, popover, field, border, border-control, fg, fg-muted, primary, accent, danger, statuses; `neutral` is the fill of muted areas, fields, soft badges and avatars), WCAG 2 contrast for the pairs that matter with pass/fail (4.5 text, 3 non-text), neutral chroma (under 0.005 reads as pure gray; `neutralTinted` per mode) and the brand seed's ΔEok to the rendered accent. Also brand vs status hues, control height and text size, radii in px, `problems` in plain words — failures this design introduced or worsened — and `inDefaults`, failures the default system has too (still real failures; tell the user). `notes` flags a mixed Primary.",
       inputSchema: { preset },
       annotations: { readOnlyHint: true },
     },
