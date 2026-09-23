@@ -74,6 +74,9 @@ export function useMedia(query: string) {
    screens) and its popovers open over the dock, never the preview. */
 export const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
+/** Docked beside the preview (a phone on its side): the `dock-side` variant. */
+export const useDockSide = () =>
+  useMedia("(max-width: 1023px) and (max-height: 500px)")
 
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
@@ -138,7 +141,7 @@ export function PanelPopover({
         "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
         docked &&
-          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-y-auto overscroll-contain [@media(max-height:500px)]:top-(--dock-chrome)! [@media(max-height:500px)]:bottom-0! [@media(max-height:500px)]:max-h-none! [@media(max-height:500px)]:rounded-t-none [@media(max-height:500px)]:border-t-0 [@media(min-height:501px)]:top-auto! [@media(min-height:501px)]:bottom-(--dock-chrome)! [@media(min-height:501px)]:max-h-[42svh]! [@media(min-height:501px)]:min-h-[calc(100%-var(--dock-chrome))] [@media(min-height:501px)]:rounded-b-none [@media(min-height:501px)]:border-b-0",
+          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
       )}
       {...props}
     >
@@ -214,7 +217,7 @@ export function ColorPickerPopover({
 }) {
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0">
+      <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
           {COLOR_PRESETS.map((preset) => (
             <ColorSwatchPickerItem
@@ -448,7 +451,7 @@ export function NeutralPickerPopover({
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}

@@ -24,7 +24,7 @@ import { Button } from "@/registry/ui/button"
 
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
-import { DOCKED_QUERY, DockLayer } from "./rows"
+import { DOCKED_QUERY, DockLayer, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, Studio } from "./state"
 
@@ -166,7 +166,10 @@ export function PanelPage({
 }) {
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
   const [active, setActive] = useState(chapters[0]?.id ?? "")
-  const [open, setOpen] = useState(true)
+  const [tucked, setTucked] = useState(false)
+  // Beside the preview, tucking would only empty the column.
+  const side = useDockSide()
+  const open = !tucked || side
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -181,7 +184,7 @@ export function PanelPage({
 
   const dock = (id: string, axis?: string) => {
     setActive(id)
-    setOpen(true)
+    setTucked(false)
     const scroller = layer?.firstElementChild
     if (!scroller) return
     scroller.scrollTo({ top: 0 })
@@ -257,8 +260,8 @@ export function PanelPage({
                 isIconOnly
                 aria-label={open ? "Collapse panel" : "Expand panel"}
                 aria-expanded={open}
-                onPress={() => setOpen(!open)}
-                className="lg:hidden pointer-coarse:data-icon-only:size-9"
+                onPress={() => setTucked(open)}
+                className="lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
               >
                 {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
               </Button>
@@ -274,7 +277,7 @@ export function PanelPage({
           }
           className={
             open
-              ? "[@media(max-width:1023px)_and_(min-height:501px)]:h-auto [@media(max-width:1023px)_and_(min-height:501px)]:max-h-[42svh]"
+              ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
               : "max-lg:h-auto max-lg:[&>:first-child]:border-0"
           }
         >

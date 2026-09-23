@@ -88,11 +88,11 @@ function StudioPage() {
       <PanelPopoverBoundary.Provider value={boundary}>
         <div
           ref={setBoundary}
-          className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 [@media(max-height:500px)]:flex-row"
+          className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 dock-side:flex-row"
         >
           {/* Below `lg` the panel docks under the preview; on short screens
               (a phone on its side) it sits beside it instead. */}
-          <StudioPanel className="max-lg:flex-none [@media(max-height:500px)]:w-64 [@media(max-width:1023px)_and_(min-height:501px)]:order-last" />
+          <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
           <PreviewPanel />
         </div>
       </PanelPopoverBoundary.Provider>

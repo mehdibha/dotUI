@@ -65,7 +65,7 @@ function FontRow({
             <RacButton
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring"
+              className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:size-7"
             >
               <RotateCcwIcon className="size-3.5" />
             </RacButton>

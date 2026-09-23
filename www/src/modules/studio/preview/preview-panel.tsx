@@ -48,7 +48,7 @@ import {
 } from "@/modules/studio/preset"
 import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
-import { useDocked, useMedia } from "@/modules/studio/rows"
+import { useDocked } from "@/modules/studio/rows"
 import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -136,10 +136,9 @@ export function PreviewPanel({ className }: { className?: string }) {
   }, [pickerOpen])
   const [inspecting, setInspecting] = useState(false)
   const [toolbarHidden, setToolbarHidden] = useState(false)
+  // Docked, the tools sit in the site header: a pill would cover the small
+  // preview, and stacked its bottom edge moves with every chapter.
   const docked = useDocked()
-  // Stacked over the dock, the tools sit in the site header: the preview's
-  // bottom edge moves with every chapter, and a pill there covers content.
-  const stacked = useMedia("(max-width: 1023px) and (min-height: 501px)")
 
   // The tools collapse by animating the wrapper to 0×0 — a `0fr` grid track
   // (react-grab's trick) resolves to content size here because the
@@ -160,7 +159,7 @@ export function PreviewPanel({ className }: { className?: string }) {
     observer.observe(el)
     measure()
     return () => observer.disconnect()
-  }, [stacked])
+  }, [docked])
   const isMobile = useIsMobile()
 
   const effectivePreview = preview
@@ -566,7 +565,7 @@ export function PreviewPanel({ className }: { className?: string }) {
           site-themed and earns separation from contrast, not size: a solid
           neutral surface, full-strength border, and a deep layered shadow.
           Sits above the skeleton so the switcher works while loading. */}
-      {stacked ? (
+      {docked ? (
         <HeaderActions>
           <div className="order-first mr-1 flex items-center gap-0.5">
             {previewPicker}
@@ -581,12 +580,12 @@ export function PreviewPanel({ className }: { className?: string }) {
             // rounded-[20px] renders like rounded-full (half the 40px pill) but,
             // unlike calc(infinity*1px), interpolates visibly during the tuck —
             // react-grab's trick for its edge collapse.
-            "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out max-lg:right-2 max-lg:left-auto max-lg:translate-x-0 [@media(max-width:1023px)_and_(min-height:501px)]:hidden",
+            "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out",
             toolbarHidden
               ? // Tucked into the panel's bottom edge as a react-grab-style tab:
                 // flush, squared toward the edge, the chevron button IS the tab.
                 "bottom-0 rounded-[10px] rounded-b-none border-b-0 p-0"
-              : "bottom-3 gap-1 rounded-[20px] p-1 max-lg:bottom-2",
+              : "bottom-3 gap-1 rounded-[20px] p-1",
           )}
         >
           {/* Collapsible content — slides shut toward the chevron, react-grab
