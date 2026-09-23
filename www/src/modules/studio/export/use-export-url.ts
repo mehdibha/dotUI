@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react"
 
 import { siteConfig } from "@/config/site"
+import { encodePreset } from "@/modules/studio/preset/codec"
+import type { StudioPreset } from "@/modules/studio/preset/codec"
 import { useStudio } from "@/modules/studio/use-studio"
 
 import type { PresetUrl } from "./types"
@@ -28,6 +30,16 @@ function getRegistryHost(): string {
 }
 
 /**
+ * Builds from the canonical encoding (base64url only), never the raw
+ * `?preset=` param: these URLs are pasted into shells.
+ */
+export function createPresetUrl(host: string, preset: StudioPreset): PresetUrl {
+  const encoded = encodePreset(preset)
+  return (path) =>
+    encoded ? `${host}${path}?preset=${encoded}` : `${host}${path}`
+}
+
+/**
  * Returns a `presetUrl(path)` builder that resolves a registry path against the
  * right host and appends the current design system as `?preset=<encoded>` —
  * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=…`.
@@ -36,17 +48,12 @@ function getRegistryHost(): string {
  * swaps to the live origin) so the URL stays stable across hydration.
  */
 export function useExportUrl(): PresetUrl {
-  const { encoded } = useStudio()
+  const { preset } = useStudio()
   const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
 
   useEffect(() => {
     setHost(getRegistryHost())
   }, [])
 
-  return useMemo(() => {
-    return (path: string) => {
-      const base = `${host}${path}`
-      return encoded ? `${base}?preset=${encoded}` : base
-    }
-  }, [encoded, host])
+  return useMemo(() => createPresetUrl(host, preset), [host, preset])
 }
