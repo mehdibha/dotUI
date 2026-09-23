@@ -48,9 +48,7 @@ const COLORS = [
   "border-focus",
 ] as const
 
-/* Statuses whose meaning a brand-colored lookalike would blur. Info is left
-   out: a blue info beside a blue brand is the common case. */
-const MEANINGFUL_STATUS = ["success", "warning", "danger"] as const
+const STATUSES = ["success", "warning", "danger", "info"] as const
 const HUE_COLLISION_DEG = 20
 /** Below this chroma a hue doesn't read, so it can't collide. */
 const CHROMATIC = 0.04
@@ -227,18 +225,42 @@ function measure(state: StudioState) {
   }
 }
 
+/** Light-mode hues of the brand and statuses, and the statuses within
+ *  HUE_COLLISION_DEG of a chromatic brand, with how far apart they sit. */
+function statusHues(
+  read: (name: string, mode: ModeName) => string | undefined,
+) {
+  const brand = parse(read("accent", "light"))
+  const hues: Record<string, number> = {}
+  const collisions = new Map<(typeof STATUSES)[number], number>()
+  if (brand) hues.brand = round(brand.h || 0, 0)
+  for (const name of STATUSES) {
+    const status = parse(read(name, "light"))
+    if (!status) continue
+    hues[name] = round(status.h || 0, 0)
+    if (!brand || brand.c < CHROMATIC || status.c < CHROMATIC) continue
+    const apart = hueDistance(brand.h, status.h)
+    if (apart < HUE_COLLISION_DEG) collisions.set(name, round(apart, 0))
+  }
+  return { hues, collisions }
+}
+
 let baseline: Map<string, number> | undefined
-/** The default system's own failures, by mode and pair, with their ratio. */
+/** The default system's own failures: contrast by mode and pair with its
+ *  ratio, hue collisions by status with their distance. */
 function baselineFailures() {
   if (!baseline) {
     const base = measure(DEFAULTS)
-    baseline = new Map(
-      (["light", "dark"] as const).flatMap((mode) =>
+    baseline = new Map([
+      ...(["light", "dark"] as const).flatMap((mode) =>
         Object.entries(base[mode].failures).map(
           ([id, { ratio }]) => [`${mode}:${id}`, ratio] as const,
         ),
       ),
-    )
+      ...[...statusHues(base.read).collisions].map(
+        ([name, apart]) => [`hue:${name}`, apart] as const,
+      ),
+    ])
   }
   return baseline
 }
@@ -276,24 +298,16 @@ export function checkDesign(state: StudioState) {
       }.`,
     )
 
-  const brand = parse(read("accent", "light"))
-  const hues: Record<string, number> = {}
-  if (brand) hues.brand = round(brand.h || 0, 0)
-  for (const name of [...MEANINGFUL_STATUS, "info"] as const) {
-    const status = parse(read(name, "light"))
-    if (!status) continue
-    hues[name] = round(status.h || 0, 0)
-    const apart = brand ? hueDistance(brand.h, status.h) : 360
-    if (
-      name !== "info" &&
-      brand &&
-      brand.c >= CHROMATIC &&
-      status.c >= CHROMATIC &&
-      apart < HUE_COLLISION_DEG
+  const { hues, collisions } = statusHues(read)
+  for (const [name, apart] of collisions) {
+    // A set info seed near the brand is Carbon's and Primer's choice, not a slip.
+    if (name === "info" && state.infoSeed) continue
+    const floor = known.get(`hue:${name}`)
+    ;(floor !== undefined && apart >= floor ? inDefaults : problems).push(
+      `brand and ${name} share a hue (${apart}° apart): ${name} states read as brand — move the ${name} seed${
+        name === "info" ? ", or set it to the brand to match on purpose" : ""
+      }`,
     )
-      problems.push(
-        `brand and ${name} share a hue (${round(apart, 0)}° apart): ${name} states read as brand — move the ${name} seed`,
-      )
   }
   const notes = primaryWarnings(state)
 
