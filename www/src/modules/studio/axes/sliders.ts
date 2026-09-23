@@ -117,8 +117,9 @@ export const SLIDER_SPEC = {
       label: PRIMARY_LEAF_LABELS.sliderColor,
       description:
         "What fills the track up to the thumb, and the Bar thumb. A leaf of " +
-        "Color's Primary: on the Buttons leaf's value it paints with the " +
-        "primary tokens, off it it forks to its own source.",
+        "Color's Primary, set on its own: changing Buttons doesn't move it " +
+        "(it defaults to Neutral), though it shares the primary tokens " +
+        "while both agree.",
       value: {
         type: "enum",
         options: SOURCE_OPTIONS.map((option) => ({

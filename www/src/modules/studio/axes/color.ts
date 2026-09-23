@@ -60,7 +60,9 @@ export const SOURCE_OPTIONS = [
     value: "accent",
     label: "Accent",
     description:
-      "The brand ramp's solid step, with a label color solved for contrast.",
+      "The brand ramp's solid step, with a white or dark label picked to " +
+      "clear WCAG 3:1 and APCA Lc 60 — not AA's 4.5:1, so check small " +
+      "text on light or vivid brands.",
   },
 ]
 
@@ -224,7 +226,10 @@ const statusSeed = (
   fallback: string,
 ): AxisSpec => ({
   label,
-  description: `Seed of the ${label.toLowerCase()} palette — ${paints}.`,
+  description:
+    `Seed of the ${label.toLowerCase()} palette — ${paints}. Vividness ` +
+    "multiplies its chroma too: above 1 the solid runs louder than the " +
+    "seed, below 1 duller (at 0.5 the default danger red turns salmon).",
   value: { type: "color" },
   auto:
     `The engine's default ${fallback}, chosen for color-vision-deficiency ` +
@@ -237,15 +242,22 @@ export const COLOR_SPEC = {
     "The palette engine's inputs: a brand seed, a neutral that leans toward " +
     "a hue, optional status and selection seeds, and which ramp the solid " +
     "roles paint with. Every palette is a 12-step ramp generated per mode; " +
-    "dark is its own pass, not an inversion.",
+    "dark is its own pass, not an inversion. Which roles paint with the " +
+    "brand is split over eight leaves — buttonColor, checkboxColor, " +
+    "radioColor, switchColor, sliderColor, tabsColor, linkColor, " +
+    "focusColor — each stored on its own; the studio's Primary control " +
+    "reads them as one value (or mixed) and sets them together. The info " +
+    "palette has no seed: it is always the engine's blue (#4862ff).",
   axes: {
     brand: {
       label: "Brand",
       description:
         "The brand color. The accent ramp is built from it: the solid step " +
-        "sits at the seed's own lightness (clamped so labels stay legible) " +
-        "and chroma, and the neutral leans toward its hue unless Neutral " +
-        "hue is set. Paints every role set to Accent (links and the focus " +
+        "keeps the seed's hue and chroma, and its lightness within L* " +
+        "35–92 — a darker or lighter seed is pulled into that window (a " +
+        "#141414 brand renders #525252, #fafafa renders #e8e8e8), and a " +
+        "mid-tone whose label can't reach contrast is darkened further. " +
+        "The neutral leans toward its hue unless Neutral hue is set. Paints every role set to Accent (links and the focus " +
         "ring by default; the focus ring moves to the Selection seed when " +
         "one is set), and always the calendar's and time picker's selected " +
         "values, drop-target highlights in drop zones and trees, and the " +
@@ -256,15 +268,25 @@ export const COLOR_SPEC = {
         "every palette from one source color, as here. A muted seed gives " +
         "a muted ramp by design — raise Vividness rather than picking a " +
         "louder seed. A near-gray seed yields gray ramps and an untinted " +
-        "neutral.",
+        "neutral. Status hues don't move away from the brand: a green " +
+        "brand lands on top of success, a red one on danger — reseed the " +
+        "status to separate them. For a black-and-white system don't seed a near-black " +
+        "brand: keep the Primary control on Neutral (near-black in light, " +
+        "near-white in dark) and give Brand the hue links, focus and " +
+        "selection highlights should carry.",
     },
     buttonColor: {
       label: PRIMARY_LEAF_LABELS.buttonColor,
       description:
         "What the primary tokens fill with: the primary button and toggle " +
         "button, the progress bar, the avatar badge, the primary chat " +
-        "bubble, the checked questionnaire choice, and the slider unless " +
-        "the Slider leaf forks. A leaf of Primary.",
+        "bubble, the checked questionnaire choice, and neutral badges and " +
+        "tags in the Inverse chip style. Nothing else follows it: " +
+        "checkboxColor, radioColor, switchColor, sliderColor and tabsColor " +
+        "(default Neutral) and linkColor and focusColor (default Accent) " +
+        "are separate leaves. Setting only this one to Accent leaves " +
+        "near-black checks, switch, slider and tabs beside brand buttons; " +
+        "the Primary control sets all eight at once.",
       value: {
         type: "enum",
         options: SOURCE_OPTIONS.map((option) => ({
@@ -272,13 +294,13 @@ export const COLOR_SPEC = {
           seenIn:
             option.value === "neutral"
               ? ["shadcn/ui", "Geist"]
-              : ["Radix Themes", "Material 3"],
+              : ["Radix Themes", "Material 3", "Linear"],
         })),
       },
       guidance:
-        "Of 4 checked, shadcn/ui and Geist fill the primary button " +
-        "near-black; Radix Themes (accent step 9) and Material 3 (primary) " +
-        "fill it with the brand. Neutral suits tool UIs where the brand is " +
+        "Of 5 checked, shadcn/ui and Geist fill the primary button " +
+        "near-black; Radix Themes (accent step 9), Material 3 (primary) " +
+        "and Linear (its indigo) fill it with the brand. Neutral suits tool UIs where the brand is " +
         "kept for links and focus; accent suits brand-forward products.",
     },
     neutralHue: {
@@ -302,14 +324,19 @@ export const COLOR_SPEC = {
       label: "Neutral tint",
       description:
         "How far the neutral leans toward its hue — a multiplier on the " +
-        "engine's tint peak (about 0.016 OKLCH chroma). 0 is a pure gray.",
+        "engine's tint peak (about 0.016 OKLCH chroma), reached only in the " +
+        "mid-tone steps; the page and surfaces carry an eighth to a quarter " +
+        "of it. 0 is a pure gray.",
       value: { type: "number", min: 0, max: 2, step: 0.05, unit: "×" },
       guidance:
         "Material 3's neutral runs at HCT chroma 6 by default, 2 in its " +
         "Neutral scheme and 0 in Monochrome; shadcn/ui's default Neutral " +
-        "is a pure gray (0). Use 0 for a stark, Vercel-like monochrome; " +
-        "1 reads as gray with a temperature; above 1.5 the neutral becomes " +
-        "visibly colored.",
+        "is a pure gray (0). 1 is the median tint of Radix's gray families " +
+        "(slate, mauve, sage…): gray with a temperature, about 0.002 " +
+        "chroma on the light page. Below 1 light surfaces render as plain " +
+        "gray (0.001 at 0.5) — don't call them tinted; the lean survives " +
+        "only faintly in borders and dark surfaces. Use 0 for a stark, " +
+        "Vercel-like monochrome; toward 2 surfaces carry a visible tint.",
     },
     successSeed: statusSeed(
       "Success",
@@ -364,16 +391,20 @@ export const COLOR_SPEC = {
     preserveSeed: {
       label: "Keep exact",
       description:
-        "Pins the brand's solid step to the exact seed in light mode, " +
-        "instead of re-fitting its lightness and chroma to the ramp. Dark " +
-        "mode still re-solves. The label on it can then miss its contrast " +
-        "target; the engine reports it.",
+        "Pins the brand's solid step to the exact seed instead of fitting " +
+        "its lightness and chroma to the ramp — in both modes, since the " +
+        "solid step is shared across them. Hover, border and text steps " +
+        "still come from the ramp. The label on it can then miss its 3:1 / " +
+        "Lc 60 target, and nothing here warns: check it yourself.",
       value: { type: "boolean" },
       guidance:
         "Material 3 offers both: Tonal Spot replaces the source chroma, " +
         "while Fidelity and Content keep it and place the source color in " +
         "primary container. Turn it on when brand guidelines require the " +
-        "exact hex on buttons; leave it off for ramps that stay even.",
+        "exact hex on buttons; leave it off for ramps that stay even. It " +
+        "doesn't fix a monochrome brand: a pinned near-black seed fills " +
+        "accent roles near-black in dark mode too, where they sink into " +
+        "the page.",
     },
   },
 } satisfies ChapterSpec<typeof COLOR_DEFAULTS>
