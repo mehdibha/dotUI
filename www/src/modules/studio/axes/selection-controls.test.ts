@@ -20,32 +20,29 @@ describe("selection controls", () => {
     const ds = resolveDesignSystem({ ...DEFAULTS, switchColor: "accent" })
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toEqual({ switch: "accent" })
-    expect(
-      resolveDesignSystem({
-        ...DEFAULTS,
-        checkboxColor: "neutral",
-        radioColor: "accent",
-        switchColor: "accent",
-      }).color?.scopes,
-    ).toEqual({ radio: "accent", switch: "accent" })
+    const split = resolveDesignSystem({
+      ...DEFAULTS,
+      checkboxColor: "neutral",
+      radioColor: "accent",
+      switchColor: "accent",
+    }).color
+    expect(split?.selection).toBe("accent")
+    expect(split?.scopes).toEqual({ checkbox: "neutral" })
   })
 
-  it("a fill matching the selection source is no fork", () => {
+  it("the checks' majority is the selection source; only the minority forks", () => {
     expect(
       resolveDesignSystem({ ...DEFAULTS, checkboxColor: "neutral" }).color,
     ).toBeUndefined()
     const accentChecks = resolveDesignSystem({
       ...DEFAULTS,
-      selectionColor: "accent",
       checkboxColor: "accent",
+      radioColor: "accent",
     }).color
     expect(accentChecks?.selection).toBe("accent")
-    expect(accentChecks?.scopes).toEqual({
-      radio: "neutral",
-      switch: "neutral",
-    })
-    // A selection seed paints the selection leaf; a control on that leaf
-    // follows it, a control off it still forks to its own source.
+    expect(accentChecks?.scopes).toEqual({ switch: "neutral" })
+    // A selection seed paints the selection source; the majority follows
+    // it, the minority still forks to its own source.
     const seeded = { ...DEFAULTS, selectionSeed: "#0072f5" }
     expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
     expect(

@@ -1,8 +1,8 @@
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch
    ⇄ Choice cards). Fill is per control, a leaf of Color's Primary: on the
-   selection tokens' source it paints with them, off it it forks — Geist runs
-   near-black checkboxes beside a blue toggle. Corner is checkbox-only
-   geometry.
+   selection tokens' source (the three controls' majority) it paints with
+   them, off it it forks — Geist runs near-black checkboxes beside a blue
+   toggle. Corner is checkbox-only geometry.
 
    Engine: a fork re-declares the selection tokens under `[data-checkbox]`
    (the recipe's `scopes`), so the component's classes never change. Corner
@@ -67,8 +67,8 @@ export const CHECKBOX_SPEC = {
       label: PRIMARY_LEAF_LABELS.checkboxColor,
       description:
         "What fills a checked or indeterminate box. A leaf of Color's " +
-        "Primary: on the Selection leaf's value it paints with the selection " +
-        "tokens, off it it forks to its own source.",
+        "Primary: when Radio or Switch shares its value it paints with the " +
+        "selection tokens; alone against both it forks to its own source.",
       value: {
         type: "enum",
         options: SOURCE_OPTIONS.map((option) => ({

@@ -52,13 +52,16 @@ describe("color axis", () => {
     })
   })
 
-  it("stores the selection source only when it leaves the primary's", () => {
+  it("derives the selection source from the checks' majority", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
       buildColorConfig({ ...DEFAULTS, ...state }).selection
-    expect(source({ selectionColor: "neutral" })).toBeUndefined()
-    expect(source({ selectionColor: "accent" })).toBe("accent")
+    expect(source({ switchColor: "accent" })).toBeUndefined()
+    expect(source({ radioColor: "accent", switchColor: "accent" })).toBe(
+      "accent",
+    )
     expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
-    expect(source({ buttonColor: "accent", selectionColor: "neutral" })).toBe(
+    expect(source({ buttonColor: "accent" })).toBe("neutral")
+    expect(source({ buttonColor: "accent", checkboxColor: "accent" })).toBe(
       "neutral",
     )
   })

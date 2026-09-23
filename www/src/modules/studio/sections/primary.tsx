@@ -129,18 +129,6 @@ function SwitchGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function SelectionGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="flex h-5 items-center gap-1 rounded-md px-1.5 text-[10.5px] font-medium"
-      style={{ background: ink.fill, color: ink.on }}
-    >
-      <Check color={ink.on} />
-      Item
-    </span>
-  )
-}
-
 function SliderGlyph({ ink }: { ink: Ink }) {
   return (
     <span className="flex h-1 w-14 items-center rounded-full bg-fg/15">
@@ -198,7 +186,6 @@ const GLYPHS: Record<PrimaryLeaf, (props: { ink: Ink }) => React.ReactNode> = {
   checkboxColor: CheckboxGlyph,
   radioColor: RadioGlyph,
   switchColor: SwitchGlyph,
-  selectionColor: SelectionGlyph,
   sliderColor: SliderGlyph,
   tabsColor: TabsGlyph,
   linkColor: LinkGlyph,

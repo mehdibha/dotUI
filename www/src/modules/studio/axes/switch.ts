@@ -27,8 +27,9 @@ export const SWITCH_SPEC = {
       label: PRIMARY_LEAF_LABELS.switchColor,
       description:
         "What fills the track when the switch is on. A leaf of Color's " +
-        "Primary: on the Selection leaf's value it paints with the selection " +
-        "tokens, off it it forks to its own source.",
+        "Primary: when Checkbox or Radio shares its value it paints with " +
+        "the selection tokens; alone against both it forks to its own " +
+        "source.",
       value: {
         type: "enum",
         options: SOURCE_OPTIONS.map((option) => ({
@@ -42,9 +43,9 @@ export const SWITCH_SPEC = {
         "Primer and Geist use the accent. The switch is the one selection " +
         "control systems fork: Geist runs a blue switch beside near-black " +
         "checkboxes. Apple, Carbon and Atlassian fill it green: set Color's " +
-        "Selection seed to that green and keep Switch on the Selection " +
-        "leaf's value. Move Checkbox and Radio off that value if they " +
-        "should stay neutral or brand, as Carbon does.",
+        "Selection seed to that green — it reaches the switch only " +
+        "alongside Checkbox or Radio, so Carbon's green switch beside a " +
+        "near-black checkbox and radio is out of reach.",
     },
   },
 } satisfies ChapterSpec<typeof SWITCH_DEFAULTS>

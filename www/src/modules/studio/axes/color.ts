@@ -36,7 +36,6 @@ export const MODE_BG_RANGE = {
 export const COLOR_DEFAULTS = {
   brand: DEFAULT_COLOR_CONFIG.seeds.accent,
   buttonColor: "neutral",
-  selectionColor: "neutral",
   neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",
@@ -70,15 +69,18 @@ export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
-   Solids fill: the buttons (the primary tokens), every selected item (the
-   selection tokens), each check control, the slider. Inks draw: the selected
-   tab, links, the focus ring. */
-export const SOLID_LEAVES = [
-  "buttonColor",
+   Solids fill: the buttons (the primary tokens), each check control (the
+   selection tokens), the slider. Inks draw: the selected tab, links, the
+   focus ring. */
+export const CHECK_LEAVES = [
   "checkboxColor",
   "radioColor",
   "switchColor",
-  "selectionColor",
+] as const
+
+export const SOLID_LEAVES = [
+  "buttonColor",
+  ...CHECK_LEAVES,
   "sliderColor",
 ] as const
 
@@ -96,7 +98,6 @@ export const PRIMARY_LEAF_LABELS: Record<PrimaryLeaf, string> = {
   checkboxColor: "Checkbox",
   radioColor: "Radio",
   switchColor: "Switch",
-  selectionColor: "Selection",
   sliderColor: "Slider",
   tabsColor: "Tabs",
   linkColor: "Links",
@@ -121,15 +122,21 @@ export function withSource<K extends PrimaryLeaf>(
   >
 }
 
+/** The selection tokens' source: the check controls' majority. */
+export function selectionSource(state: StudioState): PrimaryColorSource {
+  const accent = CHECK_LEAVES.filter((leaf) => state[leaf] === "accent")
+  return accent.length >= 2 ? "accent" : "neutral"
+}
+
 /** One control's fill as a recipe scope — only when it leaves the selection
- *  leaf; on it, the control paints with the selection tokens (a `selection`
- *  seed included). */
+ *  source; on it, the control paints with the selection tokens (a
+ *  `selection` seed included). */
 export function fillScope(
   state: StudioState,
   scope: string,
   fill: string,
 ): Partial<ColorConfig> | undefined {
-  if (fill === state.selectionColor) return undefined
+  if (fill === selectionSource(state)) return undefined
   return { scopes: { [scope]: fill as PrimaryColorSource } }
 }
 
@@ -152,6 +159,7 @@ function compact<T extends object>(value: T): T {
 }
 
 export function buildColorConfig(state: StudioState): ColorConfig {
+  const selection = selectionSource(state)
   const light = modeFor(state, "light")
   const dark = modeFor(state, "dark")
   return compact({
@@ -178,10 +186,7 @@ export function buildColorConfig(state: StudioState): ColorConfig {
     neutralHue: state.neutralHue ?? undefined,
     preserveSeed: state.preserveSeed || undefined,
     primary: state.buttonColor === "accent" ? "accent" : undefined,
-    selection:
-      state.selectionColor === state.buttonColor
-        ? undefined
-        : (state.selectionColor as PrimaryColorSource),
+    selection: selection === state.buttonColor ? undefined : selection,
   })
 }
 
@@ -276,32 +281,6 @@ export const COLOR_SPEC = {
         "fill it with the brand. Neutral suits tool UIs where the brand is " +
         "kept for links and focus; accent suits brand-forward products.",
     },
-    selectionColor: {
-      label: PRIMARY_LEAF_LABELS.selectionColor,
-      description:
-        "The source of the root selection tokens (color-selection*), which " +
-        "app code can use. Checkbox, radio and switch each have their own " +
-        "leaf: a control whose leaf equals this value paints with these " +
-        "tokens (and follows the Selection seed when one is set); a control " +
-        "on another value is scoped to its own source. Changing this alone " +
-        "repaints no registry component — it decides which checked " +
-        "controls follow the Selection seed.",
-      value: {
-        type: "enum",
-        options: SOURCE_OPTIONS.map((option) => ({
-          ...option,
-          seenIn:
-            option.value === "neutral"
-              ? ["shadcn/ui", "Carbon"]
-              : ["Radix Themes", "Material 3"],
-        })),
-      },
-      guidance:
-        "Of 4 checked, shadcn/ui (primary, near-black) and Carbon " +
-        "(icon-primary) check in neutral; Radix Themes and Material 3 in " +
-        "the brand. Keep it on the same source as Buttons unless checked " +
-        "controls need their own voice.",
-    },
     neutralHue: {
       label: "Neutral hue",
       description:
@@ -352,21 +331,22 @@ export const COLOR_SPEC = {
       label: "Selection",
       description:
         "Moves the selection tokens onto their own ramp, built from this " +
-        "seed: checkbox, radio and switch on the Selection leaf fill with " +
-        "its solid step instead of neutral or accent. It also takes over " +
-        "the focus color (color-border-focus): with Focus ring on Accent, " +
-        "the focus ring and focused field borders switch from the brand to " +
-        "this seed.",
+        "seed: of checkbox, radio and switch, the ones on the source at " +
+        "least two of them share fill with its solid step instead of " +
+        "neutral or accent; a control alone on the other source keeps it. " +
+        "It also takes over the focus color (color-border-focus): with " +
+        "Focus ring on Accent, the focus ring and focused field borders " +
+        "switch from the brand to this seed.",
       value: { type: "color" },
       auto:
-        "No ramp of its own — the selection tokens draw from the Selection " +
-        "leaf's source.",
+        "No ramp of its own — the selection tokens draw from the source " +
+        "most check controls share.",
       guidance:
         "Use it when checked controls carry a hue that is neither the " +
-        "brand nor gray: Apple HIG switches default to green, Carbon's " +
-        "toggle fills with its success green while its checkbox stays " +
-        "near-black. To split like Carbon, set the seed and move the " +
-        "controls that should stay neutral off the Selection leaf.",
+        "brand nor gray: Apple HIG switches default to green. It reaches " +
+        "the two or three checks that agree, never a lone one — Carbon's " +
+        "green toggle beside a near-black checkbox and radio is out of " +
+        "reach.",
     },
     vividness: {
       label: "Vividness",

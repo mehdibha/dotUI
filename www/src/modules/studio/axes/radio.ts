@@ -26,9 +26,9 @@ export const RADIO_SPEC = {
     radioColor: {
       label: PRIMARY_LEAF_LABELS.radioColor,
       description:
-        "What fills a selected radio. A leaf of Color's Primary: on the " +
-        "Selection leaf's value it paints with the selection tokens, off it " +
-        "it forks to its own source.",
+        "What fills a selected radio. A leaf of Color's Primary: when " +
+        "Checkbox or Switch shares its value it paints with the selection " +
+        "tokens; alone against both it forks to its own source.",
       value: {
         type: "enum",
         options: SOURCE_OPTIONS.map((option) => ({

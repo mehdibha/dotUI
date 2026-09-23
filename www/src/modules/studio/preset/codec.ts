@@ -20,6 +20,7 @@ import type { CodeOptions } from "@/publisher/code-options"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 import {
+  CHECK_LEAVES,
   PRIMARY_LEAVES,
   SOLID_LEAVES,
   withSource,
@@ -204,13 +205,10 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
   if (color) {
     state.brand = color.seeds.accent
-    // The selection tokens and the slider followed the primary unless
-    // re-pointed.
+    // The checks and the slider followed the primary unless re-pointed.
     Object.assign(state, withSource(SOLID_LEAVES, color.primary ?? "neutral"))
     if (color.selection)
-      for (const leaf of SOLID_LEAVES)
-        if (leaf !== "buttonColor" && leaf !== "sliderColor")
-          state[leaf] = color.selection
+      Object.assign(state, withSource(CHECK_LEAVES, color.selection))
     for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
       const fill = color.scopes?.[scope]
       if (fill) state[key] = fill
