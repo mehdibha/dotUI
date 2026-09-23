@@ -144,13 +144,15 @@
 }
 
 /* Focus axes: the ring controls wear (color, width, offset in bg, duo inner
-   stroke) and the layer fields wear (a muted halo by default). */
+   stroke) and the layer fields wear (a 30% halo of the ring color by
+   default). */
 @theme {
   --focus-ring-color: var(--color-border-focus);
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
   --focus-ring-inner: 0px;
-  --focus-input-color: var(--color-border-focus-muted);
+  /* prettier-ignore */
+  --focus-input-color: color-mix(in oklab, var(--color-border-focus) 30%, transparent);
   --focus-input-width: 2px;
   --focus-input-offset: 0px;
   --focus-input-inner: 0px;

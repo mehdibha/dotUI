@@ -1,8 +1,10 @@
 import { describe, expect, test } from "vitest"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
+import { FOCUS_DEFAULTS, mixFocus } from "./focus"
 import { DEFAULTS } from "./index"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
@@ -40,6 +42,12 @@ describe("focus axis", () => {
     })
     expect(resolve({ focusStyle: "duo", focusOffset: "inset" }).tokens).toEqual(
       { "--focus-ring-inner": "1px", "--focus-ring-offset": "0px" },
+    )
+  })
+
+  test("the default field halo is the strength mix base.css ships", () => {
+    expect(baseRegistryCss.cssVars.theme["--focus-input-color"]).toBe(
+      mixFocus("var(--color-border-focus)", FOCUS_DEFAULTS.focusInputStrength),
     )
   })
 

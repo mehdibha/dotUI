@@ -10,7 +10,7 @@ import type { Resolved, StudioState } from "./index"
 import type { AxisOption, ChapterSpec } from "./spec"
 
 /* Defaults mirror base.css: a 2px accent ring over a 2px bg gap; fields wear
-   a 2px muted halo. */
+   a 2px halo of the ring color at 30%. */
 export const FOCUS_DEFAULTS = {
   focusColor: "accent",
   focusStyle: "ring",
@@ -73,8 +73,8 @@ export const FOCUS_INPUT_STYLE_OPTIONS = [
     value: "halo",
     label: "Halo",
     description:
-      "The border turns the focus color and a soft 2px halo of its muted " +
-      "step spreads flush outside it.",
+      "The border turns the focus color and a soft 2px halo of it, 30% " +
+      "by default (Strength), spreads flush outside it.",
     seenIn: ["shadcn/ui", "Geist", "coss ui", "Ant Design"],
   },
   {
@@ -210,14 +210,14 @@ export function resolveFocus(state: StudioState): Resolved {
 const FOCUS_INKS: Record<string, Pick<AxisOption, "description" | "seenIn">> = {
   neutral: {
     description:
-      "A gray ring from the neutral ramp (step 700); the field halo takes " +
-      "its light step (300).",
+      "A gray ring from the neutral ramp (step 700); the field halo is " +
+      "the same gray, translucent.",
     seenIn: ["shadcn/ui", "Fluent 2"],
   },
   accent: {
     description:
       "The ring in the accent's solid step (700), or the selection seed's " +
-      "when one is set; the field halo takes its light step (300).",
+      "when one is set; the field halo is the same color, translucent.",
     seenIn: [
       "Radix Themes",
       "Spectrum 2",
@@ -331,9 +331,8 @@ export const FOCUS_SPEC = {
     focusInputStrength: {
       label: "Strength",
       description:
-        "The field halo's opacity. At 30 it is the focus color's muted " +
-        "step; any other value mixes the focus color at that percent with " +
-        "transparent. Read only by the Halo field style.",
+        "The field halo's opacity, as the percent of focus color mixed " +
+        "with transparent. Read only by the Halo field style.",
       value: { type: "number", unit: "%", ...FOCUS_STRENGTH_RANGE },
     },
     focusInputBorderWidth: {
