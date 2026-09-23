@@ -5,7 +5,7 @@
  * children (the header CTA, the panel footer button).
  */
 
-import { useState, type ReactNode } from "react"
+import { Fragment, useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
@@ -291,11 +291,26 @@ function CommandLine({
 
   return (
     <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-      <code className="min-w-0 flex-1 font-mono text-xs wrap-anywhere text-fg">
+      <code className="min-w-0 flex-1 font-mono text-xs text-fg">
         {steps.map((step, i) => (
           <span key={step} className="block">
-            {step}
-            {i < steps.length - 1 ? " &&" : null}
+            {/* Only the URL may break; flags wrap as whole tokens. */}
+            {[...step.split(" "), ...(i < steps.length - 1 ? ["&&"] : [])].map(
+              (token, j) => (
+                <Fragment key={j}>
+                  {j > 0 ? " " : null}
+                  <span
+                    className={
+                      token.includes("://")
+                        ? "wrap-anywhere"
+                        : "whitespace-nowrap"
+                    }
+                  >
+                    {token}
+                  </span>
+                </Fragment>
+              ),
+            )}
           </span>
         ))}
       </code>
