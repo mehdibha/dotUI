@@ -4,7 +4,7 @@ import {
   sendInspect,
   sendInspectorExit,
   useInspectorModeMessages,
-} from "@/modules/studio/preset"
+} from "@/modules/studio/preview/iframe-sync"
 
 import { findOwner, getHostElements } from "./fiber"
 import type { FiberLike } from "./fiber"

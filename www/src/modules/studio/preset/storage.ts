@@ -1,33 +1,33 @@
 "use client"
 
-import { createPersistedStore } from "@/lib/persisted-store"
-import { DEFAULTS } from "@/modules/studio/axes"
-import type { StudioState } from "@/modules/studio/axes"
+import { useMemo } from "react"
 
-import { decodeState, encodeState } from "./codec"
+import { createPersistedStore } from "@/lib/persisted-store"
+import { parseStored, readDoc } from "@/modules/studio/doc"
+import type { StudioDoc } from "@/modules/studio/doc"
+
+import { ORIGIN_ID } from "./codec"
 
 /**
- * The user's design system, persisted as the same compact string /studio uses
- * in its `?preset=` param (see codec.ts) so presets round-trip between the two.
- * The /studio page writes it as the user customizes; docs previews read it live.
- * `encodeState` returns undefined for the default system, which clears the key
- * instead of storing an empty diff.
+ * This browser's working design system: the studio query of the document a
+ * tab last edited as its own (see studio/doc.ts), or a legacy blob from
+ * before the grammar. A bare /studio reopens it; docs previews render it.
  */
-const presetStore = createPersistedStore<StudioState>(
+const workingStore = createPersistedStore<string | undefined>(
   "dotui:preset",
-  DEFAULTS,
-  { decode: decodeState, encode: (state) => encodeState(state) ?? null },
+  undefined,
+  { decode: (raw) => raw || undefined, encode: (query) => query ?? null },
 )
 
-export const loadStoredPreset = presetStore.get
-export const saveStoredPreset = presetStore.set
-export const useStoredPreset = presetStore.useValue
+export const loadWorking = workingStore.get
+export const saveWorking = workingStore.set
+export const useWorking = workingStore.useValue
 
-/** The working system's name; empty until the user picks or names one. */
-const nameStore = createPersistedStore<string>("dotui:design-system-name", "", {
-  decode: (raw) => raw,
-  encode: (name) => name,
-})
-
-export const saveDesignSystemName = nameStore.set
-export const useDesignSystemName = nameStore.useValue
+/** The working document; Origin until the studio stores one. */
+export function useWorkingDoc(): StudioDoc {
+  const working = useWorking()
+  return useMemo(
+    () => readDoc(working ? parseStored(working) : { preset: ORIGIN_ID }),
+    [working],
+  )
+}

@@ -5,9 +5,10 @@ import { PreviewPage } from "./-preview-page"
 export const Route = createFileRoute("/preview/$slug")({
   validateSearch: (
     search: Record<string, unknown>,
-  ): { preset?: string; mode?: "light" | "dark" } => ({
+  ): { preset?: string; d?: string; mode?: "light" | "dark" } => ({
     preset: typeof search.preset === "string" ? search.preset : undefined,
-    // Initial display mode, baked in by the /create parent (read directly from
+    d: typeof search.d === "string" ? search.d : undefined,
+    // Initial display mode, baked in by the studio (read directly from
     // location by usePreviewForcedTheme; declared so the router keeps it).
     mode:
       search.mode === "light" || search.mode === "dark"

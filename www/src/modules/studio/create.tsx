@@ -1,33 +1,25 @@
 "use client"
 
 /* The studio panel mounted in /studio's slot: the panel page over the
-   studio state, with the chrome (switcher, reset, search, save, export) wired
-   to presets and export. The switcher is the PresetPicker (saved systems +
-   built-in presets, live previews, unsaved-changes guard), reachable at
-   ?gallery= like before. */
+   studio document, with the chrome (switcher, save, reset, search) wired to
+   presets. The switcher is the PresetPicker (saved systems + built-in
+   presets, live previews, unsaved-changes guard), reachable at ?gallery=. */
 
 import { useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
-import { ORIGIN, PRESETS } from "@/modules/presets/catalog"
+import { toastManager } from "@/registry/ui/toast"
+import { PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
-import { ExportDialog } from "@/modules/studio/export"
-import {
-  canonicalize,
-  decodeState,
-  encodeState,
-  useMyPresets,
-} from "@/modules/studio/preset"
-import {
-  saveDesignSystemName,
-  useDesignSystemName,
-} from "@/modules/studio/preset/storage"
+import { useMyPresets } from "@/modules/studio/preset"
+import { ORIGIN_ID } from "@/modules/studio/preset/codec"
 import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
 import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
 import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
+import { designQuery, readDoc, resetSearch, storedDesign } from "./doc"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
@@ -38,49 +30,24 @@ const routeApi = getRouteApi("/_app/studio")
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
+  const { doc, search, saved, commit } = studio
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const {
-    presets,
-    activeId,
-    setActive,
-    save,
-    update,
-    rename,
-    duplicate,
-    remove,
-  } = useMyPresets()
-  const storedName = useDesignSystemName()
+  const { presets, save, update, rename, duplicate, remove } = useMyPresets()
   const [saveOpen, setSaveOpen] = useState(false)
   const [createOpen, setCreateOpen] = useState(false)
-  // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
+  // An action held back by the unsaved-changes guard, awaiting save/discard.
   const [pending, setPending] = useState<(() => void) | null>(null)
-
-  // The header names what's being edited: the active saved system (dotted when
-  // edited past its snapshot), else the standalone design-system name.
-  const activeSaved = presets.find((p) => p.id === activeId)
-  const displayName = activeSaved?.name ?? (storedName || ORIGIN.name)
-
-  // Built-in presets are re-loadable from the gallery, so a freshly applied one
-  // isn't unsaved work — only edits past it (or past a saved snapshot) are.
-  const builtInStates = useMemo(
-    () => new Set(PRESETS.map((p) => encodeState(p.state) ?? "")),
-    [],
-  )
-  const currentState = canonicalize(studio.encoded)
-  const isDirty = activeSaved
-    ? canonicalize(activeSaved.state) !== currentState
-    : currentState !== "" && !builtInStates.has(currentState)
 
   const pickerSections = useMemo(() => {
     const mine = {
       id: "mine",
       title: "My systems",
-      items: presets.map((saved) => {
-        const state = decodeState(saved.state)
+      items: presets.map((record) => {
+        const { state } = readDoc(storedDesign(record.state) ?? {})
         return {
-          id: saved.id,
-          name: saved.name,
+          id: record.id,
+          name: record.name,
           swatch: state.brand,
           resolve: () => resolveDesignSystem(state),
         }
@@ -94,19 +61,6 @@ export function StudioPanel({ className }: { className?: string }) {
     return presets.length > 0 ? [mine, featured] : [featured]
   }, [presets])
 
-  // Apply a state and close the gallery in one navigation — two separate
-  // navigates would race each other's search updates.
-  function applyState(encoded: string | undefined) {
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        preset: encoded || undefined,
-        gallery: undefined,
-      }),
-      replace: true,
-    })
-  }
-
   function setGalleryOpen(open: boolean) {
     navigate({
       search: (prev) => ({ ...prev, gallery: open ? true : undefined }),
@@ -114,65 +68,78 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  function pickPreset(itemId: string) {
-    const saved = presets.find((p) => p.id === itemId)
-    if (saved) {
-      setActive(saved.id)
-      saveDesignSystemName(saved.name)
-      applyState(saved.state)
-      return
+  function pick(id: string) {
+    const record = presets.find((p) => p.id === id)
+    if (record) {
+      const design = storedDesign(record.state) ?? { preset: ORIGIN_ID }
+      commit({ ...design, system: record.id }, { adopt: true })
+    } else if (PRESETS.some((p) => p.id === id)) {
+      commit({ preset: id }, { adopt: true })
     }
-    const builtIn = PRESETS.find((p) => p.id === itemId)
-    if (!builtIn) return
-    setActive(undefined)
-    saveDesignSystemName(builtIn.name)
-    applyState(encodeState(builtIn.state))
   }
 
-  function createPreset(name: string, state: string) {
-    save(name, state)
-    saveDesignSystemName(name)
-    applyState(state)
+  function saveNew(name: string) {
+    const design = designQuery(search)
+    commit(
+      { ...search, name: undefined, system: save(name, design) },
+      {
+        adopt: true,
+      },
+    )
   }
 
-  // Replacing the state over unsaved work asks first; over clean state it's instant.
+  function reset() {
+    const before = search
+    commit(resetSearch(doc))
+    toastManager.add({
+      title: `Reset to ${doc.baseName}`,
+      actionProps: { children: "Undo", onClick: () => commit(before) },
+    })
+  }
+
+  // Replacing unsaved work asks first; over clean work it's instant.
   function guarded(action: () => void) {
-    if (isDirty) setPending(() => action)
+    if (studio.dirty) setPending(() => action)
     else action()
   }
 
+  const newName = doc.name ?? "Untitled"
+
   function resolvePending(saveFirst: boolean) {
     if (saveFirst) {
-      if (activeSaved) update(activeSaved.id, currentState)
-      else save(displayName, currentState)
+      if (saved) update(saved.id, designQuery(search))
+      else save(newName, designQuery(search))
     }
     pending?.()
     setPending(null)
   }
 
   const system: PanelSystem = {
-    name: displayName,
-    dirty: isDirty,
-    onReset: () => pickPreset(ORIGIN.id),
+    name: studio.label,
+    dirty: saved !== undefined && studio.dirty,
+    unsaved: studio.dirty,
+    modified: doc.modified,
+    shared: studio.owned === false,
+    onReset: () => guarded(reset),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
         sections={pickerSections}
-        selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
-        onPick={(item) => guarded(() => pickPreset(item.id))}
+        selectedId={saved?.id ?? doc.base.id}
+        onPick={(item) => guarded(() => pick(item.id))}
         onCreate={() => setCreateOpen(true)}
         withPreview
         renderItemActions={(item) => {
-          const saved = presets.find((p) => p.id === item.id)
-          if (!saved) return null
+          const record = presets.find((p) => p.id === item.id)
+          if (!record) return null
           return (
             <SavedPresetActions
-              saved={saved}
-              onRename={(name) => rename(saved.id, name)}
-              onDuplicate={() => duplicate(saved.id)}
-              onDelete={() => remove(saved.id)}
+              saved={record}
+              onRename={(name) => rename(record.id, name)}
+              onDuplicate={() => duplicate(record.id)}
+              onDelete={() => remove(record.id)}
             />
           )
         }}
@@ -180,7 +147,6 @@ export function StudioPanel({ className }: { className?: string }) {
         {trigger}
       </PresetPicker>
     ),
-    renderExport: (trigger) => <ExportDialog>{trigger}</ExportDialog>,
   }
 
   return (
@@ -191,17 +157,33 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
-      <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
+      <SavePresetDialog
+        isOpen={saveOpen}
+        onOpenChange={setSaveOpen}
+        defaultName={saved?.name ?? doc.name ?? ""}
+        updateTarget={saved?.name}
+        onSaveNew={saveNew}
+        onUpdate={() => saved && update(saved.id, designQuery(search))}
+      />
       <CreatePresetDialog
         isOpen={createOpen}
         onOpenChange={setCreateOpen}
-        onCreate={(name) => guarded(() => createPreset(name, ""))}
+        onCreate={(name) =>
+          guarded(() =>
+            commit(
+              { preset: ORIGIN_ID, system: save(name, `preset=${ORIGIN_ID}`) },
+              { adopt: true },
+            ),
+          )
+        }
       />
       <UnsavedChangesDialog
         isOpen={pending !== null}
         onOpenChange={(open) => {
           if (!open) setPending(null)
         }}
+        subject={saved?.name ?? studio.label}
+        saveLabel={saved ? `Update “${saved.name}”` : `Save as “${newName}”`}
         onSave={() => resolvePending(true)}
         onDiscard={() => resolvePending(false)}
       />

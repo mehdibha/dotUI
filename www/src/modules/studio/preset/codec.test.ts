@@ -7,18 +7,11 @@ import { PRESETS } from "@/modules/presets/catalog"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
-import {
-  canonicalize,
-  decode,
-  decodeState,
-  encodeQuery,
-  encodeState,
-  readParams,
-} from "./codec"
-import { currentBaseline } from "./migrations"
+import { decode, encodeDesign, encodeQuery, readParams } from "./codec"
+import { currentBaseline, same } from "./migrations"
 
-/** Encode an arbitrary payload with the same deflate+base64url pipeline as
- *  `encodeState`, bypassing its typing — for crafting stale/garbage presets. */
+/** An arbitrary payload through the codec's deflate+base64url pipeline — for
+ *  crafting stale/garbage presets. */
 function encodeRaw(payload: unknown): string {
   const compressed = deflateRaw(JSON.stringify(payload), { level: 9 })
   const binary = String.fromCharCode(...compressed)
@@ -31,45 +24,45 @@ function decodeRaw(encoded: string): Record<string, unknown> {
   return JSON.parse(inflateRaw(bytes, { to: "string" }))
 }
 
-describe("preset codec — studio state", () => {
-  it("encodes the defaults to nothing", () => {
-    expect(encodeState(DEFAULTS)).toBeUndefined()
-    const reordered = Object.fromEntries(Object.entries(DEFAULTS).reverse())
-    expect(encodeState(reordered as typeof DEFAULTS)).toBeUndefined()
-  })
+/** A v4 blob, as the studio wrote them before the grammar. */
+function blob(state: StudioState): string {
+  const baseline = currentBaseline()
+  const s = Object.fromEntries(
+    Object.entries(state).filter(
+      ([key, value]) => !same(value, baseline[key as keyof StudioState]),
+    ),
+  )
+  return encodeRaw({ v: 4, s })
+}
 
-  it("encodes a state on the frozen baseline, which is not the default", () => {
-    const baseline = currentBaseline()
-    expect(baseline).not.toEqual(DEFAULTS)
-    const encoded = encodeState(baseline)
-    expect(encoded).toBeTypeOf("string")
-    expect(decodeState(encoded ?? "")).toEqual(baseline)
-  })
+function decodeState(preset: string): StudioState {
+  const result = decode({ preset })
+  if (!result.ok) throw new Error(result.reason)
+  return result.state
+}
 
-  it("round-trips a modified state", () => {
+describe("preset codec — legacy blobs", () => {
+  it("reads a state back from its blob", () => {
     const state = {
       ...DEFAULTS,
       brand: "#ef4444",
       radiusPx: 4,
       density: "compact",
     }
-    const encoded = encodeState(state)
-    expect(encoded).toBeTypeOf("string")
-    expect(decodeState(encoded ?? "")).toEqual(state)
+    expect(decodeState(blob(state))).toEqual(state)
+    expect(decodeState(blob(currentBaseline()))).toEqual(currentBaseline())
   })
 
-  it("keeps code options out of the studio's string", () => {
-    const stateOnly = encodeState({ ...DEFAULTS, brand: "#ef4444" }) as string
-    const blob = encodeRaw({
+  it("reads an old blob's code options apart from its state", () => {
+    const stateOnly = blob({ ...DEFAULTS, brand: "#ef4444" })
+    const withOptions = encodeRaw({
       ...decodeRaw(stateOnly),
       o: { classArrays: true },
     })
-    const decoded = decode({ preset: blob })
+    const decoded = decode({ preset: withOptions })
     if (!decoded.ok) throw new Error(decoded.reason)
     expect(decoded.codeOptions?.classArrays).toBe(true)
-    // An old blob's code options don't read as an edit.
-    expect(canonicalize(blob)).toBe(stateOnly)
-    expect(decodeRaw(stateOnly)).not.toHaveProperty("o")
+    expect(decoded.state).toEqual(decodeState(stateOnly))
   })
 
   it("drops unknown keys and invalid values, and names them", () => {
@@ -115,11 +108,6 @@ describe("preset codec — studio state", () => {
         ok: false,
         reason: "invalid",
       })
-  })
-
-  it("still decodes garbage to the defaults through decodeState", () => {
-    expect(decodeState("not-a-preset")).toBe(DEFAULTS)
-    expect(decodeState(encodeRaw({ v: 5 }))).toBe(DEFAULTS)
   })
 })
 
@@ -195,25 +183,6 @@ describe("preset codec — legacy migration", () => {
   })
 })
 
-describe("preset codec — canonical encoding", () => {
-  // /studio seeds from a stored state via decode → encode on reload; a
-  // non-identity roundtrip makes a freshly applied preset look edited.
-  for (const preset of PRESETS) {
-    it(`encode∘decode is byte-identity for the ${preset.name} preset`, () => {
-      const encoded = encodeState(preset.state)
-      if (encoded === undefined) return
-      expect(encodeState(decodeState(encoded))).toBe(encoded)
-    })
-  }
-
-  it("encodes the same state identically regardless of key order", () => {
-    const a = encodeState({ ...DEFAULTS, radiusPx: 12, brand: "#ef4444" })
-    const b = encodeState({ ...DEFAULTS, brand: "#ef4444", radiusPx: 12 })
-    expect(a).toBeTypeOf("string")
-    expect(b).toBe(a)
-  })
-})
-
 /* ------------------------------- grammar ------------------------------- */
 
 const LINEAR = PRESETS.find((p) => p.id === "linear") as (typeof PRESETS)[0]
@@ -234,6 +203,15 @@ describe("preset codec — grammar", () => {
         state: LINEAR.state,
         dropped: [],
       })
+  })
+
+  it("names a pristine latest built-in by its bare id in the studio", () => {
+    expect(encodeDesign(LINEAR.state, LINEAR_1)).toEqual({ preset: "linear" })
+    const state = { ...LINEAR.state, radiusPx: 4 }
+    expect(encodeDesign(state, LINEAR_1)).toEqual({
+      preset: "linear@1",
+      d: `v5.${encodeRaw({ radiusPx: 4 })}`,
+    })
   })
 
   it("reads no preset as Origin's latest revision", () => {
@@ -302,6 +280,10 @@ describe("preset codec — grammar", () => {
       if (!pristine.ok) throw new Error(pristine.reason)
       expect(pristine.base).toEqual({ id: "linear", rev: 2 })
       expect(pristine.state.brand).toBe("#10b981")
+      // A pristine older revision stays pinned: its bare id means the latest.
+      expect(encodeDesign(LINEAR.state, LINEAR_1)).toEqual({
+        preset: "linear@1",
+      })
     } finally {
       revisions.pop()
     }
@@ -360,8 +342,7 @@ describe("preset codec — grammar", () => {
   })
 
   it("rebases a legacy blob onto Origin's latest revision", () => {
-    const blob = encodeState({ ...DEFAULTS, brand: "#ef4444" }) as string
-    const decoded = decode({ preset: blob })
+    const decoded = decode({ preset: blob({ ...DEFAULTS, brand: "#ef4444" }) })
     if (!decoded.ok) throw new Error(decoded.reason)
     expect(decoded.base).toEqual({ id: "origin", rev: 1 })
     expect(encodeQuery(decoded.state, decoded)).toBe(
@@ -377,10 +358,7 @@ describe("preset codec — grammar", () => {
     ["invalid", { d: `v5.${encodeRaw({})}` }],
     ["invalid", { preset: "linear@1", d: `v4.${encodeRaw({})}` }],
     ["invalid", { preset: "linear@1", d: `v5.${encodeRaw([1])}` }],
-    [
-      "invalid",
-      { preset: encodeState(LINEAR.state), d: `v5.${encodeRaw({})}` },
-    ],
+    ["invalid", { preset: blob(LINEAR.state), d: `v5.${encodeRaw({})}` }],
     ["newer-version", { preset: "linear@1", d: `v6.${encodeRaw({})}` }],
     ["corrupt", { preset: "linear@1", d: encodeRaw({}) }],
     ["corrupt", { preset: "linear@1", d: "v5.q1Yq" }],

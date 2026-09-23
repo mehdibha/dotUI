@@ -5,7 +5,6 @@ import { installFakeWindow } from "@/lib/test-fake-window"
 import type { SavedPreset } from "./my-presets"
 
 const PRESETS_KEY = "dotui:my-presets"
-const ACTIVE_KEY = "dotui:active-saved-preset"
 
 let win: ReturnType<typeof installFakeWindow>
 
@@ -101,28 +100,24 @@ describe("saved presets", () => {
     expect(names()).toEqual(["New"])
   })
 
-  it("clears the active id only when removing the active preset", async () => {
-    win.seed(PRESETS_KEY, JSON.stringify([record("a"), record("b")]))
-    const { removePreset } = await load()
-    win.otherTab(ACTIVE_KEY, "b")
+  it("updates a record's design and never its name", async () => {
+    win.seed(PRESETS_KEY, JSON.stringify([record("a", "Acme")]))
+    const { updatePreset } = await load()
 
-    removePreset("a")
-    expect(win.read(ACTIVE_KEY)).toBe("b")
-
-    removePreset("b")
-    expect(win.read(ACTIVE_KEY)).toBeNull()
+    updatePreset("a", "preset=linear")
+    expect(stored().map((p) => [p.name, p.state])).toEqual([
+      ["Acme", "preset=linear"],
+    ])
   })
 
   it("generates ids without crypto.randomUUID (insecure contexts)", async () => {
     vi.stubGlobal("crypto", {})
     const { savePreset } = await load()
 
-    savePreset("A", "a")
-    savePreset("B", "b")
+    const returned = [savePreset("A", "a"), savePreset("B", "b")]
 
     const ids = stored().map((p) => p.id)
-    expect(ids).toHaveLength(2)
+    expect(ids).toEqual(returned)
     expect(new Set(ids).size).toBe(2)
-    expect(win.read(ACTIVE_KEY)).toBe(ids[1])
   })
 })

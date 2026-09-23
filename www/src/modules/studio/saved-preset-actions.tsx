@@ -12,6 +12,7 @@ import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { TextField } from "@/registry/ui/text-field"
+import { docQuery, storedDesign } from "@/modules/studio/doc"
 import type { SavedPreset } from "@/modules/studio/preset"
 
 /**
@@ -37,7 +38,9 @@ export function SavedPresetActions({
     if (key === "rename") setRenameOpen(true)
     else if (key === "duplicate") onDuplicate()
     else if (key === "copy") {
-      copyToClipboard(`${window.location.origin}/studio?preset=${saved.state}`)
+      // Record ids are this browser's: the link carries the name instead.
+      const query = docQuery({ ...storedDesign(saved.state), name: saved.name })
+      copyToClipboard(`${window.location.origin}/studio?${query}`)
     } else if (key === "delete") onDelete()
   }
 

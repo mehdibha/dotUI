@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { Button } from "@/registry/ui/button"
 import {
@@ -12,50 +12,41 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
-import { useStudio } from "@/modules/studio/use-studio"
-
-import { useMyPresets } from "./preset"
-import { saveDesignSystemName, useDesignSystemName } from "./preset/storage"
 
 /**
- * Snapshots the current design system to a named localStorage preset ("Save as").
- * When an active saved preset has diverged it also offers to update it in place.
+ * Saves the document as a new named system; when the tab edits a saved
+ * system, it also offers to update that one in place. The name field belongs
+ * to "save as new" only: Update never renames.
  */
 export function SavePresetDialog({
   isOpen,
   onOpenChange,
+  defaultName,
+  updateTarget,
+  onSaveNew,
+  onUpdate,
 }: {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  defaultName: string
+  /** The saved system Update writes to. */
+  updateTarget?: string
+  onSaveNew: (name: string) => void
+  onUpdate: () => void
 }) {
-  const { encoded } = useStudio()
-  const { presets, activeId, save, update } = useMyPresets()
-  const storedName = useDesignSystemName()
-
-  const currentState = encoded ?? ""
-  const active = presets.find((p) => p.id === activeId)
-  const isDirty = active ? active.state !== currentState : false
-
-  const [name, setName] = useState("")
-  useEffect(() => {
-    if (isOpen) setName(active?.name ?? storedName)
-  }, [isOpen, active?.name, storedName])
+  const [name, setName] = useState(defaultName)
+  // The field resets on every open (the modal stays mounted between opens).
+  const [wasOpen, setWasOpen] = useState(isOpen)
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen)
+    if (isOpen) setName(defaultName)
+  }
 
   const trimmed = name.trim()
 
-  // The saved name becomes the working system's name — the panel header
-  // reflects what was just saved.
-  function saveAsNew() {
-    const name = trimmed || storedName
-    save(name, currentState)
-    saveDesignSystemName(name)
-    onOpenChange(false)
-  }
-
-  function updateActive() {
-    if (!active) return
-    update(active.id, currentState, trimmed || undefined)
-    saveDesignSystemName(trimmed || active.name)
+  function saveNew() {
+    if (!trimmed) return
+    onSaveNew(trimmed)
     onOpenChange(false)
   }
 
@@ -80,9 +71,7 @@ export function SavePresetDialog({
         <form
           onSubmit={(e) => {
             e.preventDefault()
-            if (!trimmed) return
-            if (active && isDirty) updateActive()
-            else saveAsNew()
+            saveNew()
           }}
         >
           <TextField
@@ -96,20 +85,27 @@ export function SavePresetDialog({
           </TextField>
         </form>
         <div className="flex justify-end gap-2">
-          {active && isDirty ? (
+          {updateTarget ? (
             <>
-              <Button size="sm" onPress={saveAsNew}>
+              <Button size="sm" onPress={saveNew} isDisabled={!trimmed}>
                 Save as new
               </Button>
-              <Button size="sm" variant="primary" onPress={updateActive}>
-                Update “{active.name}”
+              <Button
+                size="sm"
+                variant="primary"
+                onPress={() => {
+                  onUpdate()
+                  onOpenChange(false)
+                }}
+              >
+                Update “{updateTarget}”
               </Button>
             </>
           ) : (
             <Button
               size="sm"
               variant="primary"
-              onPress={saveAsNew}
+              onPress={saveNew}
               isDisabled={!trimmed}
             >
               Save

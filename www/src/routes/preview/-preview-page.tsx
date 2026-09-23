@@ -8,14 +8,14 @@ import {
   GroupExamplesIndex,
 } from "@/modules/studio/__generated__/examples"
 import { DEFAULTS } from "@/modules/studio/axes"
-import { decodeState } from "@/modules/studio/preset/codec"
+import { decode } from "@/modules/studio/preset/codec"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
   usePreviewNavigationMessages,
-} from "@/modules/studio/preset/iframe-sync"
-import type { DesignSystem } from "@/modules/studio/preset/types"
-import { BlocksIndex } from "@/modules/studio/preview/blocks"
+} from "@/modules/studio/preview/iframe-sync"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
@@ -42,7 +42,7 @@ export function getExamplesPromise(slug: string) {
   return promise
 }
 
-// Embedded, the preview sits inside the /create panel's rounded card; a native
+// Embedded, the preview sits inside the studio's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 const EMBEDDED_SCROLLBAR_CSS = `
@@ -54,10 +54,11 @@ const route = getRouteApi("/preview/$slug")
 
 export function PreviewPage() {
   const { slug } = route.useParams()
-  const { preset } = route.useSearch()
-  const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(preset ? decodeState(preset) : DEFAULTS),
-  )
+  const { preset, d } = route.useSearch()
+  const [designSystem, setDesignSystem] = useState<DesignSystem>(() => {
+    const decoded = decode({ preset, d })
+    return resolveDesignSystem(decoded.ok ? decoded.state : DEFAULTS)
+  })
 
   const navigate = route.useNavigate()
 

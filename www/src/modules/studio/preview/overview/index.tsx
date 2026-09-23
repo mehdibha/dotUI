@@ -43,15 +43,18 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
-import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
+import {
+  sendInspect,
+  useIsEmbeddedPreview,
+} from "@/modules/studio/preview/iframe-sync"
 
 /* ---------------------------------------------------------------------------
  * The preset overview — a style guide the way a senior designer would present a
  * brand system: an editorial spec sheet walking through every axis of the live
  * design system (color, type, icons, shape, density, elevation, components).
  *
- * Rendered inside the /create preview iframe under `DesignSystemProvider`, so
+ * Rendered inside the studio preview iframe under `DesignSystemProvider`, so
  * every swatch, ramp and component below is the live, edited system — themed by
  * CSS variables that flip with light / dark and update on every edit.
  * ------------------------------------------------------------------------- */
@@ -147,7 +150,7 @@ function SectionHeader({
         <span className="font-mono text-xs tracking-widest uppercase">
           {index} — {title}
         </span>
-        {/* Embedded only: hop to this chapter's controls in the /create panel. */}
+        {/* Embedded only: hop to this chapter's controls in the studio panel. */}
         {embedded && panelId && (
           <button
             type="button"
@@ -823,7 +826,7 @@ function Section({
   icon: typeof PaletteIcon
   title: string
   description: string
-  /** The /create panel chapter these values are edited in (embedded inspect). */
+  /** The studio panel chapter these values are edited in (embedded inspect). */
   panelId?: string
   children: ReactNode
 }) {
@@ -956,7 +959,7 @@ export function PresetOverview({
 
         <Section
           index="05"
-          panelId="shape"
+          panelId="space"
           icon={RulerIcon}
           title="Density & spacing"
           description="Density sets control heights and padding across every component; the spacing scale keeps rhythm consistent."
@@ -966,7 +969,7 @@ export function PresetOverview({
 
         <Section
           index="06"
-          panelId="details"
+          panelId="surfaces"
           icon={LayersIcon}
           title="Surfaces & elevation"
           description="Layered surface tokens and a restrained shadow ramp give depth without noise."
@@ -986,7 +989,7 @@ export function PresetOverview({
 
         <Section
           index="08"
-          panelId="details"
+          panelId="browser"
           icon={MousePointer2Icon}
           title="Interaction"
           description="Cursors signal what's actionable and what isn't."

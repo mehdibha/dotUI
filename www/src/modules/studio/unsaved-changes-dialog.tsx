@@ -9,17 +9,22 @@ import {
 import { Modal } from "@/registry/ui/modal"
 
 /**
- * Guards applying a preset over unsaved work — the one action that would
- * silently overwrite both the URL state and the persisted draft.
+ * Guards replacing unsaved work (applying a preset, creating one, Reset).
+ * Names what the work is and where Save puts it.
  */
 export function UnsavedChangesDialog({
   isOpen,
   onOpenChange,
+  subject,
+  saveLabel,
   onSave,
   onDiscard,
 }: {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  /** The document with the unsaved work. */
+  subject: string
+  saveLabel: string
   onSave: () => void
   onDiscard: () => void
 }) {
@@ -38,7 +43,7 @@ export function UnsavedChangesDialog({
             Unsaved changes
           </DialogTitle>
           <DialogDescription className="text-sm text-fg-muted">
-            Applying this design system will replace your unsaved changes.
+            This replaces your unsaved changes to {subject}.
           </DialogDescription>
         </div>
         <div className="flex justify-end gap-2">
@@ -49,7 +54,7 @@ export function UnsavedChangesDialog({
             Discard
           </Button>
           <Button size="sm" variant="primary" onPress={onSave}>
-            Save changes
+            {saveLabel}
           </Button>
         </div>
       </DialogContent>

@@ -1,59 +1,55 @@
 "use client"
 
 /* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
-   whole, its header pinned — the system switcher on the left, global reset
-   and search on the right — over a hairline. Real behavior arrives through
-   `system` (wired by StudioPanel on /studio); without it the chrome is the
-   studio's inert design shell. */
+   whole, its header pinned — the system switcher on the left, save, reset
+   and search on the right — over a hairline. */
 
 import type { ReactNode } from "react"
-import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
+import {
+  ChevronsUpDownIcon,
+  CopyPlusIcon,
+  RotateCcwIcon,
+  SaveIcon,
+} from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 
-import { DEFAULTS } from "./state"
-import type { Studio } from "./state"
-
-/** The create-engine wiring the chrome acts through. Everything here operates
- *  on the real design system (URL preset + localStorage); the studio's own axes
- *  reset alongside it but aren't persisted until their chapters are wired. */
+/** The studio document the chrome acts on (wired by StudioPanel). */
 export interface PanelSystem {
-  /** What's being edited: the active saved system's name, else the working name. */
+  /** What's being edited: a saved system's name, else the base preset's. */
   name: string
-  /** Edits past the active saved snapshot (or any built-in) — unsaved work. */
+  /** Edits past the saved system: marks the name. */
   dirty: boolean
+  /** Work no saved system holds yet, or edits past one: shows Save. */
+  unsaved: boolean
+  /** Shows Reset, back to the base preset. */
+  modified: boolean
+  /** A shared link: Save makes it a copy of this browser's own. */
+  shared: boolean
   onReset: () => void
   onSave: () => void
   /** Wraps the header name button in the preset picker's trigger. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
-  /** Wraps the Export button in the export dialog's trigger. */
-  renderExport: (trigger: ReactNode) => ReactNode
 }
 
 export function PanelChrome({
-  studio,
   system,
   search,
   children,
 }: {
-  studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
   /** Search trigger + overlay, supplied by the page (it owns navigation). */
-  search?: ReactNode
+  search: ReactNode
   children: ReactNode
 }) {
-  // The only reset in the panel, back to the default system.
-  const whole = studio.section(DEFAULTS)
-  const resetAll = system?.onReset ?? whole.onReset
-
   const switcherTrigger = (
     <Button
       variant="quiet"
       size="sm"
-      className="min-w-0 justify-start gap-1.5 font-medium"
+      className="min-w-0 shrink justify-start gap-1.5 font-medium"
     >
-      <span className="truncate">{system?.name ?? "Acme design system"}</span>
-      {system?.dirty && (
+      <span className="truncate">{system.name}</span>
+      {system.dirty && (
         <span
           aria-label="Unsaved changes"
           className="size-1.5 shrink-0 rounded-full bg-fg-muted"
@@ -66,30 +62,33 @@ export function PanelChrome({
   return (
     <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)]">
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
-        {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
+        {system.renderSwitcher(switcherTrigger)}
         <span className="flex shrink-0 items-center">
-          {whole.modified && (
+          {(system.shared || system.unsaved) && (
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              aria-label={system.shared ? "Save a copy" : "Save design system"}
+              onPress={system.onSave}
+              className="text-fg-muted"
+            >
+              {system.shared ? <CopyPlusIcon /> : <SaveIcon />}
+            </Button>
+          )}
+          {system.modified && (
             <Button
               size="sm"
               variant="quiet"
               isIconOnly
               aria-label="Reset design system"
-              onPress={resetAll}
+              onPress={system.onReset}
               className="text-fg-muted"
             >
               <RotateCcwIcon />
             </Button>
           )}
-          {search ?? (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Search settings"
-            >
-              <SearchIcon />
-            </Button>
-          )}
+          {search}
         </span>
       </div>
       {children}

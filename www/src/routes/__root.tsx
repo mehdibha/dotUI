@@ -13,7 +13,7 @@ import { ThemeProvider } from "starter-themes"
 import { siteConfig } from "@/config/site"
 import { truncateOnWord } from "@/lib/text"
 import { PREVIEW_PENDING_SCRIPT } from "@/modules/docs/preview-pending"
-import { usePreviewForcedTheme } from "@/modules/studio/preset/iframe-sync"
+import { usePreviewForcedTheme } from "@/modules/studio/preview/iframe-sync"
 
 import appCss from "@/styles.css?url"
 

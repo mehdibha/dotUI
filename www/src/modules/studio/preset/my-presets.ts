@@ -2,11 +2,12 @@
 
 import { createPersistedStore } from "@/lib/persisted-store"
 
-/** A named design-system snapshot the user saved from /create. */
+/** A named design system the user saved from the studio. */
 export interface SavedPreset {
   id: string
   name: string
-  /** `encodeState()` output — the compact string, never the expanded object. */
+  /** Its design as a studio query (`preset=…[&d=…]`, see studio/doc.ts);
+   *  records from before the grammar hold a legacy blob. */
   state: string
   createdAt: number
   updatedAt: number
@@ -49,35 +50,23 @@ const presetsStore = createPersistedStore<SavedPreset[]>(
   },
 )
 
-/** The preset last saved or applied — highlighted in the gallery, targeted by Save's update path. */
-const activeStore = createPersistedStore<string | undefined>(
-  "dotui:active-saved-preset",
-  undefined,
-  {
-    decode: (raw) => raw || undefined,
-    encode: (id) => id ?? null,
-  },
-)
-
-export function savePreset(name: string, state: string): void {
+/** Saves a new record and returns its id. */
+export function savePreset(name: string, state: string): string {
   const id = newId()
   const now = Date.now()
   presetsStore.update((presets) => [
     ...presets,
     { id, name, state, createdAt: now, updatedAt: now },
   ])
-  activeStore.set(id)
+  return id
 }
 
-export function updatePreset(id: string, state: string, name?: string): void {
+export function updatePreset(id: string, state: string): void {
   presetsStore.update((presets) =>
     presets.map((p) =>
-      p.id === id
-        ? { ...p, state, name: name ?? p.name, updatedAt: Date.now() }
-        : p,
+      p.id === id ? { ...p, state, updatedAt: Date.now() } : p,
     ),
   )
-  activeStore.set(id)
 }
 
 export function renamePreset(id: string, name: string): void {
@@ -108,18 +97,15 @@ export function duplicatePreset(id: string): void {
 
 export function removePreset(id: string): void {
   presetsStore.update((presets) => presets.filter((p) => p.id !== id))
-  activeStore.update((active) => (active === id ? undefined : active))
 }
 
 export function useMyPresets() {
   return {
     presets: presetsStore.useValue(),
-    activeId: activeStore.useValue(),
     save: savePreset,
     update: updatePreset,
     rename: renamePreset,
     duplicate: duplicatePreset,
     remove: removePreset,
-    setActive: activeStore.set,
   }
 }

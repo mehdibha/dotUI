@@ -64,14 +64,15 @@ export function Header({ className, items = [] }: HeaderProps) {
             // via the longest-prefix match above. aria-current is left to Router
             // Link with `exact` matching so it marks only the literal current page
             // — otherwise Link's default fuzzy match lights aria-current on both
-            // Docs and Components for any /docs/components/* page.
+            // Docs and Components for any /docs/components/* page. The search
+            // doesn't count: /studio?preset=… is still the Studio page.
             const isActive = item.match === activeMatch
             return (
               <RouterLink
                 key={item.name}
                 to={item.to}
                 params={item.params}
-                activeOptions={{ exact: true }}
+                activeOptions={{ exact: true, includeSearch: false }}
                 className={cn(
                   "px-0.5 transition-colors hover:text-fg",
                   isActive ? "text-fg" : "text-fg-muted",

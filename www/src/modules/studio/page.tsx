@@ -6,6 +6,8 @@
 
 import { useRef } from "react"
 
+import { useInspectMessages } from "@/modules/studio/preview/iframe-sync"
+
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { PanelSearch } from "./search"
@@ -49,7 +51,7 @@ export function PanelPage({
 }: {
   chapters: Chapter[]
   studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
 }) {
   const rootRef = useRef<HTMLDivElement>(null)
   const reveal = (id: string) =>
@@ -57,10 +59,15 @@ export function PanelPage({
       ?.querySelector(`[data-chapter="${id}"]`)
       ?.scrollIntoView({ block: "start" })
 
+  // The preview's inspector and overview ask for a chapter by id, or for a
+  // component's row as `component:<slug>`.
+  useInspectMessages((panel) =>
+    reveal(panel.startsWith("component:") ? "components" : panel),
+  )
+
   return (
     <div ref={rootRef} className="contents">
       <PanelChrome
-        studio={studio}
         system={system}
         search={<PanelSearch chapters={chapters} onOpenChapter={reveal} />}
       >

@@ -36,6 +36,7 @@ import { SearchField } from "@/registry/ui/search-field"
 import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import {
   pingIframe,
   sendInspectorMode,
@@ -44,9 +45,8 @@ import {
   sendPreviewPrefetch,
   sendToIframe,
   useInspectorExitMessages,
-} from "@/modules/studio/preset"
-import type { PreviewMode } from "@/modules/studio/preset"
-import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
+} from "@/modules/studio/preview/iframe-sync"
+import type { PreviewMode } from "@/modules/studio/preview/iframe-sync"
 import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -102,9 +102,9 @@ export function PreviewPanel({
   /** Mobile only — opens the customize sheet from the floating toolbar. */
   onCustomize?: () => void
 }) {
-  const { preview, preset } = routeApi.useSearch()
+  const { preview } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem } = useStudio()
+  const { designSystem, search } = useStudio()
   const { resolvedTheme } = useTheme()
 
   const panelRef = useRef<HTMLDivElement>(null)
@@ -180,14 +180,19 @@ export function PreviewPanel({
     // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
   }, [])
 
-  // The iframe's document URL, fixed at mount — the preset is baked in so the
-  // initial render has the right state. Everything after goes over postMessage
-  // (preset / mode changes, and preview switches, which navigate the iframe's
-  // own SPA router), so the iframe never reloads.
-  const [iframeSrc] = useState(() => {
-    const base = `/preview/${effectivePreview}`
-    return preset ? `${base}?${new URLSearchParams({ preset })}` : base
-  })
+  // The design params the preview decodes: the document's own.
+  const design = () => {
+    const params = new URLSearchParams({ preset: search.preset ?? "" })
+    if (search.d) params.set("d", search.d)
+    return params
+  }
+
+  // The iframe's document URL, fixed at mount — the route resolved the
+  // document before this rendered, so its first paint is already right.
+  // Everything after goes over postMessage (design / mode changes, and
+  // preview switches, which navigate the iframe's own SPA router), so the
+  // iframe never reloads.
+  const [iframeSrc] = useState(() => `/preview/${effectivePreview}?${design()}`)
 
   // Show the stage skeleton until the iframe's document signals it has rendered
   // — initial boot only, since preview switches keep the document alive. The
@@ -642,8 +647,7 @@ export function PreviewPanel({
                 onPress={() => {
                   // Built at click time — the iframe src is frozen at mount, so
                   // it no longer reflects the current preview or mode.
-                  const params = new URLSearchParams()
-                  if (preset) params.set("preset", preset)
+                  const params = design()
                   params.set("mode", previewMode)
                   window.open(
                     `/preview/${effectivePreview}?${params}`,

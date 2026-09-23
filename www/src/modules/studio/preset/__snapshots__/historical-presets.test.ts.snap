@@ -177,7 +177,6 @@ exports[`built-in presets > resolves airbnb 1`] = `
       "--radius": "0.665rem",
     },
   },
-  "encoded": "FcxBCsIwFIThq5RxG6RiFckBXLgq2Au8NAkEYwJ5SWkpvbvP7fcPs2OBHhQYeofJdnvmVKExxsbdiz5UKnVvSgwFUyhZaSfvr4_bLGJd4lA3sTl_fZatiU48uVYLxSn8v3qFQjY0HlfoS3--D8fxAw",
   "query": "preset=airbnb@1",
   "state": {
     "accordionContainer": "divided",
@@ -493,7 +492,6 @@ exports[`built-in presets > resolves claude 1`] = `
       "--radius": "0.75rem",
     },
   },
-  "encoded": "bZBNa8MwDIb_StGuvrR0TePrRtmgh0GPowfH1hJT1xqKvbWE_PfKLLCy7Ph-PJbkAb5ArxX0oAdoyF13FBNoeI0JGRQ0bKIT_eDqqnqsipNTovhEgVh8Yy0KoMB2aE8NXWZBh8b52E7vHiizxcUB2X8s1hKfyaEMfx_AlznBt12hojmjyP0kPykY9ul612ha0PV2VBPoDJ9-uecfdYdNeaFW41GKmBOb8JKlXm8UsGxJs-WLm_u3C-jlSj4JA9rk_7m-D94hz-1vn2z3xx7HGw",
   "query": "preset=claude@1",
   "state": {
     "accordionContainer": "divided",
@@ -806,7 +804,6 @@ exports[`built-in presets > resolves github 1`] = `
       "--font-sans": "'Mona Sans', ui-sans-serif, system-ui, sans-serif",
     },
   },
-  "encoded": "bY89C8IwEIb_ipxrEJVWSFZFHHRyFIdrEmxompM0VUvpfzfFgsU6vs_dcx8tPEAkDCoQLWSkmj25AAJO5HB2RlcBg8yjU5HNl3zDFfakDoHcliz5yFFKHSUGMteyyOg1KZSkdNxwacH0g6y55T12WOoYj0O8k0VvQjPqyG4gOO_YICr0xdfbfdJIG-q9lSzS7hpbdR082kMdhXW6YuBRGZocWGmrZTB_fqqsUdpP8dMEmf_grnsD",
   "query": "preset=github@1",
   "state": {
     "accordionContainer": "divided",
@@ -1125,7 +1122,6 @@ exports[`built-in presets > resolves linear 1`] = `
       "--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     },
   },
-  "encoded": "bc2xDsIwDATQfzFrpwg6ZAWh8hluYkhEFCPHKaCq_046sFDGe7rTzTCB3XdQwM4wsn-fOStYuGQlgQ5Gwexb3h2oR29Wqaqcj5xYmqNz1AZfHniilVO8BaXc3AVy95Ffm0GmqoJpqATW9KYDQR95UyuUyGn881hS9CRbrnJFRyd6aGguGAv51Z9RXfipL8sH",
   "query": "preset=linear@1",
   "state": {
     "accordionContainer": "divided",
@@ -1439,7 +1435,6 @@ exports[`built-in presets > resolves notion 1`] = `
       "--radius": "0.375rem",
     },
   },
-  "encoded": "bc7LCgIxDAXQf7luuxjBB3YriO78hT4CUywNtOk4Msy_29lalzk34WbBBH1QKNALLPvPjZNA45GEMhRsNsm3eTcM56OnTaoIpytHzs2Nc9QOFNxI7mV57oJEVbKJ90rQl71CNj5wt7VpLc8Z-tSeoUhOwp-WEoOn3PM7iBt_eF2_",
   "query": "preset=notion@1",
   "state": {
     "accordionContainer": "divided",
@@ -1740,7 +1735,6 @@ exports[`built-in presets > resolves origin 1`] = `
     "icons": undefined,
     "tokens": {},
   },
-  "encoded": undefined,
   "query": "preset=origin@1",
   "state": {
     "accordionContainer": "divided",
@@ -2055,7 +2049,6 @@ exports[`built-in presets > resolves spotify 1`] = `
       "--studio-btn-radius": "var(--radius-full)",
     },
   },
-  "encoded": "bc7BCsIwDAbgd4nXHTaQCb0KO4v6Al0bXTC0o0t1Y-zdzQQvzuvHnz__DE8w-wIGMDO00U9NDAIGGrpLQoQC2mSDV9lV6A91uUoWieEYOSZ16xzqyZfP1lPWNuiJWdV16B5tHDdxCn2Wi0yMqjcNo1cNmCVZvtK6oiwgaV3c3KbPk9MIpqp1OzI6oT-TBiaPacsvEtf98LK8AQ",
   "query": "preset=spotify@1",
   "state": {
     "accordionContainer": "divided",
@@ -2369,7 +2362,6 @@ exports[`built-in presets > resolves stripe 1`] = `
       "--radius": "0.665rem",
     },
   },
-  "encoded": "bc7NCsIwEATgd1mvRepfDrkKojfBJ8jPlgZDFpKNtpS-u8nBi_E4HzMwC7xAHjtIIBfQZOcLBQYJt8AYoQMdVbAlb8ThpIehSmamcCZPsbgyBsvgyw-ePRamzN4FLG5GNE9NUzMImDkqf82lvxd9B1FZR02tak73CeSu34r6FD0adn8uJO8sxpbfjs34w-v6AQ",
   "query": "preset=stripe@1",
   "state": {
     "accordionContainer": "divided",
@@ -2682,7 +2674,6 @@ exports[`built-in presets > resolves supabase 1`] = `
       "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
     },
   },
-  "encoded": "bczBCgIxDATQfxmvPSiKSK-C6Ge0aWSLpYE2dZVl_916tR7zZiYLnrAHgwq7wEt4XyQrLG5ZucDAF5dDvzd7pvuJv9JUJZ8lSenuiLgPDGhienh5DUHmpsWla2PY3XFrUFyIMtQqJyaNfz7XFAOXkeeoNP3wun4A",
   "query": "preset=supabase@1",
   "state": {
     "accordionContainer": "divided",
@@ -2997,7 +2988,6 @@ exports[`built-in presets > resolves vercel 1`] = `
       "--color-popover": "light-dark(var(--neutral-25), var(--neutral-100))",
     },
   },
-  "encoded": "TY69CsIwFIXf5bpmiKKUZtXRTTdxuG1uazBNJU0LEvLu3mjAcqbz88GJsIDaC5hARWg8Og0KNtsqCwQMoyaubhFMLqzpH4FjhwOxPRf7Gi16E96rRdODquskCqjRP__c6edWWOkzJdOdhzQHj_ZqXOCE75GlNpjRXYi-D6Wsdt2BkWn2HbZ0RLcgP4XACE9S-gA",
   "query": "preset=vercel@1",
   "state": {
     "accordionContainer": "divided",

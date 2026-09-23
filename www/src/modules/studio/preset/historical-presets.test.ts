@@ -2,15 +2,10 @@ import { describe, expect, it } from "vitest"
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
 import { PRESETS } from "@/modules/presets/catalog"
+import { arrive } from "@/modules/studio/doc"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
-import {
-  canonicalize,
-  decode,
-  encodeQuery,
-  encodeState,
-  readParams,
-} from "./codec"
+import { decode, encodeQuery, readParams } from "./codec"
 import fixtures from "./historical-presets.json"
 
 describe("historical preset strings", () => {
@@ -73,7 +68,6 @@ describe("built-in presets", () => {
   for (const preset of PRESETS) {
     it(`resolves ${preset.id}`, () => {
       expect({
-        encoded: encodeState(preset.state),
         query: encodeQuery(preset.state, { base: preset }),
         state: preset.state,
         designSystem: preset.designSystem,
@@ -84,19 +78,15 @@ describe("built-in presets", () => {
 
 describe("stored built-in strings", () => {
   // Seeded into URLs and saved systems; the studio must not read them as edits.
-  const builtIns = new Set(PRESETS.map((p) => encodeState(p.state) ?? ""))
   for (const fixture of fixtures.filter(
     (f) => f.format === "v3" || f.format === "v4",
   )) {
     const id = fixture.id.replace(/^v[34]-/, "")
     if (!PRESETS.some((p) => p.id === id)) continue
-    it(`canonicalizes ${fixture.id} onto its built-in`, () => {
-      expect(builtIns.has(canonicalize(fixture.encoded))).toBe(true)
+    it(`opens ${fixture.id} as its built-in`, () => {
+      expect(arrive({ preset: fixture.encoded }).redirect).toEqual({
+        preset: id,
+      })
     })
   }
-
-  it("canonicalizes the old Origin string to the default system", () => {
-    const v4 = fixtures.find((f) => f.id === "v4-origin")
-    expect(canonicalize(v4?.encoded)).toBe("")
-  })
 })
