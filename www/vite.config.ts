@@ -59,6 +59,12 @@ export default defineConfig({
     mdx(await import("./source.config")),
     nitro({
       preset: process.env.VERCEL ? "vercel" : "node",
+      vercel: {
+        // MCP render runs headless Chromium: give /mcp its own function so
+        // the browser never shares an instance with page SSR, and room for a
+        // cold render (Chromium download + launch + two pages).
+        functionRules: { "/mcp": { maxDuration: 60 } },
+      },
       rollupConfig: {
         onwarn(warning, warn) {
           if (
