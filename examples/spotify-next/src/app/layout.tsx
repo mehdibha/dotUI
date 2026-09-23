@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { Figtree, Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geistMono = Geist_Mono({subsets:['latin'],variable:'--font-mono'});
+const geistMonoGeistMono = Geist_Mono({subsets:['latin'],variable:'--font-geist-mono'});
 
 const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={cn("font-sans", figtree.variable, geistMono.variable)}>
+    <html lang="en" className={cn("font-sans", figtree.variable, geistMonoGeistMono.variable)}>
       <body className="bg-bg text-fg">{children}</body>
     </html>
   )

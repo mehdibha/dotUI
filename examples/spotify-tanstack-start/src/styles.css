@@ -44,7 +44,7 @@
     --radius-full: calc(infinity * 1px);
     --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
     --font-heading: var(--font-sans);
-    --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', monospace;
+    --font-mono: var(--font-geist-mono);
     --color-bg: var(--bg);
     --color-muted: var(--muted);
     --color-inverse: var(--inverse);
@@ -134,6 +134,7 @@
     --color-thumb: var(--thumb);
     --color-text-selection: var(--text-selection);
     --color-fg-on-text-selection: var(--fg-on-text-selection);
+    --font-geist-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', monospace;
     --color-chart-8: var(--chart-8);
     --color-chart-7: var(--chart-7);
     --color-chart-6: var(--chart-6);
@@ -444,14 +445,8 @@
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
     }
-  :root {
-    --font-mono: var(--font-geist-mono, "Geist Mono Variable", "Geist Mono", ui-monospace, monospace);
-    }
   html {
     @apply font-sans;
-    }
-  code, kbd, samp, pre {
-    @apply font-mono;
     }
 }
   ::selection {

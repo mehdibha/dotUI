@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const geistGeistSans = Geist({subsets:['latin'],variable:'--font-geist-sans'});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistMonoGeistMono = Geist_Mono({subsets:['latin'],variable:'--font-geist-mono'});
 
 export const metadata: Metadata = {
   title: "dotUI · Next.js example",
@@ -24,7 +19,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", geistGeistSans.variable, geistMonoGeistMono.variable)}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
