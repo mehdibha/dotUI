@@ -171,8 +171,8 @@ function ExportDialogBody() {
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
             you add after installs already themed. Your components stay as they
-            are, but your shadcn theme tokens (the CSS variables in your global
-            stylesheet) are replaced.
+            are; your theme tokens, fonts and{" "}
+            <code className="font-mono">lib/utils</code> are replaced.
           </p>
         )}
 
