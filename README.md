@@ -1,39 +1,38 @@
 # dotUI
 
-**Create a design system that looks like your brand — not a preset.**
+**dotUI Studio — build your design system, then own it as code.**
 
-Design your visual language once — colors, icon library, radius, density — and
-export it anywhere: your codebase via the shadcn CLI, or straight into v0
-(Bolt and Lovable are on the way).
+Compose your design system at [dotui.org/studio](https://dotui.org/studio) —
+colors, typography, icons, density, radius and per-component styles — preview
+every change live on real, accessible components built on React Aria and
+Tailwind CSS, and export it into your codebase via the shadcn CLI or straight
+into v0.
 
-> **Preview** — dotUI is in active development. The builder panel is being
-> rebuilt chapter by chapter ([#666](https://github.com/mehdibha/dotUI/issues/666));
-> chapters marked WIP aren't wired yet, and APIs may change before 1.0.
+[![dotUI Studio: the design-system panel beside a live wall of components](www/public/images/og-studio.png)](https://dotui.org/studio)
 
-<!-- TODO: screenshot/GIF of the /studio theme builder -->
+dotUI is in beta: expect APIs to change before 1.0.
 
 ## How it works
 
 1. **Design** your system at [dotui.org/studio](https://dotui.org/studio) —
-   not just a palette swap: pick your colors, icon library, radius and
-   density, and preview every change live on real components.
+   not just a palette swap: every visual decision is yours.
 2. **Export** it wherever you build:
 
    ```bash
-   npx shadcn init "https://dotui.org/r/init?preset=<your-preset>"
+   npx shadcn@latest init "https://dotui.org/r/init?preset=<your-preset>"
    ```
 
    then add components as you need them:
 
    ```bash
-   npx shadcn add @dotui/button
+   npx shadcn@latest add @dotui/button
    ```
 
    Or open your design system directly in **v0** and start prompting with
    your brand already baked in — **Bolt** and **Lovable** are on the way.
 
 3. **Own the code.** Components land in your project as plain React files —
-   no runtime dependency, restyle or rewrite anything.
+   no dotUI package to depend on; restyle or rewrite anything.
 
 ## Documentation
 
