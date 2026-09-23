@@ -20,10 +20,9 @@ import appCss from "@/styles.css?url"
 // Devtools hub — ⌘⇧D toggles a switch panel for the tweaker, React Grab and
 // TanStack Devtools (see src/dev/devtools). Dev + Vercel previews; the !SSR
 // guard keeps the chunk out of the server bundle so build-time prerendering
-// never evaluates it; automated browsers (the MCP render tool) skip it.
+// never evaluates it.
 const DevtoolsHub =
   !import.meta.env.SSR &&
-  !navigator.webdriver &&
   (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
     ? lazy(() =>
         import("@/dev/devtools").then((m) => ({ default: m.DevtoolsHub })),

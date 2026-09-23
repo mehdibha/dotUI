@@ -89,9 +89,6 @@ function decode(preset: string | undefined): StudioPreset {
 
 const encode = (preset: StudioPreset) => encodePreset(preset) ?? ""
 
-/** The preset re-encoded: validated, and the same string for the same system. */
-export const canonicalPreset = (preset?: string) => encode(decode(preset))
-
 const same = (a: unknown, b: unknown) =>
   a === b || JSON.stringify(a) === JSON.stringify(b)
 
@@ -110,13 +107,6 @@ const withQuery = (url: string, params: Record<string, string>) => {
     .join("&")
   return query ? `${url}?${query}` : url
 }
-
-export const previewUrl = (
-  origin: string,
-  preset: string,
-  page: string,
-  mode: string,
-) => withQuery(`${origin}/preview/${page}`, { preset, mode })
 
 function links(origin: string, preset: string) {
   return {
@@ -539,19 +529,22 @@ export function previewUrls(origin: string, preset?: string, pages?: string[]) {
     throw new ToolError(
       `Unknown page: ${unknown.join(", ")}. Pages: ${PREVIEW_PAGES.join(", ")}`,
     )
-  const encoded = canonicalPreset(preset)
+  const encoded = encode(decode(preset))
   return {
     studio: withQuery(`${origin}/studio`, { preset: encoded }),
-    url: previewUrl(origin, encoded, "{page}", "{light|dark}"),
+    url: withQuery(`${origin}/preview/{page}`, {
+      preset: encoded,
+      mode: "{light|dark}",
+    }),
     pages: pages?.length ? pages : PREVIEW_PAGES,
-    note: "Fill {page} from pages and pick one mode. Pages render client-side: open them in a browser (a plain HTTP fetch returns an empty shell). Without a browser, call render for screenshots of the same pages. Only if render fails too, verify with check and tell the user you have not seen the result.",
+    note: "Fill {page} from pages and pick one mode. Pages render client-side: open them in a browser (a plain HTTP fetch returns an empty shell). Without a browser, verify with check and tell the user you have not seen the result.",
   }
 }
 
 /* --------------------------------- export -------------------------------- */
 
 export function exportDesign(registryOrigin: string, preset?: string) {
-  const encoded = canonicalPreset(preset)
+  const encoded = encode(decode(preset))
   const query = encoded ? `?preset=${encoded}` : ""
   const initUrl = `${registryOrigin}/r/init${query}`
   return {

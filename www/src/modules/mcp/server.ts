@@ -7,7 +7,6 @@ import { z } from "zod"
 
 import { siteConfig } from "@/config/site"
 
-import { OVERVIEW_SECTIONS, render, RENDER_MODES } from "./render"
 import {
   check,
   exportDesign,
@@ -15,7 +14,6 @@ import {
   listAxes,
   listFonts,
   listPresets,
-  PREVIEW_PAGES,
   previewUrls,
   setAxes,
   ToolError,
@@ -30,7 +28,7 @@ Workflow:
 2. list_axes with no arguments: every chapter with its axis keys, labels, value vocabularies, defaults and cautions — a caution is a trap the value springs; read it before picking that value. Then list_axes({ chapters }) for one-line descriptions, and list_axes({ axes }) for the full guidance and real-system evidence of the axes you are deciding. Font axes take a family from list_fonts. Optionally start from list_presets.
 3. set_axes, several axes per call. Change only what the brief calls for: every axis has a sensible default, and set_axes lists values you restated as \`noop\`. For a brand-forward system set \`primaryColor: "accent"\` — it moves buttons, checks, switch, slider, tabs, links and focus together.
 4. check after color, type, shape or space changes: resolved colors per mode, WCAG contrast, neutral tint, brand fidelity, sizes. Fix what \`problems\` lists where an axis reaches it; \`inDefaults\` are failures the default system shares.
-5. render to look at the result: screenshots of the overview and of real app screens, light and dark. Look at them after check, and iterate on what you see — check reads numbers, render shows whether the system reads as intended. preview_urls gives the same pages for a browser. Only if render failed or is unavailable, tell the user the design is unseen and that check was your only verification.
+5. preview_urls to look at the result in a browser. If you could not view it, tell the user the design is unseen and that check was your only verification.
 6. export for the shadcn command and the v0 link. Share the studio link so the user can keep refining by hand.
 
 Set the foundations (color, type, shape, space, surfaces) before component chapters, and keep one coherent point of view.
@@ -41,16 +39,12 @@ const text = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value) }],
 })
 
-function failed(error: unknown) {
-  if (!(error instanceof ToolError)) throw error
-  return { ...text({ error: error.message }), isError: true }
-}
-
 function run(fn: () => unknown) {
   try {
     return text(fn())
   } catch (error) {
-    return failed(error)
+    if (!(error instanceof ToolError)) throw error
+    return { ...text({ error: error.message }), isError: true }
   }
 }
 
@@ -198,43 +192,6 @@ function createServer(origin: string, registryOrigin: string) {
       annotations: { readOnlyHint: true },
     },
     ({ preset, pages }) => run(() => previewUrls(origin, preset, pages)),
-  )
-
-  server.registerTool(
-    "render",
-    {
-      title: "Render",
-      description:
-        "Screenshots of a preview page in this design system — returns JPEG images (one per mode, 1280px wide, up to 2000px tall) plus a text item naming each image's mode, URL and crop. Takes a few seconds per page; repeat calls are cached. The overview is long: its first image covers the top, `section` jumps to a later part.",
-      inputSchema: {
-        preset,
-        page: z
-          .string()
-          .optional()
-          .describe(
-            `'overview' (default: the style guide) or an app screen: ${PREVIEW_PAGES.slice(1).join(", ")}.`,
-          ),
-        mode: z
-          .enum(RENDER_MODES)
-          .optional()
-          .describe("'light', 'dark' or 'both' (default)."),
-        section: z
-          .string()
-          .optional()
-          .describe(
-            `Overview only: capture from this section down — ${Object.keys(OVERVIEW_SECTIONS).join(", ")}.`,
-          ),
-      },
-      annotations: { readOnlyHint: true },
-    },
-    async (input) => {
-      const { screenshot } = await import("./chrome")
-      try {
-        return { content: await render(origin, input, screenshot) }
-      } catch (error) {
-        return failed(error)
-      }
-    },
   )
 
   server.registerTool(
