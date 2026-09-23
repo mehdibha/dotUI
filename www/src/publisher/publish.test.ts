@@ -8,7 +8,7 @@
  *                scalar param ("radius") whose var ref must be rewritten
  */
 
-import { afterEach, describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest"
 
 import {
   publishables,
@@ -23,8 +23,6 @@ import {
   depsFromFileImports,
   publish,
   selectPublishable,
-  setDotuiDepResolver,
-  setKnownDotuiNames,
   TV_CONFIG_PLACEHOLDER,
 } from "./publish"
 import {
@@ -36,11 +34,6 @@ import {
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
 import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
-
-afterEach(() => {
-  setKnownDotuiNames([])
-  setDotuiDepResolver("")
-})
 
 /* ============================================================ */
 /* flatten                                                       */
@@ -452,8 +445,7 @@ describe("publish", () => {
     expect(item.type).toBe("registry:ui")
     // `focus-styles` is bundled into the registry:base init item so it gets
     // dropped from per-component registryDependencies. `loader` stays as a
-    // bare name — without a `setKnownDotuiNames` + `setDotuiDepResolver`
-    // call there's no URL rewrite.
+    // bare name — without a `deps` resolver there's no URL rewrite.
     expect(item.registryDependencies).toEqual(["loader"])
     const file = item.files?.[0]
     // Shipped as a flat `path` with no `target`, so the shadcn CLI honours the
@@ -522,12 +514,14 @@ describe("publish", () => {
   })
 
   test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {
-    setKnownDotuiNames(["loader"])
-    setDotuiDepResolver("https://dotui.com", "?preset=abc")
-
     const { item } = publish({
       publishable: buttonPublishable,
       preset: { density: "default", componentParams: {} },
+      deps: {
+        origin: "https://dotui.com/",
+        query: "?preset=abc",
+        known: new Set(["loader"]),
+      },
     })
 
     expect(item.registryDependencies).toEqual([
@@ -539,9 +533,6 @@ describe("publish", () => {
     // Regression for #477: `input` used to pass through bare (it had no
     // publishable), so `shadcn add` resolved it against shadcn's default
     // registry. With `input` publishable, both deps rewrite to dotui URLs.
-    setKnownDotuiNames(["field", "input"])
-    setDotuiDepResolver("https://dotui.org")
-
     const { item } = publish({
       publishable: {
         template: TV_CONFIG_PLACEHOLDER,
@@ -560,6 +551,10 @@ describe("publish", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
+      deps: {
+        origin: "https://dotui.org",
+        known: new Set(["field", "input"]),
+      },
     })
 
     expect(item.registryDependencies).toEqual([
@@ -569,8 +564,10 @@ describe("publish", () => {
   })
 
   test("popover: ships a param value's registry deps only when it is selected", () => {
-    setKnownDotuiNames(["drawer", "use-mobile"])
-    setDotuiDepResolver("https://dotui.org")
+    const deps = {
+      origin: "https://dotui.org",
+      known: new Set(["drawer", "use-mobile"]),
+    }
     const publishable = {
       template: TV_CONFIG_PLACEHOLDER,
       stylesConfig: { base: {} },
@@ -598,6 +595,7 @@ describe("publish", () => {
     const drawer = publish({
       publishable,
       preset: { density: "default", componentParams: {} },
+      deps,
     })
     expect(drawer.item.registryDependencies).toEqual([
       "https://dotui.org/r/drawer",
@@ -610,6 +608,7 @@ describe("publish", () => {
         density: "default",
         componentParams: { popover: { mobile: "popover" } },
       },
+      deps,
     })
     expect(plain.item.registryDependencies).toBeUndefined()
   })
