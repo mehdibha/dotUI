@@ -6,12 +6,8 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import type * as PageTree from "fumadocs-core/page-tree"
 
 import type { SerializedPageTree } from "@/lib/source"
-import {
-  DrawerIndent,
-  DrawerIndentBackground,
-  DrawerProvider,
-} from "@/registry/ui/drawer"
 import { Header } from "@/components/layout/header"
+import { MobileMenuLayout } from "@/components/layout/mobile-menu"
 
 const getPageTree = createServerFn({ method: "GET" }).handler(
   async (): Promise<SerializedPageTree> => {
@@ -45,29 +41,16 @@ function AppLayout() {
   const items = pageTree.children as PageTree.Node[]
 
   return (
-    <DrawerProvider>
-      <DrawerIndentBackground />
-      {/* The mobile menu (a left drawer in the header) pushes the page aside
-          Claude-app style: the page slides right by the menu width, follows
-          the finger 1:1 while swiping (transition off whenever swipe progress
-          is non-zero), and rounds its corner over the dark layer above. The
-          hairline is an inset spread shadow, not a border, so nothing shifts;
-          inset because the sidebar is opaque and would cover a line drawn
-          outside the box. Active-only, since inset it would otherwise show
-          along the viewport edges.
-          Page drawers (docs demos, studio) live under their own provider
-          below so they never trigger the push. */}
-      <DrawerIndent className="origin-left transition-[transform,border-radius,box-shadow] duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] [--header-height:--spacing(14)] data-active:transform-[translate3d(calc(var(--mobile-menu-width)*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:rounded-3xl data-active:shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--color-fg)_25%,var(--color-bg))]">
+    <MobileMenuLayout items={items}>
+      <div className="[--header-height:--spacing(14)]">
         <Header items={items} />
-        <DrawerProvider>
-          <main id="content">
-            <Outlet />
-          </main>
-        </DrawerProvider>
+        <main id="content">
+          <Outlet />
+        </main>
         {/* Not on the root: the /preview iframe renders outside _app. */}
         <Analytics />
         <SpeedInsights />
-      </DrawerIndent>
-    </DrawerProvider>
+      </div>
+    </MobileMenuLayout>
   )
 }

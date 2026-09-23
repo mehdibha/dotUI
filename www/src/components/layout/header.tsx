@@ -9,7 +9,7 @@ import { Separator } from "@/registry/ui/separator"
 import { GitHubIcon } from "@/components/icons/github"
 import { HeaderActionsSlot } from "@/components/layout/header-slot"
 import { Logo } from "@/components/layout/logo"
-import { MobileMenu } from "@/components/layout/mobile-menu"
+import { MobileMenuButton } from "@/components/layout/mobile-menu"
 import { ProgressiveBlur } from "@/components/progressive-blur"
 import { SearchCommand } from "@/components/search-command"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -52,7 +52,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <ProgressiveBlur />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
-        <MobileMenu items={items} />
+        <MobileMenuButton />
         <Logo />
         {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
             here next to the logo instead. Renders null off docs pages. */}

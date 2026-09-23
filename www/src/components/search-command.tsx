@@ -2,7 +2,7 @@ import React from "react"
 import type * as PageTree from "fumadocs-core/page-tree"
 
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Drawer, DrawerHandle, DrawerProvider } from "@/registry/ui/drawer"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   ModalBackdrop,
   ModalOverlay,
@@ -124,14 +124,10 @@ export function SearchCommand({
           // structurally clear of the iOS keyboard, and the results list
           // flexes below it. The drawer's keyboard inset keeps the list's
           // bottom above the keyboard.
-          // Own provider: the app layout's DrawerProvider drives the
-          // mobile-menu push effect, which this sheet must not trigger.
-          <DrawerProvider>
-            <Drawer className="h-[calc(100dvh-3rem+var(--drawer-bleed))] bg-(--neutral-100)">
-              <DrawerHandle />
-              {content}
-            </Drawer>
-          </DrawerProvider>
+          <Drawer className="h-[calc(100dvh-3rem+var(--drawer-bleed))] bg-(--neutral-100)">
+            <DrawerHandle />
+            {content}
+          </Drawer>
         ) : (
           // Composed (not <Modal>) so the panel AND backdrop appear
           // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
