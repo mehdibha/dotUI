@@ -295,6 +295,7 @@ function CommandLine({ label, command }: { label: string; command: string }) {
 interface RegistryInit {
   dependencies?: string[]
   cssVars?: {
+    theme?: Record<string, string>
     light?: Record<string, string>
     dark?: Record<string, string>
   }
@@ -311,7 +312,7 @@ function download(filename: string, text: string) {
 
 function cssBlock(selector: string, vars: Record<string, string> = {}) {
   const lines = Object.entries(vars).map(
-    ([key, value]) => `  --${key}: ${value};`,
+    ([key, value]) => `  ${key.startsWith("--") ? key : `--${key}`}: ${value};`,
   )
   return `${selector} {\n${lines.join("\n")}\n}`
 }
@@ -339,8 +340,14 @@ function ThemeCss() {
     return () => controller.abort()
   }, [isOpen, encoded])
 
+  // The order init writes them: the Tailwind aliases (fonts, radius scale,
+  // motion), then the values per mode.
   const css = item
-    ? `${cssBlock(":root", item.cssVars?.light)}\n\n${cssBlock(".dark", item.cssVars?.dark)}`
+    ? [
+        cssBlock("@theme inline", item.cssVars?.theme),
+        cssBlock(":root", item.cssVars?.light),
+        cssBlock(".dark", item.cssVars?.dark),
+      ].join("\n\n")
     : ""
 
   return (
@@ -360,8 +367,8 @@ function ThemeCss() {
       </Button>
       {isOpen && (
         <div className="rounded-md border bg-muted/40">
-          <div className="flex items-center justify-between gap-2 border-b py-1 pr-1.5 pl-3">
-            <span className="min-w-0 truncate text-xs text-fg-muted">
+          <div className="flex items-start justify-between gap-2 border-b py-1.5 pr-1.5 pl-3">
+            <span className="min-w-0 text-xs text-fg-muted">
               {item?.dependencies?.length
                 ? `Installs ${item.dependencies.join(", ")}`
                 : "globals.css"}
