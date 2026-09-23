@@ -27,11 +27,11 @@ const PINNED: Record<string, string> = {
   "airbnb@1": "a24b46befbfe8d5d",
   "airbnb@2": "dc1a95f54a2b2ce2",
   "github@1": "9baa7e9f54c5d2ae",
-  "github@2": "065b2e4daa9183d4",
+  "github@2": "8c8cf969fd8bea7f",
   "notion@1": "5288d7c7b6426f84",
   "notion@2": "131afac9a4987928",
   "spotify@1": "93cf711c969d4fd4",
-  "spotify@2": "d4848cbf43ca403f",
+  "spotify@2": "2d30c60cf922778b",
 }
 
 /** JSON with sorted keys, so the hash tracks content, not layout. */

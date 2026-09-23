@@ -181,9 +181,9 @@
         }
       ],
       "focusColor": "neutral",
-      "focusStyle": "ring",
+      "focusStyle": "duo",
       "focusWidth": 2,
-      "focusOffset": "inset",
+      "focusOffset": "gap",
       "focusGap": 2,
       "focusHaloStrength": 45,
       "focusInputStyle": "ring",
