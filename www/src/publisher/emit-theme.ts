@@ -5,7 +5,7 @@
  * same shape shadcn's own themes use:
  *   - `cssVars.light` / `.dark` -> `:root` / `.dark` — every semantic token
  *                                  as a literal `oklch()` per mode, plus
- *                                  radius and chart slots
+ *                                  radius, chart slots and shadcn's names
  *   - `cssVars.theme`           -> `@theme inline` — the Tailwind vocabulary
  *                                  (`--color-bg: var(--bg)`, radius rungs, fonts)
  *   - `css`                     -> imports, plugins, utilities, layers,
@@ -63,6 +63,48 @@ export interface EmitThemeInput {
   encodedPreset?: string
   /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
   registryRoot: string
+  /** The `?base=` shadcn appends to the init URL, read from the project's style. */
+  shadcnBase?: string | null
+}
+
+/**
+ * shadcn's own token names, pointed at the dotUI token that means the same
+ * thing. Without them an existing project keeps shadcn's values next to
+ * dotUI's (`--primary-foreground` unreadable on dotUI's `--primary`), and on
+ * Next.js loses light `--background`/`--foreground`: shadcn's init strips
+ * create-next-app's pair from `:root` and only restores what the item sets.
+ */
+const SHADCN_ALIASES: Record<string, string> = {
+  background: "bg",
+  foreground: "fg",
+  "card-foreground": "fg",
+  "popover-foreground": "fg",
+  "primary-foreground": "fg-on-primary",
+  secondary: "neutral",
+  "secondary-foreground": "fg-on-neutral",
+  "muted-foreground": "fg-muted",
+  "accent-foreground": "fg-on-accent",
+  destructive: "danger",
+  input: "border-control",
+  ring: "border-focus",
+  "sidebar-foreground": "fg",
+  "sidebar-primary": "primary",
+  "sidebar-primary-foreground": "fg-on-primary",
+  "sidebar-accent": "highlight",
+  "sidebar-accent-foreground": "fg-on-highlight",
+  "sidebar-border": "border",
+  "sidebar-ring": "border-focus",
+}
+
+const SHADCN_BASES = ["radix", "base", "aria"]
+
+/**
+ * The style a plain `shadcn add <item>` resolves against: shadcn's default
+ * (nova) on the project's own primitives, so later shadcn components match
+ * the ones already installed. `"default"` would fetch the legacy v3 registry.
+ */
+function shadcnStyle(base: string | null | undefined): string {
+  return `${base && SHADCN_BASES.includes(base) ? base : "base"}-nova`
 }
 
 export const DEFAULT_DEPENDENCIES = [
@@ -150,7 +192,8 @@ function splitPresetTokens(
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
-  const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
+  const { baseRegistryCss, preset, encodedPreset, registryRoot, shadcnBase } =
+    input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
   // One `registry:font` item per font role, defaults included: nothing else
   // loads the face. shadcn installs it per framework (next/font on Next.js,
@@ -172,12 +215,16 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   //   (`~/` on React Router); these would override it.
   // - `cssVariables: true` because dotUI installs its design tokens through
   //   this registry item's structured CSS fields.
+  // - `style` and the menu fields: init rewrites components.json keeping only
+  //   `registries`, so an existing project's values survive only if set here.
   // - The `@dotui` registries mapping is preserved as a convenience for
   //   shadcn versions that DO merge a `registry:base`'s config block, but
   //   we don't rely on it: per-component `registryDependencies` are emitted
   //   as absolute URLs by the per-component publisher.
   const config = {
-    style: "default",
+    style: shadcnStyle(shadcnBase),
+    menuColor: "default",
+    menuAccent: "subtle",
     tailwind: {
       cssVariables: true,
     },
@@ -278,6 +325,13 @@ export function mergePresetCssFields(
   }
   Object.assign(light, split.semantic.light)
   Object.assign(dark, split.semantic.dark)
+  for (const [name, token] of Object.entries(SHADCN_ALIASES)) {
+    const [lightValue, darkValue] = [light[token], dark[token]]
+    if (lightValue === undefined || darkValue === undefined) continue
+    theme[`--color-${name}`] = `var(--${name})`
+    light[name] = lightValue
+    dark[name] = darkValue
+  }
   // Controls that leave the selection source: the cluster's `:root` names
   // re-declared on the component, per mode.
   for (const [selector, vocab] of Object.entries(

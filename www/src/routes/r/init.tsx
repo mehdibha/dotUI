@@ -33,6 +33,7 @@ export const Route = createFileRoute("/r/init")({
           preset,
           encodedPreset,
           registryRoot: `${url.protocol}//${url.host}`,
+          shadcnBase: url.searchParams.get("base"),
         })
 
         return new Response(JSON.stringify(item, null, 2), {
