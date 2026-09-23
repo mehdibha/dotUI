@@ -28,6 +28,9 @@ import {
 } from "../dial"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
+import { usePanelMode } from "./color"
+import { inks } from "./primary"
+import type { Ink } from "./primary"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -52,8 +55,23 @@ const FAMILY: Record<string, { primary: string; secondary: string }> = {
   },
 }
 
+/** The primary fill the buttons actually wear — the brand when Primary puts
+ *  buttons on the accent. */
+function useButtonInk(state: StudioState): Ink {
+  const { m } = usePanelMode(state)
+  return inks(m)[state.buttonColor === "accent" ? "accent" : "neutral"]
+}
+
 /** A primary button in one family; on a card, a secondary beside it. */
-function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
+function ButtonGlyph({
+  style,
+  ink,
+  card,
+}: {
+  style: string
+  ink: Ink
+  card?: boolean
+}) {
   const family = FAMILY[style] ?? FLAT
   const size = card ? "h-6 px-2.5 text-[11px]" : "h-4 px-1.5 text-[9px]"
   return (
@@ -65,10 +83,11 @@ function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
     >
       <span
         className={cn(
-          "flex items-center rounded-md bg-primary font-semibold text-fg-on-primary",
+          "flex items-center rounded-md font-semibold",
           size,
           family.primary,
         )}
+        style={{ backgroundColor: ink.fill, color: ink.on }}
       >
         {card ? "Primary" : "Button"}
       </span>
@@ -167,11 +186,12 @@ function SegmentedGlyph({
 /* --------------------------------- Section --------------------------------- */
 
 export function ButtonsPreview({ state }: { state: StudioState }) {
-  return <ButtonGlyph style={state.buttonStyle} />
+  return <ButtonGlyph style={state.buttonStyle} ink={useButtonInk(state)} />
 }
 
 export function ButtonsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const ink = useButtonInk(state)
   return (
     <>
       <DialTrigger
@@ -181,7 +201,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             <span className="truncate">
               {optionLabel(STYLE_OPTIONS, state.buttonStyle)}
             </span>
-            <ButtonGlyph style={state.buttonStyle} />
+            <ButtonGlyph style={state.buttonStyle} ink={ink} />
           </>
         }
       >
@@ -193,7 +213,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             options={STYLE_OPTIONS.map((option) => ({
               id: option.value,
               label: option.label,
-              children: <ButtonGlyph style={option.value} card />,
+              children: <ButtonGlyph style={option.value} ink={ink} card />,
             }))}
           />
           <DialGap />

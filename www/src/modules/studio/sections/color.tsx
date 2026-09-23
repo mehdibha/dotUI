@@ -54,7 +54,7 @@ export function useModeTheme(state: StudioState, mode?: ColorMode) {
 
 /** The resolved theme in the panel's own mode, so what the rows show is what
  *  the page around them renders. */
-function usePanelMode(state: StudioState) {
+export function usePanelMode(state: StudioState) {
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
   const { resolvedTheme } = useTheme()
