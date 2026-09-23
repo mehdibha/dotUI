@@ -176,7 +176,12 @@ describe("set_axes", () => {
     expect(() =>
       setAxes(ORIGIN, { set: { monoFont: "IBM Plex Mono" } }),
     ).toThrow(/curated set of Google variable fonts — closest: .*Mono/)
-    expect(nearFonts("IBM Plex Mono")).toContain("IBM Plex Sans")
+    const mono = nearFonts("IBM Plex Mono")
+    expect(mono[0]).toBe("Geist Mono")
+    expect(mono).not.toContain("IBM Plex Sans")
+    expect(() => setAxes(ORIGIN, { set: { monoFont: "Menlo" } })).toThrow(
+      /closest: Geist Mono, JetBrains Mono/,
+    )
     expect(nearFonts("inter")[0]).toBe("Inter")
   })
 
@@ -198,7 +203,10 @@ describe("set_axes", () => {
     for (const leaf of PRIMARY_LEAVES)
       expect(state[leaf]).toBe(leaf === "tabsColor" ? "neutral" : "accent")
     expect(getDesign(ORIGIN, preset).primaryColor).toBe("mixed")
-    expect(warnings?.join()).toMatch(/Mixed Primary: .*tabsColor/)
+    expect(warnings?.join()).toMatch(
+      /Mixed Primary: buttons are accent but tabsColor is still neutral/,
+    )
+    expect(warnings?.join()).not.toMatch(/Geist/)
 
     const all = setAxes(ORIGIN, { set: { primaryColor: "accent" } })
     expect(getDesign(ORIGIN, all.preset).primaryColor).toBe("accent")
@@ -215,7 +223,7 @@ describe("set_axes", () => {
   test("brand buttons beside neutral checks warn", () => {
     const { warnings } = setAxes(ORIGIN, { set: { buttonColor: "accent" } })
     expect(warnings?.join()).toMatch(
-      /Mixed Primary: buttons are accent but checkboxColor, radioColor, switchColor, sliderColor, tabsColor/,
+      /Mixed Primary: buttons are accent but checkboxColor, radioColor, switchColor, sliderColor, tabsColor are still neutral/,
     )
   })
 
@@ -268,11 +276,20 @@ describe("check", () => {
     expect(result.light.neutralChroma.bg).toBe(0)
   })
 
-  test("flags a near-black brand the engine pulls to mid gray", () => {
+  test("flags a near-black brand the engine pulls toward gray", () => {
     const { preset } = setAxes(ORIGIN, { set: { brand: "#141414" } })
     expect(check(preset).problems.join()).toMatch(
-      /renders visibly off its seed/,
+      /renders visibly off its seed.*use primaryColor: "neutral"/,
     )
+  })
+
+  test("a neutral Primary isn't told to go neutral", () => {
+    const { preset } = setAxes(ORIGIN, {
+      set: { brand: "#141414", primaryColor: "neutral" },
+    })
+    const problems = check(preset).problems.join()
+    expect(problems).toMatch(/renders visibly off its seed.*preserveSeed/)
+    expect(problems).not.toMatch(/primaryColor/)
   })
 
   test("follows preset token re-points and pill shapes", () => {

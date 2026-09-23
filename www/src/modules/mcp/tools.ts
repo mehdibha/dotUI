@@ -50,8 +50,10 @@ const PRIMARY_SPEC: AxisSpec = {
   guidance:
     "Accent is the brand-forward system (Material 3, Radix Themes): brand " +
     "buttons, checks, switch, slider, tabs, links and focus. Neutral is the " +
-    "tool-UI school (shadcn/ui, Geist): near-black solids. The default is " +
-    "neither: neutral solids with accent links and focus ring.",
+    "tool-UI school (shadcn/ui): near-black solids. The default is " +
+    "neither: neutral solids with accent links and focus ring. Geist is a " +
+    "deliberate mix (neutral buttons and checkbox, accent switch): set " +
+    "primaryColor, then the leaves that differ.",
 }
 
 const AXES = new Map<string, { chapter: string; spec: AxisSpec }>([

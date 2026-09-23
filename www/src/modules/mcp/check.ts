@@ -16,7 +16,7 @@ import type { ModeName } from "@/registry/theme"
 import { colorLookup } from "@/publisher/flatten-color"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
-import { PRIMARY_LEAVES } from "@/modules/studio/axes/color"
+import { PRIMARY_LEAVES, primaryValue } from "@/modules/studio/axes/color"
 import { roleRadiusPx } from "@/modules/studio/axes/shape"
 import type { ShapeRoleKey } from "@/modules/studio/axes/shape"
 import { densityTier } from "@/modules/studio/axes/space"
@@ -127,7 +127,7 @@ export function primaryWarnings(state: StudioState): string[] {
   )
   if (!neutral.length) return []
   return [
-    `Mixed Primary: buttons are accent but ${neutral.join(", ")} stay neutral (near-black/white). For a brand-forward system set primaryColor: "accent"; keep the fork only if it is deliberate (Geist-style).`,
+    `Mixed Primary: buttons are accent but ${neutral.join(", ")} ${neutral.length > 1 ? "are" : "is"} still neutral (near-black/white). For a brand-forward system set primaryColor: "accent"; keep the fork only if it is deliberate.`,
   ]
 }
 
@@ -251,7 +251,11 @@ export function checkDesign(state: StudioState) {
   const drift = Math.max(light.brandDeltaE ?? 0, dark.brandDeltaE ?? 0)
   if (drift > SEED_DRIFT)
     problems.push(
-      `the brand solid renders visibly off its seed (ΔEok ${drift}): the engine re-fits the seed's lightness and chroma, and pulls near-black or near-white seeds to mid gray. For the exact hex set preserveSeed (labels may then miss contrast); for a monochrome brand use primaryColor: "neutral" instead.`,
+      `the brand solid renders visibly off its seed (ΔEok ${drift}): the engine re-fits the seed's lightness and chroma, and pulls near-black and near-white seeds toward gray. For the exact hex set preserveSeed (labels may then miss contrast)${
+        primaryValue(state) === "neutral"
+          ? ""
+          : `; for a monochrome brand use primaryColor: "neutral" instead`
+      }.`,
     )
 
   const brand = parse(read("accent", "light"))

@@ -71,7 +71,7 @@ export const TYPE_SPEC = {
     monoFont: {
       label: "Mono",
       description: "The monospace face — code, Kbd keys and OTP field digits.",
-      value: { type: "font" },
+      value: { type: "font", category: "mono" },
       guidance:
         "Radix Themes (`--code-font-family`) and shadcn/ui (`--font-mono`) " +
         "expose it as its own token; Material 3 has no mono role. A mono " +
