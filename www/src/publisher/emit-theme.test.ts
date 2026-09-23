@@ -167,7 +167,7 @@ describe("emitInitItem", () => {
       menuColor: "default",
       menuAccent: "subtle",
     })
-    expect(styleFor("radix")?.style).toBe("radix-nova")
+    expect(styleFor("radix")?.style).toBe("new-york")
     expect(styleFor("aria")?.style).toBe("aria-nova")
     expect(styleFor("default")?.style).toBe("base-nova")
   })

@@ -96,15 +96,14 @@ const SHADCN_ALIASES: Record<string, string> = {
   "sidebar-ring": "border-focus",
 }
 
-const SHADCN_BASES = ["radix", "base", "aria"]
-
 /**
- * The style a plain `shadcn add <item>` resolves against: shadcn's default
- * (nova) on the project's own primitives, so later shadcn components match
- * the ones already installed. `"default"` would fetch the legacy v3 registry.
+ * The style a plain `shadcn add <item>` resolves against, on the project's own
+ * primitives. Radix projects are mostly `new-york`, which shadcn serves as
+ * `new-york-v4` on Tailwind v4; `"default"` would fetch the legacy registry.
  */
 function shadcnStyle(base: string | null | undefined): string {
-  return `${base && SHADCN_BASES.includes(base) ? base : "base"}-nova`
+  if (base === "radix") return "new-york"
+  return base === "aria" ? "aria-nova" : "base-nova"
 }
 
 export const DEFAULT_DEPENDENCIES = [
