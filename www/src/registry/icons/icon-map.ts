@@ -140,6 +140,13 @@ export const registryIcons: Record<
     hugeicons: "Mic01Icon",
     phosphor: "WaveformIcon",
   },
+  SquareIcon: {
+    lucide: "SquareIcon",
+    remix: "RiStopFill",
+    tabler: "IconPlayerStopFilled",
+    hugeicons: "StopIcon",
+    phosphor: "StopIcon",
+  },
   ArrowUpIcon: {
     lucide: "ArrowUpIcon",
     remix: "RiArrowUpLine",

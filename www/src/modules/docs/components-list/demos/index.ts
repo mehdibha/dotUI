@@ -27,6 +27,7 @@ import { ColorSliderDemo } from "./color-slider"
 import { ColorSwatchPickerDemo } from "./color-swatch-picker"
 import { ComboboxDemo } from "./combobox"
 import { CommandDemo } from "./command"
+import { ComposerDemo } from "./composer"
 import { DateFieldDemo } from "./date-field"
 import { DatePickerDemo } from "./date-picker"
 import { DialogDemo } from "./dialog"
@@ -121,6 +122,7 @@ export const componentDemos: Record<string, ComponentType> = {
   loader: LoaderDemo,
   marker: MarkerDemo,
   mention: MentionDemo,
+  composer: ComposerDemo,
   message: MessageDemo,
   menu: MenuDemo,
   "message-scroller": MessageScrollerDemo,

@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 159 icons we actually use (not the entire library)
+// Only exports the 160 icons we actually use (not the entire library)
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -138,6 +138,7 @@ import {
 	SourceCodeSquareIcon as SourceCodeSquareIconData,
 	SparklesIcon as SparklesIconData,
 	StarIcon as StarIconData,
+	StopIcon as StopIconData,
 	Sun01Icon as Sun01IconData,
 	Table01Icon as Table01IconData,
 	Tag01Icon as Tag01IconData,
@@ -307,6 +308,7 @@ export const SourceCodeIcon = wrap(SourceCodeIconData);
 export const SourceCodeSquareIcon = wrap(SourceCodeSquareIconData);
 export const SparklesIcon = wrap(SparklesIconData);
 export const StarIcon = wrap(StarIconData);
+export const StopIcon = wrap(StopIconData);
 export const Sun01Icon = wrap(Sun01IconData);
 export const Table01Icon = wrap(Table01IconData);
 export const Tag01Icon = wrap(Tag01IconData);

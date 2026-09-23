@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 165 icons we actually use (not the entire library)
+// Only exports the 166 icons we actually use (not the entire library)
 export {
 	RiAddBoxLine,
 	RiAddCircleLine,
@@ -146,6 +146,7 @@ export {
 	RiSparklingLine,
 	RiStackLine,
 	RiStarLine,
+	RiStopFill,
 	RiSubtractLine,
 	RiSunLine,
 	RiTable2,

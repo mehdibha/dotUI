@@ -420,6 +420,12 @@ export const componentsData: ComponentCategory[] = [
         status: "in review",
       },
       {
+        name: "Composer",
+        slug: "composer",
+        href: "/docs/components/composer",
+        status: "in review",
+      },
+      {
         name: "Bubble",
         slug: "bubble",
         href: "/docs/components/bubble",
