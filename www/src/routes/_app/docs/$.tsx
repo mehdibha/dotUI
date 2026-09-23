@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router"
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
 import { setResponseHeader } from "@tanstack/react-start/server"
 import { findNeighbour } from "fumadocs-core/page-tree"
@@ -23,7 +23,26 @@ function ogEyebrow(url: string) {
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
+/** Removed docs pages → where their content lives now. */
+const MOVED: Record<string, { to: string; hash?: string }> = {
+  "components/chart": { to: "charts" },
+  "components/chat": { to: "components/message" },
+  "components/context-menu": { to: "components/menu", hash: "triggers" },
+  "components/disclosure": { to: "components/collapsible" },
+}
+
 export const Route = createFileRoute("/_app/docs/$")({
+  beforeLoad: ({ params }) => {
+    const moved = params._splat ? MOVED[params._splat] : undefined
+    if (moved) {
+      throw redirect({
+        to: "/docs/$",
+        params: { _splat: moved.to },
+        hash: moved.hash,
+        statusCode: 301,
+      })
+    }
+  },
   component: DocsPage,
   // Docs content only changes with a build/deploy (Vercel purges the CDN cache
   // on deploy), so never background-revalidate it on re-match.
