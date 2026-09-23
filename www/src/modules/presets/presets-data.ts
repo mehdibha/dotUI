@@ -98,6 +98,7 @@ export const PRESETS: Preset[] = [
       brand: "#d97757",
       neutralHue: grayHue("#97958d"),
       neutralTint: 0.5,
+      mutedText: "soft",
       // CTAs are white-on-graphite (neutral); clay is brand only, and the
       // checks, toggles and focus take iOS blue.
       selectionSeed: "#5598e7",

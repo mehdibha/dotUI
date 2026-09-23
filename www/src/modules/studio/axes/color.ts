@@ -37,7 +37,16 @@ export const COLOR_DEFAULTS = {
   vividness: 1,
   neutralTint: 1,
   preserveSeed: false,
+  mutedText: "strong",
 }
+
+/* Secondary text: the ramp's text-muted job (shadcn, Radix, Geist), or a
+   step softer — Apple's secondaryLabel and Claude's greys, which recede
+   further behind the primary text. */
+export const MUTED_TEXT_OPTIONS = [
+  { value: "strong", label: "Strong" },
+  { value: "soft", label: "Soft" },
+]
 
 /* What a role draws from: the neutral's text end (the shadcn school,
    black/white) or the brand ramp (Material, Linear, Radix Themes). */
@@ -170,5 +179,15 @@ export function isDefaultColorConfig(config: ColorConfig): boolean {
 }
 
 export function resolveColor(state: StudioState): Resolved {
-  return { color: buildColorConfig(state) }
+  const color = buildColorConfig(state)
+  if (state.mutedText === "soft")
+    return {
+      color: {
+        ...color,
+        overrides: {
+          "color-fg-muted": { palette: "neutral", job: "solid-hover" },
+        },
+      },
+    }
+  return { color }
 }

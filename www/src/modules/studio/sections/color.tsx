@@ -14,12 +14,17 @@ import { STEPS, toOklch } from "@dotui/colors"
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
 
-import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
+import {
+  buildColorConfig,
+  COLOR_DEFAULTS,
+  MUTED_TEXT_OPTIONS,
+} from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   DialColor,
   DialGap,
   DialPopover,
+  DialSegmented,
   DialSlider,
   DialToggle,
   DialTrigger,
@@ -188,6 +193,12 @@ export function ColorSection({ studio }: { studio: Studio }) {
           ))}
         </DialPopover>
       </DialTrigger>
+      <DialSegmented
+        label="Muted text"
+        value={state.mutedText}
+        onChange={set("mutedText")}
+        options={MUTED_TEXT_OPTIONS}
+      />
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
     </>

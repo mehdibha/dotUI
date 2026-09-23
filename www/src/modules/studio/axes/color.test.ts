@@ -5,6 +5,7 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { DEFAULTS } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
+  resolveColor,
   buildColorConfig,
   isDefaultColorConfig,
   SOLID_LEAVES,
@@ -79,5 +80,14 @@ describe("color axis", () => {
     expect(
       isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: "accent" }),
     ).toBe(false)
+  })
+})
+
+describe("muted text", () => {
+  it("strong keeps the text-muted job; soft steps it down", () => {
+    expect(resolveColor(DEFAULTS).color?.overrides).toBeUndefined()
+    expect(
+      resolveColor({ ...DEFAULTS, mutedText: "soft" }).color?.overrides,
+    ).toEqual({ "color-fg-muted": { palette: "neutral", job: "solid-hover" } })
   })
 })
