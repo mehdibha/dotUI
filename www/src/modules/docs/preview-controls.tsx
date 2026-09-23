@@ -10,7 +10,7 @@ import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { LEGACY_ORIGINS, ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { isLegacyOrigin, ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
 import {
@@ -39,17 +39,18 @@ const presetStore = createPersistedStore(
    built-in: a fresh visitor sits on Origin, and a preset applied from the
    gallery is still that preset. Until then the picker lists no "My systems"
    and a stored `yours` selection reads as the built-in it matches. */
-const BUILT_IN_BY_STATE = new Map([
-  ...PRESETS.map((p) => [encodeState(p.state), p.id] as const),
-  ...LEGACY_ORIGINS.map((encoded) => [encoded, ORIGIN.id] as const),
-])
+const BUILT_IN_BY_STATE = new Map(
+  PRESETS.map((p) => [encodeState(p.state), p.id] as const),
+)
 
 function useSelectedPreset() {
   const stored = presetStore.useValue()
   const yours = useStoredPreset()
   const builtIn = useMemo(() => {
     const encoded = encodePreset(yours)
-    return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
+    return encoded === undefined || isLegacyOrigin(encoded)
+      ? ORIGIN.id
+      : BUILT_IN_BY_STATE.get(encoded)
   }, [yours])
   const own = builtIn === undefined
   const selected = stored === YOURS && builtIn ? builtIn : stored
