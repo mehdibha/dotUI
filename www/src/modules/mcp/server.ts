@@ -8,6 +8,7 @@ import { z } from "zod"
 import { siteConfig } from "@/config/site"
 
 import {
+  check,
   exportDesign,
   getDesign,
   listAxes,
@@ -23,16 +24,17 @@ const INSTRUCTIONS = `dotUI builds a complete design system — color, type, ico
 The design system is a \`preset\` string. No tool keeps state: pass the latest \`preset\` into every call and keep the one it returns. An empty preset is the default system.
 
 Workflow:
-1. list_axes with no arguments for the map of chapters, then list_axes({ chapters }) for the axes you need — each explains what it controls, its options, which real systems use them, and how systems split.
-2. Optionally start from list_presets.
-3. set_axes to change several axes at once; it validates every value and reports what moved in the resolved system. Chapters may offer recipes — curated combinations to pass straight to set_axes.
-4. preview_urls to look at the result in a browser; iterate.
-5. export for the shadcn command and the v0 link. Share the studio link so the user can keep refining by hand.
+1. If the brief names a real product or design system, research its tokens first (brand hex, fonts, radius, density) — don't guess its look.
+2. list_axes with no arguments: every chapter with its axis keys, value vocabularies and defaults. Then list_axes({ chapters }) for one-line descriptions, and list_axes({ axes }) for the full guidance and real-system evidence of the axes you are deciding. Font axes take a family from list_fonts. Optionally start from list_presets.
+3. set_axes, several axes per call. Change only what the brief calls for: every axis has a sensible default, and set_axes lists values you restated as \`noop\`. For a brand-forward system set \`primaryColor: "accent"\` — it moves buttons, checks, switch, slider, tabs, links and focus together.
+4. check after color, type, shape or space changes: resolved colors per mode, WCAG contrast, neutral tint, brand fidelity, sizes. Fix what \`problems\` lists where an axis reaches it; \`inDefaults\` are failures the default system shares.
+5. preview_urls to look at the result in a browser. If you could not view it, tell the user the design is unseen and that check was your only verification.
+6. export for the shadcn command and the v0 link. Share the studio link so the user can keep refining by hand.
 
-Decide like a designer: set the foundations (color, type, shape, space, surfaces) before component chapters, and keep a coherent point of view — every axis has a sensible default, so change what the brief calls for.`
+Set the foundations (color, type, shape, space, surfaces) before component chapters, and keep one coherent point of view.`
 
 const text = (value: unknown) => ({
-  content: [{ type: "text" as const, text: JSON.stringify(value, null, 2) }],
+  content: [{ type: "text" as const, text: JSON.stringify(value) }],
 })
 
 function run(fn: () => unknown) {
@@ -60,16 +62,26 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "List axes",
       description:
-        "The design-system axes by chapter. No arguments: every chapter with its axis keys. With `chapters`: each axis in full — description, value type, options with descriptions and the systems that use them, guidance, default — plus the chapter's recipes.",
+        "The design-system axes by chapter. No arguments: every chapter with each axis key, its values (enum values or number range) and default. `chapters`: those chapters with each axis's label and one-line description (detail 'full' adds option descriptions, guidance and the real systems that use each option) plus the chapter's recipes. `axes`: specific axes in full.",
       inputSchema: {
         chapters: z
           .array(z.string())
           .optional()
           .describe("Chapter ids from the overview, e.g. ['color', 'shape']."),
+        axes: z
+          .array(z.string())
+          .optional()
+          .describe(
+            "Axis keys to read in full, e.g. ['buttonStyle', 'neutralTint'].",
+          ),
+        detail: z
+          .enum(["brief", "full"])
+          .optional()
+          .describe("For `chapters`: 'brief' (default) or 'full'."),
       },
       annotations: { readOnlyHint: true },
     },
-    ({ chapters }) => run(() => listAxes(chapters)),
+    (input) => run(() => listAxes(input)),
   )
 
   server.registerTool(
@@ -77,7 +89,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Get design",
       description:
-        "Decode a preset: the axes it changes from the defaults (by chapter), its code options, and studio/preview links.",
+        "Decode a preset: the axes it changes from the defaults (by chapter), its Primary source (neutral, accent or mixed), its code options, and studio/preview links.",
       inputSchema: { preset },
       annotations: { readOnlyHint: true },
     },
@@ -89,13 +101,15 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Set axes",
       description:
-        "Change axes and return the new preset. Atomic: any unknown key or invalid value fails the whole call with every problem listed. Returns the tokens and component params that moved, so you can confirm the change did what you meant.",
+        "Change axes and return the new preset. Atomic: any unknown key or invalid value fails the whole call with every problem listed. Returns `applied` (this call's changes, from → to), `noop` (keys already at that value), `warnings` (incoherent combinations; contrast problems when colors moved), `effects` (the tokens and component params that moved) and `nonDefault` (every axis off its default, by chapter).",
       inputSchema: {
         preset,
         set: z
           .record(z.string(), z.unknown())
           .optional()
-          .describe("Axis key → value, e.g. { buttonStyle: 'raised' }."),
+          .describe(
+            "Axis key → value, e.g. { buttonStyle: 'raised' }. `primaryColor: 'neutral' | 'accent'` sets every Primary leaf at once.",
+          ),
         reset: z
           .array(z.string())
           .optional()
@@ -116,6 +130,18 @@ function createServer(origin: string, registryOrigin: string) {
   )
 
   server.registerTool(
+    "check",
+    {
+      title: "Check",
+      description:
+        "Verify the design system without a browser, from the real engine. Per mode (light, dark): the resolved hex of the --color-* tokens the components read (bg, card, popover, field, border, border-control, fg, fg-muted, primary, accent, danger, statuses; `neutral` is the off switch track), WCAG 2 contrast for the pairs that matter with pass/fail (4.5 text, 3 non-text), neutral chroma (under 0.005 reads as pure gray) and the brand seed's ΔEok to the rendered accent. Also brand vs status hues, control height and text size, radii in px, and `problems` in plain words (`inDefaults`: failures the default system has too).",
+      inputSchema: { preset },
+      annotations: { readOnlyHint: true },
+    },
+    ({ preset }) => run(() => check(preset)),
+  )
+
+  server.registerTool(
     "list_presets",
     {
       title: "List presets",
@@ -130,7 +156,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "List fonts",
       description:
-        "Families the font axes accept (Google Fonts), filterable by category or name.",
+        "Families the font axes accept — a curated set of Google variable fonts — filterable by category or name.",
       inputSchema: {
         category: z
           .enum(["sans-serif", "serif", "display", "handwriting", "mono"])
@@ -147,7 +173,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Preview URLs",
       description:
-        "Browser URLs that render the design system: the studio, an overview style guide, and real app screens (dashboard, settings, mail…).",
+        "Browser URLs that render the design system, each page in light and dark: an overview style guide and real app screens (dashboard, settings, mail…), plus the studio.",
       inputSchema: { preset },
       annotations: { readOnlyHint: true },
     },
