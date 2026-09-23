@@ -115,6 +115,16 @@ describe("surfaces", () => {
         }
   })
 
+  test("strong control borders re-point the control tokens; subtle emits nothing", () => {
+    expect(resolveDesignSystem(DEFAULTS).color?.overrides).toBeUndefined()
+    const strong = resolveDesignSystem({ ...DEFAULTS, controlBorder: "strong" })
+    expect(strong.color?.overrides).toEqual({
+      "color-border-control": { palette: "neutral", job: "solid-hover" },
+      "color-border-control-hover": { palette: "neutral", job: "text-muted" },
+    })
+    expect(strong.tokens).toEqual(resolveDesignSystem(DEFAULTS).tokens)
+  })
+
   test("glass turns the popover tier translucent; solid is the default", () => {
     const tokens = tokensFor({ surfaceMaterial: "glass" })
     expect(tokens["--popover-alpha"]).toBe("70%")

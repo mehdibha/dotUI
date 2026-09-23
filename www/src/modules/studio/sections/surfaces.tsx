@@ -4,9 +4,9 @@
    the recipe drawn twice, light beside dark: dark behavior is part of a style
    (shadows die on near-black), so the pick shows both modes instead of asking
    for them separately. Depth is the one intensity lever, Page whether white
-   surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — sits under Style, whose cards draw
-   both modes. */
+   surfaces lift off a gray page, Glass the popover material, Control borders
+   whether field and check edges clear 3:1. Each mode's background — how
+   white, how black — sits under Style, whose cards draw both modes. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -14,6 +14,7 @@ import { MODE_BG_RANGE, modeFor } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
+  CONTROL_BORDER_OPTIONS,
   DEPTH_OPTIONS,
   shadowCss,
   STRATEGY_OPTIONS,
@@ -224,6 +225,12 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         label="Glass"
         value={state.surfaceMaterial === "glass"}
         onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
+      />
+      <DialSegmented
+        label="Control borders"
+        value={state.controlBorder}
+        onChange={set("controlBorder")}
+        options={CONTROL_BORDER_OPTIONS}
       />
     </>
   )

@@ -21,6 +21,8 @@
      glass — shadcn's recipe, the surface at 70% over a blurred, saturated
      backdrop. Modals and drawers stay solid either way; they sit over a
      scrim, so there is nothing to see through.
+   - Control borders: the edge fields, checks and secondary buttons wear —
+     a hairline-weight gray, or one that clears WCAG 1.4.11's 3:1.
 
    Engine: every combination resolves to the tokens card, popover (menus,
    pickers, chart tooltips), modal and drawer read — an edge per role (`--card-border`,
@@ -32,6 +34,8 @@
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
+import type { TokenOverrides } from "@/registry/theme"
+
 import { DEFAULT_MODES, MODE_BG_RANGE } from "./color"
 import type { Resolved, StudioState } from "./index"
 import type { ChapterSpec } from "./spec"
@@ -41,6 +45,7 @@ export const SURFACE_DEFAULTS = {
   surfaceDepth: "subtle",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
+  controlBorder: "subtle",
   modes: DEFAULT_MODES,
 }
 
@@ -151,6 +156,34 @@ export const MATERIAL_OPTIONS = [
     seenIn: ["shadcn/ui", "Radix Themes", "Apple HIG"],
   },
 ]
+
+export const CONTROL_BORDER_OPTIONS = [
+  {
+    value: "subtle",
+    label: "Subtle",
+    description:
+      "A light gray edge (neutral 400) on fields, checkboxes, radios, " +
+      "secondary buttons and the off switch track — about 1.4:1 on cards " +
+      "in light, 1.8:1 in dark.",
+    seenIn: ["shadcn/ui", "Geist", "Primer"],
+  },
+  {
+    value: "strong",
+    label: "Strong",
+    description:
+      "The same edges on neutral 800 (hover 900), dark enough to clear " +
+      "3:1 against cards and the page in both modes, across the whole " +
+      "background range — WCAG 1.4.11 for control boundaries.",
+    seenIn: ["Carbon", "Material 3", "Atlassian", "GOV.UK"],
+  },
+]
+
+/* Neutral 800 is the lowest rung that clears 3:1 on every card and page
+   rung (25–100) in both modes at any background lightness. */
+const STRONG_CONTROL_BORDER: TokenOverrides = {
+  "color-border-control": { palette: "neutral", job: "solid-hover" },
+  "color-border-control-hover": { palette: "neutral", job: "text-muted" },
+}
 
 /* -------------------------------- Recipe --------------------------------- */
 
@@ -503,7 +536,9 @@ export function resolveSurfaces(state: StudioState): Resolved {
   for (const [name, value] of Object.entries(surfaceTokens(state))) {
     if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
   }
-  return { tokens }
+  return state.controlBorder === "strong"
+    ? { tokens, color: { overrides: STRONG_CONTROL_BORDER } }
+    : { tokens }
 }
 
 export const SURFACE_SPEC = {
@@ -512,7 +547,8 @@ export const SURFACE_SPEC = {
     "How cards and floating layers (popovers, menus, modals) separate " +
     "from the page: which means leads — edge, shadow or tone — and how it " +
     "translates to dark, how strong it is, the page behind them, the " +
-    "popover material, and each mode's background lightness.",
+    "popover material, each mode's background lightness, and how strong " +
+    "control borders are.",
   axes: {
     surfaceStrategy: {
       label: "Style",
@@ -570,6 +606,24 @@ export const SURFACE_SPEC = {
         "menus — to translucent; Apple HIG puts popovers on Liquid Glass. " +
         "Glass only shows over content: on a plain page it reads as a " +
         "slightly grayer solid.",
+    },
+    controlBorder: {
+      label: "Control borders",
+      description:
+        "The border weight of controls — text fields, checkboxes, radios, " +
+        "secondary and toggle buttons, the slider thumb, the segmented " +
+        "indicator ring — and the off switch track. Cards, overlays and " +
+        "dividers keep the hairline.",
+      value: { type: "enum", options: CONTROL_BORDER_OPTIONS },
+      guidance:
+        "Subtle fails WCAG 1.4.11 (3:1 for the boundary a user needs to " +
+        "find a control) in both modes; Strong passes. shadcn/ui, Geist " +
+        "and Primer keep light gray edges; Carbon (gray 50), Material 3 " +
+        "(outline), Atlassian (border.input) and GOV.UK (black) clear 3:1; " +
+        "Fluent 2 splits it — accessible checks and a strong field bottom " +
+        "edge on subtle sides. Pick Strong for public-sector, health, " +
+        "finance or any audience that includes low vision; Subtle for a " +
+        "quiet tool look.",
     },
     modes: {
       label: "Backgrounds",
