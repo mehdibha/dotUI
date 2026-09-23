@@ -357,9 +357,16 @@ describe("check", () => {
     expect(check().radiusPx.control).not.toBe("full")
   })
 
-  test("neutral tint alone doesn't blame the subtle control border", () => {
-    const { preset } = setAxes({ set: { neutralHue: 250, neutralTint: 1.3 } })
-    expect(check(preset).problems.join()).not.toMatch(/control borders/)
+  test("subtle control borders are a tradeoff, not a problem", () => {
+    const { preset } = setAxes({
+      set: { neutralHue: 250, neutralTint: 1.3, surfaceCanvas: "tinted" },
+    })
+    const result = check(preset)
+    expect(result.problems.join()).not.toMatch(/control borders/)
+    expect(result.inDefaults.join()).not.toMatch(/control borders/)
+    expect(result.tradeoffs?.join()).toMatch(/subtle control borders/)
+    const strong = setAxes({ set: { controlBorder: "strong" } })
+    expect(check(strong.preset).tradeoffs).toBeUndefined()
   })
 
   test("sees an untinted neutral", () => {

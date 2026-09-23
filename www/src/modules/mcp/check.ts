@@ -331,6 +331,7 @@ export function checkDesign(state: StudioState) {
   const changed = diffState(state)
   const problems: string[] = []
   const inDefaults: string[] = []
+  const tradeoffs: string[] = []
   for (const [mode, result] of [
     ["light", light],
     ["dark", dark],
@@ -338,6 +339,13 @@ export function checkDesign(state: StudioState) {
     for (const [id, { ratio, message, tokens }] of Object.entries(
       result.failures,
     )) {
+      // Subtle borders miss 3:1 by design: a look the axis chose, not a bug.
+      if (tokens[0] === "border-control" && state.controlBorder === "subtle") {
+        tradeoffs.push(
+          `${mode}: subtle control borders ${ratio}:1 (WCAG 1.4.11 asks 3:1) — the quiet look; set controlBorder: "strong" only when the brief asks for accessibility`,
+        )
+        continue
+      }
       const floor = known.get(`${mode}:${id}`)
       // Blame the measured color (the label, the border), not its backdrop.
       const touched = driversOf(tokens[0] ?? "").some((axis) => axis in changed)
@@ -421,6 +429,7 @@ export function checkDesign(state: StudioState) {
     },
     problems,
     inDefaults,
+    ...(tradeoffs.length ? { tradeoffs } : {}),
     ...(notes.length ? { notes } : {}),
   }
 }

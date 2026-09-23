@@ -291,13 +291,16 @@ const screenshotOnce: Screenshotter = async ({ url, section }) => {
     throw new ToolError(`render is unavailable here: ${message(error)}`)
   }
   const release = await acquire()
+  // One context per shot: pages sharing a context only get animation frames
+  // in the front one, so concurrent renders stall on rAF-driven layouts.
   const shoot = async (cache: boolean) => {
-    const page = await b.newPage()
+    const context = await b.createBrowserContext()
     try {
+      const page = await context.newPage()
       await page.setCacheEnabled(cache)
       return await capture(page, url, section)
     } finally {
-      void page.close().catch(() => {})
+      void context.close().catch(() => {})
     }
   }
   // The warm browser shares one HTTP cache: a chunk that 404ed while a
