@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESETS } from "@/modules/presets/catalog"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 import { decode, encodeState } from "./codec"

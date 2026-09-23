@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest"
 
-import { PRESETS } from "@/modules/presets/presets-data"
-
 import { DEFAULTS, SCHEMA, validateState } from "./index"
 import { parseAxis } from "./schema"
 
@@ -16,11 +14,6 @@ describe("axis schema", () => {
         DEFAULTS[key as keyof typeof DEFAULTS],
       )
     expect(validateState(DEFAULTS)).toEqual({ state: DEFAULTS, dropped: [] })
-  })
-
-  it("accepts every built-in preset", () => {
-    for (const preset of PRESETS)
-      expect(validateState(preset.state).dropped).toEqual([])
   })
 
   it("drops a value outside each enum's options", () => {

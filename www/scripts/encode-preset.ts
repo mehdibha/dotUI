@@ -9,7 +9,7 @@
  * Usage:  tsx scripts/encode-preset.ts origin spotify
  */
 
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESETS } from "@/modules/presets/catalog"
 import { encodeState } from "@/modules/studio/preset/codec"
 
 const ids = process.argv.slice(2)

@@ -14,7 +14,7 @@ import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
 
-import { PRESETS } from "../src/modules/presets/presets-data"
+import { PRESETS } from "../src/modules/presets/catalog"
 import {
   buildPublishables,
   collectBaseFiles,
@@ -400,6 +400,25 @@ ${lines.join("\n")}
   console.log(
     `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
   )
+}
+
+/** The built-in presets without their states, resolved here so the landing
+ *  never loads the resolver. */
+async function buildPresetCatalog() {
+  const targetPath = path.join(
+    process.cwd(),
+    "src/modules/presets/__generated__/catalog.ts",
+  )
+  const summaries = PRESETS.map(({ state: _, ...summary }) => summary)
+  const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+import type { PresetSummary } from "../catalog"
+
+export const PRESET_CATALOG: PresetSummary[] = ${JSON.stringify(summaries)}
+`
+  await fs.mkdir(path.dirname(targetPath), { recursive: true })
+  await writeGeneratedFile(targetPath, content)
+  console.log(`  ✓ presets/__generated__/catalog.ts (${summaries.length})`)
 }
 
 // ============================================================================
@@ -1019,6 +1038,7 @@ async function main() {
     await buildInternalIcons()
     await buildInternalExamples()
     await buildStudioSearchIndex()
+    await buildPresetCatalog()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies

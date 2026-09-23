@@ -2,7 +2,7 @@ import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { PRESETS } from "@/modules/presets/catalog"
 import { DEFAULTS } from "@/modules/studio/axes"
 
 import { decode, decodePreset, encodePreset, encodeState } from "./codec"
@@ -175,7 +175,7 @@ describe("preset codec — legacy migration", () => {
 describe("preset codec — canonical encoding", () => {
   // /studio seeds from a stored state via decode → encode on reload; a
   // non-identity roundtrip makes a freshly applied preset look edited.
-  for (const preset of [ORIGIN, ...PRESETS]) {
+  for (const preset of PRESETS) {
     it(`encode∘decode is byte-identity for the ${preset.name} preset`, () => {
       const encoded = encodeState(preset.state)
       if (encoded === undefined) return

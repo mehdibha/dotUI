@@ -4,7 +4,7 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { ORIGIN } from "@/modules/presets/catalog"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
 import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"

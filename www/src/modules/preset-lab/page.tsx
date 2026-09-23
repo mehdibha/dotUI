@@ -6,7 +6,7 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { InternalHeader } from "@/modules/internal/shell"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESETS } from "@/modules/presets/catalog"
 import type { DesignSystem } from "@/modules/studio/preset"
 
 import { airbnbAudit } from "./data/airbnb"

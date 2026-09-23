@@ -10,8 +10,8 @@ import { useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
+import { ORIGIN, PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
 import {
@@ -83,25 +83,24 @@ export function StudioPanel({ className }: { className?: string }) {
     ? canon(activeSaved.state) !== currentState
     : currentState !== "" && !builtInStates.has(currentState)
 
-  // Saved systems decode to full design systems for the picker's mini previews.
   const pickerSections = useMemo(() => {
     const mine = {
       id: "mine",
       title: "My systems",
-      items: presets.map((saved) => ({
-        id: saved.id,
-        name: saved.name,
-        designSystem: resolveDesignSystem(decodePreset(saved.state).state),
-      })),
+      items: presets.map((saved) => {
+        const { state } = decodePreset(saved.state)
+        return {
+          id: saved.id,
+          name: saved.name,
+          swatch: state.brand,
+          resolve: () => resolveDesignSystem(state),
+        }
+      }),
     }
     const featured = {
       id: "featured",
       title: "Featured",
-      items: PRESETS.map((p) => ({
-        id: p.id,
-        name: p.name,
-        designSystem: p.designSystem,
-      })),
+      items: PRESETS.map((p) => ({ ...p, resolve: () => p.designSystem })),
     }
     return presets.length > 0 ? [mine, featured] : [featured]
   }, [presets])

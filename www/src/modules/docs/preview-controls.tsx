@@ -9,8 +9,8 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
+import { ORIGIN, PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
 import {
@@ -193,20 +193,27 @@ function PresetSelector({
 }) {
   const { selected, yours, own } = useSelectedPreset()
   const previewMode = useForcedPreviewMode()
-  const yoursDesignSystem = useMemo(
-    () => resolveDesignSystem(yours.state),
-    [yours],
-  )
   const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
-  const yoursSwatch = yours.state.brand
-  const selectedName =
-    selected === YOURS
-      ? yoursName
-      : (PRESETS.find((p) => p.id === selected)?.name ?? yoursName)
-  const selectedSwatch =
-    selected === YOURS
-      ? yoursSwatch
-      : (PRESETS.find((p) => p.id === selected)?.swatch ?? yoursSwatch)
+  const sections = useMemo(() => {
+    const yoursItem = {
+      id: YOURS,
+      name: yoursName,
+      swatch: yours.state.brand,
+      resolve: () => resolveDesignSystem(yours.state),
+    }
+    const featured = {
+      id: "featured",
+      title: "Featured",
+      items: PRESETS.map((p) => ({ ...p, resolve: () => p.designSystem })),
+    }
+    return {
+      yoursItem,
+      list: own
+        ? [{ id: "yours", title: "My systems", items: [yoursItem] }, featured]
+        : [featured],
+    }
+  }, [own, yours, yoursName])
+  const active = PRESETS.find((p) => p.id === selected) ?? sections.yoursItem
 
   return (
     <PresetPicker
@@ -214,32 +221,7 @@ function PresetSelector({
       onPick={(item) => presetStore.set(item.id)}
       previewMode={previewMode}
       withPreview
-      sections={[
-        ...(own
-          ? [
-              {
-                id: "yours",
-                title: "My systems",
-                items: [
-                  {
-                    id: YOURS,
-                    name: yoursName,
-                    designSystem: yoursDesignSystem,
-                  },
-                ],
-              },
-            ]
-          : []),
-        {
-          id: "featured",
-          title: "Featured",
-          items: PRESETS.map((preset) => ({
-            id: preset.id,
-            name: preset.name,
-            designSystem: preset.designSystem,
-          })),
-        },
-      ]}
+      sections={sections.list}
     >
       <Button
         variant={variant}
@@ -247,8 +229,8 @@ function PresetSelector({
         aria-label="Preview design system"
         className="gap-1.5"
       >
-        <PresetSwatch color={selectedSwatch} />
-        {selectedName}
+        <PresetSwatch color={active.swatch} />
+        {active.name}
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>
