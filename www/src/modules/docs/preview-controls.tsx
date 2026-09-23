@@ -10,7 +10,7 @@ import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { LEGACY_ORIGIN, ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { LEGACY_ORIGINS, ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
 import {
@@ -41,7 +41,7 @@ const presetStore = createPersistedStore(
    and a stored `yours` selection reads as the built-in it matches. */
 const BUILT_IN_BY_STATE = new Map([
   ...PRESETS.map((p) => [encodeState(p.state), p.id] as const),
-  [LEGACY_ORIGIN, ORIGIN.id],
+  ...LEGACY_ORIGINS.map((encoded) => [encoded, ORIGIN.id] as const),
 ])
 
 function useSelectedPreset() {
