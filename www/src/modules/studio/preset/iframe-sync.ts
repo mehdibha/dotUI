@@ -158,12 +158,8 @@ export function usePreviewNavigationMessages(handlers: {
 }
 
 /**
- * The display mode a preview is pinned to, or `undefined` outside previews (the main app owns
- * its own theme). Seeded from `?mode=` on any /preview page, embedded or opened directly; inside
- * the /create iframe the parent's `preview-mode` messages then drive it. Returned so the root
- * `ThemeProvider` can take it as `forcedTheme` — which deterministically wins over the
- * system/storage theme listeners (they no-op while forced), instead of toggling `.dark`
- * out-of-band where the provider would revert it on the next OS-pref / storage event.
+ * The mode a preview is pinned to (`undefined` outside /preview): seeded from `?mode=`, then driven by
+ * the /studio parent's `preview-mode` messages. Fed to `ThemeProvider` as `forcedTheme`.
  */
 export function usePreviewForcedTheme(): PreviewMode | undefined {
   // Read on first render so the first paint already uses the previewed mode —
