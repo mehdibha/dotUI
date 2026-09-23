@@ -59,7 +59,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         },
         push: {
           indent:
-            "origin-left duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] data-active:transform-[translate3d(calc(var(--drawer-indent-push,min(85vw,--spacing(80)))*(1-var(--drawer-swipe-progress,0))),0,0)] data-active:overflow-hidden data-active:rounded-(--studio-drawer-radius) data-active:shadow-[inset_0_0_0_1px_var(--color-border-control)]",
+            "origin-left duration-[calc(500ms*(1-clamp(0,calc(var(--drawer-swipe-progress,0)*100000),1)))] data-active:transform-[translate3d(calc(var(--drawer-indent-push,min(85vw,--spacing(80)))*(1-var(--drawer-swipe-progress,0))),0,0)] *:transition-opacity *:duration-[inherit] data-active:overflow-hidden data-active:rounded-(--studio-drawer-radius) data-active:*:opacity-[calc(0.4+0.6*var(--drawer-swipe-progress,0))] data-active:shadow-[inset_0_0_0_1px_var(--color-border-control)]",
         },
       },
     },

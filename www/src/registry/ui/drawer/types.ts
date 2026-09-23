@@ -28,6 +28,12 @@ export interface DrawerProps {
    */
   swipeToDismiss?: boolean
   /**
+   * Whether a scrim covers the page. Turn it off when the page shows the
+   * drawer some other way, e.g. a `DrawerIndent` that pushes it aside.
+   * @default true
+   */
+  hasBackdrop?: boolean
+  /**
    * Heights the drawer rests at: fractions of the viewport (0–1), pixels, or
    * `px`/`rem` strings. Bottom and top drawers only.
    */
@@ -62,7 +68,7 @@ export interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 export interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {
   /**
    * How the page moves while a drawer is open: scale back behind a sheet, or
-   * slide aside by `--drawer-indent-push` for a side menu. Set that variable
+   * slide aside by `--drawer-indent-push` for a side menu, fading its content. Set that variable
    * where both the page and the drawer (portaled) read it, e.g. `:root`.
    * @default 'scale'
    */

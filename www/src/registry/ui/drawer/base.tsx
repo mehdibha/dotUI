@@ -92,6 +92,7 @@ interface DrawerProps {
   isDismissable?: boolean
   isKeyboardDismissDisabled?: boolean
   swipeToDismiss?: boolean
+  hasBackdrop?: boolean
   snapPoints?: DrawerPrimitive.Root.Props["snapPoints"]
   snapPoint?: DrawerPrimitive.Root.Props["snapPoint"]
   defaultSnapPoint?: DrawerPrimitive.Root.Props["defaultSnapPoint"]
@@ -111,6 +112,7 @@ function Drawer({
   onOpenChange,
   placement = "bottom",
   swipeToDismiss = true,
+  hasBackdrop = true,
   snapPoints,
   snapPoint,
   defaultSnapPoint,
@@ -178,7 +180,9 @@ function Drawer({
                 className={overlay()}
                 data-snap-points={snapPoints?.length ? "" : undefined}
               >
-                <DrawerPrimitive.Backdrop className={backdrop()} />
+                {hasBackdrop && (
+                  <DrawerPrimitive.Backdrop className={backdrop()} />
+                )}
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
                     data-drawer=""
