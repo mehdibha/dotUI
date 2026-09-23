@@ -161,11 +161,11 @@ export const CardsGrid = memo(function CardsGrid({
   )
 })
 
-// The /create preview canvas — the shadcn-create shape: a fixed-pixel,
-// horizontally scrollable life-size surface rather than a fluid grid, so card
-// size comes from the ~340px column track, never from the pane width. Columns
-// are hand-curated stacks; the wide slot holds the AI banner over a 2-col
-// sub-grid. `content-visibility` keeps off-screen columns free to lay out.
+// The /studio preview canvas — the shadcn-create shape where it fits: a
+// fixed-pixel life-size surface, so card size comes from the ~340px column
+// track, never from the pane width. Columns are hand-curated stacks; the wide
+// slot holds the AI banner over a 2-col sub-grid. `content-visibility` keeps
+// off-screen columns free to lay out.
 const CANVAS_1: CardKey[] = [
   "controls",
   "twoFactor",
@@ -217,7 +217,7 @@ function CanvasColumn({
   return (
     <div
       className={cn(
-        "contents lg:flex lg:flex-col lg:gap-(--gap) lg:p-px lg:[contain-intrinsic-size:340px_1200px] lg:[content-visibility:auto]",
+        "contents min-[2208px]:flex min-[2208px]:flex-col min-[2208px]:gap-(--gap) min-[2208px]:p-px min-[2208px]:[contain-intrinsic-size:340px_1200px] min-[2208px]:[content-visibility:auto]",
         className,
       )}
     >
@@ -228,9 +228,10 @@ function CanvasColumn({
   )
 }
 
-// Below lg (the Mobile and Tablet device sizes, narrow stages) the columns
-// dissolve into a flowing multi-column list, so the device preview reflows
-// instead of cropping a desktop canvas.
+// Until the whole canvas fits (2208px), the columns dissolve into a flowing
+// multi-column list: every card is reachable by scrolling down, and device
+// previews reflow instead of cropping. The prompt leads the markup so it tops
+// the flow; on the canvas, explicit column starts put everything back.
 function FlowCard({
   className,
   children,
@@ -239,7 +240,12 @@ function FlowCard({
   children: React.ReactNode
 }) {
   return (
-    <div className={cn("break-inside-avoid pb-(--gap) lg:pb-0", className)}>
+    <div
+      className={cn(
+        "break-inside-avoid pb-(--gap) min-[2208px]:pb-0",
+        className,
+      )}
+    >
       {children}
     </div>
   )
@@ -247,35 +253,43 @@ function FlowCard({
 
 export function CardsCanvas() {
   return (
-    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
-      {/* Centers the canvas when the viewport is wider than it; otherwise the
-          canvas starts flush-left and scrolls. */}
-      <div className="flex w-full justify-center lg:min-w-max">
-        {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
-            so tightening --gap keeps cards life-size instead of growing them. */}
-        <div className="w-full columns-[20rem] gap-(--gap) p-(--gap) lg:grid lg:w-[2208px] lg:grid-cols-6 lg:items-start">
-          <CanvasColumn cards={CANVAS_1} />
-          <CanvasColumn cards={CANVAS_2} />
-          <div className="contents lg:col-span-2 lg:flex lg:flex-col lg:gap-(--gap) lg:p-px lg:[contain-intrinsic-size:790px_1200px] lg:[content-visibility:auto]">
-            <FlowCard className="[column-span:all]">
-              <AiPrompt />
-            </FlowCard>
-            <div className="contents lg:grid lg:grid-cols-2 lg:items-start lg:gap-(--gap)">
-              {[CANVAS_WIDE_LEFT, CANVAS_WIDE_RIGHT].map((cards) => (
-                <div
-                  key={cards[0]}
-                  className="contents lg:flex lg:flex-col lg:gap-(--gap)"
-                >
-                  {cards.map((key) => (
-                    <FlowCard key={key}>{CARDS[key]}</FlowCard>
-                  ))}
-                </div>
-              ))}
-            </div>
+    <div className="min-h-svh bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
+      {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
+          so tightening --gap keeps cards life-size instead of growing them. */}
+      <div className="mx-auto columns-[20rem] gap-(--gap) p-(--gap) min-[2208px]:grid min-[2208px]:w-[2208px] min-[2208px]:grid-cols-6 min-[2208px]:items-start">
+        <div className="contents min-[2208px]:col-span-2 min-[2208px]:col-start-3 min-[2208px]:row-start-1 min-[2208px]:flex min-[2208px]:flex-col min-[2208px]:gap-(--gap) min-[2208px]:p-px min-[2208px]:[contain-intrinsic-size:790px_1200px] min-[2208px]:[content-visibility:auto]">
+          <FlowCard className="[column-span:all]">
+            <AiPrompt />
+          </FlowCard>
+          <div className="contents min-[2208px]:grid min-[2208px]:grid-cols-2 min-[2208px]:items-start min-[2208px]:gap-(--gap)">
+            {[CANVAS_WIDE_LEFT, CANVAS_WIDE_RIGHT].map((cards) => (
+              <div
+                key={cards[0]}
+                className="contents min-[2208px]:flex min-[2208px]:flex-col min-[2208px]:gap-(--gap)"
+              >
+                {cards.map((key) => (
+                  <FlowCard key={key}>{CARDS[key]}</FlowCard>
+                ))}
+              </div>
+            ))}
           </div>
-          <CanvasColumn cards={CANVAS_5} />
-          <CanvasColumn cards={CANVAS_6} />
         </div>
+        <CanvasColumn
+          cards={CANVAS_1}
+          className="min-[2208px]:col-start-1 min-[2208px]:row-start-1"
+        />
+        <CanvasColumn
+          cards={CANVAS_2}
+          className="min-[2208px]:col-start-2 min-[2208px]:row-start-1"
+        />
+        <CanvasColumn
+          cards={CANVAS_5}
+          className="min-[2208px]:col-start-5 min-[2208px]:row-start-1"
+        />
+        <CanvasColumn
+          cards={CANVAS_6}
+          className="min-[2208px]:col-start-6 min-[2208px]:row-start-1"
+        />
       </div>
     </div>
   )
