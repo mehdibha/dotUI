@@ -20,6 +20,6 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@dotui": "https://dotui.org/r/{name}?preset=bcwxCoUwEEXRvTxbC5EvQlpXkkxGDIYMJKNfEPeutbE9F-6JHebXosCccNkmD4Om68Z-HtDCbaqSJomSH7dEnPRhWphWJ0cVsvVBKi0cmTR8jEoMnnPN_6C0vPi6bg"
+    "@dotui": "https://dotui.org/r/{name}"
   }
 }
