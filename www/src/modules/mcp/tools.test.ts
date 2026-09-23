@@ -13,6 +13,7 @@ import {
   exportDesign,
   getDesign,
   listAxes,
+  listFonts,
   listPresets,
   previewUrls,
   setAxes,
@@ -31,10 +32,12 @@ describe("list_axes", () => {
     )
     expect(axes.find((a) => a.key === "density")).toEqual({
       key: "density",
+      label: "Density",
       type: "enum",
       values: ["compact", "default", "comfortable"],
       default: "default",
     })
+    expect(axes.every((a) => a.label)).toBe(true)
     expect(axes.find((a) => a.key === "radiusPx")).toMatchObject({
       type: "number",
       min: 2,
@@ -68,19 +71,41 @@ describe("list_axes", () => {
     expect(JSON.stringify(density)).toContain("seenIn")
   })
 
-  test("primaryColor is listed in the color chapter", () => {
-    const [color] = axisChapters(["color"], "brief").chapters
-    expect(color?.axes.find((a) => a.key === "primaryColor")).toMatchObject({
-      type: "enum",
+  test("primaryColor is a shortcut in the color chapter", () => {
+    const shortcut = {
+      type: "shortcut",
       values: ["neutral", "accent"],
       default: null,
+      description: expect.stringMatching(/not stored.*"mixed"/),
+    }
+    const [color] = axisChapters(["color"], "brief").chapters
+    expect(color?.axes.find((a) => a.key === "primaryColor")).toMatchObject(
+      shortcut,
+    )
+    const overview = axisOverview().chapters.find((c) => c.id === "color")
+    expect(overview?.axes.find((a) => a.key === "primaryColor")).toMatchObject(
+      shortcut,
+    )
+  })
+
+  test("the overview carries cautions by value and by axis", () => {
+    const axes = axisOverview().chapters.flatMap((c) => c.axes)
+    const find = (key: string) => axes.find((a) => a.key === key)
+    expect(find("checkCorner")).toMatchObject({
+      cautions: { circle: expect.stringMatching(/radio/) },
     })
+    expect(find("checkCorner")).not.toHaveProperty("caution")
+    expect(find("motionSpeed")).toMatchObject({
+      caution: expect.stringMatching(/Higher = slower/),
+    })
+    expect(find("menuScale")).toMatchObject({ label: "Command palette scale" })
+    expect(find("density")).not.toHaveProperty("cautions")
   })
 
   test("stays small enough for MCP clients", () => {
     const size = (value: unknown) => JSON.stringify(value).length
     const all = CATALOG.map((c) => c.id)
-    expect(size(listAxes())).toBeLessThan(20_000)
+    expect(size(listAxes())).toBeLessThan(22_000)
     expect(size(listAxes({ chapters: all }))).toBeLessThan(
       size(listAxes({ chapters: all, detail: "full" })) / 2,
     )
@@ -217,6 +242,27 @@ describe("set_axes", () => {
     )
   })
 
+  test("applying a cautioned value echoes its caution", () => {
+    const { warnings, preset } = setAxes(ORIGIN, {
+      set: { checkCorner: "circle", motionSpeed: 1.2, density: "compact" },
+    })
+    expect(warnings).toEqual([
+      expect.stringMatching(/^checkCorner "circle": .*radio/),
+      expect.stringMatching(/^motionSpeed 1\.2: Higher = slower/),
+    ])
+    const again = setAxes(ORIGIN, { preset, set: { checkCorner: "circle" } })
+    expect(again.warnings).toBeUndefined()
+    expect(
+      setAxes(ORIGIN, { set: { checkCorner: "square" } }),
+    ).not.toHaveProperty("warnings")
+  })
+
+  test("results carry no links", () => {
+    expect(setAxes(ORIGIN, { set: { radiusPx: 6 } })).not.toHaveProperty(
+      "links",
+    )
+  })
+
   test("brand buttons beside neutral checks warn", () => {
     const { warnings } = setAxes(ORIGIN, { set: { buttonColor: "accent" } })
     expect(warnings?.join()).toMatch(
@@ -326,16 +372,42 @@ describe("presets and links", () => {
     const { preset } = setAxes(ORIGIN, { set: { radiusPx: 6 } })
     const urls = previewUrls(ORIGIN, preset)
     expect(urls.studio).toBe(`${ORIGIN}/studio?preset=${preset}`)
-    expect(urls.pages[0]).toEqual({
-      page: "overview",
-      light: `${ORIGIN}/preview/overview?preset=${preset}&mode=light`,
-      dark: `${ORIGIN}/preview/overview?preset=${preset}&mode=dark`,
-    })
-    expect(previewUrls(ORIGIN).pages[0]?.dark).toBe(
-      `${ORIGIN}/preview/overview?mode=dark`,
+    expect(urls.url).toBe(
+      `${ORIGIN}/preview/{page}?preset=${preset}&mode={light|dark}`,
+    )
+    expect(urls.pages[0]).toBe("overview")
+    expect(urls.pages.length).toBeGreaterThan(5)
+    expect(previewUrls(ORIGIN).url).toBe(
+      `${ORIGIN}/preview/{page}?mode={light|dark}`,
+    )
+    expect(previewUrls(ORIGIN, preset, ["overview"]).pages).toEqual([
+      "overview",
+    ])
+    expect(() => previewUrls(ORIGIN, preset, ["nope"])).toThrow(
+      /Unknown page: nope/,
     )
     expect(exportDesign(ORIGIN, preset).shadcn.init.npm).toContain(
       `${ORIGIN}/r/init?preset=${preset}`,
     )
+  })
+})
+
+describe("list_fonts", () => {
+  test("caps the list and counts the rest", () => {
+    const { fonts, more } = listFonts()
+    expect(fonts).toHaveLength(30)
+    expect(more).toBeGreaterThan(100)
+    expect(listFonts({ category: "mono", limit: 3 }).fonts).toHaveLength(3)
+  })
+
+  test("a category filter doesn't hide a name match", () => {
+    const result = listFonts({ category: "display", query: "fredoka" })
+    expect(result.fonts).toEqual([])
+    expect(result.otherCategories).toEqual([
+      { family: "Fredoka", category: "sans-serif" },
+    ])
+    expect(listFonts({ query: "fredoka" })).toEqual({
+      fonts: [{ family: "Fredoka", category: "sans-serif" }],
+    })
   })
 })

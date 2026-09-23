@@ -44,8 +44,8 @@ const PRIMARY_SPEC: AxisSpec = {
   label: "Primary",
   description:
     `Shortcut, not stored: sets every Primary leaf (${PRIMARY_LEAVES.join(", ")}) ` +
-    "to one source, as the studio's Primary view does. Leaves set in the " +
-    "same call win.",
+    'to one source; "mixed" in get_design means the leaves differ. Leaves ' +
+    "set in the same call win.",
   value: { type: "enum", options: SOURCE_OPTIONS },
   guidance:
     "Accent is the brand-forward system (Material 3, Radix Themes): brand " +
@@ -111,8 +111,10 @@ const firstSentence = (text: string) =>
   /^.*?[.!?](?=\s|$)/.exec(text)?.[0] ?? text
 
 /** The value's vocabulary, flat: enum values, or a number's range. */
-function valueShape(spec: AxisSpec) {
+function valueShape(key: string, spec: AxisSpec) {
   const value = spec.value
+  if (key === PRIMARY_KEY && value.type === "enum")
+    return { type: "shortcut", values: value.options.map((o) => o.value) }
   switch (value.type) {
     case "enum":
       return { type: "enum", values: value.options.map((o) => o.value) }
@@ -131,20 +133,51 @@ function valueShape(spec: AxisSpec) {
   }
 }
 
+/** The axis's traps: its own caution, and each cautioned option's by value. */
+function cautions(spec: AxisSpec) {
+  const options =
+    spec.value.type === "enum"
+      ? spec.value.options.filter((option) => option.caution)
+      : []
+  return {
+    ...(spec.caution ? { caution: spec.caution } : {}),
+    ...(options.length
+      ? {
+          cautions: Object.fromEntries(
+            options.map((option) => [option.value, option.caution]),
+          ),
+        }
+      : {}),
+  }
+}
+
 const overviewEntry = (key: string, spec: AxisSpec) => ({
   key,
-  ...valueShape(spec),
+  label: spec.label,
+  ...valueShape(key, spec),
   default: defaultOf(key),
+  ...(key === PRIMARY_KEY
+    ? { description: firstSentence(spec.description) }
+    : {}),
+  ...cautions(spec),
 })
 
 const briefEntry = (key: string, spec: AxisSpec) => ({
   key,
   label: spec.label,
-  ...valueShape(spec),
+  ...valueShape(key, spec),
   default: defaultOf(key),
   ...(spec.auto !== undefined ? { auto: firstSentence(spec.auto) } : {}),
   description: firstSentence(spec.description),
+  ...cautions(spec),
 })
+
+/** The caution a value springs, if any. */
+function cautionFor(spec: AxisSpec | undefined, value: unknown) {
+  if (spec?.caution) return spec.caution
+  if (spec?.value.type === "enum")
+    return spec.value.options.find((option) => option.value === value)?.caution
+}
 
 const fullEntry = (key: string, spec: AxisSpec) => ({
   key,
@@ -331,8 +364,9 @@ function effects(before: StudioState, after: StudioState) {
   }
 }
 
+/** `_origin` is unused since links left the result; kept for callers. */
 export function setAxes(
-  origin: string,
+  _origin: string,
   input: {
     preset?: string
     set?: Record<string, unknown>
@@ -420,7 +454,11 @@ export function setAxes(
     explicit.has("buttonColor") || explicit.has(PRIMARY_KEY)
       ? primaryWarnings(state, explicit)
       : []
-  const warnings = [...new Set([...forked, ...problems])]
+  const cautioned = Object.entries(set).flatMap(([key, value]) => {
+    const caution = key in applied && cautionFor(AXES.get(key)?.spec, value)
+    return caution ? [`${key} ${JSON.stringify(value)}: ${caution}`] : []
+  })
+  const warnings = [...new Set([...forked, ...cautioned, ...problems])]
   return {
     preset: encoded,
     applied,
@@ -428,7 +466,6 @@ export function setAxes(
     ...(warnings.length ? { warnings } : {}),
     effects: moved,
     nonDefault: nonDefault(state),
-    links: links(origin, encoded),
   }
 }
 
@@ -453,32 +490,48 @@ export function listPresets() {
 
 /* ------------------------------- list_fonts ------------------------------ */
 
-export function listFonts(category?: FontCategory, query?: string) {
-  const needle = query?.toLowerCase()
+export function listFonts(
+  input: { category?: FontCategory; query?: string; limit?: number } = {},
+) {
+  const { category, limit = 30 } = input
+  const needle = input.query?.toLowerCase()
+  const named = FONT_CATALOG.filter(
+    (font) => !needle || font.family.toLowerCase().includes(needle),
+  )
+  const fonts = named.filter((font) => !category || font.category === category)
+  const elsewhere = needle
+    ? named.filter((font) => category && font.category !== category)
+    : []
+  const entry = (font: (typeof FONT_CATALOG)[number]) => ({
+    family: font.family,
+    category: font.category,
+  })
   return {
-    fonts: FONT_CATALOG.filter(
-      (font) =>
-        (!category || font.category === category) &&
-        (!needle || font.family.toLowerCase().includes(needle)),
-    ).map((font) => ({ family: font.family, category: font.category })),
+    fonts: fonts.slice(0, limit).map(entry),
+    ...(fonts.length > limit ? { more: fonts.length - limit } : {}),
+    ...(elsewhere.length
+      ? { otherCategories: elsewhere.slice(0, limit).map(entry) }
+      : {}),
   }
 }
 
 /* ------------------------------ preview_urls ----------------------------- */
 
-export function previewUrls(origin: string, preset?: string) {
+export function previewUrls(origin: string, preset?: string, pages?: string[]) {
+  const unknown = pages?.filter((page) => !PREVIEW_PAGES.includes(page)) ?? []
+  if (unknown.length)
+    throw new ToolError(
+      `Unknown page: ${unknown.join(", ")}. Pages: ${PREVIEW_PAGES.join(", ")}`,
+    )
   const encoded = encode(decode(preset))
   return {
     studio: withQuery(`${origin}/studio`, { preset: encoded }),
-    pages: PREVIEW_PAGES.map((page) => {
-      const url = `${origin}/preview/${page}`
-      return {
-        page,
-        light: withQuery(url, { preset: encoded, mode: "light" }),
-        dark: withQuery(url, { preset: encoded, mode: "dark" }),
-      }
+    url: withQuery(`${origin}/preview/{page}`, {
+      preset: encoded,
+      mode: "{light|dark}",
     }),
-    note: "Pages render client-side: open them in a browser (a plain HTTP fetch returns an empty shell). Without a browser, verify with check and tell the user you have not seen the result.",
+    pages: pages?.length ? pages : PREVIEW_PAGES,
+    note: "Fill {page} from pages and pick one mode. Pages render client-side: open them in a browser (a plain HTTP fetch returns an empty shell). Without a browser, verify with check and tell the user you have not seen the result.",
   }
 }
 

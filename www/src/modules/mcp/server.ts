@@ -25,13 +25,15 @@ The design system is a \`preset\` string. No tool keeps state: pass the latest \
 
 Workflow:
 1. If the brief names a real product or design system, research its tokens first (brand hex, fonts, radius, density) — don't guess its look.
-2. list_axes with no arguments: every chapter with its axis keys, value vocabularies and defaults. Then list_axes({ chapters }) for one-line descriptions, and list_axes({ axes }) for the full guidance and real-system evidence of the axes you are deciding. Font axes take a family from list_fonts. Optionally start from list_presets.
+2. list_axes with no arguments: every chapter with its axis keys, labels, value vocabularies, defaults and cautions — a caution is a trap the value springs; read it before picking that value. Then list_axes({ chapters }) for one-line descriptions, and list_axes({ axes }) for the full guidance and real-system evidence of the axes you are deciding. Font axes take a family from list_fonts. Optionally start from list_presets.
 3. set_axes, several axes per call. Change only what the brief calls for: every axis has a sensible default, and set_axes lists values you restated as \`noop\`. For a brand-forward system set \`primaryColor: "accent"\` — it moves buttons, checks, switch, slider, tabs, links and focus together.
 4. check after color, type, shape or space changes: resolved colors per mode, WCAG contrast, neutral tint, brand fidelity, sizes. Fix what \`problems\` lists where an axis reaches it; \`inDefaults\` are failures the default system shares.
 5. preview_urls to look at the result in a browser. If you could not view it, tell the user the design is unseen and that check was your only verification.
 6. export for the shadcn command and the v0 link. Share the studio link so the user can keep refining by hand.
 
-Set the foundations (color, type, shape, space, surfaces) before component chapters, and keep one coherent point of view.`
+Set the foundations (color, type, shape, space, surfaces) before component chapters, and keep one coherent point of view.
+
+Reporting to the user: describe only what \`nonDefault\` lists — \`noop\` values are defaults, not decisions. Before stating a color, size or contrast, quote the value check returned, not what you asked for.`
 
 const text = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value) }],
@@ -62,7 +64,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "List axes",
       description:
-        "The design-system axes by chapter. No arguments: every chapter with each axis key, its values (enum values or number range) and default. `chapters`: those chapters with each axis's label and one-line description (detail 'full' adds option descriptions, guidance and the real systems that use each option) plus the chapter's recipes. `axes`: specific axes in full.",
+        "The design-system axes by chapter. No arguments: every chapter with each axis key, label, values (enum values or number range), default and cautions (traps of the axis or of a value, by value); primaryColor is a write-only shortcut. `chapters`: those chapters with each axis's label and one-line description (detail 'full' adds option descriptions, guidance and the real systems that use each option) plus the chapter's recipes. `axes`: specific axes in full.",
       inputSchema: {
         chapters: z
           .array(z.string())
@@ -101,7 +103,7 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Set axes",
       description:
-        "Change axes and return the new preset. Atomic: any unknown key or invalid value fails the whole call with every problem listed. Returns `applied` (this call's changes, from → to), `noop` (keys already at that value), `warnings` (incoherent combinations; contrast problems when colors moved), `effects` (the tokens and component params that moved) and `nonDefault` (every axis off its default, by chapter).",
+        "Change axes and return the new preset. Atomic: any unknown key or invalid value fails the whole call with every problem listed. Returns `applied` (this call's changes, from → to), `noop` (keys already at that value), `warnings` (cautions of the values applied, incoherent combinations, contrast problems when colors moved), `effects` (the tokens and component params that moved) and `nonDefault` (every axis off its default, by chapter).",
       inputSchema: {
         preset,
         set: z
@@ -156,16 +158,22 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "List fonts",
       description:
-        "Families the font axes accept — a curated set of Google variable fonts — filterable by category or name.",
+        "Families the font axes accept — a curated set of Google variable fonts, most-used first — filterable by category or name. `more` counts matches past the limit; `otherCategories` lists name matches the category filter hid.",
       inputSchema: {
         category: z
           .enum(["sans-serif", "serif", "display", "handwriting", "mono"])
           .optional(),
-        query: z.string().optional(),
+        query: z.string().optional().describe("Part of a family name."),
+        limit: z
+          .number()
+          .int()
+          .positive()
+          .optional()
+          .describe("Most families to return; default 30."),
       },
       annotations: { readOnlyHint: true },
     },
-    ({ category, query }) => run(() => listFonts(category, query)),
+    (input) => run(() => listFonts(input)),
   )
 
   server.registerTool(
@@ -173,11 +181,17 @@ function createServer(origin: string, registryOrigin: string) {
     {
       title: "Preview URLs",
       description:
-        "Browser URLs that render the design system, each page in light and dark: an overview style guide and real app screens (dashboard, settings, mail…), plus the studio.",
-      inputSchema: { preset },
+        "A preview URL template that renders the design system in a browser, the pages to fill it with (an overview style guide and real app screens: dashboard, settings, mail…) and the studio link.",
+      inputSchema: {
+        preset,
+        pages: z
+          .array(z.string())
+          .optional()
+          .describe("Only these pages, e.g. ['overview', 'dashboard']."),
+      },
       annotations: { readOnlyHint: true },
     },
-    ({ preset }) => run(() => previewUrls(origin, preset)),
+    ({ preset, pages }) => run(() => previewUrls(origin, preset, pages)),
   )
 
   server.registerTool(
