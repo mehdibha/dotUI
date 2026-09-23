@@ -1,47 +1,34 @@
 "use client"
 
-import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
+import { useEffect, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
-import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
+import { createPersistedStore } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
-import { ORIGIN, PRESETS } from "@/modules/presets/catalog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { useSavedSystems } from "@/modules/studio/preset/saved-systems"
-import { useWorkingDoc } from "@/modules/studio/preset/storage"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { useWorking } from "@/modules/studio/preset/storage"
+
+import {
+  decodeSelection,
+  previewView,
+  selectionStore,
+} from "./preview-selection"
 
 /**
  * Which design system and light/dark mode the docs previews render in. Global
- * and persisted, so every demo on the site stays in sync; `yours` is the design
- * system built at /create. The mode defaults to the site theme until the user
- * picks one, then pins previews to that choice.
+ * and persisted, so every demo on the site stays in sync (see
+ * preview-selection.ts). The mode follows the site theme until the user picks
+ * the other one; picking the site theme again un-pins it.
  */
 
-const YOURS = "yours"
-
-const presetStore = createPersistedStore(
-  "dotui:preview-preset",
-  ORIGIN.id,
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], ORIGIN.id),
-)
-
-/* The working system counts as the user's own once it is more than a plain
-   built-in: a fresh visitor sits on Origin, and a preset applied from the
-   gallery is still that preset. Until then the picker lists no "My systems"
-   and a stored `yours` selection reads as the built-in it matches. */
-function useSelectedPreset() {
-  const stored = presetStore.useValue()
-  const doc = useWorkingDoc()
-  const own = doc.modified || doc.name !== undefined || doc.system !== undefined
-  const selected = stored === YOURS && !own ? doc.base.id : stored
-  return { selected, doc, own }
-}
+const usePreviewView = () =>
+  previewView(selectionStore.useValue(), useWorking(), useSavedSystems())
 
 type PreviewMode = "light" | "dark"
 
@@ -108,6 +95,11 @@ function usePreviewMode(): PreviewMode | undefined {
   const hydrated = useHydrated()
   const stored = modeStore.useValue()
   const { resolvedTheme } = useTheme()
+  // A choice equal to the site theme pins nothing; stored, it would keep
+  // the pre-paint veil over every preview (see preview-pending.ts).
+  useEffect(() => {
+    if (modeStore.get() === resolvedTheme) modeStore.set(null)
+  }, [stored, resolvedTheme])
   if (stored) return stored
   if (!hydrated) return undefined
   return resolvedTheme === "dark" || resolvedTheme === "light"
@@ -123,14 +115,8 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 }
 
 /** The design system the docs previews render in, resolved from the selection. */
-export function useResolvedPreset(): DesignSystem {
-  const { selected, doc } = useSelectedPreset()
-  const yoursResolved = useMemo(() => resolveDesignSystem(doc.state), [doc])
-  if (selected === YOURS) return yoursResolved
-  return (
-    PRESETS.find((p) => p.id === selected)?.designSystem ?? ORIGIN.designSystem
-  )
-}
+export const useResolvedPreset = (): DesignSystem =>
+  usePreviewView().designSystem
 
 /**
  * The frame around a docs preview: pins the whole panel — toolbar included — to
@@ -179,40 +165,16 @@ function PresetSelector({
 }: {
   variant?: ButtonProps["variant"]
 }) {
-  const { selected, doc, own } = useSelectedPreset()
+  const view = usePreviewView()
   const previewMode = useForcedPreviewMode()
-  const yoursName =
-    useSavedSystems().find((s) => s.id === doc.system)?.name ??
-    doc.name ??
-    doc.baseName
-  const sections = useMemo(() => {
-    const yoursItem = {
-      id: YOURS,
-      name: yoursName,
-      swatch: doc.state.brand,
-      resolve: () => resolveDesignSystem(doc.state),
-    }
-    const featured = {
-      id: "featured",
-      title: "Featured",
-      items: PRESETS.map((p) => ({ ...p, resolve: () => p.designSystem })),
-    }
-    return {
-      yoursItem,
-      list: own
-        ? [{ id: "yours", title: "My systems", items: [yoursItem] }, featured]
-        : [featured],
-    }
-  }, [own, doc, yoursName])
-  const active = PRESETS.find((p) => p.id === selected) ?? sections.yoursItem
 
   return (
     <PresetPicker
-      selectedId={selected}
-      onPick={(item) => presetStore.set(item.id)}
+      selectedId={view.selectedId}
+      onPick={(item) => selectionStore.set(decodeSelection(item.id))}
       previewMode={previewMode}
       withPreview
-      sections={sections.list}
+      sections={view.sections}
     >
       <Button
         variant={variant}
@@ -220,8 +182,8 @@ function PresetSelector({
         aria-label="Preview design system"
         className="gap-1.5"
       >
-        <PresetSwatch color={active.swatch} />
-        {active.name}
+        <PresetSwatch color={view.swatch} />
+        {view.name}
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>
@@ -238,6 +200,7 @@ function PreviewModeToggle({
   const stored = modeStore.useValue()
   const mode = usePreviewMode() ?? "light"
   const next = mode === "light" ? "dark" : "light"
+  const { resolvedTheme } = useTheme()
 
   return (
     <Button
@@ -246,7 +209,7 @@ function PreviewModeToggle({
       isIconOnly
       aria-label={`Switch preview to ${next} mode`}
       className={cn(variant === "quiet" && "text-fg-muted", className)}
-      onPress={() => modeStore.set(next)}
+      onPress={() => modeStore.set(next === resolvedTheme ? null : next)}
     >
       {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
       {stored === "dark" ? (
