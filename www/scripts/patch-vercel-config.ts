@@ -18,6 +18,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname } from "node:path"
 
+import { HOME_MD } from "../src/config/home-md"
+
+type Route = { src?: string; dest?: string; has?: unknown; handle?: string }
+
 const CONFIG = ".vercel/output/config.json"
 const STATIC_HOME_MD = ".vercel/output/static/home.md"
 
@@ -28,30 +32,7 @@ if (!existsSync(CONFIG)) {
   process.exit(0)
 }
 
-// 1) Static markdown homepage. On Vercel this static file is what actually
-// serves for GET /home.md and the "/" Accept:text/markdown negotiation (it
-// shadows the src/routes/home[.]md.tsx route). Keep byte-identical to that
-// route's BODY.
-const HOME_MD = `# dotUI
-
-> Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.
-
-dotUI is a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Generate a UI library that looks like your product — not a preset — with the style editor, then consume it through the shadcn CLI, the registry endpoint, or AI tooling like v0.
-
-## Documentation
-
-- Overview (what dotUI is, how to install): https://dotui.org/docs
-- Components index (llms.txt): https://dotui.org/llms.txt
-- Full documentation, single file (llms-full.txt): https://dotui.org/llms-full.txt
-- Component registry API: GET https://dotui.org/r/{name}
-
-## Links
-
-- GitHub: https://github.com/mehdibha/dotUI
-- X (Twitter): https://x.com/mehdibha
-- Discord: https://discord.gg/DXpj5V2fU8
-`
-
+// 1) Static markdown homepage — shadows the /home.md route on Vercel.
 mkdirSync(dirname(STATIC_HOME_MD), { recursive: true })
 writeFileSync(STATIC_HOME_MD, HOME_MD)
 
@@ -62,7 +43,7 @@ config.overrides ??= {}
 config.overrides["home.md"] = { contentType: "text/markdown; charset=utf-8" }
 
 config.routes ??= []
-const routes = [
+const routes: Route[] = [
   {
     src: "/",
     has: [{ type: "header", key: "accept", value: "(.*)text/markdown(.*)" }],
@@ -76,12 +57,13 @@ const routes = [
     dest: "/__server",
   })),
 ]
+const existing: Route[] = config.routes
 const missing = routes.filter(
   (route) =>
-    !config.routes.some((r) => JSON.stringify(r) === JSON.stringify(route)),
+    !existing.some((r) => JSON.stringify(r) === JSON.stringify(route)),
 )
-const fsIndex = config.routes.findIndex((r) => r && r.handle === "filesystem")
-config.routes.splice(fsIndex === -1 ? 0 : fsIndex, 0, ...missing)
+const fsIndex = existing.findIndex((r) => r && r.handle === "filesystem")
+existing.splice(fsIndex === -1 ? 0 : fsIndex, 0, ...missing)
 
 writeFileSync(CONFIG, `${JSON.stringify(config, null, 2)}\n`)
 console.log(
