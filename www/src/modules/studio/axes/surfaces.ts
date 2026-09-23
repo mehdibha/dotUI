@@ -132,10 +132,10 @@ export const CANVAS_OPTIONS = [
     label: "Tinted",
     description:
       "A light-gray page with cards on the whitest step (Tonal keeps its " +
-      "own card tone). In dark the page stays put, cards sit on the rung " +
-      "between the plain card and the neutral fills (so fields and muted " +
-      "fills still read on them), and floating layers lift one rung " +
-      "further than on Plain.",
+      "own card tone). In dark the page stays put, cards sit on the mid " +
+      "rung between 50 and the neutral fills (where Shadow at Raised and " +
+      "up already puts them), so fields and muted fills still read on " +
+      "them, and floating layers lift one rung further than on Plain.",
     seenIn: ["Apple HIG"],
   },
 ]
@@ -171,9 +171,9 @@ export const CONTROL_BORDER_OPTIONS = [
     value: "strong",
     label: "Strong",
     description:
-      "The same edges on neutral 800 (hover 900), dark enough to clear " +
-      "3:1 against cards and the page in both modes, across the whole " +
-      "background range — WCAG 1.4.11 for control boundaries.",
+      "The same edges on neutral 800 (hover 900), which clear 3:1 against " +
+      "cards and the page in both modes across the whole background " +
+      "range — WCAG 1.4.11 for control boundaries.",
     seenIn: ["Carbon", "Material 3", "Atlassian", "GOV.UK"],
   },
 ]
