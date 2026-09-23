@@ -82,6 +82,32 @@ export function PanelChrome({
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">
+          {(studio.canUndo || studio.canRedo) && (
+            <>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Undo"
+                isDisabled={!studio.canUndo}
+                onPress={studio.undo}
+                className="text-fg-muted"
+              >
+                <Undo2Icon />
+              </Button>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Redo"
+                isDisabled={!studio.canRedo}
+                onPress={studio.redo}
+                className="text-fg-muted"
+              >
+                <Redo2Icon />
+              </Button>
+            </>
+          )}
           {system?.dirty && (
             <Button
               size="sm"
@@ -92,30 +118,6 @@ export function PanelChrome({
               className="text-fg-muted"
             >
               <SaveIcon />
-            </Button>
-          )}
-          {studio.canUndo && (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Undo"
-              onPress={studio.undo}
-              className="text-fg-muted"
-            >
-              <Undo2Icon />
-            </Button>
-          )}
-          {studio.canRedo && (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Redo"
-              onPress={studio.redo}
-              className="text-fg-muted"
-            >
-              <Redo2Icon />
             </Button>
           )}
           {modified && (
