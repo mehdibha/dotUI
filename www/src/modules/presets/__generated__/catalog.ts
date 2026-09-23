@@ -283,6 +283,7 @@ export const PRESET_CATALOG: PresetSummary[] = [
 				"--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 				"--shadow-modal": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 				"--color-popover": "light-dark(var(--neutral-50), var(--neutral-100))",
+				"--focus-ring-inner": "1px",
 				"--focus-ring-offset": "0px",
 				"--focus-input-width": "4px",
 				"--focus-input-color": "color-mix(in oklab, var(--color-border-focus) 35%, transparent)",

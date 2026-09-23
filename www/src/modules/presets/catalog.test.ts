@@ -19,7 +19,7 @@ const PINNED: Record<string, string> = {
   "supabase@1": "f66f0c99c49017eb",
   "supabase@2": "8cfe1a43b7866d46",
   "stripe@1": "a6a41413f0ca596b",
-  "stripe@2": "211fc44848442b4a",
+  "stripe@2": "f1b978410c8880dc",
   "linear@1": "77f7226d9f56f447",
   "linear@2": "3ec570ce78cf3aed",
   "vercel@1": "6ce976902dcfcb83",
