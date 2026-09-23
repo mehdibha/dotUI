@@ -43,15 +43,7 @@ describe("emitInitItem", () => {
 
     expect(item.type).toBe("registry:base")
     // Base CSS passes through untouched: no palette blocks ride in `css`.
-    const { "@layer base": layer, ...rest } = item.css ?? {}
-    expect(rest).toEqual(baseRegistryCss.css)
-    // Default faces stay reachable when shadcn leaves a Geist layout alone.
-    expect(layer).toEqual({
-      ":root": {
-        "--font-sans": expect.stringMatching(/^var\(--font-geist-sans, /),
-        "--font-mono": expect.stringMatching(/^var\(--font-geist-mono, /),
-      },
-    })
+    expect(item.css).toEqual(baseRegistryCss.css)
     expect(item.dependencies).not.toContain("tailwindcss-autocontrast")
     expect((item as InitItemConfig).config?.tailwind?.cssVariables).toBe(true)
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
@@ -261,10 +253,9 @@ describe("emitInitItem", () => {
       "https://dotui.com/r/font-heading-figtree",
       "https://dotui.com/r/font-mono-geist-mono",
     ])
-    // Only the default roles get a Geist fallback.
-    expect(Object.keys(item.css?.["@layer base"]?.[":root"] ?? {})).toEqual([
-      "--font-mono",
-    ])
+    // Font tokens live only in `@theme`, so a later font item, re-init or
+    // theme edit overrides them.
+    expect(JSON.stringify(item.css)).not.toMatch(/--font-(sans|heading|mono)/)
     // shadcn would place a CSS import after `@import "tailwindcss"`, where
     // bundlers drop it — the faces travel as font items instead.
     expect(

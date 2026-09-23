@@ -17,6 +17,8 @@
  */
 
 import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
   familyFromStack,
   FONT_CATALOG,
   FONT_HEADING_VAR,
@@ -82,14 +84,24 @@ export function parseFontItemName(
   return undefined
 }
 
+// The default faces bind create-next-app's variables, which the base theme
+// reads (`--font-sans: var(--font-geist-sans)`). shadcn skips a layout that
+// already imports Geist only for `--font-sans|serif|mono`, and never rewrites
+// the theme's own tokens — so a later font change still overrides them.
+const DEFAULT_FACE_VARS: Record<string, string> = {
+  [fontItemName(FONT_SANS_VAR, DEFAULT_BODY_FAMILY)]: "--font-geist-sans",
+  [fontItemName(FONT_MONO_VAR, DEFAULT_MONO_FAMILY)]: "--font-geist-mono",
+}
+
 export function emitFontItem(name: string): RegistryItem | undefined {
   const parsed = parseFontItemName(name)
   if (!parsed) return undefined
-  const { variable, family } = parsed
+  const { family } = parsed
+  const variable = DEFAULT_FACE_VARS[name] ?? parsed.variable
   const role =
-    variable === FONT_HEADING_VAR
+    parsed.variable === FONT_HEADING_VAR
       ? " (Heading)"
-      : variable === FONT_MONO_VAR
+      : parsed.variable === FONT_MONO_VAR
         ? " (Mono)"
         : ""
   const item = {

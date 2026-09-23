@@ -53,6 +53,17 @@ describe("emitFontItem", () => {
     expect(heading.font.selector).toBeUndefined()
   })
 
+  test("the default faces bind create-next-app's variables", () => {
+    const sans = emitFontItem("font-geist") as unknown as FontItem
+    const mono = emitFontItem("font-mono-geist-mono") as unknown as FontItem
+    expect(sans.font.variable).toBe("--font-geist-sans")
+    expect(mono.font.variable).toBe("--font-geist-mono")
+    expect(mono.font.selector).toBeUndefined()
+    expect(
+      (emitFontItem("font-heading-geist") as unknown as FontItem).font.variable,
+    ).toBe("--font-heading")
+  })
+
   test("unknown families and non-font names are not items", () => {
     expect(emitFontItem("font-not-a-real-face")).toBeUndefined()
     expect(emitFontItem("button")).toBeUndefined()
