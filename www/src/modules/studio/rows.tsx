@@ -4,16 +4,20 @@
    color seed, the neutral, the font list. Everything is controlled — value
    in, callback out. */
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
+  OverlayTriggerStateContext,
+  PopoverContext,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
+  useSlottedContext,
 } from "react-aria-components"
 
 import { FONT_CATALOG, fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
+import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { ColorArea } from "@/registry/ui/color-area"
@@ -72,8 +76,36 @@ export function PanelPopover({
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
+  const state = useContext(OverlayTriggerStateContext)
+  const triggerRef = useSlottedContext(PopoverContext)?.triggerRef
+  // Non-modal on desktop: a click on another row closes this one and lands,
+  // instead of being eaten by a modal underlay. Mobile keeps its drawers.
+  const isNonModal = !useIsMobile()
+  const isOwn = (target: Element | null) =>
+    !!target &&
+    (!!target.closest("[data-popover], [role=dialog]") ||
+      !!triggerRef?.current?.contains(target))
+
+  useEffect(() => {
+    if (!isNonModal || !state?.isOpen) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!isOwn(e.target as Element)) state.close()
+    }
+    // Focus left for the preview iframe.
+    const onBlur = () => state.close()
+    document.addEventListener("pointerdown", onPointerDown, true)
+    window.addEventListener("blur", onBlur)
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown, true)
+      window.removeEventListener("blur", onBlur)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isNonModal, state?.isOpen])
+
   return (
     <Popover
+      isNonModal={isNonModal}
+      shouldCloseOnInteractOutside={(element) => !isOwn(element)}
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
