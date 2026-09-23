@@ -3,10 +3,13 @@ import { createStyles } from "@/lib/styles"
 import badgeMeta from "./meta"
 
 /* Each intent sets the chip's palette as vars; `appearance` picks which of
-   them paint. The `style` param only moves the appearance default, so a
-   product that mixes chips keeps the prop. The neutral tint is a half-strength
-   wash: its fill is already the wash tone, so `muted` alone would equal solid.
-   Synced with tag-group. */
+   them paint. The `style` param moves the appearance default, so a product
+   that mixes chips keeps the prop, and owns the neutral palette so inverse
+   can swap its fill to the primary. The neutral tint is a half-strength wash: its fill is already the
+   wash tone, so `muted` alone would equal solid. Synced with tag-group. */
+
+const neutralPalette =
+  "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]"
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {
@@ -20,8 +23,7 @@ const { useStyles, styles } = createStyles(badgeMeta, {
           "border border-(--badge-border) bg-(--badge-tint) text-(--badge-fg-tint)",
       },
       variant: {
-        neutral:
-          "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+        neutral: "",
         accent:
           "[--badge-border:var(--color-border-accent)] [--badge-fg-tint:var(--color-fg-accent)] [--badge-fg:var(--color-fg-on-accent)] [--badge-fill:var(--color-accent)] [--badge-tint:var(--color-accent-muted)]",
         danger:
@@ -51,10 +53,27 @@ const { useStyles, styles } = createStyles(badgeMeta, {
   },
   params: {
     style: {
-      solid: {},
-      soft: { defaultVariants: { appearance: "soft" } },
-      outline: { defaultVariants: { appearance: "outline" } },
-      "soft-outline": { defaultVariants: { appearance: "soft-outline" } },
+      solid: { variants: { variant: { neutral: neutralPalette } } },
+      soft: {
+        variants: { variant: { neutral: neutralPalette } },
+        defaultVariants: { appearance: "soft" },
+      },
+      outline: {
+        variants: { variant: { neutral: neutralPalette } },
+        defaultVariants: { appearance: "outline" },
+      },
+      "soft-outline": {
+        variants: { variant: { neutral: neutralPalette } },
+        defaultVariants: { appearance: "soft-outline" },
+      },
+      inverse: {
+        variants: {
+          variant: {
+            neutral:
+              "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-primary)] [--badge-fill:var(--color-primary)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+          },
+        },
+      },
     },
   },
 })

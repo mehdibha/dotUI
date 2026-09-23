@@ -4,8 +4,9 @@
 
    Engine: `style` is an enum param on both `badge` and `tag-group` (a synced
    group — one axis writes both). On the badge it sets the default of the
-   `appearance` prop, which stays API for the products that mix chips; on the
-   tag it is the fill. Shape rides on the `--studio-badge-radius` / `--studio-tag-radius`
+   `appearance` prop, which stays API for the products that mix chips, and
+   inverse re-points the neutral palette's fill to the primary; on the tag it
+   is the fill. Shape rides on the `--studio-badge-radius` / `--studio-tag-radius`
    surface vars (token-field tokens sit on `--studio-tag-radius` too), resolved to
    plain `rounded-*` on export. Pill is the registry default and emits
    nothing: badges are full-round, tags keep their `radius-control` corners. */
@@ -46,6 +47,15 @@ export const STYLE_OPTIONS = [
     label: "Soft outline",
     description: "The soft wash plus a 1px intent-colored border.",
     seenIn: ["Ant Design", "Radix Themes"],
+  },
+  {
+    value: "inverse",
+    label: "Inverse",
+    description:
+      "Solid intent fills, but the neutral badge and tags take the Buttons " +
+      "primary fill with its on-color: near-black by default, the brand " +
+      "color when buttons are brand.",
+    seenIn: ["shadcn/ui", "Geist", "Chakra UI"],
   },
 ]
 
@@ -100,14 +110,15 @@ export const BADGE_SPEC = {
       description:
         "The default fill treatment of badges and tags. On badges it sets " +
         "the default of the `appearance` prop, so a product can still mix " +
-        "styles; on tags it is the fill.",
+        "styles (inverse also moves the neutral badge's solid fill to the " +
+        "primary); on tags it is the fill.",
       value: { type: "enum", options: STYLE_OPTIONS },
       guidance:
-        "Systems split on the default: shadcn, Spectrum 2 and Fluent 2 fill " +
-        "solid; Radix Themes and Chakra default to soft; Primer outlines; " +
-        "Ant tags wash and outline. Most ship several as variants. Soft " +
-        "keeps dense tables readable; solid suits sparse, high-signal " +
-        "status.",
+        "Systems split on the default: Spectrum 2 and Fluent 2 fill solid; " +
+        "shadcn's default badge is inverse (the primary's near-black); " +
+        "Radix Themes and Chakra default to soft; Primer outlines; Ant tags " +
+        "wash and outline. Most ship several as variants. Soft keeps dense " +
+        "tables readable; solid and inverse suit sparse, high-signal status.",
     },
     badgeShape: {
       label: "Shape",

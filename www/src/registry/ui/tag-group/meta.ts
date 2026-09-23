@@ -17,7 +17,7 @@ const tagGroupMeta = {
     style: {
       kind: "enum",
       default: "solid",
-      values: ["solid", "soft", "outline", "soft-outline"] as const,
+      values: ["solid", "soft", "outline", "soft-outline", "inverse"] as const,
       description: "The chip fill a tag wears.",
     },
   },
