@@ -97,14 +97,23 @@ function ExportDialogBody() {
   const initCommand = buildInitCommands(presetUrl("/r/init"))[packageManager]
   const addCommand = buildInstallCommands(["button"])[packageManager]
   // The template ships shadcn's cva button; swap in dotUI's so the app builds.
-  const command =
+  // Existing: skip the overwrite and reinstall prompts; components stay as is.
+  const primary: CommandEntry =
     mode === "new"
-      ? [
-          `${initCommand} --template ${template} --name ${PROJECT_NAME}`,
-          `cd ${PROJECT_NAME}`,
-          `${addCommand} --overwrite --yes`,
-        ].join(" && ")
-      : initCommand
+      ? {
+          label: "Scaffold",
+          steps: [
+            `${initCommand} --template ${template} --name ${PROJECT_NAME}`,
+            `cd ${PROJECT_NAME}`,
+            `${addCommand} --overwrite --yes`,
+          ],
+        }
+      : { label: "Register", steps: [`${initCommand} --force --no-reinstall`] }
+  const commands =
+    mode === "new"
+      ? [primary]
+      : [primary, { label: "Add components", steps: [addCommand] }]
+  const command = joinSteps(primary.steps)
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
   const trackCopy = (line: string) =>
@@ -161,8 +170,9 @@ function ExportDialogBody() {
           <p className="text-xs text-fg-muted">
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
-            you add after installs already themed. It replaces your shadcn theme
-            tokens, the CSS variables in your global stylesheet.
+            you add after installs already themed. Your components stay as they
+            are, but your shadcn theme tokens (the CSS variables in your global
+            stylesheet) are replaced.
           </p>
         )}
 
@@ -170,17 +180,7 @@ function ExportDialogBody() {
           <CodeOptions />
         </Section>
 
-        <CommandBlock
-          commands={
-            mode === "new"
-              ? [{ label: "Scaffold", command }]
-              : [
-                  { label: "Register", command },
-                  { label: "Add components", command: addCommand },
-                ]
-          }
-          onCopy={trackCopy}
-        />
+        <CommandBlock commands={commands} onCopy={trackCopy} />
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
@@ -227,6 +227,14 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
+interface CommandEntry {
+  label: string
+  /** Chained with `&&` when copied; shown one per line. */
+  steps: string[]
+}
+
+const joinSteps = (steps: string[]) => steps.join(" && ")
+
 /**
  * The commands to run, under a package-manager switch shared with the docs.
  * Each line copies on its own; the first is what the footer button copies.
@@ -235,7 +243,7 @@ function CommandBlock({
   commands,
   onCopy,
 }: {
-  commands: { label: string; command: string }[]
+  commands: CommandEntry[]
   onCopy: (line: string) => void
 }) {
   const packageManager = packageManagerStore.useValue()
@@ -276,19 +284,14 @@ function CommandBlock({
 
 function CommandLine({
   label,
-  command,
+  steps,
   onCopy,
-}: {
-  label: string
-  command: string
-  onCopy: (line: string) => void
-}) {
+}: CommandEntry & { onCopy: (line: string) => void }) {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
-  const steps = command.split(" && ")
 
   return (
     <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-      <code className="min-w-0 flex-1 scrollbar-none overflow-x-auto mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] font-mono text-xs whitespace-nowrap text-fg">
+      <code className="min-w-0 flex-1 font-mono text-xs wrap-anywhere text-fg">
         {steps.map((step, i) => (
           <span key={step} className="block">
             {step}
@@ -302,7 +305,7 @@ function CommandLine({
         isIconOnly
         aria-label={`Copy ${label.toLowerCase()} command`}
         onPress={() => {
-          copyToClipboard(command)
+          copyToClipboard(joinSteps(steps))
           onCopy(label.toLowerCase())
         }}
         className={cn(isCopied && "text-fg")}
