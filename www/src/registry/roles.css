@@ -2,10 +2,15 @@
    studio vars. A shape character retargets these four together; the publisher
    resolves the whole chain to plain utilities, so exported code never carries
    them. Items ride one rung below surfaces by default — the invariant every
-   rounded shadcn style follows. */
+   rounded shadcn style follows. The last three derive from Controls: small
+   controls step one rung down, details (checkbox, kbd) cap at sm, and pills
+   go square with square controls. */
 :root {
   --studio-radius-control: var(--radius-md);
   --studio-radius-item: var(--radius-md);
   --studio-radius-surface: var(--radius-lg);
   --studio-radius-panel: var(--radius-xl);
+  --studio-radius-control-sm: var(--radius-sm);
+  --studio-radius-detail: var(--radius-sm);
+  --studio-radius-pill: var(--radius-full);
 }

@@ -1,3 +1,4 @@
 :root {
   --studio-drawer-radius: var(--studio-radius-panel);
+  --studio-drawer-handle-radius: var(--studio-radius-pill);
 }

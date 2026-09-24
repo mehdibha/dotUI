@@ -35,15 +35,15 @@ describe("feedback chapters (skeleton · spinner · progress)", () => {
     expect(ds.tokens).toEqual({})
   })
 
-  test("progress ends go square with square controls", () => {
+  test("progress ends ride the pill role: square with square controls", () => {
     expect(
       resolveDesignSystem({ ...DEFAULTS, roleControl: "none" }).tokens[
-        "--studio-progress-radius"
+        "--studio-radius-pill"
       ],
     ).toBe("0")
     expect(
       resolveDesignSystem({ ...DEFAULTS, roleControl: "sm" }).tokens[
-        "--studio-progress-radius"
+        "--studio-radius-pill"
       ],
     ).toBeUndefined()
   })

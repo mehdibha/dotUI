@@ -2,8 +2,8 @@
    Material 3's cut track (gap + stop dot).
 
    Engine: three enum params on `progress-bar` (`track`, `indeterminate`,
-   `gap`). The ends read `--studio-progress-radius`: pill, or square when
-   Shape's Controls role is None. */
+   `gap`). The ends ride Shape's pill role: pill, or square when the
+   Controls role is None. */
 
 import type { Resolved, StudioState } from "./index"
 import type { ChapterSpec } from "./spec"
@@ -52,10 +52,6 @@ const pick = (options: { value: string }[], value: string, fallback: string) =>
 
 export function resolveProgress(state: StudioState): Resolved {
   return {
-    tokens:
-      state.roleControl === "none"
-        ? { "--studio-progress-radius": "0" }
-        : undefined,
     params: {
       "progress-bar": {
         track: pick(TRACK_OPTIONS, state.progressTrack, "thin"),

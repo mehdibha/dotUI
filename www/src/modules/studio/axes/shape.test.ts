@@ -28,6 +28,8 @@ describe("shape axis", () => {
     })
     expect(resolve(vector("pill")).tokens).toEqual({
       "--studio-radius-control": "var(--radius-full)",
+      // Small controls step one rung down from Controls: full → 3xl.
+      "--studio-radius-control-sm": "var(--radius-3xl)",
     })
   })
 
@@ -37,7 +39,19 @@ describe("shape axis", () => {
       "--studio-radius-item": "0",
       "--studio-radius-surface": "0",
       "--studio-radius-panel": "0",
-      "--studio-progress-radius": "0",
+      "--studio-radius-control-sm": "0",
+      "--studio-radius-detail": "0",
+      "--studio-radius-pill": "0",
+    })
+  })
+
+  test("details cap at sm, whatever Controls ride", () => {
+    expect(resolve(vector("round")).tokens).not.toHaveProperty(
+      "--studio-radius-detail",
+    )
+    expect(resolve({ roleControl: "xs" }).tokens).toMatchObject({
+      "--studio-radius-control-sm": "0",
+      "--studio-radius-detail": "var(--radius-xs)",
     })
   })
 

@@ -70,7 +70,7 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
       cut: {
         slots: {
           track:
-            "after:absolute after:top-1/2 after:right-0 after:size-1 after:-translate-y-1/2 after:rounded-full after:bg-primary has-data-indeterminate:after:hidden",
+            "after:absolute after:top-1/2 after:right-0 after:size-1 after:-translate-y-1/2 after:rounded-(--studio-progress-radius) after:bg-primary has-data-indeterminate:after:hidden",
           fill: "relative rounded-(--studio-progress-radius) before:absolute before:top-0 before:right-[calc(100%+4px)] before:h-full before:w-screen before:rounded-(--studio-progress-radius) before:bg-muted after:absolute after:top-0 after:left-[calc(100%+4px)] after:h-full after:w-screen after:rounded-(--studio-progress-radius) after:bg-muted",
         },
       },

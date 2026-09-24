@@ -1,5 +1,5 @@
 :root {
-  --studio-progress-radius: var(--radius-full);
+  --studio-progress-radius: var(--studio-radius-pill);
 }
 
 @theme inline {

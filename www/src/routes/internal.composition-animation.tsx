@@ -4,8 +4,10 @@ import { CompositionSection } from "@/modules/internal/composition-section"
 import { InternalShell } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/composition-animation")({
-  component: CompositionAnimationDemo,
-  head: () => ({ meta: [{ title: "Composition animation · dotUI" }] }),
+  component: import.meta.env.DEV ? CompositionAnimationDemo : undefined,
+  head: import.meta.env.DEV
+    ? () => ({ meta: [{ title: "Composition animation · dotUI" }] })
+    : undefined,
 })
 
 function CompositionAnimationDemo() {

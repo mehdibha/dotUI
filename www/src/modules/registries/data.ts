@@ -1,9 +1,7 @@
 /* The shadcn registry directory, mirrored for the internal browser at
    /internal/registries. Source: ui.shadcn.com/r/registries.json (264 entries,
    identical to shadcn-ui/ui apps/v4/registry/directory.json), fetched
-   2026-08-01. `maintainer` and everything under it come from a per-registry
-   audit — homepage, legal entity, GitHub org, search — re-checked by a second
-   adversarial pass; `evidence` is what that pass stood on. */
+   2026-08-01. */
 
 export type Category =
   | "3d"
@@ -37,16 +35,6 @@ export type BaseLayer =
   | "shadcn"
   | "unknown"
 export type Pricing = "free" | "freemium" | "paid" | "unknown"
-export type Maintainer = "company" | "individual" | "solo-business" | "unclear"
-export type EntityKind =
-  | "agency-studio"
-  | "big-tech"
-  | "individual"
-  | "oss-org"
-  | "product-company"
-  | "solo-business"
-  | "startup-saas"
-  | "unknown"
 export type StyleTag =
   | "accessibility"
   | "brutalism"
@@ -77,13 +65,6 @@ export interface Registry {
   base: BaseLayer
   pricing: Pricing
   tags: StyleTag[]
-  maintainer: Maintainer
-  /** The company or person behind it. */
-  entity: string
-  entityKind: EntityKind
-  confidence: "high" | "low" | "medium"
-  /** What the audit actually saw. */
-  evidence: string
 }
 
 export const registries: Registry[] = [
@@ -98,12 +79,6 @@ export const registries: Registry[] = [
     base: "radix",
     pricing: "unknown",
     tags: ["clay", "playful", "tailwind-v4"],
-    maintainer: "individual",
-    entity: "Mojtaba Beheshti",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer credits "by Mojtaba Beheshti" linking to github.com/moji2002; source lives at github.com/moji2002/1st-pouf under MIT with no company, team or about page anywhere.',
   },
   {
     name: "7ovr",
@@ -116,12 +91,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["marketing", "dashboard"],
-    maintainer: "individual",
-    entity: "Oliver (@7ovrui)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Homepage footer reads "Built by Oliver" linking to x.com/7ovrui; contact is a single personal hello@7ovr.com address, and the site names no legal entity, team or GitHub org. Blocks are advertised as free.',
   },
   {
     name: "8bitcn",
@@ -134,12 +103,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["retro", "open-source", "playful"],
-    maintainer: "individual",
-    entity: "OrcDev (TheOrcDev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      '8bitcn.com footer: "Built by OrcDev and Contributors", repo github.com/TheOrcDev/8bitcn-ui. orcdev.com is a personal-brand site written in first person singular ("I build, I break, I conquer", "15+ years in the code mines"), © 2026 OrcDev, no team/about page or legal entity.',
   },
   {
     name: "8starlabs-ui",
@@ -152,12 +115,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "solo-business",
-    entity: "Tham Kei Lok (8StarLabs)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'ui.8starlabs.com and its /docs path both return HTTP 403 to fetch. I fetched the parent brand 8starlabs.com directly: it self-describes as "an independent software studio based in Singapore" shipping two products (8StarLabs UI, Canopy), and the footer reads "Copyright © 2026 Tham Kei Lok. All rights reserved." There is an FAQ item literally titled "Who runs 8StarLabs?" — a question a multi-person company would not need. No team page, no legal entity, one named human. Solo-business confirmed.',
   },
   {
     name: "abstract",
@@ -170,12 +127,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["web3"],
-    maintainer: "company",
-    entity: "Abstract Foundation",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      "I fetched github.com/Abstract-Foundation directly: it is a GitHub organization with 26 repositories, 746 followers, a registered location of Cayman Islands, and website abs.xyz — the Abstract L2 blockchain platform. The registry repo agw-reusables sits in that org and documents itself at build.abs.xyz. Repos include agw-sdk, agw-contracts, abstract-node and abstract-docs, i.e. real protocol infrastructure, not a hobby project. Company confirmed.",
   },
   {
     name: "abui",
@@ -189,12 +140,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Antonio Brandao",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'abui.io states "Components, blocks, and utilities by Antonio Brandao" and links his personal github.com/antoniobrandao and @antonio_brandao X account. No company, team or legal entity on the site.',
   },
   {
     name: "aceternity",
@@ -207,13 +152,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["marketing", "playful"],
-    maintainer: "company",
-    entity:
-      "Aceternity (Aceternity Labs LLC / Aceternity Solutions Private Limited), founder Manu Arora",
-    entityKind: "agency-studio",
-    confidence: "high",
-    evidence:
-      'I actively tried to refute this as a solo dev with an LLC wrapper — the refutation failed. ui.aceternity.com footer: "© 2026 Aceternity Labs LLC. All Rights Reserved."; aceternity.com footer names "Aceternity Solutions Private Limited". Decisively, a Starter Story interview with founder Manu Arora states Aceternity is now a team of six — 2 front-end engineers, 1 full-stack engineer, 1 designer, 1 social media manager, 1 product manager — and that he hired his first full-time employee to take over client work. Two legal entities plus actual employees. (Note: the "Alex" the prior agent cited is chat-mockup copy, not a person — but the team evidence stands independently.)',
   },
   {
     name: "aevr",
@@ -226,12 +164,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Miracle Onyenma (aevrHQ)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'ui.aevr.space root now serves a "this domain may be for sale" parking page (the registry lives at v1.ui.aevr.space), so no site-side credits. Source is github.com/aevrHQ/ui, generated from shadcn-ui/registry-template; the aevrHQ org has bio "Crafting beautiful experiences", site aevr.online, 3 followers and one visible member, @miracleonyenma (a frontend developer/designer whose profile lists @aevrHQ). No legal entity or team page found.',
   },
   {
     name: "agentcn",
@@ -244,12 +176,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Aniket Pawar (Shadcn Labs)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'agentcn.vercel.app redirects to agentcn.run; repo is github.com/shadcn-labs/agentcn (MIT, generated from shadcn-labs/startercn). The org\'s site shadcn-labs.com has a TEAM section listing exactly one person, Aniket Pawar, with footer "Shadcn Labs 2026" and no incorporation details — an OSS personal brand, not a company.',
   },
   {
     name: "agents-ui",
@@ -262,12 +188,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "LiveKit",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'Fetched livekit.com/ui directly: footer reads "© 2026 LiveKit. Engineered and designed worldwide." with /about and /careers links and a github.com/livekit org link. A careers page and a corporate about page are direct evidence of a multi-person funded company; LiveKit is the well-known real-time voice/video infrastructure vendor. Company confirmed.',
   },
   {
     name: "ai-blocks",
@@ -280,12 +200,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'I retried independently: webllm.org/ and www.webllm.org/blocks both return only a JS shell with the title "WebLLM - Browser-Native AI Protocol" and no footer, author, GitHub link or about section. Four searches surfaced nothing tying the domain to any person or org, and registry.directory has no ai-blocks/webllm entry. The github.com/webllm org (renderify, browser-use, webblackbox; one visible member @unadlib, contact unadlib@gmail.com) links to webllm.github.io, not webllm.org, and renderify\'s README never mentions webllm.org, ai-blocks or shadcn — so I could not confirm that org owns the domain. Note the confusable mlc-ai/web-llm project is unrelated. Genuinely unclear.',
   },
   {
     name: "ai-elements",
@@ -298,12 +212,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Vercel",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'Fetched github.com/vercel/ai-elements directly: the repo lives in the official Vercel GitHub organization and its README states AI Elements was "Made with ❤️ by Vercel". It is the companion component registry to Vercel\'s AI SDK, a commercial product line. Vercel is a large funded company. Confirmed.',
   },
   {
     name: "aicanvas",
@@ -316,12 +224,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "playful"],
-    maintainer: "individual",
-    entity: "uiNerd (github.com/uiNerd16)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The site states explicitly: "One person. AI Canvas is a solo project, built and cared for one component at a time." Footer is "© 2026 AI Canvas" with no legal entity; links go to github.com/uiNerd16/aicanvas and X handle @uiNerd. Free and open source.',
   },
   {
     name: "algolia",
@@ -334,12 +236,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: [],
-    maintainer: "company",
-    entity: "Algolia",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "Fetched github.com/algolia/sitesearch: the repo exists inside the official Algolia GitHub organization, describes itself as combining Algolia's InstantSearch and Ask AI, and requires an Algolia account as a prerequisite. The docs site is on Algolia's own domain (sitesearch.algolia.com). This is a first-party artifact of an established commercial search vendor. Confirmed.",
   },
   {
     name: "aliimam",
@@ -352,12 +248,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Ali Imam",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'aliimam.in returned HTTP 402 to fetch; search confirms it is the personal portfolio of Ali Imam, a graphic designer/design engineer based in Bokaro Steel City, India ("Design Without Limits | Ali Imam"), with personal GitHub accounts aliimam-in and designali-in/aliimam. He runs personal brands (@designali_in, @dalim_in) but no company entity or team is evidenced.',
   },
   {
     name: "amicro",
@@ -370,12 +260,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Subhan (github.com/Subhan-code)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "The site itself shows only the product tagline with no footer, about page or copyright. The registry endpoint resolves to raw.githubusercontent.com/Subhan-code/Amicro--Micro-transitions-/main/registry/{name}.json, i.e. a single personal GitHub account; no organization or legal entity found.",
   },
   {
     name: "amplo",
@@ -389,12 +273,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "Alexandre Schrammel",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "© 2026 Alexandre Schrammel" and "Created with care and love by ale.design"; MIT-licensed, repo at github.com/TheAleSch/amplo-picker. ale.design is a personal brand, not a registered company, and no team is listed.',
   },
   {
     name: "animate-ui",
@@ -407,12 +285,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Skyleen (github.com/imskyleen)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "The homepage renders client-side and shows only an @animate_ui X link; the GitHub repo (animate-ui, ~4.1k stars) is owned and maintained by the single personal account imskyleen, with community contributors but no organization members, legal entity or team page.",
   },
   {
     name: "animbits",
@@ -425,12 +297,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "Garvit (github.com/Garvit1000)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "animbits.dev is JS-only and exposed no footer, about page or copyright on fetch. The shadcn registry-directory submission (shadcn-ui/ui issue #8898) for @animbits was opened by the personal GitHub account Garvit1000; no company, org or team is referenced anywhere.",
   },
   {
     name: "approvals-ui",
@@ -443,12 +309,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Dylan Mérigaud",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The site credits Dylan Mérigaud, "freelance AI full-stack engineer (ex-Pivot, procurement fintech)", says the components were extracted from his own Ledgerloop project, is MIT-licensed and hosted under the personal GitHub account DylanMerigaud. No company entity or team.',
   },
   {
     name: "arc",
@@ -461,12 +321,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "company",
-    entity: "Arc Studio",
-    entityKind: "agency-studio",
-    confidence: "medium",
-    evidence:
-      'I tried to refute this as a one-person studio and it survived, but narrowly. witharc.co is a client-services design studio ("a small studio designing brand, product, and web for early-stage startups, including 10+ Y Combinator companies"), footer "© Arc Studio", live careers page advertising a Designer role, Instagram/X presence based in Istanbul. Two people are attached to Arc: Omer Ozkok (omeroztok@witharc.co, the contact) and Emir (@emirayaaz, linked at page bottom and praised in a client testimonial as "both a developer and designer"). Correction to the prior agent\'s evidence: the testimonial names on the page (Guillermo Rauch/Vercel, Emir Karabeg/Sim, Adi Singh/AgentMail, etc.) are clients, not staff — the multi-person case rests only on Omer + Emir. No legal entity is published, so this sits close to the solo-business line.',
   },
   {
     name: "asanshay",
@@ -478,12 +332,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "Asanshay Gupta",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The docs site carries no company, team or copyright info; the shadcn registry-directory issue #8936 was filed by SuperAce100 and names @asanshay as registry owner. Search confirms Asanshay Gupta, a Stanford CS student (asanshay@stanford.edu) whose personal site asanshay.com lists this design system among his projects.",
   },
   {
     name: "assistant-ui",
@@ -496,12 +344,6 @@ export const registries: Registry[] = [
     base: "radix",
     pricing: "freemium",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "assistant-ui (Y Combinator-backed)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'Fetched github.com/orgs/assistant-ui/people directly: three public org members — Simon Farshid (@Yonom), Bassim Shahidy (@AVGVSTVS96), Shobhit Patra (@ShobhitPatra). The repo README carries a "Backed by Y Combinator" badge, sells a paid "Assistant Cloud" managed service alongside the MIT core, offers a Contact Sales / booking flow, and lists production users (LangChain, Mastra). Funded startup with a named multi-person team. Confirmed.',
   },
   {
     name: "auth0",
@@ -514,12 +356,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: [],
-    maintainer: "company",
-    entity: "Okta, Inc. (Auth0)",
-    entityKind: "big-tech",
-    confidence: "high",
-    evidence:
-      'Fetched auth0.com: footer reads "© 2026 Okta, Inc. All Rights Reserved." with links to corporate agreements, terms, privacy choices, status page and multi-language versions. Auth0 is Okta\'s identity product line; Okta is a publicly traded company. Confirmed.',
   },
   {
     name: "baraile-loader",
@@ -531,12 +367,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "Joe (first name only; no surname or company given)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The page credits itself explicitly: "Built independently for shadcn/ui by Joe." plus a credit to @gunnargray for inspiration. No company, no legal entity, hosted on a free vercel.app subdomain.',
   },
   {
     name: "basecn",
@@ -548,12 +378,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "akash3444 (personal GitHub account)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "basecn.dev has no about/team page, no company name and no footer copyright; its only attribution is the GitHub link https://github.com/akash3444/basecn — a personal user account, not an org.",
   },
   {
     name: "baselayer",
@@ -566,12 +390,6 @@ export const registries: Registry[] = [
     base: "react-aria",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "Zach Wagner (GitHub @zwgnr)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'baselayer.dev shows no company, team or copyright; the repo is https://github.com/zwgnr/BaseLayer. The GitHub profile zwgnr is a personal account: "Zach Wagner", Miami, personal site zachwagner.dev, with BaseLayer as his pinned project alongside hobby repos.',
   },
   {
     name: "beste-ui",
@@ -584,12 +402,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["marketing", "dashboard"],
-    maintainer: "solo-business",
-    entity: "Beste — Uğur Sözen",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'Fetched ui.beste.co: footer "© 2026, Beste. All rights reserved.", contact only via X @withbeste and GitHub, MIT free tier with a paid commercial licence for Pro blocks — a real commercial product. Fetched github.com/beste-co: it is an organization but with no publicly listed members, one visible repo (beste-ui), contact hello@beste.co. The only human found is Uğur "ziegfiroyt" Sözen, whose personal profile page lives on the same domain at zieg.beste.co listing his own GitHub/LinkedIn/X. One person, commercial brand, no team. Solo-business confirmed.',
   },
   {
     name: "better-upload",
@@ -603,12 +415,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Nic13Gamer (personal GitHub account)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'better-upload.com carries no company name, footer copyright or "built by" credit; the only attribution is the repo link https://github.com/Nic13Gamer/better-upload, a personal user account. Free MIT-style OSS library, no pricing or entity.',
   },
   {
     name: "beui",
@@ -621,12 +427,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["tailwind-v4", "open-source"],
-    maintainer: "individual",
-    entity: "Saurabh (X @saurra3h, GitHub starc007)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'beui.dev footer states "Created by Saurabh" linking to x.com/saurra3h and "© 2026 beUI. MIT License."; source lives at github.com/starc007/ui-components, a personal account. No company or team.',
   },
   {
     name: "billingsdk",
@@ -640,12 +440,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Dodo Payments",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "Fetched github.com/dodopayments/billingsdk: the repo sits in the Dodo Payments company GitHub org and is described as a billing/subscription component library for React; the README notes it is part of the Vercel OSS Program. It is the companion UI library to Dodo Payments' commercial merchant-of-record payments product, so this is a first-party company artifact. Confirmed.",
   },
   {
     name: "bklit",
@@ -658,12 +452,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source", "dashboard"],
-    maintainer: "individual",
-    entity: "Matt (GitHub @uixmat)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'CORRECTED from solo-business. The prior verdict rested on "runs a hosted commercial SaaS (app.bklit.com)" — that is refuted: Bklit Analytics has been discontinued (hosted service, npm packages and self-hosted infra no longer maintained) and it was free during its entire beta with no paid tier ever activated. What remains is bklit-ui, MIT-licensed chart components; the Studio is source-available-proprietary ("you may not reuse, resell, or redistribute Studio without written permission") but is not sold, and bklit.com/pricing 404s. The site footer says simply "built by uixmat"; github.com/bklit has no public members; github.com/uixmat is Matt, a solo "Design Engineer" in Bulgaria, sponsored by the Vercel OSS Program and himself sponsoring shadcn. No commerce, no team — a personal OSS project.',
   },
   {
     name: "blocks-so",
@@ -676,12 +464,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "dashboard", "minimal"],
-    maintainer: "individual",
-    entity: "Ephraim Duncan",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'blocks.so states "Built by Ephraim Duncan" linking to his personal site ephraimduncan.com, footer "© 2026 Blocks.so", source at github.com/ephraimduncan/blocks. Free and open source, no company.',
   },
   {
     name: "blockus",
@@ -695,12 +477,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Leonel Ngoya (lndev)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer: "© 2026 blockus. Built by Leonel Ngoya" linking to his personal site lndev.me, header says "by lndev-ui", contact is a personal gmail address and @ln_dev7 on X. No company entity or team.',
   },
   {
     name: "boldkit",
@@ -714,12 +490,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["brutalism", "open-source"],
-    maintainer: "individual",
-    entity: "Aniruddha Agarwal (GitHub ANIBIT14)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "boldkit.dev itself carries no attribution, copyright or team page. Search shows the source is github.com/ANIBIT14/boldkit (personal account) and the author announced it on DEV Community as Aniruddha Agarwal; the library is described as free and open source, no pricing or legal entity.",
   },
   {
     name: "brainless",
@@ -733,12 +503,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["terminal"],
-    maintainer: "individual",
-    entity: "Ben Swerdlow (X @benswerd)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site is on his personal domain swerdlow.dev and the only credit is "◆ @benswerd · freestyle (freestyle.sh)". Freestyle appears as the author\'s affiliation/link, not as the owner: no company copyright, no company GitHub org, no team page.',
   },
   {
     name: "bundui",
@@ -752,12 +516,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing", "dashboard"],
-    maintainer: "solo-business",
-    entity: "Bundui (operator's real name not disclosed)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'bundui.io is not fetchable, so I verified on GitHub: github.com/bundui is a personal user account (not an organization) — 8 repos, 304 followers, personal achievement badges (Pull Shark, Starstruck), bio "Discover a curated collection of over 100 handcrafted UI components…". The same profile links three commercial template businesses it operates: shadcnuikit.com, lensthemes.com and ecommercekit.dev, plus X @bunduidotio. A paid-template business run from one personal account with no named team or legal entity. Solo-business confirmed.',
   },
   {
     name: "canvas-ui",
@@ -769,12 +527,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: [],
-    maintainer: "individual",
-    entity: "David Haz (GitHub DavidHDev, X @davidhdev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "canvasui.dev could not be fetched (domain verification blocked); the repo github.com/DavidHDev/canvas-ui is a personal account belonging to David Haz (also creator of React Bits), licensed MIT + Commons Clause, free to use, with no company backing, sponsors or team listed.",
   },
   {
     name: "cardcn",
@@ -786,12 +538,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: [],
-    maintainer: "individual",
-    entity: "Ali Hussein (GitHub Ali-Hussein-dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'cardcn.dev could not be fetched (domain verification blocked). Search shows the source at github.com/Ali-Hussein-dev/cardcn — a personal account — described as "Free collection of beautiful shadcn cards". No company or paid product found.',
   },
   {
     name: "chamaac",
@@ -804,12 +550,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Amarnath Dhumal (@AmarnathDhumal)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'I reached the site this time: www.chamaac.com footer reads "Built with Love by Amarnath" linking to x.com/AmarnathDhumal, and the FAQ answers "Is it free to use?" with testimonials referencing components being free on chamaac.com — no pricing, no Pro tier, so not a commercial brand. The source repo is github.com/amarnathdhumal/chamaacui, a personal account, MIT-licensed, with chamaac.com in the About field and no corporate mention. Individual confirmed; raising confidence from the prior agent\'s low.',
   },
   {
     name: "channel3",
@@ -823,12 +563,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Channel3",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'Fetched trychannel3.com/developers/ui: the page carries "Channel3 raises $6M to power product discovery for agentic commerce", recognition in the Awin Power 100, SOC 2 & GDPR compliance statements, terms of service and privacy policy, API reference and brand directory. SOC 2 and a priced funding round are things only a real company has. The registry is described as open-source React components "typed against the Channel3 SDK", i.e. a first-party companion to the commercial API. Confirmed.',
   },
   {
     name: "clerk",
@@ -842,12 +576,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: [],
-    maintainer: "company",
-    entity: "Clerk",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "Fetched the docs page: it is hosted on clerk.com's own documentation domain and documents Clerk's official shadcn registry — a quickstart package plus individual sign-in/sign-up/waitlist pages and ClerkProvider/middleware components that bootstrap Clerk auth. First-party artifact of Clerk, the commercial authentication/user-management SaaS. Confirmed.",
   },
   {
     name: "cnippet",
@@ -861,12 +589,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "solo-business",
-    entity: "Cnippet (operator not disclosed)",
-    entityKind: "solo-business",
-    confidence: "low",
-    evidence:
-      'Verdict stands but the reasoning needed fixing, and I found a trap. Searches surface a "Cnippet team" page naming a CEO/founder "Patrick Stewart" plus content directors and engineering leads — I checked it and it is fictional demo data inside a team-section UI component that cnippet.dev published to 21st.dev, not a real roster. Real evidence: cnippet.dev, ui.cnippet.dev all return 403; github.com/cnippet-dev is an organization but with no public members at all, 5 repos, bio "Build stunning web applications with Cnippet⚡", socials @cnippet_dev. The product sells premium components/blocks (blocks.cnippet.dev) aimed at agencies and teams. A commercial brand with zero verifiable humans — closest to solo-business, but I cannot rule out a small undisclosed team.',
   },
   {
     name: "cognicatch",
@@ -880,12 +602,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'Re-verified independently: cognicatch.dev returns HTTP 403 Forbidden to fetch, and two fresh searches ("cognicatch.dev shadcn registry components author github", "cognicatch github registry UI") returned zero results referencing the project — no GitHub account, org, author, company or even a product page. No maintainer evidence exists in public indexes. Unclear confirmed.',
   },
   {
     name: "commercn",
@@ -897,12 +613,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "solo-business",
-    entity: "Logging Studio — Arif (@ariflogs)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'Verified on GitHub rather than the unreachable domain. github.com/Logging-Studio/commercn ("ShadCN UI Blocks for E-commerce Websites", MIT, 72 stars) sits in the Logging-Studio org; the org profile says "Building the coolest tools for developers", lists website loggingstudiio.com, contact email arif@retroui.dev, and socials youtube.com/@ariflogs and x.com/@ariflogs — every channel points to the same single person, Arif, who also runs the commercial RetroUI brand. 18 followers, one public member. One person operating a studio brand with paid products. Confirmed.',
   },
   {
     name: "componentry",
@@ -915,12 +625,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Harsh Jadhav",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'componentry.fun 301-redirects to componentry.dev, whose footer reads "© 2026 Componentry. Created by Harsh Jadhav" (x.com/harshjdhv), repo at github.com/harshjdhv/componentry, personal gmail contact. Vercel OSS Program backing only, no company entity.',
   },
   {
     name: "contentbit",
@@ -934,12 +638,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "@agonist42 (agonist)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "contentbit.dev credits a single maintainer, @agonist42 on X, with source at github.com/agonist/contentbit, MIT licensed. No company, team, or legal entity anywhere on the site.",
   },
   {
     name: "corr",
@@ -953,12 +651,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Liam Corrigan",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'ui.corr.sh itself returned essentially no identifying content. The parent domain corr.sh is a personal site identifying "Liam Corrigan — Engineer"; the domain name matches his surname and a matching GitHub account (lcorrigan) exists. No company, team page, or org found.',
   },
   {
     name: "coss",
@@ -972,12 +664,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "coss.com (Cal.com's holding company)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'github.com/cosscom hosts the `coss` repo (10.4k stars, AGPL-3.0) described verbatim as "coss.com/ui is the official design system of Cal.com"; search confirms coss.com is the new holding company of Cal.com, and Cal.com\'s changelog documents migrating its whole app onto coss.com/ui. Note the coss.com/ui footer itself is coy — only "© 2026 coss.com – open source, open heart, open mind" — but the Cal.com/commercial-entity link is solid. CONFIRMED (entity name sharpened: the owner is coss.com, the holdco, not Cal.com the product).',
   },
   {
     name: "creative-tim",
@@ -991,12 +677,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["dashboard", "marketing"],
-    maintainer: "company",
-    entity: "Creative Tim (CREATIVE CODE SRL)",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'creative-tim.com/about-us names the legal entity CREATIVE CODE SRL, VAT RO32193813, reg. J40/4367/30.03.2017, address Dionisie Lupu 56, Bucharest, and shows a 9-person team roster (co-founder Alex, developers, UI/UX designer, office manager). The /ui page is the company\'s own registry ("by Creative Tim"). CONFIRMED, with a registered legal entity the prior agent had not found.',
   },
   {
     name: "cubby-ui",
@@ -1010,12 +690,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["tailwind-v4", "open-source"],
-    maintainer: "individual",
-    entity: "Jon Coronel",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'www.cubby-ui.dev was blocked by domain verification, but cubby-ui.dev fetched fine: footer reads "© 2026 Cubby UI · MIT licensed" with source at github.com/joncoronel/cubby-ui — a personal GitHub account, no org, team, or company entity named.',
   },
   {
     name: "cult-ui",
@@ -1029,12 +703,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Jordan Gilliam (nolly-studio)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'cult-ui.com was blocked by domain verification; via search, the repo is github.com/nolly-studio/cult-ui and the GitHub profile nolly-studio is an individual user account (name "jordan", bio "Cooking", 11 repos) rather than an org. Search results credit Jordan Gilliam as creator. "Studio" is branding on a solo account; could not verify paid offerings.',
   },
   {
     name: "darx",
@@ -1048,12 +716,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["playful"],
-    maintainer: "individual",
-    entity: "Darshit (Design Engineer, darshitdev.in)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'darshitdev.in was blocked by fetch; search shows the site titled "Arts – Darshit | Design Engineer" — a personal portfolio domain of a design engineer/full-stack dev whose /arts section hosts his custom shadcn components. No company or team.',
   },
   {
     name: "delego",
@@ -1067,12 +729,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Koishore Roy (Delego-Dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The Delego-Dev GitHub org has tiny traction (delego 25 stars, registry 2 stars) and one visible member, koishore (Koishore Roy, Bengaluru). delegohq.com lists pricing tiers and a careers page but the footer contact is a personal gmail (koishore@gmail.com) and everything commercial is marked "coming soon" — no legal entity or named team.',
   },
   {
     name: "delta",
@@ -1086,12 +742,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Patrick Prunty",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'deltacomponents.dev footer reads "Developed by Patrick Prunty" with source at github.com/pprunty/deltacomponents.dev — a personal account. No company, team, or pricing.',
   },
   {
     name: "devl",
@@ -1104,12 +754,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Sean (devl.dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'devl.dev presents itself as "Sean\'s scratch pad" — "158 design experiments, two years deep" — and explicitly calls Cal.com "the day job". No company entity, team page, copyright footer, or pricing for the registry itself.',
   },
   {
     name: "diceui",
@@ -1123,12 +767,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "sadmann7 (Sadman)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "diceui.com returned HTTP 526 (origin cert error). The project repo github.com/sadmann7/diceui is owned by the individual developer sadmann7 (2k stars, 87 forks), with primary maintenance by that single personal account and no org or company.",
   },
   {
     name: "diklein",
@@ -1142,12 +780,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Dave (David) Klein",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'diklein.com is a personal portfolio: "UX designer, photographer, and writer" who "designs software and leads a team of designers at ServiceNow"; footer reads "Designed, researched, and written by David Klein". No studio or company entity.',
   },
   {
     name: "dominik-ui",
@@ -1161,12 +793,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Dominik Koch",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "The /ui page gave no ownership details, but it sits on the personal domain dominikkoch.dev of Dominik Koch (GitHub DominikKoch), a software engineer who lists shadcn/ui and nuqs contributions on his personal site. No company branding on the registry; his LinkedIn lists a separate venture (Rivo), unrelated to this registry's domain.",
   },
   {
     name: "doras-ui",
@@ -1179,12 +805,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "solo-business",
-    entity: "Doras.to (Tommy/Thomas Lundy)",
-    entityKind: "solo-business",
-    confidence: "low",
-    evidence:
-      'ui.doras.to carries no ownership info at all (no footer credit, no company, no GitHub link); github.com/dorasto is an Ireland-based org for the doras.to link-in-bio/social SaaS with zero public members, and github.com/dorasto/ui has no description or README credits. Only named person anywhere is Tommy Lundy (Cork, Ireland), described as "Founder & Admiral of the Fleet" on GitHub but "Co-founder of Doras.to" on LinkedIn — that co-founder title is unrefuted evidence of a possible second person, and no legal entity, About page, or team roster exists. Commercial brand, one visible operator: solo-business stands, but confidence lowered to low given the co-founder wording and the total absence of ownership disclosure.',
   },
   {
     name: "dotmatrix",
@@ -1198,12 +818,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Shawn (@zzzzshawn)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer credits "by shawn." with links to x.com/zzzzshawn and github.com/zzzzshawn/matrix; hosted on his personal zzzzshawn.cloud domain. Free and open-source, no company mentioned.',
   },
   {
     name: "dsikeres1",
@@ -1217,12 +831,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "DSikeres1",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Hosted on a personal GitHub Pages account; footer reads "Copyright © 2026 DSikeres1. All rights reserved." with a link to the personal GitHub repo. No company or additional authors.',
   },
   {
     name: "efferd",
@@ -1236,12 +844,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Efferd (Shaban, @shabanhr)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'efferd.com footer: "© 2026 Efferd. Built by Shaban", linking his personal GitHub and X (@shabanhr), contact mail@efferd.com. /pricing sells one-time Pro ($147) and Team ($497) licences processed by a third-party merchant (Inflow). No About/Team page, no second person, no Inc/Ltd/LLC anywhere. CONFIRMED.',
   },
   {
     name: "einui",
@@ -1255,12 +857,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["glass", "open-source"],
-    maintainer: "individual",
-    entity: "Ehsan Ghaffar",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer states "Built by Ehsan. MIT License", linking github.com/ehsanghaffar and @ehsanghaffar on X, on his personal eindev.ir domain. No company affiliation.',
   },
   {
     name: "eldoraui",
@@ -1274,12 +870,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Karthik Mudunuri",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer attribution "Built by Karthik Mudunuri. The source code is available on GitHub" pointing to github.com/karthikmudunuri/eldoraui — a personal account. Open source, no company or team.',
   },
   {
     name: "elements",
@@ -1293,12 +883,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Crafter Station",
-    entityKind: "oss-org",
-    confidence: "high",
-    evidence:
-      'tryelements.dev footer credits Crafter Station with source at github.com/crafter-station/elements (519 stars). github.com/orgs/crafter-station/people lists exactly 8 public members (camilocbarrera, carlosdtn, cuevaio, EdwardR0507, Jibaru, MrUprizing, Railly, shiarauzo), and the org page describes a Peru-based "LatAm network of shippers" with 900+ builders, 50+ events, 25+ products, its own site and sponsors. Genuinely multi-person, so not an individual project; it is a collective/OSS org rather than a registered firm. CONFIRMED, confidence raised after verifying the member list directly.',
   },
   {
     name: "elevenlabs-ui",
@@ -1312,12 +896,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "ElevenLabs",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'github.com/elevenlabs/ui — the official ElevenLabs org, alongside their SDKs — README: "ElevenLabs UI is a component library built on top of shadcn/ui to help you build audio & agentic applications faster", footer "Engineered by ElevenLabs", MIT, 2.3k stars. Registry is served from the company\'s own ui.elevenlabs.io subdomain. ElevenLabs is a heavily funded commercial AI-audio company. CONFIRMED.',
   },
   {
     name: "emerald-ui",
@@ -1331,12 +909,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["gsap"],
-    maintainer: "individual",
-    entity: "shatlyk1011 (Shatlyk)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "emerald-ui.com links source to the personal GitHub account github.com/shatlyk1011/emerald-ui; no company name, team/about page, or footer copyright entity anywhere on the site.",
   },
   {
     name: "ericts",
@@ -1349,12 +921,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Eric Tsai (EricTsai83)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site is on the personal domain ericts.com and credits the single GitHub account EricTsai83; it has a "Special thanks" section to shadcn/Emil Kowalski/Manu Arora, and no company, team, or legal-entity notice.',
   },
   {
     name: "evex",
@@ -1368,12 +934,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "TommyBez (Tommy)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'On evex.sh every listed agent recipe shows author "TommyBez", the repo link is the personal account github.com/TommyBez/evex, and the social credit is x.com/TommyBez85. No company or team is named.',
   },
   {
     name: "evilbuttons",
@@ -1387,12 +947,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["playful"],
-    maintainer: "individual",
-    entity: "Jay Sharma (radiumcoders)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The docs URL 307-redirects to evilbuttons.com/docs, which credits @radiumcoders and links github.com/sponsors/radiumcoders. github.com/radiumcoders is a personal user account named Jay Sharma (bio "work work", no company field).',
   },
   {
     name: "evilcharts",
@@ -1406,12 +960,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "legions-developer",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "evilcharts.com shows no company, team, or copyright entity; the only attribution is a GitHub link to github.com/legions-developer/evilcharts, which GitHub renders as a personal user account (the only org mentioned is Vercel via an OSS-program sponsorship badge).",
   },
   {
     name: "exabase",
@@ -1425,12 +973,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "ExaWizards Inc.",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'The kit is served from the corporate domain exawizards.com, states it was "built by the designers of ExaWizards", and carries a copyright notice naming ExaWizards Inc. with links to the corporate site and privacy policy. exaBase is ExaWizards\' commercial AI product line (ExaWizards is a listed Japanese AI company). CONFIRMED.',
   },
   {
     name: "extend",
@@ -1443,12 +985,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Extend (Extend AI)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'ui.extend.ai states the library was created by Extend with source under the GitHub org extend-hq. extend.ai is a B2B document-processing API company: footer "© 2026 Extend", Company > Careers link, Terms & Privacy, pricing tiers, dashboard.extend.ai, SDKs, SOC 2 / HIPAA / GDPR, and named customers (Brex, Mercury, Flatiron). The registry is a companion to the commercial product. CONFIRMED.',
   },
   {
     name: "fab-ui",
@@ -1461,12 +997,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Dimitrios C. (triatetarta)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'fab-ui.com names no company, team, or copyright holder; its only attribution is github.com/triatetarta/fab-ui. That GitHub account is a personal profile: "Dimitrios C. — Frontend Engineer based in London, UK", 11 followers, no company field.',
   },
   {
     name: "flightcn",
@@ -1480,12 +1010,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "ridemountainpig (Yen-Cheng)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "WebFetch of flightcn.yencheng.dev returned 403, so I searched: the repo is the personal account github.com/ridemountainpig/flightcn, and the docs are hosted on the maintainer's own personal domain yencheng.dev. No company anywhere; it is a companion add-on to the third-party mapcn project.",
   },
   {
     name: "flowui",
@@ -1499,12 +1023,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "KushalXCoder (Kushal)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The vercel.app domain was blocked by fetch policy, so I searched: the project is github.com/KushalXCoder/flowui, a personal GitHub account, described as "A UI library built on top of shadcn". Registry is a free Vercel deployment with no company, team, or paid product.',
   },
   {
     name: "flowkit-ui",
@@ -1518,12 +1036,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "vzkiss",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The domain was blocked by fetch policy; search confirms the repo is github.com/vzkiss/flowkit-ui (personal account) and the docs sit on that same person\'s subdomain flowkit-ui.vzkiss.com. Tagline "built by vzkiss"; no company or team found.',
   },
   {
     name: "fluid",
@@ -1537,12 +1049,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "minimal"],
-    maintainer: "individual",
-    entity: "Micka Touillaud (mickadesign)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'fluidfunctionalism.com was blocked by fetch policy; search shows the repo is github.com/mickadesign/fluid-functionalism. That GitHub profile is a personal account (bio "👓", San Francisco, personal site micka.design, X @micka_design, 26 followers) with no company field, and the kit is free/open-source.',
   },
   {
     name: "flx",
@@ -1555,12 +1061,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Felipe Menezes",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'ui.flexnative.com footer states "Built by Felipe Menezes" with source at the personal account github.com/felipemenezes098/ui-flx. No company name, legal entity, or copyright notice on the site.',
   },
   {
     name: "fonttrio",
@@ -1574,12 +1074,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Dima Kapish (kapishdima)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The homepage fetch surfaced no attribution, so I searched: the project is github.com/kapishdima/fonttrio, a personal account, and coverage (InfoQ, shadcn's own X post crediting @kapish_dima) describes it as an open-source project by Dima Kapish. No company or team.",
   },
   {
     name: "forgeui",
@@ -1593,12 +1087,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "accessibility"],
-    maintainer: "individual",
-    entity: "Aman Shakya (amanshakya0018)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'forgeui.in returned 403 to WebFetch; search shows the registry directory entry maps to github.com/amanshakya0018/forgeui, a personal GitHub account, described as "A library of React components for smooth, fast front-end development". No company or team found.',
   },
   {
     name: "formcn",
@@ -1611,12 +1099,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Ali Hussein (Ali-Hussein-dev)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'formcn.dev credits developer Ali Hussein (@alibey_10 on X, "available for hire"), source at the personal account github.com/Ali-Hussein-dev/formcn. Footer reads "© 2026 formcn" — a project name, not a legal entity.',
   },
   {
     name: "framecn",
@@ -1629,12 +1111,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: [],
-    maintainer: "individual",
-    entity: "Aniket Pawar (Shadcn Labs)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'framecn.vercel.app redirects to framecn.dev (DNS failed for me), and the repo is github.com/shadcn-labs/framecn. shadcn-labs.com\'s team section lists exactly one person, Aniket Pawar; footer is "© Shadcn Labs 2026" — a personal brand, not a named legal entity, and the components are 100% free.',
   },
   {
     name: "gaia",
@@ -1648,12 +1124,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "The Experience Company",
-    entityKind: "startup-saas",
-    confidence: "medium",
-    evidence:
-      'ui.heygaia.io states GAIA UI "was created by The Experience Company as part of their work on an open-source AI assistant called GAIA" and repeatedly says "the team". The Experience Company has its own GitHub org (github.com/theexperiencecompany, owner of the `gaia` repo) and site experience.heygaia.io describing "a team of hackers, engineers, and designers"; heygaia.io ships a commercial assistant with /about and /pricing pages. Multi-person and commercial, though no legal entity (Inc/Ltd) is published. CONFIRMED.',
   },
   {
     name: "gamekitui",
@@ -1666,12 +1136,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "unknown",
     tags: ["playful"],
-    maintainer: "individual",
-    entity: "slarity",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'gamekitui.com explicitly states it is "an independent, unaffiliated community project"; the only attribution is github.com/slarity/gamekit-ui, a personal GitHub account. No company name, copyright holder, or about/team section.',
   },
   {
     name: "gamifykit",
@@ -1684,12 +1148,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["playful"],
-    maintainer: "individual",
-    entity: "Kaiden See",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'gamifykit.com footer reads "Built by Kaiden See" linking to his personal site kaiden.my; code lives at github.com/gamifykit (a project-name org). No legal entity, no pricing or terms page, no team.',
   },
   {
     name: "gammaui",
@@ -1702,12 +1160,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Mazyar Kawa",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'gammaui.com footer says "Engineered by Mazyar" linking to Mazyar Kawa\'s LinkedIn, with source at the personal account github.com/mazyar-kawa/gamma-ui. No company, legal entity, or copyright notice.',
   },
   {
     name: "gc-solid",
@@ -1721,12 +1173,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "binnodon",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "Homepage is a JS-only GitHub Pages site that returned no readable content to WebFetch. Fallback check of https://github.com/binnodon shows a personal GitHub user account (not an org) with 4 public repos including gc-solid-ui (6 stars) plus forks of shadcn-ui and Nuxt; no company, bio, or team listed.",
   },
   {
     name: "glass-ui",
@@ -1740,12 +1186,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["glass"],
-    maintainer: "company",
-    entity: "Crenspire Technologies",
-    entityKind: "agency-studio",
-    confidence: "high",
-    evidence:
-      'glass-ui.crenspire.com is a subdomain of the company\'s own site and credits "built by Akshay Joshi at Crenspire Technologies". crenspire.com is an AI-driven software/app development firm founded 2018, office at B-104 Titanium Heights, Corporate Road, Prahalad Nagar, Ahmedabad 380015, phone +919016374502, sales@crenspire.com, with /team and portfolio pages and named clients (Jio and others). Employer-hosted, not a personal side project. CONFIRMED.',
   },
   {
     name: "glasscn",
@@ -1758,12 +1198,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["glass", "open-source"],
-    maintainer: "individual",
-    entity: "Alex Kostyniuk (kostyniuk)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer credit reads "Open source. MIT licensed. Made by kostyniuk", linking to the personal GitHub repo kostyniuk/glasscn-components and X handle @kostyniuk00. No company, team, or legal entity anywhere on the site.',
   },
   {
     name: "gooseui",
@@ -1777,12 +1211,6 @@ export const registries: Registry[] = [
     base: "radix",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Dmitry Borisenko (goosen-x)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer says "© 2026 GooseUI. Open Source." with repo github.com/goosen-x/gooseui and contact info@gooseui.pro; no company or team page. The GitHub profile goosen-x is a personal account: Dmitry Borisenko, "Fullstack Developer | Next JS | Node JS", Moscow, 25 repos, 17 followers.',
   },
   {
     name: "gpt-vis",
@@ -1796,12 +1224,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "AntV Team, Ant Group",
-    entityKind: "big-tech",
-    confidence: "high",
-    evidence:
-      'The docs site states the project is maintained by the AntV Team and is "part of the broader AntV ecosystem by Ant Group", MIT-licensed; it is hosted on antv.vision and the source lives in the multi-maintainer org github.com/antvis (GPT-Vis). AntV is Ant Group\'s in-house data-visualization team. CONFIRMED.',
   },
   {
     name: "gymnopedies",
@@ -1815,12 +1237,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "shoota",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The homepage is a JS-rendered Storybook shell — WebFetch returned only the title "storybook - Storybook" and a raw curl found no footer/attribution markup. Fallback WebSearch surfaced a Zenn article by author "shoota" (zenn.dev/shoota) announcing this shadcn/ui reading theme; the site sits on his personal domain shoota.work. No company or team found.',
   },
   {
     name: "grootstudio",
@@ -1834,12 +1250,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Subhadip Jana (Subhadipjana95)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'grootstudio.vercel.app 307-redirects to grootstudio.dev, whose footer reads "© 2026 Groot Studio. All rights reserved." and links to the personal GitHub repo github.com/Subhadipjana95/Groot-Studio and the personal LinkedIn linkedin.com/in/subhadipjana095. "Studio" is branding only — no team, about page, or legal entity.',
   },
   {
     name: "ha-components",
@@ -1852,12 +1262,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["dashboard", "open-source"],
-    maintainer: "individual",
-    entity: "Joshua Chung (jchu634)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'WebFetch got HTTP 403; a direct curl of the page HTML shows the footer text "Created by Joshua Chung (JCHU634). MIT Licensed." plus a github.com/jchu634 link. The repo github.com/jchu634/ha-components is a personal user repo (not an org) pointing back to hacomponents.keshuac.com.',
   },
   {
     name: "headcodecms",
@@ -1870,13 +1274,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity:
-      "unknown (single unnamed creator behind the headcodecms GitHub org)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The site is written in the first person by one unnamed creator — "I have built websites for more than 20 years" and "Headcode CMS is my test of that future" — with no company name, legal entity, pricing, or imprint. The GitHub org github.com/headcodecms states "This organization has no public members", has 3 repos and 8 followers, and lists only office@headcodecms.com.',
   },
   {
     name: "heroicons-animated",
@@ -1889,12 +1286,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Aniket Pawar",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer credits "aniket" linking to the personal portfolio aniketpawar.com; MIT licensed, funded via GitHub Sponsors and "Backed by Vercel OSS Program" (Spring 2026 cohort). No company, team, or legal entity on the site.',
   },
   {
     name: "hextaui",
@@ -1907,12 +1298,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Preet Suthar (preetsuthar17)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site states "Built by @preetsuthar17" (preetsuthar.me) with "Theme by @matsugfx"; source is at github.com/preetsuthar17/hextaui, a personal account. No copyright footer, company name, team, or legal entity found.',
   },
   {
     name: "hexui",
@@ -1925,12 +1310,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Rion (ri0n.dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer attribution reads "Design and Developed by Rion" linking to x.com/ri0n.dev; code lives at github.com/hexui-sh/ui, an org used as a project namespace. No company name, team/about page, pricing, terms, or copyright entity on the site.',
   },
   {
     name: "hirael",
@@ -1943,12 +1322,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Mohammad Shehadeh",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'WebFetch returned HTTP 403 for both hirael.com and hirael.com/docs; a direct curl of the page HTML exposes the footer payload "© 2026 Mohammad Shehadeh · built on shadcn" alongside a github.com/mohammadshehadeh link. No company, team, or legal entity in the markup.',
   },
   {
     name: "hugeicons-animated",
@@ -1960,12 +1333,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Enes Gules (enesgules)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "Site credits creator Enes Gules with the repo github.com/enesgules/hugeicons-animated under an MIT license (icons themselves are third-party Hugeicons). No company, legal entity, or team page appears anywhere on the site.",
   },
   {
     name: "iconiq",
@@ -1978,12 +1345,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["minimal", "open-source"],
-    maintainer: "individual",
-    entity: "Edwin Vakayil (edwinvakayil)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "Built by edwinvakayil at Vercel" — that is the author\'s employer, not the project owner: the code is at the personal repo github.com/edwinvakayil/iconiq, and Vercel appears only as the Open Source Program (Spring 2026 cohort) backer. No separate legal entity or team.',
   },
   {
     name: "icons-animated",
@@ -1996,12 +1357,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "LN / ln-dev7",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'WebFetch returned HTTP 404 and a raw curl yielded no attribution markup (JS-only page). Fallback WebSearch shows the project repo is github.com/ln-dev7/icons-animated ("Meticulously crafted animated icons - based on lucide-animated.com"), a personal account, by LN (x.com/ln_dev7), on his personal lndev.me domain.',
   },
   {
     name: "indiacn",
@@ -2015,12 +1370,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "Krishna Agarwal (krishnaagarwal1506)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site explicitly disclaims institutional backing: "A community initiative — not affiliated with the Government of India", footer "© 2026 IndiaCN · MIT License · Made with care in Bharat". Maintained by Krishna Agarwal via the personal GitHub account krishnaagarwal1506; no company or government body.',
   },
   {
     name: "inferencesh",
@@ -2034,12 +1383,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Inference Shell Inc.",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "inference.sh/terms names the operator as Inference Shell Inc., a Delaware corporation, and states it is the merchant of record for all platform transactions. inference.sh is a commercial AI runtime (pay-per-execution pricing, hosted app, Teams tier, CLI, 30+ providers) and ui.inference.sh is its own registry subdomain with source at github.com/inference-sh. CONFIRMED, legal entity independently verified in the ToS.",
   },
   {
     name: "intentui",
@@ -2052,12 +1395,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "Irsyad (irsyad)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer states "This project\'s crafted by Irsyad" (x.com/irsyad) with "2026 · Intent UI ™" and MIT-licensed source at github.com/intentui/intentui — an org used as a project namespace. No named team, about/careers page, or legal entity found.',
   },
   {
     name: "jalco",
@@ -2070,12 +1407,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Justin Levine",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "Built by Justin Levine. Open source, always." on his personal domain justinlevine.me; source at jal-co/ui, a namespace for his own initials. Community is a Discord server; no company, team, or legal entity named.',
   },
   {
     name: "jolyui",
@@ -2088,12 +1419,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "johuniq",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Page links to github.com/johuniq/jolyui (a personal GitHub account) with "Star on GitHub" and "MIT licensed - free for commercial use"; the same account also runs a related project, Wavee. No footer copyright entity, company name, or team page appears.',
   },
   {
     name: "joyco",
@@ -2107,12 +1432,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "JOYCO Studio",
-    entityKind: "agency-studio",
-    confidence: "high",
-    evidence:
-      'registry.joyco.studio resolves to hub.joyco.studio, self-described as "a public knowledge HQ where our team shares and collaborates on internal components, tools, and resources" — i.e. a studio\'s internal component library exposed publicly (25 components, 21 toolbox items, 18 logs), with X/GitHub/Instagram links to JOYCO Studio and source under github.com/joyco-studio. A design/dev studio with a team, not a personal project. CONFIRMED.',
   },
   {
     name: "kanpeki",
@@ -2125,12 +1444,6 @@ export const registries: Registry[] = [
     base: "react-aria",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Fellipe Utaka",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer reads "Built by Fellipe Utaka. The source code is available on GitHub" linking twitter.com/fellipeutaka and github.com/fellipeutaka/kanpeki — a personal GitHub account, no company or team page. (The "Team" cards showing Sarah Chen/Marcus Rivera are demo component data, not real staff.)',
   },
   {
     name: "kapwa",
@@ -2143,12 +1456,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "BetterGov.ph",
-    entityKind: "oss-org",
-    confidence: "high",
-    evidence:
-      "github.com/bettergovph/kapwa describes Kapwa as the design system for government portals used by BetterGov.ph, published to npm as @bettergov/kapwa under CC0, with a Code of Conduct, contribution guidelines, an active contributor base, and open recruitment of volunteers (developers, designers, writers, translators, QA) at volunteers@bettergov.ph. A volunteer-led multi-person civic-tech organization, not one person. CONFIRMED.",
   },
   {
     name: "kibo-ui",
@@ -2161,12 +1468,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "company",
-    entity: "Shadcnblocks (founder Robert Austin)",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'kibo-ui.com now carries Shadcn UI Blocks branding and points to github.com/shadcnblocks/kibo (3.8k stars) — the registry sits in the Shadcnblocks org, not Hayden Bleasel\'s personal account. shadcnblocks.com/about names founder Robert Austin (@ausrobdev, started 2024) and lists a 12-person distributed team (Luis, Yassine, Mason, Rakesh, Yosra, Nader, Niko, Mateusz, Serge, Jannik, Callum), "profitable, bootstrapped", $1M ARR, selective hiring. Multi-person commercial business; no legal entity published, hence product-company rather than a verified registered firm. CONFIRMED.',
   },
   {
     name: "kinetic",
@@ -2179,12 +1480,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Jayant Acharya",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site credit line reads "MIT · Jayant Acharya" and it is hosted on his personal domain itsjay.in. No company, team, about page or legal entity anywhere on the site.',
   },
   {
     name: "kokonutui",
@@ -2197,12 +1492,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Dorian Baffier",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer says "Built by Dorian Baffier" with @dorianbaffier on X; source at github.com/kokonut-labs/kokonutui and support credited to Vercel\'s OSS Program. "kokonut-labs" is a project namespace — no team, about page, or legal entity is named.',
   },
   {
     name: "launchui",
@@ -2215,12 +1504,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Launch UI (Mikołaj Dobrucki)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "Homepage and /pricing credit exactly one person: Mikołaj Dobrucki (contact@mikolajdobrucki.com, twitter.com/mikolajdobrucki); repo at github.com/launch-ui/launch-ui. Paid tiers check out via launchui.lemonsqueezy.com (Lemon Squeezy is merchant of record); no About/Team page, no legal entity, no VAT, no second name anywhere on the site. Commercial but one-person. CONFIRMED.",
   },
   {
     name: "lens-blocks",
@@ -2233,12 +1516,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["web3"],
-    maintainer: "individual",
-    entity: "Paul Burke",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "Built by Paul Burke. Source code available on GitHub" linking his personal site paulburke.co and the personal account github.com/iPaulPro/lens-blocks. No company, team, or entity mentioned.',
   },
   {
     name: "limeplay",
@@ -2251,12 +1528,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "winoffrg (single developer)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Hosted on the personal domain winoffrg.dev; repo is github.com/winoffrg/limeplay and contact is "Reach out on X" at x.com/winoffrg. Footer only says "© 2026 Limeplay" — no company, team, or legal entity.',
   },
   {
     name: "liquefy-ui",
@@ -2270,12 +1541,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["glass", "open-source"],
-    maintainer: "individual",
-    entity: "yu5ag (single maintainer)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The homepage is JS-only and yielded no attribution, so I checked GitHub: the liquefy-ui org shows "This organization has no public members", and the repo README\'s sponsors section states "Sponsorship goes to the maintainer rather than to an organisation; there is one of us", with the sponsor handle yu5ag. It also states it is "an independent open-source project".',
   },
   {
     name: "lmscn",
@@ -2288,12 +1553,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "SiphoChris",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site links github.com/SiphoChris/lmscn.git (a personal account) and the footer only reads "© 2026 lmscn. Built with shadcn/ui." No team page, company, or legal entity.',
   },
   {
     name: "loading-ui",
@@ -2306,12 +1565,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "solo-business",
-    entity: 'TurboStarter (Bartosz "Bart" Zagrodzki)',
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'The registry source is github.com/turbostarter/loading-ui (440 stars, MIT, "Spinners, loaders and loading animations for modern web apps"), i.e. inside the org of the commercial TurboStarter SaaS boilerplate. turbostarter.dev sells $299/$449 lifetime licences and presents a single founder — Bart Zagrodzki, "a software engineer with 8+ years of experience" — with no team page, no co-founders, and no company entity named; support runs through his Discord/email. Commercial, one person. CONFIRMED (loading-ui.com itself blocks automated fetches, so this rests on the GitHub org and turbostarter.dev).',
   },
   {
     name: "lucide-animated",
@@ -2324,12 +1577,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Dmytro (@pqoqubbw)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The site credits author @pqoqubbw linking x.com/pqoqubbw, and the MIT license points to github.com/pqoqubbw/icons — a personal account. Search confirms "Lucide-animated was created by dmytro, a design engineer" with the same @pqoqubbw handle. No company or team.',
   },
   {
     name: "lumiui",
@@ -2342,12 +1589,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "patrick-xin",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer only shows "Lumi UI © 2026" with no entity; the GitHub link is github.com/patrick-xin/lumi-ui, a personal account with a single contributor. README credits only upstream projects (Base UI, shadcn/ui, Fumadocs) — no company or sponsor.',
   },
   {
     name: "lytenyte",
@@ -2361,12 +1602,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "freemium",
     tags: ["dashboard"],
-    maintainer: "company",
-    entity: "1771 Technologies",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'The homepage is the vendor\'s own corporate site ("1771 Technologies: LyteNyte, Fastest in Class React Data Grid") with pricing, docs, blog, demo and Contact Sales. github.com/1771-Technologies/lytenyte confirms a dual-licence commercial model: Core under Apache 2.0 and a paid PRO edition with 12 months of updates/support and organization plans for 50+ developer teams, maintained by 1771 Technologies. A real commercial software vendor. CONFIRMED.',
   },
   {
     name: "magicui",
@@ -2379,12 +1614,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing", "open-source"],
-    maintainer: "solo-business",
-    entity: "Magic UI (Dillion Verma)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'CORRECTED from "company". magicui.design credits exactly one person — "Built by dillion" (twitter.com/dillionverma) — and has no About, Team, Careers, or Terms page and no legal entity anywhere; pro.magicui.design is a $199 one-time storefront with an affiliate program but likewise names no entity. github.com/orgs/magicuidesign/people lists only 2 public members (Beau Hayes-Pollard, Jinho) with no stated employment, and Dillion\'s own account describes building it alone for 8+ months before open-sourcing. Targeted searches for incorporation, funding, or hiring returned nothing. That is a commercial one-person product with a couple of collaborators, not a verified multi-person organization.',
   },
   {
     name: "manifest",
@@ -2397,12 +1626,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Manifest",
-    entityKind: "startup-saas",
-    confidence: "medium",
-    evidence:
-      'ui.manifest.build ("a shadcn/ui components library for building ChatGPT Apps", an official shadcn registry) is a subdomain of manifest.build, a commercial product — hosted cloud tier at app.manifest.build plus paid enterprise options and self-hosted Docker. The GitHub org github.com/mnfst (contact hello@manifest.build, site manifest.build) has multiple members (@brunobuddy, @SebConejo) and several maintained repos including the 7.4k-star flagship. Multi-person and commercial. I could not re-verify the prior agent\'s "250 Shattuck Avenue, Berkeley" footer or the SkyDeck/Inria backing, so the company verdict here rests on the org membership and commercial tiers rather than a named legal entity.',
   },
   {
     name: "mapcn",
@@ -2415,12 +1638,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Anmol Saini",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'GitHub link is github.com/AnmolSaini16/mapcn (personal account) with a GitHub Sponsors link; footer only says "© 2026 mapcn. All rights reserved." and it is described as "Free & open-source". No company, team, or about page.',
   },
   {
     name: "mksingh",
@@ -2433,12 +1650,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Mukesh (MK) Singh",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'mksingh.dev is a personal portfolio — "MK Singh, Staff Software Engineer", "FullStack Developer", GitHub github.com/MKSinghDev, status "open to work". The registry\'s own description calls it "A personal registry of production-ready ShadCN components and utilities."',
   },
   {
     name: "moduix-react",
@@ -2451,12 +1662,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Blinks44 (personal GitHub account)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "CORRECTED from unclear. WebFetch 403s but curl with a browser UA returns moduix.dev (200, 84KB); the ONLY external link in the page is https://github.com/Blinks44/moduix. The npm registry metadata for @moduix/react confirms repository git+https://github.com/Blinks44/moduix.git, sole maintainer 'blinks44' <blinks44@yandex.ru>, MIT license. That GitHub account is a personal profile with 8 repos (5 of them forks), 4 followers, no company/bio. No pricing, no team, no org, no legal entity anywhere.",
   },
   {
     name: "moleculeui",
@@ -2469,12 +1674,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Rushil (@molecule-lab-rushil)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "CORRECTED from unclear. GitHub API on molecule-lab/molecule-ui contributors returns exactly two entries: molecule-lab-rushil with 77 commits and vercel[bot] with 1 — one human, all the code. LICENSE reads 'Copyright (c) 2025 molecule-ui' (the project name, not a person or firm). The org's claimed website moleculelab.in does not resolve at all (DNS ENOTFOUND), and the org lists no public members. 'Molecule Lab' is one developer's namespace, not an organization.",
   },
   {
     name: "motion-primitives",
@@ -2487,12 +1686,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "freemium",
     tags: ["open-source"],
-    maintainer: "solo-business",
-    entity: "Julien Thibeaut (@ibelick)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. The repo is github.com/ibelick/motion-primitives — a personal account (bio 'function is beauty', Paris, site ibelick.com), alongside his other solo projects (ui-skills, prompt-kit, zola, webclaw). He runs the free motion-primitives.com plus the paid pro.motion-primitives.com selling templates. He describes a one-person design-engineering practice ('Interface Office'); no company page, no team, no legal entity, no multi-maintainer org.",
   },
   {
     name: "mozaika",
@@ -2506,12 +1699,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "freemium",
     tags: [],
-    maintainer: "solo-business",
-    entity: "Sam (solo founder, Mozaika)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      "CONFIRMED, entity name corrected. Fetching mozaika.design/proof (24KB) shows the signature split across two nodes: '— Sam' and 'solo founder, building in the open' — the previous agent's 'Samsolo founder' was a concatenation artifact; the person is 'Sam'. Paid tiers ($59 one-time Founder License, $9/mo then $199/mo). /about, /terms and /pricing all serve the same 3.2KB JS shell with no legal entity, no company, no GitHub org.",
   },
   {
     name: "mui-treasury",
@@ -2524,12 +1711,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Siriwat K. (@siriwatknp)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Homepage credits the author as "@siriwatknp" linking to github.com/siriwatknp; no company, legal entity, team page or footer copyright anywhere on the site — just a community GitHub repo.',
   },
   {
     name: "motokoui",
@@ -2543,12 +1724,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "senommu",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer reads "Built by senommu" linking to github.com/senommu. The github.com/motoko-ui org has a single repo ("motokoui") and states "This organization has no public members" — no company, team or legal entity found.',
   },
   {
     name: "navui",
@@ -2562,12 +1737,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Navdeep Singh",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site header names "Navdeep Singh", footer says "© 2026 Nav UI", the GitHub link points at the personal repo navdeepannu/portfolio, and socials are personal (LinkedIn navdeepsingh0, X navdeepannu0). Hosted on his personal domain navdeepsingh.dev.',
   },
   {
     name: "ncdai",
@@ -2579,12 +1748,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["minimal", "open-source"],
-    maintainer: "individual",
-    entity: "Chánh Đại (@iamncdai / github.com/ncdai)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Page states "Crafted by @iamncdai"; source is under the personal GitHub account github.com/ncdai, MIT licensed, hosted on the author\'s personal portfolio domain chanhdai.com. No company or team page.',
   },
   {
     name: "neobrutalism",
@@ -2597,12 +1760,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["brutalism", "open-source"],
-    maintainer: "individual",
-    entity: "ekmas",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Homepage\'s only attribution is "Released under MIT License. The source code is available on Github" pointing to github.com/ekmas/neobrutalism-components — a single personal GitHub account. No footer entity, about/team page or company credit.',
   },
   {
     name: "neon-ui",
@@ -2616,12 +1773,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: ["tailwind-v4", "dashboard"],
-    maintainer: "company",
-    entity: "Neon (neon.com, serverless Postgres)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. ui.neon.com returns 200 with <title>Neon UI — The UI layer for building with Neon</title>, served on Neon's own apex domain neon.com, and the page points its source at the neondatabase GitHub org. Install commands are `npx shadcn@latest add https://ui.neon.com/r/<name>.json`. It is a first-party companion registry to Neon's commercial serverless-Postgres platform, not a third-party project. (Note: github.com/neondatabase/ui returns 404 — the source repo is private or renamed — but domain ownership is decisive.)",
   },
   {
     name: "nessra-ui",
@@ -2635,12 +1786,6 @@ export const registries: Registry[] = [
     base: "radix",
     pricing: "unknown",
     tags: ["tailwind-v4", "accessibility"],
-    maintainer: "individual",
-    entity: "codewithmehmet",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "Only maintainer signal on the site is the repo link github.com/codewithmehmet/nessra-ui (a single personal account). No company name, legal entity, about/team page, or footer copyright; the site is a free Vercel subdomain.",
   },
   {
     name: "nexus-elements",
@@ -2654,12 +1799,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["web3"],
-    maintainer: "company",
-    entity: "Avail (Avail Project)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. elements.nexus.availproject.org 307-redirects to widgets.availproject.org — Avail's own domain. Avail Nexus ships from github.com/availproject/nexus-sdk and npm @avail-project/nexus, documented at docs.availproject.org. Avail is a funded blockchain-infrastructure company with a LinkedIn company page (linkedin.com/company/availproject); reported $27M led by Founders Fund and Dragonfly (the prior agent's ~$75M figure is not what I could source, but the company status is unaffected).",
   },
   {
     name: "nexus-labs",
@@ -2673,12 +1812,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      "CONFIRMED unclear, with stronger negative evidence. The site is a commercial marketplace ('Nexus-UI · UI systems lab · A premium marketplace for animated interfaces', Pricing/Sign in/Dashboard, contact form, '© 2026 Nexus-UI'). Its footer 'GitHub' and 'X' icons link to the bare roots https://github.com and https://x.com — placeholder hrefs pointing at no account. /terms, /privacy, /about, /legal, /license and /refund-policy all 200 to the same JS shell with no entity text. registry.json declares name 'next-ui', homepage nexus-ui.com, and no author field. Fully anonymous operator; commercial signals suggest solo-business but nothing names anyone.",
   },
   {
     name: "nexus-ui",
@@ -2692,12 +1825,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Victor Williams (@victorcodess)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "Site links source to github.com/victorcodess/nexus-ui and the social link goes to X account victorwilliams_ — a single personal account. No company name, legal entity, about page or footer copyright.",
   },
   {
     name: "nordaun",
@@ -2709,12 +1836,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "vorhdam",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Homepage credit reads "Built by vorhdam" (github.com/vorhdam), with source at github.com/nordaun/ui. "Nordaun" is a project GitHub org rather than a named legal entity — no about/team page, copyright statement, or company found.',
   },
   {
     name: "nteract",
@@ -2726,12 +1847,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "nteract (open-source organization)",
-    entityKind: "oss-org",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED, with a stronger link than the prior agent had. The registry manifest at nteract-elements.vercel.app/r/registry.json declares "name": "nteract" and "homepage": "https://nteract.io" — i.e. it self-identifies as an nteract artifact, not merely a downstream user. github.com/nteract is an established multi-person OSS org: 8 public members, 72 repos, and well-known projects (papermill 6.5k stars, hydrogen 4k, semiotic 2.7k). The site\'s only outbound repo link is github.com/runtimed/runt (Kyle Kelley et al.), the same community. No standalone \'elements\' repo is public, so the exact home repo remains unconfirmed.',
   },
   {
     name: "nuqs",
@@ -2745,12 +1860,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "François Best (@franky47, 47ng)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The registry page links only to github.com/47ng/nuqs; the 47ng org README says "I\'m François Best (@franky47), founder of 47ng, my freelancing company" and lists exactly one person (@franky47) under People, with "sponsor me on GitHub to help with maintenance" — a solo OSS maintainer, not a staffed company.',
   },
   {
     name: "nusaiba",
@@ -2764,12 +1873,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: 'Kirman (@sukirman1901, "Nusaiba Studio")',
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The homepage itself carries no maintainer, company or copyright info. The shadcn/ui registry PR adding @nusaiba was opened by github.com/sukirman1901, whose profile reads bio "Hi, I\'am Kirman", company field "Nusaiba Studio", location Indonesia, and website nusaiba.dev. "Studio" is self-declared branding by one person; no team or legal entity found.',
   },
   {
     name: "odysseyui",
@@ -2783,12 +1886,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Shr3kx and iam-sahil",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Docs page states "Built by Shr3kx (x.com/shr3kxx) & iam-sahil (x.com/ctrlcat0x)." Source lives at github.com/shr3kx/odysseyUI, a personal account. Two collaborating individuals, no company, legal entity or team/about page.',
   },
   {
     name: "ogimagecn",
@@ -2801,12 +1898,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Aniket Pawar (Shadcn Labs)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Homepage redirects to ogimagecn.com; the repo lives under the github.com/shadcn-labs org ("building open-source technologies that push the limits of shadcn/ui ecosystem", location India, hello@shadcn-labs.com) which states "This organization has no public members." Search attributes Shadcn Labs to a single creator, Aniket Pawar; all 18 repos are free/MIT with no pricing, terms or team page. Direct fetch of ogimagecn.com was blocked by network policy.',
   },
   {
     name: "openpolicy",
@@ -2819,12 +1910,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Jamie Davenport (@jamiedavenport)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "CORRECTED from solo-business. Fetched openpolicy.sh directly: the only two outbound links are github.com/jamiedavenport/policystack (a personal account, not an org) and github.com/sponsors/jamiedavenport. The site's own funding section reads 'Sponsorship pays for the time it takes to keep both repos maintained' — a personal-sponsorship OSS model, not a business. Everything is Apache-2.0; the 'Cloud' commercial piece does not exist yet (/cloud returns 404, the CTA is 'join cloud'). No pricing page, no copyright line, no legal entity. His consulting brand 'JXD' is separate and is not named as the project's owner.",
   },
   {
     name: "openstatus",
@@ -2837,12 +1922,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["dashboard", "open-source"],
-    maintainer: "company",
-    entity: "openstatus",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. openstatus.dev embeds schema.org JSON-LD with "@type": "Organization", name \'openstatus\', sameAs including linkedin.com/company/openstatus, github.com/openstatushq and x.com/openstatushq, plus a Support contactPoint (ping@openstatus.dev). The site has a Pricing page, a managed SaaS with an enterprise plan, SOC-2 positioning and named customers (Cal.com, Documenso, WhiteBIT). AGPL-3.0 flagship at ~8k+ stars with named maintainers. This is a commercial company\'s own registry.',
   },
   {
     name: "optics",
@@ -2856,12 +1935,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Agustín Mayol (github.com/AgusMayol)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Direct fetch was blocked by network policy; search confirms the site is hosted on his personal domain (optics.agusmayol.com.ar, portfolio at agusmayol.com.ar) with source at github.com/AgusMayol/optics — a single personal account. No company, team or legal entity. Note: an unrelated "Optics" design system by RoleModel Software exists and is not this registry.',
   },
   {
     name: "oui",
@@ -2875,12 +1948,6 @@ export const registries: Registry[] = [
     base: "react-aria",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "mw10013",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer reads "© 2026 Oui" with no company name, and the source link is github.com/mw10013/oui — a single personal GitHub account; the site is served from that user\'s personal Cloudflare workers.dev subdomain. No about/team page or legal entity.',
   },
   {
     name: "paceui",
@@ -2894,12 +1961,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "paid",
     tags: ["dashboard"],
-    maintainer: "solo-business",
-    entity: "Denish Navadiya (@withden), PaceUI",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "CONFIRMED and now hard-sourced. GitHub API: the paceui org has ZERO public members, no company/location/email fields, 6 repos. Its two flagship repos are written almost entirely by one account — paceui/gsap: withden 155 of ~161 commits; paceui/saaskit-starter: withden 7 of 7. That account resolves to 'Denish Navadiya'. paceui.com/pricing sells 'lifetime'/'one-time' tiers up to Enterprise. Commercial brand, one operator.",
   },
   {
     name: "pacekit",
@@ -2912,12 +1973,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "paid",
     tags: ["dashboard"],
-    maintainer: "solo-business",
-    entity: "Denish Navadiya (@withden), PaceKit",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "CONFIRMED, and the PaceUI link is now proven rather than inferred. ui.pacekit.dev and paceui.com return byte-identical payloads (both exactly 289,722 bytes) — the same deployment behind two domains. pacekit.dev's footer social link is twitter.com/paceui_, the same X handle PaceUI uses. The pacekit GitHub org (created 2026-01-07, hello@pacekit.dev) has one repo, creembase, whose sole contributor is withden — Denish Navadiya, the same person behind PaceUI. No public members, no legal entity.",
   },
   {
     name: "paceui-gsap",
@@ -2931,12 +1986,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "unknown",
     tags: ["gsap"],
-    maintainer: "solo-business",
-    entity: "Denish Navadiya (@withden), PaceUI",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. gsap.paceui.com links to github.com/paceui/gsap and x.com/paceui_. That repo's contributor list is withden 155, abnerjs 4, William-LP 1, withden-dev 1 — one author plus trivial drive-by PRs. withden = Denish Navadiya. The paceui org reports no public members and no company field. Note: I could not reproduce the prior agent's exact 'Built by Denish at PaceUI' footer string in the current HTML (the sites are TanStack/JS-rendered), so I am resting the identification on the commit data rather than the footer.",
   },
   {
     name: "paddle",
@@ -2950,12 +1999,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Paddle.com Market Ltd.",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED, and the registry is verifiably first-party: developer.paddle.com/r/registry.json returns {"name": "paddle", "homepage": "https://developer.paddle.com/", items: [paddle-helpers, ...]}. The site footer carries \'© 2012–2026\' and the docs are Paddle\'s official developer portal for Paddle Billing (merchant-of-record payments, 30 currencies, 200+ markets, official Node/PHP/Go/Python SDKs). A real, established payments company.',
   },
   {
     name: "paletteui",
@@ -2968,12 +2011,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["tailwind-v4", "open-source"],
-    maintainer: "individual",
-    entity: "Lior Pesoa",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "paletteui.xyz footer links to x.com/liorpesoa and the source repo github.com/lior-pesoa/paletteui (a personal account, MIT licensed). No company name, team page, legal entity or paid tier anywhere on the site.",
   },
   {
     name: "payload-components",
@@ -2987,12 +2024,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Ducksss",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer shows "© 2026 Ducksss" and identifies Ducksss as "Maintainer, Payload Components", with a first-person origin story. Repo is github.com/Ducksss/payload-components — a personal account, MIT, described as an independent community-first project with no company affiliation.',
   },
   {
     name: "pastecn",
@@ -3006,12 +2037,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Ronny Badilla (rbadillap)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "pastecn.com itself has no footer credit, copyright, about page or company name (fetched, inconclusive). WebSearch resolves the project to the personal GitHub repo github.com/rbadillap/pastecn, and it was posted to the Vercel community showcase by the same author.",
   },
   {
     name: "paykit-sdk",
@@ -3025,12 +2050,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Payroutes",
-    entityKind: "startup-saas",
-    confidence: "medium",
-    evidence:
-      "CONFIRMED, though thin. usepaykit.dev refused connections on every attempt, so this rests on GitHub + search. github.com/payrouteshq is a named org ('The missing infrastructure between developers and payment providers. Creators of StellarTools, PayKit SDK and more.', payroutes.sh, hello@payroutes.sh, 8 repos). paykit-sdk contributors: devodii 432, Chizihn 7, princeajuzie7 7, juansoler 6. devodii = Emmanuel Odii, GitHub company field '@payrouteshq'. Search surfaces LinkedIn company pages for both Payroutes and PayKit, a Tracxn company profile, and named roles beyond the founder (Prince Ajuzie – engineer, Lucas Svoboda – Head of Product). Only one public org member, so team size is asserted rather than directly verified.",
   },
   {
     name: "phucbm",
@@ -3043,12 +2062,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["gsap"],
-    maintainer: "individual",
-    entity: "Phuc Bui",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'phucbm.com is a personal portfolio site; footer states "© 2026 Phuc Bui. All rights reserved", with personal contact phucbm.dev@gmail.com and GitHub/X/LinkedIn profiles for the single person. No company or team.',
   },
   {
     name: "pixelact-ui",
@@ -3062,12 +2075,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["retro", "playful", "open-source"],
-    maintainer: "individual",
-    entity: "Alberta Saftei / 'alburt' (@albertasaftei)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "CORRECTED from unclear. GitHub API on pixelact-ui/pixelact-ui gives contributors: albertasaftei 148, dependabot[bot] 26, albertasaftei00 9 — one human plus his own second account. The org (created 2025-05-03) has a single repo, no name/company/blog/email/description and no public members. License is MIT, README describes a free pixel-art shadcn registry with no paid tier, no pricing page, no sponsor link. A personal side project.",
   },
   {
     name: "plate",
@@ -3079,12 +2086,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["open-source"],
-    maintainer: "solo-business",
-    entity: "Udecode (Ziad Beyens, @zbeyens)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      "CONFIRMED, with a caveat. The udecode org lists exactly one public member, zbeyens = Ziad Beyens (Brussels, GitHub company field '@udecode', bio 'Plate maintainer'), and he wrote 4,838 of the commits on udecode/plate. pro.platejs.org sells licensed templates and its footer reads '© 2026 Udecode. All rights reserved' — a brand, with no Inc/Ltd/BV/SPRL disclosed anywhere. Caveat against my own verdict: Felix Feng (@felixfeng33, bio 'Co-maintainer of @plate.js') has 1,850 commits, so this is not literally a one-person codebase; it sits close to the multi-person-OSS-org line. The commercial framing and single-owner brand keep it in solo-business.",
   },
   {
     name: "prompt-kit",
@@ -3097,12 +2098,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "Julien Thibeaut (ibelick)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "prompt-kit.com returned HTTP 403 to WebFetch; search resolves the project to github.com/ibelick/prompt-kit, the personal account of Julien Thibeaut (ibelick.com is his personal site). Free MIT component library, no company, team or pricing found.",
   },
   {
     name: "prosekit",
@@ -3115,12 +2110,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Ocavue",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'prosekit.dev footer reads "© 2026 Ocavue", repo is github.com/ocavue/prosekit (personal account), socials are @ocavue on X and Bluesky. MIT licensed, no company, team page or commercial offering.',
   },
   {
     name: "pulkitxm",
@@ -3133,12 +2122,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["gsap"],
-    maintainer: "individual",
-    entity: "Pulkit (github.com/Pulkitxm)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'pulkit.page is a personal portfolio (bio, blog, projects) with footer "© 2026 Pulkit. All rights reserved" and GitHub handle Pulkitxm. He is employed elsewhere ("Building & Breaking things at Noveum.ai"), so the registry is a personal side project, not a company artifact.',
   },
   {
     name: "pulld",
@@ -3152,12 +2135,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["accessibility"],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      "CONFIRMED unclear. I fetched the landing page (134KB) and /pro, /pricing, /docs, /account: the ONLY href in the entire document that leaves the current path is https://pulld.pages.dev/account. Zero GitHub links, zero social links, no mailto, no copyright line, no checkout provider (no Gumroad/Lemon Squeezy/Polar/Stripe/Paddle strings). r/registry.json declares homepage 'https://pulld.dev', but that domain does not resolve. A paid Pro tier plus an /account route implies a commercial indie product, but nothing identifies the operator.",
   },
   {
     name: "pureui",
@@ -3171,12 +2148,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "Krishna (github.com/MusKRI)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'pure.kam-ui.com could not be fetched (domain safety verification blocked). Search plus the repo github.com/MusKRI/pure-ui ("A design system built with Base UI") show a personal GitHub account as owner, the site hosted on a personal kam-ui.com domain, and no company, team or pricing.',
   },
   {
     name: "ramonclaudio-coderabbit",
@@ -3190,12 +2161,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Ramon Claudio",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'ramonclaudio.com could not be fetched (domain safety verification blocked). Search shows the registry lives under a personal-name domain (page titled "CodeRabbit Registry | Ray") built by Ramon Claudio as an unofficial third-party client for CodeRabbit\'s API — it is not published by CodeRabbit (github.com/coderabbitai) itself. No company entity found for ramonclaudio.com.',
   },
   {
     name: "react-aria",
@@ -3209,12 +2174,6 @@ export const registries: Registry[] = [
     base: "react-aria",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "company",
-    entity: "Adobe Inc.",
-    entityKind: "big-tech",
-    confidence: "high",
-    evidence:
-      "CONFIRMED, and I got past the earlier fetch block. curl on react-aria.adobe.com returns 200 with <title>React Aria</title> and the embedded footer string 'Copyright © 2026 Adobe. All rights reserved.' The page links to github.com/adobe/react-spectrum plus the personal profiles of Adobe React Spectrum engineers (LFDanLu, reidbarber, yihuiliao). Served on Adobe's own domain; unambiguously a big-tech first-party artifact.",
   },
   {
     name: "react-bits",
@@ -3228,12 +2187,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["open-source", "playful"],
-    maintainer: "solo-business",
-    entity: "David Haz (@DavidHDev)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      "CONFIRMED and upgraded. reactbits.dev's only outbound links are github.com/DavidHDev/react-bits and x.com/davidhdev. GitHub API: 44,622 stars, contributors DavidHDev 921 then a long tail (EnderRomantice 38, PedroMarianoAlmeida 28, ieedan 26) — community PRs, not a team. His profile has no company field, personal site davidhaz.com. pro.reactbits.dev is live (200, 347KB) with paid tiers up to $299. One person running a commercial brand on a personal account; no org, no entity.",
   },
   {
     name: "react-easy-modals",
@@ -3247,12 +2200,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "AlexDemzz",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "Docs site (a vercel.app subdomain) shows no company, copyright or team; its only attribution is the GitHub link github.com/AlexDemzz/react-easy-modals — a personal account hosting a small OSS modal library.",
   },
   {
     name: "react-slot",
@@ -3266,12 +2213,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Sina Bayandorian (@sina-byn)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Docs footer says "Developed by Sina Bayandorian" and links to his personal portfolio sina-byn.vercel.app; repo is github.com/sina-byn/react-slot (personal account). No company, copyright entity or commercial offering.',
   },
   {
     name: "remocn",
@@ -3285,12 +2226,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Kapish (kapish@remocn.dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'remocn.dev footer reads "© 2026 remocn — MIT licensed" with a single personal contact kapish@remocn.dev; repo github.com/Remocn/remocn. Everything is free MIT with "no account, no runtime" — no pricing, team, or legal entity.',
   },
   {
     name: "rescript-shadcn",
@@ -3304,12 +2239,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Miriad SAS",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The registry sits on a subdomain of miriad.studio and its only GitHub link points to github.com/miriadhq/rescript-shadcn — an Organization account (2 repos) whose website field is https://www.miriad.studio. miriad.studio is a creative review/approval SaaS with a freemium plan and a footer naming the legal entity "Miriad SAS" (French SAS). Caveat: the miriadhq org lists no public members, so team size is unverified, but the legal entity and product domain are enough.',
   },
   {
     name: "retab",
@@ -3323,12 +2252,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "company",
-    entity: "Retab (retab-dev)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. ui.retab.com footer says "Created by Retab" with source at github.com/retab-dev/retab-ui. The retab-dev GitHub org has 10 repos (official Python/PHP/Node SDKs, CLI, docs) and links a company LinkedIn (company/retab-ai), X @retabdev and a Substack. retab.com is a commercial document-automation platform with enterprise customers, a careers page, and SOC2/HIPAA/GDPR tiers. The registry is a companion artifact of that product.',
   },
   {
     name: "retroui",
@@ -3342,12 +2265,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["brutalism", "retro"],
-    maintainer: "solo-business",
-    entity: "Arif Hossain (Neobrutalism, formerly RetroUI)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED. retroui.dev 301-redirects to neobrutalism.com, which sells a Pro tier, Figma kit and templates. The GitHub org github.com/neobrutalism ("NeoBrutalism.com") has 1 public repo, zero public members, and only a generic contact@neobrutalism.com plus X @neobrutalismcom — no named team. Independent reporting (fakemayo.com founder interview) identifies Arif Hossain, an indie hacker in Dhaka, Bangladesh (github.com/ariflogs, blog ariflogs.com) as the sole creator who first committed in Sept 2024 and launched RetroUI Pro at $99 lifetime. One person, commercial brand.',
   },
   {
     name: "reui",
@@ -3361,12 +2278,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Keenthemes Inc",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED, with the entity name sharpened. Repo is github.com/keenthemes/reui; the README credits "Built with ❤️ by the Keenthemes team". The GitHub org profile is literally titled "Keenthemes Inc", located in Malaysia, website keenthemes.com, 185 followers, and it also ships ktui and Metronic integrations — Metronic being a long-running commercial premium-template business. It also sponsors shadcn and other OSS devs, which is company behavior, not hobbyist.',
   },
   {
     name: "roiui",
@@ -3380,12 +2291,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "preetecool",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer reads "Built by @preetecool" linking to x.com/preetecool, and the source is at github.com/preetecool/roi-ui — a personal GitHub account, not an org. No company entity, team, about, or pricing page.',
   },
   {
     name: "sabraman",
@@ -3397,12 +2302,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["retro", "open-source"],
-    maintainer: "individual",
-    entity: "Danya Yudin",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'WebFetch of sabraman.ru/components returned no output (JS-only page), so I fell back to search: the indexed page title is "Legacy React Components for Next.js - Sabraman | Danya Yudin". Personal domain named after the handle @sabraman, free MIT-style components installed via the shadcn CLI; no company or team surfaced.',
   },
   {
     name: "satoriui",
@@ -3416,12 +2315,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'CONFIRMED unclear after deeper probing. /r/registry.json is real (name "satori-ui", homepage satoriui.site), but every attribution route is a dead end: footer is only "© 2026 Satori UI, All rights reserved"; the GitHub link in the markup is the bare string "https://github.com" with no org or user; /about, /contact, /terms, /license and even /pricing all return 404 (the footer nav links are non-functional placeholders); the homepage HTML contains no email address, X handle or GitHub/LinkedIn URL at all. GitHub code search finds the registry referenced only in third-party aggregator files, never in a source repo. No maintainer identifiable.',
   },
   {
     name: "scrollxui",
@@ -3435,12 +2328,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Aditya Kishore (@Adityakishore0)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "© 2026 ScrollX UI. Built with love by the Ahdeetai" and links to the personal repo github.com/Adityakishore0/ScrollX-UI, with the same account\'s profile photo shown on the page. Single personal GitHub account, no company or org.',
   },
   {
     name: "seamui",
@@ -3454,12 +2341,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Miks Villamor (@meiskv)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "Footer links to the personal accounts github.com/meiskv and linkedin.com/in/miksvillamor/, with the source at github.com/meiskv/seamui. No company name, legal entity, team, or about page appears anywhere on the site.",
   },
   {
     name: "shadcn-editor",
@@ -3472,12 +2353,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source", "accessibility"],
-    maintainer: "individual",
-    entity: "Talha Mujahid (@htmujahid)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The docs site itself exposed no author info, so I searched: the project is github.com/htmujahid/shadcn-editor, a personal GitHub account maintained by Talha Mujahid. Free open-source Lexical + shadcn/ui editor on a vercel.app subdomain, no company or paid tier.",
   },
   {
     name: "shadcn-map",
@@ -3490,12 +2365,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Hin (Tong Ho Hin, @tonghohin)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site credits an individual developer "Hin", with source at github.com/tonghohin/shadcn-map and a personal portfolio at tonghohin.vercel.app. Single personal GitHub account, vercel.app subdomain, no company.',
   },
   {
     name: "shadcn-space",
@@ -3509,12 +2378,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["dashboard"],
-    maintainer: "company",
-    entity: "WrapPixel",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. shadcnspace.com footer carries the WrapPixel logo/link plus a "Meet our Team" link to wrappixel.com/about-us/. That about page states WrapPixel was "founded in November 2016 by two brothers" and names 13 team members with roles — Sunil Joshi (Co-Founder & Designer), Nirav Joshi (Co-Founder & Lead Developer), plus front-end, React, Vue, Angular and WordPress developers, a designer, and a marketing lead. It also has Careers, Affiliate, and Premium Support pages. Multi-person commercial organization.',
   },
   {
     name: "shadcn-studio",
@@ -3528,13 +2391,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity:
-      "Clevision Technologies Private Limited (ThemeSelection / Shadcn Studio)",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED and strengthened — the previous agent missed the actual legal entity. The shadcnstudio.com homepage markup contains the literal string "CLEVISION TECHNOLOGIES PRIVATE LIMITED" (an Indian Pvt Ltd), alongside "Co-Founder and CEO", "Co-founder", named people Ajay Patel and Anand Patel, and links to clevision.net/about, themeselection.com and themeselection.com/hire-us/. Footer reads "©2026 shadcn/studio, Supported by ThemeSelection" and lists sibling brands (FlyonUI, PixInvent, JetShip). Registered company, multiple founders.',
   },
   {
     name: "shadcn-ui-blocks",
@@ -3548,12 +2404,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'CONFIRMED unclear. The registry at /r/registry.json is real (name "shadcn-ui-blocks"). But /about, /contact, /terms and /privacy all 404; the footer is only "© 2026 Shadcn UI Blocks. All rights reserved. An independent project, not affiliated with shadcn/ui." The only contact channels found anywhere in the HTML are support@shadcn-ui-blocks.com and X @shadcnuiblocks — no GitHub link, no person, no legal entity. The /support and /pricing pages use plural "we" and mention a 15-seat team plan, but that describes the customer\'s team, not the vendor\'s. Marketing "we" alone is not evidence of an organization.',
   },
   {
     name: "shadcnblocks",
@@ -3567,12 +2417,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing", "dashboard"],
-    maintainer: "company",
-    entity: 'Shadcnblocks (founded by Robert "Rob" Austin, Australia)',
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CORRECTED from solo-business. The previous agent stopped at the footer credit "A project by @ausrobdev" and never opened /about. That page names a 12-person team with roles — Robert Austin (Founder), Luis (Fullstack Engineer), Yassine (Lead Design Engineer), Mason (Marketing), Rakesh, Yosra, Nader, Niko, Mateusz, Serge, Jannik, Callum — states "12 humans, 1 mission", "Built and maintained by a dedicated full-time team", "$1M ARR, profitable, bootstrapped", "About 80% of our hires come from the shadcn ecosystem", and links Careers/Press pages plus sister brands Wicked Blocks and Zerostatic. The /license page sets governing law as Australia. A named founder as the public face does not make it a one-person operation.',
   },
   {
     name: "shadcncraft",
@@ -3586,12 +2430,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["minimal"],
-    maintainer: "solo-business",
-    entity: "Hamish O'Neill (shadcncraft)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The /about page has a section headed "About the founder": "shadcncraft was created by Hamish O\'Neill, a designer and design systems specialist based in Melbourne, Australia", with a pull quote signed "Hamish O\'Neill, Founder, shadcncraft". No other person is named anywhere on the site; the Company menu offers About/Ambassadors/Affiliates/Privacy/Terms/Contact but no team or careers page. Footer is a bare brand string, "© Copyright shadcncraft 2026", with no Pty/Ltd/Inc. The page\'s own schema.org JSON-LD sets "author": {"@type": "Person"}. Commercial (paid Pro tiers, launch-week discounts) but one person.',
   },
   {
     name: "shadcndesign",
@@ -3605,12 +2443,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Matt Wierzbicki (shadcndesign.com)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. I pulled the rendered footer directly: "This project is independent and not affiliated with Figma or shadcn/ui. Copyright © 2026 Matt Wierzbicki" — a personal name, not a legal entity, and no team or careers page anywhere. The product is commercial (paid Figma kit, Pro blocks, templates, sign-in/sign-up accounts), which places it in solo-business rather than individual.',
   },
   {
     name: "shadcnhooks",
@@ -3622,12 +2454,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Debbl",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "Homepage fetch was blocked by domain verification, so I used search: the project is github.com/Debbl/shadcn-hooks, a personal GitHub account, and the registry-directory submission is shadcn-ui/ui issue #8593. Free open-source hooks collection, no company, pricing, or team evidence.",
   },
   {
     name: "shadcnmaps",
@@ -3640,12 +2466,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "LGLabGreg",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site links its source to github.com/LGLabGreg/shadcnmaps — a personal GitHub account. Page describes "Interactive SVG Map Components for React" with no company name, team, about, or pricing page.',
   },
   {
     name: "shadcnstore",
@@ -3658,12 +2478,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["dashboard"],
-    maintainer: "company",
-    entity: "SiliconDeck Innovations Pvt. Ltd. (ShadcnStore)",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED as company, and the real entity found. The footer\'s "©2026 ShadcnStore, Inc." is unverifiable on its own (no about/terms page — both 404), so I traced the code instead: both github.com/shadcnstore repos have exactly two contributors, `vrushank` and `monab`. `monab` is Mona Brahmakshatriya, bio "Developer, Entrepreneur, co-owner at @silicondeck & Product Manager @pixinvent @themeselection", company field "SiliconDeck, CleVision, ShadcnStore, ThemeSelection, Pixinvent", blog shadcnstore.com. silicondeck.com lists Shadcn Store under Resources and its footer reads "© SiliconDeck Innovations Pvt. Ltd. 2025" with a registered address in Adalaj, Gandhinagar, Gujarat. Multi-person registered company.',
   },
   {
     name: "shadcnui-blocks",
@@ -3677,12 +2491,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Akash (@akash3444)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site links to github.com/akash3444/shadcn-ui-blocks and github.com/sponsors/akash3444 — a personal GitHub account with personal sponsorship. Footer is just "© 2026 Shadcn UI Blocks" with no company, legal entity, or team page.',
   },
   {
     name: "shadcnuikit",
@@ -3696,12 +2504,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["dashboard", "marketing"],
-    maintainer: "solo-business",
-    entity: "Bundui (Toby Belhome)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED. Footer is "© 2026 Bundui. All Rights Reserved" and the only outbound identity links in the page source are github.com/bundui and x.com/TobyBelhome. Critically, github.com/bundui is a personal User account ("type": "User", name "Bundui.io", 8 repos) — not an organization — so there is no multi-maintainer structure. Commercial (lifetime All Access, affiliates program, multiple paid templates) with one visible person and no legal entity named.',
   },
   {
     name: "shark",
@@ -3713,12 +2515,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Vinicius Vicentini",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Hosted on the personal domain vini.one; footer reads "© 2026 Built by Vinicius Vicentini" linking to vini.one. Source at github.com/sharkui-inc/shark-ui — an org named for the project, but no other members, company entity, or pricing surfaced.',
   },
   {
     name: "shieldcn",
@@ -3732,12 +2528,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["open-source", "minimal"],
-    maintainer: "individual",
-    entity: "Justin Levine",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer reads "Made with love by Justin Levine" linking to his personal site justinlevine.me. Repo is under github.com/jal-co (his own initials-based account) and the project is credited to the Vercel Open Source Program. No company, team, or paid tier named.',
   },
   {
     name: "skiper-ui",
@@ -3751,12 +2541,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["playful"],
-    maintainer: "solo-business",
-    entity: "Gxuri (@Gur__vi)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The rendered page ends with "Design and Developed by © Gxuri" — a single handle, no company. Pricing is a one-time Premium $129 / Exclusive $549 license with no legal entity, VAT number, or team page anywhere on the site. The only other names present are a credits wall of inspirations and sponsors (Emil Kowalski, Rauno Freiberg, Rob Austin, etc.), which are acknowledgements, not collaborators. One person running a paid product.',
   },
   {
     name: "slide-cn",
@@ -3768,12 +2552,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Prithvi Rajan",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'slide-cn.com footer states "Built by Prithvi" linking to x.com/PrithviRajan222, and the source lives on a personal GitHub account at github.com/prithvi-rajan-222/slide-cn. No company, team, about page, or paid product.',
   },
   {
     name: "smoothui",
@@ -3787,12 +2565,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "playful"],
-    maintainer: "individual",
-    entity: "Eduardo Calvo (educlopez)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'smoothui.dev footer reads "© 2026 SmoothUI. Built by Eduardo Calvo." MIT-licensed on his personal GitHub account (educlopez/smoothui); he also runs sparkbites.dev, codevator.dev and thegridcn.com as personal side projects. No legal entity or employed team.',
   },
   {
     name: "solaceui",
@@ -3806,12 +2578,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Harshit (@harshitlog)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'solaceui.com footer says "Building in public @harshitlog" alongside "© 2026 SolaceUI, All rights reserved" — no company name, about/team page, or entity. The templates page lists the Mobile SaaS template as "Free", and /pricing returns 404, so there is no evidence of a commercial operation.',
   },
   {
     name: "sona-ui",
@@ -3824,12 +2590,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "accessibility"],
-    maintainer: "individual",
-    entity: "Dinil Thilakarathne",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The site links its source to the personal GitHub account github.com/Dinil-Thilakarathne/sona-ui and describes itself as open source "Built in the open". Hosted on a free vercel.app subdomain; no company, team, or entity named anywhere on the page.',
   },
   {
     name: "soralabs",
@@ -3843,12 +2603,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Axyl (github.com/axyl1410)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'ui.soralabs.io.vn footer states "Built by Axyl" linking to the personal GitHub profile github.com/axyl1410/. Despite the "labs" branding there is no company name, team page, or legal entity; a follow-up search surfaced no organisation behind the soralabs.io.vn domain.',
   },
   {
     name: "soundcn",
@@ -3862,12 +2616,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source", "retro"],
-    maintainer: "individual",
-    entity: "kapishdima",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The homepage fetch returned only the title tag with no footer or attribution, so I fell back to search: the project source is at the personal GitHub account github.com/kapishdima/soundcn, described as "700+ curated UI sound effects... Free and open source", with a personal GitHub sponsor commit. No org or company found.',
   },
   {
     name: "spectrumui",
@@ -3881,12 +2629,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Arihant (arihantcodes)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer reads "© 2026 Spectrum UI. All rights reserved." with GitHub/LinkedIn/X all pointing to the personal handle @arihantcodes and source at github.com/arihantcodes/spectrum-ui. I also fetched spectrumhq.in directly: no about/team page, no services, no legal entity — just a product landing page.',
   },
   {
     name: "spell",
@@ -3900,12 +2642,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Tom (xxtomm / @tomm_ui)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'spell.sh shows only "© 2026 Spell UI" with links to github.com/xxtomm/spell-ui and the personal handle tomm_ui on X/Discord. The author\'s own dev.to post "I built UI Components called Spell UI" describes it as a personal project by a design engineer; no company or team.',
   },
   {
     name: "square-ui",
@@ -3919,12 +2655,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["open-source", "dashboard"],
-    maintainer: "solo-business",
-    entity: "Leonel Ngoya (ln-dev / lndev)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. square.lndev.me resolves to square.lndevui.com; the page links github.com/ln-dev7 and x.com/ln_dev7. His hub lndevui.com sells three paid products (lndev/ui $89, Square UI Pro $169, Blockus Solo $119, Trio $289) and its footer reads "Crafted by Leonel Ngoya · lndev" and "© 2026 Leonel Ngoya. All rights reserved" — a natural person, not an entity. Note: individual dashboards carry "Design by Rico / Ryco / Augustas" credits (x.com/_heyrico, x.com/AugustasDesign), but these are per-template design credits, not a company team.',
   },
   {
     name: "stepper",
@@ -3938,12 +2668,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "francozeta",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The docs page itself carries no footer, copyright, or "built by" credit, so I searched: the project is at the personal GitHub account github.com/francozeta/stepper, a single registry-distributed Stepper component, hosted on a free vercel.app subdomain named after the author. No org or commercial offering.',
   },
   {
     name: "supabase",
@@ -3957,12 +2681,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Supabase Inc.",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. supabase.com/ui states the library was created by Supabase and is open-source with code on GitHub, living inside the main supabase/supabase monorepo (apps/ui-library) on the company's own product domain. The blocks exist specifically to wire front-ends to the Supabase backend (auth, realtime, storage) — a first-party artifact of the venture-funded backend-as-a-service company.",
   },
   {
     name: "svgl",
@@ -3974,12 +2692,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "pheralb",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The site links source, stars and sponsorship all to the single personal GitHub account: github.com/pheralb/svgl and github.com/sponsors/pheralb. No footer company, about/team page, or legal entity; funded via personal GitHub Sponsors rather than a business.",
   },
   {
     name: "systaliko-ui",
@@ -3993,12 +2705,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Youcef Bnm (@YoucefBnm)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "Created by @YoucefBnm" (x.com/lbnm_yussef) and the site says "Systaliko UI is built by a working frontend developer" available for freelance projects. Source on the personal account github.com/YoucefBnm/systaliko-ui; no corporate entity or team listed.',
   },
   {
     name: "tailark",
@@ -4011,12 +2717,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Meschac Irung (Tailark)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The github.com/tailark org (created April 2025, 3 repos) lists zero public members and exposes purely personal contact details: email meschacirung@gmail.com, twitter_username meschacirung, location Congo (Kinshasa). pro.tailark.com is a paid early-access product (Essentials/Complete/Team one-time licenses) whose own testimonial wall credits the work to "@MeschacIrung". No legal entity, no second maintainer.',
   },
   {
     name: "tailgrids",
@@ -4029,12 +2729,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "company",
-    entity: "Pimjo LLC",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. tailgrids.com\'s own footer names no entity ("© Copyright 2026 Tailgrids UI") and /about 404s, so I verified the parent: the Tailgrids page links pimjo.com/community and sibling brands TailAdmin, Lineicons and GrayGrids. pimjo.com lists Tailgrids first among its products and its footer gives two offices — "Pimjo LLC - 30 N Gould St Ste R Sheridan, WY 82801" (US) and a Dhaka, Bangladesh headquarters — plus Careers and Contact pages and an "expert team" description. Real multi-person company.',
   },
   {
     name: "tailwind-admin",
@@ -4048,12 +2742,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["dashboard"],
-    maintainer: "company",
-    entity: "WrapPixel",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. I fetched the rendered page: the footer ends "© 2026 TailwindAdmin. All rights reserved. A product by: WrapPixel". WrapPixel\'s own about page (wrappixel.com/about-us/) documents a company founded November 2016 by two brothers, with 13 named staff (Sunil Joshi and Nirav Joshi as co-founders, plus designers and framework-specific developers), 518,265+ downloads, Careers and Premium Support pages.',
   },
   {
     name: "tailwind-builder",
@@ -4066,12 +2754,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["dashboard", "marketing"],
-    maintainer: "company",
-    entity: "WrapPixel",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. Rendered footer reads "© 2025 TailwindBuilder. All rights reserved. A product by:" followed by the WrapPixel logo asset (wrappixel-dark.svg) linking to wrappixel.com — I grepped the HTML to confirm the vendor rather than relying on the visible text. Same parent as tailwind-admin.com; WrapPixel is a 13-person template company founded in 2016 by two brothers, per wrappixel.com/about-us/.',
   },
   {
     name: "taki",
@@ -4085,12 +2767,6 @@ export const registries: Registry[] = [
     base: "react-aria",
     pricing: "free",
     tags: ["accessibility", "open-source"],
-    maintainer: "individual",
-    entity: "Pawan Kumar (jsartisan)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'taki-ui.com footer states "Built by jsartisan" linking to x.com/pawankumar2901. No company name, team/about page, pricing, or legal entity anywhere on the site — a solo open-source React Aria component library.',
   },
   {
     name: "termcn",
@@ -4103,12 +2779,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["terminal", "open-source"],
-    maintainer: "individual",
-    entity: "Aniket Pawar (Shadcn Labs)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Source is at github.com/shadcn-labs/termcn; the shadcn-labs GitHub org (bio "Pushing the limits of shadcn/ui ecosystem", India, "Not endorsed by or affiliated with shadcn") has no public members, and shadcn-labs.com lists "Aniket Pawar" as the sole team member under "Founder", with "© Shadcn Labs 2026" and no legal entity. The repo also mirrors his personal account Aniket-508; the project is free/MIT.',
   },
   {
     name: "tuiparts",
@@ -4121,12 +2791,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["terminal", "open-source"],
-    maintainer: "individual",
-    entity: "Matt Simpson (GitHub @msmps)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'CONFIRMED with stronger evidence. GitHub contributors API for tuiparts/tuiparts returns exactly one human: msmps (83 commits), plus github-actions[bot] (17) and a drive-by contributor (1). api.github.com/users/msmps = "Matt Simpson", Midlands UK, bio "software engineer • passionate about typescript, rust, and ai • oss @ anomalyco/opentui", company field "Cloudflare". The tuiparts GitHub org has 1 repo and no public members; tuiparts.sh has no footer credit, about page, contact, or legal entity anywhere. His employer (Cloudflare) and the OpenTUI vendor (anomalyco) are unrelated to this registry — the README calls it an independent project. Upgraded confidence low -> high.',
   },
   {
     name: "terrae",
@@ -4140,12 +2804,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Ala Menai (alamenai)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "terrae.dev credits a single creator, Ala Menai, linking to github.com/alamenai, with source at github.com/alamenai/terrae. No company name, team/about page, pricing, or legal entity — a personal open-source map component library.",
   },
   {
     name: "tetra-ui",
@@ -4158,12 +2816,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["mobile", "accessibility"],
-    maintainer: "individual",
-    entity: "Liam (Liamandrew)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'tetra-ui.com states "Built by Liam (x.com/_liamandr) for the community" and links the repo at github.com/Liamandrew/tetra-ui — a personal GitHub account, no company, team page or legal entity anywhere on the site.',
   },
   {
     name: "text-ui",
@@ -4176,12 +2828,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Joel LaChance (joelachance)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The docs are hosted on a personal GitHub Pages domain (joelachance.github.io) and link to github.com/joelachance/text-ui, a single personal account. No company, team, or footer entity appears on the page.",
   },
   {
     name: "thegridcn",
@@ -4195,12 +2841,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["retro", "glass"],
-    maintainer: "individual",
-    entity: "Eduardo Calvo (educlopez)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "© 2026 Eduardo Calvo"; repo is github.com/educlopez/thegridcn-ui (personal account) and the author links his other personal side projects (smoothui.dev, sparkbites.dev). No company or team page.',
   },
   {
     name: "toc-cn",
@@ -4214,12 +2854,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["minimal"],
-    maintainer: "individual",
-    entity: "lenxism",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The homepage has no attribution at all, but the registry JSON at tocn.vercel.app/r/registry.json carries author "toc-cn (https://github.com/lenxism/tocn)"; that repo sits under the personal GitHub user lenxism, not an org.',
   },
   {
     name: "tokenui",
@@ -4232,12 +2866,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: [],
-    maintainer: "individual",
-    entity: "Georgy Malanichev (Character Development)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'CORRECTED solo-business -> individual. The previous agent\'s facts are right but the bucket is wrong: Token UI is free, not a commercial product. tokenui.dev\'s own JSON-LD declares offers: {price: "0", priceCurrency: "USD"}; there is no /pricing, no paid tier, no license gate. Footer is "© 2026 Character Development" and the page meta has twitter:creator "@gmlnchv". chrctr.dev self-describes as "the independent creative practice of Georgy Malanichev" — a portfolio-style personal site with one contact email (georgy@chrctr.dev), no team. Repo is github.com/gmlnchv/token-ui, owner type "User", 2 stars, no license file. A free side project by one person, published under his personal practice brand — solo-business requires a paid/commercial product, which this is not.',
   },
   {
     name: "tool-ui",
@@ -4251,12 +2879,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "assistant-ui (YC W25)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      "CONFIRMED. tool-ui.com links its source to github.com/assistant-ui/tool-ui; the assistant-ui GitHub org is a domain-verified organization (assistant-ui.com, contact@assistant-ui.com, LinkedIn company/assistant-ui, US), hosting assistant-ui (11.4k stars) alongside tool-ui (760 stars). assistant-ui has a Y Combinator company page (ycombinator.com/companies/assistant-ui), YC W25 batch, founded by Simon Farshid, ~3 employees in San Francisco, $500K seed Feb 2025 per Tracxn/FounderTrace. The registry is the funded startup's official companion project, not a side project.",
   },
   {
     name: "tour",
@@ -4269,12 +2891,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "Hin (Tong Ho Hin, tonghohin)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer credits "Built by Hin" linking to the personal portfolio tonghohin.vercel.app, with source at github.com/tonghohin/tour — a single personal GitHub account. No company or team.',
   },
   {
     name: "trophy-ui",
@@ -4288,12 +2904,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Trophy Labs Inc. (Delaware, US)",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED, and the entity is now pinned to a legal name the previous agent did not have. trophy.so/legal/terms names "Trophy Labs Inc.", registered in Delaware, address 1111B S Governors Ave STE 25403, Dover, DE 19904. The registry sits on the product subdomain ui.trophy.so, says "Built by Trophy", and the source is the org repo github.com/trophyso/ui. trophy.so is a commercial gamification API/SaaS with pricing, careers, contact-sales, customer stories, a status page, and official SDKs in seven languages.',
   },
   {
     name: "turbopills-ui",
@@ -4306,12 +2916,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "company",
-    entity: "Turbopills",
-    entityKind: "startup-saas",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The registry is hosted under the commercial product domain (turbopills.com/ui/docs), described as the UI kit powering the platform. turbopills.com/careers currently lists an open Customer Success Manager role (remote, full-time) plus two archived roles, and describes a "small team", "remote-first... across time zones", and collaboration "with founders and engineering" — plural founders plus active hiring is real-organization evidence, not marketing "we". Site also has About Us, Contact, Blog, and a status page. Caveat: no legal entity (Inc/LLC) is named anywhere I could find, and no founder is named publicly, so this reads as an early-stage startup rather than an established company.',
   },
   {
     name: "typedora-ui",
@@ -4325,12 +2929,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "individual",
-    entity: "nguyenphutrong",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The Netlify homepage exposes no attribution (JS-rendered, only the title was retrievable). The repo is github.com/nguyenphutrong/typedora-ui — a personal user account; the MIT license says "© 2025 Typedora UI Team" but no real team, org, or legal entity is identified anywhere.',
   },
   {
     name: "ui-layouts",
@@ -4344,12 +2942,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["marketing"],
-    maintainer: "individual",
-    entity: "Naymur Rahman (naymur_dev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer says "© 2026 UI-Layouts. All Rights Reserved" with no legal entity; contact is naymur@ui-layouts.com. The repo github.com/ui-layouts/uilayouts README has a single "Author (Naymur)" section (X @naymur_dev); the other names shown on the site are listed under "Open Source Heroes"/contributors, not employees.',
   },
   {
     name: "uicapsule",
@@ -4363,12 +2955,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["playful"],
-    maintainer: "individual",
-    entity: "Kaiyu Hsu",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "©2026 Kaiyu Hsu" with personal GitHub and X links only. No company name, team page, or legal entity appears on the site.',
   },
   {
     name: "uitripled",
@@ -4382,12 +2968,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "TripleD (TripleD for Development), Egypt",
-    entityKind: "agency-studio",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED, with harder evidence than the previous agent had. tripled.work\'s inline JSON-LD declares @type Organization, name "TripleD", email contact@tripled.work, foundingLocation addressCountry "EG"; the /about page says "Designed and developed by the TripleD Team" and "an independent web & app development agency". Crucially, the apex site links linkedin.com/company/tripled-for-development, whose page states 2-10 employees and describes "a full-service digital studio" — an actual company page, not just plural pronouns. The registry subdomain ui.tripled.work does credit one person (x.com/moumensoliman, linkedin.com/in/moumensoliman), so this is a very small studio with one visible builder; no legal entity or founder list is published.',
   },
   {
     name: "unlumen-ui",
@@ -4401,12 +2981,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "paid",
     tags: [],
-    maintainer: "solo-business",
-    entity: "Léo (@leouiux) — unlumen UI",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. ui.unlumen.com/pricing credits "Léo" (x.com/leouiux), contact leo@unlumen.com, and sells paid tiers: Pro one-time $119 (reg. $149), Pro annual $69/yr, Studio $430 for 5 seats, with a student discount and an explicit no-refunds policy. A listed perk is "direct support from the maker" (singular). No legal entity, imprint, terms-of-company, or team page exists on the site; repos are on personal accounts. One person running a paid product.',
   },
   {
     name: "untld",
@@ -4420,12 +2994,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'CONFIRMED unclear. I re-fetched the raw HTML: ui.untldlabs.com renders only a nav, a search box, and the literal text "Hello World / You can open /docs and see the documentation" — an unfinished template. Grepping the page source for x.com, github.com, or mailto links returns nothing. /r/registry.json contains only name "untld-ui", homepage, and two components (ai-input, page-dock) — no author or repository field. untldlabs.com is a GoDaddy Website Builder page whose entire content is the name "Untld Labs", the tagline "Unleashing Creative Potential", and "Copyright © 2026 Untld Labs - All Rights Reserved"; no about, team, services, or contact details. Targeted web searches for "untld labs"/"untldlabs" surface nothing. Note the GoDaddy-builder placeholder site is weak evidence *against* an established company, but not enough to assign a person.',
   },
   {
     name: "uselayouts",
@@ -4439,12 +3007,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: [],
-    maintainer: "individual",
-    entity: "Urvish (@0xUrvish, GitHub iurvish)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Footer states "Built by @0xUrvish" with a "Meet Creator" link to the personal site urvish.in; repos live under the personal account iurvish and support is via GitHub Sponsors. /pricing 404s — components are offered free, so no commercial entity is evidenced.',
   },
   {
     name: "uui",
@@ -4458,12 +3020,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "unclear",
-    entity: "unknown",
-    entityKind: "unknown",
-    confidence: "low",
-    evidence:
-      'CONFIRMED unclear. Raw-HTML grep of uui.app for x.com, twitter.com, github.com, linkedin.com, and mailto links returns zero matches, on both the homepage and /directory. /about, /terms, and /privacy all return HTTP 404; the only footer text is "©2026 UUI". /r/registry.json parses fine (name "ui", homepage https://uui.app, blocks like cards-shader-effect, dropbox-upload, family-signin-drawer) but carries no author or repository field. I also chased the one promising lead — an App Store listing "UUi" (id6757535871) — and refuted it: that is an unrelated Taiwanese lifestyle/anniversary-tracking app by developer YIN-SHIAN HUNG, not this UI-inspiration site. Operator genuinely unidentifiable.',
   },
   {
     name: "utilcn",
@@ -4477,12 +3033,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Brennen Rocks (BrennenRocks)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "The site links its source to github.com/BrennenRocks/utilcn, a personal GitHub user account. No company name, team page, or legal entity appears on utilcn.dev.",
   },
   {
     name: "w3-kit",
@@ -4495,12 +3045,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: ["web3"],
-    maintainer: "individual",
-    entity: "Petar Stoev (GitHub @PetarStoev02), Bulgaria",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'CORRECTED unclear -> individual. The GitHub contributors API for w3-kit/ui returns one human: PetarStoev02 with 175 commits (plus dependabot and a 1-commit account). api.github.com/users/PetarStoev02 = Petar Stoev, Bulgaria, blog petarstoev.dev, company field "@dextrasoft" (his employer, unrelated to w3-kit). The w3-kit org has 8 repos (ui, website, cli, config, registry, learn, contracts, .github) but no public members, and w3-kit.com states "Open source, MIT, no accounts, no keys, no upsells" — free, so not solo-business either. Org-shaped account, one person behind it.',
   },
   {
     name: "wa-ui",
@@ -4513,12 +3057,6 @@ export const registries: Registry[] = [
     base: "base-ui",
     pricing: "free",
     tags: ["tailwind-v4", "open-source"],
-    maintainer: "individual",
-    entity: "froggy1014",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "MIT License. Built by @froggy1014" linking to github.com/froggy1014, a personal account. The related meta-cloud-api SDK and playground are the same developer\'s projects; no company or team is named.',
   },
   {
     name: "wandry-ui",
@@ -4531,12 +3069,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "Wandry Agency, Odesa, Ukraine",
-    entityKind: "agency-studio",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED. The registry subdomain itself is unreachable (expired TLS cert), so the verdict rests on the parent domain: wandry.com.ua/en is a client-services agency offering branding (research, brand identity, packaging, illustration), UI/UX, and web development (front-end, back-end, DevOps, CMS, maintenance), with a sales address sales@wandry.com.ua, a phone number (+380634551401), a physical Odesa location with coordinates, and Behance/Dribbble/Instagram (@wandry.agency) profiles. A sales line plus a full service menu and portfolio is agency evidence, not solo-marketing "we". Caveat: no team members and no legal entity are named, and I could not inspect the registry page\'s own attribution.',
   },
   {
     name: "waves-cn",
@@ -4549,12 +3081,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Mouad Sadik and Badreddine Ziane",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site footer states "Built by Mouad Sadik and Badreddine Ziane", linking the personal GitHub accounts @MouadSadik and @Ziane-Badreddine. Two individuals collaborating on an open-source project; no company, org, or legal entity named.',
   },
   {
     name: "wds",
@@ -4567,12 +3093,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "solo-business",
-    entity: "Web Dev Simplified (Kyle Cook)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. The site footer reads "Built by Web Dev Simplified for use with Shadcn", linking webdevsimplified.com plus GitHub/WebDevSimplified, YouTube @WebDevSimplified and X @DevSimplified. Web Dev Simplified is Kyle Cook\'s one-person course/teaching brand (webdevsimplified.com resolves to courses.webdevsimplified.com, a paid course catalog) — a commercial brand with a single operator, no team page, no named legal entity, and no multi-maintainer GitHub org. The registry is a free companion artifact of that solo commercial brand.',
   },
   {
     name: "wensity",
@@ -4586,12 +3106,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Wensity (Parth Sharma, @ksparth12)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED. wensity.com self-describes as an "independent design and engineering studio" with productised client pricing (Launch $1,200 single landing page; Startup $3,500 for 4-6 pages; Enterprise custom), fixed-fee not hourly, contact hello@wensity.com and a "Talk to Parth!" CTA — Parth is the only human named anywhere. api.github.com/users/ksparth12 = "Parth Sharma", Noida (India), blog parthh.in, bio "Software Engineer | Full Stack Developer... AI Intern @Intel | Ex-Zion Intern | CSE\'26" — an individual, currently a CS student/intern, not a company employee roster. No team page, no legal entity, no company LinkedIn. Commercial packages + exactly one person = solo-business.',
   },
   {
     name: "wigggle-ui",
@@ -4604,12 +3118,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Henil Shah",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Site states "Built by Henil Shah" (twitter.com/wigggleui) and "The source code is available on GitHub" at github.com/wigggle-ui/ui. No company, team, pricing, or copyright entity anywhere on the page.',
   },
   {
     name: "heatmap",
@@ -4623,12 +3131,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["accessibility"],
-    maintainer: "individual",
-    entity: "HO Ching-Ru (chingru.com)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'shadcn-heatmap.pages.dev 301-redirects to heatmap.chingru.com; chingru.com is the personal portfolio of HO Ching-Ru, "an individual software engineer from Taiwan" (contact hello@chingru.com), with no company, team, or legal entity. A same-named GitHub repo exists at github.com/fishdev20/shadcn-heatmap (Minh Nguyen, Helsinki), also a personal account — either way it is one person, not an organization.',
   },
   {
     name: "xcn",
@@ -4642,12 +3144,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["minimal", "open-source"],
-    maintainer: "individual",
-    entity: "Jay Sharma (GitHub: radiumcoders)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site links only to github.com/radiumcoders/ui and x.com/radiumcoders; the GitHub API shows radiumcoders is type "User" (personal account), name "Jay Sharma", bio "Using Arch and Neovim BTW", no company field. README credits "RadiumCoders" as sole creator (Apache 2.0). radiumcoders.com returned no readable content.',
   },
   {
     name: "saaskit",
@@ -4661,12 +3157,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["brutalism", "minimal", "open-source"],
-    maintainer: "individual",
-    entity: "Vidhal Elame",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'The site is a JS-only SPA (WebFetch saw only the title), so I grepped its JS bundle: it contains the footer strings "© {{year}} Saaskit by Vidhal Elame. MIT License." / French variant, plus github.com/terravidhal/saaskit, x.com/TerraVidhal and vidhalelame@gmail.com. Personal GitHub account, no company.',
   },
   {
     name: "zippystarter",
@@ -4679,12 +3169,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["marketing"],
-    maintainer: "solo-business",
-    entity: "Zippystarter (Morgan Feeney)",
-    entityKind: "solo-business",
-    confidence: "medium",
-    evidence:
-      "CONFIRMED. zippystarter.com sells a $149 one-time lifetime bundle (templates Devstarter/Focus/Nimble, premium blocks, private shadcn registry access) alongside free tools (shadcn theme generator, image cropper) — an unambiguously commercial product, with License/Terms/Privacy pages. Attribution independently traces to Morgan Feeney: github.com/morganfeeney and morganfeeney.com/now, described as a frontend/UI/design engineer in Manchester UK who works on zippystarter, shadcn preset, shadcn theme generator and shadcn themes in his spare time. No about/team page, no GitHub org, no Ltd/Inc named. One operator behind a paid brand.",
   },
   {
     name: "kaui",
@@ -4696,12 +3180,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Khanh Anh Trinh (GitHub: diontr00)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer credit "Built by Khanh Anh Trinh" with source at github.com/diontr00/kaui-shadcn-registry (personal account). The registry\'s own description says "Personal well crafted components for Shadcn ui"; no company or team.',
   },
   {
     name: "uiable",
@@ -4715,12 +3193,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "free",
     tags: ["tailwind-v4", "open-source"],
-    maintainer: "company",
-    entity: "CodedThemes (India)",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED, and the previous agent\'s weakest point (org headcount) now has direct proof. api.github.com/orgs/codedthemes/members returns 10 public members: ct-amit, ct-anjali-patel, ct-bipin, ct-brijeshd, ct-nensy, ct-viral, ct-vrushti, phoenixcoded20, rakesh-nakrani, ritirathod0 — note the shared "ct-" employee-handle convention. The org (62 public repos, 198 followers, location India, blog codedthemes.com, codedthemes@gmail.com) describes itself as "A collection of the best Free & Premium UI Kits and Admin Templates built with React, Angular, Bootstrap, Vue.js, MUI, & Tailwind" — an established commercial template vendor. The registry repo is github.com/codedthemes/uiable, MIT, owned by that org.',
   },
   {
     name: "vue-bits",
@@ -4734,12 +3206,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source", "playful"],
-    maintainer: "individual",
-    entity: "David Haz (GitHub: DavidHDev)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "vue-bits.dev blocked WebFetch (403); the repo github.com/DavidHDev/vue-bits is a personal account with David Haz listed as the sole maintainer in the README's Maintainers section and no company mentioned (same author as React Bits).",
   },
   {
     name: "svelte-bits",
@@ -4753,12 +3219,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["open-source", "playful"],
-    maintainer: "individual",
-    entity: "David Haz (GitHub: DavidHDev)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      "sveltebits.xyz blocked WebFetch (403). Search confirms the project repo is github.com/DavidHDev/svelte-bits — the official Svelte port of React Bits, maintained by the same solo developer David Haz on his personal GitHub account; no organization or company involved.",
   },
   {
     name: "aniui",
@@ -4772,12 +3232,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "free",
     tags: ["mobile", "open-source"],
-    maintainer: "individual",
-    entity: "Anish (GitHub: anishlp7, anishl.dev)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer reads "Made with by Anish" linking to the personal site anishl.dev; source at github.com/anishlp7/aniui under MIT. No company, team page, or legal entity.',
   },
   {
     name: "threecn",
@@ -4791,12 +3245,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "ln-dev7 (Leonel Ngoya)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Only attributions on the site are the X handle @ln_dev7 and the repo github.com/ln-dev7/threecn (personal account); footer says just "Built with R3F, Drei, and shadcn/ui." No company, team, copyright entity, or pricing.',
   },
   {
     name: "vllnt-ui",
@@ -4810,12 +3258,6 @@ export const registries: Registry[] = [
     base: "radix",
     pricing: "free",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "vllnt SAS (Paris, France — RCS Paris 932 014 071)",
-    entityKind: "startup-saas",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED, with the registration number now verified. The /legal page names "vllnt SAS", share capital €1,000, Paris trade register number 932 014 071, registered office 12 rue de la Forge, 75011 Paris, contacts hello@/legal@/dpo@vllnt.ai, hosting by Scaleway SAS, publication director B. Vaillant. The registry ui.vllnt.com (313 MIT components for AI agent UIs) sits on the company\'s own domain and is maintained under github.com/vllnt. Honest caveat that keeps confidence at medium rather than high: vllnt.com shows a single founder (handle bntvllnt), ~29 OSS projects with ~39 stars and ~1.6k weekly npm downloads, and no paid product — so this is a registered one-person SAS, i.e. a real legal entity but effectively a solo operation. I kept "company" because a verifiable incorporation is the stated bar, not team size.',
   },
   {
     name: "grainly-icons",
@@ -4827,12 +3269,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "abhix4 (Abhi)",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      "Hosted on the personal subdomain abhii.space; the only link is github.com/abhix4/grainly-icons (personal account). No company, team, copyright footer, or commercial offering on the page.",
   },
   {
     name: "shadcnloaders",
@@ -4845,12 +3281,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Sammed Chougule (GitHub: Sammed-Chougule)",
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'The Vercel-hosted page returned no attribution text to WebFetch; search identifies the project repo as github.com/Sammed-Chougule/Shadcn-Loaders ("20+ professional React loaders and spinners inspired by shadcn/ui") on a personal account. No org, company, or team found.',
   },
   {
     name: "shadcn-dashboard",
@@ -4864,12 +3294,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "unknown",
     tags: ["dashboard"],
-    maintainer: "company",
-    entity: "WrapPixel",
-    entityKind: "product-company",
-    confidence: "high",
-    evidence:
-      'CONFIRMED via the page\'s own structured data, which is stronger than the prose the previous agent quoted. The rendered HTML contains JSON-LD with "parentOrganization": {"@type": "Organization", "name": "Wrappixel", "url": "https://wrappixel.com/"}, plus a FAQ entry "Who is behind ShadcnDashboard.dev?" answering that it is "proudly backed by WrapPixel, a trusted name in the admin dashboard ecosystem with over 15 years of experience... used by 600K+ developers", and WrapPixel logo assets linked to wrappixel.com. The site sells paid access (Get all access, Download, Figma kit, Supabase boilerplate) and the org repo is github.com/shadcndashboard/shadcndashboard. WrapPixel is a long-established commercial template company.',
   },
   {
     name: "usva",
@@ -4883,12 +3307,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "unknown",
     tags: [],
-    maintainer: "individual",
-    entity: "Matt Pasek",
-    entityKind: "individual",
-    confidence: "high",
-    evidence:
-      'Footer: "© 2026 usva · built by matt pasek" linking to the personal site matt-pasek.dev, with source at github.com/matt-pasek/usva (personal account). No company or team.',
   },
   {
     name: "atelier",
@@ -4902,12 +3320,6 @@ export const registries: Registry[] = [
     base: "none",
     pricing: "freemium",
     tags: [],
-    maintainer: "solo-business",
-    entity: "Atelier UI (Jérémie Nallet, Paris)",
-    entityKind: "solo-business",
-    confidence: "high",
-    evidence:
-      'CONFIRMED. atelier-ui.com credits "Designed & Built by Jérémie Nallet · In Paris, France" and sells a Pro tier at $79.99 one-time (Shader Studio access, pro-only components, future releases) alongside 25+ free MIT components. Support runs through a personal Gmail address and the source sits on the personal account github.com/whatisjery/atelier-ui. No company name, no team, no legal entity anywhere on the site — one person running a paid product.',
   },
   {
     name: "mediadrop",
@@ -4921,12 +3333,6 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: [],
-    maintainer: "company",
-    entity: "Autorender Inc.",
-    entityKind: "startup-saas",
-    confidence: "medium",
-    evidence:
-      'CONFIRMED. mediadrop.dev states the MIT library is "maintained by Autorender" and links autorender.io, whose footer reads "© 2026 Autorender Inc." — an incorporated entity. autorender.io is a commercial image API ("the new image API for developers") with bandwidth-based pricing, an NVIDIA Inception Program badge, a "talk to a founder" scheduling link, and GitHub/Discord/LinkedIn/X presence. Caveat holding this at medium rather than high: the product is still pre-launch (waitlist, staged onboarding) and no individual team members are named, so headcount beyond the founder(s) is unverified — but the incorporation plus accelerator membership is real-organization evidence.',
   },
   {
     name: "ai2",
@@ -4940,12 +3346,6 @@ export const registries: Registry[] = [
     base: "shadcn",
     pricing: "freemium",
     tags: ["open-source"],
-    maintainer: "company",
-    entity: "BEY AGENCY LTD (England & Wales, company no. 16435596)",
-    entityKind: "agency-studio",
-    confidence: "high",
-    evidence:
-      "CONFIRMED by direct fetch of ai2.design/legal/license, which names BEY AGENCY LTD as the operating entity, registered in England & Wales under company number 16435596. The page sets out an open-core split — MIT for base UI components, shadcn registry items and docs code; a commercial licence for Framer/Next.js themes, Figma kits, blocks, sections and MCP Pro — with seat limits (Pro 1 seat, Ultimate up to 10), a twelve-downloads-per-twelve-hours fair-use cap, and the ai2 name and logo retained as BEY AGENCY LTD trademarks. Contacts hi@bey.agency and hello@ai2.design. A named, registered UK company operating the registry as a commercial product line.",
   },
   {
     name: "whiskeyjack",
@@ -4959,11 +3359,5 @@ export const registries: Registry[] = [
     base: "unknown",
     pricing: "free",
     tags: ["mobile", "glass"],
-    maintainer: "individual",
-    entity: '"findingsimo" (Simo) — whiskeyjack.net',
-    entityKind: "individual",
-    confidence: "medium",
-    evidence:
-      'Site footer is only "2026 Whiskeyjack.net" with no names; /about, /legal and /terms 404 and /contact says "email whiskeyjack.net@gmail.com". GitHub org whiskeyjack-net has no public members, and the npm package @whiskeyjack-net/i18n lists author "whiskeyjack.net" with a single maintainer, findingsimo <djsimo3001@gmail.com>. Apps are "All free to use" — one person\'s design system extracted from their own apps, no company evidence.',
   },
 ]
