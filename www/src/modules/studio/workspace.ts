@@ -5,7 +5,7 @@
    so tabs never clobber each other. The open system's edits land in memory at
    once and in storage at most every 200 ms. */
 
-import { useSyncExternalStore } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
 import {
@@ -16,7 +16,7 @@ import {
 } from "@/lib/snapshots/snapshot"
 import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
 import { closestPreset, getPreset, ORIGIN } from "@/modules/presets"
-import { sameState, validate } from "@/modules/studio/axes"
+import { formatIssues, sameState, validate } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
 export type Origin =
@@ -236,6 +236,9 @@ export const useOpenSystem = () => openDoc(useWorkspace())
 
 /** Edits the system's state; storage catches up within 200 ms. */
 export function setState(id: string, state: StudioState): void {
+  // An invalid record would be dropped on the next read: refuse it here.
+  const valid = validate(state)
+  if (!valid.ok) return console.error(formatIssues(valid.issues))
   if (pending && pending.id !== id) flush()
   pending = { id, state }
   timer ??= setTimeout(flush, WRITE_INTERVAL)
@@ -426,6 +429,24 @@ export async function hasUnpublishedChanges(
   } catch {
     return true
   }
+}
+
+/** `hasUnpublishedChanges` for the UI; `undefined` until first known, then
+ *  the previous answer while the next one is computed. */
+export function useUnpublishedChanges(
+  doc: DesignSystemDoc,
+): boolean | undefined {
+  const [unpublished, setUnpublished] = useState<boolean>()
+  useEffect(() => {
+    let live = true
+    void hasUnpublishedChanges(doc).then(
+      (value) => live && setUnpublished(value),
+    )
+    return () => {
+      live = false
+    }
+  }, [doc])
+  return unpublished
 }
 
 type Post = (body: Omit<SnapshotContent, "schema">) => Promise<string>

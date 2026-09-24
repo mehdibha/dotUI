@@ -1,207 +1,160 @@
 "use client"
 
-/* The studio panel mounted in /studio's slot: the panel page over the
-   studio state, with the chrome (switcher, reset, search, save, export) wired
-   to presets and export. The switcher is the PresetPicker (saved systems +
-   built-in presets, live previews, unsaved-changes guard), reachable at
-   ?gallery= like before. */
+/* The studio panel mounted in /studio's slot: the panel page over the open
+   design system, its chrome wired to the workspace. The switcher lists the
+   user's systems over the built-in presets and opens at ?gallery=. */
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { getRouteApi } from "@tanstack/react-router"
+import { MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { toastManager } from "@/registry/ui/toast"
 import {
   getPreset,
   ORIGIN,
   PRESET_META,
-  PRESETS,
   resolvePreset,
 } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
-import { ExportDialog } from "@/modules/studio/export"
-import { decodeState, encodeState, useMyPresets } from "@/modules/studio/preset"
-import {
-  saveDesignSystemName,
-  useDesignSystemName,
-} from "@/modules/studio/preset/storage"
-import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
-import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
-import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
+import { sameState } from "./axes"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
+import {
+  createFromPreset,
+  duplicate,
+  open,
+  openDoc,
+  remove,
+  rename,
+  reset,
+  useWorkspace,
+} from "./workspace"
+import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-/* The codec is canonical (encode∘decode = identity), but states from storage
-   may predate it — one roundtrip normalizes those. */
-function canon(state: string): string {
-  const decoded = state ? decodeState(state) : undefined
-  return (decoded?.ok && encodeState(decoded.state)) || ""
+export function undoToast(title: string, undo: () => void) {
+  const id = toastManager.add({
+    title,
+    actionProps: {
+      children: "Undo",
+      onClick: () => {
+        undo()
+        toastManager.close(id)
+      },
+    },
+  })
 }
 
-/* Origin is the panel's baseline: what first-time users start on, what the
-   global reset returns to, and what the modified dot diffs against. */
-const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
+function resetLabel(doc: DesignSystemDoc): string {
+  if (doc.origin.kind === "snapshot") return "Reset to shared version"
+  if (doc.origin.kind === "copy") return "Reset to copy"
+  return `Reset to ${getPreset(doc.origin.id)?.name ?? "preset"}`
+}
+
+function SystemActions({ doc }: { doc: DesignSystemDoc }) {
+  return (
+    <Menu>
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        aria-label={`Actions for ${doc.name}`}
+        className="shrink-0 text-fg-muted"
+      >
+        <MoreHorizontalIcon />
+      </Button>
+      <Popover placement="bottom end">
+        <MenuContent
+          onAction={(key) => {
+            if (key === "duplicate") duplicate(doc.id)
+            if (key === "delete")
+              undoToast(`Deleted ${doc.name}`, remove(doc.id))
+          }}
+        >
+          <MenuItem id="duplicate">Duplicate</MenuItem>
+          <MenuItem id="delete" variant="danger">
+            Delete
+          </MenuItem>
+        </MenuContent>
+      </Popover>
+    </Menu>
+  )
+}
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
+  const workspace = useWorkspace()
+  const doc = openDoc(workspace)
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const {
-    presets,
-    activeId,
-    setActive,
-    save,
-    update,
-    rename,
-    duplicate,
-    remove,
-  } = useMyPresets()
-  const storedName = useDesignSystemName()
-  const [saveOpen, setSaveOpen] = useState(false)
-  const [createOpen, setCreateOpen] = useState(false)
-  // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
-  const [pending, setPending] = useState<(() => void) | null>(null)
 
-  // The header names what's being edited: the active saved system (dotted when
-  // edited past its snapshot), else the standalone design-system name.
-  const activeSaved = presets.find((p) => p.id === activeId)
-  const displayName = activeSaved?.name ?? storedName
-
-  // Built-in presets are re-loadable from the gallery, so a freshly applied one
-  // isn't unsaved work — only edits past it (or past a saved snapshot) are.
-  const builtInStates = useMemo(
-    () => new Set(PRESETS.map((p) => encodeState(p.state) ?? "")),
-    [],
+  const sections = useMemo(
+    () => [
+      {
+        id: "mine",
+        title: "My design systems",
+        items: [...workspace.systems].reverse().map((system) => ({
+          id: system.id,
+          name: system.name,
+          swatch: system.state.brand,
+          resolve: () => resolveDesignSystem(system.state),
+        })),
+      },
+      {
+        id: "presets",
+        title: "Presets",
+        items: PRESET_META.map((meta) => ({
+          ...meta,
+          resolve: () => resolvePreset(meta.id),
+        })),
+      },
+    ],
+    [workspace.systems],
   )
-  const currentState = studio.encoded ?? ""
-  const isDirty = activeSaved
-    ? canon(activeSaved.state) !== currentState
-    : currentState !== "" && !builtInStates.has(currentState)
 
-  const pickerSections = useMemo(() => {
-    const mine = {
-      id: "mine",
-      title: "My systems",
-      // A saved system that no longer validates stays out of the list.
-      items: presets.flatMap((saved) => {
-        const decoded = decodeState(saved.state)
-        if (!decoded.ok) return []
-        const { state } = decoded
-        return [
-          {
-            id: saved.id,
-            name: saved.name,
-            swatch: state.brand,
-            resolve: () => resolveDesignSystem(state),
-          },
-        ]
-      }),
-    }
-    const featured = {
-      id: "featured",
-      title: "Featured",
-      items: PRESET_META.map((meta) => ({
-        ...meta,
-        resolve: () => resolvePreset(meta.id),
-      })),
-    }
-    return presets.length > 0 ? [mine, featured] : [featured]
-  }, [presets])
-
-  // Apply a state and close the gallery in one navigation — two separate
-  // navigates would race each other's search updates.
-  function applyState(encoded: string | undefined) {
+  function setGalleryOpen(isOpen: boolean) {
     navigate({
-      search: (prev) => ({
-        ...prev,
-        preset: encoded || undefined,
-        gallery: undefined,
-      }),
+      search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
     })
   }
 
-  function setGalleryOpen(open: boolean) {
-    navigate({
-      search: (prev) => ({ ...prev, gallery: open ? true : undefined }),
-      replace: true,
-    })
-  }
-
-  function pickPreset(itemId: string) {
-    const saved = presets.find((p) => p.id === itemId)
-    if (saved) {
-      setActive(saved.id)
-      saveDesignSystemName(saved.name)
-      applyState(saved.state)
-      return
-    }
-    const builtIn = getPreset(itemId)
-    if (!builtIn) return
-    setActive(undefined)
-    saveDesignSystemName(builtIn.name)
-    applyState(encodeState(builtIn.state))
-  }
-
-  function createPreset(name: string, state: string) {
-    save(name, state)
-    saveDesignSystemName(name)
-    applyState(state)
-  }
-
-  // Replacing the state over unsaved work asks first; over clean state it's instant.
-  function guarded(action: () => void) {
-    if (isDirty) setPending(() => action)
-    else action()
-  }
-
-  function resolvePending(saveFirst: boolean) {
-    if (saveFirst) {
-      if (activeSaved) update(activeSaved.id, currentState)
-      else save(displayName, currentState)
-    }
-    pending?.()
-    setPending(null)
-  }
-
+  const label = resetLabel(doc)
   const system: PanelSystem = {
-    name: displayName,
-    dirty: isDirty,
-    modified: currentState !== ORIGIN_CANON,
-    onReset: () => pickPreset(ORIGIN.id),
-    onSave: () => setSaveOpen(true),
+    name: doc.name,
+    onRename: (name) => rename(doc.id, name),
+    reset: sameState(doc.state, doc.initial)
+      ? undefined
+      : { label, onReset: () => undoToast(label, reset(doc.id)) },
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
-        sections={pickerSections}
-        selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
-        onPick={(item) => guarded(() => pickPreset(item.id))}
-        onCreate={() => setCreateOpen(true)}
+        sections={sections}
+        selectedId={doc.id}
+        onPick={(item) => {
+          if (workspace.systems.some((s) => s.id === item.id)) open(item.id)
+          else createFromPreset(item.id)
+        }}
+        onCreate={() => createFromPreset(ORIGIN.id)}
         withPreview
         renderItemActions={(item) => {
-          const saved = presets.find((p) => p.id === item.id)
-          if (!saved) return null
-          return (
-            <SavedPresetActions
-              saved={saved}
-              onRename={(name) => rename(saved.id, name)}
-              onDuplicate={() => duplicate(saved.id)}
-              onDelete={() => remove(saved.id)}
-            />
-          )
+          const system = workspace.systems.find((s) => s.id === item.id)
+          return system ? <SystemActions doc={system} /> : null
         }}
       >
         {trigger}
       </PresetPicker>
     ),
-    renderExport: (trigger) => <ExportDialog>{trigger}</ExportDialog>,
   }
 
   return (
@@ -212,20 +165,6 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
-      <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
-      <CreatePresetDialog
-        isOpen={createOpen}
-        onOpenChange={setCreateOpen}
-        onCreate={(name) => guarded(() => createPreset(name, ORIGIN_CANON))}
-      />
-      <UnsavedChangesDialog
-        isOpen={pending !== null}
-        onOpenChange={(open) => {
-          if (!open) setPending(null)
-        }}
-        onSave={() => resolvePending(true)}
-        onDiscard={() => resolvePending(false)}
-      />
     </div>
   )
 }
