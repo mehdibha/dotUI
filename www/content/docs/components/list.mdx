@@ -1,0 +1,126 @@
+---
+title: List
+description: A list displays rows of content — navigation, settings, choices — grouped on rounded cards or as plain rows.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/GridList.html
+wip: true
+---
+
+<InteractiveDemo
+  name="list"
+  controls={[
+    {
+      type: "enum",
+      name: "selectionMode",
+      options: ["none", "single", "multiple"],
+      defaultValue: "single",
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/list
+```
+
+## Usage
+
+Use lists for settings screens, navigation menus and short sets of choices laid out in the page — the rows of an iOS settings screen. For options inside a floating layer, use a [ListBox](/docs/components/list-box) or a [Menu](/docs/components/menu).
+
+```tsx
+import { List, ListItem } from "@/components/ui/list"
+```
+
+```tsx
+<List aria-label="Fruits">
+  <ListItem>Apple</ListItem>
+  <ListItem>Banana</ListItem>
+</List>
+```
+
+## Anatomy
+
+```tsx
+import {
+  List,
+  ListItem,
+  ListItemDescription,
+  ListItemIcon,
+  ListItemLabel,
+  ListItemValue,
+  ListSection,
+  ListSectionHeader,
+} from "@/components/ui/list"
+```
+
+```tsx
+<List>
+  <ListSection>
+    <ListSectionHeader />
+    <ListItem>
+      <ListItemIcon />
+      <ListItemLabel />
+      <ListItemDescription />
+      <ListItemValue />
+    </ListItem>
+  </ListSection>
+</List>
+```
+
+A row is a grid: the icon leads, the label sits over its description, and the value trails, followed by the chevron or the selection check. Every slot is optional; a plain string child becomes the label. Separators start at the label, past the icon.
+
+## Rows
+
+A row with an `href` is a link and shows a chevron; set `hasChevron` to show or hide it on any row. Pass `onAction` to the list to make rows pressable. `variant="accent"` draws an action row in the link color, `variant="danger"` a destructive one.
+
+<Demo name="list/demos/sections" />
+
+## Selection
+
+`selectionMode` makes rows selectable; the selected row shows a check. Control it with `selectedKeys` and `onSelectionChange`, or `defaultSelectedKeys`.
+
+<Demo name="list/demos/selection" />
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="list/demos/basic" title="Settings rows" />
+  <Example name="list/demos/sections" title="Sections" />
+  <Example name="list/demos/selection" title="Choice" />
+</Examples>
+
+## API Reference
+
+### List
+
+<Reference name="list" />
+
+### ListItem
+
+<Reference name="list-item" />
+
+### ListItemIcon
+
+<Reference name="list-item-icon" />
+
+### ListItemLabel
+
+<Reference name="list-item-label" />
+
+### ListItemDescription
+
+<Reference name="list-item-description" />
+
+### ListItemValue
+
+<Reference name="list-item-value" />
+
+### ListSection
+
+<Reference name="list-section" />
+
+### ListSectionHeader
+
+<Reference name="list-section-header" />

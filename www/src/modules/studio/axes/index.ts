@@ -33,6 +33,7 @@ import * as inputs from "./inputs"
 import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
+import * as lists from "./lists"
 import * as menus from "./menus"
 import * as mobile from "./mobile"
 import * as motion from "./motion"
@@ -91,6 +92,7 @@ export const DEFAULTS = {
   ...mobile.MOBILE_DEFAULTS,
   ...charts.CHART_DEFAULTS,
   ...links.LINK_DEFAULTS,
+  ...lists.LIST_DEFAULTS,
   ...alert.ALERT_DEFAULTS,
   ...toast.TOAST_DEFAULTS,
   ...skeleton.SKELETON_DEFAULTS,
@@ -144,6 +146,7 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   mobile.resolveMobile,
   charts.resolveCharts,
   links.resolveLinks,
+  lists.resolveLists,
   alert.resolveAlert,
   toast.resolveToast,
   skeleton.resolveSkeleton,

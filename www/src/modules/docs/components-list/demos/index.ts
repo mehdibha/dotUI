@@ -39,6 +39,7 @@ import { InputDemo } from "./input"
 import { InputGroupDemo } from "./input-group"
 import { KbdDemo } from "./kbd"
 import { LinkDemo } from "./link"
+import { ListDemo } from "./list"
 import { ListBoxDemo } from "./list-box"
 import { LoaderDemo } from "./loader"
 import { MarkerDemo } from "./marker"
@@ -115,6 +116,7 @@ export const componentDemos: Record<string, ComponentType> = {
   "input-group": InputGroupDemo,
   kbd: KbdDemo,
   link: LinkDemo,
+  list: ListDemo,
   "list-box": ListBoxDemo,
   loader: LoaderDemo,
   marker: MarkerDemo,
