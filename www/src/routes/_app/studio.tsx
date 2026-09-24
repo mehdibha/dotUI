@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
+import { siteConfig } from "@/config/site"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { isLegacyOrigin, ORIGIN } from "@/modules/presets/presets-data"
@@ -64,6 +65,37 @@ export const Route = createFileRoute("/_app/studio")({
   validateSearch: createSearchSchema,
   search: {
     middlewares: [stripSearchParams(searchDefaults)],
+  },
+  head: () => {
+    const title = `${siteConfig.name} Studio - Build your design system`
+    const description =
+      "Compose colors, typography, icons, density, radius and per-component styles, preview every change on real components, then export code you own."
+    const url = `${siteConfig.url}/studio`
+    const image = `${siteConfig.url}/images/og-studio.png`
+    const imageAlt =
+      "dotUI Studio: the design-system panel beside a live wall of components"
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: image },
+        { property: "og:image:type", content: "image/png" },
+        { property: "og:image:width", content: "2400" },
+        { property: "og:image:height", content: "1260" },
+        { property: "og:image:alt", content: imageAlt },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: image },
+        { name: "twitter:image:alt", content: imageAlt },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    }
   },
   component: StudioPage,
 })
