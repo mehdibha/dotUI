@@ -10,8 +10,14 @@ import { useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
+import {
+  getPreset,
+  ORIGIN,
+  PRESET_META,
+  PRESETS,
+  resolvePreset,
+} from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
 import {
@@ -83,7 +89,6 @@ export function StudioPanel({ className }: { className?: string }) {
     ? canon(activeSaved.state) !== currentState
     : currentState !== "" && !builtInStates.has(currentState)
 
-  // Saved systems decode to full design systems for the picker's mini previews.
   const pickerSections = useMemo(() => {
     const mine = {
       id: "mine",
@@ -91,24 +96,24 @@ export function StudioPanel({ className }: { className?: string }) {
       // A saved system that no longer validates stays out of the list.
       items: presets.flatMap((saved) => {
         const decoded = decodePreset(saved.state)
-        return decoded.ok
-          ? [
-              {
-                id: saved.id,
-                name: saved.name,
-                designSystem: resolveDesignSystem(decoded.preset.state),
-              },
-            ]
-          : []
+        if (!decoded.ok) return []
+        const { state } = decoded.preset
+        return [
+          {
+            id: saved.id,
+            name: saved.name,
+            swatch: state.brand,
+            resolve: () => resolveDesignSystem(state),
+          },
+        ]
       }),
     }
     const featured = {
       id: "featured",
       title: "Featured",
-      items: PRESETS.map((p) => ({
-        id: p.id,
-        name: p.name,
-        designSystem: p.designSystem,
+      items: PRESET_META.map((meta) => ({
+        ...meta,
+        resolve: () => resolvePreset(meta.id),
       })),
     }
     return presets.length > 0 ? [mine, featured] : [featured]
@@ -142,7 +147,7 @@ export function StudioPanel({ className }: { className?: string }) {
       applyState(saved.state)
       return
     }
-    const builtIn = PRESETS.find((p) => p.id === itemId)
+    const builtIn = getPreset(itemId)
     if (!builtIn) return
     setActive(undefined)
     saveDesignSystemName(builtIn.name)

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { ORIGIN } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
 import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"

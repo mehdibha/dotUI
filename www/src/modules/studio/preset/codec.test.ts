@@ -2,7 +2,7 @@ import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESETS } from "@/modules/presets"
 import { DEFAULT_STATE, parseState } from "@/modules/studio/axes"
 
 import { decodePreset, encodePreset, encodeState } from "./codec"

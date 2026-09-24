@@ -27,7 +27,7 @@ import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
 import { CN_UTILS_TS, emitInitItem } from "@/publisher/emit-theme"
 import { renderStylesheet } from "@/publisher/emit-v0"
 import { consumerPath, publishItem } from "@/publisher/serve"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { getPreset } from "@/modules/presets"
 import { encodeState } from "@/modules/studio/preset/codec"
 
 const WWW_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
@@ -74,7 +74,7 @@ function write(cwd: string, rel: string, content: string): void {
 
 async function materialize(example: string): Promise<void> {
   const { preset: presetId, stylesheet } = EXAMPLES[example] ?? {}
-  const source = PRESETS.find((p) => p.id === presetId)
+  const source = presetId ? getPreset(presetId) : undefined
   if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
   const cwd = path.join(EXAMPLES_DIR, example)
   const encodedPreset = encodeState(source.state)
