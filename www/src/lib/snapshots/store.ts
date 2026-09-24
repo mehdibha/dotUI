@@ -42,7 +42,7 @@ export function fileStore(dir: string): SnapshotStore {
   }
 }
 
-/** Vercel Blob; authenticates with `BLOB_READ_WRITE_TOKEN`. */
+/** Vercel Blob; authenticates with `BLOB_READ_WRITE_TOKEN`, or OIDC with `BLOB_STORE_ID`. */
 export function blobStore(): SnapshotStore {
   const pathname = (id: string) => `snapshots/${id}.json`
   const store: SnapshotStore = {
@@ -76,7 +76,7 @@ export function blobStore(): SnapshotStore {
 function unconfiguredStore(): SnapshotStore {
   const fail = async (): Promise<never> => {
     throw new Error(
-      "Snapshot storage is not configured: link a Vercel Blob store (BLOB_READ_WRITE_TOKEN)",
+      "Snapshot storage is not configured: link a Vercel Blob store (BLOB_READ_WRITE_TOKEN or BLOB_STORE_ID)",
     )
   }
   return { put: fail, get: fail }
@@ -85,10 +85,11 @@ function unconfiguredStore(): SnapshotStore {
 let store: SnapshotStore | undefined
 
 export function getSnapshotStore(): SnapshotStore {
-  store ??= process.env.BLOB_READ_WRITE_TOKEN
-    ? blobStore()
-    : process.env.VERCEL
-      ? unconfiguredStore()
-      : fileStore(path.resolve(".data/snapshots"))
+  store ??=
+    process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID
+      ? blobStore()
+      : process.env.VERCEL
+        ? unconfiguredStore()
+        : fileStore(path.resolve(".data/snapshots"))
   return store
 }
