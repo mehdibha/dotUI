@@ -236,6 +236,11 @@ export function parseState(raw: unknown): StudioState {
 
 export const DEFAULT_STATE = parseState({})
 
+/** Every axis value is a primitive, so key-by-key identity is equality. */
+export const sameState = (a: StudioState, b: StudioState) =>
+  a === b ||
+  (Object.keys(SCHEMA) as SchemaKey[]).every((key) => a[key] === b[key])
+
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   color.resolveColor,
   type.resolveType,

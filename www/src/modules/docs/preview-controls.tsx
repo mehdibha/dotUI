@@ -12,47 +12,35 @@ import { Loader } from "@/registry/ui/loader"
 import { ORIGIN, PRESET_META, PRESETS, resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { encodeState } from "@/modules/studio/preset/codec"
-import {
-  DEFAULT_DESIGN_SYSTEM_NAME,
-  useDesignSystemName,
-  useStoredPreset,
-} from "@/modules/studio/preset/storage"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { isUntouched, useOpenSystem } from "@/modules/studio/workspace"
 
 /**
  * Which design system and light/dark mode the docs previews render in. Global
- * and persisted, so every demo on the site stays in sync; `yours` is the design
- * system built at /create. The mode defaults to the site theme until the user
- * picks one, then pins previews to that choice.
+ * and persisted, so every demo on the site stays in sync; `open` is the system
+ * open in the studio. The mode defaults to the site theme until the user picks
+ * one, then pins previews to that choice.
  */
 
-const YOURS = "yours"
+const OPEN = "open"
 
 const presetStore = createPersistedStore(
   "dotui:preview-preset",
   ORIGIN.id,
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], ORIGIN.id),
+  enumCodec([OPEN, ...PRESETS.map((p) => p.id)], ORIGIN.id),
 )
 
-/* The working system counts as the user's own once it diverges from every
-   built-in: a fresh visitor sits on Origin, and a preset applied from the
-   gallery is still that preset. Until then the picker lists no "My systems"
-   and a stored `yours` selection reads as the built-in it matches. */
-const BUILT_IN_BY_STATE = new Map(
-  PRESETS.map((p) => [encodeState(p.state), p.id]),
-)
-
+/* An untouched system is just its preset: the picker lists it as that preset
+   and a stored `open` selection reads as it. */
 function useSelectedPreset() {
   const stored = presetStore.useValue()
-  const yours = useStoredPreset()
-  const builtIn = useMemo(() => {
-    const encoded = encodeState(yours)
-    return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
-  }, [yours])
-  const own = builtIn === undefined
-  const selected = stored === YOURS && builtIn ? builtIn : stored
-  return { selected, yours, own }
+  const open = useOpenSystem()
+  const asPreset =
+    isUntouched(open) && open.origin.kind === "preset"
+      ? open.origin.id
+      : undefined
+  const selected = stored === OPEN && asPreset ? asPreset : stored
+  return { selected, open, own: asPreset === undefined }
 }
 
 type PreviewMode = "light" | "dark"
@@ -136,9 +124,12 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 
 /** The design system the docs previews render in, resolved from the selection. */
 export function useResolvedPreset(): DesignSystem {
-  const { selected, yours } = useSelectedPreset()
-  const yoursResolved = useMemo(() => resolveDesignSystem(yours), [yours])
-  if (selected === YOURS) return yoursResolved
+  const { selected, open } = useSelectedPreset()
+  const openResolved = useMemo(
+    () => resolveDesignSystem(open.state),
+    [open.state],
+  )
+  if (selected === OPEN) return openResolved
   return resolvePreset(selected)
 }
 
@@ -189,28 +180,27 @@ function PresetSelector({
 }: {
   variant?: ButtonProps["variant"]
 }) {
-  const { selected, yours, own } = useSelectedPreset()
+  const { selected, open, own } = useSelectedPreset()
   const previewMode = useForcedPreviewMode()
-  const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
-  const { yoursItem, sections } = useMemo(() => {
-    const yoursItem = {
-      id: YOURS,
-      name: yoursName,
-      swatch: yours.brand,
-      resolve: () => resolveDesignSystem(yours),
+  const { openItem, sections } = useMemo(() => {
+    const openItem = {
+      id: OPEN,
+      name: open.name,
+      swatch: open.state.brand,
+      resolve: () => resolveDesignSystem(open.state),
     }
     const featured = {
       id: "featured",
-      title: "Featured",
+      title: "Presets",
       items: PRESET_META.map((meta) => ({
         ...meta,
         resolve: () => resolvePreset(meta.id),
       })),
     }
-    const mine = { id: "yours", title: "My systems", items: [yoursItem] }
-    return { yoursItem, sections: own ? [mine, featured] : [featured] }
-  }, [own, yours, yoursName])
-  const active = PRESET_META.find((p) => p.id === selected) ?? yoursItem
+    const mine = { id: "open", title: "My design system", items: [openItem] }
+    return { openItem, sections: own ? [mine, featured] : [featured] }
+  }, [own, open])
+  const active = PRESET_META.find((p) => p.id === selected) ?? openItem
 
   return (
     <PresetPicker

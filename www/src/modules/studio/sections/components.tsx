@@ -4,47 +4,20 @@
    beside it. The row carries the family's headline value and its specimen;
    everything else lives in the popover, so a new option never adds a row. */
 
-import { ACCORDION_DEFAULTS, CONTAINER_OPTIONS } from "../axes/accordion"
-import {
-  AVATAR_DEFAULTS,
-  SHAPE_OPTIONS as AVATAR_SHAPES,
-} from "../axes/avatars"
-import { BADGE_DEFAULTS, STYLE_OPTIONS as BADGE_STYLES } from "../axes/badges"
-import { BREADCRUMB_DEFAULTS } from "../axes/breadcrumbs"
-import { BUTTON_GROUP_DEFAULTS } from "../axes/button-groups"
-import {
-  BUTTON_DEFAULTS,
-  STYLE_OPTIONS as BUTTON_STYLES,
-} from "../axes/buttons"
-import { CALENDAR_DEFAULTS } from "../axes/calendar"
-import { CHART_DEFAULTS, PALETTE_OPTIONS } from "../axes/charts"
-import { CHECKBOX_DEFAULTS, CORNER_OPTIONS } from "../axes/checkbox"
-import { CHOICE_CARD_DEFAULTS } from "../axes/choice-cards"
-import { BACKDROP_OPTIONS, DIALOG_DEFAULTS } from "../axes/dialogs"
-import { INPUT_GROUP_DEFAULTS } from "../axes/input-groups"
-import { INPUT_DEFAULTS, STYLE_OPTIONS as INPUT_STYLES } from "../axes/inputs"
-import { KBD_DEFAULTS } from "../axes/kbd"
-import { LINK_DEFAULTS } from "../axes/links"
-import { HIGHLIGHT_OPTIONS, MENU_DEFAULTS } from "../axes/menus"
-import { NUMBER_FIELD_DEFAULTS } from "../axes/number-field"
-import { OTP_FIELD_DEFAULTS } from "../axes/otp-field"
-import { PAGINATION_DEFAULTS } from "../axes/pagination"
-import { CARET_OPTIONS, PICKER_DEFAULTS } from "../axes/pickers"
-import { POPOVER_DEFAULTS } from "../axes/popovers"
-import { PROGRESS_DEFAULTS } from "../axes/progress"
-import { RADIO_DEFAULTS } from "../axes/radio"
-import { SEGMENTED_DEFAULTS } from "../axes/segmented-control"
-import { SKELETON_DEFAULTS } from "../axes/skeleton"
-import { SLIDER_DEFAULTS, THUMB_OPTIONS } from "../axes/sliders"
-import {
-  SPINNER_DEFAULTS,
-  STYLE_OPTIONS as SPINNER_STYLES,
-} from "../axes/spinner"
-import { SWITCH_DEFAULTS } from "../axes/switch"
-import { SEPARATION_OPTIONS, TABLE_DEFAULTS } from "../axes/tables"
-import { TAB_DEFAULTS, TAB_STYLE_OPTIONS } from "../axes/tabs"
-import { TOGGLE_DEFAULTS } from "../axes/toggles"
-import { TOOLTIP_DEFAULTS } from "../axes/tooltips"
+import { CONTAINER_OPTIONS } from "../axes/accordion"
+import { SHAPE_OPTIONS as AVATAR_SHAPES } from "../axes/avatars"
+import { STYLE_OPTIONS as BADGE_STYLES } from "../axes/badges"
+import { STYLE_OPTIONS as BUTTON_STYLES } from "../axes/buttons"
+import { PALETTE_OPTIONS } from "../axes/charts"
+import { CORNER_OPTIONS } from "../axes/checkbox"
+import { BACKDROP_OPTIONS } from "../axes/dialogs"
+import { STYLE_OPTIONS as INPUT_STYLES } from "../axes/inputs"
+import { HIGHLIGHT_OPTIONS } from "../axes/menus"
+import { CARET_OPTIONS } from "../axes/pickers"
+import { THUMB_OPTIONS } from "../axes/sliders"
+import { STYLE_OPTIONS as SPINNER_STYLES } from "../axes/spinner"
+import { SEPARATION_OPTIONS } from "../axes/tables"
+import { TAB_STYLE_OPTIONS } from "../axes/tabs"
 import { DialPopover, DialTrigger, optionLabel } from "../dial"
 import type { Studio, StudioState } from "../state"
 import { AccordionPreview, AccordionSection } from "./accordion"
@@ -65,41 +38,6 @@ import {
 } from "./selection-controls"
 import { SlidersPreview, SlidersSection } from "./sliders"
 import { TablesPreview, TablesSection } from "./tables"
-
-export const COMPONENTS_DEFAULTS = {
-  ...BUTTON_DEFAULTS,
-  ...BUTTON_GROUP_DEFAULTS,
-  ...TOGGLE_DEFAULTS,
-  ...SEGMENTED_DEFAULTS,
-  ...INPUT_DEFAULTS,
-  ...INPUT_GROUP_DEFAULTS,
-  ...NUMBER_FIELD_DEFAULTS,
-  ...OTP_FIELD_DEFAULTS,
-  ...CHECKBOX_DEFAULTS,
-  ...RADIO_DEFAULTS,
-  ...SWITCH_DEFAULTS,
-  ...CHOICE_CARD_DEFAULTS,
-  ...PICKER_DEFAULTS,
-  ...CALENDAR_DEFAULTS,
-  ...SLIDER_DEFAULTS,
-  ...MENU_DEFAULTS,
-  ...DIALOG_DEFAULTS,
-  ...POPOVER_DEFAULTS,
-  ...TOOLTIP_DEFAULTS,
-  ...LINK_DEFAULTS,
-  ...TAB_DEFAULTS,
-  ...BREADCRUMB_DEFAULTS,
-  ...PAGINATION_DEFAULTS,
-  ...SKELETON_DEFAULTS,
-  ...SPINNER_DEFAULTS,
-  ...PROGRESS_DEFAULTS,
-  ...BADGE_DEFAULTS,
-  ...KBD_DEFAULTS,
-  ...AVATAR_DEFAULTS,
-  ...TABLE_DEFAULTS,
-  ...ACCORDION_DEFAULTS,
-  ...CHART_DEFAULTS,
-}
 
 interface Family {
   label: string

@@ -18,8 +18,10 @@ import {
   Dialog,
   DialogBody,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
 } from "@/registry/ui/dialog"
 import { Label } from "@/registry/ui/field"
 import { Modal } from "@/registry/ui/modal"
@@ -40,6 +42,11 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
+import {
+  publish,
+  useOpenSystem,
+  useUnpublishedChanges,
+} from "@/modules/studio/workspace"
 
 import { CodeOptions } from "./code-options"
 import { OPEN_IN_TARGETS } from "./targets"
@@ -85,17 +92,80 @@ export function ExportDialog({ children }: { children: ReactNode }) {
   )
 }
 
+/**
+ * Export installs the latest published version; with changes past it, the
+ * dialog asks to publish them first.
+ */
 function ExportDialogBody() {
+  const doc = useOpenSystem()
+  const unpublished = useUnpublishedChanges(doc)
+  const last = doc.published.at(-1)?.id
+  const [chosen, setChosen] = useState<string>()
+  const [publishing, setPublishing] = useState<"idle" | "busy" | "failed">(
+    "idle",
+  )
+
+  const snapshotId = chosen ?? (unpublished === false ? last : undefined)
+  if (snapshotId) return <ExportCommands snapshotId={snapshotId} />
+  if (unpublished === undefined) return null
+
+  function onPublish() {
+    setPublishing("busy")
+    publish(doc.id).then(setChosen, (error: unknown) => {
+      console.error(error)
+      setPublishing("failed")
+    })
+  }
+
+  return (
+    <>
+      <DialogHeader className="pr-8">
+        <DialogTitle>Publish your changes first?</DialogTitle>
+        <DialogDescription>
+          {last
+            ? "Export installs a published version. Your latest changes aren't published yet."
+            : "Export installs a published version of your design system."}
+        </DialogDescription>
+      </DialogHeader>
+      {publishing === "failed" && (
+        <DialogBody>
+          <p className="text-xs text-fg-danger">
+            Couldn't publish this design system.
+          </p>
+        </DialogBody>
+      )}
+      <DialogFooter className="flex-col sm:flex-col">
+        <Button
+          variant="primary"
+          className="w-full"
+          isPending={publishing === "busy"}
+          onPress={onPublish}
+        >
+          Publish and export
+        </Button>
+        {last && (
+          <Button
+            variant="secondary"
+            className="w-full"
+            onPress={() => setChosen(last)}
+          >
+            Export the published version
+          </Button>
+        )}
+      </DialogFooter>
+    </>
+  )
+}
+
+function ExportCommands({ snapshotId }: { snapshotId: string }) {
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
-  const urls = useExportUrl()
+  const url = useExportUrl(snapshotId)
 
   const command =
-    urls.status === "ready"
-      ? buildInitCommands(urls.url("init"))[packageManager] +
-        (mode === "new" ? ` --template ${template}` : "")
-      : undefined
+    buildInitCommands(url("init"))[packageManager] +
+    (mode === "new" ? ` --template ${template}` : "")
   const addCommand = buildInstallCommands(["button"])[packageManager]
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
@@ -154,58 +224,43 @@ function ExportDialogBody() {
           <CodeOptions />
         </Section>
 
-        {command ? (
-          <CommandBlock
-            commands={
-              mode === "new"
-                ? [{ label: "Scaffold", command }]
-                : [
-                    { label: "Register", command },
-                    { label: "Add components", command: addCommand },
-                  ]
-            }
-          />
-        ) : urls.status === "failed" ? (
-          <div className="flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-xs text-fg-muted">
-            Couldn't publish this design system.
-            <Button variant="quiet" size="xs" onPress={urls.retry}>
-              Retry
-            </Button>
-          </div>
-        ) : (
-          <p className="rounded-md border px-3 py-2 text-xs text-fg-muted">
-            Publishing your design system…
-          </p>
-        )}
+        <CommandBlock
+          commands={
+            mode === "new"
+              ? [{ label: "Scaffold", command }]
+              : [
+                  { label: "Register", command },
+                  { label: "Add components", command: addCommand },
+                ]
+          }
+        />
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
         <Button
           variant="primary"
           className="w-full"
-          isDisabled={!command}
-          onPress={() => command && copyToClipboard(command)}
+          onPress={() => copyToClipboard(command)}
         >
           {isCopied ? "Copied" : "Copy command"}
         </Button>
-        {mode === "new" && urls.status === "ready"
-          ? OPEN_IN_TARGETS.map((target) => (
-              <LinkButton
-                key={target.id}
-                variant="secondary"
-                href={target.href(urls.url)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-              >
-                <span className="flex items-center gap-1.5">
-                  Open in
-                  <span aria-label={target.name}>{target.wordmark}</span>
-                </span>
-                <ArrowUpRightIcon data-icon="inline-end" />
-              </LinkButton>
-            ))
-          : null}
+        {mode === "new" &&
+          OPEN_IN_TARGETS.map((target) => (
+            <LinkButton
+              key={target.id}
+              variant="secondary"
+              href={target.href(url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+            >
+              <span className="flex items-center gap-1.5">
+                Open in
+                <span aria-label={target.name}>{target.wordmark}</span>
+              </span>
+              <ArrowUpRightIcon data-icon="inline-end" />
+            </LinkButton>
+          ))}
       </DialogFooter>
     </>
   )
