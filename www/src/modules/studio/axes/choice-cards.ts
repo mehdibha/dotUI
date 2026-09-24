@@ -11,6 +11,8 @@
    switch card always trails its control. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const CHOICE_CARD_DEFAULTS = {
   cardSelected: "tint",
@@ -32,14 +34,16 @@ export const CONTROL_OPTIONS = [
   { value: "hidden", label: "Hidden" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
+  cardSelected: oneOf(SELECTED_OPTIONS),
+  cardControl: oneOf(CONTROL_OPTIONS),
+}
 
 export function resolveChoiceCards(state: StudioState): Resolved {
-  const selected = pick(SELECTED_OPTIONS, state.cardSelected, "tint")
+  const selected = state.cardSelected
   const box = {
     "card-selected": selected,
-    "card-control": pick(CONTROL_OPTIONS, state.cardControl, "start"),
+    "card-control": state.cardControl,
   }
   return {
     params: {

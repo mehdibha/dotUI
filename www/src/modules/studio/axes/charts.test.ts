@@ -3,12 +3,11 @@ import { describe, expect, it } from "vitest"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
-import { gridOption, paletteOption } from "./charts"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and the grid solid", () => {
-    const ds = resolveDesignSystem(DEFAULTS)
+    const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.color).toBeUndefined()
     expect(ds.componentParams.chart).toEqual({ grid: "solid" })
     expect(Object.keys(ds.tokens).some((k) => k.startsWith("--chart"))).toBe(
@@ -17,10 +16,7 @@ describe("charts axes", () => {
   })
 
   it("a hue-spread palette rides on the color recipe, completed from the default", () => {
-    const { color } = resolveDesignSystem({
-      ...DEFAULTS,
-      chartPalette: "vivid",
-    })
+    const { color } = resolveDesignSystem(parseState({ chartPalette: "vivid" }))
     expect(color).toEqual({ ...DEFAULT_COLOR_CONFIG, chartPalette: "vivid" })
     if (!color) throw new Error("unreachable")
     const vivid = resolveColorConfig(color).charts
@@ -29,20 +25,9 @@ describe("charts axes", () => {
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
   })
 
-  it("a stored value outside the options (the pre-rename `auto`) reads as the default", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      chartPalette: "auto",
-      chartGrid: "dotted",
-    })
-    expect(ds).toEqual(resolveDesignSystem(DEFAULTS))
-    expect(paletteOption("auto")).toBe("mono")
-    expect(gridOption("dotted")).toBe("solid")
-  })
-
   it("the grid is a param on the chart container", () => {
     for (const chartGrid of ["dashed", "none"]) {
-      const ds = resolveDesignSystem({ ...DEFAULTS, chartGrid })
+      const ds = resolveDesignSystem(parseState({ chartGrid }))
       expect(ds.componentParams.chart).toEqual({ grid: chartGrid })
       expect(ds.color).toBeUndefined()
     }

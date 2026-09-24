@@ -7,6 +7,8 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
+import { auto, BOOLEAN, COLOR, oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
@@ -29,6 +31,25 @@ export const SOURCE_OPTIONS = [
   { value: "neutral", label: "Neutral" },
   { value: "accent", label: "Accent" },
 ]
+
+export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
+export const NEUTRAL_HUE_RANGE = { min: 0, max: 360, step: 1 }
+/** Up to twice the engine's default lean; 0 is a pure gray. */
+export const NEUTRAL_TINT_RANGE = { min: 0, max: 2, step: 0.05 }
+
+export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
+  brand: COLOR,
+  buttonColor: oneOf(SOURCE_OPTIONS),
+  selectionColor: oneOf(SOURCE_OPTIONS),
+  neutralHue: auto(range(NEUTRAL_HUE_RANGE)),
+  successSeed: auto(COLOR),
+  warningSeed: auto(COLOR),
+  dangerSeed: auto(COLOR),
+  selectionSeed: auto(COLOR),
+  vividness: range(VIVIDNESS_RANGE),
+  neutralTint: range(NEUTRAL_TINT_RANGE),
+  preserveSeed: BOOLEAN,
+}
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.

@@ -12,7 +12,7 @@ import { describe, expect, test } from "vitest"
 import { buttonPublishable } from "@/publisher/__fixtures__/button-publishable"
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 import { publish } from "@/publisher/publish"
-import { DEFAULTS } from "@/modules/studio/axes"
+import { DEFAULT_STATE } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 import { decodePreset, encodePreset } from "./codec"
@@ -23,11 +23,13 @@ const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 async function exportButton(codeOptions: typeof DEFAULT_CODE_OPTIONS) {
   // 1. Encode the user's design system (with code options) to a preset blob.
-  const encoded = encodePreset({ state: DEFAULTS, codeOptions })
+  const encoded = encodePreset({ state: DEFAULT_STATE, codeOptions })
   expect(encoded, "non-default code options must produce a preset").toBeTruthy()
 
   // 2. Decode it back the way a /r/* route does.
-  const decoded = decodePreset(encoded as string)
+  const result = decodePreset(encoded as string)
+  if (!result.ok) throw new Error("the preset must decode")
+  const decoded = result.preset
   const ds = resolveDesignSystem(decoded.state)
 
   // 3. Publish + format exactly like routes/r/$name.tsx.

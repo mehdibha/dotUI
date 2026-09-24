@@ -39,8 +39,8 @@ const routeApi = getRouteApi("/_app/studio")
 /* The codec is canonical (encode∘decode = identity), but states from storage
    may predate it — one roundtrip normalizes those. */
 function canon(state: string): string {
-  if (!state) return ""
-  return encodePreset(decodePreset(state)) ?? ""
+  const decoded = state ? decodePreset(state) : undefined
+  return (decoded?.ok && encodePreset(decoded.preset)) || ""
 }
 
 /* Origin is the panel's baseline: what first-time users start on, what the
@@ -88,11 +88,19 @@ export function StudioPanel({ className }: { className?: string }) {
     const mine = {
       id: "mine",
       title: "My systems",
-      items: presets.map((saved) => ({
-        id: saved.id,
-        name: saved.name,
-        designSystem: resolveDesignSystem(decodePreset(saved.state).state),
-      })),
+      // A saved system that no longer validates stays out of the list.
+      items: presets.flatMap((saved) => {
+        const decoded = decodePreset(saved.state)
+        return decoded.ok
+          ? [
+              {
+                id: saved.id,
+                name: saved.name,
+                designSystem: resolveDesignSystem(decoded.preset.state),
+              },
+            ]
+          : []
+      }),
     }
     const featured = {
       id: "featured",

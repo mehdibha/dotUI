@@ -10,7 +10,10 @@
    buttons' source. The color-slider stays out: its track is a gradient
    swatch and its thumb the shared color-thumb, so no axis applies. */
 
+import { SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SLIDER_DEFAULTS = {
   sliderThumb: "circle",
@@ -34,16 +37,19 @@ export const TRACK_OPTIONS = [
   { value: "thick", label: "Thick" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
+  sliderThumb: oneOf(THUMB_OPTIONS),
+  sliderTrack: oneOf(TRACK_OPTIONS),
+  sliderColor: oneOf(SOURCE_OPTIONS),
+}
 
 export function resolveSliders(state: StudioState): Resolved {
   const fill = FILL_TOKENS[state.sliderColor]
   return {
     params: {
       slider: {
-        thumb: pick(THUMB_OPTIONS, state.sliderThumb, "circle"),
-        track: pick(TRACK_OPTIONS, state.sliderTrack, "thin"),
+        thumb: state.sliderThumb,
+        track: state.sliderTrack,
       },
     },
     tokens:

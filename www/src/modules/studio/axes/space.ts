@@ -7,6 +7,8 @@
    `--spacing`, written on `:root` — live and in the exported theme alike. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SPACE_DEFAULTS = {
   density: "default",
@@ -54,6 +56,11 @@ export type DensityTier = (typeof DENSITY_TIERS)[number]
 
 export const densityTier = (id: string): DensityTier =>
   DENSITY_TIERS.find((tier) => tier.id === id) ?? DENSITY_TIERS[1]
+
+export const SPACE_SCHEMA: ChapterSchema<typeof SPACE_DEFAULTS> = {
+  density: oneOf(DENSITY_TIERS.map((tier) => ({ value: tier.id }))),
+  spacingUnit: range(UNIT_RANGE),
+}
 
 export function resolveSpace(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}

@@ -32,6 +32,8 @@
    `light-dark()`; only what differs from the defaults is emitted. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
@@ -388,6 +390,15 @@ function surfaceTokens(state: StudioState): Record<string, string> {
 }
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
+
+export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
+  surfaceStrategy: oneOf(STRATEGY_OPTIONS),
+  surfaceDepth: oneOf(DEPTH_OPTIONS),
+  surfaceCanvas: oneOf(CANVAS_OPTIONS),
+  surfaceMaterial: oneOf(MATERIAL_OPTIONS),
+  lightBg: range(LIGHT_BG_RANGE),
+  darkBg: range(DARK_BG_RANGE),
+}
 
 export function resolveSurfaces(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}

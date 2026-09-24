@@ -1,7 +1,8 @@
 /* The studio's design-system state, and how it becomes a design system.
 
    Each axis module owns one chapter's slice: its defaults (the state shape),
-   its option vocabularies, and `resolve` — the pure mapping from that slice
+   its option vocabularies, the schema raw values are validated against, and
+   `resolve` — the pure mapping from that slice
    to what the engine consumes: global tokens (CSS vars), per-component
    registry params, the density tier, the color recipe, the icon library. No
    React here: the same resolver runs in the panel, the preview, the docs
@@ -43,6 +44,8 @@ import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as radio from "./radio"
+import { checkAxisValue } from "./schema"
+import type { AxisSchema } from "./schema"
 import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
@@ -125,7 +128,113 @@ export const DEFAULTS = {
   ...tables.TABLE_DEFAULTS,
 }
 
-export type StudioState = typeof DEFAULTS
+export type StudioStateInput = typeof DEFAULTS
+
+export const SCHEMA = {
+  ...color.COLOR_SCHEMA,
+  ...type.TYPE_SCHEMA,
+  ...icons.ICON_SCHEMA,
+  ...shape.SHAPE_SCHEMA,
+  ...space.SPACE_SCHEMA,
+  ...surfaces.SURFACE_SCHEMA,
+  ...focus.FOCUS_SCHEMA,
+  ...cursor.CURSOR_SCHEMA,
+  ...selection.SELECTION_SCHEMA,
+  ...scrollbars.SCROLLBAR_SCHEMA,
+  ...disabled.DISABLED_SCHEMA,
+  ...invalid.INVALID_SCHEMA,
+  ...motion.MOTION_SCHEMA,
+  ...mobile.MOBILE_SCHEMA,
+  ...charts.CHART_SCHEMA,
+  ...links.LINK_SCHEMA,
+  ...alert.ALERT_SCHEMA,
+  ...toast.TOAST_SCHEMA,
+  ...skeleton.SKELETON_SCHEMA,
+  ...spinner.SPINNER_SCHEMA,
+  ...progress.PROGRESS_SCHEMA,
+  ...buttons.BUTTON_SCHEMA,
+  ...buttonGroups.BUTTON_GROUP_SCHEMA,
+  ...toggles.TOGGLE_SCHEMA,
+  ...segmentedControl.SEGMENTED_SCHEMA,
+  ...switchAxis.SWITCH_SCHEMA,
+  ...checkbox.CHECKBOX_SCHEMA,
+  ...radio.RADIO_SCHEMA,
+  ...choiceCards.CHOICE_CARD_SCHEMA,
+  ...inputs.INPUT_SCHEMA,
+  ...inputGroups.INPUT_GROUP_SCHEMA,
+  ...numberField.NUMBER_FIELD_SCHEMA,
+  ...otpField.OTP_FIELD_SCHEMA,
+  ...pickers.PICKER_SCHEMA,
+  ...calendar.CALENDAR_SCHEMA,
+  ...sliders.SLIDER_SCHEMA,
+  ...menus.MENU_SCHEMA,
+  ...dialogs.DIALOG_SCHEMA,
+  ...popovers.POPOVER_SCHEMA,
+  ...tooltips.TOOLTIP_SCHEMA,
+  ...tabs.TAB_SCHEMA,
+  ...accordion.ACCORDION_SCHEMA,
+  ...breadcrumbs.BREADCRUMB_SCHEMA,
+  ...pagination.PAGINATION_SCHEMA,
+  ...badges.BADGE_SCHEMA,
+  ...kbd.KBD_SCHEMA,
+  ...avatars.AVATAR_SCHEMA,
+  ...tables.TABLE_SCHEMA,
+} satisfies Record<keyof typeof DEFAULTS, AxisSchema>
+
+// Every schema key is a state key; `satisfies` covers the reverse.
+type StateKey<K extends keyof StudioStateInput> = K
+type SchemaKey = StateKey<keyof typeof SCHEMA>
+
+declare const VALID: unique symbol
+
+/** Axis values that passed `validate()` — the only way to mint one. */
+export type StudioState = StudioStateInput & { readonly [VALID]: true }
+
+export interface StateIssue {
+  key: string
+  problem: string
+}
+
+export type Validation =
+  | { ok: true; state: StudioState }
+  | { ok: false; issues: StateIssue[] }
+
+/** Checks raw state against every axis schema. A missing key takes the axis
+ *  default; an unknown key or a bad value is an issue — nothing is salvaged. */
+export function validate(raw: unknown): Validation {
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw))
+    return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
+  const input = raw as Record<string, unknown>
+  const issues: StateIssue[] = []
+  for (const key of Object.keys(input))
+    if (!Object.hasOwn(SCHEMA, key))
+      issues.push({ key, problem: "unknown key" })
+  const state: Record<string, unknown> = {}
+  for (const [key, schema] of Object.entries(SCHEMA)) {
+    const value = Object.hasOwn(input, key)
+      ? input[key]
+      : DEFAULTS[key as SchemaKey]
+    const problem = checkAxisValue(schema, value)
+    if (problem) issues.push({ key, problem })
+    else state[key] = value
+  }
+  return issues.length > 0
+    ? { ok: false, issues }
+    : { ok: true, state: state as StudioState }
+}
+
+export const formatIssues = (issues: StateIssue[]) =>
+  issues.map(({ key, problem }) => `${key || "state"}: ${problem}`).join("; ")
+
+/** `validate()` for sources that must be valid (built-ins, tests): throws. */
+export function parseState(raw: unknown): StudioState {
+  const result = validate(raw)
+  if (!result.ok)
+    throw new Error(`Invalid studio state — ${formatIssues(result.issues)}`)
+  return result.state
+}
+
+export const DEFAULT_STATE = parseState({})
 
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   color.resolveColor,

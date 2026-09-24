@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import {
   NO_SHADOW,
   shadowCss,
@@ -30,7 +30,7 @@ const SHADOW_LG =
   "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
 
 const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem({ ...DEFAULTS, ...overrides }).tokens
+  resolveDesignSystem(parseState({ ...overrides })).tokens
 
 describe("surfaces", () => {
   test("defaults emit no surface tokens", () => {
@@ -39,7 +39,7 @@ describe("surfaces", () => {
   })
 
   test("the default recipe is the registry's look (card none · popover md · modal lg)", () => {
-    const { card, popover, modal } = surfaceRecipe(DEFAULTS)
+    const { card, popover, modal } = surfaceRecipe(DEFAULT_STATE)
     const palette = { step: (s: string) => s, hairline: "" }
     const plain = (pair: PerMode<SurfaceColor>) =>
       surfaceColorCss(pair.light, palette)

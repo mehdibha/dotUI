@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, DEFAULTS, parseState } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
   buildColorConfig,
@@ -13,22 +13,23 @@ import {
 
 describe("color axis", () => {
   it("the defaults are the shipped palette, and resolve to no recipe", () => {
-    expect(buildColorConfig(DEFAULTS)).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(resolveDesignSystem(DEFAULTS).color).toBeUndefined()
+    expect(buildColorConfig(DEFAULT_STATE)).toEqual(DEFAULT_COLOR_CONFIG)
+    expect(resolveDesignSystem(DEFAULT_STATE).color).toBeUndefined()
   })
 
   it("maps seeds and engine axes onto ColorConfig, absent when default", () => {
-    const { color } = resolveDesignSystem({
-      ...DEFAULTS,
-      brand: "#5e6ad2",
-      ...withSource(SOLID_LEAVES, "accent"),
-      successSeed: "#16a34a",
-      selectionSeed: "#0072f5",
-      neutralHue: 250,
-      neutralTint: 2,
-      vividness: 1.3,
-      preserveSeed: true,
-    })
+    const { color } = resolveDesignSystem(
+      parseState({
+        brand: "#5e6ad2",
+        ...withSource(SOLID_LEAVES, "accent"),
+        successSeed: "#16a34a",
+        selectionSeed: "#0072f5",
+        neutralHue: 250,
+        neutralTint: 2,
+        vividness: 1.3,
+        preserveSeed: true,
+      }),
+    )
     expect(color).toEqual({
       v: 2,
       seeds: { accent: "#5e6ad2", success: "#16a34a", selection: "#0072f5" },
@@ -43,7 +44,7 @@ describe("color axis", () => {
 
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
-      buildColorConfig({ ...DEFAULTS, ...state }).selection
+      buildColorConfig(parseState({ ...state })).selection
     expect(source({ selectionColor: "neutral" })).toBeUndefined()
     expect(source({ selectionColor: "accent" })).toBe("accent")
     expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
@@ -54,7 +55,7 @@ describe("color axis", () => {
 
   it("maps the backgrounds onto per-polarity backgrounds (0 dark = OLED)", () => {
     expect(
-      resolveDesignSystem({ ...DEFAULTS, lightBg: 97, darkBg: 0 }).color
+      resolveDesignSystem(parseState({ lightBg: 97, darkBg: 0 })).color
         ?.background,
     ).toEqual({ light: 97, dark: "oled" })
   })

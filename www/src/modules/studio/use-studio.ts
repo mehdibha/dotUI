@@ -18,6 +18,7 @@ import {
 import type { StudioPreset } from "@/modules/studio/preset/codec"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
+import { formatIssues } from "./axes"
 import type { StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"
 
@@ -50,7 +51,10 @@ function decodeCached(encoded: string | undefined): StudioPreset {
   if (!encoded) return DEFAULT_PRESET
   let preset = decodeCache.get(encoded)
   if (!preset) {
-    preset = decodePreset(encoded)
+    const result = decodePreset(encoded)
+    if (!result.ok)
+      console.warn(`Ignoring ?preset=: ${formatIssues(result.issues)}`)
+    preset = result.ok ? result.preset : DEFAULT_PRESET
     decodeCache.set(encoded, preset)
   }
   return preset

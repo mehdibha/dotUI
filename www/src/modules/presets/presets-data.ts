@@ -1,7 +1,7 @@
 import { toOklch } from "@dotui/colors"
 
-import { DEFAULTS } from "@/modules/studio/axes"
-import type { StudioState } from "@/modules/studio/axes"
+import { parseState } from "@/modules/studio/axes"
+import type { StudioState, StudioStateInput } from "@/modules/studio/axes"
 import { SOLID_LEAVES, withSource } from "@/modules/studio/axes/color"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
@@ -34,10 +34,10 @@ const grayHue = (hex: string) => Math.round(toOklch(hex).h ?? 0)
 
 function definePreset(
   preset: Omit<Preset, "state" | "designSystem"> & {
-    state: Partial<StudioState>
+    state: Partial<StudioStateInput>
   },
 ): Preset {
-  const state = { ...DEFAULTS, ...preset.state }
+  const state = parseState(preset.state)
   return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 

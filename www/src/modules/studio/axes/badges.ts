@@ -12,6 +12,8 @@
    nothing: badges are full-round, tags keep their `radius-control` corners. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const BADGE_DEFAULTS = {
   badgeStyle: "solid",
@@ -36,11 +38,13 @@ const SHAPE_TOKENS: Record<string, string> = {
   rounded: "var(--radius-sm)",
 }
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const BADGE_SCHEMA: ChapterSchema<typeof BADGE_DEFAULTS> = {
+  badgeStyle: oneOf(STYLE_OPTIONS),
+  badgeShape: oneOf(SHAPE_OPTIONS),
+}
 
 export function resolveBadges(state: StudioState): Resolved {
-  const style = pick(STYLE_OPTIONS, state.badgeStyle, "solid")
+  const style = state.badgeStyle
   const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.badgeShape]
   if (radius) {

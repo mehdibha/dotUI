@@ -1,19 +1,18 @@
 import { describe, expect, test } from "vitest"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, parseState } from "."
 import { resolveDesignSystem } from "../resolve"
 
 describe("disabled", () => {
   test("solid is the registry's own look: no tokens", () => {
-    const { tokens } = resolveDesignSystem(DEFAULTS)
+    const { tokens } = resolveDesignSystem(DEFAULT_STATE)
     expect(Object.keys(tokens).some((k) => k.includes("disabled"))).toBe(false)
   })
 
   test("fade unsets every recolor token and dims", () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      disabledTreatment: "fade",
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({ disabledTreatment: "fade" }),
+    )
     expect(tokens["--disabled-opacity"]).toBe("0.5")
     for (const name of [
       "--disabled-bg",
@@ -28,10 +27,9 @@ describe("disabled", () => {
   })
 
   test("alpha mixes ink at fixed alphas, no opacity", () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      disabledTreatment: "alpha",
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({ disabledTreatment: "alpha" }),
+    )
     expect(tokens["--disabled-opacity"]).toBeUndefined()
     expect(tokens["--disabled-bg"]).toContain("12%")
     expect(tokens["--disabled-fg"]).toContain("38%")
@@ -41,17 +39,12 @@ describe("disabled", () => {
 
 describe("invalid", () => {
   test("drives the field error param; the bar carries its vars", () => {
-    const plain = resolveDesignSystem(DEFAULTS)
+    const plain = resolveDesignSystem(DEFAULT_STATE)
     expect(plain.componentParams.field?.error).toBe("border")
     expect(plain.tokens["--studio-field-error-bar"]).toBeUndefined()
 
-    const bar = resolveDesignSystem({ ...DEFAULTS, inputError: "bar" })
+    const bar = resolveDesignSystem(parseState({ inputError: "bar" }))
     expect(bar.componentParams.field?.error).toBe("bar")
     expect(bar.tokens["--studio-field-error-bar"]).toBe("3px")
-
-    expect(
-      resolveDesignSystem({ ...DEFAULTS, inputError: "nope" }).componentParams
-        .field?.error,
-    ).toBe("border")
   })
 })

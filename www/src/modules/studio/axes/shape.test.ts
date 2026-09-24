@@ -1,11 +1,11 @@
 import { describe, expect, test } from "vitest"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import { activeCharacter, SHAPE_CHARACTERS } from "./shape"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem({ ...DEFAULTS, ...overrides })
+  resolveDesignSystem(parseState({ ...overrides }))
 
 const vector = (id: string) =>
   SHAPE_CHARACTERS.find((character) => character.id === id)!.vector
@@ -13,7 +13,7 @@ const vector = (id: string) =>
 describe("shape axis", () => {
   test("defaults emit nothing", () => {
     expect(resolve({}).tokens).toEqual({})
-    expect(activeCharacter(DEFAULTS)).toBe("standard")
+    expect(activeCharacter(DEFAULT_STATE)).toBe("standard")
   })
 
   test("the base lands on --radius in rem", () => {
@@ -56,7 +56,7 @@ describe("shape axis", () => {
   })
 
   test("a hand-set role reads as custom", () => {
-    expect(activeCharacter({ ...DEFAULTS, rolePanel: "2xl" })).toBeUndefined()
+    expect(activeCharacter(parseState({ rolePanel: "2xl" }))).toBeUndefined()
     expect(resolve({ rolePanel: "2xl" }).tokens).toEqual({
       "--studio-radius-panel": "var(--radius-2xl)",
     })

@@ -14,7 +14,11 @@ import { STEPS, toOklch } from "@dotui/colors"
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
 
-import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
+import {
+  buildColorConfig,
+  COLOR_DEFAULTS,
+  VIVIDNESS_RANGE,
+} from "../axes/color"
 import {
   DialColor,
   DialGap,
@@ -90,9 +94,9 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
               label="Vividness"
               value={state.vividness}
               onChange={set("vividness")}
-              minValue={0}
-              maxValue={2}
-              step={0.05}
+              minValue={VIVIDNESS_RANGE.min}
+              maxValue={VIVIDNESS_RANGE.max}
+              step={VIVIDNESS_RANGE.step}
               format={(v) => `${v.toFixed(2)}×`}
             />
           </>

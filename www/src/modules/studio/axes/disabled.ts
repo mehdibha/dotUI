@@ -11,6 +11,8 @@
    recolor treatments re-point them. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const DISABLED_DEFAULTS = {
   disabledTreatment: "solid",
@@ -49,6 +51,10 @@ const TREATMENT_TOKENS: Record<string, Record<string, string>> = {
     "--disabled-unselected-bg": ink(12),
     "--color-primary-disabled": ink(12),
   },
+}
+
+export const DISABLED_SCHEMA: ChapterSchema<typeof DISABLED_DEFAULTS> = {
+  disabledTreatment: oneOf(TREATMENT_OPTIONS),
 }
 
 export function resolveDisabled(state: StudioState): Resolved {

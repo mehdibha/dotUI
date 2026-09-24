@@ -7,8 +7,9 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { CURSOR_DEFAULTS } from "../axes/cursor"
+import { CURSOR_DEFAULTS, CURSOR_OPTIONS } from "../axes/cursor"
 import { STYLE_OPTIONS } from "../axes/scrollbars"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import {
   DialPopover,
   DialSegmented,
@@ -41,55 +42,38 @@ function Glyph({
   )
 }
 
-const cursor = (
-  value: string,
-  label: string,
-  glyph: React.ReactNode,
-): DialOption => ({
-  value,
-  label: (
-    <>
-      <Glyph>{glyph}</Glyph>
-      {label}
-    </>
-  ),
-})
+const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
+  default: <ArrowCursor />,
+  inherit: <ArrowCursor />,
+  pointer: <HandCursor />,
+  progress: <ProgressCursor />,
+  wait: <WaitCursor />,
+  grab: <OpenHandCursor />,
+  "not-allowed": <NotAllowedCursor />,
+}
 
-const CURSOR_ROWS = [
-  {
-    key: "cursorControls",
-    label: "Controls",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("pointer", "Hand", <HandCursor />),
-    ],
-  },
-  {
-    key: "cursorPending",
-    label: "Pending",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("progress", "Progress", <ProgressCursor />),
-      cursor("wait", "Wait", <WaitCursor />),
-    ],
-  },
-  {
-    key: "cursorDragging",
-    label: "Dragging",
-    options: [
-      cursor("inherit", "Arrow", <ArrowCursor />),
-      cursor("grab", "Grab", <OpenHandCursor />),
-    ],
-  },
-  {
-    key: "cursorDisabled",
-    label: "Disabled",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("not-allowed", "Blocked", <NotAllowedCursor />),
-    ],
-  },
-] as const
+const CURSOR_ROWS = (
+  [
+    ["cursorControls", "Controls"],
+    ["cursorPending", "Pending"],
+    ["cursorDragging", "Dragging"],
+    ["cursorDisabled", "Disabled"],
+  ] as const
+).map(([key, label]) => ({
+  key,
+  label,
+  options: CURSOR_OPTIONS[key].map(
+    (option): DialOption => ({
+      value: option.value,
+      label: (
+        <>
+          <Glyph>{CURSOR_GLYPHS[option.value]}</Glyph>
+          {option.label}
+        </>
+      ),
+    }),
+  ),
+}))
 
 /* ------------------------------- Scrollbars ------------------------------- */
 
@@ -153,26 +137,18 @@ function ScrollbarGlyph({ kind }: { kind: string }) {
 
 /* Painted words, not cursors: the option is the highlight itself. The blue
    depicts the OS default, which is literal like the cursor drawings. */
-const HIGHLIGHT_OPTIONS = [
-  {
-    value: "accent",
-    label: "Accent",
-    preview: (
-      <span className="rounded-xs bg-text-selection px-1 text-[11px] text-fg-on-text-selection">
-        Aa
-      </span>
-    ),
-  },
-  {
-    value: "browser",
-    label: "Browser",
-    preview: (
-      <span className="rounded-xs bg-[#B3D7FF] px-1 text-[11px] text-[#1B1B1F]">
-        Aa
-      </span>
-    ),
-  },
-]
+const HIGHLIGHT_PREVIEWS: Record<string, React.ReactNode> = {
+  accent: (
+    <span className="rounded-xs bg-text-selection px-1 text-[11px] text-fg-on-text-selection">
+      Aa
+    </span>
+  ),
+  browser: (
+    <span className="rounded-xs bg-[#B3D7FF] px-1 text-[11px] text-[#1B1B1F]">
+      Aa
+    </span>
+  ),
+}
 
 /* --------------------------------- Section --------------------------------- */
 
@@ -212,7 +188,7 @@ export function BrowserSection({ studio }: { studio: Studio }) {
               label={row.label}
               value={state[row.key]}
               onChange={set(row.key)}
-              options={[...row.options]}
+              options={row.options}
             />
           ))}
         </DialPopover>
@@ -226,7 +202,10 @@ export function BrowserSection({ studio }: { studio: Studio }) {
         label="Highlight"
         value={state.selectionHighlight}
         onChange={set("selectionHighlight")}
-        options={HIGHLIGHT_OPTIONS}
+        options={HIGHLIGHT_OPTIONS.map((option) => ({
+          ...option,
+          preview: HIGHLIGHT_PREVIEWS[option.value],
+        }))}
       />
       <DialSelect
         label="Scrollbars"
