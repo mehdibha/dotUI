@@ -1,7 +1,7 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import type { ReactNode } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import type { ReactNode, Ref } from "react"
 import { CheckIcon, PlusIcon, SearchIcon } from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
@@ -29,8 +29,13 @@ import type { DesignSystem } from "@/modules/studio/preset"
 interface PresetPickerItem {
   id: string
   name: string
-  /** Themes the option's preview. */
-  designSystem: DesignSystem
+  /** The row's dot. */
+  swatch: string
+  description?: string
+  /** The brand a preset recreates, disclaimed under its description. */
+  inspiredBy?: string
+  /** Themes the flyout — called only for the previewed item. */
+  resolve: () => DesignSystem
 }
 
 interface PresetPickerSection {
@@ -50,7 +55,7 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
-  /** Pin the previews to one mode (docs previews pin light/dark). */
+  /** Pin the flyout to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
@@ -62,7 +67,7 @@ interface PresetPickerProps {
 
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
- * panel: a searchable list of plain rows — an accent dot and the preset's name.
+ * panel: a searchable list of plain rows — a swatch dot and the preset's name.
  * Popover on desktop, drawer on mobile.
  *
  * `withPreview` adds a detached flyout card — a big tooltip in the previewed
@@ -324,7 +329,6 @@ function PresetPickerContent({
                     isHovered={isHovered}
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
-                    forcedMode={previewMode}
                     actions={renderItemActions?.(item)}
                   />
                 )}
@@ -348,7 +352,7 @@ function PresetPickerContent({
       >
         {list}
       </Command>
-      {flyout && (
+      {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
           isVisible={engaged}
@@ -359,11 +363,7 @@ function PresetPickerContent({
   )
 }
 
-/**
- * One option: the preset's accent as a dot and its name. The scope only themes
- * the dot — the row itself is the site's, so hover and highlight come from the
- * list like any other command item.
- */
+/** One option: the preset's swatch and its name, in the site's own theme. */
 function PresetOptionRow({
   item,
   isSelected,
@@ -371,7 +371,6 @@ function PresetOptionRow({
   isHovered,
   onShow,
   onHide,
-  forcedMode,
   actions,
 }: {
   item: PresetPickerItem
@@ -380,11 +379,8 @@ function PresetOptionRow({
   isHovered: boolean
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
-  forcedMode?: "light" | "dark"
   actions?: ReactNode
 }) {
-  const { designSystem } = item
-
   // Route this row to the flyout: the pointer and the keyboard highlight both
   // land here, and whichever spoke last wins. Losing both signals the flyout
   // to close — unless another row claims it first.
@@ -409,27 +405,9 @@ function PresetOptionRow({
 
   return (
     <>
-      <DesignSystemProvider
-        scoped
-        params={designSystem.componentParams}
-        tokens={designSystem.tokens}
-        density={designSystem.density}
-        color={designSystem.color}
-        icons={designSystem.icons}
-        forcedMode={forcedMode}
-      >
-        <span
-          ref={rowRef}
-          aria-hidden
-          // The hairline keeps a near-white or near-black accent from
-          // vanishing into the row it sits on.
-          className="size-2.5 shrink-0 rounded-full bg-accent ring-1 ring-fg/10 ring-inset"
-        />
-      </DesignSystemProvider>
+      <Swatch ref={rowRef} color={item.swatch} />
       <span className="min-w-0 flex-1 truncate">{item.name}</span>
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
-      {/* Site chrome, deliberately outside the preset scope: the actions menu
-          belongs to the site, not to the system it acts on. */}
       {actions ? (
         <span className="absolute top-1/2 right-1 -translate-y-1/2">
           {actions}
@@ -454,13 +432,11 @@ function PresetPreviewFlyout({
   isVisible,
   forcedMode,
 }: {
-  item?: PresetPickerItem
+  item: PresetPickerItem
   isVisible: boolean
   forcedMode?: "light" | "dark"
 }) {
-  if (!item) return null
-
-  const { designSystem } = item
+  const designSystem = useMemo(() => item.resolve(), [item])
 
   return (
     <DesignSystemProvider
@@ -482,14 +458,22 @@ function PresetPreviewFlyout({
           !isVisible && "hidden",
         )}
       >
-        <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
-          <p className="min-w-0 flex-1 truncate font-heading text-base leading-tight font-semibold text-fg">
-            {item.name}
-          </p>
-          <span
-            aria-hidden
-            className="size-2.5 shrink-0 rounded-full bg-accent ring-1 ring-fg/10 ring-inset"
-          />
+        <div className="flex shrink-0 flex-col gap-1 border-b p-3.5">
+          <div className="flex items-center gap-3">
+            <p className="min-w-0 flex-1 truncate font-heading text-base leading-tight font-semibold text-fg">
+              {item.name}
+            </p>
+            <Swatch color={item.swatch} />
+          </div>
+          {item.description && (
+            <p className="text-sm text-fg-muted">{item.description}</p>
+          )}
+          {item.inspiredBy && (
+            <p className="text-xs text-fg-muted">
+              Inspired by {item.inspiredBy}. Not affiliated with{" "}
+              {item.inspiredBy}.
+            </p>
+          )}
         </div>
         <Controls
           inert
@@ -497,6 +481,19 @@ function PresetPreviewFlyout({
         />
       </div>
     </DesignSystemProvider>
+  )
+}
+
+function Swatch({ ref, color }: { ref?: Ref<HTMLSpanElement>; color: string }) {
+  return (
+    <span
+      ref={ref}
+      aria-hidden
+      // The hairline keeps a near-white or near-black swatch from vanishing
+      // into the surface it sits on.
+      className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+      style={{ background: color }}
+    />
   )
 }
 

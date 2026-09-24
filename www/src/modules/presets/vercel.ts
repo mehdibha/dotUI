@@ -1,0 +1,152 @@
+import { definePreset } from "./preset"
+
+export const vercel = definePreset({
+  id: "vercel",
+  name: "Vercel",
+  description: "Monochrome ink, Geist blue accents.",
+  swatch: "#8f8f8f",
+  inspiredBy: "Vercel",
+  state: {
+    // Color
+    // Geist blue for focus and links; the solids stay ink via the neutral leaves.
+    brand: "#0072f5",
+    buttonColor: "neutral",
+    selectionColor: "neutral",
+    neutralHue: null,
+    successSeed: "#45a557",
+    warningSeed: "#ffb224",
+    dangerSeed: "#e5484d",
+    selectionSeed: "",
+    vividness: 1,
+    neutralTint: 0,
+    preserveSeed: false,
+
+    // Typography
+    headingFont: "",
+    bodyFont: "Geist",
+    monoFont: "Geist Mono",
+
+    // Icons
+    iconLibrary: "lucide",
+    // Geist's 1.5/16 stroke on Lucide's 24 grid.
+    iconStroke: 2.25,
+    iconWeight: "regular",
+
+    // Shape
+    radiusPx: 8,
+    roleControl: "md",
+    roleItem: "md",
+    roleSurface: "xl",
+    rolePanel: "xl",
+
+    // Space
+    // Geist's default control is 36px.
+    density: "comfortable",
+    spacingUnit: 4,
+
+    // Surfaces
+    surfaceStrategy: "hairline",
+    surfaceDepth: "subtle",
+    surfaceCanvas: "same",
+    surfaceMaterial: "solid",
+    lightBg: 100,
+    darkBg: 0,
+
+    // Browser
+    cursorControls: "pointer",
+    cursorPending: "default",
+    cursorDragging: "inherit",
+    cursorDisabled: "not-allowed",
+    selectionUiText: "none",
+    selectionHighlight: "accent",
+    scrollbarStyle: "native",
+
+    // States
+    focusColor: "accent",
+    focusStyle: "ring",
+    focusWidth: 2,
+    focusOffset: "gap",
+    focusGap: 2,
+    focusHaloStrength: 45,
+    focusInputStyle: "halo",
+    focusInputWidth: 3,
+    focusInputStrength: 30,
+    focusInputBorderWidth: 1,
+    disabledTreatment: "solid",
+    inputError: "border",
+
+    // Motion
+    motionCharacter: "standard",
+    motionSpeed: 1,
+    motionOverlay: "scale",
+    motionState: "smooth",
+
+    // Mobile
+    mobilePickers: "drawer",
+    mobileDialogs: "center",
+
+    // Components
+    chartPalette: "mono",
+    chartGrid: "solid",
+    linkUnderline: "never",
+    linkColor: "accent",
+    skeletonAnimation: "shimmer",
+    spinnerStyle: "blades",
+    progressTrack: "thin",
+    progressIndeterminate: "slide",
+    progressGap: false,
+    buttonStyle: "flat",
+    buttonRadius: "auto",
+    buttonHover: "dim",
+    buttonPress: "none",
+    groupSeparator: "auto",
+    toggleSelected: "fill",
+    segmentedSelected: "flat",
+    segmentedTrack: "outline",
+    switchColor: "accent",
+    checkboxColor: "neutral",
+    checkCorner: "rounded",
+    radioColor: "neutral",
+    cardSelected: "outline-tint",
+    cardControl: "end",
+    inputStyle: "outline",
+    inputHover: "border",
+    addonLayout: "inside",
+    addonDivider: "hairline",
+    numberLayout: "right",
+    otpStyle: "group",
+    pickerCaret: "chevron",
+    calendarDayShape: "rounded",
+    calendarToday: "none",
+    calendarWeekdays: "single",
+    sliderThumb: "circle",
+    sliderTrack: "thin",
+    sliderColor: "neutral",
+    menuIndicator: "check-end",
+    menuHighlight: "neutral",
+    menuInset: "inset",
+    menuLabels: "sentence",
+    menuSearch: "prompt",
+    menuScale: "default",
+    dialogBackdrop: "dim",
+    dialogPosition: "center",
+    popoverTip: "none",
+    popoverHeader: "title",
+    tooltipStyle: "inverted",
+    tabStyle: "line",
+    tabsColor: "neutral",
+    accordionContainer: "divided",
+    accordionMarker: "chevron",
+    accordionMarkerPosition: "trailing",
+    breadcrumbSeparator: "chevron",
+    breadcrumbTone: "muted",
+    paginationCurrent: "outline",
+    badgeStyle: "solid",
+    badgeShape: "pill",
+    kbdTreatment: "chip",
+    avatarShape: "circle",
+    avatarFallback: "neutral",
+    tableSeparation: "lines",
+    tableHeader: "plain",
+  },
+})

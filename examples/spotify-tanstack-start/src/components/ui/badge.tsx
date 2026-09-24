@@ -2,7 +2,7 @@ import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const badgeVariants = tv({
-  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-sm text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
   variants: {
     appearance: {
       solid: "bg-(--badge-fill) text-(--badge-fg)",
@@ -31,7 +31,7 @@ const badgeVariants = tv({
     },
   },
   defaultVariants: {
-    appearance: "solid",
+    appearance: "soft",
     variant: "neutral",
     size: "md",
   },

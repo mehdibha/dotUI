@@ -9,7 +9,7 @@
  * Usage:  tsx scripts/encode-preset.ts origin spotify
  */
 
-import { PRESETS } from "@/modules/presets/presets-data"
+import { getPreset, PRESETS } from "@/modules/presets"
 import { encodeState } from "@/modules/studio/preset/codec"
 
 const ids = process.argv.slice(2)
@@ -20,7 +20,7 @@ if (ids.length === 0) {
 
 const out: Record<string, string> = {}
 for (const id of ids) {
-  const preset = PRESETS.find((p) => p.id === id)
+  const preset = getPreset(id)
   if (!preset) {
     console.error(
       `error: unknown preset "${id}" (known: ${PRESETS.map((p) => p.id).join(", ")})`,

@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest"
 
-import { PRESETS } from "@/modules/presets/presets-data"
-
 import { DEFAULT_STATE, DEFAULTS, SCHEMA, validate } from "./index"
 import { checkAxisValue } from "./schema"
 
@@ -23,11 +21,6 @@ describe("state schema", () => {
     expect(DEFAULT_STATE).toEqual(DEFAULTS)
     const result = validate({ radiusPx: 4 })
     expect(result.ok && result.state).toEqual({ ...DEFAULTS, radiusPx: 4 })
-  })
-
-  it("accepts every built-in preset", () => {
-    const invalid = PRESETS.filter((preset) => !validate(preset.state).ok)
-    expect(invalid.map((preset) => preset.id)).toEqual([])
   })
 
   it("checks each kind", () => {

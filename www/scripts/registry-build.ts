@@ -14,7 +14,6 @@ import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
 
-import { PRESETS } from "../src/modules/presets/presets-data"
 import {
   buildPublishables,
   collectBaseFiles,
@@ -33,6 +32,7 @@ import {
   resolveColorConfig,
   themeOptionsFromConfig,
 } from "../src/registry/theme"
+import type { ColorConfig } from "../src/registry/theme"
 import type { RegistryItem } from "../src/registry/types"
 
 // Directories — relative to www/ (process.cwd())
@@ -967,10 +967,12 @@ async function buildShadcnPublishables(
 // The engine's input contract is a zod schema checked here, at build time,
 // for the default and every built-in preset — `createTheme` itself trusts
 // its typed input so the client never ships zod.
-function checkColorConfigs() {
+function checkColorConfigs(
+  presets: { id: string; designSystem: { color?: ColorConfig } }[],
+) {
   const configs = [
     ["default", DEFAULT_COLOR_CONFIG] as const,
-    ...PRESETS.map((preset) => [preset.id, preset.designSystem.color] as const),
+    ...presets.map((preset) => [preset.id, preset.designSystem.color] as const),
   ]
   for (const [name, config] of configs) {
     if (!config) continue
@@ -982,6 +984,32 @@ function checkColorConfigs() {
     }
   }
   console.log(`  ✓ color configs (${configs.length} presets)`)
+}
+
+/** The built-ins resolved at build time, so the landing never loads the
+ *  resolver. Imported late: resolution reads the registry files written above. */
+async function buildPresetCatalog() {
+  const { PRESET_META, resolvePreset } =
+    await import("../src/modules/presets/index")
+  const catalog = PRESET_META.map((meta) => ({
+    ...meta,
+    designSystem: resolvePreset(meta.id),
+  }))
+  checkColorConfigs(catalog)
+  const targetPath = path.join(
+    process.cwd(),
+    "src/modules/presets/__generated__/catalog.ts",
+  )
+  const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+import type { PresetMeta } from "../preset"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+
+export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> = ${JSON.stringify(catalog)}
+`
+  await fs.mkdir(path.dirname(targetPath), { recursive: true })
+  await writeGeneratedFile(targetPath, content)
+  console.log(`  ✓ presets/__generated__/catalog.ts (${catalog.length})`)
 }
 
 async function generateBaseColorsCss() {
@@ -1000,7 +1028,6 @@ async function main() {
 
   try {
     console.log("Generating base color css")
-    checkColorConfigs()
     await generateBaseColorsCss()
 
     // Fresh item lists globbed from disk — never the (possibly stale) committed
@@ -1032,6 +1059,9 @@ async function main() {
 
     console.log("\nChecking publishable integrity")
     await checkPublishableIntegrity(registryUi, publishablesBuild)
+
+    console.log("\nGenerating preset catalog")
+    await buildPresetCatalog()
 
     console.log("\n✅ Registry built successfully!")
   } catch (error) {

@@ -6,7 +6,7 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { InternalHeader } from "@/modules/internal/shell"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { getPreset, resolvePreset } from "@/modules/presets"
 import type { DesignSystem } from "@/modules/studio/preset"
 
 import { airbnbAudit } from "./data/airbnb"
@@ -39,8 +39,9 @@ function presetSystem(
   name: string,
   audit: AuditEntry[],
 ): System | null {
-  const preset = PRESETS.find((p) => p.id === id)
-  return preset ? { id, name, designSystem: preset.designSystem, audit } : null
+  return getPreset(id)
+    ? { id, name, designSystem: resolvePreset(id), audit }
+    : null
 }
 
 const SYSTEMS: System[] = [
