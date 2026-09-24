@@ -4,10 +4,10 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { LEGACY_ORIGIN, ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
+import { DEFAULT_PRESET, encodePreset } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -43,6 +43,19 @@ export function createSearchSchema(
 
 const searchDefaults = { preview: "cards" }
 
+/** Undefined on the server and first render (SSR ships the desktop layout). */
+function useIsBelowLg() {
+  const [isBelow, setIsBelow] = useState<boolean>()
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 1023px)")
+    const onChange = () => setIsBelow(mql.matches)
+    mql.addEventListener("change", onChange)
+    onChange()
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+  return isBelow
+}
+
 export const Route = createFileRoute("/_app/studio")({
   validateSearch: createSearchSchema,
   search: {
@@ -52,11 +65,19 @@ export const Route = createFileRoute("/_app/studio")({
 })
 
 function StudioPage() {
-  const { preset } = Route.useSearch()
+  const { preset, gallery } = Route.useSearch()
   const { preset: current, setPreset, setState } = useStudio()
   // Below `lg` the preview is the whole page and the panel rides over it as a
-  // bottom sheet — edits stay visible on the live stage while adjusting.
+  // bottom sheet — edits stay visible on the live stage while adjusting. One
+  // panel is mounted at a time: each owns the preset picker and ⌘P.
+  const isBelowLg = useIsBelowLg()
   const [sheetOpen, setSheetOpen] = useState(false)
+  useEffect(() => {
+    // The sheet portals out of the layout: close it past lg.
+    if (isBelowLg === false) setSheetOpen(false)
+    // ?gallery= (the /presets redirect) needs the panel that owns the picker.
+    else if (isBelowLg && gallery) setSheetOpen(true)
+  }, [isBelowLg, gallery])
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // The user's selected preset is persisted in localStorage so every docs
@@ -64,21 +85,30 @@ function StudioPage() {
   // shared ?preset= link is being viewed), then persist back as it's edited.
   // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
+  const skipPersists = useRef(1)
   useEffect(() => {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
-    if (preset) return // a shared / deep-linked preset wins over the saved one
+    // A shared / deep-linked preset wins over the saved one.
+    if (preset) {
+      if (preset === LEGACY_ORIGIN) {
+        // Still the link's initial value, not an edit to persist.
+        skipPersists.current++
+        setState(ORIGIN.state)
+      }
+      return
+    }
     const stored = loadStoredPreset()
-    if (stored !== DEFAULT_PRESET) setPreset(stored)
-    else setState(ORIGIN.state)
+    if (stored === DEFAULT_PRESET || encodePreset(stored) === LEGACY_ORIGIN)
+      setState(ORIGIN.state)
+    else setPreset(stored)
   }, [preset, setPreset, setState])
 
-  const skipFirstPersist = useRef(true)
   useEffect(() => {
     // Skip the initial value so merely opening a shared link doesn't overwrite
     // the saved preset; persist once the user actually changes something.
-    if (skipFirstPersist.current) {
-      skipFirstPersist.current = false
+    if (skipPersists.current > 0) {
+      skipPersists.current--
       return
     }
     saveStoredPreset(current)
@@ -95,14 +125,19 @@ function StudioPage() {
           ref={setBoundary}
           className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
         >
-          <StudioPanel className="max-lg:hidden" />
+          {!isBelowLg && (
+            <StudioPanel
+              className="max-lg:hidden"
+              galleryReady={isBelowLg !== undefined}
+            />
+          )}
           <PreviewPanel onCustomize={() => setSheetOpen(true)} />
         </div>
       </PanelPopoverBoundary.Provider>
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
           the preview's floating toolbar. */}
-      <div className="contents lg:hidden">
+      {isBelowLg && (
         <Drawer
           isOpen={sheetOpen}
           onOpenChange={setSheetOpen}
@@ -116,7 +151,7 @@ function StudioPage() {
             <StudioPanel className="min-h-0 flex-1" />
           </DialogContent>
         </Drawer>
-      </div>
+      )}
     </div>
   )
 }

@@ -170,15 +170,12 @@ export function PreviewPanel({
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
   const SizeIcon = sizeOption.Icon
 
-  // Open the preview in the same light / dark mode the site is currently in. Seeded on
-  // mount rather than via the useState initializer: this page is server-rendered and the
-  // server can't know the client's stored theme (it always resolves "light"), so reading
-  // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
-  // preview mode is toggled independently of the site theme afterwards.
+  // Follow the site's light / dark mode; the pill's toggle overrides it until the
+  // next site toggle. An effect, not the useState initializer: the server can't
+  // know the stored theme, so reading it during render would mismatch on hydration.
   useEffect(() => {
     setPreviewMode(resolvedTheme)
-    // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
-  }, [])
+  }, [resolvedTheme])
 
   // The iframe's document URL, fixed at mount — the preset is baked in so the
   // initial render has the right state. Everything after goes over postMessage
@@ -482,7 +479,7 @@ export function PreviewPanel({
               <Button
                 size="sm"
                 variant="quiet"
-                className="max-w-44 rounded-full"
+                className="max-w-44 rounded-full max-sm:max-w-24"
               >
                 {/* flex-initial overrides the base flex-1 (basis-0), which has no
                 space to grow into inside the pill's shrink-to-fit box and
@@ -596,7 +593,7 @@ export function PreviewPanel({
                 size="sm"
                 variant={inspecting ? "primary" : "quiet"}
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={() => setInspecting((v) => !v)}
                 aria-label="Toggle component inspector"
               >
@@ -638,7 +635,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={() => {
                   // Built at click time — the iframe src is frozen at mount, so
                   // it no longer reflects the current preview or mode.
@@ -664,7 +661,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-sm:hidden"
                 onPress={toggleFullscreen}
                 aria-label="Toggle fullscreen"
               >
