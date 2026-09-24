@@ -11,17 +11,6 @@ import {
   withSource,
 } from "./color"
 
-const withModes = (
-  light: Partial<(typeof DEFAULTS.modes)[number]>,
-  dark: Partial<(typeof DEFAULTS.modes)[number]> = {},
-) => ({
-  ...DEFAULTS,
-  modes: DEFAULTS.modes.map((mode) => ({
-    ...mode,
-    ...(mode.polarity === "light" ? light : dark),
-  })),
-})
-
 describe("color axis", () => {
   it("the defaults are the shipped palette, and resolve to no recipe", () => {
     expect(buildColorConfig(DEFAULTS)).toEqual(DEFAULT_COLOR_CONFIG)
@@ -63,9 +52,10 @@ describe("color axis", () => {
     )
   })
 
-  it("maps the mode pair onto per-polarity backgrounds (0 dark = OLED)", () => {
+  it("maps the backgrounds onto per-polarity backgrounds (0 dark = OLED)", () => {
     expect(
-      resolveDesignSystem(withModes({ bg: 97 }, { bg: 0 })).color?.background,
+      resolveDesignSystem({ ...DEFAULTS, lightBg: 97, darkBg: 0 }).color
+        ?.background,
     ).toEqual({ light: 97, dark: "oled" })
   })
 

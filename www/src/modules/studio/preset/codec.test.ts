@@ -48,12 +48,12 @@ describe("preset codec — studio state", () => {
   it("drops unknown keys and wrongly typed values", () => {
     const encoded = encodeRaw({
       v: 3,
-      s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
+      s: { brand: "#ef4444", radiusPx: "big", nope: 1, darkBg: "oled" },
     })
     const { state } = decodePreset(encoded)
     expect(state.brand).toBe("#ef4444")
     expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
-    expect(state.modes).toEqual(DEFAULTS.modes)
+    expect(state.darkBg).toBe(DEFAULTS.darkBg)
     expect("nope" in state).toBe(false)
   })
 
@@ -136,7 +136,7 @@ describe("preset codec — legacy migration", () => {
     expect(state.switchColor).toBe("accent")
     expect(state.checkboxColor).toBe("neutral")
     expect(state.vividness).toBe(1.2)
-    expect(state.modes.map((m) => m.bg)).toEqual([98, 0])
+    expect([state.lightBg, state.darkBg]).toEqual([98, 0])
     expect(state.density).toBe("comfortable")
     expect(state.radiusPx).toBe(12)
     expect(state.bodyFont).toBe("Inter")

@@ -128,8 +128,6 @@ function sanitizeState(raw: unknown): StudioState {
     if (value === undefined) continue
     if (fallback === null) {
       if (value === null || typeof value === "number") state[key] = value
-    } else if (Array.isArray(fallback)) {
-      if (Array.isArray(value)) state[key] = value
     } else if (typeof value === typeof fallback) {
       state[key] = value
     }
@@ -223,13 +221,9 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint
     if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
     if (color.preserveSeed) state.preserveSeed = true
-    if (color.background) {
-      state.modes = DEFAULTS.modes.map((mode) => {
-        const bg = color.background?.[mode.polarity]
-        if (bg === undefined) return mode
-        return { ...mode, bg: bg === "oled" ? 0 : bg }
-      })
-    }
+    const { light, dark } = color.background ?? {}
+    if (light !== undefined) state.lightBg = light
+    if (dark !== undefined) state.darkBg = dark === "oled" ? 0 : dark
   }
 
   if (legacy.d === "compact" || legacy.d === "comfortable")
