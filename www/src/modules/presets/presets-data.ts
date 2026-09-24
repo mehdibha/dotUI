@@ -1,7 +1,7 @@
 import { toOklch } from "@dotui/colors"
 
-import { DEFAULTS } from "@/modules/studio/axes"
-import type { StudioState } from "@/modules/studio/axes"
+import { parseState } from "@/modules/studio/axes"
+import type { StudioState, StudioStateInput } from "@/modules/studio/axes"
 import { SOLID_LEAVES, withSource } from "@/modules/studio/axes/color"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
@@ -32,20 +32,12 @@ export type Preset = {
 /** OKLCH hue of a measured gray — the studio's neutral axis is a hue, not a seed. */
 const grayHue = (hex: string) => Math.round(toOklch(hex).h ?? 0)
 
-/** Mode overrides: background L* per polarity (0 on dark = OLED). */
-function modes(bg: { light?: number; dark?: number }): StudioState["modes"] {
-  return DEFAULTS.modes.map((mode) => {
-    const next = bg[mode.polarity]
-    return next === undefined ? mode : { ...mode, bg: next }
-  })
-}
-
 function definePreset(
   preset: Omit<Preset, "state" | "designSystem"> & {
-    state: Partial<StudioState>
+    state: Partial<StudioStateInput>
   },
 ): Preset {
-  const state = { ...DEFAULTS, ...preset.state }
+  const state = parseState(preset.state)
   return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 
@@ -84,7 +76,7 @@ export const PRESETS: Preset[] = [
       headingFont: "Source Serif 4",
       bodyFont: "Inter",
       // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
-      modes: modes({ light: 98 }),
+      lightBg: 98,
     },
   }),
   definePreset({
@@ -131,7 +123,7 @@ export const PRESETS: Preset[] = [
       // Linear ships Inter (verified against live production CSS).
       bodyFont: "Inter",
       // Linear's dark-first page is near-black #08090a.
-      modes: modes({ dark: 2 }),
+      darkBg: 2,
       buttonHover: "lighten",
       surfaceDepth: "raised",
     },
@@ -149,7 +141,7 @@ export const PRESETS: Preset[] = [
       // controls.
       selectionSeed: SELECTION_BLUE,
       // Vercel dark runs a true-black page with #0a0a0a panels.
-      modes: modes({ dark: 0 }),
+      darkBg: 0,
       badgeShape: "pill",
       surfaceCanvas: "tinted",
     },
@@ -185,7 +177,7 @@ export const PRESETS: Preset[] = [
       // GitHub's brand font, open-sourced and on Google Fonts.
       bodyFont: "Mona Sans",
       // GitHub dark sits on blue-black #0d1117.
-      modes: modes({ dark: 4.5 }),
+      darkBg: 4.5,
       // Labels/counters are pills.
       badgeShape: "pill",
     },

@@ -6,6 +6,8 @@
    follows the Icons chapter. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SPINNER_DEFAULTS = {
   spinnerStyle: "ring",
@@ -17,9 +19,10 @@ export const STYLE_OPTIONS = [
   { value: "dots", label: "Dots" },
 ]
 
+export const SPINNER_SCHEMA: ChapterSchema<typeof SPINNER_DEFAULTS> = {
+  spinnerStyle: oneOf(STYLE_OPTIONS),
+}
+
 export function resolveSpinner(state: StudioState): Resolved {
-  const style = STYLE_OPTIONS.some((o) => o.value === state.spinnerStyle)
-    ? state.spinnerStyle
-    : SPINNER_DEFAULTS.spinnerStyle
-  return { params: { loader: { style } } }
+  return { params: { loader: { style: state.spinnerStyle } } }
 }

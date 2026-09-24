@@ -103,12 +103,6 @@ interface ColorConfig2 {
 }
 ```
 
-Old presets (`c.algorithm` present) migrate in `decodePreset`: seeds carry
-over, `primary` carries over, `chromaMult → vividness`, `hueTorsion →
-hueShift`; other knobs drop. Old URLs/localStorage/components.json keep
-producing a sensible theme — never silent `DEFAULTS` wipes. `sanitizeColor`
-validates the full shape (zod), not just the discriminant.
-
 ## T6. Emission ✅
 
 - `resolveColorConfig(config)` → engine `createTheme` (both modes, one call)

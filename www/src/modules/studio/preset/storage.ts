@@ -1,6 +1,7 @@
 "use client"
 
 import { createPersistedStore } from "@/lib/persisted-store"
+import { formatIssues } from "@/modules/studio/axes"
 
 import { DEFAULT_PRESET, decodePreset, encodePreset } from "./codec"
 import type { StudioPreset } from "./codec"
@@ -16,7 +17,12 @@ const presetStore = createPersistedStore<StudioPreset>(
   "dotui:preset",
   DEFAULT_PRESET,
   {
-    decode: decodePreset,
+    // A stored preset that no longer validates reads as the fallback.
+    decode: (raw) => {
+      const result = decodePreset(raw)
+      if (!result.ok) throw new Error(formatIssues(result.issues))
+      return result.preset
+    },
     encode: (preset) => encodePreset(preset) ?? null,
   },
 )

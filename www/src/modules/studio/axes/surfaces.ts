@@ -14,8 +14,8 @@
      Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
    - Canvas: white-on-white, or a tinted page white surfaces lift off (Vercel,
      Stripe, Apple); dark lifts the same surfaces a full rung instead.
-   - Modes: each mode's background L* — how white the light page is, how
-     black the dark one (OLED at 0). The color engine reads it.
+   - Backgrounds: each mode's background L* — how white the light page is,
+     how black the dark one (OLED at 0). The color engine reads them.
    - Material: the popover tier (menus, pickers, popovers) solid, or as
      glass — shadcn's recipe, the surface at 70% over a blurred, saturated
      backdrop. Modals and drawers stay solid either way; they sit over a
@@ -31,16 +31,23 @@
    look (card none · popover md · modal lg); per-mode values ride on
    `light-dark()`; only what differs from the defaults is emitted. */
 
-import { DEFAULT_MODES } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
   surfaceDepth: "subtle",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
-  modes: DEFAULT_MODES,
+  /** Background L*; dark 2 is dotUI's (the engine would pick 6). */
+  lightBg: 99,
+  darkBg: 2,
 }
+
+/** Where each mode's background runs — the engine's accepted range. */
+export const LIGHT_BG_RANGE = { min: 90, max: 100, step: 0.5 }
+export const DARK_BG_RANGE = { min: 0, max: 20, step: 0.5 }
 
 export const STRATEGY_OPTIONS = [
   { value: "hairline", label: "Hairline" },
@@ -383,6 +390,15 @@ function surfaceTokens(state: StudioState): Record<string, string> {
 }
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
+
+export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
+  surfaceStrategy: oneOf(STRATEGY_OPTIONS),
+  surfaceDepth: oneOf(DEPTH_OPTIONS),
+  surfaceCanvas: oneOf(CANVAS_OPTIONS),
+  surfaceMaterial: oneOf(MATERIAL_OPTIONS),
+  lightBg: range(LIGHT_BG_RANGE),
+  darkBg: range(DARK_BG_RANGE),
+}
 
 export function resolveSurfaces(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}

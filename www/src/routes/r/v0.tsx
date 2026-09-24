@@ -13,7 +13,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { format } from "oxfmt"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
+import {
+  invalidPresetResponse,
+  resolveRequestPreset,
+} from "@/lib/registry-preset"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import useImageLoadingStatusSource from "@/registry/hooks/use-image-loading-status.ts?raw"
@@ -53,7 +56,9 @@ export const Route = createFileRoute("/r/v0")({
       GET: async ({ request }) => {
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const preset = await resolveRequestPreset(encodedPreset)
+        const resolved = await resolveRequestPreset(encodedPreset)
+        if (!resolved.ok) return invalidPresetResponse(resolved.issues)
+        const { preset } = resolved
 
         const items = await Promise.all(
           Object.values(publishables).map(async (loader) => {

@@ -7,35 +7,60 @@
  */
 
 import type { PublishPreset } from "@/publisher/types"
+import type { StateIssue } from "@/modules/studio/axes"
 
 export function defaultPreset(): PublishPreset {
   return { density: "default", componentParams: {} }
 }
 
-/**
- * Resolve a `?preset=` value to a `PublishPreset`, falling back to the default
- * preset when the param is absent or fails to decode.
- */
+export type RequestPreset =
+  | { ok: true; preset: PublishPreset }
+  | { ok: false; issues: StateIssue[] }
+
+/** Resolve a `?preset=` value; absent means the default preset. */
 export async function resolveRequestPreset(
   encoded: string | undefined,
-): Promise<PublishPreset> {
-  if (!encoded) return defaultPreset()
-  try {
-    const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
-      import("@/modules/studio/preset/codec"),
-      import("@/modules/studio/resolve"),
-    ])
-    const preset = decodePreset(encoded)
-    const ds = resolveDesignSystem(preset.state)
-    return {
+): Promise<RequestPreset> {
+  if (!encoded) return { ok: true, preset: defaultPreset() }
+  const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
+    import("@/modules/studio/preset/codec"),
+    import("@/modules/studio/resolve"),
+  ])
+  const decoded = decodePreset(encoded)
+  if (!decoded.ok) return decoded
+  const ds = resolveDesignSystem(decoded.preset.state)
+  return {
+    ok: true,
+    preset: {
       color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
       tokens: ds.tokens,
-      codeOptions: preset.codeOptions,
+      codeOptions: decoded.preset.codeOptions,
       icons: ds.icons,
-    }
-  } catch {
-    return defaultPreset()
+    },
   }
+}
+
+const MAX_ISSUES = 20
+const MAX_KEY_LENGTH = 64
+
+/** 400 for a bad `?preset=`; bounded, since the issue keys come from the request. */
+export function invalidPresetResponse(issues: StateIssue[]): Response {
+  return Response.json(
+    {
+      error: "Invalid preset",
+      issues: issues.slice(0, MAX_ISSUES).map(({ key, problem }) => ({
+        key:
+          key.length > MAX_KEY_LENGTH
+            ? `${key.slice(0, MAX_KEY_LENGTH)}…`
+            : key,
+        problem,
+      })),
+      ...(issues.length > MAX_ISSUES
+        ? { omitted: issues.length - MAX_ISSUES }
+        : {}),
+    },
+    { status: 400, headers: { "Cache-Control": "no-store" } },
+  )
 }

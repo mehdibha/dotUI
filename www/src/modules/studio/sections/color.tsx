@@ -14,8 +14,11 @@ import { STEPS, toOklch } from "@dotui/colors"
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
 
-import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
-import type { ColorMode } from "../axes/color"
+import {
+  buildColorConfig,
+  COLOR_DEFAULTS,
+  VIVIDNESS_RANGE,
+} from "../axes/color"
 import {
   DialColor,
   DialGap,
@@ -31,10 +34,11 @@ import { PrimaryRow } from "./primary"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
-/* Modes live under Surfaces but feed the same recipe. */
+/* The backgrounds live under Surfaces but feed the same recipe. */
 const COLOR_KEYS = [
   ...Object.keys(COLOR_DEFAULTS),
-  "modes",
+  "lightBg",
+  "darkBg",
 ] as (keyof StudioState)[]
 
 /** The state's recipe, reference-stable on its values so the engine runs
@@ -43,13 +47,6 @@ function useColorConfig(state: StudioState): ColorConfig {
   const key = JSON.stringify(COLOR_KEYS.map((k) => state[k]))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => buildColorConfig(state), [key])
-}
-
-/** One mode's engine half — how other sections (Surfaces) read the mode
- *  pair without owning color state. */
-export function useModeTheme(state: StudioState, mode?: ColorMode) {
-  const theme = resolveColorConfigCached(useColorConfig(state))
-  return mode ? theme[mode.polarity] : null
 }
 
 /** The resolved theme in the panel's own mode, so what the rows show is what
@@ -97,9 +94,9 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
               label="Vividness"
               value={state.vividness}
               onChange={set("vividness")}
-              minValue={0}
-              maxValue={2}
-              step={0.05}
+              minValue={VIVIDNESS_RANGE.min}
+              maxValue={VIVIDNESS_RANGE.max}
+              step={VIVIDNESS_RANGE.step}
               format={(v) => `${v.toFixed(2)}×`}
             />
           </>

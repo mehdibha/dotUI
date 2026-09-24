@@ -9,7 +9,8 @@
    styles the title inside a popover. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./pick"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const POPOVER_DEFAULTS = {
   popoverTip: "none",
@@ -26,11 +27,16 @@ export const HEADER_OPTIONS = [
   { value: "band", label: "Band" },
 ]
 
+export const POPOVER_SCHEMA: ChapterSchema<typeof POPOVER_DEFAULTS> = {
+  popoverTip: oneOf(TIP_OPTIONS),
+  popoverHeader: oneOf(HEADER_OPTIONS),
+}
+
 export function resolvePopovers(state: StudioState): Resolved {
   return {
     params: {
-      popover: { tip: pick(TIP_OPTIONS, state.popoverTip, "none") },
-      dialog: { header: pick(HEADER_OPTIONS, state.popoverHeader, "title") },
+      popover: { tip: state.popoverTip },
+      dialog: { header: state.popoverHeader },
     },
   }
 }

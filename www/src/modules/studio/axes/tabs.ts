@@ -9,6 +9,8 @@
 
 import { SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const TAB_DEFAULTS = {
   tabStyle: "segmented",
@@ -22,12 +24,11 @@ export const TAB_STYLE_OPTIONS = [
   { value: "enclosed", label: "Enclosed" },
 ]
 
+export const TAB_SCHEMA: ChapterSchema<typeof TAB_DEFAULTS> = {
+  tabStyle: oneOf(TAB_STYLE_OPTIONS),
+  tabsColor: oneOf(SOURCE_OPTIONS),
+}
+
 export function resolveTabs(state: StudioState): Resolved {
-  const style = TAB_STYLE_OPTIONS.some((o) => o.value === state.tabStyle)
-    ? state.tabStyle
-    : TAB_DEFAULTS.tabStyle
-  const color = SOURCE_OPTIONS.some((o) => o.value === state.tabsColor)
-    ? state.tabsColor
-    : TAB_DEFAULTS.tabsColor
-  return { params: { tabs: { style, color } } }
+  return { params: { tabs: { style: state.tabStyle, color: state.tabsColor } } }
 }

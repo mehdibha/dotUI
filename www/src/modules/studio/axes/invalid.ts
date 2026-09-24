@@ -9,6 +9,8 @@
    by the value's vars. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const INVALID_DEFAULTS = {
   inputError: "border",
@@ -20,9 +22,10 @@ export const ERROR_OPTIONS = [
   { value: "bar", label: "Bar" },
 ]
 
+export const INVALID_SCHEMA: ChapterSchema<typeof INVALID_DEFAULTS> = {
+  inputError: oneOf(ERROR_OPTIONS),
+}
+
 export function resolveInvalid(state: StudioState): Resolved {
-  const error = ERROR_OPTIONS.some((o) => o.value === state.inputError)
-    ? state.inputError
-    : "border"
-  return { params: { field: { error } } }
+  return { params: { field: { error: state.inputError } } }
 }

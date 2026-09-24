@@ -7,7 +7,8 @@
    the shared `--studio-btn-radius` var. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./pick"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
@@ -55,11 +56,18 @@ const RADIUS_TOKENS: Record<string, string> = {
   pill: "var(--radius-full)",
 }
 
+export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
+  buttonStyle: oneOf(STYLE_OPTIONS),
+  buttonRadius: oneOf(RADIUS_OPTIONS),
+  buttonHover: oneOf(HOVER_OPTIONS),
+  buttonPress: oneOf(PRESS_OPTIONS),
+}
+
 export function resolveButtons(state: StudioState): Resolved {
   const selection = {
-    style: pick(STYLE_OPTIONS, state.buttonStyle, "flat"),
-    hover: pick(HOVER_OPTIONS, state.buttonHover, "dim"),
-    press: pick(PRESS_OPTIONS, state.buttonPress, "dim"),
+    style: state.buttonStyle,
+    hover: state.buttonHover,
+    press: state.buttonPress,
   }
   const tokens: Record<string, string> = {}
   const radius = RADIUS_TOKENS[state.buttonRadius]

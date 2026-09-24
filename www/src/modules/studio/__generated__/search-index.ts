@@ -8,7 +8,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	icons: ["Library", "Stroke", "Weight"],
 	shape: ["Character", "Radius"],
 	space: ["Density", "Unit"],
-	surfaces: ["Style", "Depth", "Page", "Glass"],
+	surfaces: ["Style", "Light background", "Dark background", "Depth", "Page", "Glass"],
 	browser: ["Cursor", "Selectable", "Highlight", "Scrollbars", "Cursors"],
 	states: [
 		"Control focus",

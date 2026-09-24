@@ -17,7 +17,7 @@ import {
   STYLE_OPTIONS as BUTTON_STYLES,
 } from "../axes/buttons"
 import { CALENDAR_DEFAULTS } from "../axes/calendar"
-import { CHART_DEFAULTS, PALETTE_OPTIONS, paletteOption } from "../axes/charts"
+import { CHART_DEFAULTS, PALETTE_OPTIONS } from "../axes/charts"
 import { CHECKBOX_DEFAULTS, CORNER_OPTIONS } from "../axes/checkbox"
 import { CHOICE_CARD_DEFAULTS } from "../axes/choice-cards"
 import { BACKDROP_OPTIONS, DIALOG_DEFAULTS } from "../axes/dialogs"
@@ -195,7 +195,7 @@ const FAMILIES: Family[] = [
   },
   {
     label: "Charts",
-    summary: (s) => optionLabel(PALETTE_OPTIONS, paletteOption(s.chartPalette)),
+    summary: (s) => optionLabel(PALETTE_OPTIONS, s.chartPalette),
     Preview: ChartsPreview,
     Body: ChartsSection,
   },

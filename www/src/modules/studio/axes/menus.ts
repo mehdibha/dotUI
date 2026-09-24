@@ -9,6 +9,8 @@
    gutter follows the rows. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const MENU_DEFAULTS = {
   menuIndicator: "check-end",
@@ -57,24 +59,30 @@ export const SCALE_OPTIONS = [
   { value: "large", label: "Large" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
+  menuIndicator: oneOf(INDICATOR_OPTIONS),
+  menuHighlight: oneOf(HIGHLIGHT_OPTIONS),
+  menuInset: oneOf(INSET_OPTIONS),
+  menuLabels: oneOf(LABEL_OPTIONS),
+  menuSearch: oneOf(SEARCH_OPTIONS),
+  menuScale: oneOf(SCALE_OPTIONS),
+}
 
 export function resolveMenus(state: StudioState): Resolved {
   const list = {
-    indicator: pick(INDICATOR_OPTIONS, state.menuIndicator, "check-end"),
-    highlight: pick(HIGHLIGHT_OPTIONS, state.menuHighlight, "neutral"),
-    inset: pick(INSET_OPTIONS, state.menuInset, "inset"),
-    labels: pick(LABEL_OPTIONS, state.menuLabels, "sentence"),
+    indicator: state.menuIndicator,
+    highlight: state.menuHighlight,
+    inset: state.menuInset,
+    labels: state.menuLabels,
   }
   return {
     params: {
       menu: list,
       "list-box": list,
       command: {
-        search: pick(SEARCH_OPTIONS, state.menuSearch, "field"),
+        search: state.menuSearch,
         inset: list.inset,
-        scale: pick(SCALE_OPTIONS, state.menuScale, "default"),
+        scale: state.menuScale,
       },
     },
   }

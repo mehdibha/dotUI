@@ -8,7 +8,8 @@
    group — one axis writes both); `position` is a `modal` param. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./pick"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const DIALOG_DEFAULTS = {
   dialogBackdrop: "dim",
@@ -26,10 +27,17 @@ export const POSITION_OPTIONS = [
   { value: "top", label: "Top" },
 ]
 
+export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
+  dialogBackdrop: oneOf(BACKDROP_OPTIONS),
+  dialogPosition: oneOf(POSITION_OPTIONS),
+}
+
 export function resolveDialogs(state: StudioState): Resolved {
-  const backdrop = pick(BACKDROP_OPTIONS, state.dialogBackdrop, "dim")
-  const position = pick(POSITION_OPTIONS, state.dialogPosition, "center")
+  const backdrop = state.dialogBackdrop
   return {
-    params: { modal: { backdrop, position }, drawer: { backdrop } },
+    params: {
+      modal: { backdrop, position: state.dialogPosition },
+      drawer: { backdrop },
+    },
   }
 }

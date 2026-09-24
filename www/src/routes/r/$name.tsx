@@ -14,7 +14,10 @@
 
 import { createFileRoute } from "@tanstack/react-router"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
+import {
+  invalidPresetResponse,
+  resolveRequestPreset,
+} from "@/lib/registry-preset"
 import { emitFontItem } from "@/publisher/emit-font"
 import { publishItem } from "@/publisher/serve"
 
@@ -44,9 +47,11 @@ export const Route = createFileRoute("/r/$name")({
 
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get("preset") ?? undefined
+        const resolved = await resolveRequestPreset(encodedPreset)
+        if (!resolved.ok) return invalidPresetResponse(resolved.issues)
         const item = await publishItem({
           name,
-          preset: await resolveRequestPreset(encodedPreset),
+          preset: resolved.preset,
           origin: `${url.protocol}//${url.host}`,
           encodedPreset,
         })

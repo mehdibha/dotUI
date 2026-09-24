@@ -12,6 +12,8 @@
    duration — springs are for arriving, not leaving. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const MOTION_DEFAULTS = {
   motionCharacter: "standard",
@@ -61,17 +63,11 @@ export const STATE_OPTIONS = [
   { value: "smooth", label: "Smooth" },
 ]
 
-const key = <T extends object>(table: T, value: string, fallback: keyof T) =>
-  (value in table ? value : fallback) as keyof T
-
 /** The timing a state resolves to: the curve and the three durations. */
 export function motionTiming(state: StudioState) {
-  const character = CHARACTER[key(CHARACTER, state.motionCharacter, "standard")]
-  const speed =
-    typeof state.motionSpeed === "number"
-      ? Math.min(SPEED_RANGE.max, Math.max(SPEED_RANGE.min, state.motionSpeed))
-      : 1
-  const stateMs = STATE_MS[key(STATE_MS, state.motionState, "smooth")]
+  const character = CHARACTER[state.motionCharacter as keyof typeof CHARACTER]
+  const speed = state.motionSpeed
+  const stateMs = STATE_MS[state.motionState as keyof typeof STATE_MS]
   return {
     ease: character.ease,
     enterMs: Math.round(character.enterMs * speed),
@@ -95,11 +91,15 @@ export function motionTokens(state: StudioState): Record<string, string> {
   return tokens
 }
 
+export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
+  motionCharacter: oneOf(CHARACTER_OPTIONS),
+  motionSpeed: range(SPEED_RANGE),
+  motionOverlay: oneOf(OVERLAY_OPTIONS),
+  motionState: oneOf(STATE_OPTIONS),
+}
+
 export function resolveMotion(state: StudioState): Resolved {
-  const motion = OVERLAY_OPTIONS.some((o) => o.value === state.motionOverlay)
-    ? state.motionOverlay
-    : "scale"
-  const selection = { motion }
+  const selection = { motion: state.motionOverlay }
   return {
     tokens: motionTokens(state),
     params: { popover: selection, tooltip: selection, modal: selection },

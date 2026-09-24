@@ -1,7 +1,7 @@
 export {
   DEFAULT_PRESET,
+  type DecodeResult,
   decodePreset,
-  decodeState,
   encodePreset,
   encodeState,
   type StudioPreset,

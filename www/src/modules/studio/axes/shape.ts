@@ -8,6 +8,8 @@
    `rounded-xl` — and a role at None ships no rounded class at all. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const SHAPE_DEFAULTS = {
   /** The base radius — the lg rung (popover · menu), in px. */
@@ -35,6 +37,16 @@ export const SHAPE_RUNGS = [
   { id: "3xl", label: "3xl", ratio: 3, token: "var(--radius-3xl)" },
   { id: "full", label: "Pill", ratio: Infinity, token: "var(--radius-full)" },
 ]
+
+const RUNG_OPTIONS = SHAPE_RUNGS.map((rung) => ({ value: rung.id }))
+
+export const SHAPE_SCHEMA: ChapterSchema<typeof SHAPE_DEFAULTS> = {
+  radiusPx: range(RADIUS_RANGE),
+  roleControl: oneOf(RUNG_OPTIONS),
+  roleItem: oneOf([{ value: "auto" }, ...RUNG_OPTIONS]),
+  roleSurface: oneOf(RUNG_OPTIONS),
+  rolePanel: oneOf(RUNG_OPTIONS),
+}
 
 export const SHAPE_ROLES = [
   { key: "rolePanel", label: "Panels", example: "dialog · card" },

@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("tables axis", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
-    const system = resolveDesignSystem(DEFAULTS)
+    const system = resolveDesignSystem(DEFAULT_STATE)
     expect(system.componentParams.table).toEqual({
       separation: "lines",
       header: "plain",
@@ -14,27 +14,13 @@ describe("tables axis", () => {
   })
 
   it("maps separation and header onto table params", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      tableSeparation: "striped",
-      tableHeader: "filled",
-    })
+    const system = resolveDesignSystem(
+      parseState({ tableSeparation: "striped", tableHeader: "filled" }),
+    )
     expect(system.componentParams.table).toEqual({
       separation: "striped",
       header: "filled",
     })
     expect(system.tokens).toEqual({})
-  })
-
-  it("falls back to the defaults on unknown values", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      tableSeparation: "zebra",
-      tableHeader: "loud",
-    })
-    expect(system.componentParams.table).toEqual({
-      separation: "lines",
-      header: "plain",
-    })
   })
 })

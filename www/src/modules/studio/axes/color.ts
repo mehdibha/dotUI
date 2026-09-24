@@ -1,28 +1,14 @@
 /* Color — the seeds and engine axes behind the generated palette, mapped
    straight onto `ColorConfig` (the one recipe `@dotui/colors` resolves; the
-   provider and the export both run it). Modes are the engine's fixed pair —
-   light on `:root`, dark on `.dark` — each with its own background L*
-   (owned by Surfaces). */
+   provider and the export both run it). Each mode's background L* is owned
+   by Surfaces. */
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
 import type { Resolved, StudioState } from "./index"
-
-export interface ColorMode {
-  id: string
-  name: string
-  polarity: "light" | "dark"
-  /** Background L*; 0 on dark = OLED black. */
-  bg: number
-}
-
-/* Light 99 is the engine's own default and stays absent from the config;
-   dark 2 is dotUI's (the engine would pick 6). */
-export const DEFAULT_MODES: ColorMode[] = [
-  { id: "light", name: "Light", polarity: "light", bg: 99 },
-  { id: "dark", name: "Dark", polarity: "dark", bg: 2 },
-]
+import { auto, BOOLEAN, COLOR, oneOf, range } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* '' on a seed means Auto (absent from the config). */
 export const COLOR_DEFAULTS = {
@@ -45,6 +31,25 @@ export const SOURCE_OPTIONS = [
   { value: "neutral", label: "Neutral" },
   { value: "accent", label: "Accent" },
 ]
+
+export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
+export const NEUTRAL_HUE_RANGE = { min: 0, max: 360, step: 1 }
+/** Up to twice the engine's default lean; 0 is a pure gray. */
+export const NEUTRAL_TINT_RANGE = { min: 0, max: 2, step: 0.05 }
+
+export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
+  brand: COLOR,
+  buttonColor: oneOf(SOURCE_OPTIONS),
+  selectionColor: oneOf(SOURCE_OPTIONS),
+  neutralHue: auto(range(NEUTRAL_HUE_RANGE)),
+  successSeed: auto(COLOR),
+  warningSeed: auto(COLOR),
+  dangerSeed: auto(COLOR),
+  selectionSeed: auto(COLOR),
+  vividness: range(VIVIDNESS_RANGE),
+  neutralTint: range(NEUTRAL_TINT_RANGE),
+  preserveSeed: BOOLEAN,
+}
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
    over them — their shared value, or mixed — and writing it writes them all.
@@ -99,17 +104,6 @@ export function fillScope(
   return { scopes: { [scope]: fill as PrimaryColorSource } }
 }
 
-/** One polarity's mode; the default when a stored pair lost it. */
-export function modeFor(state: StudioState, polarity: ColorMode["polarity"]) {
-  return (
-    state.modes.find((mode) => mode.polarity === polarity) ??
-    (DEFAULT_MODES.find((mode) => mode.polarity === polarity) as ColorMode)
-  )
-}
-
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value))
-
 /** Drops undefined entries so absent stays absent (the config's "default"). */
 function compact<T extends object>(value: T): T {
   return Object.fromEntries(
@@ -118,8 +112,6 @@ function compact<T extends object>(value: T): T {
 }
 
 export function buildColorConfig(state: StudioState): ColorConfig {
-  const light = modeFor(state, "light")
-  const dark = modeFor(state, "dark")
   return compact({
     v: 2,
     seeds: compact({
@@ -130,8 +122,9 @@ export function buildColorConfig(state: StudioState): ColorConfig {
       selection: state.selectionSeed || undefined,
     }),
     background: compact({
-      light: light.bg === 99 ? undefined : clamp(light.bg, 90, 100),
-      dark: dark.bg === 0 ? ("oled" as const) : clamp(dark.bg, 0, 20),
+      // 99 is the engine's own light default.
+      light: state.lightBg === 99 ? undefined : state.lightBg,
+      dark: state.darkBg === 0 ? ("oled" as const) : state.darkBg,
     }),
     vividness: state.vividness === 1 ? undefined : state.vividness,
     neutralTint: state.neutralTint === 1 ? undefined : state.neutralTint,
