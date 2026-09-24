@@ -1,0 +1,15 @@
+{
+  "title": "Components",
+  "pages": [
+    "...",
+    "---Charts---",
+    "chart",
+    "chart-area",
+    "chart-bar",
+    "chart-line",
+    "chart-pie",
+    "chart-radar",
+    "chart-radial",
+    "chart-heatmap"
+  ]
+}
