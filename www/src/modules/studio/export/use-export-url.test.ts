@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { buildInitCommands } from "@/modules/docs/install-commands"
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import { decodePreset, encodeState } from "@/modules/studio/preset/codec"
 
 import { createPresetUrl } from "./use-export-url"
@@ -22,10 +22,17 @@ describe("createPresetUrl", () => {
   })
 
   it("carries a real preset as its canonical base64url encoding", () => {
-    const encoded = encodeState(ORIGIN.state)
+    const spotify = PRESETS.find((p) => p.id === "spotify")
+    const encoded = spotify && encodeState(spotify.state)
     const url = createPresetUrl(HOST, decodePreset(encoded ?? ""))("/r/init")
 
     expect(url).toBe(`${HOST}/r/init?preset=${encoded}`)
     expect(encoded).toMatch(/^[\w-]+$/)
+  })
+
+  it("leaves Origin, the defaults, on the plain URL", () => {
+    expect(createPresetUrl(HOST, { state: ORIGIN.state })("/r/init")).toBe(
+      `${HOST}/r/init`,
+    )
   })
 })

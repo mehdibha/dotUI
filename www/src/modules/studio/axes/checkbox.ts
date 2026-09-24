@@ -13,7 +13,7 @@ import { fillScope } from "./color"
 import type { Resolved, StudioState } from "./index"
 
 export const CHECKBOX_DEFAULTS = {
-  checkboxColor: "neutral",
+  checkboxColor: "accent",
   checkCorner: "rounded",
 }
 

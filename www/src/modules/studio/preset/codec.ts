@@ -1,6 +1,6 @@
 /* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
-   localStorage and `components.json`. Only the diff against the defaults is
-   stored, so an untouched system encodes to nothing. Canonical — encode∘decode
+   localStorage and `components.json`. Only the diff against a frozen base is
+   stored, and an untouched system encodes to nothing. Canonical — encode∘decode
    is byte-identity — and tolerant: garbage decodes to the defaults, and the
    pre-studio shape (a resolved design system) migrates onto the axes it maps
    to. */
@@ -64,26 +64,40 @@ interface Encoded {
 
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 
-/** The keys of `state` that differ from the defaults, sorted. */
-export function diffState(state: StudioState): Partial<StudioState> {
+/* The defaults as they stood before Origin became them (Sep 2026). Strings
+   diff against this, not the live defaults, so every shared string keeps its
+   meaning when a default moves. */
+const BASE: StudioState = {
+  ...DEFAULTS,
+  brand: "#438cd6",
+  ...withSource(SOLID_LEAVES, "neutral"),
+}
+
+/** The keys of `state` that differ from `base`, sorted. */
+function diffState(
+  state: StudioState,
+  base: StudioState,
+): Partial<StudioState> {
   const diff: Record<string, unknown> = {}
-  for (const key of Object.keys(DEFAULTS).sort()) {
+  for (const key of Object.keys(base).sort()) {
     const k = key as keyof StudioState
-    if (!same(state[k], DEFAULTS[k])) diff[key] = state[k]
+    if (!same(state[k], base[k])) diff[key] = state[k]
   }
   return diff as Partial<StudioState>
 }
 
 /** `undefined` when everything matches the defaults (no preset needed). */
 export function encodePreset(preset: StudioPreset): string | undefined {
+  const codeOptions = preset.codeOptions
+    ? sanitizeCodeOptions(preset.codeOptions)
+    : undefined
+  const customCode = codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+  const isDefault = Object.keys(diffState(preset.state, DEFAULTS)).length === 0
+  if (isDefault && !customCode) return undefined
   const compact: Encoded = { v: VERSION }
-  const diff = diffState(preset.state)
+  const diff = diffState(preset.state, BASE)
   if (Object.keys(diff).length > 0) compact.s = diff
-  if (preset.codeOptions) {
-    const codeOptions = sanitizeCodeOptions(preset.codeOptions)
-    if (!same(codeOptions, DEFAULT_CODE_OPTIONS)) compact.o = codeOptions
-  }
-  if (!compact.s && !compact.o) return undefined
+  if (customCode) compact.o = codeOptions
   return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
 }
 
@@ -116,12 +130,12 @@ function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
   return stored
 }
 
-/** Keep a stored value only when it has the default's shape. */
-function sanitizeState(raw: unknown): StudioState {
-  const state = { ...DEFAULTS } as Record<string, unknown>
+/** `base` filled with the stored values that have its shape. */
+function sanitizeState(raw: unknown, base: StudioState): StudioState {
+  const state = { ...base } as Record<string, unknown>
   if (!raw || typeof raw !== "object") return state as StudioState
   const stored = raw as Record<string, unknown>
-  for (const [key, fallback] of Object.entries(DEFAULTS)) {
+  for (const [key, fallback] of Object.entries(base)) {
     const value = stored[key]
     if (PRIMARY_LEAVES.includes(key as PrimaryLeaf) && !isSource(value))
       continue
@@ -149,7 +163,7 @@ export function decodePreset(encoded: string): StudioPreset {
           ? migrateV3(parsed.s as Record<string, unknown>)
           : parsed.s
       return {
-        state: sanitizeState(stored),
+        state: sanitizeState(stored, BASE),
         ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
           ? { codeOptions }
           : {}),
@@ -198,7 +212,7 @@ const SCOPE_KEYS: Record<string, keyof StudioState> = {
 /** Best-effort: the axes a resolved system maps back onto. Component params
  *  don't survive — they were a different vocabulary. */
 function migrateLegacy(legacy: LegacyState): StudioPreset {
-  const state: Record<string, unknown> = { ...DEFAULTS }
+  const state: Record<string, unknown> = { ...BASE }
   const tokens = legacy.t ?? {}
 
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
@@ -224,7 +238,7 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
     if (color.preserveSeed) state.preserveSeed = true
     if (color.background) {
-      state.modes = DEFAULTS.modes.map((mode) => {
+      state.modes = BASE.modes.map((mode) => {
         const bg = color.background?.[mode.polarity]
         if (bg === undefined) return mode
         return { ...mode, bg: bg === "oled" ? 0 : bg }
@@ -258,7 +272,7 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
 
   const codeOptions = legacy.o ? sanitizeCodeOptions(legacy.o) : undefined
   return {
-    state: sanitizeState(state),
+    state: sanitizeState(state, BASE),
     ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
       ? { codeOptions }
       : {}),

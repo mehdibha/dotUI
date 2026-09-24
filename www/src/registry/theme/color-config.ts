@@ -44,7 +44,8 @@ export interface ColorConfig {
   preserveSeed?: boolean
   /**
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
-   * (brand-colored primary); absent means the default neutral (black/white).
+   * (brand-colored primary, the default's); absent means neutral
+   * (black/white).
    */
   primary?: "accent"
   /**
@@ -71,14 +72,15 @@ export interface ColorConfig {
 export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
- * dotUI's default palette: a blue brand accent, auto-tinted neutral, and the
- * engine's CVD-gated status defaults (kept ABSENT so an untouched palette
- * still encodes to `undefined` — the codec diffs against this default).
+ * dotUI's default palette (Origin): a blue brand accent that also fills the
+ * primary actions, auto-tinted neutral, and the engine's CVD-gated status
+ * defaults (kept ABSENT so an untouched palette still reads as the default).
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
-  seeds: { accent: "#438cd6" },
+  seeds: { accent: "#0072f5" },
   background: { dark: 2 },
+  primary: "accent",
 }
 
 /** Engine status defaults, re-exported for the customizer's seed pickers. */
@@ -174,7 +176,8 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
  * out-of-range axis is clamped or dropped, never taking valid siblings with
  * it); the v1 shape (`{algorithm, seeds, knobs?, primary?}`) maps onto the
  * nearest v2 axes (algorithm + per-producer knobs are gone; the one engine
- * covers their range). Unknown shapes fall back to the default, and every
+ * covers their range). Unknown shapes fall back to `DEFAULT_COLOR_CONFIG`
+ * (Origin's blue, accent primary), and every
  * kept seed is verified parseable — never a decode or render explosion.
  * Also the validator in front of the engine (`resolveColorConfig`).
  */

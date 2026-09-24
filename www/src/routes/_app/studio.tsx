@@ -7,7 +7,11 @@ import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { LEGACY_ORIGIN, ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET, encodePreset } from "@/modules/studio/preset/codec"
+import {
+  DEFAULT_PRESET,
+  decodePreset,
+  encodePreset,
+} from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -85,16 +89,24 @@ function StudioPage() {
   // shared ?preset= link is being viewed), then persist back as it's edited.
   // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
-  const skipPersists = useRef(1)
+  const skipFirstPersist = useRef(true)
+  // A link's rewrite to today's encoding ("" for the defaults): still the
+  // link's value, not an edit to persist.
+  const rewrittenTo = useRef<string | null>(null)
   useEffect(() => {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
-    // A shared / deep-linked preset wins over the saved one.
+    // A shared / deep-linked preset wins over the saved one. An old link
+    // loads in today's encoding (the pinned Origin as Origin, which is none).
     if (preset) {
-      if (preset === LEGACY_ORIGIN) {
-        // Still the link's initial value, not an edit to persist.
-        skipPersists.current++
-        setState(ORIGIN.state)
+      const next =
+        preset === LEGACY_ORIGIN
+          ? { state: ORIGIN.state }
+          : decodePreset(preset)
+      const encoded = encodePreset(next)
+      if (encoded !== preset) {
+        rewrittenTo.current = encoded ?? ""
+        setPreset(next)
       }
       return
     }
@@ -107,10 +119,15 @@ function StudioPage() {
   useEffect(() => {
     // Skip the initial value so merely opening a shared link doesn't overwrite
     // the saved preset; persist once the user actually changes something.
-    if (skipPersists.current > 0) {
-      skipPersists.current--
+    if (skipFirstPersist.current) {
+      skipFirstPersist.current = false
       return
     }
+    // A rewrite that left the value unchanged never lands here, so the next
+    // real edit can't match it.
+    const rewrite = rewrittenTo.current
+    rewrittenTo.current = null
+    if (rewrite === (encodePreset(current) ?? "")) return
     saveStoredPreset(current)
   }, [current])
 

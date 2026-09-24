@@ -5,6 +5,8 @@
 
 import { createTheme, STEPS, type Theme } from "@dotui/colors"
 
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+
 import {
   buildColorSystem,
   type ColorSystem,
@@ -12,8 +14,8 @@ import {
   type UiRole,
 } from "./data"
 
-/** The builder's default brand accent (registry/theme DEFAULT_COLOR_CONFIG). */
-export const DEFAULT_SEED = "#438cd6"
+/** The builder's default brand accent. */
+export const DEFAULT_SEED = DEFAULT_COLOR_CONFIG.seeds.accent
 
 // Engine job ladder ↔ lab role frame, index for index.
 const JOB_ROLES: UiRole[] = [

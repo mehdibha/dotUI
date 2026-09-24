@@ -8,8 +8,8 @@
  * files. Per template:
  *   1. Remove everything a previous run generated.
  *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
- *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
- *      give, with the template's preset baked in.
+ *   3. `shadcn init <origin>/r/init[?preset=…]` — the exact command the docs
+ *      give, with the template's preset baked in (none for the defaults).
  *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
@@ -394,13 +394,19 @@ function encodePresets(ids: string[]): Record<string, string> {
   return JSON.parse(result.stdout.trim()) as Record<string, string>
 }
 
+/** `encodedPreset` is empty for the defaults. */
+const initUrl = (origin: string, encodedPreset: string) =>
+  encodedPreset
+    ? `${origin}/r/init?preset=${encodedPreset}`
+    : `${origin}/r/init`
+
 /** Whether the init item for this preset pulls in `registry:font` items. */
 async function initHasFonts(
   origin: string,
   encodedPreset: string,
 ): Promise<boolean> {
   const item = await fetchJson<{ registryDependencies?: string[] }>(
-    `${origin}/r/init?preset=${encodedPreset}`,
+    initUrl(origin, encodedPreset),
   )
   return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
 }
@@ -513,13 +519,7 @@ async function regenerate(
   await run(
     cwd,
     "pnpm",
-    [
-      "dlx",
-      SHADCN,
-      "init",
-      `${origin}/r/init?preset=${encodedPreset}`,
-      "--yes",
-    ],
+    ["dlx", SHADCN, "init", initUrl(origin, encodedPreset), "--yes"],
     shadcnEnv,
   )
   await run(

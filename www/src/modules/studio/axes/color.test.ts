@@ -55,11 +55,11 @@ describe("color axis", () => {
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
       buildColorConfig({ ...DEFAULTS, ...state }).selection
-    expect(source({ selectionColor: "neutral" })).toBeUndefined()
-    expect(source({ selectionColor: "accent" })).toBe("accent")
-    expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
-    expect(source({ buttonColor: "accent", selectionColor: "neutral" })).toBe(
-      "neutral",
+    expect(source({ selectionColor: "accent" })).toBeUndefined()
+    expect(source({ selectionColor: "neutral" })).toBe("neutral")
+    expect(source(withSource(SOLID_LEAVES, "neutral"))).toBeUndefined()
+    expect(source({ buttonColor: "neutral", selectionColor: "accent" })).toBe(
+      "accent",
     )
   })
 
@@ -77,7 +77,16 @@ describe("color axis", () => {
       }),
     ).toBe(true)
     expect(
-      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: "accent" }),
+      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: undefined }),
     ).toBe(false)
+  })
+
+  it("keeps a neutral primary off the accent default", () => {
+    const { color } = resolveDesignSystem({
+      ...DEFAULTS,
+      ...withSource(SOLID_LEAVES, "neutral"),
+    })
+    expect(color).toBeDefined()
+    expect(color?.primary).toBeUndefined()
   })
 })

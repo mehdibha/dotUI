@@ -49,8 +49,8 @@ function definePreset(
   return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 
-/** Geist's measured blue: Vercel's selection ramp, Origin's accent. */
-const SELECTION_BLUE = "#0072f5"
+/** Geist's measured blue: the default brand, and Vercel's selection ramp. */
+const SELECTION_BLUE = DEFAULTS.brand
 
 export const PRESETS: Preset[] = [
   // Kept first: ORIGIN below and the gallery's ordering both rely on it.
@@ -59,12 +59,8 @@ export const PRESETS: Preset[] = [
     name: "Origin",
     description: "dotUI blue, the starting point.",
     swatch: SELECTION_BLUE,
-    // Tracks the builder defaults on every axis but the brand blue, which
-    // drives the accent ramp and every solid role, selection included.
-    state: {
-      brand: SELECTION_BLUE,
-      ...withSource(SOLID_LEAVES, "accent"),
-    },
+    // The builder defaults, untouched.
+    state: {},
   }),
   definePreset({
     id: "claude",
@@ -143,6 +139,7 @@ export const PRESETS: Preset[] = [
       brand: "#171717",
       neutralHue: null,
       neutralTint: 0,
+      ...withSource(SOLID_LEAVES, "neutral"),
       // Geist runs black CTAs but a blue selection: focus rings + checked
       // controls.
       selectionSeed: SELECTION_BLUE,
@@ -161,6 +158,7 @@ export const PRESETS: Preset[] = [
       brand: "#ff385c",
       neutralHue: null,
       neutralTint: 0,
+      ...withSource(SOLID_LEAVES, "neutral"),
       // Airbnb's primary CTA and selection controls are near-black (#222); Rausch
       // stays the accent for badges, links, prices (issue #484 audit).
       // Controls measure 8px radius (md = 0.75 × base), not 12.
