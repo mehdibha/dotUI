@@ -4,7 +4,7 @@
    is byte-identity — and strict: decoding validates the state and reports
    what is wrong instead of falling back. */
 
-import { deflateRaw, inflateRaw } from "pako"
+import { deflateRaw, Inflate } from "pako"
 
 import {
   DEFAULT_CODE_OPTIONS,
@@ -95,10 +95,27 @@ const unreadable: DecodeResult = {
   issues: [{ key: "", problem: "not a preset string" }],
 }
 
+/** A full preset inflates to ~3 KB; anything far past that is hostile. */
+const MAX_INFLATED_BYTES = 16 * 1024
+
+function inflateCapped(bytes: Uint8Array): string {
+  const inflator = new Inflate({ raw: true, chunkSize: MAX_INFLATED_BYTES })
+  const onData = inflator.onData.bind(inflator)
+  let size = 0
+  inflator.onData = (chunk) => {
+    size += (chunk as Uint8Array).length
+    if (size > MAX_INFLATED_BYTES) throw new Error("preset too large")
+    onData(chunk)
+  }
+  inflator.push(bytes, true)
+  if (inflator.err) throw new Error(inflator.msg)
+  return new TextDecoder().decode(inflator.result as Uint8Array)
+}
+
 export function decodePreset(encoded: string): DecodeResult {
   let parsed: unknown
   try {
-    parsed = JSON.parse(inflateRaw(fromBase64Url(encoded), { to: "string" }))
+    parsed = JSON.parse(inflateCapped(fromBase64Url(encoded)))
   } catch {
     return unreadable
   }

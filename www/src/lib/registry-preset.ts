@@ -42,9 +42,25 @@ export async function resolveRequestPreset(
   }
 }
 
+const MAX_ISSUES = 20
+const MAX_KEY_LENGTH = 64
+
+/** 400 for a bad `?preset=`; bounded, since the issue keys come from the request. */
 export function invalidPresetResponse(issues: StateIssue[]): Response {
   return Response.json(
-    { error: "Invalid preset", issues },
+    {
+      error: "Invalid preset",
+      issues: issues.slice(0, MAX_ISSUES).map(({ key, problem }) => ({
+        key:
+          key.length > MAX_KEY_LENGTH
+            ? `${key.slice(0, MAX_KEY_LENGTH)}…`
+            : key,
+        problem,
+      })),
+      ...(issues.length > MAX_ISSUES
+        ? { omitted: issues.length - MAX_ISSUES }
+        : {}),
+    },
     { status: 400, headers: { "Cache-Control": "no-store" } },
   )
 }

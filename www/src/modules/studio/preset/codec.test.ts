@@ -79,6 +79,15 @@ describe("preset codec", () => {
       expect(decodePreset(encoded).ok).toBe(false)
   })
 
+  it("rejects a deflate bomb without inflating it", () => {
+    const bomb = encodeRaw({ v: 4, s: { ["k".repeat(8_000_000)]: 1 } })
+    expect(bomb.length).toBeLessThan(20_000)
+    expect(decodePreset(bomb)).toEqual({
+      ok: false,
+      issues: [{ key: "", problem: "not a preset string" }],
+    })
+  })
+
   // /studio seeds from a stored state via decode → encode on reload; a
   // non-identity roundtrip makes a freshly applied preset look edited.
   for (const preset of PRESETS) {
