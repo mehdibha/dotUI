@@ -5,8 +5,14 @@
  * children (the header CTA, the panel footer button).
  */
 
-import { useState, type ReactNode } from "react"
-import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
+import { useEffect, useState, type ReactNode } from "react"
+import {
+  ArrowUpRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  DownloadIcon,
+} from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 
@@ -40,6 +46,7 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
+import { useStudio } from "@/modules/studio/use-studio"
 
 import { CodeOptions } from "./code-options"
 import { OPEN_IN_TARGETS } from "./targets"
@@ -96,6 +103,13 @@ function ExportDialogBody() {
     buildInitCommands(initUrl)[packageManager] +
     (mode === "new" ? ` --template ${template}` : "")
   const addCommand = buildInstallCommands(["button"])[packageManager]
+  const commands =
+    mode === "new"
+      ? [{ label: "Scaffold", command }]
+      : [
+          { label: "Register", command },
+          { label: "Add components", command: addCommand },
+        ]
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
 
@@ -145,7 +159,10 @@ function ExportDialogBody() {
           <p className="text-xs text-fg-muted">
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
-            you add after installs already themed.
+            you add after installs already themed. Components land in{" "}
+            <code className="font-mono">components/ui</code> with their own APIs
+            — the CLI asks before replacing a file you already have, like a
+            shadcn <code className="font-mono">button.tsx</code>.
           </p>
         )}
 
@@ -153,25 +170,28 @@ function ExportDialogBody() {
           <CodeOptions />
         </Section>
 
-        <CommandBlock
-          commands={
-            mode === "new"
-              ? [{ label: "Scaffold", command }]
-              : [
-                  { label: "Register", command },
-                  { label: "Add components", command: addCommand },
-                ]
-          }
-        />
+        <CommandBlock commands={commands} />
+
+        <ThemeCss />
+
+        <p className="text-xs text-fg-muted">
+          Built on React Aria Components. Requires React 19 and Tailwind CSS v4.
+        </p>
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
         <Button
           variant="primary"
           className="w-full"
-          onPress={() => copyToClipboard(command)}
+          onPress={() =>
+            copyToClipboard(commands.map((entry) => entry.command).join("\n"))
+          }
         >
-          {isCopied ? "Copied" : "Copy command"}
+          {isCopied
+            ? "Copied"
+            : commands.length > 1
+              ? "Copy commands"
+              : "Copy command"}
         </Button>
         {mode === "new"
           ? OPEN_IN_TARGETS.map((target) => (
@@ -207,7 +227,7 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
 
 /**
  * The commands to run, under a package-manager switch shared with the docs.
- * Each line copies on its own; the first is what the footer button copies.
+ * Each line copies on its own; the footer button copies them all.
  */
 function CommandBlock({
   commands,
@@ -254,8 +274,8 @@ function CommandLine({ label, command }: { label: string; command: string }) {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
 
   return (
-    <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-      <code className="min-w-0 flex-1 scrollbar-none overflow-x-auto mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] font-mono text-xs whitespace-nowrap text-fg">
+    <div className="flex items-start gap-2 py-1.5 pr-1.5 pl-3">
+      <code className="min-w-0 flex-1 font-mono text-xs break-all text-fg">
         {command}
       </code>
       <Button
@@ -268,6 +288,119 @@ function CommandLine({ label, command }: { label: string; command: string }) {
       >
         {isCopied ? <CheckIcon /> : <CopyIcon />}
       </Button>
+    </div>
+  )
+}
+
+interface RegistryInit {
+  dependencies?: string[]
+  cssVars?: {
+    theme?: Record<string, string>
+    light?: Record<string, string>
+    dark?: Record<string, string>
+  }
+}
+
+function download(filename: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], { type: "text/css" }))
+  const link = document.createElement("a")
+  link.href = url
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
+function cssBlock(selector: string, vars: Record<string, string> = {}) {
+  const lines = Object.entries(vars).map(
+    ([key, value]) => `  ${key.startsWith("--") ? key : `--${key}`}: ${value};`,
+  )
+  return `${selector} {\n${lines.join("\n")}\n}`
+}
+
+/**
+ * What `init` writes before you run it: the theme's CSS variables, read from
+ * the same registry item the command fetches, plus the packages it installs.
+ */
+function ThemeCss() {
+  const { encoded } = useStudio()
+  const [isOpen, setOpen] = useState(false)
+  const [item, setItem] = useState<RegistryInit | null>(null)
+  const { isCopied, copyToClipboard } = useCopyToClipboard()
+
+  useEffect(() => {
+    if (!isOpen) return
+    const controller = new AbortController()
+    setItem(null)
+    fetch(`/r/init${encoded ? `?preset=${encoded}` : ""}`, {
+      signal: controller.signal,
+    })
+      .then((res) => res.json() as Promise<RegistryInit>)
+      .then(setItem)
+      .catch(() => {})
+    return () => controller.abort()
+  }, [isOpen, encoded])
+
+  // The order init writes them: the Tailwind aliases (fonts, radius scale,
+  // motion), then the values per mode.
+  const css = item
+    ? [
+        cssBlock("@theme inline", item.cssVars?.theme),
+        cssBlock(":root", item.cssVars?.light),
+        cssBlock(".dark", item.cssVars?.dark),
+      ].join("\n\n")
+    : ""
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Button
+        variant="quiet"
+        size="sm"
+        aria-expanded={isOpen}
+        onPress={() => setOpen(!isOpen)}
+        className="-ml-2 self-start text-fg-muted"
+      >
+        Preview theme CSS
+        <ChevronDownIcon
+          data-icon="inline-end"
+          className={cn(isOpen && "rotate-180")}
+        />
+      </Button>
+      {isOpen && (
+        <div className="rounded-md border bg-muted/40">
+          <div className="flex items-start justify-between gap-2 border-b py-1.5 pr-1.5 pl-3">
+            <span className="min-w-0 text-xs text-fg-muted">
+              {item?.dependencies?.length
+                ? `Installs ${item.dependencies.join(", ")}`
+                : "globals.css"}
+            </span>
+            <span className="flex shrink-0">
+              <Button
+                variant="quiet"
+                size="xs"
+                isIconOnly
+                aria-label="Download theme CSS"
+                isDisabled={!item}
+                onPress={() => download("theme.css", css)}
+              >
+                <DownloadIcon />
+              </Button>
+              <Button
+                variant="quiet"
+                size="xs"
+                isIconOnly
+                aria-label="Copy theme CSS"
+                isDisabled={!item}
+                onPress={() => copyToClipboard(css)}
+              >
+                {isCopied ? <CheckIcon /> : <CopyIcon />}
+              </Button>
+            </span>
+          </div>
+          <pre className="max-h-[40vh] overflow-auto px-3 py-2 font-mono text-xs text-fg">
+            {item ? css : "Loading…"}
+          </pre>
+        </div>
+      )}
     </div>
   )
 }

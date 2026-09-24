@@ -170,15 +170,14 @@ export function PreviewPanel({
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
   const SizeIcon = sizeOption.Icon
 
-  // Open the preview in the same light / dark mode the site is currently in. Seeded on
-  // mount rather than via the useState initializer: this page is server-rendered and the
-  // server can't know the client's stored theme (it always resolves "light"), so reading
-  // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
-  // preview mode is toggled independently of the site theme afterwards.
+  // The preview follows the site's light / dark mode — flipping the header toggle
+  // and seeing only the chrome change read as a bug. Its own toggle still flips
+  // it alone, to compare modes. Synced in an effect, not the useState
+  // initializer: the server can't know the client's stored theme (it always
+  // resolves "light"), so reading it during render would mismatch on hydration.
   useEffect(() => {
     setPreviewMode(resolvedTheme)
-    // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
-  }, [])
+  }, [resolvedTheme])
 
   // The iframe's document URL, fixed at mount — the preset is baked in so the
   // initial render has the right state. Everything after goes over postMessage
@@ -545,6 +544,11 @@ export function PreviewPanel({
                     <ListBoxItem key={id} id={id} textValue={label}>
                       <Icon />
                       {label}
+                      {id !== "desktop" && (
+                        <span className="ml-auto pl-3 text-fg-muted tabular-nums">
+                          {DEVICE_WIDTHS[id]}
+                        </span>
+                      )}
                     </ListBoxItem>
                   ))}
                 </ListBox>
@@ -596,7 +600,7 @@ export function PreviewPanel({
                 size="sm"
                 variant={inspecting ? "primary" : "quiet"}
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-lg:hidden"
                 onPress={() => setInspecting((v) => !v)}
                 aria-label="Toggle component inspector"
               >
@@ -620,7 +624,7 @@ export function PreviewPanel({
                 onPress={() =>
                   setPreviewMode((m) => (m === "dark" ? "light" : "dark"))
                 }
-                aria-label="Toggle preview mode"
+                aria-label="Toggle preview dark mode"
               >
                 {previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
               </Button>
@@ -664,7 +668,7 @@ export function PreviewPanel({
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                className="rounded-full"
+                className="rounded-full max-lg:hidden"
                 onPress={toggleFullscreen}
                 aria-label="Toggle fullscreen"
               >

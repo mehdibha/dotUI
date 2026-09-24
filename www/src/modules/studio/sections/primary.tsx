@@ -50,7 +50,7 @@ const LEAF_LABELS: Record<PrimaryLeaf, string> = {
 
 /** What a source paints, from the engine's mode: the solid fill and its
  *  label, the text ink, the focus ring, the tinted wash. */
-interface Ink {
+export interface Ink {
   fill: string
   on: string
   text: string
@@ -58,7 +58,7 @@ interface Ink {
   wash: string
 }
 
-function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
+export function inks(m: ModeOutput): Record<PrimaryColorSource, Ink> {
   const step = (palette: string, step: string) =>
     m.scales[palette]?.[step as keyof (typeof m.scales)[string]] ?? m.background
   return {
@@ -104,7 +104,7 @@ function ButtonGlyph({ ink }: { ink: Ink }) {
       className="flex h-5 items-center rounded-md px-2 text-[10.5px] font-semibold"
       style={{ background: ink.fill, color: ink.on }}
     >
-      Save
+      Button
     </span>
   )
 }

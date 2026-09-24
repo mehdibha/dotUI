@@ -101,12 +101,12 @@ interface Suggestion {
 }
 
 const FILES: Suggestion[] = [
-  { id: "theme.css" },
-  { id: "button.tsx" },
-  { id: "menu.tsx" },
-  { id: "popover.tsx" },
-  { id: "tokens.ts" },
-  { id: "chart.tsx" },
+  { id: "invoices.tsx" },
+  { id: "invoices.test.ts" },
+  { id: "billing.ts" },
+  { id: "schema.ts" },
+  { id: "api.ts" },
+  { id: "README.md" },
 ]
 
 const COMMANDS: Suggestion[] = [
@@ -117,14 +117,15 @@ const COMMANDS: Suggestion[] = [
   { id: "ship", description: "Open a pull request" },
 ]
 
-// The prompt the card starts with: a `/goal` command plus `@`-mentioned files,
-// all rendered as inline tokens.
+// The prompt the card starts with: a `/plan` command plus `@`-mentioned files,
+// all rendered as inline tokens. Product work, not design-system work — on
+// /studio a theming prompt read as a feature of the studio itself.
 const DEFAULT_PROMPT = new TokenFieldValue([
-  { type: "token", text: "/goal" },
-  { type: "text", text: " Ship dark mode — generate the neutral scale in " },
-  { type: "token", text: "@theme.css" },
-  { type: "text", text: " and swap the hardcoded colors in " },
-  { type: "token", text: "@button.tsx" },
+  { type: "token", text: "/plan" },
+  { type: "text", text: " Add CSV export to the invoices table in " },
+  { type: "token", text: "@invoices.tsx" },
+  { type: "text", text: " and cover it in " },
+  { type: "token", text: "@invoices.test.ts" },
   { type: "text", text: " " },
 ])
 

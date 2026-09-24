@@ -12,9 +12,10 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
+import { PRESETS } from "@/modules/presets/presets-data"
 import { useStudio } from "@/modules/studio/use-studio"
 
-import { useMyPresets } from "./preset"
+import { uniqueName, useMyPresets } from "./preset"
 import { saveDesignSystemName, useDesignSystemName } from "./preset/storage"
 
 /**
@@ -36,9 +37,17 @@ export function SavePresetDialog({
   const active = presets.find((p) => p.id === activeId)
   const isDirty = active ? active.state !== currentState : false
 
+  // Never a second "Linear" beside the built-in one, or a saved twin.
+  const taken = [...PRESETS.map((p) => p.name), ...presets.map((p) => p.name)]
   const [name, setName] = useState("")
+  // An edited built-in (or an untitled link) is new work: ask for its name
+  // rather than suggest "Origin 2".
+  const isOwnName =
+    storedName !== "Untitled" && !PRESETS.some((p) => p.name === storedName)
   useEffect(() => {
-    if (isOpen) setName(active?.name ?? storedName)
+    if (!isOpen) return
+    setName(active?.name ?? (isOwnName ? uniqueName(storedName, taken) : ""))
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- on open
   }, [isOpen, active?.name, storedName])
 
   const trimmed = name.trim()
@@ -46,7 +55,7 @@ export function SavePresetDialog({
   // The saved name becomes the working system's name — the panel header
   // reflects what was just saved.
   function saveAsNew() {
-    const name = trimmed || storedName
+    const name = uniqueName(trimmed || storedName, taken)
     save(name, currentState)
     saveDesignSystemName(name)
     onOpenChange(false)

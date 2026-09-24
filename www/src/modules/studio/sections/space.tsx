@@ -102,9 +102,10 @@ export function SpaceSection({ studio }: { studio: Studio }) {
   return (
     <>
       <DialTrigger label="Density" value={tier.label}>
-        <DialPopover className="w-80">
+        <DialPopover className="w-96">
           <CardGrid
             label="Density"
+            columns={3}
             value={tier.id}
             onChange={set("density")}
             options={DENSITY_TIERS.map((t) => ({

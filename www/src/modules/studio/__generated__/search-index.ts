@@ -23,7 +23,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Controls",
 		"Fields",
 	],
-	motion: ["Character", "Speed", "Overlays", "State changes"],
+	motion: ["Easing", "Speed", "Overlays", "State changes"],
 	mobile: ["Pickers", "Dialogs"],
 	components: [
 		"Accordion",

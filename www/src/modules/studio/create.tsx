@@ -6,7 +6,7 @@
    built-in presets, live previews, unsaved-changes guard), reachable at
    ?gallery= like before. */
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
@@ -18,9 +18,12 @@ import {
   decodePreset,
   encodePreset,
   encodeState,
+  uniqueName,
   useMyPresets,
 } from "@/modules/studio/preset"
+import { saveActivePresetId } from "@/modules/studio/preset/my-presets"
 import {
+  loadStoredPreset,
   saveDesignSystemName,
   useDesignSystemName,
 } from "@/modules/studio/preset/storage"
@@ -28,6 +31,7 @@ import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
 import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
 import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
+import { record } from "./history"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
@@ -67,10 +71,39 @@ export function StudioPanel({ className }: { className?: string }) {
   // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
   const [pending, setPending] = useState<(() => void) | null>(null)
 
+  // A link opened here (someone's ?preset=) isn't this browser's system: it
+  // goes by the saved or built-in system it matches, else "Untitled", and
+  // keeps that name once edited — never the name last used in this browser.
+  const [shared, setShared] = useState<{
+    state: string
+    name: string
+    activeId?: string
+  } | null>(null)
+  useEffect(() => {
+    const url = canon(studio.encoded ?? "")
+    if (!url || url === canon(encodePreset(loadStoredPreset()) ?? "")) return
+    const saved = presets.find((p) => canon(p.state) === url)
+    const builtIn = PRESETS.find((p) => encodeState(p.state) === url)
+    setShared({
+      state: url,
+      name: saved?.name ?? builtIn?.name ?? "Untitled",
+      activeId: saved?.id,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the URL on arrival
+  }, [])
+  useEffect(() => {
+    if (!shared || canon(studio.encoded ?? "") === shared.state) return
+    saveDesignSystemName(shared.name)
+    saveActivePresetId(shared.activeId)
+    setShared(null)
+  }, [studio.encoded, shared])
+
   // The header names what's being edited: the active saved system (dotted when
   // edited past its snapshot), else the standalone design-system name.
-  const activeSaved = presets.find((p) => p.id === activeId)
-  const displayName = activeSaved?.name ?? storedName
+  const activeSaved = shared
+    ? presets.find((p) => p.id === shared.activeId)
+    : presets.find((p) => p.id === activeId)
+  const displayName = shared?.name ?? activeSaved?.name ?? storedName
 
   // Built-in presets are re-loadable from the gallery, so a freshly applied one
   // isn't unsaved work — only edits past it (or past a saved snapshot) are.
@@ -126,7 +159,14 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
+  // Before the name and active system change, so undo restores all three.
+  function remember() {
+    setShared(null)
+    if (studio.encoded !== undefined) record(studio.encoded)
+  }
+
   function pickPreset(itemId: string) {
+    remember()
     const saved = presets.find((p) => p.id === itemId)
     if (saved) {
       setActive(saved.id)
@@ -142,6 +182,7 @@ export function StudioPanel({ className }: { className?: string }) {
   }
 
   function createPreset(name: string, state: string) {
+    remember()
     save(name, state)
     saveDesignSystemName(name)
     applyState(state)
@@ -156,7 +197,14 @@ export function StudioPanel({ className }: { className?: string }) {
   function resolvePending(saveFirst: boolean) {
     if (saveFirst) {
       if (activeSaved) update(activeSaved.id, currentState)
-      else save(displayName, currentState)
+      else {
+        const name = uniqueName(displayName, [
+          ...PRESETS.map((p) => p.name),
+          ...presets.map((p) => p.name),
+        ])
+        save(name, currentState)
+        saveDesignSystemName(name)
+      }
     }
     pending?.()
     setPending(null)

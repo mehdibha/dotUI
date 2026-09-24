@@ -32,6 +32,34 @@ interface Entry {
   axis?: string
 }
 
+/* Words people search for that a row's label doesn't say, keyed by
+   `chapter/row`. */
+const ALIASES: Record<string, string[]> = {
+  "color/Brand": ["accent", "primary color", "hex", "logo"],
+  "color/Neutral": ["gray", "grey", "background"],
+  "color/Semantics": ["success", "warning", "danger", "error", "status"],
+  "color/Vividness": ["saturation", "chroma"],
+  "color/Primary": ["accent", "fill", "button color"],
+  "typography/Heading": ["font", "typeface"],
+  "typography/Body": ["font", "typeface", "text"],
+  "typography/Mono": ["font", "code"],
+  "shape/Radius": ["corner", "rounded", "roundness", "border radius"],
+  "shape/Character": ["corner", "rounded", "pill", "sharp"],
+  "space/Density": ["spacing", "padding", "size", "compact", "comfortable"],
+  "space/Unit": ["spacing", "grid"],
+  "surfaces/Style": ["border", "outline", "card"],
+  "surfaces/Depth": ["shadow", "elevation"],
+  "surfaces/Page": ["background", "tint"],
+  "surfaces/Glass": ["blur", "translucent", "frosted", "transparent"],
+  "browser/Highlight": ["text selection"],
+  "states/Control focus": ["focus ring", "outline"],
+  "states/Field focus": ["focus ring", "outline"],
+  "motion/Easing": ["animation", "spring", "curve"],
+  "motion/Speed": ["animation", "duration"],
+  "motion/Overlays": ["animation", "entrance", "transition"],
+  "motion/State changes": ["animation", "hover", "transition"],
+}
+
 function categories(chapters: Chapter[]): Entry[] {
   return chapters.map((chapter) => ({
     id: chapter.id,
@@ -94,7 +122,11 @@ export function PanelSearch({
     )
     return cats.length > 0
       ? cats
-      : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
+      : axes(chapters).filter(
+          (a) =>
+            contains(a.axis ?? "", needle) ||
+            (ALIASES[a.id] ?? []).some((alias) => contains(alias, needle)),
+        )
   }, [chapters, query, contains])
 
   // Global shortcut — ⌘P / Ctrl+P toggles from anywhere on the page.
@@ -167,7 +199,11 @@ export function PanelSearch({
             {(entry) => (
               <ListBoxItem
                 id={entry.id}
-                textValue={entry.axis ?? entry.category}
+                // The Command filters again on this; aliases keep their hits.
+                textValue={[
+                  entry.axis ?? entry.category,
+                  ...(ALIASES[entry.id] ?? []),
+                ].join(" ")}
                 onAction={() => jump(entry.chapterId)}
                 className="flex-col items-start gap-0"
               >

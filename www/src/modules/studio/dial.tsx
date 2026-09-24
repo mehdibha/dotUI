@@ -355,7 +355,10 @@ export function DialSlider({
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return
+    // preventDefault also cancels the focus a press would give; take it back
+    // so the arrow keys work after a click.
     e.preventDefault()
+    e.currentTarget.focus({ preventScroll: true })
     e.currentTarget.setPointerCapture(e.pointerId)
     pointerDown.current = { x: e.clientX, y: e.clientY }
     isClick.current = true

@@ -7,7 +7,14 @@
    studio's inert design shell. */
 
 import type { ReactNode } from "react"
-import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
+import {
+  ChevronsUpDownIcon,
+  Redo2Icon,
+  RotateCcwIcon,
+  SaveIcon,
+  SearchIcon,
+  Undo2Icon,
+} from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 
@@ -45,7 +52,7 @@ export function PanelChrome({
   children: ReactNode
 }) {
   // The only reset in the panel. It clears the studio axes and the engine
-  // state as one.
+  // state as one, and undo brings the work back.
   const whole = studio.section(DEFAULTS)
   const modified = whole.modified || (system?.modified ?? false)
   const resetAll = () => {
@@ -75,6 +82,44 @@ export function PanelChrome({
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">
+          {(studio.canUndo || studio.canRedo) && (
+            <>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Undo"
+                isDisabled={!studio.canUndo}
+                onPress={studio.undo}
+                className="text-fg-muted"
+              >
+                <Undo2Icon />
+              </Button>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Redo"
+                isDisabled={!studio.canRedo}
+                onPress={studio.redo}
+                className="text-fg-muted"
+              >
+                <Redo2Icon />
+              </Button>
+            </>
+          )}
+          {system?.dirty && (
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              aria-label="Save design system"
+              onPress={system.onSave}
+              className="text-fg-muted"
+            >
+              <SaveIcon />
+            </Button>
+          )}
           {modified && (
             <Button
               size="sm"

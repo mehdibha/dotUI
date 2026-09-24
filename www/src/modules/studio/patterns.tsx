@@ -67,7 +67,7 @@ export function CardGrid({
           className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
         >
           <span className="flex items-center gap-2">
-            <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
+            <span className="size-3 shrink-0 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
             <span className="text-[13px] font-medium text-fg/85">
               {option.label}
             </span>

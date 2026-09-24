@@ -38,6 +38,18 @@ const activeStore = createPersistedStore<string | undefined>(
   },
 )
 
+/** `name`, or `name 2`, `name 3`… — the first not already `taken`. */
+export function uniqueName(name: string, taken: string[]): string {
+  const names = new Set(taken.map((n) => n.toLowerCase()))
+  if (!names.has(name.toLowerCase())) return name
+  let n = 2
+  while (names.has(`${name} ${n}`.toLowerCase())) n++
+  return `${name} ${n}`
+}
+
+export const loadActivePresetId = activeStore.get
+export const saveActivePresetId = activeStore.set
+
 export function useMyPresets() {
   const presets = presetsStore.useValue()
   const activeId = activeStore.useValue()
