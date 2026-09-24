@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest"
 
+import { defaultPreset } from "@/lib/registry-preset"
+import { publishables } from "@/registry/__generated__/publishables"
+import { publish, selectPublishable } from "@/publisher/publish"
+
 import { DEFAULTS } from "."
 import { resolveDesignSystem } from "../resolve"
 
@@ -52,5 +56,35 @@ describe("display chapters (badges, kbd, avatars)", () => {
     expect(ds.componentParams.badge?.style).toBe("solid")
     expect(ds.componentParams.kbd?.treatment).toBe("chip")
     expect(ds.componentParams.avatar?.fallback).toBe("neutral")
+  })
+})
+
+const shipped = async (name: string, tokens: Record<string, string> = {}) => {
+  const preset = defaultPreset()
+  const mod = await publishables[name]?.()
+  if (!mod) throw new Error(`${name} is not publishable`)
+  const { item } = publish({
+    publishable: selectPublishable(mod, preset),
+    preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
+  })
+  return item.files?.[0]?.content ?? ""
+}
+
+describe("tag motion", () => {
+  it("ships shadcn's default timing: no duration or ease class", async () => {
+    const content = await shipped("tag-group")
+    expect(content).toContain("transition-colors select-ui")
+    expect(content).not.toMatch(/ (duration|ease)-/)
+    expect(content).not.toContain("--studio-")
+  })
+
+  it("a tweak times the tag's hover", async () => {
+    const { tokens } = resolveDesignSystem({
+      ...DEFAULTS,
+      tagMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+    })
+    expect(await shipped("tag-group", tokens)).toContain(
+      "transition-colors duration-200 ease-out select-ui",
+    )
   })
 })

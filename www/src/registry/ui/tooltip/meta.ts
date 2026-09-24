@@ -19,7 +19,6 @@ const tooltipMeta = {
       description:
         "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
-    // Synced with popover and modal: the studio's Motion axis writes all three.
     motion: {
       kind: "enum",
       default: "scale",

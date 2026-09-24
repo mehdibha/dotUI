@@ -1,4 +1,8 @@
 :root {
   --studio-modal-background: var(--color-popover);
   --studio-modal-radius: var(--studio-radius-panel);
+  --studio-modal-enter-duration: 100ms;
+  --studio-modal-exit-duration: 100ms;
+  --studio-modal-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-modal-exit-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }

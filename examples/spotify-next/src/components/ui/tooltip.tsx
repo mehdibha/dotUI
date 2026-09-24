@@ -9,7 +9,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 const tooltipVariants = tv({
   slots: {
     content:
-      "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-md px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none bg-tooltip text-fg-on-tooltip transition-[transform,opacity,scale] duration-enter ease-enter will-change-[transform,opacity,scale] exiting:duration-exit exiting:ease-out motion-reduce:transition-none entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0 [--slide-offset:--spacing(0.5)] entering:transform-(--origin) exiting:transform-(--origin) placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]",
+      "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-md px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none bg-tooltip text-fg-on-tooltip transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[transform,opacity,scale] motion-reduce:transition-none entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0 [--slide-offset:--spacing(2)] entering:transform-(--offset) placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]",
     arrow:
       "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 [&>svg]:fill-tooltip",
   },

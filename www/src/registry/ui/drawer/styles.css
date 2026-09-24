@@ -1,4 +1,8 @@
 :root {
   --studio-drawer-radius: var(--studio-radius-panel);
   --studio-drawer-handle-radius: var(--studio-radius-pill);
+  --studio-drawer-enter-duration: 450ms;
+  --studio-drawer-exit-duration: 400ms;
+  --studio-drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --studio-drawer-exit-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }

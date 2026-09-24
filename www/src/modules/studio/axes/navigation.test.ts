@@ -14,7 +14,9 @@ describe("navigation chapters", () => {
       container: "divided",
       marker: "chevron",
       markerPosition: "trailing",
+      motion: "expand",
     })
+    expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
     expect(ds.componentParams.breadcrumbs).toEqual({
       separator: "chevron",
       tone: "muted",
@@ -46,6 +48,7 @@ describe("navigation chapters", () => {
       container: "cards",
       marker: "plus",
       markerPosition: "leading",
+      motion: "expand",
     })
   })
 

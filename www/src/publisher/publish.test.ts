@@ -302,6 +302,116 @@ describe("resolve-classes", () => {
     ).toBe("border rounded-[calc(var(--radius-md)-1px)]")
   })
 
+  test("rewriteClassString maps motion reads onto Tailwind's scale", () => {
+    const vars = resolveStudioVars({
+      "--studio-enter": "200ms",
+      "--studio-zero": "0ms",
+      "--studio-bare": "300",
+      "--studio-seconds": "0.2s",
+      "--studio-odd": "12.5ms",
+      "--studio-calc": "calc(var(--x)*2)",
+      "--studio-out": "cubic-bezier(0, 0, 0.2, 1)",
+      "--studio-in": "cubic-bezier(0.4,0,1,1)",
+      "--studio-linear": "linear",
+      "--studio-token": "var(--ease-in-out)",
+      "--studio-custom": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+      "--studio-spring": "linear(0, 0.62 20%, 1.04 44%, 1)",
+    })
+    expect(
+      rewriteClassString(
+        "duration-(--studio-enter) duration-(--studio-zero) duration-(--studio-bare) duration-(--studio-seconds) duration-(--studio-odd) duration-(--studio-calc)",
+        vars,
+      ),
+    ).toBe(
+      "duration-200 duration-0 duration-300 duration-200 duration-[12.5ms] duration-[calc(var(--x)*2)]",
+    )
+    expect(
+      rewriteClassString(
+        "ease-(--studio-out) ease-(--studio-in) ease-(--studio-linear) ease-(--studio-token) ease-(--studio-custom) ease-(--studio-spring)",
+        vars,
+      ),
+    ).toBe(
+      "ease-out ease-in ease-linear ease-in-out ease-[cubic-bezier(0.25,0.1,0.25,1)] ease-[linear(0,0.62_20%,1.04_44%,1)]",
+    )
+  })
+
+  test("rewriteClassString drops motion reads that change nothing", () => {
+    const vars = resolveStudioVars({
+      "--studio-enter": "150ms",
+      "--studio-exit": "150ms",
+      "--studio-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "--studio-exit-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "--studio-fast": "100ms",
+    })
+    // Tailwind's transition default, beside a transition utility: no class.
+    expect(
+      rewriteClassString(
+        "transition-colors duration-(--studio-enter) ease-(--studio-ease)",
+        vars,
+      ),
+    ).toBe("transition-colors")
+    // tw-animate reads the same vars with defaults of its own (ease, not
+    // ease-in-out): the class still matters.
+    expect(
+      rewriteClassString(
+        "transition-opacity entering:animate-in ease-(--studio-ease)",
+        vars,
+      ),
+    ).toBe("transition-opacity entering:animate-in ease-in-out")
+    // No unprefixed transition utility: the class still matters.
+    expect(
+      rewriteClassString(
+        "[transition-property:height] motion-safe:transition-all duration-(--studio-enter)",
+        vars,
+      ),
+    ).toBe(
+      "[transition-property:height] motion-safe:transition-all duration-150",
+    )
+    // A prefixed read equal to its unprefixed sibling goes; one that
+    // overrides it stays, default value or not.
+    expect(
+      rewriteClassString(
+        "transition-opacity duration-(--studio-fast) exiting:duration-(--studio-exit) exiting:ease-(--studio-exit-ease)",
+        vars,
+      ),
+    ).toBe(
+      "transition-opacity duration-100 exiting:duration-150 exiting:ease-in-out",
+    )
+    expect(
+      rewriteClassString(
+        "transition-opacity duration-(--studio-enter) exiting:duration-(--studio-exit)",
+        vars,
+      ),
+    ).toBe("transition-opacity")
+    // Equal to its sibling, but beating a broader prefixed class: it stays.
+    expect(
+      rewriteClassString(
+        "transition-opacity duration-(--studio-fast) exiting:duration-300 exiting:data-swiping:duration-(--studio-fast)",
+        vars,
+      ),
+    ).toBe(
+      "transition-opacity duration-100 exiting:duration-300 exiting:data-swiping:duration-100",
+    )
+  })
+
+  test("resolveClasses judges motion drops against the whole slot", () => {
+    const vars = resolveStudioVars({
+      "--studio-enter": "150ms",
+      "--studio-exit": "150ms",
+    })
+    const layer: TvLayer = {
+      slots: {
+        root: ["transition-[opacity,scale]", "duration-(--studio-enter) p-2"],
+      },
+      variants: {
+        open: { true: { root: "exiting:duration-(--studio-exit)" } },
+      },
+    }
+    const out = resolveClasses(layer, vars)
+    expect(out.slots?.root).toEqual(["transition-[opacity,scale]", "p-2"])
+    expect(out.variants?.open?.true).toEqual({ root: "" })
+  })
+
   test("rewriteClassString leaves undeclared vars alone", () => {
     const vars = resolveStudioVars({
       "--studio-alert-radius": "var(--radius-md)",

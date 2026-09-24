@@ -1,3 +1,7 @@
 :root {
   --studio-popover-radius: var(--studio-radius-surface);
+  --studio-popover-enter-duration: 100ms;
+  --studio-popover-exit-duration: 100ms;
+  --studio-popover-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-popover-exit-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }

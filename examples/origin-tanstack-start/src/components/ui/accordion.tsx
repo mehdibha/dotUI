@@ -16,9 +16,9 @@ const accordionVariants = tv({
     trigger:
       "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start gap-4 rounded-md py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between",
     marker:
-      "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200 **:[svg]:size-4 group-expanded/accordion-item:rotate-180",
+      "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4 duration-200 ease-[cubic-bezier(0,0,0.58,1)] transition-transform group-expanded/accordion-item:rotate-180",
     panel:
-      "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/accordion-item:opacity-100 motion-safe:transition-[height,opacity]",
+      "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted duration-200 ease-[cubic-bezier(0,0,0.58,1)] motion-safe:transition-[height]",
     panelContent: "pb-3",
   },
 });

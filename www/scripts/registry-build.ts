@@ -361,9 +361,10 @@ async function buildStudioSearchIndex() {
       fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
     const rowLabels = (source: string) => {
       const found: string[] = []
-      // A row's own label — the tag must not contain another "<" before it.
+      // A row's own label (a folded row's title) — the tag must not contain
+      // another "<" before it.
       for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|CardGrid)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+        /<(?:\w+Row|Dial\w+|\w+Motion|CardGrid)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push(label)
       for (const [, title = ""] of source.matchAll(

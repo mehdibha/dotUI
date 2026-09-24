@@ -1,7 +1,7 @@
 "use client"
 
-/* Accordion — how the container groups the items, and the marker that says a
-   trigger opens. Expand motion lives in Motion. */
+/* Accordion — how the container groups the items, the marker that says a
+   trigger opens, and how a panel opens (collapsibles ride on it). */
 
 import {
   CONTAINER_OPTIONS,
@@ -9,6 +9,7 @@ import {
   POSITION_OPTIONS,
 } from "../axes/accordion"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { AccordionMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -131,6 +132,7 @@ export function AccordionSection({ studio }: { studio: Studio }) {
         onChange={set("accordionMarkerPosition")}
         options={POSITION_OPTIONS}
       />
+      <AccordionMotion label="Motion" studio={studio} />
     </>
   )
 }

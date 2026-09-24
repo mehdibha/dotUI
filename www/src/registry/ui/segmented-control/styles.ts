@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     slots: {
       root: "inline-flex w-fit items-center justify-center rounded-(--studio-segmented-control-radius) text-fg-muted",
       item: [
-        "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring",
+        "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) select-ui focus-visible:focus-ring",
         "text-fg-muted hover:text-fg",
         "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       // item; the transition makes it glide. `inset-0` + `isolate` on the item sit
       // it behind the content (which is `z-10`).
       indicator:
-        "pointer-events-none absolute inset-0 rounded-(--studio-segmented-control-item-radius) ease-out motion-safe:transition-[translate,width,height]",
+        "pointer-events-none absolute inset-0 rounded-(--studio-segmented-control-item-radius) transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
       itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
     },
   },

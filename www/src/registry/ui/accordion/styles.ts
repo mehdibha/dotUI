@@ -2,6 +2,11 @@ import { createStyles } from "@/lib/styles"
 
 import accordionMeta from "./meta"
 
+/* The expand's timing is the studio's (styles.css); the collapsible rides on
+   it, and the marker turns in step with the panel. */
+const expand =
+  "duration-(--studio-accordion-enter-duration) ease-(--studio-accordion-ease)"
+
 const { useStyles, styles } = createStyles(accordionMeta, {
   base: {
     slots: {
@@ -13,9 +18,9 @@ const { useStyles, styles } = createStyles(accordionMeta, {
         "flex flex-1 cursor-interactive items-start gap-4 rounded-(--studio-accordion-trigger-radius) py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",
       ],
       marker:
-        "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200 **:[svg]:size-4",
+        "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4",
       panel:
-        "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted opacity-0 duration-300 ease-fluid-out group-expanded/accordion-item:opacity-100 motion-safe:transition-[height,opacity]",
+        "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted",
       panelContent: "pb-3",
     },
   },
@@ -25,6 +30,25 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     comfortable: {},
   },
   params: {
+    motion: {
+      // shadcn's: the height alone.
+      expand: {
+        slots: {
+          marker: [expand, "transition-transform"],
+          panel: [expand, "motion-safe:transition-[height]"],
+        },
+      },
+      fade: {
+        slots: {
+          marker: [expand, "transition-transform"],
+          panel: [
+            expand,
+            "opacity-0 group-expanded/accordion-item:opacity-100 motion-safe:transition-[height,opacity]",
+          ],
+        },
+      },
+      none: {},
+    },
     container: {
       divided: {
         slots: {

@@ -6,6 +6,7 @@
 
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { SliderMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -93,6 +94,7 @@ export function SlidersSection({ studio }: { studio: Studio }) {
         onChange={set("sliderTrack")}
         options={TRACK_OPTIONS}
       />
+      <SliderMotion label="Transition" studio={studio} />
     </>
   )
 }

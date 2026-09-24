@@ -1,14 +1,23 @@
 "use client"
 
 /* Badges — and Tags, one synced chip language: how much intent color the
-   chip carries and its corners. Kbd is the third small chip, with a chrome
-   of its own. */
+   chip carries and its corners. Only tags react to the pointer, so they
+   alone time a transition. Kbd is the third small chip, with a chrome of its
+   own. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
 import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+} from "../dial"
+import { StateMotionValue } from "../dial-motion"
+import { TagMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -112,6 +121,14 @@ export function BadgesSection({ studio }: { studio: Studio }) {
         onChange={set("badgeShape")}
         options={SHAPE_OPTIONS}
       />
+      <DialTrigger
+        label="Tags"
+        value={<StateMotionValue value={state.tagMotion} />}
+      >
+        <DialPopover>
+          <TagMotion label="Transition" studio={studio} />
+        </DialPopover>
+      </DialTrigger>
       <DialSelect
         label="Kbd"
         value={state.kbdTreatment}

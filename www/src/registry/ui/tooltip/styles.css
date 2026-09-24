@@ -1,3 +1,7 @@
 :root {
   --studio-tooltip-radius: var(--studio-radius-item);
+  --studio-tooltip-enter-duration: 150ms;
+  --studio-tooltip-exit-duration: 150ms;
+  --studio-tooltip-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-tooltip-exit-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }

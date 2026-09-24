@@ -1,9 +1,9 @@
 "use client"
 
 /* Inputs — the field family: every field renders through Input / InputGroup,
-   so Style reaches them all. Addons fold the group's layout and divider into
-   one pick; steppers and OTP cells are the two fields with a layout of their
-   own. Focus and invalid live in States. */
+   so Style (shell, hover, transition) reaches them all. Addons fold the
+   group's layout and divider into one pick; steppers and OTP cells are the
+   two fields with a layout of their own. Focus and invalid live in States. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -19,6 +19,7 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
+import { InputMotion } from "../motion-controls"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
@@ -196,6 +197,7 @@ export function InputsSection({ studio }: { studio: Studio }) {
             onChange={set("inputHover")}
             options={HOVER_OPTIONS}
           />
+          <InputMotion label="Transition" studio={studio} />
         </DialPopover>
       </DialTrigger>
       <DialSelect

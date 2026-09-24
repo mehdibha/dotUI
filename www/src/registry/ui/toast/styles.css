@@ -1,4 +1,10 @@
 :root {
   --studio-toast-radius: var(--studio-radius-surface);
   --studio-toast-action-radius: var(--studio-radius-control);
+  --studio-toast-enter-duration: 400ms;
+  --studio-toast-exit-duration: 400ms;
+  --studio-toast-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-toast-exit-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --studio-toast-swipe-state-duration: 200ms;
+  --studio-toast-swipe-state-ease: cubic-bezier(0, 0, 0.2, 1);
 }

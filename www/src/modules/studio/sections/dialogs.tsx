@@ -1,10 +1,12 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page: the scrim under them, and where
-   a dialog rests. Backdrop writes Dialog and Drawer together. */
+/* Dialogs — how modal layers meet the page: the scrim under them, where
+   a dialog rests, and how the modal and the drawer move. Backdrop writes
+   Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DrawerMotion, ModalMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -85,6 +87,8 @@ export function DialogsSection({ studio }: { studio: Studio }) {
         onChange={set("dialogPosition")}
         options={POSITION_OPTIONS}
       />
+      <ModalMotion label="Motion" studio={studio} />
+      <DrawerMotion label="Drawer motion" studio={studio} />
     </>
   )
 }

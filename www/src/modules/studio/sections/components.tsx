@@ -34,6 +34,7 @@ import { POPOVER_DEFAULTS } from "../axes/popovers"
 import { PROGRESS_DEFAULTS } from "../axes/progress"
 import { RADIO_DEFAULTS } from "../axes/radio"
 import { SEGMENTED_DEFAULTS } from "../axes/segmented-control"
+import { SIDEBAR_DEFAULTS } from "../axes/sidebar"
 import { SKELETON_DEFAULTS } from "../axes/skeleton"
 import { SLIDER_DEFAULTS, THUMB_OPTIONS } from "../axes/sliders"
 import {
@@ -43,6 +44,10 @@ import {
 import { SWITCH_DEFAULTS } from "../axes/switch"
 import { SEPARATION_OPTIONS, TABLE_DEFAULTS } from "../axes/tables"
 import { TAB_DEFAULTS, TAB_STYLE_OPTIONS } from "../axes/tabs"
+import {
+  MOTION_PATTERNS as TOAST_PATTERNS,
+  TOAST_DEFAULTS,
+} from "../axes/toast"
 import { TOGGLE_DEFAULTS } from "../axes/toggles"
 import { TOOLTIP_DEFAULTS } from "../axes/tooltips"
 import { DialPopover, DialTrigger, optionLabel } from "../dial"
@@ -65,6 +70,7 @@ import {
 } from "./selection-controls"
 import { SlidersPreview, SlidersSection } from "./sliders"
 import { TablesPreview, TablesSection } from "./tables"
+import { ToastSection } from "./toast"
 
 export const COMPONENTS_DEFAULTS = {
   ...BUTTON_DEFAULTS,
@@ -86,10 +92,12 @@ export const COMPONENTS_DEFAULTS = {
   ...DIALOG_DEFAULTS,
   ...POPOVER_DEFAULTS,
   ...TOOLTIP_DEFAULTS,
+  ...TOAST_DEFAULTS,
   ...LINK_DEFAULTS,
   ...TAB_DEFAULTS,
   ...BREADCRUMB_DEFAULTS,
   ...PAGINATION_DEFAULTS,
+  ...SIDEBAR_DEFAULTS,
   ...SKELETON_DEFAULTS,
   ...SPINNER_DEFAULTS,
   ...PROGRESS_DEFAULTS,
@@ -157,6 +165,11 @@ const FAMILIES: Family[] = [
     summary: (s) => (s.popoverTip === "tip" ? "Arrow" : "Plain"),
     Preview: PopoversPreview,
     Body: PopoversSection,
+  },
+  {
+    label: "Toast",
+    summary: (s) => optionLabel(TOAST_PATTERNS, s.toastMotion.pattern),
+    Body: ToastSection,
   },
   {
     label: "Navigation",

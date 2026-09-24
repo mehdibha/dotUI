@@ -20,6 +20,7 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
+import { ProgressMotion } from "../motion-controls"
 import type { Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -162,6 +163,7 @@ export function LoadingSection({ studio }: { studio: Studio }) {
             value={state.progressGap}
             onChange={set("progressGap")}
           />
+          <ProgressMotion label="Fill" studio={studio} />
         </DialPopover>
       </DialTrigger>
     </>

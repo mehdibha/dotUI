@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest"
 
+import { defaultPreset } from "@/lib/registry-preset"
+import { publishables } from "@/registry/__generated__/publishables"
+import { publish, selectPublishable } from "@/publisher/publish"
+
 import { resolveDesignSystem } from "../resolve"
 import { DEFAULTS } from "./index"
 
@@ -76,5 +80,38 @@ describe("selection controls", () => {
     }
     // The switch card always trails its control; only Selected reaches it.
     expect(ds.componentParams.switch).toEqual({ "card-selected": "outline" })
+  })
+})
+
+const shipped = async (name: string, tokens: Record<string, string> = {}) => {
+  const preset = defaultPreset()
+  const mod = await publishables[name]?.()
+  if (!mod) throw new Error(`${name} is not publishable`)
+  const { item } = publish({
+    publishable: selectPublishable(mod, preset),
+    preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
+  })
+  return item.files?.[0]?.content ?? ""
+}
+
+describe("checkbox and radio motion", () => {
+  it("ships shadcn's default timing: no duration or ease class", async () => {
+    for (const name of ["checkbox", "radio-group"]) {
+      const content = await shipped(name)
+      expect(content).toContain("transition-colors has-data-label:w-full")
+      expect(content).not.toMatch(/ (duration|ease)-/)
+      expect(content).not.toContain("--studio-")
+    }
+  })
+
+  it("one tweak times checkbox and radio alike", async () => {
+    const { tokens } = resolveDesignSystem({
+      ...DEFAULTS,
+      checkboxMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+    })
+    for (const name of ["checkbox", "radio-group"])
+      expect(await shipped(name, tokens)).toContain(
+        "transition-colors duration-200 ease-out has-data-label:w-full",
+      )
   })
 })
