@@ -3,13 +3,15 @@
  * without the shadcn CLI — for looking at real consumer files while working.
  *
  *   pnpm examples:preview [--example <name>] [--watch]
+ *   pnpm examples:preview --dir <app> --preset <id> [--stylesheet <path>] [--watch]
  *
  * Runs the publisher the way `/r/$name` does for every publishable, formats,
  * and writes the files where the CLI would put them (`src/components/ui`,
  * `src/hooks`, `src/lib`) plus the stylesheet rendered from the init item's
  * CSS fields. With the template's own dev server running, every save to the
  * registry shows up through HMR. `--watch` re-runs on changes under
- * `www/src/registry` and `www/src/publisher`.
+ * `www/src/registry`, `www/src/publisher` and the presets. `--dir` writes
+ * into any app outside `examples/` (default stylesheet `src/styles.css`).
  *
  * This is a preview, never the committed output: the CLI reprints every file
  * in its own style and wires fonts per framework, so what lands in `examples/`
@@ -42,13 +44,29 @@ const EXAMPLES: Record<string, { preset: string; stylesheet: string }> = {
   "spotify-tanstack-start": { preset: "spotify", stylesheet: "src/styles.css" },
 }
 
-function parseArgs(argv: string[]): { examples: string[]; watch: boolean } {
+interface Target {
+  name: string
+  cwd: string
+  preset: string
+  stylesheet: string
+}
+
+function parseArgs(argv: string[]): { targets: Target[]; watch: boolean } {
   let examples = Object.keys(EXAMPLES)
   let watchMode = false
+  let dir: string | undefined
+  let preset: string | undefined
+  let stylesheet = "src/styles.css"
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
     if (arg === "--watch") {
       watchMode = true
+    } else if (arg === "--dir" && argv[i + 1]) {
+      dir = path.resolve(process.env.INIT_CWD ?? process.cwd(), argv[++i] ?? "")
+    } else if (arg === "--preset" && argv[i + 1]) {
+      preset = argv[++i]
+    } else if (arg === "--stylesheet" && argv[i + 1]) {
+      stylesheet = argv[++i] ?? stylesheet
     } else if (arg === "--example" && argv[i + 1]) {
       const name = argv[++i] ?? ""
       if (!(name in EXAMPLES)) {
@@ -63,7 +81,24 @@ function parseArgs(argv: string[]): { examples: string[]; watch: boolean } {
       process.exit(2)
     }
   }
-  return { examples, watch: watchMode }
+  if (dir) {
+    if (!preset) {
+      console.error("error: --dir needs --preset <id>")
+      process.exit(2)
+    }
+    return {
+      targets: [{ name: path.basename(dir), cwd: dir, preset, stylesheet }],
+      watch: watchMode,
+    }
+  }
+  return {
+    targets: examples.map((name) => ({
+      name,
+      cwd: path.join(EXAMPLES_DIR, name),
+      ...(EXAMPLES[name] as { preset: string; stylesheet: string }),
+    })),
+    watch: watchMode,
+  }
 }
 
 function write(cwd: string, rel: string, content: string): void {
@@ -72,11 +107,14 @@ function write(cwd: string, rel: string, content: string): void {
   writeFileSync(abs, content, "utf8")
 }
 
-async function materialize(example: string): Promise<void> {
-  const { preset: presetId, stylesheet } = EXAMPLES[example] ?? {}
+async function materialize({
+  name: example,
+  cwd,
+  preset: presetId,
+  stylesheet,
+}: Target): Promise<void> {
   const source = PRESETS.find((p) => p.id === presetId)
-  if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
-  const cwd = path.join(EXAMPLES_DIR, example)
+  if (!source) throw new Error(`unknown preset ${presetId}`)
   const encodedPreset = encodeState(source.state)
   const preset = await resolveRequestPreset(encodedPreset)
 
@@ -116,14 +154,14 @@ async function materialize(example: string): Promise<void> {
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2))
   if (!options.watch) {
-    for (const example of options.examples) await materialize(example)
+    for (const target of options.targets) await materialize(target)
     return
   }
 
   // Watch mode re-execs a one-shot run per change so publishables reload: the
   // registry build rewrites `__generated__/publishables`, and a long-lived
   // process would keep the first import.
-  const args = options.examples.flatMap((name) => ["--example", name])
+  const args = process.argv.slice(2).filter((arg) => arg !== "--watch")
   let timer: NodeJS.Timeout | undefined
   let running = false
   let queued = false
@@ -147,7 +185,7 @@ async function main(): Promise<void> {
       }
     })
   }
-  for (const dir of ["src/registry", "src/publisher"]) {
+  for (const dir of ["src/registry", "src/publisher", "src/modules/presets"]) {
     watch(path.join(WWW_DIR, dir), { recursive: true }, (_event, file) => {
       if (file?.includes("__generated__")) return
       clearTimeout(timer)
@@ -155,7 +193,7 @@ async function main(): Promise<void> {
     })
   }
   console.log(
-    `watching www/src/registry and www/src/publisher — ctrl-c to stop`,
+    `watching www/src/registry, www/src/publisher and the presets — ctrl-c to stop`,
   )
   rerun()
 }
