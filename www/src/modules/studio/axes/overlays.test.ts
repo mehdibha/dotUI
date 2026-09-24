@@ -11,7 +11,10 @@ describe("overlays chapters", () => {
       backdrop: "dim",
       position: "center",
     })
-    expect(ds.componentParams.drawer).toMatchObject({ backdrop: "dim" })
+    expect(ds.componentParams.drawer).toMatchObject({
+      backdrop: "dim",
+      sheet: "attached",
+    })
     expect(ds.componentParams.popover).toMatchObject({ tip: "none" })
     expect(ds.componentParams.dialog).toMatchObject({ header: "title" })
     expect(ds.componentParams.tooltip).toMatchObject({ style: "inverted" })
@@ -28,6 +31,12 @@ describe("overlays chapters", () => {
       position: "top",
     })
     expect(ds.componentParams.drawer).toMatchObject({ backdrop: "blur" })
+  })
+
+  test("dialogs: sheet writes the drawer only", () => {
+    const ds = resolveDesignSystem({ ...DEFAULTS, dialogSheet: "floating" })
+    expect(ds.componentParams.drawer).toMatchObject({ sheet: "floating" })
+    expect(ds.componentParams.modal).not.toHaveProperty("sheet")
   })
 
   test("popovers: tip on popover, header on dialog", () => {

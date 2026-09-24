@@ -53,6 +53,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Dialogs",
 		"Dialogs › Backdrop",
 		"Dialogs › Position",
+		"Dialogs › Sheet",
 		"Inputs",
 		"Inputs › Style",
 		"Inputs › Hover",
