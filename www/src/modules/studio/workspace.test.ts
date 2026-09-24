@@ -168,6 +168,32 @@ describe("workspace", () => {
     )
   })
 
+  it("keeps generated names readable at the length limit", async () => {
+    const { ws, id } = await edited()
+    const long = "x".repeat(64)
+    ws.rename(id, long)
+    ws.duplicate(id)
+    ws.duplicate(id)
+    const snapshot = {
+      schema: 1 as const,
+      name: long,
+      base: "origin",
+      state: linear.state,
+      createdAt: 1,
+    }
+    ws.importSnapshot("L0ngN4me01", snapshot)
+    ws.importSnapshot("Bl4nkN4me1", { ...snapshot, name: "  " })
+    const workspace = ws.getWorkspace()
+    expect(workspace.systems.map((s) => s.name)).toEqual([
+      long,
+      `${"x".repeat(59)} copy`,
+      `${"x".repeat(57)} copy 2`,
+      `${"x".repeat(62)} 2`,
+      "Untitled",
+    ])
+    expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(workspace)
+  })
+
   it("imports a snapshot once and reopens it after", async () => {
     const { ws, id } = await edited()
     const snapshot = {

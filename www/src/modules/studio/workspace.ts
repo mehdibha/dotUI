@@ -250,12 +250,20 @@ function update(fn: (workspace: Workspace) => Workspace) {
   store.update(fn)
 }
 
-export function uniqueName(name: string, systems: DesignSystemDoc[]): string {
+/** `name` + `suffix`, then " 2", " 3"… until free; the base is cut so the
+ *  result stays a readable name (trimmed, 1–64 characters). */
+export function uniqueName(
+  name: string,
+  systems: DesignSystemDoc[],
+  suffix = "",
+): string {
   const taken = new Set(systems.map((s) => s.name))
-  if (!taken.has(name)) return name
-  let n = 2
-  while (taken.has(`${name} ${n}`)) n++
-  return `${name} ${n}`
+  const base = name.trim() || "Untitled"
+  const fit = (end: string) =>
+    base.slice(0, MAX_NAME_LENGTH - end.length).trimEnd() + end
+  let candidate = fit(suffix)
+  for (let n = 2; taken.has(candidate); n++) candidate = fit(`${suffix} ${n}`)
+  return candidate
 }
 
 /** Opened from a preset and never changed, renamed or published: picking
@@ -333,7 +341,7 @@ export function duplicate(id: string): void {
     const source = workspace.systems.find((s) => s.id === id)
     if (!source) return workspace
     const copy = newDoc({
-      name: uniqueName(`${source.name} copy`, workspace.systems),
+      name: uniqueName(source.name, workspace.systems, " copy"),
       origin: { kind: "copy", of: source.id },
       state: source.state,
     })
