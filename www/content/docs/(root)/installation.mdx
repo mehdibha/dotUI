@@ -1,0 +1,69 @@
+---
+title: Installation
+description: Install your design system in a React project with the shadcn CLI.
+---
+
+The best way to install dotUI is the command from the studio's **Export** dialog. Your design system is inside the command, so every component you add is already styled.
+
+## Requirements
+
+- [React 19](https://react.dev)
+- [Tailwind CSS 4](https://tailwindcss.com)
+- [TypeScript 5](https://www.typescriptlang.org)
+
+## Install
+
+<Steps>
+
+### Run init
+
+In the [studio](/studio), click **Export** and choose **Existing project**. Copy the **Register** command and run it in your project root.
+
+No design system yet? Run init with the default one:
+
+```npm
+npx shadcn@latest init https://dotui.org/r/init
+```
+
+The default system is a plain starting point with a blue accent and black-and-white buttons. It is not one of the studio presets. To install Origin or another preset, pick it in the studio and export it.
+
+### Add components
+
+```npm
+npx shadcn@latest add @dotui/button
+```
+
+You can add several at once, like `@dotui/button @dotui/dialog`. Each page in [Components](/docs/components) shows its own command. Components install with your design system applied: your colors, density, component styles and icons.
+
+</Steps>
+
+<Alert>
+  Starting a new app? In the Export dialog, choose **New project** and pick
+  Next.js, TanStack Start, Vite or React Router. You get an init command that
+  creates the app first. You can also open your system in v0 from there.
+</Alert>
+
+## What init changes
+
+- **Dependencies.** Installs `react-aria-components`, `tailwind-variants`, `tailwindcss-react-aria-components`, `tw-animate-css` and `tailwindcss-with`.
+- **Stylesheet.** Adds your tokens to your main CSS file, for example `src/app/globals.css` in Next.js: colors for light and dark mode, radius, chart colors, and the Tailwind plugins dotUI uses.
+- **Fonts.** If your system uses custom fonts, sets them up with `next/font` in Next.js and Fontsource elsewhere.
+- **`lib/utils.ts`.** Adds a `cn` helper that components use to merge classes.
+- **`components.json`.** Registers the `@dotui` registry. Its URL holds your design system, so `add` knows which styles to install.
+
+Run init before `add`. `add @dotui/...` only works after init has registered `@dotui`.
+
+## Change your system later
+
+Export the new system from the studio and run its init command in the same project. The shadcn CLI asks two questions:
+
+- **Overwrite components.json?** Answer Yes. If you answer No, init stops.
+- **Re-install existing UI components?** Answer No. Update them from dotUI as shown below.
+
+Colors, radius and fonts update right away, because components read them from CSS variables. Density, component styles and icons are written into each component file when you add it. To update those, add the components again with `--overwrite`:
+
+```npm
+npx shadcn@latest add @dotui/button @dotui/dialog --overwrite
+```
+
+This replaces the files, so any changes you made to them are lost.
