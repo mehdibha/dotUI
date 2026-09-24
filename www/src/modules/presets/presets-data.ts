@@ -49,8 +49,8 @@ function definePreset(
   return { ...preset, state, designSystem: resolveDesignSystem(state) }
 }
 
-/** Geist's measured blue: the default brand, and Vercel's selection ramp. */
-const SELECTION_BLUE = DEFAULTS.brand
+/** Geist's measured blue: Vercel's selection ramp. */
+const SELECTION_BLUE = "#0072f5"
 
 export const PRESETS: Preset[] = [
   // Kept first: ORIGIN below and the gallery's ordering both rely on it.
@@ -58,7 +58,7 @@ export const PRESETS: Preset[] = [
     id: "origin",
     name: "Origin",
     description: "dotUI blue, the starting point.",
-    swatch: SELECTION_BLUE,
+    swatch: DEFAULTS.brand,
     // The builder defaults, untouched.
     state: {},
   }),
@@ -225,7 +225,14 @@ export const PRESETS: Preset[] = [
 /** The default preset — what /studio starts on for first-time users. */
 export const ORIGIN = PRESETS[0]!
 
-/** Origin as encoded before #777 (selection pinned blue), still in returning
- *  visitors' storage and shared links; it loads as today's Origin. */
-export const LEGACY_ORIGIN =
-  "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
+/** Origin as encoded before #777 (#0072f5 brand, selection pinned to it),
+ *  still in returning visitors' storage and shared links. The same string is
+ *  a hand-picked #0072f5 brand + selection on otherwise-Origin, which loads
+ *  as Origin too. */
+export const LEGACY_ORIGINS = [
+  "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA",
+] as const
+
+/** Whether an encoded preset is an old Origin that loads as today's. */
+export const isLegacyOrigin = (encoded: string | undefined): boolean =>
+  (LEGACY_ORIGINS as readonly (string | undefined)[]).includes(encoded)

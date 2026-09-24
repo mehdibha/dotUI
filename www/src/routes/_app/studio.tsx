@@ -4,7 +4,7 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
-import { LEGACY_ORIGIN, ORIGIN } from "@/modules/presets/presets-data"
+import { isLegacyOrigin, ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
 import {
@@ -97,12 +97,11 @@ function StudioPage() {
     if (seededFromStorage.current) return
     seededFromStorage.current = true
     // A shared / deep-linked preset wins over the saved one. An old link
-    // loads in today's encoding (the pinned Origin as Origin, which is none).
+    // loads in today's encoding (an old Origin as Origin, which is none).
     if (preset) {
-      const next =
-        preset === LEGACY_ORIGIN
-          ? { state: ORIGIN.state }
-          : decodePreset(preset)
+      const next = isLegacyOrigin(preset)
+        ? { state: ORIGIN.state }
+        : decodePreset(preset)
       const encoded = encodePreset(next)
       if (encoded !== preset) {
         rewrittenTo.current = encoded ?? ""
@@ -111,7 +110,7 @@ function StudioPage() {
       return
     }
     const stored = loadStoredPreset()
-    if (stored === DEFAULT_PRESET || encodePreset(stored) === LEGACY_ORIGIN)
+    if (stored === DEFAULT_PRESET || isLegacyOrigin(encodePreset(stored)))
       setState(ORIGIN.state)
     else setPreset(stored)
   }, [preset, setPreset, setState])

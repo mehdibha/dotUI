@@ -2,7 +2,12 @@ import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import {
+  isLegacyOrigin,
+  LEGACY_ORIGINS,
+  ORIGIN,
+  PRESETS,
+} from "@/modules/presets/presets-data"
 import { DEFAULTS } from "@/modules/studio/axes"
 
 import { decodePreset, encodePreset, encodeState } from "./codec"
@@ -109,18 +114,15 @@ describe("preset codec — studio state", () => {
 })
 
 describe("preset codec — strings minted before Origin became the default", () => {
-  // Origin as encoded then, before and after #777 (selection pinned blue).
+  // Origin as encoded then: pre-#777 (selection pinned blue), and #788-era.
+  const [PINNED_ORIGIN] = LEGACY_ORIGINS
   const OLD_ORIGIN =
     "bcwxCoUwEEXRvTxbC5EvQlpXkkxGDIYMJKNfEPeutbE9F-6JHebXosCccNkmD4Om68Z-HtDCbaqSJomSH7dEnPRhWphWJ0cVsvVBKi0cmTR8jEoMnnPN_6C0vPi6bg"
-  const PINNED_ORIGIN =
-    "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
   const SPOTIFY =
     "bc7BCsIwDAbgd4nXHTaQCb0KO4v6Al0bXTC0o0t1Y-zdzQQvzuvHnz__DE8w-wIGMDO00U9NDAIGGrpLQoQC2mSDV9lV6A91uUoWieEYOSZ16xzqyZfP1lPWNuiJWdV16B5tHDdxCn2Wi0yMqjcNo1cNmCVZvtK6oiwgaV3c3KbPk9MIpqp1OzI6oT-TBiaPacsvEtf98LK8AQ"
 
   it("encodes Origin to nothing", () => {
     expect(encodeState(ORIGIN.state)).toBeUndefined()
-    expect(decodePreset(OLD_ORIGIN).state).toEqual(DEFAULTS)
-    expect(encodePreset(decodePreset(OLD_ORIGIN))).toBeUndefined()
   })
 
   it("decodes against the defaults they were minted on", () => {
@@ -128,14 +130,34 @@ describe("preset codec — strings minted before Origin became the default", () 
     expect(state.brand).toBe("#438cd6")
     expect(state.buttonColor).toBe("neutral")
     expect(state.sliderColor).toBe("neutral")
-    const pinned = decodePreset(PINNED_ORIGIN).state
-    expect(pinned).toEqual({ ...DEFAULTS, selectionSeed: "#0072f5" })
+    // Both carry the #0072f5 brand they were minted on.
+    const old = { ...DEFAULTS, brand: "#0072f5" }
+    expect(decodePreset(OLD_ORIGIN).state).toEqual(old)
+    expect(decodePreset(PINNED_ORIGIN).state).toEqual({
+      ...old,
+      selectionSeed: "#0072f5",
+    })
   })
 
   it("keeps their bytes", () => {
+    expect(encodePreset(decodePreset(OLD_ORIGIN))).toBe(OLD_ORIGIN)
     expect(encodePreset(decodePreset(PINNED_ORIGIN))).toBe(PINNED_ORIGIN)
     const spotify = PRESETS.find((p) => p.id === "spotify")
     expect(spotify && encodeState(spotify.state)).toBe(SPOTIFY)
+  })
+
+  it("maps only the pre-#777 Origin onto today's Origin", () => {
+    expect(isLegacyOrigin(PINNED_ORIGIN)).toBe(true)
+    // Never on production; it is also a hand-picked #0072f5 brand.
+    expect(encodeState({ ...DEFAULTS, brand: "#0072f5" })).toBe(OLD_ORIGIN)
+    expect(isLegacyOrigin(OLD_ORIGIN)).toBe(false)
+    expect(isLegacyOrigin(undefined)).toBe(false)
+    expect(isLegacyOrigin(encodeState(ORIGIN.state))).toBe(false)
+  })
+
+  it("pins the one collision: #0072f5 as both brand and selection seed", () => {
+    const state = { ...DEFAULTS, brand: "#0072f5", selectionSeed: "#0072f5" }
+    expect(isLegacyOrigin(encodeState(state))).toBe(true)
   })
 })
 

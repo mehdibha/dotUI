@@ -75,10 +75,12 @@ export type PaletteSeeds = ColorConfig["seeds"]
  * dotUI's default palette (Origin): a blue brand accent that also fills the
  * primary actions, auto-tinted neutral, and the engine's CVD-gated status
  * defaults (kept ABSENT so an untouched palette still reads as the default).
+ * The accent sits just under Geist's #0072f5 so white labels on the solid
+ * clear WCAG AA (4.5:1).
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
-  seeds: { accent: "#0072f5" },
+  seeds: { accent: "#0070f1" },
   background: { dark: 2 },
   primary: "accent",
 }
