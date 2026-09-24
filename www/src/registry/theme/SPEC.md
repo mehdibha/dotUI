@@ -78,7 +78,7 @@ resolver; the four hand-maintained `primary === 'accent'` branches die. The
 model generalizes to future role remaps (e.g. `info → accent`) without new
 emitters.
 
-## T5. Config schema v2 + migration ✅
+## T5. Config schema v2 ✅
 
 ```ts
 interface ColorConfig2 {

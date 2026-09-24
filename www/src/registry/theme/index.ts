@@ -39,7 +39,7 @@ export {
   type ColorConfig,
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
-  migrateColorConfig,
+  salvageColorConfig,
   type PaletteSeeds,
 } from "./color-config"
 export {

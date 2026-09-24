@@ -170,15 +170,13 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
 }
 
 /**
- * Migrate any decoded color slice — v2 salvages field by field (a corrupt or
- * out-of-range axis is clamped or dropped, never taking valid siblings with
- * it); the v1 shape (`{algorithm, seeds, knobs?, primary?}`) maps onto the
- * nearest v2 axes (algorithm + per-producer knobs are gone; the one engine
- * covers their range). Unknown shapes fall back to the default, and every
- * kept seed is verified parseable — never a decode or render explosion.
- * Also the validator in front of the engine (`resolveColorConfig`).
+ * Salvage a decoded v2 color slice field by field: a corrupt or out-of-range
+ * axis is clamped or dropped, never taking valid siblings with it. Anything
+ * else falls back to the default, and every kept seed is verified parseable —
+ * never a render explosion. The validator in front of the engine
+ * (`resolveColorConfig`).
  */
-export function migrateColorConfig(input: unknown): ColorConfig {
+export function salvageColorConfig(input: unknown): ColorConfig {
   if (typeof input !== "object" || input === null) return DEFAULT_COLOR_CONFIG
 
   const raw = input as {
@@ -192,56 +190,36 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     preserveSeed?: unknown
     overrides?: unknown
     chartPalette?: unknown
-    algorithm?: string
-    knobs?: Record<string, unknown>
     primary?: unknown
     selection?: unknown
     scopes?: unknown
   }
+  if (raw.v !== 2) return DEFAULT_COLOR_CONFIG
 
-  if (raw.v === 2) {
-    const config: ColorConfig = { v: 2, seeds: salvageSeeds(raw.seeds) }
-    const bg = raw.background
-    if (typeof bg === "object" && bg !== null) {
-      const background: ColorConfig["background"] = {}
-      if (finite(bg.light)) background.light = clamp(bg.light, 90, 100)
-      if (finite(bg.dark)) background.dark = clamp(bg.dark, 0, 20)
-      else if (bg.dark === "oled") background.dark = "oled"
-      if (background.light !== undefined || background.dark !== undefined)
-        config.background = background
-    }
-    if (finite(raw.vividness)) config.vividness = clamp(raw.vividness, 0, 2)
-    if (finite(raw.hueShift)) config.hueShift = clamp(raw.hueShift, 0, 3)
-    if (finite(raw.neutralTint))
-      config.neutralTint = clamp(raw.neutralTint, 0, 4)
-    if (finite(raw.neutralHue))
-      config.neutralHue = clamp(raw.neutralHue, 0, 360)
-    if (typeof raw.preserveSeed === "boolean")
-      config.preserveSeed = raw.preserveSeed
-    if (raw.primary === "accent") config.primary = "accent"
-    if (isSource(raw.selection)) config.selection = raw.selection
-    const scopes = salvageScopes(raw.scopes)
-    if (scopes) config.scopes = scopes
-    const overrides = salvageOverrides(raw.overrides)
-    if (overrides) config.overrides = overrides
-    if (raw.chartPalette === "vivid" || raw.chartPalette === "muted")
-      config.chartPalette = raw.chartPalette
-    return config
+  const config: ColorConfig = { v: 2, seeds: salvageSeeds(raw.seeds) }
+  const bg = raw.background
+  if (typeof bg === "object" && bg !== null) {
+    const background: ColorConfig["background"] = {}
+    if (finite(bg.light)) background.light = clamp(bg.light, 90, 100)
+    if (finite(bg.dark)) background.dark = clamp(bg.dark, 0, 20)
+    else if (bg.dark === "oled") background.dark = "oled"
+    if (background.light !== undefined || background.dark !== undefined)
+      config.background = background
   }
-
-  if (!isColor(raw.seeds?.accent)) return DEFAULT_COLOR_CONFIG
-
-  const seeds = salvageSeeds(raw.seeds)
-  // v1's default neutral seed meant "plain gray"; v2's default is auto-tint.
-  if (seeds.neutral === "#808080") delete seeds.neutral
-
-  const config: ColorConfig = { v: 2, seeds }
-  const chromaMult = raw.knobs?.chromaMult
-  if (finite(chromaMult)) config.vividness = clamp(chromaMult, 0, 2)
-  const hueTorsion = raw.knobs?.hueTorsion
-  if (finite(hueTorsion) && hueTorsion !== 0)
-    config.hueShift = clamp(Math.abs(hueTorsion) / 15, 0, 3)
+  if (finite(raw.vividness)) config.vividness = clamp(raw.vividness, 0, 2)
+  if (finite(raw.hueShift)) config.hueShift = clamp(raw.hueShift, 0, 3)
+  if (finite(raw.neutralTint)) config.neutralTint = clamp(raw.neutralTint, 0, 4)
+  if (finite(raw.neutralHue)) config.neutralHue = clamp(raw.neutralHue, 0, 360)
+  if (typeof raw.preserveSeed === "boolean")
+    config.preserveSeed = raw.preserveSeed
   if (raw.primary === "accent") config.primary = "accent"
+  if (isSource(raw.selection)) config.selection = raw.selection
+  const scopes = salvageScopes(raw.scopes)
+  if (scopes) config.scopes = scopes
+  const overrides = salvageOverrides(raw.overrides)
+  if (overrides) config.overrides = overrides
+  if (raw.chartPalette === "vivid" || raw.chartPalette === "muted")
+    config.chartPalette = raw.chartPalette
   return config
 }
 
