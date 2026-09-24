@@ -20,6 +20,7 @@ import {
   resolvePreset,
 } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
+import { share } from "@/modules/studio/export"
 
 import { sameState } from "./axes"
 import { PanelPage } from "./page"
@@ -75,11 +76,13 @@ function SystemActions({ doc }: { doc: DesignSystemDoc }) {
       <Popover placement="bottom end">
         <MenuContent
           onAction={(key) => {
+            if (key === "share") share(doc.id)
             if (key === "duplicate") duplicate(doc.id)
             if (key === "delete")
               undoToast(`Deleted ${doc.name}`, remove(doc.id))
           }}
         >
+          <MenuItem id="share">Copy link</MenuItem>
           <MenuItem id="duplicate">Duplicate</MenuItem>
           <MenuItem id="delete" variant="danger">
             Delete

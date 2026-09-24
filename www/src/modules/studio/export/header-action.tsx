@@ -33,6 +33,17 @@ async function copyLater(text: Promise<string>) {
   return navigator.clipboard.writeText(await text)
 }
 
+/** Publishes the system and copies its studio link. */
+export function share(id: string) {
+  const link = publish(id).then(
+    (snapshot) => `${window.location.origin}/studio?s=${snapshot}`,
+  )
+  copyLater(link).then(
+    () => toastManager.add({ title: "Link copied" }),
+    failed("Couldn't share"),
+  )
+}
+
 /**
  * The studio's header actions — Share, Publish, Export — portaled into the
  * global header so they stay visible from both mobile panes.
@@ -55,16 +66,6 @@ export function StudioHeaderActions() {
       .finally(() => setPublishing(false))
   }
 
-  function onShare() {
-    const link = publish(doc.id).then(
-      (id) => `${window.location.origin}/studio?s=${id}`,
-    )
-    copyLater(link).then(
-      () => toastManager.add({ title: "Link copied" }),
-      failed("Couldn't share"),
-    )
-  }
-
   return (
     <HeaderActions>
       <Tooltip delay={0}>
@@ -73,7 +74,8 @@ export function StudioHeaderActions() {
           size="sm"
           isIconOnly
           aria-label="Copy share link"
-          onPress={onShare}
+          onPress={() => share(doc.id)}
+          className="max-sm:hidden"
         >
           <LinkIcon />
         </Button>
