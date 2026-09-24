@@ -6,6 +6,7 @@ import { toastManager } from "@/registry/ui/toast"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import {
+  isUntouched,
   publish,
   useOpenSystem,
   useUnpublishedChanges,
@@ -38,7 +39,10 @@ async function copyLater(text: Promise<string>) {
  */
 export function StudioHeaderActions() {
   const doc = useOpenSystem()
-  const unpublished = useUnpublishedChanges(doc)
+  // A preset nobody has touched yet has nothing of its own to publish.
+  const unpublished =
+    useUnpublishedChanges(doc) &&
+    (doc.published.length > 0 || !isUntouched(doc))
   const [publishing, setPublishing] = useState(false)
 
   function onPublish() {

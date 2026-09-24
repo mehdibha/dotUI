@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
@@ -66,39 +66,36 @@ const useHydrated = () =>
 function useStudioLink() {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
+  // Once per link, though effects may run twice.
+  const handled = useRef<string>(undefined)
 
   useEffect(() => {
-    if (s === undefined && preset === undefined) return
+    const link = s ?? preset
+    if (link === undefined || handled.current === link) return
+    handled.current = link
     const done = () =>
       navigate({
         search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
         replace: true,
       })
-    if (s !== undefined) {
-      let live = true
-      fetchSnapshot(s)
-        .then(
-          (snapshot) => live && importSnapshot(s, snapshot),
-          (error: unknown) => {
-            console.error(error)
-            if (live)
-              toastManager.add({
-                title: "Couldn't open that design system",
-                description: "The link is broken or no longer exists.",
-                type: "error",
-              })
-          },
-        )
-        .finally(() => live && done())
-      return () => {
-        live = false
-      }
-    }
-    if (preset !== undefined) {
-      if (getPreset(preset)) createFromPreset(preset)
+    if (s === undefined) {
+      if (getPreset(link)) createFromPreset(link)
       else toastManager.add({ title: "Unknown preset", type: "error" })
-      done()
+      return void done()
     }
+    fetchSnapshot(s)
+      .then(
+        (snapshot) => importSnapshot(s, snapshot),
+        (error: unknown) => {
+          console.error(error)
+          toastManager.add({
+            title: "Couldn't open that design system",
+            description: "The link is broken or no longer exists.",
+            type: "error",
+          })
+        },
+      )
+      .finally(done)
   }, [s, preset, navigate])
 }
 

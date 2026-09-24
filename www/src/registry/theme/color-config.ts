@@ -72,8 +72,7 @@ export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
  * dotUI's default palette: a blue brand accent, auto-tinted neutral, and the
- * engine's CVD-gated status defaults (kept ABSENT so an untouched palette
- * still encodes to `undefined` — the codec diffs against this default).
+ * engine's CVD-gated status defaults (kept absent: the engine supplies them).
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
