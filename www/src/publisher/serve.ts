@@ -14,17 +14,10 @@ import {
 } from "@/registry/__generated__/publishables"
 import type { RegistryItem } from "@/registry/types"
 
-import {
-  publish,
-  selectPublishable,
-  setDotuiDepResolver,
-  setKnownDotuiNames,
-} from "./publish"
+import { publish, selectPublishable } from "./publish"
 import type { PublishPreset } from "./types"
 
-// Prime the dep rewriter with every component name we ship. Module scope so
-// it runs once per bundle load.
-setKnownDotuiNames(PUBLISHABLE_NAMES)
+const KNOWN_NAMES: ReadonlySet<string> = new Set(PUBLISHABLE_NAMES)
 
 // A fixed, conventional baseline — the consumer reformats with their own
 // Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
@@ -47,17 +40,17 @@ export async function publishItem(
   const loader = publishables[input.name]
   if (!loader) return undefined
 
-  // Transitive deps become absolute URLs back at the origin (with the preset
-  // preserved) so `shadcn add` can follow them without a registry mapping in
-  // the consumer's components.json.
-  setDotuiDepResolver(
-    input.origin,
-    input.encodedPreset ? `?preset=${input.encodedPreset}` : "",
-  )
-
   const mod = await loader()
-  const publishable = selectPublishable(mod, input.preset)
-  const { item } = publish({ publishable, preset: input.preset })
+  const { item } = publish({
+    publishable: selectPublishable(mod, input.preset),
+    preset: input.preset,
+    // Transitive deps point back at this origin with the same preset.
+    deps: {
+      origin: input.origin,
+      query: input.encodedPreset ? `?preset=${input.encodedPreset}` : "",
+      known: KNOWN_NAMES,
+    },
+  })
 
   // Format per-file — a base `.tsx` and a secondary `.ts` hook carry different
   // content and need their own parser. A formatter failure keeps the raw

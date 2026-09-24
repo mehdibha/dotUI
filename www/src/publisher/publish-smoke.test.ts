@@ -22,12 +22,7 @@ import {
 } from "@/registry/__generated__/publishables"
 
 import { CN_UTILS_TS } from "./emit-theme"
-import {
-  publish,
-  selectPublishable,
-  setDotuiDepResolver,
-  setKnownDotuiNames,
-} from "./publish"
+import { publish, selectPublishable } from "./publish"
 import { consumerPath } from "./serve"
 
 // www/ — the fixture lives inside it so bare imports resolve via www/node_modules
@@ -46,8 +41,6 @@ async function buildFixture(): Promise<void> {
   rmSync(FIXTURE_DIR, { recursive: true, force: true })
   mkdirSync(FIXTURE_DIR, { recursive: true })
 
-  setKnownDotuiNames(PUBLISHABLE_NAMES)
-  setDotuiDepResolver("https://dotui.org")
   const preset = defaultPreset()
 
   for (const name of PUBLISHABLE_NAMES) {
