@@ -205,4 +205,24 @@ describe("checkpoints", () => {
     undo()
     expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
   })
+
+  it("leave with a replaced system and come back with its undo", async () => {
+    const { history, ws, open, edit } = await load()
+    const origin = open()
+    edit(3)
+    history.checkpoint(origin.id)
+    history.undo(origin.id)
+    expect(ws.isUntouched(open())).toBe(true)
+    history.createFromPreset("linear")
+    const linear = open()
+    expect(win.read(key(origin.id))).toBeNull()
+    history.undo(linear.id)
+    expect(history.checkpoints(origin.id).map((c) => c.state.radiusPx)).toEqual(
+      [3],
+    )
+    history.redo(origin.id)
+    expect(win.read(key(origin.id))).toBeNull()
+    history.undo(linear.id)
+    expect(history.checkpoints(origin.id)).toHaveLength(1)
+  })
 })

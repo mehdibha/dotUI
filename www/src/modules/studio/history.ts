@@ -18,8 +18,11 @@ const UNDO_LIMIT = 100
 const IDLE_MS = 2 * 60_000
 const CHECKPOINT_LIMIT = 20
 
-/** A state to return to, or the system a replacement closed. */
-type Step = { state: StudioState } | { system: DesignSystemDoc }
+/** A state to return to, or the system a replacement closed (with its
+ *  stored checkpoints). */
+type Step =
+  | { state: StudioState }
+  | { system: DesignSystemDoc; checkpoints: string | null }
 
 interface Stack {
   past: Step[]
@@ -112,7 +115,10 @@ function replacing(change: () => void) {
   change()
   const after = workspace.openDoc(workspace.getWorkspace())
   if (after.id !== before.id && !find(before.id))
-    record(after.id, { system: before })
+    record(after.id, {
+      system: before,
+      checkpoints: takeCheckpoints(before.id),
+    })
 }
 
 export const createFromPreset = (presetId: string) =>
@@ -124,8 +130,7 @@ export const importSnapshot = (
 
 /** Deletes the system and its checkpoints; returns the undo. */
 export function remove(id: string): () => void {
-  const saved = readStorage(historyKey(id))
-  writeStorage(historyKey(id), null)
+  const saved = takeCheckpoints(id)
   const undo = workspace.remove(id)
   return () => {
     undo()
@@ -145,7 +150,11 @@ function travel(id: string, from: "past" | "future", to: "past" | "future") {
     push(entry[to], { state: doc.state })
   } else {
     workspace.reinstate(step.system)
-    push(stack(step.system.id)[to], { system: doc })
+    if (step.checkpoints !== null)
+      writeStorage(historyKey(step.system.id), step.checkpoints)
+    // Reinstating can close `doc` in turn when it is untouched.
+    const checkpoints = find(id) ? null : takeCheckpoints(id)
+    push(stack(step.system.id)[to], { system: doc, checkpoints })
   }
   emit()
 }
@@ -195,6 +204,13 @@ function writeStorage(key: string, value: string | null) {
   } catch {
     // Best effort: checkpoints are a convenience.
   }
+}
+
+/** Removes the system's stored checkpoints; returns them to write back. */
+function takeCheckpoints(id: string): string | null {
+  const saved = readStorage(historyKey(id))
+  writeStorage(historyKey(id), null)
+  return saved
 }
 
 /** The system's checkpoints, oldest first; invalid entries are dropped. */
