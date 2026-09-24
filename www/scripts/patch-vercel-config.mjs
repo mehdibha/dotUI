@@ -40,7 +40,8 @@ dotUI is a design system platform and component registry built on React Aria Com
 
 ## Documentation
 
-- Overview (what dotUI is, how to install): https://dotui.org/docs
+- Overview (what dotUI is): https://dotui.org/docs
+- Installation (shadcn CLI): https://dotui.org/docs/installation
 - Components index (llms.txt): https://dotui.org/llms.txt
 - Full documentation, single file (llms-full.txt): https://dotui.org/llms-full.txt
 - Component registry API: GET https://dotui.org/r/{name}

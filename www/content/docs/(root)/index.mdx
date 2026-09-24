@@ -1,25 +1,46 @@
 ---
 title: Overview
-description: Build your own design system. Compose it in the studio, preview it live, and export code you own.
+description: Build your design system in the studio and install it as code in your project.
 ---
 
 import { LinkButton } from "@/registry/ui/button"
 
-**dotUI is a design-system builder, not a component library.** There is no default look to install. You compose your system in the [studio](/studio) — colors, typography, icons, density, radius, the style of each component — and leave with code that is yours.
-
-Component libraries ship with a look, and every app built on them shares it. Copy-paste libraries let you own the files, but the design inside is still someone else's. dotUI exists so that anyone can build a real design system without a design team, and without spending months on it.
-
-## Use the studio
-
-Everything happens in the studio. Build your system there, preview every change on real components, then hit **Export**: it hands you the exact commands for your project, with your design system baked in, or opens it directly in v0. Nothing to configure by hand.
+You build your design system in the [studio](/studio), check it on real components, and install it in your React project with the shadcn CLI.
 
 <LinkButton href="/studio" variant="primary" size="lg" className="mt-6">
   Open the studio
 </LinkButton>
 
-## Requirements
+## Build it in the studio
 
-Your project needs [React 19](https://react.dev), [Tailwind CSS 4](https://tailwindcss.com) and [TypeScript 5](https://www.typescriptlang.org/).
+The studio shows a panel of settings next to a live preview. The preview shows every component and full pages, like a dashboard, a settings screen, a mail app and a checkout, in light and dark mode.
+
+Change a setting and every component follows:
+
+- Pick a brand color. dotUI generates the full palette for light and dark mode.
+- Choose fonts for headings, body text and code.
+- Pick an icon set: Lucide, Phosphor, Tabler, Remix or Hugeicons.
+- Set the corner radius and the density: Compact, Default or Comfortable.
+- Style each group of components. For example, make buttons flat, outlined or raised, and inputs outlined or filled.
+
+The studio opens on the Origin preset. You can start from another preset instead, and save your own systems in your browser.
+
+## Put it in your project
+
+When you're ready, click **Export**. You get a shadcn CLI command with your design system in it. Run it in your project, then add the components you need. For a new project, you can also open your system in v0.
+
+What ends up in your project:
+
+- Each component as a plain React file. Read it and edit it like the rest of your code.
+- Your colors and radius as CSS variables in your stylesheet, for light and dark mode.
+- Your fonts, set up for your framework.
+
+There is no dotUI package to install or update. Components are built on React Aria Components, which handles keyboard navigation, focus and screen readers. Styles use Tailwind CSS 4 and tailwind-variants.
+
+## Next steps
+
+- [Installation](/docs/installation): the commands, and what they change in your project.
+- [Components](/docs/components): browse every component.
 
 ## Get involved
 
