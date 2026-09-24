@@ -16,7 +16,7 @@ export interface ToggleButtonProps extends React.ComponentProps<
    * The size of the toggle button.
    * @default 'md'
    */
-  size?: "xs" | "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
 
   /**
    * Whether the toggle button only contains an icon.

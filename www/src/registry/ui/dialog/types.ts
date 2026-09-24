@@ -19,7 +19,15 @@ export interface DialogContentProps extends React.ComponentProps<
 /**
  * The header of the dialog. Contains the title and description.
  */
-export interface DialogHeaderProps extends React.ComponentProps<"header"> {}
+export interface DialogHeaderProps extends React.ComponentProps<"header"> {
+  /**
+   * `stack` sets the title above its description; `bar` centers the title
+   * between a leading and a trailing action, like an iOS sheet's navigation
+   * bar.
+   * @default 'stack'
+   */
+  layout?: "stack" | "bar"
+}
 
 /**
  * The heading that labels the dialog.

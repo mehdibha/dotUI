@@ -3,6 +3,25 @@
   "description": "The header of the dialog. Contains the title and description.",
   "extendsElement": "header",
   "props": {
+    "layout": {
+      "type": "\"bar\" | \"stack\"",
+      "detailedType": "'bar' | 'stack' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bar"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "stack"
+          }
+        ]
+      },
+      "description": "`stack` sets the title above its description; `bar` centers the title\nbetween a leading and a trailing action, like an iOS sheet's navigation\nbar.",
+      "default": "'stack'"
+    },
     "className": {
       "type": "string",
       "typeAst": {

@@ -66,14 +66,17 @@ const DialogContent = ({
 
 // MARK: Separator
 
-interface DialogHeaderProps extends React.ComponentProps<"header"> {}
+interface DialogHeaderProps extends React.ComponentProps<"header"> {
+  layout?: "stack" | "bar"
+}
 
-const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
+const DialogHeader = ({ className, layout, ...props }: DialogHeaderProps) => {
   const { header } = useStyles()()
   return (
     <header
       data-slot="dialog-header"
-      className={header({ className })}
+      data-layout={layout}
+      className={header({ layout, className })}
       {...props}
     />
   )

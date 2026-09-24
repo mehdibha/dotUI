@@ -19,7 +19,7 @@ export interface ButtonProps extends React.ComponentProps<
    * For an icon-only button, set `isIconOnly` rather than a dedicated size.
    * @default "md"
    */
-  size?: "xs" | "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 /**
@@ -40,5 +40,5 @@ export interface LinkButtonProps extends React.ComponentProps<
    * For an icon-only button, set `isIconOnly` rather than a dedicated size.
    * @default "md"
    */
-  size?: "xs" | "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
 }

@@ -9,6 +9,7 @@ import Controlled from "./demos/controlled"
 import Description from "./demos/description"
 import Dismissable from "./demos/dismissable"
 import Drawer from "./demos/drawer"
+import HeaderBar from "./demos/header-bar"
 import InsetContent from "./demos/inset-content"
 import Nested from "./demos/nested"
 import Popover from "./demos/popover"
@@ -41,6 +42,9 @@ export default function DialogExamples() {
       </Example>
       <Example title="drawer">
         <Drawer />
+      </Example>
+      <Example title="header bar">
+        <HeaderBar />
       </Example>
       <Example title="inset content">
         <InsetContent />
