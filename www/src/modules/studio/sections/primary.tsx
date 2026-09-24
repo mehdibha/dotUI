@@ -1,13 +1,14 @@
 "use client"
 
 /* Primary — the Color chapter's view over every role that paints with a
-   source (axes/color.ts PRIMARY_LEAVES). Two cards write all of them; a
-   folder below holds a row per leaf, and while the leaves disagree no card
-   is selected. Each preview is the role at glyph scale in the engine's own
-   colors, so a choice reads before it lands. */
+   source (axes/color.ts PRIMARY_LEAVES). Accent and Neutral write all of
+   them; Custom opens a panel with a row per leaf, and is the selection while
+   the leaves disagree. Each preview is the role at glyph scale in the
+   engine's own colors, so a choice reads before it lands. */
 
-import { useState } from "react"
+import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import {
+  Button as RacButton,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -16,6 +17,7 @@ import type { ModeOutput } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
 import {
   PRIMARY_LEAVES,
@@ -25,13 +27,15 @@ import {
 } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
 import {
+  DIAL_CHEVRON,
   DIAL_LABEL,
+  DIAL_PRESS,
   DIAL_ROW,
-  DialFolder,
   DialPopover,
   DialTrigger,
   SegmentedGroup,
 } from "../dial"
+import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
 
 const LEAF_LABELS: Record<PrimaryLeaf, string> = {
@@ -241,12 +245,12 @@ function SourceSwatch({
 
 /* ---------------------------------- Row ----------------------------------- */
 
-const CARDS: { id: PrimaryColorSource; label: string }[] = [
-  { id: "neutral", label: "Neutral" },
+const CHOICES: { id: PrimaryColorSource; label: string }[] = [
   { id: "accent", label: "Accent" },
+  { id: "neutral", label: "Neutral" },
 ]
 
-function CardStrip({ ink }: { ink: Ink }) {
+function ChoiceStrip({ ink }: { ink: Ink }) {
   return (
     <span className="flex items-center gap-1.5">
       <CheckboxGlyph ink={ink} />
@@ -258,61 +262,21 @@ function CardStrip({ ink }: { ink: Ink }) {
 
 function leavesSummary(state: Studio["state"]) {
   const neutral = PRIMARY_LEAVES.filter((l) => state[l] === "neutral").length
-  if (neutral === 0) return "All accent"
-  if (neutral === PRIMARY_LEAVES.length) return "All neutral"
   return `${neutral} neutral · ${PRIMARY_LEAVES.length - neutral} accent`
 }
 
-/** Mounted with the popover, so the folder opens on mixed leaves each time. */
-function PrimaryPanel({
+/** A row per leaf, each on its own source. */
+function CustomPanel({
   studio,
   ink,
 }: {
   studio: Studio
   ink: Record<PrimaryColorSource, Ink>
 }) {
-  const { state, set, setState } = studio
-  const primary = primaryValue(state)
-  const [open, setOpen] = useState(primary === "mixed")
+  const { state, set } = studio
   return (
-    <>
-      <RacToggleButtonGroup
-        aria-label="Primary"
-        selectionMode="single"
-        selectedKeys={primary === "mixed" ? [] : [primary]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next)
-            setState({
-              ...state,
-              ...withSource(PRIMARY_LEAVES, next as PrimaryColorSource),
-            })
-        }}
-        className="grid grid-cols-2 gap-1.5"
-      >
-        {CARDS.map((card) => (
-          <RacToggleButton
-            key={card.id}
-            id={card.id}
-            className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-2.5 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
-          >
-            <span className="flex items-center gap-2">
-              <span className="size-3 rounded-full border border-fg/30 transition-[border-width] group-selected/card:border-4 group-selected/card:border-fg" />
-              <span className="text-[13px] font-medium text-fg/85">
-                {card.label}
-              </span>
-            </span>
-            <CardStrip ink={ink[card.id]} />
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
-      <DialFolder
-        title="Per control"
-        value={leavesSummary(state)}
-        open={open}
-        onOpenChange={setOpen}
-        modified={primary === "mixed"}
-      >
+    <PanelPopover className="w-[352px] min-w-0">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
         {PRIMARY_LEAVES.map((leaf) => {
           const Glyph = GLYPHS[leaf]
           const source = state[leaf] as PrimaryColorSource
@@ -333,7 +297,78 @@ function PrimaryPanel({
             </div>
           )
         })}
-      </DialFolder>
+      </DialogContent>
+    </PanelPopover>
+  )
+}
+
+function PrimaryPanel({
+  studio,
+  ink,
+}: {
+  studio: Studio
+  ink: Record<PrimaryColorSource, Ink>
+}) {
+  const { state, setState } = studio
+  const primary = primaryValue(state)
+  return (
+    <>
+      <RacToggleButtonGroup
+        aria-label="Primary"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={primary === "mixed" ? [] : [primary]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next)
+            setState({
+              ...state,
+              ...withSource(PRIMARY_LEAVES, next as PrimaryColorSource),
+            })
+        }}
+        className="flex flex-col gap-1.5"
+      >
+        {CHOICES.map((choice) => (
+          <RacToggleButton
+            key={choice.id}
+            id={choice.id}
+            className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
+          >
+            {({ isSelected }) => (
+              <>
+                <span className={DIAL_LABEL}>{choice.label}</span>
+                <span className="flex items-center gap-2">
+                  <ChoiceStrip ink={ink[choice.id]} />
+                  <CheckIcon
+                    className={cn(
+                      "size-4 shrink-0 text-fg",
+                      !isSelected && "invisible",
+                    )}
+                  />
+                </span>
+              </>
+            )}
+          </RacToggleButton>
+        ))}
+      </RacToggleButtonGroup>
+      <Dialog>
+        <RacButton
+          className={cn(DIAL_ROW, DIAL_PRESS, primary === "mixed" && "tint-10")}
+        >
+          <span className={DIAL_LABEL}>Custom</span>
+          <span className="flex min-w-0 items-center gap-2">
+            {primary === "mixed" && (
+              <span className="truncate text-[13px] font-medium text-fg/50">
+                {leavesSummary(state)}
+              </span>
+            )}
+            <ChevronRightIcon className={DIAL_CHEVRON} />
+          </span>
+        </RacButton>
+        <PanelPopoverTitle.Provider value="Custom">
+          <CustomPanel studio={studio} ink={ink} />
+        </PanelPopoverTitle.Provider>
+      </Dialog>
     </>
   )
 }
@@ -342,7 +377,7 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   const ink = inks(m)
   const primary = primaryValue(studio.state)
   const label =
-    primary === "mixed" ? "Mixed" : primary === "accent" ? "Accent" : "Neutral"
+    primary === "mixed" ? "Custom" : primary === "accent" ? "Accent" : "Neutral"
   return (
     <DialTrigger
       label="Primary"
@@ -354,7 +389,7 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
         </>
       }
     >
-      <DialPopover className="w-[352px]">
+      <DialPopover className="w-72">
         <PrimaryPanel studio={studio} ink={ink} />
       </DialPopover>
     </DialTrigger>
