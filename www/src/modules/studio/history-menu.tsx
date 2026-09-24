@@ -123,7 +123,9 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
       if (entry) restore(doc.id, entry.state)
       return
     }
-    fetchSnapshot(value!).then(
+    const entry = published[Number(value)]
+    if (!entry) return
+    fetchSnapshot(entry.id).then(
       (snapshot) => restore(doc.id, snapshot.state),
       (error: unknown) => {
         console.error(error)
@@ -141,10 +143,11 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
       {published.length > 0 && (
         <MenuSection>
           <MenuSectionHeader>Published</MenuSectionHeader>
-          {published.map((entry) => (
+          {/* Restoring then republishing repeats an id, so key by index. */}
+          {published.map((entry, index) => (
             <MenuItem
-              key={entry.id}
-              id={`published:${entry.id}`}
+              key={index}
+              id={`published:${index}`}
               textValue={ago(entry.at, now)}
             >
               <Entry at={entry.at} now={now} />
