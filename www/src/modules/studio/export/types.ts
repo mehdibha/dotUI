@@ -1,6 +1,3 @@
-/**
- * Builds a preset-encoded registry URL for a given path, resolved against the
- * right host — e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=<encoded>`.
- * Produced by `useExportUrl()`.
- */
-export type PresetUrl = (path: string) => string
+/** A registry file's URL for the exported design system — e.g.
+ *  `url("init")` → `https://dotui.org/r/s/<id>/init.json`. */
+export type ExportUrl = (file: string) => string

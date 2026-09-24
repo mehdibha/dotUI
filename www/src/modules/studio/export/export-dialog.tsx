@@ -89,12 +89,13 @@ function ExportDialogBody() {
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
-  const presetUrl = useExportUrl()
+  const urls = useExportUrl()
 
-  const initUrl = presetUrl("/r/init")
   const command =
-    buildInitCommands(initUrl)[packageManager] +
-    (mode === "new" ? ` --template ${template}` : "")
+    urls.status === "ready"
+      ? buildInitCommands(urls.url("init"))[packageManager] +
+        (mode === "new" ? ` --template ${template}` : "")
+      : undefined
   const addCommand = buildInstallCommands(["button"])[packageManager]
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
@@ -153,32 +154,46 @@ function ExportDialogBody() {
           <CodeOptions />
         </Section>
 
-        <CommandBlock
-          commands={
-            mode === "new"
-              ? [{ label: "Scaffold", command }]
-              : [
-                  { label: "Register", command },
-                  { label: "Add components", command: addCommand },
-                ]
-          }
-        />
+        {command ? (
+          <CommandBlock
+            commands={
+              mode === "new"
+                ? [{ label: "Scaffold", command }]
+                : [
+                    { label: "Register", command },
+                    { label: "Add components", command: addCommand },
+                  ]
+            }
+          />
+        ) : urls.status === "failed" ? (
+          <div className="flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-xs text-fg-muted">
+            Couldn't publish this design system.
+            <Button variant="quiet" size="xs" onPress={urls.retry}>
+              Retry
+            </Button>
+          </div>
+        ) : (
+          <p className="rounded-md border px-3 py-2 text-xs text-fg-muted">
+            Publishing your design system…
+          </p>
+        )}
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
         <Button
           variant="primary"
           className="w-full"
-          onPress={() => copyToClipboard(command)}
+          isDisabled={!command}
+          onPress={() => command && copyToClipboard(command)}
         >
           {isCopied ? "Copied" : "Copy command"}
         </Button>
-        {mode === "new"
+        {mode === "new" && urls.status === "ready"
           ? OPEN_IN_TARGETS.map((target) => (
               <LinkButton
                 key={target.id}
                 variant="secondary"
-                href={target.href(presetUrl)}
+                href={target.href(urls.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full"

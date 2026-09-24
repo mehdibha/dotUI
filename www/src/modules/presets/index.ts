@@ -1,3 +1,4 @@
+import type { StudioState } from "@/modules/studio/axes"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -37,6 +38,22 @@ export const PRESET_META: PresetMeta[] = PRESETS.map(
 )
 
 export const getPreset = (id: string) => PRESETS.find((p) => p.id === id)
+
+/** The built-in whose state differs from `state` in the fewest axes. */
+export function closestPreset(state: StudioState): Preset {
+  let closest = ORIGIN
+  let fewest = Infinity
+  for (const preset of PRESETS) {
+    const differing = (Object.keys(state) as (keyof StudioState)[]).filter(
+      (key) => state[key] !== preset.state[key],
+    ).length
+    if (differing < fewest) {
+      closest = preset
+      fewest = differing
+    }
+  }
+  return closest
+}
 
 const resolved = new Map<string, DesignSystem>()
 

@@ -1,31 +1,17 @@
-/* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
-   localStorage and `components.json`. Only the diff against the defaults is
+/* The preset codec: studio state ⇄ the compact string that rides in `?preset=`
+   and localStorage. Only the diff against the defaults is
    stored, so an untouched system encodes to nothing. Canonical — encode∘decode
    is byte-identity — and strict: decoding validates the state and reports
    what is wrong instead of falling back. */
 
 import { deflateRaw, Inflate } from "pako"
 
-import {
-  DEFAULT_CODE_OPTIONS,
-  sanitizeCodeOptions,
-} from "@/publisher/code-options"
-import type { CodeOptions } from "@/publisher/code-options"
-import { DEFAULT_STATE, DEFAULTS, validate } from "@/modules/studio/axes"
+import { DEFAULTS, validate } from "@/modules/studio/axes"
 import type {
   StateIssue,
   StudioState,
   StudioStateInput,
 } from "@/modules/studio/axes"
-
-/** A studio state plus the exported-code style — everything a preset holds. */
-export interface StudioPreset {
-  state: StudioState
-  /** `undefined` means the default code style. */
-  codeOptions?: CodeOptions
-}
-
-export const DEFAULT_PRESET: StudioPreset = { state: DEFAULT_STATE }
 
 /* ------------------------------ base64url ------------------------------ */
 
@@ -51,10 +37,7 @@ interface Encoded {
   v: typeof VERSION
   /** State keys that differ from the defaults, in sorted key order. */
   s?: Partial<StudioStateInput>
-  o?: CodeOptions
 }
-
-const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 
 /** The keys of `state` that differ from the defaults, sorted. */
 function diffState(state: StudioState): Partial<StudioStateInput> {
@@ -67,27 +50,17 @@ function diffState(state: StudioState): Partial<StudioStateInput> {
 }
 
 /** `undefined` when everything matches the defaults (no preset needed). */
-export function encodePreset(preset: StudioPreset): string | undefined {
-  const compact: Encoded = { v: VERSION }
-  const diff = diffState(preset.state)
-  if (Object.keys(diff).length > 0) compact.s = diff
-  if (preset.codeOptions) {
-    const codeOptions = sanitizeCodeOptions(preset.codeOptions)
-    if (!same(codeOptions, DEFAULT_CODE_OPTIONS)) compact.o = codeOptions
-  }
-  if (!compact.s && !compact.o) return undefined
-  return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
-}
-
-/** Encode a bare state (default code style). */
 export function encodeState(state: StudioState): string | undefined {
-  return encodePreset({ state })
+  const diff = diffState(state)
+  if (Object.keys(diff).length === 0) return undefined
+  const compact: Encoded = { v: VERSION, s: diff }
+  return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
 }
 
 /* -------------------------------- decode -------------------------------- */
 
 export type DecodeResult =
-  | { ok: true; preset: StudioPreset }
+  | { ok: true; state: StudioState }
   | { ok: false; issues: StateIssue[] }
 
 const unreadable: DecodeResult = {
@@ -112,7 +85,7 @@ function inflateCapped(bytes: Uint8Array): string {
   return new TextDecoder().decode(inflator.result as Uint8Array)
 }
 
-export function decodePreset(encoded: string): DecodeResult {
+export function decodeState(encoded: string): DecodeResult {
   let parsed: unknown
   try {
     parsed = JSON.parse(inflateCapped(fromBase64Url(encoded)))
@@ -125,17 +98,5 @@ export function decodePreset(encoded: string): DecodeResult {
     (parsed as Encoded).v !== VERSION
   )
     return unreadable
-  const { s, o } = parsed as Encoded
-  const result = validate(s ?? {})
-  if (!result.ok) return result
-  const codeOptions = o ? sanitizeCodeOptions(o) : undefined
-  return {
-    ok: true,
-    preset: {
-      state: result.state,
-      ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
-        ? { codeOptions }
-        : {}),
-    },
-  }
+  return validate((parsed as Encoded).s ?? {})
 }

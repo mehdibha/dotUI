@@ -1,8 +1,8 @@
 /**
  * Compile smoke test — the load-bearing guard for the #477 bug class.
  *
- * Publishes EVERY publishable at the default preset (mimicking the /r/$name
- * route), lays the emitted files out as a shadcn consumer would receive them,
+ * Publishes EVERY publishable at the Origin preset (mimicking
+ * `/r/<name>.json`), lays the emitted files out as a shadcn consumer would receive them,
  * and runs ONE `tsc --noEmit` over the whole set. Cross-component imports
  * (`@/components/ui/field`) resolve to OTHER emitted files, so the check proves
  * the shipped code actually type-checks together — e.g. that every slot a base
@@ -15,11 +15,11 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import {
   publishables,
   PUBLISHABLE_NAMES,
 } from "@/registry/__generated__/publishables"
+import { ORIGIN, resolvePreset } from "@/modules/presets"
 
 import { CN_UTILS_TS } from "./emit-theme"
 import { publish, selectPublishable } from "./publish"
@@ -41,7 +41,7 @@ async function buildFixture(): Promise<void> {
   rmSync(FIXTURE_DIR, { recursive: true, force: true })
   mkdirSync(FIXTURE_DIR, { recursive: true })
 
-  const preset = defaultPreset()
+  const preset = resolvePreset(ORIGIN.id)
 
   for (const name of PUBLISHABLE_NAMES) {
     const loader = publishables[name]

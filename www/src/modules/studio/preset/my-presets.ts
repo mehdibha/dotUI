@@ -6,7 +6,7 @@ import { createPersistedStore } from "@/lib/persisted-store"
 export interface SavedPreset {
   id: string
   name: string
-  /** `encodePreset()` output — the compact string, never the expanded object. */
+  /** `encodeState()` output — the compact string, never the expanded object. */
   state: string
   createdAt: number
   updatedAt: number

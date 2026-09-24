@@ -54,10 +54,9 @@ export interface EmitThemeInput {
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
   preset: PublishPreset
-  /** Encoded preset string — gets put in `config.registries.@dotui` as `?preset=…`. */
-  encodedPreset?: string
-  /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
-  registryRoot: string
+  /** Where a registry item is served, e.g. `https://dotui.org/r/p/linear/loader.json`;
+   *  `{name}` yields the `components.json` registry template. */
+  itemUrl: (name: string) => string
 }
 
 export const DEFAULT_DEPENDENCIES = [
@@ -145,13 +144,13 @@ function splitPresetTokens(
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
-  const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
+  const { baseRegistryCss, preset, itemUrl } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
   // One `registry:font` item per font token the preset sets. shadcn installs
   // the face per framework (next/font on Next.js, @fontsource elsewhere) and
   // sets the token variable — see emit-font.ts for why not a CSS `@import`.
   const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
-    (name) => `${registryRoot}/r/${name}`,
+    itemUrl,
   )
 
   // Intentionally minimal `config` block:
@@ -179,7 +178,7 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
       hooks: "@/hooks",
     },
     registries: {
-      "@dotui": registryConfigUrl(registryRoot, encodedPreset),
+      "@dotui": itemUrl("{name}"),
     },
   }
 
@@ -208,13 +207,6 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   }
 
   return item as unknown as RegistryItem
-}
-
-function registryConfigUrl(
-  registryRoot: string,
-  encodedPreset: string | undefined,
-): string {
-  return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
 }
 
 /** `color-fg-on-primary` → `fg-on-primary`: the `:root` name behind a token. */

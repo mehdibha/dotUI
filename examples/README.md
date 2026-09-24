@@ -29,7 +29,7 @@ pnpm smoke:examples --example spotify-next       # one template
 pnpm smoke:examples --no-build                   # write the files, skip build + typecheck
 ```
 
-With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `/r/registry.json`, a production build, `tsc --noEmit`, and checks that the preset's fonts were wired into the framework (the layout on Next.js, the stylesheet on TanStack Start). It runs offline: the CLI's own base files (its style list and base color) are answered from `scripts/shadcn-base/`, vendored from [shadcn-ui/ui](https://github.com/shadcn-ui/ui/tree/main/apps/v4/public/r), through the CLI's `REGISTRY_URL` override — so a sandboxed agent session can regenerate too, and CI and a laptop produce the same bytes. If the CLI ever fetches a file that isn't vendored, the run logs `shadcn-base: no vendored file for …` and fails; add the file from the same place.
+With no arguments the script builds the registry, serves this checkout with the www dev server (or reuses one you already have running), and for every template: wipes what the CLI wrote, runs `pnpm install`, `shadcn init <origin>/r/p/<preset>/init.json`, `shadcn add @dotui/<name>` for every item in `/r/p/<preset>/registry.json`, a production build, `tsc --noEmit`, and checks that the preset's fonts were wired into the framework (the layout on Next.js, the stylesheet on TanStack Start). It runs offline: the CLI's own base files (its style list and base color) are answered from `scripts/shadcn-base/`, vendored from [shadcn-ui/ui](https://github.com/shadcn-ui/ui/tree/main/apps/v4/public/r), through the CLI's `REGISTRY_URL` override — so a sandboxed agent session can regenerate too, and CI and a laptop produce the same bytes. If the CLI ever fetches a file that isn't vendored, the run logs `shadcn-base: no vendored file for …` and fails; add the file from the same place.
 
 Never hand-edit or hand-merge `examples/`: if two registry branches conflict there, regenerate on the merged result.
 
@@ -41,7 +41,7 @@ pnpm smoke:examples --origin https://dotui-git-my-branch.vercel.app
 
 Two things are normalised so a regeneration only differs when the registry did: `components.json` always points at `https://dotui.org` whatever origin served the run, and `package.json` is kept as committed unless the set of dependencies changed (`pnpm add` would otherwise re-resolve version ranges on every run). The shadcn version is pinned in `scripts/smoke.ts`.
 
-Presets are identified by their encoded design system in the init URL, the same value the create page bakes into `components.json`. The smoke gets it from `www/scripts/encode-preset.ts`, so the encoding always comes from this checkout even when the registry origin is a deployment.
+Each template installs from its built-in preset's path, `/r/p/<preset>/…`, which `components.json` keeps for later `shadcn add` calls. Built-ins need no snapshot store, so a run works against any origin.
 
 ## Live preview while working
 

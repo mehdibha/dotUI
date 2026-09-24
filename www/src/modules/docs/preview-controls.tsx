@@ -12,7 +12,7 @@ import { Loader } from "@/registry/ui/loader"
 import { ORIGIN, PRESET_META, PRESETS, resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
+import { encodeState } from "@/modules/studio/preset/codec"
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
@@ -47,7 +47,7 @@ function useSelectedPreset() {
   const stored = presetStore.useValue()
   const yours = useStoredPreset()
   const builtIn = useMemo(() => {
-    const encoded = encodePreset(yours)
+    const encoded = encodeState(yours)
     return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
   }, [yours])
   const own = builtIn === undefined
@@ -137,7 +137,7 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 /** The design system the docs previews render in, resolved from the selection. */
 export function useResolvedPreset(): DesignSystem {
   const { selected, yours } = useSelectedPreset()
-  const yoursResolved = useMemo(() => resolveDesignSystem(yours.state), [yours])
+  const yoursResolved = useMemo(() => resolveDesignSystem(yours), [yours])
   if (selected === YOURS) return yoursResolved
   return resolvePreset(selected)
 }
@@ -196,8 +196,8 @@ function PresetSelector({
     const yoursItem = {
       id: YOURS,
       name: yoursName,
-      swatch: yours.state.brand,
-      resolve: () => resolveDesignSystem(yours.state),
+      swatch: yours.brand,
+      resolve: () => resolveDesignSystem(yours),
     }
     const featured = {
       id: "featured",

@@ -32,12 +32,14 @@ function hueOf(value: string | undefined): number {
   return Number(value?.match(/oklch\([\d.]+ [\d.]+ ([\d.]+)\)/)?.[1])
 }
 
+const itemUrl = (name: string) => `https://dotui.org/r/${name}.json`
+
 describe("emitInitItem", () => {
   test("emits base CSS through registry fields instead of a CSS file", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.type).toBe("registry:base")
@@ -46,7 +48,7 @@ describe("emitInitItem", () => {
     expect(item.dependencies).not.toContain("tailwindcss-autocontrast")
     expect((item as InitItemConfig).config?.tailwind?.cssVariables).toBe(true)
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=",
+      "https://dotui.org/r/{name}.json",
     )
     expect(item.files?.map((file) => file.target)).toEqual(["src/lib/utils.ts"])
     expect(JSON.stringify(item)).not.toContain("dotui-base.css")
@@ -56,7 +58,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const { theme, light, dark } = item.cssVars ?? {}
 
@@ -94,16 +96,16 @@ describe("emitInitItem", () => {
     expect(dark?.["chart-8"]).toMatch(OKLCH)
   })
 
-  test("writes the preset into the @dotui registry URL string", () => {
+  test("writes the design system's path into the @dotui registry URL", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      encodedPreset: "abc123",
-      registryRoot: "https://dotui.com",
+      itemUrl: (name) =>
+        `https://dotui.org/r/s/abc123DEF4/${name}.json?code=arrays`,
     })
 
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=abc123",
+      "https://dotui.org/r/s/abc123DEF4/{name}.json?code=arrays",
     )
   })
 
@@ -111,7 +113,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "compact", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.css?.[":root"]).toMatchObject({ "--dotui-density": "compact" })
@@ -129,7 +131,7 @@ describe("emitInitItem", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const theme = item.cssVars?.theme ?? {}
     expect(theme["--disabled-bg"]).toBe("var(--disabled)")
@@ -151,7 +153,7 @@ describe("emitInitItem", () => {
           "--studio-btn-radius": "--radius-md",
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     // Radius rides with the colors; other tokens stay in a plain `:root`
@@ -190,7 +192,7 @@ describe("emitInitItem", () => {
           "--studio-btn-radius": "--radius-md",
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const { theme, light, dark } = item.cssVars ?? {}
     const root = item.css?.[":root"]
@@ -236,12 +238,12 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset,
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.com/r/font-figtree",
-      "https://dotui.com/r/font-heading-figtree",
+      "https://dotui.org/r/font-figtree.json",
+      "https://dotui.org/r/font-heading-figtree.json",
     ])
     // shadcn would place a CSS import after `@import "tailwindcss"`, where
     // bundlers drop it — the faces travel as font items instead.
@@ -269,7 +271,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#ef4444" } },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}
@@ -293,7 +295,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#3ecf8e" }, primary: "accent" },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}
@@ -320,7 +322,7 @@ describe("emitInitItem", () => {
           scopes: { checkbox: "neutral" },
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}

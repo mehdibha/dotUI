@@ -11,19 +11,19 @@
  * Steps, against --origin (default https://dotui.org):
  *   1. GET /r/registry.json to learn the deployed component list. Never
  *      hardcoded — the probe tracks whatever the deploy actually shipped.
- *   2. GET /r/<name> for every item plus /r/init. Fail on any non-200 or
+ *   2. GET /r/<name>.json for every item plus /r/init.json. Fail on any non-200 or
  *      non-JSON response.
  *   3. Assert no BARE registryDependencies in any served item: every entry must
  *      be an absolute URL or an "@namespace/…" id. A bare name means the dep
  *      rewriter didn't recognize it and shadcn would resolve it against its
  *      default registry — exactly the #477 failure mode.
- *   4. Shape spot-check on /r/field: every slot the code destructures from
+ *   4. Shape spot-check on /r/field.json: every slot the code destructures from
  *      fieldVariants() must be declared in the tv() slots:{} block. Cheap,
  *      regex-level — catches a publish that emits code referencing a slot the
  *      styles no longer define.
  *
- * Cache-awareness: /r/$name is served with
- * `s-maxage=3600, stale-while-revalidate=86400` (see routes/r/$name.tsx), so a
+ * Cache-awareness: /r/* is served with
+ * `s-maxage=3600, stale-while-revalidate=86400` (see lib/registry/response.ts), so a
  * probe run right after a deploy can read STALE cached JSON built by the PREVIOUS
  * deployment. Every request carries a unique cache-busting query param so we
  * always hit the fresh deployment, not the CDN's copy.
@@ -159,11 +159,11 @@ function checkDeps(
 }
 
 /**
- * Shape spot-check on /r/field: every slot destructured from fieldVariants()
+ * Shape spot-check on /r/field.json: every slot destructured from fieldVariants()
  * must be declared in the tv() slots:{} block of the emitted source.
  */
 function checkFieldShape(origin: string, item: unknown): Failure[] {
-  const url = `${origin}/r/field`
+  const url = `${origin}/r/field.json`
   const files = (item as { files?: Array<{ content?: string }> }).files
   const content = files?.map((f) => f.content ?? "").join("\n") ?? ""
   if (!content) {
@@ -238,7 +238,7 @@ async function main(): Promise<void> {
   // 2 + 3. GET every item and check its deps. Collect the field item for step 4.
   let fieldItem: unknown
   const failureLists = await mapPool(names, CONCURRENCY, async (name) => {
-    const url = `${origin}/r/${name}`
+    const url = `${origin}/r/${name}.json`
     const res = await fetchJson(url)
     if (res.error || !res.json) {
       return [{ name, url, reason: res.error ?? "no body" }]

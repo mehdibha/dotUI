@@ -1,3 +1,4 @@
+import { formatIssues } from "@/modules/studio/axes"
 import type { StateIssue } from "@/modules/studio/axes"
 
 import {
@@ -83,24 +84,35 @@ export const createSnapshot = (request: Request, store: SnapshotStore) =>
     return Response.json({ id }, { headers: NO_STORE })
   })
 
+/** The stored snapshot, `null` when absent. Stored data that no longer
+ *  validates throws. */
+export async function loadSnapshot(
+  id: string,
+  store: SnapshotStore,
+): Promise<Snapshot | null> {
+  const json = await store.get(id)
+  if (json === null) return null
+  let raw: unknown
+  try {
+    raw = JSON.parse(json)
+  } catch {
+    raw = undefined
+  }
+  const snapshot = parseSnapshot(raw)
+  if (!snapshot.ok)
+    throw new Error(
+      `Stored snapshot ${id} is invalid: ${formatIssues(snapshot.issues)}`,
+    )
+  return snapshot.value
+}
+
 /** `GET /api/snapshots/$id` → the `Snapshot`. */
 export const readSnapshot = (id: string, store: SnapshotStore) =>
   guard(async () => {
     if (!SNAPSHOT_ID.test(id)) return error(400, "Invalid snapshot id")
-    const json = await store.get(id)
-    if (json === null) return error(404, "Snapshot not found")
-    let raw: unknown
-    try {
-      raw = JSON.parse(json)
-    } catch {
-      raw = undefined
-    }
-    const snapshot = parseSnapshot(raw)
-    if (!snapshot.ok) {
-      console.error(`Stored snapshot ${id} is invalid`, snapshot.issues)
-      return error(500, "Stored snapshot is invalid")
-    }
-    return Response.json(snapshot.value, {
+    const snapshot = await loadSnapshot(id, store)
+    if (!snapshot) return error(404, "Snapshot not found")
+    return Response.json(snapshot, {
       headers: { "Cache-Control": "public, max-age=31536000, immutable" },
     })
   })

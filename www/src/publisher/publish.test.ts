@@ -513,19 +513,18 @@ describe("publish", () => {
     }
   })
 
-  test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {
+  test("button: rewrites known dotui deps through the resolver", () => {
     const { item } = publish({
       publishable: buttonPublishable,
       preset: { density: "default", componentParams: {} },
       deps: {
-        origin: "https://dotui.com/",
-        query: "?preset=abc",
+        url: (name) => `https://dotui.org/r/p/linear/${name}.json?code=arrays`,
         known: new Set(["loader"]),
       },
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.com/r/loader?preset=abc",
+      "https://dotui.org/r/p/linear/loader.json?code=arrays",
     ])
   })
 
@@ -552,20 +551,20 @@ describe("publish", () => {
       },
       preset: { density: "default", componentParams: {} },
       deps: {
-        origin: "https://dotui.org",
+        url: (name) => `https://dotui.org/r/${name}.json`,
         known: new Set(["field", "input"]),
       },
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.org/r/field",
-      "https://dotui.org/r/input",
+      "https://dotui.org/r/field.json",
+      "https://dotui.org/r/input.json",
     ])
   })
 
   test("popover: ships a param value's registry deps only when it is selected", () => {
     const deps = {
-      origin: "https://dotui.org",
+      url: (name: string) => `https://dotui.org/r/${name}.json`,
       known: new Set(["drawer", "use-mobile"]),
     }
     const publishable = {
@@ -598,8 +597,8 @@ describe("publish", () => {
       deps,
     })
     expect(drawer.item.registryDependencies).toEqual([
-      "https://dotui.org/r/drawer",
-      "https://dotui.org/r/use-mobile",
+      "https://dotui.org/r/drawer.json",
+      "https://dotui.org/r/use-mobile.json",
     ])
 
     const plain = publish({
