@@ -136,12 +136,11 @@ describe("workspace", () => {
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([id])
   })
 
-  it("resets to the initial state with an undo", async () => {
+  it("resets to the initial state", async () => {
     const { ws, id } = await edited()
-    const undo = ws.reset(id)
-    expect(ws.openDoc(ws.getWorkspace()).state.radiusPx).not.toBe(3)
-    undo()
-    expect(ws.openDoc(ws.getWorkspace()).state.radiusPx).toBe(3)
+    ws.reset(id)
+    const doc = ws.openDoc(ws.getWorkspace())
+    expect(doc.state).toEqual(doc.initial)
   })
 
   it("publishes once per content", async () => {

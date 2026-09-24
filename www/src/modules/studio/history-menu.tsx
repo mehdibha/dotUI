@@ -1,0 +1,209 @@
+"use client"
+
+/* The panel header's history cluster: undo, redo, and the History menu —
+   published versions and checkpoints, newest first, then Reset. */
+
+import type { ReactNode } from "react"
+import { HistoryIcon, Redo2Icon, Undo2Icon } from "lucide-react"
+
+import { Button } from "@/registry/ui/button"
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSection,
+  MenuSectionHeader,
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { toastManager } from "@/registry/ui/toast"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { getPreset } from "@/modules/presets"
+
+import { sameState } from "./axes"
+import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
+import { fetchSnapshot } from "./workspace"
+import type { DesignSystemDoc } from "./workspace"
+
+export function undoToast(title: string, undo: () => void) {
+  const id = toastManager.add({
+    title,
+    actionProps: {
+      children: "Undo",
+      onClick: () => {
+        undo()
+        toastManager.close(id)
+      },
+    },
+  })
+}
+
+function resetLabel(doc: DesignSystemDoc): string {
+  if (doc.origin.kind === "snapshot") return "Reset to shared version"
+  if (doc.origin.kind === "copy") return "Reset to copy"
+  return `Reset to ${getPreset(doc.origin.id)?.name ?? "preset"}`
+}
+
+const UNITS = [
+  ["year", 31_536_000],
+  ["month", 2_592_000],
+  ["week", 604_800],
+  ["day", 86_400],
+  ["hour", 3600],
+  ["minute", 60],
+] as const
+
+const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" })
+
+function ago(at: number, now: number): string {
+  const seconds = (now - at) / 1000
+  for (const [unit, size] of UNITS)
+    if (seconds >= size)
+      return relative.format(-Math.floor(seconds / size), unit)
+  return "Just now"
+}
+
+// The relative time rounds; the clock pins it.
+function clock(at: number, now: number): string {
+  const date = new Date(at)
+  return date.toDateString() === new Date(now).toDateString()
+    ? date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
+    : date.toLocaleDateString(undefined, { month: "short", day: "numeric" })
+}
+
+function Entry({ at, now }: { at: number; now: number }) {
+  return (
+    <>
+      <span>{ago(at, now)}</span>
+      <span className="ml-auto pl-6 text-fg-muted tabular-nums">
+        {clock(at, now)}
+      </span>
+    </>
+  )
+}
+
+function IconButton({
+  label,
+  children,
+  ...props
+}: {
+  label: string
+  children: ReactNode
+  isDisabled?: boolean
+  onPress?: () => void
+}) {
+  return (
+    <Tooltip delay={0}>
+      <Button
+        size="sm"
+        variant="quiet"
+        isIconOnly
+        aria-label={label}
+        // Chrome, not content: a disabled step stays unfilled.
+        className="text-fg-muted disabled:bg-transparent pointer-coarse:data-icon-only:size-9"
+        {...props}
+      >
+        {children}
+      </Button>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
+  )
+}
+
+function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
+  const now = Date.now()
+  const published = [...doc.published].reverse()
+  const saved = checkpoints(doc.id).reverse()
+  const label = resetLabel(doc)
+
+  function onAction(key: string) {
+    if (key === "reset") return undoToast(label, reset(doc.id))
+    const [kind, value] = key.split(":")
+    if (kind === "checkpoint") {
+      const entry = saved[Number(value)]
+      if (entry) restore(doc.id, entry.state)
+      return
+    }
+    const entry = published[Number(value)]
+    if (!entry) return
+    fetchSnapshot(entry.id).then(
+      (snapshot) => restore(doc.id, snapshot.state),
+      (error: unknown) => {
+        console.error(error)
+        toastManager.add({ title: "Couldn't open that version", type: "error" })
+      },
+    )
+  }
+
+  return (
+    <MenuContent
+      aria-label="History"
+      onAction={(key) => onAction(String(key))}
+      className="min-w-52"
+    >
+      {published.length > 0 && (
+        <MenuSection>
+          <MenuSectionHeader>Published</MenuSectionHeader>
+          {/* Restoring then republishing repeats an id, so key by index. */}
+          {published.map((entry, index) => (
+            <MenuItem
+              key={index}
+              id={`published:${index}`}
+              textValue={ago(entry.at, now)}
+            >
+              <Entry at={entry.at} now={now} />
+            </MenuItem>
+          ))}
+        </MenuSection>
+      )}
+      {saved.length > 0 && (
+        <MenuSection>
+          <MenuSectionHeader>Autosaved</MenuSectionHeader>
+          {saved.map((entry, index) => (
+            <MenuItem
+              key={index}
+              id={`checkpoint:${index}`}
+              textValue={ago(entry.at, now)}
+            >
+              <Entry at={entry.at} now={now} />
+            </MenuItem>
+          ))}
+        </MenuSection>
+      )}
+      <MenuSection>
+        <MenuItem id="reset" isDisabled={sameState(doc.state, doc.initial)}>
+          {label}
+        </MenuItem>
+      </MenuSection>
+    </MenuContent>
+  )
+}
+
+export function HistoryControls({ doc }: { doc: DesignSystemDoc }) {
+  const { canUndo, canRedo } = useUndoRedo(doc.id)
+  return (
+    <>
+      <IconButton
+        label="Undo"
+        isDisabled={!canUndo}
+        onPress={() => undo(doc.id)}
+      >
+        <Undo2Icon />
+      </IconButton>
+      <IconButton
+        label="Redo"
+        isDisabled={!canRedo}
+        onPress={() => redo(doc.id)}
+      >
+        <Redo2Icon />
+      </IconButton>
+      <Menu>
+        <IconButton label="History">
+          <HistoryIcon />
+        </IconButton>
+        <Popover placement="bottom end">
+          <HistoryItems doc={doc} />
+        </Popover>
+      </Menu>
+    </>
+  )
+}

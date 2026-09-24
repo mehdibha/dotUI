@@ -9,8 +9,9 @@ import { useCallback, useMemo } from "react"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
+import { edit } from "./history"
 import { resolveDesignSystem } from "./resolve"
-import { setState as setSystemState, useOpenSystem } from "./workspace"
+import { useOpenSystem } from "./workspace"
 
 export interface Studio {
   state: StudioState
@@ -22,10 +23,7 @@ export interface Studio {
 
 export function useStudio(): Studio {
   const { id, state } = useOpenSystem()
-  const setState = useCallback(
-    (next: StudioState) => setSystemState(id, next),
-    [id],
-  )
+  const setState = useCallback((next: StudioState) => edit(id, next), [id])
   const designSystem = useMemo(() => resolveDesignSystem(state), [state])
 
   return useMemo(() => {
