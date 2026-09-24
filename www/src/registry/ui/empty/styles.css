@@ -1,0 +1,4 @@
+:root {
+  --studio-empty-radius: var(--studio-radius-panel);
+  --studio-empty-media-radius: var(--studio-radius-control);
+}

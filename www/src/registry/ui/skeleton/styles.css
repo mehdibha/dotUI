@@ -1,3 +1,8 @@
+:root {
+  --studio-skeleton-radius: var(--studio-radius-detail);
+  --studio-skeleton-block-radius: var(--studio-radius-control);
+}
+
 /* One painter for every placeholder (the root applies it to descendants via
    its variants); base.tsx drives the animation with WAAPI. The modifier only
    sets the inherited image the shimmer sweeps — pulse and none clear it so a

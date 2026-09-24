@@ -16,10 +16,12 @@
 @import "./ui/checkbox/styles.css";
 @import "./ui/color-area/styles.css";
 @import "./ui/color-editor/styles.css";
+@import "./ui/color-slider/styles.css";
 @import "./ui/color-swatch/styles.css";
 @import "./ui/color-swatch-picker/styles.css";
 @import "./ui/drawer/styles.css";
 @import "./ui/drop-zone/styles.css";
+@import "./ui/empty/styles.css";
 @import "./ui/field/styles.css";
 @import "./ui/group/styles.css";
 @import "./ui/input/styles.css";
@@ -37,6 +39,7 @@
 @import "./ui/skeleton/styles.css";
 @import "./ui/slider/styles.css";
 @import "./ui/switch/styles.css";
+@import "./ui/table/styles.css";
 @import "./ui/tabs/styles.css";
 @import "./ui/tag-group/styles.css";
 @import "./ui/time-picker/styles.css";

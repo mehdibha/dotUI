@@ -293,6 +293,13 @@ describe("resolve-classes", () => {
         vars,
       ),
     ).toBe("flex [--surface-radius:0] shadow-none")
+    // So does an arbitrary radius derived from it.
+    expect(
+      rewriteClassString(
+        "border first:rounded-tl-[calc(var(--studio-btn-radius)-1px)] rounded-[calc(var(--radius-md)-1px)]",
+        vars,
+      ),
+    ).toBe("border rounded-[calc(var(--radius-md)-1px)]")
   })
 
   test("rewriteClassString leaves undeclared vars alone", () => {

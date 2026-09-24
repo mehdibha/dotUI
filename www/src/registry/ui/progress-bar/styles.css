@@ -1,3 +1,7 @@
+:root {
+  --studio-progress-radius: var(--studio-radius-pill);
+}
+
 @theme inline {
   --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
   --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;

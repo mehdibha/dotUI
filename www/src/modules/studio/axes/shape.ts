@@ -47,9 +47,9 @@ export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
 export type ShapeVector = Record<ShapeRoleKey, string>
 
 /* Curated role vectors — the 80% path, each a family from the shadcn-styles
-   study at a 10px base: Square ≈ lyra/sera, Crisp ≈ mira/vega, Standard =
-   dotUI today, Soft ≈ rhea, Round ≈ luma/maia. Items default to 'auto' = one
-   rung below Surfaces — true of every rounded shadcn style. */
+   study at a 10px base: Square ≈ lyra/sera, Crisp ≈ vega, Standard ≈ mira,
+   Soft ≈ rhea, Round ≈ luma/maia. Items default to 'auto' = one rung below
+   Surfaces — true of every rounded shadcn style. */
 export const SHAPE_CHARACTERS: Array<{
   id: string
   label: string
@@ -101,7 +101,7 @@ export const SHAPE_CHARACTERS: Array<{
     vector: {
       roleControl: "3xl",
       roleItem: "auto",
-      roleSurface: "3xl",
+      roleSurface: "2xl",
       rolePanel: "3xl",
     },
   },
@@ -127,12 +127,26 @@ export function activeCharacter(state: StudioState): string | undefined {
   )?.id
 }
 
+const rungBelow = (id: string) =>
+  SHAPE_RUNGS[Math.max(0, rungIndex(id) - 1)]?.id ?? "none"
+
 /** A role's rung id with 'auto' resolved: Items ride one rung below Surfaces. */
 export function roleRung(state: StudioState, key: ShapeRoleKey): string {
   const id = state[key]
-  if (id !== "auto") return id
-  const below = Math.max(0, rungIndex(state.roleSurface) - 1)
-  return SHAPE_RUNGS[below]?.id ?? "none"
+  return id === "auto" ? rungBelow(state.roleSurface) : id
+}
+
+/* Radii that follow Controls without being a role of their own: small
+   controls step one rung down, details (checkbox, kbd) cap at sm, and pills
+   (badge, slider) go square with square controls — as lyra/sera do. */
+function derivedRungs(state: StudioState): Record<string, string> {
+  const control = roleRung(state, "roleControl")
+  return {
+    "--studio-radius-control-sm": rungBelow(control),
+    "--studio-radius-detail":
+      rungIndex(control) < rungIndex("sm") ? control : "sm",
+    "--studio-radius-pill": control === "none" ? "none" : "full",
+  }
 }
 
 /** A role's ratio of the base. */
@@ -164,6 +178,11 @@ export function resolveShape(state: StudioState): Resolved {
     if (rung !== defaultRung)
       tokens[ROLE_VARS[role.key]] =
         SHAPE_RUNGS[rungIndex(rung)]?.token ?? "var(--radius-md)"
+  }
+  const defaults = derivedRungs(SHAPE_DEFAULTS as StudioState)
+  for (const [name, rung] of Object.entries(derivedRungs(state))) {
+    if (rung !== defaults[name])
+      tokens[name] = SHAPE_RUNGS[rungIndex(rung)]?.token ?? "0"
   }
   return { tokens }
 }

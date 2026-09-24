@@ -154,7 +154,20 @@ export function rewriteClassString(input: string, vars: StudioVars): string {
     "g",
   )
   let dropped = false
+  // An arbitrary radius derived from a 0 role (`calc(var(--r)-1px)`) is 0 too;
+  // substituted, it would ship invalid CSS (`calc(0-1px)`).
+  const arbitraryRadius =
+    /( ?)((?:[\w[\]*&>./=-]+:)*)(rounded[a-z-]*)-\[([^\s\]]+)\]( ?)/g
   let rewritten = input.replace(
+    arbitraryRadius,
+    (match, lead: string, _variants, _utility, value: string, trail) => {
+      const reads = value.matchAll(/var\((--studio-[\w-]+)/g)
+      if (![...reads].some(([, name]) => vars.get(name!) === "0")) return match
+      dropped = true
+      return lead && trail ? " " : ""
+    },
+  )
+  rewritten = rewritten.replace(
     shorthand,
     (match, lead, variants, utility, name, trail) => {
       const value = vars.get(name)
