@@ -10,6 +10,7 @@ import { getRouteApi } from "@tanstack/react-router"
 
 import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 import type { CodeOptions } from "@/publisher/code-options"
+import { isLegacyOrigin } from "@/modules/presets/presets-data"
 import {
   DEFAULT_PRESET,
   decodePreset,
@@ -57,7 +58,10 @@ function decodeCached(encoded: string | undefined): StudioPreset {
 }
 
 export function useStudio(): Studio {
-  const { preset: encoded } = routeApi.useSearch()
+  const { preset: param } = routeApi.useSearch()
+  // An old Origin link renders as today's Origin — on the server too, before
+  // /studio rewrites the link.
+  const encoded = isLegacyOrigin(param) ? undefined : param
   const navigate = routeApi.useNavigate()
   const preset = decodeCached(encoded)
   const { state } = preset

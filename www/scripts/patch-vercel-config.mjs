@@ -62,20 +62,28 @@ config.overrides ??= {}
 config.overrides["home.md"] = { contentType: "text/markdown; charset=utf-8" }
 
 config.routes ??= []
-const route = {
-  src: "/",
-  has: [{ type: "header", key: "accept", value: "(.*)text/markdown(.*)" }],
-  dest: "/home.md",
-}
-const already = config.routes.some(
-  (r) => r && r.src === route.src && r.dest === route.dest && r.has,
+const routes = [
+  {
+    src: "/",
+    has: [{ type: "header", key: "accept", value: "(.*)text/markdown(.*)" }],
+    dest: "/home.md",
+  },
+  // /studio is prerendered without a query, so its static HTML can't hydrate a
+  // ?preset= or ?preview= link: those render on the server instead.
+  ...["preset", "preview"].map((key) => ({
+    src: "/studio/?",
+    has: [{ type: "query", key }],
+    dest: "/__server",
+  })),
+]
+const missing = routes.filter(
+  (route) =>
+    !config.routes.some((r) => JSON.stringify(r) === JSON.stringify(route)),
 )
-if (!already) {
-  const fsIndex = config.routes.findIndex((r) => r && r.handle === "filesystem")
-  config.routes.splice(fsIndex === -1 ? 0 : fsIndex, 0, route)
-}
+const fsIndex = config.routes.findIndex((r) => r && r.handle === "filesystem")
+config.routes.splice(fsIndex === -1 ? 0 : fsIndex, 0, ...missing)
 
 writeFileSync(CONFIG, `${JSON.stringify(config, null, 2)}\n`)
 console.log(
-  "[patch-vercel-config] wrote static home.md, set text/markdown override, injected markdown-negotiation rewrite.",
+  "[patch-vercel-config] wrote static home.md, set text/markdown override, injected the markdown-negotiation and /studio query rewrites.",
 )
