@@ -1,0 +1,46 @@
+---
+title: Installation
+description: Export your design system from the Studio into a new or existing project, then add components with the shadcn CLI.
+---
+
+Every install starts in the [Studio](/studio). Build your design system, then hit **Export**: it gives you the command for your project with your design system in the URL. The commands below use the defaults; yours end in `?preset=…`.
+
+## New project
+
+Scaffolds an app with your design system, then swaps the template's Button for dotUI's.
+
+```npm
+npx shadcn@latest init "https://dotui.org/r/init" --template next --name my-app
+```
+
+```npm
+cd my-app && npx shadcn@latest add @dotui/button --overwrite --yes
+```
+
+`--template` takes `next`, `start` (TanStack Start), `vite` or `react-router`.
+
+## Existing project
+
+Run in your project root. Your project needs [React 19](https://react.dev), [Tailwind CSS 4](https://tailwindcss.com) and [TypeScript 5](https://www.typescriptlang.org/).
+
+```npm
+npx shadcn@latest init "https://dotui.org/r/init" --force --no-reinstall
+```
+
+This registers `@dotui` in `components.json`, so every component you add after installs already themed. Your theme tokens, fonts and `lib/utils` are replaced.
+
+Adding a dotUI component means overwriting your file of the same name, such as `button.tsx`: other dotUI components rely on dotUI's Button.
+
+## Add components
+
+Add any component by name. Each [component page](/docs/components) lists its own command.
+
+```npm
+npx shadcn@latest add @dotui/button
+```
+
+## dotUI and shadcn
+
+- dotUI is distributed through the shadcn CLI and registry format: `init`, `add` and `components.json` work as you know them.
+- Components are built on React Aria Components, not Radix (Toast, Drawer and OTP Field use Base UI), styled with Tailwind CSS 4 and tailwind-variants.
+- You own the code. Components land in your repo as plain files; edit them freely.

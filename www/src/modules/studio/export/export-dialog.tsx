@@ -170,9 +170,10 @@ function ExportDialogBody() {
           <p className="text-xs text-fg-muted">
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
-            you add after installs already themed. Your components stay as they
-            are; your theme tokens, fonts and{" "}
-            <code className="font-mono">lib/utils</code> are replaced.
+            you add after installs already themed. Your theme tokens, fonts and{" "}
+            <code className="font-mono">lib/utils</code> are replaced, and
+            adding a component means overwriting yours of the same name, like{" "}
+            <code className="font-mono">button.tsx</code>.
           </p>
         )}
 

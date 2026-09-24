@@ -5,6 +5,14 @@ import lastModified from "fumadocs-mdx/plugins/last-modified"
 import { z } from "zod"
 
 import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform"
+import { remarkInstallPrerequisite } from "./src/modules/docs/mdx-plugins/remark-install-prerequisite"
+
+const RUNNERS = {
+  npm: "npx",
+  pnpm: "pnpm dlx",
+  yarn: "yarn dlx",
+  bun: "bunx",
+}
 
 export const docs = defineDocs({
   dir: "content/docs",
@@ -50,12 +58,18 @@ export default defineConfig({
       },
       tab: true,
     },
+    remarkPlugins: [remarkInstallPrerequisite],
     rehypePlugins: [rehypeTransform],
     // ```npm blocks become package-manager tabs. `persist` adds `groupId` so
     // <CodeBlockTabs> binds them to the shared packageManagerStore (pnpm by
     // default, the user's last pick remembered).
     remarkNpmOptions: {
       persist: { id: "package-manager" },
+      // Same runners as install-commands.ts (fumadocs' default bun is `bun x`).
+      packageManagers: Object.entries(RUNNERS).map(([name, runner]) => ({
+        name,
+        command: (cmd: string) => cmd.replace(/(^|&& )npx /gm, `$1${runner} `),
+      })),
     },
   },
 })
