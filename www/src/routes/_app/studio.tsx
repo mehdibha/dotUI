@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
-import { DialogContent } from "@/registry/ui/dialog"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ORIGIN } from "@/modules/presets/presets-data"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
@@ -54,9 +52,6 @@ export const Route = createFileRoute("/_app/studio")({
 function StudioPage() {
   const { preset } = Route.useSearch()
   const { preset: current, setPreset, setState } = useStudio()
-  // Below `lg` the preview is the whole page and the panel rides over it as a
-  // bottom sheet — edits stay visible on the live stage while adjusting.
-  const [sheetOpen, setSheetOpen] = useState(false)
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // The user's selected preset is persisted in localStorage so every docs
@@ -87,36 +82,20 @@ function StudioPage() {
   return (
     // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
     // lines up with the Export button above it.
-    <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 lg:p-6 lg:pt-2 lg:pr-4">
+    <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 max-sm:px-2 max-sm:pb-2 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
       {/* The row is the panel's height: panel popovers stay within it. */}
       <PanelPopoverBoundary.Provider value={boundary}>
         <div
           ref={setBoundary}
-          className="flex h-full min-h-0 flex-col gap-3 lg:flex-row lg:gap-6"
+          className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 dock-side:flex-row"
         >
-          <StudioPanel className="max-lg:hidden" />
-          <PreviewPanel onCustomize={() => setSheetOpen(true)} />
+          {/* Below `lg` the panel docks under the preview; on short screens
+              (a phone on its side) it sits beside it instead. */}
+          <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
+          <PreviewPanel />
         </div>
       </PanelPopoverBoundary.Provider>
-
-      {/* Mobile: the panel is a bottom sheet over the live stage, opened from
-          the preview's floating toolbar. */}
-      <div className="contents lg:hidden">
-        <Drawer
-          isOpen={sheetOpen}
-          onOpenChange={setSheetOpen}
-          className="h-[80svh]"
-        >
-          <DialogContent
-            aria-label="Customize"
-            className="flex h-full min-h-0 flex-col gap-0 p-0"
-          >
-            <DrawerHandle />
-            <StudioPanel className="min-h-0 flex-1" />
-          </DialogContent>
-        </Drawer>
-      </div>
     </div>
   )
 }

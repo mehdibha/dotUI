@@ -4,10 +4,17 @@
    color seed, the neutral, the font list. Everything is controlled — value
    in, callback out. */
 
-import { createContext, useContext, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from "react"
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
+  composeRenderProps,
+  OverlayTriggerStateContext,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -33,7 +40,7 @@ import {
   ListBoxSection,
   ListBoxSectionHeader,
 } from "@/registry/ui/list-box"
-import { Popover } from "@/registry/ui/popover"
+import { Popover } from "@/registry/ui/popover/base.popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
   Slider,
@@ -52,9 +59,53 @@ const PANEL_PADDING = 8
 const PANEL_BORDER = 1
 const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
 
+export function useMedia(query: string) {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mql = window.matchMedia(query)
+      mql.addEventListener("change", onChange)
+      return () => mql.removeEventListener("change", onChange)
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  )
+}
+/* Below `lg` the panel docks under the preview (or beside it, on short
+   screens) and its popovers open over the dock, never the preview. */
+export const DOCKED_QUERY = "(max-width: 1023px)"
+export const useDocked = () => useMedia(DOCKED_QUERY)
+/** Docked beside the preview (a phone on its side): the `dock-side` variant. */
+export const useDockSide = () =>
+  useMedia("(max-width: 1023px) and (max-height: 500px)")
+
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
 export const PanelPopoverBoundary = createContext<Element | null>(null)
+
+/** The docked panel's positioned wrapper, which docked popovers portal into. */
+export const DockLayer = createContext<Element | null>(null)
+
+/** The row a popover edits, named over it when docked — the sheet covers it. */
+export const PanelPopoverTitle = createContext<string | null>(null)
+
+function DockedTitle({ title }: { title: string }) {
+  const state = useContext(OverlayTriggerStateContext)
+  return (
+    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3">
+      <span className="truncate text-sm font-medium text-fg">{title}</span>
+      <Button
+        size="sm"
+        variant="quiet"
+        isIconOnly
+        aria-label="Close"
+        onPress={() => state?.close()}
+        className="pointer-coarse:data-icon-only:size-9"
+      >
+        <XIcon />
+      </Button>
+    </div>
+  )
+}
 
 /** Panel popovers open and close instantly — control feedback, not content —
  *  and wear the panel's own surface, raised: its card, hairline, radius and
@@ -63,27 +114,46 @@ export const PanelPopoverBoundary = createContext<Element | null>(null)
  *  room below its row up to fit the boundary. Its inline max-height is
  *  overridden so the box grows with its content — that growth is what
  *  react-aria observes to re-slide it; a capped box would never report it.
- *  The viewport cap is the last resort, where the content scrolls. */
+ *  The viewport cap is the last resort, where the content scrolls. Docked,
+ *  the popover covers the dock's rows at its width, rising over the preview
+ *  when it holds more, and names the row it edits. */
 export function PanelPopover({
   className,
   placement = ROW_OVERLAY_PLACEMENT,
+  children,
   ...props
 }: Omit<React.ComponentProps<typeof Popover>, "className"> & {
   className?: string
 }) {
   const boundary = useContext(PanelPopoverBoundary)
+  const layer = useContext(DockLayer)
+  const title = useContext(PanelPopoverTitle)
+  const docked = useDocked() && layer !== null
   return (
     <Popover
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
       offset={boundary ? PANEL_POPOVER_OFFSET : undefined}
+      UNSTABLE_portalContainer={docked ? (layer ?? undefined) : undefined}
+      showArrow={!docked}
       className={cn(
         "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
         className,
+        docked &&
+          "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
       )}
       {...props}
-    />
+    >
+      {docked && title
+        ? composeRenderProps(children, (children) => (
+            <>
+              <DockedTitle title={title} />
+              {children}
+            </>
+          ))
+        : children}
+    </Popover>
   )
 }
 
@@ -147,13 +217,13 @@ export function ColorPickerPopover({
 }) {
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
         <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
           {COLOR_PRESETS.map((preset) => (
             <ColorSwatchPickerItem
               key={preset}
               color={preset}
-              className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden selected:ring-2 selected:ring-(--color)"
+              className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden pointer-coarse:size-7 selected:ring-2 selected:ring-(--color)"
             />
           ))}
         </ColorSwatchPicker>
@@ -163,7 +233,7 @@ export function ColorPickerPopover({
           xChannel="saturation"
           yChannel="brightness"
           onChangeEnd={commit}
-          className="w-full rounded-xl"
+          className="w-full rounded-xl max-lg:aspect-auto max-lg:h-28 max-lg:shrink-0"
         />
         <ColorSlider
           aria-label="Hue"
@@ -381,7 +451,7 @@ export function NeutralPickerPopover({
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2">
+      <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}
@@ -405,7 +475,7 @@ export function NeutralPickerPopover({
             id="brand"
             onHoverStart={() => setHovered("Auto")}
             onHoverEnd={() => setHovered(null)}
-            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
+            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
           >
             <span
               className="size-4 rounded-full"
@@ -424,7 +494,7 @@ export function NeutralPickerPopover({
                 background:
                   option.hue === null ? sample(0, 0) : sample(option.hue),
               }}
-              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring selected:ring-2 selected:ring-accent"
+              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
             />
           ))}
         </RacToggleButtonGroup>
@@ -473,10 +543,14 @@ export function FontListPopover({
   categories: FontCategory[]
 }) {
   const listRef = useLazyFontPreviews()
+  // On touch, a focused field would raise the keyboard over the list.
+  const finePointer = useMedia("(pointer: fine)")
   return (
     <PanelPopover className="w-(--trigger-width) outline-hidden">
-      <Command>
-        <SearchField autoFocus aria-label="Search fonts">
+      {/* Docked, the list fills the sheet over the field, which sits on the
+          keyboard. */}
+      <Command className="max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
+        <SearchField autoFocus={finePointer} aria-label="Search fonts">
           <InputGroup>
             <InputGroupAddon>
               <SearchIcon />
@@ -492,7 +566,7 @@ export function FontListPopover({
         {/* The `display:contents` wrapper hands the lazy-preview observer the
             listbox scroll container (ListBox forwards no ref). */}
         <div ref={listRef} className="contents">
-          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain">
+          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1">
             {categories.map((category) => (
               <ListBoxSection key={category}>
                 <ListBoxSectionHeader className="capitalize">
@@ -504,6 +578,7 @@ export function FontListPopover({
                       key={font.family}
                       id={font.family}
                       textValue={font.family}
+                      className="pointer-coarse:min-h-11"
                     >
                       <span
                         data-preview-family={font.family}

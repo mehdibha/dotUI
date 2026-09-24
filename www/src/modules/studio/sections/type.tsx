@@ -19,7 +19,7 @@ import {
   DIAL_ROW,
   DIAL_VALUE,
 } from "../dial"
-import { FontListPopover } from "../rows"
+import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
 /** A font role as a dial row: label, the family in its own typeface, the
@@ -65,7 +65,7 @@ function FontRow({
             <RacButton
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring"
+              className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:size-7"
             >
               <RotateCcwIcon className="size-3.5" />
             </RacButton>
@@ -80,7 +80,9 @@ function FontRow({
           <ChevronDownIcon className={DIAL_CHEVRON} />
         </span>
       </div>
-      <FontListPopover categories={categories} />
+      <PanelPopoverTitle.Provider value={label}>
+        <FontListPopover categories={categories} />
+      </PanelPopoverTitle.Provider>
     </Select>
   )
 }

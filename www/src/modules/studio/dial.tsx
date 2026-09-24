@@ -6,7 +6,7 @@
    fold in place between hairlines. Alpha surfaces keep both themes in one
    set of classes. Folds are instant — chrome, not content. */
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
@@ -27,7 +27,13 @@ import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
-import { ColorPickerPopover, PanelPopover, useDraft } from "./rows"
+import {
+  ColorPickerPopover,
+  PanelPopover,
+  PanelPopoverTitle,
+  useDraft,
+  useMedia,
+} from "./rows"
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
@@ -100,7 +106,9 @@ export function DialTrigger({
           {chevron && <ChevronDownIcon className={DIAL_CHEVRON} />}
         </span>
       </RacButton>
-      {children}
+      <PanelPopoverTitle.Provider value={label}>
+        {children}
+      </PanelPopoverTitle.Provider>
     </Dialog>
   )
 }
@@ -230,19 +238,6 @@ function snapToDecile(raw: number, min: number, max: number) {
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
 }
 
-const REDUCED = "(prefers-reduced-motion: reduce)"
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    (notify) => {
-      const query = window.matchMedia(REDUCED)
-      query.addEventListener("change", notify)
-      return () => query.removeEventListener("change", notify)
-    },
-    () => window.matchMedia(REDUCED).matches,
-    () => false,
-  )
-}
-
 /** Drags through a draft and commits on release. */
 export function DialSlider({
   label,
@@ -262,7 +257,7 @@ export function DialSlider({
   format: (value: number) => string
 }) {
   const [draft, setDraft] = useDraft(value)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useMedia("(prefers-reduced-motion: reduce)")
   const range = maxValue - minValue
   const steps = range / step
   const toPct = (v: number) => ((v - minValue) / range) * 100
@@ -285,8 +280,21 @@ export function DialSlider({
   const [dragging, setDragging] = useState(false)
   const [hovered, setHovered] = useState(false)
   const active = interacting || hovered
+  // Touch has no hover: the handle rests visible, and a tap flashes it.
+  const coarse = useMedia("(pointer: coarse)")
+  const [nudged, setNudged] = useState(false)
+  useEffect(() => {
+    if (!nudged) return
+    const timer = setTimeout(() => setNudged(false), 600)
+    return () => clearTimeout(timer)
+  }, [nudged])
 
-  const pointerDown = useRef<{ x: number; y: number } | null>(null)
+  const pointerDown = useRef<{
+    x: number
+    y: number
+    value: number
+    touch: boolean
+  } | null>(null)
   const isClick = useRef(true)
   const rect = useRef<DOMRect | null>(null)
   const committed = useRef(value)
@@ -357,20 +365,46 @@ export function DialSlider({
     if (e.button !== 0 && e.pointerType === "mouse") return
     e.preventDefault()
     e.currentTarget.setPointerCapture(e.pointerId)
-    pointerDown.current = { x: e.clientX, y: e.clientY }
+    pointerDown.current = {
+      x: e.clientX,
+      y: e.clientY,
+      value: draft,
+      touch: e.pointerType === "touch",
+    }
     isClick.current = true
     rect.current = wrapperRef.current?.getBoundingClientRect() ?? null
     setInteracting(true)
   }
 
+  /* Touch drags are relative and never jump: the row is also what the dock
+     scrolls by, so a vertical swipe hands off to the scroll and a tap is a
+     no-op. The mouse keeps DialKit's absolute track. */
+  const touchValueAt = (clientX: number) => {
+    const down = pointerDown.current
+    const width = wrapperRef.current?.offsetWidth
+    if (!down || !width) return draft
+    return clamp(down.value + ((clientX - down.x) / width) * range)
+  }
+
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!interacting || !pointerDown.current) return
+    const down = pointerDown.current
+    if (!interacting || !down) return
     if (isClick.current) {
-      const dx = e.clientX - pointerDown.current.x
-      const dy = e.clientY - pointerDown.current.y
+      const dx = e.clientX - down.x
+      const dy = e.clientY - down.y
       if (Math.hypot(dx, dy) <= CLICK_THRESHOLD) return
+      if (down.touch && Math.abs(dy) > Math.abs(dx)) {
+        e.currentTarget.releasePointerCapture(e.pointerId)
+        return onPointerCancel()
+      }
       isClick.current = false
       setDragging(true)
+    }
+    if (down.touch) {
+      const raw = touchValueAt(e.clientX)
+      paint(toPct(raw))
+      setDraft(round(raw))
+      return
     }
     stretchTo(stretchAt(e.clientX))
     const raw = valueAt(e.clientX)
@@ -380,6 +414,18 @@ export function DialSlider({
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interacting) return
+    if (pointerDown.current?.touch) {
+      if (isClick.current) {
+        onPointerCancel()
+        setNudged(true)
+      } else {
+        settle(round(touchValueAt(e.clientX)))
+        setInteracting(false)
+        setDragging(false)
+        pointerDown.current = null
+      }
+      return
+    }
     const raw = valueAt(e.clientX)
     settle(
       round(
@@ -433,8 +479,9 @@ export function DialSlider({
     onChange(next)
   }
 
-  // The handle: hidden at rest, half-strength on hover, full while dragging,
-  // and nearly gone where it would cross the label or the value.
+  // The handle: hidden at rest (half-strength on touch), half-strength on
+  // hover, full while dragging, and nearly gone where it would cross the
+  // label or the value.
   const pct = toPct(draft)
   const [handleLook, setHandleLook] = useState({ opacity: 0, x: 0.25, y: 1 })
   useEffect(() => {
@@ -456,11 +503,19 @@ export function DialSlider({
         : 78
     const dodge = pct < left || pct > right
     setHandleLook({
-      opacity: !active ? 0 : dodge ? 0.1 : dragging ? 0.9 : 0.5,
-      x: active ? 1 : 0.25,
+      opacity: nudged
+        ? 0.9
+        : !active && !coarse
+          ? 0
+          : dodge
+            ? 0.1
+            : dragging
+              ? 0.9
+              : 0.5,
+      x: active || coarse ? 1 : 0.25,
       y: active && dodge ? 0.75 : 1,
     })
-  }, [active, dragging, pct])
+  }, [active, coarse, dragging, nudged, pct])
 
   // Nine marks at each tenth, or one per step when the range has ten or fewer.
   const marks =
@@ -484,7 +539,7 @@ export function DialSlider({
         aria-valuetext={format(draft)}
         data-active={active || undefined}
         data-dragging={dragging || undefined}
-        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-none overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
+        className="group absolute inset-y-0 left-0 w-full cursor-interactive touch-pan-y overflow-hidden rounded-lg tint-5 focus-reset select-none focus-visible:focus-ring"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -593,7 +648,7 @@ export function DialColor({
               <RacButton
                 aria-label={`Reset ${label} to auto`}
                 onPress={onReset}
-                className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring"
+                className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:size-7"
               >
                 <RotateCcwIcon className="size-3.5" />
               </RacButton>
@@ -603,7 +658,9 @@ export function DialColor({
             </span>
             <ColorSwatch className="size-4 rounded-full border border-fg/15" />
           </span>
-          <ColorPickerPopover commit={commit}>{footer}</ColorPickerPopover>
+          <PanelPopoverTitle.Provider value={label}>
+            <ColorPickerPopover commit={commit}>{footer}</ColorPickerPopover>
+          </PanelPopoverTitle.Provider>
         </div>
       )}
     </ColorPicker>
@@ -648,7 +705,7 @@ export function SegmentedGroup({
         <RacToggleButton
           key={option.value}
           id={option.value}
-          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring selected:text-fg/95"
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center gap-1.5">

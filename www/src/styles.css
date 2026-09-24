@@ -11,6 +11,9 @@
 /* Site-only: a subtree can pin its own mode with `data-mode="light|dark"` (a
    themed preview inside a differently-themed page); the last definition wins. */
 @custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
+/* /studio below lg: the panel docks under the preview, or beside it on short screens. */
+@custom-variant dock-stacked (@media (width < 64rem) and (height > 500px));
+@custom-variant dock-side (@media (width < 64rem) and (height <= 500px));
 
 /* Metric-matched fallbacks (capsize) for the fontsource faces above. The webfonts
    load with font-display: swap; without these, the swap reflows the whole page

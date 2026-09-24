@@ -2,13 +2,16 @@
 
 /* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
    whole, its header pinned — the system switcher on the left, global reset
-   and search on the right — over a hairline. Real behavior arrives through
-   `system` (wired by StudioPanel on /studio); without it the chrome is the
-   studio's inert design shell. */
+   and search on the right — over a hairline. Docked under the preview, the
+   header and strip pin to the bottom edge instead, so they stay put as the
+   dock hugs each chapter. Real behavior arrives through `system` (wired by
+   StudioPanel on /studio); without it the chrome is the studio's inert
+   design shell. */
 
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
+import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
 import { DEFAULTS } from "./state"
@@ -35,13 +38,18 @@ export interface PanelSystem {
 export function PanelChrome({
   studio,
   system,
-  search,
+  actions,
+  strip,
+  className,
   children,
 }: {
   studio: Studio
   system?: PanelSystem
-  /** Search trigger + overlay, supplied by the page (it owns navigation). */
-  search?: ReactNode
+  /** Search and the dock toggle, supplied by the page (it owns navigation). */
+  actions?: ReactNode
+  /** Mobile chapter navigation, pinned with the header. */
+  strip?: ReactNode
+  className?: string
   children: ReactNode
 }) {
   // The only reset in the panel. It clears the studio axes and the engine
@@ -71,33 +79,41 @@ export function PanelChrome({
   )
 
   return (
-    <div className="relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)]">
-      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 items-center justify-between gap-2 border-b border-fg/6 bg-card p-2">
-        {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
-        <span className="flex shrink-0 items-center">
-          {modified && (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Reset design system"
-              onPress={resetAll}
-              className="text-fg-muted"
-            >
-              <RotateCcwIcon />
-            </Button>
-          )}
-          {search ?? (
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Search settings"
-            >
-              <SearchIcon />
-            </Button>
-          )}
-        </span>
+    <div
+      className={cn(
+        "relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)] max-lg:pb-0",
+        className,
+      )}
+    >
+      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 dock-stacked:top-auto dock-stacked:bottom-0 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
+        <div className="flex items-center justify-between gap-2">
+          {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
+          <span className="flex shrink-0 items-center pointer-coarse:gap-1">
+            {modified && (
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Reset design system"
+                onPress={resetAll}
+                className="text-fg-muted pointer-coarse:data-icon-only:size-9"
+              >
+                <RotateCcwIcon />
+              </Button>
+            )}
+            {actions ?? (
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                aria-label="Search settings"
+              >
+                <SearchIcon />
+              </Button>
+            )}
+          </span>
+        </div>
+        {strip}
       </div>
       {children}
     </div>
