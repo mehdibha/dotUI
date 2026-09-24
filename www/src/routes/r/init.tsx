@@ -24,8 +24,9 @@ export const Route = createFileRoute("/r/init")({
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get("preset") ?? undefined
-        const preset = await resolveRequestPreset(encodedPreset)
+        const { preset, encodedPreset } = await resolveRequestPreset(
+          url.searchParams.get("preset") ?? undefined,
+        )
 
         const item = emitInitItem({
           baseRegistryCss,

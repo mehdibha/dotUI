@@ -67,10 +67,53 @@ const SHADCN_BASE_DIR = path.join(EXAMPLES_DIR, "scripts", "shadcn-base")
 
 type Framework = "next" | "tanstack-start"
 
-// Directory name → what it exercises. Add a template here and to the
-// workflow matrix.
-const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
-  "origin-next": { framework: "next", preset: "origin" },
+const CREATE_NEXT_APP_LAYOUT = `import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "dotUI · Next.js example",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={\`\${geistSans.variable} \${geistMono.variable} h-full antialiased\`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
+  );
+}
+`
+
+// Directory name → what it exercises (`seeds` override the framework's). Add a
+// template here and to the workflow matrix.
+const EXAMPLES: Record<
+  string,
+  { framework: Framework; preset: string; seeds?: Record<string, string> }
+> = {
+  // Stock create-next-app layout: Geist is already imported, so shadcn leaves
+  // the layout alone and the default fonts must still render.
+  "origin-next": {
+    framework: "next",
+    preset: "origin",
+    seeds: { "src/app/layout.tsx": CREATE_NEXT_APP_LAYOUT },
+  },
   "origin-tanstack-start": { framework: "tanstack-start", preset: "origin" },
   "spotify-next": { framework: "next", preset: "spotify" },
   "spotify-tanstack-start": { framework: "tanstack-start", preset: "spotify" },
@@ -444,7 +487,7 @@ async function regenerate(
   shadcnBaseUrl: string,
   build: boolean,
 ) {
-  const { framework: frameworkName } = EXAMPLES[example]!
+  const { framework: frameworkName, seeds } = EXAMPLES[example]!
   const framework = FRAMEWORKS[frameworkName]
   const cwd = path.join(EXAMPLES_DIR, example)
   console.log(`\n=== ${example} ===`)
@@ -458,6 +501,12 @@ async function regenerate(
     path.join(cwd, framework.stylesheet),
     '@import "tailwindcss";\n',
   )
+  for (const [file, content] of Object.entries({
+    ...framework.seeds,
+    ...seeds,
+  })) {
+    writeFileSync(path.join(cwd, file), content)
+  }
 
   const shadcnEnv = { ...noProxy(), REGISTRY_URL: shadcnBaseUrl }
   await run(cwd, "pnpm", ["install"])

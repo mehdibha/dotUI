@@ -27,8 +27,13 @@
 import type { Theme } from "@dotui/colors"
 
 import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
   FONT_TOKEN_VARS,
   fontFamiliesFromTokens,
+  fontStack,
   googleFontsUrl,
 } from "@/lib/fonts"
 import {
@@ -54,7 +59,7 @@ export interface EmitThemeInput {
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
   preset: PublishPreset
-  /** Encoded preset string — gets put in `config.registries.@dotui` as `?preset=…`. */
+  /** Canonical encoded preset (never the raw param) for `config.registries.@dotui`. */
   encodedPreset?: string
   /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
   registryRoot: string
@@ -147,12 +152,15 @@ function splitPresetTokens(
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
   const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
-  // One `registry:font` item per font token the preset sets. shadcn installs
-  // the face per framework (next/font on Next.js, @fontsource elsewhere) and
-  // sets the token variable — see emit-font.ts for why not a CSS `@import`.
-  const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
-    (name) => `${registryRoot}/r/${name}`,
-  )
+  // One `registry:font` item per font role, defaults included: nothing else
+  // loads the face. shadcn installs it per framework (next/font on Next.js,
+  // @fontsource elsewhere) and sets the token variable — see emit-font.ts for
+  // why not a CSS `@import`.
+  const fontDependencies = fontItemNamesForTokens({
+    [FONT_SANS_VAR]: fontStack(DEFAULT_BODY_FAMILY),
+    [FONT_MONO_VAR]: fontStack(DEFAULT_MONO_FAMILY),
+    ...preset.tokens,
+  }).map((name) => `${registryRoot}/r/${name}`)
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
@@ -160,6 +168,8 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   //   coding `src/styles/globals.css` here would override a correct
   //   detection and cause ENOENT when shadcn tries to merge cssVars into a
   //   file that doesn't exist.
+  // - No `aliases` — shadcn detects them from the project's tsconfig paths
+  //   (`~/` on React Router); these would override it.
   // - `cssVariables: true` because dotUI installs its design tokens through
   //   this registry item's structured CSS fields.
   // - The `@dotui` registries mapping is preserved as a convenience for
@@ -170,13 +180,6 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     style: "default",
     tailwind: {
       cssVariables: true,
-    },
-    aliases: {
-      components: "@/components",
-      ui: "@/components/ui",
-      utils: "@/lib/utils",
-      lib: "@/lib",
-      hooks: "@/hooks",
     },
     registries: {
       "@dotui": registryConfigUrl(registryRoot, encodedPreset),
@@ -199,8 +202,8 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     files: [
       {
         type: "registry:lib",
+        // No `target`: shadcn places it under the project's `lib` alias.
         path: "lib/utils.ts",
-        target: "src/lib/utils.ts",
         content: CN_UTILS_TS,
       },
     ],

@@ -36,7 +36,7 @@ export interface PublishItemInput {
   preset: PublishPreset
   /** Origin transitive deps resolve to, e.g. `https://dotui.org`. */
   origin: string
-  /** Encoded preset carried on transitive dep URLs. */
+  /** Canonical encoded preset (never the raw param), carried on dep URLs. */
   encodedPreset?: string
 }
 

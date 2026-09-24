@@ -12,30 +12,43 @@ export function defaultPreset(): PublishPreset {
   return { density: "default", componentParams: {} }
 }
 
+export interface RequestPreset {
+  preset: PublishPreset
+  /**
+   * The param re-encoded canonically — the only form that may be echoed into
+   * consumer files. `undefined` for the defaults or an undecodable value.
+   */
+  encodedPreset?: string
+}
+
 /**
  * Resolve a `?preset=` value to a `PublishPreset`, falling back to the default
  * preset when the param is absent or fails to decode.
  */
 export async function resolveRequestPreset(
-  encoded: string | undefined,
-): Promise<PublishPreset> {
-  if (!encoded) return defaultPreset()
+  raw: string | undefined,
+): Promise<RequestPreset> {
+  if (!raw) return { preset: defaultPreset() }
   try {
-    const [{ decodePreset }, { resolveDesignSystem }] = await Promise.all([
-      import("@/modules/studio/preset/codec"),
-      import("@/modules/studio/resolve"),
-    ])
-    const preset = decodePreset(encoded)
-    const ds = resolveDesignSystem(preset.state)
+    const [{ decodePreset, encodePreset }, { resolveDesignSystem }] =
+      await Promise.all([
+        import("@/modules/studio/preset/codec"),
+        import("@/modules/studio/resolve"),
+      ])
+    const decoded = decodePreset(raw)
+    const ds = resolveDesignSystem(decoded.state)
     return {
-      color: ds.color,
-      density: ds.density,
-      componentParams: ds.componentParams,
-      tokens: ds.tokens,
-      codeOptions: preset.codeOptions,
-      icons: ds.icons,
+      preset: {
+        color: ds.color,
+        density: ds.density,
+        componentParams: ds.componentParams,
+        tokens: ds.tokens,
+        codeOptions: decoded.codeOptions,
+        icons: ds.icons,
+      },
+      encodedPreset: encodePreset(decoded),
     }
   } catch {
-    return defaultPreset()
+    return { preset: defaultPreset() }
   }
 }

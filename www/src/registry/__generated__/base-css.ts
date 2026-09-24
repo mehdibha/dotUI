@@ -51,9 +51,6 @@ export const baseRegistryCss = {
 			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
 				opacity: "var(--disabled-opacity, 1)",
 			},
-			html: {
-				"@apply font-sans": {},
-			},
 		},
 		":root": {
 			"--card-border": "var(--color-border)",

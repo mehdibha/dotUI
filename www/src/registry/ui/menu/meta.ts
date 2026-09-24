@@ -11,14 +11,7 @@ const menuMeta = {
       target: "ui/menu.tsx",
     },
   ],
-  registryDependencies: [
-    "kbd",
-    "responsive",
-    "modal",
-    "drawer",
-    "popover",
-    "text",
-  ],
+  registryDependencies: ["button", "popover"],
   params: {
     indicator: {
       kind: "enum",

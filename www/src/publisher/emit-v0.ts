@@ -247,8 +247,10 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
     ...DEFAULT_DEPENDENCIES,
     ...FONT_DEPENDENCIES,
   ])
+  const devDependencies = new Set<string>()
   for (const item of items) {
     for (const dep of item.dependencies ?? []) dependencies.add(dep)
+    for (const dep of item.devDependencies ?? []) devDependencies.add(dep)
   }
 
   return {
@@ -261,6 +263,9 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
     dependencies: [...dependencies]
       .filter((dep) => !FRAMEWORK_PROVIDED.has(dep))
       .sort(),
+    ...(devDependencies.size > 0
+      ? { devDependencies: [...devDependencies].sort() }
+      : {}),
     registryDependencies: [],
     files: [...filesByTarget.values()],
   }

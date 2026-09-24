@@ -16,6 +16,7 @@ type FontItem = {
     variable: string
     subsets?: string[]
     dependency?: string
+    selector?: string
   }
 }
 
@@ -47,6 +48,20 @@ describe("emitFontItem", () => {
     const mono = emitFontItem("font-mono-jetbrains-mono") as unknown as FontItem
     expect(mono.font.variable).toBe("--font-mono")
     expect(mono.font.family).toMatch(/^'JetBrains Mono Variable', /)
+    // shadcn applies selector-less mono faces to <html>.
+    expect(mono.font.selector).toBe("code, kbd, samp, pre")
+    expect(heading.font.selector).toBeUndefined()
+  })
+
+  test("the default faces bind create-next-app's variables", () => {
+    const sans = emitFontItem("font-geist") as unknown as FontItem
+    const mono = emitFontItem("font-mono-geist-mono") as unknown as FontItem
+    expect(sans.font.variable).toBe("--font-geist-sans")
+    expect(mono.font.variable).toBe("--font-geist-mono")
+    expect(mono.font.selector).toBeUndefined()
+    expect(
+      (emitFontItem("font-heading-geist") as unknown as FontItem).font.variable,
+    ).toBe("--font-heading")
   })
 
   test("unknown families and non-font names are not items", () => {
