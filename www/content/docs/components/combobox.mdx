@@ -44,7 +44,7 @@ npx shadcn@latest add @dotui/combobox
 Use `Combobox` to allow users to filter a list of options to items matching a query and select an item from the list.
 
 ```tsx
-import { Combobox } from "@/components/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/components/ui/combobox"
 import { Input, InputGroup, InputGroupAddon } from "@/components/ui/input"
 import { ListBox, ListBoxItem } from "@/components/ui/list-box"
 import { Popover } from "@/components/ui/popover"
@@ -55,9 +55,7 @@ import { Popover } from "@/components/ui/popover"
   <InputGroup>
     <Input placeholder="Select a country..." />
     <InputGroupAddon>
-      <Button variant="quiet" isIconOnly>
-        <ChevronDownIcon />
-      </Button>
+      <ComboboxTrigger />
     </InputGroupAddon>
   </InputGroup>
   <Popover>
@@ -71,14 +69,16 @@ import { Popover } from "@/components/ui/popover"
 
 ## Anatomy
 
-`Combobox` is assembled from the field, input, list-box, and popover primitives. `InputGroup` wraps the text `Input` and an `InputGroupAddon` trigger; the `Popover` holds a `ListBox` of `ListBoxItem` options.
+`Combobox` is assembled from the field, input, list-box, and popover primitives. `InputGroup` wraps the text `Input` and an `InputGroupAddon` holding the `ComboboxTrigger` button, which carries the caret; the `Popover` holds a `ListBox` of `ListBoxItem` options.
 
 ```tsx
 <Combobox>
   <Label />
   <InputGroup>
     <Input />
-    <InputGroupAddon />
+    <InputGroupAddon>
+      <ComboboxTrigger />
+    </InputGroupAddon>
   </InputGroup>
   <Popover>
     <ListBox>
@@ -186,3 +186,7 @@ Set `allowsCustomValue` to let users submit text that doesn't match any option.
 ### ComboboxValue
 
 <Reference name="combobox-value" />
+
+### ComboboxTrigger
+
+<Reference name="combobox-trigger" />

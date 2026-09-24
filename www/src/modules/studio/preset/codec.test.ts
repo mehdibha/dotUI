@@ -65,7 +65,6 @@ describe("preset codec — studio state", () => {
         state.checkboxColor,
         state.radioColor,
         state.switchColor,
-        state.selectionColor,
         state.sliderColor,
         state.tabsColor,
         state.linkColor,
@@ -73,23 +72,23 @@ describe("preset codec — studio state", () => {
       ]
     }
     const inks = ["neutral", "accent", "accent"]
-    // The selection tokens and the slider followed the primary.
+    // The checks and the slider followed the primary.
     expect(leaves({ primary: "accent" })).toEqual([
-      ...Array(6).fill("accent"),
+      ...Array(5).fill("accent"),
       ...inks,
     ])
     // The family fill re-pointed every check, whatever the primary.
     expect(leaves({ checkFill: "accent" })).toEqual([
       "neutral",
-      ...Array(5).fill("accent"),
+      ...Array(4).fill("accent"),
       ...inks,
     ])
     expect(leaves({ primary: "accent", checkFill: "neutral" })).toEqual([
       "accent",
-      ...Array(5).fill("neutral"),
+      ...Array(4).fill("neutral"),
       ...inks,
     ])
-    expect(leaves({ linkColor: "foreground" })[7]).toBe("neutral")
+    expect(leaves({ linkColor: "foreground" })[6]).toBe("neutral")
     const { state } = decodePreset(encodeRaw({ v: 3, s: {} }))
     expect("primary" in state || "checkFill" in state).toBe(false)
   })
@@ -100,6 +99,16 @@ describe("preset codec — studio state", () => {
     )
     expect(state.switchColor).toBe("neutral")
     expect(state.radioColor).toBe("accent")
+  })
+
+  it("drops the retired selectionColor leaf", () => {
+    const { state } = decodePreset(
+      encodeRaw({
+        v: 4,
+        s: { selectionColor: "accent", radioColor: "accent" },
+      }),
+    )
+    expect(state).toEqual({ ...DEFAULTS, radioColor: "accent" })
   })
 
   it("decodes garbage to the defaults", () => {

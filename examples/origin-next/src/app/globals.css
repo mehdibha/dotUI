@@ -21,7 +21,7 @@
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
     --focus-ring-inner: 0px;
-    --focus-input-color: var(--border-focus-muted);
+    --focus-input-color: color-mix(in oklab, var(--border-focus) 30%, transparent);
     --focus-input-width: 2px;
     --focus-input-offset: 0px;
     --focus-input-inner: 0px;
@@ -122,7 +122,6 @@
     --color-border-control: var(--border-control);
     --color-border-control-hover: var(--border-control-hover);
     --color-border-focus: var(--border-focus);
-    --color-border-focus-muted: var(--border-focus-muted);
     --color-tooltip: var(--tooltip);
     --color-fg-on-tooltip: var(--fg-on-tooltip);
     --color-card: var(--card);
@@ -258,7 +257,6 @@
     --border-control: oklch(0.8827 0.0074 258.04);
     --border-control-hover: oklch(0.8545 0.0091 258.04);
     --border-focus: oklch(0.5787 0.2113 258.04);
-    --border-focus-muted: oklch(0.8984 0.0496 241.04);
     --tooltip: oklch(0.2399 0.0126 258.04);
     --fg-on-tooltip: oklch(0.992 0.0021 258.04);
     --card: oklch(0.9831 0.003 258.04);
@@ -362,7 +360,6 @@
     --border-control: oklch(0.3608 0.0082 258.04);
     --border-control-hover: oklch(0.4318 0.0096 258.04);
     --border-focus: oklch(0.5787 0.2113 258.04);
-    --border-focus-muted: oklch(0.3183 0.1101 263.25);
     --tooltip: oklch(0.9562 0.0029 258.04);
     --fg-on-tooltip: oklch(0.131 0.0037 258.04);
     --card: oklch(0.1748 0.0035 258.04);

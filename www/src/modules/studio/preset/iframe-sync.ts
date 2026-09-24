@@ -158,18 +158,17 @@ export function usePreviewNavigationMessages(handlers: {
 }
 
 /**
- * Inside the preview iframe: the display mode (light / dark) the customizer has chosen, or
- * `undefined` when not in an iframe (the main app owns its own theme). Returned so the root
- * `ThemeProvider` can take it as `forcedTheme` — which deterministically wins over the iframe's
- * system/storage theme listeners (they no-op while forced), instead of toggling `.dark`
- * out-of-band where the provider would revert it on the next OS-pref / storage event.
+ * The mode a preview is pinned to (`undefined` outside /preview): seeded from `?mode=`, then driven by
+ * the /studio parent's `preview-mode` messages. Fed to `ThemeProvider` as `forcedTheme`.
  */
 export function usePreviewForcedTheme(): PreviewMode | undefined {
-  // Seeded from the iframe URL so the first paint already uses the previewed
-  // mode — waiting for the parent's post-load `preview-mode` message would
-  // flash the iframe's own stored theme first whenever the two differ.
+  // Read on first render so the first paint already uses the previewed mode —
+  // waiting for the parent's post-load `preview-mode` message would flash the
+  // stored theme first whenever the two differ.
   const [mode, setMode] = React.useState<PreviewMode | undefined>(() => {
-    if (typeof window === "undefined" || !isInIframe()) return undefined
+    if (typeof window === "undefined") return undefined
+    if (!isInIframe() && !window.location.pathname.startsWith("/preview/"))
+      return undefined
     const m = new URLSearchParams(window.location.search).get("mode")
     return m === "dark" || m === "light" ? m : undefined
   })

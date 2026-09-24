@@ -1,8 +1,6 @@
-import { ChevronDownIcon } from "lucide-react"
-
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
-import { Combobox } from "@/registry/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/registry/ui/combobox"
 import {
   Dialog,
   DialogBody,
@@ -39,9 +37,7 @@ export default function Demo() {
                   <InputGroup>
                     <Input placeholder="Select a framework" />
                     <InputGroupAddon>
-                      <Button variant="quiet" isIconOnly>
-                        <ChevronDownIcon />
-                      </Button>
+                      <ComboboxTrigger />
                     </InputGroupAddon>
                   </InputGroup>
                   <Popover>

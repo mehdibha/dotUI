@@ -1,10 +1,7 @@
 "use client"
 
-/* Mobile — how overlays adapt below the touch line. Pickers is the loudest
-   split: shadcn/Vaul and most product apps slide selects, menus and date
-   pickers into a bottom drawer, Geist keeps the popover anchored. Dialogs
-   split again: the classic modal stays centered, iOS-style systems drop it
-   to a sheet. Popover + Center is Radix Themes' "same everywhere".
+/* Mobile — how overlays adapt below the touch line: pickers as a bottom
+   drawer or an anchored popover, dialogs centered or docked as a sheet.
    Deliberately baseline, never axes: the mobile line itself (768px), hover
    styles only under (hover: hover), 16px inputs against iOS zoom, safe-area
    insets, keyboard-aware sheets. Comboboxes have no row: their list stays

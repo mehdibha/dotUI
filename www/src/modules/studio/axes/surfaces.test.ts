@@ -62,13 +62,16 @@ describe("surfaces", () => {
     expect(raised["--shadow-popover"]).toBe(SHADOW_LG)
   })
 
-  test("adaptive is shadow-only in light and hairline in dark", () => {
+  test("adaptive re-weights: faint ring + shadow in light, brighter edge + tighter shadow in dark", () => {
     const tokens = tokensFor({ surfaceStrategy: "adaptive" })
     expect(tokens["--card-border"]).toBe(
-      "light-dark(transparent, var(--neutral-200))",
+      "light-dark(var(--neutral-100), var(--neutral-200))",
     )
     expect(tokens["--shadow-card"]).toBe(
-      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent)",
+      "0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), transparent), 0 1px 2px 0 light-dark(transparent, rgb(0 0 0 / 0.2))",
+    )
+    expect(tokens["--shadow-popover"]).toBe(
+      "0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), transparent), 0 4px 6px -1px light-dark(transparent, rgb(0 0 0 / 0.4)), 0 2px 4px -2px light-dark(transparent, rgb(0 0 0 / 0.4))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-50), var(--neutral-100))",
@@ -78,24 +81,48 @@ describe("surfaces", () => {
   test("shadow casts harder in dark, with an ambient layer under the key", () => {
     const tokens = tokensFor({ surfaceStrategy: "shadow" })
     expect(tokens["--card-border"]).toBe("transparent")
-    const key = "light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.264))"
+    const key = "light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.36))"
     expect(tokens["--shadow-card"]).toBe(
-      `0 4px 6px -1px ${key}, 0 2px 4px -2px ${key}, 0 8px 24px 4px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.132))`,
+      `0 4px 6px -1px ${key}, 0 2px 4px -2px ${key}, 0 8px 24px 4px light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.18))`,
     )
   })
 
-  test("tinted canvas lifts white cards off a gray page, a full rung in dark", () => {
+  test("tinted canvas lifts white cards off a gray page, a rung in dark", () => {
     const tokens = tokensFor({ surfaceCanvas: "tinted" })
     expect(tokens["--color-bg"]).toBe(
       "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), var(--neutral-25))",
     )
     expect(tokens["--color-card"]).toBe(
-      "light-dark(var(--neutral-25), var(--neutral-100))",
+      "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
     )
     expect(tokens["--color-popover"]).toBe(
       "light-dark(var(--neutral-25), var(--neutral-100))",
     )
     expect(tokens).not.toHaveProperty("--shadow-popover")
+  })
+
+  test("no combination puts a dark card on the neutral fill (neutral 100)", () => {
+    for (const surfaceStrategy of ["hairline", "adaptive", "shadow", "tonal"])
+      for (const surfaceDepth of ["flat", "subtle", "raised", "floating"])
+        for (const surfaceCanvas of ["same", "tinted"]) {
+          const { card } = surfaceRecipe({
+            ...DEFAULTS,
+            surfaceStrategy,
+            surfaceDepth,
+            surfaceCanvas,
+          })
+          expect(card.bg.dark).not.toEqual({ kind: "step", step: "100" })
+        }
+  })
+
+  test("strong control borders re-point the control tokens; subtle emits nothing", () => {
+    expect(resolveDesignSystem(DEFAULTS).color?.overrides).toBeUndefined()
+    const strong = resolveDesignSystem({ ...DEFAULTS, controlBorder: "strong" })
+    expect(strong.color?.overrides).toEqual({
+      "color-border-control": { palette: "neutral", job: "solid-hover" },
+      "color-border-control-hover": { palette: "neutral", job: "text-muted" },
+    })
+    expect(strong.tokens).toEqual(resolveDesignSystem(DEFAULTS).tokens)
   })
 
   test("glass turns the popover tier translucent; solid is the default", () => {

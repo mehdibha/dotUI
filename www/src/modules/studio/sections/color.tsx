@@ -14,7 +14,13 @@ import { STEPS, toOklch } from "@dotui/colors"
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
 
-import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
+import {
+  buildColorConfig,
+  CHECK_LEAVES,
+  COLOR_DEFAULTS,
+  selectionSource,
+  VIVIDNESS_RANGE,
+} from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   DialColor,
@@ -31,9 +37,11 @@ import { PrimaryRow } from "./primary"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
-/* Modes live under Surfaces but feed the same recipe. */
+/* Modes live under Surfaces and the check leaves under their controls, but
+   feed the same recipe. */
 const COLOR_KEYS = [
   ...Object.keys(COLOR_DEFAULTS),
+  ...CHECK_LEAVES,
   "modes",
 ] as (keyof StudioState)[]
 
@@ -70,6 +78,7 @@ const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
   { key: "warningSeed", palette: "warning", label: "Warning" },
   { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "infoSeed", palette: "info", label: "Info" },
   { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 
@@ -97,9 +106,9 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
               label="Vividness"
               value={state.vividness}
               onChange={set("vividness")}
-              minValue={0}
-              maxValue={2}
-              step={0.05}
+              minValue={VIVIDNESS_RANGE.min}
+              maxValue={VIVIDNESS_RANGE.max}
+              step={VIVIDNESS_RANGE.step}
               format={(v) => `${v.toFixed(2)}×`}
             />
           </>
@@ -151,12 +160,11 @@ export function ColorSection({ studio }: { studio: Studio }) {
   const { m } = usePanelMode(state)
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
+  const selection = selectionSource(state)
   const semantic = (palette: string) =>
     palette === "selection"
       ? (m.scales.selection?.["700"] ??
-        m.scales[state.selectionColor]?.[
-          state.selectionColor === "neutral" ? "950" : "700"
-        ] ??
+        m.scales[selection]?.[selection === "neutral" ? "950" : "700"] ??
         m.background)
       : solid(palette)
   const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")

@@ -1,8 +1,10 @@
 import { describe, expect, test } from "vitest"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
+import { FOCUS_DEFAULTS, mixFocus } from "./focus"
 import { DEFAULTS } from "./index"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
@@ -43,6 +45,12 @@ describe("focus axis", () => {
     )
   })
 
+  test("the default field halo is the strength mix base.css ships", () => {
+    expect(baseRegistryCss.cssVars.theme["--focus-input-color"]).toBe(
+      mixFocus("var(--color-border-focus)", FOCUS_DEFAULTS.focusInputStrength),
+    )
+  })
+
   test("input styles ride the input tokens", () => {
     expect(
       resolve({ focusInputWidth: 4, focusInputStrength: 50 }).tokens,
@@ -72,14 +80,13 @@ describe("focus axis", () => {
     })
   })
 
-  test("neutral re-points the focus pair over the default recipe", () => {
+  test("neutral re-points the focus color over the default recipe", () => {
     const system = resolve({ focusColor: "neutral" })
     expect(system.tokens).toEqual({})
     expect(system.color).toEqual({
       ...DEFAULT_COLOR_CONFIG,
       overrides: {
         "color-border-focus": { palette: "neutral", job: "solid" },
-        "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
       },
     })
   })

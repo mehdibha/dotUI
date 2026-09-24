@@ -2,10 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import tagGroupMeta from "./meta"
 
-/* The fill and its disabled recolor live in the `style` param so each value
-   ships only its own classes. Soft is a half-strength wash: the neutral fill
-   is already the wash tone, so a full `bg-muted` would equal solid.
-   Synced with badge — change both together. */
+/* The fill, its disabled recolor and the remove button's ink live in the
+   `style` param so each value ships only its own classes. Soft is a
+   half-strength wash: the neutral fill is already the wash tone, so a full
+   `bg-muted` would equal solid. Synced with badge — change both together. */
 
 const { useStyles, styles } = createStyles(tagGroupMeta, {
   base: {
@@ -29,7 +29,7 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
 
         "text-xs/relaxed **:[svg]:not-with-[size]:size-3",
         // remove button
-        "has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
+        "has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent",
       ],
     },
   },
@@ -67,22 +67,27 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
     style: {
       solid: {
         slots: {
-          tag: "bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-accent-muted selected:text-fg-accent",
+          tag: "bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-accent-muted selected:text-fg-accent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
         },
       },
       soft: {
         slots: {
-          tag: "bg-muted/50 text-fg disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-accent-muted selected:text-fg-accent",
+          tag: "bg-muted/50 text-fg disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-accent-muted selected:text-fg-accent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
         },
       },
       outline: {
         slots: {
-          tag: "border border-border text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:text-fg-accent",
+          tag: "border border-border text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:text-fg-accent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
         },
       },
       "soft-outline": {
         slots: {
-          tag: "border border-border bg-muted/50 text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:bg-accent-muted selected:text-fg-accent",
+          tag: "border border-border bg-muted/50 text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:bg-accent-muted selected:text-fg-accent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
+        },
+      },
+      inverse: {
+        slots: {
+          tag: "bg-primary text-fg-on-primary disabled:bg-(--disabled-bg,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) selected:bg-accent-muted selected:text-fg-accent **:[button[slot=remove]]:text-current/70 **:[button[slot=remove]]:hover:text-current",
         },
       },
     },

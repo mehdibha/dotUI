@@ -4,16 +4,17 @@
    the recipe drawn twice, light beside dark: dark behavior is part of a style
    (shadows die on near-black), so the pick shows both modes instead of asking
    for them separately. Depth is the one intensity lever, Page whether white
-   surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — sits under Style, whose cards draw
-   both modes. */
+   surfaces lift off a gray page, Glass the popover material, Control borders
+   whether field and check edges clear 3:1. Each mode's background — how
+   white, how black — sits under Style, whose cards draw both modes. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { modeFor } from "../axes/color"
+import { MODE_BG_RANGE, modeFor } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
+  CONTROL_BORDER_OPTIONS,
   DEPTH_OPTIONS,
   shadowCss,
   STRATEGY_OPTIONS,
@@ -190,16 +191,15 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
           <DialGap />
           {(["light", "dark"] as const).map((polarity) => {
             const mode = modeFor(state, polarity)
-            const light = polarity === "light"
             return (
               <DialSlider
                 key={mode.id}
                 label={`${mode.name} background`}
                 value={mode.bg}
                 onChange={setBg(mode)}
-                minValue={light ? 90 : 0}
-                maxValue={light ? 100 : 20}
-                step={0.5}
+                minValue={MODE_BG_RANGE[polarity].min}
+                maxValue={MODE_BG_RANGE[polarity].max}
+                step={MODE_BG_RANGE.step}
                 format={(v) => formatBg(mode, v)}
               />
             )
@@ -225,6 +225,12 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
         label="Glass"
         value={state.surfaceMaterial === "glass"}
         onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
+      />
+      <DialSegmented
+        label="Control borders"
+        value={state.controlBorder}
+        onChange={set("controlBorder")}
+        options={CONTROL_BORDER_OPTIONS}
       />
     </>
   )

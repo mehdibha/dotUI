@@ -12,10 +12,11 @@ describe("calendar + pickers axes", () => {
       weekdays: "single",
     })
     expect(ds.componentParams.select).toEqual({ caret: "chevron" })
+    expect(ds.componentParams.combobox).toEqual({ caret: "chevron" })
     expect(ds.tokens).toEqual({})
   })
 
-  test("selections land on the calendar and select params", () => {
+  test("selections land on the calendar, select and combobox params", () => {
     const ds = resolveDesignSystem({
       ...DEFAULTS,
       calendarDayShape: "circle",
@@ -29,6 +30,7 @@ describe("calendar + pickers axes", () => {
       weekdays: "double",
     })
     expect(ds.componentParams.select).toEqual({ caret: "double" })
+    expect(ds.componentParams.combobox).toEqual({ caret: "double" })
   })
 
   test("unknown values fall back to the defaults", () => {
@@ -39,5 +41,6 @@ describe("calendar + pickers axes", () => {
     })
     expect(ds.componentParams.calendar?.dayShape).toBe("rounded")
     expect(ds.componentParams.select?.caret).toBe("chevron")
+    expect(ds.componentParams.combobox?.caret).toBe("chevron")
   })
 })

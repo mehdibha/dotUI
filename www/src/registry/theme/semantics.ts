@@ -218,10 +218,6 @@ export function semanticVocabulary(
       ref(hasSelection ? "selection" : "accent", "700"),
       PRIMARY,
     ),
-    "color-border-focus-muted": bd(
-      ref(hasSelection ? "selection" : "accent", "300"),
-      PRIMARY,
-    ),
     // ---- component surfaces ----
     "color-tooltip": bg(ref("neutral", "950"), NEUTRAL),
     "color-fg-on-tooltip": fg(ref("neutral", "25")),

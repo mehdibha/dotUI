@@ -18,9 +18,10 @@ const CHIP: Record<string, string> = {
   soft: "bg-accent-muted text-fg-accent",
   outline: "border border-border-accent text-fg-accent",
   "soft-outline": "border border-border-accent bg-accent-muted text-fg-accent",
+  inverse: "bg-primary text-fg-on-primary",
 }
 
-/** The accent chip in one style and shape. */
+/** The accent chip (inverse: the neutral one) in one style and shape. */
 function ChipGlyph({ style, shape }: { style: string; shape: string }) {
   return (
     <span

@@ -18,6 +18,7 @@ import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 
 import {
+  PRIMARY_LEAF_LABELS,
   PRIMARY_LEAVES,
   primaryValue,
   SOURCE_OPTIONS,
@@ -33,18 +34,6 @@ import {
   SegmentedGroup,
 } from "../dial"
 import type { Studio } from "../state"
-
-const LEAF_LABELS: Record<PrimaryLeaf, string> = {
-  buttonColor: "Buttons",
-  checkboxColor: "Checkbox",
-  radioColor: "Radio",
-  switchColor: "Switch",
-  selectionColor: "Selection",
-  sliderColor: "Slider",
-  tabsColor: "Tabs",
-  linkColor: "Links",
-  focusColor: "Focus ring",
-}
 
 /* --------------------------------- Inks ---------------------------------- */
 
@@ -140,18 +129,6 @@ function SwitchGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function SelectionGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="flex h-5 items-center gap-1 rounded-md px-1.5 text-[10.5px] font-medium"
-      style={{ background: ink.fill, color: ink.on }}
-    >
-      <Check color={ink.on} />
-      Item
-    </span>
-  )
-}
-
 function SliderGlyph({ ink }: { ink: Ink }) {
   return (
     <span className="flex h-1 w-14 items-center rounded-full bg-fg/15">
@@ -209,7 +186,6 @@ const GLYPHS: Record<PrimaryLeaf, (props: { ink: Ink }) => React.ReactNode> = {
   checkboxColor: CheckboxGlyph,
   radioColor: RadioGlyph,
   switchColor: SwitchGlyph,
-  selectionColor: SelectionGlyph,
   sliderColor: SliderGlyph,
   tabsColor: TabsGlyph,
   linkColor: LinkGlyph,
@@ -319,13 +295,13 @@ function PrimaryPanel({
           return (
             <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
               <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
+                {PRIMARY_LEAF_LABELS[leaf]}
               </span>
               <span className="flex min-w-0 flex-1 items-center">
                 <Glyph ink={ink[source]} />
               </span>
               <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
+                label={`${PRIMARY_LEAF_LABELS[leaf]} color`}
                 value={source}
                 onChange={set(leaf)}
                 options={SOURCE_OPTIONS}

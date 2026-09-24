@@ -20,6 +20,7 @@ import type { CodeOptions } from "@/publisher/code-options"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 import {
+  CHECK_LEAVES,
   PRIMARY_LEAVES,
   SOLID_LEAVES,
   withSource,
@@ -137,25 +138,32 @@ function sanitizeState(raw: unknown): StudioState {
   return state as StudioState
 }
 
+/** Throws when the string isn't a preset — for callers that must not
+ *  mistake a typo for the default system (the MCP). */
+export function decodePresetStrict(encoded: string): StudioPreset {
+  const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
+  const parsed = JSON.parse(json) as Encoded | LegacyState
+  if (!parsed || typeof parsed !== "object") throw new Error("not a preset")
+  if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
+    const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
+    const stored =
+      parsed.v === 3 && parsed.s
+        ? migrateV3(parsed.s as Record<string, unknown>)
+        : parsed.s
+    return {
+      state: sanitizeState(stored),
+      ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+        ? { codeOptions }
+        : {}),
+    }
+  }
+  return migrateLegacy(parsed as LegacyState)
+}
+
 /** Falls back to the defaults on any error. */
 export function decodePreset(encoded: string): StudioPreset {
   try {
-    const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
-    const parsed = JSON.parse(json) as Encoded | LegacyState
-    if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
-      const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
-      const stored =
-        parsed.v === 3 && parsed.s
-          ? migrateV3(parsed.s as Record<string, unknown>)
-          : parsed.s
-      return {
-        state: sanitizeState(stored),
-        ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
-          ? { codeOptions }
-          : {}),
-      }
-    }
-    return migrateLegacy(parsed as LegacyState)
+    return decodePresetStrict(encoded)
   } catch {
     return DEFAULT_PRESET
   }
@@ -204,13 +212,10 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
   if (color) {
     state.brand = color.seeds.accent
-    // The selection tokens and the slider followed the primary unless
-    // re-pointed.
+    // The checks and the slider followed the primary unless re-pointed.
     Object.assign(state, withSource(SOLID_LEAVES, color.primary ?? "neutral"))
     if (color.selection)
-      for (const leaf of SOLID_LEAVES)
-        if (leaf !== "buttonColor" && leaf !== "sliderColor")
-          state[leaf] = color.selection
+      Object.assign(state, withSource(CHECK_LEAVES, color.selection))
     for (const [scope, key] of Object.entries(SCOPE_KEYS)) {
       const fill = color.scopes?.[scope]
       if (fill) state[key] = fill
@@ -218,6 +223,7 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
     if (color.seeds.success) state.successSeed = color.seeds.success
     if (color.seeds.warning) state.warningSeed = color.seeds.warning
     if (color.seeds.danger) state.dangerSeed = color.seeds.danger
+    if (color.seeds.info) state.infoSeed = color.seeds.info
     if (color.seeds.selection) state.selectionSeed = color.seeds.selection
     if (color.vividness !== undefined) state.vividness = color.vividness
     if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint

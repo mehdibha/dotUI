@@ -1,7 +1,4 @@
-import { ChevronDownIcon } from "lucide-react"
-
-import { Button } from "@/registry/ui/button"
-import { Combobox } from "@/registry/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/registry/ui/combobox"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
@@ -47,9 +44,7 @@ export default function Demo() {
       <InputGroup>
         <Input placeholder="Search countries..." />
         <InputGroupAddon>
-          <Button variant="quiet" isIconOnly>
-            <ChevronDownIcon />
-          </Button>
+          <ComboboxTrigger />
         </InputGroupAddon>
       </InputGroup>
       <Popover>

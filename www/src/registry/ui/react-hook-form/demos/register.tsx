@@ -5,12 +5,12 @@ import { parseDate } from "@internationalized/date"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { CalendarIcon, ChevronDownIcon } from "@/registry/__generated__/icons"
+import { CalendarIcon } from "@/registry/__generated__/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
 import { Calendar } from "@/registry/ui/calendar"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { Combobox } from "@/registry/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/registry/ui/combobox"
 import { DatePicker } from "@/registry/ui/date-picker"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer } from "@/registry/ui/drawer"
@@ -157,9 +157,7 @@ export default function Demo() {
               <InputGroup>
                 <Input />
                 <InputGroupAddon>
-                  <Button variant="quiet" isIconOnly>
-                    <ChevronDownIcon />
-                  </Button>
+                  <ComboboxTrigger />
                 </InputGroupAddon>
               </InputGroup>
               <Popover>

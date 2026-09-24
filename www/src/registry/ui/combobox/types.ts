@@ -1,5 +1,7 @@
 import type * as ComboBoxPrimitives from "react-aria-components/ComboBox"
 
+import type { ButtonProps } from "@/registry/ui/button"
+
 /**
  * A combo box combines a text input with a listbox, allowing users to filter
  * a list of options to items matching a query.
@@ -17,3 +19,8 @@ export interface ComboboxProps<
 export interface ComboboxValueProps<
   T extends object,
 > extends ComboBoxPrimitives.ComboBoxValueProps<T> {}
+
+/**
+ * An icon button that opens the combo box's list of options.
+ */
+export interface ComboboxTriggerProps extends Omit<ButtonProps, "children"> {}

@@ -35,6 +35,19 @@ describe("feedback chapters (skeleton · spinner · progress)", () => {
     expect(ds.tokens).toEqual({})
   })
 
+  test("progress ends ride the pill role: square with square controls", () => {
+    expect(
+      resolveDesignSystem({ ...DEFAULTS, roleControl: "none" }).tokens[
+        "--studio-radius-pill"
+      ],
+    ).toBe("0")
+    expect(
+      resolveDesignSystem({ ...DEFAULTS, roleControl: "sm" }).tokens[
+        "--studio-radius-pill"
+      ],
+    ).toBeUndefined()
+  })
+
   test("unknown values fall back to the defaults", () => {
     const ds = resolveDesignSystem({
       ...DEFAULTS,

@@ -87,7 +87,7 @@ export const baseRegistryCss = {
 			"--focus-ring-width": "2px",
 			"--focus-ring-offset": "2px",
 			"--focus-ring-inner": "0px",
-			"--focus-input-color": "var(--color-border-focus-muted)",
+			"--focus-input-color": "color-mix(in oklab, var(--color-border-focus) 30%, transparent)",
 			"--focus-input-width": "2px",
 			"--focus-input-offset": "0px",
 			"--focus-input-inner": "0px",

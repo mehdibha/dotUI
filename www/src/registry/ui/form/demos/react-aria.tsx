@@ -1,11 +1,10 @@
 "use client"
 
-import { ChevronDownIcon } from "lucide-react"
 import * as FormPrimitives from "react-aria-components/Form"
 
 import { Button } from "@/registry/ui/button"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { Combobox } from "@/registry/ui/combobox"
+import { Combobox, ComboboxTrigger } from "@/registry/ui/combobox"
 import { DatePicker } from "@/registry/ui/date-picker"
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
@@ -66,9 +65,7 @@ export default function Demo() {
           <InputGroup>
             <Input />
             <InputGroupAddon>
-              <Button variant="quiet" isIconOnly>
-                <ChevronDownIcon />
-              </Button>
+              <ComboboxTrigger />
             </InputGroupAddon>
           </InputGroup>
           <Popover>

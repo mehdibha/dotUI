@@ -50,6 +50,7 @@ import * as shape from "./shape"
 import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
+import type { ChapterSpec } from "./spec"
 import * as spinner from "./spinner"
 import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
@@ -220,3 +221,53 @@ export function resolveAll(state: StudioState): ResolvedAll {
   }
   return { tokens, params, density, color, icons }
 }
+
+/** What every axis means, by chapter — the catalog agents read over MCP. */
+export const CATALOG: Array<ChapterSpec & { id: string }> = [
+  { id: "color", ...color.COLOR_SPEC },
+  { id: "type", ...type.TYPE_SPEC },
+  { id: "icons", ...icons.ICON_SPEC },
+  { id: "shape", ...shape.SHAPE_SPEC },
+  { id: "space", ...space.SPACE_SPEC },
+  { id: "surfaces", ...surfaces.SURFACE_SPEC },
+  { id: "focus", ...focus.FOCUS_SPEC },
+  { id: "cursor", ...cursor.CURSOR_SPEC },
+  { id: "selection", ...selection.SELECTION_SPEC },
+  { id: "scrollbars", ...scrollbars.SCROLLBAR_SPEC },
+  { id: "disabled", ...disabled.DISABLED_SPEC },
+  { id: "invalid", ...invalid.INVALID_SPEC },
+  { id: "motion", ...motion.MOTION_SPEC },
+  { id: "mobile", ...mobile.MOBILE_SPEC },
+  { id: "charts", ...charts.CHART_SPEC },
+  { id: "links", ...links.LINK_SPEC },
+  { id: "skeleton", ...skeleton.SKELETON_SPEC },
+  { id: "spinner", ...spinner.SPINNER_SPEC },
+  { id: "progress", ...progress.PROGRESS_SPEC },
+  { id: "buttons", ...buttons.BUTTON_SPEC },
+  { id: "button-groups", ...buttonGroups.BUTTON_GROUP_SPEC },
+  { id: "toggles", ...toggles.TOGGLE_SPEC },
+  { id: "segmented-control", ...segmentedControl.SEGMENTED_SPEC },
+  { id: "switch", ...switchAxis.SWITCH_SPEC },
+  { id: "checkbox", ...checkbox.CHECKBOX_SPEC },
+  { id: "radio", ...radio.RADIO_SPEC },
+  { id: "choice-cards", ...choiceCards.CHOICE_CARD_SPEC },
+  { id: "inputs", ...inputs.INPUT_SPEC },
+  { id: "input-groups", ...inputGroups.INPUT_GROUP_SPEC },
+  { id: "number-field", ...numberField.NUMBER_FIELD_SPEC },
+  { id: "otp-field", ...otpField.OTP_FIELD_SPEC },
+  { id: "pickers", ...pickers.PICKER_SPEC },
+  { id: "calendar", ...calendar.CALENDAR_SPEC },
+  { id: "sliders", ...sliders.SLIDER_SPEC },
+  { id: "menus", ...menus.MENU_SPEC },
+  { id: "dialogs", ...dialogs.DIALOG_SPEC },
+  { id: "popovers", ...popovers.POPOVER_SPEC },
+  { id: "tooltips", ...tooltips.TOOLTIP_SPEC },
+  { id: "tabs", ...tabs.TAB_SPEC },
+  { id: "accordion", ...accordion.ACCORDION_SPEC },
+  { id: "breadcrumbs", ...breadcrumbs.BREADCRUMB_SPEC },
+  { id: "pagination", ...pagination.PAGINATION_SPEC },
+  { id: "badges", ...badges.BADGE_SPEC },
+  { id: "kbd", ...kbd.KBD_SPEC },
+  { id: "avatars", ...avatars.AVATAR_SPEC },
+  { id: "tables", ...tables.TABLE_SPEC },
+]

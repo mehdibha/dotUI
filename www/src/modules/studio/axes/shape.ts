@@ -8,6 +8,7 @@
    `rounded-xl` — and a role at None ships no rounded class at all. */
 
 import type { Resolved, StudioState } from "./index"
+import type { AxisSpec, ChapterSpec } from "./spec"
 
 export const SHAPE_DEFAULTS = {
   /** The base radius — the lg rung (popover · menu), in px. */
@@ -53,11 +54,14 @@ export type ShapeVector = Record<ShapeRoleKey, string>
 export const SHAPE_CHARACTERS: Array<{
   id: string
   label: string
+  description: string
   vector: ShapeVector
 }> = [
   {
     id: "square",
     label: "Square",
+    description:
+      "Every corner square — Carbon buttons, or Radix Themes at radius none.",
     vector: {
       roleControl: "none",
       roleItem: "none",
@@ -68,6 +72,8 @@ export const SHAPE_CHARACTERS: Array<{
   {
     id: "crisp",
     label: "Crisp",
+    description:
+      "Controls and surfaces on the md rung, panels on xl: tight corners with rounder dialogs.",
     vector: {
       roleControl: "md",
       roleItem: "auto",
@@ -78,6 +84,8 @@ export const SHAPE_CHARACTERS: Array<{
   {
     id: "standard",
     label: "Standard",
+    description:
+      "Controls md, surfaces lg, panels xl — each container one step rounder than what it holds.",
     vector: {
       roleControl: "md",
       roleItem: "auto",
@@ -88,6 +96,8 @@ export const SHAPE_CHARACTERS: Array<{
   {
     id: "soft",
     label: "Soft",
+    description:
+      "Controls, surfaces and panels all on 2xl: large, even rounding.",
     vector: {
       roleControl: "2xl",
       roleItem: "auto",
@@ -98,6 +108,9 @@ export const SHAPE_CHARACTERS: Array<{
   {
     id: "round",
     label: "Round",
+    description:
+      "Controls, surfaces and panels all on 3xl: at the default base, " +
+      "controls round into capsules and cards get very soft corners.",
     vector: {
       roleControl: "3xl",
       roleItem: "auto",
@@ -108,6 +121,8 @@ export const SHAPE_CHARACTERS: Array<{
   {
     id: "pill",
     label: "Pill",
+    description:
+      "Capsule controls over rounded surfaces and panels — Radix Themes at radius full.",
     vector: {
       roleControl: "full",
       roleItem: "auto",
@@ -186,3 +201,93 @@ export function resolveShape(state: StudioState): Resolved {
   }
   return { tokens }
 }
+
+const RUNG_OPTIONS = SHAPE_RUNGS.map(({ id, label, ratio }) => ({
+  value: id,
+  label,
+  description:
+    ratio === 0
+      ? "Square corners."
+      : ratio === Infinity
+        ? "Fully rounded ends — a capsule."
+        : `${ratio}× the base radius.`,
+}))
+
+const role = (label: string, wears: string, guidance: string): AxisSpec => ({
+  label,
+  description: `Which rung of the radius ladder ${wears} wear.`,
+  value: { type: "enum", options: RUNG_OPTIONS },
+  guidance,
+})
+
+export const SHAPE_SPEC = {
+  label: "Shape",
+  description:
+    "Corner radius. One base length scales a ladder of rungs (xs … 3xl, " +
+    "pill); four roles pick a rung each, so nested corners stay concentric.",
+  axes: {
+    radiusPx: {
+      label: "Base radius",
+      description:
+        "The lg rung in px — popovers and menus at the Standard character. " +
+        "Every other rung is a ratio of it.",
+      value: { type: "number", unit: "px", ...RADIUS_RANGE },
+      guidance:
+        "Checked defaults: Fluent 2 4px, Ant Design and Primer 6px, HeroUI " +
+        "and Mantine 8px, shadcn/ui 10px. HeroUI derives the same xs–4xl " +
+        "ratio ladder from one --radius. 6–8px reads crisp and tool-like, " +
+        "12px+ soft and consumer. Go square with the roles, not with a low " +
+        "base.",
+    },
+    rolePanel: role(
+      "Panels",
+      "dialogs, cards and sheets",
+      "Checked dialogs: Radix Themes 12px, shadcn/ui 14px, Spectrum 2 16px, " +
+        "HeroUI 24px, Material 3 28px. In the four where menus were also " +
+        "measured, dialogs are rounder than menus.",
+    ),
+    roleSurface: role(
+      "Surfaces",
+      "popovers, menus and toasts",
+      "Checked menus and popovers: Material 3 and Fluent 2 4px, Radix " +
+        "Themes 8px, shadcn/ui and Spectrum 2 10px, Primer 12px.",
+    ),
+    roleControl: role(
+      "Controls",
+      "buttons, inputs, selects and toggles",
+      "Systems split three ways: square (Carbon), a small radius (Fluent 2 " +
+        "4px, Primer 6px, Mantine 8px, shadcn/ui 10px), or capsules " +
+        "(Spectrum 2, Material 3, HeroUI). Material 3 pairs pill buttons " +
+        "with 4px menus, so controls can sit above surfaces on the ladder.",
+    ),
+    roleItem: {
+      ...role(
+        "Items",
+        "menu items, list rows and options",
+        "In shadcn/ui and Radix Themes a menu item sits below its menu's " +
+          "radius (shadcn/ui one rung, Radix Themes half the radius), so " +
+          "the item's corner nests inside the menu's padding. Auto keeps " +
+          "that relation when Surfaces changes.",
+      ),
+      value: {
+        type: "enum",
+        options: [
+          {
+            value: "auto",
+            label: "Auto",
+            description:
+              "One rung below Surfaces, so an item nests concentrically in " +
+              "its menu.",
+          },
+          ...RUNG_OPTIONS,
+        ],
+      },
+    },
+  },
+  recipes: SHAPE_CHARACTERS.map(({ id, label, description, vector }) => ({
+    id,
+    label,
+    description,
+    set: vector,
+  })),
+} satisfies ChapterSpec<typeof SHAPE_DEFAULTS>
