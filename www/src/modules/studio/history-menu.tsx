@@ -62,6 +62,25 @@ function ago(at: number, now: number): string {
   return "Just now"
 }
 
+// The relative time rounds; the clock pins it.
+function clock(at: number, now: number): string {
+  const date = new Date(at)
+  return date.toDateString() === new Date(now).toDateString()
+    ? date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
+    : date.toLocaleDateString(undefined, { month: "short", day: "numeric" })
+}
+
+function Entry({ at, now }: { at: number; now: number }) {
+  return (
+    <>
+      <span>{ago(at, now)}</span>
+      <span className="ml-auto pl-6 text-fg-muted tabular-nums">
+        {clock(at, now)}
+      </span>
+    </>
+  )
+}
+
 function IconButton({
   label,
   children,
@@ -79,7 +98,8 @@ function IconButton({
         variant="quiet"
         isIconOnly
         aria-label={label}
-        className="text-fg-muted pointer-coarse:data-icon-only:size-9"
+        // Chrome, not content: a disabled step stays unfilled.
+        className="text-fg-muted disabled:bg-transparent pointer-coarse:data-icon-only:size-9"
         {...props}
       >
         {children}
@@ -122,8 +142,12 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
         <MenuSection>
           <MenuSectionHeader>Published</MenuSectionHeader>
           {published.map((entry) => (
-            <MenuItem key={entry.id} id={`published:${entry.id}`}>
-              {ago(entry.at, now)}
+            <MenuItem
+              key={entry.id}
+              id={`published:${entry.id}`}
+              textValue={ago(entry.at, now)}
+            >
+              <Entry at={entry.at} now={now} />
             </MenuItem>
           ))}
         </MenuSection>
@@ -132,8 +156,12 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
         <MenuSection>
           <MenuSectionHeader>Autosaved</MenuSectionHeader>
           {saved.map((entry, index) => (
-            <MenuItem key={index} id={`checkpoint:${index}`}>
-              {ago(entry.at, now)}
+            <MenuItem
+              key={index}
+              id={`checkpoint:${index}`}
+              textValue={ago(entry.at, now)}
+            >
+              <Entry at={entry.at} now={now} />
             </MenuItem>
           ))}
         </MenuSection>
