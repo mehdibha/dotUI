@@ -130,12 +130,13 @@ export function SearchCommand({
           </Drawer>
         ) : (
           // Composed (not <Modal>) so the panel AND backdrop appear
-          // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
-          // (512px), top-15%.
+          // instantly. duration-0 needs `!`: tailwind-merge can't dedupe it
+          // against the motion token's duration-enter, which sorts later.
+          // Mirror shadcn.com: max-w-lg (512px), top-15%.
           <ModalOverlay>
-            <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
+            <ModalBackdrop className="duration-0!" />
             <ModalViewport>
-              <ModalPanel className="mt-[15vh] self-start duration-0 [--studio-modal-background:var(--neutral-100)] [--studio-modal-radius:var(--radius-2xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
+              <ModalPanel className="mt-[15vh] self-start duration-0! [--studio-modal-background:var(--neutral-100)] [--studio-modal-radius:var(--radius-2xl)] sm:max-w-lg">
                 {content}
               </ModalPanel>
             </ModalViewport>
