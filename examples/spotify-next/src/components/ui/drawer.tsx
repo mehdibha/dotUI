@@ -38,7 +38,7 @@ const drawerVariants = tv({
       bottom: {
         viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
         popup:
-          "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+          "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0px))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
         swipeArea: "inset-x-0 bottom-0 h-8",
       },
       left: {
