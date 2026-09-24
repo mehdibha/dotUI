@@ -102,6 +102,76 @@ describe("emitInitItem", () => {
     expect(dark?.["chart-8"]).toMatch(OKLCH)
   })
 
+  test("sets every shadcn token in both modes, from dotUI's", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: { density: "default", componentParams: {} },
+      registryRoot: "https://dotui.com",
+    })
+    const { theme, light, dark } = item.cssVars ?? {}
+
+    // What shadcn's own init sets: an existing project keeps a full palette.
+    for (const name of [
+      "background",
+      "foreground",
+      "card",
+      "card-foreground",
+      "popover",
+      "popover-foreground",
+      "primary",
+      "primary-foreground",
+      "secondary",
+      "secondary-foreground",
+      "muted",
+      "muted-foreground",
+      "accent",
+      "accent-foreground",
+      "destructive",
+      "border",
+      "input",
+      "ring",
+      "sidebar",
+      "sidebar-foreground",
+      "sidebar-primary",
+      "sidebar-primary-foreground",
+      "sidebar-accent",
+      "sidebar-accent-foreground",
+      "sidebar-border",
+      "sidebar-ring",
+    ]) {
+      expect(light?.[name]).toMatch(OKLCH)
+      expect(dark?.[name]).toMatch(OKLCH)
+      expect(theme?.[`--color-${name}`]).toBe(`var(--${name})`)
+    }
+    for (const mode of [light, dark]) {
+      expect(mode?.["background"]).toBe(mode?.["bg"])
+      expect(mode?.["foreground"]).toBe(mode?.["fg"])
+      expect(mode?.["primary-foreground"]).toBe(mode?.["fg-on-primary"])
+      expect(mode?.["accent-foreground"]).toBe(mode?.["fg-on-accent"])
+    }
+  })
+
+  test("keeps shadcn's style family for later shadcn adds", () => {
+    const styleFor = (shadcnBase?: string) =>
+      (
+        emitInitItem({
+          baseRegistryCss,
+          preset: { density: "default", componentParams: {} },
+          registryRoot: "https://dotui.com",
+          shadcnBase,
+        }) as { config?: Record<string, unknown> }
+      ).config
+
+    expect(styleFor()).toMatchObject({
+      style: "base-nova",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    expect(styleFor("radix")?.style).toBe("new-york")
+    expect(styleFor("aria")?.style).toBe("aria-nova")
+    expect(styleFor("default")?.style).toBe("base-nova")
+  })
+
   test("writes the preset into the @dotui registry URL string", () => {
     const item = emitInitItem({
       baseRegistryCss,
