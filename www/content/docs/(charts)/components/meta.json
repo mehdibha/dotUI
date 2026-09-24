@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "chart-bar",
+    "chart-line",
+    "chart-area",
+    "chart-pie",
+    "chart-radar",
+    "chart-radial",
+    "chart-heatmap"
+  ]
+}
