@@ -78,7 +78,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
-        filter: ({ path }) => !path.includes("?"),
+        filter: ({ path }) =>
+          !path.includes("?") && !path.startsWith("/internal"),
       },
     }),
     viteReact(),

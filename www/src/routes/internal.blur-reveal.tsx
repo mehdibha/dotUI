@@ -4,7 +4,7 @@ import { ProgressiveBlur } from "@/components/progressive-blur"
 import { InternalHeader } from "@/modules/internal/shell"
 
 export const Route = createFileRoute("/internal/blur-reveal")({
-  component: BlurRevealDemo,
+  component: import.meta.env.DEV ? BlurRevealDemo : undefined,
 })
 
 // Internal demo of the blur-reveal utilities (styles.css) paired with

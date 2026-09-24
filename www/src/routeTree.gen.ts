@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as OgRouteImport } from './routes/og'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
+import { Route as InternalRouteImport } from './routes/internal'
 import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as InternalIndexRouteImport } from './routes/internal.index'
@@ -60,6 +61,11 @@ const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
   path: '/llms-full.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InternalRoute = InternalRouteImport.update({
+  id: '/internal',
+  path: '/internal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeDotmdRoute = HomeDotmdRouteImport.update({
   id: '/home.md',
   path: '/home.md',
@@ -70,9 +76,9 @@ const AppRouteRoute = AppRouteRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalIndexRoute = InternalIndexRouteImport.update({
-  id: '/internal/',
-  path: '/internal/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => InternalRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
@@ -105,36 +111,36 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
-  id: '/internal/registries',
-  path: '/internal/registries',
-  getParentRoute: () => rootRouteImport,
+  id: '/registries',
+  path: '/registries',
+  getParentRoute: () => InternalRoute,
 } as any)
 const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
-  id: '/internal/preset-lab',
-  path: '/internal/preset-lab',
-  getParentRoute: () => rootRouteImport,
+  id: '/preset-lab',
+  path: '/preset-lab',
+  getParentRoute: () => InternalRoute,
 } as any)
 const InternalHighlightCompareRoute =
   InternalHighlightCompareRouteImport.update({
-    id: '/internal/highlight-compare',
-    path: '/internal/highlight-compare',
-    getParentRoute: () => rootRouteImport,
+    id: '/highlight-compare',
+    path: '/highlight-compare',
+    getParentRoute: () => InternalRoute,
   } as any)
 const InternalCompositionAnimationRoute =
   InternalCompositionAnimationRouteImport.update({
-    id: '/internal/composition-animation',
-    path: '/internal/composition-animation',
-    getParentRoute: () => rootRouteImport,
+    id: '/composition-animation',
+    path: '/composition-animation',
+    getParentRoute: () => InternalRoute,
   } as any)
 const InternalColorLabRoute = InternalColorLabRouteImport.update({
-  id: '/internal/color-lab',
-  path: '/internal/color-lab',
-  getParentRoute: () => rootRouteImport,
+  id: '/color-lab',
+  path: '/color-lab',
+  getParentRoute: () => InternalRoute,
 } as any)
 const InternalBlurRevealRoute = InternalBlurRevealRouteImport.update({
-  id: '/internal/blur-reveal',
-  path: '/internal/blur-reveal',
-  getParentRoute: () => rootRouteImport,
+  id: '/blur-reveal',
+  path: '/blur-reveal',
+  getParentRoute: () => InternalRoute,
 } as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
@@ -196,6 +202,7 @@ const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/home.md': typeof HomeDotmdRoute
+  '/internal': typeof InternalRouteWithChildren
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRoute
@@ -259,6 +266,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
   '/home.md': typeof HomeDotmdRoute
+  '/internal': typeof InternalRouteWithChildren
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRoute
@@ -293,6 +301,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/home.md'
+    | '/internal'
     | '/llms-full.txt'
     | '/llms.txt'
     | '/og'
@@ -355,6 +364,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_app'
     | '/home.md'
+    | '/internal'
     | '/llms-full.txt'
     | '/llms.txt'
     | '/og'
@@ -388,6 +398,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   HomeDotmdRoute: typeof HomeDotmdRoute
+  InternalRoute: typeof InternalRouteWithChildren
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   OgRoute: typeof OgRoute
@@ -395,18 +406,11 @@ export interface RootRouteChildren {
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
-  InternalBlurRevealRoute: typeof InternalBlurRevealRoute
-  InternalColorLabRoute: typeof InternalColorLabRoute
-  InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
-  InternalHighlightCompareRoute: typeof InternalHighlightCompareRoute
-  InternalPresetLabRoute: typeof InternalPresetLabRoute
-  InternalRegistriesRoute: typeof InternalRegistriesRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
   RRegistryDotjsonRoute: typeof RRegistryDotjsonRoute
   RV0Route: typeof RV0Route
-  InternalIndexRoute: typeof InternalIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -439,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LlmsFullDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/internal': {
+      id: '/internal'
+      path: '/internal'
+      fullPath: '/internal'
+      preLoaderRoute: typeof InternalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home.md': {
       id: '/home.md'
       path: '/home.md'
@@ -455,10 +466,10 @@ declare module '@tanstack/react-router' {
     }
     '/internal/': {
       id: '/internal/'
-      path: '/internal'
+      path: '/'
       fullPath: '/internal/'
       preLoaderRoute: typeof InternalIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/_app/': {
       id: '/_app/'
@@ -504,45 +515,45 @@ declare module '@tanstack/react-router' {
     }
     '/internal/registries': {
       id: '/internal/registries'
-      path: '/internal/registries'
+      path: '/registries'
       fullPath: '/internal/registries'
       preLoaderRoute: typeof InternalRegistriesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/internal/preset-lab': {
       id: '/internal/preset-lab'
-      path: '/internal/preset-lab'
+      path: '/preset-lab'
       fullPath: '/internal/preset-lab'
       preLoaderRoute: typeof InternalPresetLabRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/internal/highlight-compare': {
       id: '/internal/highlight-compare'
-      path: '/internal/highlight-compare'
+      path: '/highlight-compare'
       fullPath: '/internal/highlight-compare'
       preLoaderRoute: typeof InternalHighlightCompareRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/internal/composition-animation': {
       id: '/internal/composition-animation'
-      path: '/internal/composition-animation'
+      path: '/composition-animation'
       fullPath: '/internal/composition-animation'
       preLoaderRoute: typeof InternalCompositionAnimationRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/internal/color-lab': {
       id: '/internal/color-lab'
-      path: '/internal/color-lab'
+      path: '/color-lab'
       fullPath: '/internal/color-lab'
       preLoaderRoute: typeof InternalColorLabRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/internal/blur-reveal': {
       id: '/internal/blur-reveal'
-      path: '/internal/blur-reveal'
+      path: '/blur-reveal'
       fullPath: '/internal/blur-reveal'
       preLoaderRoute: typeof InternalBlurRevealRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof InternalRoute
     }
     '/demos/$slug': {
       id: '/demos/$slug'
@@ -662,9 +673,34 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
   AppRouteRouteChildren,
 )
 
+interface InternalRouteChildren {
+  InternalBlurRevealRoute: typeof InternalBlurRevealRoute
+  InternalColorLabRoute: typeof InternalColorLabRoute
+  InternalCompositionAnimationRoute: typeof InternalCompositionAnimationRoute
+  InternalHighlightCompareRoute: typeof InternalHighlightCompareRoute
+  InternalPresetLabRoute: typeof InternalPresetLabRoute
+  InternalRegistriesRoute: typeof InternalRegistriesRoute
+  InternalIndexRoute: typeof InternalIndexRoute
+}
+
+const InternalRouteChildren: InternalRouteChildren = {
+  InternalBlurRevealRoute: InternalBlurRevealRoute,
+  InternalColorLabRoute: InternalColorLabRoute,
+  InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
+  InternalHighlightCompareRoute: InternalHighlightCompareRoute,
+  InternalPresetLabRoute: InternalPresetLabRoute,
+  InternalRegistriesRoute: InternalRegistriesRoute,
+  InternalIndexRoute: InternalIndexRoute,
+}
+
+const InternalRouteWithChildren = InternalRoute._addFileChildren(
+  InternalRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   HomeDotmdRoute: HomeDotmdRoute,
+  InternalRoute: InternalRouteWithChildren,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   OgRoute: OgRoute,
@@ -672,18 +708,11 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
-  InternalBlurRevealRoute: InternalBlurRevealRoute,
-  InternalColorLabRoute: InternalColorLabRoute,
-  InternalCompositionAnimationRoute: InternalCompositionAnimationRoute,
-  InternalHighlightCompareRoute: InternalHighlightCompareRoute,
-  InternalPresetLabRoute: InternalPresetLabRoute,
-  InternalRegistriesRoute: InternalRegistriesRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
   RRegistryDotjsonRoute: RRegistryDotjsonRoute,
   RV0Route: RV0Route,
-  InternalIndexRoute: InternalIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
