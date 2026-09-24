@@ -72,11 +72,23 @@ export function blobStore(): SnapshotStore {
   return store
 }
 
+// Vercel's filesystem is read-only: without a Blob token, fail loudly there.
+function unconfiguredStore(): SnapshotStore {
+  const fail = async (): Promise<never> => {
+    throw new Error(
+      "Snapshot storage is not configured: link a Vercel Blob store (BLOB_READ_WRITE_TOKEN)",
+    )
+  }
+  return { put: fail, get: fail }
+}
+
 let store: SnapshotStore | undefined
 
 export function getSnapshotStore(): SnapshotStore {
   store ??= process.env.BLOB_READ_WRITE_TOKEN
     ? blobStore()
-    : fileStore(path.resolve(".data/snapshots"))
+    : process.env.VERCEL
+      ? unconfiguredStore()
+      : fileStore(path.resolve(".data/snapshots"))
   return store
 }
