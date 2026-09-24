@@ -27,6 +27,7 @@ import * as cursor from "./cursor"
 import * as dialogs from "./dialogs"
 import * as disabled from "./disabled"
 import * as focus from "./focus"
+import * as guidance from "./guidance"
 import * as icons from "./icons"
 import * as inputGroups from "./input-groups"
 import * as inputs from "./inputs"
@@ -123,6 +124,7 @@ export const DEFAULTS = {
   ...kbd.KBD_DEFAULTS,
   ...avatars.AVATAR_DEFAULTS,
   ...tables.TABLE_DEFAULTS,
+  ...guidance.GUIDANCE_DEFAULTS,
 }
 
 export type StudioState = typeof DEFAULTS

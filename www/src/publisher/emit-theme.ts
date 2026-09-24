@@ -58,6 +58,8 @@ export interface EmitThemeInput {
   encodedPreset?: string
   /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
   registryRoot: string
+  /** Project-root files shipped alongside (the agent docs), path → content. */
+  rootFiles?: Array<{ path: string; content: string }>
 }
 
 export const DEFAULT_DEPENDENCIES = [
@@ -145,7 +147,8 @@ function splitPresetTokens(
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
-  const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
+  const { baseRegistryCss, preset, encodedPreset, registryRoot, rootFiles } =
+    input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
   // One `registry:font` item per font token the preset sets. shadcn installs
   // the face per framework (next/font on Next.js, @fontsource elsewhere) and
@@ -203,6 +206,13 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
         target: "src/lib/utils.ts",
         content: CN_UTILS_TS,
       },
+      // `~/` targets resolve against the project root in shadcn.
+      ...(rootFiles ?? []).map((file) => ({
+        type: "registry:file",
+        path: file.path,
+        target: `~/${file.path}`,
+        content: file.content,
+      })),
     ],
     config,
   }

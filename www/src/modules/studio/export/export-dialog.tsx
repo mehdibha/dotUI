@@ -40,7 +40,9 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
+import { useStudio } from "@/modules/studio/use-studio"
 
+import { AgentDocsModal } from "./agent-docs-modal"
 import { CodeOptions } from "./code-options"
 import { OPEN_IN_TARGETS } from "./targets"
 import { useExportUrl } from "./use-export-url"
@@ -90,6 +92,7 @@ function ExportDialogBody() {
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
   const presetUrl = useExportUrl()
+  const { state } = useStudio()
 
   const initUrl = presetUrl("/r/init")
   const command =
@@ -151,6 +154,21 @@ function ExportDialogBody() {
 
         <Section label="Code style">
           <CodeOptions />
+        </Section>
+
+        <Section label="Agent docs">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs text-fg-muted">
+              Installs <code className="font-mono">DESIGN.md</code> and a
+              design-system skill, so coding agents build with your components.
+            </p>
+            <Dialog>
+              <Button variant="quiet" size="sm">
+                Preview
+              </Button>
+              <AgentDocsModal state={state} />
+            </Dialog>
+          </div>
         </Section>
 
         <CommandBlock

@@ -179,6 +179,8 @@ export interface BuildV0ItemInput {
   cssFields: RegistryCssFields
   /** Support sources shipped verbatim (already import-rewritten), by target. */
   supportFiles: Record<string, string>
+  /** Project-root files shipped as-is (the agent docs), path → content. */
+  rootFiles?: Array<{ path: string; content: string }>
 }
 
 /**
@@ -239,6 +241,10 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
   // Fill support-module gaps (hooks, lib helpers) not shipped by any item.
   for (const [target, content] of Object.entries(input.supportFiles)) {
     add(v0File("registry:lib", target, content))
+  }
+
+  for (const file of input.rootFiles ?? []) {
+    add(v0File("registry:file", file.path, file.content))
   }
 
   // Same base deps `shadcn init` would install, since there's no init step

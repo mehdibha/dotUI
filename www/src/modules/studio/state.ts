@@ -15,6 +15,7 @@ import { COLOR_DEFAULTS } from "./axes/color"
 import { CURSOR_DEFAULTS } from "./axes/cursor"
 import { DISABLED_DEFAULTS } from "./axes/disabled"
 import { FOCUS_DEFAULTS } from "./axes/focus"
+import { GUIDANCE_DEFAULTS } from "./axes/guidance"
 import { ICON_DEFAULTS } from "./axes/icons"
 import { INVALID_DEFAULTS } from "./axes/invalid"
 import { MOBILE_DEFAULTS } from "./axes/mobile"
@@ -28,6 +29,7 @@ import { TYPE_DEFAULTS } from "./axes/type"
 import { BrowserPreview, BrowserSection } from "./sections/browser"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENTS_DEFAULTS, ComponentsSection } from "./sections/components"
+import { GuidanceSection } from "./sections/guidance"
 import { IconsPreview, IconsSection } from "./sections/icons"
 import { MobilePreview, MobileSection } from "./sections/mobile"
 import { MotionPreview, MotionSection } from "./sections/motion"
@@ -56,7 +58,8 @@ export interface Chapter {
 }
 
 /* Identity first, then the page chrome and the treatments every control
-   wears, then every component behind one row each. Alert and Toast have no
+   wears, then how agents should build with it, then every component behind
+   one row each. Alert and Toast have no
    axes yet and stay off the page until they are rebuilt from preset evidence. */
 export const CHAPTERS: Chapter[] = [
   {
@@ -133,6 +136,12 @@ export const CHAPTERS: Chapter[] = [
     defaults: MOBILE_DEFAULTS,
     Body: MobileSection,
     Preview: MobilePreview,
+  },
+  {
+    id: "guidance",
+    label: "Guidance",
+    defaults: GUIDANCE_DEFAULTS,
+    Body: GuidanceSection,
   },
   {
     id: "components",
