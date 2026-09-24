@@ -20,7 +20,7 @@ export it anywhere: your codebase via the shadcn CLI, or straight into v0
 2. **Export** it wherever you build:
 
    ```bash
-   npx shadcn init "https://dotui.org/r/init?preset=<your-preset>"
+   npx shadcn init https://dotui.org/r/s/<your-id>/init.json
    ```
 
    then add components as you need them:

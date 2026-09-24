@@ -20,12 +20,7 @@ import {
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
 import { ExportDialog } from "@/modules/studio/export"
-import {
-  decodePreset,
-  encodePreset,
-  encodeState,
-  useMyPresets,
-} from "@/modules/studio/preset"
+import { decodeState, encodeState, useMyPresets } from "@/modules/studio/preset"
 import {
   saveDesignSystemName,
   useDesignSystemName,
@@ -45,8 +40,8 @@ const routeApi = getRouteApi("/_app/studio")
 /* The codec is canonical (encode∘decode = identity), but states from storage
    may predate it — one roundtrip normalizes those. */
 function canon(state: string): string {
-  const decoded = state ? decodePreset(state) : undefined
-  return (decoded?.ok && encodePreset(decoded.preset)) || ""
+  const decoded = state ? decodeState(state) : undefined
+  return (decoded?.ok && encodeState(decoded.state)) || ""
 }
 
 /* Origin is the panel's baseline: what first-time users start on, what the
@@ -95,9 +90,9 @@ export function StudioPanel({ className }: { className?: string }) {
       title: "My systems",
       // A saved system that no longer validates stays out of the list.
       items: presets.flatMap((saved) => {
-        const decoded = decodePreset(saved.state)
+        const decoded = decodeState(saved.state)
         if (!decoded.ok) return []
-        const { state } = decoded.preset
+        const { state } = decoded
         return [
           {
             id: saved.id,

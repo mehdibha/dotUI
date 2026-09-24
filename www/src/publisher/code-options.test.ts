@@ -3,7 +3,7 @@
  * layer that shapes the STYLE of exported code.
  *
  * Coverage:
- *   - sanitizeCodeOptions   : robust coercion of stale/crafted presets
+ *   - parseCodeFlags        : the `?code=` vocabulary
  *   - flattenClassArrays    : grouped arrays → single string per slot/variant
  *   - applySectionComments  : // MARK: → section separators (or removal)
  *   - publish (integration) : the options flow through the request-time path
@@ -15,33 +15,35 @@ import { buttonPublishable } from "./__fixtures__/button-publishable"
 import {
   applySectionComments,
   DEFAULT_CODE_OPTIONS,
+  codeFlags,
   flattenClassArrays,
-  sanitizeCodeOptions,
+  parseCodeFlags,
 } from "./code-options"
 import { publish, TV_CONFIG_PLACEHOLDER } from "./publish"
 import type { TvLayer } from "./types"
 
 /* ============================================================ */
-/* sanitizeCodeOptions                                          */
+/* code flags                                                   */
 /* ============================================================ */
 
-describe("sanitizeCodeOptions", () => {
-  test("non-object input returns a full default copy", () => {
-    expect(sanitizeCodeOptions(undefined)).toEqual(DEFAULT_CODE_OPTIONS)
-    expect(sanitizeCodeOptions("nope")).toEqual(DEFAULT_CODE_OPTIONS)
-    expect(sanitizeCodeOptions(42)).toEqual(DEFAULT_CODE_OPTIONS)
-    // a fresh copy, not the shared default object
-    expect(sanitizeCodeOptions(null)).not.toBe(DEFAULT_CODE_OPTIONS)
+describe("code flags", () => {
+  test("round-trip every combination, defaults as no flags", () => {
+    expect(codeFlags(DEFAULT_CODE_OPTIONS)).toBe("")
+    for (const options of [
+      { classArrays: true, sectionComments: true },
+      { classArrays: false, sectionComments: false },
+      { classArrays: true, sectionComments: false },
+    ])
+      expect(parseCodeFlags(codeFlags(options))).toEqual(options)
+    expect(parseCodeFlags("no-sections,arrays")).toEqual({
+      classArrays: true,
+      sectionComments: false,
+    })
   })
 
-  test("keeps valid fields and falls back per-field for invalid ones", () => {
-    const out = sanitizeCodeOptions({
-      classArrays: false,
-      sectionComments: "nope", // not a boolean → default
-      extra: "ignored",
-    })
-    expect(out.classArrays).toBe(false)
-    expect(out.sectionComments).toBe(DEFAULT_CODE_OPTIONS.sectionComments)
+  test("reject unknown, empty and repeated flags", () => {
+    for (const value of ["", "tabs", "arrays,", "arrays,arrays", "ARRAYS"])
+      expect(parseCodeFlags(value)).toBeUndefined()
   })
 })
 

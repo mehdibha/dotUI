@@ -3,9 +3,9 @@ import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { ORIGIN } from "@/modules/presets"
+import { DEFAULT_STATE } from "@/modules/studio/axes"
 import { StudioPanel } from "@/modules/studio/create"
 import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/_app/studio")({
 
 function StudioPage() {
   const { preset } = Route.useSearch()
-  const { preset: current, setPreset, setState } = useStudio()
+  const { state: current, setState } = useStudio()
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // The user's selected preset is persisted in localStorage so every docs
@@ -64,9 +64,8 @@ function StudioPage() {
     seededFromStorage.current = true
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
-    if (stored !== DEFAULT_PRESET) setPreset(stored)
-    else setState(ORIGIN.state)
-  }, [preset, setPreset, setState])
+    setState(stored === DEFAULT_STATE ? ORIGIN.state : stored)
+  }, [preset, setState])
 
   const skipFirstPersist = useRef(true)
   useEffect(() => {

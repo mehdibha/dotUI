@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest"
 
-import { validate } from "@/modules/studio/axes"
+import { parseState, validate } from "@/modules/studio/axes"
 
-import { ORIGIN, PRESETS } from "./index"
+import { closestPreset, ORIGIN, PRESETS } from "./index"
 
 describe("built-in presets", () => {
   it("validate", () => {
@@ -22,5 +22,14 @@ describe("built-in presets", () => {
   it("credit the brand they recreate", () => {
     for (const preset of PRESETS)
       if (preset !== ORIGIN) expect(preset.inspiredBy, preset.id).toBeTruthy()
+  })
+
+  it("match themselves as the closest preset", () => {
+    for (const preset of PRESETS)
+      expect(closestPreset(preset.state).id).toBe(preset.id)
+    const linear = PRESETS.find((preset) => preset.id === "linear")!
+    expect(
+      closestPreset(parseState({ ...linear.state, radiusPx: 13 })).id,
+    ).toBe("linear")
   })
 })

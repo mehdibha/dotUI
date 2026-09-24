@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site"
 
 // Serves /.well-known/api-catalog (RFC 9727) — a linkset that points agents at
 // dotUI's real, machine-consumable resources: the shadcn component registry
-// endpoint (GET /r/{name}), the docs overview, and the llms.txt index.
+// endpoint (GET /r/{name}.json), the docs overview, and the llms.txt index.
 // This deliberately advertises only capabilities that actually exist — there is
 // no MCP server, agent card, or OAuth on this static docs site, so none are
 // claimed (a hollow capability card is worse than its absence).
@@ -34,10 +34,10 @@ export const Route = createFileRoute("/.well-known/api-catalog")({
               ],
               item: [
                 {
-                  href: `${url}/r/{name}`,
+                  href: `${url}/r/{name}.json`,
                   type: "application/json",
                   title:
-                    "dotUI shadcn component registry — GET /r/{name} returns the resolved registry item JSON for a component, consumable by the shadcn CLI and AI tooling.",
+                    "dotUI shadcn component registry — GET /r/{name}.json returns the resolved registry item JSON for a component, consumable by the shadcn CLI and AI tooling.",
                 },
               ],
               "service-doc": [

@@ -56,28 +56,20 @@ export const BUNDLED_INTO_INIT = new Set([
 ])
 
 /**
- * Rewrites bare dotui dep names (`"loader"`) to absolute URLs
- * (`https://dotui.org/r/loader?preset=…`) so `shadcn add` can follow them
- * without a registry mapping in the consumer's components.json.
+ * Rewrites bare dotui dep names (`"loader"`) to absolute URLs so `shadcn add`
+ * can follow them without a registry mapping in the consumer's components.json.
  */
 export interface DepResolver {
-  /** e.g. `https://dotui.org`. */
-  origin: string
-  /** Appended to every dep URL, including the leading `?`. */
-  query?: string
+  /** Where a dep is served, e.g. `https://dotui.org/r/p/linear/loader.json`. */
+  url: (name: string) => string
   /** Names with a publishable; anything else passes through bare. */
   known: ReadonlySet<string>
 }
 
 function rewriteDeps(deps: string[], resolver?: DepResolver): string[] {
-  const origin = resolver?.origin.replace(/\/$/, "")
   return deps
     .filter((dep) => !BUNDLED_INTO_INIT.has(dep))
-    .map((dep) =>
-      resolver?.known.has(dep)
-        ? `${origin}/r/${dep}${resolver.query ?? ""}`
-        : dep,
-    )
+    .map((dep) => (resolver?.known.has(dep) ? resolver.url(dep) : dep))
 }
 
 /**

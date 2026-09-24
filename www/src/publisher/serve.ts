@@ -1,5 +1,5 @@
 /**
- * Publish one registry item the way `/r/$name` serves it: select the
+ * Publish one registry item the way `/r/<name>.json` serves it: select the
  * publishable for the preset, publish, and format every shipped file. Shared
  * by the route and the examples preview so both produce the same files.
  *
@@ -27,29 +27,22 @@ const OUTPUT_FORMAT = { printWidth: 80 } as const
 export interface PublishItemInput {
   name: string
   preset: PublishPreset
-  /** Origin transitive deps resolve to, e.g. `https://dotui.org`. */
-  origin: string
-  /** Encoded preset carried on transitive dep URLs. */
-  encodedPreset?: string
+  /** Where a registry dep is served, e.g. `https://dotui.org/r/loader.json`. */
+  itemUrl: (name: string) => string
 }
 
 /** The published item for `name`, or `undefined` when no publishable exists. */
 export async function publishItem(
   input: PublishItemInput,
 ): Promise<RegistryItem | undefined> {
-  const loader = publishables[input.name]
+  const loader = KNOWN_NAMES.has(input.name) && publishables[input.name]
   if (!loader) return undefined
 
   const mod = await loader()
   const { item } = publish({
     publishable: selectPublishable(mod, input.preset),
     preset: input.preset,
-    // Transitive deps point back at this origin with the same preset.
-    deps: {
-      origin: input.origin,
-      query: input.encodedPreset ? `?preset=${input.encodedPreset}` : "",
-      known: KNOWN_NAMES,
-    },
+    deps: { url: input.itemUrl, known: KNOWN_NAMES },
   })
 
   // Format per-file — a base `.tsx` and a secondary `.ts` hook carry different

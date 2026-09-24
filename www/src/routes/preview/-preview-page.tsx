@@ -7,7 +7,8 @@ import {
   ExamplesIndex,
   GroupExamplesIndex,
 } from "@/modules/studio/__generated__/examples"
-import { DEFAULT_PRESET, decodePreset } from "@/modules/studio/preset/codec"
+import { DEFAULT_STATE } from "@/modules/studio/axes"
+import { decodeState } from "@/modules/studio/preset/codec"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
@@ -55,10 +56,8 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   const { preset } = route.useSearch()
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() => {
-    const decoded = preset ? decodePreset(preset) : undefined
-    return resolveDesignSystem(
-      (decoded?.ok ? decoded.preset : DEFAULT_PRESET).state,
-    )
+    const decoded = preset ? decodeState(preset) : undefined
+    return resolveDesignSystem(decoded?.ok ? decoded.state : DEFAULT_STATE)
   })
 
   const navigate = route.useNavigate()

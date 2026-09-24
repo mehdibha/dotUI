@@ -4,7 +4,7 @@
  *
  *   pnpm examples:preview [--example <name>] [--watch]
  *
- * Runs the publisher the way `/r/$name` does for every publishable, formats,
+ * Runs the publisher the way `/r/p/<preset>/<name>.json` does for every publishable, formats,
  * and writes the files where the CLI would put them (`src/components/ui`,
  * `src/hooks`, `src/lib`) plus the stylesheet rendered from the init item's
  * CSS fields. With the template's own dev server running, every save to the
@@ -21,14 +21,12 @@ import { mkdirSync, watch, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-import { resolveRequestPreset } from "@/lib/registry-preset"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
 import { CN_UTILS_TS, emitInitItem } from "@/publisher/emit-theme"
 import { renderStylesheet } from "@/publisher/emit-v0"
 import { consumerPath, publishItem } from "@/publisher/serve"
-import { getPreset } from "@/modules/presets"
-import { encodeState } from "@/modules/studio/preset/codec"
+import { getPreset, resolvePreset } from "@/modules/presets"
 
 const WWW_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const REPO_DIR = path.resolve(WWW_DIR, "..")
@@ -74,22 +72,16 @@ function write(cwd: string, rel: string, content: string): void {
 
 async function materialize(example: string): Promise<void> {
   const { preset: presetId, stylesheet } = EXAMPLES[example] ?? {}
-  const source = presetId ? getPreset(presetId) : undefined
-  if (!stylesheet || !source) throw new Error(`unknown example ${example}`)
+  if (!stylesheet || !presetId || !getPreset(presetId))
+    throw new Error(`unknown example ${example}`)
   const cwd = path.join(EXAMPLES_DIR, example)
-  const encodedPreset = encodeState(source.state)
-  const resolved = await resolveRequestPreset(encodedPreset)
-  if (!resolved.ok) throw new Error(`invalid preset for ${example}`)
-  const { preset } = resolved
+  const preset = resolvePreset(presetId)
+  const itemUrl = (name: string) =>
+    `https://dotui.org/r/p/${presetId}/${name}.json`
 
   let files = 0
   for (const name of PUBLISHABLE_NAMES) {
-    const item = await publishItem({
-      name,
-      preset,
-      origin: "https://dotui.org",
-      encodedPreset,
-    })
+    const item = await publishItem({ name, preset, itemUrl })
     for (const file of item?.files ?? []) {
       if (file.content == null) continue
       write(cwd, consumerPath(file.path), file.content)
@@ -101,12 +93,7 @@ async function materialize(example: string): Promise<void> {
   // The stylesheet as the init item's CSS fields render; `shadcn init` merges
   // the same fields into the consumer's file. Fonts are not wired here, so a
   // preset's faces fall back to the system stack.
-  const init = emitInitItem({
-    baseRegistryCss,
-    preset,
-    encodedPreset,
-    registryRoot: "https://dotui.org",
-  })
+  const init = emitInitItem({ baseRegistryCss, preset, itemUrl })
   write(
     cwd,
     stylesheet,

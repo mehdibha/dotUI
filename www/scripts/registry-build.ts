@@ -700,7 +700,7 @@ async function checkRegistryIntegrity(
 // ============================================================================
 // Post-publish guards: the emitted publishable set is a CONTRACT — every skip
 // is explained, every declared dep resolves, every docs-advertised name ships.
-// These catch the #477 bug class (a component silently missing from /r/{name},
+// These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
 // ============================================================================
@@ -738,7 +738,7 @@ function checkPublishableSkips(build: PublishablesBuild): string[] {
 
 /**
  * Registered lib/hook items referenced as `registryDependencies` that are NOT
- * independently servable at GET /r/{name} (only ui items become publishables).
+ * independently servable at GET /r/{name}.json (only ui items become publishables).
  * shadcn add would fall through to its DEFAULT registry for these bare names —
  * the exact #477 failure. They are a KNOWN packaging gap: the fix is to ship the
  * file inline (as ui/tabs does with lib/context) or make lib/hooks servable.
@@ -805,9 +805,9 @@ function checkDependencyClosure(
 const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
 
 /**
- * Names that resolve to a real `/r/<name>` route but aren't components, so they
- * never appear in `builtNames`. `init` serves the `registry:base` item that
- * `shadcn init https://dotui.org/r/init` consumes (see routes/r/init.tsx). Docs
+ * Names that resolve to a real `/r/<name>.json` file but aren't components, so
+ * they never appear in `builtNames`. `init` serves the `registry:base` item
+ * that `shadcn init` consumes (see lib/registry/serve.ts). Docs
  * may advertise these; the guard treats them as served, not dangling.
  */
 const SERVED_ROUTE_NAMES = new Set(["init"])
@@ -927,7 +927,7 @@ async function checkPublishableIntegrity(
 
 interface PublishablesBuild {
   skipped: Array<{ name: string; reason: string }>
-  /** Names of items that emitted a publishable — the exact set GET /r/{name} serves. */
+  /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
 }
 

@@ -8,9 +8,10 @@
  * files. Per template:
  *   1. Remove everything a previous run generated.
  *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
- *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
- *      give, with the template's preset baked in.
- *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
+ *   3. `shadcn init <origin>/r/p/<preset>/init.json` — the built-in preset's
+ *      registry path, so a run never needs the snapshot store.
+ *   4. `shadcn add @dotui/<name>` for every item in the preset's
+ *      `registry.json`.
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
  *
@@ -25,9 +26,7 @@
  *
  * With no `--origin` the script builds the registry and serves this checkout
  * with the www dev server (reusing one already running on its port). Pass a
- * Vercel preview or production to regenerate from a deployment instead. Preset
- * encoding always comes from this checkout (`www/scripts/encode-preset.ts`),
- * the same way the create page encodes it in the browser.
+ * Vercel preview or production to regenerate from a deployment instead.
  *
  * Runs offline: the CLI's own base fetches (its style list and base color) are
  * answered from `shadcn-base/`, vendored from shadcn-ui/ui, through the CLI's
@@ -36,7 +35,7 @@
  * files are written, for a quick look at the output.
  */
 
-import { spawn, spawnSync } from "node:child_process"
+import { spawn } from "node:child_process"
 import {
   existsSync,
   openSync,
@@ -330,42 +329,18 @@ async function fetchJson<T>(url: string, attempts = 5): Promise<T> {
   throw lastError instanceof Error ? lastError : new Error(String(lastError))
 }
 
-/**
- * Encoded `?preset=` values by preset id, from this checkout's preset data.
- * Runs tsx directly: through `pnpm exec`, an engine warning lands on stdout
- * and corrupts the JSON.
- */
-function encodePresets(ids: string[]): Record<string, string> {
-  const result = spawnSync(
-    path.join(REPO_DIR, "www/node_modules/.bin/tsx"),
-    ["scripts/encode-preset.ts", ...ids],
-    {
-      cwd: path.join(REPO_DIR, "www"),
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "inherit"],
-    },
-  )
-  if (result.error) throw result.error
-  if (result.status !== 0)
-    throw new Error(`encode-preset exited with ${result.status}`)
-  return JSON.parse(result.stdout.trim()) as Record<string, string>
-}
-
-/** Whether the init item for this preset pulls in `registry:font` items. */
-async function initHasFonts(
-  origin: string,
-  encodedPreset: string,
-): Promise<boolean> {
+/** Whether the init item at `registry` pulls in `registry:font` items. */
+async function initHasFonts(registry: string): Promise<boolean> {
   const item = await fetchJson<{ registryDependencies?: string[] }>(
-    `${origin}/r/init?preset=${encodedPreset}`,
+    `${registry}/init.json`,
   )
-  return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
+  return (item.registryDependencies ?? []).some((dep) => /\/font-/.test(dep))
 }
 
-async function registryNames(origin: string): Promise<string[]> {
-  const url = `${origin}/r/registry.json`
-  const registry = await fetchJson<{ items?: Array<{ name: string }> }>(url)
-  const names = (registry.items ?? []).map((item) => item.name)
+async function registryNames(registry: string): Promise<string[]> {
+  const url = `${registry}/registry.json`
+  const index = await fetchJson<{ items?: Array<{ name: string }> }>(url)
+  const names = (index.items ?? []).map((item) => item.name)
   if (names.length === 0) throw new Error(`GET ${url} lists no items`)
   return names
 }
@@ -439,16 +414,17 @@ function stabilizePackageJson(cwd: string, before: string): void {
 async function regenerate(
   example: string,
   origin: string,
-  encodedPreset: string,
-  names: string[],
   shadcnBaseUrl: string,
   build: boolean,
 ) {
-  const { framework: frameworkName } = EXAMPLES[example]!
+  const { framework: frameworkName, preset } = EXAMPLES[example]!
   const framework = FRAMEWORKS[frameworkName]
   const cwd = path.join(EXAMPLES_DIR, example)
+  const registry = `${origin}/r/p/${preset}`
   console.log(`\n=== ${example} ===`)
-  const expectFonts = await initHasFonts(origin, encodedPreset)
+  const names = await registryNames(registry)
+  console.log(`items: ${names.length}`)
+  const expectFonts = await initHasFonts(registry)
   const packageJsonBefore = readFileSync(path.join(cwd, "package.json"), "utf8")
 
   for (const generated of GENERATED) {
@@ -464,13 +440,7 @@ async function regenerate(
   await run(
     cwd,
     "pnpm",
-    [
-      "dlx",
-      SHADCN,
-      "init",
-      `${origin}/r/init?preset=${encodedPreset}`,
-      "--yes",
-    ],
+    ["dlx", SHADCN, "init", `${registry}/init.json`, "--yes"],
     shadcnEnv,
   )
   await run(
@@ -506,25 +476,12 @@ async function main() {
     origin = LOCAL_ORIGIN
   }
   console.log(`registry: ${origin}`)
-  const presetIds = [
-    ...new Set(options.examples.map((name) => EXAMPLES[name]!.preset)),
-  ]
-  const encoded = encodePresets(presetIds)
-  const names = await registryNames(origin)
-  console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
   const shadcnBase = await serveShadcnBase()
 
   const failures: string[] = []
   for (const example of options.examples) {
     try {
-      await regenerate(
-        example,
-        origin,
-        encoded[EXAMPLES[example]!.preset]!,
-        names,
-        shadcnBase.url,
-        options.build,
-      )
+      await regenerate(example, origin, shadcnBase.url, options.build)
       console.log(`\n✓ ${example}`)
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)

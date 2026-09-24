@@ -18,9 +18,8 @@
  *   - section separators — whether the file is divided into sections with
  *     comment rules (`applySectionComments`).
  *
- * Pure JS, no external imports — safe to import from anywhere: the request-time
- * route bundle, the `/create` client bundle, AND the "Open in v0" showcase
- * bundle (the create codec pulls this in transitively).
+ * Pure JS, no external imports — safe to import from the request-time route
+ * bundle and the /studio client bundle alike.
  */
 
 import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
@@ -45,36 +44,43 @@ export interface CodeOptions {
  * Defaults ship one class string per slot/variant (the shadcn convention) with
  * comment-rule section separators; grouped arrays and a separator-free file
  * are opt-ins.
- *
- * Kept as a complete object (every field present) so the codec can diff the
- * whole recipe against this default — an untouched config encodes to nothing.
  */
 export const DEFAULT_CODE_OPTIONS: CodeOptions = {
   classArrays: false,
   sectionComments: true,
 }
 
-/* ------------------------------- validation ------------------------------- */
+/* --------------------------------- flags --------------------------------- */
 
-function pickBool(value: unknown, fallback: boolean): boolean {
-  return typeof value === "boolean" ? value : fallback
+/** The `?code=` vocabulary: one flag per non-default choice. */
+const FLAGS = {
+  arrays: { classArrays: true },
+  "no-sections": { sectionComments: false },
+} satisfies Record<string, Partial<CodeOptions>>
+
+type Flag = keyof typeof FLAGS
+
+export const CODE_FLAGS = Object.keys(FLAGS) as Flag[]
+
+/** `"arrays,no-sections"` → options; `undefined` for an unknown or repeated flag. */
+export function parseCodeFlags(value: string): CodeOptions | undefined {
+  const flags = value.split(",")
+  if (new Set(flags).size !== flags.length) return undefined
+  let options = DEFAULT_CODE_OPTIONS
+  for (const flag of flags) {
+    if (!Object.hasOwn(FLAGS, flag)) return undefined
+    options = { ...options, ...FLAGS[flag as Flag] }
+  }
+  return options
 }
 
-/**
- * Coerce an untouched / stale / crafted preset value into a complete, valid
- * `CodeOptions`. Mirrors `sanitizeColor` in the codec: never throws, always
- * returns something the publisher can act on.
- */
-export function sanitizeCodeOptions(input: unknown): CodeOptions {
-  if (typeof input !== "object" || input === null) {
-    return { ...DEFAULT_CODE_OPTIONS }
-  }
-  const raw = input as Partial<Record<keyof CodeOptions, unknown>>
-  const d = DEFAULT_CODE_OPTIONS
-  return {
-    classArrays: pickBool(raw.classArrays, d.classArrays),
-    sectionComments: pickBool(raw.sectionComments, d.sectionComments),
-  }
+/** The options as flags, `""` for the defaults. */
+export function codeFlags(options: CodeOptions): string {
+  return CODE_FLAGS.filter((flag) =>
+    Object.entries(FLAGS[flag]).every(
+      ([key, value]) => options[key as keyof CodeOptions] === value,
+    ),
+  ).join(",")
 }
 
 /* --------------------------- serialize-shape ----------------------------- */
