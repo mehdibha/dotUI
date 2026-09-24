@@ -59,8 +59,7 @@ const routes: Route[] = [
 ]
 const existing: Route[] = config.routes
 const missing = routes.filter(
-  (route) =>
-    !existing.some((r) => JSON.stringify(r) === JSON.stringify(route)),
+  (route) => !existing.some((r) => JSON.stringify(r) === JSON.stringify(route)),
 )
 const fsIndex = existing.findIndex((r) => r && r.handle === "filesystem")
 existing.splice(fsIndex === -1 ? 0 : fsIndex, 0, ...missing)
