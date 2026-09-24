@@ -42,5 +42,8 @@ Thumbs.db
 # Generated shadcn publishables — emitted by `pnpm build:registry`.
 www/src/registry/__generated__/publishables/
 
+# Local snapshot store (dev and CI; production uses Vercel Blob).
+www/.data/
+
 # Publisher compile smoke-test fixture — emitted by publish-smoke.test.ts.
 www/.smoke-fixture/
