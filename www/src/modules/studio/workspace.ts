@@ -234,15 +234,20 @@ export const useOpenSystem = () => openDoc(useWorkspace())
 
 /* ------------------------------ operations ------------------------------ */
 
-/** Edits the system's state; storage catches up within 200 ms. */
-export function setState(id: string, state: StudioState): void {
+/** Edits the system's state; storage catches up within 200 ms. Returns
+ *  whether the state was accepted. */
+export function setState(id: string, state: StudioState): boolean {
   // An invalid record would be dropped on the next read: refuse it here.
   const valid = validate(state)
-  if (!valid.ok) return console.error(formatIssues(valid.issues))
+  if (!valid.ok) {
+    console.error(formatIssues(valid.issues))
+    return false
+  }
   if (pending && pending.id !== id) flush()
   pending = { id, state }
   timer ??= setTimeout(flush, WRITE_INTERVAL)
   for (const listener of listeners) listener()
+  return true
 }
 
 function update(fn: (workspace: Workspace) => Workspace) {
@@ -313,6 +318,16 @@ export function createFromPreset(presetId: string): void {
       }),
     )
   })
+}
+
+/** Reopens a system a replacement closed, replacing the open one in turn
+ *  if it is untouched. */
+export function reinstate(doc: DesignSystemDoc): void {
+  update((workspace) =>
+    workspace.systems.some((s) => s.id === doc.id)
+      ? { ...workspace, openId: doc.id }
+      : addAndOpen(workspace, doc),
+  )
 }
 
 export function open(id: string): void {
@@ -395,24 +410,11 @@ export function remove(id: string): () => void {
   }
 }
 
-/** Returns the system to its initial state; returns the undo. */
-export function reset(id: string): () => void {
-  let before: StudioState | undefined
+/** Returns the system to its initial state. */
+export function reset(id: string): void {
   update((workspace) =>
-    withDoc(workspace, id, (doc) => {
-      before = doc.state
-      return withState(doc.initial)(doc)
-    }),
+    withDoc(workspace, id, (doc) => withState(doc.initial)(doc)),
   )
-  return () => {
-    if (!before) return
-    const state = before
-    update((workspace) =>
-      withDoc(workspace, id, (doc) =>
-        sameState(doc.state, doc.initial) ? withState(state)(doc) : doc,
-      ),
-    )
-  }
 }
 
 /** What publishing the system would store. */

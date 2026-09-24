@@ -6,14 +6,14 @@ import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
-import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
-import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import {
   createFromPreset,
-  fetchSnapshot,
-  flush,
   importSnapshot,
-} from "@/modules/studio/workspace"
+  useHistory,
+} from "@/modules/studio/history"
+import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
+import { PanelPopoverBoundary } from "@/modules/studio/rows"
+import { fetchSnapshot, flush, useOpenSystem } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
   search: {
@@ -136,6 +136,7 @@ function StudioPage() {
 
 function StudioBody() {
   useStudioLink()
+  useHistory(useOpenSystem().id)
   return (
     <>
       <StudioHeaderActions />

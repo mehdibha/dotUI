@@ -12,54 +12,21 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { toastManager } from "@/registry/ui/toast"
-import {
-  getPreset,
-  ORIGIN,
-  PRESET_META,
-  resolvePreset,
-} from "@/modules/presets"
+import { ORIGIN, PRESET_META, resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { share } from "@/modules/studio/export"
 
-import { sameState } from "./axes"
+import { createFromPreset, remove } from "./history"
+import { HistoryControls, undoToast } from "./history-menu"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { resolveDesignSystem } from "./resolve"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import {
-  createFromPreset,
-  duplicate,
-  open,
-  openDoc,
-  remove,
-  rename,
-  reset,
-  useWorkspace,
-} from "./workspace"
+import { duplicate, open, openDoc, rename, useWorkspace } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
-
-export function undoToast(title: string, undo: () => void) {
-  const id = toastManager.add({
-    title,
-    actionProps: {
-      children: "Undo",
-      onClick: () => {
-        undo()
-        toastManager.close(id)
-      },
-    },
-  })
-}
-
-function resetLabel(doc: DesignSystemDoc): string {
-  if (doc.origin.kind === "snapshot") return "Reset to shared version"
-  if (doc.origin.kind === "copy") return "Reset to copy"
-  return `Reset to ${getPreset(doc.origin.id)?.name ?? "preset"}`
-}
 
 function SystemActions({ doc }: { doc: DesignSystemDoc }) {
   return (
@@ -131,13 +98,10 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  const label = resetLabel(doc)
   const system: PanelSystem = {
     name: doc.name,
     onRename: (name) => rename(doc.id, name),
-    reset: sameState(doc.state, doc.initial)
-      ? undefined
-      : { label, onReset: () => undoToast(label, reset(doc.id)) },
+    history: <HistoryControls doc={doc} />,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}

@@ -2,24 +2,23 @@
 
 /* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
    whole, its header pinned — the open system's name (press to rename) and
-   the switcher on the left, reset and search on the right — over a hairline.
+   the switcher on the left, history and search on the right — over a hairline.
    Docked under the preview, the header and strip pin to the bottom edge
    instead, so they stay put as the dock hugs each chapter. */
 
 import { useState } from "react"
 import type { ReactNode } from "react"
-import { ChevronsUpDownIcon, RotateCcwIcon } from "lucide-react"
+import { ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 /** The open design system, as the chrome acts on it. */
 export interface PanelSystem {
   name: string
   onRename: (name: string) => void
-  /** Present while the state differs from where the system started. */
-  reset?: { label: string; onReset: () => void }
+  /** Undo, redo and the history menu. */
+  history: ReactNode
   /** Wraps the switcher button in the design-system picker's trigger. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
 }
@@ -112,21 +111,7 @@ export function PanelChrome({
             )}
           </span>
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">
-            {system.reset && (
-              <Tooltip delay={0}>
-                <Button
-                  size="sm"
-                  variant="quiet"
-                  isIconOnly
-                  aria-label={system.reset.label}
-                  onPress={system.reset.onReset}
-                  className="text-fg-muted pointer-coarse:data-icon-only:size-9"
-                >
-                  <RotateCcwIcon />
-                </Button>
-                <TooltipContent>{system.reset.label}</TooltipContent>
-              </Tooltip>
-            )}
+            {system.history}
             {actions}
           </span>
         </div>
