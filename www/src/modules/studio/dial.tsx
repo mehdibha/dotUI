@@ -849,7 +849,7 @@ export function DialFolder({
           {/* Folders nest, so the state comes from the render prop, not a group. */}
           <DisclosurePanel
             className={cn(
-              "h-(--disclosure-panel-height) overflow-clip duration-300 ease-fluid-out motion-safe:transition-[height,opacity]",
+              "h-(--disclosure-panel-height) overflow-clip duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:transition-[height,opacity]",
               isExpanded ? "opacity-100" : "opacity-0",
             )}
           >

@@ -1,4 +1,6 @@
 :root {
   --studio-btn-radius: var(--studio-radius-control);
   --studio-btn-font-weight: var(--font-weight-medium);
+  --studio-button-state-duration: 150ms;
+  --studio-button-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

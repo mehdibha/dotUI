@@ -11,7 +11,7 @@ const popoverMeta = {
       target: "ui/popover.tsx",
     },
   ],
-  // Synced with tooltip and modal: the studio's Motion axis writes all three.
+  // Menus, selects and pickers ride on the popover's motion.
   params: {
     motion: {
       kind: "enum",

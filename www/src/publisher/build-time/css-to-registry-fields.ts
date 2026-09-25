@@ -178,7 +178,7 @@ class CssParser {
     return {
       type: "decl",
       prop: prelude.slice(0, colon).trim(),
-      value: prelude.slice(colon + 1).trim(),
+      value: oneLine(prelude.slice(colon + 1).trim()),
     }
   }
 
@@ -256,4 +256,13 @@ function findTopLevelColon(input: string): number {
     if (char === ":" && parenDepth === 0) return i
   }
   return -1
+}
+
+/** A value the formatter wrapped, back on one line: a line break is only
+ *  whitespace in CSS, and the publisher matches values as written. */
+function oneLine(value: string): string {
+  return value
+    .replace(/\(\s*\n\s*/g, "(")
+    .replace(/\s*\n\s*\)/g, ")")
+    .replace(/\s*\n\s*/g, " ")
 }

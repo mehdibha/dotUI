@@ -1,4 +1,6 @@
 :root {
   --studio-accordion-radius: var(--studio-radius-panel);
   --studio-accordion-trigger-radius: var(--studio-radius-item);
+  --studio-accordion-enter-duration: 200ms;
+  --studio-accordion-ease: cubic-bezier(0, 0, 0.58, 1);
 }

@@ -7,15 +7,23 @@
    scales the thumb with it through the component's own size vars. Color is
    a leaf of Color's Primary: the fill rides `--studio-slider-fill-color`,
    the primary tokens by default, re-pointed only when the slider leaves the
-   buttons' source. The color-slider stays out: its track is a gradient
-   swatch and its thumb the shared color-thumb, so no axis applies. */
+   buttons' source. The thumb's focus ring eases on the
+   `--studio-slider-state-*` vars. The color-slider stays out: its track is
+   a gradient swatch and its thumb the shared color-thumb, so no axis
+   applies. */
 
 import type { Resolved, StudioState } from "./index"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+
+/* shadcn's thumb: `transition-[color,box-shadow]` on Tailwind's default
+   timing. */
+const MOTION = TAILWIND_TIMING
 
 export const SLIDER_DEFAULTS = {
   sliderThumb: "circle",
   sliderTrack: "thin",
   sliderColor: "neutral",
+  sliderMotion: MOTION,
 }
 
 const FILL_TOKENS: Record<string, string> = {
@@ -38,7 +46,10 @@ const pick = (options: { value: string }[], value: string, fallback: string) =>
   options.some((o) => o.value === value) ? value : fallback
 
 export function resolveSliders(state: StudioState): Resolved {
+  const tokens = resolveStateChange("slider", state.sliderMotion, MOTION)
   const fill = FILL_TOKENS[state.sliderColor]
+  if (fill && state.sliderColor !== state.buttonColor)
+    tokens["--studio-slider-fill-color"] = fill
   return {
     params: {
       slider: {
@@ -46,9 +57,6 @@ export function resolveSliders(state: StudioState): Resolved {
         track: pick(TRACK_OPTIONS, state.sliderTrack, "thin"),
       },
     },
-    tokens:
-      fill && state.sliderColor !== state.buttonColor
-        ? { "--studio-slider-fill-color": fill }
-        : undefined,
+    tokens,
   }
 }

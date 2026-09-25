@@ -1,3 +1,6 @@
 :root {
   --studio-attachment-radius: var(--studio-radius-surface);
+  /* A file in flight pulses on the skeleton's loop. */
+  --studio-attachment-pulse: pulse var(--studio-skeleton-loop-duration)
+    var(--studio-skeleton-loop-ease) infinite;
 }

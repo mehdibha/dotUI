@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
       root: fieldStyles().field(),
       track:
         "relative flex w-full items-center overflow-x-hidden rounded-(--studio-progress-radius)",
-      fill: "h-full w-full bg-primary transition-all",
+      fill: "h-full w-full bg-primary transition-all duration-(--studio-progress-state-duration) ease-(--studio-progress-state-ease)",
       output: "ml-auto text-fg-muted tabular-nums",
     },
     variants: {},

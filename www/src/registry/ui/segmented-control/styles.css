@@ -1,4 +1,6 @@
 :root {
   --studio-segmented-control-radius: var(--studio-radius-surface);
   --studio-segmented-control-item-radius: var(--studio-radius-item);
+  --studio-segmented-control-state-duration: 150ms;
+  --studio-segmented-control-state-ease: cubic-bezier(0, 0, 0.2, 1);
 }

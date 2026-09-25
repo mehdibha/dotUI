@@ -32,6 +32,8 @@ import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal"
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
 import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
+import { createParamValue } from "@/lib/styles"
+
 import { useStyles } from "./styles"
 
 /* Every design decision the chart families share. Read from here, never
@@ -54,7 +56,6 @@ export const chartDefaults = {
   legend: false,
   focus: "group-x",
   tooltipAnchor: "group-center",
-  animate: { type: "spring", stiffness: 170, damping: 26 },
   animateMaxPoints: 800,
   enterStagger: 25,
   narrowWidth: 420,
@@ -676,6 +677,22 @@ const ENTER_STAGGER = stagger({
   roles: ["arc", "bar"],
 })
 
+const useChartMotion = createParamValue<Exclude<ChartAnimate, true>>({
+  componentName: "chart",
+  paramName: "motion",
+  defaultValue: "spring",
+  // react-spring's named physics (`spring` is its default config), recharts'
+  // tween on CSS `ease` (what shadcn's charts ride), or none.
+  values: {
+    spring: { type: "spring", stiffness: 170, damping: 26 },
+    stiff: { type: "spring", stiffness: 210, damping: 20 },
+    wobbly: { type: "spring", stiffness: 180, damping: 12 },
+    slow: { type: "spring", stiffness: 280, damping: 60 },
+    ease: { type: "tween", duration: 400, easing: "ease" },
+    none: false,
+  },
+})
+
 export type ChartTooltipContentOf<TOptions> = (
   points: readonly ChartPoint[],
   context: ChartTooltipContentContext,
@@ -710,7 +727,11 @@ export function useChartDefinition<TDatum, TOptions>(
   const rows = Array.isArray(spec.data) ? spec.data.length : 0
   const series = Array.isArray(spec.y) ? spec.y.length : 1
   const degrade = rows * series > chartDefaults.animateMaxPoints
+  // Every chart's motion unless its `animate` prop says otherwise; the
+  // annotation types the transition literal.
+  const systemMotion: Exclude<ChartAnimate, true> = useChartMotion()
   const animate = behavior.animate ?? true
+  const transition = animate === true ? systemMotion : animate
   const { tooltipContent } = family
   const definition = useOptionsMemo(
     () =>
@@ -737,14 +758,11 @@ export function useChartDefinition<TDatum, TOptions>(
                 }),
               },
         motion:
-          degrade || animate === false
+          degrade || transition === false
             ? false
-            : {
-                transition: animate === true ? chartDefaults.animate : animate,
-                ...ENTER_STAGGER,
-              },
+            : { transition, ...ENTER_STAGGER },
       }),
-    { ...spec, ...behavior, build, degrade },
+    { ...spec, ...behavior, build, degrade, transition },
   )
   return {
     definition: definition as DomChartDefinition<TDatum, ChartValue, number>,

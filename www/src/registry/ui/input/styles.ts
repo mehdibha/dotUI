@@ -29,7 +29,7 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--studio-input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-(--studio-input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -40,7 +40,7 @@ const outlineField = tv({
 })
 
 const lineField = tv({
-  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
+  base: "border-b border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -51,7 +51,7 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--studio-input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
@@ -62,7 +62,7 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "rounded-(--studio-input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-(--studio-input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",

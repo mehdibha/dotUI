@@ -10,6 +10,8 @@
  *   font-(--studio-btn-font-weight)            → font-medium
  *   shadow-(--studio-slider-thumb-shadow)      → shadow-none
  *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
+ *   duration-(--studio-popover-enter-duration) → duration-200
+ *   ease-(--studio-popover-ease)               → ease-out · ease-[cubic-bezier(…)]
  *
  * The var → value map follows chains through other studio vars (button →
  * radius role → ladder rung). Values that name a Tailwind theme token become
@@ -122,10 +124,37 @@ function substituteVarReads(
 
 /* ----------------------------- class rewrite ----------------------------- */
 
+/** Tailwind's named curves, keyed by their whitespace-free value. */
+const NAMED_EASES: Record<string, string> = {
+  "cubic-bezier(0,0,0.2,1)": "out",
+  "cubic-bezier(0.4,0,1,1)": "in",
+  "cubic-bezier(0.4,0,0.2,1)": "in-out",
+  linear: "linear",
+}
+
+/** Tailwind's named loops, keyed as `animationKey` normalizes a value. */
+const NAMED_ANIMATIONS: Record<string, string> = {
+  "spin 1000ms linear infinite": "spin",
+  "pulse 2000ms cubic-bezier(0.4,0,0.6,1) infinite": "pulse",
+}
+
+/** An animation shorthand with whitespace-free commas and ms durations. */
+const animationKey = (value: string) =>
+  value
+    .replace(/\s*,\s*/g, ",")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(
+      /(?<=^| )([\d.]+)s(?= |$)/g,
+      (_, n: string) => `${Number(n) * 1000}ms`,
+    )
+
 /**
  * The utility suffix a resolved value maps to, or undefined for an arbitrary
  * value. Theme tokens map by name (`var(--radius-md)` → `md`); spacing by
- * multiplier; the shadow literal the registry's defaults use by utility.
+ * multiplier; the shadow literal the registry's defaults use by utility;
+ * whole milliseconds and Tailwind's named curves and loops by motion
+ * utility.
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
@@ -138,15 +167,107 @@ function utilitySuffix(utility: string, value: string): string | undefined {
     /^calc\(var\(--spacing\)\s*\*\s*([\d.]+)\)$/.exec(value)
   if (spacing) return spacing[1]
   if (value === "0 0 #0000" && utility === "shadow") return "none"
+  if (utility === "duration") {
+    const [, n, unit] = /^([\d.]+)(ms|s)?$/.exec(value) ?? []
+    const ms = Number(n) * (unit === "s" ? 1000 : 1)
+    return Number.isInteger(ms) ? String(ms) : undefined
+  }
+  if (utility === "ease")
+    return (
+      /^var\(--ease-(in|out|in-out)\)$/.exec(value)?.[1] ??
+      NAMED_EASES[value.replace(/\s+/g, "")]
+    )
+  if (utility === "animate") return NAMED_ANIMATIONS[animationKey(value)]
   return undefined
+}
+
+/* A motion read that changes nothing ships no class: an unprefixed duration
+   or ease at Tailwind's transition default (150ms, ease-in-out) beside an
+   unprefixed transition utility, which already sets it — unless tw-animate's
+   `animate-in` / `animate-out` there reads it too, with defaults of its own; a
+   variant-prefixed one equal to its unprefixed sibling, which it would
+   override with itself, or at the default beside a transition utility of
+   its own prefix (`before:transition-*`). */
+const TRANSITION_DEFAULT: Record<string, string> = {
+  duration: "150",
+  ease: "in-out",
+}
+const HAS_TRANSITION =
+  /(?:^|\s)transition(?:-(?!none\b|discrete\b|normal\b)\S+)?(?=\s|$)/
+const HAS_ANIMATION = /(?:^|[\s:])animate-(?:in|out)(?=\s|$)/
+
+/** The shipped form of one studio read: `duration-200`, `ease-[…]`. */
+function resolvedUtility(utility: string, value: string): string {
+  const suffix = utilitySuffix(utility, value)
+  if (suffix !== undefined) return `${utility}-${suffix}`
+  const ref = /^var\((--[\w-]+)\)$/.exec(value)
+  if (ref) return `${utility}-(${ref[1]})`
+  // Curves drop the spaces after commas; `linear()` stops keep theirs as `_`.
+  const arbitrary =
+    utility === "ease" || utility === "animate"
+      ? value.replace(/\s*,\s*/g, ",")
+      : value
+  return `${utility}-[${arbitrary.replace(/\s+/g, "_")}]`
+}
+
+function isNoopMotion(
+  variants: string,
+  utility: string,
+  value: string,
+  context: string,
+  vars: StudioVars,
+): boolean {
+  if (!(utility in TRANSITION_DEFAULT)) return false
+  const shipped = resolvedUtility(utility, value)
+  const atDefault = (classes: string) =>
+    shipped === `${utility}-${TRANSITION_DEFAULT[utility]}` &&
+    HAS_TRANSITION.test(classes) &&
+    !HAS_ANIMATION.test(classes)
+  if (!variants) return atDefault(context)
+  const own = variants.slice(0, -1).split(":")
+  // Every other read of the utility that applies whenever this one does,
+  // by prefix: `a:duration-x` under `a:b:duration-y`, "" when unprefixed.
+  const broader = context.split(/\s+/).flatMap((cls) => {
+    const match = new RegExp(`^(?:(.+?):)?${utility}-`).exec(cls)
+    const prefix = match?.[1] ?? ""
+    if (!match || prefix === own.join(":")) return []
+    return prefix.split(":").every((v) => !v || own.includes(v)) ? [prefix] : []
+  })
+  // At the default beside a transition utility of its own prefix
+  // (`before:transition-*`), with nothing broader to override.
+  if (broader.length === 0) {
+    const scoped = context
+      .split(/\s+/)
+      .filter((cls) => cls.startsWith(variants))
+      .map((cls) => cls.slice(variants.length))
+      .join(" ")
+    if (atDefault(scoped)) return true
+  }
+  const sibling = new RegExp(
+    `(?:^|\\s)${utility}-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)(?=\\s|$)`,
+  ).exec(context)?.[1]
+  const siblingValue = sibling && vars.get(sibling)
+  if (
+    siblingValue === undefined ||
+    resolvedUtility(utility, siblingValue) !== shipped
+  )
+    return false
+  // It stays when it beats a broader prefixed one.
+  return !broader.some(Boolean)
 }
 
 /**
  * Rewrite one class string (or any text carrying class names). A rounded
  * utility whose var resolves to `0` is dropped with its variant prefix — a
- * square system ships no rounded class, not `rounded-none`.
+ * square system ships no rounded class, not `rounded-none` — and so is a
+ * no-op motion read. `context` is every class the element wears (the whole
+ * slot), which those motion drops are judged against.
  */
-export function rewriteClassString(input: string, vars: StudioVars): string {
+export function rewriteClassString(
+  input: string,
+  vars: StudioVars,
+  context = input,
+): string {
   if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
   // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · var · trail
   const shorthand = new RegExp(
@@ -172,16 +293,14 @@ export function rewriteClassString(input: string, vars: StudioVars): string {
     (match, lead, variants, utility, name, trail) => {
       const value = vars.get(name)
       if (value === undefined) return match
-      if (value === "0" && utility.startsWith("rounded")) {
+      if (
+        (value === "0" && utility.startsWith("rounded")) ||
+        isNoopMotion(variants, utility, value, context, vars)
+      ) {
         dropped = true
         return lead && trail ? " " : ""
       }
-      const suffix = utilitySuffix(utility, value)
-      if (suffix !== undefined)
-        return `${lead}${variants}${utility}-${suffix}${trail}`
-      const ref = /^var\((--[\w-]+)\)$/.exec(value)
-      if (ref) return `${lead}${variants}${utility}-(${ref[1]})${trail}`
-      return `${lead}${variants}${utility}-[${value.replace(/\s+/g, "_")}]${trail}`
+      return `${lead}${variants}${resolvedUtility(utility, value)}${trail}`
     },
   )
   // A drop at either end of a class string leaves a stray space; file
@@ -190,16 +309,26 @@ export function rewriteClassString(input: string, vars: StudioVars): string {
   return substituteVarReads(rewritten, (name) => vars.get(name)).text
 }
 
+/** Every class in a value, space-joined — the context a slot's reads share. */
+function classText(...values: (ClassValue | undefined)[]): string {
+  return values
+    .flatMap((v) =>
+      typeof v === "string" ? [v] : Array.isArray(v) ? [classText(...v)] : [],
+    )
+    .join(" ")
+}
+
 function rewriteClassValue(
   value: ClassValue | undefined,
   vars: StudioVars,
+  context = classText(value),
 ): ClassValue | undefined {
   if (value == null || value === false) return value
-  if (typeof value === "string") return rewriteClassString(value, vars)
+  if (typeof value === "string") return rewriteClassString(value, vars, context)
   if (Array.isArray(value)) {
-    // A dropped rounded class can empty a group; the group goes with it.
+    // A dropped class can empty a group; the group goes with it.
     return value
-      .map((v) => rewriteClassValue(v, vars) as string | string[])
+      .map((v) => rewriteClassValue(v, vars, context) as string | string[])
       .filter((v) => v !== "") as ClassValue
   }
   return value
@@ -211,20 +340,23 @@ function isSlotMap(
   return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
+/** A variant slice is judged with the base classes of the slot it lands on. */
 function rewriteVariantSlice(
   value: VariantSliceValue | undefined,
   vars: StudioVars,
+  layer: TvLayer,
 ): VariantSliceValue | undefined {
   if (value === undefined) return undefined
   if (isSlotMap(value)) {
     const result: Record<string, ClassValue> = {}
     for (const [slot, slotValue] of Object.entries(value)) {
-      const rewritten = rewriteClassValue(slotValue, vars)
+      const context = classText(slotValue, layer.slots?.[slot])
+      const rewritten = rewriteClassValue(slotValue, vars, context)
       if (rewritten !== undefined) result[slot] = rewritten
     }
     return result
   }
-  return rewriteClassValue(value, vars)
+  return rewriteClassValue(value, vars, classText(value, layer.base))
 }
 
 /**
@@ -252,7 +384,7 @@ export function resolveClasses(layer: TvLayer, vars: StudioVars): TvLayer {
     for (const [variantName, values] of Object.entries(layer.variants)) {
       const valuesOut: Record<string, VariantSliceValue> = {}
       for (const [valueName, sliceValue] of Object.entries(values)) {
-        const rewritten = rewriteVariantSlice(sliceValue, vars)
+        const rewritten = rewriteVariantSlice(sliceValue, vars, layer)
         if (rewritten !== undefined) valuesOut[valueName] = rewritten
       }
       variants[variantName] = valuesOut
@@ -267,7 +399,11 @@ export function resolveClasses(layer: TvLayer, vars: StudioVars): TvLayer {
       const result: Record<string, unknown> = {}
       for (const [k, v] of Object.entries(cv)) {
         if (k === "class" || k === "className") {
-          const rewritten = rewriteClassValue(v as ClassValue, vars)
+          const rewritten = rewriteClassValue(
+            v as ClassValue,
+            vars,
+            classText(v as ClassValue, layer.base),
+          )
           if (rewritten !== undefined) result[k] = rewritten
         } else {
           result[k] = v
@@ -288,16 +424,16 @@ interface CssObject {
 }
 
 /**
- * Resolve a registry item's `css` field: the studio defaults themselves are
+ * Resolve a registry item's `css` field (or its `cssVars`, whose @theme
+ * values may read a loop's timing): the studio defaults themselves are
  * dropped, reads inside shipped rules are substituted, and a declaration
  * reading an unset studio var goes too — it's invalid at computed-value time
  * live, so dropping it is what the browser already does. Selectors emptied by
  * that are dropped; originally-empty entries (`@plugin` statements) stay.
  */
-export function resolveCssFields(
-  css: RegistryItem["css"],
-  vars: StudioVars,
-): RegistryItem["css"] | undefined {
+export function resolveCssFields<
+  T extends RegistryItem["css"] | RegistryItem["cssVars"],
+>(css: T, vars: StudioVars): T | undefined {
   if (!css) return css
   const visit = (node: CssObject): CssObject | undefined => {
     const out: CssObject = {}
@@ -316,7 +452,7 @@ export function resolveCssFields(
     }
     return Object.keys(out).length > 0 ? out : undefined
   }
-  return visit(css as CssObject) as RegistryItem["css"] | undefined
+  return visit(css as CssObject) as T | undefined
 }
 
 /** Shipped output must carry no studio var — the export owns its values. */

@@ -1,9 +1,9 @@
 "use client"
 
 /* Inputs — the field family: every field renders through Input / InputGroup,
-   so Style reaches them all. Addons fold the group's layout and divider into
-   one pick; steppers and OTP cells are the two fields with a layout of their
-   own. Focus and invalid live in States. */
+   so Style (shell, hover) reaches them all. Addons fold the
+   group's layout and divider into one pick; steppers and OTP cells are the
+   two fields with a layout of their own. Focus and invalid live in States. */
 
 import { cn } from "@/registry/lib/utils"
 

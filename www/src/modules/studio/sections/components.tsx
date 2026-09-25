@@ -2,7 +2,8 @@
 
 /* Components — one row per family, each opening the family's whole recipe
    beside it. The row carries the family's headline value and its specimen;
-   everything else lives in the popover, so a new option never adds a row. */
+   everything else lives in the popover, so a new option never adds a row.
+   Every popover closes on the same Motion group, from the motion registry. */
 
 import { ACCORDION_DEFAULTS, CONTAINER_OPTIONS } from "../axes/accordion"
 import {
@@ -26,14 +27,17 @@ import { INPUT_DEFAULTS, STYLE_OPTIONS as INPUT_STYLES } from "../axes/inputs"
 import { KBD_DEFAULTS } from "../axes/kbd"
 import { LINK_DEFAULTS } from "../axes/links"
 import { HIGHLIGHT_OPTIONS, MENU_DEFAULTS } from "../axes/menus"
+import { MESSAGE_SCROLLER_DEFAULTS } from "../axes/message-scroller"
 import { NUMBER_FIELD_DEFAULTS } from "../axes/number-field"
 import { OTP_FIELD_DEFAULTS } from "../axes/otp-field"
 import { PAGINATION_DEFAULTS } from "../axes/pagination"
 import { CARET_OPTIONS, PICKER_DEFAULTS } from "../axes/pickers"
 import { POPOVER_DEFAULTS } from "../axes/popovers"
 import { PROGRESS_DEFAULTS } from "../axes/progress"
+import { QUESTIONNAIRE_DEFAULTS } from "../axes/questionnaire"
 import { RADIO_DEFAULTS } from "../axes/radio"
 import { SEGMENTED_DEFAULTS } from "../axes/segmented-control"
+import { SIDEBAR_DEFAULTS } from "../axes/sidebar"
 import { SKELETON_DEFAULTS } from "../axes/skeleton"
 import { SLIDER_DEFAULTS, THUMB_OPTIONS } from "../axes/sliders"
 import {
@@ -43,9 +47,14 @@ import {
 import { SWITCH_DEFAULTS } from "../axes/switch"
 import { SEPARATION_OPTIONS, TABLE_DEFAULTS } from "../axes/tables"
 import { TAB_DEFAULTS, TAB_STYLE_OPTIONS } from "../axes/tabs"
+import {
+  MOTION_PATTERNS as TOAST_PATTERNS,
+  TOAST_DEFAULTS,
+} from "../axes/toast"
 import { TOGGLE_DEFAULTS } from "../axes/toggles"
 import { TOOLTIP_DEFAULTS } from "../axes/tooltips"
 import { DialPopover, DialTrigger, optionLabel } from "../dial"
+import { FamilyMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 import { AccordionPreview, AccordionSection } from "./accordion"
 import { AvatarsPreview, AvatarsSection } from "./avatars"
@@ -79,6 +88,7 @@ export const COMPONENTS_DEFAULTS = {
   ...RADIO_DEFAULTS,
   ...SWITCH_DEFAULTS,
   ...CHOICE_CARD_DEFAULTS,
+  ...QUESTIONNAIRE_DEFAULTS,
   ...PICKER_DEFAULTS,
   ...CALENDAR_DEFAULTS,
   ...SLIDER_DEFAULTS,
@@ -86,10 +96,13 @@ export const COMPONENTS_DEFAULTS = {
   ...DIALOG_DEFAULTS,
   ...POPOVER_DEFAULTS,
   ...TOOLTIP_DEFAULTS,
+  ...TOAST_DEFAULTS,
   ...LINK_DEFAULTS,
   ...TAB_DEFAULTS,
   ...BREADCRUMB_DEFAULTS,
   ...PAGINATION_DEFAULTS,
+  ...SIDEBAR_DEFAULTS,
+  ...MESSAGE_SCROLLER_DEFAULTS,
   ...SKELETON_DEFAULTS,
   ...SPINNER_DEFAULTS,
   ...PROGRESS_DEFAULTS,
@@ -106,7 +119,8 @@ interface Family {
   /** The headline value the row shows. */
   summary: (state: StudioState) => string
   Preview?: React.ComponentType<{ state: StudioState }>
-  Body: React.ComponentType<{ studio: Studio }>
+  /** Everything but motion: the popover closes on the family's motion. */
+  Body?: React.ComponentType<{ studio: Studio }>
 }
 
 const FAMILIES: Family[] = [
@@ -159,6 +173,10 @@ const FAMILIES: Family[] = [
     Body: PopoversSection,
   },
   {
+    label: "Toast",
+    summary: (s) => optionLabel(TOAST_PATTERNS, s.toastMotion.pattern),
+  },
+  {
     label: "Navigation",
     summary: (s) => optionLabel(TAB_STYLE_OPTIONS, s.tabStyle),
     Preview: NavigationPreview,
@@ -201,6 +219,8 @@ const FAMILIES: Family[] = [
   },
 ]
 
+export const FAMILY_LABELS = FAMILIES.map((family) => family.label)
+
 export function ComponentsSection({ studio }: { studio: Studio }) {
   const { state } = studio
   return (
@@ -217,7 +237,8 @@ export function ComponentsSection({ studio }: { studio: Studio }) {
           }
         >
           <DialPopover className="w-80">
-            <Body studio={studio} />
+            {Body && <Body studio={studio} />}
+            <FamilyMotion family={label} studio={studio} />
           </DialPopover>
         </DialTrigger>
       ))}

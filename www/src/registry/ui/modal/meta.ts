@@ -24,7 +24,6 @@ const modalMeta = {
       values: ["center", "top"] as const,
       description: "Where the modal rests in the viewport.",
     },
-    // Synced with popover and tooltip: the studio's Motion axis writes all three.
     motion: {
       kind: "enum",
       default: "scale",

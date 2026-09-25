@@ -37,10 +37,10 @@ import type { ControlValues, SerializableControl } from "./types"
  * into three detached cards — preview, controls, code — each carrying its own
  * border and radius, with the controls card sliding in from the right and
  * *pushing* the preview (the flex sibling reflows) rather than overlaying it.
- * Everything tweens with the drawer easing (--ease-fluid-out): the panel width,
- * the gaps, and the corners that were squared where the cards met. The
- * controls card takes its natural height, so a tall control set extends the
- * row instead of scrolling.
+ * Everything tweens with the drawer easing: the panel width, the gaps, and
+ * the corners that were squared where the cards met. The controls card takes
+ * its natural height, so a tall control set extends the row instead of
+ * scrolling.
  *
  * The displayed code is filled from a build-time template-with-holes over the
  * real demo source (see codegen/source-overlay.ts). Preview and code derive
@@ -120,7 +120,7 @@ export function InteractiveDemo({
             clear of the trigger pinned in the corner. */}
         <PreviewPanel
           className={cn(
-            "flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border transition-[border-radius] duration-300 ease-fluid-out motion-reduce:transition-none",
+            "flex min-w-0 flex-1 flex-col overflow-hidden rounded-lg border transition-[border-radius] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
             !controlsOpen && "rounded-b-none",
           )}
         >
@@ -137,7 +137,7 @@ export function InteractiveDemo({
                 isIconOnly
                 aria-label="Controls"
                 className={cn(
-                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,translate] duration-300 ease-fluid-out motion-reduce:transition-none",
+                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,translate] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
                   controlsOpen && "translate-x-12 opacity-0",
                 )}
                 onPress={() => setControlsOpen(true)}
@@ -149,7 +149,7 @@ export function InteractiveDemo({
           </span>
           <PreviewControls
             className={cn(
-              "transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none",
+              "transition-[padding] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
               !controlsOpen && "pr-11",
             )}
           />
@@ -167,7 +167,7 @@ export function InteractiveDemo({
             true zero width instead of leaving a bordered sliver. */}
         <div
           className={cn(
-            "flex overflow-hidden transition-[width,margin,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0",
+            "flex overflow-hidden transition-[width,margin,display] transition-discrete duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none md:shrink-0",
             "starting:mt-0 md:starting:ml-0 md:starting:w-0",
             controlsOpen
               ? "mt-3 flex w-full md:mt-0 md:ml-3 md:w-56"
@@ -186,7 +186,7 @@ export function InteractiveDemo({
           <div
             className={cn(
               "**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
-              "min-h-full w-full overflow-hidden rounded-lg border bg-card transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none starting:h-56",
+              "min-h-full w-full overflow-hidden rounded-lg border bg-card transition-[height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] [interpolate-size:allow-keywords] motion-reduce:transition-none starting:h-56",
               controlsOpen ? "h-auto" : "h-56",
             )}
           >
@@ -219,7 +219,7 @@ export function InteractiveDemo({
           borders overlapping into one hairline); open, it detaches below. */}
       <CodeBlock
         className={cn(
-          "rounded-lg transition-[border-radius,margin] duration-300 ease-fluid-out motion-reduce:transition-none",
+          "rounded-lg transition-[border-radius,margin] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none",
           controlsOpen ? "mt-3" : "-mt-px rounded-t-none",
         )}
         actions={

@@ -8,15 +8,15 @@ const { useStyles, styles } = createStyles(switchMeta, {
       root: "flex items-center has-data-description:items-start",
       control: [
         "relative flex items-center gap-2 rounded-(--studio-switch-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius)",
-        "transition-colors duration-75 has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5",
+        "transition-colors duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
-        "inline-flex shrink-0 cursor-pointer items-center rounded-(--studio-switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-200",
+        "inline-flex shrink-0 cursor-pointer items-center rounded-(--studio-switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
         "selected:bg-selection",
         "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
       ],
       thumb: [
-        "pointer-events-none block rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-200",
+        "pointer-events-none block rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
         "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
       ],
     },

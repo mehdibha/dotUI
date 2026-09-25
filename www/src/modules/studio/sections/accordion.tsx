@@ -1,7 +1,7 @@
 "use client"
 
-/* Accordion — how the container groups the items, and the marker that says a
-   trigger opens. Expand motion lives in Motion. */
+/* Accordion — how the container groups the items and the marker that says
+   a trigger opens. */
 
 import {
   CONTAINER_OPTIONS,

@@ -1,6 +1,6 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page: the scrim under them, and where
+/* Dialogs — how modal layers meet the page: the scrim under them, where
    a dialog rests. Backdrop writes Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"

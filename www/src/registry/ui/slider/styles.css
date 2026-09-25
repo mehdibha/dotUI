@@ -5,4 +5,6 @@
   --studio-slider-fill-color: var(--color-primary);
   --studio-slider-cursor: var(--cursor-drag);
   --studio-slider-dragging-cursor: var(--cursor-dragging);
+  --studio-slider-state-duration: 150ms;
+  --studio-slider-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

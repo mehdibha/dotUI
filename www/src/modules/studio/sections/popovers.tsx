@@ -1,8 +1,8 @@
 "use client"
 
-/* Popovers — the anchored panel's own decisions past Surfaces, Menus and
-   Motion: the arrow at the trigger and how a title sits. The tooltip is a
-   surface decision of its own, never synced to the popover's. */
+/* Popovers — the anchored panel's own decisions past Surfaces and Menus: the
+   arrow at the trigger and how a title sits. The tooltip's surface is its
+   own, never synced to the popover's. */
 
 import { HEADER_OPTIONS } from "../axes/popovers"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"

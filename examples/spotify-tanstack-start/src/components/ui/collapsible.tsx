@@ -10,7 +10,7 @@ const collapsibleVariants = tv({
     root: "group/collapsible",
     trigger: "cursor-interactive focus-reset focus-visible:focus-ring",
     panel:
-      "h-(--disclosure-panel-height) overflow-clip opacity-0 duration-300 ease-fluid-out group-expanded/collapsible:opacity-100 motion-safe:transition-[height,opacity]",
+      "h-(--disclosure-panel-height) overflow-clip duration-200 ease-[cubic-bezier(0,0,0.58,1)] motion-safe:transition-[height]",
   },
 });
 
