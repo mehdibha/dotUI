@@ -1,14 +1,12 @@
 "use client"
 
 /* Popovers — the anchored panel's own decisions past Surfaces and Menus: the
-   arrow at the trigger, how a title sits, and how it moves (menus, selects
-   and pickers ride on it). The tooltip's surface and motion are its own,
-   never synced to the popover's. */
+   arrow at the trigger and how a title sits. The tooltip's surface is its
+   own, never synced to the popover's. */
 
 import { HEADER_OPTIONS } from "../axes/popovers"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import { DialGlyph, DialSegmented, DialSelect, DialToggle } from "../dial"
-import { PopoverMotion, TooltipMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -96,7 +94,6 @@ export function PopoversSection({ studio }: { studio: Studio }) {
         onChange={set("popoverHeader")}
         options={HEADER_OPTIONS}
       />
-      <PopoverMotion label="Motion" studio={studio} />
       <DialSelect
         label="Tooltip"
         value={state.tooltipStyle}
@@ -110,7 +107,6 @@ export function PopoversSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
-      <TooltipMotion label="Tooltip motion" studio={studio} />
     </>
   )
 }

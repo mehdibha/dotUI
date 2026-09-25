@@ -5,7 +5,8 @@
    dragging its two handles (arrows nudge by 0.01, shift by 0.1), a spring
    by its bounce (Time) or its physics — with the named curves one tap away.
    DialMotion composes one component's entrance: pattern, curve, enter and
-   exit; DialStateMotion a control's state change: duration and curve. */
+   exit; DialStateMotion a control's state change: duration and curve;
+   DialLoop a keyframe loop's cycle and curve. */
 
 import { useId, useRef } from "react"
 import { mergeProps, useFocusRing, useMove } from "react-aria"
@@ -21,16 +22,16 @@ import {
   CURVES,
   curveName,
   curveTiming,
+  CYCLE_RANGE,
   DURATION_RANGE,
   springParams,
   springProgress,
 } from "./axes/motion"
-import type { Bezier, Curve, Entrance, StateChange } from "./axes/motion"
+import type { Bezier, Curve, Entrance, Loop, StateChange } from "./axes/motion"
 import {
   DIAL_LABEL,
   DIAL_ROW,
   DIAL_VALUE,
-  DialFolder,
   DialGlyph,
   DialPopover,
   DialRow,
@@ -595,41 +596,28 @@ function DialDuration({
   )
 }
 
-/** One component's entrance, folded under `label`. A single pattern (the
- *  drawer's slide) leaves nothing to pick; a physics spring times itself, so
- *  its enter row only reads; "none" leaves nothing to time, `children`
- *  (rows timed alongside, like the toast's swipe) included. */
+/** One component's entrance. A single pattern (the drawer's slide) leaves
+ *  nothing to pick; a physics spring times itself, so its enter row only
+ *  reads; "none" leaves nothing to time, `children` (rows timed alongside,
+ *  like the toast's swipe) included. */
 export function DialMotion({
-  label,
   value,
   onChange,
   patterns,
-  defaultOpen,
   children,
 }: {
-  label: string
   value: Entrance
   onChange: (value: Entrance) => void
   patterns: DialSelectOption[]
-  defaultOpen?: boolean
   children?: React.ReactNode
 }) {
   const set =
     <K extends keyof Entrance>(key: K) =>
     (next: Entrance[K]) =>
       onChange({ ...value, [key]: next })
-  const pattern = patterns.find((p) => p.value === value.pattern)
   const enter = curveTiming(value.curve, value.enter).ms
   return (
-    <DialFolder
-      title={label}
-      defaultOpen={defaultOpen}
-      value={
-        value.pattern === "none"
-          ? pattern?.label
-          : `${pattern?.label ?? value.pattern} · ${ms(enter)}`
-      }
-    >
+    <>
       {patterns.length > 1 && (
         <DialSelect
           label="Entrance"
@@ -678,37 +666,22 @@ export function DialMotion({
           {children}
         </>
       )}
-    </DialFolder>
-  )
-}
-
-/** A state change at a glance, for the row that opens it: its duration and
- *  its curve's specimen. */
-export function StateMotionValue({ value }: { value: StateChange }) {
-  return (
-    <>
-      <span className="truncate">{ms(value.duration)}</span>
-      <DialGlyph>
-        <CurveGlyph curve={{ type: "easing", ease: value.ease }} />
-      </DialGlyph>
     </>
   )
 }
 
 /** A control's state change: how long hover, press and selection take to
- *  settle, and on what curve. `title` folds the two rows under it. */
+ *  settle, and on what curve. */
 export function DialStateMotion({
   label,
   value,
   onChange,
-  title,
 }: {
   label: string
   value: StateChange
   onChange: (value: StateChange) => void
-  title?: string
 }) {
-  const rows = (
+  return (
     <>
       <DialDuration
         label={label}
@@ -726,10 +699,43 @@ export function DialStateMotion({
       />
     </>
   )
-  if (!title) return rows
+}
+
+/** A keyframe loop: how long one cycle runs, and on what curve where the
+ *  loop has one to bend (`curve`). */
+export function DialLoop({
+  label,
+  value,
+  onChange,
+  curve = true,
+}: {
+  label: string
+  value: Loop
+  onChange: (value: Loop) => void
+  curve?: boolean
+}) {
   return (
-    <DialFolder title={title} value={ms(value.duration)} defaultOpen={false}>
-      {rows}
-    </DialFolder>
+    <>
+      <DialSlider
+        label={label}
+        value={value.cycle}
+        onChange={(cycle) => onChange({ ...value, cycle })}
+        minValue={CYCLE_RANGE.min}
+        maxValue={CYCLE_RANGE.max}
+        step={CYCLE_RANGE.step}
+        format={ms}
+      />
+      {curve && (
+        <DialCurve
+          label="Curve"
+          value={{ type: "easing", ease: value.ease }}
+          onChange={(next) =>
+            next.type === "easing" && onChange({ ...value, ease: next.ease })
+          }
+          ms={value.cycle}
+          springs={false}
+        />
+      )}
+    </>
   )
 }

@@ -132,11 +132,29 @@ const NAMED_EASES: Record<string, string> = {
   linear: "linear",
 }
 
+/** Tailwind's named loops, keyed as `animationKey` normalizes a value. */
+const NAMED_ANIMATIONS: Record<string, string> = {
+  "spin 1000ms linear infinite": "spin",
+  "pulse 2000ms cubic-bezier(0.4,0,0.6,1) infinite": "pulse",
+}
+
+/** An animation shorthand with whitespace-free commas and ms durations. */
+const animationKey = (value: string) =>
+  value
+    .replace(/\s*,\s*/g, ",")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(
+      /(?<=^| )([\d.]+)s(?= |$)/g,
+      (_, n: string) => `${Number(n) * 1000}ms`,
+    )
+
 /**
  * The utility suffix a resolved value maps to, or undefined for an arbitrary
  * value. Theme tokens map by name (`var(--radius-md)` → `md`); spacing by
  * multiplier; the shadow literal the registry's defaults use by utility;
- * whole milliseconds and Tailwind's named curves by motion utility.
+ * whole milliseconds and Tailwind's named curves and loops by motion
+ * utility.
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
@@ -159,6 +177,7 @@ function utilitySuffix(utility: string, value: string): string | undefined {
       /^var\(--ease-(in|out|in-out)\)$/.exec(value)?.[1] ??
       NAMED_EASES[value.replace(/\s+/g, "")]
     )
+  if (utility === "animate") return NAMED_ANIMATIONS[animationKey(value)]
   return undefined
 }
 
@@ -167,7 +186,8 @@ function utilitySuffix(utility: string, value: string): string | undefined {
    unprefixed transition utility, which already sets it — unless tw-animate's
    `animate-in` / `animate-out` there reads it too, with defaults of its own; a
    variant-prefixed one equal to its unprefixed sibling, which it would
-   override with itself. */
+   override with itself, or at the default beside a transition utility of
+   its own prefix (`before:transition-*`). */
 const TRANSITION_DEFAULT: Record<string, string> = {
   duration: "150",
   ease: "in-out",
@@ -183,7 +203,10 @@ function resolvedUtility(utility: string, value: string): string {
   const ref = /^var\((--[\w-]+)\)$/.exec(value)
   if (ref) return `${utility}-(${ref[1]})`
   // Curves drop the spaces after commas; `linear()` stops keep theirs as `_`.
-  const arbitrary = utility === "ease" ? value.replace(/\s*,\s*/g, ",") : value
+  const arbitrary =
+    utility === "ease" || utility === "animate"
+      ? value.replace(/\s*,\s*/g, ",")
+      : value
   return `${utility}-[${arbitrary.replace(/\s+/g, "_")}]`
 }
 
@@ -196,12 +219,30 @@ function isNoopMotion(
 ): boolean {
   if (!(utility in TRANSITION_DEFAULT)) return false
   const shipped = resolvedUtility(utility, value)
-  if (!variants)
-    return (
-      shipped === `${utility}-${TRANSITION_DEFAULT[utility]}` &&
-      HAS_TRANSITION.test(context) &&
-      !HAS_ANIMATION.test(context)
-    )
+  const atDefault = (classes: string) =>
+    shipped === `${utility}-${TRANSITION_DEFAULT[utility]}` &&
+    HAS_TRANSITION.test(classes) &&
+    !HAS_ANIMATION.test(classes)
+  if (!variants) return atDefault(context)
+  const own = variants.slice(0, -1).split(":")
+  // Every other read of the utility that applies whenever this one does,
+  // by prefix: `a:duration-x` under `a:b:duration-y`, "" when unprefixed.
+  const broader = context.split(/\s+/).flatMap((cls) => {
+    const match = new RegExp(`^(?:(.+?):)?${utility}-`).exec(cls)
+    const prefix = match?.[1] ?? ""
+    if (!match || prefix === own.join(":")) return []
+    return prefix.split(":").every((v) => !v || own.includes(v)) ? [prefix] : []
+  })
+  // At the default beside a transition utility of its own prefix
+  // (`before:transition-*`), with nothing broader to override.
+  if (broader.length === 0) {
+    const scoped = context
+      .split(/\s+/)
+      .filter((cls) => cls.startsWith(variants))
+      .map((cls) => cls.slice(variants.length))
+      .join(" ")
+    if (atDefault(scoped)) return true
+  }
   const sibling = new RegExp(
     `(?:^|\\s)${utility}-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)(?=\\s|$)`,
   ).exec(context)?.[1]
@@ -211,14 +252,8 @@ function isNoopMotion(
     resolvedUtility(utility, siblingValue) !== shipped
   )
     return false
-  // It stays when it beats a broader prefixed one (`a:duration-x` under
-  // `a:b:duration-y`), whose every variant it also wears.
-  const own = variants.slice(0, -1).split(":")
-  return !context.split(/\s+/).some((cls) => {
-    const prefix = new RegExp(`^(.+?):${utility}-`).exec(cls)?.[1]
-    if (!prefix || prefix === own.join(":")) return false
-    return prefix.split(":").every((v) => own.includes(v))
-  })
+  // It stays when it beats a broader prefixed one.
+  return !broader.some(Boolean)
 }
 
 /**
@@ -389,16 +424,16 @@ interface CssObject {
 }
 
 /**
- * Resolve a registry item's `css` field: the studio defaults themselves are
+ * Resolve a registry item's `css` field (or its `cssVars`, whose @theme
+ * values may read a loop's timing): the studio defaults themselves are
  * dropped, reads inside shipped rules are substituted, and a declaration
  * reading an unset studio var goes too — it's invalid at computed-value time
  * live, so dropping it is what the browser already does. Selectors emptied by
  * that are dropped; originally-empty entries (`@plugin` statements) stay.
  */
-export function resolveCssFields(
-  css: RegistryItem["css"],
-  vars: StudioVars,
-): RegistryItem["css"] | undefined {
+export function resolveCssFields<
+  T extends RegistryItem["css"] | RegistryItem["cssVars"],
+>(css: T, vars: StudioVars): T | undefined {
   if (!css) return css
   const visit = (node: CssObject): CssObject | undefined => {
     const out: CssObject = {}
@@ -417,7 +452,7 @@ export function resolveCssFields(
     }
     return Object.keys(out).length > 0 ? out : undefined
   }
-  return visit(css as CssObject) as RegistryItem["css"] | undefined
+  return visit(css as CssObject) as T | undefined
 }
 
 /** Shipped output must carry no studio var — the export owns its values. */

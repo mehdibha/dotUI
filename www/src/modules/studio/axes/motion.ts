@@ -5,9 +5,11 @@
    `ease-[cubic-bezier(…)]`, `ease-[linear(…)]`).
 
    A component axis keeps one `<name>Motion` state key — an Entrance (a
-   floating layer: its pattern param plus in/out timing) or a StateChange
-   (hover, press, selection) — and resolves it with `resolveEntrance` /
-   `resolveStateChange`, which write only the vars that leave the defaults.
+   floating layer: its pattern param plus in/out timing), a StateChange
+   (hover, press, selection) or a Loop (a keyframe animation repeating while
+   something loads) — and resolves it with `resolveEntrance` /
+   `resolveStateChange` / `resolveLoop`, which write only the vars that
+   leave the defaults.
    Curves follow DialKit's transition modes: a cubic bezier, a spring timed
    by its visual duration and bounce, or a spring by its physics. Springs
    ship as `linear()` over their settle time; exits never spring. */
@@ -39,7 +41,15 @@ export interface StateChange {
   ease: Bezier
 }
 
+/** A keyframe loop — a spinner's turn, a skeleton's pulse: one cycle's
+ *  length in ms and its curve. */
+export interface Loop {
+  cycle: number
+  ease: Bezier
+}
+
 export const DURATION_RANGE = { min: 0, max: 1000, step: 10 }
+export const CYCLE_RANGE = { min: 200, max: 4000, step: 50 }
 
 const easing = (ease: Bezier): Curve => ({ type: "easing", ease })
 
@@ -207,6 +217,13 @@ export function stateChangeVars(id: string, value: StateChange) {
   }
 }
 
+export function loopVars(id: string, value: Loop) {
+  return {
+    [`--studio-${id}-loop-duration`]: `${value.cycle}ms`,
+    [`--studio-${id}-loop-ease`]: bezierCss(value.ease),
+  }
+}
+
 /* --------------------------------- Resolve -------------------------------- */
 
 /** The vars that leave the defaults: an untouched system writes none. */
@@ -272,5 +289,13 @@ export function resolveStateChange(
   return changed(
     stateChangeVars(id, sanitize(value, defaults)),
     stateChangeVars(id, defaults),
+  )
+}
+
+/** A keyframe loop's `--studio-<id>-loop-*` tokens. */
+export function resolveLoop(id: string, value: Loop, defaults: Loop) {
+  return changed(
+    loopVars(id, sanitize(value, defaults)),
+    loopVars(id, defaults),
   )
 }

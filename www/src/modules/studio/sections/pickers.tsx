@@ -20,7 +20,6 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import { CalendarMotion } from "../motion-controls"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
@@ -178,7 +177,6 @@ export function PickersSection({ studio }: { studio: Studio }) {
             onChange={set("calendarWeekdays")}
             options={WEEKDAY_OPTIONS}
           />
-          <CalendarMotion label="Transition" studio={studio} />
         </DialPopover>
       </DialTrigger>
     </>

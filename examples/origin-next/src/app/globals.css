@@ -135,8 +135,10 @@
     --color-chart-3: var(--chart-3);
     --color-chart-2: var(--chart-2);
     --color-chart-1: var(--chart-1);
-    --animate-loader-blades: loader-blades 0.8s steps(8, end) infinite;
-    --animate-loader-dots: loader-dots 0.9s ease-in-out infinite;
+    --animate-loader-blades: loader-blades 1000ms steps(8, end) infinite;
+    --animate-loader-dots: loader-dots 1000ms ease-in-out infinite;
+    --animate-skeleton-shimmer: skeleton-shimmer 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-skeleton-pulse: skeleton-pulse 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
     --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;
   @keyframes loader-blades {
@@ -151,6 +153,16 @@
         }
   50% {
     opacity: 1;
+        }
+    }
+  @keyframes skeleton-shimmer {
+  to {
+    background-position: 0%;
+        }
+    }
+  @keyframes skeleton-pulse {
+  50% {
+    opacity: 0.5;
         }
     }
   @keyframes progress-slide {
@@ -382,25 +394,13 @@
 }
 
 @utility focus-ring {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--color-bg),
-    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),
-    var(--focus-ring-inset,) 0 0 0
-      calc(var(--focus-ring-offset) + var(--focus-ring-width))
-      var(--focus-ring-color);
-    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
-    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
-    var(--tw-shadow, 0 0 #0000);
+    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--color-bg), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 @utility focus-input {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--color-bg),
-    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),
-    var(--focus-input-inset,) 0 0 0
-      calc(var(--focus-input-offset) + var(--focus-input-width))
-      var(--tw-ring-color, var(--focus-input-color));
-    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
-    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
-    var(--tw-shadow, 0 0 #0000);
+    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--color-bg), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
+    box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 @utility no-highlight {
@@ -461,26 +461,28 @@
     background-size: 300% 100%;
     background-position: 100%;
     background-repeat: no-repeat;
+    animation: var(--skeleton-animation, none);
   &:where(img, video, canvas, svg) {
     content-visibility: hidden;
+    }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
     }
 }
 
 @utility skeleton--shimmer {
-    --skeleton-image: linear-gradient(
-    to right,
-    var(--color-muted) 33%,
-    color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
-    var(--color-muted) 66%
-  );
+    --skeleton-image: linear-gradient(to right, var(--color-muted) 33%, color-mix(in oklab, var(--color-muted), var(--color-bg) 45%), var(--color-muted) 66%);
+    --skeleton-animation: var(--animate-skeleton-shimmer);
 }
 
 @utility skeleton--pulse {
     --skeleton-image: none;
+    --skeleton-animation: var(--animate-skeleton-pulse);
 }
 
 @utility skeleton--none {
     --skeleton-image: none;
+    --skeleton-animation: none;
 }
   [data-required] [data-label]::after {
     content: "*" / "";

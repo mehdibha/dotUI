@@ -13,10 +13,11 @@ import {
   bezierCss,
   curveTiming,
   entranceVars,
+  loopVars,
   resolveEntrance,
   stateChangeVars,
 } from "./motion"
-import type { Entrance, StateChange } from "./motion"
+import type { Entrance, Loop, StateChange } from "./motion"
 
 const ENTRANCE: Entrance = {
   pattern: "scale",
@@ -96,15 +97,23 @@ describe("motion vocabulary", () => {
 /* A `<name>Motion` state key owns the `--studio-<name>-*` vars. */
 const idOf = (key: string) =>
   key.replace(/Motion$/, "").replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
-const MOTION_KEYS = Object.keys(DEFAULTS).filter((key) =>
-  key.endsWith("Motion"),
+/* The var-backed timings; a param-backed motion (the chart's named
+   transition) is its axis's own business. */
+const MOTION_KEYS = Object.keys(DEFAULTS).filter(
+  (key) =>
+    key.endsWith("Motion") &&
+    typeof DEFAULTS[key as keyof StudioState] === "object",
 ) as (keyof StudioState)[]
 const isEntrance = (value: unknown): value is Entrance =>
   typeof value === "object" && value !== null && "pattern" in value
+const isLoop = (value: unknown): value is Loop =>
+  typeof value === "object" && value !== null && "cycle" in value
 const varsOf = (key: keyof StudioState, value: unknown) =>
   isEntrance(value)
     ? entranceVars(idOf(key), value)
-    : stateChangeVars(idOf(key), value as StateChange)
+    : isLoop(value)
+      ? loopVars(idOf(key), value)
+      : stateChangeVars(idOf(key), value as StateChange)
 
 /* Each component's motion vars live twice: the `:root` defaults in its
    styles.css (what the publisher resolves) and its axis's state defaults
@@ -148,11 +157,24 @@ describe("component motion", () => {
     },
   )
 
+  test.each(ids("loop-duration"))(
+    "%s: styles.css agrees with the loop defaults",
+    (id) => {
+      const value = state[`${camel(id)}Motion`] as Loop
+      expect(value).toBeDefined()
+      expect(declared(id, ["loop-duration", "loop-ease"])).toEqual(
+        loopVars(id, value),
+      )
+    },
+  )
+
   test.each(MOTION_KEYS)("%s writes its own component's vars only", (key) => {
-    const value = DEFAULTS[key] as Entrance | StateChange
+    const value = DEFAULTS[key] as Entrance | StateChange | Loop
     const retimed = isEntrance(value)
       ? { ...value, enter: value.enter + 50 }
-      : { ...value, duration: value.duration + 50 }
+      : isLoop(value)
+        ? { ...value, cycle: value.cycle + 50 }
+        : { ...value, duration: value.duration + 50 }
     const ds = resolveDesignSystem({ ...DEFAULTS, [key]: retimed })
     expect(Object.keys(ds.tokens).length).toBeGreaterThan(0)
     expect(Object.keys(varsOf(key, retimed))).toEqual(

@@ -1,4 +1,6 @@
 :root {
   --studio-table-radius: var(--studio-radius-control);
   --studio-table-cell-radius: var(--studio-radius-item);
+  --studio-table-state-duration: 150ms;
+  --studio-table-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

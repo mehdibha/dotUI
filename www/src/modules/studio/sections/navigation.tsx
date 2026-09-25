@@ -1,9 +1,8 @@
 "use client"
 
-/* Navigation — how a link announces itself and eases, the selected-tab
-   signature and its motion, the breadcrumb trail, the current page, and how
-   the sidebar collapses. Link and tab colors are leaves of Color's Primary;
-   pagination's cells wear Buttons' look. */
+/* Navigation — how a link announces itself, the selected-tab signature, the
+   breadcrumb trail and the current page. Link and tab colors are leaves of
+   Color's Primary; pagination's cells wear Buttons' look. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -19,8 +18,6 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import { StateMotionValue } from "../dial-motion"
-import { LinkMotion, SidebarMotion, TabsMotion } from "../motion-controls"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -205,62 +202,28 @@ export function NavigationSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialTrigger
+      <DialSelect
         label="Links"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(UNDERLINE_OPTIONS, state.linkUnderline)}
-            </span>
-            <LinkGlyph underline={state.linkUnderline} />
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSelect
-            label="Underline"
-            value={state.linkUnderline}
-            onChange={set("linkUnderline")}
-            rowPreview={false}
-            options={UNDERLINE_OPTIONS.map((option) => ({
-              ...option,
-              preview: <LinkGlyph underline={option.value} />,
-            }))}
-          />
-          <LinkMotion label="Transition" studio={studio} />
-        </DialPopover>
-      </DialTrigger>
-      <DialTrigger
+        value={state.linkUnderline}
+        onChange={set("linkUnderline")}
+        options={UNDERLINE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <LinkGlyph underline={option.value} />,
+        }))}
+      />
+      <DialSelect
         label="Tabs"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(TAB_STYLE_OPTIONS, state.tabStyle)}
-            </span>
+        value={state.tabStyle}
+        onChange={set("tabStyle")}
+        options={TAB_STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
             <DialGlyph>
-              <TabGlyph style={state.tabStyle} />
+              <TabGlyph style={option.value} />
             </DialGlyph>
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSelect
-            label="Style"
-            value={state.tabStyle}
-            onChange={set("tabStyle")}
-            rowPreview={false}
-            options={TAB_STYLE_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <TabGlyph style={option.value} />
-                </DialGlyph>
-              ),
-            }))}
-          />
-          <TabsMotion label="Transition" studio={studio} />
-        </DialPopover>
-      </DialTrigger>
+          ),
+        }))}
+      />
       <DialTrigger
         label="Breadcrumbs"
         value={
@@ -302,14 +265,6 @@ export function NavigationSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
-      <DialTrigger
-        label="Sidebar"
-        value={<StateMotionValue value={state.sidebarMotion} />}
-      >
-        <DialPopover>
-          <SidebarMotion label="Collapse" studio={studio} />
-        </DialPopover>
-      </DialTrigger>
     </>
   )
 }

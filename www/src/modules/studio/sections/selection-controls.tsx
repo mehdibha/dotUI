@@ -3,8 +3,7 @@
 /* Selection controls — Checkbox, Radio, Switch and their card variant. A
    radio is always a circle and a switch a pill, so Corner stops at the box;
    each control's color is a leaf of Color's Primary. Choice cards are one
-   treatment across all three. Radio rides the checkbox's transition; the
-   switch times its own flip. */
+   treatment across all three. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -18,8 +17,6 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import { StateMotionValue } from "../dial-motion"
-import { CheckboxMotion, SwitchMotion } from "../motion-controls"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
@@ -106,37 +103,19 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialTrigger
+      <DialSelect
         label="Checkbox"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(CORNER_OPTIONS, state.checkCorner)}
-            </span>
+        value={state.checkCorner}
+        onChange={set("checkCorner")}
+        options={CORNER_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
             <DialGlyph>
-              <CornerGlyph corner={state.checkCorner} />
+              <CornerGlyph corner={option.value} />
             </DialGlyph>
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSelect
-            label="Corner"
-            value={state.checkCorner}
-            onChange={set("checkCorner")}
-            rowPreview={false}
-            options={CORNER_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <CornerGlyph corner={option.value} />
-                </DialGlyph>
-              ),
-            }))}
-          />
-          <CheckboxMotion label="Transition" studio={studio} />
-        </DialPopover>
-      </DialTrigger>
+          ),
+        }))}
+      />
       <DialTrigger
         label="Choice cards"
         value={
@@ -176,14 +155,6 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
             onChange={set("cardControl")}
             options={CONTROL_OPTIONS}
           />
-        </DialPopover>
-      </DialTrigger>
-      <DialTrigger
-        label="Switch"
-        value={<StateMotionValue value={state.switchMotion} />}
-      >
-        <DialPopover>
-          <SwitchMotion label="Transition" studio={studio} />
         </DialPopover>
       </DialTrigger>
     </>

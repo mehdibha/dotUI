@@ -335,6 +335,24 @@ describe("resolve-classes", () => {
     )
   })
 
+  test("rewriteClassString ships Tailwind's named loops by name", () => {
+    const vars = resolveStudioVars({
+      "--studio-cycle": "1000ms",
+      "--studio-curve": "linear",
+      "--studio-spin": "spin var(--studio-cycle) var(--studio-curve) infinite",
+      "--studio-pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      "--studio-fast": "spin 600ms cubic-bezier(0.4, 0, 0.2, 1) infinite",
+    })
+    expect(
+      rewriteClassString(
+        "animate-(--studio-spin) data-busy:animate-(--studio-pulse) animate-(--studio-fast)",
+        vars,
+      ),
+    ).toBe(
+      "animate-spin data-busy:animate-pulse animate-[spin_600ms_cubic-bezier(0.4,0,0.2,1)_infinite]",
+    )
+  })
+
   test("rewriteClassString drops motion reads that change nothing", () => {
     const vars = resolveStudioVars({
       "--studio-enter": "150ms",
@@ -392,6 +410,23 @@ describe("resolve-classes", () => {
     ).toBe(
       "transition-opacity duration-100 exiting:duration-300 exiting:data-swiping:duration-100",
     )
+    // At the default beside a transition of its own prefix: no class,
+    // unless a broader read would take over.
+    expect(
+      rewriteClassString(
+        "before:transition-opacity before:duration-(--studio-fast) before:ease-(--studio-ease)",
+        vars,
+      ),
+    ).toBe("before:transition-opacity before:duration-100")
+    expect(
+      rewriteClassString(
+        "duration-300 hover:transition-colors hover:duration-(--studio-enter)",
+        vars,
+      ),
+    ).toBe("duration-300 hover:transition-colors hover:duration-150")
+    expect(
+      rewriteClassString("transition-colors hover:ease-(--studio-ease)", vars),
+    ).toBe("transition-colors hover:ease-in-out")
   })
 
   test("resolveClasses judges motion drops against the whole slot", () => {
@@ -513,6 +548,23 @@ describe("resolveCssFields", () => {
   test("keeps originally-empty objects (@plugin statements)", () => {
     const css = { '@plugin "tailwindcss-foo"': {} }
     expect(resolveCssFields(css, resolveStudioVars({}))).toEqual(css)
+  })
+
+  test("resolves @theme values in cssVars", () => {
+    const out = resolveCssFields(
+      {
+        theme: {
+          "--animate-loader-blades":
+            "loader-blades var(--studio-loader-loop-duration) steps(8, end) infinite",
+        },
+      },
+      resolveStudioVars({ "--studio-loader-loop-duration": "800ms" }),
+    )
+    expect(out).toEqual({
+      theme: {
+        "--animate-loader-blades": "loader-blades 800ms steps(8, end) infinite",
+      },
+    })
   })
 })
 

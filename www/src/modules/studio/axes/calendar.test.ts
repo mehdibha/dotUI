@@ -77,3 +77,39 @@ describe("calendar motion", () => {
     )
   })
 })
+
+describe("picker motion", () => {
+  test("ships today's timing: no class for the time column, 100ms for the swatch ring", async () => {
+    const time = await shipped("time-picker")
+    expect(time).toContain(
+      "outline-hidden transition-colors hover:bg-accent-muted",
+    )
+    expect(time).not.toContain("--studio-")
+    const swatch = await shipped("color-swatch-picker")
+    expect(swatch).toContain(
+      "before:transition-[opacity,scale] before:duration-100 before:content-['']",
+    )
+    expect(swatch).not.toMatch(/ease-/)
+    expect(swatch).not.toContain("--studio-")
+  })
+
+  test("a tweak times each picker on its own", async () => {
+    const { tokens } = resolveDesignSystem({
+      ...DEFAULTS,
+      timePickerMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+      colorSwatchPickerMotion: { duration: 150, ease: [0, 0, 0.2, 1] },
+    })
+    expect(tokens).toEqual({
+      "--studio-time-picker-state-duration": "200ms",
+      "--studio-time-picker-state-ease": "cubic-bezier(0, 0, 0.2, 1)",
+      "--studio-color-swatch-picker-state-duration": "150ms",
+      "--studio-color-swatch-picker-state-ease": "cubic-bezier(0, 0, 0.2, 1)",
+    })
+    expect(await shipped("time-picker", tokens)).toContain(
+      "transition-colors duration-200 ease-out hover:bg-accent-muted",
+    )
+    expect(await shipped("color-swatch-picker", tokens)).toContain(
+      "before:transition-[opacity,scale] before:ease-out before:content-['']",
+    )
+  })
+})

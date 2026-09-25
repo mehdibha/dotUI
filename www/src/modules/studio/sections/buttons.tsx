@@ -2,8 +2,7 @@
 
 /* Buttons — the family: Button sets the look that Toggle, Group and
    Segmented control reuse. Style opens the button recipe whole — the family
-   cards, then radius, hover, press and how fast they settle. Color is a leaf
-   of Color's Primary. */
+   cards, then radius, hover and press. Color is a leaf of Color's Primary. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -27,7 +26,6 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import { ButtonMotion, SegmentedControlMotion } from "../motion-controls"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
@@ -217,7 +215,6 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             onChange={set("buttonPress")}
             options={PRESS_OPTIONS}
           />
-          <ButtonMotion label="Transition" studio={studio} />
         </DialPopover>
       </DialTrigger>
       <DialSelect
@@ -276,7 +273,6 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             onChange={set("segmentedTrack")}
             options={TRACK_OPTIONS}
           />
-          <SegmentedControlMotion label="Transition" studio={studio} />
         </DialPopover>
       </DialTrigger>
     </>

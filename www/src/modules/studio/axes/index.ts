@@ -34,6 +34,7 @@ import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
 import * as menus from "./menus"
+import * as messageScroller from "./message-scroller"
 import * as mobile from "./mobile"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
@@ -41,6 +42,7 @@ import * as pagination from "./pagination"
 import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
+import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
 import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
@@ -123,6 +125,8 @@ export const DEFAULTS = {
   ...kbd.KBD_DEFAULTS,
   ...avatars.AVATAR_DEFAULTS,
   ...tables.TABLE_DEFAULTS,
+  ...questionnaire.QUESTIONNAIRE_DEFAULTS,
+  ...messageScroller.MESSAGE_SCROLLER_DEFAULTS,
 }
 
 export type StudioState = typeof DEFAULTS
@@ -176,6 +180,8 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   kbd.resolveKbd,
   avatars.resolveAvatars,
   tables.resolveTables,
+  questionnaire.resolveQuestionnaire,
+  messageScroller.resolveMessageScroller,
 ]
 
 /** The engine's view of the state: every chapter's resolution merged. Later
