@@ -10,7 +10,7 @@ import { useHistory } from "@/modules/studio/history"
 import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
-import { select, useCurrent } from "@/modules/studio/selection"
+import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
 import { fetchSnapshot, flush } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
@@ -73,9 +73,9 @@ const linkKey = (s?: string, preset?: string) =>
 function useSelectionUrl() {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
-  const current = useCurrent()
+  const { doc, key } = useCurrent()
   const url = linkKey(s, preset)
-  const wanted = current.doc ? "" : current.key
+  const wanted = doc ? "" : key
   // The link the URL last held that has been dealt with.
   const seen = useRef<string>(undefined)
 
@@ -84,15 +84,18 @@ function useSelectionUrl() {
       seen.current = url
       return
     }
-    const sync = () =>
+    // Reads the selection live: an effect run can be a render behind.
+    const sync = () => {
+      const { sel, doc } = getCurrent()
       navigate({
         search: (prev) => ({
           ...prev,
-          s: current.sel.kind === "shared" ? current.sel.id : undefined,
-          preset: current.sel.kind === "preset" ? current.sel.id : undefined,
+          s: !doc && sel.kind === "shared" ? sel.id : undefined,
+          preset: !doc && sel.kind === "preset" ? sel.id : undefined,
         }),
         replace: true,
       })
+    }
     if (!url || url === seen.current) return void sync()
     seen.current = url
     const broken = (title: string, description?: string) => {
@@ -122,7 +125,7 @@ function useSelectionUrl() {
         broken("This link doesn't work", "It is broken or no longer exists.")
       },
     )
-  }, [url, wanted, s, preset, current.sel, navigate])
+  }, [url, wanted, s, preset, navigate])
 }
 
 function StudioPage() {

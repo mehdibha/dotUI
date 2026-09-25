@@ -183,6 +183,11 @@ function PresetSelector({
         <span dir="auto" className="max-w-35 truncate">
           {current.name}
         </span>
+        {current.tag && current.tag !== "Preset" && (
+          <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
+            {current.tag}
+          </span>
+        )}
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>
