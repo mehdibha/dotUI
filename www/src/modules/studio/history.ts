@@ -1,15 +1,23 @@
 "use client"
 
-/* Undo, redo and checkpoints for the design systems in the workspace. Each
-   system keeps an in-memory undo stack; edits within 500 ms, or within one
-   pointer press (a slider drag), merge into one step. Checkpoints persist in
+/* Undo, redo and checkpoints. Each selection keeps an in-memory undo stack;
+   edits within 500 ms, or within one pointer press (a slider drag), merge
+   into one step. The first edit of a view forks it into a draft, and that
+   step is the bottom of the draft's stack: undoing it removes the draft
+   (unless it was kept or published) and returns to the view, whose redo
+   brings it back with the same id. Checkpoints persist in
    `dotui:history:<id>`: written when the studio leaves a system (switching,
    hiding the page, navigating away) and after two idle minutes. */
 
 import { useEffect, useSyncExternalStore } from "react"
 
+import { toastManager } from "@/registry/ui/toast"
+import { ORIGIN } from "@/modules/presets"
+
 import { sameState, validate } from "./axes"
 import type { StudioState } from "./axes"
+import { getCurrent, getSelection, select, selectionKey } from "./selection"
+import type { Selection, ViewSelection } from "./selection"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
@@ -17,12 +25,14 @@ const MERGE_MS = 500
 const UNDO_LIMIT = 100
 const IDLE_MS = 2 * 60_000
 const CHECKPOINT_LIMIT = 20
+const SEEN_DRAFT = "dotui:seen-draft"
 
-/** A state to return to, or the system a replacement closed (with its
- *  stored checkpoints). */
+/** A state to return to; the creation of the open system, back to the
+ *  selection it came from; or, on that selection, the system to bring back. */
 type Step =
   | { state: StudioState }
-  | { system: DesignSystemDoc; checkpoints: string | null }
+  | { created: Selection; draft: boolean }
+  | { recreate: DesignSystemDoc; checkpoints: string | null }
 
 interface Stack {
   past: Step[]
@@ -38,14 +48,13 @@ let press = 0
 let presses = 0
 let idle: ReturnType<typeof setTimeout> | undefined
 
-const find = (id: string) =>
-  workspace.getWorkspace().systems.find((s) => s.id === id)
+const systemKey = (id: string) => selectionKey({ kind: "system", id })
 
-function stack(id: string): Stack {
-  let entry = stacks.get(id)
+function stack(key: string): Stack {
+  let entry = stacks.get(key)
   if (!entry) {
     entry = { past: [], future: [], editedAt: 0, press: 0 }
-    stacks.set(id, entry)
+    stacks.set(key, entry)
   }
   return entry
 }
@@ -60,8 +69,8 @@ function emit() {
 }
 
 /** Starts a new undo step returning to `step`. */
-function record(id: string, step: Step) {
-  const entry = stack(id)
+function record(key: string, step: Step) {
+  const entry = stack(key)
   push(entry.past, step)
   entry.future = []
   entry.editedAt = 0
@@ -69,19 +78,69 @@ function record(id: string, step: Step) {
   emit()
 }
 
+/** Makes `id` current after a create, as one undoable step. */
+function opened(id: string, from: Selection, draft: boolean) {
+  select({ kind: "system", id })
+  record(systemKey(id), { created: from, draft })
+}
+
+/* --------------------------------- drafts -------------------------------- */
+
+/** Keeps every draft but `except` under its default name, so at most one
+ *  draft exists. */
+function keepOtherDrafts(except?: string) {
+  for (const doc of workspace.getWorkspace().systems) {
+    if (!doc.draft || doc.id === except) continue
+    const name = workspace.keptName(doc)
+    workspace.keep(doc.id, name)
+    toastManager.add({ title: `Kept "${name}"` })
+  }
+}
+
+function fork(view: ViewSelection, next: StudioState) {
+  const { name, state } = getCurrent()
+  keepOtherDrafts()
+  const doc = workspace.create({
+    draft: true,
+    name,
+    origin:
+      view.kind === "preset"
+        ? { kind: "preset", id: view.id }
+        : { kind: "snapshot", id: view.id },
+    initial: state,
+    state: next,
+  })
+  if (!doc) return
+  stacks.delete(selectionKey(view))
+  opened(doc.id, view, true)
+  // The rest of this gesture merges into the fork.
+  const entry = stack(systemKey(doc.id))
+  entry.editedAt = Date.now()
+  entry.press = press
+  try {
+    if (window.localStorage.getItem(SEEN_DRAFT)) return
+    window.localStorage.setItem(SEEN_DRAFT, "1")
+  } catch {
+    return
+  }
+  toastManager.add({ title: "Your changes are saved in this browser." })
+}
+
 /* -------------------------------- editing -------------------------------- */
 
-/** Edits the system's state as one undoable step, merged with the edits
- *  just before it. */
-export function edit(id: string, next: StudioState): void {
-  const doc = find(id)
-  if (!doc || sameState(doc.state, next)) return
+/** Edits the current design system as one undoable step, merged with the
+ *  edits just before it. On a view, the first edit creates a draft. */
+export function edit(next: StudioState): void {
+  const current = getCurrent()
+  if (sameState(current.state, next)) return
+  if (!current.doc) return fork(current.sel as ViewSelection, next)
+  const { id, state } = current.doc
   if (!workspace.setState(id, next)) return
-  const entry = stack(id)
+  const entry = stack(systemKey(id))
   const now = Date.now()
   const merge =
     now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
-  if (!merge) record(id, { state: doc.state })
+  if (!merge) record(systemKey(id), { state })
   entry.editedAt = now
   entry.press = press
   clearTimeout(idle)
@@ -91,88 +150,139 @@ export function edit(id: string, next: StudioState): void {
 /** Returns the system to its initial state; returns an undo that applies
  *  only while nothing happened since. */
 export function reset(id: string): () => void {
-  const doc = find(id)
+  const doc = workspace.findSystem(id)
   if (!doc || sameState(doc.state, doc.initial)) return () => {}
   const step = { state: doc.state }
-  record(id, step)
+  record(systemKey(id), step)
   workspace.reset(id)
-  return () => stacks.get(id)?.past.at(-1) === step && undo(id)
+  return () => stacks.get(systemKey(id))?.past.at(-1) === step && undo()
 }
 
 /** Sets an earlier state, checkpointing the current one first. */
 export function restore(id: string, state: StudioState): void {
-  const doc = find(id)
+  const doc = workspace.findSystem(id)
   if (!doc) return
   checkpoint(id)
   if (sameState(doc.state, state) || !workspace.setState(id, state)) return
-  record(id, { state: doc.state })
+  record(systemKey(id), { state: doc.state })
 }
 
-/** Runs a workspace change; if it replaced the open system (an untouched
- *  preset), undo brings that system back. */
-function replacing(change: () => void) {
-  const before = workspace.openDoc(workspace.getWorkspace())
-  change()
-  const after = workspace.openDoc(workspace.getWorkspace())
-  if (after.id !== before.id && !find(before.id))
-    record(after.id, {
-      system: before,
-      checkpoints: takeCheckpoints(before.id),
-    })
+/** Creates "Untitled" from Origin and opens it; returns its id. */
+export function newSystem(): string | undefined {
+  const from = getSelection()
+  const doc = workspace.create({
+    name: "Untitled",
+    origin: { kind: "preset", id: ORIGIN.id },
+    initial: ORIGIN.state,
+    state: ORIGIN.state,
+  })
+  if (doc) opened(doc.id, from, false)
+  return doc?.id
 }
 
-export const createFromPreset = (presetId: string) =>
-  replacing(() => workspace.createFromPreset(presetId))
+/** Opens a copy of the system: "Acme copy". */
+export function duplicate(id: string): string | undefined {
+  const source = workspace.findSystem(id)
+  if (!source) return
+  const from = getSelection()
+  const doc = workspace.create({
+    name: workspace.uniqueName(
+      source.name.replace(/ copy( \d+)?$/, ""),
+      workspace.getWorkspace().systems,
+      " copy",
+    ),
+    origin: { kind: "copy", of: source.id },
+    initial: source.state,
+    state: source.state,
+  })
+  if (doc) opened(doc.id, from, false)
+  return doc?.id
+}
 
-export const importSnapshot = (
-  ...args: Parameters<typeof workspace.importSnapshot>
-) => replacing(() => workspace.importSnapshot(...args))
-
-/** Deletes the system and its checkpoints; returns the undo. */
+/** Deletes the system and its checkpoints; deleting the current one opens
+ *  the next in the list, else the Origin view. Returns the undo. */
 export function remove(id: string): () => void {
+  const list = workspace.listed(workspace.getWorkspace())
   const saved = takeCheckpoints(id)
-  const undo = workspace.remove(id)
+  const wasCurrent = selectionKey(getSelection()) === systemKey(id)
+  const removed = workspace.remove(id)
+  if (!removed) return () => {}
+  if (wasCurrent) {
+    const at = list.findIndex((s) => s.id === id)
+    const next = list[at + 1] ?? list[at - 1]
+    select(
+      next
+        ? { kind: "system", id: next.id }
+        : { kind: "preset", id: ORIGIN.id },
+    )
+  }
   return () => {
-    undo()
-    if (saved !== null && find(id)) writeStorage(historyKey(id), saved)
+    workspace.insert(removed.doc, removed.index)
+    if (saved !== null) writeStorage(historyKey(id), saved)
+    if (removed.doc.draft) keepOtherDrafts(id)
+    if (wasCurrent) select({ kind: "system", id })
   }
 }
 
-function travel(id: string, from: "past" | "future", to: "past" | "future") {
-  const doc = find(id)
-  const entry = stacks.get(id)
-  const step = doc && entry?.[from].pop()
-  if (!doc || !entry || !step) return
+function travel(from: "past" | "future", to: "past" | "future") {
+  const sel = getSelection()
+  const key = selectionKey(sel)
+  const entry = stacks.get(key)
+  const step = entry?.[from].pop()
+  if (!entry || !step) return
   entry.editedAt = 0
   entry.press = 0
-  if ("state" in step) {
-    workspace.setState(id, step.state)
+  const doc = sel.kind === "system" ? workspace.findSystem(sel.id) : undefined
+
+  if ("recreate" in step) {
+    const { recreate, checkpoints } = step
+    workspace.insert(recreate)
+    if (checkpoints !== null) writeStorage(historyKey(recreate.id), checkpoints)
+    if (recreate.draft) keepOtherDrafts(recreate.id)
+    select({ kind: "system", id: recreate.id })
+    push(stack(systemKey(recreate.id))[to], {
+      created: sel,
+      draft: recreate.draft,
+    })
+  } else if (!doc) {
+    return
+  } else if ("state" in step) {
+    workspace.setState(doc.id, step.state)
     push(entry[to], { state: doc.state })
+  } else if (doc.published.length === 0 && (step.draft ? doc.draft : true)) {
+    // The create itself: the system goes, and the selection it came from
+    // can bring it back.
+    workspace.flush()
+    const checkpoints = takeCheckpoints(doc.id)
+    workspace.remove(doc.id)
+    const back =
+      step.created.kind === "system" && !workspace.findSystem(step.created.id)
+        ? ({ kind: "preset", id: ORIGIN.id } as const)
+        : step.created
+    select(back)
+    push(stack(selectionKey(back))[to], { recreate: doc, checkpoints })
   } else {
-    workspace.reinstate(step.system)
-    if (step.checkpoints !== null)
-      writeStorage(historyKey(step.system.id), step.checkpoints)
-    // Reinstating can close `doc` in turn when it is untouched.
-    const checkpoints = find(id) ? null : takeCheckpoints(id)
-    push(stack(step.system.id)[to], { system: doc, checkpoints })
+    // Kept or published since: only its changes go.
+    workspace.setState(doc.id, doc.initial)
+    push(entry[to], { state: doc.state })
   }
   emit()
 }
 
-export const undo = (id: string) => travel(id, "past", "future")
-export const redo = (id: string) => travel(id, "future", "past")
+export const undo = () => travel("past", "future")
+export const redo = () => travel("future", "past")
 
 function subscribe(listener: () => void) {
   listeners.add(listener)
   return () => listeners.delete(listener)
 }
 
-export function useUndoRedo(id: string) {
+export function useUndoRedo(key: string) {
   // A primitive snapshot, so it is stable between changes.
   const flags = useSyncExternalStore(
     subscribe,
     () => {
-      const entry = stacks.get(id)
+      const entry = stacks.get(key)
       return (entry?.past.length ? 1 : 0) | (entry?.future.length ? 2 : 0)
     },
     () => 0,
@@ -237,7 +347,7 @@ export function checkpoints(id: string): Checkpoint[] {
 /** Records the system's state unless it equals the latest checkpoint (or,
  *  before the first, the state Reset returns to). Keeps the last 20. */
 export function checkpoint(id: string): void {
-  const doc = find(id)
+  const doc = workspace.findSystem(id)
   if (!doc) return
   const list = checkpoints(id)
   const last = list.at(-1)?.state ?? doc.initial
@@ -251,41 +361,49 @@ export function checkpoint(id: string): void {
 const TEXT_ENTRY =
   "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
 
+const checkpointCurrent = () => {
+  const { doc } = getCurrent()
+  if (doc) checkpoint(doc.id)
+}
+
 /** The studio's history wiring: ⌘Z / ⇧⌘Z outside text fields (which keep
  *  their own undo), press tracking, and checkpoints on leaving a system. */
-export function useHistory(openId: string) {
-  useEffect(() => () => checkpoint(openId), [openId])
+export function useHistory(systemId: string | undefined) {
+  useEffect(
+    () => () => {
+      if (systemId) checkpoint(systemId)
+    },
+    [systemId],
+  )
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey) || e.altKey) return
       if (e.target instanceof Element && e.target.closest(TEXT_ENTRY)) return
       const key = e.key.toLowerCase()
-      const id = workspace.getWorkspace().openId
-      if (key === "z" && !e.shiftKey) undo(id)
-      else if ((key === "z" && e.shiftKey) || (key === "y" && e.ctrlKey))
-        redo(id)
+      if (key === "z" && !e.shiftKey) undo()
+      else if ((key === "z" && e.shiftKey) || (key === "y" && e.ctrlKey)) redo()
       else return
       e.preventDefault()
     }
     const onPointerDown = () => setPressed(true)
     const onPointerUp = () => setPressed(false)
-    const onLeave = () => checkpoint(workspace.getWorkspace().openId)
-    const onHide = () => document.visibilityState === "hidden" && onLeave()
+    const onHide = () =>
+      document.visibilityState === "hidden" && checkpointCurrent()
     // Capture: a press ends before the control's own pointerup handler runs.
     window.addEventListener("keydown", onKeyDown)
     window.addEventListener("pointerdown", onPointerDown, true)
     window.addEventListener("pointerup", onPointerUp, true)
     window.addEventListener("pointercancel", onPointerUp, true)
     document.addEventListener("visibilitychange", onHide)
-    window.addEventListener("pagehide", onLeave)
+    window.addEventListener("pagehide", checkpointCurrent)
     return () => {
       window.removeEventListener("keydown", onKeyDown)
       window.removeEventListener("pointerdown", onPointerDown, true)
       window.removeEventListener("pointerup", onPointerUp, true)
       window.removeEventListener("pointercancel", onPointerUp, true)
       document.removeEventListener("visibilitychange", onHide)
-      window.removeEventListener("pagehide", onLeave)
+      window.removeEventListener("pagehide", checkpointCurrent)
     }
   }, [])
 }

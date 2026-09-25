@@ -4,6 +4,8 @@ import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
 
+const ORIGIN_RADIUS = getPreset("origin")!.state.radiusPx
+
 let win: ReturnType<typeof installFakeWindow>
 
 beforeEach(() => {
@@ -20,111 +22,199 @@ afterEach(() => {
 async function load() {
   const history = await import("./history")
   const ws = await import("./workspace")
-  const open = () => ws.openDoc(ws.getWorkspace())
-  const radius = (px: number) => parseState({ ...open().state, radiusPx: px })
-  const edit = (px: number) => history.edit(open().id, radius(px))
-  return { history, ws, open, radius, edit }
+  const selection = await import("./selection")
+  const current = () => selection.getCurrent()
+  const open = () => current().doc!
+  const radius = (px: number) =>
+    parseState({ ...current().state, radiusPx: px })
+  const edit = (px: number) => history.edit(radius(px))
+  /** A kept system, current. */
+  const system = () => {
+    const id = history.newSystem()!
+    edit(3)
+    vi.advanceTimersByTime(600)
+    return id
+  }
+  return { history, ws, selection, current, open, radius, edit, system }
 }
 
 describe("undo stack", () => {
   it("merges edits within 500 ms into one step", async () => {
-    const { history, open, edit } = await load()
+    const { history, open, edit, system } = await load()
+    system()
     const start = open().state.radiusPx
-    edit(3)
-    vi.advanceTimersByTime(300)
     edit(4)
     vi.advanceTimersByTime(300)
     edit(5)
-    vi.advanceTimersByTime(600)
+    vi.advanceTimersByTime(300)
     edit(6)
-    history.undo(open().id)
-    expect(open().state.radiusPx).toBe(5)
-    history.undo(open().id)
-    expect(open().state.radiusPx).toBe(start)
-    history.redo(open().id)
-    history.redo(open().id)
+    vi.advanceTimersByTime(600)
+    edit(7)
+    history.undo()
     expect(open().state.radiusPx).toBe(6)
+    history.undo()
+    expect(open().state.radiusPx).toBe(start)
+    history.redo()
+    history.redo()
+    expect(open().state.radiusPx).toBe(7)
   })
 
   it("merges one pointer press however slow the drag", async () => {
-    const { history, open, edit } = await load()
-    const start = open().state.radiusPx
+    const { history, open, edit, system } = await load()
+    system()
     history.setPressed(true)
-    edit(3)
-    vi.advanceTimersByTime(2000)
     edit(4)
+    vi.advanceTimersByTime(2000)
+    edit(5)
     history.setPressed(false)
     vi.advanceTimersByTime(600)
     history.setPressed(true)
-    edit(5)
+    edit(6)
     history.setPressed(false)
-    history.undo(open().id)
-    expect(open().state.radiusPx).toBe(4)
-    history.undo(open().id)
-    expect(open().state.radiusPx).toBe(start)
+    history.undo()
+    expect(open().state.radiusPx).toBe(5)
+    history.undo()
+    expect(open().state.radiusPx).toBe(3)
   })
 
   it("drops the redo branch on a new edit", async () => {
-    const { history, open, edit } = await load()
-    edit(3)
-    history.undo(open().id)
+    const { history, open, edit, system } = await load()
+    system()
     edit(4)
-    history.redo(open().id)
-    expect(open().state.radiusPx).toBe(4)
+    history.undo()
+    edit(5)
+    history.redo()
+    expect(open().state.radiusPx).toBe(5)
   })
 
   it("never merges an edit into the step an undo just made", async () => {
-    const { history, open, edit } = await load()
-    edit(3)
-    vi.advanceTimersByTime(600)
+    const { history, open, edit, system } = await load()
+    system()
     edit(4)
-    history.undo(open().id)
+    vi.advanceTimersByTime(600)
     edit(5)
-    history.undo(open().id)
-    expect(open().state.radiusPx).toBe(3)
+    history.undo()
+    edit(6)
+    history.undo()
+    expect(open().state.radiusPx).toBe(4)
   })
 
   it("undoes a reset, through its toast only while nothing happened since", async () => {
-    const { history, open, edit } = await load()
-    edit(3)
-    const undoReset = history.reset(open().id)
+    const { history, open, edit, system } = await load()
+    const id = system()
+    const undoReset = history.reset(id)
     expect(open().state).toEqual(open().initial)
     undoReset()
     expect(open().state.radiusPx).toBe(3)
-    history.redo(open().id)
+    history.redo()
     expect(open().state).toEqual(open().initial)
 
     edit(7)
-    const stale = history.reset(open().id)
+    const stale = history.reset(id)
     edit(8)
     stale()
     expect(open().state.radiusPx).toBe(8)
   })
 
-  it("brings back the untouched system a preset replaced", async () => {
-    const { history, ws, open } = await load()
-    const origin = open()
-    history.createFromPreset("linear")
-    const linear = open()
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([linear.id])
-    history.undo(linear.id)
-    expect(ws.getWorkspace().systems).toEqual([origin])
-    expect(ws.getWorkspace().openId).toBe(origin.id)
-    history.redo(origin.id)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([linear.id])
-    expect(open().state).toEqual(getPreset("linear")!.state)
+  it("keeps a separate stack per system", async () => {
+    const { history, ws, selection, open, system } = await load()
+    const first = system()
+    const second = system()
+    history.undo()
+    expect(open().state.radiusPx).toBe(ORIGIN_RADIUS)
+    selection.select({ kind: "system", id: first })
+    history.undo()
+    expect(ws.findSystem(first)!.state.radiusPx).toBe(ORIGIN_RADIUS)
+    expect(ws.findSystem(second)!.state.radiusPx).toBe(ORIGIN_RADIUS)
+  })
+})
+
+describe("views and drafts", () => {
+  it("writes nothing until a view is edited", async () => {
+    const { selection, current } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    expect(current().tag).toBe("Preset")
+    expect(win.read("dotui:design-systems")).toBeNull()
   })
 
-  it("keeps a separate stack per system", async () => {
-    const { history, ws, open, edit } = await load()
-    const first = open().id
+  it("forks the first edit of a view into a draft, one step with its drag", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    history.setPressed(true)
     edit(3)
-    ws.duplicate(first)
-    const copy = open().id
-    history.undo(copy)
-    expect(open().state.radiusPx).toBe(3)
-    history.undo(first)
-    expect(ws.getWorkspace().systems[0]!.state.radiusPx).not.toBe(3)
+    vi.advanceTimersByTime(2000)
+    edit(4)
+    history.setPressed(false)
+    const draft = current().doc!
+    expect(draft).toMatchObject({ name: "Stripe", draft: true })
+    expect(draft.origin).toEqual({ kind: "preset", id: "stripe" })
+    expect(draft.initial).toEqual(getPreset("stripe")!.state)
+    expect(draft.state.radiusPx).toBe(4)
+
+    history.undo()
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().systems).toEqual([])
+    history.redo()
+    expect(current().doc).toMatchObject({ id: draft.id, draft: true })
+    expect(current().state.radiusPx).toBe(4)
+  })
+
+  it("only reverts a fork that was kept since", async () => {
+    const { history, ws, current, edit } = await load()
+    edit(3)
+    const { id } = current().doc!
+    ws.rename(id, "Acme")
+    history.undo()
+    expect(current().doc).toMatchObject({ id, name: "Acme", draft: false })
+    expect(current().state).toEqual(current().doc!.initial)
+  })
+
+  it("keeps the old draft when another view is edited", async () => {
+    const { ws, selection, current, edit } = await load()
+    edit(3)
+    const old = current().doc!.id
+    selection.select({ kind: "preset", id: "linear" })
+    edit(5)
+    expect(ws.findSystem(old)).toMatchObject({
+      name: "My Origin",
+      draft: false,
+    })
+    expect(current().doc).toMatchObject({ name: "Linear", draft: true })
+  })
+
+  it("removes an unchanged draft when it is left", async () => {
+    const { ws, selection, edit } = await load()
+    edit(3)
+    vi.advanceTimersByTime(600)
+    edit(ORIGIN_RADIUS)
+    selection.select({ kind: "preset", id: "linear" })
+    expect(ws.getWorkspace().systems).toEqual([])
+  })
+
+  it("creates Untitled from any selection; undo removes it", async () => {
+    const { history, ws, selection, current } = await load()
+    selection.select({ kind: "preset", id: "linear" })
+    const id = history.newSystem()!
+    expect(current().doc).toMatchObject({ id, name: "Untitled", draft: false })
+    ws.rename(id, "Acme")
+    history.undo()
+    expect(current().key).toBe("preset:linear")
+    expect(ws.getWorkspace().systems).toEqual([])
+    history.redo()
+    expect(current().doc).toMatchObject({ id, name: "Acme" })
+  })
+
+  it("deletes the current system to the next one, else the Origin view", async () => {
+    const { history, ws, current, system } = await load()
+    const first = system()
+    const second = system()
+    const undo = history.remove(second)
+    expect(current().doc?.id).toBe(first)
+    history.remove(first)
+    expect(current().key).toBe("preset:origin")
+    undo()
+    expect(current().doc?.id).toBe(second)
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([second])
   })
 })
 
@@ -132,8 +222,8 @@ describe("checkpoints", () => {
   const key = (id: string) => `dotui:history:${id}`
 
   it("skips a state equal to the latest checkpoint or, first, the initial one", async () => {
-    const { history, open, edit } = await load()
-    const { id } = open()
+    const { history, edit } = await load()
+    const id = history.newSystem()!
     history.checkpoint(id)
     expect(win.read(key(id))).toBeNull()
     edit(3)
@@ -143,8 +233,8 @@ describe("checkpoints", () => {
   })
 
   it("keeps the last 20", async () => {
-    const { history, open, edit } = await load()
-    const { id } = open()
+    const { history, edit } = await load()
+    const id = history.newSystem()!
     const times: number[] = []
     for (let i = 0; i < 25; i++) {
       vi.advanceTimersByTime(1000)
@@ -157,6 +247,7 @@ describe("checkpoints", () => {
 
   it("records one after two idle minutes following edits", async () => {
     const { history, open, edit } = await load()
+    history.newSystem()
     edit(3)
     vi.advanceTimersByTime(60_000)
     edit(4)
@@ -169,8 +260,8 @@ describe("checkpoints", () => {
   })
 
   it("drops invalid entries on read", async () => {
-    const { history, open, radius } = await load()
-    const { id } = open()
+    const { history, radius } = await load()
+    const id = history.newSystem()!
     win.seed(
       key(id),
       JSON.stringify([
@@ -184,45 +275,33 @@ describe("checkpoints", () => {
   })
 
   it("restores as an undoable step, checkpointing the current state", async () => {
-    const { history, open, edit, radius } = await load()
-    const { id } = open()
-    edit(3)
+    const { history, open, radius, system } = await load()
+    const id = system()
     history.restore(id, radius(11))
     expect(open().state.radiusPx).toBe(11)
     expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
-    history.undo(id)
+    history.undo()
     expect(open().state.radiusPx).toBe(3)
   })
 
   it("are deleted with the system and come back with its undo", async () => {
-    const { history, ws, open, edit } = await load()
-    const { id } = open()
-    edit(3)
+    const { history, system } = await load()
+    const id = system()
     history.checkpoint(id)
-    ws.duplicate(id)
     const undo = history.remove(id)
     expect(win.read(key(id))).toBeNull()
     undo()
     expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
   })
 
-  it("leave with a replaced system and come back with its undo", async () => {
-    const { history, ws, open, edit } = await load()
-    const origin = open()
+  it("leave with an undone fork and come back with its redo", async () => {
+    const { history, edit, current } = await load()
     edit(3)
-    history.checkpoint(origin.id)
-    history.undo(origin.id)
-    expect(ws.isUntouched(open())).toBe(true)
-    history.createFromPreset("linear")
-    const linear = open()
-    expect(win.read(key(origin.id))).toBeNull()
-    history.undo(linear.id)
-    expect(history.checkpoints(origin.id).map((c) => c.state.radiusPx)).toEqual(
-      [3],
-    )
-    history.redo(origin.id)
-    expect(win.read(key(origin.id))).toBeNull()
-    history.undo(linear.id)
-    expect(history.checkpoints(origin.id)).toHaveLength(1)
+    const { id } = current().doc!
+    history.checkpoint(id)
+    history.undo()
+    expect(win.read(key(id))).toBeNull()
+    history.redo()
+    expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
   })
 })

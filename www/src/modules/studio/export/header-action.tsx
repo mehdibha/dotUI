@@ -5,12 +5,11 @@ import { Button } from "@/registry/ui/button"
 import { toastManager } from "@/registry/ui/toast"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
-import {
-  isUntouched,
-  publish,
-  useOpenSystem,
-  useUnpublishedChanges,
-} from "@/modules/studio/workspace"
+import { publishSystem } from "@/modules/studio/keep-dialog"
+import { useCurrent, viewLink } from "@/modules/studio/selection"
+import type { ViewSelection } from "@/modules/studio/selection"
+import { findSystem, useUnpublishedChanges } from "@/modules/studio/workspace"
+import type { DesignSystemDoc } from "@/modules/studio/workspace"
 
 import { ExportDialog } from "./export-dialog"
 
@@ -33,34 +32,45 @@ async function copyLater(text: Promise<string>) {
   return navigator.clipboard.writeText(await text)
 }
 
-/** Publishes the system and copies its studio link. */
-export function share(id: string) {
-  const link = publish(id).then(
-    (snapshot) => `${window.location.origin}/studio?s=${snapshot}`,
-  )
+/** Copies the current design system's studio link, publishing the user's
+ *  system first. */
+export function share(target: DesignSystemDoc | ViewSelection) {
+  const link =
+    "kind" in target
+      ? Promise.resolve(viewLink(target))
+      : publishSystem(target).then((snapshot) => {
+          if (!snapshot) throw new Error("cancelled")
+          return `${window.location.origin}/studio?s=${snapshot}`
+        })
   copyLater(link).then(
     () => toastManager.add({ title: "Link copied" }),
-    failed("Couldn't share"),
+    (error: unknown) => {
+      if (error instanceof Error && error.message === "cancelled") return
+      failed("Couldn't share")(error)
+    },
   )
 }
 
 /**
  * The studio's header actions — Share, Publish, Export — portaled into the
- * global header so they stay visible from both mobile panes.
+ * global header so they stay visible from both mobile panes. Views have
+ * nothing to publish.
  */
 export function StudioHeaderActions() {
-  const doc = useOpenSystem()
-  // A preset nobody has touched yet has nothing of its own to publish.
-  const unpublished =
-    useUnpublishedChanges(doc) &&
-    (doc.published.length > 0 || !isUntouched(doc))
+  const { doc, sel } = useCurrent()
+  const unpublished = useUnpublishedChanges(doc)
   const [publishing, setPublishing] = useState(false)
 
   function onPublish() {
+    if (!doc) return
     setPublishing(true)
-    publish(doc.id)
+    publishSystem(doc)
       .then(
-        () => toastManager.add({ title: `Published ${doc.name}` }),
+        (snapshot) =>
+          snapshot &&
+          toastManager.add({
+            title: `Published "${findSystem(doc.id)?.name ?? doc.name}"`,
+          }),
         failed("Couldn't publish"),
       )
       .finally(() => setPublishing(false))
@@ -74,29 +84,31 @@ export function StudioHeaderActions() {
           size="sm"
           isIconOnly
           aria-label="Copy share link"
-          onPress={() => share(doc.id)}
+          onPress={() => share(doc ?? (sel as ViewSelection))}
           className="max-sm:hidden"
         >
           <LinkIcon />
         </Button>
         <TooltipContent>Copy share link</TooltipContent>
       </Tooltip>
-      <Button
-        variant="secondary"
-        size="sm"
-        isPending={publishing}
-        onPress={onPublish}
-        className="gap-1.5"
-      >
-        Publish
-        {unpublished && (
-          <span
-            role="img"
-            aria-label="Unpublished changes"
-            className="size-1.5 shrink-0 rounded-full bg-accent"
-          />
-        )}
-      </Button>
+      {doc && (
+        <Button
+          variant="secondary"
+          size="sm"
+          isPending={publishing}
+          onPress={onPublish}
+          className="gap-1.5"
+        >
+          Publish
+          {unpublished && (
+            <span
+              role="img"
+              aria-label="Unpublished changes"
+              className="size-1.5 shrink-0 rounded-full bg-accent"
+            />
+          )}
+        </Button>
+      )}
       <ExportDialog>
         <Button variant="primary" size="sm">
           Export

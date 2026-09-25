@@ -1,71 +1,27 @@
 "use client"
 
 /* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
-   whole, its header pinned — the open system's name (press to rename) and
-   the switcher on the left, history and search on the right — over a hairline.
+   whole, its header pinned — the design-system picker's trigger on the left,
+   history and search on the right — over a hairline.
    Docked under the preview, the header and strip pin to the bottom edge
    instead, so they stay put as the dock hugs each chapter. */
 
-import { useState } from "react"
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
-/** The open design system, as the chrome acts on it. */
+/** The current design system, as the chrome shows it. */
 export interface PanelSystem {
   name: string
-  onRename: (name: string) => void
+  swatch: string
+  /** "Preset", "Shared" or "Draft"; the user's own systems have none. */
+  tag?: string
   /** Undo, redo and the history menu. */
   history: ReactNode
-  /** Wraps the switcher button in the design-system picker's trigger. */
+  /** Wraps the trigger in the design-system picker. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
-}
-
-function NameField({
-  name,
-  onRename,
-}: {
-  name: string
-  onRename: (name: string) => void
-}) {
-  const [editing, setEditing] = useState(false)
-
-  if (!editing)
-    return (
-      <Button
-        variant="quiet"
-        size="sm"
-        aria-label={`Rename ${name}`}
-        onPress={() => setEditing(true)}
-        className="min-w-0 justify-start font-medium"
-      >
-        <span className="truncate">{name}</span>
-      </Button>
-    )
-
-  return (
-    <input
-      aria-label="Design system name"
-      defaultValue={name}
-      maxLength={64}
-      autoFocus
-      onFocus={(e) => e.currentTarget.select()}
-      onBlur={(e) => {
-        onRename(e.currentTarget.value)
-        setEditing(false)
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") e.currentTarget.blur()
-        if (e.key === "Escape") {
-          e.currentTarget.value = name
-          e.currentTarget.blur()
-        }
-      }}
-      className="h-7 min-w-0 flex-1 rounded-md bg-transparent px-2 text-sm font-medium focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring pointer-coarse:h-9"
-    />
-  )
 }
 
 export function PanelChrome({
@@ -92,24 +48,29 @@ export function PanelChrome({
     >
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 dock-stacked:top-auto dock-stacked:bottom-0 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
         <div className="flex items-center justify-between gap-2">
-          <span className="flex min-w-0 flex-1 items-center">
-            <NameField
-              key={system.name}
-              name={system.name}
-              onRename={system.onRename}
-            />
-            {system.renderSwitcher(
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                aria-label="Switch design system"
-                className="shrink-0 text-fg-muted pointer-coarse:data-icon-only:size-9"
-              >
-                <ChevronsUpDownIcon />
-              </Button>,
-            )}
-          </span>
+          {system.renderSwitcher(
+            <Button
+              variant="quiet"
+              size="sm"
+              aria-label={`Design system: ${system.name}${system.tag ? `, ${system.tag.toLowerCase()}` : ""}. Change design system`}
+              className="min-w-0 justify-start gap-1.5 font-medium"
+            >
+              <span
+                aria-hidden
+                className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                style={{ background: system.swatch }}
+              />
+              <span dir="auto" className="truncate">
+                {system.name}
+              </span>
+              {system.tag && (
+                <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
+                  {system.tag}
+                </span>
+              )}
+              <ChevronsUpDownIcon className="shrink-0 text-fg-muted" />
+            </Button>,
+          )}
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">
             {system.history}
             {actions}

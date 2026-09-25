@@ -34,6 +34,8 @@ interface PresetPickerItem {
   description?: string
   /** The brand a preset recreates, disclaimed under its description. */
   inspiredBy?: string
+  /** A short status after the name, e.g. "Draft". */
+  badge?: string
   /** Themes the flyout — called only for the previewed item. */
   resolve: () => DesignSystem
 }
@@ -61,8 +63,13 @@ interface PresetPickerProps {
   withPreview?: boolean
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetPickerItem) => ReactNode
-  /** Adds a "+ New" button beside the search field; pressing it closes the picker first. */
+  /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
+  /** The row being renamed in place, if any. */
+  renamingId?: string
+  /** Ends the rename: the typed name, or null when cancelled; `submit` when
+   *  it ended with Enter. */
+  onRenameEnd?: (id: string, name: string | null, submit: boolean) => void
 }
 
 /**
@@ -87,6 +94,8 @@ export function PresetPicker({
   withPreview = false,
   renderItemActions,
   onCreate,
+  renamingId,
+  onRenameEnd,
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
@@ -108,6 +117,8 @@ export function PresetPicker({
           withPreview={withPreview}
           renderItemActions={renderItemActions}
           onCreate={onCreate}
+          renamingId={renamingId}
+          onRenameEnd={onRenameEnd}
         />
       )}
     </DialogContent>
@@ -147,6 +158,8 @@ function PresetPickerContent({
   withPreview,
   renderItemActions,
   onCreate,
+  renamingId,
+  onRenameEnd,
 }: {
   sections: PresetPickerSection[]
   selectedId?: string
@@ -157,6 +170,8 @@ function PresetPickerContent({
   withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
   onCreate?: () => void
+  renamingId?: string
+  onRenameEnd?: (id: string, name: string | null, submit: boolean) => void
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
@@ -271,10 +286,7 @@ function PresetPickerContent({
             variant="secondary"
             size="md"
             className="mt-2 shrink-0"
-            onPress={() => {
-              close()
-              onCreate()
-            }}
+            onPress={onCreate}
           >
             <PlusIcon />
             New
@@ -330,6 +342,11 @@ function PresetPickerContent({
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
                     actions={renderItemActions?.(item)}
+                    rename={
+                      item.id === renamingId && onRenameEnd
+                        ? (name, submit) => onRenameEnd(item.id, name, submit)
+                        : undefined
+                    }
                   />
                 )}
               </CommandItem>
@@ -372,6 +389,7 @@ function PresetOptionRow({
   onShow,
   onHide,
   actions,
+  rename,
 }: {
   item: PresetPickerItem
   isSelected: boolean
@@ -380,6 +398,7 @@ function PresetOptionRow({
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
   actions?: ReactNode
+  rename?: (name: string | null, submit: boolean) => void
 }) {
   // Route this row to the flyout: the pointer and the keyboard highlight both
   // land here, and whichever spoke last wins. Losing both signals the flyout
@@ -406,7 +425,18 @@ function PresetOptionRow({
   return (
     <>
       <Swatch ref={rowRef} color={item.swatch} />
-      <span className="min-w-0 flex-1 truncate">{item.name}</span>
+      {rename ? (
+        <RenameField name={item.name} onEnd={rename} />
+      ) : (
+        <span dir="auto" className="min-w-0 flex-1 truncate">
+          {item.name}
+        </span>
+      )}
+      {item.badge && (
+        <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
+          {item.badge}
+        </span>
+      )}
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
       {actions ? (
         <span className="absolute top-1/2 right-1 -translate-y-1/2">
@@ -414,6 +444,53 @@ function PresetOptionRow({
         </span>
       ) : null}
     </>
+  )
+}
+
+/**
+ * The row's name as an input. A plain input, so the surrounding collection's
+ * contexts don't reach it, and its events stop here so the row neither
+ * selects nor type-selects while the user types. Enter or blur commits, Esc
+ * cancels.
+ */
+function RenameField({
+  name,
+  onEnd,
+}: {
+  name: string
+  onEnd: (name: string | null, submit: boolean) => void
+}) {
+  const ended = useRef(false)
+  const end = (value: string | null, submit: boolean) => {
+    if (ended.current) return
+    ended.current = true
+    onEnd(value, submit)
+  }
+  const stop = (e: { stopPropagation: () => void }) => e.stopPropagation()
+
+  return (
+    <input
+      aria-label="Design system name"
+      defaultValue={name}
+      maxLength={64}
+      autoFocus
+      onFocus={(e) => {
+        stop(e)
+        e.currentTarget.select()
+      }}
+      onBlur={(e) => end(e.currentTarget.value, false)}
+      onKeyDown={(e) => {
+        stop(e)
+        if (e.key === "Enter") end(e.currentTarget.value, true)
+        if (e.key === "Escape") end(null, false)
+      }}
+      onKeyUp={stop}
+      onPointerDown={stop}
+      onPointerUp={stop}
+      onMouseDown={stop}
+      onClick={stop}
+      className="-my-1 h-6 min-w-0 flex-1 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
+    />
   )
 }
 

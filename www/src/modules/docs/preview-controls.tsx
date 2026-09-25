@@ -4,44 +4,25 @@ import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
-import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
+import { createPersistedStore } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
-import { ORIGIN, PRESET_META, PRESETS, resolvePreset } from "@/modules/presets"
+import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
+import { pickerSections, rowSelection } from "@/modules/studio/picker-sections"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
-import { isUntouched, useOpenSystem } from "@/modules/studio/workspace"
+import { select, useCurrent } from "@/modules/studio/selection"
+import { useWorkspace } from "@/modules/studio/workspace"
 
 /**
- * Which design system and light/dark mode the docs previews render in. Global
- * and persisted, so every demo on the site stays in sync; `open` is the system
- * open in the studio. The mode defaults to the site theme until the user picks
+ * The docs previews render the current design system (see
+ * studio/selection.ts), shared with the studio and every tab, and the
+ * light/dark mode. The mode defaults to the site theme until the user picks
  * one, then pins previews to that choice.
  */
-
-const OPEN = "open"
-
-const presetStore = createPersistedStore(
-  "dotui:preview-preset",
-  ORIGIN.id,
-  enumCodec([OPEN, ...PRESETS.map((p) => p.id)], ORIGIN.id),
-)
-
-/* An untouched system is just its preset: the picker lists it as that preset
-   and a stored `open` selection reads as it. */
-function useSelectedPreset() {
-  const stored = presetStore.useValue()
-  const open = useOpenSystem()
-  const asPreset =
-    isUntouched(open) && open.origin.kind === "preset"
-      ? open.origin.id
-      : undefined
-  const selected = stored === OPEN && asPreset ? asPreset : stored
-  return { selected, open, own: asPreset === undefined }
-}
 
 type PreviewMode = "light" | "dark"
 
@@ -122,15 +103,11 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
   return mode === undefined || mode === resolvedTheme ? undefined : mode
 }
 
-/** The design system the docs previews render in, resolved from the selection. */
+/** The design system the docs previews render in. */
 export function useResolvedPreset(): DesignSystem {
-  const { selected, open } = useSelectedPreset()
-  const openResolved = useMemo(
-    () => resolveDesignSystem(open.state),
-    [open.state],
-  )
-  if (selected === OPEN) return openResolved
-  return resolvePreset(selected)
+  const { sel, state } = useCurrent()
+  const own = useMemo(() => resolveDesignSystem(state), [state])
+  return sel.kind === "preset" ? resolvePreset(sel.id) : own
 }
 
 /**
@@ -180,32 +157,18 @@ function PresetSelector({
 }: {
   variant?: ButtonProps["variant"]
 }) {
-  const { selected, open, own } = useSelectedPreset()
+  const current = useCurrent()
+  const workspace = useWorkspace()
   const previewMode = useForcedPreviewMode()
-  const { openItem, sections } = useMemo(() => {
-    const openItem = {
-      id: OPEN,
-      name: open.name,
-      swatch: open.state.brand,
-      resolve: () => resolveDesignSystem(open.state),
-    }
-    const featured = {
-      id: "featured",
-      title: "Presets",
-      items: PRESET_META.map((meta) => ({
-        ...meta,
-        resolve: () => resolvePreset(meta.id),
-      })),
-    }
-    const mine = { id: "open", title: "My design system", items: [openItem] }
-    return { openItem, sections: own ? [mine, featured] : [featured] }
-  }, [own, open])
-  const active = PRESET_META.find((p) => p.id === selected) ?? openItem
+  const sections = useMemo(
+    () => pickerSections(current, workspace),
+    [current, workspace],
+  )
 
   return (
     <PresetPicker
-      selectedId={selected}
-      onPick={(item) => presetStore.set(item.id)}
+      selectedId={current.key}
+      onPick={(item) => select(rowSelection(item.id, current))}
       previewMode={previewMode}
       withPreview
       sections={sections}
@@ -216,8 +179,10 @@ function PresetSelector({
         aria-label="Preview design system"
         className="gap-1.5"
       >
-        <PresetSwatch color={active.swatch} />
-        {active.name}
+        <PresetSwatch color={current.swatch} />
+        <span dir="auto" className="max-w-35 truncate">
+          {current.name}
+        </span>
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>

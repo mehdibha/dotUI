@@ -23,200 +23,182 @@ const load = () => import("./workspace")
 const stored = () => JSON.parse(win.read(KEY)!)
 const linear = getPreset("linear")!
 
-async function edited() {
+async function created(name = "Acme") {
   const ws = await load()
-  const { id, state } = ws.openDoc(ws.getWorkspace())
-  ws.setState(id, parseState({ ...state, radiusPx: 3 }))
-  ws.flush()
-  return { ws, id }
+  const doc = ws.create({
+    name,
+    origin: { kind: "preset", id: "linear" },
+    initial: linear.state,
+    state: parseState({ ...linear.state, radiusPx: 3 }),
+  })!
+  return { ws, doc }
 }
 
 describe("workspace", () => {
-  it("starts on an untouched Origin without writing", async () => {
+  it("starts empty without writing", async () => {
     const ws = await load()
-    const workspace = ws.getWorkspace()
-    expect(workspace.systems.map((s) => s.name)).toEqual(["Origin"])
-    expect(ws.isUntouched(ws.openDoc(workspace))).toBe(true)
+    expect(ws.getWorkspace()).toEqual({ schema: 2, systems: [] })
     expect(win.read(KEY)).toBeNull()
   })
 
-  it("replaces an untouched system when a preset is picked", async () => {
-    const ws = await load()
-    ws.createFromPreset("linear")
-    const workspace = ws.getWorkspace()
-    expect(workspace.systems.map((s) => s.name)).toEqual(["Linear"])
-    expect(ws.openDoc(workspace).state).toEqual(linear.state)
-    expect(stored().openId).toBe(workspace.openId)
-  })
-
-  it("keeps edited work and names new systems uniquely", async () => {
-    const { ws } = await edited()
-    ws.createFromPreset("linear")
-    ws.rename(ws.getWorkspace().openId, "Mine")
-    ws.createFromPreset("linear")
-    ws.setState(ws.getWorkspace().openId, parseState({ radiusPx: 5 }))
-    ws.createFromPreset("linear")
-    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual([
-      "Origin",
-      "Mine",
-      "Linear",
-      "Linear 2",
+  it("names created systems uniquely, except drafts", async () => {
+    const { ws } = await created("Untitled")
+    const second = ws.create({
+      name: "Untitled",
+      origin: { kind: "preset", id: "origin" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    const draft = ws.create({
+      draft: true,
+      name: "Untitled",
+      origin: { kind: "preset", id: "origin" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    expect([second.name, draft.name]).toEqual(["Untitled 2", "Untitled"])
+    expect(stored().systems.map((s: { draft: boolean }) => s.draft)).toEqual([
+      false,
+      false,
+      true,
     ])
   })
 
-  it("does not recreate the untouched preset that is already open", async () => {
-    const ws = await load()
-    ws.createFromPreset("linear")
-    const { openId } = ws.getWorkspace()
-    ws.createFromPreset("linear")
-    expect(ws.getWorkspace().openId).toBe(openId)
-    expect(ws.getWorkspace().systems).toHaveLength(1)
+  it("lists the draft first, then newest first", async () => {
+    const { ws, doc } = await created()
+    const draft = ws.create({
+      draft: true,
+      name: "Linear",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    const later = ws.create({
+      name: "Later",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    expect(ws.listed(ws.getWorkspace()).map((s) => s.id)).toEqual([
+      draft.id,
+      later.id,
+      doc.id,
+    ])
   })
 
-  it("counts a renamed or published system as touched", async () => {
+  it("keeps a draft on rename, but not on the same name", async () => {
     const ws = await load()
-    const doc = ws.openDoc(ws.getWorkspace())
-    ws.rename(doc.id, "Acme")
-    expect(ws.isUntouched(ws.openDoc(ws.getWorkspace()))).toBe(false)
-    ws.rename(doc.id, "Origin 3")
-    expect(ws.isUntouched(ws.openDoc(ws.getWorkspace()))).toBe(true)
-    await ws.publish(doc.id, async () => "abcdefghij")
-    expect(ws.isUntouched(ws.openDoc(ws.getWorkspace()))).toBe(false)
+    const draft = ws.create({
+      draft: true,
+      name: "Linear",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: parseState({ ...linear.state, radiusPx: 3 }),
+    })!
+    expect(ws.isChangedDraft(draft)).toBe(true)
+    expect(ws.keptName(draft)).toBe("My Linear")
+    ws.rename(draft.id, "  Linear ")
+    expect(ws.findSystem(draft.id)!.draft).toBe(true)
+    ws.rename(draft.id, "Brand​\u0007 ")
+    expect(ws.findSystem(draft.id)).toMatchObject({
+      name: "Brand",
+      draft: false,
+    })
+  })
+
+  it("suggests unique kept names", async () => {
+    const { ws } = await created("My Linear")
+    const draft = ws.create({
+      draft: true,
+      name: "Linear",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    expect(ws.keptName(draft)).toBe("My Linear 2")
+    ws.keep(draft.id, "Linear")
+    expect(ws.findSystem(draft.id)).toMatchObject({
+      name: "Linear",
+      draft: false,
+    })
   })
 
   it("keeps edits in memory and writes them at most every 200 ms", async () => {
+    const { ws, doc } = await created()
     vi.useFakeTimers()
-    const ws = await load()
-    const { id } = ws.openDoc(ws.getWorkspace())
-    ws.setState(id, parseState({ radiusPx: 2 }))
-    ws.setState(id, parseState({ radiusPx: 3 }))
-    expect(ws.openDoc(ws.getWorkspace()).state.radiusPx).toBe(3)
+    win.localStorage.setItem.mockClear()
+    ws.setState(doc.id, parseState({ radiusPx: 2 }))
+    ws.setState(doc.id, parseState({ radiusPx: 3 }))
+    expect(ws.findSystem(doc.id)!.state.radiusPx).toBe(3)
     expect(win.localStorage.setItem).not.toHaveBeenCalled()
     vi.advanceTimersByTime(200)
     expect(win.localStorage.setItem).toHaveBeenCalledTimes(1)
     expect(stored().systems[0].state.radiusPx).toBe(3)
   })
 
-  it("duplicates into an opened copy", async () => {
-    const { ws, id } = await edited()
-    ws.duplicate(id)
-    ws.duplicate(id)
-    const workspace = ws.getWorkspace()
-    const copy = ws.openDoc(workspace)
-    expect(workspace.systems.map((s) => s.name)).toEqual([
-      "Origin",
-      "Origin copy",
-      "Origin copy 2",
+  it("removes and inserts back in place", async () => {
+    const { ws, doc } = await created()
+    const other = ws.create({
+      name: "Other",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    const removed = ws.remove(doc.id)!
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([other.id])
+    ws.insert(removed.doc, removed.index)
+    ws.insert(removed.doc, removed.index)
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
+      doc.id,
+      other.id,
     ])
-    expect(copy.origin).toEqual({ kind: "copy", of: id })
-    expect(copy.initial.radiusPx).toBe(3)
-  })
-
-  it("deletes with an undo that restores position and focus", async () => {
-    const { ws, id } = await edited()
-    ws.duplicate(id)
-    const copy = ws.getWorkspace().openId
-    const undo = ws.remove(copy)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([id])
-    expect(ws.getWorkspace().openId).toBe(id)
-    undo()
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([id, copy])
-    expect(ws.getWorkspace().openId).toBe(copy)
-    undo()
-    expect(ws.getWorkspace().systems).toHaveLength(2)
-  })
-
-  it("opens a fresh Origin after deleting the last system, dropped by undo", async () => {
-    const { ws, id } = await edited()
-    const undo = ws.remove(id)
-    const [fresh] = ws.getWorkspace().systems
-    expect(fresh!.name).toBe("Origin")
-    expect(fresh!.id).not.toBe(id)
-    undo()
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([id])
   })
 
   it("resets to the initial state", async () => {
-    const { ws, id } = await edited()
-    ws.reset(id)
-    const doc = ws.openDoc(ws.getWorkspace())
-    expect(doc.state).toEqual(doc.initial)
+    const { ws, doc } = await created()
+    ws.reset(doc.id)
+    const reset = ws.findSystem(doc.id)!
+    expect(reset.state).toEqual(reset.initial)
   })
 
   it("publishes once per content", async () => {
-    const { ws, id } = await edited()
+    const { ws, doc } = await created()
     const post = vi.fn(async (body: { name: string; base: string }) =>
-      snapshotId({
-        schema: 1,
-        ...body,
-        state: ws.getWorkspace().systems[0]!.state,
-      }),
+      snapshotId({ schema: 1, ...body, state: ws.findSystem(doc.id)!.state }),
     )
-    const first = await ws.publish(id, post)
-    expect(await ws.publish(id, post)).toBe(first)
+    const first = await ws.publish(doc.id, post)
+    expect(await ws.publish(doc.id, post)).toBe(first)
     expect(post).toHaveBeenCalledTimes(1)
-    expect(ws.openDoc(ws.getWorkspace()).published.map((p) => p.id)).toEqual([
-      first,
-    ])
-    expect(await ws.hasUnpublishedChanges(ws.openDoc(ws.getWorkspace()))).toBe(
-      false,
-    )
-    ws.rename(id, "Renamed")
-    expect(await ws.hasUnpublishedChanges(ws.openDoc(ws.getWorkspace()))).toBe(
-      true,
-    )
+    expect(ws.findSystem(doc.id)!.published.map((p) => p.id)).toEqual([first])
+    expect(await ws.hasUnpublishedChanges(ws.findSystem(doc.id)!)).toBe(false)
+    ws.rename(doc.id, "Renamed")
+    expect(await ws.hasUnpublishedChanges(ws.findSystem(doc.id)!)).toBe(true)
   })
 
-  it("keeps generated names readable at the length limit", async () => {
-    const { ws, id } = await edited()
+  it("keeps generated names within 64 UTF-16 units", async () => {
     const long = "x".repeat(64)
-    ws.rename(id, long)
-    ws.duplicate(id)
-    ws.duplicate(id)
-    const snapshot = {
-      schema: 1 as const,
-      name: long,
-      base: "origin",
-      state: linear.state,
-      createdAt: 1,
-    }
-    ws.importSnapshot("L0ngN4me01", snapshot)
-    ws.importSnapshot("Bl4nkN4me1", { ...snapshot, name: "  " })
-    const workspace = ws.getWorkspace()
-    expect(workspace.systems.map((s) => s.name)).toEqual([
-      long,
-      `${"x".repeat(59)} copy`,
-      `${"x".repeat(57)} copy 2`,
-      `${"x".repeat(62)} 2`,
-      "Untitled",
-    ])
-    expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(workspace)
+    const { ws } = await created(long)
+    const next = () =>
+      ws.create({
+        name: long,
+        origin: { kind: "preset", id: "linear" },
+        initial: linear.state,
+        state: linear.state,
+      })!.name
+    expect(next()).toBe(`${"x".repeat(62)} 2`)
+    // A surrogate pair is never split.
+    expect(ws.uniqueName(`${"x".repeat(58)}😀😀`, [], " copy")).toBe(
+      `${"x".repeat(58)} copy`,
+    )
+    expect(ws.cleanName("😀".repeat(40))).toBe("😀".repeat(32))
+    expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(ws.getWorkspace())
   })
 
-  it("imports a snapshot once and reopens it after", async () => {
-    const { ws, id } = await edited()
-    const snapshot = {
-      schema: 1 as const,
-      name: "Origin",
-      base: "linear",
-      state: linear.state,
-      createdAt: 1,
-    }
-    ws.importSnapshot("Sh4r3dL1nk", snapshot)
-    const imported = ws.openDoc(ws.getWorkspace())
-    expect(imported.name).toBe("Origin 2")
-    expect(imported.origin).toEqual({ kind: "snapshot", id: "Sh4r3dL1nk" })
-    expect(imported.published).toEqual([{ id: "Sh4r3dL1nk", at: 1 }])
-    ws.open(id)
-    ws.importSnapshot("Sh4r3dL1nk", snapshot)
-    expect(ws.getWorkspace().openId).toBe(imported.id)
-    expect(ws.getWorkspace().systems).toHaveLength(2)
-  })
-
-  it("drops invalid records and reopens a surviving one", async () => {
+  it("drops invalid records", async () => {
     const good = {
       id: "a",
       name: "Acme",
+      draft: false,
       origin: { kind: "preset", id: "linear" },
       initial: {},
       state: { radiusPx: 4 },
@@ -227,8 +209,7 @@ describe("workspace", () => {
     win.seed(
       KEY,
       JSON.stringify({
-        schema: 1,
-        openId: "gone",
+        schema: 2,
         systems: [
           good,
           { ...good, id: "b", state: { radiusPx: -1000 } },
@@ -236,6 +217,8 @@ describe("workspace", () => {
           { ...good, id: "d", name: "" },
           { ...good, id: "e", published: [{ id: "../x", at: 1 }] },
           { ...good, id: "f", origin: { kind: "nope" } },
+          { ...good, id: "g", draft: "yes" },
+          { ...good, id: "h", name: "a\u0000b" },
           null,
         ],
       }),
@@ -243,15 +226,14 @@ describe("workspace", () => {
     const ws = await load()
     const workspace = ws.getWorkspace()
     expect(workspace.systems.map((s) => s.id)).toEqual(["a"])
-    expect(workspace.openId).toBe("a")
     expect(workspace.systems[0]!.state.radiusPx).toBe(4)
   })
 
-  it("starts over when nothing valid is stored", async () => {
-    win.seed(KEY, JSON.stringify({ schema: 1, openId: "x", systems: [{}] }))
+  it("reads anything but schema 2 as empty", async () => {
+    win.seed(KEY, JSON.stringify({ schema: 1, openId: "x", systems: [] }))
     const ws = await load()
-    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual(["Origin"])
+    expect(ws.getWorkspace().systems).toEqual([])
     win.seed(KEY, "not json")
-    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual(["Origin"])
+    expect(ws.getWorkspace().systems).toEqual([])
   })
 })

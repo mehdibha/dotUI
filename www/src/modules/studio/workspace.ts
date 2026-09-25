@@ -2,8 +2,8 @@
 
 /* The user's design systems, kept in this browser. Every record is validated
    on read (invalid ones are dropped) and every write re-reads storage first,
-   so tabs never clobber each other. The open system's edits land in memory at
-   once and in storage at most every 200 ms. */
+   so tabs never clobber each other. Edits land in memory at once and in
+   storage at most every 200 ms. What is on screen lives in `selection.ts`. */
 
 import { useEffect, useState, useSyncExternalStore } from "react"
 
@@ -15,7 +15,8 @@ import {
   snapshotId,
 } from "@/lib/snapshots/snapshot"
 import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
-import { closestPreset, getPreset, ORIGIN } from "@/modules/presets"
+import { toastManager } from "@/registry/ui/toast"
+import { closestPreset } from "@/modules/presets"
 import { formatIssues, sameState, validate } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
@@ -27,6 +28,8 @@ export type Origin =
 export interface DesignSystemDoc {
   id: string
   name: string
+  /** Made by editing a preset or a shared link; kept once named. */
+  draft: boolean
   origin: Origin
   /** What Reset returns to; set once. */
   initial: StudioState
@@ -37,8 +40,7 @@ export interface DesignSystemDoc {
 }
 
 export interface Workspace {
-  schema: 1
-  openId: string
+  schema: 2
   systems: DesignSystemDoc[]
 }
 
@@ -52,33 +54,6 @@ function newId(): string {
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
 }
 
-function newDoc(
-  fields: Pick<DesignSystemDoc, "name" | "origin" | "state"> &
-    Partial<Pick<DesignSystemDoc, "published">>,
-): DesignSystemDoc {
-  const now = Date.now()
-  return {
-    id: newId(),
-    published: [],
-    ...fields,
-    initial: fields.state,
-    createdAt: now,
-    updatedAt: now,
-  }
-}
-
-const originDoc = () =>
-  newDoc({
-    name: ORIGIN.name,
-    origin: { kind: "preset", id: ORIGIN.id },
-    state: ORIGIN.state,
-  })
-
-function freshWorkspace(): Workspace {
-  const doc = originDoc()
-  return { schema: 1, openId: doc.id, systems: [doc] }
-}
-
 /* -------------------------------- reading -------------------------------- */
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -87,11 +62,8 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const isTime = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)
 
-const isName = (value: unknown): value is string =>
-  typeof value === "string" &&
-  value.trim() === value &&
-  value.length > 0 &&
-  value.length <= MAX_NAME_LENGTH
+export const isName = (value: unknown): value is string =>
+  typeof value === "string" && value === cleanName(value) && value.length > 0
 
 function parseOrigin(raw: unknown): Origin | undefined {
   if (!isRecord(raw)) return
@@ -105,7 +77,7 @@ function parseOrigin(raw: unknown): Origin | undefined {
 
 function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   if (!isRecord(raw)) return
-  const { id, name, published, createdAt, updatedAt } = raw
+  const { id, name, draft, published, createdAt, updatedAt } = raw
   const origin = parseOrigin(raw.origin)
   const initial = validate(raw.initial)
   const state = validate(raw.state)
@@ -113,6 +85,7 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
     typeof id !== "string" ||
     !id ||
     !isName(name) ||
+    typeof draft !== "boolean" ||
     !origin ||
     !initial.ok ||
     !state.ok ||
@@ -131,6 +104,7 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   return {
     id,
     name,
+    draft,
     origin,
     initial: initial.state,
     state: state.state,
@@ -140,32 +114,33 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   }
 }
 
-/** Invalid records are dropped; an empty workspace starts over on Origin. */
+/** Invalid records are dropped; anything but schema 2 reads as empty. */
 export function parseWorkspace(raw: string): Workspace {
   const parsed: unknown = JSON.parse(raw)
-  if (!isRecord(parsed) || parsed.schema !== 1)
-    throw new Error("not a workspace")
   const systems: DesignSystemDoc[] = []
+  if (!isRecord(parsed) || parsed.schema !== 2) return EMPTY
   for (const entry of Array.isArray(parsed.systems) ? parsed.systems : []) {
     const doc = parseDoc(entry)
     if (doc && !systems.some((s) => s.id === doc.id)) systems.push(doc)
   }
-  if (systems.length === 0) throw new Error("empty workspace")
-  const openId = systems.some((s) => s.id === parsed.openId)
-    ? (parsed.openId as string)
-    : latest(systems).id
-  return { schema: 1, openId, systems }
+  return { schema: 2, systems }
 }
 
-const latest = (systems: DesignSystemDoc[]) =>
-  systems.reduce((a, b) => (b.updatedAt > a.updatedAt ? b : a))
+const EMPTY: Workspace = { schema: 2, systems: [] }
 
-// Created once, so the untouched Origin keeps its id until the first write.
-const FALLBACK = freshWorkspace()
+export function storageFailed() {
+  toastManager.add({
+    id: "storage-failed",
+    title: "Changes can't be saved in this browser",
+    type: "warning",
+    timeout: 0,
+  })
+}
 
-const store = createPersistedStore<Workspace>(KEY, FALLBACK, {
+const store = createPersistedStore<Workspace>(KEY, EMPTY, {
   decode: parseWorkspace,
   encode: (workspace) => JSON.stringify(workspace),
+  onWriteError: storageFailed,
 })
 
 /* --------------------------- the pending edit --------------------------- */
@@ -205,6 +180,9 @@ export function getWorkspace(): Workspace {
   return overlay.value
 }
 
+export const findSystem = (id: string) =>
+  getWorkspace().systems.find((s) => s.id === id)
+
 /** Writes the pending edit now. Every other operation flushes first. */
 export function flush(): void {
   clearTimeout(timer)
@@ -225,24 +203,31 @@ function subscribe(onChange: () => void) {
 }
 
 export const useWorkspace = (): Workspace =>
-  useSyncExternalStore(subscribe, getWorkspace, () => FALLBACK)
+  useSyncExternalStore(subscribe, getWorkspace, () => EMPTY)
 
-export const openDoc = (workspace: Workspace): DesignSystemDoc =>
-  workspace.systems.find((s) => s.id === workspace.openId)!
+/** The list as pickers show it: the draft first, then newest first. */
+export const listed = (workspace: Workspace): DesignSystemDoc[] =>
+  [...workspace.systems]
+    .reverse()
+    .sort((a, b) => Number(b.draft) - Number(a.draft))
 
-export const useOpenSystem = () => openDoc(useWorkspace())
+/** A draft with changes worth keeping. */
+export const isChangedDraft = (doc: DesignSystemDoc | undefined) =>
+  !!doc?.draft && !sameState(doc.state, doc.initial)
 
 /* ------------------------------ operations ------------------------------ */
+
+function accepts(state: StudioState): boolean {
+  // An invalid record would be dropped on the next read: refuse it here.
+  const valid = validate(state)
+  if (!valid.ok) console.error(formatIssues(valid.issues))
+  return valid.ok
+}
 
 /** Edits the system's state; storage catches up within 200 ms. Returns
  *  whether the state was accepted. */
 export function setState(id: string, state: StudioState): boolean {
-  // An invalid record would be dropped on the next read: refuse it here.
-  const valid = validate(state)
-  if (!valid.ok) {
-    console.error(formatIssues(valid.issues))
-    return false
-  }
+  if (!accepts(state)) return false
   if (pending && pending.id !== id) flush()
   pending = { id, state }
   timer ??= setTimeout(flush, WRITE_INTERVAL)
@@ -255,159 +240,117 @@ function update(fn: (workspace: Workspace) => Workspace) {
   store.update(fn)
 }
 
+// In UTF-16 units, as the server counts, without splitting a character.
+function cut(text: string, max: number): string {
+  let out = ""
+  for (const char of text) {
+    if (out.length + char.length > max) break
+    out += char
+  }
+  return out
+}
+
+/** Trimmed, control and zero-width characters stripped, at most 64
+ *  characters. */
+export const cleanName = (name: string) =>
+  cut(
+    name
+      .normalize("NFC")
+      .replace(/[\p{Cc}\p{Cf}]/gu, "")
+      .trim(),
+    MAX_NAME_LENGTH,
+  ).trim()
+
 /** `name` + `suffix`, then " 2", " 3"… until free; the base is cut so the
- *  result stays a readable name (trimmed, 1–64 characters). */
+ *  result stays a valid name. */
 export function uniqueName(
   name: string,
   systems: DesignSystemDoc[],
   suffix = "",
 ): string {
   const taken = new Set(systems.map((s) => s.name))
-  const base = name.trim() || "Untitled"
+  const base = cleanName(name) || "Untitled"
   const fit = (end: string) =>
-    base.slice(0, MAX_NAME_LENGTH - end.length).trimEnd() + end
+    cut(base, MAX_NAME_LENGTH - end.length).trimEnd() + end
   let candidate = fit(suffix)
   for (let n = 2; taken.has(candidate); n++) candidate = fit(`${suffix} ${n}`)
   return candidate
 }
 
-/** Opened from a preset and never changed, renamed or published: picking
- *  something else may replace it. */
-export function isUntouched(doc: DesignSystemDoc): boolean {
-  const preset = doc.origin.kind === "preset" && getPreset(doc.origin.id)
-  return (
-    !!preset &&
-    doc.published.length === 0 &&
-    sameState(doc.state, doc.initial) &&
-    doc.name.startsWith(preset.name) &&
-    /^( \d+)?$/.test(doc.name.slice(preset.name.length))
+/** What keeping a draft named after its source suggests: "My Linear". */
+export const keptName = (doc: DesignSystemDoc) =>
+  uniqueName(
+    `My ${doc.name}`,
+    getWorkspace().systems.filter((s) => s.id !== doc.id),
   )
-}
 
-/** Adds `doc` and opens it, replacing the open system if it is untouched. */
-function addAndOpen(workspace: Workspace, doc: DesignSystemDoc): Workspace {
-  const open = openDoc(workspace)
-  const systems = isUntouched(open)
-    ? workspace.systems.filter((s) => s !== open)
-    : workspace.systems
-  return {
-    ...workspace,
-    openId: doc.id,
-    systems: [...systems, { ...doc, name: uniqueName(doc.name, systems) }],
+export function create(
+  fields: Pick<DesignSystemDoc, "name" | "origin" | "initial" | "state"> & {
+    draft?: boolean
+  },
+): DesignSystemDoc | undefined {
+  if (!accepts(fields.initial) || !accepts(fields.state)) return
+  const now = Date.now()
+  const doc: DesignSystemDoc = {
+    id: newId(),
+    draft: false,
+    published: [],
+    ...fields,
+    name: uniqueName(fields.name, fields.draft ? [] : getWorkspace().systems),
+    createdAt: now,
+    updatedAt: now,
   }
+  update((workspace) => ({
+    ...workspace,
+    systems: [...workspace.systems, doc],
+  }))
+  return doc
 }
 
-/** A new system from a built-in, named "Linear", "Linear 2"… */
-export function createFromPreset(presetId: string): void {
-  const preset = getPreset(presetId)
-  if (!preset) return
+/** Puts a removed system back (same id), at its old position. */
+export function insert(doc: DesignSystemDoc, index?: number): void {
   update((workspace) => {
-    const open = openDoc(workspace)
-    if (
-      isUntouched(open) &&
-      open.origin.kind === "preset" &&
-      open.origin.id === presetId
-    )
-      return workspace
-    return addAndOpen(
-      workspace,
-      newDoc({
-        name: preset.name,
-        origin: { kind: "preset", id: preset.id },
-        state: preset.state,
-      }),
-    )
+    if (workspace.systems.some((s) => s.id === doc.id)) return workspace
+    const systems = [...workspace.systems]
+    systems.splice(index ?? systems.length, 0, doc)
+    return { ...workspace, systems }
   })
 }
 
-/** Reopens a system a replacement closed, replacing the open one in turn
- *  if it is untouched. */
-export function reinstate(doc: DesignSystemDoc): void {
-  update((workspace) =>
-    workspace.systems.some((s) => s.id === doc.id)
-      ? { ...workspace, openId: doc.id }
-      : addAndOpen(workspace, doc),
-  )
-}
-
-export function open(id: string): void {
-  update((workspace) =>
-    workspace.openId === id || !workspace.systems.some((s) => s.id === id)
-      ? workspace
-      : { ...workspace, openId: id },
-  )
-}
-
-export function rename(id: string, name: string): void {
-  const trimmed = name.trim().slice(0, MAX_NAME_LENGTH).trim()
-  if (!trimmed) return
-  update((workspace) =>
-    withDoc(workspace, id, (doc) =>
-      doc.name === trimmed
-        ? doc
-        : { ...doc, name: trimmed, updatedAt: Date.now() },
-    ),
-  )
-}
-
-/** Opens a copy of the system. */
-export function duplicate(id: string): void {
-  update((workspace) => {
-    const source = workspace.systems.find((s) => s.id === id)
-    if (!source) return workspace
-    const copy = newDoc({
-      name: uniqueName(source.name, workspace.systems, " copy"),
-      origin: { kind: "copy", of: source.id },
-      state: source.state,
-    })
-    return {
-      ...workspace,
-      openId: copy.id,
-      systems: [...workspace.systems, copy],
-    }
-  })
-}
-
-/** Deletes the system and returns its undo. Deleting the last one opens a
- *  fresh Origin. */
-export function remove(id: string): () => void {
-  let removed:
-    | { doc: DesignSystemDoc; index: number; wasOpen: boolean }
-    | undefined
-  let replacement: string | undefined
+/** Removes the system; returns it and where it was. */
+export function remove(
+  id: string,
+): { doc: DesignSystemDoc; index: number } | undefined {
+  let removed: { doc: DesignSystemDoc; index: number } | undefined
   update((workspace) => {
     const index = workspace.systems.findIndex((s) => s.id === id)
     if (index === -1) return workspace
-    removed = {
-      doc: workspace.systems[index]!,
-      index,
-      wasOpen: workspace.openId === id,
+    removed = { doc: workspace.systems[index]!, index }
+    return {
+      ...workspace,
+      systems: workspace.systems.filter((s) => s.id !== id),
     }
-    let systems = workspace.systems.filter((s) => s.id !== id)
-    if (systems.length === 0) {
-      const doc = originDoc()
-      replacement = doc.id
-      systems = [doc]
-    }
-    const openId = removed.wasOpen ? latest(systems).id : workspace.openId
-    return { ...workspace, openId, systems }
   })
-  return () => {
-    if (!removed) return
-    const { doc, index, wasOpen } = removed
-    update((workspace) => {
-      if (workspace.systems.some((s) => s.id === doc.id)) return workspace
-      const systems = workspace.systems.filter(
-        (s) => s.id !== replacement || !isUntouched(s),
-      )
-      systems.splice(Math.min(index, systems.length), 0, doc)
-      const openId =
-        wasOpen || !systems.some((s) => s.id === workspace.openId)
-          ? doc.id
-          : workspace.openId
-      return { ...workspace, openId, systems }
-    })
-  }
+  return removed
+}
+
+/** Names the system; a draft that gets a new name is kept. */
+export function rename(id: string, name: string): void {
+  const clean = cleanName(name)
+  if (clean && findSystem(id)?.name !== clean) keep(id, clean)
+}
+
+/** Keeps a draft under `name`. */
+export function keep(id: string, name: string): void {
+  const clean = cleanName(name)
+  if (!clean) return
+  update((workspace) =>
+    withDoc(workspace, id, (doc) =>
+      doc.name === clean && !doc.draft
+        ? doc
+        : { ...doc, name: clean, draft: false, updatedAt: Date.now() },
+    ),
+  )
 }
 
 /** Returns the system to its initial state. */
@@ -444,10 +387,11 @@ export async function hasUnpublishedChanges(
 /** `hasUnpublishedChanges` for the UI; `undefined` until first known, then
  *  the previous answer while the next one is computed. */
 export function useUnpublishedChanges(
-  doc: DesignSystemDoc,
+  doc: DesignSystemDoc | undefined,
 ): boolean | undefined {
   const [unpublished, setUnpublished] = useState<boolean>()
   useEffect(() => {
+    if (!doc) return
     let live = true
     void hasUnpublishedChanges(doc).then(
       (value) => live && setUnpublished(value),
@@ -456,7 +400,7 @@ export function useUnpublishedChanges(
       live = false
     }
   }, [doc])
-  return unpublished
+  return doc ? unpublished : undefined
 }
 
 type Post = (body: Omit<SnapshotContent, "schema">) => Promise<string>
@@ -478,7 +422,7 @@ async function postSnapshot(body: Omit<SnapshotContent, "schema">) {
  *  nothing changed since the latest published version. */
 export async function publish(id: string, post: Post = postSnapshot) {
   flush()
-  const doc = getWorkspace().systems.find((s) => s.id === id)
+  const doc = findSystem(id)
   if (!doc) throw new Error(`No design system ${id}`)
   const last = doc.published.at(-1)
   if (last && !(await hasUnpublishedChanges(doc))) return last.id
@@ -495,28 +439,6 @@ export async function publish(id: string, post: Post = postSnapshot) {
     ),
   )
   return snapshot
-}
-
-/** Opens the system a shared snapshot became, importing a copy the first
- *  time. */
-export function importSnapshot(id: string, snapshot: Snapshot): void {
-  update((workspace) => {
-    const existing = workspace.systems.find(
-      (s) =>
-        (s.origin.kind === "snapshot" && s.origin.id === id) ||
-        s.published.some((p) => p.id === id),
-    )
-    if (existing) return { ...workspace, openId: existing.id }
-    return addAndOpen(
-      workspace,
-      newDoc({
-        name: snapshot.name,
-        origin: { kind: "snapshot", id },
-        state: snapshot.state,
-        published: [{ id, at: snapshot.createdAt }],
-      }),
-    )
-  })
 }
 
 /** A snapshot fetched by id, validated like the server's own read. */
