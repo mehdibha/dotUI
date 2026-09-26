@@ -95,6 +95,17 @@ export function KeepDialog() {
     if (current && current.doc.id !== currentId) cancel()
   }, [current, currentId])
 
+  // Leaving the studio abandons the question: coming back (Forward) must not
+  // find it waiting. Its callbacks would act on a page that is gone.
+  useEffect(
+    () => () => {
+      const dropped = request
+      set(null)
+      if (dropped?.kind === "publish") dropped.done(false)
+    },
+    [],
+  )
+
   return (
     // No trigger, so no Dialog wrapper. Only Esc or a button closes it: the
     // second click of a double click on what opened it lands outside.
