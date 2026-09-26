@@ -378,6 +378,7 @@ function PresetPickerContent({
     if (!item) return
     onPick(item)
     close()
+    swallowDoubleClick()
   }
 
   const list = (
@@ -564,6 +565,27 @@ function PresetPickerContent({
       )}
     </>
   )
+}
+
+/** Drops the rest of a double click that picked a row: the picker closes on
+ *  the first click, and the second would land on whatever was under it. */
+function swallowDoubleClick() {
+  const types = [
+    "pointerdown",
+    "mousedown",
+    "pointerup",
+    "mouseup",
+    "click",
+    "dblclick",
+  ]
+  const swallow = (e: Event) => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+  for (const type of types) window.addEventListener(type, swallow, true)
+  setTimeout(() => {
+    for (const type of types) window.removeEventListener(type, swallow, true)
+  }, 500)
 }
 
 /** One option: the preset's swatch and its name, in the site's own theme. */
