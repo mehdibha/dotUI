@@ -6,14 +6,12 @@ import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
-import {
-  createFromPreset,
-  importSnapshot,
-  useHistory,
-} from "@/modules/studio/history"
+import { useHistory } from "@/modules/studio/history"
+import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
-import { fetchSnapshot, flush, useOpenSystem } from "@/modules/studio/workspace"
+import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
+import { fetchSnapshot, flush } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
   search: {
@@ -38,7 +36,7 @@ export function createSearchSchema(
     // Opens the design-system switcher — set by the /presets redirect.
     // Coerced boolean: the search parser reads bare `1`/`true` as non-strings.
     gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
-    // Links: a published snapshot to import, or a preset to start from.
+    // The view on screen: a published snapshot, or a preset.
     s: text(search.s),
     preset: text(search.preset),
   }
@@ -61,42 +59,73 @@ const useHydrated = () =>
     () => false,
   )
 
-/** Opens what a link points at — never over the user's work — then drops
- *  the link from the URL. */
-function useStudioLink() {
+const linkKey = (s?: string, preset?: string) =>
+  s !== undefined
+    ? `shared:${s}`
+    : preset !== undefined
+      ? `preset:${preset}`
+      : ""
+
+/** Keeps the URL on the current selection: `?preset=` and `?s=` for views,
+ *  bare `/studio` for the user's systems. A link that isn't the current
+ *  selection opens it (asking first when leaving a changed draft); a broken
+ *  one is dropped with a toast. */
+function useSelectionUrl() {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
-  // Once per link, though effects may run twice.
-  const handled = useRef<string>(undefined)
+  const { doc, key } = useCurrent()
+  const url = linkKey(s, preset)
+  const wanted = doc ? "" : key
+  // The link the URL last held that has been dealt with.
+  const seen = useRef<string>(undefined)
 
   useEffect(() => {
-    const link = s ?? preset
-    if (link === undefined || handled.current === link) return
-    handled.current = link
-    const done = () =>
+    if (url === wanted) {
+      seen.current = url
+      return
+    }
+    // Reads the selection live: an effect run can be a render behind.
+    const sync = () => {
+      const { sel, doc } = getCurrent()
       navigate({
-        search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
+        search: (prev) => ({
+          ...prev,
+          s: !doc && sel.kind === "shared" ? sel.id : undefined,
+          preset: !doc && sel.kind === "preset" ? sel.id : undefined,
+        }),
         replace: true,
       })
-    if (s === undefined) {
-      if (getPreset(link)) createFromPreset(link)
-      else toastManager.add({ title: "Unknown preset", type: "error" })
-      return void done()
     }
-    fetchSnapshot(s)
-      .then(
-        (snapshot) => importSnapshot(s, snapshot),
-        (error: unknown) => {
-          console.error(error)
-          toastManager.add({
-            title: "Couldn't open that design system",
-            description: "The link is broken or no longer exists.",
-            type: "error",
-          })
-        },
-      )
-      .finally(done)
-  }, [s, preset, navigate])
+    if (!url || url === seen.current) return void sync()
+    seen.current = url
+    const broken = (title: string, description?: string) => {
+      toastManager.add({ title, description, type: "error" })
+      sync()
+    }
+    if (s === undefined) {
+      if (preset !== undefined && getPreset(preset))
+        leave(() => select({ kind: "preset", id: preset }), sync)
+      else broken(`No preset called "${preset}"`)
+      return
+    }
+    fetchSnapshot(s).then(
+      (snapshot) =>
+        leave(
+          () =>
+            select({
+              kind: "shared",
+              id: s,
+              name: snapshot.name,
+              state: snapshot.state,
+            }),
+          sync,
+        ),
+      (error: unknown) => {
+        console.error(error)
+        broken("This link doesn't work", "It is broken or no longer exists.")
+      },
+    )
+  }, [url, wanted, s, preset, navigate])
 }
 
 function StudioPage() {
@@ -135,12 +164,13 @@ function StudioPage() {
 }
 
 function StudioBody() {
-  useStudioLink()
-  useHistory(useOpenSystem().id)
+  useSelectionUrl()
+  useHistory(useCurrent().doc?.id)
   return (
     <>
       <StudioHeaderActions />
       <ToastProvider />
+      <KeepDialog />
       {/* Below `lg` the panel docks under the preview; on short screens
           (a phone on its side) it sits beside it instead. */}
       <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />

@@ -1,7 +1,8 @@
 "use client"
 
 /* The panel header's history cluster: undo, redo, and the History menu —
-   published versions and checkpoints, newest first, then Reset. */
+   published versions and checkpoints, newest first, then Reset. Views have
+   no history of their own. */
 
 import type { ReactNode } from "react"
 import { HistoryIcon, Redo2Icon, Undo2Icon } from "lucide-react"
@@ -21,6 +22,7 @@ import { getPreset } from "@/modules/presets"
 
 import { sameState } from "./axes"
 import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
+import type { Current } from "./selection"
 import { fetchSnapshot } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
@@ -178,30 +180,22 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
   )
 }
 
-export function HistoryControls({ doc }: { doc: DesignSystemDoc }) {
-  const { canUndo, canRedo } = useUndoRedo(doc.id)
+export function HistoryControls({ current }: { current: Current }) {
+  const { canUndo, canRedo } = useUndoRedo(current.key)
   return (
     <>
-      <IconButton
-        label="Undo"
-        isDisabled={!canUndo}
-        onPress={() => undo(doc.id)}
-      >
+      <IconButton label="Undo" isDisabled={!canUndo} onPress={undo}>
         <Undo2Icon />
       </IconButton>
-      <IconButton
-        label="Redo"
-        isDisabled={!canRedo}
-        onPress={() => redo(doc.id)}
-      >
+      <IconButton label="Redo" isDisabled={!canRedo} onPress={redo}>
         <Redo2Icon />
       </IconButton>
       <Menu>
-        <IconButton label="History">
+        <IconButton label="History" isDisabled={!current.doc}>
           <HistoryIcon />
         </IconButton>
         <Popover placement="bottom end">
-          <HistoryItems doc={doc} />
+          {current.doc && <HistoryItems doc={current.doc} />}
         </Popover>
       </Menu>
     </>

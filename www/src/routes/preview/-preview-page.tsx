@@ -17,7 +17,7 @@ import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
-import { getWorkspace, openDoc } from "@/modules/studio/workspace"
+import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
 // this route's split chunk instead of the router's critical import graph.
@@ -53,10 +53,10 @@ const route = getRouteApi("/preview/$slug")
 
 export function PreviewPage() {
   const { slug } = route.useParams()
-  // Boots on the open system (same origin, same workspace); the studio's
-  // messages take over from there.
+  // Boots on the current design system (same origin, same storage); the
+  // studio's messages take over from there.
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(openDoc(getWorkspace()).state),
+    resolveDesignSystem(getCurrent().state),
   )
 
   const navigate = route.useNavigate()

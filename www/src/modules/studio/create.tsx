@@ -1,10 +1,11 @@
 "use client"
 
-/* The studio panel mounted in /studio's slot: the panel page over the open
-   design system, its chrome wired to the workspace. The switcher lists the
-   user's systems over the built-in presets and opens at ?gallery=. */
+/* The studio panel mounted in /studio's slot: the panel page over the current
+   design system, its chrome wired to the workspace. The picker lists the
+   shared link being viewed, the user's systems (the draft first) and the
+   presets, and opens at ?gallery=. */
 
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import { MoreHorizontalIcon } from "lucide-react"
 
@@ -12,23 +13,30 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { ORIGIN, PRESET_META, resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { share } from "@/modules/studio/export"
 
-import { createFromPreset, remove } from "./history"
+import { duplicate, newSystem, remove } from "./history"
 import { HistoryControls, undoToast } from "./history-menu"
+import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { resolveDesignSystem } from "./resolve"
+import { pickerSections, rowSelection } from "./picker-sections"
+import { select, selectionKey, useCurrent } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { duplicate, open, openDoc, rename, useWorkspace } from "./workspace"
+import { rename, useWorkspace } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-function SystemActions({ doc }: { doc: DesignSystemDoc }) {
+function SystemActions({
+  doc,
+  onRename,
+}: {
+  doc: DesignSystemDoc
+  onRename: () => void
+}) {
   return (
     <Menu>
       <Button
@@ -43,12 +51,14 @@ function SystemActions({ doc }: { doc: DesignSystemDoc }) {
       <Popover placement="bottom end">
         <MenuContent
           onAction={(key) => {
-            if (key === "share") share(doc.id)
+            if (key === "rename") onRename()
+            if (key === "share") share(doc)
             if (key === "duplicate") duplicate(doc.id)
             if (key === "delete")
-              undoToast(`Deleted ${doc.name}`, remove(doc.id))
+              undoToast(`Deleted "${doc.name}"`, remove(doc.id))
           }}
         >
+          <MenuItem id="rename">Rename</MenuItem>
           <MenuItem id="share">Copy link</MenuItem>
           <MenuItem id="duplicate">Duplicate</MenuItem>
           <MenuItem id="delete" variant="danger">
@@ -62,61 +72,72 @@ function SystemActions({ doc }: { doc: DesignSystemDoc }) {
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
+  const current = useCurrent()
   const workspace = useWorkspace()
-  const doc = openDoc(workspace)
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
+  const [renaming, setRenaming] = useState<string>()
 
   const sections = useMemo(
-    () => [
-      {
-        id: "mine",
-        title: "My design systems",
-        items: [...workspace.systems].reverse().map((system) => ({
-          id: system.id,
-          name: system.name,
-          swatch: system.state.brand,
-          resolve: () => resolveDesignSystem(system.state),
-        })),
-      },
-      {
-        id: "presets",
-        title: "Presets",
-        items: PRESET_META.map((meta) => ({
-          ...meta,
-          resolve: () => resolvePreset(meta.id),
-        })),
-      },
-    ],
-    [workspace.systems],
+    () => pickerSections(current, workspace),
+    [current, workspace],
   )
 
   function setGalleryOpen(isOpen: boolean) {
+    if (!isOpen) setRenaming(undefined)
     navigate({
       search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
     })
   }
 
+  function systemOf(key: string) {
+    return workspace.systems.find(
+      (s) => selectionKey({ kind: "system", id: s.id }) === key,
+    )
+  }
+
+  function onPick(key: string) {
+    if (key !== current.key) leave(() => select(rowSelection(key, current)))
+  }
+
+  function onCreate() {
+    // The keep dialog can't sit over the picker.
+    if (leaving()) setGalleryOpen(false)
+    leave(() => {
+      const id = newSystem()
+      if (!id) return
+      setRenaming(selectionKey({ kind: "system", id }))
+      setGalleryOpen(true)
+    })
+  }
+
   const system: PanelSystem = {
-    name: doc.name,
-    onRename: (name) => rename(doc.id, name),
-    history: <HistoryControls doc={doc} />,
+    name: current.name,
+    swatch: current.swatch,
+    tag: current.tag,
+    history: <HistoryControls current={current} />,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
         sections={sections}
-        selectedId={doc.id}
-        onPick={(item) => {
-          if (workspace.systems.some((s) => s.id === item.id)) open(item.id)
-          else createFromPreset(item.id)
+        selectedId={current.key}
+        onPick={(item) => onPick(item.id)}
+        onCreate={onCreate}
+        renamingId={renaming}
+        onRenameEnd={(key, name, submit) => {
+          setRenaming(undefined)
+          const doc = systemOf(key)
+          if (doc && name !== null) rename(doc.id, name)
+          if (submit) setGalleryOpen(false)
         }}
-        onCreate={() => createFromPreset(ORIGIN.id)}
         withPreview
         renderItemActions={(item) => {
-          const system = workspace.systems.find((s) => s.id === item.id)
-          return system ? <SystemActions doc={system} /> : null
+          const doc = systemOf(item.id)
+          return doc ? (
+            <SystemActions doc={doc} onRename={() => setRenaming(item.id)} />
+          ) : null
         }}
       >
         {trigger}

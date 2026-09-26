@@ -6,6 +6,8 @@ interface PersistedStoreCodec<T> {
   decode: (raw: string) => T
   /** Return null to clear the key instead of storing. */
   encode: (value: T) => string | null
+  /** Called when a write can't reach storage (private mode, quota). */
+  onWriteError?: () => void
 }
 
 /**
@@ -19,7 +21,7 @@ interface PersistedStoreCodec<T> {
 export function createPersistedStore<T>(
   key: string,
   fallback: T,
-  { decode, encode }: PersistedStoreCodec<T>,
+  { decode, encode, onWriteError }: PersistedStoreCodec<T>,
 ) {
   const listeners = new Set<() => void>()
   let value = fallback
@@ -67,7 +69,8 @@ export function createPersistedStore<T>(
       else window.localStorage.setItem(key, encoded)
       raw = encoded
     } catch {
-      // Best-effort persistence; the in-memory value still applies.
+      // The in-memory value still applies.
+      onWriteError?.()
     }
     emit()
   }

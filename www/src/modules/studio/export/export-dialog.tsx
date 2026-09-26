@@ -42,11 +42,9 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
-import {
-  publish,
-  useOpenSystem,
-  useUnpublishedChanges,
-} from "@/modules/studio/workspace"
+import { publishSystem } from "@/modules/studio/keep-dialog"
+import { useCurrent } from "@/modules/studio/selection"
+import { useUnpublishedChanges } from "@/modules/studio/workspace"
 
 import { CodeOptions } from "./code-options"
 import { OPEN_IN_TARGETS } from "./targets"
@@ -93,28 +91,37 @@ export function ExportDialog({ children }: { children: ReactNode }) {
 }
 
 /**
- * Export installs the latest published version; with changes past it, the
- * dialog asks to publish them first.
+ * A view installs from its own path. The user's system installs its latest
+ * published version; with changes past it, the dialog asks to publish them
+ * first.
  */
 function ExportDialogBody() {
-  const doc = useOpenSystem()
+  const { doc, sel } = useCurrent()
   const unpublished = useUnpublishedChanges(doc)
-  const last = doc.published.at(-1)?.id
+  const last = doc?.published.at(-1)?.id
   const [chosen, setChosen] = useState<string>()
   const [publishing, setPublishing] = useState<"idle" | "busy" | "failed">(
     "idle",
   )
 
+  if (!doc)
+    return (
+      <ExportCommands path={`${sel.kind === "preset" ? "p" : "s"}/${sel.id}`} />
+    )
   const snapshotId = chosen ?? (unpublished === false ? last : undefined)
-  if (snapshotId) return <ExportCommands snapshotId={snapshotId} />
+  if (snapshotId) return <ExportCommands path={`s/${snapshotId}`} />
   if (unpublished === undefined) return null
 
   function onPublish() {
+    if (!doc) return
     setPublishing("busy")
-    publish(doc.id).then(setChosen, (error: unknown) => {
-      console.error(error)
-      setPublishing("failed")
-    })
+    publishSystem(doc).then(
+      (id) => (id ? setChosen(id) : setPublishing("idle")),
+      (error: unknown) => {
+        console.error(error)
+        setPublishing("failed")
+      },
+    )
   }
 
   return (
@@ -157,11 +164,11 @@ function ExportDialogBody() {
   )
 }
 
-function ExportCommands({ snapshotId }: { snapshotId: string }) {
+function ExportCommands({ path }: { path: string }) {
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
-  const url = useExportUrl(snapshotId)
+  const url = useExportUrl(path)
 
   const command =
     buildInitCommands(url("init"))[packageManager] +
