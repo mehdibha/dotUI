@@ -32,21 +32,18 @@ const COPIED_MS = 2000
 const copyKey = () =>
   /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘C" : "Ctrl+C"
 
-/** "Copied" for 2s after a write that succeeded; `failed` after one that
- *  didn't, when the field is selected for a manual copy. */
+/** Whether a write succeeded in the last 2s. */
 function useCopied() {
-  const [state, setState] = useState<"idle" | "copied" | "failed">("idle")
+  const [copied, setCopied] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
   useEffect(() => () => clearTimeout(timer.current), [])
   function done(ok: boolean) {
     clearTimeout(timer.current)
-    setState(ok ? "copied" : "failed")
-    if (ok) timer.current = setTimeout(() => setState("idle"), COPIED_MS)
+    setCopied(ok)
+    if (ok) timer.current = setTimeout(() => setCopied(false), COPIED_MS)
   }
-  return [state, done] as const
+  return [copied, done] as const
 }
-
-type CopyState = ReturnType<typeof useCopied>[0]
 
 function select(input: HTMLInputElement | null) {
   input?.focus()
@@ -56,17 +53,21 @@ function select(input: HTMLInputElement | null) {
 function CopyField({
   label,
   value,
-  outside = "idle",
+  copiedOutside = false,
+  failed,
+  onFailedChange,
 }: {
   label: string
   value: string
-  /** A write of this value made elsewhere (Publish and copy). */
-  outside?: CopyState
+  /** A write of this value made elsewhere (Publish and copy) succeeded. */
+  copiedOutside?: boolean
+  /** Its write failed: it is selected for ⌘C, with a hint. */
+  failed: boolean
+  onFailedChange: (failed: boolean) => void
 }) {
   const [own, done] = useCopied()
-  const state = own === "idle" ? outside : own
+  const copied = own || copiedOutside
   const input = useRef<HTMLInputElement>(null)
-  const failed = state === "failed"
 
   // Selected for ⌘C once a write fails; a failed press here selects it
   // again, as the press moved focus to the button.
@@ -78,7 +79,7 @@ function CopyField({
   // "Copied" narrows the field too.
   useEffect(() => {
     if (input.current) input.current.scrollLeft = input.current.scrollWidth
-  }, [value, state])
+  }, [value, copied])
 
   return (
     <TextField value={value} isReadOnly className="w-full">
@@ -92,19 +93,21 @@ function CopyField({
         />
         <Button
           size="sm"
-          onPress={() =>
+          onPress={() => {
+            onFailedChange(false)
             copyText(value).then(
               () => done(true),
               (error: unknown) => {
                 console.error(error)
                 done(false)
+                onFailedChange(true)
                 select(input.current)
               },
             )
-          }
+          }}
           className="shrink-0"
         >
-          {state === "copied" ? "Copied" : "Copy"}
+          {copied ? "Copied" : "Copy"}
         </Button>
       </div>
       {failed && <Description>Press {copyKey()} to copy.</Description>}
@@ -129,7 +132,9 @@ function ShareBody() {
   const { doc, sel, name } = useCurrent()
   const status = usePublishStatus(doc)
   const isMobile = useIsMobile()
-  const [state, done] = useCopied()
+  const [copied, done] = useCopied()
+  // The one field whose write failed, hinting ⌘C.
+  const [failed, setFailed] = useState<string>()
   const [publishFailed, setPublishFailed] = useState(false)
   const last = doc?.published.at(-1)
 
@@ -143,24 +148,26 @@ function ShareBody() {
   function publishAndCopy() {
     if (!doc) return
     setPublishFailed(false)
-    let failed = false
+    setFailed(undefined)
+    let publishError = false
     const published = publishSystem(doc.id).then(
       (id) => {
         if (!id) throw new Error("cancelled")
         return snapshotLink(id)
       },
       (error: unknown) => {
-        failed = true
+        publishError = true
         throw error
       },
     )
     copyText(published).then(
       () => done(true),
       (error: unknown) => {
-        if (failed) return setPublishFailed(true)
+        if (publishError) return setPublishFailed(true)
         if (error instanceof Error && error.message === "cancelled") return
         console.error(error)
         done(false)
+        setFailed("link")
       },
     )
   }
@@ -179,8 +186,19 @@ function ShareBody() {
       )}
       {link && install ? (
         <>
-          <CopyField label="Studio link" value={link} outside={state} />
-          <CopyField label="Install" value={install} />
+          <CopyField
+            label="Studio link"
+            value={link}
+            copiedOutside={copied}
+            failed={failed === "link"}
+            onFailedChange={(f) => setFailed(f ? "link" : undefined)}
+          />
+          <CopyField
+            label="Install"
+            value={install}
+            failed={failed === "install"}
+            onFailedChange={(f) => setFailed(f ? "install" : undefined)}
+          />
         </>
       ) : (
         <p className="text-xs text-fg-muted">
