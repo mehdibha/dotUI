@@ -7,7 +7,6 @@ import { useState, useSyncExternalStore } from "react"
 
 import { Button } from "@/registry/ui/button"
 import {
-  Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -80,7 +79,9 @@ export function KeepDialog() {
   )
 
   return (
-    <Dialog
+    // No trigger, so no Dialog wrapper. Only Esc or a button closes it: the
+    // second click of a double click on what opened it lands outside.
+    <Modal
       isOpen={current !== null}
       onOpenChange={(isOpen) => {
         if (isOpen || !request) return
@@ -89,15 +90,13 @@ export function KeepDialog() {
         if (closed.kind === "leave") closed.cancel?.()
         else closed.done(false)
       }}
+      isDismissable={false}
+      className="sm:max-w-sm"
     >
-      {/* Only Esc or a button closes it: the second click of a double
-          click on what opened it lands outside. */}
-      <Modal isDismissable={false} className="sm:max-w-sm">
-        <DialogContent aria-label="Keep your changes">
-          {current && <KeepForm key={current.doc.id} request={current} />}
-        </DialogContent>
-      </Modal>
-    </Dialog>
+      <DialogContent aria-label="Keep your changes">
+        {current && <KeepForm key={current.doc.id} request={current} />}
+      </DialogContent>
+    </Modal>
   )
 }
 
