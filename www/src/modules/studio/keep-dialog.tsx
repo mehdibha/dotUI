@@ -4,6 +4,7 @@
    or discard it. Publishing a draft asks for its name the same way. */
 
 import { useEffect, useState, useSyncExternalStore } from "react"
+import { useRouter } from "@tanstack/react-router"
 
 import { Button } from "@/registry/ui/button"
 import {
@@ -95,15 +96,18 @@ export function KeepDialog() {
     if (current && current.doc.id !== currentId) cancel()
   }, [current, currentId])
 
-  // Leaving the studio abandons the question: coming back (Forward) must not
-  // find it waiting. Its callbacks would act on a page that is gone.
+  // Leaving the studio (Back included) abandons the question, callbacks and
+  // all: coming back must not find it waiting.
+  const router = useRouter()
   useEffect(
-    () => () => {
-      const dropped = request
-      set(null)
-      if (dropped?.kind === "publish") dropped.done(false)
-    },
-    [],
+    () =>
+      router.subscribe("onBeforeNavigate", ({ pathChanged }) => {
+        const dropped = request
+        if (!pathChanged || !dropped) return
+        set(null)
+        if (dropped.kind === "publish") dropped.done(false)
+      }),
+    [router],
   )
 
   return (
