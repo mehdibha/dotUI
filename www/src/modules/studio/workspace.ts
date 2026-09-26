@@ -635,7 +635,9 @@ export function publish(
  *  undefined when no snapshot has that id. */
 export async function fetchSnapshot(id: string): Promise<Snapshot | undefined> {
   if (!SNAPSHOT_ID.test(id)) return
-  const response = await fetch(`/api/snapshots/${id}`)
+  const response = await fetch(`/api/snapshots/${id}`, {
+    signal: AbortSignal.timeout(8000),
+  })
   if (response.status === 404) return
   if (!response.ok)
     throw new Error(`GET /api/snapshots/${id} → ${response.status}`)

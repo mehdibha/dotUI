@@ -111,26 +111,48 @@ function useSelectionUrl() {
       return
     }
     const dead = () =>
-      broken("This link doesn't work", "It is broken or no longer exists.")
-    fetchSnapshot(s).then(
-      (snapshot) =>
-        snapshot
-          ? leave(
-              () =>
-                select({
-                  kind: "shared",
-                  id: s,
-                  name: snapshot.name,
-                  state: snapshot.state,
-                }),
-              sync,
-            )
-          : dead(),
-      (error: unknown) => {
-        console.error(error)
-        dead()
-      },
-    )
+      broken(
+        "This link doesn't work",
+        "It's broken or no longer exists. Links made on a preview or local site only open there.",
+      )
+    const slow = () => {
+      const id = toastManager.add({
+        title: "This link doesn't work",
+        description: "It took too long to load.",
+        type: "error",
+        actionProps: {
+          children: "Retry",
+          onClick: () => {
+            toastManager.close(id)
+            load()
+          },
+        },
+      })
+      sync()
+    }
+    const load = () =>
+      fetchSnapshot(s).then(
+        (snapshot) =>
+          snapshot
+            ? leave(
+                () =>
+                  select({
+                    kind: "shared",
+                    id: s,
+                    name: snapshot.name,
+                    state: snapshot.state,
+                  }),
+                sync,
+              )
+            : dead(),
+        (error: unknown) => {
+          console.error(error)
+          if (error instanceof DOMException && error.name === "TimeoutError")
+            slow()
+          else dead()
+        },
+      )
+    load()
   }, [url, wanted, s, preset, navigate])
 }
 
