@@ -44,7 +44,6 @@ import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
-import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
@@ -86,7 +85,6 @@ export const DEFAULTS = {
   ...focus.FOCUS_DEFAULTS,
   ...cursor.CURSOR_DEFAULTS,
   ...selection.SELECTION_DEFAULTS,
-  ...scrollbars.SCROLLBAR_DEFAULTS,
   ...disabled.DISABLED_DEFAULTS,
   ...invalid.INVALID_DEFAULTS,
   ...mobile.MOBILE_DEFAULTS,
@@ -141,7 +139,6 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   focus.resolveFocus,
   cursor.resolveCursor,
   selection.resolveSelection,
-  scrollbars.resolveScrollbars,
   disabled.resolveDisabled,
   invalid.resolveInvalid,
   mobile.resolveMobile,

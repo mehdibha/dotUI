@@ -34,11 +34,6 @@ export const baseRegistryCss = {
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
-				"scrollbar-width": "var(--scrollbar-width, auto)",
-				"scrollbar-color": "var(--scrollbar-color, auto)",
-			},
-			"*:hover": {
-				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
 			},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
