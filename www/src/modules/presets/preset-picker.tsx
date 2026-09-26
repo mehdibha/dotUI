@@ -673,19 +673,22 @@ function PresetOptionRow({
         {rename ? (
           <RenameField name={item.name} onEnd={rename} />
         ) : (
-          <span dir="auto" className="truncate">
-            {item.name}
+          // The badge rides the name line, leaving the subtitle its width.
+          <span className="flex min-w-0 items-center gap-1.5">
+            <span dir="auto" className="min-w-0 truncate">
+              {item.name}
+            </span>
+            {item.badge && (
+              <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
+                {item.badge}
+              </span>
+            )}
           </span>
         )}
         {subtitle && (
           <span className="truncate text-xs text-fg-muted">{subtitle}</span>
         )}
       </span>
-      {item.badge && (
-        <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
-          {item.badge}
-        </span>
-      )}
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
       {onMenu && (
         // A press here never reaches the row, so it doesn't pick it.
@@ -747,7 +750,8 @@ function RenameField({
       onPointerUp={stop}
       onMouseDown={stop}
       onClick={stop}
-      className="-my-0.5 h-6 w-full min-w-0 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
+      // The name line's height, ring inside: the subtitle sits right below.
+      className="h-5 w-full min-w-0 rounded-sm bg-transparent px-1 [--focus-ring-inset:inset] focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
     />
   )
 }
