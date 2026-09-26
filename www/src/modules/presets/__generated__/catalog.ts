@@ -8,7 +8,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 		id: "origin",
 		name: "Origin",
 		description: "dotUI blue, the starting point.",
-		swatch: "#0072f5",
+		swatch: "#0070f1",
 		designSystem: {
 			componentParams: {
 				accordion: { container: "divided", marker: "chevron", markerPosition: "trailing" },

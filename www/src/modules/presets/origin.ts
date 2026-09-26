@@ -4,11 +4,12 @@ export const origin = definePreset({
   id: "origin",
   name: "Origin",
   description: "dotUI blue, the starting point.",
-  swatch: "#0072f5",
+  swatch: "#0070f1",
   state: {
     // Color
-    // Geist's measured blue drives every solid role, selection included.
-    brand: "#0072f5",
+    // Geist's blue, a step darker so white labels clear AA; it drives every
+    // solid role, selection included.
+    brand: "#0070f1",
     buttonColor: "accent",
     selectionColor: "accent",
     neutralHue: null,
