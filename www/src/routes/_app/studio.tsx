@@ -3,6 +3,7 @@ import type { ComponentProps } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
+import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
@@ -165,7 +166,8 @@ function StudioPage() {
 }
 
 // Live and on top of modal overlays, the picker's drawer included: a delete's
-// Undo works with the picker open.
+// Undo works with the picker open. On phones they sit at the top, clear of
+// the drawers.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
   className: "relative z-60",
@@ -174,10 +176,14 @@ const TOP_LAYER = {
 function StudioBody() {
   useSelectionUrl()
   useHistory(useCurrent().doc?.id)
+  const isMobile = useIsMobile()
   return (
     <>
       <StudioHeaderActions />
-      <ToastProvider portalProps={TOP_LAYER} />
+      <ToastProvider
+        portalProps={TOP_LAYER}
+        position={isMobile ? "top-center" : undefined}
+      />
       <KeepDialog />
       {/* Below `lg` the panel docks under the preview; on short screens
           (a phone on its side) it sits beside it instead. */}
