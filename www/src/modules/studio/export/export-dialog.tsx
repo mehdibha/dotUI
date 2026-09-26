@@ -5,7 +5,7 @@
  * children (the header CTA, the panel footer button).
  */
 
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
@@ -50,7 +50,7 @@ import type { PackageManager } from "@/modules/docs/install-commands"
 import { publishSystem } from "@/modules/studio/publish"
 import { useCurrent } from "@/modules/studio/selection"
 import { clock } from "@/modules/studio/time"
-import { usePublishStatus } from "@/modules/studio/workspace"
+import * as workspace from "@/modules/studio/workspace"
 
 import { CodeOptions } from "./code-options"
 import { KeepFocus } from "./keep-focus"
@@ -105,15 +105,29 @@ export function ExportDialog({ children }: { children: ReactNode }) {
  */
 function ExportDialogBody() {
   const { doc, sel } = useCurrent()
-  const status = usePublishStatus(doc)
+  const status = workspace.usePublishStatus(doc)
   const [choice, setChoice] = useState<"published" | "latest">("published")
   const [failed, setFailed] = useState(false)
   // The version the switch opened on: it stays for the dialog's life, so
   // publishing the latest changes doesn't pull it from under the pointer.
   const [before, setBefore] = useState<{ id: string; at: number; n: number }>()
   const latest = doc?.published.at(-1)
-  if (doc && latest && status === "changed" && !before)
+  if (
+    doc &&
+    latest &&
+    !before &&
+    (status === "changed" || status === "pending")
+  ) {
     setBefore({ ...latest, n: doc.published.length })
+    // A publish already on its way (from Publish or Share) is the latest.
+    if (status === "pending") setChoice("latest")
+  }
+  const docId = doc?.id
+  const following = status === "pending" && choice === "latest"
+  useEffect(() => {
+    if (following && docId)
+      workspace.publishing(docId)?.catch(() => setFailed(true))
+  }, [following, docId])
 
   if (!doc)
     return (
