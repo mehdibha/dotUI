@@ -88,7 +88,10 @@ export function StudioPanel({ className }: { className?: string }) {
     }
     // F2 pressed in the preview, handed up by its iframe.
     const onMessage = (e: MessageEvent) => {
-      if (e.origin === window.location.origin && e.data?.type === "preview-rename")
+      if (
+        e.origin === window.location.origin &&
+        e.data?.type === "preview-rename"
+      )
         renameCurrent()
     }
     window.addEventListener("keydown", onKeyDown)
@@ -199,7 +202,11 @@ export function StudioPanel({ className }: { className?: string }) {
             aria-label="More"
             onAction={(key) => key === "trash" && setTrashOpen(true)}
           >
-            <MenuItem id="trash" isDisabled={trash.length === 0}>
+            <MenuItem
+              id="trash"
+              isDisabled={trash.length === 0}
+              className="pointer-coarse:min-h-11"
+            >
               {`Recently deleted (${trash.length})`}
             </MenuItem>
           </MenuContent>
