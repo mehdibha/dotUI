@@ -25,6 +25,7 @@ export function RecentlyDeleted({ onBack }: { onBack: () => void }) {
           isIconOnly
           aria-label="Back"
           autoFocus
+          className="pointer-coarse:size-11!"
           onPress={onBack}
         >
           <ChevronLeftIcon />
@@ -64,10 +65,15 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
             size="sm"
             autoFocus
             onPress={() => purge(doc.id)}
+            className="pointer-coarse:h-11"
           >
             Delete
           </Button>
-          <Button size="sm" onPress={() => setConfirming(false)}>
+          <Button
+            size="sm"
+            onPress={() => setConfirming(false)}
+            className="pointer-coarse:h-11"
+          >
             Cancel
           </Button>
         </>
@@ -91,7 +97,7 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
             size="sm"
             isIconOnly
             aria-label={`Restore ${doc.name}`}
-            className="text-fg-muted"
+            className="text-fg-muted pointer-coarse:size-11!"
             onPress={() => recover(doc.id)}
           >
             <RotateCcwIcon />
@@ -101,7 +107,7 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
             size="sm"
             isIconOnly
             aria-label={`Delete ${doc.name} forever`}
-            className="text-fg-muted"
+            className="text-fg-muted pointer-coarse:size-11!"
             onPress={() => setConfirming(true)}
           >
             <Trash2Icon />
