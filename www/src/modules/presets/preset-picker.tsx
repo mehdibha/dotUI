@@ -43,6 +43,7 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
 import type { DesignSystem } from "@/modules/studio/preset"
 
@@ -603,6 +604,8 @@ function swallowDoubleClick() {
   const timer = setTimeout(stop, 500)
 }
 
+const ROW_MENU_HINT = "Press Shift+F10 for actions"
+
 /** One option: the preset's swatch and its name, in the site's own theme. */
 function PresetOptionRow({
   item,
@@ -663,6 +666,9 @@ function PresetOptionRow({
   useEffect(() => {
     const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
     if (!option || !hasMenu) return
+    // Rows are no Tab stops: screen readers say the keyboard way in.
+    if (!window.matchMedia("(pointer: coarse)").matches)
+      option.setAttribute("aria-description", ROW_MENU_HINT)
     const open = () =>
       menuFrom(option.querySelector("[data-row-menu]") ?? option)
     let timer: ReturnType<typeof setTimeout> | undefined
@@ -698,6 +704,7 @@ function PresetOptionRow({
     option.addEventListener("pointercancel", cancel)
     return () => {
       cancel()
+      option.removeAttribute("aria-description")
       option.removeEventListener("contextmenu", onContextMenu)
       option.removeEventListener("pointerdown", onPointerDown)
       option.removeEventListener("pointermove", onPointerMove)
@@ -732,18 +739,21 @@ function PresetOptionRow({
       </span>
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
       {onMenu && (
-        // A press here never reaches the row, so it doesn't pick it.
-        <Button
-          variant="quiet"
-          size="sm"
-          isIconOnly
-          data-row-menu=""
-          aria-label={`Actions for ${item.kind ? `${item.kind} ` : ""}${item.name}`}
-          onPress={(e) => onMenu(e.target)}
-          className="-my-1 -mr-1 shrink-0 text-fg-muted pointer-coarse:size-11!"
-        >
-          <MoreHorizontalIcon />
-        </Button>
+        <Tooltip>
+          {/* A press here never reaches the row, so it doesn't pick it. */}
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            data-row-menu=""
+            aria-label={`Actions for ${item.kind ? `${item.kind} ` : ""}${item.name}`}
+            onPress={(e) => onMenu(e.target)}
+            className="-my-1 -mr-1 shrink-0 text-fg-muted pointer-coarse:size-11!"
+          >
+            <MoreHorizontalIcon />
+          </Button>
+          <TooltipContent>Actions · Shift+F10</TooltipContent>
+        </Tooltip>
       )}
     </>
   )
