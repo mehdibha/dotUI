@@ -65,18 +65,14 @@ export function PanelChrome({
                   className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
                   style={{ background: system.swatch }}
                 />
-                {/* The name wins: a tag that doesn't fit beside it wraps
-                    onto a clipped second line. */}
-                <span className="flex h-5 min-w-0 flex-wrap content-start items-center gap-x-1 overflow-hidden">
-                  <span dir="auto" className="min-w-0 truncate leading-5">
-                    {system.name}
-                  </span>
-                  {system.tag && (
-                    <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.625rem] leading-4 font-normal text-fg-muted">
-                      {system.tag}
-                    </span>
-                  )}
+                <span dir="auto" className="min-w-0 truncate">
+                  {system.name}
                 </span>
+                {system.tag && (
+                  <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.625rem] leading-4 font-normal text-fg-muted">
+                    {system.tag}
+                  </span>
+                )}
                 <ChevronsUpDownIcon
                   data-icon="inline-end"
                   className="size-3 shrink-0 text-fg-muted"
