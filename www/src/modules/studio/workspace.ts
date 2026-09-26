@@ -129,12 +129,18 @@ export function parseWorkspace(raw: string): Workspace {
 
 const EMPTY: Workspace = { schema: 2, systems: [] }
 
+/** Stays until dismissed; the next failed write shows it again. */
 export function storageFailed() {
+  const id = "storage-failed"
   toastManager.add({
-    id: "storage-failed",
+    id,
     title: "Changes can't be saved in this browser",
     type: "warning",
     timeout: 0,
+    actionProps: {
+      children: "Dismiss",
+      onClick: () => toastManager.close(id),
+    },
   })
 }
 
