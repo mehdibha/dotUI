@@ -10,7 +10,6 @@ import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
-import { getPreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { duplicate, inTextEntry, newSystem, remove } from "./history"
@@ -18,7 +17,7 @@ import { HistoryControls, quoted, undoToast } from "./history-menu"
 import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { pickerSections, rowSelection } from "./picker-sections"
+import { basedOn, pickerSections, rowSelection } from "./picker-sections"
 import { RecentlyDeleted } from "./recently-deleted"
 import { SystemMenu, ViewMenu } from "./row-menus"
 import { getCurrent, select, selectionKey, useCurrent } from "./selection"
@@ -35,14 +34,9 @@ function kindOf({ sel, doc }: Current, workspace: Workspace): string {
   if (sel.kind === "preset") return "preset, edits create a draft"
   if (sel.kind === "shared") return "shared link, edits create a draft"
   if (!doc) return ""
-  const { origin } = doc
-  const source =
-    origin.kind === "preset"
-      ? `based on ${getPreset(origin.id)?.name ?? "a preset"}`
-      : origin.kind === "snapshot"
-        ? "from a shared link"
-        : `copy of ${workspace.systems.find((s) => s.id === origin.of)?.name ?? "a deleted system"}`
-  return doc.draft ? `draft, ${source}` : source
+  const source = basedOn(doc, workspace)
+  const lower = source.charAt(0).toLowerCase() + source.slice(1)
+  return doc.draft ? `draft, ${lower}` : lower
 }
 
 export function StudioPanel({ className }: { className?: string }) {

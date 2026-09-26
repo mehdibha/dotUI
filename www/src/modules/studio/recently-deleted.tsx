@@ -9,7 +9,7 @@ import { ChevronLeftIcon, RotateCcwIcon, Trash2Icon } from "lucide-react"
 import { Button } from "@/registry/ui/button"
 
 import { recover } from "./history"
-import { ago } from "./history-menu"
+import { ago } from "./time"
 import { purge, useTrash } from "./workspace"
 import type { Deleted } from "./workspace"
 

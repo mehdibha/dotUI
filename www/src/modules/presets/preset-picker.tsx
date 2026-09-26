@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useEffectEvent,
   useMemo,
   useRef,
   useState,
@@ -55,6 +56,10 @@ interface PresetPickerItem {
   inspiredBy?: string
   /** A short status after the name, e.g. "Draft". */
   badge?: string
+  /** The muted second line, read as the row renders so times stay fresh. */
+  subtitle?: () => string
+  /** Tells same-named rows apart in the ⋯ label, e.g. "preset". */
+  kind?: string
   /** Themes the flyout — called only for the previewed item. */
   resolve: () => DesignSystem
 }
@@ -446,12 +451,7 @@ function PresetPickerContent({
               <span className="tabular-nums">{section.items.length}</span>
             </CommandSectionHeader>
             {section.items.map((item) => (
-              <CommandItem
-                key={item.id}
-                id={item.id}
-                textValue={item.name}
-                className={cn(renderItemMenu && "pr-9")}
-              >
+              <CommandItem key={item.id} id={item.id} textValue={item.name}>
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
                     item={item}
@@ -604,16 +604,66 @@ function PresetOptionRow({
       option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
   }, [isSelected])
 
+  // Right-click, or a long press on touch, opens the row's menu.
+  const menuFrom = useEffectEvent((trigger: Element) => onMenu?.(trigger))
+  const hasMenu = !!onMenu
+  useEffect(() => {
+    const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
+    if (!option || !hasMenu) return
+    const open = () =>
+      menuFrom(option.querySelector("[data-row-menu]") ?? option)
+    let timer: ReturnType<typeof setTimeout> | undefined
+    let start = { x: 0, y: 0 }
+    const cancel = () => clearTimeout(timer)
+    const onContextMenu = (e: MouseEvent) => {
+      e.preventDefault()
+      cancel()
+      open()
+    }
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== "touch") return
+      if ((e.target as Element).closest("[data-row-menu], input")) return
+      start = { x: e.clientX, y: e.clientY }
+      timer = setTimeout(() => {
+        // Ends the row's press, so lifting the finger doesn't pick the row.
+        document.dispatchEvent(new PointerEvent("pointercancel"))
+        open()
+      }, 500)
+    }
+    const onPointerMove = (e: PointerEvent) => {
+      if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8) cancel()
+    }
+    option.addEventListener("contextmenu", onContextMenu)
+    option.addEventListener("pointerdown", onPointerDown)
+    option.addEventListener("pointermove", onPointerMove)
+    option.addEventListener("pointerup", cancel)
+    option.addEventListener("pointercancel", cancel)
+    return () => {
+      cancel()
+      option.removeEventListener("contextmenu", onContextMenu)
+      option.removeEventListener("pointerdown", onPointerDown)
+      option.removeEventListener("pointermove", onPointerMove)
+      option.removeEventListener("pointerup", cancel)
+      option.removeEventListener("pointercancel", cancel)
+    }
+  }, [hasMenu])
+
+  const subtitle = item.subtitle?.()
   return (
     <>
       <Swatch ref={rowRef} color={item.swatch} />
-      {rename ? (
-        <RenameField name={item.name} onEnd={rename} />
-      ) : (
-        <span dir="auto" className="min-w-0 flex-1 truncate">
-          {item.name}
-        </span>
-      )}
+      <span className="flex min-w-0 flex-1 flex-col">
+        {rename ? (
+          <RenameField name={item.name} onEnd={rename} />
+        ) : (
+          <span dir="auto" className="truncate">
+            {item.name}
+          </span>
+        )}
+        {subtitle && (
+          <span className="truncate text-xs text-fg-muted">{subtitle}</span>
+        )}
+      </span>
       {item.badge && (
         <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
           {item.badge}
@@ -627,9 +677,9 @@ function PresetOptionRow({
           size="sm"
           isIconOnly
           data-row-menu=""
-          aria-label={`Actions for ${item.name}`}
+          aria-label={`Actions for ${item.kind ? `${item.kind} ` : ""}${item.name}`}
           onPress={(e) => onMenu(e.target)}
-          className="absolute top-1/2 right-1 -translate-y-1/2 text-fg-muted pointer-coarse:size-11"
+          className="-my-1 -mr-1 shrink-0 text-fg-muted pointer-coarse:size-11!"
         >
           <MoreHorizontalIcon />
         </Button>
@@ -680,7 +730,7 @@ function RenameField({
       onPointerUp={stop}
       onMouseDown={stop}
       onClick={stop}
-      className="-my-1 h-6 min-w-0 flex-1 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
+      className="-my-0.5 h-6 w-full min-w-0 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
     />
   )
 }
