@@ -7,7 +7,7 @@ export const origin = definePreset({
   swatch: "#0072f5",
   state: {
     // Color
-    // Geist's measured blue drives the solids and the selection ramp.
+    // Geist's measured blue drives every solid role, selection included.
     brand: "#0072f5",
     buttonColor: "accent",
     selectionColor: "accent",
@@ -15,7 +15,7 @@ export const origin = definePreset({
     successSeed: "",
     warningSeed: "",
     dangerSeed: "",
-    selectionSeed: "#0072f5",
+    selectionSeed: "",
     vividness: 1,
     neutralTint: 1,
     preserveSeed: false,
