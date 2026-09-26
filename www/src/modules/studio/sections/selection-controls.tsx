@@ -2,13 +2,14 @@
 
 /* Selection controls — Checkbox, Radio, Switch and their card variant. A
    radio is always a circle and a switch a pill, so Corner stops at the box;
-   each control's color is a leaf of Color's Primary. Choice cards are one
-   treatment across all three. */
+   each control picks its own color. Choice cards are one treatment across
+   all three. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { CORNER_OPTIONS } from "../axes/checkbox"
 import { CONTROL_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards"
+import { SOURCE_OPTIONS } from "../axes/color"
 import {
   DialGlyph,
   DialPopover,
@@ -95,19 +96,54 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialTrigger
         label="Checkbox"
-        value={state.checkCorner}
-        onChange={set("checkCorner")}
-        rowPreview={false}
-        options={CORNER_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(CORNER_OPTIONS, state.checkCorner)} ·{" "}
+              {optionLabel(SOURCE_OPTIONS, state.checkboxColor)}
+            </span>
             <DialGlyph>
-              <CornerGlyph corner={option.value} />
+              <CornerGlyph corner={state.checkCorner} />
             </DialGlyph>
-          ),
-        }))}
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Corner"
+            value={state.checkCorner}
+            onChange={set("checkCorner")}
+            rowPreview={false}
+            options={CORNER_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <CornerGlyph corner={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Color"
+            value={state.checkboxColor}
+            onChange={set("checkboxColor")}
+            options={SOURCE_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+      <DialSegmented
+        label="Radio"
+        value={state.radioColor}
+        onChange={set("radioColor")}
+        options={SOURCE_OPTIONS}
+      />
+      <DialSegmented
+        label="Switch"
+        value={state.switchColor}
+        onChange={set("switchColor")}
+        options={SOURCE_OPTIONS}
       />
       <DialTrigger
         label="Choice card"

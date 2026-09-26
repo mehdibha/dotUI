@@ -4,6 +4,7 @@
    volume slider, bar-on-thin is M3 on a quiet page. The fill's color is a
    leaf of Color's Primary. */
 
+import { SOURCE_OPTIONS } from "../axes/color"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import {
   DialGlyph,
@@ -111,6 +112,12 @@ export function SlidersSection({ studio }: { studio: Studio }) {
             value={state.sliderTrack}
             onChange={set("sliderTrack")}
             options={TRACK_OPTIONS}
+          />
+          <DialSegmented
+            label="Color"
+            value={state.sliderColor}
+            onChange={set("sliderColor")}
+            options={SOURCE_OPTIONS}
           />
         </DialPopover>
       </DialTrigger>

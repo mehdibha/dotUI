@@ -8,6 +8,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { SOURCE_OPTIONS } from "../axes/color"
 import { TREATMENT_OPTIONS } from "../axes/disabled"
 import {
   FOCUS_INPUT_STYLE_OPTIONS,
@@ -287,6 +288,13 @@ function FocusPanel({ studio }: { studio: Studio }) {
           format={px}
         />
       )}
+      <DialGap />
+      <DialSegmented
+        label="Color"
+        value={state.focusColor}
+        onChange={set("focusColor")}
+        options={SOURCE_OPTIONS}
+      />
     </>
   )
 }
