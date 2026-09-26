@@ -232,6 +232,36 @@ describe("workspace", () => {
     expect(workspace.systems[0]!.state.radiusPx).toBe(4)
   })
 
+  it("writes a deleted system to the trash before removing it", async () => {
+    const { ws, doc } = await created()
+    win.localStorage.setItem.mockClear()
+    ws.trash(doc.id)
+    expect(win.localStorage.setItem.mock.calls.map(([key]) => key)).toEqual([
+      "dotui:trash",
+      KEY,
+    ])
+    expect(ws.getWorkspace().systems).toEqual([])
+    expect(ws.recover(doc.id)?.id).toBe(doc.id)
+    expect(win.read("dotui:trash")).toBeNull()
+  })
+
+  it("drops invalid trash entries", async () => {
+    const { ws, doc } = await created()
+    win.seed(
+      "dotui:trash",
+      JSON.stringify({
+        schema: 1,
+        items: [
+          { doc, index: 0, deletedAt: 1 },
+          { doc: { ...doc, id: "x", name: "" }, index: 0, deletedAt: 1 },
+          { doc: { ...doc, id: "y" }, index: "0", deletedAt: 1 },
+          { doc: { ...doc, id: "z" }, index: 0 },
+        ],
+      }),
+    )
+    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([doc.id])
+  })
+
   it("reads anything but schema 2 as empty", async () => {
     win.seed(KEY, JSON.stringify({ schema: 1, openId: "x", systems: [] }))
     const ws = await load()

@@ -218,6 +218,114 @@ describe("views and drafts", () => {
   })
 })
 
+describe("duplicate", () => {
+  it("copies a preset as My <preset>, kept", async () => {
+    const { history, current } = await load()
+    const id = history.duplicate({ kind: "preset", id: "linear" })!
+    expect(current().doc).toMatchObject({
+      id,
+      name: "My Linear",
+      draft: false,
+      origin: { kind: "preset", id: "linear" },
+      state: getPreset("linear")!.state,
+    })
+    expect(history.duplicate({ kind: "preset", id: "linear" })).toBeDefined()
+    expect(current().name).toBe("My Linear 2")
+  })
+
+  it("copies a system as <name> copy, never chaining", async () => {
+    const { history, ws, current, system } = await load()
+    const id = system()
+    ws.rename(id, "Acme")
+    const copy = history.duplicate({ kind: "system", id })!
+    expect(current().doc).toMatchObject({
+      name: "Acme copy",
+      origin: { kind: "copy", of: id },
+    })
+    expect(current().state.radiusPx).toBe(3)
+    history.duplicate({ kind: "system", id: copy })
+    expect(current().name).toBe("Acme copy 2")
+  })
+
+  it("copies a shared view under its name; undo removes the copy", async () => {
+    const { history, ws, selection, current, radius } = await load()
+    const shared = {
+      kind: "shared",
+      id: "abcdefghij",
+      name: "Acme",
+      state: radius(9),
+    } as const
+    selection.select(shared)
+    history.duplicate(shared)
+    expect(current().doc).toMatchObject({
+      name: "Acme",
+      origin: { kind: "snapshot", id: "abcdefghij" },
+    })
+    history.undo()
+    expect(current().key).toBe("shared:abcdefghij")
+    expect(ws.getWorkspace().systems).toEqual([])
+  })
+})
+
+describe("recently deleted", () => {
+  it("moves a system there; undo brings it back in place", async () => {
+    const { history, ws, selection, current, system } = await load()
+    const first = system()
+    const second = system()
+    selection.select({ kind: "system", id: first })
+    const undo = history.remove(second)
+    expect(current().doc?.id).toBe(first)
+    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
+    undo()
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first, second])
+    expect(ws.getTrash()).toEqual([])
+    expect(current().doc?.id).toBe(first)
+  })
+
+  it("empties the list to the Origin view, and restores after a reload", async () => {
+    const { history, ws, current, system } = await load()
+    const id = system()
+    history.remove(id)
+    expect(current().key).toBe("preset:origin")
+    expect(ws.getWorkspace().systems).toEqual([])
+    vi.resetModules()
+    const reloaded = await load()
+    reloaded.history.recover(id)
+    expect(reloaded.ws.getWorkspace().systems.map((s) => s.id)).toEqual([id])
+    expect(reloaded.current().key).toBe("preset:origin")
+  })
+
+  it("keeps one draft when a deleted draft comes back", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    edit(3)
+    const old = current().doc!.id
+    history.remove(old)
+    selection.select({ kind: "preset", id: "linear" })
+    edit(5)
+    const draft = current().doc!.id
+    history.recover(old, true)
+    expect(current().doc).toMatchObject({ id: old, draft: true })
+    expect(ws.findSystem(draft)).toMatchObject({
+      name: "My Linear",
+      draft: false,
+    })
+  })
+
+  it("purges what was deleted over 30 days ago", async () => {
+    const { history, ws, system } = await load()
+    const old = system()
+    history.checkpoint(old)
+    history.remove(old)
+    vi.advanceTimersByTime(29 * 86_400_000)
+    const recent = system()
+    history.remove(recent)
+    vi.advanceTimersByTime(2 * 86_400_000)
+    ws.purgeExpired()
+    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([recent])
+    expect(win.read(`dotui:history:${old}`)).toBeNull()
+  })
+})
+
 describe("checkpoints", () => {
   const key = (id: string) => `dotui:history:${id}`
 
@@ -284,14 +392,14 @@ describe("checkpoints", () => {
     expect(open().state.radiusPx).toBe(3)
   })
 
-  it("are deleted with the system and come back with its undo", async () => {
-    const { history, system } = await load()
+  it("stay with a deleted system and go when it is deleted forever", async () => {
+    const { history, ws, system } = await load()
     const id = system()
     history.checkpoint(id)
-    const undo = history.remove(id)
-    expect(win.read(key(id))).toBeNull()
-    undo()
+    history.remove(id)
     expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
+    ws.purge(id)
+    expect(win.read(key(id))).toBeNull()
   })
 
   it("are deleted with a draft left unchanged", async () => {

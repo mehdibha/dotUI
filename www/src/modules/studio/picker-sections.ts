@@ -1,11 +1,27 @@
-import { PRESET_META, resolvePreset } from "@/modules/presets"
+import {
+  getPreset,
+  ORIGIN,
+  PRESET_META,
+  resolvePreset,
+} from "@/modules/presets"
 import type { PresetPickerSection } from "@/modules/presets/preset-picker"
 
 import { resolveDesignSystem } from "./resolve"
 import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
+import { ago } from "./time"
 import { listed } from "./workspace"
-import type { Workspace } from "./workspace"
+import type { DesignSystemDoc, Workspace } from "./workspace"
+
+/** Where a system came from: "Based on Linear", "From a shared link"… */
+export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
+  const { origin } = doc
+  if (origin.kind === "preset")
+    return `Based on ${getPreset(origin.id)?.name ?? "a preset"}`
+  if (origin.kind === "snapshot") return "From a shared link"
+  const source = workspace.systems.find((s) => s.id === origin.of)
+  return `Copy of ${source?.name ?? "a deleted system"}`
+}
 
 /** What the studio and docs pickers list: the shared link on screen, the
  *  user's systems (the draft first) and the presets, keyed by selection. */
@@ -24,6 +40,8 @@ export function pickerSections(
           id: current.key,
           name: current.name,
           swatch: current.swatch,
+          kind: "shared link",
+          subtitle: () => "Shared link",
           resolve: () => resolveDesignSystem(sel.state),
         },
       ],
@@ -38,6 +56,9 @@ export function pickerSections(
         name: system.name,
         swatch: system.state.brand,
         badge: system.draft ? "Draft" : undefined,
+        kind: system.draft ? "draft" : undefined,
+        subtitle: () =>
+          `${basedOn(system, workspace)} · ${ago(system.updatedAt, Date.now(), "narrow")}${system.published.length ? " · Published" : ""}`,
         resolve: () => resolveDesignSystem(system.state),
       })),
     })
@@ -47,6 +68,8 @@ export function pickerSections(
     items: PRESET_META.map((meta) => ({
       ...meta,
       id: selectionKey({ kind: "preset", id: meta.id }),
+      kind: "preset",
+      subtitle: meta.id === ORIGIN.id ? () => "Default" : undefined,
       resolve: () => resolvePreset(meta.id),
     })),
   })

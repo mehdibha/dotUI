@@ -23,12 +23,24 @@ import { getPreset } from "@/modules/presets"
 import { sameState } from "./axes"
 import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
 import type { Current } from "./selection"
+import { ago } from "./time"
 import { fetchSnapshot } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
-export function undoToast(title: string, undo: () => void) {
+/** A design system's name in a toast title: quoted, cut at 32 characters. */
+export function quoted(name: string): string {
+  const chars = [...name]
+  return `"${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}"`
+}
+
+export function undoToast(
+  title: string,
+  undo: () => void,
+  description?: string,
+) {
   const id = toastManager.add({
     title,
+    description,
     actionProps: {
       children: "Undo",
       onClick: () => {
@@ -41,27 +53,8 @@ export function undoToast(title: string, undo: () => void) {
 
 function resetLabel(doc: DesignSystemDoc): string {
   if (doc.origin.kind === "snapshot") return "Reset to shared version"
-  if (doc.origin.kind === "copy") return "Reset to copy"
+  if (doc.origin.kind === "copy") return "Reset to copy point"
   return `Reset to ${getPreset(doc.origin.id)?.name ?? "preset"}`
-}
-
-const UNITS = [
-  ["year", 31_536_000],
-  ["month", 2_592_000],
-  ["week", 604_800],
-  ["day", 86_400],
-  ["hour", 3600],
-  ["minute", 60],
-] as const
-
-const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" })
-
-function ago(at: number, now: number): string {
-  const seconds = (now - at) / 1000
-  for (const [unit, size] of UNITS)
-    if (seconds >= size)
-      return relative.format(-Math.floor(seconds / size), unit)
-  return "Just now"
 }
 
 // The relative time rounds; the clock pins it.
@@ -118,7 +111,8 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
   const label = resetLabel(doc)
 
   function onAction(key: string) {
-    if (key === "reset") return undoToast(label, reset(doc.id))
+    if (key === "reset")
+      return undoToast(`Reset ${quoted(doc.name)}`, reset(doc.id))
     const [kind, value] = key.split(":")
     if (kind === "checkpoint") {
       const entry = saved[Number(value)]

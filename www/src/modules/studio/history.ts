@@ -16,7 +16,13 @@ import { ORIGIN } from "@/modules/presets"
 
 import { sameState, validate } from "./axes"
 import type { StudioState } from "./axes"
-import { getCurrent, getSelection, select, selectionKey } from "./selection"
+import {
+  describe,
+  getCurrent,
+  getSelection,
+  select,
+  selectionKey,
+} from "./selection"
 import type { Selection, ViewSelection } from "./selection"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
@@ -180,18 +186,29 @@ export function newSystem(): string | undefined {
   return doc?.id
 }
 
-/** Opens a copy of the system: "Acme copy". */
-export function duplicate(id: string): string | undefined {
-  const source = workspace.findSystem(id)
-  if (!source) return
+/** Opens a kept copy of a row: "My Linear" from a preset, "Acme copy" from
+ *  a system, the link's name from a shared view. Returns its id. */
+export function duplicate(sel: Selection): string | undefined {
+  const source = describe(sel, workspace.getWorkspace())
+  if (sel.kind === "system" && !source.doc) return
   const from = getSelection()
   const doc = workspace.create({
-    name: workspace.uniqueName(
-      source.name.replace(/ copy( \d+)?$/, ""),
-      workspace.getWorkspace().systems,
-      " copy",
-    ),
-    origin: { kind: "copy", of: source.id },
+    name:
+      sel.kind === "preset"
+        ? `My ${source.name}`
+        : sel.kind === "system"
+          ? workspace.uniqueName(
+              source.name.replace(/ copy( \d+)?$/, ""),
+              workspace.getWorkspace().systems,
+              " copy",
+            )
+          : source.name,
+    origin:
+      sel.kind === "preset"
+        ? { kind: "preset", id: sel.id }
+        : sel.kind === "shared"
+          ? { kind: "snapshot", id: sel.id }
+          : { kind: "copy", of: sel.id },
     initial: source.state,
     state: source.state,
   })
@@ -199,13 +216,12 @@ export function duplicate(id: string): string | undefined {
   return doc?.id
 }
 
-/** Deletes the system and its checkpoints; deleting the current one opens
- *  the next in the list, else the Origin view. Returns the undo. */
+/** Moves the system to Recently deleted; deleting the current one opens the
+ *  next in the list, else the Origin view. Returns the undo. */
 export function remove(id: string): () => void {
   const list = workspace.listed(workspace.getWorkspace())
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
-  const removed = workspace.remove(id)
-  if (!removed) return () => {}
+  if (!workspace.trash(id)) return () => {}
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
     const next = list[at + 1] ?? list[at - 1]
@@ -215,11 +231,15 @@ export function remove(id: string): () => void {
         : { kind: "preset", id: ORIGIN.id },
     )
   }
-  return () => {
-    workspace.insert(removed.doc, removed.index, removed.checkpoints)
-    if (removed.doc.draft) keepOtherDrafts(id)
-    if (wasCurrent) select({ kind: "system", id })
-  }
+  return () => recover(id, wasCurrent)
+}
+
+/** Brings a system back from Recently deleted; `open` makes it current. */
+export function recover(id: string, open = false): void {
+  const doc = workspace.recover(id)
+  if (!doc) return
+  if (doc.draft) keepOtherDrafts(id)
+  if (open) select({ kind: "system", id })
 }
 
 function travel(from: "past" | "future", to: "past" | "future") {
@@ -338,6 +358,10 @@ export function checkpoint(id: string): void {
 const TEXT_ENTRY =
   "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
 
+/** Whether a key event's target keeps the key for itself (a text field). */
+export const inTextEntry = (target: EventTarget | null) =>
+  target instanceof Element && !!target.closest(TEXT_ENTRY)
+
 const checkpointCurrent = () => {
   const { doc } = getCurrent()
   if (doc) checkpoint(doc.id)
@@ -356,7 +380,7 @@ export function useHistory(systemId: string | undefined) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey) || e.altKey) return
-      if (e.target instanceof Element && e.target.closest(TEXT_ENTRY)) return
+      if (inTextEntry(e.target)) return
       const key = e.key.toLowerCase()
       if (key === "z" && !e.shiftKey) undo()
       else if ((key === "z" && e.shiftKey) || (key === "y" && e.ctrlKey)) redo()

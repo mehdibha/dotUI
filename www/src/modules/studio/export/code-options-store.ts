@@ -20,6 +20,7 @@ const store = createPersistedStore<CodeOptions>(
 )
 
 export const useCodeOptions = store.useValue
+export const getCodeOptions = store.get
 
 export function setCodeOption<K extends keyof CodeOptions>(
   key: K,
