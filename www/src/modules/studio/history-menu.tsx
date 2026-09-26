@@ -71,12 +71,14 @@ function Entry({ at, now }: { at: number; now: number }) {
 
 function IconButton({
   label,
+  tip = label,
   disabledLabel,
   children,
   isDisabled,
   onPress,
 }: {
   label: string
+  tip?: string
   /** The tooltip while disabled: why there's nothing to do. */
   disabledLabel?: string
   children: ReactNode
@@ -110,7 +112,7 @@ function IconButton({
           {children}
         </Button>
       )}
-      <TooltipContent>{isDisabled ? disabledLabel : label}</TooltipContent>
+      <TooltipContent>{isDisabled ? disabledLabel : tip}</TooltipContent>
     </Tooltip>
   )
 }
@@ -188,7 +190,7 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
 }
 
 export function HistoryControls({ current }: { current: Current }) {
-  const { canUndo, canRedo } = useUndoRedo(current.key)
+  const { canUndo, canRedo, redoLabel } = useUndoRedo(current.key)
   return (
     <>
       <IconButton
@@ -201,6 +203,7 @@ export function HistoryControls({ current }: { current: Current }) {
       </IconButton>
       <IconButton
         label="Redo"
+        tip={redoLabel}
         disabledLabel="Nothing to redo"
         isDisabled={!canRedo}
         onPress={redo}

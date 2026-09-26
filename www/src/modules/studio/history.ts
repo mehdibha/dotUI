@@ -53,6 +53,8 @@ const listeners = new Set<() => void>()
 let press = 0
 let presses = 0
 let idle: ReturnType<typeof setTimeout> | undefined
+// The first draft's "saved" toast, closed if that draft is undone away.
+let savedToast: { id: string; draft: string } | undefined
 
 const systemKey = (id: string) => selectionKey({ kind: "system", id })
 
@@ -129,7 +131,10 @@ function fork(view: ViewSelection, next: StudioState) {
   } catch {
     return
   }
-  toastManager.add({ title: "Your changes are saved in this browser." })
+  savedToast = {
+    id: toastManager.add({ title: "Your changes are saved in this browser." }),
+    draft: doc.id,
+  }
 }
 
 /* -------------------------------- editing -------------------------------- */
@@ -271,6 +276,7 @@ function travel(from: "past" | "future", to: "past" | "future") {
     // can bring it back.
     workspace.flush()
     const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
+    if (savedToast?.draft === doc.id) toastManager.close(savedToast.id)
     const back =
       step.created.kind === "system" && !workspace.findSystem(step.created.id)
         ? ({ kind: "preset", id: ORIGIN.id } as const)
@@ -303,7 +309,21 @@ export function useUndoRedo(key: string) {
     },
     () => 0,
   )
-  return { canUndo: (flags & 1) !== 0, canRedo: (flags & 2) !== 0 }
+  const recreates = useSyncExternalStore(
+    subscribe,
+    () => {
+      const step = stacks.get(key)?.future.at(-1)
+      if (!step || !("recreate" in step)) return undefined
+      const { name, draft } = step.recreate
+      return draft ? `the ${name} draft` : name
+    },
+    () => undefined,
+  )
+  return {
+    canUndo: (flags & 1) !== 0,
+    canRedo: (flags & 2) !== 0,
+    redoLabel: recreates ? `Redo · recreate ${recreates}` : "Redo",
+  }
 }
 
 /* ------------------------------ checkpoints ------------------------------ */
