@@ -196,6 +196,16 @@ function PresetPickerContent({
     menuTriggerRef.current = trigger as HTMLElement
     setMenu({ id })
   }
+  const closeMenu = () => {
+    setMenu(null)
+    // After a delete the trigger is gone: the search keeps focus in the
+    // picker. Two frames, after the popover's own focus restore.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        if (!menuTriggerRef.current?.isConnected) searchRef.current?.focus()
+      }),
+    )
+  }
   // Which preset the flyout previews: the last row the pointer entered or the
   // keyboard highlight landed on, whichever signalled most recently. Focus only
   // counts once the user has actually navigated (arrows or typing) — the
@@ -260,7 +270,7 @@ function PresetPickerContent({
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
-  const flyout = surface === "popover" && withPreview && !pane
+  const flyout = surface === "popover" && withPreview
   const menuItem = menu?.id
     ? allItems.find((item) => item.id === menu.id)
     : undefined
@@ -428,12 +438,12 @@ function PresetPickerContent({
     <PopoverContext.Provider value={null}>
       <RootMenuTriggerStateContext.Provider value={null}>
         <MenuContext.Provider
-          value={{ onClose: () => setMenu(null), autoFocus: "first" }}
+          value={{ onClose: closeMenu, autoFocus: "first" }}
         >
           <Popover
             triggerRef={menuTriggerRef}
             isOpen={!!menuContent}
-            onOpenChange={(isOpen) => !isOpen && setMenu(null)}
+            onOpenChange={(isOpen) => !isOpen && closeMenu()}
             placement="bottom end"
             className="transition-none will-change-auto"
           >
@@ -470,7 +480,9 @@ function PresetPickerContent({
       {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
-          isVisible={engaged}
+          // Hidden, not unmounted, under a pane: its demos' hidden popovers
+          // would otherwise take over the picker's arrow on remount.
+          isVisible={engaged && !pane}
           forcedMode={previewMode}
         />
       )}

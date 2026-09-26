@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import type { ComponentProps } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
@@ -163,13 +164,18 @@ function StudioPage() {
   )
 }
 
+// Kept live under modal overlays: a delete's Undo works with the picker open.
+const TOP_LAYER = {
+  "data-react-aria-top-layer": "true",
+} as ComponentProps<typeof ToastProvider>["portalProps"]
+
 function StudioBody() {
   useSelectionUrl()
   useHistory(useCurrent().doc?.id)
   return (
     <>
       <StudioHeaderActions />
-      <ToastProvider />
+      <ToastProvider portalProps={TOP_LAYER} />
       <KeepDialog />
       {/* Below `lg` the panel docks under the preview; on short screens
           (a phone on its side) it sits beside it instead. */}
