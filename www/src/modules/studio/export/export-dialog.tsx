@@ -193,10 +193,10 @@ function ExportDialogBody() {
         if (next === "latest") publishLatest()
       }}
     >
-      <SegmentedControlItem id="published">
+      <SegmentedControlItem id="published" className="max-sm:text-xs">
         Published · {clock(before.at)}
       </SegmentedControlItem>
-      <SegmentedControlItem id="latest">
+      <SegmentedControlItem id="latest" className="max-sm:text-xs">
         Include latest changes
       </SegmentedControlItem>
     </SegmentedControl>
@@ -268,8 +268,9 @@ function ExportCommands({
 
   return (
     <>
-      <DialogHeader className="pr-8">
-        {top}
+      {/* The close button sits beside the short first row; the version
+          switch below gets the full width. */}
+      <DialogHeader>
         <SegmentedControl
           aria-label="Project type"
           selectedKeys={[mode]}
@@ -285,6 +286,7 @@ function ExportCommands({
             Existing project
           </SegmentedControlItem>
         </SegmentedControl>
+        {top}
       </DialogHeader>
 
       <DialogBody className="gap-4 overflow-y-auto">
