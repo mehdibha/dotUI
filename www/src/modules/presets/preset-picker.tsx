@@ -106,6 +106,9 @@ interface PresetPickerProps {
    *  it ended with Enter. Returns true when it closes the picker; otherwise
    *  focus returns to the row. */
   onRenameEnd?: (id: string, name: string | null, submit: boolean) => boolean
+  /** Filled, while the picker is open, with a function that moves focus back
+   *  to the list and highlights a row. */
+  focusRef?: RefObject<((id: string) => void) | null>
 }
 
 /**
@@ -193,6 +196,7 @@ function PresetPickerContent({
   onRenameKey,
   renamingId,
   onRenameEnd,
+  focusRef,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
@@ -244,6 +248,13 @@ function PresetPickerContent({
       : null
     ;(rowMenu ?? dialog)?.focus()
   }
+  useEffect(() => {
+    if (!focusRef) return
+    focusRef.current = focusRow
+    return () => {
+      focusRef.current = null
+    }
+  })
   const closeMenu = () => {
     setMenu(null)
     // Two frames: after the popover's own focus restore. Focus must never be

@@ -5,7 +5,7 @@
    shared link being viewed, the user's systems (the draft first) and the
    presets, each with a ⋯ menu, and opens at ?gallery=. */
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
@@ -49,6 +49,7 @@ export function StudioPanel({ className }: { className?: string }) {
   // `closes`: Enter also closes the picker, which was opened for this rename.
   const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
   const [trashOpen, setTrashOpen] = useState(false)
+  const focusPicker = useRef<((key: string) => void) | null>(null)
 
   const sections = useMemo(
     () => pickerSections(current, workspace),
@@ -110,9 +111,16 @@ export function StudioPanel({ className }: { className?: string }) {
   function onDelete(id: string) {
     const doc = workspace.systems.find((s) => s.id === id)
     if (!doc) return
+    const undo = remove(id)
     undoToast(
       `Deleted ${quoted(doc.name)}`,
-      remove(id),
+      () => {
+        undo()
+        // Back from the toast to the restored row, so Esc and arrows work.
+        requestAnimationFrame(() =>
+          focusPicker.current?.(selectionKey({ kind: "system", id })),
+        )
+      },
       doc.published.length ? "Its published links keep working." : undefined,
     )
   }
@@ -129,6 +137,7 @@ export function StudioPanel({ className }: { className?: string }) {
     return (
       <SystemMenu
         doc={doc}
+        isCurrent={key === current.key}
         onRename={() => setRenaming({ key, closes: false })}
         onDuplicate={onDuplicate}
         onDelete={() => afterClose(() => onDelete(doc.id))}
@@ -163,6 +172,7 @@ export function StudioPanel({ className }: { className?: string }) {
           return closes
         }}
         onRenameKey={renameCurrent}
+        focusRef={focusPicker}
         withPreview
         renderItemMenu={(item, afterClose) =>
           renderItemMenu(item.id, afterClose)
