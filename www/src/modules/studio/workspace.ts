@@ -307,21 +307,39 @@ export function create(
   return doc
 }
 
-/** Puts a removed system back (same id), at its old position. */
-export function insert(doc: DesignSystemDoc, index?: number): void {
+/** Where history.ts keeps a system's checkpoints; they go with the system. */
+export const checkpointsKey = (id: string) => `dotui:history:${id}`
+
+interface Removed {
+  doc: DesignSystemDoc
+  index: number
+  checkpoints: string | null
+}
+
+/** Puts a removed system back (same id), at its old position, with its
+ *  checkpoints. */
+export function insert(
+  doc: DesignSystemDoc,
+  index?: number,
+  checkpoints: string | null = null,
+): void {
   update((workspace) => {
     if (workspace.systems.some((s) => s.id === doc.id)) return workspace
     const systems = [...workspace.systems]
     systems.splice(index ?? systems.length, 0, doc)
     return { ...workspace, systems }
   })
+  if (checkpoints === null) return
+  try {
+    window.localStorage.setItem(checkpointsKey(doc.id), checkpoints)
+  } catch {
+    // Best effort: checkpoints are a convenience.
+  }
 }
 
-/** Removes the system; returns it and where it was. */
-export function remove(
-  id: string,
-): { doc: DesignSystemDoc; index: number } | undefined {
-  let removed: { doc: DesignSystemDoc; index: number } | undefined
+/** Removes the system and its checkpoints; returns them and where it was. */
+export function remove(id: string): Removed | undefined {
+  let removed: Omit<Removed, "checkpoints"> | undefined
   update((workspace) => {
     const index = workspace.systems.findIndex((s) => s.id === id)
     if (index === -1) return workspace
@@ -331,7 +349,15 @@ export function remove(
       systems: workspace.systems.filter((s) => s.id !== id),
     }
   })
-  return removed
+  if (!removed) return
+  let checkpoints: string | null = null
+  try {
+    checkpoints = window.localStorage.getItem(checkpointsKey(id))
+    window.localStorage.removeItem(checkpointsKey(id))
+  } catch {
+    // Best effort, as above.
+  }
+  return { ...removed, checkpoints }
 }
 
 /** Names the system; a draft that gets a new name is kept. */

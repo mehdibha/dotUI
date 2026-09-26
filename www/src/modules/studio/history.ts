@@ -203,7 +203,6 @@ export function duplicate(id: string): string | undefined {
  *  the next in the list, else the Origin view. Returns the undo. */
 export function remove(id: string): () => void {
   const list = workspace.listed(workspace.getWorkspace())
-  const saved = takeCheckpoints(id)
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
   const removed = workspace.remove(id)
   if (!removed) return () => {}
@@ -217,8 +216,7 @@ export function remove(id: string): () => void {
     )
   }
   return () => {
-    workspace.insert(removed.doc, removed.index)
-    if (saved !== null) writeStorage(historyKey(id), saved)
+    workspace.insert(removed.doc, removed.index, removed.checkpoints)
     if (removed.doc.draft) keepOtherDrafts(id)
     if (wasCurrent) select({ kind: "system", id })
   }
@@ -236,8 +234,7 @@ function travel(from: "past" | "future", to: "past" | "future") {
 
   if ("recreate" in step) {
     const { recreate, checkpoints } = step
-    workspace.insert(recreate)
-    if (checkpoints !== null) writeStorage(historyKey(recreate.id), checkpoints)
+    workspace.insert(recreate, undefined, checkpoints)
     if (recreate.draft) keepOtherDrafts(recreate.id)
     select({ kind: "system", id: recreate.id })
     push(stack(systemKey(recreate.id))[to], {
@@ -253,8 +250,7 @@ function travel(from: "past" | "future", to: "past" | "future") {
     // The create itself: the system goes, and the selection it came from
     // can bring it back.
     workspace.flush()
-    const checkpoints = takeCheckpoints(doc.id)
-    workspace.remove(doc.id)
+    const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
     const back =
       step.created.kind === "system" && !workspace.findSystem(step.created.id)
         ? ({ kind: "preset", id: ORIGIN.id } as const)
@@ -297,39 +293,13 @@ export interface Checkpoint {
   state: StudioState
 }
 
-const historyKey = (id: string) => `dotui:history:${id}`
-
-function readStorage(key: string): string | null {
-  try {
-    return window.localStorage.getItem(key)
-  } catch {
-    return null
-  }
-}
-
-function writeStorage(key: string, value: string | null) {
-  try {
-    if (value === null) window.localStorage.removeItem(key)
-    else window.localStorage.setItem(key, value)
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
-}
-
-/** Removes the system's stored checkpoints; returns them to write back. */
-function takeCheckpoints(id: string): string | null {
-  const saved = readStorage(historyKey(id))
-  writeStorage(historyKey(id), null)
-  return saved
-}
-
 /** The system's checkpoints, oldest first; invalid entries are dropped. */
 export function checkpoints(id: string): Checkpoint[] {
-  const raw = readStorage(historyKey(id))
-  if (!raw) return []
   let parsed: unknown
   try {
-    parsed = JSON.parse(raw)
+    parsed = JSON.parse(
+      window.localStorage.getItem(workspace.checkpointsKey(id)) ?? "[]",
+    )
   } catch {
     return []
   }
@@ -353,7 +323,14 @@ export function checkpoint(id: string): void {
   const last = list.at(-1)?.state ?? doc.initial
   if (sameState(last, doc.state)) return
   const next = [...list, { at: Date.now(), state: doc.state }]
-  writeStorage(historyKey(id), JSON.stringify(next.slice(-CHECKPOINT_LIMIT)))
+  try {
+    window.localStorage.setItem(
+      workspace.checkpointsKey(id),
+      JSON.stringify(next.slice(-CHECKPOINT_LIMIT)),
+    )
+  } catch {
+    // Best effort: checkpoints are a convenience.
+  }
 }
 
 /* --------------------------------- wiring -------------------------------- */

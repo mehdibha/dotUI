@@ -136,7 +136,7 @@ describe("workspace", () => {
     expect(stored().systems[0].state.radiusPx).toBe(3)
   })
 
-  it("removes and inserts back in place", async () => {
+  it("removes and inserts back in place, with its checkpoints", async () => {
     const { ws, doc } = await created()
     const other = ws.create({
       name: "Other",
@@ -144,14 +144,17 @@ describe("workspace", () => {
       initial: linear.state,
       state: linear.state,
     })!
+    win.seed(ws.checkpointsKey(doc.id), "[]")
     const removed = ws.remove(doc.id)!
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([other.id])
-    ws.insert(removed.doc, removed.index)
+    expect(win.read(ws.checkpointsKey(doc.id))).toBeNull()
+    ws.insert(removed.doc, removed.index, removed.checkpoints)
     ws.insert(removed.doc, removed.index)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
       doc.id,
       other.id,
     ])
+    expect(win.read(ws.checkpointsKey(doc.id))).toBe("[]")
   })
 
   it("resets to the initial state", async () => {

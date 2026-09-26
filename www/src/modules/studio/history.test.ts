@@ -294,6 +294,18 @@ describe("checkpoints", () => {
     expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
   })
 
+  it("are deleted with a draft left unchanged", async () => {
+    const { history, selection, current, edit } = await load()
+    edit(3)
+    const { id } = current().doc!
+    history.checkpoint(id)
+    vi.advanceTimersByTime(600)
+    edit(ORIGIN_RADIUS)
+    selection.select({ kind: "preset", id: "linear" })
+    expect(current().key).toBe("preset:linear")
+    expect(win.read(key(id))).toBeNull()
+  })
+
   it("leave with an undone fork and come back with its redo", async () => {
     const { history, edit, current } = await load()
     edit(3)
