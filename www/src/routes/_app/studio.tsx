@@ -30,8 +30,9 @@ export function createSearchSchema(
   s?: string
   preset?: string
 } {
+  // An empty param (`?preset=`) is no param.
   const text = (value: unknown) =>
-    typeof value === "string" ? value : undefined
+    typeof value === "string" && value ? value : undefined
   return {
     panel: text(search.panel),
     preview: text(search.preview) ?? "cards",
