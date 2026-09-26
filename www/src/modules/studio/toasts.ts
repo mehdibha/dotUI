@@ -15,6 +15,7 @@ export function undoToast(
   const id = toastManager.add({
     title,
     description,
+    timeout: 10_000,
     actionProps: {
       children: "Undo",
       onClick: () => {
