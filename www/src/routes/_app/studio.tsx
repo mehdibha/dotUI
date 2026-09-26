@@ -167,10 +167,11 @@ function StudioPage() {
 
 // Live and on top of modal overlays, the picker's drawer included: a delete's
 // Undo works with the picker open. On phones they sit at the top, clear of
-// the drawers.
+// the drawers and below the header's Share and Export.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
-  className: "relative z-60",
+  className:
+    "relative z-60 max-md:*:data-[slot=toast-viewport]:top-[calc(var(--header-height)+(--spacing(2)))]!",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {

@@ -74,7 +74,8 @@ function CopyField({
         <Input
           ref={input}
           onFocus={(e) => e.target.select()}
-          className="min-w-0 flex-1 font-mono text-xs"
+          size="sm"
+          className="min-w-0 flex-1 font-mono sm:text-xs"
         />
         <Button
           size="sm"
