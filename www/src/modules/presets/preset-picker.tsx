@@ -603,8 +603,10 @@ function PresetOptionRow({
     else onHide?.(item.id)
   }, [isHovered, isFocused, item.id, onShow, onHide])
 
-  // Center the selected row when it enters the list: the collection carries no
-  // selection (rows draw their own), so RAC never scrolls to it on open.
+  // Center the selected row when it enters the list out of view: the
+  // collection carries no selection (rows draw their own), so RAC never
+  // scrolls to it on open. A visible row stays put, keeping the sections
+  // above it in view.
   // Offset math, not scrollIntoView — the popover's entering scale skews rects.
   const rowRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
@@ -612,6 +614,8 @@ function PresetOptionRow({
     const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
     const scroller = option?.offsetParent
     if (!option || !(scroller instanceof HTMLElement)) return
+    const top = option.offsetTop - scroller.scrollTop
+    if (top >= 0 && top + option.offsetHeight <= scroller.clientHeight) return
     scroller.scrollTop =
       option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
   }, [isSelected])
