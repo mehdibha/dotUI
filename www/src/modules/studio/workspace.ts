@@ -17,7 +17,7 @@ import {
 } from "@/lib/snapshots/snapshot"
 import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { closestPreset, getPreset } from "@/modules/presets"
+import { closestPreset, getPreset, ORIGIN } from "@/modules/presets"
 import { formatIssues, sameState, validate } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
@@ -295,10 +295,13 @@ export function uniqueName(
   return candidate
 }
 
-/** What keeping a draft named after its source suggests: "My Linear". */
+/** What keeping a draft named after its source suggests: "My Linear", or
+ *  "Untitled" for Origin, like New. */
 export const keptName = (doc: DesignSystemDoc) =>
   uniqueName(
-    `My ${doc.name}`,
+    doc.origin.kind === "preset" && doc.origin.id === ORIGIN.id
+      ? "Untitled"
+      : `My ${doc.name}`,
     getWorkspace().systems.filter((s) => s.id !== doc.id),
   )
 

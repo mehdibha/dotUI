@@ -176,7 +176,7 @@ describe("views and drafts", () => {
     selection.select({ kind: "preset", id: "linear" })
     edit(5)
     expect(ws.findSystem(old)).toMatchObject({
-      name: "My Origin",
+      name: "Untitled",
       draft: false,
     })
     expect(current().doc).toMatchObject({ name: "Linear", draft: true })

@@ -135,6 +135,14 @@ describe("workspace", () => {
       state: linear.state,
     })!
     expect(ws.keptName(draft)).toBe("My Linear 2")
+    const origin = ws.create({
+      draft: true,
+      name: "Origin",
+      origin: { kind: "preset", id: "origin" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    expect(ws.keptName(origin)).toBe("Untitled")
     ws.keep(draft.id, "Linear")
     expect(ws.findSystem(draft.id)).toMatchObject({
       name: "Linear",
