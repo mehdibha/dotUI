@@ -114,10 +114,50 @@ export function KeepDialog() {
             e.preventDefault()
         }}
       >
+        <RestoreFocus />
         {shown && <KeepForm key={shown.doc.id} request={shown} />}
       </DialogContent>
     </Modal>
   )
+}
+
+/** Once the dialog is gone, focus that fell to the page goes back to what
+ *  opened it — or, as a publish swapped that out, to the dialog it sat in
+ *  (Share, Export), else to what replaced it (Published ✓). */
+function RestoreFocus() {
+  const [opener] = useState(() => {
+    const active = document.activeElement
+    if (!(active instanceof HTMLElement) || active === document.body) return
+    return {
+      element: active,
+      dialog: active.closest<HTMLElement>("[role=dialog]"),
+      parent: active.parentElement,
+    }
+  })
+  useEffect(
+    () => () => {
+      if (!opener) return
+      // After react-aria's own restore, a frame past the unmount.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const targets = [
+            opener.element,
+            opener.dialog,
+            opener.parent?.querySelector<HTMLElement>(
+              "button, [role=button], input, [tabindex]",
+            ),
+          ]
+          for (const target of targets) {
+            const active = document.activeElement
+            if (active && active !== document.body) return
+            if (target?.isConnected) target.focus()
+          }
+        }),
+      )
+    },
+    [opener],
+  )
+  return null
 }
 
 function KeepForm({ request: current }: { request: Request }) {
