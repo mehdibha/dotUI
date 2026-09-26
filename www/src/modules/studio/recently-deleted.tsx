@@ -59,11 +59,18 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
     <li className="flex min-h-10 items-center gap-2 rounded-md py-1 pr-1 pl-2 text-sm">
       {confirming ? (
         <>
-          <span className="min-w-0 flex-1 truncate">Delete forever?</span>
+          <span className="flex min-w-0 flex-1 whitespace-nowrap">
+            Delete "
+            <span dir="auto" className="truncate">
+              {doc.name}
+            </span>
+            " forever?
+          </span>
           <Button
             variant="danger"
             size="sm"
             autoFocus
+            aria-label={`Delete ${doc.name} forever`}
             onPress={() => purge(doc.id)}
             className="pointer-coarse:h-11"
           >
@@ -71,6 +78,7 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
           </Button>
           <Button
             size="sm"
+            aria-label={`Cancel deleting ${doc.name}`}
             onPress={() => setConfirming(false)}
             className="pointer-coarse:h-11"
           >
