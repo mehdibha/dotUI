@@ -205,7 +205,8 @@ function PresetPickerContent({
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
   // (its header is our child, so the collection can't hide it for us). Reading
-  // it off `onInput` leaves the value under Autocomplete's control.
+  // it off the field's `onChange` (Esc clears through it too) leaves the
+  // value under Autocomplete's control.
   const [query, setQuery] = useState("")
   const { contains } = useFilter({
     sensitivity: "base",
@@ -389,6 +390,7 @@ function PresetPickerContent({
           // nor over a row being renamed.
           autoFocus={surface === "popover" && !renamingId}
           aria-label="Search design systems"
+          onChange={setQuery}
           className="flex-1 border-b-0! px-0!"
         >
           <InputGroup>
@@ -399,8 +401,7 @@ function PresetPickerContent({
               ref={searchRef}
               onKeyDown={onSearchKeyDown}
               placeholder="Search"
-              onInput={(e) => {
-                setQuery(e.currentTarget.value)
+              onInput={() => {
                 // Typing moves the highlight to the first match, so from here on
                 // the pane follows it.
                 navigatedRef.current = true
