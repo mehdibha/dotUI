@@ -254,13 +254,13 @@ function cut(text: string, max: number): string {
   return out
 }
 
-/** Trimmed, control and zero-width characters stripped, at most 64
- *  characters. */
+/** Trimmed, control characters and invisible spaces stripped, at most 64
+ *  characters. Joiners and bidi marks stay: emoji and scripts need them. */
 export const cleanName = (name: string) =>
   cut(
     name
       .normalize("NFC")
-      .replace(/[\p{Cc}\p{Cf}]/gu, "")
+      .replace(/[\p{Cc}\u200B\u2060\uFEFF]/gu, "")
       .trim(),
     MAX_NAME_LENGTH,
   ).trim()
