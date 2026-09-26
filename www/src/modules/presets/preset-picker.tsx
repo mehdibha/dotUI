@@ -134,6 +134,24 @@ export function PresetPicker({
   withPreview = false,
   ...rest
 }: PresetPickerProps) {
+  // Closing after its opener went away (reopened past the keep dialog)
+  // leaves focus on the page: it goes back to the trigger.
+  const triggerRef = useRef<HTMLSpanElement>(null)
+  const wasOpen = useRef(isOpen)
+  useEffect(() => {
+    const closed = wasOpen.current && !isOpen
+    wasOpen.current = isOpen
+    if (!closed) return
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        const active = document.activeElement
+        if (active && active !== document.body) return
+        triggerRef.current?.querySelector<HTMLElement>("button")?.focus()
+      })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [isOpen])
+
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Design systems"
@@ -160,7 +178,9 @@ export function PresetPicker({
 
   return (
     <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      {children}
+      <span ref={triggerRef} className="contents">
+        {children}
+      </span>
       <Responsive
         render={(isMobile) =>
           isMobile ? (
