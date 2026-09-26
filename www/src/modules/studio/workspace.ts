@@ -360,6 +360,91 @@ export function remove(id: string): Removed | undefined {
   return { ...removed, checkpoints }
 }
 
+/* --------------------------- recently deleted --------------------------- */
+
+export interface Deleted {
+  doc: DesignSystemDoc
+  /** Its place in the list, to come back to. */
+  index: number
+  deletedAt: number
+}
+
+const TRASH_MS = 30 * 86_400_000
+
+function parseTrash(raw: string): Deleted[] {
+  const parsed: unknown = JSON.parse(raw)
+  if (!isRecord(parsed) || parsed.schema !== 1 || !Array.isArray(parsed.items))
+    return []
+  return parsed.items.flatMap((entry: unknown) => {
+    if (!isRecord(entry)) return []
+    const doc = parseDoc(entry.doc)
+    const { index, deletedAt } = entry
+    return doc && Number.isInteger(index) && isTime(deletedAt)
+      ? [{ doc, index: index as number, deletedAt }]
+      : []
+  })
+}
+
+const trashStore = createPersistedStore<Deleted[]>("dotui:trash", [], {
+  decode: parseTrash,
+  encode: (items) =>
+    items.length ? JSON.stringify({ schema: 1, items }) : null,
+  onWriteError: storageFailed,
+})
+
+/** Recently deleted, oldest first. */
+export const getTrash = trashStore.get
+export const useTrash = trashStore.useValue
+
+/** Moves the system to Recently deleted, writing it there first. */
+export function trash(id: string): Deleted | undefined {
+  let deleted: Deleted | undefined
+  update((workspace) => {
+    const index = workspace.systems.findIndex((s) => s.id === id)
+    if (index === -1) return workspace
+    const item = {
+      doc: workspace.systems[index]!,
+      index,
+      deletedAt: Date.now(),
+    }
+    trashStore.update((items) => [
+      ...items.filter((i) => i.doc.id !== id),
+      item,
+    ])
+    deleted = item
+    return {
+      ...workspace,
+      systems: workspace.systems.filter((s) => s.id !== id),
+    }
+  })
+  return deleted
+}
+
+/** Brings a system back from Recently deleted, in its old place. */
+export function recover(id: string): DesignSystemDoc | undefined {
+  const item = trashStore.get().find((i) => i.doc.id === id)
+  if (!item) return
+  insert(item.doc, item.index)
+  trashStore.update((items) => items.filter((i) => i.doc.id !== id))
+  return item.doc
+}
+
+/** Deletes a system from Recently deleted for good, with its checkpoints. */
+export function purge(id: string): void {
+  trashStore.update((items) => items.filter((i) => i.doc.id !== id))
+  try {
+    window.localStorage.removeItem(checkpointsKey(id))
+  } catch {
+    // Best effort: checkpoints are a convenience.
+  }
+}
+
+/** Purges what was deleted over 30 days ago. */
+export function purgeExpired(now = Date.now()): void {
+  for (const { doc, deletedAt } of trashStore.get())
+    if (now - deletedAt > TRASH_MS) purge(doc.id)
+}
+
 /** Names the system; a draft that gets a new name is kept. */
 export function rename(id: string, name: string): void {
   const clean = cleanName(name)

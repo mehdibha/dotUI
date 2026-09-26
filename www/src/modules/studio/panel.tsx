@@ -11,6 +11,7 @@ import { ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 /** The current design system, as the chrome shows it. */
 export interface PanelSystem {
@@ -18,6 +19,9 @@ export interface PanelSystem {
   swatch: string
   /** "Preset", "Shared" or "Draft"; the user's own systems have none. */
   tag?: string
+  /** The full name and its kind, e.g. "Linear · preset, edits create a
+   *  draft". */
+  description: string
   /** Undo, redo and the history menu. */
   history: ReactNode
   /** Wraps the trigger in the design-system picker. */
@@ -49,27 +53,30 @@ export function PanelChrome({
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 dock-stacked:top-auto dock-stacked:bottom-0 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
         <div className="flex items-center justify-between gap-2">
           {system.renderSwitcher(
-            <Button
-              variant="quiet"
-              size="sm"
-              aria-label={`Design system: ${system.name}${system.tag ? `, ${system.tag.toLowerCase()}` : ""}. Change design system`}
-              className="min-w-0 justify-start gap-1.5 font-medium"
-            >
-              <span
-                aria-hidden
-                className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
-                style={{ background: system.swatch }}
-              />
-              <span dir="auto" className="truncate">
-                {system.name}
-              </span>
-              {system.tag && (
-                <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
-                  {system.tag}
+            <Tooltip>
+              <Button
+                variant="quiet"
+                size="sm"
+                aria-label={`Design system: ${system.description}. Change design system`}
+                className="min-w-0 justify-start gap-1.5 font-medium"
+              >
+                <span
+                  aria-hidden
+                  className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                  style={{ background: system.swatch }}
+                />
+                <span dir="auto" className="truncate">
+                  {system.name}
                 </span>
-              )}
-              <ChevronsUpDownIcon className="shrink-0 text-fg-muted" />
-            </Button>,
+                {system.tag && (
+                  <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
+                    {system.tag}
+                  </span>
+                )}
+                <ChevronsUpDownIcon className="shrink-0 text-fg-muted" />
+              </Button>
+              <TooltipContent>{system.description}</TooltipContent>
+            </Tooltip>,
           )}
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">
             {system.history}

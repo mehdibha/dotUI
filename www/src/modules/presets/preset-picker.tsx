@@ -2,9 +2,19 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode, Ref } from "react"
-import { CheckIcon, PlusIcon, SearchIcon } from "lucide-react"
+import {
+  CheckIcon,
+  MoreHorizontalIcon,
+  PlusIcon,
+  SearchIcon,
+} from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
+import {
+  MenuContext,
+  RootMenuTriggerStateContext,
+} from "react-aria-components/Menu"
+import { PopoverContext } from "react-aria-components/Popover"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { Responsive } from "@/registry/lib/responsive"
@@ -61,10 +71,17 @@ interface PresetPickerProps {
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
-  /** Trailing controls on a row (e.g. a saved preset's actions menu). */
-  renderItemActions?: (item: PresetPickerItem) => ReactNode
+  /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
+   *  search never filters it. */
+  renderItemMenu?: (item: PresetPickerItem) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
+  /** The picker's own ⋯ menu, beside New. */
+  moreMenu?: ReactNode
+  /** Shown instead of the list, e.g. Recently deleted. */
+  pane?: ReactNode
+  /** F2 in the search field. */
+  onRenameKey?: () => void
   /** The row being renamed in place, if any. */
   renamingId?: string
   /** Ends the rename: the typed name, or null when cancelled; `submit` when
@@ -92,10 +109,7 @@ export function PresetPicker({
   placement = "bottom start",
   previewMode,
   withPreview = false,
-  renderItemActions,
-  onCreate,
-  renamingId,
-  onRenameEnd,
+  ...rest
 }: PresetPickerProps) {
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
@@ -115,10 +129,7 @@ export function PresetPicker({
           surface={surface}
           previewMode={previewMode}
           withPreview={withPreview}
-          renderItemActions={renderItemActions}
-          onCreate={onCreate}
-          renamingId={renamingId}
-          onRenameEnd={onRenameEnd}
+          {...rest}
         />
       )}
     </DialogContent>
@@ -156,22 +167,17 @@ function PresetPickerContent({
   surface,
   previewMode,
   withPreview,
-  renderItemActions,
+  renderItemMenu,
   onCreate,
+  moreMenu,
+  pane,
+  onRenameKey,
   renamingId,
   onRenameEnd,
-}: {
-  sections: PresetPickerSection[]
-  selectedId?: string
-  onPick: (item: PresetPickerItem) => void
+}: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
-  previewMode?: "light" | "dark"
   withPreview: boolean
-  renderItemActions?: (item: PresetPickerItem) => ReactNode
-  onCreate?: () => void
-  renamingId?: string
-  onRenameEnd?: (id: string, name: string | null, submit: boolean) => void
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
@@ -182,6 +188,14 @@ function PresetPickerContent({
     sensitivity: "base",
     ignorePunctuation: true,
   })
+  // The open ⋯ menu: a row's, or the picker's own (id null).
+  const [menu, setMenu] = useState<{ id: string | null } | null>(null)
+  const menuTriggerRef = useRef<HTMLElement | null>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
+  const openMenu = (id: string | null, trigger: Element) => {
+    menuTriggerRef.current = trigger as HTMLElement
+    setMenu({ id })
+  }
   // Which preset the flyout previews: the last row the pointer entered or the
   // keyboard highlight landed on, whichever signalled most recently. Focus only
   // counts once the user has actually navigated (arrows or typing) — the
@@ -246,7 +260,33 @@ function PresetPickerContent({
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
-  const flyout = surface === "popover" && withPreview
+  const flyout = surface === "popover" && withPreview && !pane
+  const menuItem = menu?.id
+    ? allItems.find((item) => item.id === menu.id)
+    : undefined
+  const menuContent =
+    menu &&
+    (menu.id === null ? moreMenu : menuItem && renderItemMenu?.(menuItem))
+
+  // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
+  function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "F2" && onRenameKey) {
+      e.preventDefault()
+      onRenameKey()
+      return
+    }
+    if (
+      !renderItemMenu ||
+      !((e.key === "F10" && e.shiftKey) || e.key === "ContextMenu")
+    )
+      return
+    const active = e.currentTarget.getAttribute("aria-activedescendant")
+    const row = active ? document.getElementById(active) : null
+    const key = row?.dataset.key
+    if (!row || !key) return
+    e.preventDefault()
+    openMenu(key, row.querySelector("[data-row-menu]") ?? row)
+  }
 
   function pick(key: Key) {
     const item = allItems.find((candidate) => candidate.id === key)
@@ -261,8 +301,9 @@ function PresetPickerContent({
           inset as the rows below; the New button, when any, shares it. */}
       <div className="mx-2 flex items-center gap-2">
         <SearchField
-          // No search autofocus on mobile — the keyboard would cover the list.
-          autoFocus={surface === "popover"}
+          // No search autofocus on mobile — the keyboard would cover the list;
+          // nor over a row being renamed.
+          autoFocus={surface === "popover" && !renamingId}
           aria-label="Search design systems"
           className="flex-1 border-b-0! px-0!"
         >
@@ -271,6 +312,8 @@ function PresetPickerContent({
               <SearchIcon />
             </InputGroupAddon>
             <Input
+              ref={searchRef}
+              onKeyDown={onSearchKeyDown}
               placeholder="Search systems..."
               onInput={(e) => {
                 setQuery(e.currentTarget.value)
@@ -290,6 +333,18 @@ function PresetPickerContent({
           >
             <PlusIcon />
             New
+          </Button>
+        )}
+        {moreMenu && (
+          <Button
+            variant="quiet"
+            size="md"
+            isIconOnly
+            aria-label="More"
+            className="mt-2 shrink-0 text-fg-muted"
+            onPress={(e) => openMenu(null, e.target)}
+          >
+            <MoreHorizontalIcon />
           </Button>
         )}
       </div>
@@ -327,7 +382,7 @@ function PresetPickerContent({
                 key={item.id}
                 id={item.id}
                 textValue={item.name}
-                className={cn(renderItemActions && "pr-9")}
+                className={cn(renderItemMenu && "pr-9")}
               >
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
@@ -341,10 +396,21 @@ function PresetPickerContent({
                     isHovered={isHovered}
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
-                    actions={renderItemActions?.(item)}
+                    onMenu={
+                      renderItemMenu
+                        ? (trigger) => openMenu(item.id, trigger)
+                        : undefined
+                    }
                     rename={
                       item.id === renamingId && onRenameEnd
-                        ? (name, submit) => onRenameEnd(item.id, name, submit)
+                        ? (name, submit) => {
+                            onRenameEnd(item.id, name, submit)
+                            // Back to the search, which drives the list.
+                            if (!submit)
+                              requestAnimationFrame(() =>
+                                searchRef.current?.focus(),
+                              )
+                          }
                         : undefined
                     }
                   />
@@ -357,18 +423,50 @@ function PresetPickerContent({
     </>
   )
 
-  if (surface === "drawer") return <Command>{list}</Command>
+  // Outside the Autocomplete, whose contexts would otherwise reach the menu.
+  const rowMenu = (
+    <PopoverContext.Provider value={null}>
+      <RootMenuTriggerStateContext.Provider value={null}>
+        <MenuContext.Provider
+          value={{ onClose: () => setMenu(null), autoFocus: "first" }}
+        >
+          <Popover
+            triggerRef={menuTriggerRef}
+            isOpen={!!menuContent}
+            onOpenChange={(isOpen) => !isOpen && setMenu(null)}
+            placement="bottom end"
+            className="transition-none will-change-auto"
+          >
+            {menuContent}
+          </Popover>
+        </MenuContext.Provider>
+      </RootMenuTriggerStateContext.Provider>
+    </PopoverContext.Provider>
+  )
+
+  if (surface === "drawer")
+    return (
+      <>
+        {pane ?? <Command>{list}</Command>}
+        {rowMenu}
+      </>
+    )
 
   return (
     <>
-      <Command
-        className="max-h-[inherit] w-65 overflow-hidden"
-        onKeyDownCapture={(e) => {
-          if (e.key.startsWith("Arrow")) navigatedRef.current = true
-        }}
-      >
-        {list}
-      </Command>
+      {pane ? (
+        <div className="flex max-h-[inherit] w-65 flex-col">{pane}</div>
+      ) : (
+        <Command
+          className="max-h-[inherit] w-65 overflow-hidden"
+          onKeyDownCapture={(e) => {
+            if (e.key.startsWith("Arrow")) navigatedRef.current = true
+          }}
+        >
+          {list}
+        </Command>
+      )}
+      {rowMenu}
       {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
@@ -388,7 +486,7 @@ function PresetOptionRow({
   isHovered,
   onShow,
   onHide,
-  actions,
+  onMenu,
   rename,
 }: {
   item: PresetPickerItem
@@ -397,7 +495,7 @@ function PresetOptionRow({
   isHovered: boolean
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
-  actions?: ReactNode
+  onMenu?: (trigger: Element) => void
   rename?: (name: string | null, submit: boolean) => void
 }) {
   // Route this row to the flyout: the pointer and the keyboard highlight both
@@ -438,11 +536,20 @@ function PresetOptionRow({
         </span>
       )}
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
-      {actions ? (
-        <span className="absolute top-1/2 right-1 -translate-y-1/2">
-          {actions}
-        </span>
-      ) : null}
+      {onMenu && (
+        // A press here never reaches the row, so it doesn't pick it.
+        <Button
+          variant="quiet"
+          size="sm"
+          isIconOnly
+          data-row-menu=""
+          aria-label={`Actions for ${item.name}`}
+          onPress={(e) => onMenu(e.target)}
+          className="absolute top-1/2 right-1 -translate-y-1/2 text-fg-muted pointer-coarse:size-11"
+        >
+          <MoreHorizontalIcon />
+        </Button>
+      )}
     </>
   )
 }
