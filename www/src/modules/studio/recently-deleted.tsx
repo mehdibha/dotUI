@@ -58,33 +58,36 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
   return (
     <li className="flex min-h-10 items-center gap-2 rounded-md py-1 pr-1 pl-2 text-sm">
       {confirming ? (
-        <>
-          <span className="flex min-w-0 flex-1 whitespace-nowrap">
+        // The question gets the row's width, so the name fits.
+        <span className="flex min-w-0 flex-1 flex-col gap-1.5 py-1">
+          <span className="flex min-w-0 whitespace-nowrap">
             Delete "
             <span dir="auto" className="truncate">
               {doc.name}
             </span>
             " forever?
           </span>
-          <Button
-            variant="danger"
-            size="sm"
-            autoFocus
-            aria-label={`Delete ${doc.name} forever`}
-            onPress={() => purge(doc.id)}
-            className="pointer-coarse:h-11"
-          >
-            Delete
-          </Button>
-          <Button
-            size="sm"
-            aria-label={`Cancel deleting ${doc.name}`}
-            onPress={() => setConfirming(false)}
-            className="pointer-coarse:h-11"
-          >
-            Cancel
-          </Button>
-        </>
+          <span className="flex justify-end gap-2">
+            <Button
+              size="sm"
+              aria-label={`Cancel deleting ${doc.name}`}
+              onPress={() => setConfirming(false)}
+              className="pointer-coarse:h-11"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              autoFocus
+              aria-label={`Delete ${doc.name} forever`}
+              onPress={() => purge(doc.id)}
+              className="pointer-coarse:h-11"
+            >
+              Delete
+            </Button>
+          </span>
+        </span>
       ) : (
         <>
           <span
