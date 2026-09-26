@@ -50,6 +50,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
   const [trashOpen, setTrashOpen] = useState(false)
   const focusPicker = useRef<((key: string) => void) | null>(null)
+  const lastNew = useRef({ at: 0, key: "" })
 
   const sections = useMemo(
     () => pickerSections(current, workspace),
@@ -159,7 +160,19 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={sections}
         selectedId={current.key}
         onPick={(item) => onPick(item.id)}
-        onCreate={() => created(newSystem)}
+        onCreate={() => {
+          // The second click of a double click is the same New: back to
+          // renaming the row the first one made.
+          const { at, key } = lastNew.current
+          if (performance.now() - at < 500)
+            return key && setRenaming({ key, closes: true })
+          lastNew.current = { at: performance.now(), key: "" }
+          created(() => {
+            const id = newSystem()
+            if (id) lastNew.current.key = selectionKey({ kind: "system", id })
+            return id
+          })
+        }}
         renamingId={renaming?.key}
         onRenameEnd={(key, name, submit) => {
           setRenaming(undefined)
