@@ -636,8 +636,13 @@ function PresetOptionRow({
       if ((e.target as Element).closest("[data-row-menu], input")) return
       start = { x: e.clientX, y: e.clientY }
       timer = setTimeout(() => {
-        // Ends the row's press, so lifting the finger doesn't pick the row.
+        // Ends the row's press, so lifting the finger doesn't pick the row,
+        // and drops the lift's mouse events, which would blur the menu.
         document.dispatchEvent(new PointerEvent("pointercancel"))
+        option.addEventListener("touchend", (e) => e.preventDefault(), {
+          once: true,
+          passive: false,
+        })
         open()
       }, 500)
     }
