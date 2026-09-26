@@ -4,7 +4,15 @@
    a dialog rests. Backdrop writes Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DIALOG_OPTIONS } from "../axes/mobile"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -53,7 +61,7 @@ function BackdropGlyph({ backdrop }: { backdrop: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function DialogsPreview({ state }: { state: StudioState }) {
+function DialogsPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <BackdropGlyph backdrop={state.dialogBackdrop} />
@@ -65,26 +73,46 @@ export function DialogsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Backdrop"
-        value={state.dialogBackdrop}
-        onChange={set("dialogBackdrop")}
-        rowPreview={false}
-        options={BACKDROP_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <BackdropGlyph backdrop={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        label="Position"
-        value={state.dialogPosition}
-        onChange={set("dialogPosition")}
-        options={POSITION_OPTIONS}
-      />
+      <DialTrigger
+        label="Dialog"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(BACKDROP_OPTIONS, state.dialogBackdrop)}
+            </span>
+            <DialogsPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Backdrop"
+            value={state.dialogBackdrop}
+            onChange={set("dialogBackdrop")}
+            rowPreview={false}
+            options={BACKDROP_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <BackdropGlyph backdrop={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Position"
+            value={state.dialogPosition}
+            onChange={set("dialogPosition")}
+            options={POSITION_OPTIONS}
+          />
+          <DialSegmented
+            label="On mobile"
+            value={state.mobileDialogs}
+            onChange={set("mobileDialogs")}
+            options={DIALOG_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

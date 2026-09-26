@@ -27,7 +27,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -166,16 +166,12 @@ function SegmentedGlyph({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function ButtonsPreview({ state }: { state: StudioState }) {
-  return <ButtonGlyph style={state.buttonStyle} />
-}
-
 export function ButtonsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
       <DialTrigger
-        label="Style"
+        label="Button"
         value={
           <>
             <span className="truncate">
@@ -218,7 +214,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         </DialPopover>
       </DialTrigger>
       <DialSelect
-        label="Toggles"
+        label="Toggle button"
         value={state.toggleSelected}
         onChange={set("toggleSelected")}
         options={TOGGLE_OPTIONS.map((option) => ({
@@ -227,7 +223,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialSelect
-        label="Groups"
+        label="Button group"
         value={state.groupSeparator}
         onChange={set("groupSeparator")}
         options={SEPARATOR_OPTIONS.map((option) => ({
@@ -236,7 +232,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialTrigger
-        label="Segmented"
+        label="Segmented control"
         value={
           <>
             <span className="truncate">

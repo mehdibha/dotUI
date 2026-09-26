@@ -162,7 +162,7 @@ function PaletteGlyph({ search }: { search: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function MenusPreview({ state }: { state: StudioState }) {
+function MenusPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <HighlightGlyph highlight={state.menuHighlight} />
@@ -174,54 +174,68 @@ export function MenusSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Indicator"
-        value={state.menuIndicator}
-        onChange={set("menuIndicator")}
-        options={INDICATOR_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <IndicatorGlyph indicator={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="Highlight"
-        value={state.menuHighlight}
-        onChange={set("menuHighlight")}
-        rowPreview={false}
-        options={HIGHLIGHT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <HighlightGlyph highlight={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="Items"
-        value={state.menuInset}
-        onChange={set("menuInset")}
-        options={INSET_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <InsetGlyph inset={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        label="Labels"
-        value={state.menuLabels}
-        onChange={set("menuLabels")}
-        options={LABEL_OPTIONS}
-      />
       <DialTrigger
-        label="Command palette"
+        label="Menu"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(HIGHLIGHT_OPTIONS, state.menuHighlight)}
+            </span>
+            <MenusPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Indicator"
+            value={state.menuIndicator}
+            onChange={set("menuIndicator")}
+            options={INDICATOR_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <IndicatorGlyph indicator={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSelect
+            label="Highlight"
+            value={state.menuHighlight}
+            onChange={set("menuHighlight")}
+            rowPreview={false}
+            options={HIGHLIGHT_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <HighlightGlyph highlight={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSelect
+            label="Items"
+            value={state.menuInset}
+            onChange={set("menuInset")}
+            options={INSET_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <InsetGlyph inset={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Labels"
+            value={state.menuLabels}
+            onChange={set("menuLabels")}
+            options={LABEL_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+      <DialTrigger
+        label="Command"
         value={
           <span className="truncate">
             {optionLabel(SEARCH_OPTIONS, state.menuSearch)} ·{" "}

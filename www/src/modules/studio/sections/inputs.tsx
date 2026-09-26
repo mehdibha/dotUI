@@ -148,10 +148,6 @@ function CellsGlyph({ cells }: { cells: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function InputsPreview({ state }: { state: StudioState }) {
-  return <FieldGlyph style={state.inputStyle} />
-}
-
 export function InputsSection({ studio }: { studio: Studio }) {
   const { state, set, setState } = studio
   const setAddon = (addon: string) =>
@@ -168,7 +164,7 @@ export function InputsSection({ studio }: { studio: Studio }) {
   return (
     <>
       <DialTrigger
-        label="Style"
+        label="Input"
         value={
           <>
             <span className="truncate">
@@ -199,7 +195,7 @@ export function InputsSection({ studio }: { studio: Studio }) {
         </DialPopover>
       </DialTrigger>
       <DialSelect
-        label="Addons"
+        label="Input group"
         value={addonValue(state)}
         onChange={setAddon}
         options={ADDON_OPTIONS.map((option) => ({

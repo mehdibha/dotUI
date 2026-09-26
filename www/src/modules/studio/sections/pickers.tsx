@@ -21,7 +21,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -102,20 +102,12 @@ function TodayGlyph({ marker }: { marker: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function PickersPreview({ state }: { state: StudioState }) {
-  return (
-    <DialGlyph>
-      <CaretGlyph caret={state.pickerCaret} />
-    </DialGlyph>
-  )
-}
-
 export function PickersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
       <DialSelect
-        label="Caret"
+        label="Select"
         value={state.pickerCaret}
         onChange={set("pickerCaret")}
         rowPreview={false}

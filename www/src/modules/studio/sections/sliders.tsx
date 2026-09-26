@@ -5,7 +5,14 @@
    leaf of Color's Primary. */
 
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -61,7 +68,7 @@ function ThumbGlyph({ thumb, track }: { thumb: string; track: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SlidersPreview({ state }: { state: StudioState }) {
+function SlidersPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <ThumbGlyph thumb={state.sliderThumb} track={state.sliderTrack} />
@@ -73,26 +80,40 @@ export function SlidersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Thumb"
-        value={state.sliderThumb}
-        onChange={set("sliderThumb")}
-        rowPreview={false}
-        options={THUMB_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <ThumbGlyph thumb={option.value} track={state.sliderTrack} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        label="Track"
-        value={state.sliderTrack}
-        onChange={set("sliderTrack")}
-        options={TRACK_OPTIONS}
-      />
+      <DialTrigger
+        label="Slider"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(THUMB_OPTIONS, state.sliderThumb)}
+            </span>
+            <SlidersPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Thumb"
+            value={state.sliderThumb}
+            onChange={set("sliderThumb")}
+            rowPreview={false}
+            options={THUMB_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <ThumbGlyph thumb={option.value} track={state.sliderTrack} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Track"
+            value={state.sliderTrack}
+            onChange={set("sliderTrack")}
+            options={TRACK_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

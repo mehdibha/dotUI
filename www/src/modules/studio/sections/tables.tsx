@@ -3,7 +3,14 @@
 /* Tables — how a data grid separates its rows, and how loud its header is. */
 
 import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /** The grid: a header band or line, then three rows divided as chosen. */
@@ -63,7 +70,7 @@ function TableGlyph({
   )
 }
 
-export function TablesPreview({ state }: { state: StudioState }) {
+function TablesPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <TableGlyph
@@ -78,29 +85,43 @@ export function TablesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Rows"
-        value={state.tableSeparation}
-        onChange={set("tableSeparation")}
-        rowPreview={false}
-        options={SEPARATION_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <TableGlyph
-                separation={option.value}
-                header={state.tableHeader}
-              />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        label="Header"
-        value={state.tableHeader}
-        onChange={set("tableHeader")}
-        options={HEADER_OPTIONS}
-      />
+      <DialTrigger
+        label="Table"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(SEPARATION_OPTIONS, state.tableSeparation)}
+            </span>
+            <TablesPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Rows"
+            value={state.tableSeparation}
+            onChange={set("tableSeparation")}
+            rowPreview={false}
+            options={SEPARATION_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <TableGlyph
+                    separation={option.value}
+                    header={state.tableHeader}
+                  />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Header"
+            value={state.tableHeader}
+            onChange={set("tableHeader")}
+            options={HEADER_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }
