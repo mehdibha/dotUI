@@ -5,7 +5,7 @@
    Pure and React-free — shared by the panel, the preview iframe, the docs
    demos and the /r/* registry routes. */
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import type { ColorConfig } from "@/registry/theme"
 import { registryUi } from "@/registry/ui/registry"
 import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/studio/preset/defaults"
 import type { DesignSystem } from "@/modules/studio/preset/types"
@@ -55,14 +55,13 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
     componentParams,
     tokens,
     density: resolved.density ?? "default",
-    // The default recipe is the floor under a partial slice; a recipe equal to
-    // the default stays absent so scoped providers and the export keep the
-    // shipped `base/colors.css`.
-    color: (() => {
-      if (!resolved.color) return undefined
-      const merged = { ...DEFAULT_COLOR_CONFIG, ...resolved.color }
-      return isDefaultColorConfig(merged) ? undefined : merged
-    })(),
+    // Color contributes the full recipe; one equal to the default stays
+    // absent so scoped providers and the export keep the shipped
+    // `base/colors.css`.
+    color:
+      resolved.color && !isDefaultColorConfig(resolved.color as ColorConfig)
+        ? (resolved.color as ColorConfig)
+        : undefined,
     icons: resolved.icons,
   }
 }

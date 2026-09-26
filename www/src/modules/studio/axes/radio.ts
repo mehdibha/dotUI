@@ -7,7 +7,7 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const RADIO_DEFAULTS = {
-  radioColor: "neutral",
+  radioColor: "accent",
 }
 
 export const RADIO_SCHEMA: ChapterSchema<typeof RADIO_DEFAULTS> = {

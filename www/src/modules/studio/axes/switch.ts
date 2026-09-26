@@ -8,7 +8,7 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const SWITCH_DEFAULTS = {
-  switchColor: "neutral",
+  switchColor: "accent",
 }
 
 export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {

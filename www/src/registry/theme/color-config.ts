@@ -44,7 +44,8 @@ export interface ColorConfig {
   preserveSeed?: boolean
   /**
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
-   * (brand-colored primary); absent means the default neutral (black/white).
+   * (brand-colored primary, the default's); absent means neutral
+   * (black/white).
    */
   primary?: "accent"
   /**
@@ -71,13 +72,15 @@ export interface ColorConfig {
 export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
- * dotUI's default palette: a blue brand accent, auto-tinted neutral, and the
- * engine's CVD-gated status defaults (kept absent: the engine supplies them).
+ * dotUI's default palette (Origin): a blue brand accent that also fills the
+ * primary actions, auto-tinted neutral, and the engine's CVD-gated status
+ * defaults (kept absent: the engine supplies them).
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
-  seeds: { accent: "#438cd6" },
+  seeds: { accent: "#0072f5" },
   background: { dark: 2 },
+  primary: "accent",
 }
 
 /** Engine status defaults, re-exported for the customizer's seed pickers. */

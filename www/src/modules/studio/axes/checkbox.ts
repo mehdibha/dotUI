@@ -15,7 +15,7 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const CHECKBOX_DEFAULTS = {
-  checkboxColor: "neutral",
+  checkboxColor: "accent",
   checkCorner: "rounded",
 }
 

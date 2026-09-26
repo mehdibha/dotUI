@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { parseState, validate } from "@/modules/studio/axes"
+import { DEFAULT_STATE, parseState, validate } from "@/modules/studio/axes"
 
 import { closestPreset, ORIGIN, PRESETS } from "./index"
 
@@ -17,6 +17,10 @@ describe("built-in presets", () => {
     const ids = PRESETS.map((preset) => preset.id)
     expect(new Set(ids).size).toBe(ids.length)
     for (const id of ids) expect(id).toMatch(/^[a-z0-9-]+$/)
+  })
+
+  it("start from Origin, the builder defaults", () => {
+    expect(ORIGIN.state).toEqual(DEFAULT_STATE)
   })
 
   it("credit the brand they recreate", () => {

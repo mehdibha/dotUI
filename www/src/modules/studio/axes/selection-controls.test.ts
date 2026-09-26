@@ -17,39 +17,40 @@ describe("selection controls", () => {
   })
 
   it("a control's fill forks it off the selection tokens as a recipe scope", () => {
-    const ds = resolveDesignSystem(parseState({ switchColor: "accent" }))
+    const ds = resolveDesignSystem(parseState({ switchColor: "neutral" }))
     expect(ds.tokens).toEqual({})
-    expect(ds.color?.scopes).toEqual({ switch: "accent" })
+    expect(ds.color?.scopes).toEqual({ switch: "neutral" })
     expect(
       resolveDesignSystem(
         parseState({
-          checkboxColor: "neutral",
-          radioColor: "accent",
-          switchColor: "accent",
+          checkboxColor: "accent",
+          radioColor: "neutral",
+          switchColor: "neutral",
         }),
       ).color?.scopes,
-    ).toEqual({ radio: "accent", switch: "accent" })
+    ).toEqual({ radio: "neutral", switch: "neutral" })
   })
 
   it("a fill matching the selection source is no fork", () => {
     expect(
-      resolveDesignSystem(parseState({ checkboxColor: "neutral" })).color,
+      resolveDesignSystem(parseState({ checkboxColor: "accent" })).color,
     ).toBeUndefined()
-    const accentChecks = resolveDesignSystem(
-      parseState({ selectionColor: "accent", checkboxColor: "accent" }),
+    const neutralChecks = resolveDesignSystem(
+      parseState({ selectionColor: "neutral", checkboxColor: "neutral" }),
     ).color
-    expect(accentChecks?.selection).toBe("accent")
-    expect(accentChecks?.scopes).toEqual({
-      radio: "neutral",
-      switch: "neutral",
+    expect(neutralChecks?.selection).toBe("neutral")
+    expect(neutralChecks?.scopes).toEqual({
+      radio: "accent",
+      switch: "accent",
     })
     // A selection seed paints the selection leaf; a control on that leaf
     // follows it, a control off it still forks to its own source.
     const seeded = parseState({ selectionSeed: "#0072f5" })
     expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
     expect(
-      resolveDesignSystem({ ...seeded, checkboxColor: "accent" }).color?.scopes,
-    ).toEqual({ checkbox: "accent" })
+      resolveDesignSystem({ ...seeded, checkboxColor: "neutral" }).color
+        ?.scopes,
+    ).toEqual({ checkbox: "neutral" })
   })
 
   it("corner rides on the checkbox radius var", () => {

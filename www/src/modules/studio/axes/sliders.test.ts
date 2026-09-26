@@ -23,14 +23,14 @@ describe("sliders axis", () => {
 
   test("the fill leaves the buttons' source through the slider fill var", () => {
     expect(
-      resolveDesignSystem(parseState({ sliderColor: "accent" })).tokens,
-    ).toEqual({ "--studio-slider-fill-color": "var(--color-accent)" })
-    expect(
-      resolveDesignSystem(parseState({ buttonColor: "accent" })).tokens,
+      resolveDesignSystem(parseState({ sliderColor: "neutral" })).tokens,
     ).toEqual({ "--studio-slider-fill-color": "var(--color-inverse)" })
     expect(
+      resolveDesignSystem(parseState({ buttonColor: "neutral" })).tokens,
+    ).toEqual({ "--studio-slider-fill-color": "var(--color-accent)" })
+    expect(
       resolveDesignSystem(
-        parseState({ buttonColor: "accent", sliderColor: "accent" }),
+        parseState({ buttonColor: "neutral", sliderColor: "neutral" }),
       ).tokens,
     ).toEqual({})
   })

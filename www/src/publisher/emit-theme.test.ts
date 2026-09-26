@@ -90,10 +90,9 @@ describe("emitInitItem", () => {
       Object.keys({ ...light, ...dark }).some((k) => k.startsWith("--")),
     ).toBe(false)
     expect(light).toMatchObject({ radius: "0.625rem" })
-    // A neutral primary is the inverse surface: dark text in light mode …
-    expect(light?.["primary"]).toBe(light?.["fg"])
-    // … and light in dark mode.
-    expect(dark?.["primary"]).toBe(dark?.["fg"])
+    // The default primary is the brand accent's solid in both modes.
+    expect(light?.["primary"]).toBe(light?.["accent"])
+    expect(dark?.["primary"]).toBe(dark?.["accent"])
     // Recipes flatten to literals — no `color-mix()` or `var()` escapes.
     expect(light?.["primary-hover"]).toMatch(OKLCH)
     expect(dark?.["border"]).toMatch(OKLCH)
