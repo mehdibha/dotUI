@@ -164,9 +164,11 @@ function StudioPage() {
   )
 }
 
-// Kept live under modal overlays: a delete's Undo works with the picker open.
+// Live and on top of modal overlays, the picker's drawer included: a delete's
+// Undo works with the picker open.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
+  className: "relative z-60",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {
