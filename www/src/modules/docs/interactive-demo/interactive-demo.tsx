@@ -191,19 +191,20 @@ export function InteractiveDemo({
             )}
           >
             {/* Pinned to the card's inner width (w-56 minus its borders). */}
-            <div className="relative flex w-full flex-col gap-4 px-4 pt-5.5 pb-4 md:w-55.5">
-              {/* Anchored to the pinned content, not the card, so it holds its
-                  place beside the controls while the card collapses. */}
-              <Button
-                variant="quiet"
-                size="xs"
-                isIconOnly
-                aria-label="Hide controls"
-                className="absolute top-2 right-2 text-fg-muted hover:text-fg"
-                onPress={() => setControlsOpen(false)}
-              >
-                <XIcon />
-              </Button>
+            <div className="flex w-full flex-col gap-4 p-4 md:w-55.5">
+              <div className="-my-1 -mr-2 flex items-center justify-between">
+                <p className="text-xs font-medium text-fg-muted">Controls</p>
+                <Button
+                  variant="quiet"
+                  size="xs"
+                  isIconOnly
+                  aria-label="Hide controls"
+                  className="text-fg-muted hover:text-fg"
+                  onPress={() => setControlsOpen(false)}
+                >
+                  <XIcon />
+                </Button>
+              </div>
               <Controls
                 controls={controls}
                 values={values}
