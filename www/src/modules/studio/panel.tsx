@@ -58,14 +58,14 @@ export function PanelChrome({
                 variant="quiet"
                 size="sm"
                 aria-label={`Design system: ${system.description}. Change design system`}
-                className="min-w-0 justify-start gap-1.5 font-medium"
+                className="min-w-0 shrink justify-start gap-1 font-medium"
               >
                 <span
                   aria-hidden
                   className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
                   style={{ background: system.swatch }}
                 />
-                <span dir="auto" className="truncate">
+                <span dir="auto" className="min-w-0 truncate">
                   {system.name}
                 </span>
                 {system.tag && (
@@ -73,7 +73,10 @@ export function PanelChrome({
                     {system.tag}
                   </span>
                 )}
-                <ChevronsUpDownIcon className="shrink-0 text-fg-muted" />
+                <ChevronsUpDownIcon
+                  data-icon="inline-end"
+                  className="shrink-0 text-fg-muted"
+                />
               </Button>
               <TooltipContent>{system.description}</TooltipContent>
             </Tooltip>,
