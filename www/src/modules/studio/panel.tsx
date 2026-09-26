@@ -58,7 +58,7 @@ export function PanelChrome({
                 variant="quiet"
                 size="sm"
                 aria-label={`Design system: ${system.description}. Change design system`}
-                className="min-w-0 shrink justify-start gap-1 pl-1.5 font-medium"
+                className="min-w-0 shrink justify-start gap-1 pl-1.5 font-medium has-data-[icon=inline-end]:pr-1"
               >
                 <span
                   aria-hidden
@@ -69,7 +69,7 @@ export function PanelChrome({
                   {system.name}
                 </span>
                 {system.tag && (
-                  <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.625rem] leading-4 font-normal text-fg-muted">
+                  <span className="shrink-0 rounded-sm bg-fg/6 px-0.5 text-[0.5625rem] leading-3.5 font-normal text-fg-muted">
                     {system.tag}
                   </span>
                 )}
