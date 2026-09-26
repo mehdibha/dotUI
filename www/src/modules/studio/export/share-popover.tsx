@@ -48,6 +48,11 @@ function useCopied() {
 
 type CopyState = ReturnType<typeof useCopied>[0]
 
+function select(input: HTMLInputElement | null) {
+  input?.focus()
+  input?.select()
+}
+
 function CopyField({
   label,
   value,
@@ -63,8 +68,10 @@ function CopyField({
   const input = useRef<HTMLInputElement>(null)
   const failed = state === "failed"
 
+  // Selected for ⌘C once a write fails; a failed press here selects it
+  // again, as the press moved focus to the button.
   useEffect(() => {
-    if (failed) input.current?.select()
+    if (failed) select(input.current)
   }, [failed])
 
   // The end tells versions apart (`?s=<id>`), so that's the part in view;
@@ -91,6 +98,7 @@ function CopyField({
               (error: unknown) => {
                 console.error(error)
                 done(false)
+                select(input.current)
               },
             )
           }
