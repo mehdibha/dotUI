@@ -132,6 +132,8 @@
     --color-thumb: var(--thumb);
     --color-text-selection: var(--text-selection);
     --color-fg-on-text-selection: var(--fg-on-text-selection);
+    --font-geist-sans: var(--font-geist-sans);
+    --font-geist-mono: var(--font-geist-mono);
     --color-chart-8: var(--chart-8);
     --color-chart-7: var(--chart-7);
     --color-chart-6: var(--chart-6);
@@ -441,9 +443,6 @@
     }
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
-    }
-  html {
-    @apply font-sans;
     }
 }
   ::selection {
