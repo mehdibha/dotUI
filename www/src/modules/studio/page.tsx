@@ -1,7 +1,8 @@
 "use client"
 
-/* The panel's one page: every group's rows in full, no titles — a separator
-   between groups, and each row carries its own value and specimen. Nothing
+/* The panel's one page: every group's rows in full, no titles — a hairline
+   between sections, a gap between groups inside one, and each row carries
+   its own value and specimen. Nothing
    folds; search scrolls to a group, it never opens one.
 
    Below `lg` the same page is a dock under the preview (beside it on short
@@ -21,7 +22,6 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { useTweak } from "@/dev/tweaker"
 
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
@@ -54,12 +54,10 @@ function ChapterBlock({
   )
 }
 
-/* Between groups on the page; the dock shows one group at a time. */
-const SEPARATOR = {
-  gap: "h-4",
-  hairline: "my-2 h-px bg-fg/6",
-  none: "h-1.5",
-}
+/* Sections are split by a hairline across the whole card; groups inside a
+   section by a gap. The dock shows one group at a time. */
+const SECTION_RULE = "-mx-2 my-2 h-px bg-fg/6"
+const GROUP_GAP = "h-4"
 
 /* Room kept past the selected chip, so the next one always peeks. */
 const STRIP_MARGIN = 32
@@ -163,12 +161,6 @@ export function PanelPage({
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
-  const separator = useTweak("Separators", {
-    type: "select",
-    options: ["gap", "hairline", "none"],
-    default: "gap",
-    group: "Studio panel",
-  })
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -285,7 +277,13 @@ export function PanelPage({
               {i > 0 && (
                 <div
                   aria-hidden
-                  className={cn("shrink-0 max-lg:hidden", SEPARATOR[separator])}
+                  className={cn(
+                    "shrink-0 max-lg:hidden",
+                    chapter.section &&
+                      chapter.section === chapters[i - 1]?.section
+                      ? GROUP_GAP
+                      : SECTION_RULE,
+                  )}
                 />
               )}
               <ChapterBlock

@@ -91,6 +91,8 @@ export type { Studio }
 export interface Chapter {
   id: string
   label: string
+  /** Groups sharing a section sit a gap apart; sections, a hairline. */
+  section?: string
   defaults: Partial<StudioState>
   /** Sections, in order; each renders one or more rows. */
   rows: React.ComponentType<{ studio: Studio }>[]
@@ -145,6 +147,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "actions",
+    section: "components",
     label: "Actions",
     defaults: {
       ...BUTTON_DEFAULTS,
@@ -156,6 +159,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "fields",
+    section: "components",
     label: "Fields",
     defaults: {
       ...INPUT_DEFAULTS,
@@ -169,6 +173,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "selection",
+    section: "components",
     label: "Selection",
     defaults: {
       ...CHECKBOX_DEFAULTS,
@@ -181,6 +186,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "overlays",
+    section: "components",
     label: "Overlays",
     defaults: {
       ...DIALOG_DEFAULTS,
@@ -193,6 +199,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "navigation",
+    section: "components",
     label: "Navigation",
     defaults: {
       ...LINK_DEFAULTS,
@@ -204,6 +211,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "display",
+    section: "components",
     label: "Display",
     defaults: {
       ...AVATAR_DEFAULTS,
@@ -223,6 +231,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "feedback",
+    section: "components",
     label: "Feedback",
     defaults: {
       ...PROGRESS_DEFAULTS,
