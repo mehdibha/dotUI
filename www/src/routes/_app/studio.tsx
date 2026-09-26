@@ -72,8 +72,8 @@ const linkKey = (s?: string, preset?: string) =>
 /** Keeps the URL on the current selection: `?preset=` and `?s=` for views,
  *  bare `/studio` for the user's systems. A link that isn't the current
  *  selection opens it (asking first when leaving a changed draft); a broken
- *  one is dropped with a toast. */
-function useSelectionUrl() {
+ *  one is dropped with a toast. Returns whether a shared link is loading. */
+function useSelectionUrl(): boolean {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
   const { doc, key } = useCurrent()
@@ -81,6 +81,9 @@ function useSelectionUrl() {
   const wanted = doc ? "" : key
   // The link the URL last held that has been dealt with.
   const seen = useRef<string>(undefined)
+  // The shared link being fetched, and the last one whose fetch ended.
+  const loading = useRef<string>(undefined)
+  const [fetched, setFetched] = useState<string>()
 
   useEffect(() => {
     if (url === wanted) {
@@ -99,7 +102,12 @@ function useSelectionUrl() {
         replace: true,
       })
     }
-    if (!url || url === seen.current) return void sync()
+    if (!url) return void sync()
+    if (url === seen.current) {
+      // Not while it loads: the effect reruns (Strict Mode, a storage event).
+      if (url !== loading.current) sync()
+      return
+    }
     seen.current = url
     const broken = (title: string, description?: string) => {
       toastManager.add({ title, description, type: "error" })
@@ -131,30 +139,39 @@ function useSelectionUrl() {
       })
       sync()
     }
-    const load = () =>
-      fetchSnapshot(s).then(
-        (snapshot) =>
-          snapshot
-            ? leave(
-                () =>
-                  select({
-                    kind: "shared",
-                    id: s,
-                    name: snapshot.name,
-                    state: snapshot.state,
-                  }),
-                sync,
-              )
-            : dead(),
-        (error: unknown) => {
-          console.error(error)
-          if (error instanceof DOMException && error.name === "TimeoutError")
-            slow()
-          else dead()
-        },
-      )
+    const load = () => {
+      loading.current = url
+      return fetchSnapshot(s)
+        .finally(() => {
+          loading.current = undefined
+          setFetched(url)
+        })
+        .then(
+          (snapshot) =>
+            snapshot
+              ? leave(
+                  () =>
+                    select({
+                      kind: "shared",
+                      id: s,
+                      name: snapshot.name,
+                      state: snapshot.state,
+                    }),
+                  sync,
+                )
+              : dead(),
+          (error: unknown) => {
+            console.error(error)
+            if (error instanceof DOMException && error.name === "TimeoutError")
+              slow()
+            else dead()
+          },
+        )
+    }
     load()
   }, [url, wanted, s, preset, navigate])
+
+  return s !== undefined && url !== wanted && fetched !== url
 }
 
 function StudioPage() {
@@ -202,30 +219,43 @@ const TOP_LAYER = {
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {
-  useSelectionUrl()
+  const loading = useSelectionUrl()
   useHistory(useCurrent().doc?.id)
   const isMobile = useIsMobile()
   return (
     <>
-      <StudioHeaderActions />
+      {/* First in both branches, so a toast raised while loading stays. */}
       <ToastProvider
         portalProps={TOP_LAYER}
         position={isMobile ? "top-center" : undefined}
       />
-      <KeepDialog />
-      {/* Below `lg` the panel docks under the preview; on short screens
-          (a phone on its side) it sits beside it instead. */}
-      <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
-      <PreviewPanel />
+      {loading ? (
+        // Not the selection it replaces: nothing until the link opens.
+        <StudioSkeleton label="Opening shared link…" />
+      ) : (
+        <>
+          <StudioHeaderActions />
+          <KeepDialog />
+          {/* Below `lg` the panel docks under the preview; on short screens
+              (a phone on its side) it sits beside it instead. */}
+          <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
+          <PreviewPanel />
+        </>
+      )}
     </>
   )
 }
 
-function StudioSkeleton() {
+function StudioSkeleton({ label }: { label?: string }) {
   return (
     <>
       <div className="rounded-[14px] border border-fg/6 bg-card max-lg:order-last max-lg:h-40 lg:w-64 lg:shrink-0" />
-      <div className="min-h-0 flex-1 rounded-[14px] border border-fg/6 bg-card" />
+      <div
+        aria-busy={label ? true : undefined}
+        className="flex min-h-0 flex-1 items-center justify-center rounded-[14px] border border-fg/6 bg-card text-sm text-fg-muted"
+      >
+        {label && <p role="status">{label}</p>}
+      </div>
     </>
   )
 }
