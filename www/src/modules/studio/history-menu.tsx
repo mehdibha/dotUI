@@ -21,6 +21,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { getPreset } from "@/modules/presets"
 
 import { sameState } from "./axes"
+import { DisabledButton } from "./disabled-button"
 import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
 import type { Current } from "./selection"
 import { ago, clock } from "./time"
@@ -70,28 +71,46 @@ function Entry({ at, now }: { at: number; now: number }) {
 
 function IconButton({
   label,
+  disabledLabel,
   children,
-  ...props
+  isDisabled,
+  onPress,
 }: {
   label: string
+  /** The tooltip while disabled: why there's nothing to do. */
+  disabledLabel?: string
   children: ReactNode
   isDisabled?: boolean
   onPress?: () => void
 }) {
+  // Chrome, not content: a disabled step stays unfilled.
+  const className =
+    "text-fg-muted disabled:bg-transparent pointer-coarse:data-icon-only:size-9"
   return (
     <Tooltip delay={0}>
-      <Button
-        size="sm"
-        variant="quiet"
-        isIconOnly
-        aria-label={label}
-        // Chrome, not content: a disabled step stays unfilled.
-        className="text-fg-muted disabled:bg-transparent pointer-coarse:data-icon-only:size-9"
-        {...props}
-      >
-        {children}
-      </Button>
-      <TooltipContent>{label}</TooltipContent>
+      {isDisabled ? (
+        <DisabledButton
+          variant="quiet"
+          size="sm"
+          isIconOnly
+          aria-label={label}
+          className={className}
+        >
+          {children}
+        </DisabledButton>
+      ) : (
+        <Button
+          size="sm"
+          variant="quiet"
+          isIconOnly
+          aria-label={label}
+          onPress={onPress}
+          className={className}
+        >
+          {children}
+        </Button>
+      )}
+      <TooltipContent>{isDisabled ? disabledLabel : label}</TooltipContent>
     </Tooltip>
   )
 }
@@ -172,20 +191,44 @@ export function HistoryControls({ current }: { current: Current }) {
   const { canUndo, canRedo } = useUndoRedo(current.key)
   return (
     <>
-      <IconButton label="Undo" isDisabled={!canUndo} onPress={undo}>
+      <IconButton
+        label="Undo"
+        disabledLabel="Nothing to undo"
+        isDisabled={!canUndo}
+        onPress={undo}
+      >
         <Undo2Icon />
       </IconButton>
-      <IconButton label="Redo" isDisabled={!canRedo} onPress={redo}>
+      <IconButton
+        label="Redo"
+        disabledLabel="Nothing to redo"
+        isDisabled={!canRedo}
+        onPress={redo}
+      >
         <Redo2Icon />
       </IconButton>
-      <Menu>
-        <IconButton label="History" isDisabled={!current.doc}>
+      {current.doc ? (
+        <Menu>
+          <IconButton label="History">
+            <HistoryIcon />
+          </IconButton>
+          <Popover placement="bottom end">
+            <HistoryItems doc={current.doc} />
+          </Popover>
+        </Menu>
+      ) : (
+        <IconButton
+          label="History"
+          disabledLabel={
+            current.sel.kind === "shared"
+              ? "Shared links have no history"
+              : "Presets have no history"
+          }
+          isDisabled
+        >
           <HistoryIcon />
         </IconButton>
-        <Popover placement="bottom end">
-          {current.doc && <HistoryItems doc={current.doc} />}
-        </Popover>
-      </Menu>
+      )}
     </>
   )
 }
