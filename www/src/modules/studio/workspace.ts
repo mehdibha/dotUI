@@ -211,8 +211,7 @@ export const listed = (workspace: Workspace): DesignSystemDoc[] =>
   [...workspace.systems]
     .reverse()
     .sort(
-      (a, b) =>
-        Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
+      (a, b) => Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
     )
 
 /** A draft with changes worth keeping. */
@@ -625,9 +624,7 @@ export function publish(
 
 /** A snapshot fetched by id, validated like the server's own read;
  *  undefined when no snapshot has that id. */
-export async function fetchSnapshot(
-  id: string,
-): Promise<Snapshot | undefined> {
+export async function fetchSnapshot(id: string): Promise<Snapshot | undefined> {
   if (!SNAPSHOT_ID.test(id)) return
   const response = await fetch(`/api/snapshots/${id}`)
   if (response.status === 404) return

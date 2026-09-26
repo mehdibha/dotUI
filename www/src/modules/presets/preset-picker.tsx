@@ -751,7 +751,7 @@ function RenameField({
       onMouseDown={stop}
       onClick={stop}
       // The name line's height, ring inside: the subtitle sits right below.
-      className="h-5 w-full min-w-0 rounded-sm bg-transparent px-1 [--focus-ring-inset:inset] focus-reset inset-ring-1 inset-ring-fg/15 focus-visible:focus-ring"
+      className="h-5 w-full min-w-0 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 [--focus-ring-inset:inset] focus-visible:focus-ring"
     />
   )
 }
