@@ -59,13 +59,6 @@ export function nameDraft(doc: DesignSystemDoc): Promise<boolean> {
   return new Promise((done) => set({ kind: "publish", doc, done }))
 }
 
-/** Publishes the system, naming a draft first; resolves the snapshot id,
- *  or undefined when the user cancels. */
-export async function publishSystem(doc: DesignSystemDoc) {
-  if (!(await nameDraft(doc))) return
-  return workspace.publish(doc.id)
-}
-
 export function KeepDialog() {
   const current = useSyncExternalStore(
     (listener) => {

@@ -15,6 +15,11 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { cn } from "@/registry/lib/utils"
 import { Button, LinkButton } from "@/registry/ui/button"
 import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/registry/ui/collapsible"
+import {
   Dialog,
   DialogBody,
   DialogContent,
@@ -42,11 +47,13 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
-import { publishSystem } from "@/modules/studio/keep-dialog"
+import { publishSystem } from "@/modules/studio/publish"
 import { useCurrent } from "@/modules/studio/selection"
-import { useUnpublishedChanges } from "@/modules/studio/workspace"
+import { clock } from "@/modules/studio/time"
+import { usePublishStatus } from "@/modules/studio/workspace"
 
 import { CodeOptions } from "./code-options"
+import { KeepFocus } from "./keep-focus"
 import { OPEN_IN_TARGETS } from "./targets"
 import { useExportUrl } from "./use-export-url"
 
@@ -83,6 +90,7 @@ export function ExportDialog({ children }: { children: ReactNode }) {
       {children}
       <Modal className="sm:max-w-md">
         <DialogContent showCloseButton aria-label="Export design system">
+          <KeepFocus />
           <ExportDialogBody />
         </DialogContent>
       </Modal>
@@ -91,80 +99,127 @@ export function ExportDialog({ children }: { children: ReactNode }) {
 }
 
 /**
- * A view installs from its own path. The user's system installs its latest
- * published version; with changes past it, the dialog asks to publish them
- * first.
+ * A view installs from its own path; the user's system from a published
+ * version. With changes past the latest one, a switch picks between it and
+ * publishing the changes. Opening never publishes.
  */
 function ExportDialogBody() {
   const { doc, sel } = useCurrent()
-  const unpublished = useUnpublishedChanges(doc)
-  const last = doc?.published.at(-1)?.id
-  const [chosen, setChosen] = useState<string>()
-  const [publishing, setPublishing] = useState<"idle" | "busy" | "failed">(
-    "idle",
-  )
+  const status = usePublishStatus(doc)
+  const [choice, setChoice] = useState<"published" | "latest">("published")
+  const [failed, setFailed] = useState(false)
 
   if (!doc)
     return (
       <ExportCommands path={`${sel.kind === "preset" ? "p" : "s"}/${sel.id}`} />
     )
-  const snapshotId = chosen ?? (unpublished === false ? last : undefined)
-  if (snapshotId) return <ExportCommands path={`s/${snapshotId}`} />
-  if (unpublished === undefined) return null
+  if (status === undefined) return null
+  const id = doc.id
+  const count = doc.published.length
+  const last = doc.published.at(-1)
 
-  function onPublish() {
-    if (!doc) return
-    setPublishing("busy")
-    publishSystem(doc).then(
-      (id) => (id ? setChosen(id) : setPublishing("idle")),
-      (error: unknown) => {
-        console.error(error)
-        setPublishing("failed")
-      },
+  function publishLatest() {
+    setFailed(false)
+    publishSystem(id).then(
+      (snapshot) => snapshot || setChoice("published"),
+      () => setFailed(true),
     )
   }
 
+  if (!last)
+    return (
+      <>
+        <DialogHeader className="pr-8">
+          <DialogTitle>Publish to export</DialogTitle>
+          <DialogDescription>
+            Export installs a published version of your design system. Later
+            edits need a new publish.
+          </DialogDescription>
+        </DialogHeader>
+        {failed && (
+          <DialogBody>
+            <p className="text-xs text-fg-danger">
+              Couldn't publish this design system.
+            </p>
+          </DialogBody>
+        )}
+        <DialogFooter className="flex-col sm:flex-col">
+          <Button
+            variant="primary"
+            className="w-full"
+            isPending={status === "pending"}
+            onPress={publishLatest}
+          >
+            {status === "pending" ? "Publishing…" : "Publish and export"}
+          </Button>
+        </DialogFooter>
+      </>
+    )
+
+  const version = `v${count} · ${clock(last.at)}`
+  if (status === "current")
+    return <ExportCommands path={`s/${last.id}`} version={version} />
+
+  const versions = (
+    <SegmentedControl
+      aria-label="Version"
+      selectedKeys={[choice]}
+      onSelectionChange={(keys) => {
+        const next = [...keys][0]
+        if (next !== "published" && next !== "latest") return
+        setChoice(next)
+        if (next === "latest") publishLatest()
+      }}
+    >
+      <SegmentedControlItem id="published">
+        Published · {clock(last.at)}
+      </SegmentedControlItem>
+      <SegmentedControlItem id="latest">
+        Include latest changes
+      </SegmentedControlItem>
+    </SegmentedControl>
+  )
+
+  if (choice === "published")
+    return (
+      <ExportCommands path={`s/${last.id}`} version={version} top={versions} />
+    )
   return (
     <>
-      <DialogHeader className="pr-8">
-        <DialogTitle>Publish your changes first?</DialogTitle>
-        <DialogDescription>
-          {last
-            ? "Export installs a published version. Your latest changes aren't published yet."
-            : "Export installs a published version of your design system."}
-        </DialogDescription>
-      </DialogHeader>
-      {publishing === "failed" && (
-        <DialogBody>
+      <DialogHeader className="pr-8">{versions}</DialogHeader>
+      <DialogBody>
+        {failed ? (
           <p className="text-xs text-fg-danger">
-            Couldn't publish this design system.
+            Couldn't publish your changes ·{" "}
+            <button
+              type="button"
+              onClick={publishLatest}
+              className="underline underline-offset-2"
+            >
+              Try again
+            </button>
           </p>
-        </DialogBody>
-      )}
-      <DialogFooter className="flex-col sm:flex-col">
-        <Button
-          variant="primary"
-          className="w-full"
-          isPending={publishing === "busy"}
-          onPress={onPublish}
-        >
-          Publish and export
-        </Button>
-        {last && (
-          <Button
-            variant="secondary"
-            className="w-full"
-            onPress={() => setChosen(last)}
-          >
-            Export the published version
-          </Button>
+        ) : (
+          <p role="status" className="text-xs text-fg-muted">
+            Publishing your changes…
+          </p>
         )}
-      </DialogFooter>
+      </DialogBody>
     </>
   )
 }
 
-function ExportCommands({ path }: { path: string }) {
+function ExportCommands({
+  path,
+  version,
+  top,
+}: {
+  /** `p/<preset>` or `s/<snapshot>`. */
+  path: string
+  /** The published version it installs, as "v3 · 3:42 PM". */
+  version?: string
+  top?: ReactNode
+}) {
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
@@ -180,6 +235,7 @@ function ExportCommands({ path }: { path: string }) {
   return (
     <>
       <DialogHeader className="pr-8">
+        {top}
         <SegmentedControl
           aria-label="Project type"
           selectedKeys={[mode]}
@@ -232,6 +288,7 @@ function ExportCommands({ path }: { path: string }) {
         </Section>
 
         <CommandBlock
+          version={version}
           commands={
             mode === "new"
               ? [{ label: "Scaffold", command }]
@@ -241,6 +298,31 @@ function ExportCommands({ path }: { path: string }) {
                 ]
           }
         />
+
+        {version && (
+          <Collapsible>
+            <CollapsibleTrigger className="text-xs text-fg-muted">
+              Already installed an older version?
+            </CollapsibleTrigger>
+            <CollapsiblePanel>
+              <p className="pb-2 text-xs text-fg-muted">
+                Point the <code className="font-mono">@dotui</code> registry in{" "}
+                <code className="font-mono">components.json</code> at this
+                version, then re-add your components with{" "}
+                <code className="font-mono">--overwrite</code>.
+              </p>
+              <CommandBlock
+                commands={[
+                  {
+                    label: "Registry",
+                    command: `"@dotui": "${url("{name}")}"`,
+                  },
+                  { label: "Re-add", command: `${addCommand} --overwrite` },
+                ]}
+              />
+            </CollapsiblePanel>
+          </Collapsible>
+        )}
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
@@ -288,8 +370,10 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
  */
 function CommandBlock({
   commands,
+  version,
 }: {
   commands: { label: string; command: string }[]
+  version?: string
 }) {
   const packageManager = packageManagerStore.useValue()
 
@@ -306,7 +390,7 @@ function CommandBlock({
             packageManagerStore.set(next as PackageManager)
           }
         }}
-        className="flex gap-1 border-b px-2 py-1.5"
+        className="flex items-center gap-1 border-b px-2 py-1.5"
       >
         {PACKAGE_MANAGERS.map((pm) => (
           <ToggleButtonPrimitives.ToggleButton
@@ -317,6 +401,11 @@ function CommandBlock({
             {pm}
           </ToggleButtonPrimitives.ToggleButton>
         ))}
+        {version && (
+          <span className="ml-auto pr-1 text-xs text-fg-muted tabular-nums">
+            {version}
+          </span>
+        )}
       </ToggleButtonGroupPrimitives.ToggleButtonGroup>
       <div className="flex flex-col divide-y">
         {commands.map((entry) => (

@@ -178,6 +178,30 @@ describe("workspace", () => {
     expect(await ws.hasUnpublishedChanges(ws.findSystem(doc.id)!)).toBe(true)
   })
 
+  it("shares one request per system while publishing", async () => {
+    const { ws, doc } = await created()
+    let resolve!: (id: string) => void
+    const post = vi.fn(() => new Promise<string>((done) => (resolve = done)))
+    const first = ws.publish(doc.id, post)
+    expect(ws.publish(doc.id, post)).toBe(first)
+    expect(ws.publishing(doc.id)).toBe(first)
+    await vi.waitFor(() => expect(post).toHaveBeenCalledTimes(1))
+    resolve("abcdefghij")
+    expect(await first).toBe("abcdefghij")
+    expect(ws.publishing(doc.id)).toBeUndefined()
+    expect(ws.findSystem(doc.id)!.published).toHaveLength(1)
+  })
+
+  it("clears the request after a failure", async () => {
+    const { ws, doc } = await created()
+    const post = vi.fn(async () => {
+      throw new Error("offline")
+    })
+    await expect(ws.publish(doc.id, post)).rejects.toThrow("offline")
+    expect(ws.publishing(doc.id)).toBeUndefined()
+    expect(ws.findSystem(doc.id)!.published).toEqual([])
+  })
+
   it("keeps generated names within 64 UTF-16 units", async () => {
     const long = "x".repeat(64)
     const { ws } = await created(long)
