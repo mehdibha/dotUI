@@ -104,7 +104,16 @@ export function KeepDialog() {
       isDismissable={false}
       className="sm:max-w-sm"
     >
-      <DialogContent showCloseButton>
+      <DialogContent
+        showCloseButton
+        // A press on its empty space (often a double click's second press,
+        // landing where the button that opened it was) keeps the name field
+        // focused, so Enter still answers.
+        onMouseDown={(e) => {
+          if (!(e.target as Element).closest("input, button, label"))
+            e.preventDefault()
+        }}
+      >
         {shown && <KeepForm key={shown.doc.id} request={shown} />}
       </DialogContent>
     </Modal>
