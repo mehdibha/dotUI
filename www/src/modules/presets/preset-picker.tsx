@@ -163,7 +163,9 @@ export function PresetPicker({
       <Responsive
         render={(isMobile) =>
           isMobile ? (
-            <Drawer>{content("drawer")}</Drawer>
+            // Instant too: an exiting drawer would cover the page and eat
+            // the next tap.
+            <Drawer className="transition-none!">{content("drawer")}</Drawer>
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
