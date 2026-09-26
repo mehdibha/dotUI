@@ -110,21 +110,25 @@ function useSelectionUrl() {
       else broken(`No preset called "${preset}"`)
       return
     }
+    const dead = () =>
+      broken("This link doesn't work", "It is broken or no longer exists.")
     fetchSnapshot(s).then(
       (snapshot) =>
-        leave(
-          () =>
-            select({
-              kind: "shared",
-              id: s,
-              name: snapshot.name,
-              state: snapshot.state,
-            }),
-          sync,
-        ),
+        snapshot
+          ? leave(
+              () =>
+                select({
+                  kind: "shared",
+                  id: s,
+                  name: snapshot.name,
+                  state: snapshot.state,
+                }),
+              sync,
+            )
+          : dead(),
       (error: unknown) => {
         console.error(error)
-        broken("This link doesn't work", "It is broken or no longer exists.")
+        dead()
       },
     )
   }, [url, wanted, s, preset, navigate])

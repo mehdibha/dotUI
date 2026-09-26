@@ -113,11 +113,13 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
     }
     const entry = published[Number(value)]
     if (!entry) return
+    const failed = () =>
+      toastManager.add({ title: "Couldn't open that version", type: "error" })
     fetchSnapshot(entry.id).then(
-      (snapshot) => restore(doc.id, snapshot.state),
+      (snapshot) => (snapshot ? restore(doc.id, snapshot.state) : failed()),
       (error: unknown) => {
         console.error(error)
-        toastManager.add({ title: "Couldn't open that version", type: "error" })
+        failed()
       },
     )
   }

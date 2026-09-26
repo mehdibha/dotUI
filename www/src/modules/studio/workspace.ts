@@ -623,10 +623,14 @@ export function publish(
   return request
 }
 
-/** A snapshot fetched by id, validated like the server's own read. */
-export async function fetchSnapshot(id: string): Promise<Snapshot> {
-  if (!SNAPSHOT_ID.test(id)) throw new Error("Invalid snapshot id")
+/** A snapshot fetched by id, validated like the server's own read;
+ *  undefined when no snapshot has that id. */
+export async function fetchSnapshot(
+  id: string,
+): Promise<Snapshot | undefined> {
+  if (!SNAPSHOT_ID.test(id)) return
   const response = await fetch(`/api/snapshots/${id}`)
+  if (response.status === 404) return
   if (!response.ok)
     throw new Error(`GET /api/snapshots/${id} → ${response.status}`)
   const snapshot = parseSnapshot(await response.json())
