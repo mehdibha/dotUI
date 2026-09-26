@@ -101,7 +101,7 @@ export function describe(sel: Selection, ws: Workspace): Current {
         sel,
         key: selectionKey(sel),
         name: doc.name,
-        swatch: doc.state.brand,
+        swatch: workspace.swatchOf(doc),
         state: doc.state,
         doc,
         tag: doc.draft ? "Draft" : undefined,

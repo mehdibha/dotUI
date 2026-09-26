@@ -17,7 +17,7 @@ import {
 } from "@/lib/snapshots/snapshot"
 import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { closestPreset } from "@/modules/presets"
+import { closestPreset, getPreset } from "@/modules/presets"
 import { formatIssues, sameState, validate } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
@@ -213,6 +213,15 @@ export const listed = (workspace: Workspace): DesignSystemDoc[] =>
     .sort(
       (a, b) => Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
     )
+
+/** A system's dot: its preset's until the brand color changes. */
+export function swatchOf(doc: DesignSystemDoc): string {
+  const preset =
+    doc.origin.kind === "preset" ? getPreset(doc.origin.id) : undefined
+  return preset && doc.state.brand === doc.initial.brand
+    ? preset.swatch
+    : doc.state.brand
+}
 
 /** A draft with changes worth keeping. */
 export const isChangedDraft = (doc: DesignSystemDoc | undefined) =>

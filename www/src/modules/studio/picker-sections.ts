@@ -10,7 +10,7 @@ import { resolveDesignSystem } from "./resolve"
 import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
 import { ago } from "./time"
-import { listed } from "./workspace"
+import { listed, swatchOf } from "./workspace"
 import type { DesignSystemDoc, Workspace } from "./workspace"
 
 /** Where a system came from: "Based on Linear", "From a shared link"… */
@@ -54,7 +54,7 @@ export function pickerSections(
       items: mine.map((system) => ({
         id: selectionKey({ kind: "system", id: system.id }),
         name: system.name,
-        swatch: system.state.brand,
+        swatch: swatchOf(system),
         badge: system.draft ? "Draft" : undefined,
         kind: system.draft ? "draft" : undefined,
         subtitle: () =>

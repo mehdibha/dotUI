@@ -10,7 +10,7 @@ import { Button } from "@/registry/ui/button"
 
 import { recover } from "./history"
 import { ago } from "./time"
-import { purge, useTrash } from "./workspace"
+import { purge, swatchOf, useTrash } from "./workspace"
 import type { Deleted } from "./workspace"
 
 export function RecentlyDeleted({ onBack }: { onBack: () => void }) {
@@ -76,7 +76,7 @@ function DeletedRow({ item, now }: { item: Deleted; now: number }) {
           <span
             aria-hidden
             className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
-            style={{ background: doc.state.brand }}
+            style={{ background: swatchOf(doc) }}
           />
           <span className="flex min-w-0 flex-1 flex-col">
             <span dir="auto" className="truncate">
