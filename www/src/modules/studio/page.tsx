@@ -260,7 +260,7 @@ export function PanelPage({
                 aria-label={open ? "Collapse panel" : "Expand panel"}
                 aria-expanded={open}
                 onPress={() => setTucked(open)}
-                className="lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
+                className="lg:hidden data-icon-only:size-6 pointer-coarse:data-icon-only:size-9 dock-side:hidden"
               >
                 {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
               </Button>

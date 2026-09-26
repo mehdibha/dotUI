@@ -85,7 +85,7 @@ function IconButton({
 }) {
   // Chrome, not content: a disabled step stays unfilled.
   const className =
-    "text-fg-muted disabled:bg-transparent pointer-coarse:data-icon-only:size-9"
+    "text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
   return (
     <Tooltip delay={0}>
       {isDisabled ? (

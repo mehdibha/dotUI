@@ -51,31 +51,35 @@ export function PanelChrome({
       )}
     >
       <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 dock-stacked:top-auto dock-stacked:bottom-0 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-1">
           {system.renderSwitcher(
             <Tooltip>
               <Button
                 variant="quiet"
                 size="sm"
                 aria-label={`Design system: ${system.description}. Change design system`}
-                className="min-w-0 shrink justify-start gap-1 font-medium"
+                className="min-w-0 shrink justify-start gap-1 pl-1.5 font-medium"
               >
                 <span
                   aria-hidden
                   className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
                   style={{ background: system.swatch }}
                 />
-                <span dir="auto" className="min-w-0 truncate">
-                  {system.name}
-                </span>
-                {system.tag && (
-                  <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
-                    {system.tag}
+                {/* The name wins: a tag that doesn't fit beside it wraps
+                    onto a clipped second line. */}
+                <span className="flex h-5 min-w-0 flex-wrap content-start items-center gap-x-1 overflow-hidden">
+                  <span dir="auto" className="min-w-0 truncate leading-5">
+                    {system.name}
                   </span>
-                )}
+                  {system.tag && (
+                    <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.625rem] leading-4 font-normal text-fg-muted">
+                      {system.tag}
+                    </span>
+                  )}
+                </span>
                 <ChevronsUpDownIcon
                   data-icon="inline-end"
-                  className="shrink-0 text-fg-muted"
+                  className="size-3 shrink-0 text-fg-muted"
                 />
               </Button>
               <TooltipContent>{system.description}</TooltipContent>
