@@ -567,25 +567,38 @@ function PresetPickerContent({
   )
 }
 
-/** Drops the rest of a double click that picked a row: the picker closes on
- *  the first click, and the second would land on whatever was under it. */
+const PRESS_TYPES = [
+  "pointerdown",
+  "mousedown",
+  "pointerup",
+  "mouseup",
+  "click",
+  "dblclick",
+]
+
+/** Drops the second press of a double click that picked a row: the picker
+ *  closes on the first, and the second would land on whatever was under
+ *  it. Presses elsewhere, or later, go through. */
 function swallowDoubleClick() {
-  const types = [
-    "pointerdown",
-    "mousedown",
-    "pointerup",
-    "mouseup",
-    "click",
-    "dblclick",
-  ]
+  const first = window.event
+  if (!(first instanceof MouseEvent)) return
   const swallow = (e: Event) => {
+    if (
+      !(e instanceof MouseEvent) ||
+      Math.hypot(e.clientX - first.clientX, e.clientY - first.clientY) > 8
+    )
+      return
     e.stopPropagation()
     e.preventDefault()
+    if (e.type === "dblclick") stop()
   }
-  for (const type of types) window.addEventListener(type, swallow, true)
-  setTimeout(() => {
-    for (const type of types) window.removeEventListener(type, swallow, true)
-  }, 500)
+  const stop = () => {
+    clearTimeout(timer)
+    for (const type of PRESS_TYPES)
+      window.removeEventListener(type, swallow, true)
+  }
+  for (const type of PRESS_TYPES) window.addEventListener(type, swallow, true)
+  const timer = setTimeout(stop, 500)
 }
 
 /** One option: the preset's swatch and its name, in the site's own theme. */
