@@ -7,6 +7,7 @@
 import { cn } from "@/registry/lib/utils"
 
 import { SEPARATOR_OPTIONS, TONE_OPTIONS } from "../axes/breadcrumbs"
+import { SOURCE_OPTIONS } from "../axes/color"
 import { UNDERLINE_OPTIONS } from "../axes/links"
 import { CURRENT_OPTIONS } from "../axes/pagination"
 import { TAB_STYLE_OPTIONS } from "../axes/tabs"
@@ -194,29 +195,73 @@ export function NavigationSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialTrigger
         label="Link"
-        value={state.linkUnderline}
-        onChange={set("linkUnderline")}
-        options={UNDERLINE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <LinkGlyph underline={option.value} />,
-        }))}
-      />
-      <DialSelect
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(UNDERLINE_OPTIONS, state.linkUnderline)} ·{" "}
+              {optionLabel(SOURCE_OPTIONS, state.linkColor)}
+            </span>
+            <LinkGlyph underline={state.linkUnderline} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Underline"
+            value={state.linkUnderline}
+            onChange={set("linkUnderline")}
+            options={UNDERLINE_OPTIONS.map((option) => ({
+              ...option,
+              preview: <LinkGlyph underline={option.value} />,
+            }))}
+          />
+          <DialSegmented
+            label="Color"
+            value={state.linkColor}
+            onChange={set("linkColor")}
+            options={SOURCE_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
+      <DialTrigger
         label="Tabs"
-        value={state.tabStyle}
-        onChange={set("tabStyle")}
-        rowPreview={false}
-        options={TAB_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(TAB_STYLE_OPTIONS, state.tabStyle)} ·{" "}
+              {optionLabel(SOURCE_OPTIONS, state.tabsColor)}
+            </span>
             <DialGlyph>
-              <TabGlyph style={option.value} />
+              <TabGlyph style={state.tabStyle} />
             </DialGlyph>
-          ),
-        }))}
-      />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Style"
+            value={state.tabStyle}
+            onChange={set("tabStyle")}
+            rowPreview={false}
+            options={TAB_STYLE_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <TabGlyph style={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Color"
+            value={state.tabsColor}
+            onChange={set("tabsColor")}
+            options={SOURCE_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
       <DialTrigger
         label="Breadcrumbs"
         value={

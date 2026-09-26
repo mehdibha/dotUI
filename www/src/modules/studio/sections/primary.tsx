@@ -1,12 +1,12 @@
 "use client"
 
-/* Primary — the Color chapter's view over every role that paints with a
-   source (axes/color.ts PRIMARY_LEAVES). Two cards write all of them; a
-   folder below holds a row per leaf, and while the leaves disagree no card
-   is selected. Each preview is the role at glyph scale in the engine's own
-   colors, so a choice reads before it lands. */
+/* Primary — the two system roles that paint with a source: the primary fill
+   (buttons and everything else on the primary token) and the selection
+   fill. Two cards set every role that paints with a source at once
+   (axes/color.ts PRIMARY_LEAVES); each component's own color lives on its
+   row. Each preview is the role at glyph scale in the engine's own colors,
+   so a choice reads before it lands. */
 
-import { useState } from "react"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -17,33 +17,21 @@ import type { ModeOutput } from "@dotui/colors"
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 
-import {
-  PRIMARY_LEAVES,
-  primaryValue,
-  SOURCE_OPTIONS,
-  withSource,
-} from "../axes/color"
-import type { PrimaryLeaf } from "../axes/color"
+import { PRIMARY_LEAVES, SOURCE_OPTIONS, withSource } from "../axes/color"
 import {
   DIAL_LABEL,
   DIAL_ROW,
-  DialFolder,
   DialPopover,
   DialTrigger,
   SegmentedGroup,
 } from "../dial"
 import type { Studio } from "../state"
 
-const LEAF_LABELS: Record<PrimaryLeaf, string> = {
-  buttonColor: "Buttons",
-  checkboxColor: "Checkbox",
-  radioColor: "Radio",
-  switchColor: "Switch",
-  selectionColor: "Selection",
-  sliderColor: "Slider",
-  tabsColor: "Tabs",
-  linkColor: "Links",
-  focusColor: "Focus ring",
+const OWNED = ["buttonColor", "selectionColor"] as const
+
+const LEAF_LABELS: Record<(typeof OWNED)[number], string> = {
+  buttonColor: "Fill",
+  selectionColor: "Selected",
 }
 
 /* --------------------------------- Inks ---------------------------------- */
@@ -120,15 +108,6 @@ function CheckboxGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function RadioGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="size-4 rounded-full border-[5px]"
-      style={{ borderColor: ink.fill, background: ink.on }}
-    />
-  )
-}
-
 function SwitchGlyph({ ink }: { ink: Ink }) {
   return (
     <span
@@ -152,68 +131,16 @@ function SelectionGlyph({ ink }: { ink: Ink }) {
   )
 }
 
-function SliderGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex h-1 w-14 items-center rounded-full bg-fg/15">
-      <span
-        className="flex h-1 w-8 items-center justify-end rounded-full"
-        style={{ background: ink.fill }}
-      >
-        <span
-          className="-mr-1.5 size-3 rounded-full ring-2 ring-bg"
-          style={{ background: ink.fill }}
-        />
-      </span>
-    </span>
-  )
-}
-
-function TabsGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span className="flex gap-2.5 text-[10.5px] font-medium">
-      <span
-        className="border-b-2 pb-px"
-        style={{ color: ink.text, borderColor: ink.fill }}
-      >
-        Tab
-      </span>
-      <span className="border-b-2 border-transparent pb-px text-fg/50">
-        Tab
-      </span>
-    </span>
-  )
-}
-
-function LinkGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="text-[11px] font-medium underline underline-offset-2"
-      style={{ color: ink.text }}
-    >
-      Learn more
-    </span>
-  )
-}
-
-function FocusGlyph({ ink }: { ink: Ink }) {
-  return (
-    <span
-      className="h-4 w-8 rounded-[5px] bg-fg/10 ring-2 ring-offset-1 ring-offset-bg"
-      style={{ ["--tw-ring-color" as string]: ink.ring }}
-    />
-  )
-}
-
-const GLYPHS: Record<PrimaryLeaf, (props: { ink: Ink }) => React.ReactNode> = {
+const GLYPHS = {
   buttonColor: ButtonGlyph,
-  checkboxColor: CheckboxGlyph,
-  radioColor: RadioGlyph,
-  switchColor: SwitchGlyph,
   selectionColor: SelectionGlyph,
-  sliderColor: SliderGlyph,
-  tabsColor: TabsGlyph,
-  linkColor: LinkGlyph,
-  focusColor: FocusGlyph,
+}
+
+/** The roles Primary owns: their shared source, or mixed. */
+function ownedValue(state: Studio["state"]): PrimaryColorSource | "mixed" {
+  return state.buttonColor === state.selectionColor
+    ? (state.buttonColor as PrimaryColorSource)
+    : "mixed"
 }
 
 /** The trigger's swatch: one source, or both halves when they disagree. */
@@ -256,14 +183,6 @@ function CardStrip({ ink }: { ink: Ink }) {
   )
 }
 
-function leavesSummary(state: Studio["state"]) {
-  const neutral = PRIMARY_LEAVES.filter((l) => state[l] === "neutral").length
-  if (neutral === 0) return "All accent"
-  if (neutral === PRIMARY_LEAVES.length) return "All neutral"
-  return `${neutral} neutral · ${PRIMARY_LEAVES.length - neutral} accent`
-}
-
-/** Mounted with the popover, so the folder opens on mixed leaves each time. */
 function PrimaryPanel({
   studio,
   ink,
@@ -272,8 +191,7 @@ function PrimaryPanel({
   ink: Record<PrimaryColorSource, Ink>
 }) {
   const { state, set, setState } = studio
-  const primary = primaryValue(state)
-  const [open, setOpen] = useState(primary === "mixed")
+  const primary = ownedValue(state)
   return (
     <>
       <RacToggleButtonGroup
@@ -306,41 +224,33 @@ function PrimaryPanel({
           </RacToggleButton>
         ))}
       </RacToggleButtonGroup>
-      <DialFolder
-        title="Per control"
-        value={leavesSummary(state)}
-        open={open}
-        onOpenChange={setOpen}
-        modified={primary === "mixed"}
-      >
-        {PRIMARY_LEAVES.map((leaf) => {
-          const Glyph = GLYPHS[leaf]
-          const source = state[leaf] as PrimaryColorSource
-          return (
-            <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
-              <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center">
-                <Glyph ink={ink[source]} />
-              </span>
-              <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
-                value={source}
-                onChange={set(leaf)}
-                options={SOURCE_OPTIONS}
-              />
-            </div>
-          )
-        })}
-      </DialFolder>
+      {OWNED.map((leaf) => {
+        const Glyph = GLYPHS[leaf]
+        const source = state[leaf] as PrimaryColorSource
+        return (
+          <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
+            <span className={cn(DIAL_LABEL, "w-[72px]")}>
+              {LEAF_LABELS[leaf]}
+            </span>
+            <span className="flex min-w-0 flex-1 items-center">
+              <Glyph ink={ink[source]} />
+            </span>
+            <SegmentedGroup
+              label={`${LEAF_LABELS[leaf]} color`}
+              value={source}
+              onChange={set(leaf)}
+              options={SOURCE_OPTIONS}
+            />
+          </div>
+        )
+      })}
     </>
   )
 }
 
 export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   const ink = inks(m)
-  const primary = primaryValue(studio.state)
+  const primary = ownedValue(studio.state)
   const label =
     primary === "mixed" ? "Mixed" : primary === "accent" ? "Accent" : "Neutral"
   return (
