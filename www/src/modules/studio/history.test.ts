@@ -191,7 +191,7 @@ describe("views and drafts", () => {
     expect(ws.getWorkspace().systems).toEqual([])
   })
 
-  it("creates Untitled from any selection; undo deletes it to Recently deleted", async () => {
+  it("creates Untitled from any selection; undo never removes it", async () => {
     const { history, ws, selection, current, edit } = await load()
     selection.select({ kind: "preset", id: "linear" })
     const id = history.newSystem()!
@@ -200,19 +200,27 @@ describe("views and drafts", () => {
     edit(3)
     vi.advanceTimersByTime(600)
     edit(4)
-    history.undo()
-    history.undo()
+    for (let i = 0; i < 5; i++) history.undo()
     expect(current().doc).toMatchObject({ id, name: "Acme" })
-    history.undo()
-    expect(current().key).toBe("preset:linear")
-    expect(ws.getWorkspace().systems).toEqual([])
-    expect(ws.getTrash().map((i) => i.doc.name)).toEqual(["Acme"])
-    history.redo()
-    expect(current().doc).toMatchObject({ id, name: "Acme" })
+    expect(current().state.radiusPx).toBe(ORIGIN_RADIUS)
     expect(ws.getTrash()).toEqual([])
     history.redo()
     history.redo()
     expect(current().state.radiusPx).toBe(4)
+  })
+
+  it("leaves the next system alone on undo right after a delete", async () => {
+    const { history, ws, selection, current, edit, system } = await load()
+    const first = system()
+    const second = system()
+    selection.select({ kind: "system", id: second })
+    edit(9)
+    history.remove(second)
+    expect(current().doc?.id).toBe(first)
+    history.undo()
+    history.undo()
+    expect(ws.findSystem(first)!.state.radiusPx).toBe(3)
+    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
   })
 
   it("deletes the current system to the next one, else the Origin view", async () => {
@@ -258,7 +266,7 @@ describe("duplicate", () => {
     expect(current().name).toBe("Acme copy 2")
   })
 
-  it("copies a shared view under its name; undo deletes the copy", async () => {
+  it("copies a shared view under its name; undo never removes the copy", async () => {
     const { history, ws, selection, current, radius } = await load()
     const shared = {
       kind: "shared",
@@ -273,9 +281,9 @@ describe("duplicate", () => {
       origin: { kind: "snapshot", id: "abcdefghij" },
     })
     history.undo()
-    expect(current().key).toBe("shared:abcdefghij")
-    expect(ws.getWorkspace().systems).toEqual([])
-    expect(ws.getTrash().map((i) => i.doc.name)).toEqual(["Acme"])
+    expect(current().doc?.name).toBe("Acme")
+    expect(ws.getWorkspace().systems).toHaveLength(1)
+    expect(ws.getTrash()).toEqual([])
   })
 })
 

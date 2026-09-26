@@ -5,9 +5,9 @@
    into one step. The first edit of a view forks it into a draft, and that
    step is the bottom of the draft's stack: undoing it removes the draft
    (unless it was kept or published) and returns to the view, whose redo
-   brings it back with the same id. Undoing the creation of a system made
-   with New or Duplicate deletes it like Delete does, to Recently deleted
-   with a toast. Checkpoints persist in
+   brings it back with the same id. Nothing else ever adds or removes a
+   system from undo: New, Duplicate and Keep are not steps, and Delete has
+   its toast. Checkpoints persist in
    `dotui:history:<id>`: written when the studio leaves a system (switching,
    hiding the page, navigating away) and after two idle minutes. */
 
@@ -37,14 +37,12 @@ const IDLE_MS = 2 * 60_000
 const CHECKPOINT_LIMIT = 20
 const SEEN_DRAFT = "dotui:seen-draft"
 
-/** A state to return to; the creation of the open system, back to the
- *  selection it came from; or, on that selection, the system to bring back:
- *  a removed draft, or a system in Recently deleted. */
+/** A state to return to; the fork of the open draft, back to its view; or,
+ *  on that view, the removed draft to bring back. */
 type Step =
   | { state: StudioState }
-  | { created: Selection; draft: boolean }
+  | { forked: ViewSelection }
   | { recreate: DesignSystemDoc; checkpoints: string | null }
-  | { recover: string }
 
 interface Stack {
   past: Step[]
@@ -95,13 +93,6 @@ function record(key: string, step: Step) {
   emit()
 }
 
-/** Makes `id` current after a create, as one undoable step. */
-function opened(id: string, from: Selection, draft: boolean) {
-  select({ kind: "system", id })
-  record(systemKey(id), { created: from, draft })
-  stack(systemKey(id)).head = workspace.findSystem(id)?.state
-}
-
 /* --------------------------------- drafts -------------------------------- */
 
 /** Keeps every draft but `except` under its default name, so at most one
@@ -130,9 +121,11 @@ function fork(view: ViewSelection, next: StudioState) {
   })
   if (!doc) return
   stacks.delete(selectionKey(view))
-  opened(doc.id, view, true)
+  select({ kind: "system", id: doc.id })
+  record(systemKey(doc.id), { forked: view })
   // The rest of this gesture merges into the fork.
   const entry = stack(systemKey(doc.id))
+  entry.head = next
   entry.editedAt = Date.now()
   entry.press = press
   try {
@@ -199,14 +192,13 @@ export function restore(id: string, state: StudioState): void {
 
 /** Creates "Untitled" from Origin and opens it; returns its id. */
 export function newSystem(): string | undefined {
-  const from = getSelection()
   const doc = workspace.create({
     name: "Untitled",
     origin: { kind: "preset", id: ORIGIN.id },
     initial: ORIGIN.state,
     state: ORIGIN.state,
   })
-  if (doc) opened(doc.id, from, false)
+  if (doc) select({ kind: "system", id: doc.id })
   return doc?.id
 }
 
@@ -215,7 +207,6 @@ export function newSystem(): string | undefined {
 export function duplicate(sel: Selection): string | undefined {
   const source = describe(sel, workspace.getWorkspace())
   if (sel.kind === "system" && !source.doc) return
-  const from = getSelection()
   const doc = workspace.create({
     name:
       sel.kind === "preset"
@@ -236,17 +227,26 @@ export function duplicate(sel: Selection): string | undefined {
     initial: source.state,
     state: source.state,
   })
-  if (doc) opened(doc.id, from, false)
+  if (doc) select({ kind: "system", id: doc.id })
   return doc?.id
 }
 
-/** Moves the system to Recently deleted with a toast (`Deleted "Acme"`,
- *  or `verb`) whose Undo, which `afterUndo` follows, brings it back. Returns
- *  whether it was there to move. */
-function trash(id: string, verb: string, afterUndo?: () => void): boolean {
-  const deleted = workspace.trash(id)
-  if (!deleted) return false
+/** Moves the system to Recently deleted with a toast (`Deleted "Acme"`, or
+ *  `verb`) whose Undo, which `afterUndo` follows, brings it back. Deleting
+ *  the current one opens the next in the list, else the Origin view, whose
+ *  undo history starts over: ⌘Z right after never touches it. Returns the
+ *  toast's undo. */
+export function remove(
+  id: string,
+  {
+    verb = "Deleted",
+    afterUndo,
+  }: { verb?: string; afterUndo?: () => void } = {},
+): () => void {
+  const list = workspace.listed(workspace.getWorkspace())
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
+  const deleted = workspace.trash(id)
+  if (!deleted) return () => {}
   const { name, published } = deleted.doc
   deletedToasts.set(
     id,
@@ -259,30 +259,15 @@ function trash(id: string, verb: string, afterUndo?: () => void): boolean {
       published.length ? "Its published links keep working." : undefined,
     ),
   )
-  return true
-}
-
-/** Moves the system to Recently deleted, with a toast; deleting the current
- *  one opens the next in the list, else the Origin view. Returns the
- *  toast's undo. */
-export function remove(
-  id: string,
-  {
-    verb = "Deleted",
-    afterUndo,
-  }: { verb?: string; afterUndo?: () => void } = {},
-): () => void {
-  const list = workspace.listed(workspace.getWorkspace())
-  const wasCurrent = selectionKey(getSelection()) === systemKey(id)
-  if (!trash(id, verb, afterUndo)) return () => {}
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
     const next = list[at + 1] ?? list[at - 1]
-    select(
-      next
-        ? { kind: "system", id: next.id }
-        : { kind: "preset", id: ORIGIN.id },
-    )
+    const sel: Selection = next
+      ? { kind: "system", id: next.id }
+      : { kind: "preset", id: ORIGIN.id }
+    select(sel)
+    stacks.delete(selectionKey(sel))
+    emit()
   }
   return () => recover(id, wasCurrent)
 }
@@ -332,45 +317,31 @@ function travel(from: "past" | "future", to: "past" | "future") {
     return
   }
 
-  if ("recover" in step) {
-    if (recover(step.recover, true))
-      push(stack(systemKey(step.recover))[to], { created: sel, draft: false })
-  } else if ("recreate" in step) {
+  if ("recreate" in step) {
     const { recreate, checkpoints } = step
     workspace.insert(recreate, undefined, checkpoints)
-    if (recreate.draft) keepOtherDrafts(recreate.id)
+    keepOtherDrafts(recreate.id)
     select({ kind: "system", id: recreate.id })
-    const created = stack(systemKey(recreate.id))
-    push(created[to], { created: sel, draft: recreate.draft })
-    created.head = recreate.state
+    const forked = stack(systemKey(recreate.id))
+    push(forked[to], { forked: sel as ViewSelection })
+    forked.head = recreate.state
   } else if (!doc) {
     return
   } else if ("state" in step) {
     workspace.setState(doc.id, step.state)
     push(entry[to], { state: doc.state })
     entry.head = step.state
-  } else if (step.draft && !(doc.draft && doc.published.length === 0)) {
-    // A fork kept or published since: only its changes go.
+  } else if (!doc.draft || doc.published.length > 0) {
+    // A fork kept, renamed or published since: only its changes go.
     workspace.setState(doc.id, doc.initial)
     push(entry[to], { state: doc.state })
     entry.head = doc.initial
   } else {
-    // The create itself: the system goes (a fork silently, anything else
-    // to Recently deleted), and the selection it came from can bring it
-    // back.
-    const back =
-      step.created.kind === "system" && !workspace.findSystem(step.created.id)
-        ? ({ kind: "preset", id: ORIGIN.id } as const)
-        : step.created
-    if (step.draft) {
-      workspace.flush()
-      const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
-      select(back)
-      push(stack(selectionKey(back))[to], { recreate: doc, checkpoints })
-    } else if (trash(doc.id, "Deleted")) {
-      select(back)
-      push(stack(selectionKey(back))[to], { recover: doc.id })
-    }
+    // The fork itself: the draft goes, and its view can bring it back.
+    workspace.flush()
+    const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
+    select(step.forked)
+    push(stack(selectionKey(step.forked))[to], { recreate: doc, checkpoints })
   }
   emit()
 }
@@ -397,19 +368,14 @@ export function useUndoRedo(key: string) {
     subscribe,
     () => {
       const step = stacks.get(key)?.future.at(-1)
-      if (step && "recover" in step)
-        return workspace.getTrash().find((i) => i.doc.id === step.recover)?.doc
-          .name
-      if (!step || !("recreate" in step)) return undefined
-      const { name, draft } = step.recreate
-      return draft ? `the ${name} draft` : name
+      return step && "recreate" in step ? step.recreate.name : undefined
     },
     () => undefined,
   )
   return {
     canUndo: (flags & 1) !== 0,
     canRedo: (flags & 2) !== 0,
-    redoLabel: recreates ? `Redo · recreate ${recreates}` : "Redo",
+    redoLabel: recreates ? `Redo · recreate the ${recreates} draft` : "Redo",
   }
 }
 
