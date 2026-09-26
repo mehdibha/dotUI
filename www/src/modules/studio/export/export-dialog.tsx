@@ -112,11 +112,14 @@ function ExportDialogBody() {
   // publishing the latest changes doesn't pull it from under the pointer.
   const [before, setBefore] = useState<{ id: string; at: number; n: number }>()
   const latest = doc?.published.at(-1)
+  // A version published while the dialog is open is the one it installs,
+  // not an older one to pick.
+  const [openedOn] = useState(() => latest?.id)
   if (
     doc &&
     latest &&
     !before &&
-    (status === "changed" || status === "pending")
+    (status === "changed" || (status === "pending" && latest.id === openedOn))
   ) {
     setBefore({ ...latest, n: doc.published.length })
     // A publish already on its way (from Publish or Share) is the latest.
