@@ -1,20 +1,12 @@
 "use client"
 
 /* Motion controls, after DialKit's TransitionControl (dialkit.dev, MIT, Josh
-   Puckett): a curve is edited in a popover over its graph — a bezier by
-   dragging its two handles (arrows nudge by 0.01, shift by 0.1), a spring
-   by its bounce (Time) or its physics — with the named curves one tap away.
-   DialMotion composes one component's entrance: pattern, curve, enter and
-   exit; DialStateMotion a control's state change: duration and curve;
-   DialLoop a keyframe loop's cycle and curve. */
+   Puckett). Everything edits inline: one component's panel never opens
+   another. */
 
-import { useId, useRef } from "react"
+import { useId, useRef, useState } from "react"
 import { mergeProps, useFocusRing, useMove } from "react-aria"
-import {
-  Input as RacInput,
-  ToggleButton as RacToggleButton,
-  ToggleButtonGroup as RacToggleButtonGroup,
-} from "react-aria-components"
+import { Input as RacInput } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 
@@ -24,6 +16,7 @@ import {
   curveTiming,
   CYCLE_RANGE,
   DURATION_RANGE,
+  formatMs,
   springParams,
   springProgress,
 } from "./axes/motion"
@@ -32,15 +25,12 @@ import {
   DIAL_LABEL,
   DIAL_ROW,
   DIAL_VALUE,
-  DialGlyph,
-  DialPopover,
+  DialChips,
   DialRow,
   DialSegmented,
-  DialSelect,
   DialSlider,
-  DialTrigger,
 } from "./dial"
-import type { DialSelectOption } from "./dial"
+import type { DialOption } from "./dial"
 import { useDraft } from "./rows"
 
 /* -------------------------------- Geometry -------------------------------- */
@@ -105,22 +95,32 @@ const GRAPH =
 function BezierHandle({
   ease,
   handle,
+  onDraft,
   onChange,
   graphRef,
   helpId,
 }: {
   ease: Bezier
   handle: 0 | 1
+  onDraft: (ease: Bezier) => void
   onChange: (ease: Bezier) => void
   graphRef: React.RefObject<HTMLDivElement | null>
   helpId: string
 }) {
-  const drag = useRef({ start: ease, x: 0, y: 0, ratio: 1, unit: 1 })
+  const drag = useRef({
+    start: ease,
+    last: ease,
+    x: 0,
+    y: 0,
+    ratio: 1,
+    unit: 1,
+  })
   const { moveProps } = useMove({
     onMoveStart() {
       const width = graphRef.current?.getBoundingClientRect().width || W
       drag.current = {
         start: ease,
+        last: ease,
         x: 0,
         y: 0,
         ratio: W / width,
@@ -136,14 +136,16 @@ function BezierHandle({
       const d = drag.current
       d.x += e.deltaX
       d.y += e.deltaY
-      onChange(
-        moveHandle(
-          d.start,
-          handle,
-          (d.x * d.ratio) / d.unit,
-          (-d.y * d.ratio) / d.unit,
-        ),
+      d.last = moveHandle(
+        d.start,
+        handle,
+        (d.x * d.ratio) / d.unit,
+        (-d.y * d.ratio) / d.unit,
       )
+      onDraft(d.last)
+    },
+    onMoveEnd(e) {
+      if (e.pointerType !== "keyboard") onChange(drag.current.last)
     },
   })
   const { focusProps, isFocusVisible } = useFocusRing()
@@ -179,7 +181,8 @@ function BezierEditor({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const helpId = useId()
-  const { start, end, handles } = fitGraph(ease)
+  const [draft, setDraft] = useDraft(ease)
+  const { start, end, handles } = fitGraph(draft)
   const [a, b] = handles
   return (
     <div ref={ref} role="group" aria-label="Bézier curve" className={GRAPH}>
@@ -226,8 +229,9 @@ function BezierEditor({
       {([0, 1] as const).map((handle) => (
         <BezierHandle
           key={handle}
-          ease={ease}
+          ease={draft}
           handle={handle}
+          onDraft={setDraft}
           onChange={onChange}
           graphRef={ref}
           helpId={helpId}
@@ -329,42 +333,6 @@ const MODE_DEFAULTS: Record<Mode, Curve> = {
   physics: { type: "physics", stiffness: 400, damping: 30, mass: 1 },
 }
 
-/** The named curves as chips; the matching one reads selected. */
-function CurvePresets({
-  value,
-  onChange,
-  springs,
-}: {
-  value: Curve
-  onChange: (curve: Curve) => void
-  springs: boolean
-}) {
-  const presets = CURVES.filter((c) => springs || c.curve.type === "easing")
-  const name = curveName(value)
-  return (
-    <RacToggleButtonGroup
-      aria-label="Presets"
-      selectionMode="single"
-      selectedKeys={name ? [name] : []}
-      onSelectionChange={(keys) => {
-        const next = presets.find((p) => keys.has(p.value))
-        if (next) onChange(next.curve)
-      }}
-      className="grid shrink-0 grid-cols-3 gap-1"
-    >
-      {presets.map((preset) => (
-        <RacToggleButton
-          key={preset.value}
-          id={preset.value}
-          className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring selected:tint-15 selected:text-fg"
-        >
-          {preset.label}
-        </RacToggleButton>
-      ))}
-    </RacToggleButtonGroup>
-  )
-}
-
 /** DialKit's Ease field: the four control points, committed on blur or Enter. */
 function BezierInput({
   ease,
@@ -399,180 +367,133 @@ function BezierInput({
   )
 }
 
-/** Opens a curve's editor: its graph, its mode, the named curves, then the
- *  mode's own parameters. `ms` sizes a time spring's graph; without
- *  `springs`, the curve is a bezier only (exits, state changes). */
-export function DialCurve({
-  label,
+/** The named curves as chips, then Custom, which reveals the editor in place.
+ *  `ms` sizes a time spring's graph; without `springs` it edits a bezier. */
+export function CurveField({
   value,
   onChange,
   ms,
-  springs = true,
+  springs,
 }: {
-  label: string
   value: Curve
   onChange: (curve: Curve) => void
   ms: number
-  springs?: boolean
+  springs: boolean
 }) {
   const last = useRef<Record<Mode, Curve>>({ ...MODE_DEFAULTS })
   last.current[value.type] = value
   const name = curveName(value)
+  const [editing, setEditing] = useState(false)
+  const custom = editing || !name
+  const presets = CURVES.filter((c) => springs || c.curve.type === "easing")
   return (
-    <DialTrigger
-      label={label}
-      value={
+    <>
+      <DialChips
+        label="Curve"
+        value={custom ? "custom" : name}
+        onChange={(next) => {
+          setEditing(next === "custom")
+          const named = presets.find((c) => c.value === next)
+          if (named) onChange(named.curve)
+        }}
+        options={[
+          ...presets.map((c) => ({ value: c.value, label: c.label })),
+          { value: "custom", label: "Custom" },
+        ]}
+      />
+      {custom && (
         <>
-          <span className="truncate">
-            {CURVES.find((c) => c.value === name)?.label ??
-              (value.type === "easing" ? "Custom" : "Custom spring")}
-          </span>
-          <DialGlyph>
-            <CurveGlyph curve={value} />
-          </DialGlyph>
+          {springs && (
+            <DialSegmented
+              label="Type"
+              value={value.type}
+              onChange={(mode) => onChange(last.current[mode as Mode])}
+              options={MODES}
+            />
+          )}
+          {value.type === "easing" ? (
+            <>
+              <BezierEditor
+                ease={value.ease}
+                onChange={(ease) => onChange({ type: "easing", ease })}
+              />
+              <BezierInput
+                ease={value.ease}
+                onChange={(ease) => onChange({ type: "easing", ease })}
+              />
+            </>
+          ) : (
+            <SpringGraph curve={value} ms={ms} />
+          )}
+          {value.type === "spring" && (
+            <DialSlider
+              label="Bounce"
+              value={value.bounce}
+              onChange={(bounce) => onChange({ ...value, bounce })}
+              minValue={0}
+              maxValue={1}
+              step={0.05}
+              format={(v) => v.toFixed(2)}
+            />
+          )}
+          {value.type === "physics" && (
+            <>
+              <DialSlider
+                label="Stiffness"
+                value={value.stiffness}
+                onChange={(stiffness) => onChange({ ...value, stiffness })}
+                minValue={10}
+                maxValue={1000}
+                step={10}
+                format={String}
+              />
+              <DialSlider
+                label="Damping"
+                value={value.damping}
+                onChange={(damping) => onChange({ ...value, damping })}
+                minValue={1}
+                maxValue={100}
+                step={1}
+                format={String}
+              />
+              <DialSlider
+                label="Mass"
+                value={value.mass}
+                onChange={(mass) => onChange({ ...value, mass })}
+                minValue={0.1}
+                maxValue={10}
+                step={0.1}
+                format={(v) => v.toFixed(1)}
+              />
+            </>
+          )}
         </>
-      }
-    >
-      <DialPopover className="w-72">
-        {value.type === "easing" ? (
-          <BezierEditor
-            ease={value.ease}
-            onChange={(ease) => onChange({ type: "easing", ease })}
-          />
-        ) : (
-          <SpringGraph curve={value} ms={ms} />
-        )}
-        {springs && (
-          <DialSegmented
-            label="Type"
-            value={value.type}
-            onChange={(mode) => onChange(last.current[mode as Mode])}
-            options={MODES}
-          />
-        )}
-        <CurvePresets value={value} onChange={onChange} springs={springs} />
-        {value.type === "easing" && (
-          <BezierInput
-            ease={value.ease}
-            onChange={(ease) => onChange({ type: "easing", ease })}
-          />
-        )}
-        {value.type === "spring" && (
-          <DialSlider
-            label="Bounce"
-            value={value.bounce}
-            onChange={(bounce) => onChange({ ...value, bounce })}
-            minValue={0}
-            maxValue={1}
-            step={0.05}
-            format={(v) => v.toFixed(2)}
-          />
-        )}
-        {value.type === "physics" && (
-          <>
-            <DialSlider
-              label="Stiffness"
-              value={value.stiffness}
-              onChange={(stiffness) => onChange({ ...value, stiffness })}
-              minValue={10}
-              maxValue={1000}
-              step={10}
-              format={String}
-            />
-            <DialSlider
-              label="Damping"
-              value={value.damping}
-              onChange={(damping) => onChange({ ...value, damping })}
-              minValue={1}
-              maxValue={100}
-              step={1}
-              format={String}
-            />
-            <DialSlider
-              label="Mass"
-              value={value.mass}
-              onChange={(mass) => onChange({ ...value, mass })}
-              minValue={0.1}
-              maxValue={10}
-              step={0.1}
-              format={(v) => v.toFixed(1)}
-            />
-          </>
-        )}
-      </DialPopover>
-    </DialTrigger>
+      )}
+    </>
   )
 }
 
-/* ------------------------------- Entrances -------------------------------- */
-
-function EntranceGlyph({ pattern }: { pattern: string }) {
+/** A bezier-only curve field. */
+function EaseField({
+  value,
+  onChange,
+  ms,
+}: {
+  value: Bezier
+  onChange: (ease: Bezier) => void
+  ms: number
+}) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {pattern === "scale" && (
-        <rect
-          x="4.5"
-          y="6.5"
-          width="15"
-          height="11"
-          rx="2"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeDasharray="2 2"
-          opacity=".45"
-        />
-      )}
-      {pattern === "slide" && (
-        <path
-          d="M12 2.5v3.5m0 0-2-2m2 2 2-2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-      {pattern === "scale" ? (
-        <rect
-          x="8.5"
-          y="9.5"
-          width="7"
-          height="5"
-          rx="1.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      ) : (
-        <rect
-          x="5"
-          y={pattern === "slide" ? 9 : 7}
-          width="14"
-          height="10"
-          rx="2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity={pattern === "fade" ? 0.35 : 1}
-        />
-      )}
-    </svg>
+    <CurveField
+      value={{ type: "easing", ease: value }}
+      onChange={(curve) => curve.type === "easing" && onChange(curve.ease)}
+      ms={ms}
+      springs={false}
+    />
   )
 }
-
-/** Entrance patterns with their specimens (none, fade, scale, slide). */
-export const withEntranceGlyphs = (
-  options: { value: string; label: string }[],
-): DialSelectOption[] =>
-  options.map((option) => ({
-    ...option,
-    preview: (
-      <DialGlyph>
-        <EntranceGlyph pattern={option.value} />
-      </DialGlyph>
-    ),
-  }))
 
 /* -------------------------------- Composites ------------------------------ */
-
-const ms = (v: number) => `${Math.round(v)}ms`
 
 function DialDuration({
   label,
@@ -591,35 +512,40 @@ function DialDuration({
       minValue={DURATION_RANGE.min}
       maxValue={DURATION_RANGE.max}
       step={DURATION_RANGE.step}
-      format={ms}
+      format={formatMs}
     />
   )
 }
 
-/** One component's entrance. A single pattern (the drawer's slide) leaves
- *  nothing to pick; a physics spring times itself, so its enter row only
- *  reads; "none" leaves nothing to time, `children` (rows timed alongside,
- *  like the toast's swipe) included. */
+/** One component's entrance: its pattern, then one leg at a time — enter,
+ *  exit, and a swipe's release where the component has one. */
 export function DialMotion({
   value,
   onChange,
   patterns,
-  children,
+  swipe,
 }: {
   value: Entrance
   onChange: (value: Entrance) => void
-  patterns: DialSelectOption[]
-  children?: React.ReactNode
+  patterns: DialOption[]
+  swipe?: { value: StateChange; onChange: (value: StateChange) => void }
 }) {
+  const [phase, setPhase] = useState("enter")
   const set =
     <K extends keyof Entrance>(key: K) =>
     (next: Entrance[K]) =>
       onChange({ ...value, [key]: next })
   const enter = curveTiming(value.curve, value.enter).ms
+  const phases: DialOption[] = [
+    { value: "enter", label: "In" },
+    ...(value.exit !== undefined ? [{ value: "exit", label: "Out" }] : []),
+    ...(swipe ? [{ value: "swipe", label: "Swipe" }] : []),
+  ]
+  const leg = phases.some((p) => p.value === phase) ? phase : "enter"
   return (
     <>
       {patterns.length > 1 && (
-        <DialSelect
+        <DialSegmented
           label="Entrance"
           value={value.pattern}
           onChange={set("pattern")}
@@ -628,42 +554,61 @@ export function DialMotion({
       )}
       {value.pattern !== "none" && (
         <>
-          <DialCurve
-            label="Curve"
-            value={value.curve}
-            onChange={set("curve")}
-            ms={value.enter}
-          />
-          {value.curve.type === "physics" ? (
-            <DialRow label="Enter">
-              <span className={DIAL_VALUE}>{ms(enter)}</span>
-            </DialRow>
-          ) : (
-            <DialDuration
-              label="Enter"
-              value={value.enter}
-              onChange={set("enter")}
+          {phases.length > 1 && (
+            <DialSegmented
+              label="Phase"
+              value={leg}
+              onChange={setPhase}
+              options={phases}
             />
           )}
-          {value.exit !== undefined && (
-            <DialDuration
-              label="Exit"
-              value={value.exit}
-              onChange={set("exit")}
+          {leg === "enter" && (
+            <>
+              {value.curve.type === "physics" ? (
+                <DialRow label="Duration">
+                  <span className={DIAL_VALUE}>{formatMs(enter)}</span>
+                </DialRow>
+              ) : (
+                <DialDuration
+                  label="Duration"
+                  value={value.enter}
+                  onChange={set("enter")}
+                />
+              )}
+              <CurveField
+                key="enter"
+                value={value.curve}
+                onChange={set("curve")}
+                ms={value.enter}
+                springs
+              />
+            </>
+          )}
+          {leg === "exit" && value.exit !== undefined && (
+            <>
+              <DialDuration
+                label="Duration"
+                value={value.exit}
+                onChange={set("exit")}
+              />
+              {value.exitEase && (
+                <EaseField
+                  key="exit"
+                  value={value.exitEase}
+                  onChange={set("exitEase")}
+                  ms={value.exit}
+                />
+              )}
+            </>
+          )}
+          {leg === "swipe" && swipe && (
+            <DialStateMotion
+              key="swipe"
+              label="Duration"
+              value={swipe.value}
+              onChange={swipe.onChange}
             />
           )}
-          {value.exitEase && (
-            <DialCurve
-              label="Exit curve"
-              value={{ type: "easing", ease: value.exitEase }}
-              onChange={(curve) =>
-                curve.type === "easing" && set("exitEase")(curve.ease)
-              }
-              ms={value.exit ?? value.enter}
-              springs={false}
-            />
-          )}
-          {children}
         </>
       )}
     </>
@@ -688,21 +633,16 @@ export function DialStateMotion({
         value={value.duration}
         onChange={(duration) => onChange({ ...value, duration })}
       />
-      <DialCurve
-        label="Curve"
-        value={{ type: "easing", ease: value.ease }}
-        onChange={(curve) =>
-          curve.type === "easing" && onChange({ ...value, ease: curve.ease })
-        }
+      <EaseField
+        value={value.ease}
+        onChange={(ease) => onChange({ ...value, ease })}
         ms={value.duration}
-        springs={false}
       />
     </>
   )
 }
 
-/** A keyframe loop: how long one cycle runs, and on what curve where the
- *  loop has one to bend (`curve`). */
+/** A keyframe loop: one cycle's length, and its curve where it has one. */
 export function DialLoop({
   label,
   value,
@@ -723,17 +663,13 @@ export function DialLoop({
         minValue={CYCLE_RANGE.min}
         maxValue={CYCLE_RANGE.max}
         step={CYCLE_RANGE.step}
-        format={ms}
+        format={formatMs}
       />
       {curve && (
-        <DialCurve
-          label="Curve"
-          value={{ type: "easing", ease: value.ease }}
-          onChange={(next) =>
-            next.type === "easing" && onChange({ ...value, ease: next.ease })
-          }
+        <EaseField
+          value={value.ease}
+          onChange={(ease) => onChange({ ...value, ease })}
           ms={value.cycle}
-          springs={false}
         />
       )}
     </>

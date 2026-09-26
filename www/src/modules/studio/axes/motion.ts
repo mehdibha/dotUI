@@ -182,6 +182,8 @@ export function springLinear(params: SpringParams, ms: number): string {
 
 /* ---------------------------------- CSS ----------------------------------- */
 
+export const formatMs = (ms: number) => `${Math.round(ms)}ms`
+
 export function bezierCss([x1, y1, x2, y2]: Bezier): string {
   return x1 === 0 && y1 === 0 && x2 === 1 && y2 === 1
     ? "linear"

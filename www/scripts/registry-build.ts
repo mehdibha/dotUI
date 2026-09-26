@@ -338,8 +338,7 @@ ${groupEntries.join("\n")}
 /** Studio panel search index: every settings row label and group title in
  *  each chapter's section, keyed by chapter id — so search reaches nested
  *  axes, not just chapter names. Read off the section JSX, plus the motion
- *  registry's entries (their rows are data-driven: each lands on its family's
- *  row in Components and on the Timeline row in Motion); other data-driven
+ *  registry's entries and presets (their rows are data-driven); other data-driven
  *  labels (color roles, shape roles) are out of scope. */
 async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
@@ -347,6 +346,10 @@ async function buildStudioSearchIndex() {
   const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
   const motion = await fs.readFile(
     path.join(studioDir, "motion-controls.tsx"),
+    "utf8",
+  )
+  const presets = await fs.readFile(
+    path.join(studioDir, "axes", "motion-presets.ts"),
     "utf8",
   )
 
@@ -390,15 +393,18 @@ async function buildStudioSearchIndex() {
       for (const label of rowLabels(await read(sibling)))
         labels.add(`${prefix} › ${label}`)
     }
-    if (id === "motion" || id === "components") {
-      for (const [, label = "", family = ""] of motion.matchAll(
-        /label: "([^"]+)",\s*family: "([^"]+)"/g,
+    if (id === "motion") {
+      for (const [, label = ""] of presets.matchAll(
+        /preset\("[^"]+", "([^"]+)"/g,
       ))
-        labels.add(
-          id === "motion"
-            ? `Timeline › ${label}`
-            : `${family} › ${label} motion`,
-        )
+        labels.add(label)
+      for (const [, label = ""] of motion.matchAll(
+        /id: "[^"]+",\s*label: "([^"]+)"/g,
+      ))
+        labels.add(label)
+      for (const [, list = ""] of motion.matchAll(/followers: \[([^\]]+)\]/g))
+        for (const [, label = ""] of list.matchAll(/"([^"]+)"/g))
+          labels.add(label)
     }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,

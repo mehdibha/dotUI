@@ -57,6 +57,17 @@ export function DialGlyph({ children }: { children: React.ReactNode }) {
   return <span className="size-4 shrink-0 *:size-full">{children}</span>
 }
 
+/** The accent dot beside anything that leaves its defaults. */
+export function ModifiedDot() {
+  return (
+    <span
+      role="img"
+      aria-label="Modified"
+      className="size-1 shrink-0 rounded-full bg-accent"
+    />
+  )
+}
+
 /** Label left, control right. */
 export function DialRow({
   label,
@@ -758,6 +769,46 @@ export function DialSegmented({
   )
 }
 
+/** A pick from short chips, three across under the label. Pressing the
+ *  selected chip keeps it. */
+export function DialChips({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string | undefined
+  onChange: (value: string) => void
+  options: DialOption[]
+}) {
+  return (
+    <div className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}>
+      <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
+      <RacToggleButtonGroup
+        aria-label={label}
+        selectionMode="single"
+        selectedKeys={value ? [value] : []}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) onChange(next as string)
+        }}
+        className="grid grid-cols-3 gap-1"
+      >
+        {options.map((option) => (
+          <RacToggleButton
+            key={option.value}
+            id={option.value}
+            className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:tint-15 selected:text-fg"
+          >
+            {option.label}
+          </RacToggleButton>
+        ))}
+      </RacToggleButtonGroup>
+    </div>
+  )
+}
+
 const OFF_ON: DialOption[] = [
   { value: "off", label: "Off" },
   { value: "on", label: "On" },
@@ -824,12 +875,7 @@ export function DialFolder({
               <span className="truncate text-[13px] font-semibold text-fg/70">
                 {title}
               </span>
-              {modified && (
-                <span
-                  aria-label="Modified"
-                  className="size-1 rounded-full bg-accent"
-                />
-              )}
+              {modified && <ModifiedDot />}
             </span>
             <span className="flex min-w-0 items-center gap-2">
               {value && (

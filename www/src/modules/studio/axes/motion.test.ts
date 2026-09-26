@@ -11,13 +11,21 @@ import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
   bezierCss,
+  curveName,
   curveTiming,
   entranceVars,
   loopVars,
   resolveEntrance,
   stateChangeVars,
 } from "./motion"
-import type { Entrance, Loop, StateChange } from "./motion"
+import type { Bezier, Entrance, Loop, StateChange } from "./motion"
+import type { MotionPreset } from "./motion-presets"
+import {
+  MOTION_KEYS as PRESET_KEYS,
+  MOTION_PRESETS,
+  motionBase,
+  same,
+} from "./motion-presets"
 
 const ENTRANCE: Entrance = {
   pattern: "scale",
@@ -264,3 +272,67 @@ describe("shipped motion", () => {
     )
   })
 })
+
+const presetById = (id: string) =>
+  MOTION_PRESETS.find((p) => p.id === id) as MotionPreset
+const motionOf = (values: Partial<StudioState>) =>
+  JSON.stringify(PRESET_KEYS.map((key) => values[key]))
+
+describe("motion presets", () => {
+  test("Default is the defaults, key order included", () => {
+    expect(motionOf(presetById("default").values)).toBe(motionOf(DEFAULTS))
+  })
+
+  test("every preset reads back as itself, exactly", () => {
+    const read = MOTION_PRESETS.map((p) => {
+      const { preset, exact } = motionBase({ ...DEFAULTS, ...p.values })
+      return `${preset.id}${exact ? "" : " (inexact)"}`
+    })
+    expect(read).toEqual(MOTION_PRESETS.map((p) => p.id))
+  })
+
+  test("one tweak stays on its preset, no longer exact", () => {
+    const snappy = presetById("snappy")
+    const state = {
+      ...DEFAULTS,
+      ...snappy.values,
+      buttonMotion: { ...snappy.values.buttonMotion, duration: 400 },
+    }
+    expect(motionBase(state)).toEqual({ preset: snappy, exact: false })
+  })
+
+  test("a preset writes named curves and slider-step durations", () => {
+    const off: string[] = []
+    for (const p of MOTION_PRESETS)
+      for (const key of PRESET_KEYS) {
+        const v = p.values[key] as Partial<Entrance & StateChange>
+        const d = DEFAULTS[key] as Partial<Entrance & StateChange>
+        if (typeof v !== "object") continue
+        // Off leaves curves alone; a curve a preset writes must be named.
+        const curves = [
+          !same(v.curve, d.curve) && v.curve,
+          !same(v.ease, d.ease) && v.ease && easing(v.ease),
+          !same(v.exitEase, d.exitEase) && v.exitEase && easing(v.exitEase),
+        ]
+        for (const c of curves)
+          if (c && !curveName(c)) off.push(`${p.id} ${key}: unnamed curve`)
+        for (const ms of [v.enter, v.exit, v.duration])
+          if (ms !== undefined && ms % 10) off.push(`${p.id} ${key}: ${ms}ms`)
+      }
+    expect(off).toEqual([])
+  })
+
+  test("every preset ships plain classes, no studio vars", async () => {
+    const survivors: string[] = []
+    for (const p of MOTION_PRESETS) {
+      const shipped = await shipAll({ ...DEFAULTS, ...p.values })
+      for (const [name, content] of Object.entries(shipped))
+        if (content.includes("--studio-")) survivors.push(`${p.id}: ${name}`)
+    }
+    expect(survivors).toEqual([])
+  })
+})
+
+function easing(ease: Bezier) {
+  return { type: "easing" as const, ease }
+}

@@ -1,66 +1,59 @@
 "use client"
 
-/* The motion registry: every animated component once, with its family, its
-   state and its control. Each Components family ends its popover with its
-   entries (FamilyMotion); the Motion chapter lays them all on one timeline.
-   Both render the same Control on the same state.
+/* Every animated component once, with its state and control. Followers
+   (synced group members) ride their lead's key, never a second one. */
 
-   Synced followers ride their lead's state and var id — never a second key.
-   They surface in their own family as the lead's control, marked "Shared
-   with <lead>": menus and selects ride the popover, collapsibles the
-   accordion, toggle buttons the button, radios the checkbox, attachments the
-   skeleton. */
+import { ChevronLeftIcon, ChevronRightIcon, RotateCcwIcon } from "lucide-react"
+import { Button as RacButton } from "react-aria-components"
+
+import { cn } from "@/registry/lib/utils"
 
 import { DEFAULTS } from "./axes"
 import { MOTION_PATTERNS as ACCORDION_PATTERNS } from "./axes/accordion"
 import { MOTION_OPTIONS as CHART_MOTION, motionOption } from "./axes/charts"
 import { DRAWER_PATTERNS, MODAL_PATTERNS } from "./axes/dialogs"
 import { MOTION_PATTERNS as MESSAGE_SCROLLER_PATTERNS } from "./axes/message-scroller"
-import { bezierCss, curveTiming } from "./axes/motion"
+import { bezierCss, curveTiming, formatMs } from "./axes/motion"
 import type { Curve, Entrance, Loop, StateChange } from "./axes/motion"
+import { same } from "./axes/motion-presets"
+import type { MotionPreset } from "./axes/motion-presets"
 import { MOTION_PATTERNS as POPOVER_PATTERNS } from "./axes/popovers"
 import { MOTION_PATTERNS as TOAST_PATTERNS } from "./axes/toast"
 import { MOTION_PATTERNS as TOOLTIP_PATTERNS } from "./axes/tooltips"
 import {
+  DIAL_CHEVRON,
+  DIAL_LABEL,
+  DIAL_PRESS,
+  DIAL_ROW,
+  DialChips,
   DialGlyph,
-  DialPopover,
-  DialSelect,
-  DialTrigger,
+  ModifiedDot,
   optionLabel,
 } from "./dial"
-import type { DialSelectOption } from "./dial"
 import {
   CurveGlyph,
   DialLoop,
   DialMotion,
   DialStateMotion,
-  withEntranceGlyphs,
 } from "./dial-motion"
-import { GroupTitle } from "./rows"
 import type { Studio, StudioState } from "./state"
+
+type Pattern = { value: string; label: string }
 
 type KeyOf<T> = {
   [K in keyof StudioState]: StudioState[K] extends T ? K : never
 }[keyof StudioState]
 
-/** How the board's specimen acts the motion out: a layer entering by its
- *  pattern, a panel expanding, a knob crossing its track, a ring's turn, a
- *  placeholder's breath, bars growing. */
-export type Specimen = "layer" | "expand" | "knob" | "spin" | "pulse" | "grow"
-
 export interface MotionEntry {
   id: string
   label: string
-  /** The Components family whose popover carries it. */
-  family: string
   kind: "entrance" | "state" | "loop" | "js"
-  /** Its state; the board times the first key. */
+  /** Its state; the first key is the one timed. */
   keys: [keyof StudioState, ...(keyof StudioState)[]]
-  specimen: Specimen
   /** Entrance patterns, for the summary. */
-  patterns?: DialSelectOption[]
+  patterns?: Pattern[]
   /** Components riding this entry's state (one key, one var id). */
-  followers?: { label: string; family: string }[]
+  followers?: string[]
   Control: React.ComponentType<{ studio: Studio }>
 }
 
@@ -68,11 +61,11 @@ type Kind = Pick<MotionEntry, "kind" | "keys" | "patterns" | "Control">
 
 const entrance = (
   key: KeyOf<Entrance>,
-  patterns: DialSelectOption[],
-  children?: (studio: Studio) => React.ReactNode,
+  patterns: Pattern[],
+  swipe?: KeyOf<StateChange>,
 ): Kind => ({
   kind: "entrance",
-  keys: [key],
+  keys: swipe ? [key, swipe] : [key],
   patterns,
   Control: function EntranceMotion({ studio }) {
     return (
@@ -80,9 +73,13 @@ const entrance = (
         value={studio.state[key]}
         onChange={studio.set(key)}
         patterns={patterns}
-      >
-        {children?.(studio)}
-      </DialMotion>
+        swipe={
+          swipe && {
+            value: studio.state[swipe],
+            onChange: studio.set(swipe),
+          }
+        }
+      />
     )
   },
 })
@@ -120,50 +117,6 @@ const loop = (
   },
 })
 
-/** A trigger over its open panel: arrowed when it grows, faint when it also
- *  fades, plain when it snaps open. */
-function ExpandGlyph({ pattern }: { pattern: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="4" y="4" width="16" height="4" rx="1.5" fill="currentColor" />
-      <rect
-        x="4.75"
-        y="10.75"
-        width="14.5"
-        height="9.5"
-        rx="1.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity={pattern === "fade" ? 0.35 : 1}
-      />
-      {pattern !== "none" && (
-        <path
-          d="M12 12.75v5m0 0-2-2m2 2 2-2"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-    </svg>
-  )
-}
-
-/* Each transition's curve as its specimen; none draws the empty entrance. */
-const CHART_MOTION_OPTIONS: DialSelectOption[] = CHART_MOTION.flatMap(
-  ({ curve, ...option }) =>
-    curve
-      ? {
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CurveGlyph curve={curve} />
-            </DialGlyph>
-          ),
-        }
-      : withEntranceGlyphs([option]),
-)
-
 /* ------------------------------- The registry ------------------------------ */
 
 /* In the Components chapter's family order. */
@@ -171,209 +124,143 @@ export const MOTION: MotionEntry[] = [
   {
     id: "button",
     label: "Button",
-    family: "Buttons",
-    specimen: "knob",
-    followers: [{ label: "Toggle button", family: "Buttons" }],
+    followers: ["Toggle button"],
     ...stateChange("buttonMotion"),
   },
   {
     id: "segmented-control",
     label: "Segmented control",
-    family: "Buttons",
-    specimen: "knob",
     ...stateChange("segmentedControlMotion"),
   },
   {
     id: "input",
     label: "Input",
-    family: "Inputs",
-    specimen: "knob",
     ...stateChange("inputMotion"),
   },
   {
     id: "checkbox",
     label: "Checkbox",
-    family: "Selection controls",
-    specimen: "knob",
-    followers: [{ label: "Radio", family: "Selection controls" }],
+    followers: ["Radio"],
     ...stateChange("checkboxMotion"),
   },
   {
     id: "switch",
     label: "Switch",
-    family: "Selection controls",
-    specimen: "knob",
     ...stateChange("switchMotion"),
   },
   {
     id: "questionnaire",
     label: "Questionnaire",
-    family: "Selection controls",
-    specimen: "knob",
     ...stateChange("questionnaireMotion"),
   },
   {
     id: "calendar",
     label: "Calendar",
-    family: "Pickers",
-    specimen: "knob",
     ...stateChange("calendarMotion"),
   },
   {
     id: "time-picker",
     label: "Time picker",
-    family: "Pickers",
-    specimen: "knob",
     ...stateChange("timePickerMotion"),
   },
   {
     id: "color-swatch-picker",
     label: "Swatch picker",
-    family: "Pickers",
-    specimen: "knob",
     ...stateChange("colorSwatchPickerMotion"),
   },
   {
     id: "slider",
     label: "Slider",
-    family: "Sliders",
-    specimen: "knob",
     ...stateChange("sliderMotion"),
   },
   {
     id: "modal",
     label: "Dialog",
-    family: "Dialogs",
-    specimen: "layer",
-    ...entrance("modalMotion", withEntranceGlyphs(MODAL_PATTERNS)),
+    ...entrance("modalMotion", MODAL_PATTERNS),
   },
   {
     id: "drawer",
     label: "Drawer",
-    family: "Dialogs",
-    specimen: "layer",
     ...entrance("drawerMotion", DRAWER_PATTERNS),
   },
   {
     id: "popover",
     label: "Popover",
-    family: "Popovers",
-    specimen: "layer",
-    followers: [
-      { label: "Menu", family: "Menus" },
-      { label: "Select & combobox", family: "Pickers" },
-    ],
-    ...entrance("popoverMotion", withEntranceGlyphs(POPOVER_PATTERNS)),
+    followers: ["Menu", "Select & combobox"],
+    ...entrance("popoverMotion", POPOVER_PATTERNS),
   },
   {
     id: "tooltip",
     label: "Tooltip",
-    family: "Popovers",
-    specimen: "layer",
-    ...entrance("tooltipMotion", withEntranceGlyphs(TOOLTIP_PATTERNS)),
+    ...entrance("tooltipMotion", TOOLTIP_PATTERNS),
   },
   {
     id: "toast",
     label: "Toast",
-    family: "Toast",
-    specimen: "layer",
     // How one swiped away finishes the throw rides the entrance's rows.
-    ...entrance("toastMotion", withEntranceGlyphs(TOAST_PATTERNS), (studio) => (
-      <DialStateMotion
-        label="Swipe"
-        value={studio.state.toastSwipeMotion}
-        onChange={studio.set("toastSwipeMotion")}
-      />
-    )),
-    keys: ["toastMotion", "toastSwipeMotion"],
+    ...entrance("toastMotion", TOAST_PATTERNS, "toastSwipeMotion"),
   },
   {
     id: "link",
     label: "Link",
-    family: "Navigation",
-    specimen: "knob",
     ...stateChange("linkMotion"),
   },
   {
     id: "tabs",
     label: "Tabs",
-    family: "Navigation",
-    specimen: "knob",
     ...stateChange("tabsMotion"),
   },
   {
     id: "breadcrumbs",
     label: "Breadcrumbs",
-    family: "Navigation",
-    specimen: "knob",
     ...stateChange("breadcrumbsMotion"),
   },
   {
     id: "sidebar",
     label: "Sidebar",
-    family: "Navigation",
-    specimen: "knob",
     ...stateChange("sidebarMotion", "Collapse"),
   },
   {
     id: "message-scroller",
     label: "Scroll to latest",
-    family: "Navigation",
-    specimen: "layer",
     ...entrance("messageScrollerMotion", MESSAGE_SCROLLER_PATTERNS),
   },
   {
     id: "loader",
     label: "Spinner",
-    family: "Loading",
-    specimen: "spin",
     // Only the ring's turn bends: blades tick in steps, dots keep their breath.
     ...loop("loaderMotion", (state) => state.spinnerStyle === "ring"),
   },
   {
     id: "skeleton",
     label: "Skeleton",
-    family: "Loading",
-    specimen: "pulse",
-    followers: [{ label: "Attachment", family: "Loading" }],
+    followers: ["Attachment"],
     ...loop("skeletonMotion"),
   },
   {
     id: "progress",
     label: "Progress",
-    family: "Loading",
-    specimen: "knob",
     ...stateChange("progressMotion", "Fill"),
   },
   {
     id: "tag",
     label: "Tag",
-    family: "Badges",
-    specimen: "knob",
     ...stateChange("tagMotion"),
   },
   {
     id: "table",
     label: "Table",
-    family: "Tables",
-    specimen: "knob",
     ...stateChange("tableMotion"),
   },
   {
     id: "accordion",
     label: "Accordion",
-    family: "Accordion",
-    specimen: "expand",
-    followers: [{ label: "Collapsible", family: "Accordion" }],
+    followers: ["Collapsible"],
     ...entrance(
       "accordionMotion",
-      ACCORDION_PATTERNS.map((option) => ({
-        ...option,
-        preview: (
-          <DialGlyph>
-            <ExpandGlyph pattern={option.value} />
-          </DialGlyph>
-        ),
+      ACCORDION_PATTERNS.map(({ value, label }) => ({
+        value,
+        label: value === "fade" ? "Fade" : label,
       })),
     ),
   },
@@ -382,17 +269,15 @@ export const MOTION: MotionEntry[] = [
     // named transition the publisher folds to its literal, not a timing.
     id: "chart",
     label: "Chart",
-    family: "Charts",
     kind: "js",
     keys: ["chartMotion"],
-    specimen: "grow",
     Control: function ChartMotion({ studio }) {
       return (
-        <DialSelect
+        <DialChips
           label="Transition"
           value={motionOption(studio.state.chartMotion)}
           onChange={studio.set("chartMotion")}
-          options={CHART_MOTION_OPTIONS}
+          options={CHART_MOTION}
         />
       )
     },
@@ -451,8 +336,6 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
   }
 }
 
-export const formatMs = (ms: number) => `${Math.round(ms)}ms`
-
 /** The row's value: the pattern and how long it takes, or the pick. */
 export function summaryOf(entry: MotionEntry, state: StudioState): string {
   if (entry.kind === "js")
@@ -464,102 +347,120 @@ export function summaryOf(entry: MotionEntry, state: StudioState): string {
   return timing.off ? pattern : `${pattern} · ${formatMs(timing.enter)}`
 }
 
-export const isModified = (entry: MotionEntry, state: StudioState) =>
-  entry.keys.some(
-    (key) => JSON.stringify(state[key]) !== JSON.stringify(DEFAULTS[key]),
-  )
+/** Whether an entry leaves the preset the system sits on. */
+export const differs = (
+  entry: MotionEntry,
+  state: StudioState,
+  base: MotionPreset,
+) => entry.keys.some((key) => !same(state[key], base.values[key as never]))
+
+/** The span of the entries' timed legs, e.g. "100–450ms". */
+export function tempo(entries: MotionEntry[], state: StudioState) {
+  const legs = entries.flatMap((entry) => {
+    const t = timingOf(entry, state)
+    return t.off ? [] : [t.enter, t.exit ?? t.enter].filter((ms) => ms > 0)
+  })
+  if (legs.length === 0) return "Instant"
+  const [low, high] = [Math.min(...legs), Math.max(...legs)]
+  return low === high ? formatMs(low) : `${Math.round(low)}–${formatMs(high)}`
+}
 
 /* ---------------------------------- Rows ---------------------------------- */
 
-/** A component as a family or the board lists it: an entry under its own
- *  label, or a follower under its own label on the lead's entry. */
-export interface MotionRow {
-  id: string
-  label: string
-  entry: MotionEntry
-  /** Who else the control drives, or whose it is. */
-  hint?: string
-  follower?: boolean
-}
-
-export function familyRows(family: string): MotionRow[] {
-  const rows: MotionRow[] = []
-  for (const entry of MOTION) {
-    if (entry.family === family) {
-      const also = entry.followers?.map((f) => f.label)
-      rows.push({
-        id: entry.id,
-        label: entry.label,
-        entry,
-        hint: also?.length ? `Also drives ${also.join(", ")}` : undefined,
-      })
-    }
-    for (const follower of entry.followers ?? []) {
-      if (follower.family === family && entry.family !== family)
-        rows.push({
-          id: `${entry.id}/${follower.label}`,
-          label: follower.label,
-          entry,
-          hint: `Shared with ${entry.label}`,
-          follower: true,
-        })
-    }
-  }
-  return rows
-}
-
-export function MotionHint({ row }: { row: MotionRow }) {
-  if (!row.hint) return null
-  return <p className="px-1 pb-0.5 text-xs text-fg/50">{row.hint}</p>
-}
-
-/** A row's value: the summary, and its curve's specimen. */
-export function MotionValue({
+/** A component's row in the Motion panel; it drills into its detail. */
+export function MotionRow({
   entry,
   state,
+  base,
+  autoFocus,
+  onOpen,
 }: {
   entry: MotionEntry
   state: StudioState
+  base: MotionPreset
+  autoFocus: boolean
+  onOpen: () => void
 }) {
   const timing = timingOf(entry, state)
   return (
-    <>
-      <span className="truncate">{summaryOf(entry, state)}</span>
-      {!timing.off && timing.curve && (
-        <DialGlyph>
-          <CurveGlyph curve={timing.curve} />
-        </DialGlyph>
-      )}
-    </>
+    <RacButton
+      data-motion-row={entry.id}
+      autoFocus={autoFocus}
+      onPress={onOpen}
+      className={cn(DIAL_ROW, DIAL_PRESS)}
+    >
+      <span className={DIAL_LABEL}>{entry.label}</span>
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
+        {differs(entry, state, base) && <ModifiedDot />}
+        <span className="truncate">{summaryOf(entry, state)}</span>
+        {!timing.off && timing.curve && (
+          <DialGlyph>
+            <CurveGlyph curve={timing.curve} />
+          </DialGlyph>
+        )}
+        <ChevronRightIcon className={DIAL_CHEVRON} />
+      </span>
+    </RacButton>
   )
 }
 
-/** The group that closes a family's popover: a row per animated component,
- *  each opening its control. Nothing for a family that doesn't move. */
-export function FamilyMotion({
-  family,
+/** One component's controls, under a header that goes back and resets it
+ *  to the preset. */
+export function MotionDetail({
+  entry,
   studio,
+  base,
+  onBack,
 }: {
-  family: string
+  entry: MotionEntry
   studio: Studio
+  base: MotionPreset
+  onBack: () => void
 }) {
-  const rows = familyRows(family)
-  if (rows.length === 0) return null
+  const { state, setState } = studio
+  const modified = differs(entry, state, base)
+  const reset = () =>
+    setState({
+      ...state,
+      ...Object.fromEntries(
+        entry.keys.map((key) => [key, base.values[key as never]]),
+      ),
+    })
   return (
     <>
-      <GroupTitle>Motion</GroupTitle>
-      {rows.map((row) => (
-        <DialTrigger
-          key={row.id}
-          label={row.label}
-          value={<MotionValue entry={row.entry} state={studio.state} />}
+      <div className="flex h-9 shrink-0 items-center gap-1">
+        <RacButton
+          autoFocus
+          aria-label="Back to all motion"
+          onPress={onBack}
+          className="flex size-7 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset transition-colors hover:tint-10 hover:text-fg focus-visible:focus-ring pointer-coarse:size-9"
         >
-          <DialPopover>
-            <MotionHint row={row} />
-            <row.entry.Control studio={studio} />
-          </DialPopover>
-        </DialTrigger>
-      ))}
+          <ChevronLeftIcon className="size-4" />
+        </RacButton>
+        <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-fg/70">
+          {entry.label}
+        </span>
+        {modified ? (
+          <RacButton
+            onPress={reset}
+            aria-label={`Reset ${entry.label} to ${base.label}`}
+            className="flex h-7 shrink-0 cursor-interactive items-center gap-1 rounded-md px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:tint-10 hover:text-fg focus-visible:focus-ring"
+          >
+            <RotateCcwIcon className="size-3" />
+            {base.label}
+          </RacButton>
+        ) : (
+          <span className="shrink-0 px-1.5 text-xs text-fg/50">
+            {base.label}
+          </span>
+        )}
+      </div>
+      {entry.followers && (
+        <p className="px-1 pb-0.5 text-xs text-fg/50">
+          Also {entry.followers.join(", ")}
+        </p>
+      )}
+      <entry.Control studio={studio} />
     </>
   )
 }
