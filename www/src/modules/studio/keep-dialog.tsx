@@ -3,7 +3,7 @@
 /* Leaving a changed draft from the studio asks first: keep it under a name,
    or discard it. Publishing a draft asks for its name the same way. */
 
-import { useState, useSyncExternalStore } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 
 import { Button } from "@/registry/ui/button"
 import {
@@ -19,7 +19,7 @@ import { TextField } from "@/registry/ui/text-field"
 
 import { remove } from "./history"
 import { quoted, undoToast } from "./history-menu"
-import { getCurrent } from "./selection"
+import { getCurrent, useCurrent } from "./selection"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
@@ -43,6 +43,15 @@ const listeners = new Set<() => void>()
 function set(next: Request | null) {
   request = next
   for (const listener of listeners) listener()
+}
+
+/** Closes the dialog as if the user stayed. */
+function cancel() {
+  const closed = request
+  if (!closed) return
+  set(null)
+  if (closed.kind === "leave") closed.cancel?.()
+  else closed.done(false)
 }
 
 /** Whether leaving the current design system asks first. */
@@ -77,24 +86,27 @@ export function KeepDialog() {
     () => request,
     () => null,
   )
+  // Still shown while the dialog animates out.
+  const [shown, setShown] = useState(current)
+  if (current && current !== shown) setShown(current)
+
+  // A pick elsewhere (the docs, another tab) moved off the draft it asks about.
+  const currentId = useCurrent().doc?.id
+  useEffect(() => {
+    if (current && current.doc.id !== currentId) cancel()
+  }, [current, currentId])
 
   return (
     // No trigger, so no Dialog wrapper. Only Esc or a button closes it: the
     // second click of a double click on what opened it lands outside.
     <Modal
       isOpen={current !== null}
-      onOpenChange={(isOpen) => {
-        if (isOpen || !request) return
-        const closed = request
-        set(null)
-        if (closed.kind === "leave") closed.cancel?.()
-        else closed.done(false)
-      }}
+      onOpenChange={(isOpen) => !isOpen && cancel()}
       isDismissable={false}
       className="sm:max-w-sm"
     >
-      <DialogContent aria-label="Keep your changes">
-        {current && <KeepForm key={current.doc.id} request={current} />}
+      <DialogContent showCloseButton>
+        {shown && <KeepForm key={shown.doc.id} request={shown} />}
       </DialogContent>
     </Modal>
   )
