@@ -52,7 +52,8 @@ export function StudioPanel({ className }: { className?: string }) {
   const trash = useTrash()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const [renaming, setRenaming] = useState<string>()
+  // `closes`: Enter also closes the picker, which was opened for this rename.
+  const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
   const [trashOpen, setTrashOpen] = useState(false)
 
   const sections = useMemo(
@@ -76,7 +77,7 @@ export function StudioPanel({ className }: { className?: string }) {
     const { doc, key } = getCurrent()
     if (!doc) return
     setTrashOpen(false)
-    setRenaming(key)
+    setRenaming({ key, closes: gallery !== true })
     setGalleryOpen(true)
   }
 
@@ -103,7 +104,7 @@ export function StudioPanel({ className }: { className?: string }) {
     const run = () => {
       const id = create()
       if (!id) return
-      setRenaming(selectionKey({ kind: "system", id }))
+      setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
       setGalleryOpen(true)
     }
     if (!leaves) return run()
@@ -134,7 +135,7 @@ export function StudioPanel({ className }: { className?: string }) {
     return (
       <SystemMenu
         doc={doc}
-        onRename={() => setRenaming(key)}
+        onRename={() => setRenaming({ key, closes: false })}
         onDuplicate={onDuplicate}
         onDelete={() => afterClose(() => onDelete(doc.id))}
       />
@@ -156,14 +157,16 @@ export function StudioPanel({ className }: { className?: string }) {
         selectedId={current.key}
         onPick={(item) => onPick(item.id)}
         onCreate={() => created(newSystem)}
-        renamingId={renaming}
+        renamingId={renaming?.key}
         onRenameEnd={(key, name, submit) => {
           setRenaming(undefined)
           const doc = workspace.systems.find(
             (s) => selectionKey({ kind: "system", id: s.id }) === key,
           )
           if (doc && name !== null) rename(doc.id, name)
-          if (submit) setGalleryOpen(false)
+          const closes = submit && renaming?.closes === true
+          if (closes) setGalleryOpen(false)
+          return closes
         }}
         onRenameKey={renameCurrent}
         withPreview

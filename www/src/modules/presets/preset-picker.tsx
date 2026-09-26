@@ -98,8 +98,9 @@ interface PresetPickerProps {
   /** The row being renamed in place, if any. */
   renamingId?: string
   /** Ends the rename: the typed name, or null when cancelled; `submit` when
-   *  it ended with Enter. */
-  onRenameEnd?: (id: string, name: string | null, submit: boolean) => void
+   *  it ended with Enter. Returns true when it closes the picker; otherwise
+   *  focus returns to the row. */
+  onRenameEnd?: (id: string, name: string | null, submit: boolean) => boolean
 }
 
 /**
@@ -472,12 +473,17 @@ function PresetPickerContent({
                     rename={
                       item.id === renamingId && onRenameEnd
                         ? (name, submit) => {
-                            onRenameEnd(item.id, name, submit)
-                            // Back to the search, which drives the list.
-                            if (!submit && surface === "popover")
-                              requestAnimationFrame(() =>
-                                searchRef.current?.focus(),
+                            if (onRenameEnd(item.id, name, submit)) return
+                            // Unless a blur moved focus to another control.
+                            requestAnimationFrame(() => {
+                              const active = document.activeElement
+                              if (
+                                !active ||
+                                active === document.body ||
+                                active === searchRef.current
                               )
+                                focusRow(item.id)
+                            })
                           }
                         : undefined
                     }
