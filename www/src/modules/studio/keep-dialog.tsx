@@ -31,7 +31,12 @@ type Request =
       then: () => void
       cancel?: () => void
     }
-  | { kind: "publish"; doc: DesignSystemDoc; done: (kept: boolean) => void }
+  | {
+      kind: "publish"
+      doc: DesignSystemDoc
+      done: (kept: boolean) => void
+      asked: Promise<boolean>
+    }
 
 let request: Request | null = null
 const listeners = new Set<() => void>()
@@ -56,7 +61,12 @@ export function leave(then: () => void, cancel?: () => void): void {
 /** Names a draft before it is published; resolves whether it was kept. */
 export function nameDraft(doc: DesignSystemDoc): Promise<boolean> {
   if (!doc.draft) return Promise.resolve(true)
-  return new Promise((done) => set({ kind: "publish", doc, done }))
+  if (request?.kind === "publish" && request.doc.id === doc.id)
+    return request.asked
+  let done: (kept: boolean) => void = () => {}
+  const asked = new Promise<boolean>((resolve) => (done = resolve))
+  set({ kind: "publish", doc, done, asked })
+  return asked
 }
 
 export function KeepDialog() {
@@ -80,7 +90,9 @@ export function KeepDialog() {
         else closed.done(false)
       }}
     >
-      <Modal className="sm:max-w-sm">
+      {/* Only Esc or a button closes it: the second click of a double
+          click on what opened it lands outside. */}
+      <Modal isDismissable={false} className="sm:max-w-sm">
         <DialogContent aria-label="Keep your changes">
           {current && <KeepForm key={current.doc.id} request={current} />}
         </DialogContent>
