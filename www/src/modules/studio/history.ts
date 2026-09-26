@@ -51,6 +51,9 @@ interface Stack {
   future: Step[]
   editedAt: number
   press: number
+  /** The system's state as this tab last left it: another tab's edit since
+   *  makes the stack stale. */
+  head?: StudioState
 }
 
 const stacks = new Map<string, Stack>()
@@ -96,6 +99,7 @@ function record(key: string, step: Step) {
 function opened(id: string, from: Selection, draft: boolean) {
   select({ kind: "system", id })
   record(systemKey(id), { created: from, draft })
+  stack(systemKey(id)).head = workspace.findSystem(id)?.state
 }
 
 /* --------------------------------- drafts -------------------------------- */
@@ -164,6 +168,7 @@ export function edit(next: StudioState): void {
   const merge =
     now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
   if (!merge) record(systemKey(id), { state })
+  entry.head = next
   entry.editedAt = now
   entry.press = press
   clearTimeout(idle)
@@ -178,6 +183,7 @@ export function reset(id: string): () => void {
   const step = { state: doc.state }
   record(systemKey(id), step)
   workspace.reset(id)
+  stack(systemKey(id)).head = doc.initial
   return () => stacks.get(systemKey(id))?.past.at(-1) === step && undo()
 }
 
@@ -188,6 +194,7 @@ export function restore(id: string, state: StudioState): void {
   checkpoint(id)
   if (sameState(doc.state, state) || !workspace.setState(id, state)) return
   record(systemKey(id), { state: doc.state })
+  stack(systemKey(id)).head = state
 }
 
 /** Creates "Untitled" from Origin and opens it; returns its id. */
@@ -314,6 +321,17 @@ function travel(from: "past" | "future", to: "past" | "future") {
   entry.press = 0
   const doc = sel.kind === "system" ? workspace.findSystem(sel.id) : undefined
 
+  // Last write wins across tabs: undo never rolls back another tab's edit.
+  if (doc && entry.head && !sameState(doc.state, entry.head)) {
+    stacks.delete(key)
+    emit()
+    toastManager.add({
+      title: `${quoted(doc.name)} was changed in another tab`,
+      description: "Undo history here starts again from its latest version.",
+    })
+    return
+  }
+
   if ("recover" in step) {
     if (recover(step.recover, true))
       push(stack(systemKey(step.recover))[to], { created: sel, draft: false })
@@ -322,19 +340,20 @@ function travel(from: "past" | "future", to: "past" | "future") {
     workspace.insert(recreate, undefined, checkpoints)
     if (recreate.draft) keepOtherDrafts(recreate.id)
     select({ kind: "system", id: recreate.id })
-    push(stack(systemKey(recreate.id))[to], {
-      created: sel,
-      draft: recreate.draft,
-    })
+    const created = stack(systemKey(recreate.id))
+    push(created[to], { created: sel, draft: recreate.draft })
+    created.head = recreate.state
   } else if (!doc) {
     return
   } else if ("state" in step) {
     workspace.setState(doc.id, step.state)
     push(entry[to], { state: doc.state })
+    entry.head = step.state
   } else if (step.draft && !(doc.draft && doc.published.length === 0)) {
     // A fork kept or published since: only its changes go.
     workspace.setState(doc.id, doc.initial)
     push(entry[to], { state: doc.state })
+    entry.head = doc.initial
   } else {
     // The create itself: the system goes (a fork silently, anything else
     // to Recently deleted), and the selection it came from can bring it
