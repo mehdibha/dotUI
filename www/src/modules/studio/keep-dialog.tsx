@@ -115,16 +115,22 @@ function KeepForm({ request: current }: { request: Request }) {
   const { doc } = current
   const [name, setName] = useState(() => workspace.keptName(doc))
 
-  function keep() {
+  // Once answered, a double click's second press finds nothing to do.
+  const answer = () => {
+    if (request !== current) return false
     set(null)
+    return true
+  }
+
+  function keep() {
+    if (!answer()) return
     workspace.keep(doc.id, workspace.cleanName(name) || workspace.keptName(doc))
     if (current.kind === "leave") current.then()
     else current.done(true)
   }
 
   function discard() {
-    if (current.kind !== "leave") return
-    set(null)
+    if (current.kind !== "leave" || !answer()) return
     remove(doc.id, { verb: "Discarded" })
     current.then()
   }
