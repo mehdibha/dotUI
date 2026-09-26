@@ -11,7 +11,7 @@ const cardMeta = {
       target: "ui/card.tsx",
     },
   ],
-  registryDependencies: ["button", "text", "focus-styles"],
+  registryDependencies: ["focus-styles"],
   params: {
     style: {
       kind: "enum",
