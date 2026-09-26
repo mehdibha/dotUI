@@ -4,6 +4,7 @@
    can be copied; the user's systems renamed and deleted too) and the
    picker's own, which leads to Recently deleted. */
 
+import { Kbd } from "@/registry/ui/kbd"
 import {
   MenuContent,
   MenuItem,
@@ -71,14 +72,16 @@ export function ViewMenu({
 }
 
 /** One of the user's systems: Copy link copies its latest published link,
- *  and never publishes. */
+ *  and never publishes. F2 renames the current one. */
 export function SystemMenu({
   doc,
+  isCurrent,
   onRename,
   onDuplicate,
   onDelete,
 }: {
   doc: DesignSystemDoc
+  isCurrent: boolean
   onRename: () => void
   onDuplicate: () => void
   onDelete: () => void
@@ -97,7 +100,10 @@ export function SystemMenu({
       }}
     >
       <MenuSection>
-        <MenuItem id="rename">Rename</MenuItem>
+        <MenuItem id="rename" textValue="Rename">
+          <MenuItemLabel>Rename</MenuItemLabel>
+          {isCurrent && <Kbd>F2</Kbd>}
+        </MenuItem>
         <MenuItem id="duplicate">Duplicate</MenuItem>
         <MenuItem
           id="link"
