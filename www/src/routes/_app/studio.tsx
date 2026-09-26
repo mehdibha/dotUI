@@ -3,6 +3,7 @@ import type { ComponentProps } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
+import { traversedHistory } from "@/lib/history-traversal"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
@@ -13,6 +14,7 @@ import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
+import type { Selection } from "@/modules/studio/selection"
 import { quoted } from "@/modules/studio/toasts"
 import { fetchSnapshot, flush } from "@/modules/studio/workspace"
 
@@ -71,9 +73,11 @@ const linkKey = (s?: string, preset?: string) =>
       : ""
 
 /** Keeps the URL on the current selection: `?preset=` and `?s=` for views,
- *  bare `/studio` for the user's systems. A link that isn't the current
- *  selection opens it (asking first when leaving a changed draft); a broken
- *  one is dropped with a toast. Returns whether a shared link is loading. */
+ *  bare `/studio` for the user's systems. A link opened that isn't the
+ *  current selection opens it (asking first when leaving a changed draft,
+ *  the link staying in the address bar until answered); one reached with
+ *  Back/Forward, or broken (with a toast), gives way to the selection.
+ *  Returns whether a shared link is loading. */
 function useSelectionUrl(): boolean {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
@@ -82,7 +86,8 @@ function useSelectionUrl(): boolean {
   const wanted = doc ? "" : key
   // The link the URL last held that has been dealt with.
   const seen = useRef<string>(undefined)
-  // The shared link being fetched, and the last one whose fetch ended.
+  // The link being fetched or waiting on the keep dialog, and the last
+  // shared link whose fetch ended.
   const loading = useRef<string>(undefined)
   const [fetched, setFetched] = useState<string>()
 
@@ -105,18 +110,35 @@ function useSelectionUrl(): boolean {
     }
     if (!url) return void sync()
     if (url === seen.current) {
-      // Not while it loads: the effect reruns (Strict Mode, a storage event).
+      // Not while it's pending: the effect reruns (a storage event).
       if (url !== loading.current) sync()
       return
     }
     seen.current = url
+    if (traversedHistory()) return void sync()
+    const open = (sel: Selection) => {
+      loading.current = url
+      const done = () => {
+        if (loading.current === url) loading.current = undefined
+      }
+      leave(
+        () => {
+          done()
+          select(sel)
+        },
+        () => {
+          done()
+          sync()
+        },
+      )
+    }
     const broken = (title: string, description?: string) => {
       toastManager.add({ title, description, type: "error" })
       sync()
     }
     if (s === undefined) {
       if (preset !== undefined && getPreset(preset))
-        leave(() => select({ kind: "preset", id: preset }), sync)
+        open({ kind: "preset", id: preset })
       else broken(`No preset called ${quoted(preset ?? "")}`)
       return
     }
@@ -150,16 +172,12 @@ function useSelectionUrl(): boolean {
         .then(
           (snapshot) =>
             snapshot
-              ? leave(
-                  () =>
-                    select({
-                      kind: "shared",
-                      id: s,
-                      name: snapshot.name,
-                      state: snapshot.state,
-                    }),
-                  sync,
-                )
+              ? open({
+                  kind: "shared",
+                  id: s,
+                  name: snapshot.name,
+                  state: snapshot.state,
+                })
               : dead(),
           (error: unknown) => {
             console.error(error)
