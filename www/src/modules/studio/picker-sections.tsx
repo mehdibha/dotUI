@@ -10,8 +10,8 @@ import { resolveDesignSystem } from "./resolve"
 import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
 import { ago } from "./time"
-import { listed, swatchOf } from "./workspace"
-import type { DesignSystemDoc, Workspace } from "./workspace"
+import { listed, swatchOf, usePublishStatus } from "./workspace"
+import type { DesignSystemDoc, PublishStatus, Workspace } from "./workspace"
 
 /** Where a system came from: "Based on Linear", "From a shared link"… */
 export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
@@ -21,6 +21,32 @@ export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
   if (origin.kind === "snapshot") return "From a shared link"
   const source = workspace.systems.find((s) => s.id === origin.of)
   return `Copy of ${source?.name ?? "a deleted system"}`
+}
+
+const STATUS: Record<PublishStatus, string> = {
+  never: "Unpublished",
+  changed: "Unpublished changes",
+  pending: "Publishing…",
+  current: "Published",
+}
+
+/** "Based on Linear · 2h ago · Unpublished": where a system came from,
+ *  when it last changed and, once kept, where it stands on publishing. */
+function SystemSubtitle({
+  doc,
+  workspace,
+}: {
+  doc: DesignSystemDoc
+  workspace: Workspace
+}) {
+  const status = usePublishStatus(doc)
+  return [
+    basedOn(doc, workspace),
+    ago(doc.updatedAt, Date.now(), "narrow"),
+    !doc.draft && status && STATUS[status],
+  ]
+    .filter(Boolean)
+    .join(" · ")
 }
 
 /** What the studio and docs pickers list: the shared link on screen, the
@@ -57,8 +83,7 @@ export function pickerSections(
         swatch: swatchOf(system),
         badge: system.draft ? "Draft" : undefined,
         kind: system.draft ? "draft" : undefined,
-        subtitle: () =>
-          `${basedOn(system, workspace)} · ${ago(system.updatedAt, Date.now(), "narrow")}${system.published.length ? " · Published" : ""}`,
+        subtitle: () => <SystemSubtitle doc={system} workspace={workspace} />,
         resolve: () => resolveDesignSystem(system.state),
       })),
     })

@@ -57,7 +57,7 @@ interface PresetPickerItem {
   /** A short status after the name, e.g. "Draft". */
   badge?: string
   /** The muted second line, read as the row renders so times stay fresh. */
-  subtitle?: () => string
+  subtitle?: () => ReactNode
   /** Tells same-named rows apart in the ⋯ label, e.g. "preset". */
   kind?: string
   /** Themes the flyout — called only for the previewed item. */
