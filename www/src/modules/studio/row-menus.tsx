@@ -20,6 +20,9 @@ import type { ViewSelection } from "./selection"
 import { usePublishStatus } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
+/** Touch-sized rows on phones. */
+const item = "pointer-coarse:min-h-11"
+
 function copy(text: string, what: string) {
   navigator.clipboard.writeText(text).then(
     () => toastManager.add({ title: `${what} copied` }),
@@ -51,10 +54,16 @@ export function ViewMenu({
           copy(initCommand(`p/${sel.id}`), "Install command")
       }}
     >
-      <MenuItem id="duplicate">Duplicate</MenuItem>
-      <MenuItem id="link">Copy link</MenuItem>
+      <MenuItem id="duplicate" className={item}>
+        Duplicate
+      </MenuItem>
+      <MenuItem id="link" className={item}>
+        Copy link
+      </MenuItem>
       {sel.kind === "preset" && (
-        <MenuItem id="install">Copy install command</MenuItem>
+        <MenuItem id="install" className={item}>
+          Copy install command
+        </MenuItem>
       )}
     </MenuContent>
   )
@@ -87,14 +96,17 @@ export function SystemMenu({
         if (key === "delete") onDelete()
       }}
     >
-      <MenuItem id="rename" textValue="Rename">
+      <MenuItem id="rename" textValue="Rename" className={item}>
         <MenuItemLabel>Rename</MenuItemLabel>
-        {isCurrent && <Kbd>F2</Kbd>}
+        {isCurrent && <Kbd className="pointer-coarse:hidden">F2</Kbd>}
       </MenuItem>
-      <MenuItem id="duplicate">Duplicate</MenuItem>
+      <MenuItem id="duplicate" className={item}>
+        Duplicate
+      </MenuItem>
       <MenuItem
         id="link"
         isDisabled={!last}
+        className={item}
         textValue={unpublished ? "Copy last published link" : "Copy link"}
       >
         <MenuItemLabel>
@@ -103,7 +115,7 @@ export function SystemMenu({
         {!last && <MenuItemDescription>Not published yet</MenuItemDescription>}
       </MenuItem>
       <Separator />
-      <MenuItem id="delete" variant="danger">
+      <MenuItem id="delete" variant="danger" className={item}>
         Delete
       </MenuItem>
     </MenuContent>

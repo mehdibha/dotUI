@@ -166,7 +166,9 @@ function ShareBody() {
       <h2 className="truncate text-sm font-medium" dir="auto">
         Share {name}
       </h2>
-      {isMobile && doc && <PublishButton doc={doc} className="w-full" />}
+      {isMobile && doc && (
+        <PublishButton doc={doc} className="w-full pointer-coarse:h-11" />
+      )}
       {link && install ? (
         <>
           <CopyField label="Studio link" value={link} outside={state} />
@@ -210,7 +212,7 @@ function ShareBody() {
           size="sm"
           isDisabled={pending}
           onPress={publishAndCopy}
-          className="w-full"
+          className="w-full pointer-coarse:h-11"
         >
           {pending ? "Publishing…" : publishLabel}
         </Button>
@@ -221,7 +223,7 @@ function ShareBody() {
           onPress={() =>
             navigator.share({ title: name, url: link }).catch(() => {})
           }
-          className="w-full"
+          className="w-full pointer-coarse:h-11"
         >
           Share…
         </Button>
