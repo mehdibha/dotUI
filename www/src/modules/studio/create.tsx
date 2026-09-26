@@ -125,7 +125,7 @@ export function StudioPanel({ className }: { className?: string }) {
     )
   }
 
-  function renderItemMenu(key: string) {
+  function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
     const sel: Selection = rowSelection(key, current)
     const onDuplicate = () =>
       // Duplicating the draft on screen doesn't leave it.
@@ -139,7 +139,7 @@ export function StudioPanel({ className }: { className?: string }) {
         doc={doc}
         onRename={() => setRenaming(key)}
         onDuplicate={onDuplicate}
-        onDelete={() => onDelete(doc.id)}
+        onDelete={() => afterClose(() => onDelete(doc.id))}
       />
     )
   }
@@ -170,7 +170,9 @@ export function StudioPanel({ className }: { className?: string }) {
         }}
         onRenameKey={renameCurrent}
         withPreview
-        renderItemMenu={(item) => renderItemMenu(item.id)}
+        renderItemMenu={(item, afterClose) =>
+          renderItemMenu(item.id, afterClose)
+        }
         moreMenu={
           <MenuContent
             aria-label="More"

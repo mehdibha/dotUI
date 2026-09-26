@@ -72,8 +72,13 @@ interface PresetPickerProps {
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
   /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
-   *  search never filters it. */
-  renderItemMenu?: (item: PresetPickerItem) => ReactNode
+   *  search never filters it. `afterClose` runs an action once the menu has
+   *  closed and focus is back on the search, for actions that remove the
+   *  row. */
+  renderItemMenu?: (
+    item: PresetPickerItem,
+    afterClose: (run: () => void) => void,
+  ) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
   /** The picker's own ⋯ menu, beside New. */
@@ -196,13 +201,22 @@ function PresetPickerContent({
     menuTriggerRef.current = trigger as HTMLElement
     setMenu({ id })
   }
+  const pendingRef = useRef<(() => void) | null>(null)
+  const afterClose = (run: () => void) => {
+    pendingRef.current = run
+  }
   const closeMenu = () => {
     setMenu(null)
-    // After a delete the trigger is gone: the search keeps focus in the
-    // picker. Two frames, after the popover's own focus restore.
+    // Two frames: after the popover's own focus restore. Focus must never be
+    // lost to the body, or the picker closes.
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        if (!menuTriggerRef.current?.isConnected) searchRef.current?.focus()
+        const run = pendingRef.current
+        pendingRef.current = null
+        const active = document.activeElement
+        if (run || !active || active === document.body)
+          searchRef.current?.focus()
+        run?.()
       }),
     )
   }
@@ -276,7 +290,9 @@ function PresetPickerContent({
     : undefined
   const menuContent =
     menu &&
-    (menu.id === null ? moreMenu : menuItem && renderItemMenu?.(menuItem))
+    (menu.id === null
+      ? moreMenu
+      : menuItem && renderItemMenu?.(menuItem, afterClose))
 
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
