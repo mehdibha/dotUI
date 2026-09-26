@@ -169,11 +169,12 @@ export function StudioPanel({ className }: { className?: string }) {
         onPick={(item) => onPick(item.id)}
         onCreate={() => {
           // The second click of a double click is the same New: back to
-          // renaming the row the first one made.
+          // renaming the row the first one made. Timed by input, as the
+          // first New can hold the second press back past the window.
+          const now = window.event?.timeStamp ?? performance.now()
           const { at, key } = lastNew.current
-          if (performance.now() - at < 500)
-            return key && setRenaming({ key, closes: true })
-          lastNew.current = { at: performance.now(), key: "" }
+          if (now - at < 500) return key && setRenaming({ key, closes: true })
+          lastNew.current = { at: now, key: "" }
           created(() => {
             const id = newSystem()
             if (id) lastNew.current.key = selectionKey({ kind: "system", id })
