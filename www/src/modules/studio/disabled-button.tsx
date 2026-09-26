@@ -2,7 +2,9 @@
 
 import { useRef } from "react"
 import type { ReactNode } from "react"
+import { mergeProps } from "react-aria/mergeProps"
 import { useFocusable } from "react-aria/useFocusable"
+import { useFocusRing } from "react-aria/useFocusRing"
 
 import { useButtonStyles } from "@/registry/ui/button"
 
@@ -24,6 +26,7 @@ export function DisabledButton({
 }) {
   const ref = useRef<HTMLSpanElement>(null)
   const { focusableProps } = useFocusable({}, ref)
+  const { focusProps, isFocusVisible } = useFocusRing()
   const styles = useButtonStyles()
   return (
     <span
@@ -35,7 +38,8 @@ export function DisabledButton({
       data-rac=""
       data-disabled=""
       data-icon-only={isIconOnly ? "" : undefined}
-      {...focusableProps}
+      data-focus-visible={isFocusVisible || undefined}
+      {...mergeProps(focusableProps, focusProps)}
       className={styles({ variant, size, isIconOnly, className })}
     >
       {children}
