@@ -24,6 +24,7 @@ import { useCurrent, viewLink } from "@/modules/studio/selection"
 import { clock } from "@/modules/studio/time"
 import { usePublishStatus } from "@/modules/studio/workspace"
 
+import { KeepFocus } from "./keep-focus"
 import { PublishButton } from "./publish-button"
 
 const COPIED_MS = 2000
@@ -154,6 +155,7 @@ function ShareBody() {
 
   return (
     <>
+      <KeepFocus />
       <h2 className="truncate text-sm font-medium" dir="auto">
         Share {name}
       </h2>

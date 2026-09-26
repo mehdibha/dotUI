@@ -53,6 +53,7 @@ import { clock } from "@/modules/studio/time"
 import { usePublishStatus } from "@/modules/studio/workspace"
 
 import { CodeOptions } from "./code-options"
+import { KeepFocus } from "./keep-focus"
 import { OPEN_IN_TARGETS } from "./targets"
 import { useExportUrl } from "./use-export-url"
 
@@ -89,6 +90,7 @@ export function ExportDialog({ children }: { children: ReactNode }) {
       {children}
       <Modal className="sm:max-w-md">
         <DialogContent showCloseButton aria-label="Export design system">
+          <KeepFocus />
           <ExportDialogBody />
         </DialogContent>
       </Modal>
