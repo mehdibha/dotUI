@@ -25,14 +25,14 @@ export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
 
 const STATUS: Record<PublishStatus, string> = {
   never: "Unpublished",
-  changed: "Unpublished changes",
+  changed: "Unpublished",
   pending: "Publishing…",
   current: "Published",
 }
 
-/** "Based on Linear · 2h ago · Unpublished": where a system came from,
- *  when it last changed and, once kept, where it stands on publishing —
- *  the part a narrow row cuts last. */
+/** "Based on Linear · Unpublished" once kept, "Based on Linear · 2h ago"
+ *  for the draft: two parts fit a row, so the time gives way to the
+ *  status, and the origin is what a narrow row cuts. */
 function SystemSubtitle({
   doc,
   workspace,
@@ -41,14 +41,17 @@ function SystemSubtitle({
   workspace: Workspace
 }) {
   const status = usePublishStatus(doc)
-  const origin = `${basedOn(doc, workspace)} · ${ago(doc.updatedAt, Date.now(), "narrow")}`
+  const origin = basedOn(doc, workspace)
+  const time = ago(doc.updatedAt, Date.now(), "narrow")
   const label = !doc.draft && status ? STATUS[status] : undefined
   return (
     <span
-      title={label ? `${origin} · ${label}` : origin}
+      title={[origin, time, label].filter(Boolean).join(" · ")}
       className="flex min-w-0"
     >
-      <span className="truncate">{origin}</span>
+      <span className="truncate">
+        {doc.draft ? `${origin} · ${time}` : origin}
+      </span>
       {label && <span className="shrink-0 whitespace-pre"> · {label}</span>}
     </span>
   )
