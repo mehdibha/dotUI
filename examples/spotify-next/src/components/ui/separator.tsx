@@ -6,7 +6,7 @@ import { useSlottedContext } from "react-aria-components/slots";
 import { tv } from "tailwind-variants";
 
 const separatorVariants = tv({
-  base: "separator shrink-0 border-0 bg-border",
+  base: "shrink-0 border-0 bg-border",
   variants: {
     orientation: {
       horizontal: "h-px w-full",
