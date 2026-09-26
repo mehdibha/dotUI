@@ -233,9 +233,9 @@ export function duplicate(sel: Selection): string | undefined {
 
 /** Moves the system to Recently deleted with a toast (`Deleted "Acme"`, or
  *  `verb`) whose Undo, which `afterUndo` follows, brings it back. Deleting
- *  the current one opens the next in the list, else the Origin view, whose
- *  undo history starts over: ⌘Z right after never touches it. Returns the
- *  toast's undo. */
+ *  the current one opens the next in the list, else the Origin view. The
+ *  current selection's undo history then starts over: ⌘Z right after never
+ *  touches another system. Returns the toast's undo. */
 export function remove(
   id: string,
   {
@@ -266,9 +266,9 @@ export function remove(
       ? { kind: "system", id: next.id }
       : { kind: "preset", id: ORIGIN.id }
     select(sel)
-    stacks.delete(selectionKey(sel))
-    emit()
   }
+  stacks.delete(selectionKey(getSelection()))
+  emit()
   return () => recover(id, wasCurrent)
 }
 

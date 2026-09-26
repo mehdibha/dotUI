@@ -223,6 +223,18 @@ describe("views and drafts", () => {
     expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
   })
 
+  it("leaves the current system alone on undo right after deleting another", async () => {
+    const { history, ws, selection, edit, system } = await load()
+    const first = system()
+    const second = system()
+    selection.select({ kind: "system", id: first })
+    edit(9)
+    history.remove(second)
+    history.undo()
+    expect(ws.findSystem(first)!.state.radiusPx).toBe(9)
+    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
+  })
+
   it("deletes the current system to the next one, else the Origin view", async () => {
     const { history, ws, current, system } = await load()
     const first = system()
