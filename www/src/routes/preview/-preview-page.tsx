@@ -9,6 +9,7 @@ import {
 } from "@/modules/studio/__generated__/examples"
 import {
   useAnnouncePreviewReady,
+  useForwardHistoryKeys,
   useIframeMessageListener,
   usePreviewNavigationMessages,
 } from "@/modules/studio/preset/iframe-sync"
@@ -91,6 +92,7 @@ export function PreviewPage() {
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
+  useForwardHistoryKeys()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's

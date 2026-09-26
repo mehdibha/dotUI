@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { historyKey } from "../history-keys"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
@@ -20,6 +21,7 @@ type IframeToParentMessage =
   | { type: "preview-ready" }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
+  | { type: "preview-history"; action: "undo" | "redo" }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -221,6 +223,24 @@ export function useAnnouncePreviewReady() {
     window.addEventListener("message", handleMessage)
     announce()
     return () => window.removeEventListener("message", handleMessage)
+  }, [])
+}
+
+/** Inside the preview iframe: hand ⌘Z / ⇧⌘Z to the studio's history. */
+export function useForwardHistoryKeys() {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      const action = historyKey(e)
+      if (!action) return
+      e.preventDefault()
+      window.parent.postMessage(
+        { type: "preview-history", action } satisfies IframeToParentMessage,
+        window.location.origin,
+      )
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 }
 

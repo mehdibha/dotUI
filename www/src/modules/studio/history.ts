@@ -16,6 +16,7 @@ import { ORIGIN } from "@/modules/presets"
 
 import { sameState, validate } from "./axes"
 import type { StudioState } from "./axes"
+import { historyKey } from "./history-keys"
 import {
   describe,
   getCurrent,
@@ -375,20 +376,14 @@ export function checkpoint(id: string): void {
 
 /* --------------------------------- wiring -------------------------------- */
 
-const TEXT_ENTRY =
-  "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
-
-/** Whether a key event's target keeps the key for itself (a text field). */
-export const inTextEntry = (target: EventTarget | null) =>
-  target instanceof Element && !!target.closest(TEXT_ENTRY)
-
 const checkpointCurrent = () => {
   const { doc } = getCurrent()
   if (doc) checkpoint(doc.id)
 }
 
 /** The studio's history wiring: ⌘Z / ⇧⌘Z outside text fields (which keep
- *  their own undo), press tracking, and checkpoints on leaving a system. */
+ *  their own undo), here or in the preview, press tracking, and checkpoints
+ *  on leaving a system. */
 export function useHistory(systemId: string | undefined) {
   useEffect(
     () => () => {
@@ -399,13 +394,17 @@ export function useHistory(systemId: string | undefined) {
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (!(e.metaKey || e.ctrlKey) || e.altKey) return
-      if (inTextEntry(e.target)) return
-      const key = e.key.toLowerCase()
-      if (key === "z" && !e.shiftKey) undo()
-      else if ((key === "z" && e.shiftKey) || (key === "y" && e.ctrlKey)) redo()
-      else return
+      const action = historyKey(e)
+      if (!action) return
       e.preventDefault()
+      if (action === "undo") undo()
+      else redo()
+    }
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== window.location.origin) return
+      if (e.data?.type !== "preview-history") return
+      if (e.data.action === "undo") undo()
+      else if (e.data.action === "redo") redo()
     }
     const onPointerDown = () => setPressed(true)
     const onPointerUp = () => setPressed(false)
@@ -413,6 +412,7 @@ export function useHistory(systemId: string | undefined) {
       document.visibilityState === "hidden" && checkpointCurrent()
     // Capture: a press ends before the control's own pointerup handler runs.
     window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("message", onMessage)
     window.addEventListener("pointerdown", onPointerDown, true)
     window.addEventListener("pointerup", onPointerUp, true)
     window.addEventListener("pointercancel", onPointerUp, true)
@@ -420,6 +420,7 @@ export function useHistory(systemId: string | undefined) {
     window.addEventListener("pagehide", checkpointCurrent)
     return () => {
       window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("message", onMessage)
       window.removeEventListener("pointerdown", onPointerDown, true)
       window.removeEventListener("pointerup", onPointerUp, true)
       window.removeEventListener("pointercancel", onPointerUp, true)
