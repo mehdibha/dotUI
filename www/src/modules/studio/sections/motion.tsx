@@ -17,7 +17,7 @@ import {
   SPEED_RANGE,
   STATE_OPTIONS,
 } from "../axes/motion"
-import { DialSelect, DialSlider } from "../dial"
+import { DialPopover, DialSelect, DialSlider, DialTrigger } from "../dial"
 import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
@@ -177,7 +177,7 @@ const STATES = withGlyphs(STATE_OPTIONS, {
   smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
 })
 
-export function MotionPreview({ state }: { state: StudioState }) {
+function MotionPreview({ state }: { state: StudioState }) {
   return (
     <span className="size-4 shrink-0 *:size-full">
       {CHARACTER_GLYPHS[state.motionCharacter]}
@@ -185,7 +185,7 @@ export function MotionPreview({ state }: { state: StudioState }) {
   )
 }
 
-export function motionSummary(state: StudioState): string {
+function motionSummary(state: StudioState): string {
   return (
     CHARACTER_OPTIONS.find((o) => o.value === state.motionCharacter)?.label ??
     state.motionCharacter
@@ -195,35 +195,47 @@ export function motionSummary(state: StudioState): string {
 export function MotionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <>
-      <DialSelect
-        label="Character"
-        value={state.motionCharacter}
-        onChange={set("motionCharacter")}
-        options={CHARACTERS}
-        rowPreview={false}
-      />
-      <DialSlider
-        label="Speed"
-        value={state.motionSpeed}
-        onChange={set("motionSpeed")}
-        minValue={SPEED_RANGE.min}
-        maxValue={SPEED_RANGE.max}
-        step={SPEED_RANGE.step}
-        format={(v) => `${v.toFixed(2)}×`}
-      />
-      <DialSelect
-        label="Overlays"
-        value={state.motionOverlay}
-        onChange={set("motionOverlay")}
-        options={OVERLAYS}
-      />
-      <DialSelect
-        label="State changes"
-        value={state.motionState}
-        onChange={set("motionState")}
-        options={STATES}
-      />
-    </>
+    <DialTrigger
+      label="Motion"
+      value={
+        <>
+          <span className="truncate">
+            {motionSummary(state)} · {state.motionSpeed}×
+          </span>
+          <MotionPreview state={state} />
+        </>
+      }
+    >
+      <DialPopover className="w-72">
+        <DialSelect
+          label="Character"
+          value={state.motionCharacter}
+          onChange={set("motionCharacter")}
+          options={CHARACTERS}
+          rowPreview={false}
+        />
+        <DialSlider
+          label="Speed"
+          value={state.motionSpeed}
+          onChange={set("motionSpeed")}
+          minValue={SPEED_RANGE.min}
+          maxValue={SPEED_RANGE.max}
+          step={SPEED_RANGE.step}
+          format={(v) => `${v.toFixed(2)}×`}
+        />
+        <DialSelect
+          label="Overlays"
+          value={state.motionOverlay}
+          onChange={set("motionOverlay")}
+          options={OVERLAYS}
+        />
+        <DialSelect
+          label="State changes"
+          value={state.motionState}
+          onChange={set("motionState")}
+          options={STATES}
+        />
+      </DialPopover>
+    </DialTrigger>
   )
 }

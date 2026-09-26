@@ -3,8 +3,8 @@
 /* Color — its rows are the specimen. The seeds and axes land on
    `ColorConfig` through the axis module; here they resolve through the same
    engine the preview runs, in the panel's own display mode, so every swatch
-   and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
-   Semantics — then Primary; Vividness sits under Brand, its seed. */
+   and derived "Auto" value is what ships. Brand and Neutral lead, then Primary,
+   Status and Surfaces; Vividness sits under Brand, its seed. */
 
 import { useMemo } from "react"
 import { useTheme } from "starter-themes"
@@ -18,7 +18,6 @@ import { buildColorConfig, COLOR_DEFAULTS } from "../axes/color"
 import type { ColorMode } from "../axes/color"
 import {
   DialColor,
-  DialGap,
   DialPopover,
   DialSlider,
   DialToggle,
@@ -28,6 +27,7 @@ import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
 import { PrimaryRow } from "./primary"
+import { SurfacesSection } from "./surfaces"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -128,24 +128,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   )
 }
 
-/** Beside the title: the brand over the neutral it sits on. */
-export function ColorPreview({ state }: { state: StudioState }) {
-  const { m } = usePanelMode(state)
-  const dots = [m.scales.neutral?.["900"], m.scales.accent?.["700"]]
-  return (
-    <span className="flex items-center -space-x-1">
-      {dots.map((color, i) => (
-        <span
-          key={i}
-          className="size-3 rounded-full ring-2 ring-(--panel-surface)"
-          style={{ backgroundColor: color ?? m.background }}
-        />
-      ))}
-    </span>
-  )
-}
-
-/** Semantics and primary. */
+/** Primary, status, then the surfaces the colors paint. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const { m } = usePanelMode(state)
@@ -162,8 +145,9 @@ export function ColorSection({ studio }: { studio: Studio }) {
   const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
   return (
     <>
+      <PrimaryRow studio={studio} m={m} />
       <DialTrigger
-        label="Semantics"
+        label="Status"
         value={
           <>
             <span className="flex items-center gap-1">
@@ -188,8 +172,7 @@ export function ColorSection({ studio }: { studio: Studio }) {
           ))}
         </DialPopover>
       </DialTrigger>
-      <DialGap />
-      <PrimaryRow studio={studio} m={m} />
+      <SurfacesSection studio={studio} />
     </>
   )
 }

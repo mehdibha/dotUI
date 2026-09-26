@@ -20,7 +20,7 @@ import {
   DIAL_VALUE,
 } from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /** A font role as a dial row: label, the family in its own typeface, the
  *  searchable list under it. With `derived`, '' reads Auto on that family
@@ -87,24 +87,16 @@ function FontRow({
   )
 }
 
-/** Beside the title: Aa in the heading face. */
-export function TypePreview({ state }: { state: StudioState }) {
-  const heading = state.headingFont || state.bodyFont
-  useLoadedFamilies([heading])
-  return (
-    <span
-      className="text-[15px]/none font-semibold"
-      style={{ fontFamily: fontStack(heading) }}
-    >
-      Aa
-    </span>
-  )
-}
-
 export function TypeSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
+      <FontRow
+        label="Body"
+        value={state.bodyFont}
+        categories={["sans-serif", "serif"]}
+        onChange={set("bodyFont")}
+      />
       <FontRow
         label="Heading"
         value={state.headingFont}
@@ -112,12 +104,6 @@ export function TypeSection({ studio }: { studio: Studio }) {
         categories={["sans-serif", "serif", "display", "handwriting"]}
         onChange={set("headingFont")}
         onReset={() => set("headingFont")("")}
-      />
-      <FontRow
-        label="Body"
-        value={state.bodyFont}
-        categories={["sans-serif", "serif"]}
-        onChange={set("bodyFont")}
       />
       <FontRow
         label="Mono"

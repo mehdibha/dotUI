@@ -178,10 +178,6 @@ function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
 const label = (options: { value: string; label: string }[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value
 
-export function StatesPreview({ state }: { state: StudioState }) {
-  return <ControlSpecimen style={state.focusStyle} />
-}
-
 export function statesSummary(state: StudioState): string {
   return `${label(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${label(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
 }

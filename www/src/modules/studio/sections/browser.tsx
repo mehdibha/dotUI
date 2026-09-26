@@ -1,20 +1,14 @@
 "use client"
 
-/* Browser — what the product overrides of the browser's own chrome: the
-   pointer over controls, whether UI text selects, the selection highlight.
-   Scrollbars stay native. Cursor is one row opening the four pointer decisions;
-   links keep the hand everywhere, so they are not one of them. */
+/* Cursor and text selection — what the product overrides of the browser's
+   own chrome. Cursor opens the four pointer decisions (links keep the hand
+   everywhere, so they are not one of them); Text selection opens whether UI
+   text selects and the highlight. Scrollbars stay native. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { CURSOR_DEFAULTS } from "../axes/cursor"
-import {
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialToggle,
-  DialTrigger,
-} from "../dial"
+import { DialPopover, DialSegmented, DialToggle, DialTrigger } from "../dial"
 import type { DialOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 import {
@@ -117,7 +111,7 @@ const HIGHLIGHT_OPTIONS = [
 
 /* --------------------------------- Section --------------------------------- */
 
-export function BrowserPreview({ state }: { state: StudioState }) {
+function CursorGlyph({ state }: { state: StudioState }) {
   return (
     <Glyph>
       {state.cursorControls === "pointer" ? <HandCursor /> : <ArrowCursor />}
@@ -125,25 +119,27 @@ export function BrowserPreview({ state }: { state: StudioState }) {
   )
 }
 
-export function browserSummary(state: StudioState): string {
-  return state.cursorControls === "pointer" ? "Hand" : "Arrow"
-}
-
 export function BrowserSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const changed = CURSOR_ROWS.filter(
     (row) => state[row.key] !== CURSOR_DEFAULTS[row.key],
   ).length
+  const highlight =
+    HIGHLIGHT_OPTIONS.find((o) => o.value === state.selectionHighlight) ??
+    HIGHLIGHT_OPTIONS[0]!
   return (
     <>
       <DialTrigger
         label="Cursor"
         value={
-          <span className="truncate">
-            {browserSummary(state)}
-            {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
-              ` · ${changed}`}
-          </span>
+          <>
+            <span className="truncate">
+              {state.cursorControls === "pointer" ? "Hand" : "Arrow"}
+              {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
+                ` · ${changed}`}
+            </span>
+            <CursorGlyph state={state} />
+          </>
         }
       >
         <DialPopover className="w-80">
@@ -158,17 +154,34 @@ export function BrowserSection({ studio }: { studio: Studio }) {
           ))}
         </DialPopover>
       </DialTrigger>
-      <DialToggle
-        label="Selectable"
-        value={state.selectionUiText === "selectable"}
-        onChange={(on) => set("selectionUiText")(on ? "selectable" : "none")}
-      />
-      <DialSelect
-        label="Highlight"
-        value={state.selectionHighlight}
-        onChange={set("selectionHighlight")}
-        options={HIGHLIGHT_OPTIONS}
-      />
+      <DialTrigger
+        label="Text selection"
+        value={
+          <>
+            <span className="truncate">
+              {highlight.label}
+              {state.selectionUiText === "selectable" && " · Selectable"}
+            </span>
+            {highlight.preview}
+          </>
+        }
+      >
+        <DialPopover>
+          <DialToggle
+            label="Selectable"
+            value={state.selectionUiText === "selectable"}
+            onChange={(on) =>
+              set("selectionUiText")(on ? "selectable" : "none")
+            }
+          />
+          <DialSegmented
+            label="Highlight"
+            value={state.selectionHighlight}
+            onChange={set("selectionHighlight")}
+            options={HIGHLIGHT_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

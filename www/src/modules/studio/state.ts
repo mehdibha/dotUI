@@ -24,17 +24,16 @@ import { SHAPE_DEFAULTS } from "./axes/shape"
 import { SPACE_DEFAULTS } from "./axes/space"
 import { SURFACE_DEFAULTS } from "./axes/surfaces"
 import { TYPE_DEFAULTS } from "./axes/type"
-import { BrowserPreview, BrowserSection } from "./sections/browser"
-import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
+import { BrowserSection } from "./sections/browser"
+import { ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENTS_DEFAULTS, ComponentsSection } from "./sections/components"
-import { IconsPreview, IconsSection } from "./sections/icons"
-import { MobilePreview, MobileSection } from "./sections/mobile"
-import { MotionPreview, MotionSection } from "./sections/motion"
-import { ShapePreview, ShapeSection } from "./sections/shape"
-import { SpacePreview, SpaceSection } from "./sections/space"
-import { StatesPreview, StatesSection } from "./sections/states"
-import { SurfacesPreview, SurfacesSection } from "./sections/surfaces"
-import { TypePreview, TypeSection } from "./sections/type"
+import { IconsSection } from "./sections/icons"
+import { MobileSection } from "./sections/mobile"
+import { MotionSection } from "./sections/motion"
+import { ShapeSection } from "./sections/shape"
+import { SpaceSection } from "./sections/space"
+import { StatesSection } from "./sections/states"
+import { TypeSection } from "./sections/type"
 
 export { DEFAULTS }
 export type { StudioState } from "./axes"
@@ -42,95 +41,76 @@ import type { Studio } from "./use-studio"
 
 export type { Studio }
 
+/** A run of rows the page separates from the next — no title on the page;
+ *  the label names it on the mobile strip, in search and to screen readers. */
 export interface Chapter {
   id: string
   label: string
   defaults: Partial<StudioState>
-  /** The rows on the page: the chapter's two or three decisions that matter. */
+  /** The rows that lead the group. */
   Primary?: React.ComponentType<{ studio: Studio }>
-  /** The rest of the chapter. */
+  /** The rest of the group. */
   Body: React.ComponentType<{ studio: Studio }>
-  /** A glyph-sized specimen of the chapter's state, beside its title. */
-  Preview?: React.ComponentType<{ state: StudioState }>
 }
 
-/* Identity first, then the page chrome and the treatments every control
-   wears, then every component behind one row each. Alert and Toast have no
-   axes yet and stay off the page until they are rebuilt from preset evidence. */
+/* Identity first, then the treatments every control wears, then every
+   component behind one row each. Alert and Toast have no axes yet and stay
+   off the page until they are rebuilt from preset evidence. */
 export const CHAPTERS: Chapter[] = [
   {
     id: "color",
     label: "Color",
-    defaults: COLOR_DEFAULTS,
+    defaults: { ...COLOR_DEFAULTS, ...SURFACE_DEFAULTS },
     Primary: ColorPrimary,
     Body: ColorSection,
-    Preview: ColorPreview,
   },
   {
-    id: "typography",
-    label: "Typography",
+    id: "fonts",
+    label: "Fonts",
     defaults: TYPE_DEFAULTS,
     Body: TypeSection,
-    Preview: TypePreview,
   },
   {
     id: "icons",
     label: "Icons",
     defaults: ICON_DEFAULTS,
     Body: IconsSection,
-    Preview: IconsPreview,
   },
   {
-    id: "shape",
-    label: "Shape",
+    id: "radius",
+    label: "Radius",
     defaults: SHAPE_DEFAULTS,
     Body: ShapeSection,
-    Preview: ShapePreview,
   },
   {
-    id: "space",
-    label: "Space",
+    id: "density",
+    label: "Density",
     defaults: SPACE_DEFAULTS,
     Body: SpaceSection,
-    Preview: SpacePreview,
-  },
-  {
-    id: "surfaces",
-    label: "Surfaces",
-    defaults: SURFACE_DEFAULTS,
-    Body: SurfacesSection,
-    Preview: SurfacesPreview,
-  },
-  {
-    id: "browser",
-    label: "Browser",
-    defaults: {
-      ...CURSOR_DEFAULTS,
-      ...SELECTION_DEFAULTS,
-    },
-    Body: BrowserSection,
-    Preview: BrowserPreview,
   },
   {
     id: "states",
     label: "States",
     defaults: { ...FOCUS_DEFAULTS, ...DISABLED_DEFAULTS, ...INVALID_DEFAULTS },
     Body: StatesSection,
-    Preview: StatesPreview,
+  },
+  {
+    id: "cursor",
+    label: "Cursor",
+    defaults: { ...CURSOR_DEFAULTS, ...SELECTION_DEFAULTS },
+    Body: BrowserSection,
   },
   {
     id: "motion",
     label: "Motion",
     defaults: MOTION_DEFAULTS,
     Body: MotionSection,
-    Preview: MotionPreview,
   },
   {
     id: "mobile",
     label: "Mobile",
     defaults: MOBILE_DEFAULTS,
     Body: MobileSection,
-    Preview: MobilePreview,
   },
   {
     id: "components",

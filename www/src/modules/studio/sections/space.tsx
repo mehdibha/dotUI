@@ -1,13 +1,13 @@
 "use client"
 
-/* Space — density, then the unit. Density opens three cards, each a small app
-   drawn at that tier's real measurements on the current unit, so the pick is
-   made by feel; the unit slider scales everything under it. */
+/* Density — one row opening three cards, each a small app drawn at that
+   tier's real measurements on the current unit, so the pick is made by feel;
+   the unit slider under them scales everything. */
 
 import { roleRadiusPx } from "../axes/shape"
 import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
 import type { DensityTier } from "../axes/space"
-import { DialPopover, DialSlider, DialTrigger } from "../dial"
+import { DialGap, DialPopover, DialSlider, DialTrigger } from "../dial"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
@@ -76,7 +76,7 @@ function AppGlyph({ tier, state }: { tier: DensityTier; state: StudioState }) {
 }
 
 /** The three tiers as bars, the current one lit. */
-export function SpacePreview({ state }: { state: StudioState }) {
+function SpacePreview({ state }: { state: StudioState }) {
   const tier = densityTier(state.density)
   return (
     <span className="flex h-4 items-end gap-0.5" aria-hidden>
@@ -92,7 +92,7 @@ export function SpacePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function spaceSummary(state: StudioState): string {
+function spaceSummary(state: StudioState): string {
   return densityTier(state.density).label
 }
 
@@ -100,30 +100,39 @@ export function SpaceSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const tier = densityTier(state.density)
   return (
-    <>
-      <DialTrigger label="Density" value={tier.label}>
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Density"
-            value={tier.id}
-            onChange={set("density")}
-            options={DENSITY_TIERS.map((t) => ({
-              id: t.id,
-              label: t.label,
-              children: <AppGlyph tier={t} state={state} />,
-            }))}
-          />
-        </DialPopover>
-      </DialTrigger>
-      <DialSlider
-        label="Unit"
-        value={state.spacingUnit}
-        onChange={set("spacingUnit")}
-        minValue={UNIT_RANGE.min}
-        maxValue={UNIT_RANGE.max}
-        step={UNIT_RANGE.step}
-        format={(v) => `${v}px`}
-      />
-    </>
+    <DialTrigger
+      label="Density"
+      value={
+        <>
+          <span className="truncate">
+            {spaceSummary(state)} · {state.spacingUnit}px
+          </span>
+          <SpacePreview state={state} />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <CardGrid
+          label="Density"
+          value={tier.id}
+          onChange={set("density")}
+          options={DENSITY_TIERS.map((t) => ({
+            id: t.id,
+            label: t.label,
+            children: <AppGlyph tier={t} state={state} />,
+          }))}
+        />
+        <DialGap />
+        <DialSlider
+          label="Unit"
+          value={state.spacingUnit}
+          onChange={set("spacingUnit")}
+          minValue={UNIT_RANGE.min}
+          maxValue={UNIT_RANGE.max}
+          step={UNIT_RANGE.step}
+          format={(v) => `${v}px`}
+        />
+      </DialPopover>
+    </DialTrigger>
   )
 }

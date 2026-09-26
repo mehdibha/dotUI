@@ -1,8 +1,8 @@
 "use client"
 
-/* Icons — the library, and the one axis that library exposes: stroke width on
-   line sets, weight on Phosphor. Every row carries its own glyphs, drawn by
-   the library it names, so the pick is made by look. */
+/* Icons — one row opening the library cards, then the one axis that library
+   exposes: stroke width on line sets, weight on Phosphor. Every card carries
+   its own glyphs, drawn by the library it names, so the pick is made by look. */
 
 import { HeartIcon, SearchIcon, SettingsIcon } from "@/registry/icons"
 import {
@@ -17,7 +17,8 @@ import {
   STROKE_DEFAULTS,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
-import { DialSelect, DialSlider } from "../dial"
+import { DialPopover, DialSelect, DialSlider, DialTrigger } from "../dial"
+import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
 /** A strip of registry icons drawn by `library`, at `weight` on Phosphor. */
@@ -46,8 +47,8 @@ function Glyphs({
   )
 }
 
-/** Beside the title: the strip as the library draws it. */
-export function IconsPreview({ state }: { state: StudioState }) {
+/** On the row: the strip as the library draws it. */
+function IconsPreview({ state }: { state: StudioState }) {
   return (
     <Glyphs
       library={state.iconLibrary as IconLibraryName}
@@ -63,51 +64,63 @@ export function IconsSection({ studio }: { studio: Studio }) {
   const weight = state.iconWeight as PhosphorWeight
   const strokeDefault = STROKE_DEFAULTS[library]
   return (
-    <>
-      <DialSelect
-        label="Library"
-        value={state.iconLibrary}
-        onChange={set("iconLibrary")}
-        rowPreview={false}
-        options={LIBRARY_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <Glyphs
-              library={option.value as IconLibraryName}
-              weight={option.value === "phosphor" ? weight : undefined}
-              stroke={option.value === library ? state.iconStroke : undefined}
-            />
-          ),
-        }))}
-      />
-      {/* Stroke only exists on line sets; Phosphor swaps it for weight. */}
-      {strokeDefault !== undefined && (
-        <DialSlider
-          label="Stroke"
-          value={state.iconStroke}
-          onChange={set("iconStroke")}
-          minValue={1}
-          maxValue={3}
-          step={0.25}
-          format={(v) => v.toFixed(2)}
-        />
-      )}
-      {library === "phosphor" && (
-        <DialSelect
-          label="Weight"
-          value={state.iconWeight}
-          onChange={set("iconWeight")}
-          options={WEIGHT_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
+    <DialTrigger
+      label="Icons"
+      value={
+        <>
+          <span className="truncate">
+            {LIBRARY_OPTIONS.find((o) => o.value === library)?.label}
+          </span>
+          <IconsPreview state={state} />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <CardGrid
+          label="Library"
+          value={state.iconLibrary}
+          onChange={set("iconLibrary")}
+          options={LIBRARY_OPTIONS.map((option) => ({
+            id: option.value,
+            label: option.label,
+            children: (
               <Glyphs
-                library="phosphor"
-                weight={option.value as PhosphorWeight}
+                library={option.value as IconLibraryName}
+                weight={option.value === "phosphor" ? weight : undefined}
+                stroke={option.value === library ? state.iconStroke : undefined}
               />
             ),
           }))}
         />
-      )}
-    </>
+        {/* Stroke only exists on line sets; Phosphor swaps it for weight. */}
+        {strokeDefault !== undefined && (
+          <DialSlider
+            label="Stroke"
+            value={state.iconStroke}
+            onChange={set("iconStroke")}
+            minValue={1}
+            maxValue={3}
+            step={0.25}
+            format={(v) => v.toFixed(2)}
+          />
+        )}
+        {library === "phosphor" && (
+          <DialSelect
+            label="Weight"
+            value={state.iconWeight}
+            onChange={set("iconWeight")}
+            options={WEIGHT_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <Glyphs
+                  library="phosphor"
+                  weight={option.value as PhosphorWeight}
+                />
+              ),
+            }))}
+          />
+        )}
+      </DialPopover>
+    </DialTrigger>
   )
 }

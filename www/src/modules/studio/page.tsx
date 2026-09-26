@@ -1,14 +1,14 @@
 "use client"
 
-/* The panel's one page (Sept 2026): every chapter in full, a quiet title with
-   the chapter's specimen beside it, then its primary rows and the rest of
-   its body. Nothing folds — search scrolls to a chapter, it never opens one.
+/* The panel's one page: every group's rows in full, no titles — a separator
+   between groups, and each row carries its own value and specimen. Nothing
+   folds; search scrolls to a group, it never opens one.
 
    Below `lg` the same page is a dock under the preview (beside it on short
    screens): one chapter's rows, hugged, over a chapter strip that scrolls
    sideways. The header's toggle tucks it to its strip. */
 
-import { useEffect, useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import {
   ChevronRightIcon,
   PanelBottomCloseIcon,
@@ -21,6 +21,7 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { useTweak } from "@/dev/tweaker"
 
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
@@ -37,35 +38,27 @@ function ChapterBlock({
   studio: Studio
   docked: boolean
 }) {
-  const { Primary, Body, Preview } = chapter
+  const { Primary, Body } = chapter
   return (
     <section
       data-chapter={chapter.id}
-      aria-labelledby={`chapter-${chapter.id}`}
+      aria-label={chapter.label}
       className={cn(
-        "flex w-full shrink-0 flex-col",
+        "flex w-full shrink-0 flex-col gap-1.5 max-lg:py-2",
         !docked && "max-lg:hidden",
       )}
     >
-      <h2
-        id={`chapter-${chapter.id}`}
-        className="flex h-9 items-center justify-between gap-2 px-1 max-lg:sr-only"
-      >
-        <span className="truncate text-xs font-medium text-fg/50">
-          {chapter.label}
-        </span>
-        {Preview && (
-          <span className="flex shrink-0 items-center text-fg/60">
-            <Preview state={studio.state} />
-          </span>
-        )}
-      </h2>
-      <div className="flex flex-col gap-1.5 pb-2.5 max-lg:py-2">
-        {Primary && <Primary studio={studio} />}
-        <Body studio={studio} />
-      </div>
+      {Primary && <Primary studio={studio} />}
+      <Body studio={studio} />
     </section>
   )
+}
+
+/* Between groups on the page; the dock shows one group at a time. */
+const SEPARATOR = {
+  gap: "h-4",
+  hairline: "my-2 h-px bg-fg/6",
+  none: "h-1.5",
 }
 
 /* Room kept past the selected chip, so the next one always peeks. */
@@ -170,6 +163,12 @@ export function PanelPage({
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
+  const separator = useTweak("Separators", {
+    type: "select",
+    options: ["gap", "hairline", "none"],
+    default: "gap",
+    group: "Studio panel",
+  })
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -281,13 +280,20 @@ export function PanelPage({
               : "max-lg:h-auto max-lg:[&>:first-child]:border-0"
           }
         >
-          {chapters.map((chapter) => (
-            <ChapterBlock
-              key={chapter.id}
-              chapter={chapter}
-              studio={studio}
-              docked={open && chapter.id === active}
-            />
+          {chapters.map((chapter, i) => (
+            <Fragment key={chapter.id}>
+              {i > 0 && (
+                <div
+                  aria-hidden
+                  className={cn("shrink-0 max-lg:hidden", SEPARATOR[separator])}
+                />
+              )}
+              <ChapterBlock
+                chapter={chapter}
+                studio={studio}
+                docked={open && chapter.id === active}
+              />
+            </Fragment>
           ))}
         </PanelChrome>
       </div>
