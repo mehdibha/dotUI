@@ -114,6 +114,10 @@ export function parseRootClosure(css: string): RootClosure {
       const ch = css[i]
       if (ch === "/" && css[i + 1] === "*") {
         skipComment()
+      } else if (ch === "\\") {
+        // An escape, as in `.font-features-\[\'calt\'\]`: never a string.
+        buf += css.slice(i, i + 2)
+        i += 2
       } else if (ch === '"' || ch === "'") {
         buf += readString()
       } else if (ch === ";") {
