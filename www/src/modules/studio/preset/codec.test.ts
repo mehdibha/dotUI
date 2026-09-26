@@ -48,13 +48,20 @@ describe("preset codec — studio state", () => {
   it("drops unknown keys and wrongly typed values", () => {
     const encoded = encodeRaw({
       v: 3,
-      s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
+      s: {
+        brand: "#ef4444",
+        radiusPx: "big",
+        nope: 1,
+        scrollbarStyle: "thin",
+        modes: "dark",
+      },
     })
     const { state } = decodePreset(encoded)
     expect(state.brand).toBe("#ef4444")
     expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
     expect(state.modes).toEqual(DEFAULTS.modes)
     expect("nope" in state).toBe(false)
+    expect("scrollbarStyle" in state).toBe(false)
   })
 
   it("fans a v3 primary and family fill out onto the leaves they painted", () => {

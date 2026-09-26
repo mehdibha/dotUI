@@ -1,14 +1,13 @@
 "use client"
 
 /* Browser — what the product overrides of the browser's own chrome: the
-   pointer over controls, whether UI text selects, the selection highlight,
-   the scrollbars. Cursor is one row opening the four pointer decisions;
+   pointer over controls, whether UI text selects, the selection highlight.
+   Scrollbars stay native. Cursor is one row opening the four pointer decisions;
    links keep the hand everywhere, so they are not one of them. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { CURSOR_DEFAULTS } from "../axes/cursor"
-import { STYLE_OPTIONS } from "../axes/scrollbars"
 import {
   DialPopover,
   DialSegmented,
@@ -91,64 +90,6 @@ const CURSOR_ROWS = [
   },
 ] as const
 
-/* ------------------------------- Scrollbars ------------------------------- */
-
-function ScrollbarGlyph({ kind }: { kind: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 6h10.5M4 12h10.5M4 18h10.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity=".35"
-      />
-      {kind === "native" && (
-        <>
-          <rect
-            x="17.5"
-            y="3.5"
-            width="4"
-            height="17"
-            rx="2"
-            fill="currentColor"
-            opacity=".2"
-          />
-          <rect
-            x="17.5"
-            y="5"
-            width="4"
-            height="8"
-            rx="2"
-            fill="currentColor"
-          />
-        </>
-      )}
-      {kind === "thin" && (
-        <rect
-          x="19"
-          y="5"
-          width="2.5"
-          height="9"
-          rx="1.25"
-          fill="currentColor"
-        />
-      )}
-      {kind === "overlay" && (
-        <rect
-          x="19"
-          y="5"
-          width="2.5"
-          height="9"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".3"
-        />
-      )}
-    </svg>
-  )
-}
-
 /* ------------------------------- Highlight -------------------------------- */
 
 /* Painted words, not cursors: the option is the highlight itself. The blue
@@ -227,19 +168,6 @@ export function BrowserSection({ studio }: { studio: Studio }) {
         value={state.selectionHighlight}
         onChange={set("selectionHighlight")}
         options={HIGHLIGHT_OPTIONS}
-      />
-      <DialSelect
-        label="Scrollbars"
-        value={state.scrollbarStyle}
-        onChange={set("scrollbarStyle")}
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <Glyph>
-              <ScrollbarGlyph kind={option.value} />
-            </Glyph>
-          ),
-        }))}
       />
     </>
   )

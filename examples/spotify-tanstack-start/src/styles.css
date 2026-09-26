@@ -421,11 +421,6 @@
 @layer base {
   * {
     @apply border-border;
-    scrollbar-width: var(--scrollbar-width, auto);
-    scrollbar-color: var(--scrollbar-color, auto);
-    }
-  *:hover {
-    scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
     }
   h1,
   h2,

@@ -19,7 +19,6 @@ import { ICON_DEFAULTS } from "./axes/icons"
 import { INVALID_DEFAULTS } from "./axes/invalid"
 import { MOBILE_DEFAULTS } from "./axes/mobile"
 import { MOTION_DEFAULTS } from "./axes/motion"
-import { SCROLLBAR_DEFAULTS } from "./axes/scrollbars"
 import { SELECTION_DEFAULTS } from "./axes/selection"
 import { SHAPE_DEFAULTS } from "./axes/shape"
 import { SPACE_DEFAULTS } from "./axes/space"
@@ -108,7 +107,6 @@ export const CHAPTERS: Chapter[] = [
     defaults: {
       ...CURSOR_DEFAULTS,
       ...SELECTION_DEFAULTS,
-      ...SCROLLBAR_DEFAULTS,
     },
     Body: BrowserSection,
     Preview: BrowserPreview,
