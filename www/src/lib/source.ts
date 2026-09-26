@@ -48,6 +48,7 @@ export const docsSource = loader({
 
           return {
             ...node,
+            name: file.data.sidebarTitle ?? node.name,
             wip: file.data.wip,
           } as DocsPageItem
         },
