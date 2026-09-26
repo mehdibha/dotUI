@@ -13,6 +13,7 @@ import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
+import { quoted } from "@/modules/studio/toasts"
 import { fetchSnapshot, flush } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
@@ -116,7 +117,7 @@ function useSelectionUrl(): boolean {
     if (s === undefined) {
       if (preset !== undefined && getPreset(preset))
         leave(() => select({ kind: "preset", id: preset }), sync)
-      else broken(`No preset called "${preset}"`)
+      else broken(`No preset called ${quoted(preset ?? "")}`)
       return
     }
     const dead = () =>
