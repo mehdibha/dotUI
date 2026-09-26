@@ -194,7 +194,7 @@ export function flush(): void {
   store.update((workspace) => withDoc(workspace, id, withState(state)))
 }
 
-function subscribe(onChange: () => void) {
+export function subscribe(onChange: () => void) {
   listeners.add(onChange)
   const unsubscribe = store.subscribe(onChange)
   return () => {

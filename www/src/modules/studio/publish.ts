@@ -12,8 +12,8 @@ import {
 } from "@/modules/docs/install-commands"
 
 import { getCodeOptions } from "./export/code-options-store"
-import { quoted } from "./history-menu"
 import { nameDraft } from "./keep-dialog"
+import { quoted } from "./toasts"
 import * as workspace from "./workspace"
 
 /** The studio link of a published version. */

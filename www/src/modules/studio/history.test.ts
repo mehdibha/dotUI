@@ -191,17 +191,28 @@ describe("views and drafts", () => {
     expect(ws.getWorkspace().systems).toEqual([])
   })
 
-  it("creates Untitled from any selection; undo removes it", async () => {
-    const { history, ws, selection, current } = await load()
+  it("creates Untitled from any selection; undo deletes it to Recently deleted", async () => {
+    const { history, ws, selection, current, edit } = await load()
     selection.select({ kind: "preset", id: "linear" })
     const id = history.newSystem()!
     expect(current().doc).toMatchObject({ id, name: "Untitled", draft: false })
     ws.rename(id, "Acme")
+    edit(3)
+    vi.advanceTimersByTime(600)
+    edit(4)
+    history.undo()
+    history.undo()
+    expect(current().doc).toMatchObject({ id, name: "Acme" })
     history.undo()
     expect(current().key).toBe("preset:linear")
     expect(ws.getWorkspace().systems).toEqual([])
+    expect(ws.getTrash().map((i) => i.doc.name)).toEqual(["Acme"])
     history.redo()
     expect(current().doc).toMatchObject({ id, name: "Acme" })
+    expect(ws.getTrash()).toEqual([])
+    history.redo()
+    history.redo()
+    expect(current().state.radiusPx).toBe(4)
   })
 
   it("deletes the current system to the next one, else the Origin view", async () => {
@@ -247,7 +258,7 @@ describe("duplicate", () => {
     expect(current().name).toBe("Acme copy 2")
   })
 
-  it("copies a shared view under its name; undo removes the copy", async () => {
+  it("copies a shared view under its name; undo deletes the copy", async () => {
     const { history, ws, selection, current, radius } = await load()
     const shared = {
       kind: "shared",
@@ -264,6 +275,7 @@ describe("duplicate", () => {
     history.undo()
     expect(current().key).toBe("shared:abcdefghij")
     expect(ws.getWorkspace().systems).toEqual([])
+    expect(ws.getTrash().map((i) => i.doc.name)).toEqual(["Acme"])
   })
 })
 
@@ -309,6 +321,21 @@ describe("recently deleted", () => {
       name: "My Linear",
       draft: false,
     })
+  })
+
+  it("closes a deleted system's toast once it is restored or purged", async () => {
+    const { history, system } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
+    const close = vi.spyOn(toastManager, "close")
+    const first = system()
+    const second = system()
+    history.remove(first)
+    history.recover(first)
+    expect(close).toHaveBeenCalledWith(add.mock.results[0]!.value)
+    history.remove(second)
+    history.purge(second)
+    expect(close).toHaveBeenCalledWith(add.mock.results[1]!.value)
   })
 
   it("purges what was deleted over 30 days ago", async () => {

@@ -25,32 +25,9 @@ import { DisabledButton } from "./disabled-button"
 import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
 import type { Current } from "./selection"
 import { ago, clock } from "./time"
+import { quoted, undoToast } from "./toasts"
 import { fetchSnapshot } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
-
-/** A design system's name in a toast title: quoted, cut at 32 characters. */
-export function quoted(name: string): string {
-  const chars = [...name]
-  return `"${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}"`
-}
-
-export function undoToast(
-  title: string,
-  undo: () => void,
-  description?: string,
-) {
-  const id = toastManager.add({
-    title,
-    description,
-    actionProps: {
-      children: "Undo",
-      onClick: () => {
-        undo()
-        toastManager.close(id)
-      },
-    },
-  })
-}
 
 function resetLabel(doc: DesignSystemDoc): string {
   if (doc.origin.kind === "snapshot") return "Reset to shared version"

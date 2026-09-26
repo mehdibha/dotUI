@@ -5,7 +5,9 @@
    into one step. The first edit of a view forks it into a draft, and that
    step is the bottom of the draft's stack: undoing it removes the draft
    (unless it was kept or published) and returns to the view, whose redo
-   brings it back with the same id. Checkpoints persist in
+   brings it back with the same id. Undoing the creation of a system made
+   with New or Duplicate deletes it like Delete does, to Recently deleted
+   with a toast. Checkpoints persist in
    `dotui:history:<id>`: written when the studio leaves a system (switching,
    hiding the page, navigating away) and after two idle minutes. */
 
@@ -25,6 +27,7 @@ import {
   selectionKey,
 } from "./selection"
 import type { Selection, ViewSelection } from "./selection"
+import { quoted, undoToast } from "./toasts"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
@@ -35,11 +38,13 @@ const CHECKPOINT_LIMIT = 20
 const SEEN_DRAFT = "dotui:seen-draft"
 
 /** A state to return to; the creation of the open system, back to the
- *  selection it came from; or, on that selection, the system to bring back. */
+ *  selection it came from; or, on that selection, the system to bring back:
+ *  a removed draft, or a system in Recently deleted. */
 type Step =
   | { state: StudioState }
   | { created: Selection; draft: boolean }
   | { recreate: DesignSystemDoc; checkpoints: string | null }
+  | { recover: string }
 
 interface Stack {
   past: Step[]
@@ -54,8 +59,8 @@ const listeners = new Set<() => void>()
 let press = 0
 let presses = 0
 let idle: ReturnType<typeof setTimeout> | undefined
-// The first draft's "saved" toast, closed if that draft is undone away.
-let savedToast: { id: string; draft: string } | undefined
+// Each deleted system's toast, closed once it is restored or purged.
+const deletedToasts = new Map<string, string>()
 
 const systemKey = (id: string) => selectionKey({ kind: "system", id })
 
@@ -132,10 +137,16 @@ function fork(view: ViewSelection, next: StudioState) {
   } catch {
     return
   }
-  savedToast = {
-    id: toastManager.add({ title: "Your changes are saved in this browser." }),
-    draft: doc.id,
-  }
+  // Closed if the draft goes (undone, or left unchanged).
+  const stop = workspace.subscribe(() => {
+    if (workspace.findSystem(doc.id)) return
+    stop()
+    toastManager.close(toastId)
+  })
+  const toastId = toastManager.add({
+    title: "Your changes are saved in this browser.",
+    onRemove: stop,
+  })
 }
 
 /* -------------------------------- editing -------------------------------- */
@@ -222,12 +233,41 @@ export function duplicate(sel: Selection): string | undefined {
   return doc?.id
 }
 
-/** Moves the system to Recently deleted; deleting the current one opens the
- *  next in the list, else the Origin view. Returns the undo. */
-export function remove(id: string): () => void {
+/** Moves the system to Recently deleted with a toast (`Deleted "Acme"`,
+ *  or `verb`) whose Undo, which `afterUndo` follows, brings it back. Returns
+ *  whether it was there to move. */
+function trash(id: string, verb: string, afterUndo?: () => void): boolean {
+  const deleted = workspace.trash(id)
+  if (!deleted) return false
+  const wasCurrent = selectionKey(getSelection()) === systemKey(id)
+  const { name, published } = deleted.doc
+  deletedToasts.set(
+    id,
+    undoToast(
+      `${verb} ${quoted(name)}`,
+      () => {
+        recover(id, wasCurrent)
+        afterUndo?.()
+      },
+      published.length ? "Its published links keep working." : undefined,
+    ),
+  )
+  return true
+}
+
+/** Moves the system to Recently deleted, with a toast; deleting the current
+ *  one opens the next in the list, else the Origin view. Returns the
+ *  toast's undo. */
+export function remove(
+  id: string,
+  {
+    verb = "Deleted",
+    afterUndo,
+  }: { verb?: string; afterUndo?: () => void } = {},
+): () => void {
   const list = workspace.listed(workspace.getWorkspace())
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
-  if (!workspace.trash(id)) return () => {}
+  if (!trash(id, verb, afterUndo)) return () => {}
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
     const next = list[at + 1] ?? list[at - 1]
@@ -240,12 +280,28 @@ export function remove(id: string): () => void {
   return () => recover(id, wasCurrent)
 }
 
-/** Brings a system back from Recently deleted; `open` makes it current. */
-export function recover(id: string, open = false): void {
+function closeDeletedToast(id: string) {
+  const toast = deletedToasts.get(id)
+  if (toast === undefined) return
+  deletedToasts.delete(id)
+  toastManager.close(toast)
+}
+
+/** Brings a system back from Recently deleted; `open` makes it current.
+ *  Returns whether it was there. */
+export function recover(id: string, open = false): boolean {
+  closeDeletedToast(id)
   const doc = workspace.recover(id)
-  if (!doc) return
+  if (!doc) return false
   if (doc.draft) keepOtherDrafts(id)
   if (open) select({ kind: "system", id })
+  return true
+}
+
+/** Deletes a system from Recently deleted for good. */
+export function purge(id: string): void {
+  closeDeletedToast(id)
+  workspace.purge(id)
 }
 
 function travel(from: "past" | "future", to: "past" | "future") {
@@ -258,7 +314,10 @@ function travel(from: "past" | "future", to: "past" | "future") {
   entry.press = 0
   const doc = sel.kind === "system" ? workspace.findSystem(sel.id) : undefined
 
-  if ("recreate" in step) {
+  if ("recover" in step) {
+    if (recover(step.recover, true))
+      push(stack(systemKey(step.recover))[to], { created: sel, draft: false })
+  } else if ("recreate" in step) {
     const { recreate, checkpoints } = step
     workspace.insert(recreate, undefined, checkpoints)
     if (recreate.draft) keepOtherDrafts(recreate.id)
@@ -272,22 +331,27 @@ function travel(from: "past" | "future", to: "past" | "future") {
   } else if ("state" in step) {
     workspace.setState(doc.id, step.state)
     push(entry[to], { state: doc.state })
-  } else if (doc.published.length === 0 && (step.draft ? doc.draft : true)) {
-    // The create itself: the system goes, and the selection it came from
-    // can bring it back.
-    workspace.flush()
-    const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
-    if (savedToast?.draft === doc.id) toastManager.close(savedToast.id)
+  } else if (step.draft && !(doc.draft && doc.published.length === 0)) {
+    // A fork kept or published since: only its changes go.
+    workspace.setState(doc.id, doc.initial)
+    push(entry[to], { state: doc.state })
+  } else {
+    // The create itself: the system goes (a fork silently, anything else
+    // to Recently deleted), and the selection it came from can bring it
+    // back.
     const back =
       step.created.kind === "system" && !workspace.findSystem(step.created.id)
         ? ({ kind: "preset", id: ORIGIN.id } as const)
         : step.created
-    select(back)
-    push(stack(selectionKey(back))[to], { recreate: doc, checkpoints })
-  } else {
-    // Kept or published since: only its changes go.
-    workspace.setState(doc.id, doc.initial)
-    push(entry[to], { state: doc.state })
+    if (step.draft) {
+      workspace.flush()
+      const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
+      select(back)
+      push(stack(selectionKey(back))[to], { recreate: doc, checkpoints })
+    } else if (trash(doc.id, "Deleted")) {
+      select(back)
+      push(stack(selectionKey(back))[to], { recover: doc.id })
+    }
   }
   emit()
 }
@@ -314,6 +378,9 @@ export function useUndoRedo(key: string) {
     subscribe,
     () => {
       const step = stacks.get(key)?.future.at(-1)
+      if (step && "recover" in step)
+        return workspace.getTrash().find((i) => i.doc.id === step.recover)?.doc
+          .name
       if (!step || !("recreate" in step)) return undefined
       const { name, draft } = step.recreate
       return draft ? `the ${name} draft` : name

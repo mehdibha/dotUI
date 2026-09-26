@@ -8,9 +8,9 @@ import { ChevronLeftIcon, RotateCcwIcon, Trash2Icon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 
-import { recover } from "./history"
+import { purge, recover } from "./history"
 import { ago } from "./time"
-import { purge, swatchOf, useTrash } from "./workspace"
+import { swatchOf, useTrash } from "./workspace"
 import type { Deleted } from "./workspace"
 
 export function RecentlyDeleted({ onBack }: { onBack: () => void }) {

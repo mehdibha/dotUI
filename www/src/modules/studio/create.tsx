@@ -14,7 +14,7 @@ import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { duplicate, newSystem, remove } from "./history"
 import { inTextEntry } from "./history-keys"
-import { HistoryControls, quoted, undoToast } from "./history-menu"
+import { HistoryControls } from "./history-menu"
 import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
@@ -111,20 +111,15 @@ export function StudioPanel({ className }: { className?: string }) {
   }
 
   function onDelete(id: string) {
-    const doc = workspace.systems.find((s) => s.id === id)
-    if (!doc) return
-    const undo = remove(id)
-    undoToast(
-      `Deleted ${quoted(doc.name)}`,
-      () => {
-        undo()
-        // Back from the toast to the restored row, so Esc and arrows work.
+    remove(id, {
+      // Back from the toast to the restored row, so Esc and arrows work.
+      afterUndo: () => {
+        setTrashOpen(false)
         requestAnimationFrame(() =>
           focusPicker.current?.(selectionKey({ kind: "system", id })),
         )
       },
-      doc.published.length ? "Its published links keep working." : undefined,
-    )
+    })
   }
 
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {

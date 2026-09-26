@@ -18,7 +18,6 @@ import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
 
 import { remove } from "./history"
-import { quoted, undoToast } from "./history-menu"
 import { getCurrent, useCurrent } from "./selection"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
@@ -126,7 +125,7 @@ function KeepForm({ request: current }: { request: Request }) {
   function discard() {
     if (current.kind !== "leave") return
     set(null)
-    undoToast(`Discarded ${quoted(doc.name)}`, remove(doc.id))
+    remove(doc.id, { verb: "Discarded" })
     current.then()
   }
 
