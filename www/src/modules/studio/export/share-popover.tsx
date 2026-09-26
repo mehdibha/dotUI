@@ -67,6 +67,12 @@ function CopyField({
     if (failed) input.current?.select()
   }, [failed])
 
+  // The end tells versions apart (`?s=<id>`), so that's the part in view;
+  // "Copied" narrows the field too.
+  useEffect(() => {
+    if (input.current) input.current.scrollLeft = input.current.scrollWidth
+  }, [value, state])
+
   return (
     <TextField value={value} isReadOnly className="w-full">
       <Label>{label}</Label>

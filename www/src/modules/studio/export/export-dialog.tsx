@@ -108,6 +108,12 @@ function ExportDialogBody() {
   const status = usePublishStatus(doc)
   const [choice, setChoice] = useState<"published" | "latest">("published")
   const [failed, setFailed] = useState(false)
+  // The version the switch opened on: it stays for the dialog's life, so
+  // publishing the latest changes doesn't pull it from under the pointer.
+  const [before, setBefore] = useState<{ id: string; at: number; n: number }>()
+  const latest = doc?.published.at(-1)
+  if (doc && latest && status === "changed" && !before)
+    setBefore({ ...latest, n: doc.published.length })
 
   if (!doc)
     return (
@@ -157,8 +163,7 @@ function ExportDialogBody() {
     )
 
   const version = `v${count} · ${clock(last.at)}`
-  if (status === "current")
-    return <ExportCommands path={`s/${last.id}`} version={version} />
+  if (!before) return <ExportCommands path={`s/${last.id}`} version={version} />
 
   const versions = (
     <SegmentedControl
@@ -172,7 +177,7 @@ function ExportDialogBody() {
       }}
     >
       <SegmentedControlItem id="published">
-        Published · {clock(last.at)}
+        Published · {clock(before.at)}
       </SegmentedControlItem>
       <SegmentedControlItem id="latest">
         Include latest changes
@@ -182,13 +187,22 @@ function ExportDialogBody() {
 
   if (choice === "published")
     return (
+      <ExportCommands
+        path={`s/${before.id}`}
+        version={`v${before.n} · ${clock(before.at)}`}
+        top={versions}
+      />
+    )
+  if (status === "current")
+    return (
       <ExportCommands path={`s/${last.id}`} version={version} top={versions} />
     )
   return (
-    <>
-      <DialogHeader className="pr-8">{versions}</DialogHeader>
-      <DialogBody>
-        {failed ? (
+    <ExportCommands
+      path={`s/${last.id}`}
+      top={versions}
+      waiting={
+        failed ? (
           <p className="text-xs text-fg-danger">
             Couldn't publish your changes ·{" "}
             <button
@@ -203,9 +217,9 @@ function ExportDialogBody() {
           <p role="status" className="text-xs text-fg-muted">
             Publishing your changes…
           </p>
-        )}
-      </DialogBody>
-    </>
+        )
+      }
+    />
   )
 }
 
@@ -213,12 +227,15 @@ function ExportCommands({
   path,
   version,
   top,
+  waiting,
 }: {
   /** `p/<preset>` or `s/<snapshot>`. */
   path: string
   /** The published version it installs, as "v3 · 3:42 PM". */
   version?: string
   top?: ReactNode
+  /** Shown instead of the commands until they can be installed. */
+  waiting?: ReactNode
 }) {
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
@@ -289,6 +306,7 @@ function ExportCommands({
 
         <CommandBlock
           version={version}
+          waiting={waiting}
           commands={
             mode === "new"
               ? [{ label: "Scaffold", command }]
@@ -299,8 +317,8 @@ function ExportCommands({
           }
         />
 
-        {version && (
-          <Collapsible>
+        {(version || waiting) && (
+          <Collapsible isDisabled={!!waiting}>
             <CollapsibleTrigger className="text-xs text-fg-muted">
               Already installed an older version?
             </CollapsibleTrigger>
@@ -329,6 +347,7 @@ function ExportCommands({
         <Button
           variant="primary"
           className="w-full"
+          isDisabled={!!waiting}
           onPress={() => copyToClipboard(command)}
         >
           {isCopied ? "Copied" : "Copy command"}
@@ -339,6 +358,7 @@ function ExportCommands({
               key={target.id}
               variant="secondary"
               href={target.href(url)}
+              isDisabled={!!waiting}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full"
@@ -371,9 +391,12 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
 function CommandBlock({
   commands,
   version,
+  waiting,
 }: {
   commands: { label: string; command: string }[]
   version?: string
+  /** Holds the commands' place until they can be installed. */
+  waiting?: ReactNode
 }) {
   const packageManager = packageManagerStore.useValue()
 
@@ -408,9 +431,15 @@ function CommandBlock({
         )}
       </ToggleButtonGroupPrimitives.ToggleButtonGroup>
       <div className="flex flex-col divide-y">
-        {commands.map((entry) => (
-          <CommandLine key={entry.label} {...entry} />
-        ))}
+        {commands.map((entry, index) =>
+          waiting ? (
+            <div key={entry.label} className="flex h-9 items-center pl-3">
+              {index === 0 && waiting}
+            </div>
+          ) : (
+            <CommandLine key={entry.label} {...entry} />
+          ),
+        )}
       </div>
     </div>
   )
