@@ -147,7 +147,7 @@ function ExportDialogBody() {
           <Button
             variant="primary"
             className="w-full"
-            isPending={status === "pending"}
+            isDisabled={status === "pending"}
             onPress={publishLatest}
           >
             {status === "pending" ? "Publishing…" : "Publish and export"}

@@ -30,7 +30,7 @@ export function StudioHeaderActions() {
           {isMobile ? <Share2Icon /> : "Share"}
         </Button>
       </SharePopover>
-      {doc && <PublishButton doc={doc} className="max-md:hidden" />}
+      {doc && !isMobile && <PublishButton doc={doc} />}
       <ExportDialog>
         <Button variant="primary" size="sm">
           Export

@@ -1,10 +1,9 @@
 "use client"
 
-import { Focusable } from "react-aria-components/Focusable"
-
 import { cn } from "@/registry/lib/utils"
-import { Button, useButtonStyles } from "@/registry/ui/button"
+import { Button } from "@/registry/ui/button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { DisabledButton } from "@/modules/studio/disabled-button"
 import { publishSystem } from "@/modules/studio/publish"
 import { clock } from "@/modules/studio/time"
 import { usePublishStatus } from "@/modules/studio/workspace"
@@ -20,36 +19,28 @@ export function PublishButton({
   className?: string
 }) {
   const status = usePublishStatus(doc)
-  const styles = useButtonStyles()
   const last = doc.published.at(-1)
 
   if (status === "current" && last)
     return (
       <Tooltip delay={0}>
-        <Focusable>
-          <span
-            role="button"
-            tabIndex={0}
-            aria-disabled="true"
-            data-disabled=""
-            className={styles({
-              variant: "secondary",
-              size: "sm",
-              className: cn("gap-1.5", className),
-            })}
-          >
-            Published ✓
-          </span>
-        </Focusable>
+        <DisabledButton
+          variant="secondary"
+          size="sm"
+          className={cn("gap-1.5", className)}
+        >
+          Published ✓
+        </DisabledButton>
         <TooltipContent>Up to date · published {clock(last.at)}</TooltipContent>
       </Tooltip>
     )
 
+  // Disabled rather than pending: the pending style hides the label.
   return (
     <Button
       variant="secondary"
       size="sm"
-      isPending={status === "pending"}
+      isDisabled={status === "pending"}
       onPress={() => publishSystem(doc.id).catch(() => {})}
       className={cn("gap-1.5", className)}
     >

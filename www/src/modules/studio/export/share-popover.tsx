@@ -202,7 +202,7 @@ function ShareBody() {
         <Button
           variant="primary"
           size="sm"
-          isPending={pending}
+          isDisabled={pending}
           onPress={publishAndCopy}
           className="w-full"
         >
