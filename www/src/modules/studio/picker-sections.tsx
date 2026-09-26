@@ -31,7 +31,8 @@ const STATUS: Record<PublishStatus, string> = {
 }
 
 /** "Based on Linear · 2h ago · Unpublished": where a system came from,
- *  when it last changed and, once kept, where it stands on publishing. */
+ *  when it last changed and, once kept, where it stands on publishing —
+ *  the part a narrow row cuts last. */
 function SystemSubtitle({
   doc,
   workspace,
@@ -40,13 +41,17 @@ function SystemSubtitle({
   workspace: Workspace
 }) {
   const status = usePublishStatus(doc)
-  return [
-    basedOn(doc, workspace),
-    ago(doc.updatedAt, Date.now(), "narrow"),
-    !doc.draft && status && STATUS[status],
-  ]
-    .filter(Boolean)
-    .join(" · ")
+  const origin = `${basedOn(doc, workspace)} · ${ago(doc.updatedAt, Date.now(), "narrow")}`
+  const label = !doc.draft && status ? STATUS[status] : undefined
+  return (
+    <span
+      title={label ? `${origin} · ${label}` : origin}
+      className="flex min-w-0"
+    >
+      <span className="truncate">{origin}</span>
+      {label && <span className="shrink-0 whitespace-pre"> · {label}</span>}
+    </span>
+  )
 }
 
 /** What the studio and docs pickers list: the shared link on screen, the
