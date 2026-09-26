@@ -13,16 +13,11 @@ import {
   MenuSection,
 } from "@/registry/ui/menu"
 import { toastManager } from "@/registry/ui/toast"
-import { codeFlags } from "@/publisher/code-options"
-import {
-  buildInitCommands,
-  packageManagerStore,
-} from "@/modules/docs/install-commands"
 
-import { getCodeOptions } from "./export/code-options-store"
+import { initCommand, snapshotLink } from "./publish"
 import { viewLink } from "./selection"
 import type { ViewSelection } from "./selection"
-import { useUnpublishedChanges } from "./workspace"
+import { usePublishStatus } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
 function copy(text: string, what: string) {
@@ -36,12 +31,6 @@ function copy(text: string, what: string) {
       })
     },
   )
-}
-
-function installCommand(presetId: string): string {
-  const flags = codeFlags(getCodeOptions())
-  const url = `${window.location.origin}/r/p/${presetId}/init.json${flags ? `?code=${flags}` : ""}`
-  return buildInitCommands(url)[packageManagerStore.get()]
 }
 
 /** A preset's or a shared link's menu. */
@@ -59,7 +48,7 @@ export function ViewMenu({
         if (key === "duplicate") onDuplicate()
         if (key === "link") copy(viewLink(sel), "Link")
         if (key === "install" && sel.kind === "preset")
-          copy(installCommand(sel.id), "Install command")
+          copy(initCommand(`p/${sel.id}`), "Install command")
       }}
     >
       <MenuItem id="duplicate">Duplicate</MenuItem>
@@ -87,15 +76,14 @@ export function SystemMenu({
   onDelete: () => void
 }) {
   const last = doc.published.at(-1)
-  const unpublished = useUnpublishedChanges(doc)
+  const unpublished = usePublishStatus(doc) === "changed"
   return (
     <MenuContent
       aria-label={`Actions for ${doc.name}`}
       onAction={(key) => {
         if (key === "rename") onRename()
         if (key === "duplicate") onDuplicate()
-        if (key === "link" && last)
-          copy(`${window.location.origin}/studio?s=${last.id}`, "Link")
+        if (key === "link" && last) copy(snapshotLink(last.id), "Link")
         if (key === "delete") onDelete()
       }}
     >
@@ -108,12 +96,10 @@ export function SystemMenu({
         <MenuItem
           id="link"
           isDisabled={!last}
-          textValue={
-            unpublished && last ? "Copy last published link" : "Copy link"
-          }
+          textValue={unpublished ? "Copy last published link" : "Copy link"}
         >
           <MenuItemLabel>
-            {unpublished && last ? "Copy last published link" : "Copy link"}
+            {unpublished ? "Copy last published link" : "Copy link"}
           </MenuItemLabel>
           {!last && (
             <MenuItemDescription>Not published yet</MenuItemDescription>

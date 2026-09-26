@@ -5,10 +5,11 @@
    so tabs never clobber each other. Edits land in memory at once and in
    storage at most every 200 ms. What is on screen lives in `selection.ts`. */
 
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
 import {
+  canonicalJson,
   MAX_NAME_LENGTH,
   parseSnapshot,
   SNAPSHOT_ID,
@@ -481,37 +482,86 @@ export function snapshotContent(doc: DesignSystemDoc): SnapshotContent {
   }
 }
 
+// Content → snapshot id, so a known answer never waits on hashing.
+const contentIds = new Map<string, string>()
+const contentKey = (doc: DesignSystemDoc) => canonicalJson(snapshotContent(doc))
+
 /** Whether the content differs from the latest published version. Hashing
- *  needs a secure context; without one, everything counts as unpublished. */
+ *  needs a secure context; without one, only what this tab published
+ *  counts as published. */
 export async function hasUnpublishedChanges(
   doc: DesignSystemDoc,
 ): Promise<boolean> {
   const last = doc.published.at(-1)
   if (!last) return true
-  try {
-    return (await snapshotId(snapshotContent(doc))) !== last.id
-  } catch {
-    return true
+  const key = contentKey(doc)
+  let id = contentIds.get(key)
+  if (!id) {
+    try {
+      id = await snapshotId(snapshotContent(doc))
+    } catch {
+      return true
+    }
+    contentIds.set(key, id)
   }
+  return id !== last.id
 }
 
-/** `hasUnpublishedChanges` for the UI; `undefined` until first known, then
- *  the previous answer while the next one is computed. */
-export function useUnpublishedChanges(
+const inflight = new Map<string, Promise<string>>()
+const inflightListeners = new Set<() => void>()
+const notifyInflight = () => {
+  for (const listener of inflightListeners) listener()
+}
+
+/** The system's publish request, while one runs. */
+export const publishing = (id: string) => inflight.get(id)
+
+export type PublishStatus = "never" | "changed" | "pending" | "current"
+
+/** Where the system stands against its latest published version;
+ *  `undefined` until first known. */
+export function usePublishStatus(
   doc: DesignSystemDoc | undefined,
-): boolean | undefined {
-  const [unpublished, setUnpublished] = useState<boolean>()
+): PublishStatus | undefined {
+  const pending = useSyncExternalStore(
+    (listener) => {
+      inflightListeners.add(listener)
+      return () => inflightListeners.delete(listener)
+    },
+    () => !!doc && inflight.has(doc.id),
+    () => false,
+  )
+  const known = useMemo(() => {
+    const last = doc?.published.at(-1)
+    if (!doc || !last) return
+    const id = contentIds.get(contentKey(doc))
+    return id && id === last.id
+  }, [doc])
+  const [computed, setComputed] = useState<{
+    doc: DesignSystemDoc
+    unpublished: boolean
+  }>()
   useEffect(() => {
-    if (!doc) return
+    if (!doc || known !== undefined) return
     let live = true
     void hasUnpublishedChanges(doc).then(
-      (value) => live && setUnpublished(value),
+      (unpublished) => live && setComputed({ doc, unpublished }),
     )
     return () => {
       live = false
     }
-  }, [doc])
-  return doc ? unpublished : undefined
+  }, [doc, known])
+  if (!doc) return
+  if (pending) return "pending"
+  if (!doc.published.length) return "never"
+  const unpublished =
+    known !== undefined
+      ? !known
+      : computed?.doc === doc
+        ? computed.unpublished
+        : undefined
+  if (unpublished === undefined) return
+  return unpublished ? "changed" : "current"
 }
 
 type Post = (body: Omit<SnapshotContent, "schema">) => Promise<string>
@@ -529,27 +579,45 @@ async function postSnapshot(body: Omit<SnapshotContent, "schema">) {
   return id
 }
 
-/** Publishes the system as a snapshot and returns its id; a no-op when
- *  nothing changed since the latest published version. */
-export async function publish(id: string, post: Post = postSnapshot) {
+/** Publishes the system as a snapshot and resolves its id; a no-op when
+ *  nothing changed since the latest published version. One request per
+ *  system at a time: a call while one runs gets the same promise. */
+export function publish(
+  id: string,
+  post: Post = postSnapshot,
+): Promise<string> {
+  const running = inflight.get(id)
+  if (running) return running
   flush()
   const doc = findSystem(id)
-  if (!doc) throw new Error(`No design system ${id}`)
-  const last = doc.published.at(-1)
-  if (last && !(await hasUnpublishedChanges(doc))) return last.id
-  const { schema: _, ...body } = snapshotContent(doc)
-  const snapshot = await post(body)
-  update((workspace) =>
-    withDoc(workspace, id, (current) =>
-      current.published.at(-1)?.id === snapshot
-        ? current
-        : {
-            ...current,
-            published: [...current.published, { id: snapshot, at: Date.now() }],
-          },
-    ),
-  )
-  return snapshot
+  if (!doc) return Promise.reject(new Error(`No design system ${id}`))
+  const request = (async () => {
+    const last = doc.published.at(-1)
+    if (last && !(await hasUnpublishedChanges(doc))) return last.id
+    const { schema: _, ...body } = snapshotContent(doc)
+    const snapshot = await post(body)
+    contentIds.set(contentKey(doc), snapshot)
+    update((workspace) =>
+      withDoc(workspace, id, (current) =>
+        current.published.at(-1)?.id === snapshot
+          ? current
+          : {
+              ...current,
+              published: [
+                ...current.published,
+                { id: snapshot, at: Date.now() },
+              ],
+            },
+      ),
+    )
+    return snapshot
+  })().finally(() => {
+    inflight.delete(id)
+    notifyInflight()
+  })
+  inflight.set(id, request)
+  notifyInflight()
+  return request
 }
 
 /** A snapshot fetched by id, validated like the server's own read. */

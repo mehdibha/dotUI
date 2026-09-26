@@ -27,3 +27,11 @@ export function ago(
       return FORMATS[style].format(-Math.floor(seconds / size), unit)
   return style === "narrow" ? "just now" : "Just now"
 }
+
+/** A clock time today, a date otherwise: "3:42 PM", "Sep 12". */
+export function clock(at: number, now = Date.now()): string {
+  const date = new Date(at)
+  return date.toDateString() === new Date(now).toDateString()
+    ? date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
+    : date.toLocaleDateString(undefined, { month: "short", day: "numeric" })
+}

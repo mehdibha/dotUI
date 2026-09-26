@@ -23,7 +23,7 @@ import { getPreset } from "@/modules/presets"
 import { sameState } from "./axes"
 import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
 import type { Current } from "./selection"
-import { ago } from "./time"
+import { ago, clock } from "./time"
 import { fetchSnapshot } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
@@ -55,14 +55,6 @@ function resetLabel(doc: DesignSystemDoc): string {
   if (doc.origin.kind === "snapshot") return "Reset to shared version"
   if (doc.origin.kind === "copy") return "Reset to copy point"
   return `Reset to ${getPreset(doc.origin.id)?.name ?? "preset"}`
-}
-
-// The relative time rounds; the clock pins it.
-function clock(at: number, now: number): string {
-  const date = new Date(at)
-  return date.toDateString() === new Date(now).toDateString()
-    ? date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
-    : date.toLocaleDateString(undefined, { month: "short", day: "numeric" })
 }
 
 function Entry({ at, now }: { at: number; now: number }) {
