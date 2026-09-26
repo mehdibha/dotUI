@@ -10,8 +10,8 @@ import {
   MenuItem,
   MenuItemDescription,
   MenuItemLabel,
-  MenuSection,
 } from "@/registry/ui/menu"
+import { Separator } from "@/registry/ui/separator"
 import { toastManager } from "@/registry/ui/toast"
 
 import { initCommand, snapshotLink } from "./publish"
@@ -87,30 +87,25 @@ export function SystemMenu({
         if (key === "delete") onDelete()
       }}
     >
-      <MenuSection>
-        <MenuItem id="rename" textValue="Rename">
-          <MenuItemLabel>Rename</MenuItemLabel>
-          {isCurrent && <Kbd>F2</Kbd>}
-        </MenuItem>
-        <MenuItem id="duplicate">Duplicate</MenuItem>
-        <MenuItem
-          id="link"
-          isDisabled={!last}
-          textValue={unpublished ? "Copy last published link" : "Copy link"}
-        >
-          <MenuItemLabel>
-            {unpublished ? "Copy last published link" : "Copy link"}
-          </MenuItemLabel>
-          {!last && (
-            <MenuItemDescription>Not published yet</MenuItemDescription>
-          )}
-        </MenuItem>
-      </MenuSection>
-      <MenuSection>
-        <MenuItem id="delete" variant="danger">
-          Delete
-        </MenuItem>
-      </MenuSection>
+      <MenuItem id="rename" textValue="Rename">
+        <MenuItemLabel>Rename</MenuItemLabel>
+        {isCurrent && <Kbd>F2</Kbd>}
+      </MenuItem>
+      <MenuItem id="duplicate">Duplicate</MenuItem>
+      <MenuItem
+        id="link"
+        isDisabled={!last}
+        textValue={unpublished ? "Copy last published link" : "Copy link"}
+      >
+        <MenuItemLabel>
+          {unpublished ? "Copy last published link" : "Copy link"}
+        </MenuItemLabel>
+        {!last && <MenuItemDescription>Not published yet</MenuItemDescription>}
+      </MenuItem>
+      <Separator />
+      <MenuItem id="delete" variant="danger">
+        Delete
+      </MenuItem>
     </MenuContent>
   )
 }
