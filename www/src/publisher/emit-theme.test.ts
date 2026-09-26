@@ -8,6 +8,7 @@ type InitItemConfig = {
   config?: {
     tailwind?: { cssVariables?: boolean }
     registries?: Record<string, unknown>
+    aliases?: unknown
   }
 }
 
@@ -50,7 +51,10 @@ describe("emitInitItem", () => {
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
       "https://dotui.org/r/{name}.json",
     )
-    expect(item.files?.map((file) => file.target)).toEqual(["src/lib/utils.ts"])
+    expect(item.files?.map((file) => [file.path, file.target])).toEqual([
+      ["lib/utils.ts", undefined],
+    ])
+    expect((item as InitItemConfig).config?.aliases).toBeUndefined()
     expect(JSON.stringify(item)).not.toContain("dotui-base.css")
     // Nothing else loads the default faces in a consumer project.
     expect(item.registryDependencies).toEqual([

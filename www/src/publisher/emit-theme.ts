@@ -167,6 +167,8 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   //   coding `src/styles/globals.css` here would override a correct
   //   detection and cause ENOENT when shadcn tries to merge cssVars into a
   //   file that doesn't exist.
+  // - No `aliases` — shadcn detects them from the project's tsconfig paths
+  //   (`~/` on React Router); these would override it.
   // - `cssVariables: true` because dotUI installs its design tokens through
   //   this registry item's structured CSS fields.
   // - The `@dotui` registries mapping is preserved as a convenience for
@@ -177,13 +179,6 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     style: "default",
     tailwind: {
       cssVariables: true,
-    },
-    aliases: {
-      components: "@/components",
-      ui: "@/components/ui",
-      utils: "@/lib/utils",
-      lib: "@/lib",
-      hooks: "@/hooks",
     },
     registries: {
       "@dotui": itemUrl("{name}"),
@@ -206,8 +201,8 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     files: [
       {
         type: "registry:lib",
+        // No `target`: shadcn places it under the project's `lib` alias.
         path: "lib/utils.ts",
-        target: "src/lib/utils.ts",
         content: CN_UTILS_TS,
       },
     ],
