@@ -755,8 +755,21 @@ function RenameField({
   }
   const stop = (e: { stopPropagation: () => void }) => e.stopPropagation()
 
+  // The list keeps focus where it is on a press (it prevents mousedown), so
+  // a press anywhere else blurs the field itself.
+  const ref = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.target !== ref.current) ref.current?.blur()
+    }
+    document.addEventListener("pointerdown", onPointerDown, true)
+    return () =>
+      document.removeEventListener("pointerdown", onPointerDown, true)
+  }, [])
+
   return (
     <input
+      ref={ref}
       aria-label="Design system name"
       defaultValue={name}
       maxLength={64}
