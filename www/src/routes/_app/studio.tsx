@@ -170,8 +170,8 @@ function StudioPage() {
 // the drawers and below the header's Share and Export.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
-  className:
-    "relative z-60 max-md:*:data-[slot=toast-viewport]:top-[calc(var(--header-height)+(--spacing(2)))]!",
+  // Portaled out of the layout's --header-height: 14 plus a gap.
+  className: "relative z-60 max-md:*:data-[slot=toast-viewport]:top-16!",
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {
