@@ -10,7 +10,13 @@ import {
   PALETTE_OPTIONS,
   paletteOption,
 } from "../axes/charts"
-import { DialGlyph, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -67,7 +73,7 @@ function GridGlyph({ grid }: { grid: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function ChartsPreview({ state }: { state: StudioState }) {
+function ChartsPreview({ state }: { state: StudioState }) {
   return <SeriesGlyph palette={paletteOption(state.chartPalette)} />
 }
 
@@ -75,29 +81,43 @@ export function ChartsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Palette"
-        value={paletteOption(state.chartPalette)}
-        onChange={set("chartPalette")}
-        rowPreview={false}
-        options={PALETTE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <SeriesGlyph palette={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Grid"
-        value={gridOption(state.chartGrid)}
-        onChange={set("chartGrid")}
-        options={GRID_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <GridGlyph grid={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+      <DialTrigger
+        label="Chart"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(PALETTE_OPTIONS, paletteOption(state.chartPalette))}
+            </span>
+            <ChartsPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Palette"
+            value={paletteOption(state.chartPalette)}
+            onChange={set("chartPalette")}
+            rowPreview={false}
+            options={PALETTE_OPTIONS.map((option) => ({
+              ...option,
+              preview: <SeriesGlyph palette={option.value} />,
+            }))}
+          />
+          <DialSelect
+            label="Grid"
+            value={gridOption(state.chartGrid)}
+            onChange={set("chartGrid")}
+            options={GRID_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <GridGlyph grid={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

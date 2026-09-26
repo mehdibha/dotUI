@@ -18,7 +18,7 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -190,20 +190,12 @@ function CurrentGlyph({ current }: { current: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function NavigationPreview({ state }: { state: StudioState }) {
-  return (
-    <DialGlyph>
-      <TabGlyph style={state.tabStyle} />
-    </DialGlyph>
-  )
-}
-
 export function NavigationSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
       <DialSelect
-        label="Links"
+        label="Link"
         value={state.linkUnderline}
         onChange={set("linkUnderline")}
         options={UNDERLINE_OPTIONS.map((option) => ({

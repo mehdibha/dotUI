@@ -4,9 +4,17 @@
    Motion: the arrow at the trigger and how a title sits. The tooltip is a
    surface decision of its own, never synced to the popover's. */
 
+import { PICKER_OPTIONS } from "../axes/mobile"
 import { HEADER_OPTIONS } from "../axes/popovers"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
-import { DialGlyph, DialSegmented, DialSelect, DialToggle } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialToggle,
+  DialTrigger,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -71,7 +79,7 @@ function TooltipGlyph({ filled }: { filled: boolean }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function PopoversPreview({ state }: { state: StudioState }) {
+function PopoversPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <TipGlyph tip={state.popoverTip === "tip"} />
@@ -83,17 +91,37 @@ export function PopoversSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialToggle
-        label="Arrow"
-        value={state.popoverTip === "tip"}
-        onChange={(on) => set("popoverTip")(on ? "tip" : "none")}
-      />
-      <DialSegmented
-        label="Header"
-        value={state.popoverHeader}
-        onChange={set("popoverHeader")}
-        options={HEADER_OPTIONS}
-      />
+      <DialTrigger
+        label="Popover"
+        value={
+          <>
+            <span className="truncate">
+              {state.popoverTip === "tip" ? "Arrow" : "Plain"}
+            </span>
+            <PopoversPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialToggle
+            label="Arrow"
+            value={state.popoverTip === "tip"}
+            onChange={(on) => set("popoverTip")(on ? "tip" : "none")}
+          />
+          <DialSegmented
+            label="Header"
+            value={state.popoverHeader}
+            onChange={set("popoverHeader")}
+            options={HEADER_OPTIONS}
+          />
+          <DialSegmented
+            label="On mobile"
+            value={state.mobilePickers}
+            onChange={set("mobilePickers")}
+            options={PICKER_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
       <DialSelect
         label="Tooltip"
         value={state.tooltipStyle}

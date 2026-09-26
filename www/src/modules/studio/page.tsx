@@ -38,7 +38,6 @@ function ChapterBlock({
   studio: Studio
   docked: boolean
 }) {
-  const { Primary, Body } = chapter
   return (
     <section
       data-chapter={chapter.id}
@@ -48,8 +47,9 @@ function ChapterBlock({
         !docked && "max-lg:hidden",
       )}
     >
-      {Primary && <Primary studio={studio} />}
-      <Body studio={studio} />
+      {chapter.rows.map((Row, i) => (
+        <Row key={i} studio={studio} />
+      ))}
     </section>
   )
 }

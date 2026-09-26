@@ -18,7 +18,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -91,14 +91,6 @@ function CardGlyph({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SelectionControlsPreview({ state }: { state: StudioState }) {
-  return (
-    <DialGlyph>
-      <CornerGlyph corner={state.checkCorner} />
-    </DialGlyph>
-  )
-}
-
 export function SelectionControlsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
@@ -118,7 +110,7 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialTrigger
-        label="Choice cards"
+        label="Choice card"
         value={
           <>
             <span className="truncate">

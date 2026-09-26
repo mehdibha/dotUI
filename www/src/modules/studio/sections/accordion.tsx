@@ -8,7 +8,14 @@ import {
   MARKER_OPTIONS,
   POSITION_OPTIONS,
 } from "../axes/accordion"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -86,7 +93,7 @@ function MarkerGlyph({ marker }: { marker: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function AccordionPreview({ state }: { state: StudioState }) {
+function AccordionPreview({ state }: { state: StudioState }) {
   return (
     <DialGlyph>
       <ContainerGlyph container={state.accordionContainer} />
@@ -98,39 +105,53 @@ export function AccordionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Container"
-        value={state.accordionContainer}
-        onChange={set("accordionContainer")}
-        rowPreview={false}
-        options={CONTAINER_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <ContainerGlyph container={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="Marker"
-        value={state.accordionMarker}
-        onChange={set("accordionMarker")}
-        options={MARKER_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <MarkerGlyph marker={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        label="Position"
-        value={state.accordionMarkerPosition}
-        onChange={set("accordionMarkerPosition")}
-        options={POSITION_OPTIONS}
-      />
+      <DialTrigger
+        label="Accordion"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(CONTAINER_OPTIONS, state.accordionContainer)}
+            </span>
+            <AccordionPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Container"
+            value={state.accordionContainer}
+            onChange={set("accordionContainer")}
+            rowPreview={false}
+            options={CONTAINER_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <ContainerGlyph container={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSelect
+            label="Marker"
+            value={state.accordionMarker}
+            onChange={set("accordionMarker")}
+            options={MARKER_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <MarkerGlyph marker={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Position"
+            value={state.accordionMarkerPosition}
+            onChange={set("accordionMarkerPosition")}
+            options={POSITION_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

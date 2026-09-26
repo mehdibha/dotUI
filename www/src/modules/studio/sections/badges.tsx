@@ -8,7 +8,14 @@ import { cn } from "@/registry/lib/utils"
 
 import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
 import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGlyph,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialTrigger,
+  optionLabel,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -88,7 +95,7 @@ function KbdGlyph({ treatment }: { treatment: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function BadgesPreview({ state }: { state: StudioState }) {
+function BadgesPreview({ state }: { state: StudioState }) {
   return <ChipGlyph style={state.badgeStyle} shape={state.badgeShape} />
 }
 
@@ -96,22 +103,38 @@ export function BadgesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Style"
-        value={state.badgeStyle}
-        onChange={set("badgeStyle")}
-        rowPreview={false}
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <ChipGlyph style={option.value} shape={state.badgeShape} />,
-        }))}
-      />
-      <DialSegmented
-        label="Shape"
-        value={state.badgeShape}
-        onChange={set("badgeShape")}
-        options={SHAPE_OPTIONS}
-      />
+      <DialTrigger
+        label="Badge"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(STYLE_OPTIONS, state.badgeStyle)}
+            </span>
+            <BadgesPreview state={state} />
+          </>
+        }
+      >
+        <DialPopover className="w-72">
+          <DialSelect
+            label="Style"
+            value={state.badgeStyle}
+            onChange={set("badgeStyle")}
+            rowPreview={false}
+            options={STYLE_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <ChipGlyph style={option.value} shape={state.badgeShape} />
+              ),
+            }))}
+          />
+          <DialSegmented
+            label="Shape"
+            value={state.badgeShape}
+            onChange={set("badgeShape")}
+            options={SHAPE_OPTIONS}
+          />
+        </DialPopover>
+      </DialTrigger>
       <DialSelect
         label="Kbd"
         value={state.kbdTreatment}

@@ -336,9 +336,10 @@ ${groupEntries.join("\n")}
 }
 
 /** Studio panel search index: every settings row label and group title in
- *  each chapter's section, keyed by chapter id — so search reaches nested
- *  axes, not just chapter names. Read off the section JSX; data-driven
- *  labels (color roles, shape roles) are out of scope. */
+ *  each panel group's sections (and the sibling sections they compose), keyed
+ *  by group id — so search reaches nested axes, not just group names. Read
+ *  off the section JSX; data-driven labels (color roles, shape roles) are out
+ *  of scope. */
 async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
   const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
@@ -351,37 +352,38 @@ async function buildStudioSearchIndex() {
     for (const name of names.split(",")) sectionOf.set(name.trim(), file)
   }
 
+  const read = (name: string) =>
+    fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
+  const rowLabels = (source: string) => {
+    const found: string[] = []
+    // A row's own label — the tag must not contain another "<" before it.
+    for (const [, label = ""] of source.matchAll(
+      /<(?:\w+Row|Dial\w+|CardGrid)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+    ))
+      found.push(label)
+    for (const [, title = ""] of source.matchAll(
+      /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
+    ))
+      found.push(title.trim())
+    return found
+  }
+
   const lines: string[] = []
-  for (const [, id = "", body = ""] of state.matchAll(
-    /id: "([\w-]+)",[\s\S]*?Body: (\w+),/g,
+  for (const [, id = "", rows = ""] of state.matchAll(
+    /id: "([\w-]+)",[\s\S]*?rows: \[([^\]]*)\]/g,
   )) {
-    const file = sectionOf.get(body)
-    if (!file) continue
-    const read = (name: string) =>
-      fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
-    const rowLabels = (source: string) => {
-      const found: string[] = []
-      // A row's own label — the tag must not contain another "<" before it.
-      for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|CardGrid)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
-      ))
-        found.push(label)
-      for (const [, title = ""] of source.matchAll(
-        /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
-      ))
-        found.push(title.trim())
-      return found
+    const files = new Set<string>()
+    for (const name of rows.split(",")) {
+      const file = sectionOf.get(name.trim())
+      if (file) files.add(file)
     }
-    const source = await read(file)
-    const labels = new Set<string>(rowLabels(source))
-    // A section that composes sibling sections (Components) indexes their
-    // rows too, under the sibling's name.
-    for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g)) {
-      const title = sibling.replace(/-/g, " ")
-      const prefix = title[0]!.toUpperCase() + title.slice(1)
-      labels.add(prefix)
-      for (const label of rowLabels(await read(sibling)))
-        labels.add(`${prefix} › ${label}`)
+    const labels = new Set<string>()
+    for (const file of files) {
+      const source = await read(file)
+      for (const label of rowLabels(source)) labels.add(label)
+      // A section that composes sibling sections indexes their rows too.
+      for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g))
+        for (const label of rowLabels(await read(sibling))) labels.add(label)
     }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
@@ -391,14 +393,14 @@ async function buildStudioSearchIndex() {
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
-/** Settings row labels per chapter id, for the panel search. */
+/** Settings row labels per panel group id, for the panel search. */
 export const SEARCH_INDEX: Record<string, string[]> = {
 ${lines.join("\n")}
 }
 `
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
+    `  ✓ studio/__generated__/search-index.ts (${lines.length} groups)`,
   )
 }
 
