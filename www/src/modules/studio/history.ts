@@ -358,6 +358,10 @@ export function checkpoint(id: string): void {
 const TEXT_ENTRY =
   "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
 
+/** Whether a key event's target keeps the key for itself (a text field). */
+export const inTextEntry = (target: EventTarget | null) =>
+  target instanceof Element && !!target.closest(TEXT_ENTRY)
+
 const checkpointCurrent = () => {
   const { doc } = getCurrent()
   if (doc) checkpoint(doc.id)
@@ -376,7 +380,7 @@ export function useHistory(systemId: string | undefined) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey) || e.altKey) return
-      if (e.target instanceof Element && e.target.closest(TEXT_ENTRY)) return
+      if (inTextEntry(e.target)) return
       const key = e.key.toLowerCase()
       if (key === "z" && !e.shiftKey) undo()
       else if ((key === "z" && e.shiftKey) || (key === "y" && e.ctrlKey)) redo()

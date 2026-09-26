@@ -340,7 +340,7 @@ function PresetPickerContent({
             <Input
               ref={searchRef}
               onKeyDown={onSearchKeyDown}
-              placeholder="Search systems..."
+              placeholder="Search"
               onInput={(e) => {
                 setQuery(e.currentTarget.value)
                 // Typing moves the highlight to the first match, so from here on
@@ -432,7 +432,7 @@ function PresetPickerContent({
                         ? (name, submit) => {
                             onRenameEnd(item.id, name, submit)
                             // Back to the search, which drives the list.
-                            if (!submit)
+                            if (!submit && surface === "popover")
                               requestAnimationFrame(() =>
                                 searchRef.current?.focus(),
                               )

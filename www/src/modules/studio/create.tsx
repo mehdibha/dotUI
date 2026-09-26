@@ -13,7 +13,7 @@ import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { getPreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { duplicate, newSystem, remove } from "./history"
+import { duplicate, inTextEntry, newSystem, remove } from "./history"
 import { HistoryControls, quoted, undoToast } from "./history-menu"
 import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
@@ -29,9 +29,6 @@ import { purgeExpired, rename, useTrash, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
-
-const TEXT_ENTRY =
-  "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
 
 /** What the trigger's tooltip says after the name. */
 function kindOf({ sel, doc }: Current, workspace: Workspace): string {
@@ -88,7 +85,7 @@ export function StudioPanel({ className }: { className?: string }) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key !== "F2" || e.metaKey || e.ctrlKey || e.altKey) return
-      if (e.target instanceof Element && e.target.closest(TEXT_ENTRY)) return
+      if (inTextEntry(e.target)) return
       e.preventDefault()
       renameCurrent()
     }
