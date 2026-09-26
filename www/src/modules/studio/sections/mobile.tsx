@@ -84,14 +84,6 @@ const withGlyphs = (
 const PICKERS = withGlyphs(PICKER_OPTIONS)
 const DIALOGS = withGlyphs(DIALOG_OPTIONS)
 
-export function MobilePreview({ state }: { state: StudioState }) {
-  return (
-    <DialGlyph>
-      <PhoneGlyph layer={state.mobilePickers as Layer} />
-    </DialGlyph>
-  )
-}
-
 export function mobileSummary(state: StudioState): string {
   return (
     PICKER_OPTIONS.find((o) => o.value === state.mobilePickers)?.label ??
@@ -104,14 +96,14 @@ export function MobileSection({ studio }: { studio: Studio }) {
   return (
     <>
       <DialSelect
-        label="Pickers"
+        label="Mobile pickers"
         value={state.mobilePickers}
         onChange={set("mobilePickers")}
         options={PICKERS}
         rowPreview={false}
       />
       <DialSelect
-        label="Dialogs"
+        label="Mobile dialogs"
         value={state.mobileDialogs}
         onChange={set("mobileDialogs")}
         options={DIALOGS}

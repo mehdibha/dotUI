@@ -1,14 +1,12 @@
 "use client"
 
-/* Shape — the base radius, and a character: which rung each role of component
-   wears. The character opens a grid of cards, each a small app drawn at that
-   character's real radii on the current base, so the pick is made by feel.
-   Roles fold under the cards for the system that needs one role off the
+/* Radius — one row opening the base radius, then a character: which rung each
+   role of component wears. The characters are cards, each a small app drawn
+   at that character's real radii on the current base, so the pick is made by
+   feel. Roles fold under the cards for the system that needs one role off the
    curated path; a hand-set vector reads Custom. */
 
 import { useState } from "react"
-
-import { cn } from "@/registry/lib/utils"
 
 import {
   activeCharacter,
@@ -22,6 +20,7 @@ import {
 import type { ShapeRoleKey } from "../axes/shape"
 import {
   DialFolder,
+  DialGap,
   DialPopover,
   DialSelect,
   DialSlider,
@@ -68,8 +67,8 @@ function AppGlyph({ state }: { state: StudioState }) {
   )
 }
 
-/** The chapter's specimen: the surface corner with a control nested inside. */
-export function ShapePreview({ state }: { state: StudioState }) {
+/** The row's specimen: the surface corner with a control nested inside. */
+function ShapePreview({ state }: { state: StudioState }) {
   const arc = (key: ShapeRoleKey, size: number) =>
     Math.min(roleRadiusPx(state, key), size)
   return (
@@ -86,7 +85,7 @@ export function ShapePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function shapeSummary(state: StudioState): string {
+function shapeSummary(state: StudioState): string {
   const character =
     SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
     "Custom"
@@ -149,34 +148,29 @@ function CharacterPanel({ studio }: { studio: Studio }) {
 
 export function ShapeSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const character = SHAPE_CHARACTERS.find(
-    (c) => c.id === activeCharacter(state),
-  )
   return (
-    <>
-      <DialSlider
-        label="Radius"
-        value={state.radiusPx}
-        onChange={set("radiusPx")}
-        minValue={RADIUS_RANGE.min}
-        maxValue={RADIUS_RANGE.max}
-        step={RADIUS_RANGE.step}
-        format={px}
-      />
-      <DialTrigger
-        label="Character"
-        value={
-          <>
-            <span className={cn("truncate", !character && "text-fg/50")}>
-              {character?.label ?? "Custom"}
-            </span>
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CharacterPanel studio={studio} />
-        </DialPopover>
-      </DialTrigger>
-    </>
+    <DialTrigger
+      label="Radius"
+      value={
+        <>
+          <span className="truncate">{shapeSummary(state)}</span>
+          <ShapePreview state={state} />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <DialSlider
+          label="Radius"
+          value={state.radiusPx}
+          onChange={set("radiusPx")}
+          minValue={RADIUS_RANGE.min}
+          maxValue={RADIUS_RANGE.max}
+          step={RADIUS_RANGE.step}
+          format={px}
+        />
+        <DialGap />
+        <CharacterPanel studio={studio} />
+      </DialPopover>
+    </DialTrigger>
   )
 }

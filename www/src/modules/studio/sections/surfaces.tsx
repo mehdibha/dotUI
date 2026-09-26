@@ -1,12 +1,11 @@
 "use client"
 
-/* Surfaces — the canvas and what sits on it. Style opens five cards, each
-   the recipe drawn twice, light beside dark: dark behavior is part of a style
-   (shadows die on near-black), so the pick shows both modes instead of asking
-   for them separately. Depth is the one intensity lever, Page whether white
-   surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — sits under Style, whose cards draw
-   both modes. */
+/* Surfaces — the canvas and what sits on it, in one row. Style cards draw the
+   recipe twice, light beside dark: dark behavior is part of a style (shadows
+   die on near-black), so the pick shows both modes instead of asking for them
+   separately. Depth is the one intensity lever, Page whether white surfaces
+   lift off a gray page, Glass the popover material; each mode's background
+   folds under them. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -28,6 +27,7 @@ import type {
   SurfacePalette,
 } from "../axes/surfaces"
 import {
+  DialFolder,
   DialGap,
   DialPopover,
   DialSegmented,
@@ -150,12 +150,13 @@ function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
 const strategyLabel = (value: string) =>
   STRATEGY_OPTIONS.find((o) => o.value === value)?.label ?? value
 
-export function SurfacesPreview({ state }: { state: StudioState }) {
+function SurfacesPreview({ state }: { state: StudioState }) {
   return <StyleGlyph state={state} mini />
 }
 
-export function surfacesSummary(state: StudioState): string {
-  return strategyLabel(state.surfaceStrategy)
+function surfacesSummary(state: StudioState): string {
+  const label = strategyLabel(state.surfaceStrategy)
+  return state.surfaceMaterial === "glass" ? `${label} · Glass` : label
 }
 
 const formatBg = (mode: ColorMode, v: number) =>
@@ -170,31 +171,57 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
   const setBg = (mode: ColorMode) => (bg: number) =>
     set("modes")(state.modes.map((m) => (m.id === mode.id ? { ...m, bg } : m)))
   return (
-    <>
-      <DialTrigger label="Style" value={strategyLabel(state.surfaceStrategy)}>
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Style"
-            value={state.surfaceStrategy}
-            onChange={set("surfaceStrategy")}
-            options={STRATEGY_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: (
-                <StyleGlyph
-                  state={{ ...state, surfaceStrategy: option.value }}
-                />
-              ),
-            }))}
-          />
-          <DialGap />
+    <DialTrigger
+      label="Surfaces"
+      value={
+        <>
+          <span className="truncate">{surfacesSummary(state)}</span>
+          <SurfacesPreview state={state} />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <CardGrid
+          label="Style"
+          value={state.surfaceStrategy}
+          onChange={set("surfaceStrategy")}
+          options={STRATEGY_OPTIONS.map((option) => ({
+            id: option.value,
+            label: option.label,
+            children: (
+              <StyleGlyph state={{ ...state, surfaceStrategy: option.value }} />
+            ),
+          }))}
+        />
+        <DialGap />
+        <DialSlider
+          label="Depth"
+          value={depth}
+          onChange={(i) => set("surfaceDepth")(DEPTH_OPTIONS[i]!.value)}
+          minValue={0}
+          maxValue={DEPTH_OPTIONS.length - 1}
+          step={1}
+          format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
+        />
+        <DialSegmented
+          label="Page"
+          value={state.surfaceCanvas}
+          onChange={set("surfaceCanvas")}
+          options={CANVAS_OPTIONS}
+        />
+        <DialToggle
+          label="Glass"
+          value={state.surfaceMaterial === "glass"}
+          onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
+        />
+        <DialFolder title="Backgrounds" defaultOpen={false}>
           {(["light", "dark"] as const).map((polarity) => {
             const mode = modeFor(state, polarity)
             const light = polarity === "light"
             return (
               <DialSlider
                 key={mode.id}
-                label={`${mode.name} background`}
+                label={mode.name}
                 value={mode.bg}
                 onChange={setBg(mode)}
                 minValue={light ? 90 : 0}
@@ -204,28 +231,8 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
               />
             )
           })}
-        </DialPopover>
-      </DialTrigger>
-      <DialSlider
-        label="Depth"
-        value={depth}
-        onChange={(i) => set("surfaceDepth")(DEPTH_OPTIONS[i]!.value)}
-        minValue={0}
-        maxValue={DEPTH_OPTIONS.length - 1}
-        step={1}
-        format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
-      />
-      <DialSegmented
-        label="Page"
-        value={state.surfaceCanvas}
-        onChange={set("surfaceCanvas")}
-        options={CANVAS_OPTIONS}
-      />
-      <DialToggle
-        label="Glass"
-        value={state.surfaceMaterial === "glass"}
-        onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
-      />
-    </>
+        </DialFolder>
+      </DialPopover>
+    </DialTrigger>
   )
 }
