@@ -1,4 +1,4 @@
-/* The history shortcuts, shared by the studio and its preview iframe (which
+/* The studio's shortcuts, shared by the studio and its preview iframe (which
    hands them up): dependency-free, since the iframe hooks load at the root. */
 
 const TEXT_ENTRY =
@@ -15,3 +15,11 @@ export function historyKey(e: KeyboardEvent): "undo" | "redo" | undefined {
   if (key === "z") return e.shiftKey ? "redo" : "undo"
   if (key === "y" && e.ctrlKey) return "redo"
 }
+
+/** F2 outside text fields: rename the current design system. */
+export const renameKey = (e: KeyboardEvent) =>
+  e.key === "F2" &&
+  !e.metaKey &&
+  !e.ctrlKey &&
+  !e.altKey &&
+  !inTextEntry(e.target)

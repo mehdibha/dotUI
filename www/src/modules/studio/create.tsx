@@ -13,7 +13,7 @@ import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { duplicate, newSystem, remove } from "./history"
-import { inTextEntry } from "./history-keys"
+import { renameKey } from "./history-keys"
 import { HistoryControls } from "./history-menu"
 import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
@@ -82,13 +82,21 @@ export function StudioPanel({ className }: { className?: string }) {
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "F2" || e.metaKey || e.ctrlKey || e.altKey) return
-      if (inTextEntry(e.target)) return
+      if (!renameKey(e)) return
       e.preventDefault()
       renameCurrent()
     }
+    // F2 pressed in the preview, handed up by its iframe.
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin === window.location.origin && e.data?.type === "preview-rename")
+        renameCurrent()
+    }
     window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
+    window.addEventListener("message", onMessage)
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("message", onMessage)
+    }
   })
 
   function onPick(key: string) {
