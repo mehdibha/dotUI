@@ -206,11 +206,14 @@ function subscribe(onChange: () => void) {
 export const useWorkspace = (): Workspace =>
   useSyncExternalStore(subscribe, getWorkspace, () => EMPTY)
 
-/** The list as pickers show it: the draft first, then newest first. */
+/** The list as pickers show it: the draft first, then the latest edited. */
 export const listed = (workspace: Workspace): DesignSystemDoc[] =>
   [...workspace.systems]
     .reverse()
-    .sort((a, b) => Number(b.draft) - Number(a.draft))
+    .sort(
+      (a, b) =>
+        Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
+    )
 
 /** A draft with changes worth keeping. */
 export const isChangedDraft = (doc: DesignSystemDoc | undefined) =>

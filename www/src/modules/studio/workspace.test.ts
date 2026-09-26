@@ -86,6 +86,25 @@ describe("workspace", () => {
     ])
   })
 
+  it("lists the latest edited first", async () => {
+    vi.useFakeTimers({ now: 1000 })
+    const { ws, doc } = await created("Alpha")
+    vi.setSystemTime(2000)
+    const bravo = ws.create({
+      name: "Bravo",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })!
+    vi.setSystemTime(3000)
+    ws.setState(doc.id, parseState({ ...linear.state, radiusPx: 5 }))
+    ws.flush()
+    expect(ws.listed(ws.getWorkspace()).map((s) => s.name)).toEqual([
+      "Alpha",
+      bravo.name,
+    ])
+  })
+
   it("keeps a draft on rename, but not on the same name", async () => {
     const ws = await load()
     const draft = ws.create({
