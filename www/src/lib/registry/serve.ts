@@ -70,7 +70,14 @@ export const serveRegistry = (request: Request, store: SnapshotStore) =>
     if (name === "registry")
       return registryJson(registryIndex(url.origin, preset))
     if (name === "init")
-      return registryJson(emitInitItem({ baseRegistryCss, preset, itemUrl }))
+      return registryJson(
+        emitInitItem({
+          baseRegistryCss,
+          preset,
+          itemUrl,
+          shadcnBase: url.searchParams.get("base"),
+        }),
+      )
     if (name === "v0") {
       const { v0Item } = await import("./v0")
       return registryJson(await v0Item(preset))
