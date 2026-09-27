@@ -166,7 +166,7 @@ describe("views and forks", () => {
     edit(5)
     expect(current().name).toBe("My Stripe 2")
     selection.select({
-      kind: "shared",
+      kind: "link",
       id: "abc",
       name: "My Brand",
       state: radius(2),

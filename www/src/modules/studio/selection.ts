@@ -1,9 +1,9 @@
 "use client"
 
 /* The one current design system, shared by the studio and the docs:
-   `dotui:current` holds a preset view, a shared view or one of the user's
-   systems. Every tab follows it. Views are read-only; the studio forks the
-   first edit of one into a system (see history.ts). */
+   `dotui:current` holds a view or one of the user's systems. Every tab
+   follows it. Views are read-only; the studio forks the first edit of one
+   into a system (see history.ts). */
 
 import { useMemo } from "react"
 
@@ -16,12 +16,12 @@ import type { StudioState } from "@/modules/studio/axes"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc, Workspace } from "./workspace"
 
-export type Selection =
+/** A read-only starting point: a preset, or a shared link's snapshot. */
+export type View =
   | { kind: "preset"; id: string }
-  | { kind: "shared"; id: string; name: string; state: StudioState }
-  | { kind: "system"; id: string }
+  | { kind: "link"; id: string; name: string; state: StudioState }
 
-export type ViewSelection = Exclude<Selection, { kind: "system" }>
+export type Selection = View | { kind: "system"; id: string }
 
 const ORIGIN_VIEW: Selection = { kind: "preset", id: ORIGIN.id }
 
@@ -33,12 +33,12 @@ function parseSelection(raw: unknown): Selection | undefined {
     return { kind: "preset", id: sel.id }
   if (sel.kind === "system" && sel.id) return { kind: "system", id: sel.id }
   if (
-    sel.kind === "shared" &&
+    sel.kind === "link" &&
     SNAPSHOT_ID.test(sel.id) &&
     workspace.isName(sel.name)
   )
     return {
-      kind: "shared",
+      kind: "link",
       id: sel.id,
       name: sel.name,
       state: salvageState(sel.state),
@@ -66,7 +66,7 @@ export const getSelection = (): Selection => store.get()?.sel ?? ORIGIN_VIEW
 export const useSelection = (): Selection =>
   store.useValue()?.sel ?? ORIGIN_VIEW
 
-/** One key per selection: `preset:<id>`, `shared:<id>` or `system:<id>`. */
+/** One key per selection: `preset:<id>`, `link:<id>` or `system:<id>`. */
 export const selectionKey = (sel: Selection) => `${sel.kind}:${sel.id}`
 
 /** A system as a fork made it, before any change. */
@@ -120,7 +120,7 @@ export function describe(sel: Selection, ws: Workspace): Current {
         doc,
       }
   }
-  if (sel.kind === "shared")
+  if (sel.kind === "link")
     return {
       sel,
       key: selectionKey(sel),

@@ -15,9 +15,9 @@ export function pickerSections(
 ): PresetPickerSection[] {
   const sections: PresetPickerSection[] = []
   const { sel } = current
-  if (sel.kind === "shared")
+  if (sel.kind === "link")
     sections.push({
-      id: "shared",
+      id: "link",
       title: "Shared link",
       items: [
         {

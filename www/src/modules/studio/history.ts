@@ -16,8 +16,13 @@ import type { StudioState } from "./axes"
 import { historyKey } from "./history-keys"
 import { getCurrent, getSelection, select, selectionKey } from "./selection"
 import type { Selection } from "./selection"
-import { quoted, undoToast } from "./toasts"
 import * as workspace from "./workspace"
+
+/** A design system's name in a toast title: quoted, cut at 32 characters. */
+function quoted(name: string): string {
+  const chars = [...name]
+  return `"${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}"`
+}
 
 const MERGE_MS = 500
 const UNDO_LIMIT = 100
@@ -149,9 +154,17 @@ export function remove(
     workspace.insert(removed.doc, removed.index)
     if (wasCurrent) select({ kind: "system", id })
   }
-  undoToast(`Deleted ${quoted(removed.doc.name)}`, () => {
-    restore()
-    afterUndo?.()
+  const toast = toastManager.add({
+    title: `Deleted ${quoted(removed.doc.name)}`,
+    timeout: 10_000,
+    actionProps: {
+      children: "Undo",
+      onClick: () => {
+        toastManager.close(toast)
+        restore()
+        afterUndo?.()
+      },
+    },
   })
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
