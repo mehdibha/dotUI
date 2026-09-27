@@ -2,42 +2,83 @@
 
 /* The studio panel mounted in /studio's slot: the panel page over the current
    design system, its chrome wired to the workspace. The picker lists the
-   shared link being viewed, the user's systems (the draft first) and the
-   presets, each with a ⋯ menu, and opens at ?gallery=. */
+   shared link being viewed, the user's systems and the presets, and opens
+   at ?gallery=. */
 
 import { useEffect, useMemo, useRef, useState } from "react"
+import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
+import { Redo2Icon, Undo2Icon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { duplicate, newSystem, remove } from "./history"
+import {
+  duplicate,
+  newSystem,
+  redo,
+  remove,
+  undo,
+  useUndoRedo,
+} from "./history"
 import { renameKey } from "./history-keys"
-import { HistoryControls } from "./history-menu"
-import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { basedOn, pickerSections, rowSelection } from "./picker-sections"
+import { pickerSections, rowSelection } from "./picker-sections"
 import { RecentlyDeleted } from "./recently-deleted"
 import { SystemMenu } from "./row-menus"
 import { getCurrent, select, selectionKey, useCurrent } from "./selection"
-import type { Current, Selection } from "./selection"
+import type { Selection } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import { purgeExpired, rename, useTrash, useWorkspace } from "./workspace"
-import type { Workspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-/** What the trigger's tooltip says after the name. */
-function kindOf({ sel, doc }: Current, workspace: Workspace): string {
-  if (sel.kind === "preset") return "preset, edits create a draft"
-  if (sel.kind === "shared") return "shared link, edits create a draft"
-  if (!doc) return ""
-  const source = basedOn(doc, workspace)
-  const lower = source.charAt(0).toLowerCase() + source.slice(1)
-  return doc.draft ? `draft, ${lower}` : lower
+function HistoryButton({
+  label,
+  isDisabled,
+  onPress,
+  children,
+}: {
+  label: string
+  isDisabled: boolean
+  onPress: () => void
+  children: ReactNode
+}) {
+  return (
+    <Tooltip delay={0}>
+      <Button
+        size="sm"
+        variant="quiet"
+        isIconOnly
+        aria-label={label}
+        isDisabled={isDisabled}
+        onPress={onPress}
+        className="text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
+      >
+        {children}
+      </Button>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
+  )
+}
+
+function UndoRedo({ selection }: { selection: string }) {
+  const { canUndo, canRedo } = useUndoRedo(selection)
+  return (
+    <>
+      <HistoryButton label="Undo" isDisabled={!canUndo} onPress={undo}>
+        <Undo2Icon />
+      </HistoryButton>
+      <HistoryButton label="Redo" isDisabled={!canRedo} onPress={redo}>
+        <Redo2Icon />
+      </HistoryButton>
+    </>
+  )
 }
 
 export function StudioPanel({ className }: { className?: string }) {
@@ -102,23 +143,11 @@ export function StudioPanel({ className }: { className?: string }) {
     }
   })
 
-  function onPick(key: string) {
-    if (key !== current.key) leave(() => select(rowSelection(key, current)))
-  }
-
-  /** Runs `create` (which opens a new system) past the keep dialog, then
-   *  renames the new row. */
-  function created(create: () => string | undefined, leaves = true) {
-    const run = () => {
-      const id = create()
-      if (!id) return
-      setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
-      setGalleryOpen(true)
-    }
-    if (!leaves) return run()
-    // The keep dialog can't sit over the picker.
-    if (leaving()) setGalleryOpen(false)
-    leave(run)
+  /** Renames the row of a system just created. */
+  function created(id: string | undefined) {
+    if (!id) return
+    setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
+    setGalleryOpen(true)
   }
 
   function onDelete(id: string) {
@@ -143,29 +172,24 @@ export function StudioPanel({ className }: { className?: string }) {
         doc={doc}
         isCurrent={key === current.key}
         onRename={() => setRenaming({ key, closes: false })}
-        // Duplicating the draft on screen doesn't leave it.
-        onDuplicate={() =>
-          created(() => duplicate(doc.id), key !== current.key)
-        }
+        onDuplicate={() => created(duplicate(doc.id))}
         onDelete={() => afterClose(() => onDelete(doc.id))}
       />
     )
   }
 
-  const kind = kindOf(current, workspace)
   const system: PanelSystem = {
     name: current.name,
     swatch: current.swatch,
     tag: current.tag,
-    description: kind ? `${current.name} · ${kind}` : current.name,
-    history: <HistoryControls current={current} />,
+    history: <UndoRedo selection={current.key} />,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
         sections={sections}
         selectedId={current.key}
-        onPick={(item) => onPick(item.id)}
+        onPick={(item) => select(rowSelection(item.id, current))}
         onCreate={() => {
           // The second click of a double click is the same New: back to
           // renaming the row the first one made. Timed by input, as the
@@ -174,11 +198,9 @@ export function StudioPanel({ className }: { className?: string }) {
           const { at, key } = lastNew.current
           if (now - at < 500) return key && setRenaming({ key, closes: true })
           lastNew.current = { at: now, key: "" }
-          created(() => {
-            const id = newSystem()
-            if (id) lastNew.current.key = selectionKey({ kind: "system", id })
-            return id
-          })
+          const id = newSystem()
+          if (id) lastNew.current.key = selectionKey({ kind: "system", id })
+          created(id)
         }}
         renamingId={renaming?.key}
         onRenameEnd={(key, name, submit) => {

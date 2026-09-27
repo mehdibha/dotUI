@@ -1,46 +1,30 @@
 "use client"
 
-/* Undo, redo and checkpoints. Each selection keeps an in-memory undo stack;
-   edits within 500 ms, or within one pointer press (a slider drag), merge
-   into one step. The first edit of a view forks it into a draft, and that
-   step is the bottom of the draft's stack: undoing it removes the draft
-   (unless it was kept) and returns to the view, whose redo
-   brings it back with the same id. Nothing else ever adds or removes a
-   system from undo: New, Duplicate and Keep are not steps, and Delete has
-   its toast. Checkpoints persist in
-   `dotui:history:<id>`: written when the studio leaves a system (switching,
-   hiding the page, navigating away) and after two idle minutes. */
+/* Undo and redo. Each system keeps an in-memory undo stack; edits within
+   500 ms, or within one pointer press (a slider drag), merge into one step.
+   The first edit of a view forks it into a new system whose first step
+   returns to the view's state. Nothing else is a step: New, Duplicate and
+   Rename aren't, and Delete has its toast. */
 
 import { useEffect, useSyncExternalStore } from "react"
 
 import { toastManager } from "@/registry/ui/toast"
 import { ORIGIN } from "@/modules/presets"
 
-import { sameState, validate } from "./axes"
+import { sameState } from "./axes"
 import type { StudioState } from "./axes"
 import { historyKey } from "./history-keys"
 import { getCurrent, getSelection, select, selectionKey } from "./selection"
-import type { Selection, ViewSelection } from "./selection"
+import type { Selection } from "./selection"
 import { quoted, undoToast } from "./toasts"
 import * as workspace from "./workspace"
-import type { DesignSystemDoc } from "./workspace"
 
 const MERGE_MS = 500
 const UNDO_LIMIT = 100
-const IDLE_MS = 2 * 60_000
-const CHECKPOINT_LIMIT = 20
-const SEEN_DRAFT = "dotui:seen-draft"
-
-/** A state to return to; the fork of the open draft, back to its view; or,
- *  on that view, the removed draft to bring back. */
-type Step =
-  | { state: StudioState }
-  | { forked: ViewSelection }
-  | { recreate: DesignSystemDoc; checkpoints: string | null }
 
 interface Stack {
-  past: Step[]
-  future: Step[]
+  past: StudioState[]
+  future: StudioState[]
   editedAt: number
   press: number
   /** The system's state as this tab last left it: another tab's edit since
@@ -53,7 +37,6 @@ const listeners = new Set<() => void>()
 // The pointer press in progress (0 when none), so a drag is one step.
 let press = 0
 let presses = 0
-let idle: ReturnType<typeof setTimeout> | undefined
 // Each deleted system's toast, closed once it is restored or purged.
 const deletedToasts = new Map<string, string>()
 
@@ -68,8 +51,8 @@ function stack(key: string): Stack {
   return entry
 }
 
-function push(steps: Step[], step: Step) {
-  steps.push(step)
+function push(steps: StudioState[], state: StudioState) {
+  steps.push(state)
   if (steps.length > UNDO_LIMIT) steps.shift()
 }
 
@@ -77,119 +60,58 @@ function emit() {
   for (const listener of listeners) listener()
 }
 
-/** Starts a new undo step returning to `step`. */
-function record(key: string, step: Step) {
-  const entry = stack(key)
-  push(entry.past, step)
-  entry.future = []
-  entry.editedAt = 0
-  entry.press = 0
-  emit()
-}
-
-/* --------------------------------- drafts -------------------------------- */
-
-/** Keeps every draft but `except` under its default name, so at most one
- *  draft exists. */
-function keepOtherDrafts(except?: string) {
-  for (const doc of workspace.getWorkspace().systems) {
-    if (!doc.draft || doc.id === except) continue
-    const name = workspace.keptName(doc)
-    workspace.keep(doc.id, name)
-    toastManager.add({ title: `Kept "${name}"` })
-  }
-}
-
-function fork(view: ViewSelection, next: StudioState) {
-  const { name, state } = getCurrent()
-  keepOtherDrafts()
-  const doc = workspace.create({
-    draft: true,
-    name,
-    origin:
-      view.kind === "preset"
-        ? { kind: "preset", id: view.id }
-        : { kind: "snapshot", id: view.id },
-    initial: state,
-    state: next,
-  })
-  if (!doc) return
-  stacks.delete(selectionKey(view))
-  select({ kind: "system", id: doc.id })
-  record(systemKey(doc.id), { forked: view })
-  // The rest of this gesture merges into the fork.
-  const entry = stack(systemKey(doc.id))
-  entry.head = next
-  entry.editedAt = Date.now()
-  entry.press = press
-  try {
-    if (window.localStorage.getItem(SEEN_DRAFT)) return
-    window.localStorage.setItem(SEEN_DRAFT, "1")
-  } catch {
-    return
-  }
-  // Closed if the draft goes (undone, or left unchanged).
-  const stop = workspace.subscribe(() => {
-    if (workspace.findSystem(doc.id)) return
-    stop()
-    toastManager.close(toastId)
-  })
-  const toastId = toastManager.add({
-    title: "Your changes are saved in this browser.",
-    onRemove: stop,
-  })
-}
-
-/* -------------------------------- editing -------------------------------- */
-
-/** Edits the current design system as one undoable step, merged with the
- *  edits just before it. On a view, the first edit creates a draft. */
-export function edit(next: StudioState): void {
-  const current = getCurrent()
-  if (sameState(current.state, next)) return
-  if (!current.doc) return fork(current.sel as ViewSelection, next)
-  const { id, state } = current.doc
-  if (!workspace.setState(id, next)) return
+/** Merges the edit into the last step when it's close enough in time or
+ *  in the same press; otherwise starts a step returning to `before`. */
+function recordEdit(id: string, before: StudioState, next: StudioState) {
   const entry = stack(systemKey(id))
   const now = Date.now()
   const merge =
     now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
-  if (!merge) record(systemKey(id), { state })
+  if (!merge) {
+    push(entry.past, before)
+    entry.future = []
+    emit()
+  }
   entry.head = next
   entry.editedAt = now
   entry.press = press
-  clearTimeout(idle)
-  idle = setTimeout(() => checkpoint(id), IDLE_MS)
 }
 
-/** Returns the system to its initial state; returns an undo that applies
- *  only while nothing happened since. */
-export function reset(id: string): () => void {
-  const doc = workspace.findSystem(id)
-  if (!doc || sameState(doc.state, doc.initial)) return () => {}
-  const step = { state: doc.state }
-  record(systemKey(id), step)
-  workspace.reset(id)
-  stack(systemKey(id)).head = doc.initial
-  return () => stacks.get(systemKey(id))?.past.at(-1) === step && undo()
+/** "My Linear", or "Untitled" from Origin, like New. */
+function forkName({ sel, name }: ReturnType<typeof getCurrent>): string {
+  if (sel.kind === "preset" && sel.id === ORIGIN.id) return "Untitled"
+  return name.startsWith("My ") ? name : `My ${name}`
 }
 
-/** Sets an earlier state, checkpointing the current one first. */
-export function restore(id: string, state: StudioState): void {
-  const doc = workspace.findSystem(id)
+function fork(next: StudioState) {
+  const current = getCurrent()
+  const doc = workspace.create({
+    name: forkName(current),
+    from: current.sel.kind === "preset" ? current.sel.id : undefined,
+    state: current.state,
+  })
   if (!doc) return
-  checkpoint(id)
-  if (sameState(doc.state, state) || !workspace.setState(id, state)) return
-  record(systemKey(id), { state: doc.state })
-  stack(systemKey(id)).head = state
+  select({ kind: "system", id: doc.id }, doc)
+  if (!workspace.setState(doc.id, next)) return
+  recordEdit(doc.id, doc.state, next)
+  toastManager.add({ title: `Saved as ${quoted(doc.name)} in this browser.` })
+}
+
+/** Edits the current design system as one undoable step, merged with the
+ *  edits just before it. On a view, the first edit forks it. */
+export function edit(next: StudioState): void {
+  const current = getCurrent()
+  if (sameState(current.state, next)) return
+  if (!current.doc) return fork(next)
+  const { id, state } = current.doc
+  if (workspace.setState(id, next)) recordEdit(id, state, next)
 }
 
 /** Creates "Untitled" from Origin and opens it; returns its id. */
 export function newSystem(): string | undefined {
   const doc = workspace.create({
     name: "Untitled",
-    origin: { kind: "preset", id: ORIGIN.id },
-    initial: ORIGIN.state,
+    from: ORIGIN.id,
     state: ORIGIN.state,
   })
   if (doc) select({ kind: "system", id: doc.id })
@@ -206,25 +128,21 @@ export function duplicate(id: string): string | undefined {
       workspace.getWorkspace().systems,
       " copy",
     ),
-    origin: { kind: "copy", of: id },
-    initial: source.state,
+    from: source.from,
     state: source.state,
   })
   if (doc) select({ kind: "system", id: doc.id })
   return doc?.id
 }
 
-/** Moves the system to Recently deleted with a toast (`Deleted "Acme"`, or
- *  `verb`) whose Undo, which `afterUndo` follows, brings it back. Deleting
- *  the current one opens the next in the list, else the Origin view. The
- *  current selection's undo history then starts over: ⌘Z right after never
- *  touches another system. Returns the toast's undo. */
+/** Moves the system to Recently deleted with a toast whose Undo, which
+ *  `afterUndo` follows, brings it back. Deleting the current one opens the
+ *  next in the list, else the Origin view. The current selection's undo
+ *  history then starts over: ⌘Z right after never touches another system.
+ *  Returns the toast's undo. */
 export function remove(
   id: string,
-  {
-    verb = "Deleted",
-    afterUndo,
-  }: { verb?: string; afterUndo?: () => void } = {},
+  { afterUndo }: { afterUndo?: () => void } = {},
 ): () => void {
   const list = workspace.listed(workspace.getWorkspace())
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
@@ -232,7 +150,7 @@ export function remove(
   if (!deleted) return () => {}
   deletedToasts.set(
     id,
-    undoToast(`${verb} ${quoted(deleted.doc.name)}`, () => {
+    undoToast(`Deleted ${quoted(deleted.doc.name)}`, () => {
       recover(id, wasCurrent)
       afterUndo?.()
     }),
@@ -261,9 +179,7 @@ function closeDeletedToast(id: string) {
  *  Returns whether it was there. */
 export function recover(id: string, open = false): boolean {
   closeDeletedToast(id)
-  const doc = workspace.recover(id)
-  if (!doc) return false
-  if (doc.draft) keepOtherDrafts(id)
+  if (!workspace.recover(id)) return false
   if (open) select({ kind: "system", id })
   return true
 }
@@ -276,51 +192,23 @@ export function purge(id: string): void {
 
 function travel(from: "past" | "future", to: "past" | "future") {
   const sel = getSelection()
+  if (sel.kind !== "system") return
   const key = selectionKey(sel)
   const entry = stacks.get(key)
-  const step = entry?.[from].pop()
-  if (!entry || !step) return
+  const doc = workspace.findSystem(sel.id)
+  if (!entry || !doc) return
+  // Last write wins across tabs: undo never rolls back another tab's edit.
+  if (entry.head && !sameState(doc.state, entry.head)) {
+    stacks.delete(key)
+    return emit()
+  }
+  const state = entry[from].pop()
+  if (!state) return
   entry.editedAt = 0
   entry.press = 0
-  const doc = sel.kind === "system" ? workspace.findSystem(sel.id) : undefined
-
-  // Last write wins across tabs: undo never rolls back another tab's edit.
-  if (doc && entry.head && !sameState(doc.state, entry.head)) {
-    stacks.delete(key)
-    emit()
-    toastManager.add({
-      title: `${quoted(doc.name)} was changed in another tab`,
-      description: "Undo history here starts again from its latest version.",
-    })
-    return
-  }
-
-  if ("recreate" in step) {
-    const { recreate, checkpoints } = step
-    workspace.insert(recreate, undefined, checkpoints)
-    keepOtherDrafts(recreate.id)
-    select({ kind: "system", id: recreate.id })
-    const forked = stack(systemKey(recreate.id))
-    push(forked[to], { forked: sel as ViewSelection })
-    forked.head = recreate.state
-  } else if (!doc) {
-    return
-  } else if ("state" in step) {
-    workspace.setState(doc.id, step.state)
-    push(entry[to], { state: doc.state })
-    entry.head = step.state
-  } else if (!doc.draft) {
-    // A fork kept or renamed since: only its changes go.
-    workspace.setState(doc.id, doc.initial)
-    push(entry[to], { state: doc.state })
-    entry.head = doc.initial
-  } else {
-    // The fork itself: the draft goes, and its view can bring it back.
-    workspace.flush()
-    const checkpoints = workspace.remove(doc.id)?.checkpoints ?? null
-    select(step.forked)
-    push(stack(selectionKey(step.forked))[to], { recreate: doc, checkpoints })
-  }
+  workspace.setState(doc.id, state)
+  push(entry[to], doc.state)
+  entry.head = state
   emit()
 }
 
@@ -342,86 +230,12 @@ export function useUndoRedo(key: string) {
     },
     () => 0,
   )
-  const recreates = useSyncExternalStore(
-    subscribe,
-    () => {
-      const step = stacks.get(key)?.future.at(-1)
-      return step && "recreate" in step ? step.recreate.name : undefined
-    },
-    () => undefined,
-  )
-  return {
-    canUndo: (flags & 1) !== 0,
-    canRedo: (flags & 2) !== 0,
-    redoLabel: recreates ? `Redo · recreate the ${recreates} draft` : "Redo",
-  }
-}
-
-/* ------------------------------ checkpoints ------------------------------ */
-
-export interface Checkpoint {
-  at: number
-  state: StudioState
-}
-
-/** The system's checkpoints, oldest first; invalid entries are dropped. */
-export function checkpoints(id: string): Checkpoint[] {
-  let parsed: unknown
-  try {
-    parsed = JSON.parse(
-      window.localStorage.getItem(workspace.checkpointsKey(id)) ?? "[]",
-    )
-  } catch {
-    return []
-  }
-  if (!Array.isArray(parsed)) return []
-  return parsed.flatMap((entry: unknown) => {
-    if (typeof entry !== "object" || entry === null) return []
-    const { at, state } = entry as Record<string, unknown>
-    const valid = validate(state)
-    return typeof at === "number" && Number.isFinite(at) && valid.ok
-      ? [{ at, state: valid.state }]
-      : []
-  })
-}
-
-/** Records the system's state unless it equals the latest checkpoint (or,
- *  before the first, the state Reset returns to). Keeps the last 20. */
-export function checkpoint(id: string): void {
-  const doc = workspace.findSystem(id)
-  if (!doc) return
-  const list = checkpoints(id)
-  const last = list.at(-1)?.state ?? doc.initial
-  if (sameState(last, doc.state)) return
-  const next = [...list, { at: Date.now(), state: doc.state }]
-  try {
-    window.localStorage.setItem(
-      workspace.checkpointsKey(id),
-      JSON.stringify(next.slice(-CHECKPOINT_LIMIT)),
-    )
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
-}
-
-/* --------------------------------- wiring -------------------------------- */
-
-const checkpointCurrent = () => {
-  const { doc } = getCurrent()
-  if (doc) checkpoint(doc.id)
+  return { canUndo: (flags & 1) !== 0, canRedo: (flags & 2) !== 0 }
 }
 
 /** The studio's history wiring: ⌘Z / ⇧⌘Z outside text fields (which keep
- *  their own undo), here or in the preview, press tracking, and checkpoints
- *  on leaving a system. */
-export function useHistory(systemId: string | undefined) {
-  useEffect(
-    () => () => {
-      if (systemId) checkpoint(systemId)
-    },
-    [systemId],
-  )
-
+ *  their own undo), here or in the preview, and press tracking. */
+export function useHistory() {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const action = historyKey(e)
@@ -438,24 +252,18 @@ export function useHistory(systemId: string | undefined) {
     }
     const onPointerDown = () => setPressed(true)
     const onPointerUp = () => setPressed(false)
-    const onHide = () =>
-      document.visibilityState === "hidden" && checkpointCurrent()
     // Capture: a press ends before the control's own pointerup handler runs.
     window.addEventListener("keydown", onKeyDown)
     window.addEventListener("message", onMessage)
     window.addEventListener("pointerdown", onPointerDown, true)
     window.addEventListener("pointerup", onPointerUp, true)
     window.addEventListener("pointercancel", onPointerUp, true)
-    document.addEventListener("visibilitychange", onHide)
-    window.addEventListener("pagehide", checkpointCurrent)
     return () => {
       window.removeEventListener("keydown", onKeyDown)
       window.removeEventListener("message", onMessage)
       window.removeEventListener("pointerdown", onPointerDown, true)
       window.removeEventListener("pointerup", onPointerUp, true)
       window.removeEventListener("pointercancel", onPointerUp, true)
-      document.removeEventListener("visibilitychange", onHide)
-      window.removeEventListener("pagehide", checkpointCurrent)
     }
   }, [])
 }

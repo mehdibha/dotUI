@@ -17,12 +17,9 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 export interface PanelSystem {
   name: string
   swatch: string
-  /** "Preset", "Shared" or "Draft"; the user's own systems have none. */
+  /** "Preset" or "Shared"; the user's own systems have none. */
   tag?: string
-  /** The full name and its kind, e.g. "Linear · preset, edits create a
-   *  draft". */
-  description: string
-  /** Undo, redo and the history menu. */
+  /** Undo and redo. */
   history: ReactNode
   /** Wraps the trigger in the design-system picker. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
@@ -57,7 +54,7 @@ export function PanelChrome({
               <Button
                 variant="quiet"
                 size="sm"
-                aria-label={`Design system: ${system.description}. Change design system`}
+                aria-label={`Design system: ${system.name}. Change design system`}
                 className="min-w-0 shrink justify-start gap-1 pl-1.5 font-medium has-data-[icon=inline-end]:pr-1"
               >
                 <span
@@ -78,7 +75,7 @@ export function PanelChrome({
                   className="size-3 shrink-0 text-fg-muted"
                 />
               </Button>
-              <TooltipContent>{system.description}</TooltipContent>
+              <TooltipContent>{system.name}</TooltipContent>
             </Tooltip>,
           )}
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">

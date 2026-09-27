@@ -2,15 +2,15 @@
 
 /* The one current design system, shared by the studio and the docs:
    `dotui:current` holds a preset view, a shared view or one of the user's
-   systems. Every tab follows it. Views are read-only; the studio turns the
-   first edit of one into a draft (see history.ts). */
+   systems. Every tab follows it. Views are read-only; the studio forks the
+   first edit of one into a system (see history.ts). */
 
 import { useMemo } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
 import { SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import { getPreset, ORIGIN } from "@/modules/presets"
-import { salvageState } from "@/modules/studio/axes"
+import { salvageState, sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
 import * as workspace from "./workspace"
@@ -69,17 +69,29 @@ export const useSelection = (): Selection =>
 /** One key per selection: `preset:<id>`, `shared:<id>` or `system:<id>`. */
 export const selectionKey = (sel: Selection) => `${sel.kind}:${sel.id}`
 
-/** Makes `sel` current, with no questions asked. A draft left unchanged is
- *  nothing to keep, so leaving it removes it. */
-export function select(sel: Selection): void {
+/** A system as a fork made it, before any change. */
+export type Fork = Pick<DesignSystemDoc, "id" | "name" | "state">
+
+let fork: Fork | undefined
+
+/** Whether `doc` is the fork just made, still unrenamed and unchanged. */
+const untouched = (doc: DesignSystemDoc | undefined): doc is DesignSystemDoc =>
+  !!doc &&
+  doc.id === fork?.id &&
+  doc.name === fork.name &&
+  sameState(doc.state, fork.state)
+
+/** Makes `sel` current; `made` marks it as a fork just made. Leaving an
+ *  untouched fork removes it. */
+export function select(sel: Selection, made?: Fork): void {
   workspace.flush()
   const previous = getSelection()
   if (selectionKey(previous) === selectionKey(sel)) return
   if (previous.kind === "system") {
     const doc = workspace.findSystem(previous.id)
-    if (doc?.draft && !workspace.isChangedDraft(doc))
-      workspace.remove(previous.id)
+    if (untouched(doc)) workspace.remove(doc.id)
   }
+  fork = made
   store.set({ sel, at: Date.now() })
 }
 
@@ -91,7 +103,7 @@ export interface Current {
   state: StudioState
   /** The user's system; absent on views. */
   doc?: DesignSystemDoc
-  tag?: "Preset" | "Shared" | "Draft"
+  tag?: "Preset" | "Shared"
 }
 
 /** What a selection shows; a system that no longer exists shows Origin. */
@@ -106,7 +118,6 @@ export function describe(sel: Selection, ws: Workspace): Current {
         swatch: workspace.swatchOf(doc),
         state: doc.state,
         doc,
-        tag: doc.draft ? "Draft" : undefined,
       }
   }
   if (sel.kind === "shared")

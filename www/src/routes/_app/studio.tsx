@@ -11,11 +11,9 @@ import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
 import { useHistory } from "@/modules/studio/history"
-import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
-import type { Selection } from "@/modules/studio/selection"
 import { fetchSnapshot } from "@/modules/studio/share"
 import { quoted } from "@/modules/studio/toasts"
 import { flush } from "@/modules/studio/workspace"
@@ -107,10 +105,9 @@ const linkKey = (s?: string, preset?: string) =>
 
 /** Keeps the URL on the current selection: `?preset=` and `?s=` for views,
  *  bare `/studio` for the user's systems. A link opened that isn't the
- *  current selection opens it (asking first when leaving a changed draft,
- *  the link staying in the address bar until answered); one reached with
- *  Back/Forward, or broken (with a toast), gives way to the selection.
- *  Returns whether a shared link is loading. */
+ *  current selection opens it; one reached with Back/Forward, or broken
+ *  (with a toast), gives way to the selection. Returns whether a shared
+ *  link is loading. */
 function useSelectionUrl(): boolean {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
@@ -119,8 +116,7 @@ function useSelectionUrl(): boolean {
   const wanted = doc ? "" : key
   // The link the URL last held that has been dealt with.
   const seen = useRef<string>(undefined)
-  // The link being fetched or waiting on the keep dialog, and the last
-  // shared link whose fetch ended.
+  // The link being fetched, and the last shared link whose fetch ended.
   const loading = useRef<string>(undefined)
   const [fetched, setFetched] = useState<string>()
 
@@ -149,29 +145,13 @@ function useSelectionUrl(): boolean {
     }
     seen.current = url
     if (traversedHistory()) return void sync()
-    const open = (sel: Selection) => {
-      loading.current = url
-      const done = () => {
-        if (loading.current === url) loading.current = undefined
-      }
-      leave(
-        () => {
-          done()
-          select(sel)
-        },
-        () => {
-          done()
-          sync()
-        },
-      )
-    }
     const broken = (title: string, description?: string) => {
       toastManager.add({ title, description, type: "error" })
       sync()
     }
     if (s === undefined) {
       if (preset !== undefined && getPreset(preset))
-        open({ kind: "preset", id: preset })
+        select({ kind: "preset", id: preset })
       else broken(`No preset called ${quoted(preset ?? "")}`)
       return
     }
@@ -205,7 +185,7 @@ function useSelectionUrl(): boolean {
         .then(
           (snapshot) =>
             snapshot
-              ? open({
+              ? select({
                   kind: "shared",
                   id: s,
                   name: snapshot.name,
@@ -272,7 +252,7 @@ const TOP_LAYER = {
 
 function StudioBody() {
   const loading = useSelectionUrl()
-  useHistory(useCurrent().doc?.id)
+  useHistory()
   const isMobile = useIsMobile()
   return (
     <>
@@ -287,7 +267,6 @@ function StudioBody() {
       ) : (
         <>
           <StudioHeaderActions />
-          <KeepDialog />
           {/* Below `lg` the panel docks under the preview; on short screens
               (a phone on its side) it sits beside it instead. */}
           <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />

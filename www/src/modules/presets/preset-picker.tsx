@@ -55,12 +55,8 @@ interface PresetPickerItem {
   description?: string
   /** The brand a preset recreates, disclaimed under its description. */
   inspiredBy?: string
-  /** A short status after the name, e.g. "Draft". */
-  badge?: string
   /** The muted second line, read as the row renders so times stay fresh. */
   subtitle?: () => ReactNode
-  /** Tells same-named rows apart in the ⋯ label, e.g. "draft". */
-  kind?: string
   /** Gets a ⋯ menu from `renderItemMenu`. */
   hasMenu?: boolean
   /** Themes the flyout — called only for the previewed item. */
@@ -136,24 +132,6 @@ export function PresetPicker({
   withPreview = false,
   ...rest
 }: PresetPickerProps) {
-  // Closing after its opener went away (reopened past the keep dialog)
-  // leaves focus on the page: it goes back to the trigger.
-  const triggerRef = useRef<HTMLSpanElement>(null)
-  const wasOpen = useRef(isOpen)
-  useEffect(() => {
-    const closed = wasOpen.current && !isOpen
-    wasOpen.current = isOpen
-    if (!closed) return
-    let frame = requestAnimationFrame(() => {
-      frame = requestAnimationFrame(() => {
-        const active = document.activeElement
-        if (active && active !== document.body) return
-        triggerRef.current?.querySelector<HTMLElement>("button")?.focus()
-      })
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [isOpen])
-
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Design systems"
@@ -180,9 +158,7 @@ export function PresetPicker({
 
   return (
     <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <span ref={triggerRef} className="contents">
-        {children}
-      </span>
+      {children}
       <Responsive
         render={(isMobile) =>
           isMobile ? (
@@ -744,16 +720,8 @@ function PresetOptionRow({
         {rename ? (
           <RenameField name={item.name} onEnd={rename} />
         ) : (
-          // The badge rides the name line, leaving the subtitle its width.
-          <span className="flex min-w-0 items-center gap-1.5">
-            <span dir="auto" className="min-w-0 truncate">
-              {item.name}
-            </span>
-            {item.badge && (
-              <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
-                {item.badge}
-              </span>
-            )}
+          <span dir="auto" className="min-w-0 truncate">
+            {item.name}
           </span>
         )}
         {subtitle && (
@@ -769,7 +737,7 @@ function PresetOptionRow({
             size="sm"
             isIconOnly
             data-row-menu=""
-            aria-label={`Actions for ${item.kind ? `${item.kind} ` : ""}${item.name}`}
+            aria-label={`Actions for ${item.name}`}
             onPress={(e) => onMenu(e.target)}
             className="-my-1 -mr-1 shrink-0 text-fg-muted pointer-coarse:size-11!"
           >

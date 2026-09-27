@@ -10,7 +10,7 @@ import { useSyncExternalStore } from "react"
 import { createPersistedStore } from "@/lib/persisted-store"
 import { MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { getPreset, ORIGIN } from "@/modules/presets"
+import { getPreset } from "@/modules/presets"
 import {
   formatIssues,
   salvageState,
@@ -19,19 +19,12 @@ import {
 } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
-export type Origin =
-  | { kind: "preset"; id: string }
-  | { kind: "snapshot"; id: string }
-  | { kind: "copy"; of: string }
-
 export interface DesignSystemDoc {
   id: string
   name: string
-  /** Made by editing a preset or a shared link; kept once named. */
-  draft: boolean
-  origin: Origin
-  /** What Reset returns to; set once. */
-  initial: StudioState
+  /** The preset it started from, whose swatch it shows until the brand
+   *  changes. */
+  from?: string
   state: StudioState
   updatedAt: number
 }
@@ -62,26 +55,16 @@ const isTime = (value: unknown): value is number =>
 export const isName = (value: unknown): value is string =>
   typeof value === "string" && value === cleanName(value) && value.length > 0
 
-function parseOrigin(raw: unknown): Origin | undefined {
-  if (!isRecord(raw)) return
-  if (raw.kind === "preset" && typeof raw.id === "string")
-    return { kind: "preset", id: raw.id }
-  if (raw.kind === "snapshot" && typeof raw.id === "string")
-    return { kind: "snapshot", id: raw.id }
-  if (raw.kind === "copy" && typeof raw.of === "string")
-    return { kind: "copy", of: raw.of }
-}
-
 function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   if (!isRecord(raw) || typeof raw.id !== "string" || !raw.id) return
-  const state = salvageState(raw.state)
   return {
     id: raw.id,
     name: (typeof raw.name === "string" && cleanName(raw.name)) || "Untitled",
-    draft: raw.draft === true,
-    origin: parseOrigin(raw.origin) ?? { kind: "preset", id: ORIGIN.id },
-    initial: raw.initial === undefined ? state : salvageState(raw.initial),
-    state,
+    from:
+      typeof raw.from === "string" && getPreset(raw.from)
+        ? raw.from
+        : undefined,
+    state: salvageState(raw.state),
     updatedAt: isTime(raw.updatedAt) ? raw.updatedAt : 0,
   }
 }
@@ -185,26 +168,16 @@ export function subscribe(onChange: () => void) {
 export const useWorkspace = (): Workspace =>
   useSyncExternalStore(subscribe, getWorkspace, () => EMPTY)
 
-/** The list as pickers show it: the draft first, then the latest edited. */
+/** The list as pickers show it: the latest edited first. */
 export const listed = (workspace: Workspace): DesignSystemDoc[] =>
-  [...workspace.systems]
-    .reverse()
-    .sort(
-      (a, b) => Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
-    )
+  [...workspace.systems].reverse().sort((a, b) => b.updatedAt - a.updatedAt)
 
-/** A system's dot: its preset's until the brand color changes. */
 export function swatchOf(doc: DesignSystemDoc): string {
-  const preset =
-    doc.origin.kind === "preset" ? getPreset(doc.origin.id) : undefined
-  return preset && doc.state.brand === doc.initial.brand
+  const preset = doc.from ? getPreset(doc.from) : undefined
+  return preset && doc.state.brand === preset.state.brand
     ? preset.swatch
     : doc.state.brand
 }
-
-/** A draft with changes worth keeping. */
-export const isChangedDraft = (doc: DesignSystemDoc | undefined) =>
-  !!doc?.draft && !sameState(doc.state, doc.initial)
 
 /* ------------------------------ operations ------------------------------ */
 
@@ -268,27 +241,14 @@ export function uniqueName(
   return candidate
 }
 
-/** What keeping a draft named after its source suggests: "My Linear", or
- *  "Untitled" for Origin, like New. */
-export const keptName = (doc: DesignSystemDoc) =>
-  uniqueName(
-    doc.origin.kind === "preset" && doc.origin.id === ORIGIN.id
-      ? "Untitled"
-      : `My ${doc.name}`,
-    getWorkspace().systems.filter((s) => s.id !== doc.id),
-  )
-
 export function create(
-  fields: Pick<DesignSystemDoc, "name" | "origin" | "initial" | "state"> & {
-    draft?: boolean
-  },
+  fields: Pick<DesignSystemDoc, "name" | "from" | "state">,
 ): DesignSystemDoc | undefined {
-  if (!accepts(fields.initial) || !accepts(fields.state)) return
+  if (!accepts(fields.state)) return
   const doc: DesignSystemDoc = {
     id: newId(),
-    draft: false,
     ...fields,
-    name: uniqueName(fields.name, fields.draft ? [] : getWorkspace().systems),
+    name: uniqueName(fields.name, getWorkspace().systems),
     updatedAt: Date.now(),
   }
   update((workspace) => ({
@@ -298,39 +258,24 @@ export function create(
   return doc
 }
 
-/** Where history.ts keeps a system's checkpoints; they go with the system. */
-export const checkpointsKey = (id: string) => `dotui:history:${id}`
-
 interface Removed {
   doc: DesignSystemDoc
   index: number
-  checkpoints: string | null
 }
 
-/** Puts a removed system back (same id), at its old position, with its
- *  checkpoints. */
-export function insert(
-  doc: DesignSystemDoc,
-  index?: number,
-  checkpoints: string | null = null,
-): void {
+/** Puts a removed system back (same id), at its old position. */
+export function insert(doc: DesignSystemDoc, index?: number): void {
   update((workspace) => {
     if (workspace.systems.some((s) => s.id === doc.id)) return workspace
     const systems = [...workspace.systems]
     systems.splice(index ?? systems.length, 0, doc)
     return { ...workspace, systems }
   })
-  if (checkpoints === null) return
-  try {
-    window.localStorage.setItem(checkpointsKey(doc.id), checkpoints)
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
 }
 
-/** Removes the system and its checkpoints; returns them and where it was. */
+/** Removes the system; returns it and where it was. */
 export function remove(id: string): Removed | undefined {
-  let removed: Omit<Removed, "checkpoints"> | undefined
+  let removed: Removed | undefined
   update((workspace) => {
     const index = workspace.systems.findIndex((s) => s.id === id)
     if (index === -1) return workspace
@@ -340,15 +285,7 @@ export function remove(id: string): Removed | undefined {
       systems: workspace.systems.filter((s) => s.id !== id),
     }
   })
-  if (!removed) return
-  let checkpoints: string | null = null
-  try {
-    checkpoints = window.localStorage.getItem(checkpointsKey(id))
-    window.localStorage.removeItem(checkpointsKey(id))
-  } catch {
-    // Best effort, as above.
-  }
-  return { ...removed, checkpoints }
+  return removed
 }
 
 /* --------------------------- recently deleted --------------------------- */
@@ -420,14 +357,9 @@ export function recover(id: string): DesignSystemDoc | undefined {
   return item.doc
 }
 
-/** Deletes a system from Recently deleted for good, with its checkpoints. */
+/** Deletes a system from Recently deleted for good. */
 export function purge(id: string): void {
   trashStore.update((items) => items.filter((i) => i.doc.id !== id))
-  try {
-    window.localStorage.removeItem(checkpointsKey(id))
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
 }
 
 /** Purges what was deleted over 30 days ago. */
@@ -436,28 +368,12 @@ export function purgeExpired(now = Date.now()): void {
     if (now - deletedAt > TRASH_MS) purge(doc.id)
 }
 
-/** Names the system; a draft that gets a new name is kept. */
 export function rename(id: string, name: string): void {
-  const clean = cleanName(name)
-  if (clean && findSystem(id)?.name !== clean) keep(id, clean)
-}
-
-/** Keeps a draft under `name`. */
-export function keep(id: string, name: string): void {
   const clean = cleanName(name)
   if (!clean) return
   update((workspace) =>
     withDoc(workspace, id, (doc) =>
-      doc.name === clean && !doc.draft
-        ? doc
-        : { ...doc, name: clean, draft: false, updatedAt: Date.now() },
+      doc.name === clean ? doc : { ...doc, name: clean, updatedAt: Date.now() },
     ),
-  )
-}
-
-/** Returns the system to its initial state. */
-export function reset(id: string): void {
-  update((workspace) =>
-    withDoc(workspace, id, (doc) => withState(doc.initial)(doc)),
   )
 }

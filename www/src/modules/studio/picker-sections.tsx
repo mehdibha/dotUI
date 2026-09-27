@@ -1,9 +1,4 @@
-import {
-  getPreset,
-  ORIGIN,
-  PRESET_META,
-  resolvePreset,
-} from "@/modules/presets"
+import { ORIGIN, PRESET_META, resolvePreset } from "@/modules/presets"
 import type { PresetPickerSection } from "@/modules/presets/preset-picker"
 
 import { resolveDesignSystem } from "./resolve"
@@ -11,20 +6,10 @@ import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
 import { ago } from "./time"
 import { listed, swatchOf } from "./workspace"
-import type { DesignSystemDoc, Workspace } from "./workspace"
-
-/** Where a system came from: "Based on Linear", "From a shared link"… */
-export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
-  const { origin } = doc
-  if (origin.kind === "preset")
-    return `Based on ${getPreset(origin.id)?.name ?? "a preset"}`
-  if (origin.kind === "snapshot") return "From a shared link"
-  const source = workspace.systems.find((s) => s.id === origin.of)
-  return `Copy of ${source?.name ?? "a deleted system"}`
-}
+import type { Workspace } from "./workspace"
 
 /** What the studio and docs pickers list: the shared link on screen, the
- *  user's systems (the draft first) and the presets, keyed by selection. */
+ *  user's systems and the presets, keyed by selection. */
 export function pickerSections(
   current: Current,
   workspace: Workspace,
@@ -54,11 +39,8 @@ export function pickerSections(
         id: selectionKey({ kind: "system", id: system.id }),
         name: system.name,
         swatch: swatchOf(system),
-        badge: system.draft ? "Draft" : undefined,
-        kind: system.draft ? "draft" : undefined,
         hasMenu: true,
-        subtitle: () =>
-          `${basedOn(system, workspace)} · ${ago(system.updatedAt, Date.now(), "narrow")}`,
+        subtitle: () => `Edited ${ago(system.updatedAt, Date.now(), "narrow")}`,
         resolve: () => resolveDesignSystem(system.state),
       })),
     })

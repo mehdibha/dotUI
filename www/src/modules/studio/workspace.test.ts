@@ -26,8 +26,7 @@ async function created(name = "Acme") {
   const ws = await load()
   const doc = ws.create({
     name,
-    origin: { kind: "preset", id: "linear" },
-    initial: linear.state,
+    from: "linear",
     state: parseState({ ...linear.state, radiusPx: 3 }),
   })!
   return { ws, doc }
@@ -40,61 +39,25 @@ describe("workspace", () => {
     expect(win.read(KEY)).toBeNull()
   })
 
-  it("names created systems uniquely, except drafts", async () => {
+  it("names created systems uniquely", async () => {
     const { ws } = await created("Untitled")
-    const second = ws.create({
-      name: "Untitled",
-      origin: { kind: "preset", id: "origin" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    const draft = ws.create({
-      draft: true,
-      name: "Untitled",
-      origin: { kind: "preset", id: "origin" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    expect([second.name, draft.name]).toEqual(["Untitled 2", "Untitled"])
-    expect(stored().systems.map((s: { draft: boolean }) => s.draft)).toEqual([
-      false,
-      false,
-      true,
-    ])
+    const second = ws.create({ name: "Untitled", state: linear.state })!
+    expect(second.name).toBe("Untitled 2")
   })
 
-  it("lists the draft first, then newest first", async () => {
+  it("shows its preset's swatch until the brand changes", async () => {
     const { ws, doc } = await created()
-    const draft = ws.create({
-      draft: true,
-      name: "Linear",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    const later = ws.create({
-      name: "Later",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    expect(ws.listed(ws.getWorkspace()).map((s) => s.id)).toEqual([
-      draft.id,
-      later.id,
-      doc.id,
-    ])
+    expect(ws.swatchOf(doc)).toBe(linear.swatch)
+    const branded = parseState({ ...doc.state, brand: "#ff0000" })
+    ws.setState(doc.id, branded)
+    expect(ws.swatchOf(ws.findSystem(doc.id)!)).toBe(branded.brand)
   })
 
   it("lists the latest edited first", async () => {
     vi.useFakeTimers({ now: 1000 })
     const { ws, doc } = await created("Alpha")
     vi.setSystemTime(2000)
-    const bravo = ws.create({
-      name: "Bravo",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })!
+    const bravo = ws.create({ name: "Bravo", state: linear.state })!
     vi.setSystemTime(3000)
     ws.setState(doc.id, parseState({ ...linear.state, radiusPx: 5 }))
     ws.flush()
@@ -104,49 +67,12 @@ describe("workspace", () => {
     ])
   })
 
-  it("keeps a draft on rename, but not on the same name", async () => {
-    const ws = await load()
-    const draft = ws.create({
-      draft: true,
-      name: "Linear",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: parseState({ ...linear.state, radiusPx: 3 }),
-    })!
-    expect(ws.isChangedDraft(draft)).toBe(true)
-    expect(ws.keptName(draft)).toBe("My Linear")
-    ws.rename(draft.id, "  Linear ")
-    expect(ws.findSystem(draft.id)!.draft).toBe(true)
-    ws.rename(draft.id, "Brand​\u0007 ")
-    expect(ws.findSystem(draft.id)).toMatchObject({
-      name: "Brand",
-      draft: false,
-    })
-  })
-
-  it("suggests unique kept names", async () => {
-    const { ws } = await created("My Linear")
-    const draft = ws.create({
-      draft: true,
-      name: "Linear",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    expect(ws.keptName(draft)).toBe("My Linear 2")
-    const origin = ws.create({
-      draft: true,
-      name: "Origin",
-      origin: { kind: "preset", id: "origin" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    expect(ws.keptName(origin)).toBe("Untitled")
-    ws.keep(draft.id, "Linear")
-    expect(ws.findSystem(draft.id)).toMatchObject({
-      name: "Linear",
-      draft: false,
-    })
+  it("renames to a clean name, ignoring an empty one", async () => {
+    const { ws, doc } = await created()
+    ws.rename(doc.id, "Brand​\u0007 ")
+    expect(ws.findSystem(doc.id)!.name).toBe("Brand")
+    ws.rename(doc.id, " \u200b")
+    expect(ws.findSystem(doc.id)!.name).toBe("Brand")
   })
 
   it("keeps edits in memory and writes them at most every 200 ms", async () => {
@@ -162,44 +88,23 @@ describe("workspace", () => {
     expect(stored().systems[0].state.radiusPx).toBe(3)
   })
 
-  it("removes and inserts back in place, with its checkpoints", async () => {
+  it("removes and inserts back in place", async () => {
     const { ws, doc } = await created()
-    const other = ws.create({
-      name: "Other",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })!
-    win.seed(ws.checkpointsKey(doc.id), "[]")
+    const other = ws.create({ name: "Other", state: linear.state })!
     const removed = ws.remove(doc.id)!
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([other.id])
-    expect(win.read(ws.checkpointsKey(doc.id))).toBeNull()
-    ws.insert(removed.doc, removed.index, removed.checkpoints)
+    ws.insert(removed.doc, removed.index)
     ws.insert(removed.doc, removed.index)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
       doc.id,
       other.id,
     ])
-    expect(win.read(ws.checkpointsKey(doc.id))).toBe("[]")
-  })
-
-  it("resets to the initial state", async () => {
-    const { ws, doc } = await created()
-    ws.reset(doc.id)
-    const reset = ws.findSystem(doc.id)!
-    expect(reset.state).toEqual(reset.initial)
   })
 
   it("keeps generated names within 64 UTF-16 units", async () => {
     const long = "x".repeat(64)
     const { ws } = await created(long)
-    const next = () =>
-      ws.create({
-        name: long,
-        origin: { kind: "preset", id: "linear" },
-        initial: linear.state,
-        state: linear.state,
-      })!.name
+    const next = () => ws.create({ name: long, state: linear.state })!.name
     expect(next()).toBe(`${"x".repeat(62)} 2`)
     // A surrogate pair is never split.
     expect(ws.uniqueName(`${"x".repeat(58)}😀😀`, [], " copy")).toBe(
@@ -216,9 +121,7 @@ describe("workspace", () => {
     const good = {
       id: "a",
       name: "Acme",
-      draft: false,
-      origin: { kind: "preset", id: "linear" },
-      initial: {},
+      from: "linear",
       state: { radiusPx: 4 },
       updatedAt: 1,
       retiredField: true,
@@ -230,7 +133,7 @@ describe("workspace", () => {
         systems: [
           good,
           { ...good, id: "b", state: { radiusPx: -1000, retired: 1 } },
-          { ...good, id: "c", name: "", origin: { kind: "nope" } },
+          { ...good, id: "c", name: "", from: "nope" },
           { ...good, id: "" },
           null,
         ],
@@ -239,14 +142,11 @@ describe("workspace", () => {
     const ws = await load()
     const [a, b, c, ...rest] = ws.getWorkspace().systems
     expect(rest).toEqual([])
-    expect(a).toMatchObject({ id: "a", name: "Acme" })
+    expect(a).toMatchObject({ id: "a", name: "Acme", from: "linear" })
     expect(a).not.toHaveProperty("retiredField")
     expect(a!.state.radiusPx).toBe(4)
     expect(b!.state).toEqual(parseState({}))
-    expect(c).toMatchObject({
-      name: "Untitled",
-      origin: { kind: "preset", id: "origin" },
-    })
+    expect(c).toMatchObject({ name: "Untitled", from: undefined })
   })
 
   it("writes a deleted system to the trash before removing it", async () => {
@@ -283,12 +183,7 @@ describe("workspace", () => {
     win.seed(KEY, future)
     const ws = await load()
     expect(ws.getWorkspace().systems).toEqual([])
-    ws.create({
-      name: "Acme",
-      origin: { kind: "preset", id: "linear" },
-      initial: linear.state,
-      state: linear.state,
-    })
+    ws.create({ name: "Acme", state: linear.state })
     expect(win.read(KEY)).toBe(future)
     win.seed(KEY, "not json")
     expect(ws.getWorkspace().systems).toEqual([])

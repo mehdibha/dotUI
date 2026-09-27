@@ -28,7 +28,7 @@ async function load() {
   const radius = (px: number) =>
     parseState({ ...current().state, radiusPx: px })
   const edit = (px: number) => history.edit(radius(px))
-  /** A kept system, current. */
+  /** One of the user's systems, current. */
   const system = () => {
     const id = history.newSystem()!
     edit(3)
@@ -99,23 +99,6 @@ describe("undo stack", () => {
     expect(open().state.radiusPx).toBe(4)
   })
 
-  it("undoes a reset, through its toast only while nothing happened since", async () => {
-    const { history, open, edit, system } = await load()
-    const id = system()
-    const undoReset = history.reset(id)
-    expect(open().state).toEqual(open().initial)
-    undoReset()
-    expect(open().state.radiusPx).toBe(3)
-    history.redo()
-    expect(open().state).toEqual(open().initial)
-
-    edit(7)
-    const stale = history.reset(id)
-    edit(8)
-    stale()
-    expect(open().state.radiusPx).toBe(8)
-  })
-
   it("keeps a separate stack per system", async () => {
     const { history, ws, selection, open, system } = await load()
     const first = system()
@@ -127,9 +110,20 @@ describe("undo stack", () => {
     expect(ws.findSystem(first)!.state.radiusPx).toBe(ORIGIN_RADIUS)
     expect(ws.findSystem(second)!.state.radiusPx).toBe(ORIGIN_RADIUS)
   })
+
+  it("drops the stack instead of undoing over another tab's edit", async () => {
+    const { history, ws, open, radius, edit, system } = await load()
+    const id = system()
+    edit(4)
+    ws.setState(id, radius(9))
+    history.undo()
+    expect(open().state.radiusPx).toBe(9)
+    history.undo()
+    expect(open().state.radiusPx).toBe(9)
+  })
 })
 
-describe("views and drafts", () => {
+describe("views and forks", () => {
   it("writes nothing until a view is edited", async () => {
     const { selection, current } = await load()
     selection.select({ kind: "preset", id: "stripe" })
@@ -137,65 +131,81 @@ describe("views and drafts", () => {
     expect(win.read("dotui:design-systems")).toBeNull()
   })
 
-  it("forks the first edit of a view into a draft, one step with its drag", async () => {
+  it("forks the first edit of a view into My <name>, one step with its drag", async () => {
     const { history, ws, selection, current, edit } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
     selection.select({ kind: "preset", id: "stripe" })
     history.setPressed(true)
     edit(3)
     vi.advanceTimersByTime(2000)
     edit(4)
     history.setPressed(false)
-    const draft = current().doc!
-    expect(draft).toMatchObject({ name: "Stripe", draft: true })
-    expect(draft.origin).toEqual({ kind: "preset", id: "stripe" })
-    expect(draft.initial).toEqual(getPreset("stripe")!.state)
-    expect(draft.state.radiusPx).toBe(4)
-
-    history.undo()
-    expect(current().key).toBe("preset:stripe")
-    expect(ws.getWorkspace().systems).toEqual([])
-    history.redo()
-    expect(current().doc).toMatchObject({ id: draft.id, draft: true })
-    expect(current().state.radiusPx).toBe(4)
-  })
-
-  it("only reverts a fork that was kept since", async () => {
-    const { history, ws, current, edit } = await load()
-    edit(3)
-    const { id } = current().doc!
-    ws.rename(id, "Acme")
-    history.undo()
-    expect(current().doc).toMatchObject({ id, name: "Acme", draft: false })
-    expect(current().state).toEqual(current().doc!.initial)
-  })
-
-  it("keeps the old draft when another view is edited", async () => {
-    const { ws, selection, current, edit } = await load()
-    edit(3)
-    const old = current().doc!.id
-    selection.select({ kind: "preset", id: "linear" })
-    edit(5)
-    expect(ws.findSystem(old)).toMatchObject({
-      name: "Untitled",
-      draft: false,
+    const fork = current().doc!
+    expect(fork).toMatchObject({ name: "My Stripe", from: "stripe" })
+    expect(fork.state.radiusPx).toBe(4)
+    expect(add).toHaveBeenCalledWith({
+      title: `Saved as "My Stripe" in this browser.`,
     })
-    expect(current().doc).toMatchObject({ name: "Linear", draft: true })
+
+    history.undo()
+    expect(current().doc?.id).toBe(fork.id)
+    expect(current().state).toEqual(getPreset("stripe")!.state)
+    history.redo()
+    expect(current().state.radiusPx).toBe(4)
+    expect(ws.getWorkspace().systems).toHaveLength(1)
   })
 
-  it("removes an unchanged draft when it is left", async () => {
-    const { ws, selection, edit } = await load()
+  it("names forks uniquely: Untitled from Origin, never My My", async () => {
+    const { selection, current, radius, edit } = await load()
     edit(3)
-    vi.advanceTimersByTime(600)
-    edit(ORIGIN_RADIUS)
+    expect(current().name).toBe("Untitled")
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(5)
+    expect(current().name).toBe("My Stripe 2")
+    selection.select({
+      kind: "shared",
+      id: "abc",
+      name: "My Brand",
+      state: radius(2),
+    })
+    edit(6)
+    expect(current().doc).toMatchObject({ name: "My Brand", from: undefined })
+  })
+
+  it("removes a fork left unrenamed and unchanged", async () => {
+    const { history, ws, selection, edit } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    history.undo()
     selection.select({ kind: "preset", id: "linear" })
     expect(ws.getWorkspace().systems).toEqual([])
+  })
+
+  it("keeps a fork left changed or renamed", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    const changed = current().doc!.id
+    selection.select({ kind: "preset", id: "linear" })
+    edit(3)
+    const renamed = current().doc!.id
+    ws.rename(renamed, "Acme")
+    history.undo()
+    selection.select({ kind: "preset", id: "origin" })
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
+      changed,
+      renamed,
+    ])
   })
 
   it("creates Untitled from any selection; undo never removes it", async () => {
     const { history, ws, selection, current, edit } = await load()
     selection.select({ kind: "preset", id: "linear" })
     const id = history.newSystem()!
-    expect(current().doc).toMatchObject({ id, name: "Untitled", draft: false })
+    expect(current().doc).toMatchObject({ id, name: "Untitled" })
     ws.rename(id, "Acme")
     edit(3)
     vi.advanceTimersByTime(600)
@@ -257,7 +267,7 @@ describe("duplicate", () => {
     const copy = history.duplicate(id)!
     expect(current().doc).toMatchObject({
       name: "Acme copy",
-      origin: { kind: "copy", of: id },
+      from: "origin",
     })
     expect(current().state.radiusPx).toBe(3)
     history.duplicate(copy)
@@ -293,22 +303,6 @@ describe("recently deleted", () => {
     expect(reloaded.current().key).toBe("preset:origin")
   })
 
-  it("keeps one draft when a deleted draft comes back", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    edit(3)
-    const old = current().doc!.id
-    history.remove(old)
-    selection.select({ kind: "preset", id: "linear" })
-    edit(5)
-    const draft = current().doc!.id
-    history.recover(old, true)
-    expect(current().doc).toMatchObject({ id: old, draft: true })
-    expect(ws.findSystem(draft)).toMatchObject({
-      name: "My Linear",
-      draft: false,
-    })
-  })
-
   it("closes a deleted system's toast once it is restored or purged", async () => {
     const { history, system } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
@@ -327,7 +321,6 @@ describe("recently deleted", () => {
   it("purges what was deleted over 30 days ago", async () => {
     const { history, ws, system } = await load()
     const old = system()
-    history.checkpoint(old)
     history.remove(old)
     vi.advanceTimersByTime(29 * 86_400_000)
     const recent = system()
@@ -335,106 +328,5 @@ describe("recently deleted", () => {
     vi.advanceTimersByTime(2 * 86_400_000)
     ws.purgeExpired()
     expect(ws.getTrash().map((i) => i.doc.id)).toEqual([recent])
-    expect(win.read(`dotui:history:${old}`)).toBeNull()
-  })
-})
-
-describe("checkpoints", () => {
-  const key = (id: string) => `dotui:history:${id}`
-
-  it("skips a state equal to the latest checkpoint or, first, the initial one", async () => {
-    const { history, edit } = await load()
-    const id = history.newSystem()!
-    history.checkpoint(id)
-    expect(win.read(key(id))).toBeNull()
-    edit(3)
-    history.checkpoint(id)
-    history.checkpoint(id)
-    expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
-  })
-
-  it("keeps the last 20", async () => {
-    const { history, edit } = await load()
-    const id = history.newSystem()!
-    const times: number[] = []
-    for (let i = 0; i < 25; i++) {
-      vi.advanceTimersByTime(1000)
-      edit(i % 2 ? 4 : 3)
-      history.checkpoint(id)
-      times.push(Date.now())
-    }
-    expect(history.checkpoints(id).map((c) => c.at)).toEqual(times.slice(-20))
-  })
-
-  it("records one after two idle minutes following edits", async () => {
-    const { history, open, edit } = await load()
-    history.newSystem()
-    edit(3)
-    vi.advanceTimersByTime(60_000)
-    edit(4)
-    vi.advanceTimersByTime(119_000)
-    expect(history.checkpoints(open().id)).toEqual([])
-    vi.advanceTimersByTime(1000)
-    expect(history.checkpoints(open().id).map((c) => c.state.radiusPx)).toEqual(
-      [4],
-    )
-  })
-
-  it("drops invalid entries on read", async () => {
-    const { history, radius } = await load()
-    const id = history.newSystem()!
-    win.seed(
-      key(id),
-      JSON.stringify([
-        { at: 1, state: radius(4) },
-        { at: 2, state: { radiusPx: -1000 } },
-        { at: "x", state: radius(5) },
-        null,
-      ]),
-    )
-    expect(history.checkpoints(id)).toEqual([{ at: 1, state: radius(4) }])
-  })
-
-  it("restores as an undoable step, checkpointing the current state", async () => {
-    const { history, open, radius, system } = await load()
-    const id = system()
-    history.restore(id, radius(11))
-    expect(open().state.radiusPx).toBe(11)
-    expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
-    history.undo()
-    expect(open().state.radiusPx).toBe(3)
-  })
-
-  it("stay with a deleted system and go when it is deleted forever", async () => {
-    const { history, ws, system } = await load()
-    const id = system()
-    history.checkpoint(id)
-    history.remove(id)
-    expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
-    ws.purge(id)
-    expect(win.read(key(id))).toBeNull()
-  })
-
-  it("are deleted with a draft left unchanged", async () => {
-    const { history, selection, current, edit } = await load()
-    edit(3)
-    const { id } = current().doc!
-    history.checkpoint(id)
-    vi.advanceTimersByTime(600)
-    edit(ORIGIN_RADIUS)
-    selection.select({ kind: "preset", id: "linear" })
-    expect(current().key).toBe("preset:linear")
-    expect(win.read(key(id))).toBeNull()
-  })
-
-  it("leave with an undone fork and come back with its redo", async () => {
-    const { history, edit, current } = await load()
-    edit(3)
-    const { id } = current().doc!
-    history.checkpoint(id)
-    history.undo()
-    expect(win.read(key(id))).toBeNull()
-    history.redo()
-    expect(history.checkpoints(id).map((c) => c.state.radiusPx)).toEqual([3])
   })
 })
