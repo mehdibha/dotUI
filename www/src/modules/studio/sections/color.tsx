@@ -183,7 +183,6 @@ export function ColorSection({ studio }: { studio: Studio }) {
               value={state[key]}
               derived={semantic(palette)}
               onChange={set(key)}
-              onReset={() => set(key)("")}
             />
           ))}
         </DialPopover>
