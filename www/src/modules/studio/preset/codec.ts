@@ -116,6 +116,23 @@ function migrateV3(raw: Record<string, unknown>): Record<string, unknown> {
   return stored
 }
 
+/**
+ * Motion went per component (Sep 2026). The system-wide character, speed and
+ * state timing have no per-component reading and drop with the other unknown
+ * keys; the overlay pattern lands on each overlay it drove.
+ */
+function migrateMotion(raw: Record<string, unknown>): Record<string, unknown> {
+  const { motionOverlay, ...stored } = raw
+  if (typeof motionOverlay === "string")
+    for (const key of [
+      "popoverMotion",
+      "tooltipMotion",
+      "modalMotion",
+    ] as const)
+      stored[key] ??= { ...DEFAULTS[key], pattern: motionOverlay }
+  return stored
+}
+
 /** Keep a stored value only when it has the default's shape. */
 function sanitizeState(raw: unknown): StudioState {
   const state = { ...DEFAULTS } as Record<string, unknown>
@@ -144,12 +161,11 @@ export function decodePreset(encoded: string): StudioPreset {
     const parsed = JSON.parse(json) as Encoded | LegacyState
     if ("v" in parsed && (parsed.v === VERSION || parsed.v === 3)) {
       const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
-      const stored =
-        parsed.v === 3 && parsed.s
-          ? migrateV3(parsed.s as Record<string, unknown>)
-          : parsed.s
+      const stored = parsed.s as Record<string, unknown> | undefined
       return {
-        state: sanitizeState(stored),
+        state: sanitizeState(
+          stored && migrateMotion(parsed.v === 3 ? migrateV3(stored) : stored),
+        ),
         ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
           ? { codeOptions }
           : {}),

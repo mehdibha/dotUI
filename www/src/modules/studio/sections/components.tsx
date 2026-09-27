@@ -26,14 +26,17 @@ import { INPUT_DEFAULTS, STYLE_OPTIONS as INPUT_STYLES } from "../axes/inputs"
 import { KBD_DEFAULTS } from "../axes/kbd"
 import { LINK_DEFAULTS } from "../axes/links"
 import { HIGHLIGHT_OPTIONS, MENU_DEFAULTS } from "../axes/menus"
+import { MESSAGE_SCROLLER_DEFAULTS } from "../axes/message-scroller"
 import { NUMBER_FIELD_DEFAULTS } from "../axes/number-field"
 import { OTP_FIELD_DEFAULTS } from "../axes/otp-field"
 import { PAGINATION_DEFAULTS } from "../axes/pagination"
 import { CARET_OPTIONS, PICKER_DEFAULTS } from "../axes/pickers"
 import { POPOVER_DEFAULTS } from "../axes/popovers"
 import { PROGRESS_DEFAULTS } from "../axes/progress"
+import { QUESTIONNAIRE_DEFAULTS } from "../axes/questionnaire"
 import { RADIO_DEFAULTS } from "../axes/radio"
 import { SEGMENTED_DEFAULTS } from "../axes/segmented-control"
+import { SIDEBAR_DEFAULTS } from "../axes/sidebar"
 import { SKELETON_DEFAULTS } from "../axes/skeleton"
 import { SLIDER_DEFAULTS, THUMB_OPTIONS } from "../axes/sliders"
 import {
@@ -43,6 +46,7 @@ import {
 import { SWITCH_DEFAULTS } from "../axes/switch"
 import { SEPARATION_OPTIONS, TABLE_DEFAULTS } from "../axes/tables"
 import { TAB_DEFAULTS, TAB_STYLE_OPTIONS } from "../axes/tabs"
+import { TOAST_DEFAULTS } from "../axes/toast"
 import { TOGGLE_DEFAULTS } from "../axes/toggles"
 import { TOOLTIP_DEFAULTS } from "../axes/tooltips"
 import { DialPopover, DialTrigger, optionLabel } from "../dial"
@@ -79,6 +83,7 @@ export const COMPONENTS_DEFAULTS = {
   ...RADIO_DEFAULTS,
   ...SWITCH_DEFAULTS,
   ...CHOICE_CARD_DEFAULTS,
+  ...QUESTIONNAIRE_DEFAULTS,
   ...PICKER_DEFAULTS,
   ...CALENDAR_DEFAULTS,
   ...SLIDER_DEFAULTS,
@@ -86,10 +91,13 @@ export const COMPONENTS_DEFAULTS = {
   ...DIALOG_DEFAULTS,
   ...POPOVER_DEFAULTS,
   ...TOOLTIP_DEFAULTS,
+  ...TOAST_DEFAULTS,
   ...LINK_DEFAULTS,
   ...TAB_DEFAULTS,
   ...BREADCRUMB_DEFAULTS,
   ...PAGINATION_DEFAULTS,
+  ...SIDEBAR_DEFAULTS,
+  ...MESSAGE_SCROLLER_DEFAULTS,
   ...SKELETON_DEFAULTS,
   ...SPINNER_DEFAULTS,
   ...PROGRESS_DEFAULTS,

@@ -28,7 +28,8 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
       ],
       selectionColumn: "w-10 min-w-10 px-2.5",
-      sortIndicator: "size-3.5 shrink-0 text-fg-muted transition-transform",
+      sortIndicator:
+        "size-3.5 shrink-0 text-fg-muted transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
       resizer: [
         "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring",
         "resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
@@ -36,7 +37,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default bg-bg/70 focus-reset transition-colors [div]:h-full",
+        "group/row relative box-border cursor-default bg-bg/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) [div]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
         "focus-visible:bg-accent-muted/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
@@ -56,19 +57,20 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "[div]:justify-center",
       ],
       dragButton: [
-        "inline-flex size-6 cursor-drag items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
+        "inline-flex size-6 cursor-drag items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) focus-visible:focus-ring",
         "group-hover/row:text-fg group-dragging/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
       ],
       dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
       dropIndicatorLine: [
-        "pointer-events-none relative z-30 block h-0 w-full opacity-0 transition-opacity",
+        "pointer-events-none relative z-30 block h-0 w-full opacity-0 transition-opacity duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
         "before:absolute before:inset-x-2 before:top-0 before:h-0.5 before:-translate-y-1/2 before:rounded-full before:bg-border-focus before:shadow-[0_0_0_1px_var(--color-bg)] before:content-['']",
       ],
       expandButton: [
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset focus-visible:focus-ring",
         "hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
       ],
-      expandIcon: "size-3.5 transition-transform",
+      expandIcon:
+        "size-3.5 transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
       loadMore: [
         "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
         "[&_[data-slot=loader]_svg]:size-4",

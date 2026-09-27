@@ -14,15 +14,15 @@ export const baseRegistryCss = {
 		},
 		"@utility focus-ring": {
 			"--tw-ring-shadow":
-				"inset 0 0 0 var(--focus-ring-inner) var(--color-bg),\n    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),\n    var(--focus-ring-inset,) 0 0 0\n      calc(var(--focus-ring-offset) + var(--focus-ring-width))\n      var(--focus-ring-color)",
+				"inset 0 0 0 var(--focus-ring-inner) var(--color-bg), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color)",
 			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),\n    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),\n    var(--tw-shadow, 0 0 #0000)",
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility focus-input": {
 			"--tw-ring-shadow":
-				"inset 0 0 0 var(--focus-input-inner) var(--color-bg),\n    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),\n    var(--focus-input-inset,) 0 0 0\n      calc(var(--focus-input-offset) + var(--focus-input-width))\n      var(--tw-ring-color, var(--focus-input-color))",
+				"inset 0 0 0 var(--focus-input-inner) var(--color-bg), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
 			"box-shadow":
-				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),\n    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),\n    var(--tw-shadow, 0 0 #0000)",
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
@@ -73,11 +73,6 @@ export const baseRegistryCss = {
 	},
 	cssVars: {
 		theme: {
-			"--ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
-			"--transition-duration-enter": "200ms",
-			"--transition-duration-exit": "150ms",
-			"--default-transition-duration": "150ms",
-			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
 			"--cursor-pending": "default",
 			"--cursor-disabled": "not-allowed",

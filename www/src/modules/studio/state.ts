@@ -18,19 +18,19 @@ import { FOCUS_DEFAULTS } from "./axes/focus"
 import { ICON_DEFAULTS } from "./axes/icons"
 import { INVALID_DEFAULTS } from "./axes/invalid"
 import { MOBILE_DEFAULTS } from "./axes/mobile"
-import { MOTION_DEFAULTS } from "./axes/motion"
 import { SCROLLBAR_DEFAULTS } from "./axes/scrollbars"
 import { SELECTION_DEFAULTS } from "./axes/selection"
 import { SHAPE_DEFAULTS } from "./axes/shape"
 import { SPACE_DEFAULTS } from "./axes/space"
 import { SURFACE_DEFAULTS } from "./axes/surfaces"
 import { TYPE_DEFAULTS } from "./axes/type"
+import { MOTION_DEFAULTS } from "./motion-controls"
 import { BrowserPreview, BrowserSection } from "./sections/browser"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENTS_DEFAULTS, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
 import { MobilePreview, MobileSection } from "./sections/mobile"
-import { MotionPreview, MotionSection } from "./sections/motion"
+import { MotionSection } from "./sections/motion"
 import { ShapePreview, ShapeSection } from "./sections/shape"
 import { SpacePreview, SpaceSection } from "./sections/space"
 import { StatesPreview, StatesSection } from "./sections/states"
@@ -56,8 +56,8 @@ export interface Chapter {
 }
 
 /* Identity first, then the page chrome and the treatments every control
-   wears, then every component behind one row each. Alert and Toast have no
-   axes yet and stay off the page until they are rebuilt from preset evidence. */
+   wears, then every component behind one row each. Alert has no axes yet
+   and stays off the page until it is rebuilt from preset evidence. */
 export const CHAPTERS: Chapter[] = [
   {
     id: "color",
@@ -125,7 +125,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Motion",
     defaults: MOTION_DEFAULTS,
     Body: MotionSection,
-    Preview: MotionPreview,
   },
   {
     id: "mobile",

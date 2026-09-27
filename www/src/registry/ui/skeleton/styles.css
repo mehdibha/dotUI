@@ -1,12 +1,25 @@
 :root {
   --studio-skeleton-radius: var(--studio-radius-detail);
   --studio-skeleton-block-radius: var(--studio-radius-control);
+  --studio-skeleton-loop-duration: 2000ms;
+  --studio-skeleton-loop-ease: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Theme animations, because the painter reaches its loop through a var:
+   Tailwind drops a theme keyframe that no used `--animate-*` names. */
+@theme inline {
+  --animate-skeleton-shimmer: skeleton-shimmer
+    var(--studio-skeleton-loop-duration) var(--studio-skeleton-loop-ease)
+    infinite;
+  --animate-skeleton-pulse: skeleton-pulse var(--studio-skeleton-loop-duration)
+    var(--studio-skeleton-loop-ease) infinite;
 }
 
 /* One painter for every placeholder (the root applies it to descendants via
-   its variants); base.tsx drives the animation with WAAPI. The modifier only
-   sets the inherited image the shimmer sweeps — pulse and none clear it so a
-   nested skeleton never inherits an outer shimmer. */
+   its variants). The modifier sets the inherited image and loop the painter
+   runs — pulse and none clear the image, and none the loop, so a nested
+   skeleton never inherits an outer one; base.tsx only keeps every
+   placeholder's loop in phase. */
 @utility skeleton {
   position: relative;
   overflow: hidden;
@@ -15,9 +28,14 @@
   background-size: 300% 100%;
   background-position: 100%;
   background-repeat: no-repeat;
+  animation: var(--skeleton-animation, none);
 
   &:where(img, video, canvas, svg) {
     content-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
@@ -28,12 +46,27 @@
     color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
     var(--color-muted) 66%
   );
+  --skeleton-animation: var(--animate-skeleton-shimmer);
 }
 
 @utility skeleton--pulse {
   --skeleton-image: none;
+  --skeleton-animation: var(--animate-skeleton-pulse);
 }
 
 @utility skeleton--none {
   --skeleton-image: none;
+  --skeleton-animation: none;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position: 0%;
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.5;
+  }
 }

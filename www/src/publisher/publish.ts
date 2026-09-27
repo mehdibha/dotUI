@@ -337,8 +337,9 @@ export function publish({
   // 5a. styles.css: drop the studio defaults, resolve the reads in rules that
   // ship. Nothing studio-prefixed may survive into the item.
   const css = resolveCssFields(meta.css, studioVars)
+  const cssVars = resolveCssFields(meta.cssVars, studioVars)
   for (const file of files) assertNoStudioVars(file.content ?? "", file.path)
-  assertNoStudioVars(JSON.stringify([css, meta.cssVars]), `${meta.name} css`)
+  assertNoStudioVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
 
   const registryDependencies = rewriteDeps(
     registryDepsFor(meta, paramSelections),
@@ -360,7 +361,7 @@ export function publish({
       : {}),
     ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
     ...(css ? { css } : {}),
-    ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
+    ...(cssVars ? { cssVars } : {}),
     files,
   }
   const item = itemShape as unknown as RegistryItem

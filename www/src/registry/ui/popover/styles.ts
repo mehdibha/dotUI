@@ -2,14 +2,14 @@ import { createStyles } from "@/lib/styles"
 
 import popoverMeta from "./meta"
 
-/* Entrances ride the motion tokens (base.css): the character curve and the
-   enter / exit durations. Exits keep a plain ease-out. Synced with tooltip —
-   change both together. */
+/* The entrance's timing is the studio's (styles.css); menus, selects and
+   pickers ride on it. */
 const entrance =
-  "transition-[transform,opacity,scale] duration-enter ease-enter will-change-[transform,opacity,scale] exiting:duration-exit exiting:ease-out motion-reduce:transition-none"
+  "transition-[transform,opacity,scale] duration-(--studio-popover-enter-duration) ease-(--studio-popover-ease) will-change-[transform,opacity,scale] exiting:duration-(--studio-popover-exit-duration) exiting:ease-(--studio-popover-exit-ease) motion-reduce:transition-none"
 
-const nudge =
-  "entering:transform-(--origin) exiting:transform-(--origin) placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]"
+/* `--offset` shifts the panel toward its trigger, whichever side it lands. */
+const offset =
+  "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
 const { useStyles, styles } = createStyles(popoverMeta, {
   base: {
@@ -33,13 +33,14 @@ const { useStyles, styles } = createStyles(popoverMeta, {
   },
   params: {
     motion: {
+      // shadcn's: in from 8px off, toward the trigger; out in place.
       scale: {
         slots: {
           popover: [
             entrance,
             "entering:scale-95 entering:opacity-0 exiting:scale-95 exiting:opacity-0",
-            "[--slide-offset:--spacing(0.5)]",
-            nudge,
+            "[--slide-offset:--spacing(2)] entering:transform-(--offset)",
+            offset,
           ],
         },
       },
@@ -53,8 +54,8 @@ const { useStyles, styles } = createStyles(popoverMeta, {
           popover: [
             entrance,
             "entering:opacity-0 exiting:opacity-0",
-            "[--slide-offset:--spacing(2)]",
-            nudge,
+            "[--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset)",
+            offset,
           ],
         },
       },

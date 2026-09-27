@@ -1,6 +1,17 @@
+:root {
+  --studio-loader-loop-duration: 1000ms;
+  --studio-loader-loop-ease: linear;
+  --studio-loader-spin: spin var(--studio-loader-loop-duration)
+    var(--studio-loader-loop-ease) infinite;
+}
+
+/* One cycle times every style: the ring's turn (on the loop's curve), the
+   blades' stepped turn, the dots' breath. */
 @theme inline {
-  --animate-loader-blades: loader-blades 0.8s steps(8, end) infinite;
-  --animate-loader-dots: loader-dots 0.9s ease-in-out infinite;
+  --animate-loader-blades: loader-blades var(--studio-loader-loop-duration)
+    steps(8, end) infinite;
+  --animate-loader-dots: loader-dots var(--studio-loader-loop-duration)
+    ease-in-out infinite;
 }
 
 /* Blades step the whole dial round (the Apple/Geist mechanic); the opacity

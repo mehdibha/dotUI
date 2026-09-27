@@ -2,6 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import toastMeta from "./meta"
 
+/* The timing is the studio's (styles.css): entering and restacking on the
+   enter leg, a dismissal on the exit leg, a swiped-away toast on its own. */
+const toastTransition =
+  "transition-[transform,opacity,height,background-color,border-color] duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) data-ending-style:not-data-swipe-direction:duration-(--studio-toast-exit-duration) data-ending-style:not-data-swipe-direction:ease-(--studio-toast-exit-ease) data-ending-style:data-swipe-direction:duration-(--studio-toast-swipe-state-duration) data-ending-style:data-swipe-direction:ease-(--studio-toast-swipe-state-ease) motion-reduce:transition-none"
+const contentTransition =
+  "transition-opacity duration-(--studio-toast-enter-duration) ease-(--studio-toast-ease) motion-reduce:transition-none"
+
 const { useStyles, styles } = createStyles(toastMeta, {
   base: {
     slots: {
@@ -13,7 +20,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
       toast: [
         "absolute z-[calc(50-var(--toast-index))] h-(--toast-calc-height) w-full overflow-hidden rounded-(--studio-toast-radius) shadow-lg focus-reset outline-none select-none focus-visible:focus-ring",
         "[--toast-calc-height:var(--toast-frontmost-height,var(--toast-height))] [--toast-gap:--spacing(3)] [--toast-peek:--spacing(3)] [--toast-scale:calc(max(0,1-(var(--toast-index)*.1)))] [--toast-shrink:calc(1-var(--toast-scale))]",
-        "[transition:transform_500ms_cubic-bezier(.22,1,.36,1),opacity_500ms,height_150ms,background-color_500ms,border-color_500ms]",
         "before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--studio-toast-radius)-1px)] before:shadow-[0_1px_0_rgb(0_0_0/0.04)]",
         "after:absolute after:left-0 after:h-[calc(var(--toast-gap)+1px)] after:w-full data-[position*=bottom]:after:bottom-full data-[position*=top]:after:top-full",
         "data-ending-style:opacity-0 data-limited:opacity-0",
@@ -27,9 +33,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "data-[position*=top]:transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--toast-peek))+(var(--toast-shrink)*var(--toast-calc-height))))_scale(var(--toast-scale))]",
         "data-[position*=bottom]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))]",
         "data-[position*=top]:data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--toast-calc-offset-y))]",
-        "data-[position*=bottom]:data-starting-style:transform-[translateY(calc(100%+var(--toast-inset)))]",
-        "data-[position*=top]:data-starting-style:transform-[translateY(calc(-100%-var(--toast-inset)))]",
-        "data-ending-style:not-data-limited:not-data-swipe-direction:transform-[translateY(calc(100%+var(--toast-inset)))]",
         "data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-inset)))]",
         "data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))]",
         "data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
@@ -41,7 +44,7 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "border bg-card text-fg",
       ],
       content:
-        "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm transition-opacity duration-200 data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
+        "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
       body: "flex min-w-0 items-center gap-2",
       icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
       message: "flex min-w-0 flex-1 flex-col gap-0.5",
@@ -105,6 +108,29 @@ const { useStyles, styles } = createStyles(toastMeta, {
       slots: {
         content: "min-h-16 px-4 py-3.5",
       },
+    },
+  },
+  params: {
+    motion: {
+      // Sonner's (shadcn's toast): in from beyond its edge, out sliding down.
+      slide: {
+        slots: {
+          toast: [
+            toastTransition,
+            "data-[position*=bottom]:data-starting-style:transform-[translateY(calc(100%+var(--toast-inset)))]",
+            "data-[position*=top]:data-starting-style:transform-[translateY(calc(-100%-var(--toast-inset)))]",
+            "data-ending-style:not-data-limited:not-data-swipe-direction:transform-[translateY(calc(100%+var(--toast-inset)))]",
+          ],
+          content: contentTransition,
+        },
+      },
+      fade: {
+        slots: {
+          toast: [toastTransition, "data-starting-style:opacity-0"],
+          content: contentTransition,
+        },
+      },
+      none: {},
     },
   },
 })

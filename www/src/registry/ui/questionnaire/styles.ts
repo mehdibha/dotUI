@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       description: "text-pretty text-fg-muted",
       choices: "group/questionnaire-choices grid min-w-0",
       choice: [
-        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors select-ui",
+        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) select-ui",
         "hover:bg-muted/50",
         "data-checked:border-primary/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
@@ -39,7 +39,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-radius-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
       inputWrapper: "group/questionnaire-input relative w-full min-w-0",
       input: [
-        "w-full min-w-0 rounded-(--studio-questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none",
+        "w-full min-w-0 rounded-(--studio-questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) outline-none",
         "placeholder:text-fg-muted",
         "focus:focus-input focus:not-aria-invalid:border-border-focus",
         "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted",

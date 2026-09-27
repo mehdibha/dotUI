@@ -337,12 +337,21 @@ ${groupEntries.join("\n")}
 
 /** Studio panel search index: every settings row label and group title in
  *  each chapter's section, keyed by chapter id — so search reaches nested
- *  axes, not just chapter names. Read off the section JSX; data-driven
+ *  axes, not just chapter names. Read off the section JSX, plus the motion
+ *  registry's entries and presets (their rows are data-driven); other data-driven
  *  labels (color roles, shape roles) are out of scope. */
 async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
   const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
   const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
+  const motion = await fs.readFile(
+    path.join(studioDir, "motion-controls.tsx"),
+    "utf8",
+  )
+  const presets = await fs.readFile(
+    path.join(studioDir, "axes", "motion-presets.ts"),
+    "utf8",
+  )
 
   const sectionOf = new Map<string, string>()
   for (const [, names = "", file = ""] of state.matchAll(
@@ -361,9 +370,10 @@ async function buildStudioSearchIndex() {
       fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
     const rowLabels = (source: string) => {
       const found: string[] = []
-      // A row's own label — the tag must not contain another "<" before it.
+      // A row's own label (a folded row's title) — the tag must not contain
+      // another "<" before it.
       for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|CardGrid)(?:(?!<)[\s\S])*?\slabel="([^"]+)"/g,
+        /<(?:\w+Row|Dial\w+|\w+Motion|CardGrid)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push(label)
       for (const [, title = ""] of source.matchAll(
@@ -382,6 +392,19 @@ async function buildStudioSearchIndex() {
       labels.add(prefix)
       for (const label of rowLabels(await read(sibling)))
         labels.add(`${prefix} › ${label}`)
+    }
+    if (id === "motion") {
+      for (const [, label = ""] of presets.matchAll(
+        /preset\("[^"]+", "([^"]+)"/g,
+      ))
+        labels.add(label)
+      for (const [, label = ""] of motion.matchAll(
+        /id: "[^"]+",\s*label: "([^"]+)"/g,
+      ))
+        labels.add(label)
+      for (const [, list = ""] of motion.matchAll(/followers: \[([^\]]+)\]/g))
+        for (const [, label = ""] of list.matchAll(/"([^"]+)"/g))
+          labels.add(label)
     }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,

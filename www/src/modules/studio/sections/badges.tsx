@@ -1,8 +1,9 @@
 "use client"
 
 /* Badges — and Tags, one synced chip language: how much intent color the
-   chip carries and its corners. Kbd is the third small chip, with a chrome
-   of its own. */
+   chip carries and its corners. Only tags react to the pointer, so they
+   alone time a transition. Kbd is the third small chip, with a chrome of its
+   own. */
 
 import { cn } from "@/registry/lib/utils"
 

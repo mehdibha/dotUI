@@ -61,7 +61,6 @@ export const chartDefaults = {
   legend: false,
   focus: "group-x",
   tooltipAnchor: "group-center",
-  animate: { type: "spring", stiffness: 170, damping: 26 },
   animateMaxPoints: 800,
   enterStagger: 25,
   narrowWidth: 420,
@@ -685,7 +684,6 @@ const ENTER_STAGGER = stagger({
   each: chartDefaults.enterStagger,
   roles: ["arc", "bar"],
 });
-
 export type ChartTooltipContentOf<TOptions> = (
   points: readonly ChartPoint[],
   context: ChartTooltipContentContext,
@@ -720,7 +718,15 @@ export function useChartDefinition<TDatum, TOptions>(
   const rows = Array.isArray(spec.data) ? spec.data.length : 0;
   const series = Array.isArray(spec.y) ? spec.y.length : 1;
   const degrade = rows * series > chartDefaults.animateMaxPoints;
+  // Every chart's motion unless its `animate` prop says otherwise; the
+  // annotation types the transition literal.
+  const systemMotion: Exclude<ChartAnimate, true> = {
+    type: "spring",
+    stiffness: 170,
+    damping: 26,
+  };
   const animate = behavior.animate ?? true;
+  const transition = animate === true ? systemMotion : animate;
   const { tooltipContent } = family;
   const definition = useOptionsMemo(
     () =>
@@ -747,14 +753,11 @@ export function useChartDefinition<TDatum, TOptions>(
                 }),
               },
         motion:
-          degrade || animate === false
+          degrade || transition === false
             ? false
-            : {
-                transition: animate === true ? chartDefaults.animate : animate,
-                ...ENTER_STAGGER,
-              },
+            : { transition, ...ENTER_STAGGER },
       }),
-    { ...spec, ...behavior, build, degrade },
+    { ...spec, ...behavior, build, degrade, transition },
   );
   return {
     definition: definition as DomChartDefinition<TDatum, ChartValue, number>,

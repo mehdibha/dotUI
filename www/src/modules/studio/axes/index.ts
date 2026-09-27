@@ -34,19 +34,21 @@ import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
 import * as menus from "./menus"
+import * as messageScroller from "./message-scroller"
 import * as mobile from "./mobile"
-import * as motion from "./motion"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
 import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
+import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
 import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
+import * as sidebar from "./sidebar"
 import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
@@ -87,7 +89,6 @@ export const DEFAULTS = {
   ...scrollbars.SCROLLBAR_DEFAULTS,
   ...disabled.DISABLED_DEFAULTS,
   ...invalid.INVALID_DEFAULTS,
-  ...motion.MOTION_DEFAULTS,
   ...mobile.MOBILE_DEFAULTS,
   ...charts.CHART_DEFAULTS,
   ...links.LINK_DEFAULTS,
@@ -117,12 +118,15 @@ export const DEFAULTS = {
   ...tooltips.TOOLTIP_DEFAULTS,
   ...tabs.TAB_DEFAULTS,
   ...accordion.ACCORDION_DEFAULTS,
+  ...sidebar.SIDEBAR_DEFAULTS,
   ...breadcrumbs.BREADCRUMB_DEFAULTS,
   ...pagination.PAGINATION_DEFAULTS,
   ...badges.BADGE_DEFAULTS,
   ...kbd.KBD_DEFAULTS,
   ...avatars.AVATAR_DEFAULTS,
   ...tables.TABLE_DEFAULTS,
+  ...questionnaire.QUESTIONNAIRE_DEFAULTS,
+  ...messageScroller.MESSAGE_SCROLLER_DEFAULTS,
 }
 
 export type StudioState = typeof DEFAULTS
@@ -140,7 +144,6 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   scrollbars.resolveScrollbars,
   disabled.resolveDisabled,
   invalid.resolveInvalid,
-  motion.resolveMotion,
   mobile.resolveMobile,
   charts.resolveCharts,
   links.resolveLinks,
@@ -170,12 +173,15 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   tooltips.resolveTooltips,
   tabs.resolveTabs,
   accordion.resolveAccordion,
+  sidebar.resolveSidebar,
   breadcrumbs.resolveBreadcrumbs,
   pagination.resolvePagination,
   badges.resolveBadges,
   kbd.resolveKbd,
   avatars.resolveAvatars,
   tables.resolveTables,
+  questionnaire.resolveQuestionnaire,
+  messageScroller.resolveMessageScroller,
 ]
 
 /** The engine's view of the state: every chapter's resolution merged. Later

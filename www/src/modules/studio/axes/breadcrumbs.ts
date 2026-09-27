@@ -3,13 +3,19 @@
    (muted labels that sharpen on hover · accent links). The current crumb is
    plain foreground in both camps.
 
-   Engine: `separator` and `tone` are enum params on `breadcrumbs`. */
+   Engine: `separator` and `tone` are enum params on `breadcrumbs`; the link's
+   hover color eases on the `--studio-breadcrumbs-state-*` vars. */
 
 import type { Resolved, StudioState } from "./index"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+
+/* shadcn's breadcrumb link: `transition-colors` on Tailwind's default. */
+const MOTION = TAILWIND_TIMING
 
 export const BREADCRUMB_DEFAULTS = {
   breadcrumbSeparator: "chevron",
   breadcrumbTone: "muted",
+  breadcrumbsMotion: MOTION,
 }
 
 export const SEPARATOR_OPTIONS = [
@@ -27,6 +33,7 @@ const pick = (options: { value: string }[], value: string, fallback: string) =>
 
 export function resolveBreadcrumbs(state: StudioState): Resolved {
   return {
+    tokens: resolveStateChange("breadcrumbs", state.breadcrumbsMotion, MOTION),
     params: {
       breadcrumbs: {
         separator: pick(

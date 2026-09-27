@@ -102,6 +102,29 @@ describe("preset codec — studio state", () => {
     expect(state.radioColor).toBe("accent")
   })
 
+  it("moves the system-wide overlay pattern onto each overlay", () => {
+    const { state } = decodePreset(
+      encodeRaw({
+        v: 4,
+        s: {
+          motionCharacter: "spring",
+          motionOverlay: "fade",
+          motionSpeed: 2,
+          tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "none" },
+        },
+      }),
+    )
+    expect(state.popoverMotion).toEqual({
+      ...DEFAULTS.popoverMotion,
+      pattern: "fade",
+    })
+    expect(state.modalMotion.pattern).toBe("fade")
+    expect(state.tooltipMotion.pattern).toBe("none")
+    expect(
+      Object.keys(state).filter((key) => key.startsWith("motion")),
+    ).toEqual([])
+  })
+
   it("decodes garbage to the defaults", () => {
     expect(decodePreset("not-a-preset").state).toEqual(DEFAULTS)
     expect(decodePreset(encodeRaw("hello")).state).toEqual(DEFAULTS)

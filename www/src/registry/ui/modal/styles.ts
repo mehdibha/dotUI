@@ -2,14 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import modalMeta from "./meta"
 
-/* Entrances ride the motion tokens (base.css): the character curve and the
-   enter / exit durations on the panel, the durations alone on the backdrop.
-   Exits keep a plain ease-out. */
+/* The entrance's timing is the studio's (styles.css); the backdrop fades on
+   the panel's. */
 const backdropFade =
-  "transition-opacity duration-enter group-exiting/modal:duration-exit motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0"
+  "transition-opacity duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) group-exiting/modal:duration-(--studio-modal-exit-duration) group-exiting/modal:ease-(--studio-modal-exit-ease) motion-reduce:transition-none group-entering/modal:opacity-0 group-exiting/modal:opacity-0"
 
 const entrance =
-  "duration-enter ease-enter exiting:duration-exit exiting:ease-out motion-reduce:transition-none"
+  "duration-(--studio-modal-enter-duration) ease-(--studio-modal-ease) exiting:duration-(--studio-modal-exit-duration) exiting:ease-(--studio-modal-exit-ease) motion-reduce:transition-none"
 
 const { useStyles, styles } = createStyles(modalMeta, {
   base: {
@@ -52,6 +51,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       },
     },
     motion: {
+      // shadcn's: fade and zoom from 95%, both ways.
       scale: {
         slots: {
           backdrop: backdropFade,
