@@ -8,16 +8,16 @@ import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 
-import { DEFAULTS } from "./axes"
+import type { StudioStateInput } from "./axes"
 import { MOTION_PATTERNS as ACCORDION_PATTERNS } from "./axes/accordion"
-import { MOTION_OPTIONS as CHART_MOTION, motionOption } from "./axes/charts"
+import { MOTION_OPTIONS as CHART_MOTION } from "./axes/charts"
 import { DRAWER_PATTERNS, MODAL_PATTERNS } from "./axes/dialogs"
 import { MOTION_PATTERNS as MESSAGE_SCROLLER_PATTERNS } from "./axes/message-scroller"
 import { bezierCss, curveTiming, formatMs } from "./axes/motion"
 import type { Curve, Entrance, Loop, StateChange } from "./axes/motion"
-import { same } from "./axes/motion-presets"
 import type { MotionPreset } from "./axes/motion-presets"
 import { MOTION_PATTERNS as POPOVER_PATTERNS } from "./axes/popovers"
+import { sameValue } from "./axes/schema"
 import { MOTION_PATTERNS as TOAST_PATTERNS } from "./axes/toast"
 import { MOTION_PATTERNS as TOOLTIP_PATTERNS } from "./axes/tooltips"
 import {
@@ -41,15 +41,15 @@ import type { Studio, StudioState } from "./state"
 type Pattern = { value: string; label: string }
 
 type KeyOf<T> = {
-  [K in keyof StudioState]: StudioState[K] extends T ? K : never
-}[keyof StudioState]
+  [K in keyof StudioStateInput]: StudioStateInput[K] extends T ? K : never
+}[keyof StudioStateInput]
 
 export interface MotionEntry {
   id: string
   label: string
   kind: "entrance" | "state" | "loop" | "js"
   /** Its state; the first key is the one timed. */
-  keys: [keyof StudioState, ...(keyof StudioState)[]]
+  keys: [keyof StudioStateInput, ...(keyof StudioStateInput)[]]
   /** Entrance patterns, for the summary. */
   patterns?: Pattern[]
   /** Components riding this entry's state (one key, one var id). */
@@ -275,7 +275,7 @@ export const MOTION: MotionEntry[] = [
       return (
         <DialChips
           label="Transition"
-          value={motionOption(studio.state.chartMotion)}
+          value={studio.state.chartMotion}
           onChange={studio.set("chartMotion")}
           options={CHART_MOTION}
         />
@@ -283,11 +283,6 @@ export const MOTION: MotionEntry[] = [
     },
   },
 ]
-
-/** Every motion key: the Motion chapter's slice. */
-export const MOTION_DEFAULTS: Partial<StudioState> = Object.fromEntries(
-  MOTION.flatMap((entry) => entry.keys.map((key) => [key, DEFAULTS[key]])),
-)
 
 /* --------------------------------- Timing --------------------------------- */
 
@@ -319,9 +314,7 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
     }
   }
   if (entry.kind === "js") {
-    const option = CHART_MOTION.find(
-      (o) => o.value === motionOption(value as string),
-    )
+    const option = CHART_MOTION.find((o) => o.value === value)
     if (!option?.curve) return { off: true, enter: 0, ease: "linear" }
     // The tween's 400ms is the chart's own; a spring times itself.
     const { ms, ease } = curveTiming(option.curve, 400)
@@ -338,8 +331,7 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
 
 /** The row's value: the pattern and how long it takes, or the pick. */
 export function summaryOf(entry: MotionEntry, state: StudioState): string {
-  if (entry.kind === "js")
-    return optionLabel(CHART_MOTION, motionOption(state.chartMotion))
+  if (entry.kind === "js") return optionLabel(CHART_MOTION, state.chartMotion)
   const timing = timingOf(entry, state)
   if (entry.kind !== "entrance" || (entry.patterns?.length ?? 0) < 2)
     return timing.off ? "None" : formatMs(timing.enter)
@@ -352,7 +344,7 @@ export const differs = (
   entry: MotionEntry,
   state: StudioState,
   base: MotionPreset,
-) => entry.keys.some((key) => !same(state[key], base.values[key as never]))
+) => entry.keys.some((key) => !sameValue(state[key], base.values[key as never]))
 
 /** The span of the entries' timed legs, e.g. "100–450ms". */
 export function tempo(entries: MotionEntry[], state: StudioState) {

@@ -3,18 +3,19 @@
    all do. Loops carry status, so no preset touches them. */
 
 import { DEFAULTS } from "./index"
-import type { StudioState } from "./index"
+import type { StudioState, StudioStateInput } from "./index"
 import { CURVES, ease } from "./motion"
 import type { Curve, Entrance, StateChange } from "./motion"
+import { sameValue } from "./schema"
 
 type KeysOf<T> = {
-  [K in keyof StudioState]: StudioState[K] extends T ? K : never
-}[keyof StudioState]
+  [K in keyof StudioStateInput]: StudioStateInput[K] extends T ? K : never
+}[keyof StudioStateInput]
 type EntranceKey = KeysOf<Entrance>
 type StateKey = KeysOf<StateChange>
 
-export type MotionKey = Extract<keyof StudioState, `${string}Motion`>
-export type MotionValues = Pick<StudioState, MotionKey>
+export type MotionKey = Extract<keyof StudioStateInput, `${string}Motion`>
+export type MotionValues = Pick<StudioStateInput, MotionKey>
 
 export interface MotionPreset {
   id: string
@@ -175,27 +176,10 @@ export const MOTION_PRESETS: MotionPreset[] = [
 
 export const MOTION_KEYS = Object.keys(DEFAULT_VALUES) as MotionKey[]
 
-/** Deep equality that ignores key order (a decoded preset may reorder). */
-export function same(a: unknown, b: unknown): boolean {
-  if (a === b) return true
-  if (typeof a !== "object" || typeof b !== "object" || !a || !b) return false
-  const ka = Object.keys(a)
-  const kb = Object.keys(b)
-  return (
-    ka.length === kb.length &&
-    ka.every((k) =>
-      same(
-        (a as Record<string, unknown>)[k],
-        (b as Record<string, unknown>)[k],
-      ),
-    )
-  )
-}
-
 /** The preset the state sits on: the one most keys match, Default on a tie. */
 export function motionBase(state: StudioState) {
   const score = (p: MotionPreset) =>
-    MOTION_KEYS.filter((key) => same(state[key], p.values[key])).length
+    MOTION_KEYS.filter((key) => sameValue(state[key], p.values[key])).length
   const byDefaultFirst = [...MOTION_PRESETS].sort(
     (a, b) => Number(b.id === "default") - Number(a.id === "default"),
   )

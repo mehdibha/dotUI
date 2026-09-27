@@ -6,14 +6,15 @@ import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { DEFAULTS } from "."
-import type { StudioState } from "."
+import { DEFAULT_STATE, DEFAULTS, parseState, validate } from "."
+import type { StudioState, StudioStateInput } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
   bezierCss,
   curveName,
   curveTiming,
   entranceVars,
+  isMotionValue,
   loopVars,
   resolveEntrance,
   stateChangeVars,
@@ -24,8 +25,8 @@ import {
   MOTION_KEYS as PRESET_KEYS,
   MOTION_PRESETS,
   motionBase,
-  same,
 } from "./motion-presets"
+import { sameValue } from "./schema"
 
 const ENTRANCE: Entrance = {
   pattern: "scale",
@@ -61,7 +62,7 @@ describe("motion vocabulary", () => {
   })
 
   test("an entrance writes only what leaves its defaults", () => {
-    expect(resolveEntrance("x", ENTRANCE, ENTRANCE, PATTERNS)).toEqual({
+    expect(resolveEntrance("x", ENTRANCE, ENTRANCE)).toEqual({
       tokens: {},
       pattern: "scale",
     })
@@ -70,7 +71,6 @@ describe("motion vocabulary", () => {
         "x",
         { ...ENTRANCE, enter: 300, pattern: "fade" },
         ENTRANCE,
-        PATTERNS,
       ),
     ).toEqual({
       tokens: { "--studio-x-enter-duration": "300ms" },
@@ -80,7 +80,6 @@ describe("motion vocabulary", () => {
       "x",
       { ...ENTRANCE, curve: { type: "spring", bounce: 0.2 } },
       ENTRANCE,
-      PATTERNS,
     ).tokens
     expect(Object.keys(spring)).toEqual([
       "--studio-x-enter-duration",
@@ -88,17 +87,22 @@ describe("motion vocabulary", () => {
     ])
   })
 
-  test("a malformed stored value falls back field by field", () => {
-    const stored = {
-      pattern: "spin",
-      enter: "fast",
-      curve: { type: "easing", ease: [1, 2] },
-      exit: 90,
-    } as unknown as Entrance
-    expect(resolveEntrance("x", stored, ENTRANCE, PATTERNS)).toEqual({
-      tokens: { "--studio-x-exit-duration": "90ms" },
-      pattern: "scale",
-    })
+  test("validation rejects a malformed motion value", () => {
+    expect(isMotionValue("entrance", ENTRANCE, PATTERNS)).toBe(true)
+    expect(
+      isMotionValue("entrance", { ...ENTRANCE, pattern: "spin" }, PATTERNS),
+    ).toBe(false)
+    expect(
+      isMotionValue(
+        "entrance",
+        { ...ENTRANCE, curve: { type: "easing", ease: [1, 2] } },
+        PATTERNS,
+      ),
+    ).toBe(false)
+    expect(isMotionValue("state-change", { duration: "fast" })).toBe(false)
+    expect(
+      validate({ ...DEFAULTS, popoverMotion: { pattern: "spin" } }).ok,
+    ).toBe(false)
   })
 })
 
@@ -107,16 +111,16 @@ const idOf = (key: string) =>
   key.replace(/Motion$/, "").replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
 /* The var-backed timings; a param-backed motion (the chart's named
    transition) is its axis's own business. */
-const MOTION_KEYS = Object.keys(DEFAULTS).filter(
+const MOTION_KEYS = Object.keys(DEFAULT_STATE).filter(
   (key) =>
     key.endsWith("Motion") &&
-    typeof DEFAULTS[key as keyof StudioState] === "object",
-) as (keyof StudioState)[]
+    typeof DEFAULTS[key as keyof StudioStateInput] === "object",
+) as (keyof StudioStateInput)[]
 const isEntrance = (value: unknown): value is Entrance =>
   typeof value === "object" && value !== null && "pattern" in value
 const isLoop = (value: unknown): value is Loop =>
   typeof value === "object" && value !== null && "cycle" in value
-const varsOf = (key: keyof StudioState, value: unknown) =>
+const varsOf = (key: keyof StudioStateInput, value: unknown) =>
   isEntrance(value)
     ? entranceVars(idOf(key), value)
     : isLoop(value)
@@ -183,13 +187,13 @@ describe("component motion", () => {
       : isLoop(value)
         ? { ...value, cycle: value.cycle + 50 }
         : { ...value, duration: value.duration + 50 }
-    const ds = resolveDesignSystem({ ...DEFAULTS, [key]: retimed })
+    const ds = resolveDesignSystem(parseState({ [key]: retimed }))
     expect(Object.keys(ds.tokens).length).toBeGreaterThan(0)
     expect(Object.keys(varsOf(key, retimed))).toEqual(
       expect.arrayContaining(Object.keys(ds.tokens)),
     )
     expect(ds.componentParams).toEqual(
-      resolveDesignSystem(DEFAULTS).componentParams,
+      resolveDesignSystem(DEFAULT_STATE).componentParams,
     )
   })
 })
@@ -221,7 +225,7 @@ const THEME_MOTION =
 
 describe("shipped motion", () => {
   test("the defaults write no motion tokens", () => {
-    const { tokens } = resolveDesignSystem(DEFAULTS)
+    const { tokens } = resolveDesignSystem(DEFAULT_STATE)
     expect(
       Object.keys(tokens).filter((name) => /-(duration|ease)$/.test(name)),
     ).toEqual([])
@@ -232,7 +236,7 @@ describe("shipped motion", () => {
   })
 
   test("the defaults ship plain classes, no studio vars", async () => {
-    const shipped = Object.entries(await shipAll(DEFAULTS))
+    const shipped = Object.entries(await shipAll(DEFAULT_STATE))
     expect(
       shipped.filter(
         ([, content]) =>
@@ -250,7 +254,7 @@ describe("shipped motion", () => {
           : []
       }),
     )
-    const shipped = await shipAll({ ...DEFAULTS, ...springs })
+    const shipped = await shipAll(parseState({ ...springs }))
     const sprung = [
       "popover",
       "tooltip",
@@ -280,12 +284,12 @@ const motionOf = (values: Partial<StudioState>) =>
 
 describe("motion presets", () => {
   test("Default is the defaults, key order included", () => {
-    expect(motionOf(presetById("default").values)).toBe(motionOf(DEFAULTS))
+    expect(motionOf(presetById("default").values)).toBe(motionOf(DEFAULT_STATE))
   })
 
   test("every preset reads back as itself, exactly", () => {
     const read = MOTION_PRESETS.map((p) => {
-      const { preset, exact } = motionBase({ ...DEFAULTS, ...p.values })
+      const { preset, exact } = motionBase(parseState({ ...p.values }))
       return `${preset.id}${exact ? "" : " (inexact)"}`
     })
     expect(read).toEqual(MOTION_PRESETS.map((p) => p.id))
@@ -293,11 +297,10 @@ describe("motion presets", () => {
 
   test("one tweak stays on its preset, no longer exact", () => {
     const snappy = presetById("snappy")
-    const state = {
-      ...DEFAULTS,
+    const state = parseState({
       ...snappy.values,
       buttonMotion: { ...snappy.values.buttonMotion, duration: 400 },
-    }
+    })
     expect(motionBase(state)).toEqual({ preset: snappy, exact: false })
   })
 
@@ -310,9 +313,11 @@ describe("motion presets", () => {
         if (typeof v !== "object") continue
         // Off leaves curves alone; a curve a preset writes must be named.
         const curves = [
-          !same(v.curve, d.curve) && v.curve,
-          !same(v.ease, d.ease) && v.ease && easing(v.ease),
-          !same(v.exitEase, d.exitEase) && v.exitEase && easing(v.exitEase),
+          !sameValue(v.curve, d.curve) && v.curve,
+          !sameValue(v.ease, d.ease) && v.ease && easing(v.ease),
+          !sameValue(v.exitEase, d.exitEase) &&
+            v.exitEase &&
+            easing(v.exitEase),
         ]
         for (const c of curves)
           if (c && !curveName(c)) off.push(`${p.id} ${key}: unnamed curve`)
@@ -325,7 +330,7 @@ describe("motion presets", () => {
   test("every preset ships plain classes, no studio vars", async () => {
     const survivors: string[] = []
     for (const p of MOTION_PRESETS) {
-      const shipped = await shipAll({ ...DEFAULTS, ...p.values })
+      const shipped = await shipAll(parseState({ ...p.values }))
       for (const [name, content] of Object.entries(shipped))
         if (content.includes("--studio-")) survivors.push(`${p.id}: ${name}`)
     }

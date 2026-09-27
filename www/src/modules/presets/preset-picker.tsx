@@ -1,10 +1,30 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import type { ReactNode } from "react"
-import { CheckIcon, PlusIcon, SearchIcon } from "lucide-react"
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
+import type { ReactNode, Ref, RefObject } from "react"
+import {
+  CheckIcon,
+  MoreHorizontalIcon,
+  PlusIcon,
+  SearchIcon,
+} from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
+import { ListStateContext } from "react-aria-components/ListBox"
+import type { ListState } from "react-aria-components/ListBox"
+import {
+  MenuContext,
+  RootMenuTriggerStateContext,
+} from "react-aria-components/Menu"
+import { PopoverContext } from "react-aria-components/Popover"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { Responsive } from "@/registry/lib/responsive"
@@ -23,14 +43,26 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import type { PopoverProps } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Controls } from "@/components/showcase/controls"
 import type { DesignSystem } from "@/modules/studio/preset"
 
 interface PresetPickerItem {
   id: string
   name: string
-  /** Themes the option's preview. */
-  designSystem: DesignSystem
+  /** The row's dot. */
+  swatch: string
+  description?: string
+  /** The brand a preset recreates, disclaimed under its description. */
+  inspiredBy?: string
+  /** A short status after the name, e.g. "Draft". */
+  badge?: string
+  /** The muted second line, read as the row renders so times stay fresh. */
+  subtitle?: () => ReactNode
+  /** Tells same-named rows apart in the ⋯ label, e.g. "preset". */
+  kind?: string
+  /** Themes the flyout — called only for the previewed item. */
+  resolve: () => DesignSystem
 }
 
 interface PresetPickerSection {
@@ -50,19 +82,39 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
-  /** Pin the previews to one mode (docs previews pin light/dark). */
+  /** Pin the flyout to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
-  /** Trailing controls on a row (e.g. a saved preset's actions menu). */
-  renderItemActions?: (item: PresetPickerItem) => ReactNode
-  /** Adds a "+ New" button beside the search field; pressing it closes the picker first. */
+  /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
+   *  search never filters it. `afterClose` runs an action that removes the
+   *  row once the menu has closed and focus has moved to the next row. */
+  renderItemMenu?: (
+    item: PresetPickerItem,
+    afterClose: (run: () => void) => void,
+  ) => ReactNode
+  /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
+  /** The picker's own ⋯ menu, beside New. */
+  moreMenu?: ReactNode
+  /** Shown instead of the list, e.g. Recently deleted. */
+  pane?: ReactNode
+  /** F2 in the search field. */
+  onRenameKey?: () => void
+  /** The row being renamed in place, if any. */
+  renamingId?: string
+  /** Ends the rename: the typed name, or null when cancelled; `submit` when
+   *  it ended with Enter. Returns true when it closes the picker; otherwise
+   *  focus returns to the row. */
+  onRenameEnd?: (id: string, name: string | null, submit: boolean) => boolean
+  /** Filled, while the picker is open, with a function that moves focus back
+   *  to the list and highlights a row. */
+  focusRef?: RefObject<((id: string) => void) | null>
 }
 
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
- * panel: a searchable list of plain rows — an accent dot and the preset's name.
+ * panel: a searchable list of plain rows — a swatch dot and the preset's name.
  * Popover on desktop, drawer on mobile.
  *
  * `withPreview` adds a detached flyout card — a big tooltip in the previewed
@@ -80,9 +132,26 @@ export function PresetPicker({
   placement = "bottom start",
   previewMode,
   withPreview = false,
-  renderItemActions,
-  onCreate,
+  ...rest
 }: PresetPickerProps) {
+  // Closing after its opener went away (reopened past the keep dialog)
+  // leaves focus on the page: it goes back to the trigger.
+  const triggerRef = useRef<HTMLSpanElement>(null)
+  const wasOpen = useRef(isOpen)
+  useEffect(() => {
+    const closed = wasOpen.current && !isOpen
+    wasOpen.current = isOpen
+    if (!closed) return
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        const active = document.activeElement
+        if (active && active !== document.body) return
+        triggerRef.current?.querySelector<HTMLElement>("button")?.focus()
+      })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [isOpen])
+
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Design systems"
@@ -101,8 +170,7 @@ export function PresetPicker({
           surface={surface}
           previewMode={previewMode}
           withPreview={withPreview}
-          renderItemActions={renderItemActions}
-          onCreate={onCreate}
+          {...rest}
         />
       )}
     </DialogContent>
@@ -110,11 +178,15 @@ export function PresetPicker({
 
   return (
     <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      {children}
+      <span ref={triggerRef} className="contents">
+        {children}
+      </span>
       <Responsive
         render={(isMobile) =>
           isMobile ? (
-            <Drawer>{content("drawer")}</Drawer>
+            // Instant too: an exiting drawer would cover the page and eat
+            // the next tap.
+            <Drawer className="transition-none!">{content("drawer")}</Drawer>
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
@@ -140,28 +212,91 @@ function PresetPickerContent({
   surface,
   previewMode,
   withPreview,
-  renderItemActions,
+  renderItemMenu,
   onCreate,
-}: {
-  sections: PresetPickerSection[]
-  selectedId?: string
-  onPick: (item: PresetPickerItem) => void
+  moreMenu,
+  pane,
+  onRenameKey,
+  renamingId,
+  onRenameEnd,
+  focusRef,
+}: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
-  previewMode?: "light" | "dark"
   withPreview: boolean
-  renderItemActions?: (item: PresetPickerItem) => ReactNode
-  onCreate?: () => void
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
   // section counts honest and to drop a section whose matches all filtered out
   // (its header is our child, so the collection can't hide it for us). Reading
-  // it off `onInput` leaves the value under Autocomplete's control.
+  // it off the field's `onChange` (Esc clears through it too) leaves the
+  // value under Autocomplete's control.
   const [query, setQuery] = useState("")
   const { contains } = useFilter({
     sensitivity: "base",
     ignorePunctuation: true,
   })
+  // The open ⋯ menu: a row's, or the picker's own (id null).
+  const [menu, setMenu] = useState<{ id: string | null } | null>(null)
+  const menuTriggerRef = useRef<HTMLElement | null>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
+  const openMenu = (id: string | null, trigger: Element) => {
+    menuTriggerRef.current = trigger as HTMLElement
+    setMenu({ id })
+  }
+  const listRef = useRef<ListState<unknown> | null>(null)
+  // A row-removing action and the row that takes focus from it.
+  const pendingRef = useRef<{ run: () => void; next?: string } | null>(null)
+  // Moves focus to a row: the popover's search keeps focus and highlights it;
+  // on the drawer its ⋯ takes focus, so the keyboard stays down. With no row,
+  // the search or the drawer itself.
+  const focusRow = (id: string | undefined) => {
+    const highlight = () => {
+      if (id === undefined) return
+      listRef.current?.selectionManager.setFocused(true)
+      listRef.current?.selectionManager.setFocusedKey(id)
+    }
+    const search = searchRef.current
+    if (surface === "popover") {
+      search?.focus()
+      // After the search's own focus handling, which restores the old one.
+      queueMicrotask(highlight)
+      return
+    }
+    // Before focusing, which would otherwise highlight the first row.
+    highlight()
+    const dialog = search?.closest<HTMLElement>("[role=dialog]")
+    const rowMenu = id
+      ? dialog?.querySelector<HTMLElement>(
+          `[data-key="${CSS.escape(id)}"] [data-row-menu]`,
+        )
+      : null
+    ;(rowMenu ?? dialog)?.focus()
+  }
+  useEffect(() => {
+    if (!focusRef) return
+    focusRef.current = focusRow
+    return () => {
+      focusRef.current = null
+    }
+  })
+  const closeMenu = () => {
+    setMenu(null)
+    // Two frames: after the popover's own focus restore. Focus must never be
+    // lost to the body, or the picker closes.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        const pending = pendingRef.current
+        pendingRef.current = null
+        if (pending) {
+          focusRow(pending.next)
+          pending.run()
+          return
+        }
+        const active = document.activeElement
+        if (!active || active === document.body) focusRow(undefined)
+      }),
+    )
+  }
   // Which preset the flyout previews: the last row the pointer entered or the
   // keyboard highlight landed on, whichever signalled most recently. Focus only
   // counts once the user has actually navigated (arrows or typing) — the
@@ -227,12 +362,46 @@ function PresetPickerContent({
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
   const flyout = surface === "popover" && withPreview
+  const menuItem = menu?.id
+    ? allItems.find((item) => item.id === menu.id)
+    : undefined
+  const rowIds = visible.flatMap((section) => section.items.map((i) => i.id))
+  const afterClose = (id: string) => (run: () => void) => {
+    const i = rowIds.indexOf(id)
+    pendingRef.current = { run, next: rowIds[i + 1] ?? rowIds[i - 1] }
+  }
+  const menuContent =
+    menu &&
+    (menu.id === null
+      ? moreMenu
+      : menuItem && renderItemMenu?.(menuItem, afterClose(menuItem.id)))
+
+  // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
+  function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "F2" && onRenameKey) {
+      e.preventDefault()
+      onRenameKey()
+      return
+    }
+    if (
+      !renderItemMenu ||
+      !((e.key === "F10" && e.shiftKey) || e.key === "ContextMenu")
+    )
+      return
+    const active = e.currentTarget.getAttribute("aria-activedescendant")
+    const row = active ? document.getElementById(active) : null
+    const key = row?.dataset.key
+    if (!row || !key) return
+    e.preventDefault()
+    openMenu(key, row.querySelector("[data-row-menu]") ?? row)
+  }
 
   function pick(key: Key) {
     const item = allItems.find((candidate) => candidate.id === key)
     if (!item) return
     onPick(item)
     close()
+    swallowDoubleClick()
   }
 
   const list = (
@@ -241,9 +410,11 @@ function PresetPickerContent({
           inset as the rows below; the New button, when any, shares it. */}
       <div className="mx-(--command-inset) flex items-center gap-2">
         <SearchField
-          // No search autofocus on mobile — the keyboard would cover the list.
-          autoFocus={surface === "popover"}
+          // No search autofocus on mobile — the keyboard would cover the list;
+          // nor over a row being renamed.
+          autoFocus={surface === "popover" && !renamingId}
           aria-label="Search design systems"
+          onChange={setQuery}
           className="flex-1 border-b-0! px-0!"
         >
           <InputGroup>
@@ -251,9 +422,10 @@ function PresetPickerContent({
               <SearchIcon />
             </InputGroupAddon>
             <Input
-              placeholder="Search systems..."
-              onInput={(e) => {
-                setQuery(e.currentTarget.value)
+              ref={searchRef}
+              onKeyDown={onSearchKeyDown}
+              placeholder="Search"
+              onInput={() => {
                 // Typing moves the highlight to the first match, so from here on
                 // the pane follows it.
                 navigatedRef.current = true
@@ -266,13 +438,22 @@ function PresetPickerContent({
             variant="secondary"
             size="md"
             className="mt-2 shrink-0"
-            onPress={() => {
-              close()
-              onCreate()
-            }}
+            onPress={onCreate}
           >
             <PlusIcon />
             New
+          </Button>
+        )}
+        {moreMenu && (
+          <Button
+            variant="quiet"
+            size="md"
+            isIconOnly
+            aria-label="More"
+            className="mt-2 shrink-0 text-fg-muted"
+            onPress={(e) => openMenu(null, e.target)}
+          >
+            <MoreHorizontalIcon />
           </Button>
         )}
       </div>
@@ -306,12 +487,7 @@ function PresetPickerContent({
               <span className="tabular-nums">{section.items.length}</span>
             </CommandSectionHeader>
             {section.items.map((item) => (
-              <CommandItem
-                key={item.id}
-                id={item.id}
-                textValue={item.name}
-                className={cn(renderItemActions && "pr-9")}
-              >
+              <CommandItem key={item.id} id={item.id} textValue={item.name}>
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
                     item={item}
@@ -322,10 +498,31 @@ function PresetPickerContent({
                     // flyout open.
                     isFocused={isFocusVisible}
                     isHovered={isHovered}
+                    listRef={listRef}
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
-                    forcedMode={previewMode}
-                    actions={renderItemActions?.(item)}
+                    onMenu={
+                      renderItemMenu
+                        ? (trigger) => openMenu(item.id, trigger)
+                        : undefined
+                    }
+                    rename={
+                      item.id === renamingId && onRenameEnd
+                        ? (name, submit) => {
+                            if (onRenameEnd(item.id, name, submit)) return
+                            // Unless a blur moved focus to another control.
+                            requestAnimationFrame(() => {
+                              const active = document.activeElement
+                              if (
+                                !active ||
+                                active === document.body ||
+                                active === searchRef.current
+                              )
+                                focusRow(item.id)
+                            })
+                          }
+                        : undefined
+                    }
                   />
                 )}
               </CommandItem>
@@ -336,22 +533,56 @@ function PresetPickerContent({
     </>
   )
 
-  if (surface === "drawer") return <Command>{list}</Command>
+  // Outside the Autocomplete, whose contexts would otherwise reach the menu.
+  const rowMenu = (
+    <PopoverContext.Provider value={null}>
+      <RootMenuTriggerStateContext.Provider value={null}>
+        <MenuContext.Provider
+          value={{ onClose: closeMenu, autoFocus: "first" }}
+        >
+          <Popover
+            triggerRef={menuTriggerRef}
+            isOpen={!!menuContent}
+            onOpenChange={(isOpen) => !isOpen && closeMenu()}
+            placement="bottom end"
+            className="transition-none will-change-auto"
+          >
+            {menuContent}
+          </Popover>
+        </MenuContext.Provider>
+      </RootMenuTriggerStateContext.Provider>
+    </PopoverContext.Provider>
+  )
+
+  if (surface === "drawer")
+    return (
+      <>
+        {pane ?? <Command>{list}</Command>}
+        {rowMenu}
+      </>
+    )
 
   return (
     <>
-      <Command
-        className="max-h-[inherit] w-65 overflow-hidden"
-        onKeyDownCapture={(e) => {
-          if (e.key.startsWith("Arrow")) navigatedRef.current = true
-        }}
-      >
-        {list}
-      </Command>
-      {flyout && (
+      {pane ? (
+        <div className="flex max-h-[inherit] w-65 flex-col">{pane}</div>
+      ) : (
+        <Command
+          className="max-h-[inherit] w-65 overflow-hidden"
+          onKeyDownCapture={(e) => {
+            if (e.key.startsWith("Arrow")) navigatedRef.current = true
+          }}
+        >
+          {list}
+        </Command>
+      )}
+      {rowMenu}
+      {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
-          isVisible={engaged}
+          // Hidden, not unmounted, under a pane: its demos' hidden popovers
+          // would otherwise take over the picker's arrow on remount.
+          isVisible={engaged && !pane}
           forcedMode={previewMode}
         />
       )}
@@ -359,11 +590,43 @@ function PresetPickerContent({
   )
 }
 
-/**
- * One option: the preset's accent as a dot and its name. The scope only themes
- * the dot — the row itself is the site's, so hover and highlight come from the
- * list like any other command item.
- */
+const PRESS_TYPES = [
+  "pointerdown",
+  "mousedown",
+  "pointerup",
+  "mouseup",
+  "click",
+  "dblclick",
+]
+
+/** Drops the second press of a double click that picked a row: the picker
+ *  closes on the first, and the second would land on whatever was under
+ *  it. Presses elsewhere, or later, go through. */
+function swallowDoubleClick() {
+  const first = window.event
+  if (!(first instanceof MouseEvent)) return
+  const swallow = (e: Event) => {
+    if (
+      !(e instanceof MouseEvent) ||
+      Math.hypot(e.clientX - first.clientX, e.clientY - first.clientY) > 8
+    )
+      return
+    e.stopPropagation()
+    e.preventDefault()
+    if (e.type === "dblclick") stop()
+  }
+  const stop = () => {
+    clearTimeout(timer)
+    for (const type of PRESS_TYPES)
+      window.removeEventListener(type, swallow, true)
+  }
+  for (const type of PRESS_TYPES) window.addEventListener(type, swallow, true)
+  const timer = setTimeout(stop, 500)
+}
+
+const ROW_MENU_HINT = "Press Shift+F10 for actions"
+
+/** One option: the preset's swatch and its name, in the site's own theme. */
 function PresetOptionRow({
   item,
   isSelected,
@@ -371,8 +634,9 @@ function PresetOptionRow({
   isHovered,
   onShow,
   onHide,
-  forcedMode,
-  actions,
+  onMenu,
+  rename,
+  listRef,
 }: {
   item: PresetPickerItem
   isSelected: boolean
@@ -380,10 +644,15 @@ function PresetOptionRow({
   isHovered: boolean
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
-  forcedMode?: "light" | "dark"
-  actions?: ReactNode
+  onMenu?: (trigger: Element) => void
+  rename?: (name: string | null, submit: boolean) => void
+  listRef: RefObject<ListState<unknown> | null>
 }) {
-  const { designSystem } = item
+  // Hands the list's state up, to move its highlight after a delete.
+  const list = useContext(ListStateContext)
+  useEffect(() => {
+    listRef.current = list
+  }, [list, listRef])
 
   // Route this row to the flyout: the pointer and the keyboard highlight both
   // land here, and whichever spoke last wins. Losing both signals the flyout
@@ -394,8 +663,10 @@ function PresetOptionRow({
     else onHide?.(item.id)
   }, [isHovered, isFocused, item.id, onShow, onHide])
 
-  // Center the selected row when it enters the list: the collection carries no
-  // selection (rows draw their own), so RAC never scrolls to it on open.
+  // Center the selected row when it enters the list out of view: the
+  // collection carries no selection (rows draw their own), so RAC never
+  // scrolls to it on open. A visible row stays put, keeping the sections
+  // above it in view.
   // Offset math, not scrollIntoView — the popover's entering scale skews rects.
   const rowRef = useRef<HTMLSpanElement>(null)
   useEffect(() => {
@@ -403,39 +674,169 @@ function PresetOptionRow({
     const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
     const scroller = option?.offsetParent
     if (!option || !(scroller instanceof HTMLElement)) return
+    const top = option.offsetTop - scroller.scrollTop
+    if (top >= 0 && top + option.offsetHeight <= scroller.clientHeight) return
     scroller.scrollTop =
       option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
   }, [isSelected])
 
+  // Right-click, or a long press on touch, opens the row's menu.
+  const menuFrom = useEffectEvent((trigger: Element) => onMenu?.(trigger))
+  const hasMenu = !!onMenu
+  useEffect(() => {
+    const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
+    if (!option || !hasMenu) return
+    // Rows are no Tab stops: screen readers say the keyboard way in.
+    if (!window.matchMedia("(pointer: coarse)").matches)
+      option.setAttribute("aria-description", ROW_MENU_HINT)
+    const open = () =>
+      menuFrom(option.querySelector("[data-row-menu]") ?? option)
+    let timer: ReturnType<typeof setTimeout> | undefined
+    let start = { x: 0, y: 0 }
+    const cancel = () => clearTimeout(timer)
+    const onContextMenu = (e: MouseEvent) => {
+      e.preventDefault()
+      cancel()
+      open()
+    }
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== "touch") return
+      if ((e.target as Element).closest("[data-row-menu], input")) return
+      start = { x: e.clientX, y: e.clientY }
+      timer = setTimeout(() => {
+        // Ends the row's press, so lifting the finger doesn't pick the row,
+        // and drops the lift's mouse events, which would blur the menu.
+        document.dispatchEvent(new PointerEvent("pointercancel"))
+        option.addEventListener("touchend", (e) => e.preventDefault(), {
+          once: true,
+          passive: false,
+        })
+        open()
+      }, 500)
+    }
+    const onPointerMove = (e: PointerEvent) => {
+      if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8) cancel()
+    }
+    option.addEventListener("contextmenu", onContextMenu)
+    option.addEventListener("pointerdown", onPointerDown)
+    option.addEventListener("pointermove", onPointerMove)
+    option.addEventListener("pointerup", cancel)
+    option.addEventListener("pointercancel", cancel)
+    return () => {
+      cancel()
+      option.removeAttribute("aria-description")
+      option.removeEventListener("contextmenu", onContextMenu)
+      option.removeEventListener("pointerdown", onPointerDown)
+      option.removeEventListener("pointermove", onPointerMove)
+      option.removeEventListener("pointerup", cancel)
+      option.removeEventListener("pointercancel", cancel)
+    }
+  }, [hasMenu])
+
+  const subtitle = item.subtitle?.()
   return (
     <>
-      <DesignSystemProvider
-        scoped
-        params={designSystem.componentParams}
-        tokens={designSystem.tokens}
-        density={designSystem.density}
-        color={designSystem.color}
-        icons={designSystem.icons}
-        forcedMode={forcedMode}
-      >
-        <span
-          ref={rowRef}
-          aria-hidden
-          // The hairline keeps a near-white or near-black accent from
-          // vanishing into the row it sits on.
-          className="size-2.5 shrink-0 rounded-full bg-accent ring-1 ring-fg/10 ring-inset"
-        />
-      </DesignSystemProvider>
-      <span className="min-w-0 flex-1 truncate">{item.name}</span>
+      <Swatch ref={rowRef} color={item.swatch} />
+      <span className="flex min-w-0 flex-1 flex-col">
+        {rename ? (
+          <RenameField name={item.name} onEnd={rename} />
+        ) : (
+          // The badge rides the name line, leaving the subtitle its width.
+          <span className="flex min-w-0 items-center gap-1.5">
+            <span dir="auto" className="min-w-0 truncate">
+              {item.name}
+            </span>
+            {item.badge && (
+              <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 text-fg-muted">
+                {item.badge}
+              </span>
+            )}
+          </span>
+        )}
+        {subtitle && (
+          <span className="truncate text-xs text-fg-muted">{subtitle}</span>
+        )}
+      </span>
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
-      {/* Site chrome, deliberately outside the preset scope: the actions menu
-          belongs to the site, not to the system it acts on. */}
-      {actions ? (
-        <span className="absolute top-1/2 right-1 -translate-y-1/2">
-          {actions}
-        </span>
-      ) : null}
+      {onMenu && (
+        <Tooltip>
+          {/* A press here never reaches the row, so it doesn't pick it. */}
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            data-row-menu=""
+            aria-label={`Actions for ${item.kind ? `${item.kind} ` : ""}${item.name}`}
+            onPress={(e) => onMenu(e.target)}
+            className="-my-1 -mr-1 shrink-0 text-fg-muted pointer-coarse:size-11!"
+          >
+            <MoreHorizontalIcon />
+          </Button>
+          <TooltipContent>Actions · Shift+F10</TooltipContent>
+        </Tooltip>
+      )}
     </>
+  )
+}
+
+/**
+ * The row's name as an input. A plain input, so the surrounding collection's
+ * contexts don't reach it, and its events stop here so the row neither
+ * selects nor type-selects while the user types. Enter or blur commits, Esc
+ * cancels.
+ */
+function RenameField({
+  name,
+  onEnd,
+}: {
+  name: string
+  onEnd: (name: string | null, submit: boolean) => void
+}) {
+  const ended = useRef(false)
+  const end = (value: string | null, submit: boolean) => {
+    if (ended.current) return
+    ended.current = true
+    onEnd(value, submit)
+  }
+  const stop = (e: { stopPropagation: () => void }) => e.stopPropagation()
+
+  // The list keeps focus where it is on a press (it prevents mousedown), so
+  // a press anywhere else blurs the field itself.
+  const ref = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.target !== ref.current) ref.current?.blur()
+    }
+    document.addEventListener("pointerdown", onPointerDown, true)
+    return () =>
+      document.removeEventListener("pointerdown", onPointerDown, true)
+  }, [])
+
+  return (
+    <input
+      ref={ref}
+      aria-label="Design system name"
+      defaultValue={name}
+      maxLength={64}
+      autoFocus
+      onFocus={(e) => {
+        stop(e)
+        e.currentTarget.select()
+      }}
+      onBlur={(e) => end(e.currentTarget.value, false)}
+      onKeyDown={(e) => {
+        stop(e)
+        if (e.key === "Enter") end(e.currentTarget.value, true)
+        if (e.key === "Escape") end(null, false)
+      }}
+      onKeyUp={stop}
+      onPointerDown={stop}
+      onPointerUp={stop}
+      onMouseDown={stop}
+      onClick={stop}
+      // The name line's height, ring inside: the subtitle sits right below.
+      className="h-5 w-full min-w-0 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 [--focus-ring-inset:inset] focus-visible:focus-ring"
+    />
   )
 }
 
@@ -454,13 +855,11 @@ function PresetPreviewFlyout({
   isVisible,
   forcedMode,
 }: {
-  item?: PresetPickerItem
+  item: PresetPickerItem
   isVisible: boolean
   forcedMode?: "light" | "dark"
 }) {
-  if (!item) return null
-
-  const { designSystem } = item
+  const designSystem = useMemo(() => item.resolve(), [item])
 
   return (
     <DesignSystemProvider
@@ -482,14 +881,22 @@ function PresetPreviewFlyout({
           !isVisible && "hidden",
         )}
       >
-        <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
-          <p className="min-w-0 flex-1 truncate font-heading text-base leading-tight font-semibold text-fg">
-            {item.name}
-          </p>
-          <span
-            aria-hidden
-            className="size-2.5 shrink-0 rounded-full bg-accent ring-1 ring-fg/10 ring-inset"
-          />
+        <div className="flex shrink-0 flex-col gap-1 border-b p-3.5">
+          <div className="flex items-center gap-3">
+            <p className="min-w-0 flex-1 truncate font-heading text-base leading-tight font-semibold text-fg">
+              {item.name}
+            </p>
+            <Swatch color={item.swatch} />
+          </div>
+          {item.description && (
+            <p className="text-sm text-fg-muted">{item.description}</p>
+          )}
+          {item.inspiredBy && (
+            <p className="text-xs text-fg-muted">
+              Inspired by {item.inspiredBy}. Not affiliated with{" "}
+              {item.inspiredBy}.
+            </p>
+          )}
         </div>
         <Controls
           inert
@@ -497,6 +904,19 @@ function PresetPreviewFlyout({
         />
       </div>
     </DesignSystemProvider>
+  )
+}
+
+function Swatch({ ref, color }: { ref?: Ref<HTMLSpanElement>; color: string }) {
+  return (
+    <span
+      ref={ref}
+      aria-hidden
+      // The hairline keeps a near-white or near-black swatch from vanishing
+      // into the surface it sits on.
+      className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+      style={{ background: color }}
+    />
   )
 }
 

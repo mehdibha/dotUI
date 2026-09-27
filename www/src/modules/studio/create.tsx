@@ -1,199 +1,226 @@
 "use client"
 
-/* The studio panel mounted in /studio's slot: the panel page over the
-   studio state, with the chrome (switcher, reset, search, save, export) wired
-   to presets and export. The switcher is the PresetPicker (saved systems +
-   built-in presets, live previews, unsaved-changes guard), reachable at
-   ?gallery= like before. */
+/* The studio panel mounted in /studio's slot: the panel page over the current
+   design system, its chrome wired to the workspace. The picker lists the
+   shared link being viewed, the user's systems (the draft first) and the
+   presets, each with a ⋯ menu, and opens at ?gallery=. */
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
-import { CreatePresetDialog } from "@/modules/studio/create-preset-dialog"
-import { ExportDialog } from "@/modules/studio/export"
-import {
-  decodePreset,
-  encodePreset,
-  encodeState,
-  useMyPresets,
-} from "@/modules/studio/preset"
-import {
-  saveDesignSystemName,
-  useDesignSystemName,
-} from "@/modules/studio/preset/storage"
-import { SavePresetDialog } from "@/modules/studio/save-preset-dialog"
-import { SavedPresetActions } from "@/modules/studio/saved-preset-actions"
-import { UnsavedChangesDialog } from "@/modules/studio/unsaved-changes-dialog"
 
+import { duplicate, newSystem, remove } from "./history"
+import { renameKey } from "./history-keys"
+import { HistoryControls } from "./history-menu"
+import { leave, leaving } from "./keep-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { resolveDesignSystem } from "./resolve"
+import { basedOn, pickerSections, rowSelection } from "./picker-sections"
+import { RecentlyDeleted } from "./recently-deleted"
+import { SystemMenu, ViewMenu } from "./row-menus"
+import { getCurrent, select, selectionKey, useCurrent } from "./selection"
+import type { Current, Selection } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
+import { purgeExpired, rename, useTrash, useWorkspace } from "./workspace"
+import type { Workspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-/* The codec is canonical (encode∘decode = identity), but states from storage
-   may predate it — one roundtrip normalizes those. */
-function canon(state: string): string {
-  if (!state) return ""
-  return encodePreset(decodePreset(state)) ?? ""
+/** What the trigger's tooltip says after the name. */
+function kindOf({ sel, doc }: Current, workspace: Workspace): string {
+  if (sel.kind === "preset") return "preset, edits create a draft"
+  if (sel.kind === "shared") return "shared link, edits create a draft"
+  if (!doc) return ""
+  const source = basedOn(doc, workspace)
+  const lower = source.charAt(0).toLowerCase() + source.slice(1)
+  return doc.draft ? `draft, ${lower}` : lower
 }
-
-/* Origin is the panel's baseline: what first-time users start on, what the
-   global reset returns to, and what the modified dot diffs against. */
-const ORIGIN_CANON = encodeState(ORIGIN.state) ?? ""
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
+  const current = useCurrent()
+  const workspace = useWorkspace()
+  const trash = useTrash()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const {
-    presets,
-    activeId,
-    setActive,
-    save,
-    update,
-    rename,
-    duplicate,
-    remove,
-  } = useMyPresets()
-  const storedName = useDesignSystemName()
-  const [saveOpen, setSaveOpen] = useState(false)
-  const [createOpen, setCreateOpen] = useState(false)
-  // A pick or create held back by the unsaved-changes guard, awaiting save/discard.
-  const [pending, setPending] = useState<(() => void) | null>(null)
+  // `closes`: Enter also closes the picker, which was opened for this rename.
+  const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
+  const [trashOpen, setTrashOpen] = useState(false)
+  const focusPicker = useRef<((key: string) => void) | null>(null)
+  const lastNew = useRef({ at: 0, key: "" })
 
-  // The header names what's being edited: the active saved system (dotted when
-  // edited past its snapshot), else the standalone design-system name.
-  const activeSaved = presets.find((p) => p.id === activeId)
-  const displayName = activeSaved?.name ?? storedName
-
-  // Built-in presets are re-loadable from the gallery, so a freshly applied one
-  // isn't unsaved work — only edits past it (or past a saved snapshot) are.
-  const builtInStates = useMemo(
-    () => new Set(PRESETS.map((p) => encodeState(p.state) ?? "")),
-    [],
+  const sections = useMemo(
+    () => pickerSections(current, workspace),
+    [current, workspace],
   )
-  const currentState = studio.encoded ?? ""
-  const isDirty = activeSaved
-    ? canon(activeSaved.state) !== currentState
-    : currentState !== "" && !builtInStates.has(currentState)
 
-  // Saved systems decode to full design systems for the picker's mini previews.
-  const pickerSections = useMemo(() => {
-    const mine = {
-      id: "mine",
-      title: "My systems",
-      items: presets.map((saved) => ({
-        id: saved.id,
-        name: saved.name,
-        designSystem: resolveDesignSystem(decodePreset(saved.state).state),
-      })),
+  function setGalleryOpen(isOpen: boolean) {
+    if (!isOpen) {
+      setRenaming(undefined)
+      setTrashOpen(false)
     }
-    const featured = {
-      id: "featured",
-      title: "Featured",
-      items: PRESETS.map((p) => ({
-        id: p.id,
-        name: p.name,
-        designSystem: p.designSystem,
-      })),
-    }
-    return presets.length > 0 ? [mine, featured] : [featured]
-  }, [presets])
-
-  // Apply a state and close the gallery in one navigation — two separate
-  // navigates would race each other's search updates.
-  function applyState(encoded: string | undefined) {
     navigate({
-      search: (prev) => ({
-        ...prev,
-        preset: encoded || undefined,
-        gallery: undefined,
-      }),
+      search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
     })
   }
 
-  function setGalleryOpen(open: boolean) {
-    navigate({
-      search: (prev) => ({ ...prev, gallery: open ? true : undefined }),
-      replace: true,
+  /** Opens the picker with the current system's row in rename mode. */
+  function renameCurrent() {
+    const { doc, key } = getCurrent()
+    if (!doc) return
+    setTrashOpen(false)
+    setRenaming({ key, closes: gallery !== true })
+    setGalleryOpen(true)
+  }
+
+  useEffect(() => purgeExpired(), [])
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!renameKey(e)) return
+      e.preventDefault()
+      renameCurrent()
+    }
+    // F2 pressed in the preview, handed up by its iframe.
+    const onMessage = (e: MessageEvent) => {
+      if (
+        e.origin === window.location.origin &&
+        e.data?.type === "preview-rename"
+      )
+        renameCurrent()
+    }
+    window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("message", onMessage)
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("message", onMessage)
+    }
+  })
+
+  function onPick(key: string) {
+    if (key !== current.key) leave(() => select(rowSelection(key, current)))
+  }
+
+  /** Runs `create` (which opens a new system) past the keep dialog, then
+   *  renames the new row. */
+  function created(create: () => string | undefined, leaves = true) {
+    const run = () => {
+      const id = create()
+      if (!id) return
+      setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
+      setGalleryOpen(true)
+    }
+    if (!leaves) return run()
+    // The keep dialog can't sit over the picker.
+    if (leaving()) setGalleryOpen(false)
+    leave(run)
+  }
+
+  function onDelete(id: string) {
+    remove(id, {
+      // Back from the toast to the restored row, so Esc and arrows work.
+      afterUndo: () => {
+        setTrashOpen(false)
+        requestAnimationFrame(() =>
+          focusPicker.current?.(selectionKey({ kind: "system", id })),
+        )
+      },
     })
   }
 
-  function pickPreset(itemId: string) {
-    const saved = presets.find((p) => p.id === itemId)
-    if (saved) {
-      setActive(saved.id)
-      saveDesignSystemName(saved.name)
-      applyState(saved.state)
-      return
-    }
-    const builtIn = PRESETS.find((p) => p.id === itemId)
-    if (!builtIn) return
-    setActive(undefined)
-    saveDesignSystemName(builtIn.name)
-    applyState(encodeState(builtIn.state))
+  function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
+    const sel: Selection = rowSelection(key, current)
+    const onDuplicate = () =>
+      // Duplicating the draft on screen doesn't leave it.
+      created(() => duplicate(sel), key !== current.key)
+    if (sel.kind !== "system")
+      return <ViewMenu sel={sel} onDuplicate={onDuplicate} />
+    const doc = workspace.systems.find((s) => s.id === sel.id)
+    if (!doc) return null
+    return (
+      <SystemMenu
+        doc={doc}
+        isCurrent={key === current.key}
+        onRename={() => setRenaming({ key, closes: false })}
+        onDuplicate={onDuplicate}
+        onDelete={() => afterClose(() => onDelete(doc.id))}
+      />
+    )
   }
 
-  function createPreset(name: string, state: string) {
-    save(name, state)
-    saveDesignSystemName(name)
-    applyState(state)
-  }
-
-  // Replacing the state over unsaved work asks first; over clean state it's instant.
-  function guarded(action: () => void) {
-    if (isDirty) setPending(() => action)
-    else action()
-  }
-
-  function resolvePending(saveFirst: boolean) {
-    if (saveFirst) {
-      if (activeSaved) update(activeSaved.id, currentState)
-      else save(displayName, currentState)
-    }
-    pending?.()
-    setPending(null)
-  }
-
+  const kind = kindOf(current, workspace)
   const system: PanelSystem = {
-    name: displayName,
-    dirty: isDirty,
-    modified: currentState !== ORIGIN_CANON,
-    onReset: () => pickPreset(ORIGIN.id),
-    onSave: () => setSaveOpen(true),
+    name: current.name,
+    swatch: current.swatch,
+    tag: current.tag,
+    description: kind ? `${current.name} · ${kind}` : current.name,
+    history: <HistoryControls current={current} />,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
-        sections={pickerSections}
-        selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
-        onPick={(item) => guarded(() => pickPreset(item.id))}
-        onCreate={() => setCreateOpen(true)}
-        withPreview
-        renderItemActions={(item) => {
-          const saved = presets.find((p) => p.id === item.id)
-          if (!saved) return null
-          return (
-            <SavedPresetActions
-              saved={saved}
-              onRename={(name) => rename(saved.id, name)}
-              onDuplicate={() => duplicate(saved.id)}
-              onDelete={() => remove(saved.id)}
-            />
-          )
+        sections={sections}
+        selectedId={current.key}
+        onPick={(item) => onPick(item.id)}
+        onCreate={() => {
+          // The second click of a double click is the same New: back to
+          // renaming the row the first one made. Timed by input, as the
+          // first New can hold the second press back past the window.
+          const now = window.event?.timeStamp ?? performance.now()
+          const { at, key } = lastNew.current
+          if (now - at < 500) return key && setRenaming({ key, closes: true })
+          lastNew.current = { at: now, key: "" }
+          created(() => {
+            const id = newSystem()
+            if (id) lastNew.current.key = selectionKey({ kind: "system", id })
+            return id
+          })
         }}
+        renamingId={renaming?.key}
+        onRenameEnd={(key, name, submit) => {
+          setRenaming(undefined)
+          const doc = workspace.systems.find(
+            (s) => selectionKey({ kind: "system", id: s.id }) === key,
+          )
+          if (doc && name !== null) rename(doc.id, name)
+          const closes = submit && renaming?.closes === true
+          if (closes) setGalleryOpen(false)
+          return closes
+        }}
+        onRenameKey={renameCurrent}
+        focusRef={focusPicker}
+        withPreview
+        renderItemMenu={(item, afterClose) =>
+          renderItemMenu(item.id, afterClose)
+        }
+        moreMenu={
+          <MenuContent
+            aria-label="More"
+            onAction={(key) => key === "trash" && setTrashOpen(true)}
+          >
+            <MenuItem
+              id="trash"
+              isDisabled={trash.length === 0}
+              className="pointer-coarse:min-h-11"
+            >
+              {`Recently deleted (${trash.length})`}
+            </MenuItem>
+          </MenuContent>
+        }
+        pane={
+          trashOpen ? (
+            <RecentlyDeleted onBack={() => setTrashOpen(false)} />
+          ) : undefined
+        }
       >
         {trigger}
       </PresetPicker>
     ),
-    renderExport: (trigger) => <ExportDialog>{trigger}</ExportDialog>,
   }
 
   return (
@@ -204,20 +231,6 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
-      <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
-      <CreatePresetDialog
-        isOpen={createOpen}
-        onOpenChange={setCreateOpen}
-        onCreate={(name) => guarded(() => createPreset(name, ORIGIN_CANON))}
-      />
-      <UnsavedChangesDialog
-        isOpen={pending !== null}
-        onOpenChange={(open) => {
-          if (!open) setPending(null)
-        }}
-        onSave={() => resolvePending(true)}
-        onDiscard={() => resolvePending(false)}
-      />
     </div>
   )
 }

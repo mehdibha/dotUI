@@ -12,6 +12,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveLoop } from "./motion"
 import type { Loop } from "./motion"
+import { LOOP, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's spinner: Tailwind's `animate-spin`, a 1s linear turn. */
 const MOTION: Loop = { cycle: 1000, ease: ease("linear") }
@@ -27,12 +29,14 @@ export const STYLE_OPTIONS = [
   { value: "dots", label: "Dots" },
 ]
 
+export const SPINNER_SCHEMA: ChapterSchema<typeof SPINNER_DEFAULTS> = {
+  spinnerStyle: oneOf(STYLE_OPTIONS),
+  loaderMotion: LOOP,
+}
+
 export function resolveSpinner(state: StudioState): Resolved {
-  const style = STYLE_OPTIONS.some((o) => o.value === state.spinnerStyle)
-    ? state.spinnerStyle
-    : SPINNER_DEFAULTS.spinnerStyle
   return {
     tokens: resolveLoop("loader", state.loaderMotion, MOTION),
-    params: { loader: { style } },
+    params: { loader: { style: state.spinnerStyle } },
   }
 }

@@ -158,11 +158,15 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
     >
       {/* The prompt itself is a Mention on the TokenField primitive: `@` browses
           files, `/` lists commands, and picked items become inline tokens. */}
-      <Mention allowsNewlines trigger={/[@/]/} defaultValue={DEFAULT_PROMPT}>
+      <Mention
+        aria-label="Prompt"
+        allowsNewlines
+        trigger={/[@/]/}
+        defaultValue={DEFAULT_PROMPT}
+      >
         {({ trigger }) => (
           <>
             <TokenInput
-              aria-label="Prompt"
               placeholder="How can I help you today?"
               className="min-h-14 rounded-none border-0 bg-transparent px-2 pt-2 text-base focus:ring-0"
             />

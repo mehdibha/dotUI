@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
-  const preset = defaultPreset()
+  const preset: PublishPreset = { density: "default", componentParams: {} }
   const mod = await publishables["message-scroller"]?.()
   if (!mod) throw new Error("message-scroller is not publishable")
   const { item } = publish({
@@ -20,7 +20,7 @@ const shipped = async (tokens: Record<string, string> = {}) => {
 
 describe("message scroller motion", () => {
   test("defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULTS).tokens).toEqual({})
+    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("ships today's timing: a quick ease-out in, a slower ease-in out", async () => {
@@ -32,16 +32,17 @@ describe("message scroller motion", () => {
   })
 
   test("an exit equal to the enter ships no inactive timing", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      messageScrollerMotion: {
-        pattern: "slide",
-        enter: 300,
-        curve: { type: "easing", ease: [0, 0, 0.2, 1] },
-        exit: 300,
-        exitEase: [0, 0, 0.2, 1],
-      },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        messageScrollerMotion: {
+          pattern: "slide",
+          enter: 300,
+          curve: { type: "easing", ease: [0, 0, 0.2, 1] },
+          exit: 300,
+          exitEase: [0, 0, 0.2, 1],
+        },
+      }),
+    )
     const content = await shipped(tokens)
     expect(content).toContain(
       "transition-[translate,scale,opacity] duration-300 ease-out data-[active=false]:pointer-events-none",
@@ -50,13 +51,14 @@ describe("message scroller motion", () => {
   })
 
   test("a spring enter ships linear() over its settle time", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      messageScrollerMotion: {
-        ...DEFAULTS.messageScrollerMotion,
-        curve: { type: "spring", bounce: 0.2 },
-      },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        messageScrollerMotion: {
+          ...DEFAULTS.messageScrollerMotion,
+          curve: { type: "spring", bounce: 0.2 },
+        },
+      }),
+    )
     expect(tokens["--studio-message-scroller-ease"]).toMatch(/^linear\(/)
     const content = await shipped(tokens)
     expect(content).toMatch(/ ease-\[linear\(0,/)

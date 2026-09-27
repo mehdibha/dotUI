@@ -114,7 +114,7 @@ let rootClosureCache: RootClosure | null = null
  * are skipped.
  *
  * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted
- * from `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed
+ * from `SITE_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed
  * source of truth, and its targets may be authored as `color-mix()` (the
  * vocabulary supports it), whose CSSOM read-back is unreliable.
  */
@@ -163,7 +163,7 @@ function getRootClosure(): RootClosure {
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
- * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `getRootClosure`),
+ * `--color-*` layer from `SITE_SEMANTICS` (the reliable source — see `getRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
  * `--radius` + param vars ride inline on the scope element.
  *

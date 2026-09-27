@@ -8,6 +8,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveEntrance, resolveStateChange } from "./motion"
 import type { Entrance, StateChange } from "./motion"
+import { entrance, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* Sonner's, shadcn's toast: 400ms both ways on CSS `ease`; a swipe-out
    finishes in 200ms on ease-out. */
@@ -31,13 +33,13 @@ export const MOTION_PATTERNS = [
   { value: "none", label: "None" },
 ]
 
+export const TOAST_SCHEMA: ChapterSchema<typeof TOAST_DEFAULTS> = {
+  toastMotion: entrance(MOTION_PATTERNS),
+  toastSwipeMotion: STATE_CHANGE,
+}
+
 export function resolveToast(state: StudioState): Resolved {
-  const motion = resolveEntrance(
-    "toast",
-    state.toastMotion,
-    MOTION,
-    MOTION_PATTERNS,
-  )
+  const motion = resolveEntrance("toast", state.toastMotion, MOTION)
   return {
     tokens: {
       ...motion.tokens,

@@ -9,7 +9,7 @@ import {
   presetLabelStack,
   usePresetLabelFonts,
 } from "@/modules/marketing/preset-fonts"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
 // The landing showcase's design-system selector: a segmented control over the cards.
 // Picking a preset re-skins the scoped grid below instantly (no tween — repainting
@@ -22,7 +22,7 @@ export function PresetSwitcher({
   selected: number
   onSelect: (index: number) => void
 }) {
-  const active = PRESETS[selected]
+  const active = PRESET_CATALOG[selected]
   const activeId = active?.id
 
   usePresetLabelFonts()
@@ -30,7 +30,7 @@ export function PresetSwitcher({
   const handleChange = (keys: Selection) => {
     if (keys === "all") return
     const id = [...keys][0]
-    const index = PRESETS.findIndex((preset) => preset.id === id)
+    const index = PRESET_CATALOG.findIndex((preset) => preset.id === id)
     if (index >= 0) onSelect(index)
   }
 
@@ -55,7 +55,7 @@ export function PresetSwitcher({
         selectedKeys={activeId ? [activeId] : []}
         onSelectionChange={handleChange}
       >
-        {PRESETS.map((preset) => (
+        {PRESET_CATALOG.map((preset) => (
           <SegmentedControlItem
             key={preset.id}
             id={preset.id}

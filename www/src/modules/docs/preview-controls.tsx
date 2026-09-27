@@ -4,56 +4,25 @@ import { useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
-import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
+import { createPersistedStore } from "@/lib/persisted-store"
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
+import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { pickerSections, rowSelection } from "@/modules/studio/picker-sections"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { encodePreset, encodeState } from "@/modules/studio/preset/codec"
-import {
-  DEFAULT_DESIGN_SYSTEM_NAME,
-  useDesignSystemName,
-  useStoredPreset,
-} from "@/modules/studio/preset/storage"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { select, useCurrent } from "@/modules/studio/selection"
+import { useWorkspace } from "@/modules/studio/workspace"
 
 /**
- * Which design system and light/dark mode the docs previews render in. Global
- * and persisted, so every demo on the site stays in sync; `yours` is the design
- * system built at /create. The mode defaults to the site theme until the user
- * picks one, then pins previews to that choice.
+ * The docs previews render the current design system (see
+ * studio/selection.ts), shared with the studio and every tab, and the
+ * light/dark mode. The mode defaults to the site theme until the user picks
+ * one, then pins previews to that choice.
  */
-
-const YOURS = "yours"
-
-const presetStore = createPersistedStore(
-  "dotui:preview-preset",
-  ORIGIN.id,
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], ORIGIN.id),
-)
-
-/* The working system counts as the user's own once it diverges from every
-   built-in: a fresh visitor sits on Origin, and a preset applied from the
-   gallery is still that preset. Until then the picker lists no "My systems"
-   and a stored `yours` selection reads as the built-in it matches. */
-const BUILT_IN_BY_STATE = new Map(
-  PRESETS.map((p) => [encodeState(p.state), p.id]),
-)
-
-function useSelectedPreset() {
-  const stored = presetStore.useValue()
-  const yours = useStoredPreset()
-  const builtIn = useMemo(() => {
-    const encoded = encodePreset(yours)
-    return encoded === undefined ? ORIGIN.id : BUILT_IN_BY_STATE.get(encoded)
-  }, [yours])
-  const own = builtIn === undefined
-  const selected = stored === YOURS && builtIn ? builtIn : stored
-  return { selected, yours, own }
-}
 
 type PreviewMode = "light" | "dark"
 
@@ -134,14 +103,11 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
   return mode === undefined || mode === resolvedTheme ? undefined : mode
 }
 
-/** The design system the docs previews render in, resolved from the selection. */
+/** The design system the docs previews render in. */
 export function useResolvedPreset(): DesignSystem {
-  const { selected, yours } = useSelectedPreset()
-  const yoursResolved = useMemo(() => resolveDesignSystem(yours.state), [yours])
-  if (selected === YOURS) return yoursResolved
-  return (
-    PRESETS.find((p) => p.id === selected)?.designSystem ?? ORIGIN.designSystem
-  )
+  const { sel, state } = useCurrent()
+  const own = useMemo(() => resolveDesignSystem(state), [state])
+  return sel.kind === "preset" ? resolvePreset(sel.id) : own
 }
 
 /**
@@ -191,55 +157,21 @@ function PresetSelector({
 }: {
   variant?: ButtonProps["variant"]
 }) {
-  const { selected, yours, own } = useSelectedPreset()
+  const current = useCurrent()
+  const workspace = useWorkspace()
   const previewMode = useForcedPreviewMode()
-  const yoursDesignSystem = useMemo(
-    () => resolveDesignSystem(yours.state),
-    [yours],
+  const sections = useMemo(
+    () => pickerSections(current, workspace),
+    [current, workspace],
   )
-  const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
-  const yoursSwatch = yours.state.brand
-  const selectedName =
-    selected === YOURS
-      ? yoursName
-      : (PRESETS.find((p) => p.id === selected)?.name ?? yoursName)
-  const selectedSwatch =
-    selected === YOURS
-      ? yoursSwatch
-      : (PRESETS.find((p) => p.id === selected)?.swatch ?? yoursSwatch)
 
   return (
     <PresetPicker
-      selectedId={selected}
-      onPick={(item) => presetStore.set(item.id)}
+      selectedId={current.key}
+      onPick={(item) => select(rowSelection(item.id, current))}
       previewMode={previewMode}
       withPreview
-      sections={[
-        ...(own
-          ? [
-              {
-                id: "yours",
-                title: "My systems",
-                items: [
-                  {
-                    id: YOURS,
-                    name: yoursName,
-                    designSystem: yoursDesignSystem,
-                  },
-                ],
-              },
-            ]
-          : []),
-        {
-          id: "featured",
-          title: "Featured",
-          items: PRESETS.map((preset) => ({
-            id: preset.id,
-            name: preset.name,
-            designSystem: preset.designSystem,
-          })),
-        },
-      ]}
+      sections={sections}
     >
       <Button
         variant={variant}
@@ -247,8 +179,15 @@ function PresetSelector({
         aria-label="Preview design system"
         className="gap-1.5"
       >
-        <PresetSwatch color={selectedSwatch} />
-        {selectedName}
+        <PresetSwatch color={current.swatch} />
+        <span dir="auto" className="max-w-35 truncate">
+          {current.name}
+        </span>
+        {current.tag && current.tag !== "Preset" && (
+          <span className="shrink-0 rounded-sm bg-fg/6 px-1 text-[0.6875rem] leading-4 font-normal text-fg-muted">
+            {current.tag}
+          </span>
+        )}
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>

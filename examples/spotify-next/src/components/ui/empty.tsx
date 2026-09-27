@@ -3,13 +3,13 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 const emptyVariants = tv({
   slots: {
-    base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-xl p-6",
-    header: "flex max-w-sm flex-col items-center gap-2",
-    title: "font-heading text-lg font-medium tracking-tight text-base",
+    base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-lg p-12",
+    header: "flex max-w-sm flex-col items-center",
+    title: "font-heading text-lg font-medium tracking-tight text-lg",
     description:
       "text-sm/relaxed text-fg-muted [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary text-sm/relaxed",
     content:
-      "flex w-full max-w-sm min-w-0 flex-col items-center text-balance gap-2.5 text-sm",
+      "flex w-full max-w-sm min-w-0 flex-col items-center text-balance text-sm",
     media:
       "flex shrink-0 items-center justify-center **:[svg]:pointer-events-none **:[svg]:shrink-0 mb-2",
   },
@@ -20,7 +20,7 @@ const emptyVariants = tv({
       },
       icon: {
         media:
-          "rounded-md bg-muted text-fg size-9 **:[svg]:not-with-[size]:size-5",
+          "rounded-full bg-muted text-fg size-10 **:[svg]:not-with-[size]:size-6",
       },
     },
   },

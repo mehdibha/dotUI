@@ -48,6 +48,10 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import {
+  NEUTRAL_HUE_RANGE,
+  NEUTRAL_TINT_RANGE,
+} from "@/modules/studio/axes/color"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
 
 /** Where row-attached overlays open. */
@@ -271,8 +275,7 @@ export interface NeutralValue {
   tint: number
 }
 
-/** The far end of the tint slider: twice the engine's default lean. */
-const MAX_TINT = 2
+const MAX_TINT = NEUTRAL_TINT_RANGE.max
 
 /** The untinted gray — an option with a name, not the absence of one. */
 const PURE_GRAY = { id: "neutral", label: "Neutral" }
@@ -326,8 +329,7 @@ function NeutralSlider({
   label,
   note,
   value,
-  maxValue,
-  step,
+  range,
   track,
   thumb,
   onChange,
@@ -337,8 +339,7 @@ function NeutralSlider({
   /** Where the value is coming from, when it isn't the user — e.g. the brand. */
   note?: string
   value: number
-  maxValue: number
-  step: number
+  range: { min: number; max: number; step: number }
   /** The gradient the track is painted with. */
   track: string
   /** The sample the thumb carries — the color at the current value. */
@@ -355,9 +356,9 @@ function NeutralSlider({
       <Slider
         aria-label={label}
         value={value}
-        minValue={0}
-        maxValue={maxValue}
-        step={step}
+        minValue={range.min}
+        maxValue={range.max}
+        step={range.step}
         onChange={(v) => onChange(v as number)}
         onChangeEnd={(v) => onChangeEnd(v as number)}
         className="w-full"
@@ -503,8 +504,7 @@ export function NeutralPickerPopover({
           label="Hue"
           note={hovered ?? family}
           value={hue}
-          maxValue={360}
-          step={1}
+          range={NEUTRAL_HUE_RANGE}
           track={HUE_TRACK}
           thumb={sample(hue)}
           onChange={setHue}
@@ -514,8 +514,7 @@ export function NeutralPickerPopover({
         <NeutralSlider
           label="Tint"
           value={tint}
-          maxValue={MAX_TINT}
-          step={0.05}
+          range={NEUTRAL_TINT_RANGE}
           track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
           thumb={sample(hue, tint)}
           onChange={setTint}

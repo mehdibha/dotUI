@@ -28,6 +28,9 @@ export function CodeBlock({
 }: CodeBlockProps) {
   const containerRef = useRef<HTMLElement>(null)
   const language = "tsx"
+  // A lone copy button gets its own column; toggle actions overlay the code.
+  const copyOnly = !title && !actionsProp
+  const overlay = !title && !!actionsProp
 
   const actions = (
     <>
@@ -59,17 +62,32 @@ export function CodeBlock({
           </div>
         )}
         <div
-          className={cn("relative overflow-auto", contentClassName)}
+          className={cn(
+            "relative overflow-auto",
+            copyOnly && "flex items-start",
+            contentClassName,
+          )}
           style={{
             counterReset: "line",
           }}
         >
-          <section className="overflow-auto">{children}</section>
+          <section
+            className={cn(
+              "overflow-auto",
+              copyOnly && "min-w-0 flex-1",
+              // Keeps the widest line's end clear of the overlaid actions.
+              overlay && "*:[pre]:pr-24",
+            )}
+          >
+            {children}
+          </section>
           {!title && (
             <div
               className={cn(
-                "absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
-                "backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]",
+                "flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
+                overlay
+                  ? "absolute top-1.75 right-1.75 backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]"
+                  : "mt-1.75 mr-1.75 shrink-0",
               )}
             >
               {actions}

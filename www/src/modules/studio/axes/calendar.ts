@@ -12,6 +12,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's day is a ghost Button: Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -42,17 +44,21 @@ export const WEEKDAY_OPTIONS = [
   { value: "triple", label: "Sun" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
+  calendarDayShape: oneOf(DAY_SHAPE_OPTIONS),
+  calendarToday: oneOf(TODAY_OPTIONS),
+  calendarWeekdays: oneOf(WEEKDAY_OPTIONS),
+  calendarMotion: STATE_CHANGE,
+}
 
 export function resolveCalendar(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("calendar", state.calendarMotion, MOTION),
     params: {
       calendar: {
-        dayShape: pick(DAY_SHAPE_OPTIONS, state.calendarDayShape, "rounded"),
-        today: pick(TODAY_OPTIONS, state.calendarToday, "none"),
-        weekdays: pick(WEEKDAY_OPTIONS, state.calendarWeekdays, "single"),
+        dayShape: state.calendarDayShape,
+        today: state.calendarToday,
+        weekdays: state.calendarWeekdays,
       },
     },
   }

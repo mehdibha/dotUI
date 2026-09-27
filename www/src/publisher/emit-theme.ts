@@ -5,7 +5,7 @@
  * same shape shadcn's own themes use:
  *   - `cssVars.light` / `.dark` -> `:root` / `.dark` — every semantic token
  *                                  as a literal `oklch()` per mode, plus
- *                                  radius and chart slots
+ *                                  radius, chart slots and shadcn's names
  *   - `cssVars.theme`           -> `@theme inline` — the Tailwind vocabulary
  *                                  (`--color-bg: var(--bg)`, radius rungs, fonts)
  *   - `css`                     -> imports, plugins, utilities, layers,
@@ -27,8 +27,13 @@
 import type { Theme } from "@dotui/colors"
 
 import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
   FONT_TOKEN_VARS,
   fontFamiliesFromTokens,
+  fontStack,
   googleFontsUrl,
 } from "@/lib/fonts"
 import {
@@ -54,10 +59,50 @@ export interface EmitThemeInput {
   baseRegistryCss: RegistryCssFields
   /** The preset to bake into the init item. */
   preset: PublishPreset
-  /** Encoded preset string — gets put in `config.registries.@dotui` as `?preset=…`. */
-  encodedPreset?: string
-  /** Root URL of the deployed registry, e.g. `https://dotui.com`. */
-  registryRoot: string
+  /** Where a registry item is served, e.g. `https://dotui.org/r/p/linear/loader.json`;
+   *  `{name}` yields the `components.json` registry template. */
+  itemUrl: (name: string) => string
+  /** The `?base=` shadcn appends to the init URL, read from the project's style. */
+  shadcnBase?: string | null
+}
+
+/**
+ * shadcn's own token names, pointed at the dotUI token that means the same
+ * thing. Without them an existing project keeps shadcn's values next to
+ * dotUI's (`--primary-foreground` unreadable on dotUI's `--primary`), and on
+ * Next.js loses light `--background`/`--foreground`: shadcn's init strips
+ * create-next-app's pair from `:root` and only restores what the item sets.
+ */
+const SHADCN_ALIASES: Record<string, string> = {
+  background: "bg",
+  foreground: "fg",
+  "card-foreground": "fg",
+  "popover-foreground": "fg",
+  "primary-foreground": "fg-on-primary",
+  secondary: "neutral",
+  "secondary-foreground": "fg-on-neutral",
+  "muted-foreground": "fg-muted",
+  "accent-foreground": "fg-on-accent",
+  destructive: "danger",
+  input: "border-control",
+  ring: "border-focus",
+  "sidebar-foreground": "fg",
+  "sidebar-primary": "primary",
+  "sidebar-primary-foreground": "fg-on-primary",
+  "sidebar-accent": "highlight",
+  "sidebar-accent-foreground": "fg-on-highlight",
+  "sidebar-border": "border",
+  "sidebar-ring": "border-focus",
+}
+
+/**
+ * The style a plain `shadcn add <item>` resolves against, on the project's own
+ * primitives. Radix projects are mostly `new-york`, which shadcn serves as
+ * `new-york-v4` on Tailwind v4; `"default"` would fetch the legacy registry.
+ */
+function shadcnStyle(base: string | null | undefined): string {
+  if (base === "radix") return "new-york"
+  return base === "aria" ? "aria-nova" : "base-nova"
 }
 
 export const DEFAULT_DEPENDENCIES = [
@@ -145,14 +190,17 @@ function splitPresetTokens(
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
-  const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
+  const { baseRegistryCss, preset, itemUrl, shadcnBase } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
-  // One `registry:font` item per font token the preset sets. shadcn installs
-  // the face per framework (next/font on Next.js, @fontsource elsewhere) and
-  // sets the token variable — see emit-font.ts for why not a CSS `@import`.
-  const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
-    (name) => `${registryRoot}/r/${name}`,
-  )
+  // One `registry:font` item per font role, defaults included: nothing else
+  // loads the face. shadcn installs it per framework (next/font on Next.js,
+  // @fontsource elsewhere) and sets the token variable — see emit-font.ts for
+  // why not a CSS `@import`.
+  const fontDependencies = fontItemNamesForTokens({
+    [FONT_SANS_VAR]: fontStack(DEFAULT_BODY_FAMILY),
+    [FONT_MONO_VAR]: fontStack(DEFAULT_MONO_FAMILY),
+    ...preset.tokens,
+  }).map(itemUrl)
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
@@ -160,26 +208,25 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   //   coding `src/styles/globals.css` here would override a correct
   //   detection and cause ENOENT when shadcn tries to merge cssVars into a
   //   file that doesn't exist.
+  // - No `aliases` — shadcn detects them from the project's tsconfig paths
+  //   (`~/` on React Router); these would override it.
   // - `cssVariables: true` because dotUI installs its design tokens through
   //   this registry item's structured CSS fields.
+  // - `style` and the menu fields: init rewrites components.json keeping only
+  //   `registries`, so an existing project's values survive only if set here.
   // - The `@dotui` registries mapping is preserved as a convenience for
   //   shadcn versions that DO merge a `registry:base`'s config block, but
   //   we don't rely on it: per-component `registryDependencies` are emitted
   //   as absolute URLs by the per-component publisher.
   const config = {
-    style: "default",
+    style: shadcnStyle(shadcnBase),
+    menuColor: "default",
+    menuAccent: "subtle",
     tailwind: {
       cssVariables: true,
     },
-    aliases: {
-      components: "@/components",
-      ui: "@/components/ui",
-      utils: "@/lib/utils",
-      lib: "@/lib",
-      hooks: "@/hooks",
-    },
     registries: {
-      "@dotui": registryConfigUrl(registryRoot, encodedPreset),
+      "@dotui": itemUrl("{name}"),
     },
   }
 
@@ -199,8 +246,8 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     files: [
       {
         type: "registry:lib",
+        // No `target`: shadcn places it under the project's `lib` alias.
         path: "lib/utils.ts",
-        target: "src/lib/utils.ts",
         content: CN_UTILS_TS,
       },
     ],
@@ -208,13 +255,6 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   }
 
   return item as unknown as RegistryItem
-}
-
-function registryConfigUrl(
-  registryRoot: string,
-  encodedPreset: string | undefined,
-): string {
-  return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
 }
 
 /** `color-fg-on-primary` → `fg-on-primary`: the `:root` name behind a token. */
@@ -274,6 +314,13 @@ export function mergePresetCssFields(
   }
   Object.assign(light, split.semantic.light)
   Object.assign(dark, split.semantic.dark)
+  for (const [name, token] of Object.entries(SHADCN_ALIASES)) {
+    const [lightValue, darkValue] = [light[token], dark[token]]
+    if (lightValue === undefined || darkValue === undefined) continue
+    theme[`--color-${name}`] = `var(--${name})`
+    light[name] = lightValue
+    dark[name] = darkValue
+  }
   // Controls that leave the selection source: the cluster's `:root` names
   // re-declared on the component, per mode.
   for (const [selector, vocab] of Object.entries(

@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { historyKey, renameKey } from "../history-keys"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
@@ -20,6 +21,8 @@ type IframeToParentMessage =
   | { type: "preview-ready" }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
+  | { type: "preview-history"; action: "undo" | "redo" }
+  | { type: "preview-rename" }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -221,6 +224,26 @@ export function useAnnouncePreviewReady() {
     window.addEventListener("message", handleMessage)
     announce()
     return () => window.removeEventListener("message", handleMessage)
+  }, [])
+}
+
+/** Inside the preview iframe: hand ⌘Z / ⇧⌘Z and F2 to the studio. */
+export function useForwardHistoryKeys() {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      const action = historyKey(e)
+      const message: IframeToParentMessage | undefined = action
+        ? { type: "preview-history", action }
+        : renameKey(e)
+          ? { type: "preview-rename" }
+          : undefined
+      if (!message) return
+      e.preventDefault()
+      window.parent.postMessage(message, window.location.origin)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 }
 

@@ -3,12 +3,12 @@ import { describe, expect, test } from "vitest"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, parseState } from "."
 import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 
 /** What `name` ships under the studio state. */
-async function shipped(name: string, state: StudioState = DEFAULTS) {
+async function shipped(name: string, state: StudioState = DEFAULT_STATE) {
   const ds = resolveDesignSystem(state)
   const preset = {
     density: ds.density,
@@ -37,14 +37,13 @@ describe("accordion motion", () => {
   })
 
   test("one key retimes and repatterns both", async () => {
-    const state: StudioState = {
-      ...DEFAULTS,
+    const state: StudioState = parseState({
       accordionMotion: {
         pattern: "fade",
         enter: 300,
         curve: { type: "easing", ease: [0, 0, 0.2, 1] },
       },
-    }
+    })
     for (const name of ["accordion", "collapsible"]) {
       const content = await shipped(name, state)
       expect(content).toContain(

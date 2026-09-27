@@ -97,7 +97,7 @@ function PillTooltipContent({ children }: { children: React.ReactNode }) {
 }
 
 export function PreviewPanel({ className }: { className?: string }) {
-  const { preview, preset } = routeApi.useSearch()
+  const { preview } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const { designSystem } = useStudio()
   const { resolvedTheme } = useTheme()
@@ -168,24 +168,18 @@ export function PreviewPanel({ className }: { className?: string }) {
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
   const SizeIcon = sizeOption.Icon
 
-  // Open the preview in the same light / dark mode the site is currently in. Seeded on
-  // mount rather than via the useState initializer: this page is server-rendered and the
-  // server can't know the client's stored theme (it always resolves "light"), so reading
-  // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
-  // preview mode is toggled independently of the site theme afterwards.
+  // Follow the site's light / dark mode; the pill's toggle overrides it until the
+  // next site toggle. An effect, not the useState initializer: the server can't
+  // know the stored theme, so reading it during render would mismatch on hydration.
   useEffect(() => {
     setPreviewMode(resolvedTheme)
-    // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
-  }, [])
+  }, [resolvedTheme])
 
-  // The iframe's document URL, fixed at mount — the preset is baked in so the
-  // initial render has the right state. Everything after goes over postMessage
-  // (preset / mode changes, and preview switches, which navigate the iframe's
+  // The iframe's document URL, fixed at mount: it boots on the open system
+  // from the shared workspace. Everything after goes over postMessage (design
+  // system / mode changes, and preview switches, which navigate the iframe's
   // own SPA router), so the iframe never reloads.
-  const [iframeSrc] = useState(() => {
-    const base = `/preview/${effectivePreview}`
-    return preset ? `${base}?${new URLSearchParams({ preset })}` : base
-  })
+  const [iframeSrc] = useState(() => `/preview/${effectivePreview}`)
 
   // Show the stage skeleton until the iframe's document signals it has rendered
   // — initial boot only, since preview switches keep the document alive. The
@@ -491,11 +485,8 @@ export function PreviewPanel({ className }: { className?: string }) {
         onPress={() => {
           // Built at click time — the iframe src is frozen at mount, so
           // it no longer reflects the current preview or mode.
-          const params = new URLSearchParams()
-          if (preset) params.set("preset", preset)
-          params.set("mode", previewMode)
           window.open(
-            `/preview/${effectivePreview}?${params}`,
+            `/preview/${effectivePreview}?mode=${previewMode}`,
             "_blank",
             "noopener,noreferrer",
           )

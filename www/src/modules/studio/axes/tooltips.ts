@@ -8,7 +8,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
-import { pick } from "./pick"
+import { entrance, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's (style-nova + tw-animate): fade, zoom from 95% and an 8px slide
    in, fade and zoom out, tw-animate's 150ms both ways on CSS `ease`. */
@@ -37,18 +38,18 @@ export const MOTION_PATTERNS = [
   { value: "none", label: "None" },
 ]
 
+export const TOOLTIP_SCHEMA: ChapterSchema<typeof TOOLTIP_DEFAULTS> = {
+  tooltipStyle: oneOf(TOOLTIP_STYLE_OPTIONS),
+  tooltipMotion: entrance(MOTION_PATTERNS),
+}
+
 export function resolveTooltips(state: StudioState): Resolved {
-  const motion = resolveEntrance(
-    "tooltip",
-    state.tooltipMotion,
-    MOTION,
-    MOTION_PATTERNS,
-  )
+  const motion = resolveEntrance("tooltip", state.tooltipMotion, MOTION)
   return {
     tokens: motion.tokens,
     params: {
       tooltip: {
-        style: pick(TOOLTIP_STYLE_OPTIONS, state.tooltipStyle, "inverted"),
+        style: state.tooltipStyle,
         motion: motion.pattern,
       },
     },

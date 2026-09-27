@@ -7,10 +7,9 @@ import {
   ExamplesIndex,
   GroupExamplesIndex,
 } from "@/modules/studio/__generated__/examples"
-import { DEFAULTS } from "@/modules/studio/axes"
-import { decodeState } from "@/modules/studio/preset/codec"
 import {
   useAnnouncePreviewReady,
+  useForwardHistoryKeys,
   useIframeMessageListener,
   usePreviewNavigationMessages,
 } from "@/modules/studio/preset/iframe-sync"
@@ -19,8 +18,9 @@ import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { getCurrent } from "@/modules/studio/selection"
 
-// Non-route file so the examples barrel, preset codec and overview stay in
+// Non-route file so the examples barrel, workspace and overview stay in
 // this route's split chunk instead of the router's critical import graph.
 const promiseCache = new Map<
   string,
@@ -54,9 +54,10 @@ const route = getRouteApi("/preview/$slug")
 
 export function PreviewPage() {
   const { slug } = route.useParams()
-  const { preset } = route.useSearch()
+  // Boots on the current design system (same origin, same storage); the
+  // studio's messages take over from there.
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(preset ? decodeState(preset) : DEFAULTS),
+    resolveDesignSystem(getCurrent().state),
   )
 
   const navigate = route.useNavigate()
@@ -91,6 +92,7 @@ export function PreviewPage() {
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
+  useForwardHistoryKeys()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's

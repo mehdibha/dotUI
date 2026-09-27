@@ -15,7 +15,7 @@ const sliderVariants = tv({
       "relative flex grow cursor-drag touch-none items-center select-none disabled:cursor-disabled [--slider-size:--spacing(1)] [--slider-thumb-size:--spacing(3)]",
     track:
       "pointer-events-none relative grow overflow-hidden rounded-full bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
-    fill: "pointer-events-none bg-primary disabled:bg-(--disabled-selected-bg,var(--color-primary))",
+    fill: "pointer-events-none bg-inverse disabled:bg-(--disabled-selected-bg,var(--color-inverse))",
     thumb:
       "top-1/2 left-1/2 grid cursor-drag place-items-center rounded-full focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-dragging size-(--slider-thumb-size) bg-fg shadow-none",
     output:

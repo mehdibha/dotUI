@@ -52,11 +52,28 @@ function DrawerPopupElement({
   // A swipe that starts on a pressable (menu item, button) never cancels the
   // react-aria press: the content moves with the finger, so the pointer stays
   // over the target, and the drawer claims the gesture before the browser
-  // would fire pointercancel. Releasing then fires onPress. Cancel in-flight
-  // presses the way the platform does when a gesture is taken over.
+  // would fire pointercancel. Releasing then fires onPress. Base UI arms a
+  // swipe on every touchstart, so cancel in-flight presses only once the
+  // finger actually drags, the way the platform does when a gesture takes over.
   React.useEffect(() => {
     if (!swiping) return
-    document.dispatchEvent(new PointerEvent("pointercancel"))
+    let origin: { x: number; y: number } | undefined
+    const onMove = (event: PointerEvent | TouchEvent) => {
+      const point = "touches" in event ? event.touches[0] : event
+      if (!point) return
+      origin ??= { x: point.clientX, y: point.clientY }
+      if (Math.hypot(point.clientX - origin.x, point.clientY - origin.y) < 8)
+        return
+      stop()
+      document.dispatchEvent(new PointerEvent("pointercancel"))
+    }
+    const stop = () => {
+      document.removeEventListener("pointermove", onMove, true)
+      document.removeEventListener("touchmove", onMove, true)
+    }
+    document.addEventListener("pointermove", onMove, true)
+    document.addEventListener("touchmove", onMove, true)
+    return stop
   }, [swiping])
 
   return <div {...props} />

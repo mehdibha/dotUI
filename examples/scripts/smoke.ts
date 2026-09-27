@@ -8,9 +8,10 @@
  * files. Per template:
  *   1. Remove everything a previous run generated.
  *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
- *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
- *      give, with the template's preset baked in.
- *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
+ *   3. `shadcn init <origin>/r/p/<preset>/init.json` — the built-in preset's
+ *      registry path, so a run never needs the snapshot store.
+ *   4. `shadcn add @dotui/<name>` for every item in the preset's
+ *      `registry.json`.
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
  *
@@ -24,10 +25,10 @@
  *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>] [--no-build]
  *
  * With no `--origin` the script builds the registry and serves this checkout
- * with the www dev server (reusing one already running on its port). Pass a
- * Vercel preview or production to regenerate from a deployment instead. Preset
- * encoding always comes from this checkout (`www/scripts/encode-preset.ts`),
- * the same way the create page encodes it in the browser.
+ * with its own www dev server on a free port — never one already running, which
+ * may belong to another checkout. Pass `--origin http://127.0.0.1:4444` to reuse
+ * your `pnpm dev:www`, or a Vercel preview or production to regenerate from a
+ * deployment.
  *
  * Runs offline: the CLI's own base fetches (its style list and base color) are
  * answered from `shadcn-base/`, vendored from shadcn-ui/ui, through the CLI's
@@ -36,7 +37,7 @@
  * files are written, for a quick look at the output.
  */
 
-import { spawn, spawnSync } from "node:child_process"
+import { spawn } from "node:child_process"
 import {
   existsSync,
   openSync,
@@ -45,6 +46,7 @@ import {
   writeFileSync,
 } from "node:fs"
 import { createServer } from "node:http"
+import { createServer as createNetServer } from "node:net"
 import type { AddressInfo } from "node:net"
 import os from "node:os"
 import path from "node:path"
@@ -52,8 +54,6 @@ import { fileURLToPath } from "node:url"
 
 // Pinned so a CLI release can't change what a green run means. Bump on purpose.
 const SHADCN = "shadcn@4.20.1"
-// The www dev server's port (www/vite.config.ts).
-const LOCAL_ORIGIN = "http://127.0.0.1:4444"
 // What the committed `components.json` points at, whatever origin generated it.
 const CANONICAL_ORIGIN = "https://dotui.org"
 const EXAMPLES_DIR = path.resolve(
@@ -67,10 +67,53 @@ const SHADCN_BASE_DIR = path.join(EXAMPLES_DIR, "scripts", "shadcn-base")
 
 type Framework = "next" | "tanstack-start"
 
-// Directory name → what it exercises. Add a template here and to the
-// workflow matrix.
-const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
-  "origin-next": { framework: "next", preset: "origin" },
+const CREATE_NEXT_APP_LAYOUT = `import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "dotUI · Next.js example",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={\`\${geistSans.variable} \${geistMono.variable} h-full antialiased\`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
+  );
+}
+`
+
+// Directory name → what it exercises (`seeds` override the framework's). Add a
+// template here and to the workflow matrix.
+const EXAMPLES: Record<
+  string,
+  { framework: Framework; preset: string; seeds?: Record<string, string> }
+> = {
+  // Stock create-next-app layout: Geist is already imported, so shadcn leaves
+  // the layout alone and the default fonts must still render.
+  "origin-next": {
+    framework: "next",
+    preset: "origin",
+    seeds: { "src/app/layout.tsx": CREATE_NEXT_APP_LAYOUT },
+  },
   "origin-tanstack-start": { framework: "tanstack-start", preset: "origin" },
   "spotify-next": { framework: "next", preset: "spotify" },
   "spotify-tanstack-start": { framework: "tanstack-start", preset: "spotify" },
@@ -213,18 +256,26 @@ async function isServing(origin: string): Promise<boolean> {
   }
 }
 
+async function freePort(): Promise<number> {
+  const server = createNetServer()
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve))
+  const { port } = server.address() as AddressInfo
+  await new Promise((resolve) => server.close(resolve))
+  return port
+}
+
 /**
- * Serve this checkout's registry on the www dev server. Reuses a server that
- * is already answering on the port (a `pnpm dev:www` you left running);
- * otherwise builds the registry, starts vite, and returns a stop function.
+ * Build this checkout's registry and serve it on its own www dev server, on a
+ * free port so no other checkout's server can answer in its place.
  */
-async function serveLocalRegistry(): Promise<() => void> {
-  if (await isServing(LOCAL_ORIGIN)) {
-    console.log(`registry: reusing the dev server at ${LOCAL_ORIGIN}`)
-    return () => {}
-  }
+async function serveLocalRegistry(): Promise<{
+  origin: string
+  stop: () => void
+}> {
   await run(REPO_DIR, "pnpm", ["build:registry"])
-  const log = path.join(os.tmpdir(), "dotui-examples-www.log")
+  const port = await freePort()
+  const origin = `http://127.0.0.1:${port}`
+  const log = path.join(os.tmpdir(), `dotui-examples-www-${port}.log`)
   const fd = openSync(log, "w")
   const child = spawn(
     "pnpm",
@@ -234,7 +285,8 @@ async function serveLocalRegistry(): Promise<() => void> {
       "vite",
       "dev",
       "--port",
-      "4444",
+      String(port),
+      "--strictPort",
       "--host",
       "127.0.0.1",
     ],
@@ -258,8 +310,8 @@ async function serveLocalRegistry(): Promise<() => void> {
   }
   console.log(`registry: starting the dev server (log: ${log})`)
   for (let attempt = 0; attempt < 60; attempt++) {
-    if (await isServing(LOCAL_ORIGIN)) return stop
     if (child.exitCode !== null) break
+    if (await isServing(origin)) return { origin, stop }
     await new Promise((resolve) => setTimeout(resolve, 3000))
   }
   stop()
@@ -330,42 +382,18 @@ async function fetchJson<T>(url: string, attempts = 5): Promise<T> {
   throw lastError instanceof Error ? lastError : new Error(String(lastError))
 }
 
-/**
- * Encoded `?preset=` values by preset id, from this checkout's preset data.
- * Runs tsx directly: through `pnpm exec`, an engine warning lands on stdout
- * and corrupts the JSON.
- */
-function encodePresets(ids: string[]): Record<string, string> {
-  const result = spawnSync(
-    path.join(REPO_DIR, "www/node_modules/.bin/tsx"),
-    ["scripts/encode-preset.ts", ...ids],
-    {
-      cwd: path.join(REPO_DIR, "www"),
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "inherit"],
-    },
-  )
-  if (result.error) throw result.error
-  if (result.status !== 0)
-    throw new Error(`encode-preset exited with ${result.status}`)
-  return JSON.parse(result.stdout.trim()) as Record<string, string>
-}
-
-/** Whether the init item for this preset pulls in `registry:font` items. */
-async function initHasFonts(
-  origin: string,
-  encodedPreset: string,
-): Promise<boolean> {
+/** Whether the init item at `registry` pulls in `registry:font` items. */
+async function initHasFonts(registry: string): Promise<boolean> {
   const item = await fetchJson<{ registryDependencies?: string[] }>(
-    `${origin}/r/init?preset=${encodedPreset}`,
+    `${registry}/init.json`,
   )
-  return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
+  return (item.registryDependencies ?? []).some((dep) => /\/font-/.test(dep))
 }
 
-async function registryNames(origin: string): Promise<string[]> {
-  const url = `${origin}/r/registry.json`
-  const registry = await fetchJson<{ items?: Array<{ name: string }> }>(url)
-  const names = (registry.items ?? []).map((item) => item.name)
+async function registryNames(registry: string): Promise<string[]> {
+  const url = `${registry}/registry.json`
+  const index = await fetchJson<{ items?: Array<{ name: string }> }>(url)
+  const names = (index.items ?? []).map((item) => item.name)
   if (names.length === 0) throw new Error(`GET ${url} lists no items`)
   return names
 }
@@ -439,16 +467,17 @@ function stabilizePackageJson(cwd: string, before: string): void {
 async function regenerate(
   example: string,
   origin: string,
-  encodedPreset: string,
-  names: string[],
   shadcnBaseUrl: string,
   build: boolean,
 ) {
-  const { framework: frameworkName } = EXAMPLES[example]!
+  const { framework: frameworkName, preset, seeds } = EXAMPLES[example]!
   const framework = FRAMEWORKS[frameworkName]
   const cwd = path.join(EXAMPLES_DIR, example)
+  const registry = `${origin}/r/p/${preset}`
   console.log(`\n=== ${example} ===`)
-  const expectFonts = await initHasFonts(origin, encodedPreset)
+  const names = await registryNames(registry)
+  console.log(`items: ${names.length}`)
+  const expectFonts = await initHasFonts(registry)
   const packageJsonBefore = readFileSync(path.join(cwd, "package.json"), "utf8")
 
   for (const generated of GENERATED) {
@@ -458,19 +487,19 @@ async function regenerate(
     path.join(cwd, framework.stylesheet),
     '@import "tailwindcss";\n',
   )
+  for (const [file, content] of Object.entries({
+    ...framework.seeds,
+    ...seeds,
+  })) {
+    writeFileSync(path.join(cwd, file), content)
+  }
 
   const shadcnEnv = { ...noProxy(), REGISTRY_URL: shadcnBaseUrl }
   await run(cwd, "pnpm", ["install"])
   await run(
     cwd,
     "pnpm",
-    [
-      "dlx",
-      SHADCN,
-      "init",
-      `${origin}/r/init?preset=${encodedPreset}`,
-      "--yes",
-    ],
+    ["dlx", SHADCN, "init", `${registry}/init.json`, "--yes"],
     shadcnEnv,
   )
   await run(
@@ -502,29 +531,17 @@ async function main() {
   let stopServer = () => {}
   let origin = options.origin
   if (!origin) {
-    stopServer = await serveLocalRegistry()
-    origin = LOCAL_ORIGIN
+    const local = await serveLocalRegistry()
+    origin = local.origin
+    stopServer = local.stop
   }
   console.log(`registry: ${origin}`)
-  const presetIds = [
-    ...new Set(options.examples.map((name) => EXAMPLES[name]!.preset)),
-  ]
-  const encoded = encodePresets(presetIds)
-  const names = await registryNames(origin)
-  console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
   const shadcnBase = await serveShadcnBase()
 
   const failures: string[] = []
   for (const example of options.examples) {
     try {
-      await regenerate(
-        example,
-        origin,
-        encoded[EXAMPLES[example]!.preset]!,
-        names,
-        shadcnBase.url,
-        options.build,
-      )
+      await regenerate(example, origin, shadcnBase.url, options.build)
       console.log(`\n✓ ${example}`)
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)

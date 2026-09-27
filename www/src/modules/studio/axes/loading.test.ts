@@ -4,14 +4,14 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, parseState } from "."
 import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 import { ease } from "./motion"
 
 /* One item as users install it from a studio state. */
 async function ship(name: string, state: Partial<StudioState> = {}) {
-  const ds = resolveDesignSystem({ ...DEFAULTS, ...state })
+  const ds = resolveDesignSystem(parseState({ ...state }))
   const preset: PublishPreset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -33,7 +33,7 @@ async function ship(name: string, state: Partial<StudioState> = {}) {
 
 describe("spinner motion", () => {
   test("the defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULTS).tokens).toEqual({})
+    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("the ring ships shadcn's animate-spin", async () => {
@@ -81,10 +81,11 @@ describe("skeleton motion", () => {
   })
 
   test("a tweak retimes the skeleton's loop", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
+      }),
+    )
     expect(tokens).toEqual({
       "--studio-skeleton-loop-duration": "1200ms",
       "--studio-skeleton-loop-ease": "cubic-bezier(0.4, 0, 0.2, 1)",

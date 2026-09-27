@@ -89,9 +89,6 @@
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
   }
-  html {
-    @apply font-sans;
-  }
 }
 
 /* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.

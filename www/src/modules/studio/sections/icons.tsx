@@ -15,6 +15,7 @@ import {
   ICON_STROKE_WIDTH_VAR,
   LIBRARY_OPTIONS,
   STROKE_DEFAULTS,
+  STROKE_RANGE,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
 import { DialSelect, DialSlider } from "../dial"
@@ -86,9 +87,9 @@ export function IconsSection({ studio }: { studio: Studio }) {
           label="Stroke"
           value={state.iconStroke}
           onChange={set("iconStroke")}
-          minValue={1}
-          maxValue={3}
-          step={0.25}
+          minValue={STROKE_RANGE.min}
+          maxValue={STROKE_RANGE.max}
+          step={STROKE_RANGE.step}
           format={(v) => v.toFixed(2)}
         />
       )}

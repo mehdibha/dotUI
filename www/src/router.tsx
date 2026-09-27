@@ -1,5 +1,6 @@
 import { createRouter } from "@tanstack/react-router"
 
+import { trackTraversal } from "@/lib/history-traversal"
 import { DefaultError } from "@/components/default-error"
 import { NotFound } from "@/components/not-found"
 
@@ -13,6 +14,7 @@ export function getRouter() {
     defaultNotFoundComponent: NotFound,
     defaultErrorComponent: DefaultError,
   })
+  trackTraversal(router.history)
 
   return router
 }

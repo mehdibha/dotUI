@@ -32,25 +32,25 @@ const drawerVariants = tv({
       top: {
         viewport: "grid grid-rows-[auto_1fr] pb-12",
         popup:
-          "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-xl border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
+          "row-start-1 max-h-[calc(100dvh-3rem)] min-h-20 w-full origin-[50%_0] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-b-lg border-t-0 data-ending-style:transform-[translateY(-100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(-100%)]",
         swipeArea: "inset-x-0 top-0 h-8",
       },
       bottom: {
         viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
         popup:
-          "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0px))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
+          "row-start-2 mb-[calc(0px-var(--drawer-bleed))] max-h-[calc(100dvh-3rem+var(--drawer-bleed))] min-h-20 w-full origin-[50%_100%] transform-[translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-lg border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)+var(--drawer-bleed)+var(--drawer-keyboard-inset,0px))] data-ending-style:transform-[translateY(100%)] data-nested-drawer-open:h-(--drawer-frontmost-height,var(--drawer-height,auto)) data-nested-drawer-open:transform-[translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-starting-style:transform-[translateY(100%)]",
         swipeArea: "inset-x-0 bottom-0 h-8",
       },
       left: {
         viewport: "flex justify-start pe-12",
         popup:
-          "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-xl border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
+          "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-right transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-r-lg border-l-0 data-ending-style:transform-[translateX(-100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(-100%)]",
         swipeArea: "inset-y-0 left-0 w-8",
       },
       right: {
         viewport: "flex justify-end ps-12",
         popup:
-          "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-xl border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
+          "h-full max-w-[calc(100dvw-3rem)] min-w-20 origin-left transform-[translateX(var(--drawer-swipe-movement-x,0px))] rounded-l-lg border-r-0 data-ending-style:transform-[translateX(100%)] data-nested-drawer-open:transform-[translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-starting-style:transform-[translateX(100%)]",
         swipeArea: "inset-y-0 right-0 w-8",
       },
     },
@@ -110,11 +110,28 @@ function DrawerPopupElement({
   // A swipe that starts on a pressable (menu item, button) never cancels the
   // react-aria press: the content moves with the finger, so the pointer stays
   // over the target, and the drawer claims the gesture before the browser
-  // would fire pointercancel. Releasing then fires onPress. Cancel in-flight
-  // presses the way the platform does when a gesture is taken over.
+  // would fire pointercancel. Releasing then fires onPress. Base UI arms a
+  // swipe on every touchstart, so cancel in-flight presses only once the
+  // finger actually drags, the way the platform does when a gesture takes over.
   React.useEffect(() => {
     if (!swiping) return;
-    document.dispatchEvent(new PointerEvent("pointercancel"));
+    let origin: { x: number; y: number } | undefined;
+    const onMove = (event: PointerEvent | TouchEvent) => {
+      const point = "touches" in event ? event.touches[0] : event;
+      if (!point) return;
+      origin ??= { x: point.clientX, y: point.clientY };
+      if (Math.hypot(point.clientX - origin.x, point.clientY - origin.y) < 8)
+        return;
+      stop();
+      document.dispatchEvent(new PointerEvent("pointercancel"));
+    };
+    const stop = () => {
+      document.removeEventListener("pointermove", onMove, true);
+      document.removeEventListener("touchmove", onMove, true);
+    };
+    document.addEventListener("pointermove", onMove, true);
+    document.addEventListener("touchmove", onMove, true);
+    return stop;
   }, [swiping]);
 
   return <div {...props} />;

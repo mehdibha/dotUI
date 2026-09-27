@@ -162,7 +162,7 @@ export function PanelPage({
 }: {
   chapters: Chapter[]
   studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
 }) {
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
   const [active, setActive] = useState(chapters[0]?.id ?? "")
@@ -249,7 +249,6 @@ export function PanelPage({
         className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
       >
         <PanelChrome
-          studio={studio}
           system={system}
           actions={
             <>
@@ -261,7 +260,7 @@ export function PanelPage({
                 aria-label={open ? "Collapse panel" : "Expand panel"}
                 aria-expanded={open}
                 onPress={() => setTucked(open)}
-                className="lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
+                className="data-icon-only:size-6 lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
               >
                 {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
               </Button>
@@ -278,7 +277,7 @@ export function PanelPage({
           className={
             open
               ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
-              : "max-lg:h-auto max-lg:[&>:first-child]:border-0"
+              : "max-lg:h-auto max-lg:*:first:border-0"
           }
         >
           {chapters.map((chapter) => (
