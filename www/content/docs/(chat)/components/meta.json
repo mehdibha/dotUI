@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "message",
+    "bubble",
+    "attachment",
+    "message-scroller",
+    "questionnaire",
+    "marker"
+  ]
+}
