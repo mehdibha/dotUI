@@ -48,7 +48,14 @@ const CONTENT_KEYS = new Set(["text"])
 const measure = (el: HTMLElement, root: HTMLElement, key: string) =>
   boxIn(el, root, CONTENT_KEYS.has(key))
 
-const PROPS = ["translate", "opacity", "filter", "scale", "clipPath"] as const
+const PROPS = [
+  "translate",
+  "opacity",
+  "filter",
+  "scale",
+  "clipPath",
+  "borderColor",
+] as const
 
 export function applyFlip({
   live,
@@ -105,33 +112,6 @@ export function applyFlip({
       const blur = (1 - enter) * 8
       if (blur > 0.05) el.style.filter = `blur(${blur}px)`
       el.style.scale = String(lerp(0.9, 1, enter))
-    }
-  }
-
-  // A new card grows its chrome out from around the content it wraps.
-  const card = parts.find((el) => names(el)[0] === "card")
-  if (card) {
-    const box = boxIn(card, live)
-    let x0 = Infinity
-    let y0 = Infinity
-    let x1 = -Infinity
-    let y1 = -Infinity
-    for (const [key, b] of from) {
-      if (CONTENT_KEYS.has(key)) continue
-      x0 = Math.min(x0, b.x)
-      y0 = Math.min(y0, b.y)
-      x1 = Math.max(x1, b.x + b.w)
-      y1 = Math.max(y1, b.y + b.h)
-    }
-    if (Number.isFinite(x0)) {
-      const OUT = -64
-      const pad = 6
-      const top = lerp(y0 - pad - box.y, OUT, move)
-      const left = lerp(x0 - pad - box.x, OUT, move)
-      const bottom = lerp(box.y + box.h - (y1 + pad), OUT, move)
-      const right = lerp(box.x + box.w - (x1 + pad), OUT, move)
-      const radius = lerp(10, 64, clamp01(move))
-      card.style.clipPath = `inset(${top}px ${right}px ${bottom}px ${left}px round ${radius}px)`
     }
   }
 }

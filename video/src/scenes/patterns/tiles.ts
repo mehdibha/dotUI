@@ -1,74 +1,76 @@
-import { random } from "../../lib/motion"
+import { SAFE_BLOCKS } from "../../lib/content"
 import { HEIGHT, WIDTH } from "../../lib/timing"
 import type { Cam } from "./camera"
 import { project } from "./camera"
 
-/* The grid: every screen is a real app rendered at 1440×900 on the world
-   plane. The center cell holds the pattern canvas (the Compose card's home);
-   the rest are studio blocks, spread so no neighbor repeats. */
+/* The field: every screen is a real app at 1440×900 on the world plane. The
+   centre cell holds the pattern canvas (the Compose card's home); the rest
+   are studio blocks, spread so no two neighbours repeat. */
 
 export const TILE_W = 1440
 export const TILE_H = 900
-const GAP = 96
-const PITCH_X = TILE_W + GAP
-const PITCH_Y = TILE_H + GAP
+const GAP = 112
+export const PITCH_X = TILE_W + GAP
+export const PITCH_Y = TILE_H + GAP
 
-export const BLOCK_SLUGS = [
-  "mail",
-  "customers",
-  "music-player",
-  "code-review",
-  "checkout",
-  "ai-chat",
-  "file-manager",
-  "messaging",
-  "search-results",
-  "invoice",
-  "notifications-center",
-  "settings",
-] as const
-
-export type Content = (typeof BLOCK_SLUGS)[number] | "canvas"
+export type Content = (typeof SAFE_BLOCKS)[number] | "canvas"
 
 export type Tile = {
   id: string
   c: number
   r: number
-  /** World center. */
+  /** World centre. */
   x: number
   y: number
   content: Content
-  light: boolean
 }
 
 const mod = (a: number, n: number) => ((a % n) + n) % n
 
+/* (2c + 5r) mod 8 never repeats between neighbours (diagonals included);
+   the order puts mail and checkout on the fly-past row and the music player
+   on the landing. */
+const ORDER: ReadonlyArray<(typeof SAFE_BLOCKS)[number]> = [
+  "customers",
+  "music-player",
+  "file-manager",
+  "code-review",
+  "invoice",
+  "mail",
+  "messaging",
+  "checkout",
+]
+
 export const TILES: Tile[] = []
-for (let r = -7; r <= 9; r++) {
-  for (let c = -7; c <= 10; c++) {
-    const center = c === 0 && r === 0
+for (let r = -5; r <= 4; r++) {
+  for (let c = -4; c <= 7; c++) {
     TILES.push({
       id: `${c}:${r}`,
       c,
       r,
       x: c * PITCH_X,
       y: r * PITCH_Y,
-      content: center
-        ? "canvas"
-        : BLOCK_SLUGS[mod(c * 5 + r * 3, BLOCK_SLUGS.length)]!,
-      light: center ? true : random(c, r, 21) < 0.5,
+      content:
+        c === 0 && r === 0
+          ? "canvas"
+          : ORDER[mod(c * 2 + r * 5, ORDER.length)]!,
     })
   }
 }
 
-const MARGIN = 30
+/** World point under a cell's centre. */
+export const cell = (c: number, r: number) => ({
+  x: c * PITCH_X,
+  y: r * PITCH_Y,
+})
 
 /**
- * Where a tile lands on screen, lifted `z` px off the plane. Most tiles are
- * small against the perspective, so one affine matrix through the center
- * fits the projected corners to a pixel — and Chrome rasterizes a 2D box at
- * the size it's shown. Tiles close to the lens get the exact projective
- * matrix instead.
+ * Where a tile lands on screen, lifted `z` px off the plane. When one affine
+ * matrix through the centre fits the projected corners to a pixel it's used
+ * (Chrome rasterizes a 2D box at the size it's shown); otherwise the exact
+ * projective matrix. A projected layer rasterizes at its own CSS size, so a
+ * tile shown past 1:1 is laid out at `density` 2 (the content zoomed ×2 inside
+ * a box twice the size) and stays sharp.
  */
 export function placement(cam: Cam, tile: Tile, z = 0) {
   const hw = TILE_W / 2
@@ -103,25 +105,47 @@ export function placement(cam: Cam, tile: Tile, z = 0) {
     ),
     Math.hypot(c * TILE_H + e - p3.x, d * TILE_H + f - p3.y),
   )
+  // Only a screen that holds the shot earns the 2× layer (it costs 4× the
+  // pixels); edge-of-frame neighbours stay at 1×.
+  const coverage =
+    (Math.max(0, Math.min(bounds.right, WIDTH) - Math.max(bounds.left, 0)) *
+      Math.max(0, Math.min(bounds.bottom, HEIGHT) - Math.max(bounds.top, 0))) /
+    (WIDTH * HEIGHT)
+  const density =
+    coverage > 0.3 &&
+    Math.max(
+      Math.hypot(p1.x - p0.x, p1.y - p0.y) / TILE_W,
+      Math.hypot(p2.x - p3.x, p2.y - p3.y) / TILE_W,
+      Math.hypot(p3.x - p0.x, p3.y - p0.y) / TILE_H,
+      Math.hypot(p2.x - p1.x, p2.y - p1.y) / TILE_H,
+    ) > 1.02
+      ? 2
+      : 1
+  // Visible area (shoelace), to rank what the camera actually sees.
+  let area = 0
+  for (let i = 0; i < 4; i++) {
+    const p = corners[i]!
+    const q = corners[(i + 1) % 4]!
+    area += p.x * q.y - q.x * p.y
+  }
   return {
     matrix:
       error > 1.5
-        ? homography(corners)
-        : `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`,
+        ? quadMatrix(corners, TILE_W * density, TILE_H * density)
+        : `matrix(${a / density}, ${b / density}, ${c / density}, ${d / density}, ${e}, ${f})`,
+    density,
     bounds,
+    area: Math.abs(area) / 2,
     depth: center.k,
     center,
   }
 }
 
-/** The projective matrix taking the tile rect onto four screen corners (Heckbert's square-to-quad). */
-function homography(q: ReadonlyArray<{ x: number; y: number }>) {
-  const [p0, p1, p2, p3] = q as [
-    { x: number; y: number },
-    { x: number; y: number },
-    { x: number; y: number },
-    { x: number; y: number },
-  ]
+type Point = { x: number; y: number }
+
+/** The projective matrix taking a w×h rect onto four screen corners (Heckbert's square-to-quad). */
+export function quadMatrix(q: readonly Point[], w: number, h: number) {
+  const [p0, p1, p2, p3] = q as [Point, Point, Point, Point]
   const dx1 = p1.x - p2.x
   const dx2 = p3.x - p2.x
   const dx3 = p0.x - p1.x + p2.x - p3.x
@@ -130,19 +154,20 @@ function homography(q: ReadonlyArray<{ x: number; y: number }>) {
   const dy3 = p0.y - p1.y + p2.y - p3.y
   const det = dx1 * dy2 - dx2 * dy1
   const g = (dx3 * dy2 - dx2 * dy3) / det
-  const h = (dx1 * dy3 - dx3 * dy1) / det
-  const a = (p1.x - p0.x + g * p1.x) / TILE_W
-  const b = (p3.x - p0.x + h * p3.x) / TILE_H
-  const d = (p1.y - p0.y + g * p1.y) / TILE_W
-  const e = (p3.y - p0.y + h * p3.y) / TILE_H
-  const gw = g / TILE_W
-  const hh = h / TILE_H
-  return `matrix3d(${a}, ${d}, 0, ${gw}, ${b}, ${e}, 0, ${hh}, 0, 0, 1, 0, ${p0.x}, ${p0.y}, 0, 1)`
+  const hh = (dx1 * dy3 - dx3 * dy1) / det
+  const a = (p1.x - p0.x + g * p1.x) / w
+  const b = (p3.x - p0.x + hh * p3.x) / h
+  const d = (p1.y - p0.y + g * p1.y) / w
+  const e = (p3.y - p0.y + hh * p3.y) / h
+  return `matrix3d(${a}, ${d}, 0, ${g / w}, ${b}, ${e}, 0, ${hh / h}, 0, 0, 1, 0, ${p0.x}, ${p0.y}, 0, 1)`
 }
 
 export type Placement = NonNullable<ReturnType<typeof placement>>
 
-export function onScreen({ bounds }: Placement) {
+const MARGIN = 24
+
+/** Overlaps the frame. */
+export function visible({ bounds }: Placement) {
   return (
     bounds.right > -MARGIN &&
     bounds.left < WIDTH + MARGIN &&

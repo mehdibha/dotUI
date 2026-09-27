@@ -9,6 +9,7 @@ export function Window({
   height,
   bar,
   title,
+  titleSize = 14,
   children,
   style,
 }: {
@@ -16,6 +17,7 @@ export function Window({
   height: number
   bar: number
   title: ReactNode
+  titleSize?: number
   children: ReactNode
   style?: CSSProperties
 }) {
@@ -25,12 +27,12 @@ export function Window({
         position: "relative",
         width,
         height,
-        borderRadius: 16,
+        borderRadius: 18,
         overflow: "hidden",
-        background: "linear-gradient(180deg, #131316 0%, #0c0c0e 100%)",
+        background: "linear-gradient(180deg, #141417 0%, #0c0c0e 100%)",
         boxShadow: [
-          "inset 0 0 0 1px rgba(255,255,255,0.09)",
-          "inset 0 1px 0 rgba(255,255,255,0.07)",
+          "inset 0 0 0 1px rgba(255,255,255,0.1)",
+          "inset 0 1px 0 rgba(255,255,255,0.08)",
           "0 0 0 1px rgba(0,0,0,0.6)",
           "0 30px 80px -20px rgba(0,0,0,0.8)",
           "0 60px 160px -40px rgba(0,0,0,0.7)",
@@ -49,13 +51,13 @@ export function Window({
           borderBottom: "1px solid rgba(255,255,255,0.06)",
           background: "rgba(255,255,255,0.025)",
           fontFamily: SANS,
-          fontSize: 14,
+          fontSize: titleSize,
           fontWeight: 500,
           letterSpacing: "-0.01em",
           color: "rgba(255,255,255,0.46)",
         }}
       >
-        <TrafficLights style={{ position: "absolute", left: 20 }} />
+        <TrafficLights style={{ position: "absolute", left: bar * 0.42 }} />
         {title}
       </div>
       {children}
@@ -74,13 +76,13 @@ export function Window({
 
 function TrafficLights({ style }: { style?: CSSProperties }) {
   return (
-    <div style={{ display: "flex", gap: 8, ...style }}>
+    <div style={{ display: "flex", gap: 9, ...style }}>
       {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
         <span
           key={c}
           style={{
-            width: 13,
-            height: 13,
+            width: 14,
+            height: 14,
             borderRadius: 99,
             background: c,
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.25)",

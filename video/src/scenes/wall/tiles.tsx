@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { memo } from "react"
+import { CalendarDate } from "@internationalized/date"
 
 import {
   ArrowRightIcon,
@@ -40,7 +41,6 @@ import {
 } from "@/registry/ui/breadcrumbs"
 import { Button } from "@/registry/ui/button"
 import {
-  Calendar,
   CalendarCell,
   CalendarGrid,
   CalendarGridBody,
@@ -48,6 +48,7 @@ import {
   CalendarHeader,
   CalendarHeaderCell,
   CalendarHeading,
+  RangeCalendar,
 } from "@/registry/ui/calendar"
 import {
   Card,
@@ -104,9 +105,6 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
-
-// video/ has no direct dependency on it; resolve through www like the registry does.
-import { CalendarDate } from "../../../../www/node_modules/@internationalized/date"
 
 /* The wall's cast: real registry components, one per cell, in the builder's
    untouched default look. `tick` is the beat index — the few tiles that live
@@ -396,6 +394,19 @@ export const TILES: Record<string, Render> = {
       </NumberFieldGroup>
     </NumberField>
   ),
+  topics: (tick) => (
+    <TagGroup
+      selectionMode="single"
+      selectedKeys={[["design", "eng", "ops"][tick % 3]!]}
+    >
+      <Label>Topics</Label>
+      <TagList>
+        <Tag id="design">Design</Tag>
+        <Tag id="eng">Engineering</Tag>
+        <Tag id="ops">Ops</Tag>
+      </TagList>
+    </TagGroup>
+  ),
   tags: () => (
     <TagGroup selectionMode="single" defaultSelectedKeys={["design"]}>
       <Label>Topics</Label>
@@ -421,8 +432,11 @@ export const TILES: Record<string, Render> = {
       </ListBox>
     </div>
   ),
-  calendar: () => (
-    <Calendar aria-label="Date" defaultValue={DAY} defaultFocusedValue={DAY}>
+  calendar: (tick) => (
+    <RangeCalendar
+      aria-label="Trip"
+      value={{ start: DAY, end: DAY.add({ days: [2, 4, 6, 9][tick % 4]! }) }}
+    >
       <CalendarHeader>
         <Button slot="previous" variant="quiet" isIconOnly>
           <ChevronLeftIcon />
@@ -440,7 +454,7 @@ export const TILES: Record<string, Render> = {
           {(date) => <CalendarCell date={date} />}
         </CalendarGridBody>
       </CalendarGrid>
-    </Calendar>
+    </RangeCalendar>
   ),
   card: () => (
     <Card className="size-full justify-center">
@@ -490,7 +504,7 @@ export const TILES: Record<string, Render> = {
     </div>
   ),
   alert: () => (
-    <Alert className="w-[26rem]">
+    <Alert className="size-full content-center">
       <InfoIcon />
       <AlertTitle>Update available</AlertTitle>
       <AlertDescription>Version 2.4 is ready to install.</AlertDescription>
@@ -557,10 +571,12 @@ export const TileContent = memo(function TileContent({
 })
 
 /** Kinds that paint their own surface (no cell chrome). */
-export const BARE = new Set(["card"])
+export const BARE = new Set(["card", "alert"])
 
 /** Kinds whose content changes on the beat. */
 export const LIVE = new Set([
+  "calendar",
+  "topics",
   "switch",
   "switch2",
   "checkbox",

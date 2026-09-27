@@ -1,27 +1,32 @@
-import type { CSSProperties, Ref } from "react"
+import type { Ref } from "react"
 
 import { Kbd } from "@/registry/ui/kbd"
 
 import { clamp01, ease, hold, lerp, progress } from "../../lib/motion"
 import { Theme } from "../../lib/theme"
 
-/* What the keyboard and a screen reader get for free: a Tab key pressed on
-   the beat, and the announcement read straight off the live DOM (the label
-   and description React Aria wired to the input, the button's name). */
+/* What the keyboard and a screen reader get for free: a key pressed on the
+   beat, and the announcement read straight off the live DOM (the label and
+   description React Aria wired to the input, the button's name). Sized for a
+   phone: the keycap's legend and the caption land at 33–34 px. */
 
 const SANS = '"Geist Variable", ui-sans-serif, system-ui, sans-serif'
-
-export type Announcement = { at: number; key: string }
+const KEY_ZOOM = 3
+const CAPTION = 34
+const PILL_H = 84
+const PILL_W = 720
 
 export function A11yRow({
+  ref,
   frame,
   keys,
   lines,
   from,
   to,
   refs,
-  style,
 }: {
+  /** The row's `top` (px) is set on this node by the caller. */
+  ref?: Ref<HTMLDivElement>
   frame: number
   /** Beat frames a key goes down on, and which key. */
   keys: ReadonlyArray<readonly [number, string]>
@@ -30,12 +35,10 @@ export function A11yRow({
   from: number
   to: number
   refs: ReadonlyArray<Ref<HTMLSpanElement>>
-  style?: CSSProperties
 }) {
   const inT = progress(frame, from, 22, ease.out)
   const outT = progress(frame, to, 14, ease.in)
   const shown = inT * (1 - outT)
-  if (shown <= 0) return null
   const label = hold(frame, [[-Infinity, keys[0]![1]], ...keys])
   const down = keys.reduce((acc, [p]) => {
     const d = frame - p
@@ -46,20 +49,22 @@ export function A11yRow({
   const blur = (1 - inT) * 10 + outT * 10
   return (
     <div
+      ref={ref}
       style={{
         position: "absolute",
-        display: "flex",
+        left: "50%",
+        display: shown > 0 ? "flex" : "none",
         alignItems: "center",
-        gap: 28,
+        gap: 26,
         opacity: shown,
         filter: blur > 0.05 ? `blur(${blur}px)` : undefined,
-        ...style,
+        transform: `translateX(-50%) translateY(${(1 - inT) * 14}px)`,
       }}
     >
       <div
         style={{
-          transform: `translateY(${down * 1.6}px) scale(${1 - down * 0.035})`,
-          zoom: 2.4,
+          transform: `translateY(${down * 2}px) scale(${1 - down * 0.04})`,
+          zoom: KEY_ZOOM,
           width: 44,
           height: 28,
           display: "flex",
@@ -76,24 +81,24 @@ export function A11yRow({
       <div
         style={{
           position: "relative",
-          height: 64,
-          width: 500,
-          padding: "0 26px 0 22px",
+          height: PILL_H,
+          width: PILL_W,
+          padding: "0 30px 0 26px",
           display: "flex",
           alignItems: "center",
-          gap: 16,
-          borderRadius: 18,
-          background: "rgba(255,255,255,0.06)",
+          gap: 18,
+          borderRadius: 22,
+          background: "rgba(255,255,255,0.07)",
           boxShadow:
-            "inset 0 0 0 1px rgba(255,255,255,0.09), 0 20px 50px -20px rgba(0,0,0,0.8)",
+            "inset 0 0 0 1px rgba(255,255,255,0.1), 0 24px 60px -24px rgba(0,0,0,0.8)",
           fontFamily: SANS,
-          fontSize: 26,
+          fontSize: CAPTION,
           letterSpacing: "-0.02em",
           color: "#fafafa",
         }}
       >
         <Speaker />
-        <div style={{ position: "relative", flex: 1, height: 64 }}>
+        <div style={{ position: "relative", flex: 1, height: PILL_H }}>
           {lines.map((at, i) => {
             const next = lines[i + 1] ?? Infinity
             const t = progress(frame, at + (i ? 5 : 0), 16, ease.out)
@@ -107,7 +112,7 @@ export function A11yRow({
                   position: "absolute",
                   left: 0,
                   top: 0,
-                  lineHeight: "64px",
+                  lineHeight: `${PILL_H}px`,
                   whiteSpace: "nowrap",
                   opacity: o,
                   filter:
@@ -127,14 +132,15 @@ export function A11yRow({
 function Speaker() {
   return (
     <svg
-      width={26}
-      height={26}
+      width={CAPTION}
+      height={CAPTION}
       viewBox="0 0 24 24"
       fill="none"
       stroke="rgba(250,250,250,0.55)"
       strokeWidth={1.8}
       strokeLinecap="round"
       strokeLinejoin="round"
+      style={{ flex: "none" }}
     >
       <path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z" />
       <path d="M16 9a5 5 0 0 1 0 6" />

@@ -1,104 +1,109 @@
 import type { ReactNode } from "react"
 import { useLayoutEffect, useRef } from "react"
+import { Easing } from "remotion"
 
-import { AccountMenu } from "@/components/showcase/account-menu"
+import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { Appearance } from "@/components/showcase/appearance"
 import { ApprovalPrompt } from "@/components/showcase/approval-prompt"
 import { Booking } from "@/components/showcase/booking"
+import { ColorEditorCard } from "@/components/showcase/color-editor"
 import { CookiePreferences } from "@/components/showcase/cookie-preferences"
-import { Filters } from "@/components/showcase/filters"
-import { InviteMembers } from "@/components/showcase/invite-members"
+import { CustomDomain } from "@/components/showcase/custom-domain"
+import { DisplaySettings } from "@/components/showcase/display-settings"
 import { PricingPlans } from "@/components/showcase/pricing-plans"
+import { Storage } from "@/components/showcase/storage"
 import { TeamName } from "@/components/showcase/team-name"
 import { TwoFactor } from "@/components/showcase/two-factor"
-import { UploadAvatar } from "@/components/showcase/upload-avatar"
 
-import { ease, lerp, progress } from "../../lib/motion"
-import { Newsletter } from "./newsletter"
+import { lerp, progress } from "../../lib/motion"
+import { CardStage, CENTERED, Newsletter } from "../compose/steps"
 import { TILE_H, TILE_W } from "./tiles"
 
-/* The center tile: the Compose card at the heart of a canvas of real pattern
-   cards (the landing showcase). Compose collapsed its light preview surface
-   onto the card; here the surface grows back out of it — past its old bounds,
-   to a whole screen of patterns. */
+/* The centre tile: Compose's finished card at the heart of a canvas of real
+   pattern cards. Compose collapsed its light preview surface onto the card;
+   here the surface grows back out of it, past its old bounds, to a whole
+   screen of patterns. */
 
 const COL = 340
 const GAP = 24
-const CARD_W = 352
+/** Room for the Compose card's column. */
+const MID = 372
 
 const cx = TILE_W / 2
-const left1 = cx - CARD_W / 2 - GAP - COL
+const left1 = cx - MID / 2 - GAP - COL
 const left2 = left1 - GAP - COL
-const right1 = cx + CARD_W / 2 + GAP
+const right1 = cx + MID / 2 + GAP
 const right2 = right1 + COL + GAP
 
 type Stack = { x: number; top: number; cards: ReactNode[] }
 
-// Elements built once: the frame-driven wrappers re-render, the cards never do.
+// Built once: the frame-driven wrappers re-render, the cards never do.
 const SIDES: Stack[] = [
   {
     x: left2,
-    top: -150,
-    cards: [<Filters key="Filters" />, <AccountMenu key="AccountMenu" />],
+    top: -96,
+    cards: [<ColorEditorCard key="a" />, <Appearance key="b" />],
   },
   {
     x: left1,
-    top: 28,
-    cards: [
-      <TwoFactor key="TwoFactor" />,
-      <InviteMembers key="InviteMembers" />,
-    ],
+    top: 40,
+    cards: [<TwoFactor key="a" />, <Booking key="b" />],
   },
   {
     x: right1,
-    top: -70,
-    cards: [<PricingPlans key="PricingPlans" />, <Booking key="Booking" />],
+    top: -40,
+    cards: [<PricingPlans key="a" />, <CookiePreferences key="b" />],
   },
   {
     x: right2,
-    top: 64,
+    top: 72,
     cards: [
-      <Appearance key="Appearance" />,
-      <CookiePreferences key="CookiePreferences" />,
+      <AgentTasks key="a" />,
+      <DisplaySettings key="b" />,
+      <Storage key="c" />,
     ],
   },
 ]
-const ABOVE = <TeamName />
-const BELOW = [
-  <ApprovalPrompt key="ApprovalPrompt" />,
-  <UploadAvatar key="UploadAvatar" />,
-]
-const CARD = <Newsletter />
+const ABOVE = [<CustomDomain key="a" />, <TeamName key="b" />]
+const BELOW = <ApprovalPrompt />
+/** Sizes the gap in the centre column. */
+const SPACER = <Newsletter />
+/** Laid out exactly as Compose's <HandoffCard />: its stage, centred. */
+const CARD = (
+  <CardStage zoom={1}>
+    <div style={CENTERED}>
+      <Newsletter />
+    </div>
+  </CardStage>
+)
 
-/** How far the surface has grown out of the card (0 at the cut, 1 by ~frame 52). */
-export const expandAt = (frame: number) => progress(frame, 2, 50, ease.camera)
+/** Clears the card's edge by frame 4, lands soft. */
+const GROW = Easing.bezier(0.3, 0, 0.15, 1)
+
+/** How far the surface has grown out of the card (0 at the cut). */
+export const growAt = (frame: number) => progress(frame, 0, 64, GROW)
+
+const RADIUS = 22
 
 export function Canvas({ frame }: { frame: number }) {
   const root = useRef<HTMLDivElement>(null)
   const surface = useRef<HTMLDivElement>(null)
-  const edge = useRef<HTMLDivElement>(null)
-  const t = expandAt(frame)
+  const t = growAt(frame)
 
-  // The surface's edge starts on the card's own edge; measured, since the
-  // card's size comes from the theme.
+  // The surface's edge starts tucked inside the card's own edge — where
+  // Compose's surface vanished. Measured, since the card's size is the theme's.
   useLayoutEffect(() => {
     const el = surface.current
-    const card = root.current?.querySelector<HTMLElement>(
-      "[data-patterns-card]",
-    )
+    const card = root.current?.querySelector<HTMLElement>("[data-compose-card]")
     if (!el || !card) return
     const w = card.offsetWidth
     const h = card.offsetHeight
     const r0 = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 12
-    // Starts tucked just inside the card, where Compose's surface vanished.
     const x = lerp((TILE_W - w) / 2 + 8, 0, t)
     const y = lerp((TILE_H - h) / 2 + 8, 0, t)
-    const clip = `inset(${y}px ${x}px round ${lerp(r0, 22, t)}px)`
-    el.style.clipPath = t >= 1 ? "" : clip
-    if (edge.current) {
-      edge.current.style.inset = `${y}px ${x}px`
-      edge.current.style.borderRadius = `${lerp(r0, 22, t)}px`
-    }
+    el.style.clipPath =
+      t >= 1 ? "" : `inset(${y}px ${x}px round ${lerp(r0, RADIUS, t)}px)`
+    el.style.visibility = t <= 0 ? "hidden" : ""
   })
 
   return (
@@ -132,29 +137,29 @@ export function Canvas({ frame }: { frame: number }) {
         <div
           style={{
             position: "absolute",
-            left: cx - CARD_W / 2,
+            left: cx - MID / 2,
             top: 0,
-            width: CARD_W,
+            width: MID,
             height: TILE_H,
             display: "grid",
             gridTemplateRows: "minmax(0, 1fr) auto minmax(0, 1fr)",
-            justifyItems: "center",
             rowGap: GAP,
           }}
         >
-          <div style={{ alignSelf: "end", width: CARD_W }}>{ABOVE}</div>
-          <div style={{ visibility: "hidden" }}>{CARD}</div>
           <div
             style={{
-              alignSelf: "start",
-              width: CARD_W,
+              alignSelf: "end",
               display: "flex",
               flexDirection: "column",
               gap: GAP,
             }}
           >
-            {BELOW}
+            {ABOVE}
           </div>
+          <div style={{ visibility: "hidden", justifySelf: "center" }}>
+            {SPACER}
+          </div>
+          <div style={{ alignSelf: "start" }}>{BELOW}</div>
         </div>
       </div>
       <div
@@ -168,14 +173,6 @@ export function Canvas({ frame }: { frame: number }) {
       >
         {CARD}
       </div>
-      <div
-        ref={edge}
-        style={{
-          position: "absolute",
-          pointerEvents: "none",
-          boxShadow: `inset 0 0 0 1.5px rgba(0,0,0,${0.08 * t})`,
-        }}
-      />
     </div>
   )
 }

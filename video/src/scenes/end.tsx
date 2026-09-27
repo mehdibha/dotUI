@@ -1,21 +1,25 @@
+import type { ReactNode } from "react"
 import { AbsoluteFill, useCurrentFrame } from "remotion"
 
-import { clamp01, ease, keys, lerp, progress } from "../lib/motion"
+import { clamp01, ease, keys, lerp, progress, punches } from "../lib/motion"
 import { Stage } from "../lib/stage"
-import { BlurWords, HEADLINE, MUTED } from "../lib/type"
+import { WarmIcons } from "../lib/theme"
+import { BlurWords, HEADLINE, TYPE } from "../lib/type"
 import type { Ripple } from "./end/field"
 import { Field, rippleFront } from "./end/field"
-import { Mark, markAt, Wordmark } from "./end/logo"
+import { EndMark, EndWordmark, markAt } from "./end/logo"
 import { CX, CY, T } from "./end/timeline"
 import { coreCharge, Vortex } from "./end/vortex"
+import { cameraAt as exportCamera } from "./export/layout"
 
-/* End — everything collapses into the dot, the dot becomes the mark, the
-   lockup and the line settle into the poster frame. */
+/* End — Export's last frame starts turning on the cut and the whole film
+   pours into the dot; the dot becomes the mark, the wordmark slides out, the
+   line and the address settle into the poster frame. */
 
 const TAGLINE = "The Design System Studio for the Web"
 const SITE = "dotui.org"
-const TAG_Y = 613
-const SITE_Y = 690
+const TAG_Y = 620
+const SITE_Y = 704
 
 function darkDot(frame: number) {
   const p = markAt(frame)
@@ -34,7 +38,27 @@ const IMPACT: Ripple = {
   width: 70,
 }
 
+/** The last dust lands on f58–59: two quick flares, then the hit. */
+function burstAt(frame: number) {
+  if (frame >= T.impact) return 0
+  return T.bursts.reduce(
+    (sum, at, i) =>
+      frame >= at ? sum + (0.6 + 0.4 * i) * Math.exp(-(frame - at) / 2.5) : sum,
+    0,
+  )
+}
+
 const RIPPLES: Ripple[] = [
+  ...T.bursts.map((at) => ({
+    at,
+    x: CX,
+    y: CY,
+    push: 5,
+    glow: 2.4,
+    speed: 34,
+    reach: 700,
+    decay: 8,
+  })),
   IMPACT,
   {
     at: T.punch,
@@ -56,32 +80,61 @@ const RIPPLES: Ripple[] = [
   })),
 ]
 
+/* Export's ground: its grid phase and drift on its last frame, carried
+   across the cut and eased back to centre (a dot on the core) by impact. */
+function exportGrid(n: number) {
+  const f = 360 + n
+  const cam = exportCamera(f)
+  return [
+    -f * 0.35 + cam.x * 0.25 - cam.rotateY * 8,
+    -f * 0.1 + cam.y * 0.25,
+  ] as const
+}
+const wrap = (v: number) => ((((v + 14) % 28) + 28) % 28) - 14
+const GRID_0 = exportGrid(0).map(wrap)
+const GRID_V = [0, 1].map((i) => exportGrid(1)[i]! - exportGrid(0)[i]!)
+
+function gridOffset(frame: number) {
+  const settle = 1 - ease.camera(clamp01(frame / 56))
+  return [
+    (GRID_0[0]! + GRID_V[0]! * frame) * settle,
+    (GRID_0[1]! + GRID_V[1]! * frame) * settle,
+  ] as const
+}
+
 export function End() {
   const frame = useCurrentFrame()
-  const pose = markAt(frame)
+  const burst = burstAt(frame)
+  const mark = markAt(frame)
+  const pose = { ...mark, size: mark.size + 6 * burst }
   const since = frame - T.impact
   const flash = since >= 0 ? Math.exp(-since / 7) : 0
   let glow: number
   if (frame < T.impact) {
     const charge = coreCharge(frame)
-    glow = 0.25 + 0.4 * charge.landed + 0.35 * charge.flare
+    glow = 0.35 + 0.4 * charge.landed + 0.4 * charge.flare
   } else {
     glow = lerp(0.2, 1.2, flash)
   }
+  // The collapse leans in on the cut and on the next beat.
+  const pull =
+    1 + punches(frame, [0, 30]) + 0.05 * ease.in(clamp01(frame / T.impact))
   const push = keys(
     frame,
     [
       [T.word, 1],
-      [359, 1.025],
+      [359, 1.03],
     ],
     ease.soft,
   )
 
   return (
     <Stage grid={false}>
+      <WarmIcons />
       <Field
         frame={frame}
         ripples={RIPPLES}
+        offset={gridOffset(frame)}
         zoom={keys(
           frame,
           [
@@ -91,25 +144,35 @@ export function End() {
           ease.linear,
         )}
       />
+      {frame < T.impact ? (
+        <AbsoluteFill
+          style={{
+            transform: `scale(${pull.toFixed(4)})`,
+            transformOrigin: `${CX}px ${CY}px`,
+          }}
+        >
+          <Vortex frame={frame} />
+        </AbsoluteFill>
+      ) : null}
       <Glow
         x={pose.cx}
         y={pose.y}
         radius={Math.max(220, pose.size * 3.4)}
         alpha={glow}
       />
-      <AbsoluteFill>
-        <Vortex frame={frame} />
-      </AbsoluteFill>
+      {burst > 0.01 ? (
+        <Glow x={CX} y={CY} radius={170} alpha={1.5 * burst} />
+      ) : null}
       {since >= 0 && since < 70 ? <Shockwave since={since} /> : null}
       {flash > 0.01 ? <Flare flash={flash} since={since} /> : null}
       <AbsoluteFill
         style={{
-          transform: `scale(${push})`,
-          transformOrigin: `${CX}px 520px`,
+          transform: `scale(${push.toFixed(4)})`,
+          transformOrigin: `${CX}px ${CY - 20}px`,
         }}
       >
-        <Wordmark pose={pose} frame={frame} />
-        <Mark pose={pose} />
+        <EndWordmark pose={pose} frame={frame} />
+        <EndMark pose={pose} />
         <Line y={TAG_Y}>
           <BlurWords
             text={TAGLINE}
@@ -117,9 +180,9 @@ export function End() {
             stagger={4}
             style={{
               ...HEADLINE,
-              fontSize: 40,
+              fontSize: TYPE.tagline,
               letterSpacing: "-0.025em",
-              color: MUTED,
+              color: "rgba(250,250,250,0.6)",
             }}
           />
         </Line>
@@ -131,7 +194,7 @@ export function End() {
   )
 }
 
-function Line({ y, children }: { y: number; children: React.ReactNode }) {
+function Line({ y, children }: { y: number; children: ReactNode }) {
   return (
     <div
       style={{
@@ -157,7 +220,7 @@ function Site({ frame }: { frame: number }) {
       style={{
         position: "relative",
         display: "inline-block",
-        padding: "11px 24px 12px",
+        padding: "13px 30px 14px",
       }}
     >
       <span
@@ -165,8 +228,8 @@ function Site({ frame }: { frame: number }) {
           position: "absolute",
           inset: 0,
           borderRadius: 999,
-          border: "1px solid rgba(255,255,255,0.16)",
-          background: "rgba(255,255,255,0.035)",
+          border: "1px solid rgba(255,255,255,0.18)",
+          background: "rgba(255,255,255,0.04)",
           opacity: t,
           transform: `scale(${lerp(0.92, 1, t)})`,
         }}
@@ -177,17 +240,17 @@ function Site({ frame }: { frame: number }) {
         style={{
           ...HEADLINE,
           position: "relative",
-          fontSize: 26,
+          fontSize: 32,
           fontWeight: 500,
-          letterSpacing: "-0.01em",
-          color: "rgba(250,250,250,0.92)",
+          letterSpacing: "-0.015em",
+          color: "rgba(250,250,250,0.94)",
         }}
       />
     </span>
   )
 }
 
-/** A soft, roughly Gaussian pool of light. */
+/** A soft, roughly Gaussian pool of light, screened over what's beneath. */
 function Glow({
   x,
   y,
@@ -208,6 +271,7 @@ function Glow({
         top: y - radius,
         width: radius * 2,
         height: radius * 2,
+        mixBlendMode: "screen",
         background: `radial-gradient(circle closest-side, ${a(0.42)} 0%, ${a(0.24)} 7%, ${a(0.11)} 18%, ${a(0.045)} 34%, ${a(0.015)} 56%, ${a(0.004)} 78%, transparent 100%)`,
       }}
     />

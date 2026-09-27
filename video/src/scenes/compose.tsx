@@ -1,141 +1,182 @@
 import { useLayoutEffect, useRef } from "react"
 import { AbsoluteFill, Easing, useCurrentFrame } from "remotion"
 
-import { clamp01, ease, keys, lerp, progress, springAt } from "../lib/motion"
+import {
+  clamp01,
+  ease,
+  keys,
+  lerp,
+  progress,
+  punches,
+  springAt,
+} from "../lib/motion"
 import { Stage } from "../lib/stage"
 import { Theme } from "../lib/theme"
-import { BlurWords, HEADLINE } from "../lib/type"
+import { BlurWords, HEADLINE, TOP_ANCHOR, TYPE } from "../lib/type"
 import { A11yRow, announce } from "./compose/a11y"
 import { codeAt, Editor, editorHeight } from "./compose/editor"
 import { applyFlip, boxIn } from "./compose/flip"
-import { CODES, Newsletter } from "./compose/steps"
+import {
+  CardStage,
+  CENTERED,
+  CODES,
+  HANDOFF_SCALE,
+  LAST_STEP,
+  Newsletter,
+} from "./compose/steps"
+
+export { HANDOFF_SCALE } from "./compose/steps"
 
 /* 5 · Compose — 4 bars. Source on the left builds a newsletter field one
-   composition at a time while the live component on the right morphs to
-   match; then the code steps away, the card takes the center, and the
-   keyboard walks it: Tab to the field, Tab to the button, each announced. */
+   composition at a time; on each beat the live component on the right snaps
+   into the new shape. Then the code folds into the card, the card takes the
+   centre, and the keyboard walks it: Tab to the field, Tab to the button,
+   Enter — each announced. It ends on the card alone (exactly <HandoffCard />),
+   pulling back into Patterns. */
 
-// Beats: 0 Input · 2 Label · 3 Description · 5 InputGroup · 7 Button · 8 Card.
-const STEP_AT = [-14, 60, 90, 150, 210, 240] as const
-const CODE_MOVE = 40
-const CODE_SIZES = [26, 25, 24, 23, 22, 20] as const
-/** The preview follows the code by a few frames: you write, it renders. */
-const LAG = 16
-const MOVE_SPRING = { damping: 19, stiffness: 150, mass: 0.9 }
-/** Component zoom per step: big while it's small, easing out as it grows. */
-const PREVIEW_SCALES = [2.05, 2.05, 2.0, 1.9, 1.85, 1.72] as const
+// The component lands on these beats; the code types in ahead of each, its
+// new lines resolving just as the beat hits.
+const STEP_BEATS = [-60, 30, 60, 120, 180, 240] as const
+const CODE_MOVE = [30, 30, 30, 40, 40, 44] as const
+const CODE_AT = STEP_BEATS.map((b, i) => b - CODE_MOVE[i]! + 6)
+const CODE_SIZES = [34, 34, 32, 29, 29, 27] as const
+/** The line the caret types along in each step (Input, Label, Description,
+    MailIcon, Button, CardTitle). */
+const CARETS = [0, 1, 3, 4, 8, 2] as const
+const MOVE_SPRING = { damping: 18, stiffness: 170, mass: 0.8 }
 
-const W = 1920
-const CODE_W = 800
-const PREVIEW_W = 760
+const EDITOR_W = 980
 const GAP = 40
-const LEFT = (W - CODE_W - GAP - PREVIEW_W) / 2
-const MIN_H = 470
+const CANVAS_PAD = 24
+const PREVIEW_W = (320 + CANVAS_PAD * 2) * HANDOFF_SCALE
+const LEFT = (1920 - EDITOR_W - GAP - PREVIEW_W) / 2
+const EDITOR_X = LEFT + EDITOR_W / 2
+const PREVIEW_X = LEFT + EDITOR_W + GAP + PREVIEW_W / 2
 
 const HANDOFF = 300
 const FOCUS_FIELD = 360
 const FOCUS_BUTTON = 390
 const PRESS = 420
 const FOCUS_OFF = 450
+const LAST = 479
+const END_SLOPE = 0.35
+/** Card zoom over the handoff scale while the keyboard walks it (2.7×). */
+const A11Y_ZOOM = 1.35
+const A11Y_Y = 574
 /** Frames the ring takes to lock on, and to glide field → button. */
 const LOCK = 9
 const GLIDE = 12
 const GLIDE_CURVE = Easing.bezier(0.22, 1, 0.36, 1)
 
-/** Hand-off: on the last frame the card sits alone at (960, 540), drawn at
-    exactly this many screen px per component px (world drift included). */
-export const HANDOFF_SCALE = 2
-const LAST = 479
-const DRIFT = 0.018
-const FINAL_SCALE = HANDOFF_SCALE / (1 + DRIFT)
+/** Geist's cap line sits this far below the top of a statement's line box. */
+const CAP_INSET = 0.155
 
 export function Compose() {
   const frame = useCurrentFrame()
 
-  const code = codeAt(frame, CODES, STEP_AT, CODE_SIZES, CODE_MOVE)
-  const paneH = Math.max(MIN_H, editorHeight(code.lines, code.fontSize))
+  // Frame 0 is close and mid-swing: the camera eases back and squares up,
+  // opening room for the title; flat (and crisp) from f96.
+  const swing = progress(frame, -6, 102, ease.out)
+  const rotY = lerp(-10, 0, swing)
+  const rotX = lerp(4, 0, swing)
+  const push = lerp(1.16, 1, swing)
+  const flat = swing >= 1
 
-  // Panes sit low under the first line, rise to center once it leaves.
+  const code = codeAt(frame, CODES, CODE_AT, CODE_SIZES, CODE_MOVE)
+  const codeH = editorHeight(code.lines, code.fontSize)
+  // Under the title the panes sit low; they rise as it leaves.
   const paneY = keys(frame, [
-    [0, 604],
-    [150, 604],
-    [205, 540],
+    [0, 648],
+    [112, 648],
+    [172, 540],
   ])
-  const arrive = progress(frame, -6, 36, ease.out)
-  const drift = frame / LAST
+  const truck = lerp(30, -30, clamp01(frame / HANDOFF))
+  // Once flat, a slow push keeps the two-shot breathing; it hands its scale
+  // back while the card takes the centre.
+  const world = keys(frame, [
+    [96, 1],
+    [HANDOFF, 1.045],
+    [HANDOFF + 60, 1],
+  ])
 
-  // Bar 3: the code steps away and the card takes the center.
-  const handoff = progress(frame, HANDOFF, 64, ease.camera)
-  const codeOut = progress(frame, HANDOFF + 6, 24, ease.in)
-  const settle = progress(frame, FOCUS_OFF, 29, ease.inOut)
-  const previewCx = lerp(LEFT + CODE_W + GAP + PREVIEW_W / 2, 960, handoff)
-  const previewCy = lerp(lerp(paneY, 578, handoff), 540, settle)
-
-  // The camera swings in on the cut, then drifts across and squares up.
-  const swing = progress(frame, -6, 70, ease.out)
-  const camY =
-    lerp(-10, -3.5, swing) +
-    keys(frame, [
-      [0, 0],
-      [300, 5],
-      [370, 3.5],
-    ])
-  const camX = lerp(7, 1.5, swing) * (1 - handoff)
+  // Bar 3: the card sets off for the centre and grows; on the beat the source
+  // folds into it, the code absorbed by the component it wrote.
+  const handoff = progress(frame, HANDOFF - 10, 70, ease.camera)
+  const codeOut = progress(frame, HANDOFF, 24, ease.in)
+  // Bar 4 ends pulling back to the hand-off: from rest, still moving on the
+  // last frame (Hermite, end slope END_SLOPE) so the cut carries the move.
+  const u = clamp01((frame - FOCUS_OFF) / (LAST - FOCUS_OFF))
+  const back = u * u * (3 - 2 * u) + (u * u * u - u * u) * END_SLOPE
+  const a11yZoom = lerp(
+    A11Y_ZOOM,
+    A11Y_ZOOM + 0.035,
+    progress(frame, 362, 88, ease.soft),
+  )
+  const cardZoom =
+    frame < FOCUS_OFF ? lerp(1, a11yZoom, handoff) : lerp(a11yZoom, 1, back)
+  const previewX = lerp(PREVIEW_X + truck, 960, handoff)
+  const previewY =
+    frame < FOCUS_OFF ? lerp(paneY, A11Y_Y, handoff) : lerp(A11Y_Y, 540, back)
+  const beat =
+    punches(frame, [...STEP_BEATS.slice(1), FOCUS_FIELD, FOCUS_BUTTON, PRESS]) *
+    (1 - u)
 
   return (
     <AbsoluteFill>
-      {/* One full grid cell of pan, so the last frame's grid matches an unpanned one. */}
-      <Stage gridOffset={[-drift * 28, 0]} />
+      <Stage
+        gridOffset={[(previewX - 960) * 0.12, (previewY - 540) * 0.3]}
+        gridScale={1 + (cardZoom - 1) * 0.5}
+      />
       <AbsoluteFill
         style={{
-          perspective: 2600,
-          transform: `scale(${1 + drift * DRIFT})`,
+          perspective: flat ? undefined : 2600,
         }}
       >
         <AbsoluteFill
           style={{
-            transform: `rotateY(${camY}deg) rotateX(${camX}deg)`,
-            transformStyle: "preserve-3d",
+            transformStyle: flat ? undefined : "preserve-3d",
+            transformOrigin: `960px ${paneY}px`,
+            transform: !flat
+              ? `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(${push})`
+              : world !== 1
+                ? `scale(${world})`
+                : undefined,
           }}
         >
           {codeOut < 1 ? (
             <div
               style={{
                 position: "absolute",
-                left: LEFT,
-                top: paneY - paneH / 2,
-                width: CODE_W,
-                height: paneH,
+                left: EDITOR_X - EDITOR_W / 2,
+                top: paneY - codeH / 2,
+                width: EDITOR_W,
                 opacity: 1 - codeOut,
-                filter: codeOut > 0.01 ? `blur(${codeOut * 14}px)` : undefined,
-                transform: `translate(${-codeOut * 160}px, ${(1 - arrive) * 28}px) scale(${lerp(0.965, 1, arrive) - codeOut * 0.04})`,
+                filter: codeOut > 0.01 ? `blur(${codeOut * 16}px)` : undefined,
+                transformOrigin: "100% 50%",
+                transform: `translateX(${truck * 0.55 + codeOut * 420}px) scale(${1 - codeOut * 0.38})`,
               }}
             >
               <Editor
                 codes={CODES}
-                at={STEP_AT}
-                duration={CODE_MOVE}
+                at={CODE_AT}
+                durations={CODE_MOVE}
                 frame={frame}
                 sizes={CODE_SIZES}
-                style={{ height: "100%" }}
+                carets={CARETS}
               />
             </div>
           ) : null}
-
           <Preview
             frame={frame}
-            cx={previewCx}
-            cy={previewCy}
-            width={PREVIEW_W}
-            height={paneH}
-            handoff={handoff}
-            arrive={arrive}
+            x={previewX}
+            y={previewY}
+            scale={cardZoom * (1 + beat)}
           />
         </AbsoluteFill>
       </AbsoluteFill>
 
-      <Title text="Built to compose." start={24} end={144} />
-      <Title text="Accessible by default." start={330} end={FOCUS_OFF} />
+      <Title text="Built to compose." start={4} end={112} />
+      <Title text="Accessible by default." start={318} end={FOCUS_OFF} />
     </AbsoluteFill>
   )
 }
@@ -155,10 +196,10 @@ function Title({
         position: "absolute",
         left: 0,
         right: 0,
-        top: 132,
+        top: TOP_ANCHOR - TYPE.statement * CAP_INSET,
         textAlign: "center",
         ...HEADLINE,
-        fontSize: 96,
+        fontSize: TYPE.statement,
       }}
     >
       <BlurWords text={text} start={start} end={end} stagger={4} />
@@ -169,46 +210,35 @@ function Title({
 /** Which step the preview shows at `frame`, and how far its morph has got. */
 function previewAt(frame: number) {
   let step = 0
-  for (let k = 0; k < STEP_AT.length; k++) {
-    if (frame >= STEP_AT[k]! + LAG) step = k
+  for (let k = 0; k < STEP_BEATS.length; k++) {
+    if (frame >= STEP_BEATS[k]!) step = k
   }
-  const start = STEP_AT[step]! + LAG
+  const start = STEP_BEATS[step]!
   const move = springAt(frame, start, MOVE_SPRING)
-  const enter = progress(frame, start + 8, 24, ease.out)
-  const done = frame - start > 54
-  const scale = lerp(
-    PREVIEW_SCALES[Math.max(0, step - 1)]!,
-    PREVIEW_SCALES[step]!,
-    move,
-  )
-  return { step, move, enter, done, scale }
+  const enter = progress(frame, start + 4, 22, ease.out)
+  const done = frame - start > 50
+  return { step, start, move, enter, done }
 }
 
 function Preview({
   frame,
-  cx,
-  cy,
-  width,
-  height,
-  handoff,
-  arrive,
+  x,
+  y,
+  scale,
 }: {
   frame: number
-  cx: number
-  cy: number
-  width: number
-  height: number
-  handoff: number
-  arrive: number
+  x: number
+  y: number
+  /** On-screen scale over HANDOFF_SCALE. */
+  scale: number
 }) {
   const live = useRef<HTMLDivElement>(null)
   const ghost = useRef<HTMLDivElement>(null)
   const ring = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLDivElement>(null)
+  const row = useRef<HTMLDivElement>(null)
   const said = [useRef<HTMLSpanElement>(null), useRef<HTMLSpanElement>(null)]
   const p = previewAt(frame)
-  const scale = lerp(p.scale, FINAL_SCALE, handoff)
-  const collapse = progress(frame, HANDOFF, 52, ease.camera)
 
   const focus =
     frame >= FOCUS_BUTTON + GLIDE && frame < FOCUS_OFF
@@ -216,7 +246,7 @@ function Preview({
       : frame >= FOCUS_FIELD + LOCK && frame < FOCUS_BUTTON
         ? "input"
         : undefined
-  const pressed = frame >= PRESS && frame < PRESS + 9
+  const pressed = frame >= PRESS && frame < PRESS + 10
 
   useLayoutEffect(() => {
     const root = live.current
@@ -236,85 +266,46 @@ function Preview({
     if (button && said[1]!.current)
       said[1]!.current.textContent = announce(button)
     placeRing(root, ring.current, frame)
-    shrinkCanvas(root, canvas.current, collapse, scale, width, height)
+    fitCanvas(root, ghost.current, canvas.current, p)
+    const card = root.querySelector<HTMLElement>("[data-compose-card]")
+    if (row.current && card) {
+      const half = (card.offsetHeight / 2) * HANDOFF_SCALE * scale
+      row.current.style.top = `${y + half + 46}px`
+    }
   })
 
-  const cardH = 164 * scale
+  const transform =
+    Math.abs(x - 960) < 0.001 && Math.abs(y - 540) < 0.001 && scale === 1
+      ? undefined
+      : `translate(${x - 960}px, ${y - 540}px) scale(${scale})`
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        left: cx - width / 2,
-        top: cy - height / 2,
-        width,
-        height,
-        transform: `translateY(${(1 - arrive) * 28}px) scale(${lerp(0.965, 1, arrive)})`,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: "-30% -25%",
-          opacity: 1 - collapse,
-          background:
-            "radial-gradient(closest-side, rgba(255,255,255,0.075), rgba(255,255,255,0.02) 55%, transparent)",
-          pointerEvents: "none",
-        }}
-      />
+    <>
       <Theme mode="light">
-        <div
-          ref={canvas}
-          className="bg-bg"
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: 22,
-            boxShadow:
-              "0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px -30px rgba(0,0,0,0.9)",
-            backgroundImage:
-              "radial-gradient(rgba(0,0,0,0.07) 1px, transparent 1.2px), radial-gradient(ellipse 80% 75% at 50% 45%, transparent 55%, rgba(0,0,0,0.045) 100%)",
-            backgroundSize: "22px 22px, 100% 100%",
-            backgroundPosition: "center, center",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            transform: `scale(${scale})`,
-          }}
+        <AbsoluteFill
+          style={{ alignItems: "center", justifyContent: "center", transform }}
         >
-          {!p.done ? (
+          <CardStage zoom={HANDOFF_SCALE}>
             <div
-              ref={ghost}
-              aria-hidden
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                visibility: "hidden",
-              }}
-            >
-              {p.step > 0 ? <Newsletter step={p.step - 1} /> : null}
-            </div>
-          ) : null}
-          <div
-            ref={live}
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Newsletter
-              step={p.step}
-              focus={focus === "button" ? "button" : undefined}
+              ref={canvas}
+              className="bg-card"
+              style={{ position: "absolute", display: "none" }}
             />
+            {!p.done && p.step > 0 ? (
+              <div
+                ref={ghost}
+                aria-hidden
+                style={{ ...CENTERED, visibility: "hidden" }}
+              >
+                <Newsletter step={p.step - 1} />
+              </div>
+            ) : null}
+            <div ref={live} style={CENTERED}>
+              <Newsletter
+                step={p.step}
+                focus={focus === "button" ? "button" : undefined}
+              />
+            </div>
             <div
               ref={ring}
               style={{
@@ -335,10 +326,11 @@ function Preview({
                 />
               ))}
             </div>
-          </div>
-        </div>
+          </CardStage>
+        </AbsoluteFill>
       </Theme>
       <A11yRow
+        ref={row}
         frame={frame}
         keys={[
           [FOCUS_FIELD, "Tab"],
@@ -346,45 +338,67 @@ function Preview({
           [PRESS, "Enter"],
         ]}
         lines={[FOCUS_FIELD, FOCUS_BUTTON]}
-        from={FOCUS_FIELD - 12}
+        from={FOCUS_FIELD - 14}
         to={FOCUS_OFF}
         refs={said}
-        style={{
-          left: "50%",
-          top: height / 2 + cardH / 2 + 56,
-          transform: "translateX(-50%)",
-        }}
       />
-    </div>
+    </>
   )
 }
 
-/* The preview surface tightens onto the card as the code leaves, so the card
-   is simply what remains — no fade through grey. */
-function shrinkCanvas(
-  root: HTMLElement,
+/* The preview's light canvas (the card's own surface colour) hugs the
+   component through each morph; when the card wraps, it tightens exactly onto
+   the card's edge, so the card's surface simply takes over. */
+function fitCanvas(
+  live: HTMLElement,
+  ghost: HTMLElement | null,
   canvas: HTMLDivElement | null,
-  t: number,
-  scale: number,
-  width: number,
-  height: number,
+  p: ReturnType<typeof previewAt>,
 ) {
   if (!canvas) return
-  canvas.style.inset = "0px"
-  canvas.style.opacity = ""
-  canvas.style.borderRadius = "22px"
-  if (t <= 0) return
-  const card = root.querySelector<HTMLElement>("[data-compose-card]")
-  if (!card) return
-  const w = card.offsetWidth * scale
-  const h = card.offsetHeight * scale
-  // Aim a little inside the card so the surface tucks under its edge.
-  const x = lerp(0, (width - w) / 2 + 8, t)
-  const y = lerp(0, (height - h) / 2 + 8, t)
-  const radius = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 12
-  canvas.style.inset = `${y}px ${x}px`
-  canvas.style.borderRadius = `${lerp(22, radius * scale, t)}px`
-  if (t >= 1) canvas.style.opacity = "0"
+  const now = live.firstElementChild as HTMLElement | null
+  const toCard = p.step === LAST_STEP
+  if (!now || (toCard && p.done)) {
+    canvas.style.display = "none"
+    return
+  }
+  const pad = toCard ? 0 : CANVAS_PAD
+  const b = boxIn(now, live)
+  let box = { x: b.x - pad, y: b.y - pad, w: b.w + pad * 2, h: b.h + pad * 2 }
+  const was = ghost?.firstElementChild as HTMLElement | null
+  if (was && !p.done) {
+    const g = boxIn(was, ghost!)
+    const from = {
+      x: g.x - CANVAS_PAD,
+      y: g.y - CANVAS_PAD,
+      w: g.w + CANVAS_PAD * 2,
+      h: g.h + CANVAS_PAD * 2,
+    }
+    box = {
+      x: lerp(from.x, box.x, p.move),
+      y: lerp(from.y, box.y, p.move),
+      w: lerp(from.w, box.w, p.move),
+      h: lerp(from.h, box.h, p.move),
+    }
+  }
+  const cardRadius = parseFloat(getComputedStyle(now).borderTopLeftRadius)
+  const radius = toCard ? lerp(14, cardRadius || 12, clamp01(p.move)) : 14
+  const shadow = toCard ? 1 - clamp01(p.move) : 1
+  if (toCard) {
+    // The card is the canvas's shape until they coincide; then its edge shows.
+    now.style.clipPath = `inset(${box.y - b.y}px ${b.x + b.w - box.x - box.w}px ${b.y + b.h - box.y - box.h}px ${box.x - b.x}px round ${radius}px)`
+    const edge = clamp01((p.move - 0.55) / 0.45) * 100
+    now.style.borderColor = `color-mix(in oklab, var(--card-border) ${edge}%, transparent)`
+  }
+  Object.assign(canvas.style, {
+    display: "block",
+    left: `${box.x}px`,
+    top: `${box.y}px`,
+    width: `${box.w}px`,
+    height: `${box.h}px`,
+    borderRadius: `${radius}px`,
+    boxShadow: `0 30px 70px -20px rgba(0,0,0,${0.85 * shadow})`,
+  })
 }
 
 /* The keyboard ring in flight: it locks onto the field on one beat and glides

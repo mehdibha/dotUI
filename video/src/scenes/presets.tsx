@@ -1,232 +1,137 @@
-import type { CSSProperties } from "react"
 import { AbsoluteFill, Easing, useCurrentFrame } from "remotion"
 
-import { ease, keys, progress } from "../lib/motion"
+import { clamp01, ease, progress } from "../lib/motion"
 import { INK } from "../lib/stage"
 import { Theme } from "../lib/theme"
 import { BEAT } from "../lib/timing"
-import { BlurWords, HEADLINE } from "../lib/type"
-import { Board, BOARD_WIDTH } from "./presets/board"
-import type { View } from "./presets/board"
+import { BlurWords, HEADLINE, TYPE } from "../lib/type"
+import { Board, BOARD_WIDTH, useCardHeights } from "./presets/board"
+import type { Cam } from "./presets/camera"
+import { cameraAt, PERSPECTIVE, viewOf } from "./presets/camera"
 import { SLOTS } from "./presets/slots"
 import type { Wipe } from "./presets/slots"
 import { clipFor, WipeLine, WipeShadow } from "./presets/wipe"
 
-/* 4 · Presets — one board of real cards, a new look on every beat. The
-   camera glides down the board from one headline band to the next; each
-   swap is a blade or a circle revealing the next theme over the last. */
+/* 3 · Presets — one board of real cards, a new preset on every beat. Bar 1
+   glides over the board under "Start from a preset."; bars 2–3 push in
+   until three or four cards fill the frame, and the last beat lands on
+   Origin, dark, on the canvas Axes opens on. */
 
 const WIPE = 12
 const wipeCurve = Easing.bezier(0.25, 1, 0.5, 1)
 
-// Plane space (px): headline A at y 0, headline B at BAND_B.
-const BAND_B = 1200
-const BAND_H = 560
-const HEADLINE_SIZE = 118
+/* Chrome rasterizes a 3D layer at 1× and upscales it, so the zoom is layout
+   (CSS zoom) and the transform only scales down — with headroom for the
+   perspective, which enlarges the near edge of the tilted board. */
+const HEADROOM = 1.08
 
-type Cam = {
-  focus: number
-  x: number
-  scale: number
-  rotateX: number
-  rotateZ: number
+function Plane({ cam, heights }: { cam: Cam; heights: readonly number[] }) {
+  const zoom = cam.scale * HEADROOM
+  return (
+    <AbsoluteFill style={{ perspective: PERSPECTIVE }}>
+      <AbsoluteFill
+        style={{
+          transform: `rotateX(${cam.rx}deg) rotateY(${cam.ry}deg) rotateZ(${cam.rz}deg) scale(${1 / HEADROOM})`,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: 960 - cam.fx * zoom,
+            top: 540 - cam.fy * zoom,
+          }}
+        >
+          <div style={{ position: "relative", width: BOARD_WIDTH, zoom }}>
+            <Board heights={heights} view={viewOf(cam)} />
+          </div>
+        </div>
+      </AbsoluteFill>
+    </AbsoluteFill>
+  )
 }
 
-function cameraAt(frame: number): Cam {
-  const drift = 0.12 * BAND_B * (frame / 359)
-  const glide = 0.88 * BAND_B * progress(frame, 60, 250, ease.camera)
-  // Camera punch: lands two frames after the beat, then settles.
-  const d = (frame % BEAT) + 1
-  const punch = 0.042 * (1 - Math.exp(-d / 1.2)) * Math.exp(-d / 9)
-  return {
-    focus: drift + glide,
-    x: keys(
-      frame,
-      [
-        [0, 70],
-        [359, -70],
-      ],
-      ease.linear,
-    ),
-    scale: 1.18 * (1 + punch),
-    rotateX: keys(
-      frame,
-      [
-        [0, 16],
-        [180, 9],
-        [359, 14],
-      ],
-      ease.inOut,
-    ),
-    rotateZ: keys(
-      frame,
-      [
-        [0, 0],
-        [60, 0],
-        [170, -1.8],
-        [280, 0],
-      ],
-      ease.inOut,
-    ),
-  }
-}
-
-/* What the camera sees, in plane px: at the steepest tilt the frame's top
-   edge lands near −510 and its bottom near +450; padded. */
-function viewOf(cam: Cam): View {
-  const cx = BOARD_WIDTH / 2 - cam.x
-  return {
-    x0: cx - 920,
-    x1: cx + 920,
-    y0: cam.focus - 660,
-    y1: cam.focus + 600,
-  }
-}
-
-/* A clean strip across the board — the page's own background, feathered
-   into the cards — so the line reads on any theme, in the theme's ink. It
-   opens before its line arrives and closes after it leaves. */
-function Band({
-  x,
-  y,
-  open,
-  text,
-  start,
-  end,
-  wordStyle,
-}: {
-  x: number
-  y: number
-  open: number
-  text: string
-  start: number
-  end?: number
-  wordStyle?: (index: number) => CSSProperties | undefined
-}) {
+/** "Start from a preset." on a clean band of the look's own page, in its
+ *  own ink — so each wipe re-inks the line with the board. */
+function Title({ frame }: { frame: number }) {
+  const open =
+    progress(frame, 0, 20, ease.out) * (1 - progress(frame, 98, 16, ease.in))
   if (open <= 0) return null
   return (
     <>
-      <div
-        className="absolute"
+      <AbsoluteFill
         style={{
-          zIndex: 1,
-          left: -600,
-          width: BOARD_WIDTH + 1200,
-          top: y - BAND_H / 2,
-          height: BAND_H,
+          top: 540 - 260,
+          height: 520,
           transform: `scaleY(${open})`,
           background:
-            "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-bg) 70%, transparent) 12%, var(--color-bg) 22%, var(--color-bg) 78%, color-mix(in oklab, var(--color-bg) 70%, transparent) 88%, transparent)",
+            "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-bg) 75%, transparent) 16%, var(--color-bg) 30%, var(--color-bg) 70%, color-mix(in oklab, var(--color-bg) 75%, transparent) 84%, transparent)",
         }}
       />
-      <div
-        className="absolute flex items-center justify-center text-fg"
-        style={{
-          zIndex: 1,
-          left: x,
-          width: BOARD_WIDTH,
-          top: y - 100,
-          height: 200,
-        }}
-      >
-        <div style={{ ...HEADLINE, color: undefined, fontSize: HEADLINE_SIZE }}>
+      <AbsoluteFill className="items-center justify-center text-fg">
+        <div
+          style={{
+            ...HEADLINE,
+            color: undefined,
+            fontSize: TYPE.statement,
+            paddingBottom: 12,
+          }}
+        >
           <BlurWords
-            text={text}
-            start={start}
-            end={end}
+            text="Start from a preset."
+            start={3}
+            end={98}
             stagger={4}
-            duration={24}
-            wordStyle={wordStyle}
+            wordStyle={(i) =>
+              i >= 2 ? { color: "var(--color-fg-muted)" } : undefined
+            }
           />
         </div>
-      </div>
+      </AbsoluteFill>
     </>
   )
 }
 
-function Plane({
-  slot,
-  cam,
-  frame,
-}: {
-  slot: number
-  cam: Cam
-  frame: number
-}) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 960 - BOARD_WIDTH / 2 + cam.x,
-        top: 540,
-        width: BOARD_WIDTH,
-        transform: `translateY(${-cam.focus}px)`,
-      }}
-    >
-      <Board state={SLOTS[slot]!.state} view={viewOf(cam)} />
-      <Band
-        y={0}
-        x={-cam.x}
-        open={
-          progress(frame, 0, 22, ease.out) *
-          (1 - progress(frame, 94, 28, ease.inOut))
-        }
-        text="Start from a preset."
-        start={5}
-        end={88}
-        wordStyle={(i) =>
-          i >= 2 ? { color: "var(--color-fg-muted)" } : undefined
-        }
-      />
-      <Band
-        y={BAND_B}
-        x={-cam.x}
-        open={progress(frame, 214, 36, ease.inOut)}
-        text="Make it yours."
-        start={244}
-        wordStyle={(i) =>
-          i === 2 ? { color: "var(--color-fg-accent)" } : undefined
-        }
-      />
-    </div>
-  )
-}
-
-/** One look of the board. The incoming look of a wipe also carries the
- *  front: its shadow under it, its brand hairline over it. */
-function Layer({
+function Look({
   slot,
   cam,
   frame,
   wipe,
+  over,
 }: {
   slot: number
   cam: Cam
   frame: number
   wipe?: { wipe: Wipe; t: number }
+  over?: "light" | "dark"
 }) {
   const { state, mode } = SLOTS[slot]!
+  const [heights, measure] = useCardHeights(state)
+  if (!heights) return measure
   return (
-    <Theme state={state} mode={mode}>
+    <>
       {wipe ? <WipeShadow {...wipe} /> : null}
       <AbsoluteFill
         className="bg-bg"
         style={{ clipPath: wipe ? clipFor(wipe.wipe, wipe.t) : undefined }}
       >
-        <AbsoluteFill style={{ perspective: 2600 }}>
+        <Plane cam={cam} heights={heights} />
+        {/* Atmosphere: the far edge of the tilted board sinks into the page. */}
+        <AbsoluteFill
+          className="bg-linear-to-b from-bg via-transparent via-22% to-transparent"
+          style={{ opacity: clamp01((cam.rx - 6) / 12) }}
+        />
+        {mode === "dark" ? (
           <AbsoluteFill
             style={{
-              transform: `rotateX(${cam.rotateX}deg) rotateZ(${cam.rotateZ}deg) scale(${cam.scale})`,
+              background:
+                "radial-gradient(ellipse 90% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.5) 100%)",
             }}
-          >
-            <Plane slot={slot} cam={cam} frame={frame} />
-          </AbsoluteFill>
-        </AbsoluteFill>
-        {/* Atmosphere: the far edge of the tilted board sinks into the page. */}
-        <AbsoluteFill className="bg-linear-to-b from-bg via-transparent via-22% to-transparent" />
+          />
+        ) : null}
+        <Title frame={frame} />
       </AbsoluteFill>
-      {wipe ? <WipeLine {...wipe} /> : null}
-    </Theme>
+      {wipe && over ? <WipeLine {...wipe} over={over} /> : null}
+    </>
   )
 }
 
@@ -242,13 +147,15 @@ export function Presets() {
   return (
     <AbsoluteFill style={{ background: INK }}>
       {layers.map((slot, i) => (
-        <Layer
-          key={slot}
-          slot={slot}
-          cam={cam}
-          frame={frame}
-          wipe={i === 1 ? { wipe: SLOTS[slot]!.wipe, t } : undefined}
-        />
+        <Theme key={slot} state={SLOTS[slot]!.state} mode={SLOTS[slot]!.mode}>
+          <Look
+            slot={slot}
+            cam={cam}
+            frame={frame}
+            wipe={i === 1 ? { wipe: SLOTS[slot]!.wipe, t } : undefined}
+            over={i === 1 ? SLOTS[slot - 1]!.mode : undefined}
+          />
+        </Theme>
       ))}
     </AbsoluteFill>
   )

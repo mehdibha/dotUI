@@ -1,10 +1,16 @@
 import {
   BellIcon,
   CheckIcon,
+  CircleCheckIcon,
+  CircleDashedIcon,
+  CreditCardIcon,
+  DownloadIcon,
+  GitBranchIcon,
   MailIcon,
   PlusIcon,
   SparklesIcon,
 } from "@/registry/icons"
+import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
@@ -66,7 +72,7 @@ export function SignIn() {
             <InputGroupAddon>
               <MailIcon />
             </InputGroupAddon>
-            <Input defaultValue="ada@acme.dev" />
+            <Input defaultValue="maya@acme.dev" />
           </InputGroup>
         </TextField>
         <TextField type="password">
@@ -88,9 +94,9 @@ export function SignIn() {
 }
 
 const PEOPLE = [
-  { name: "Ada Lovelace", email: "ada@acme.dev", role: "Owner" },
-  { name: "Grace Hopper", email: "grace@acme.dev", role: "Admin" },
-  { name: "Alan Turing", email: "alan@acme.dev", role: "Member" },
+  { name: "Maya Chen", email: "maya@acme.dev", role: "Owner" },
+  { name: "Leo Park", email: "leo@acme.dev", role: "Admin" },
+  { name: "Sam Ortiz", email: "sam@acme.dev", role: "Member" },
 ]
 
 export function Team() {
@@ -381,6 +387,151 @@ export function Shipping() {
             ))}
           </FieldGroup>
         </RadioGroup>
+      </CardContent>
+    </Card>
+  )
+}
+
+export function Profile() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Profile</CardTitle>
+        <CardDescription>How others see you.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="flex items-center gap-3">
+          <Avatar size="lg">
+            <AvatarFallback>MC</AvatarFallback>
+          </Avatar>
+          <Button size="sm" variant="secondary">
+            Change photo
+          </Button>
+        </div>
+        <TextField>
+          <Label>Display name</Label>
+          <Input defaultValue="Maya Chen" />
+        </TextField>
+        <Switch defaultSelected className="w-full justify-between gap-3">
+          <FieldContent>
+            <Label>Public profile</Label>
+            <Description>Show your activity to the team.</Description>
+          </FieldContent>
+          <SwitchControl />
+        </Switch>
+      </CardContent>
+      <CardFooter className="justify-end gap-2">
+        <Button variant="quiet">Cancel</Button>
+        <Button variant="primary">Save</Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+const BUILDS = [
+  { branch: "main", status: "Ready", time: "2m ago" },
+  { branch: "feat/billing", status: "Building", time: "now" },
+  { branch: "fix/header", status: "Ready", time: "1h ago" },
+]
+
+export function Deploys() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Deployments</CardTitle>
+        <CardDescription>Production and previews.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {BUILDS.map((build) => (
+          <div key={build.branch} className="flex items-center gap-2.5 text-sm">
+            {build.status === "Ready" ? (
+              <CircleCheckIcon className="size-4 shrink-0 text-fg-success" />
+            ) : (
+              <CircleDashedIcon className="size-4 shrink-0 text-fg-warning" />
+            )}
+            <GitBranchIcon className="size-3.5 shrink-0 text-fg-muted" />
+            <span className="min-w-0 flex-1 truncate font-mono">
+              {build.branch}
+            </span>
+            <Badge variant={build.status === "Ready" ? "success" : "warning"}>
+              {build.status}
+            </Badge>
+          </div>
+        ))}
+        <Alert variant="info">
+          <SparklesIcon />
+          <AlertTitle>Preview ready</AlertTitle>
+          <AlertDescription>Share it with your team.</AlertDescription>
+        </Alert>
+      </CardContent>
+    </Card>
+  )
+}
+
+const LINES = [
+  { item: "Pro plan · 5 seats", amount: "$80.00" },
+  { item: "Extra storage", amount: "$12.00" },
+  { item: "Discount", amount: "−$9.20" },
+]
+
+export function Invoice() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Invoice #0042</CardTitle>
+        <CardDescription>Due March 1</CardDescription>
+        <CardAction>
+          <Badge variant="accent">Open</Badge>
+        </CardAction>
+      </CardHeader>
+      <CardContent className="space-y-2.5 text-sm">
+        {LINES.map((line) => (
+          <div key={line.item} className="flex justify-between gap-2">
+            <span className="text-fg-muted">{line.item}</span>
+            <span className="tabular-nums">{line.amount}</span>
+          </div>
+        ))}
+        <Separator />
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="font-medium">Total</span>
+          <span className="font-heading text-2xl font-semibold tabular-nums">
+            $82.80
+          </span>
+        </div>
+      </CardContent>
+      <CardFooter className="gap-2">
+        <Button variant="secondary" isIconOnly aria-label="Download">
+          <DownloadIcon />
+        </Button>
+        <Button variant="primary" className="flex-1">
+          <CreditCardIcon />
+          Pay now
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+const TODOS = [
+  { label: "Pick a type scale", done: true },
+  { label: "Set the brand color", done: true },
+  { label: "Tune the radius", done: false },
+  { label: "Export to code", done: false },
+]
+
+export function Tasks() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>This week</CardTitle>
+        <CardDescription>2 of 4 done</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {TODOS.map((todo) => (
+          <Checkbox key={todo.label} defaultSelected={todo.done}>
+            {todo.label}
+          </Checkbox>
+        ))}
       </CardContent>
     </Card>
   )

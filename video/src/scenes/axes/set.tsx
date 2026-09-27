@@ -6,12 +6,15 @@ import { PanelPage } from "@/modules/studio/page"
 import { CHAPTERS } from "@/modules/studio/state"
 import type { StudioState } from "@/modules/studio/state"
 
+import { Mark } from "../../lib/brand"
 import { Cursor, cursorAt } from "../../lib/cursor"
 import type { CursorKey } from "../../lib/cursor"
-import { clamp01, ease, keys } from "../../lib/motion"
+import { clamp01, ease, hold } from "../../lib/motion"
 import { studioAt } from "../../lib/studio"
 import { at } from "../../lib/timing"
+import { SET } from "./camera"
 import { SearchIcon, SunIcon } from "./deps"
+import { PANEL, POPOVER_X, PREVIEW } from "./layout"
 import type { Box } from "./measure"
 import { boxWithin, findRow, ZERO } from "./measure"
 import { PANEL_CSS } from "./panel-css"
@@ -23,7 +26,7 @@ import {
   IconBody,
   PopoverSurface,
 } from "./popovers"
-import { Canvas, Pill, Sheen } from "./preview"
+import { Canvas, Pill } from "./preview"
 import {
   CLICKS,
   COLOR_CLOSE,
@@ -39,7 +42,7 @@ import {
   hueAt,
   ICON_CLOSE,
   ICON_OPEN,
-  ICON_PICKS,
+  ICON_PICK,
   MODE_FLIP,
   RADIUS_PRESS,
   RADIUS_RANGE,
@@ -52,15 +55,10 @@ import {
   WIPE_FRAMES,
 } from "./timeline"
 
-/* The studio set, in the page's own px: a 1440×810 /studio — the site
-   header, the real panel on the left, the preview on the right — that the
-   camera flies around. Everything the cursor aims at is measured from the
-   DOM each frame, so the film follows the panel as it evolves. */
-
-export const SET = { w: 1440, h: 810 }
-const PANEL = { x: 24, y: 64, w: 256, h: 722 }
-export const PREVIEW = { x: 304, y: 64, w: 1120, h: 722 }
-const POPOVER_X = PANEL.x + PANEL.w + 8
+/* The studio set: the site header, the real panel driven by the frame's
+   state, the preview, the panel's popovers (inline), and the cursor.
+   Everything the cursor aims at is measured from the DOM each frame, so the
+   film follows the panel as it evolves. */
 
 const ROWS = {
   brand: ["color", "Brand"],
@@ -72,19 +70,15 @@ const ROWS = {
 } as const
 type RowKey = keyof typeof ROWS
 
-/* Which chapter sits at the top of the panel, and when it scrolls there. */
+/* Which chapter sits at the top of the panel. It changes while the camera
+   is in the preview, so each cut back to the panel finds its row ready. */
 const SCROLL: Array<readonly [number, string]> = [
   [0, "color"],
-  [at(1, 3.1), "color"],
-  [at(2) - 4, "typography"],
-  [at(2, 3.1), "typography"],
-  [at(3) - 4, "icons"],
-  [at(3, 3.1), "icons"],
-  [at(4) - 4, "shape"],
-  [at(4, 3.1), "shape"],
-  [at(5) - 4, "space"],
-  [at(6, 1), "space"],
-  [at(6, 3.5), "components"],
+  [at(2) - 8, "typography"],
+  [at(3) - 8, "icons"],
+  [at(4) - 8, "shape"],
+  [at(5) - 8, "space"],
+  [at(7) - 8, "components"],
 ]
 
 interface Layout {
@@ -97,16 +91,11 @@ interface Layout {
 
 function scrollAt(frame: number, layout: Layout | null) {
   if (!layout) return 0
-  const top = (id: string) =>
+  const id = hold(frame, SCROLL)
+  return Math.round(
     Math.min(
       layout.scrollMax,
       Math.max(0, (layout.chapters[id] ?? 0) - (layout.chapters.color ?? 0)),
-    )
-  return Math.round(
-    keys(
-      frame,
-      SCROLL.map(([f, id]) => [f, top(id)] as const),
-      ease.inOut,
     ),
   )
 }
@@ -168,56 +157,8 @@ export function StudioSet({ frame }: { frame: number }) {
   const panel = useRef<HTMLDivElement>(null)
   const [layout, setLayout] = useState<Layout | null>(null)
 
-  const state = stateAt(frame)
-  const studio = studioAt(state)
+  const studio = studioAt(stateAt(frame))
   const scrollTop = scrollAt(frame, layout)
-
-  // Every render: layout feeds the cursor and popovers, and settles in a
-  // second pass (the state only updates when a reading changed).
-  // oxlint-disable-next-line react-hooks/exhaustive-deps -- measures after every render
-  useLayoutEffect(() => {
-    const scroller = panel.current?.firstElementChild
-      ?.firstElementChild as HTMLElement | null
-    const set = root.current
-    if (!scroller || !set) return
-    // Scrolled by transform, not scrollTop: a Suspense reveal inside the
-    // theme resets scroll offsets after this effect has run.
-    for (const child of [...scroller.children].slice(1))
-      (child as HTMLElement).style.transform = `translateY(${-scrollTop}px)`
-    const chapters: Layout["chapters"] = {}
-    const rows: Layout["rows"] = {}
-    for (const section of scroller.querySelectorAll<HTMLElement>(
-      "[data-chapter]",
-    )) {
-      chapters[section.dataset.chapter!] = boxWithin(section, scroller).y
-    }
-    for (const [key, [chapter, label]] of Object.entries(ROWS)) {
-      const section = scroller.querySelector(`[data-chapter="${chapter}"]`)
-      const row = section && findRow(section, label)
-      if (row) rows[key as RowKey] = boxWithin(row, scroller)
-    }
-    const marks: Layout["marks"] = {}
-    for (const el of set.querySelectorAll<HTMLElement>("[data-mark]")) {
-      marks[el.dataset.mark!] = boxWithin(el, set)
-    }
-    const clicked = CLICKS.some((c) => frame >= c && frame < c + 7)
-    hover(set, scroller, scrollTop, pressing ? null : pointer, clicked)
-    for (const track of scroller.querySelectorAll<HTMLElement>(
-      '[role="slider"][aria-label="Radius"]',
-    )) {
-      if (frame >= RADIUS_PRESS - 4 && frame <= RADIUS_RELEASE + 8)
-        track.setAttribute("data-active", "true")
-      else track.removeAttribute("data-active")
-    }
-    const next: Layout = {
-      scroller: boxWithin(scroller, set),
-      scrollMax: scroller.scrollHeight - scroller.clientHeight,
-      chapters,
-      rows,
-      marks,
-    }
-    if (JSON.stringify(next) !== JSON.stringify(layout)) setLayout(next)
-  })
 
   /** A row's box in set px, at the scroll of `atFrame`. */
   const row = (key: RowKey, atFrame = frame): Box => {
@@ -236,9 +177,62 @@ export function StudioSet({ frame }: { frame: number }) {
     frame >= CURSOR_FROM && frame <= CURSOR_TO ? cursorAt(frame, path) : null
   const pressing = PRESSES.some(([a, b]) => frame >= a - 2 && frame <= b + 2)
 
-  // Popover placement: beside the row ("right top"), kept inside the panel's height.
-  // Once closed it stays mounted, hidden and still, so the cursor can still
-  // read where its controls were.
+  // Every render: layout feeds the cursor and popovers, and settles in a
+  // second pass (the state only updates when a reading changed).
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- measures after every render
+  useLayoutEffect(() => {
+    const scroller = panel.current?.firstElementChild
+      ?.firstElementChild as HTMLElement | null
+    const set = root.current
+    if (!scroller || !set) return
+    // Under the camera's CSS zoom, offsets may read in zoomed px.
+    const k = set.offsetWidth / SET.w || 1
+    const within = (el: HTMLElement, base: HTMLElement) => {
+      const b = boxWithin(el, base)
+      return { x: b.x / k, y: b.y / k, w: b.w / k, h: b.h / k }
+    }
+    // Scrolled by transform, not scrollTop: a Suspense reveal inside the
+    // theme resets scroll offsets after this effect has run.
+    for (const child of [...scroller.children].slice(1))
+      (child as HTMLElement).style.transform = `translateY(${-scrollTop}px)`
+    const chapters: Layout["chapters"] = {}
+    const rows: Layout["rows"] = {}
+    for (const section of scroller.querySelectorAll<HTMLElement>(
+      "[data-chapter]",
+    )) {
+      chapters[section.dataset.chapter!] = within(section, scroller).y
+    }
+    for (const [key, [chapter, label]] of Object.entries(ROWS)) {
+      const section = scroller.querySelector(`[data-chapter="${chapter}"]`)
+      const found = section && findRow(section, label)
+      if (found) rows[key as RowKey] = within(found, scroller)
+    }
+    const marks: Layout["marks"] = {}
+    for (const el of set.querySelectorAll<HTMLElement>("[data-mark]")) {
+      marks[el.dataset.mark!] = within(el, set)
+    }
+    const clicked = CLICKS.some((c) => frame >= c && frame < c + 7)
+    hover(set, scroller, scrollTop, pressing ? null : pointer, clicked, within)
+    for (const track of scroller.querySelectorAll<HTMLElement>(
+      '[role="slider"][aria-label="Radius"]',
+    )) {
+      if (frame >= RADIUS_PRESS - 4 && frame <= RADIUS_RELEASE + 8)
+        track.setAttribute("data-active", "true")
+      else track.removeAttribute("data-active")
+    }
+    const next: Layout = {
+      scroller: within(scroller, set),
+      scrollMax: (scroller.scrollHeight - scroller.clientHeight) / k,
+      chapters,
+      rows,
+      marks,
+    }
+    if (JSON.stringify(next) !== JSON.stringify(layout)) setLayout(next)
+  })
+
+  // Popover placement: beside the row, kept inside the panel's height. Once
+  // closed it stays mounted, hidden and still, so the cursor can still read
+  // where its controls were.
   const popover = (key: RowKey, name: string, close: number) => {
     const anchor = row(key, Math.min(frame, close - 1))
     const height = mark(name).h
@@ -258,12 +252,13 @@ export function StudioSet({ frame }: { frame: number }) {
     Math.max(origin[1], PREVIEW.h - origin[1]),
   )
   const wipe = clamp01((frame - MODE_FLIP) / WIPE_FRAMES)
+  const radius = ease.inOut(wipe) * reach
   const dark = frame < MODE_FLIP
 
   return (
     <div
       ref={root}
-      className="absolute top-0 left-0 overflow-hidden rounded-[18px] border border-white/10 bg-bg text-fg shadow-[0_40px_120px_-20px_rgb(0_0_0/0.8)]"
+      className="absolute top-0 left-0 overflow-hidden rounded-[18px] border border-white/10 bg-bg text-fg"
       style={{ width: SET.w, height: SET.h }}
     >
       <style>{PANEL_CSS}</style>
@@ -291,7 +286,7 @@ export function StudioSet({ frame }: { frame: number }) {
             style={{
               clipPath:
                 wipe < 1
-                  ? `circle(${ease.inOut(wipe) * reach}px at ${origin[0]}px ${origin[1]}px)`
+                  ? `circle(${radius}px at ${origin[0]}px ${origin[1]}px)`
                   : undefined,
             }}
           >
@@ -302,15 +297,14 @@ export function StudioSet({ frame }: { frame: number }) {
           <div
             className="pointer-events-none absolute rounded-full"
             style={{
-              left: origin[0] - ease.inOut(wipe) * reach,
-              top: origin[1] - ease.inOut(wipe) * reach,
-              width: 2 * ease.inOut(wipe) * reach,
-              height: 2 * ease.inOut(wipe) * reach,
-              boxShadow: `0 0 0 1.5px rgba(255,255,255,${0.55 * (1 - wipe)}), 0 0 40px 6px rgba(255,255,255,${0.18 * (1 - wipe)})`,
+              left: origin[0] - radius,
+              top: origin[1] - radius,
+              width: 2 * radius,
+              height: 2 * radius,
+              boxShadow: `0 0 0 1.5px rgba(255,255,255,${0.7 * (1 - wipe)}), 0 0 32px 2px rgba(255,255,255,${0.14 * (1 - wipe)})`,
             }}
           />
         )}
-        <Sheen frame={frame} height={PREVIEW.h} />
         <Pill dark={dark} />
       </div>
 
@@ -335,7 +329,8 @@ export function StudioSet({ frame }: { frame: number }) {
           path={path}
           from={CURSOR_FROM}
           to={CURSOR_TO}
-          size={0.82}
+          // Larger in the light & dark wide, where the set is small.
+          size={frame >= at(6) && frame < at(7) ? 1.5 : 0.82}
           clicks={CLICKS}
           presses={PRESSES}
         />
@@ -344,8 +339,8 @@ export function StudioSet({ frame }: { frame: number }) {
   )
 }
 
-const CURSOR_FROM = at(0, 2.8)
-const CURSOR_TO = at(8, 0.6)
+const CURSOR_FROM = at(0, 3)
+const CURSOR_TO = at(7, 3.3)
 
 const PRESSES = [
   [HUE_PRESS, HUE_RELEASE],
@@ -359,6 +354,7 @@ function hover(
   scroll: number,
   point: readonly [number, number] | null,
   pressed: boolean,
+  within: (el: HTMLElement, base: HTMLElement) => Box,
 ) {
   for (const el of set.querySelectorAll("[data-film-hover]")) {
     el.removeAttribute("data-film-hover")
@@ -367,17 +363,17 @@ function hover(
   }
   if (!point) return
   const [px, py] = point
-  const scrollerBox = boxWithin(scroller, set)
+  const scrollerBox = within(scroller, set)
   const candidates: Array<{ el: Element; box: Box }> = []
   for (const el of set.querySelectorAll<HTMLElement>(
     '[data-mark^="pop-"]:not([data-hidden]) [data-rac], [data-mark="mode-toggle"] [data-rac]',
   )) {
-    candidates.push({ el, box: boxWithin(el, set) })
+    candidates.push({ el, box: within(el, set) })
   }
   for (const el of scroller.querySelectorAll<HTMLElement>(
     "[data-chapter] button[data-rac]",
   )) {
-    const box = boxWithin(el, scroller)
+    const box = within(el, scroller)
     candidates.push({
       el,
       box: {
@@ -429,10 +425,7 @@ function Header() {
   return (
     <div className="absolute inset-x-0 top-0 flex h-14 items-center justify-between pr-4 pl-6">
       <div className="flex items-center gap-6">
-        <svg viewBox="0 0 100 100" className="size-5" aria-hidden>
-          <rect width="100" height="100" rx="12" className="fill-white" />
-          <circle cx="75" cy="75" r="11" className="fill-[#381e1e]" />
-        </svg>
+        <Mark size={20} />
         <nav className="flex items-center gap-3 text-sm">
           <span className="px-0.5 text-fg-muted">Docs</span>
           <span className="px-0.5 text-fg-muted">Components</span>
@@ -486,44 +479,38 @@ function cursorPath(
   const key = (f: number, [x, y]: Point): CursorKey => [f, x, y]
   const follow = (from: number, to: number, fn: (f: number) => Point) =>
     Array.from({ length: to - from + 1 }, (_, i) => key(from + i, fn(from + i)))
+  /** Arrive on `p` a little before `f`, and stay through the click. */
+  const clickOn = (f: number, p: Point, lead = 8): CursorKey[] => [
+    key(f - lead, p),
+    key(f + 3, p),
+  ]
 
+  const [TYPE_A, TYPE_B] = TYPE_PICKS
+  const [DENSITY_A, DENSITY_B] = DENSITY_PICKS
+  const [STYLE_PICK, RADIUS_PICK] = COMPONENT_PICKS
   const toggle = onMark("mode-toggle")
   return [
-    key(CURSOR_FROM, [PREVIEW.x + 620, PREVIEW.y + 520]),
-    key(COLOR_OPEN - 3, onRow("brand", COLOR_OPEN)),
-    key(COLOR_OPEN + 2, onRow("brand", COLOR_OPEN)),
-    key(HUE_PRESS - 3, hueThumb(HUE_PRESS)),
+    key(CURSOR_FROM, [PANEL.x + PANEL.w + 180, PANEL.y + 360]),
+    ...clickOn(COLOR_OPEN, onRow("brand", COLOR_OPEN), 12),
+    key(HUE_PRESS - 4, hueThumb(HUE_PRESS)),
     ...follow(HUE_PRESS, HUE_RELEASE, hueThumb),
-    key(COLOR_CLOSE, hueThumb(HUE_RELEASE)),
-    key(TYPE_OPEN - 2, onRow("heading", TYPE_OPEN)),
-    key(TYPE_OPEN + 2, onRow("heading", TYPE_OPEN)),
-    key(TYPE_PICKS[0][0] - 3, onMark(`font:${TYPE_PICKS[0][1]}`, 0.35)),
-    key(TYPE_PICKS[0][0] + 2, onMark(`font:${TYPE_PICKS[0][1]}`, 0.35)),
-    key(TYPE_PICKS[1][0] - 3, onMark(`font:${TYPE_PICKS[1][1]}`, 0.35)),
-    key(TYPE_CLOSE, onMark(`font:${TYPE_PICKS[1][1]}`, 0.35)),
-    key(ICON_OPEN - 2, onRow("library", ICON_OPEN)),
-    key(ICON_OPEN + 2, onRow("library", ICON_OPEN)),
-    key(ICON_PICKS[0][0] - 3, onMark(`icon:${ICON_PICKS[0][1]}`, 0.3)),
-    key(ICON_PICKS[0][0] + 2, onMark(`icon:${ICON_PICKS[0][1]}`, 0.3)),
-    key(ICON_PICKS[1][0] - 3, onMark(`icon:${ICON_PICKS[1][1]}`, 0.3)),
-    key(ICON_CLOSE, onMark(`icon:${ICON_PICKS[1][1]}`, 0.3)),
-    key(RADIUS_PRESS - 3, radiusThumb(RADIUS_PRESS)),
+    ...clickOn(TYPE_OPEN, onRow("heading", TYPE_OPEN), 4),
+    ...clickOn(TYPE_A[0], onMark(`font:${TYPE_A[1]}`, 0.35), 12),
+    ...clickOn(TYPE_B[0], onMark(`font:${TYPE_B[1]}`, 0.35), 12),
+    ...clickOn(ICON_OPEN, onRow("library", ICON_OPEN), 4),
+    ...clickOn(ICON_PICK, onMark("icon:phosphor", 0.3), 12),
+    key(RADIUS_PRESS - 4, radiusThumb(RADIUS_PRESS)),
     ...follow(RADIUS_PRESS, RADIUS_RELEASE, radiusThumb),
-    key(RADIUS_RELEASE + 6, radiusThumb(RADIUS_RELEASE)),
-    key(DENSITY_OPEN - 2, onRow("density", DENSITY_OPEN)),
-    key(DENSITY_OPEN + 2, onRow("density", DENSITY_OPEN)),
-    key(DENSITY_PICKS[0][0] - 3, onMark(`density:${DENSITY_PICKS[0][1]}`)),
-    key(DENSITY_PICKS[0][0] + 2, onMark(`density:${DENSITY_PICKS[0][1]}`)),
-    key(DENSITY_PICKS[1][0] - 3, onMark(`density:${DENSITY_PICKS[1][1]}`)),
-    key(DENSITY_CLOSE, onMark(`density:${DENSITY_PICKS[1][1]}`)),
-    key(MODE_FLIP - 2, toggle),
-    key(at(6, 2.4), toggle),
-    key(COMPONENTS_OPEN - 2, onRow("buttons", COMPONENTS_OPEN)),
-    key(COMPONENTS_OPEN + 2, onRow("buttons", COMPONENTS_OPEN)),
-    key(COMPONENT_PICKS[0][0] - 3, onMark(`button:${COMPONENT_PICKS[0][2]}`)),
-    key(COMPONENT_PICKS[0][0] + 2, onMark(`button:${COMPONENT_PICKS[0][2]}`)),
-    key(COMPONENT_PICKS[1][0] - 3, onMark("button-radius", 0.86, 0.72)),
-    key(COMPONENTS_CLOSE - 10, onMark("button-radius", 0.86, 0.72)),
-    key(CURSOR_TO, [PREVIEW.x + 700, PREVIEW.y + 560]),
+    ...clickOn(DENSITY_OPEN, onRow("density", DENSITY_OPEN), 4),
+    ...clickOn(DENSITY_A[0], onMark(`density:${DENSITY_A[1]}`), 12),
+    // Back to the row: the second pick lands while the camera is away.
+    key(DENSITY_A[0] + 20, onRow("density", DENSITY_B[0], 90)),
+    key(at(6) - 2, [toggle[0] - 150, toggle[1] - 110]),
+    ...clickOn(MODE_FLIP, toggle, 10),
+    key(at(6, 2.6), [toggle[0] + 40, toggle[1] - 70]),
+    ...clickOn(COMPONENTS_OPEN, onRow("buttons", COMPONENTS_OPEN), 4),
+    ...clickOn(STYLE_PICK[0], onMark(`button:${STYLE_PICK[2]}`), 12),
+    ...clickOn(RADIUS_PICK[0], onMark("button-radius", 0.86, 0.72), 12),
+    key(CURSOR_TO, [PANEL.x + PANEL.w + 300, PANEL.y + 420]),
   ]
 }

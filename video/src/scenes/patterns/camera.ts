@@ -1,74 +1,73 @@
-import { ease, progress } from "../../lib/motion"
+import { punches } from "../../lib/motion"
 import { HEIGHT, WIDTH } from "../../lib/timing"
-import { HANDOFF_SCALE } from "./newsletter"
+import { HANDOFF_SCALE } from "../compose/steps"
 import { spline } from "./spline"
 
-/* The shot, as camera channels over scene frames. World units are screen
-   pixels of a tile (a 1440×900 app renders 1:1 on the plane); `x`/`y` is the
-   world point under the lens, `scale` the plane's zoom, `tiltX`/`tiltZ` the
-   isometric lean. Every channel is a monotone spline, so the move never
-   stops or kinks between keys. */
+/* The shot, as camera channels over scene frames. World units are a tile's
+   own pixels (a 1440×900 app renders 1:1 on the plane); `x`/`y` is the world
+   point under the lens, `scale` the plane's zoom, `tiltX`/`tiltZ` the lean.
+   Every channel is a monotone spline, so the move never kinks between keys;
+   the last keys sit past the scene so the camera is still gliding at the cut. */
 
 export const PERSPECTIVE = 2600
 
-// Bar 4 lands on one product, the (4, 0) screen. The key sits past the
-// scene's end so the camera is still settling on the last frame; the target
-// leads the screen's center so it frames centered by then.
-export const HERO = { c: 4, r: 0 }
-const END = 500
-const LAND = { x: HERO.c * 1536 + 150, y: HERO.r * 996 + 40 }
+const smooth = (keys: ReadonlyArray<readonly [number, number]>) =>
+  spline(keys, { startSlope: 0 })
 
+/** Compose ends still pulling back (its card shrinking ~0.47 % a frame); the
+    move carries straight through the cut. */
+const HANDOFF_RATE = -0.00465
+
+// Pull back out of the card, lean the plane back, glide right across the
+// field, drop low for the fly-past, rise for the wave, drift onto the hero.
 const logScale = spline(
   [
     [0, Math.log(HANDOFF_SCALE)],
-    [60, Math.log(0.8)],
-    [140, Math.log(0.52)],
-    [360, Math.log(0.44)],
-    [END, Math.log(0.9)],
+    [56, Math.log(0.86)],
+    [118, Math.log(0.5)],
+    [160, Math.log(0.56)],
+    [210, Math.log(1.1)],
+    [290, Math.log(0.58)],
+    [360, Math.log(0.68)],
+    [480, Math.log(1.3)],
+    [540, Math.log(1.48)],
   ],
-  { startSlope: 0, endSlope: 0 },
+  { startSlope: HANDOFF_RATE },
 )
-const tiltX = spline(
-  [
-    [0, 0],
-    [24, 1.5],
-    [150, 46],
-    [360, 50],
-    [END, 4],
-  ],
-  { startSlope: 0, endSlope: 0 },
-)
-const tiltZ = spline(
-  [
-    [0, 0],
-    [24, -1],
-    [150, -28],
-    [360, -31],
-    [END, -3],
-  ],
-  { startSlope: 0, endSlope: 0 },
-)
-// The glide eases in once the field is up and carries into the landing.
-const panX = spline(
-  [
-    [0, 0],
-    [50, 0],
-    [240, 1700],
-    [360, 2900],
-    [END, LAND.x],
-  ],
-  { startSlope: 0, endSlope: 0 },
-)
-const panY = spline(
-  [
-    [0, 0],
-    [50, 0],
-    [240, -500],
-    [360, -850],
-    [END, LAND.y],
-  ],
-  { startSlope: 0, endSlope: 0 },
-)
+const tiltX = smooth([
+  [0, 0],
+  [110, 26],
+  [210, 16],
+  [290, 28],
+  [480, 7],
+  [540, 5],
+])
+const tiltZ = smooth([
+  [0, 0],
+  [110, -10],
+  [210, -5],
+  [290, -11],
+  [480, -3],
+  [540, -2],
+])
+const panX = smooth([
+  [0, 0],
+  [118, 300],
+  [165, 1150],
+  [210, 2250],
+  [290, 3450],
+  [480, 4520],
+  [540, 4620],
+])
+const panY = smooth([
+  [0, 0],
+  [118, -330],
+  [165, -640],
+  [210, -1000],
+  [290, -1160],
+  [480, -1250],
+  [540, -1275],
+])
 
 export type Cam = {
   x: number
@@ -78,20 +77,14 @@ export type Cam = {
   tiltZ: number
 }
 
-/** A small push on the wave's downbeat: in fast, out slow. */
-function punch(frame: number) {
-  return (
-    progress(frame, PUNCH_AT, 7, ease.out) -
-    progress(frame, PUNCH_AT + 7, 40, ease.inOut)
-  )
-}
-const PUNCH_AT = 240
+/** The beat accent on the wave's downbeat. */
+const PUNCHES = [240]
 
 export function camAt(frame: number): Cam {
   return {
     x: panX(frame),
     y: panY(frame),
-    scale: Math.exp(logScale(frame)) * (1 + 0.016 * punch(frame)),
+    scale: Math.exp(logScale(frame)) * (1 + punches(frame, PUNCHES)),
     tiltX: tiltX(frame),
     tiltZ: tiltZ(frame),
   }

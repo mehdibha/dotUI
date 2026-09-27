@@ -1,8 +1,6 @@
 import type { CSSProperties } from "react"
 
 import { clamp01, lerp } from "../../lib/motion"
-import type { Glint } from "./fx"
-import { GlintLayer } from "./fx"
 import type { Tile } from "./layout"
 import { BARE, TileContent } from "./tiles"
 
@@ -14,14 +12,12 @@ export function TileBox({
   pop,
   edge,
   tick,
-  glint,
 }: {
   tile: Tile
   pop: number
   /** Distance falloff (1 = full brightness). */
   edge: number
   tick: number
-  glint: Glint | null
 }) {
   if (pop <= 0.001) return null
   const settled = clamp01(pop)
@@ -50,23 +46,20 @@ export function TileBox({
       }}
     >
       <TileContent kind={t.kind} tick={tick} />
-      {glint ? <GlintLayer glint={glint} x={t.x} y={t.y} /> : null}
     </div>
   )
 }
 
-/** The hero cell: its content never moves (its dot is the anchor); only the
-    cell pops in behind it. `vars` drive HERO_CSS. */
+/** The hero cell: its content never moves (its dot is the anchor); the cell
+    fades in behind it with the first ring of tiles. `vars` drive HERO_CSS. */
 export function HeroBox({
   tile: t,
-  pop,
+  chrome,
   vars,
-  glint,
 }: {
   tile: Tile
-  pop: number
+  chrome: number
   vars: CSSProperties
-  glint: Glint | null
 }) {
   return (
     <div
@@ -80,21 +73,20 @@ export function HeroBox({
         ...vars,
       }}
     >
-      {pop > 0.001 ? (
+      {chrome > 0.001 ? (
         <div
           className={CHROME}
           style={{
             position: "absolute",
             inset: 0,
-            opacity: clamp01(pop * 1.5),
-            transform: `scale(${lerp(0.8, 1, pop)})`,
+            opacity: chrome,
+            transform: `scale(${lerp(0.97, 1, chrome)})`,
           }}
         />
       ) : null}
       <div className="relative flex size-full items-center justify-center">
         <TileContent kind={t.kind} tick={0} />
       </div>
-      {glint ? <GlintLayer glint={glint} x={t.x} y={t.y} /> : null}
     </div>
   )
 }

@@ -1,7 +1,6 @@
-import type { ComponentType } from "react"
-import { memo } from "react"
+import type { ComponentType, ReactNode } from "react"
+import { memo, useEffect } from "react"
 
-import AiChat from "@/modules/studio/preview/blocks/ai-chat"
 import Checkout from "@/modules/studio/preview/blocks/checkout"
 import CodeReview from "@/modules/studio/preview/blocks/code-review"
 import Customers from "@/modules/studio/preview/blocks/customers"
@@ -10,9 +9,6 @@ import Invoice from "@/modules/studio/preview/blocks/invoice"
 import Mail from "@/modules/studio/preview/blocks/mail"
 import Messaging from "@/modules/studio/preview/blocks/messaging"
 import MusicPlayer from "@/modules/studio/preview/blocks/music-player"
-import NotificationsCenter from "@/modules/studio/preview/blocks/notifications-center"
-import SearchResults from "@/modules/studio/preview/blocks/search-results"
-import Settings from "@/modules/studio/preview/blocks/settings"
 
 import { Theme } from "../../lib/theme"
 import type { State } from "../../lib/theme"
@@ -22,16 +18,12 @@ import { TILE_H, TILE_W } from "./tiles"
 const BLOCKS: Record<Exclude<Content, "canvas">, ComponentType> = {
   mail: Mail,
   customers: Customers,
-  "music-player": MusicPlayer,
+  "file-manager": FileManager,
   "code-review": CodeReview,
   checkout: Checkout,
-  "ai-chat": AiChat,
-  "file-manager": FileManager,
-  messaging: Messaging,
-  "search-results": SearchResults,
   invoice: Invoice,
-  "notifications-center": NotificationsCenter,
-  settings: Settings,
+  messaging: Messaging,
+  "music-player": MusicPlayer,
 }
 
 /* Blocks size themselves to the viewport (h-svh, min-h-screen); inside a
@@ -41,20 +33,40 @@ export const SCREEN_CSS = `
 .pt-screen .min-h-svh,.pt-screen .min-h-screen{min-height:100%!important}
 `
 
-/** A themed app surface. Memoized on its inputs, so camera frames never re-render the app. */
+/* A block may run a wall-clock timer (the music player ticks its progress
+   every second), which would make a frame depend on how long the tab has been
+   rendering. Mount effects run children first, siblings in order, so a stub
+   placed before the block and a restore placed after bracket exactly its
+   effects: its interval never starts. */
+let realSetInterval: typeof window.setInterval | null = null
+
+function StopClock() {
+  useEffect(() => {
+    realSetInterval ??= window.setInterval
+    window.setInterval = (() => 0) as unknown as typeof window.setInterval
+  }, [])
+  return null
+}
+
+function StartClock() {
+  useEffect(() => {
+    if (realSetInterval) window.setInterval = realSetInterval
+  }, [])
+  return null
+}
+
+/** A themed app surface. Memoized, so camera frames never re-render the app. */
 export const Surface = memo(function Surface({
   content,
   state,
   mode,
-  bare = false,
   children,
 }: {
   content: Content
   state: State
   mode: "light" | "dark"
-  /** No page background (the canvas fades its own in). */
-  bare?: boolean
-  children?: React.ReactNode
+  /** The canvas tile's content (it paints its own background). */
+  children?: ReactNode
 }) {
   const Block = content === "canvas" ? null : BLOCKS[content]
   return (
@@ -72,10 +84,18 @@ export const Surface = memo(function Surface({
       <Theme state={state} mode={mode}>
         <div
           className={
-            bare ? "relative h-full w-full" : "relative h-full w-full bg-bg"
+            Block ? "relative h-full w-full bg-bg" : "relative h-full w-full"
           }
         >
-          {Block ? <Block /> : children}
+          {Block ? (
+            <>
+              <StopClock />
+              <Block />
+              <StartClock />
+            </>
+          ) : (
+            children
+          )}
         </div>
       </Theme>
     </div>

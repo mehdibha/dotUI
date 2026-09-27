@@ -12,121 +12,233 @@ import { CookiePreferences } from "@/components/showcase/cookie-preferences"
 import { CustomDomain } from "@/components/showcase/custom-domain"
 import { DisplaySettings } from "@/components/showcase/display-settings"
 import { Faq } from "@/components/showcase/faq"
-import { Filters } from "@/components/showcase/filters"
 import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { Storage } from "@/components/showcase/storage"
 import { SupportChat } from "@/components/showcase/support-chat"
 import { TeamName } from "@/components/showcase/team-name"
 import { TwoFactor } from "@/components/showcase/two-factor"
 
+import { facesReady } from "../../lib/theme"
 import type { State } from "../../lib/theme"
+import { COLUMNS as AXES_COLUMNS } from "../axes/layout"
 import {
   Alerts,
   Billing,
+  Deploys,
+  Invoice,
   Onboarding,
+  Profile,
   Quotas,
   Shipping,
   SignIn,
+  Tasks,
   Team,
   Topics,
 } from "./cards"
-import { facesReady } from "./faces"
 
 export const COLUMN = 340
 export const GAP = 24
+const PITCH = COLUMN + GAP
 
-/* Landing showcase cards (the ones without charts, names, logos or remote
-   images) plus a few of our own. Heights are rough (default density) — only
-   used to know when a column has run the length of the board. */
-const POOL: Array<{ card: ReactNode; height: number }> = [
-  { card: <Controls />, height: 360 },
-  { card: <SignIn />, height: 360 },
-  { card: <Booking />, height: 515 },
-  { card: <Onboarding />, height: 350 },
-  { card: <PricingPlans />, height: 360 },
-  { card: <Appearance />, height: 235 },
-  { card: <Billing />, height: 360 },
-  { card: <Alerts />, height: 300 },
-  { card: <Filters />, height: 460 },
-  { card: <CommandMenu />, height: 350 },
-  { card: <TwoFactor />, height: 250 },
-  { card: <Storage />, height: 265 },
-  { card: <Team />, height: 260 },
-  { card: <Shipping />, height: 330 },
-  { card: <Quotas />, height: 270 },
-  { card: <ApprovalPrompt />, height: 320 },
-  { card: <CookiePreferences />, height: 355 },
-  { card: <DisplaySettings />, height: 243 },
-  { card: <Faq />, height: 400 },
-  { card: <TeamName />, height: 180 },
-  { card: <CustomDomain />, height: 250 },
-  { card: <Topics />, height: 190 },
-  { card: <SupportChat />, height: 460 },
+/* Showcase cards from SAFE_SHOWCASE plus a few of our own, with rough
+   default-density heights: the layout is planned on these (so every render
+   plans the same board) and placed on each look's measured ones. */
+const CARDS = {
+  controls: { card: <Controls />, height: 360 },
+  command: { card: <CommandMenu />, height: 350 },
+  booking: { card: <Booking />, height: 515 },
+  "two-factor": { card: <TwoFactor />, height: 250 },
+  pricing: { card: <PricingPlans />, height: 360 },
+  appearance: { card: <Appearance />, height: 235 },
+  signin: { card: <SignIn />, height: 360 },
+  team: { card: <Team />, height: 260 },
+  alerts: { card: <Alerts />, height: 300 },
+  onboarding: { card: <Onboarding />, height: 350 },
+  topics: { card: <Topics />, height: 190 },
+  billing: { card: <Billing />, height: 360 },
+  quotas: { card: <Quotas />, height: 270 },
+  shipping: { card: <Shipping />, height: 330 },
+  storage: { card: <Storage />, height: 265 },
+  cookies: { card: <CookiePreferences />, height: 355 },
+  display: { card: <DisplaySettings />, height: 243 },
+  faq: { card: <Faq />, height: 400 },
+  teamname: { card: <TeamName />, height: 180 },
+  domain: { card: <CustomDomain />, height: 250 },
+  approval: { card: <ApprovalPrompt />, height: 320 },
+  chat: { card: <SupportChat />, height: 460 },
+  profile: { card: <Profile />, height: 400 },
+  deploys: { card: <Deploys />, height: 330 },
+  invoice: { card: <Invoice />, height: 330 },
+  tasks: { card: <Tasks />, height: 250 },
+} satisfies Record<string, { card: ReactNode; height: number }>
+
+type CardId = keyof typeof CARDS
+const IDS = Object.keys(CARDS) as CardId[]
+const INDEX = new Map(IDS.map((id, i) => [id, i]))
+
+/* Plane px. The home row at y 0 is Axes' preview canvas card for card —
+   the same columns, tops aligned, so the last frame here is the first
+   there. Around it, the cards the macro glide passes; the rest is filled so
+   no card has a twin in view. */
+const HOME_COLUMNS: CardId[][] = AXES_COLUMNS.map((cards) =>
+  cards.map(([id]) => id).filter((id) => id in CARDS),
+)
+export const HOME = { first: 2, count: HOME_COLUMNS.length }
+
+/** Cards stacked directly above the home columns, left to right. */
+const ABOVE: CardId[][] = [
+  ["billing"],
+  ["onboarding"],
+  ["alerts"],
+  ["shipping"],
 ]
 
-/** Seven columns spanning plane y [top, bottom]; the middle five are in
- *  frame. A stride of 10 through the pool keeps a card's twin far away. */
-function columns(top: number, bottom: number) {
-  return Array.from({ length: 7 }, (_, i) => {
-    const start = top + ((i * 53) % 140)
-    const cards: number[] = []
-    let y = start
-    for (let j = (i * 10) % POOL.length; y < bottom; j++) {
-      cards.push(j % POOL.length)
-      y += POOL[j % POOL.length]!.height + GAP
-    }
-    return { top: start, cards }
+const PLAN: Array<{
+  y: number
+  down: CardId[]
+  up: CardId[]
+  /** Nothing below `down` — the canvas ends there, as in Axes. */
+  closed?: boolean
+}> = [
+  { y: -300, down: ["approval"], up: [] },
+  { y: 110, down: ["signin", "quotas"], up: ["team", "faq"] },
+  ...HOME_COLUMNS.map((down, i) => ({
+    y: 0,
+    down: [...down],
+    up: [...(ABOVE[i] ?? [])],
+    closed: true,
+  })),
+  { y: 60, down: ["topics", "appearance"], up: ["teamname"] },
+  { y: -80, down: ["chat"], up: [] },
+]
+
+export const BOARD_WIDTH = PLAN.length * PITCH - GAP
+const TOP = -2300
+const BOTTOM = 1000
+
+type Placed = { id: CardId; col: number; y0: number; y1: number }
+
+/** Extend every column up to TOP and down to BOTTOM, each time taking the
+ *  card whose nearest twin is farthest away. */
+function plan() {
+  const placed: Placed[] = []
+  const columns = PLAN.map((col, c) => {
+    let y = col.y
+    const down = col.down.map((id) => {
+      placed.push({ id, col: c, y0: y, y1: y + CARDS[id].height })
+      y += CARDS[id].height + GAP
+      return id
+    })
+    let top = col.y
+    const up = col.up.map((id) => {
+      top -= CARDS[id].height + GAP
+      placed.push({ id, col: c, y0: top, y1: top + CARDS[id].height })
+      return id
+    })
+    return { anchor: col.y, down, up, top, bottom: col.closed ? BOTTOM : y }
   })
+  const distance = (id: CardId, col: number, y: number) =>
+    Math.min(
+      Infinity,
+      ...placed
+        .filter((p) => p.id === id)
+        .map((p) => Math.hypot((p.col - col) * PITCH, (p.y0 + p.y1) / 2 - y)),
+    )
+  for (;;) {
+    const open = columns
+      .map((col, c) => ({ col, c }))
+      .filter(({ col }) => col.top > TOP || col.bottom < BOTTOM)
+    if (open.length === 0) break
+    for (const { col, c } of open) {
+      const upward = col.top > TOP
+      let best: CardId = IDS[0]!
+      let far = -1
+      for (const id of IDS) {
+        const h = CARDS[id].height
+        const y0 = upward ? col.top - GAP - h : col.bottom
+        const d = distance(id, c, y0 + h / 2)
+        if (d > far + 1e-6) {
+          far = d
+          best = id
+        }
+      }
+      const h = CARDS[best].height
+      const y0 = upward ? col.top - GAP - h : col.bottom
+      placed.push({ id: best, col: c, y0, y1: y0 + h })
+      if (upward) {
+        col.up.push(best)
+        col.top = y0
+      } else {
+        col.down.push(best)
+        col.bottom = y0 + h + GAP
+      }
+    }
+  }
+  return columns.map(({ anchor, down, up }) => ({ anchor, down, up }))
 }
 
-const COLUMNS = columns(-720, 2120)
+const COLUMNS = plan()
 
-export const BOARD_WIDTH = COLUMNS.length * COLUMN + (COLUMNS.length - 1) * GAP
-
-/** The part of the plane in frame (plane px). */
+/** A rect of the plane that the camera sees (plane px). */
 export type View = { x0: number; x1: number; y0: number; y1: number }
 
 /* Chrome restyles and relayouts the whole document twice per captured frame
    (the screenshot resizes the viewport), so the board mounts only the cards
    in view. To place them without their neighbours, each look's card heights
-   are measured once — every card, in that look, once its faces are in. */
+   are measured once — every card, in that look, once its faces are in. The
+   measure mounts outside the camera (no zoom), in the look's Theme. */
 const measured = new Map<State, number[]>()
 
-export function Board({ state, view }: { state: State; view: View }) {
+export function useCardHeights(state: State) {
   const [heights, setHeights] = useState(() => measured.get(state))
-  if (!heights)
-    return (
-      <Measure
-        state={state}
-        onMeasure={(h) => {
-          measured.set(state, h)
-          setHeights(h)
-        }}
-      />
-    )
-  return (
-    <div className="absolute inset-0 isolate text-fg">
-      {COLUMNS.map((column, i) => {
-        const left = i * (COLUMN + GAP)
-        if (left + COLUMN < view.x0 || left > view.x1) return null
-        let y = column.top
-        return column.cards.map((card, j) => {
-          const top = y
-          y += heights[card]! + GAP
-          if (y < view.y0 || top > view.y1) return null
-          return (
-            <div
-              key={`${i}-${j}`}
-              className="absolute"
-              style={{ left, top, width: COLUMN }}
-            >
-              {POOL[card]!.card}
-            </div>
-          )
-        })
-      })}
-    </div>
+  const measure = heights ? null : (
+    <Measure
+      state={state}
+      onMeasure={(h) => {
+        measured.set(state, h)
+        setHeights(h)
+      }}
+    />
   )
+  return [heights, measure] as const
+}
+
+export function Board({
+  heights,
+  view,
+}: {
+  heights: readonly number[]
+  view: View
+}) {
+  const h = (id: CardId) => heights[INDEX.get(id)!]!
+  const cards: ReactNode[] = []
+  COLUMNS.forEach((column, c) => {
+    const left = c * PITCH
+    if (left + COLUMN < view.x0 || left > view.x1) return
+    const place = (id: CardId, top: number, key: string) => {
+      if (top + h(id) < view.y0 || top > view.y1) return
+      cards.push(
+        <div
+          key={key}
+          className="absolute"
+          style={{ left, top, width: COLUMN }}
+        >
+          {CARDS[id].card}
+        </div>,
+      )
+    }
+    let y = column.anchor
+    column.down.forEach((id, i) => {
+      place(id, y, `${c}d${i}`)
+      y += h(id) + GAP
+    })
+    y = column.anchor
+    column.up.forEach((id, i) => {
+      y -= h(id) + GAP
+      place(id, y, `${c}u${i}`)
+    })
+  })
+  return <div className="absolute inset-0 isolate text-fg">{cards}</div>
 }
 
 function Measure({
@@ -158,8 +270,8 @@ function Measure({
       className="invisible absolute text-fg"
       style={{ width: COLUMN }}
     >
-      {POOL.map(({ card }, i) => (
-        <div key={i}>{card}</div>
+      {IDS.map((id) => (
+        <div key={id}>{CARDS[id].card}</div>
       ))}
     </div>
   )

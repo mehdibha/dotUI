@@ -26,7 +26,7 @@ function blade(angle: number) {
 /** How far the front has travelled at `t`: px along the blade's axis, or
  *  the circle's radius. */
 function front(wipe: Wipe, t: number) {
-  if (wipe.kind === "radial") {
+  if (wipe.kind === "circle") {
     const far = Math.max(
       ...CORNERS.map(([x, y]) => Math.hypot(x - wipe.x, y - wipe.y)),
     )
@@ -38,7 +38,7 @@ function front(wipe: Wipe, t: number) {
 
 export function clipFor(wipe: Wipe, t: number) {
   const s = front(wipe, t)
-  if (wipe.kind === "radial")
+  if (wipe.kind === "circle")
     return `circle(${s.toFixed(2)}px at ${wipe.x}px ${wipe.y}px)`
   const { d } = blade(wipe.angle)
   const n = [-d[1], d[0]] as const
@@ -60,7 +60,7 @@ export function WipeShadow({ wipe, t }: { wipe: Wipe; t: number }) {
   const s = front(wipe, t)
   const shade = "rgba(0,0,0,0.28)"
   let background: string
-  if (wipe.kind === "radial") {
+  if (wipe.kind === "circle") {
     background = `radial-gradient(circle at ${wipe.x}px ${wipe.y}px, transparent ${s}px, ${shade} ${s}px, transparent ${s + 90}px)`
   } else {
     // CSS gradient angles run clockwise from "to top"; ours from +x, y down.
@@ -74,18 +74,27 @@ export function WipeShadow({ wipe, t }: { wipe: Wipe; t: number }) {
   return <AbsoluteFill style={{ opacity: 1 - t, background }} />
 }
 
-/** A hairline of the incoming brand riding the front. Render it inside the
+/** A hairline of the incoming brand riding the front, pushed toward white
+ *  over a dark outgoing look and toward black over a light one, so a
+ *  near-black or pale accent still draws a line. Render it inside the
  *  incoming Theme (for its accent) but outside the clip. */
-export function WipeLine({ wipe, t }: { wipe: Wipe; t: number }) {
+export function WipeLine({
+  wipe,
+  t,
+  over,
+}: {
+  wipe: Wipe
+  t: number
+  over: "light" | "dark"
+}) {
   const s = front(wipe, t)
-  const glow =
-    "0 0 18px 1px color-mix(in oklab, var(--color-accent) 70%, transparent)"
+  const color = `color-mix(in oklab, var(--color-accent) ${over === "dark" ? 55 : 75}%, ${over === "dark" ? "white" : "black"})`
   const common = {
     position: "absolute",
     opacity: Math.min(1, (1 - t) * 1.6),
-    boxShadow: glow,
+    boxShadow: `0 0 18px 1px color-mix(in oklab, ${color} 70%, transparent)`,
   } as const
-  if (wipe.kind === "radial") {
+  if (wipe.kind === "circle") {
     return (
       <div
         style={{
@@ -95,7 +104,7 @@ export function WipeLine({ wipe, t }: { wipe: Wipe; t: number }) {
           width: s * 2,
           height: s * 2,
           borderRadius: "50%",
-          border: "2px solid var(--color-accent)",
+          border: `2px solid ${color}`,
         }}
       />
     )
@@ -109,7 +118,7 @@ export function WipeLine({ wipe, t }: { wipe: Wipe; t: number }) {
         top: HEIGHT / 2 + d[1] * s - 1,
         width: 4000,
         height: 2,
-        background: "var(--color-accent)",
+        background: color,
         transform: `rotate(${wipe.angle + 90}deg)`,
       }}
     />

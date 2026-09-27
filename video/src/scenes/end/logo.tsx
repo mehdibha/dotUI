@@ -1,56 +1,49 @@
 import { Easing } from "remotion"
 
-import { clamp01, ease, lerp, springAt } from "../../lib/motion"
-import { LETTERS } from "../../lib/wordmark"
+import { Mark, Wordmark } from "../../lib/brand"
+import { clamp01, ease, lerp, pulse, springAt } from "../../lib/motion"
+import { LETTERS, LOCKUP } from "../../lib/wordmark"
 import { CX, CY, T } from "./timeline"
 
-/* The dot becomes the logo: the white dot grows and squares off into the
-   mark, the dark dot punches in at its lower right, then the wordmark slides
-   out from behind it and the lockup settles into the end card. */
+/* The dot becomes the brand, drawn with lib/brand: the white dot swells and
+   squares off into the mark, its ink dot punches in, then the wordmark
+   slides out from behind it and the lockup rises into the end card. */
 
+/** Mark side while it's alone, and in the settled lockup. */
 export const HERO = 232
-export const FINAL = 172
-export const RISE = 93
-export const INK_DOT = "#381e1e"
+export const FINAL = 184
+/** The settled lockup's centre sits this far above the frame's. */
+export const RISE = 112
 
 const quint = Easing.bezier(0.22, 1, 0.36, 1)
-
-/** A beat's heartbeat: 0 → 1 at `d` = 5 frames → back to ~0 by 24. */
-export function pulse(d: number) {
-  if (d < 0) return 0
-  return (d / 5) * Math.exp(1 - d / 5)
-}
+const grow = { damping: 16, stiffness: 95, mass: 1 }
+/** Mark centre → lockup centre, in wordmark units. */
+const SHIFT = LOCKUP.width / 2 - 50
+const WORD_X0 = LETTERS[0].x0
 
 export function markAt(frame: number) {
   let size: number
-  // The core swells as the cast falls in, then draws in on itself before the hit.
-  if (frame < T.impact - 8) size = lerp(6, 17, (frame / (T.impact - 8)) ** 2)
+  // Pops in on the cut, swells as the cast falls in, draws in before the hit.
+  if (frame < T.impact - 8)
+    size = lerp(0, 8, springAt(frame, -3, "pop")) + 9 * (frame / T.impact) ** 2
   else if (frame < T.impact)
-    size = lerp(17, 9, ease.in((frame - T.impact + 8) / 8))
-  else if (frame < T.grow) size = lerp(9, 28, springAt(frame, T.impact, "pop"))
-  else
     size = lerp(
-      28,
-      HERO,
-      springAt(frame, T.grow, { damping: 16, stiffness: 95, mass: 1 }),
+      8 + 9 * ((T.impact - 8) / T.impact) ** 2,
+      9,
+      ease.in((frame - T.impact + 8) / 8),
     )
+  else if (frame < T.grow) size = lerp(9, 28, springAt(frame, T.impact, "pop"))
+  else size = lerp(28, HERO, springAt(frame, T.grow, grow))
   const toFinal = ease.inOut(clamp01((frame - T.word) / 48))
   size *= lerp(1, FINAL / HERO, toFinal)
-  // The punch knocks the square back a hair.
-  const recoil = frame >= T.punch ? 0.045 * pulse((frame - T.punch) * 1.4) : 0
-  size *= 1 - recoil
+  // The ink dot's arrival knocks the square back a hair.
+  if (frame >= T.punch) size *= 1 - 0.045 * pulse((frame - T.punch) * 1.4)
 
   const round = lerp(0.5, 0.12, ease.inOut(clamp01((frame - T.grow - 4) / 34)))
   const rotate =
-    frame < T.grow
-      ? 0
-      : lerp(
-          -24,
-          0,
-          springAt(frame, T.grow, { damping: 16, stiffness: 95, mass: 1 }),
-        )
+    frame < T.grow ? 0 : lerp(-24, 0, springAt(frame, T.grow, grow))
   const k = size / 100
-  const x = CX - 115.5 * k * toFinal
+  const x = CX - SHIFT * k * toFinal
   const y = CY - RISE * ease.camera(clamp01((frame - T.rise) / 50))
   const dot =
     frame < T.punch
@@ -61,102 +54,71 @@ export function markAt(frame: number) {
             (a, p, i) => a + (0.22 - i * 0.05) * pulse(frame - p),
             0,
           ))
-  // Center of the whole lockup — where the light should sit once the word is out.
-  const cx = x + 115.5 * k * toFinal
+  // Centre of the whole lockup — where the light sits once the word is out.
+  const cx = x + SHIFT * k * toFinal
   return { x, y, cx, size, k, round, rotate, dot }
 }
 
 export type MarkPose = ReturnType<typeof markAt>
 
-export function Mark({ pose }: { pose: MarkPose }) {
-  const { x, y, size, round, rotate, dot, k } = pose
+export function EndMark({ pose }: { pose: MarkPose }) {
+  const { x, y, size, round, rotate, dot } = pose
   return (
-    <div
+    <Mark
+      size={size}
+      dot={dot}
+      round={round}
       style={{
         position: "absolute",
         left: x - size / 2,
         top: y - size / 2,
-        width: size,
-        height: size,
-        borderRadius: size * round,
-        background: "#fff",
-        transform: rotate ? `rotate(${rotate}deg)` : undefined,
-        overflow: "hidden",
-        boxShadow: `0 0 ${Math.max(10, size * 0.28)}px rgba(255,255,255,0.08)`,
+        transform: rotate ? `rotate(${rotate.toFixed(3)}deg)` : undefined,
+        boxShadow: `0 0 ${Math.max(10, size * 0.28).toFixed(1)}px rgba(255,255,255,0.08)`,
       }}
-    >
-      {dot > 0 ? (
-        <div
-          style={{
-            position: "absolute",
-            left: 75 * k,
-            top: 75 * k,
-            width: 22 * k,
-            height: 22 * k,
-            marginLeft: -11 * k,
-            marginTop: -11 * k,
-            borderRadius: "50%",
-            background: INK_DOT,
-            transform: `scale(${dot})`,
-          }}
-        />
-      ) : null}
-    </div>
+    />
   )
 }
 
 /** The wordmark, clipped at the mark's right edge so it slides out from behind it. */
-export function Wordmark({ pose, frame }: { pose: MarkPose; frame: number }) {
+export function EndWordmark({
+  pose,
+  frame,
+}: {
+  pose: MarkPose
+  frame: number
+}) {
   if (frame < T.word) return null
-  const { x, y, k } = pose
+  const { x, y, k, size } = pose
   const OFF = 240
+  const left = x - size / 2 + 102 * k
   return (
-    <svg
-      viewBox="0 0 331 100"
-      width={331 * k}
-      height={100 * k}
+    <div
       style={{
         position: "absolute",
-        left: x - 50 * k,
-        top: y - 50 * k,
-        overflow: "visible",
+        left,
+        top: y - size / 2 - 20 * k,
+        width: 260 * k,
+        height: 140 * k,
+        overflow: "hidden",
+        maskImage: `linear-gradient(90deg, transparent 0, #000 ${(11 * k).toFixed(2)}px)`,
       }}
     >
-      <defs>
-        <linearGradient
-          id="end-wordmark-edge"
-          gradientUnits="userSpaceOnUse"
-          x1={102}
-          x2={113}
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity={0} />
-          <stop offset="1" stopColor="#fff" stopOpacity={1} />
-        </linearGradient>
-        <mask id="end-wordmark-mask" maskUnits="userSpaceOnUse">
-          <rect
-            x={102}
-            y={-40}
-            width={400}
-            height={180}
-            fill="url(#end-wordmark-edge)"
-          />
-        </mask>
-      </defs>
-      <g mask="url(#end-wordmark-mask)" fill="#fff">
-        {LETTERS.map((letter, i) => {
-          const e = quint(
-            clamp01((frame - T.word - (LETTERS.length - 1 - i)) / 44),
-          )
-          return (
-            <path
-              key={letter.char}
-              d={letter.d}
-              fillRule="evenodd"
-              transform={`translate(${(-OFF * (1 - e)).toFixed(3)} 0)`}
-            />
-          )
-        })}
-      </g>
-    </svg>
+      <div
+        style={{
+          position: "absolute",
+          left: (WORD_X0 - 102) * k,
+          top: 20 * k,
+        }}
+      >
+        <Wordmark
+          height={size}
+          letterOffset={(i) =>
+            -OFF *
+            (1 -
+              quint(clamp01((frame - T.word - (LETTERS.length - 1 - i)) / 44)))
+          }
+        />
+      </div>
+    </div>
   )
 }

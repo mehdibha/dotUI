@@ -1,276 +1,412 @@
-import { clamp01, random } from "../../lib/motion"
-import { preset, Theme } from "../../lib/theme"
-import type { State } from "../../lib/theme"
-import { LARGE, SMALL } from "./tiles"
+import { memo, useLayoutEffect, useRef } from "react"
+
+import { clamp01, ease, progress, random } from "../../lib/motion"
+import { EXPORT_LAST, exportRects, ExportPiece } from "../export/handoff"
+import type { ExportPieceId } from "../export/handoff"
+import { CAST } from "./cast"
+import type { CastId } from "./cast"
 import { CX, CY, T } from "./timeline"
 
-/* Everything collapses into the dot: the cast orbits on a tilted disk and
-   spirals inward, faster as it falls, burning white in the last stretch.
-   Cards are billboards (always facing camera) placed in true perspective, so
-   they swell as they swing near and shrink as they swing away. Inner rings
-   land first; the last card lands on the impact beat. */
+/* Everything collapses into the dot. Export's last frame is the first ring:
+   its editor, line and pill start turning on the cut, exactly where Export
+   left them. The rest of the film pours in from beyond the frame — Wall's
+   components, Presets' cards, the studio panel, the Compose card, a Patterns
+   product — each on its own inward spiral. The disk leans back as it turns;
+   bodies stay facing the lens (billboards), swell on the near side and
+   burn into light in the last stretch. Dust arms feed the core until the
+   last specks land on f58–59, a frame before the hit. */
 
-type Look = { state: State; mode: "light" | "dark" }
+type Orbit = {
+  /** Where the spiral starts, screen px at frame 0 (the disk starts in the
+   *  screen plane). */
+  x: number
+  y: number
+  /** Frame it reaches the core. */
+  land: number
+  size: number
+  /** Extra radius it swoops in from (px), decaying over the first frames. */
+  entry?: number
+  /** Share of the fall that is linear (pull on frame 0); the rest accelerates. */
+  pull?: number
+}
 
-const LOOKS: Look[] = [
-  { state: {}, mode: "dark" },
-  { state: preset("claude"), mode: "dark" },
-  { state: preset("stripe"), mode: "light" },
-  { state: preset("linear"), mode: "dark" },
-  { state: {}, mode: "light" },
-  { state: preset("supabase"), mode: "dark" },
-  { state: preset("vercel"), mode: "light" },
-  { state: preset("spotify"), mode: "dark" },
-  { state: preset("notion"), mode: "light" },
-  { state: preset("github"), mode: "dark" },
-]
+type Piece = Orbit & { kind: "piece"; piece: ExportPieceId }
+type Billboard = Orbit & { kind: "cast"; cast: CastId }
+type Body = Piece | Billboard
 
-type Body = { r: number; angle: number; land: number }
-type Tile = Body & { render: () => React.ReactNode; size: number; look: number }
-
-const RINGS = [
-  {
-    r: 360,
-    kinds: ["switch", "badges", "kbd", "checkbox", "toggles", "radio"],
-    size: 0.95,
-    land: [38, 46],
-  },
-  {
-    r: 700,
-    kinds: [
-      "buttons",
-      "segmented",
-      "slider",
-      "tabs",
-      "avatars",
-      "email",
-      "progress",
-      "tags",
-    ],
-    size: 1,
-    land: [46, 56],
-  },
-  {
-    r: 1080,
-    kinds: [
-      "team",
-      "twoFactor",
-      "login",
-      "cookies",
-      "domain",
-      "empty",
-      "approval",
-    ],
-    size: 0.95,
-    land: [53, 59],
-  },
-] as const
-
-export const TILES: Tile[] = RINGS.flatMap((ring, ri) =>
-  ring.kinds.map((kind, i) => {
-    const n = ring.kinds.length
-    const jitter = random(ri, i, 7) - 0.5
-    const last = ri === RINGS.length - 1 && i === n - 1
-    return {
-      render: (SMALL[kind] ?? LARGE[kind])!,
-      r: ring.r * (1 + jitter * 0.14),
-      angle: ((i + 0.5 * ri + jitter * 0.35) / n) * Math.PI * 2 - Math.PI / 2,
-      size: ring.size * (1 + (random(ri, i, 3) - 0.5) * 0.16),
-      land: last
-        ? T.impact
-        : Math.round(
-            ring.land[0] + random(ri, i, 11) * (ring.land[1] - ring.land[0]),
-          ),
-      look: (i * 3 + ri * 5) % LOOKS.length,
-    }
-  }),
-)
-
-/* Dust between the cards: specks that pour in with them and keep the rush
-   dense after the last card has shrunk to a point. */
-const DUST: Array<Body & { size: number; glow: number }> = Array.from(
-  { length: 110 },
-  (_, i) => ({
-    r: 240 + random(i, 1) ** 0.7 * 1100,
-    angle: random(i, 2) * Math.PI * 2,
-    land: Math.round(36 + random(i, 3) ** 0.45 * (T.impact - 36)),
-    size: 0.8 + random(i, 4) * 1.4,
-    glow: 0.35 + random(i, 5) * 0.65,
-  }),
-)
-
-const SPIN = 0.0055
-const SWIRL = 1.8
-// The disk leans back this far from the screen plane; the lens sits DISTANCE away.
-const TILT = (58 * Math.PI) / 180
+const SPIN = 0.014
+const SWIRL = 1.7
+/** The fall has some pull on frame 0, then accelerates. */
+const PULL = 0.16
+const TILT_MAX = (52 * Math.PI) / 180
 const DISTANCE = 3000
+/** Frames for an entering body's swoop to settle onto the disk. */
+const ENTRY_TAU = 9
+/** An entering body starts this far above the disk (toward the lens). */
+const ENTRY_LIFT = 420
 
-/** A body on the inward spiral at `frame`, projected: screen center, depth scale, fall 1→0. */
-function orbit(body: Body, frame: number) {
+const tiltAt = (frame: number) =>
+  TILT_MAX * ease.camera(clamp01((frame + 6) / 48))
+
+/** A body on its inward spiral at `frame`, projected. */
+function orbit(body: Orbit, frame: number) {
+  const dx = body.x - CX
+  const dy = body.y - CY
+  const r0 = Math.hypot(dx, dy)
+  const a0 = Math.atan2(dy, dx)
   const u = clamp01(frame / body.land)
-  const fall = 1 - u ** 2.4
+  const pull = body.pull ?? PULL
+  const fall = 1 - (pull * u + (1 - pull) * u ** 3)
+  // Inner bodies wind up faster: the swirl grows as the radius closes.
   const turn = SPIN * frame + SWIRL * u ** 3
-  const theta = body.angle + turn
-  const a = Math.cos(theta) * body.r * fall
-  const b = Math.sin(theta) * body.r * fall
-  const depth = DISTANCE / (DISTANCE - b * Math.sin(TILT))
+  const theta = a0 + turn
+  const swoop = body.entry ? Math.exp(-Math.max(frame, -20) / ENTRY_TAU) : 0
+  const r = r0 * fall + (body.entry ?? 0) * swoop
+  const a = Math.cos(theta) * r
+  const b = Math.sin(theta) * r
+  const tilt = tiltAt(frame)
+  const depth = DISTANCE / (DISTANCE - b * Math.sin(tilt) - ENTRY_LIFT * swoop)
   return {
     x: CX + a * depth,
-    y: CY + b * Math.cos(TILT) * depth,
+    y: CY + b * Math.cos(tilt) * depth,
     depth,
     fall,
-    turn: turn * (180 / Math.PI),
+    turn,
     u,
   }
 }
 
-/** Where a tile is at `frame`: center (px), scale, spin (deg), burn 0→1, shade 0→1. */
-export function tileAt(tile: Tile, frame: number) {
-  const o = orbit(tile, frame)
+function look(body: Orbit, frame: number) {
+  const o = orbit(body, frame)
   return {
     ...o,
-    scale: tile.size * o.depth * o.fall ** 1.15,
-    spin: o.turn * 0.4,
-    burn: clamp01((1 - o.fall) ** 5 * 1.6),
-    shade: clamp01((1 - o.depth) * 1.3),
+    scale: body.size * o.depth * o.fall ** 0.85,
+    spin: o.turn * 0.4 * (180 / Math.PI),
+    burn: clamp01((1 - o.fall) ** 6 * 2),
+    shade: clamp01((1 - o.depth) * 1.6),
+    fade: 1 - clamp01((o.u - 0.9) / 0.1),
   }
+}
+
+/* --- The cast ---------------------------------------------------------- */
+
+const RECTS = exportRects(EXPORT_LAST)
+
+/* Export's pieces sit nearest the core, so they feel the pull at once. */
+const piece = (p: ExportPieceId, land: number): Piece => ({
+  kind: "piece",
+  piece: p,
+  x: RECTS[p].cx,
+  y: RECTS[p].cy,
+  land,
+  size: 1,
+  pull: 0.5,
+})
+
+const cast = (
+  id: CastId,
+  [x, y]: readonly [number, number],
+  land: number,
+  size: number,
+  entry = 0,
+): Billboard => ({ kind: "cast", cast: id, x, y, land, size, entry })
+
+/* The film rewinds into the dot: Export's pieces go first, then Patterns'
+   product, the Compose card, the studio panel, Presets' cards, and Wall's
+   components last, with the dust. Starts are solved so each body crosses
+   the frame at a readable size in the window noted beside it. */
+const BODIES: Body[] = [
+  piece("editor", 38),
+  piece("line", 30),
+  piece("pill", 34),
+  // Down the right edge, f8–32.
+  cast("product", [1476, -97], 46, 1, 500),
+  // Across the top third over the fading line, f8–40.
+  cast("panel", [292, 434], 52, 1, 1000),
+  // Up the left side, f12–36.
+  cast("compose", [617, 1159], 50, 0.8, 500),
+  // Along the bottom, near the lens, f8–44.
+  cast("appearance", [1803, 569], 54, 0.95, 600),
+  cast("switch", [1951, 644], 56, 0.85, 20),
+  // Up the left edge, then over the top, f20–48.
+  cast("pricing", [49, 1252], 54, 0.95, 20),
+  // Over the top right, f18–50.
+  cast("twoFactor", [884, -333], 55, 0.95),
+  // The late ring: in from far out, f12–58.
+  cast("slider", [1481, -204], 58, 0.85),
+  cast("tabs", [1537, 1429], 56, 0.85),
+  cast("primary", [-613, 961], 57, 0.85),
+  cast("badges", [767, 1914], 58, 0.8),
+  cast("checkbox", [321, -966], 59, 0.8),
+]
+
+/* Dust between the bodies, plus five arms that feed the core right up to
+   the beat's last two frames: the gathering before the hit. */
+type Speck = Orbit & { glow: number; arm?: boolean }
+
+const DUST: Speck[] = [
+  ...Array.from({ length: 110 }, (_, i) => {
+    const a = random(i, 2) * Math.PI * 2
+    const r = 260 + random(i, 1) ** 0.7 * 1150
+    return {
+      x: CX + Math.cos(a) * r,
+      y: CY + Math.sin(a) * r,
+      land: Math.round(24 + random(i, 3) ** 0.5 * 30),
+      size: 0.8 + random(i, 4) * 1.4,
+      glow: 0.35 + random(i, 5) * 0.65,
+    }
+  }),
+  // Each arm feeds the core from f44; its tail lands on f58–59.
+  ...[0.3, 1.55, 2.8, 4.0, 5.2].flatMap((angle, s) =>
+    Array.from({ length: 30 }, (_, i) => {
+      const r = 620 + i * 24 + random(s, i, 1) * 50
+      const a = angle - i * 0.035 + (random(s, i, 2) - 0.5) * 0.12
+      return {
+        x: CX + Math.cos(a) * r,
+        y: CY + Math.sin(a) * r,
+        land: i >= 22 ? T.bursts[i % 2]! : 44 + Math.round(i * 0.62),
+        size: 0.9 + random(s, i, 3) * 1.5,
+        glow: 0.7 + random(s, i, 4) * 0.3,
+        arm: true,
+      }
+    }),
+  ),
+]
+
+/* --- Rendering --------------------------------------------------------- */
+
+const onFrame = (x: number, y: number, radius: number) =>
+  x + radius > 0 && x - radius < 1920 && y + radius > 0 && y - radius < 1080
+
+function filterOf(shade: number, burn: number) {
+  const k = (1 - 0.55 * shade) * (1 + 1.4 * burn)
+  return Math.abs(k - 1) > 0.005 ? `brightness(${k.toFixed(3)})` : undefined
 }
 
 export function Vortex({ frame }: { frame: number }) {
   if (frame >= T.impact) return null
-  const live = TILES.map((tile, i) => ({ tile, i, p: tileAt(tile, frame) }))
+  const live = BODIES.map((body, i) => ({ body, i, p: look(body, frame) }))
     .filter(({ p }) => p.u < 1)
-    .sort((a, b) => a.p.depth - b.p.depth)
+    // Export's pieces keep their order on top while depths still tie.
+    .sort(
+      (a, b) =>
+        a.p.depth - b.p.depth ||
+        Number(a.body.kind === "piece") - Number(b.body.kind === "piece") ||
+        a.i - b.i,
+    )
   return (
     <>
       <Streaks frame={frame} />
-      {live.map(({ tile, i, p }, order) => {
-        const look = LOOKS[tile.look]!
-        const fade = 1 - clamp01((p.u - 0.9) / 0.1)
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: p.x,
-              top: p.y,
-              transform: `translate(-50%, -50%) rotate(${p.spin}deg) scale(${p.scale})`,
-              opacity: fade,
-              zIndex: order + 1,
-            }}
-          >
-            <div style={{ position: "relative" }}>
-              <Theme state={look.state} mode={look.mode}>
-                {tile.render()}
-              </Theme>
-              <Veil color="#000" alpha={p.shade} />
-              <Veil color="#fff" alpha={p.burn} />
-            </div>
-          </div>
-        )
-      })}
+      {live.map(({ body, i, p }) =>
+        body.kind === "piece" ? (
+          <PieceLayer key={i} body={body} p={p} frame={frame} />
+        ) : (
+          <BillboardLayer key={i} body={body} p={p} />
+        ),
+      )}
     </>
   )
 }
 
-function Veil({ color, alpha }: { color: string; alpha: number }) {
-  if (alpha < 0.005) return null
+type Look = ReturnType<typeof look>
+
+function PieceLayer({
+  body,
+  p,
+  frame,
+}: {
+  body: Piece
+  p: Look
+  frame: number
+}) {
+  // The line leaves the way every line in the film does: blur out, cubic-in.
+  const out = body.piece === "line" ? progress(frame, 0, 18, ease.in) : 0
+  const filters = [
+    filterOf(p.shade, p.burn),
+    out > 0.01 ? `blur(${(out * 14).toFixed(2)}px)` : undefined,
+  ].filter(Boolean)
   return (
     <div
       style={{
         position: "absolute",
-        inset: -1,
-        borderRadius: 16,
-        background: color,
-        opacity: alpha,
-        boxShadow:
-          color === "#fff"
-            ? `0 0 ${48 * alpha}px rgba(255,255,255,${0.7 * alpha})`
-            : undefined,
+        inset: 0,
+        transformOrigin: `${body.x}px ${body.y}px`,
+        transform: `translate(${(p.x - body.x).toFixed(2)}px, ${(p.y - body.y).toFixed(2)}px) rotate(${p.spin.toFixed(3)}deg) scale(${p.scale.toFixed(4)})`,
+        opacity: p.fade * (1 - out) * (1 - 0.85 * p.burn),
+        filter: filters.length ? filters.join(" ") : undefined,
+      }}
+    >
+      {body.piece === "editor" ? (
+        <KeyLight x={body.x} y={body.y} u={p.u} />
+      ) : null}
+      <ExportPiece piece={body.piece} frame={EXPORT_LAST + 1 + frame} />
+    </div>
+  )
+}
+
+/** Export's blue key light on the editor, carried in with it. */
+function KeyLight({ x, y, u }: { x: number; y: number; u: number }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - 1000,
+        top: y - 640,
+        width: 2000,
+        height: 1280,
+        opacity: 1 - clamp01(u * 1.6),
+        background:
+          "radial-gradient(closest-side, rgba(110,140,255,0.15), rgba(110,140,255,0.05) 55%, transparent)",
       }}
     />
   )
 }
 
-/** Light trails: each falling body leaves a tapered streak along its path. */
-function Streaks({ frame }: { frame: number }) {
-  const trails: React.ReactNode[] = []
-  const trail = (
-    key: string,
-    body: Body,
-    lag: number,
-    width: number,
-    alpha: number,
-  ) => {
-    // History may reach before frame 0: the orbit was already turning.
-    const now = orbit(body, frame)
-    const tail = orbit(body, frame - lag)
-    const pts: string[] = []
-    for (let k = 0; k <= 4; k++) {
-      const p = orbit(body, frame - lag + (k * lag) / 4)
-      pts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`)
-    }
-    trails.push(
-      <g key={key}>
-        <linearGradient
-          id={`end-trail-${key}`}
-          gradientUnits="userSpaceOnUse"
-          x1={tail.x}
-          y1={tail.y}
-          x2={now.x}
-          y2={now.y}
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity={0} />
-          <stop offset="1" stopColor="#fff" stopOpacity={alpha} />
-        </linearGradient>
-        <polyline
-          points={pts.join(" ")}
-          fill="none"
-          stroke={`url(#end-trail-${key})`}
-          strokeWidth={width}
-          strokeLinecap="round"
-        />
-      </g>,
-    )
-    return now
-  }
-
-  TILES.forEach((tile, i) => {
-    const now = orbit(tile, frame)
-    if (now.u >= 1) return
-    const before = orbit(tile, frame - 1)
-    const speed = Math.hypot(now.x - before.x, now.y - before.y)
-    const strength = clamp01((speed - 2) / 30)
-    trail(`t${i}`, tile, 6, 1.2 + 2.8 * strength, 0.25 + 0.55 * strength)
-  })
-  const heads: React.ReactNode[] = []
-  DUST.forEach((d, i) => {
-    const probe = orbit(d, frame)
-    if (probe.u >= 1) return
-    const speed = clamp01((1 - probe.fall) * 1.8)
-    const alpha =
-      d.glow * (0.3 + 0.7 * speed) * (1 - clamp01((probe.u - 0.9) / 0.1))
-    const now = trail(`d${i}`, d, 4, d.size * probe.depth, alpha * 0.8)
-    heads.push(
-      <circle
-        key={`h${i}`}
-        cx={now.x.toFixed(1)}
-        cy={now.y.toFixed(1)}
-        r={(d.size * now.depth * (0.55 + 0.45 * now.fall)).toFixed(2)}
-        fillOpacity={alpha.toFixed(3)}
-      />,
-    )
-  })
-
+function BillboardLayer({ body, p }: { body: Billboard; p: Look }) {
+  const actor = CAST[body.cast]
+  const w = actor.w * actor.zoom
+  const h = actor.h * actor.zoom
+  if (!onFrame(p.x, p.y, (Math.hypot(w, h) / 2) * p.scale)) return null
   return (
-    <svg
-      width={1920}
-      height={1080}
-      style={{ position: "absolute", inset: 0, overflow: "visible", zIndex: 0 }}
+    <div
+      style={{
+        position: "absolute",
+        left: p.x - w / 2,
+        top: p.y - h / 2,
+        width: w,
+        height: h,
+        transform: `rotate(${p.spin.toFixed(3)}deg) scale(${p.scale.toFixed(4)})`,
+        opacity: p.fade * (1 - 0.85 * p.burn),
+        filter: filterOf(p.shade, p.burn),
+      }}
     >
-      {trails}
-      <g fill="#fff">{heads}</g>
-    </svg>
+      <div style={{ zoom: actor.zoom, width: actor.w, height: actor.h }}>
+        <Actor id={body.cast} />
+      </div>
+    </div>
+  )
+}
+
+/** An actor's content never changes, so camera frames skip re-rendering it. */
+const Actor = memo(function Actor({ id }: { id: CastId }) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {CAST[id].render()}
+    </div>
+  )
+})
+
+/** Light trails behind the bodies and the dust, drawn on one canvas. */
+function Streaks({ frame }: { frame: number }) {
+  const ref = useRef<HTMLCanvasElement>(null)
+  useLayoutEffect(() => {
+    const canvas = ref.current
+    const ctx = canvas?.getContext("2d")
+    if (!canvas || !ctx) return
+    const dpr = window.devicePixelRatio || 1
+    if (canvas.width !== 1920 * dpr) {
+      canvas.width = 1920 * dpr
+      canvas.height = 1080 * dpr
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.clearRect(0, 0, 1920, 1080)
+    ctx.lineCap = "round"
+    ctx.lineJoin = "round"
+
+    /** A tapered streak along the body's path over the last `lag` frames,
+     *  ending at `head` (the frame it has reached). */
+    const trail = (
+      body: Orbit,
+      head: number,
+      lag: number,
+      width: number,
+      alpha: number,
+    ) => {
+      const steps = 8
+      const now = orbit(body, head)
+      const tail = orbit(body, frame - lag)
+      const gradient = ctx.createLinearGradient(tail.x, tail.y, now.x, now.y)
+      gradient.addColorStop(0, "rgba(255,255,255,0)")
+      gradient.addColorStop(1, `rgba(255,255,255,${alpha.toFixed(3)})`)
+      ctx.strokeStyle = gradient
+      ctx.lineWidth = width
+      ctx.beginPath()
+      for (let k = 0; k <= steps; k++) {
+        const q = orbit(body, frame - lag + (k * (head - frame + lag)) / steps)
+        if (k === 0) ctx.moveTo(q.x, q.y)
+        else ctx.lineTo(q.x, q.y)
+      }
+      ctx.stroke()
+      return now
+    }
+
+    for (const body of BODIES) {
+      if (body.kind === "piece") continue
+      const now = orbit(body, frame)
+      if (now.u >= 1) continue
+      const before = orbit(body, frame - 1)
+      const speed = Math.hypot(now.x - before.x, now.y - before.y)
+      const strength = clamp01((speed - 4) / 30)
+      trail(body, frame, 7, 1.4 + 3 * strength, 0.2 + 0.5 * strength)
+    }
+    // A body burning into the core becomes a point of light as it fades.
+    for (const body of BODIES) {
+      const p = look(body, frame)
+      if (p.u >= 1 || p.burn < 0.02) continue
+      const radius = 30 + 160 * p.scale
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius)
+      glow.addColorStop(
+        0,
+        `rgba(255,255,255,${(0.55 * p.burn * p.fade).toFixed(3)})`,
+      )
+      glow.addColorStop(
+        0.25,
+        `rgba(255,255,255,${(0.16 * p.burn * p.fade).toFixed(3)})`,
+      )
+      glow.addColorStop(1, "rgba(255,255,255,0)")
+      ctx.fillStyle = glow
+      ctx.fillRect(p.x - radius, p.y - radius, radius * 2, radius * 2)
+    }
+    ctx.fillStyle = "#fff"
+    for (const d of DUST) {
+      // An arm's streak keeps draining into the core a few frames after its
+      // head lands, so the arms feed the hit right up to it.
+      const drain = d.arm ? clamp01((frame - d.land) / 3) : 0
+      if (frame >= d.land && (!d.arm || drain >= 1)) continue
+      const head = Math.min(frame, d.land)
+      const probe = orbit(d, head)
+      const speed = clamp01((1 - probe.fall) * 1.8)
+      const fade = d.arm ? 1 - drain : 1 - clamp01((probe.u - 0.9) / 0.1)
+      const alpha = d.glow * (0.3 + 0.7 * speed) * fade
+      const width = d.size * probe.depth * (d.arm ? 1 + speed : 1)
+      const now = trail(d, head, d.arm ? 6 : 5, width, alpha * 0.85)
+      if (frame >= d.land) continue
+      ctx.globalAlpha = alpha
+      ctx.beginPath()
+      ctx.arc(
+        now.x,
+        now.y,
+        d.size * now.depth * (0.55 + 0.45 * now.fall),
+        0,
+        Math.PI * 2,
+      )
+      ctx.fill()
+      ctx.globalAlpha = 1
+    }
+  })
+  return (
+    <canvas
+      ref={ref}
+      style={{ position: "absolute", inset: 0, width: 1920, height: 1080 }}
+    />
   )
 }
 
@@ -278,10 +414,16 @@ function Streaks({ frame }: { frame: number }) {
 export function coreCharge(frame: number) {
   let landed = 0
   let flare = 0
-  for (const tile of TILES) {
-    if (frame < tile.land) continue
+  for (const body of BODIES) {
+    if (frame < body.land) continue
     landed += 1
-    flare += Math.exp(-(frame - tile.land) / 5)
+    flare += Math.exp(-(frame - body.land) / 5)
   }
-  return { landed: landed / TILES.length, flare: Math.min(1.5, flare) }
+  // The arms' last specks flicker the core up to the hit.
+  for (const d of DUST) {
+    if (frame < d.land || d.land < 48) continue
+    const k = d.land >= T.bursts[0] ? 0.08 : 0.035
+    flare += k * Math.exp(-(frame - d.land) / 4)
+  }
+  return { landed: landed / BODIES.length, flare: Math.min(1.6, flare) }
 }

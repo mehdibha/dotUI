@@ -1,3 +1,5 @@
+import { TOKEN } from "./data"
+
 /* The shipped source: examples/origin-next/src/components/ui/button.tsx, lines
    1–46, verbatim — what `shadcn add` writes into a consumer app. */
 export const BUTTON_SOURCE = `"use client";
@@ -48,8 +50,7 @@ type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 `
 
-/* The components.json `shadcn init` writes (examples/origin-next), with the
-   preset token shortened to the one typed in the terminal. */
+/* The components.json `shadcn init` writes: examples/origin-next, verbatim. */
 export const COMPONENTS_JSON = `{
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "default",
@@ -57,7 +58,7 @@ export const COMPONENTS_JSON = `{
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "app/globals.css",
+    "css": "src/app/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
@@ -72,6 +73,6 @@ export const COMPONENTS_JSON = `{
     "hooks": "@/hooks"
   },
   "registries": {
-    "@dotui": "https://dotui.org/r/{name}?preset=q1YqU7Iy0V"
+    "@dotui": "https://dotui.org/r/{name}?preset=${TOKEN}"
   }
 }`

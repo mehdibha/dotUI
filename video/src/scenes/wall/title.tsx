@@ -1,71 +1,56 @@
-import { useCurrentFrame } from "remotion"
+import type { CSSProperties } from "react"
+import { AbsoluteFill } from "remotion"
 
-import { clamp01, lerp, springAt } from "../../lib/motion"
-import { BlurWords, HEADLINE } from "../../lib/type"
+import { Lockup } from "../../lib/brand"
+import { ease, lerp, progress, punch } from "../../lib/motion"
+import { T } from "./timeline"
 
-/* The title card: the dotUI mark (www/public/brand/dotui-logo-white.svg — a
-   rounded square, rx 12/100, its dot at 75,75 r 11) beside "dotUI Studio". */
+const HEIGHT = 150
+/** Room around the lockup for the blur halo, inside the mask box. */
+const PAD = 48
 
-export const INK_DOT = "#381e1e"
-
-export function Mark({
-  size,
-  dot = 1,
-  style,
-}: {
-  size: number
-  /** Dot scale (0 = no dot). */
-  dot?: number
-  style?: React.CSSProperties
-}) {
+/* The lockup resolves out of blur left to right — the mark, then the word,
+   then "Studio", like BlurWords' stagger — lands with the beat's punch, and
+   keeps breathing toward the cut. `p` is the resolve front, in % of the box. */
+export function Title({ frame }: { frame: number }) {
+  if (frame < T.lockup) return null
+  const p = lerp(-30, 130, progress(frame, T.lockup, 22, ease.soft))
+  const scale =
+    (1 + punch(frame, T.land)) *
+    lerp(0.985, 1.015, (frame - T.lockup) / (T.end - T.lockup))
+  const box: CSSProperties = { padding: PAD }
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      style={{ display: "block", overflow: "visible", ...style }}
-    >
-      <rect width={100} height={100} rx={12} fill="#fff" />
-      <circle cx={75} cy={75} r={11 * dot} fill={INK_DOT} />
-    </svg>
-  )
-}
-
-export function Title({ start }: { start: number }) {
-  const frame = useCurrentFrame()
-  const pop = springAt(frame, start, { damping: 15, stiffness: 140, mass: 0.8 })
-  const dot = springAt(frame, start + 10, {
-    damping: 10,
-    stiffness: 220,
-    mass: 0.5,
-  })
-  const size = 124
-  const fade = clamp01(pop * 1.6)
-  return (
-    <div
+    <AbsoluteFill
       style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: 40,
+        transform: `scale(${scale.toFixed(5)})`,
         pointerEvents: "none",
       }}
     >
-      <Mark
-        size={size}
-        dot={dot}
-        style={{
-          opacity: fade,
-          transform: `scale(${lerp(0.55, 1, pop)}) rotate(${lerp(-14, 0, pop)}deg)`,
-          filter: pop < 0.98 ? `blur(${(1 - clamp01(pop)) * 10}px)` : undefined,
-          boxShadow: "none",
-        }}
-      />
-      <div style={{ ...HEADLINE, fontSize: 140, lineHeight: 1 }}>
-        <BlurWords text="dotUI Studio" start={start + 8} stagger={6} />
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            ...box,
+            maskImage: `linear-gradient(90deg, #000 ${p - 26}%, transparent ${p - 4}%)`,
+          }}
+        >
+          <Lockup height={HEIGHT} studio />
+        </div>
+        {p < 125 ? (
+          <div
+            style={{
+              ...box,
+              position: "absolute",
+              inset: 0,
+              filter: "blur(12px)",
+              maskImage: `linear-gradient(90deg, transparent ${p - 26}%, #000 ${p - 10}%, #000 ${p}%, transparent ${p + 22}%)`,
+            }}
+          >
+            <Lockup height={HEIGHT} studio />
+          </div>
+        ) : null}
       </div>
-    </div>
+    </AbsoluteFill>
   )
 }
