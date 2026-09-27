@@ -357,7 +357,7 @@ function PresetPickerContent({
     <>
       {/* The search row drops the Command's hairline and sits on the same
           inset as the rows below; the New button, when any, shares it. */}
-      <div className="mx-2 flex items-center gap-2">
+      <div className="mx-(--command-inset) flex items-center gap-2">
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === "popover"}
