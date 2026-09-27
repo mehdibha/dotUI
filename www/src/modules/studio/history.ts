@@ -19,13 +19,7 @@ import { ORIGIN } from "@/modules/presets"
 import { sameState, validate } from "./axes"
 import type { StudioState } from "./axes"
 import { historyKey } from "./history-keys"
-import {
-  describe,
-  getCurrent,
-  getSelection,
-  select,
-  selectionKey,
-} from "./selection"
+import { getCurrent, getSelection, select, selectionKey } from "./selection"
 import type { Selection, ViewSelection } from "./selection"
 import { quoted, undoToast } from "./toasts"
 import * as workspace from "./workspace"
@@ -202,28 +196,17 @@ export function newSystem(): string | undefined {
   return doc?.id
 }
 
-/** Opens a kept copy of a row: "My Linear" from a preset, "Acme copy" from
- *  a system, the link's name from a shared view. Returns its id. */
-export function duplicate(sel: Selection): string | undefined {
-  const source = describe(sel, workspace.getWorkspace())
-  if (sel.kind === "system" && !source.doc) return
+/** Opens a copy of one of the user's systems, "Acme copy". Returns its id. */
+export function duplicate(id: string): string | undefined {
+  const source = workspace.findSystem(id)
+  if (!source) return
   const doc = workspace.create({
-    name:
-      sel.kind === "preset"
-        ? `My ${source.name}`
-        : sel.kind === "system"
-          ? workspace.uniqueName(
-              source.name.replace(/ copy( \d+)?$/, ""),
-              workspace.getWorkspace().systems,
-              " copy",
-            )
-          : source.name,
-    origin:
-      sel.kind === "preset"
-        ? { kind: "preset", id: sel.id }
-        : sel.kind === "shared"
-          ? { kind: "snapshot", id: sel.id }
-          : { kind: "copy", of: sel.id },
+    name: workspace.uniqueName(
+      source.name.replace(/ copy( \d+)?$/, ""),
+      workspace.getWorkspace().systems,
+      " copy",
+    ),
+    origin: { kind: "copy", of: id },
     initial: source.state,
     state: source.state,
   })

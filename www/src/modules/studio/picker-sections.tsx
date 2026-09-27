@@ -40,7 +40,6 @@ export function pickerSections(
           id: current.key,
           name: current.name,
           swatch: current.swatch,
-          kind: "shared link",
           subtitle: () => "Shared link",
           resolve: () => resolveDesignSystem(sel.state),
         },
@@ -57,6 +56,7 @@ export function pickerSections(
         swatch: swatchOf(system),
         badge: system.draft ? "Draft" : undefined,
         kind: system.draft ? "draft" : undefined,
+        hasMenu: true,
         subtitle: () =>
           `${basedOn(system, workspace)} · ${ago(system.updatedAt, Date.now(), "narrow")}`,
         resolve: () => resolveDesignSystem(system.state),
@@ -68,7 +68,6 @@ export function pickerSections(
     items: PRESET_META.map((meta) => ({
       ...meta,
       id: selectionKey({ kind: "preset", id: meta.id }),
-      kind: "preset",
       subtitle: meta.id === ORIGIN.id ? () => "Default" : undefined,
       resolve: () => resolvePreset(meta.id),
     })),

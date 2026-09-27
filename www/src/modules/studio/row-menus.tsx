@@ -1,67 +1,15 @@
 "use client"
 
-/* The picker's ⋯ menus: a row's actions by kind (presets and shared links
-   can be copied; the user's systems renamed and deleted too) and the
-   picker's own, which leads to Recently deleted. */
+/* The picker's ⋯ menu on the user's systems. */
 
 import { Kbd } from "@/registry/ui/kbd"
 import { MenuContent, MenuItem, MenuItemLabel } from "@/registry/ui/menu"
 import { Separator } from "@/registry/ui/separator"
-import { toastManager } from "@/registry/ui/toast"
 
-import { viewLink } from "./selection"
-import type { ViewSelection } from "./selection"
-import { initCommand } from "./share"
 import type { DesignSystemDoc } from "./workspace"
 
 /** Touch-sized rows on phones. */
 const item = "pointer-coarse:min-h-11"
-
-function copy(text: string, what: string) {
-  navigator.clipboard.writeText(text).then(
-    () => toastManager.add({ title: `${what} copied` }),
-    (error: unknown) => {
-      console.error(error)
-      toastManager.add({
-        title: `Couldn't copy the ${what.toLowerCase()}`,
-        type: "error",
-      })
-    },
-  )
-}
-
-/** A preset's or a shared link's menu. */
-export function ViewMenu({
-  sel,
-  onDuplicate,
-}: {
-  sel: ViewSelection
-  onDuplicate: () => void
-}) {
-  return (
-    <MenuContent
-      aria-label="Design system actions"
-      onAction={(key) => {
-        if (key === "duplicate") onDuplicate()
-        if (key === "link") copy(viewLink(sel), "Link")
-        if (key === "install" && sel.kind === "preset")
-          copy(initCommand(`p/${sel.id}`), "Install command")
-      }}
-    >
-      <MenuItem id="duplicate" className={item}>
-        Duplicate
-      </MenuItem>
-      <MenuItem id="link" className={item}>
-        Copy link
-      </MenuItem>
-      {sel.kind === "preset" && (
-        <MenuItem id="install" className={item}>
-          Copy install command
-        </MenuItem>
-      )}
-    </MenuContent>
-  )
-}
 
 /** One of the user's systems. F2 renames the current one. */
 export function SystemMenu({

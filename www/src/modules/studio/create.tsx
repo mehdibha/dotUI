@@ -20,7 +20,7 @@ import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { basedOn, pickerSections, rowSelection } from "./picker-sections"
 import { RecentlyDeleted } from "./recently-deleted"
-import { SystemMenu, ViewMenu } from "./row-menus"
+import { SystemMenu } from "./row-menus"
 import { getCurrent, select, selectionKey, useCurrent } from "./selection"
 import type { Current, Selection } from "./selection"
 import { CHAPTERS } from "./state"
@@ -135,11 +135,7 @@ export function StudioPanel({ className }: { className?: string }) {
 
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
     const sel: Selection = rowSelection(key, current)
-    const onDuplicate = () =>
-      // Duplicating the draft on screen doesn't leave it.
-      created(() => duplicate(sel), key !== current.key)
-    if (sel.kind !== "system")
-      return <ViewMenu sel={sel} onDuplicate={onDuplicate} />
+    if (sel.kind !== "system") return null
     const doc = workspace.systems.find((s) => s.id === sel.id)
     if (!doc) return null
     return (
@@ -147,7 +143,10 @@ export function StudioPanel({ className }: { className?: string }) {
         doc={doc}
         isCurrent={key === current.key}
         onRename={() => setRenaming({ key, closes: false })}
-        onDuplicate={onDuplicate}
+        // Duplicating the draft on screen doesn't leave it.
+        onDuplicate={() =>
+          created(() => duplicate(doc.id), key !== current.key)
+        }
         onDelete={() => afterClose(() => onDelete(doc.id))}
       />
     )

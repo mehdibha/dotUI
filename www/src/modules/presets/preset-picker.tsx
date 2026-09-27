@@ -59,8 +59,10 @@ interface PresetPickerItem {
   badge?: string
   /** The muted second line, read as the row renders so times stay fresh. */
   subtitle?: () => ReactNode
-  /** Tells same-named rows apart in the ⋯ label, e.g. "preset". */
+  /** Tells same-named rows apart in the ⋯ label, e.g. "draft". */
   kind?: string
+  /** Gets a ⋯ menu from `renderItemMenu`. */
+  hasMenu?: boolean
   /** Themes the flyout — called only for the previewed item. */
   resolve: () => DesignSystem
 }
@@ -390,10 +392,11 @@ function PresetPickerContent({
       return
     const active = e.currentTarget.getAttribute("aria-activedescendant")
     const row = active ? document.getElementById(active) : null
+    const trigger = row?.querySelector("[data-row-menu]")
     const key = row?.dataset.key
-    if (!row || !key) return
+    if (!trigger || !key) return
     e.preventDefault()
-    openMenu(key, row.querySelector("[data-row-menu]") ?? row)
+    openMenu(key, trigger)
   }
 
   function pick(key: Key) {
@@ -502,7 +505,7 @@ function PresetPickerContent({
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
                     onMenu={
-                      renderItemMenu
+                      renderItemMenu && item.hasMenu
                         ? (trigger) => openMenu(item.id, trigger)
                         : undefined
                     }

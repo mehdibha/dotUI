@@ -138,9 +138,3 @@ export function useCurrent(): Current {
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }
-
-/** The studio link of a view. */
-export function viewLink(sel: ViewSelection): string {
-  const param = sel.kind === "preset" ? "preset" : "s"
-  return `${window.location.origin}/studio?${param}=${sel.id}`
-}

@@ -250,52 +250,18 @@ describe("views and drafts", () => {
 })
 
 describe("duplicate", () => {
-  it("copies a preset as My <preset>, kept", async () => {
-    const { history, current } = await load()
-    const id = history.duplicate({ kind: "preset", id: "linear" })!
-    expect(current().doc).toMatchObject({
-      id,
-      name: "My Linear",
-      draft: false,
-      origin: { kind: "preset", id: "linear" },
-      state: getPreset("linear")!.state,
-    })
-    expect(history.duplicate({ kind: "preset", id: "linear" })).toBeDefined()
-    expect(current().name).toBe("My Linear 2")
-  })
-
   it("copies a system as <name> copy, never chaining", async () => {
     const { history, ws, current, system } = await load()
     const id = system()
     ws.rename(id, "Acme")
-    const copy = history.duplicate({ kind: "system", id })!
+    const copy = history.duplicate(id)!
     expect(current().doc).toMatchObject({
       name: "Acme copy",
       origin: { kind: "copy", of: id },
     })
     expect(current().state.radiusPx).toBe(3)
-    history.duplicate({ kind: "system", id: copy })
+    history.duplicate(copy)
     expect(current().name).toBe("Acme copy 2")
-  })
-
-  it("copies a shared view under its name; undo never removes the copy", async () => {
-    const { history, ws, selection, current, radius } = await load()
-    const shared = {
-      kind: "shared",
-      id: "abcdefghij",
-      name: "Acme",
-      state: radius(9),
-    } as const
-    selection.select(shared)
-    history.duplicate(shared)
-    expect(current().doc).toMatchObject({
-      name: "Acme",
-      origin: { kind: "snapshot", id: "abcdefghij" },
-    })
-    history.undo()
-    expect(current().doc?.name).toBe("Acme")
-    expect(ws.getWorkspace().systems).toHaveLength(1)
-    expect(ws.getTrash()).toEqual([])
   })
 })
 

@@ -13,14 +13,8 @@ import {
   SNAPSHOT_ID,
 } from "@/lib/snapshots/snapshot"
 import type { Snapshot } from "@/lib/snapshots/snapshot"
-import { codeFlags } from "@/publisher/code-options"
-import {
-  buildInitCommands,
-  packageManagerStore,
-} from "@/modules/docs/install-commands"
 
 import type { StudioState } from "./axes"
-import { getCodeOptions } from "./export/code-options-store"
 import { useCurrent } from "./selection"
 
 export type Source = { kind: "preset" | "snapshot"; id: string }
@@ -31,13 +25,6 @@ export const registryPath = ({ kind, id }: Source) =>
 
 export const studioLink = ({ kind, id }: Source) =>
   `${window.location.origin}/studio?${kind === "preset" ? "preset" : "s"}=${id}`
-
-/** The init command for a registry path: `p/<preset>` or `s/<snapshot>`. */
-export function initCommand(path: string): string {
-  const flags = codeFlags(getCodeOptions())
-  const url = `${window.location.origin}/r/${path}/init.json${flags ? `?code=${flags}` : ""}`
-  return buildInitCommands(url)[packageManagerStore.get()]
-}
 
 interface Content {
   name: string
