@@ -1,9 +1,10 @@
 /* Render stills of one composition from a single bundle, plus a contact sheet.
 
-   node scripts/frames.ts <Composition> <frames> [--sheet] [--scale=0.5] [--cols=4]
+   node scripts/frames.ts <Composition> <frames> [--sheet] [--scale=0.5] [--cols=4] [--concurrency=3]
 
    <frames>: "0,45,90" · "0-600:30" (range with step) · "all:60"
    Writes out/frames/<Composition>/<frame>.jpg and out/frames/<Composition>.sheet.jpg.
+   A scene id bundles only that scene (a broken sibling can't break it).
    Set VIDEO_NO_CACHE=1 to skip webpack's disk cache (parallel runs). */
 
 import { execFileSync } from "node:child_process"
@@ -13,6 +14,7 @@ import { fileURLToPath } from "node:url"
 import { bundle } from "@remotion/bundler"
 import { openBrowser, renderStill, selectComposition } from "@remotion/renderer"
 
+import { SCENE_LIST } from "../src/scene-list.ts"
 import { webpackOverride } from "../webpack.ts"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
@@ -29,8 +31,33 @@ const scale = Number(flag("scale") ?? 0.5)
 const cols = Number(flag("cols") ?? 4)
 const sheet = flags.includes("--sheet")
 
+const concurrency = Number(flag("concurrency") ?? 3)
+
+// A single scene gets its own entry, so it bundles without its siblings.
+const scene = SCENE_LIST.find((s) => s.id === id)
+let entryPoint = path.join(root, "src/index.ts")
+if (scene) {
+  entryPoint = path.join(root, "src/.entries", `${scene.file}.tsx`)
+  fs.mkdirSync(path.dirname(entryPoint), { recursive: true })
+  fs.writeFileSync(
+    entryPoint,
+    `import "../styles.css"
+import { Composition, registerRoot } from "remotion"
+import { Film } from "../film"
+import { BAR, FPS, HEIGHT, WIDTH } from "../lib/timing"
+import { ${scene.id} as Scene } from "../scenes/${scene.file}"
+function Filmed() {
+  return <Film><Scene /></Film>
+}
+registerRoot(() => (
+  <Composition id="${scene.id}" component={Filmed} durationInFrames={${scene.bars} * BAR} fps={FPS} width={WIDTH} height={HEIGHT} />
+))
+`,
+  )
+}
+
 const serveUrl = await bundle({
-  entryPoint: path.join(root, "src/index.ts"),
+  entryPoint,
   webpackOverride,
   enableCaching: !process.env.VIDEO_NO_CACHE,
   onProgress: () => {},
@@ -66,7 +93,7 @@ fs.mkdirSync(dir, { recursive: true })
 const files: string[] = []
 const queue = [...frames]
 await Promise.all(
-  Array.from({ length: 4 }, async () => {
+  Array.from({ length: concurrency }, async () => {
     while (queue.length) {
       const frame = queue.shift()!
       const output = path.join(dir, `${String(frame).padStart(5, "0")}.jpg`)

@@ -1,6 +1,8 @@
 import { Sequence } from "remotion"
 
 import { bars } from "./lib/timing"
+import { SCENE_LIST } from "./scene-list"
+import type { SceneId } from "./scene-list"
 import { Axes } from "./scenes/axes"
 import { Compose } from "./scenes/compose"
 import { End } from "./scenes/end"
@@ -10,18 +12,23 @@ import { Patterns } from "./scenes/patterns"
 import { Presets } from "./scenes/presets"
 import { Wall } from "./scenes/wall"
 
-/* The edit. Lengths are in bars (2 s at 120 BPM); every cut lands on a
-   downbeat. Each scene also registers as its own composition for iteration. */
-export const SCENES = [
-  { id: "Open", component: Open, bars: 2 },
-  { id: "Wall", component: Wall, bars: 3 },
-  { id: "Axes", component: Axes, bars: 9 },
-  { id: "Presets", component: Presets, bars: 3 },
-  { id: "Compose", component: Compose, bars: 4 },
-  { id: "Patterns", component: Patterns, bars: 4 },
-  { id: "Export", component: Export, bars: 3 },
-  { id: "End", component: End, bars: 3 },
-] as const
+const COMPONENTS: Record<SceneId, React.ComponentType> = {
+  Open,
+  Wall,
+  Axes,
+  Presets,
+  Compose,
+  Patterns,
+  Export,
+  End,
+}
+
+/* The edit. Every cut lands on a downbeat; each scene also registers as its
+   own composition for iteration. */
+export const SCENES = SCENE_LIST.map((s) => ({
+  ...s,
+  component: COMPONENTS[s.id],
+}))
 
 export const LAUNCH_FRAMES = SCENES.reduce((n, s) => n + bars(s.bars), 0)
 
