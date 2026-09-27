@@ -40,10 +40,10 @@ const { useStyles, styles } = createStyles(toastMeta, {
         "data-expanded:data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-inset)))]",
         "data-expanded:data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-100%-var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
         "data-expanded:data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+100%+var(--toast-inset)))_translateY(var(--toast-calc-offset-y))]",
-        "border border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)] [--surface-bg:var(--color-popover)]",
+        "border border-(--overlay-border) bg-popover/(--popover-alpha) text-fg [backdrop-filter:var(--popover-backdrop-filter)]",
       ],
       content:
-        "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
+        "pointer-events-auto flex min-h-12 items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm [--surface-bg:var(--color-popover)] data-behind:opacity-0 data-behind:not-data-expanded:pointer-events-none data-expanded:opacity-100",
       body: "flex min-w-0 items-center gap-2",
       icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
       message: "flex min-w-0 flex-1 flex-col gap-0.5",

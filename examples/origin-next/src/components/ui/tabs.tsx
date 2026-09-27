@@ -48,7 +48,7 @@ const tabsVariants = tv({
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
-        tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-bg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent selected:text-fg",
+        tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent selected:text-fg",
         selectionIndicator: "hidden",
       },
     },

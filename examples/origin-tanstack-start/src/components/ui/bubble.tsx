@@ -10,7 +10,7 @@ const bubbleVariants = tv({
     content:
       "w-fit max-w-full min-w-0 overflow-hidden rounded-lg border border-transparent wrap-break-word group-data-[align=end]/bubble:self-end px-3 py-2 text-sm leading-relaxed",
     reactions:
-      "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 ring-bg has-[button]:p-0 data-[align=end]:right-3 data-[align=start]:left-3 data-[side=bottom]:bottom-0 data-[side=bottom]:translate-y-3/4 data-[side=top]:top-0 data-[side=top]:-translate-y-3/4 text-sm ring-3",
+      "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 ring-(--surface-bg,var(--color-bg)) has-[button]:p-0 data-[align=end]:right-3 data-[align=start]:left-3 data-[side=bottom]:bottom-0 data-[side=bottom]:translate-y-3/4 data-[side=top]:top-0 data-[side=top]:-translate-y-3/4 text-sm ring-3",
   },
   variants: {
     variant: {
@@ -27,7 +27,7 @@ const bubbleVariants = tv({
         root: "*:data-bubble-content:bg-primary-muted",
       },
       outline: {
-        root: "*:data-bubble-content:border-border *:data-bubble-content:bg-bg",
+        root: "*:data-bubble-content:border-border *:data-bubble-content:bg-(--surface-bg,var(--color-bg))",
       },
       ghost: {
         root: "max-w-full *:data-bubble-content:rounded-none *:data-bubble-content:border-none *:data-bubble-content:bg-transparent *:data-bubble-content:p-0",

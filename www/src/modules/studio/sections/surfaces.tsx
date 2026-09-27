@@ -4,6 +4,8 @@
    neutral light beside dark, then the settings a style is made of and each
    mode's page. */
 
+import { useState } from "react"
+
 import type { StepName, Theme } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
@@ -72,7 +74,10 @@ function lookStyle(
     boxShadow: shadowCss(
       look.shadow.map((layer) => ({
         offset: scaleOffset(layer.offset, k),
-        color: { light: boost(layer.color.light), dark: boost(layer.color.dark) },
+        color: {
+          light: boost(layer.color.light),
+          dark: boost(layer.color.dark),
+        },
       })),
       color,
     ),
@@ -168,7 +173,10 @@ export function SurfacesRow({
   theme: Theme
 }) {
   const { state, set, setState } = studio
-  const { style, exact } = surfaceStyle(state)
+  // The style the edits started from names the row while they differ.
+  const [from, setFrom] = useState<string>()
+  const { style, exact } = surfaceStyle(state, from)
+  if (exact && style.id !== from) setFrom(style.id)
   const edit = (patch: Parameters<typeof withSurface>[1]) =>
     setState(withSurface(state, patch))
   return (
@@ -178,9 +186,7 @@ export function SurfacesRow({
       value={
         <>
           {!exact && <ModifiedDot />}
-          <span className="truncate">
-            {exact ? style.label : `${style.label}, edited`}
-          </span>
+          <span className="truncate">{style.label}</span>
           <SurfaceGlyph state={state} theme={theme} mini />
         </>
       }

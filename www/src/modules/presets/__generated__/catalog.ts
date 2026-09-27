@@ -114,7 +114,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
 				"--font-heading": "'Source Serif 4', ui-serif, Georgia, serif",
 				"--radius": "0.666875rem",
-				"--shadow-card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+				"--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
 				"--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 				"--shadow-modal": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 				"--focus-ring-width": "1px",
@@ -280,7 +280,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-control": "var(--radius-lg)",
 				"--studio-radius-item": "var(--radius-sm)",
 				"--studio-radius-control-sm": "var(--radius-md)",
-				"--shadow-card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+				"--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
 				"--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 				"--shadow-modal": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 				"--focus-ring-inner": "1px",
@@ -355,7 +355,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			tokens: {
 				"--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
 				"--radius": "0.5rem",
-				"--shadow-card": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+				"--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
 				"--shadow-popover": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
 				"--shadow-modal": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
 				"--focus-ring-width": "1px",
@@ -519,7 +519,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-modal":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-				"--color-card": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+				"--color-card": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
 				"--focus-input-inset": "inset",
 				"--focus-input-offset": "0px",
 				"--focus-input-width": "1px",
@@ -767,7 +767,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-modal":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
-				"--color-card": "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))",
+				"--color-card":
+					"light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
 				"--focus-ring-inner": "1px",
 				"--focus-ring-offset": "0px",
 				"--focus-input-width": "var(--focus-ring-width)",

@@ -15,10 +15,7 @@ const { useStyles, styles } = createStyles(popoverMeta, {
   base: {
     slots: {
       popover: [
-        "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
-        // The blur sits on a layer behind the content, never on the popover
-        // itself: a backdrop-filter there would make it a containing block.
-        "before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:[backdrop-filter:var(--popover-backdrop-filter)]",
+        "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
       ],
       arrow: [
         "block [&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",

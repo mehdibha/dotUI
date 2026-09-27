@@ -453,12 +453,12 @@
 }
 
 @utility focus-ring {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--color-bg), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+    --tw-ring-shadow: inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
     box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 @utility focus-input {
-    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--color-bg), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
+    --tw-ring-shadow: inset 0 0 0 var(--focus-input-inner) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color));
     box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
@@ -527,7 +527,7 @@
 }
 
 @utility skeleton--shimmer {
-    --skeleton-image: linear-gradient(to right, var(--color-muted) 33%, color-mix(in oklab, var(--color-muted), var(--color-bg) 45%), var(--color-muted) 66%);
+    --skeleton-image: linear-gradient(to right, var(--color-muted) 33%, color-mix(in oklab, var(--color-muted), var(--surface-bg, var(--color-bg)) 45%), var(--color-muted) 66%);
     --skeleton-animation: var(--animate-skeleton-shimmer);
 }
 

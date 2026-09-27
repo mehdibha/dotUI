@@ -682,7 +682,6 @@ function CategoriesCard() {
             name="category"
             labels={categoryLabels}
             innerRadius={0.6}
-            stroke="var(--color-bg)"
             strokeWidth={4}
             legend={false}
             height={208}

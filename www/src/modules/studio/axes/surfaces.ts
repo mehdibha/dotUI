@@ -8,8 +8,8 @@
      overlay, under the field/muted rung so content inside still reads.
    - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Spectrum). An
      edgeless system's dark is derived: shadows die on near-black, so they
-     double, cards lift a rung and overlays take the hairline (Atlassian,
-     Spectrum, HeroUI).
+     double, cards lift a quarter rung and overlays take the hairline
+     (Atlassian, Spectrum, HeroUI).
    - Shadow: one lift for cards, popovers and dialogs together, on Tailwind's
      rungs — the default IS the registry's look (card none · popover md ·
      modal lg).
@@ -90,16 +90,27 @@ export const SURFACE_STYLES: SurfaceStyle[] = [
 
 const STYLE_KEYS: StyleKey[] = ["surfaceLayers", "surfaceEdge", "surfaceShadow"]
 
-/** The style the state sits on — exactly, or the closest one it was edited
- *  from. */
-export function surfaceStyle(state: StudioState): {
-  style: SurfaceStyle
-  exact: boolean
-} {
+/** The style the state sits on, or the closest one: Layers outweighs the
+ *  other two, and a tie goes to `from`, the style the edits started at. */
+export function surfaceStyle(
+  state: StudioState,
+  from?: string,
+): { style: SurfaceStyle; exact: boolean } {
   const score = (s: SurfaceStyle) =>
-    STYLE_KEYS.filter((key) => state[key] === s.values[key]).length
-  const best = SURFACE_STYLES.reduce((a, b) => (score(b) > score(a) ? b : a))
-  return { style: best, exact: score(best) === STYLE_KEYS.length }
+    STYLE_KEYS.reduce(
+      (n, key) =>
+        state[key] === s.values[key]
+          ? n + (key === "surfaceLayers" ? 3 : 1)
+          : n,
+      0,
+    )
+  const best = SURFACE_STYLES.reduce((a, b) =>
+    score(b) > score(a) || (score(b) === score(a) && b.id === from) ? b : a,
+  )
+  return {
+    style: best,
+    exact: STYLE_KEYS.every((key) => state[key] === best.values[key]),
+  }
 }
 
 /** Cards with no edge, no shadow and the page's own tone would vanish. */
@@ -159,6 +170,8 @@ const HAIRLINE: SurfaceColor = { kind: "hairline" }
 const step = (step: string): SurfaceColor => ({ kind: "step", step })
 /** Halfway between the 50 and 100 rungs: the registry's dark popover. */
 const HALF: SurfaceColor = { kind: "mix", a: "50", b: "100", weight: 50 }
+/** A quarter rung above 50: a lifted dark card, still under the popover. */
+const QUARTER: SurfaceColor = { kind: "mix", a: "50", b: "100", weight: 75 }
 const both = <T>(value: T): PerMode<T> => ({ light: value, dark: value })
 
 /* Tailwind's shadow ladder as `[offset, alpha]` layers: 0 none, then xs, sm,
@@ -187,12 +200,12 @@ const RUNGS: Array<Array<[string, number]>> = [
 
 /** Rung per role — card, popover, modal — at each shadow step. Edgeless
  *  cards start a rung higher: their shadow is their edge. */
-const LADDERS: Record<string, Record<string, [number, number, number]>> = {
+const LADDERS = {
   line: {
     flat: [0, 2, 3],
     subtle: [0, 3, 4],
-    raised: [1, 4, 5],
-    floating: [2, 5, 6],
+    raised: [2, 4, 5],
+    floating: [3, 5, 6],
   },
   none: {
     flat: [0, 2, 3],
@@ -200,7 +213,7 @@ const LADDERS: Record<string, Record<string, [number, number, number]>> = {
     raised: [3, 4, 5],
     floating: [4, 5, 6],
   },
-}
+} satisfies Record<string, Record<string, [number, number, number]>>
 
 /* The soft 0-offset outline shadow-led systems draw around every raised
    surface (Fluent's 0 0 2px). */
@@ -228,15 +241,16 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
+  const ladder = LADDERS[edgeless ? "none" : "line"]
   const [card, popover, modal] =
-    LADDERS[state.surfaceEdge]?.[state.surfaceShadow] ?? LADDERS.line!.subtle!
+    ladder[state.surfaceShadow as keyof typeof ladder] ?? ladder.subtle
   return {
     page: { light: grouped ? HALF : step("25"), dark: step("25") },
     card: {
       edge: both(edgeless ? NONE : HAIRLINE),
       bg: {
         light: grouped ? step("25") : tonal ? HALF : step("50"),
-        dark: edgeless || tonal ? HALF : step("50"),
+        dark: edgeless || tonal ? QUARTER : step("50"),
       },
       shadow: shadowLayers(card, edgeless),
     },

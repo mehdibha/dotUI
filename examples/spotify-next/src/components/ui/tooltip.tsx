@@ -9,9 +9,9 @@ import { type VariantProps, tv } from "tailwind-variants";
 const tooltipVariants = tv({
   slots: {
     content:
-      "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-md px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none border bg-popover text-fg shadow-(--shadow-popover,var(--shadow-md)) transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[transform,opacity,scale] motion-reduce:transition-none entering:opacity-0 exiting:opacity-0 [--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset) placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]",
+      "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-md px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none border border-(--overlay-border) bg-popover/(--popover-alpha) text-fg shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[transform,opacity,scale] motion-reduce:transition-none entering:opacity-0 exiting:opacity-0 [--slide-offset:--spacing(2)] entering:transform-(--offset) exiting:transform-(--offset) placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]",
     arrow:
-      "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover [&>svg]:stroke-border",
+      "block [&>svg]:size-2.5 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180 placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
   },
 });
 
