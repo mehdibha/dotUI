@@ -1,10 +1,11 @@
 /* Render the film: one bundle, one MP4 per scene (a crash or a re-take only
    costs that scene), then a lossless concat into out/launch.mp4.
 
-   node scripts/render.ts [--scenes=Open,Wall] [--scale=1] [--concurrency=3] [--music=public/track.mp3]
+   node scripts/render.ts [--scenes=Open,Wall] [--skip=Patterns] [--scale=1] [--concurrency=3] [--music=public/track.mp3]
 
    --scenes re-renders only those scenes and re-concats with the existing
-   takes of the others. --scale=2 renders a 4K master (to out/launch@2x.mp4). */
+   takes of the others. --skip leaves scenes out of the cut (a preview while one
+   is broken). --scale=2 renders a 4K master (to out/launch@2x.mp4). */
 
 import { execFileSync } from "node:child_process"
 import fs from "node:fs"
@@ -23,6 +24,7 @@ const flag = (name: string) =>
 const scale = Number(flag("scale") ?? 1)
 const concurrency = Number(flag("concurrency") ?? 3)
 const only = flag("scenes")?.split(",")
+const skip = flag("skip")?.split(",") ?? []
 const music = flag("music")
 const suffix = scale === 1 ? "" : `@${scale}x`
 const ffmpeg = fs.existsSync("/opt/homebrew/bin/ffmpeg")
@@ -43,6 +45,7 @@ fs.mkdirSync(dir, { recursive: true })
 const takes: string[] = []
 
 for (const scene of SCENE_LIST) {
+  if (skip.includes(scene.id)) continue
   const output = path.join(dir, `${scene.file}${suffix}.mp4`)
   takes.push(output)
   if (only && !only.includes(scene.id) && fs.existsSync(output)) continue
