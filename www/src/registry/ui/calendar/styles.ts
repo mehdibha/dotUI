@@ -49,7 +49,9 @@ const { useStyles, styles } = createStyles(calendarMeta, {
             "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
             "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
           ],
-          cellInner: "rounded-(--cell-radius)",
+          // Mid-range chips take the band's shape, as shadcn's one element does.
+          cellInner:
+            "rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit]",
         },
       },
       circle: {
