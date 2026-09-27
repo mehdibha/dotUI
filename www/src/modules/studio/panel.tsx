@@ -6,7 +6,7 @@
    Docked under the preview, the header and strip pin to the bottom edge
    instead, so they stay put as the dock hugs each chapter. */
 
-import type { ReactNode } from "react"
+import type { ReactNode, Ref } from "react"
 import { ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
@@ -23,6 +23,7 @@ export interface PanelSystem {
   history: ReactNode
   /** Wraps the trigger in the design-system picker. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
+  triggerRef?: Ref<HTMLButtonElement>
 }
 
 export function PanelChrome({
@@ -52,6 +53,7 @@ export function PanelChrome({
           {system.renderSwitcher(
             <Tooltip>
               <Button
+                ref={system.triggerRef}
                 variant="quiet"
                 size="sm"
                 aria-label={`Design system: ${system.name}. Change design system`}

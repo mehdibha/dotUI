@@ -45,51 +45,64 @@ function parseSelection(raw: unknown): Selection | undefined {
     }
 }
 
-const store = createPersistedStore<{ sel: Selection; at: number } | null>(
-  "dotui:current",
-  null,
-  {
-    decode: (raw) => {
-      const parsed = JSON.parse(raw) as { sel?: unknown; at?: unknown }
+/** A system as a fork made it, before any change. */
+type Fork = Pick<DesignSystemDoc, "id" | "state">
+
+interface Stored {
+  sel: Selection
+  at: number
+  /** Set while the current selection is a fork no one kept yet. */
+  fork?: Fork
+}
+
+function parseFork(raw: unknown): Fork | undefined {
+  if (typeof raw !== "object" || raw === null) return
+  const fork = raw as Record<string, unknown>
+  if (typeof fork.id === "string")
+    return { id: fork.id, state: salvageState(fork.state) }
+}
+
+const store = createPersistedStore<Stored | null>("dotui:current", null, {
+  // Unreadable is Origin: it's only a pointer, safe to write over.
+  decode: (raw) => {
+    try {
+      const parsed = JSON.parse(raw) as Record<string, unknown>
       const sel = parseSelection(parsed.sel)
-      return sel && typeof parsed.at === "number"
-        ? { sel, at: parsed.at }
-        : null
-    },
-    encode: (value) => (value ? JSON.stringify(value) : null),
-    onWriteError: workspace.storageFailed,
+      if (!sel || typeof parsed.at !== "number") return null
+      return { sel, at: parsed.at, fork: parseFork(parsed.fork) }
+    } catch {
+      return null
+    }
   },
-)
+  encode: (value) => (value ? JSON.stringify(value) : null),
+  onWriteError: workspace.storageFailed,
+})
 
 export const getSelection = (): Selection => store.get()?.sel ?? ORIGIN_VIEW
 
 /** One key per selection: `preset:<id>`, `link:<id>` or `system:<id>`. */
 export const selectionKey = (sel: Selection) => `${sel.kind}:${sel.id}`
 
-/** A system as a fork made it, before any change. */
-type Fork = Pick<DesignSystemDoc, "id" | "name" | "state">
-
-let fork: Fork | undefined
-
-/** Whether `doc` is the fork just made, still unrenamed and unchanged. */
-const untouched = (doc: DesignSystemDoc | undefined): doc is DesignSystemDoc =>
-  !!doc &&
-  doc.id === fork?.id &&
-  doc.name === fork.name &&
-  sameState(doc.state, fork.state)
-
-/** Makes `sel` current; `made` marks it as a fork just made. Leaving an
- *  untouched fork removes it. */
+/** Makes `sel` current; `made` marks it as a fork just made. Leaving a fork
+ *  still unchanged and never kept removes it. */
 export function select(sel: Selection, made?: Fork): void {
   workspace.flush()
-  const previous = getSelection()
-  if (selectionKey(previous) === selectionKey(sel)) return
-  if (previous.kind === "system") {
-    const doc = workspace.findSystem(previous.id)
-    if (untouched(doc)) workspace.remove(doc.id)
-  }
-  fork = made
-  store.set({ sel, at: Date.now() })
+  const previous = store.get()
+  if (selectionKey(previous?.sel ?? ORIGIN_VIEW) === selectionKey(sel)) return
+  const fork = previous?.fork
+  const doc = fork && workspace.findSystem(fork.id)
+  if (doc && sameState(doc.state, fork.state)) workspace.remove(doc.id)
+  store.set({
+    sel,
+    at: Date.now(),
+    fork: made && { id: made.id, state: made.state },
+  })
+}
+
+/** Keeps the system on leave even unchanged: the user renamed or copied it. */
+export function keep(id: string): void {
+  const value = store.get()
+  if (value?.fork?.id === id) store.set({ ...value, fork: undefined })
 }
 
 export interface Current {

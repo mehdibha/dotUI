@@ -21,7 +21,7 @@ import * as workspace from "./workspace"
 /** A design system's name in a toast title: quoted, cut at 32 characters. */
 function quoted(name: string): string {
   const chars = [...name]
-  return `"${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}"`
+  return `“${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}”`
 }
 
 const MERGE_MS = 500
@@ -34,24 +34,21 @@ interface Stack {
   press: number
   /** The system's state as this tab last left it: another tab's edit since
    *  makes the stack stale. */
-  head?: StudioState
+  head: StudioState
 }
 
+// By system id.
 const stacks = new Map<string, Stack>()
 const listeners = new Set<() => void>()
 // The pointer press in progress (0 when none), so a drag is one step.
 let press = 0
 let presses = 0
 
-const systemKey = (id: string) => selectionKey({ kind: "system", id })
-
-function stack(key: string): Stack {
-  let entry = stacks.get(key)
-  if (!entry) {
-    entry = { past: [], future: [], editedAt: 0, press: 0 }
-    stacks.set(key, entry)
-  }
-  return entry
+/** The system's stack, unless another tab edited the system since. */
+function live(id: string): Stack | undefined {
+  const entry = stacks.get(id)
+  const doc = workspace.findSystem(id)
+  if (entry && doc && sameState(doc.state, entry.head)) return entry
 }
 
 function push(steps: StudioState[], state: StudioState) {
@@ -66,7 +63,13 @@ function emit() {
 /** Merges the edit into the last step when it's close enough in time or
  *  in the same press; otherwise starts a step returning to `before`. */
 function recordEdit(id: string, before: StudioState, next: StudioState) {
-  const entry = stack(systemKey(id))
+  // Undo never steps back over another tab's edit: a stale stack restarts.
+  const last = stacks.get(id)
+  const entry =
+    last && sameState(last.head, before)
+      ? last
+      : { past: [], future: [], editedAt: 0, press: 0, head: before }
+  stacks.set(id, entry)
   const now = Date.now()
   const merge =
     now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
@@ -80,10 +83,10 @@ function recordEdit(id: string, before: StudioState, next: StudioState) {
   entry.press = press
 }
 
-/** "My Linear", or "Untitled" from Origin. */
+/** "My Linear", or "Untitled" from Origin or an "Untitled" link. */
 function forkName({ sel, name }: ReturnType<typeof getCurrent>): string {
-  if (sel.kind === "preset" && sel.id === ORIGIN.id) return "Untitled"
-  return name.startsWith("My ") ? name : `My ${name}`
+  const base = sel.id === ORIGIN.id ? "Untitled" : name
+  return base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`
 }
 
 function fork(next: StudioState) {
@@ -97,7 +100,8 @@ function fork(next: StudioState) {
   select({ kind: "system", id: doc.id }, doc)
   if (!workspace.setState(doc.id, next)) return
   recordEdit(doc.id, doc.state, next)
-  toastManager.add({ title: `Saved as ${quoted(doc.name)} in this browser.` })
+  if (workspace.isSaved())
+    toastManager.add({ title: `Saved as ${quoted(doc.name)} in this browser.` })
 }
 
 /** Edits the current design system as one undoable step, merged with the
@@ -119,7 +123,8 @@ export function remove(
   { afterUndo }: { afterUndo?: () => void } = {},
 ): () => void {
   const list = workspace.listed(workspace.getWorkspace())
-  const wasCurrent = selectionKey(getSelection()) === systemKey(id)
+  const wasCurrent =
+    selectionKey(getSelection()) === selectionKey({ kind: "system", id })
   const removed = workspace.remove(id)
   if (!removed) return () => {}
   const restore = () => {
@@ -146,25 +151,17 @@ export function remove(
       : { kind: "preset", id: ORIGIN.id }
     select(sel)
   }
-  stacks.delete(selectionKey(getSelection()))
+  stacks.delete(getSelection().id)
   emit()
   return restore
 }
 
 function travel(from: "past" | "future", to: "past" | "future") {
   const sel = getSelection()
-  if (sel.kind !== "system") return
-  const key = selectionKey(sel)
-  const entry = stacks.get(key)
+  const entry = sel.kind === "system" ? live(sel.id) : undefined
+  const state = entry?.[from].pop()
   const doc = workspace.findSystem(sel.id)
-  if (!entry || !doc) return
-  // Last write wins across tabs: undo never rolls back another tab's edit.
-  if (entry.head && !sameState(doc.state, entry.head)) {
-    stacks.delete(key)
-    return emit()
-  }
-  const state = entry[from].pop()
-  if (!state) return
+  if (!entry || !state || !doc) return
   entry.editedAt = 0
   entry.press = 0
   workspace.setState(doc.id, state)
@@ -178,15 +175,20 @@ export const redo = () => travel("future", "past")
 
 function subscribe(listener: () => void) {
   listeners.add(listener)
-  return () => listeners.delete(listener)
+  const unsubscribe = workspace.subscribe(listener)
+  return () => {
+    listeners.delete(listener)
+    unsubscribe()
+  }
 }
 
-export function useUndoRedo(key: string) {
+/** Whether the system's edits can be undone or redone here. */
+export function useUndoRedo(id: string | undefined) {
   // A primitive snapshot, so it is stable between changes.
   const flags = useSyncExternalStore(
     subscribe,
     () => {
-      const entry = stacks.get(key)
+      const entry = id ? live(id) : undefined
       return (entry?.past.length ? 1 : 0) | (entry?.future.length ? 2 : 0)
     },
     () => 0,

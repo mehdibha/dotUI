@@ -118,6 +118,18 @@ describe("undo stack", () => {
     expect(ws.findSystem(second)!.state.radiusPx).toBe(ORIGIN_RADIUS)
   })
 
+  it("never undoes past another tab's edit made between two of its own", async () => {
+    const { history, ws, open, radius, edit, system } = await load()
+    const id = system()
+    ws.setState(id, radius(9))
+    vi.advanceTimersByTime(600)
+    edit(4)
+    history.undo()
+    expect(open().state.radiusPx).toBe(9)
+    history.undo()
+    expect(open().state.radiusPx).toBe(9)
+  })
+
   it("drops the stack instead of undoing over another tab's edit", async () => {
     const { history, ws, open, radius, edit, system } = await load()
     const id = system()
@@ -167,7 +179,7 @@ describe("views and forks", () => {
     expect(fork).toMatchObject({ name: "My Stripe", from: "stripe" })
     expect(fork.state.radiusPx).toBe(4)
     expect(add).toHaveBeenCalledWith({
-      title: `Saved as "My Stripe" in this browser.`,
+      title: "Saved as “My Stripe” in this browser.",
     })
 
     history.undo()
@@ -195,6 +207,55 @@ describe("views and forks", () => {
     })
     edit(6)
     expect(current().doc).toMatchObject({ name: "My Brand", from: undefined })
+    selection.select({
+      kind: "link",
+      id: "abc",
+      name: "Untitled",
+      state: radius(2),
+    })
+    edit(7)
+    expect(current().name).toBe("Untitled 2")
+  })
+
+  it("keeps a fork kept unchanged: renamed to the same name, or duplicated", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    history.undo()
+    const fork = current().doc!
+    selection.keep(fork.id)
+    const copy = ws.duplicate(fork.id, "My Stripe copy")!
+    selection.select({ kind: "system", id: copy.id })
+    selection.select({ kind: "preset", id: "linear" })
+    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual([
+      "My Stripe",
+      "My Stripe copy",
+    ])
+  })
+
+  it("removes an unchanged fork left after a reload", async () => {
+    const first = await load()
+    first.selection.select({ kind: "preset", id: "stripe" })
+    first.edit(3)
+    first.history.undo()
+    vi.advanceTimersByTime(600)
+    vi.resetModules()
+    const { ws, selection } = await load()
+    expect(selection.getCurrent().name).toBe("My Stripe")
+    selection.select({ kind: "preset", id: "linear" })
+    expect(ws.getWorkspace().systems).toEqual([])
+  })
+
+  it("claims no save when stored systems can't be read", async () => {
+    win.seed("dotui:design-systems", "not json {{{")
+    const { edit } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
+    edit(3)
+    expect(add.mock.calls.map(([toast]) => toast.title)).toEqual([
+      "Your saved design systems can't be read",
+    ])
+    expect(win.read("dotui:design-systems")).toBe("not json {{{")
   })
 
   it("removes a fork left unrenamed and unchanged", async () => {
@@ -214,6 +275,7 @@ describe("views and forks", () => {
     selection.select({ kind: "preset", id: "linear" })
     edit(3)
     const renamed = current().doc!.id
+    selection.keep(renamed)
     ws.rename(renamed, "Acme")
     history.undo()
     selection.select({ kind: "preset", id: "origin" })
@@ -271,7 +333,7 @@ describe("delete", () => {
     history.remove(second)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first])
     const toast = add.mock.calls.at(-1)![0]
-    expect(toast).toMatchObject({ title: `Deleted "Untitled 2"` })
+    expect(toast).toMatchObject({ title: "Deleted “Untitled 2”" })
     toast.actionProps!.onClick!({} as never)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first, second])
     expect(current().doc?.id).toBe(first)

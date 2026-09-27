@@ -75,6 +75,16 @@ describe("workspace", () => {
     expect(ws.findSystem(doc.id)!.name).toBe("Brand")
   })
 
+  it("renames without moving the system in the list", async () => {
+    const { ws, doc } = await created("One")
+    const two = ws.create({ name: "Two", state: doc.state })!
+    ws.rename(doc.id, "One renamed")
+    expect(ws.listed(ws.getWorkspace()).map((s) => s.id)).toEqual([
+      two.id,
+      doc.id,
+    ])
+  })
+
   it("keeps edits in memory and writes them at most every 200 ms", async () => {
     const { ws, doc } = await created()
     vi.useFakeTimers()

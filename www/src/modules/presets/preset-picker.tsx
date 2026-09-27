@@ -325,6 +325,7 @@ function PresetPickerContent({
   const afterClose = (id: string) => (run: () => void) => {
     const i = rowIds.indexOf(id)
     pendingRef.current = { run, next: rowIds[i + 1] ?? rowIds[i - 1] }
+    swallowDoubleClick()
   }
   const menuContent =
     menuItem && renderItemMenu?.(menuItem, afterClose(menuItem.id))

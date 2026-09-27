@@ -6,9 +6,9 @@ interface PersistedStoreCodec<T> {
   decode: (raw: string) => T
   /** Return null to clear the key instead of storing. */
   encode: (value: T) => string | null
-  /** Called when a write can't reach storage (private mode, quota, or a
-   *  stored value `decode` rejected). */
-  onWriteError?: () => void
+  /** Called when a write can't reach storage: `unreadable` when the stored
+   *  value is one `decode` rejected, else private mode or quota. */
+  onWriteError?: (unreadable: boolean) => void
 }
 
 /**
@@ -64,29 +64,34 @@ export function createPersistedStore<T>(
     return value
   }
 
-  function set(next: T): void {
+  /** Returns whether `next` reached storage; it applies in memory anyway. */
+  function set(next: T): boolean {
     // Baseline `raw` so a failed write isn't undone by the next re-read.
     if (raw === undefined) sync()
     value = next
+    let saved = false
     try {
       if (unreadable) throw new Error(`${key} holds a value this can't read`)
       const encoded = encode(next)
       if (encoded === null) window.localStorage.removeItem(key)
       else window.localStorage.setItem(key, encoded)
       raw = encoded
+      saved = true
     } catch {
-      // The in-memory value still applies.
-      onWriteError?.()
+      onWriteError?.(unreadable)
     }
     emit()
+    return saved
   }
 
-  /** Read-modify-write against the latest stored value. */
-  function update(fn: (current: T) => T): void {
+  /** Read-modify-write against the latest stored value. Returns whether the
+   *  result is in storage. */
+  function update(fn: (current: T) => T): boolean {
     const changed = sync()
     const next = fn(value)
-    if (next !== value) set(next)
-    else if (changed) emit()
+    if (next !== value) return set(next)
+    if (changed) emit()
+    return !unreadable
   }
 
   function subscribe(onChange: () => void): () => void {

@@ -6,7 +6,8 @@
    at ?gallery=. */
 
 import { useMemo, useRef, useState } from "react"
-import type { ReactNode } from "react"
+import type { ReactNode, RefObject } from "react"
+import { flushSync } from "react-dom"
 import { getRouteApi } from "@tanstack/react-router"
 import { Redo2Icon, Undo2Icon } from "lucide-react"
 
@@ -23,7 +24,7 @@ import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections, rowSelection } from "./picker-sections"
 import { SystemMenu } from "./row-menus"
-import { select, selectionKey, useCurrent } from "./selection"
+import { keep, select, selectionKey, useCurrent } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import {
@@ -45,22 +46,34 @@ function HistoryButton({
   label,
   isDisabled,
   onPress,
+  buttonRef,
+  otherRef,
   children,
 }: {
   label: string
   isDisabled: boolean
   onPress: () => void
+  buttonRef: RefObject<HTMLButtonElement | null>
+  /** Takes focus when this one disables under it. */
+  otherRef: RefObject<HTMLButtonElement | null>
   children: ReactNode
 }) {
   return (
     <Tooltip delay={0}>
       <Button
+        ref={buttonRef}
         size="sm"
         variant="quiet"
         isIconOnly
         aria-label={label}
         isDisabled={isDisabled}
-        onPress={onPress}
+        onPress={() => {
+          const button = buttonRef.current
+          const focused = !!button && document.activeElement === button
+          flushSync(onPress)
+          // A disabled button drops focus to the page.
+          if (focused && button.disabled) otherRef.current?.focus()
+        }}
         className="text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
       >
         {children}
@@ -70,14 +83,28 @@ function HistoryButton({
   )
 }
 
-function UndoRedo({ selection }: { selection: string }) {
-  const { canUndo, canRedo } = useUndoRedo(selection)
+function UndoRedo({ id }: { id: string | undefined }) {
+  const { canUndo, canRedo } = useUndoRedo(id)
+  const undoRef = useRef<HTMLButtonElement>(null)
+  const redoRef = useRef<HTMLButtonElement>(null)
   return (
     <>
-      <HistoryButton label="Undo" isDisabled={!canUndo} onPress={undo}>
+      <HistoryButton
+        label="Undo"
+        isDisabled={!canUndo}
+        onPress={undo}
+        buttonRef={undoRef}
+        otherRef={redoRef}
+      >
         <Undo2Icon />
       </HistoryButton>
-      <HistoryButton label="Redo" isDisabled={!canRedo} onPress={redo}>
+      <HistoryButton
+        label="Redo"
+        isDisabled={!canRedo}
+        onPress={redo}
+        buttonRef={redoRef}
+        otherRef={undoRef}
+      >
         <Redo2Icon />
       </HistoryButton>
     </>
@@ -92,6 +119,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const navigate = routeApi.useNavigate()
   const [naming, setNaming] = useState<NameRequest>()
   const focusPicker = useRef<((key: string) => void) | null>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   const sections = useMemo(
     () => pickerSections(current, workspace),
@@ -114,10 +142,13 @@ export function StudioPanel({ className }: { className?: string }) {
 
   function onDelete(id: string) {
     remove(id, {
-      // Back from the toast to the restored row, so Esc and arrows work.
+      // Back from the toast to the restored row, so Esc and arrows work;
+      // to the picker's trigger once it closed.
       afterUndo: () =>
         requestAnimationFrame(() =>
-          focusPicker.current?.(selectionKey({ kind: "system", id })),
+          focusPicker.current
+            ? focusPicker.current(selectionKey({ kind: "system", id }))
+            : triggerRef.current?.focus(),
         ),
     })
   }
@@ -129,6 +160,7 @@ export function StudioPanel({ className }: { className?: string }) {
         ? workspace.systems.find((s) => s.id === sel.id)
         : undefined
     if (!doc) return null
+    const others = workspace.systems.filter((s) => s.id !== doc.id)
     return (
       <SystemMenu
         doc={doc}
@@ -137,7 +169,11 @@ export function StudioPanel({ className }: { className?: string }) {
             title: "Rename design system",
             action: "Save",
             name: doc.name,
-            onSubmit: (name) => rename(doc.id, name),
+            taken: others.map((s) => s.name),
+            onSubmit: (name) => {
+              keep(doc.id)
+              rename(doc.id, name)
+            },
           })
         }
         onDuplicate={() =>
@@ -145,7 +181,11 @@ export function StudioPanel({ className }: { className?: string }) {
             title: "Duplicate design system",
             action: "Create",
             name: copyName(doc.name),
-            onSubmit: (name) => open(duplicate(doc.id, name)),
+            taken: workspace.systems.map((s) => s.name),
+            onSubmit: (name) => {
+              keep(doc.id)
+              open(duplicate(doc.id, name))
+            },
           })
         }
         onDelete={() => afterClose(() => onDelete(doc.id))}
@@ -157,7 +197,8 @@ export function StudioPanel({ className }: { className?: string }) {
     name: current.name,
     swatch: current.swatch,
     tag: current.tag,
-    history: <UndoRedo selection={current.key} />,
+    history: <UndoRedo id={current.doc?.id} />,
+    triggerRef,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
@@ -170,6 +211,7 @@ export function StudioPanel({ className }: { className?: string }) {
             title: "New design system",
             action: "Create",
             name: uniqueName("Untitled", workspace.systems),
+            taken: workspace.systems.map((s) => s.name),
             onSubmit: (name) =>
               open(create({ name, from: ORIGIN.id, state: ORIGIN.state })),
           })

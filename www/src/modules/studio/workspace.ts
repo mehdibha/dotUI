@@ -86,11 +86,16 @@ export function parseWorkspace(raw: string): Workspace {
 const EMPTY: Workspace = { schema: 2, systems: [] }
 
 /** Stays until dismissed; the next failed write shows it again. */
-export function storageFailed() {
+export function storageFailed(unreadable = false) {
   const id = "storage-failed"
   toastManager.add({
     id,
-    title: "Changes can't be saved in this browser",
+    title: unreadable
+      ? "Your saved design systems can't be read"
+      : "Changes can't be saved in this browser",
+    description: unreadable
+      ? "They're left as they are, and new changes aren't saved."
+      : undefined,
     type: "warning",
     timeout: 0,
     actionProps: {
@@ -199,9 +204,14 @@ export function setState(id: string, state: StudioState): boolean {
   return true
 }
 
+let saved = true
+
+/** Whether the last change to the list reached storage. */
+export const isSaved = () => saved
+
 function update(fn: (workspace: Workspace) => Workspace) {
   flush()
-  store.update(fn)
+  saved = store.update(fn)
 }
 
 // In UTF-16 units, as the server counts, without splitting a character.
@@ -300,12 +310,13 @@ export function remove(id: string): Removed | undefined {
   return removed
 }
 
+/** Renames in place: the list stays in the order of edits to the design. */
 export function rename(id: string, name: string): void {
   const clean = cleanName(name)
   if (!clean) return
   update((workspace) =>
     withDoc(workspace, id, (doc) =>
-      doc.name === clean ? doc : { ...doc, name: clean, updatedAt: Date.now() },
+      doc.name === clean ? doc : { ...doc, name: clean },
     ),
   )
 }
