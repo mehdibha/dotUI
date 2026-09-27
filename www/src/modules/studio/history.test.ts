@@ -30,7 +30,7 @@ async function load() {
   const edit = (px: number) => history.edit(radius(px))
   /** One of the user's systems, current. */
   const system = () => {
-    const id = history.newSystem()!
+    const id = history.newSystem("Untitled")!
     edit(3)
     vi.advanceTimersByTime(600)
     return id
@@ -201,11 +201,11 @@ describe("views and forks", () => {
     ])
   })
 
-  it("creates Untitled from any selection; undo never removes it", async () => {
+  it("creates a system from Origin; undo never removes it", async () => {
     const { history, ws, selection, current, edit } = await load()
     selection.select({ kind: "preset", id: "linear" })
-    const id = history.newSystem()!
-    expect(current().doc).toMatchObject({ id, name: "Untitled" })
+    const id = history.newSystem("Brand")!
+    expect(current().doc).toMatchObject({ id, name: "Brand", from: "origin" })
     ws.rename(id, "Acme")
     edit(3)
     vi.advanceTimersByTime(600)
@@ -257,17 +257,19 @@ describe("views and forks", () => {
 })
 
 describe("duplicate", () => {
-  it("copies a system as <name> copy, never chaining", async () => {
+  it("copies a system under the given name, suggested as <name> copy", async () => {
     const { history, ws, current, system } = await load()
     const id = system()
     ws.rename(id, "Acme")
-    const copy = history.duplicate(id)!
+    expect(history.copyName("Acme")).toBe("Acme copy")
+    const copy = history.duplicate(id, "Acme copy")!
     expect(current().doc).toMatchObject({
       name: "Acme copy",
       from: "origin",
     })
     expect(current().state.radiusPx).toBe(3)
-    history.duplicate(copy)
+    expect(history.copyName(current().name)).toBe("Acme copy 2")
+    history.duplicate(copy, "Acme copy")
     expect(current().name).toBe("Acme copy 2")
   })
 })

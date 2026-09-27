@@ -2,8 +2,7 @@
 
 /* The picker's ⋯ menu on the user's systems. */
 
-import { Kbd } from "@/registry/ui/kbd"
-import { MenuContent, MenuItem, MenuItemLabel } from "@/registry/ui/menu"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Separator } from "@/registry/ui/separator"
 
 import type { DesignSystemDoc } from "./workspace"
@@ -11,16 +10,13 @@ import type { DesignSystemDoc } from "./workspace"
 /** Touch-sized rows on phones. */
 const item = "pointer-coarse:min-h-11"
 
-/** One of the user's systems. F2 renames the current one. */
 export function SystemMenu({
   doc,
-  isCurrent,
   onRename,
   onDuplicate,
   onDelete,
 }: {
   doc: DesignSystemDoc
-  isCurrent: boolean
   onRename: () => void
   onDuplicate: () => void
   onDelete: () => void
@@ -34,12 +30,11 @@ export function SystemMenu({
         if (key === "delete") onDelete()
       }}
     >
-      <MenuItem id="rename" textValue="Rename" className={item}>
-        <MenuItemLabel>Rename</MenuItemLabel>
-        {isCurrent && <Kbd className="pointer-coarse:hidden">F2</Kbd>}
+      <MenuItem id="rename" className={item}>
+        Rename…
       </MenuItem>
       <MenuItem id="duplicate" className={item}>
-        Duplicate
+        Duplicate…
       </MenuItem>
       <Separator />
       <MenuItem id="delete" variant="danger" className={item}>

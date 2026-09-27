@@ -75,7 +75,7 @@ function recordEdit(id: string, before: StudioState, next: StudioState) {
   entry.press = press
 }
 
-/** "My Linear", or "Untitled" from Origin, like New. */
+/** "My Linear", or "Untitled" from Origin. */
 function forkName({ sel, name }: ReturnType<typeof getCurrent>): string {
   if (sel.kind === "preset" && sel.id === ORIGIN.id) return "Untitled"
   return name.startsWith("My ") ? name : `My ${name}`
@@ -105,27 +105,27 @@ export function edit(next: StudioState): void {
   if (workspace.setState(id, next)) recordEdit(id, state, next)
 }
 
-/** Creates "Untitled" from Origin and opens it; returns its id. */
-export function newSystem(): string | undefined {
-  const doc = workspace.create({
-    name: "Untitled",
-    from: ORIGIN.id,
-    state: ORIGIN.state,
-  })
+/** Creates a system from Origin and opens it; returns its id. */
+export function newSystem(name: string): string | undefined {
+  const doc = workspace.create({ name, from: ORIGIN.id, state: ORIGIN.state })
   if (doc) select({ kind: "system", id: doc.id })
   return doc?.id
 }
 
-/** Opens a copy of one of the user's systems, "Acme copy". Returns its id. */
-export function duplicate(id: string): string | undefined {
+/** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
+export const copyName = (name: string) =>
+  workspace.uniqueName(
+    name.replace(/ copy( \d+)?$/, ""),
+    workspace.getWorkspace().systems,
+    " copy",
+  )
+
+/** Opens a copy of one of the user's systems; returns its id. */
+export function duplicate(id: string, name: string): string | undefined {
   const source = workspace.findSystem(id)
   if (!source) return
   const doc = workspace.create({
-    name: workspace.uniqueName(
-      source.name.replace(/ copy( \d+)?$/, ""),
-      workspace.getWorkspace().systems,
-      " copy",
-    ),
+    name,
     from: source.from,
     state: source.state,
   })

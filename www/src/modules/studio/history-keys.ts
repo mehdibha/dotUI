@@ -15,11 +15,3 @@ export function historyKey(e: KeyboardEvent): "undo" | "redo" | undefined {
   if (key === "z") return e.shiftKey ? "redo" : "undo"
   if (key === "y" && e.ctrlKey) return "redo"
 }
-
-/** F2 outside text fields: rename the current design system. */
-export const renameKey = (e: KeyboardEvent) =>
-  e.key === "F2" &&
-  !e.metaKey &&
-  !e.ctrlKey &&
-  !e.altKey &&
-  !inTextEntry(e.target)

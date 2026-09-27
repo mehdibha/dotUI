@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useEffectEvent,
   useMemo,
   useRef,
   useState,
@@ -55,8 +54,6 @@ interface PresetPickerItem {
   description?: string
   /** The brand a preset recreates, disclaimed under its description. */
   inspiredBy?: string
-  /** The muted second line, read as the row renders so times stay fresh. */
-  subtitle?: () => ReactNode
   /** Gets a ⋯ menu from `renderItemMenu`. */
   hasMenu?: boolean
   /** Themes the flyout — called only for the previewed item. */
@@ -93,14 +90,6 @@ interface PresetPickerProps {
   ) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
-  /** F2 in the search field. */
-  onRenameKey?: () => void
-  /** The row being renamed in place, if any. */
-  renamingId?: string
-  /** Ends the rename: the typed name, or null when cancelled; `submit` when
-   *  it ended with Enter. Returns true when it closes the picker; otherwise
-   *  focus returns to the row. */
-  onRenameEnd?: (id: string, name: string | null, submit: boolean) => boolean
   /** Filled, while the picker is open, with a function that moves focus back
    *  to the list and highlights a row. */
   focusRef?: RefObject<((id: string) => void) | null>
@@ -188,9 +177,6 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
-  onRenameKey,
-  renamingId,
-  onRenameEnd,
   focusRef,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
@@ -345,11 +331,6 @@ function PresetPickerContent({
 
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "F2" && onRenameKey) {
-      e.preventDefault()
-      onRenameKey()
-      return
-    }
     if (
       !renderItemMenu ||
       !((e.key === "F10" && e.shiftKey) || e.key === "ContextMenu")
@@ -378,9 +359,8 @@ function PresetPickerContent({
           inset as the rows below; the New button, when any, shares it. */}
       <div className="mx-2 flex items-center gap-2">
         <SearchField
-          // No search autofocus on mobile — the keyboard would cover the list;
-          // nor over a row being renamed.
-          autoFocus={surface === "popover" && !renamingId}
+          // No search autofocus on mobile — the keyboard would cover the list.
+          autoFocus={surface === "popover"}
           aria-label="Search design systems"
           onChange={setQuery}
           className="flex-1 border-b-0! px-0!"
@@ -460,23 +440,6 @@ function PresetPickerContent({
                     onMenu={
                       renderItemMenu && item.hasMenu
                         ? (trigger) => openMenu(item.id, trigger)
-                        : undefined
-                    }
-                    rename={
-                      item.id === renamingId && onRenameEnd
-                        ? (name, submit) => {
-                            if (onRenameEnd(item.id, name, submit)) return
-                            // Unless a blur moved focus to another control.
-                            requestAnimationFrame(() => {
-                              const active = document.activeElement
-                              if (
-                                !active ||
-                                active === document.body ||
-                                active === searchRef.current
-                              )
-                                focusRow(item.id)
-                            })
-                          }
                         : undefined
                     }
                   />
@@ -585,7 +548,6 @@ function PresetOptionRow({
   onShow,
   onHide,
   onMenu,
-  rename,
   listRef,
 }: {
   item: PresetPickerItem
@@ -595,7 +557,6 @@ function PresetOptionRow({
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
   onMenu?: (trigger: Element) => void
-  rename?: (name: string | null, submit: boolean) => void
   listRef: RefObject<ListState<unknown> | null>
 }) {
   // Hands the list's state up, to move its highlight after a delete.
@@ -630,74 +591,21 @@ function PresetOptionRow({
       option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
   }, [isSelected])
 
-  // Right-click, or a long press on touch, opens the row's menu.
-  const menuFrom = useEffectEvent((trigger: Element) => onMenu?.(trigger))
+  // Rows are no Tab stops: screen readers say the keyboard way in.
   const hasMenu = !!onMenu
   useEffect(() => {
     const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
-    if (!option || !hasMenu) return
-    // Rows are no Tab stops: screen readers say the keyboard way in.
-    if (!window.matchMedia("(pointer: coarse)").matches)
-      option.setAttribute("aria-description", ROW_MENU_HINT)
-    const open = () =>
-      menuFrom(option.querySelector("[data-row-menu]") ?? option)
-    let timer: ReturnType<typeof setTimeout> | undefined
-    let start = { x: 0, y: 0 }
-    const cancel = () => clearTimeout(timer)
-    const onContextMenu = (e: MouseEvent) => {
-      e.preventDefault()
-      cancel()
-      open()
-    }
-    const onPointerDown = (e: PointerEvent) => {
-      if (e.pointerType !== "touch") return
-      if ((e.target as Element).closest("[data-row-menu], input")) return
-      start = { x: e.clientX, y: e.clientY }
-      timer = setTimeout(() => {
-        // Ends the row's press, so lifting the finger doesn't pick the row,
-        // and drops the lift's mouse events, which would blur the menu.
-        document.dispatchEvent(new PointerEvent("pointercancel"))
-        option.addEventListener("touchend", (e) => e.preventDefault(), {
-          once: true,
-          passive: false,
-        })
-        open()
-      }, 500)
-    }
-    const onPointerMove = (e: PointerEvent) => {
-      if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8) cancel()
-    }
-    option.addEventListener("contextmenu", onContextMenu)
-    option.addEventListener("pointerdown", onPointerDown)
-    option.addEventListener("pointermove", onPointerMove)
-    option.addEventListener("pointerup", cancel)
-    option.addEventListener("pointercancel", cancel)
-    return () => {
-      cancel()
-      option.removeAttribute("aria-description")
-      option.removeEventListener("contextmenu", onContextMenu)
-      option.removeEventListener("pointerdown", onPointerDown)
-      option.removeEventListener("pointermove", onPointerMove)
-      option.removeEventListener("pointerup", cancel)
-      option.removeEventListener("pointercancel", cancel)
-    }
+    if (!option || !hasMenu || window.matchMedia("(pointer: coarse)").matches)
+      return
+    option.setAttribute("aria-description", ROW_MENU_HINT)
+    return () => option.removeAttribute("aria-description")
   }, [hasMenu])
 
-  const subtitle = item.subtitle?.()
   return (
     <>
       <Swatch ref={rowRef} color={item.swatch} />
-      <span className="flex min-w-0 flex-1 flex-col">
-        {rename ? (
-          <RenameField name={item.name} onEnd={rename} />
-        ) : (
-          <span dir="auto" className="min-w-0 truncate">
-            {item.name}
-          </span>
-        )}
-        {subtitle && (
-          <span className="truncate text-xs text-fg-muted">{subtitle}</span>
-        )}
+      <span dir="auto" className="min-w-0 flex-1 truncate">
+        {item.name}
       </span>
       {isSelected && <CheckIcon className="size-3.5 shrink-0" />}
       {onMenu && (
@@ -718,67 +626,6 @@ function PresetOptionRow({
         </Tooltip>
       )}
     </>
-  )
-}
-
-/**
- * The row's name as an input. A plain input, so the surrounding collection's
- * contexts don't reach it, and its events stop here so the row neither
- * selects nor type-selects while the user types. Enter or blur commits, Esc
- * cancels.
- */
-function RenameField({
-  name,
-  onEnd,
-}: {
-  name: string
-  onEnd: (name: string | null, submit: boolean) => void
-}) {
-  const ended = useRef(false)
-  const end = (value: string | null, submit: boolean) => {
-    if (ended.current) return
-    ended.current = true
-    onEnd(value, submit)
-  }
-  const stop = (e: { stopPropagation: () => void }) => e.stopPropagation()
-
-  // The list keeps focus where it is on a press (it prevents mousedown), so
-  // a press anywhere else blurs the field itself.
-  const ref = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    const onPointerDown = (e: PointerEvent) => {
-      if (e.target !== ref.current) ref.current?.blur()
-    }
-    document.addEventListener("pointerdown", onPointerDown, true)
-    return () =>
-      document.removeEventListener("pointerdown", onPointerDown, true)
-  }, [])
-
-  return (
-    <input
-      ref={ref}
-      aria-label="Design system name"
-      defaultValue={name}
-      maxLength={64}
-      autoFocus
-      onFocus={(e) => {
-        stop(e)
-        e.currentTarget.select()
-      }}
-      onBlur={(e) => end(e.currentTarget.value, false)}
-      onKeyDown={(e) => {
-        stop(e)
-        if (e.key === "Enter") end(e.currentTarget.value, true)
-        if (e.key === "Escape") end(null, false)
-      }}
-      onKeyUp={stop}
-      onPointerDown={stop}
-      onPointerUp={stop}
-      onMouseDown={stop}
-      onClick={stop}
-      // The name line's height, ring inside: the subtitle sits right below.
-      className="h-5 w-full min-w-0 rounded-sm bg-transparent px-1 focus-reset inset-ring-1 inset-ring-fg/15 [--focus-ring-inset:inset] focus-visible:focus-ring"
-    />
   )
 }
 

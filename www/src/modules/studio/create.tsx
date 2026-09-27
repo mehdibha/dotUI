@@ -5,7 +5,7 @@
    shared link being viewed, the user's systems and the presets, and opens
    at ?gallery=. */
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import { Redo2Icon, Undo2Icon } from "lucide-react"
@@ -16,6 +16,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import {
+  copyName,
   duplicate,
   newSystem,
   redo,
@@ -23,16 +24,17 @@ import {
   undo,
   useUndoRedo,
 } from "./history"
-import { renameKey } from "./history-keys"
+import { NameDialog } from "./name-dialog"
+import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections, rowSelection } from "./picker-sections"
 import { SystemMenu } from "./row-menus"
-import { getCurrent, select, selectionKey, useCurrent } from "./selection"
-import type { Selection } from "./selection"
+import { select, selectionKey, useCurrent } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { rename, useWorkspace } from "./workspace"
+import { rename, uniqueName, useWorkspace } from "./workspace"
+import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
@@ -85,10 +87,8 @@ export function StudioPanel({ className }: { className?: string }) {
   const workspace = useWorkspace()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  // `closes`: Enter also closes the picker, which was opened for this rename.
-  const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
+  const [naming, setNaming] = useState<NameRequest>()
   const focusPicker = useRef<((key: string) => void) | null>(null)
-  const lastNew = useRef({ at: 0, key: "" })
 
   const sections = useMemo(
     () => pickerSections(current, workspace),
@@ -96,48 +96,16 @@ export function StudioPanel({ className }: { className?: string }) {
   )
 
   function setGalleryOpen(isOpen: boolean) {
-    if (!isOpen) setRenaming(undefined)
     navigate({
       search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
     })
   }
 
-  /** Opens the picker with the current system's row in rename mode. */
-  function renameCurrent() {
-    const { doc, key } = getCurrent()
-    if (!doc) return
-    setRenaming({ key, closes: gallery !== true })
-    setGalleryOpen(true)
-  }
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (!renameKey(e)) return
-      e.preventDefault()
-      renameCurrent()
-    }
-    // F2 pressed in the preview, handed up by its iframe.
-    const onMessage = (e: MessageEvent) => {
-      if (
-        e.origin === window.location.origin &&
-        e.data?.type === "preview-rename"
-      )
-        renameCurrent()
-    }
-    window.addEventListener("keydown", onKeyDown)
-    window.addEventListener("message", onMessage)
-    return () => {
-      window.removeEventListener("keydown", onKeyDown)
-      window.removeEventListener("message", onMessage)
-    }
-  })
-
-  /** Renames the row of a system just created. */
-  function created(id: string | undefined) {
-    if (!id) return
-    setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
-    setGalleryOpen(true)
+  /** Closes the picker for the name dialog. */
+  function askName(request: NameRequest) {
+    setGalleryOpen(false)
+    setNaming(request)
   }
 
   function onDelete(id: string) {
@@ -151,16 +119,31 @@ export function StudioPanel({ className }: { className?: string }) {
   }
 
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
-    const sel: Selection = rowSelection(key, current)
-    if (sel.kind !== "system") return null
-    const doc = workspace.systems.find((s) => s.id === sel.id)
+    const sel = rowSelection(key, current)
+    const doc: DesignSystemDoc | undefined =
+      sel.kind === "system"
+        ? workspace.systems.find((s) => s.id === sel.id)
+        : undefined
     if (!doc) return null
     return (
       <SystemMenu
         doc={doc}
-        isCurrent={key === current.key}
-        onRename={() => setRenaming({ key, closes: false })}
-        onDuplicate={() => created(duplicate(doc.id))}
+        onRename={() =>
+          askName({
+            title: "Rename design system",
+            action: "Save",
+            name: doc.name,
+            onSubmit: (name) => rename(doc.id, name),
+          })
+        }
+        onDuplicate={() =>
+          askName({
+            title: "Duplicate design system",
+            action: "Create",
+            name: copyName(doc.name),
+            onSubmit: (name) => duplicate(doc.id, name),
+          })
+        }
         onDelete={() => afterClose(() => onDelete(doc.id))}
       />
     )
@@ -178,30 +161,14 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={sections}
         selectedId={current.key}
         onPick={(item) => select(rowSelection(item.id, current))}
-        onCreate={() => {
-          // The second click of a double click is the same New: back to
-          // renaming the row the first one made. Timed by input, as the
-          // first New can hold the second press back past the window.
-          const now = window.event?.timeStamp ?? performance.now()
-          const { at, key } = lastNew.current
-          if (now - at < 500) return key && setRenaming({ key, closes: true })
-          lastNew.current = { at: now, key: "" }
-          const id = newSystem()
-          if (id) lastNew.current.key = selectionKey({ kind: "system", id })
-          created(id)
-        }}
-        renamingId={renaming?.key}
-        onRenameEnd={(key, name, submit) => {
-          setRenaming(undefined)
-          const doc = workspace.systems.find(
-            (s) => selectionKey({ kind: "system", id: s.id }) === key,
-          )
-          if (doc && name !== null) rename(doc.id, name)
-          const closes = submit && renaming?.closes === true
-          if (closes) setGalleryOpen(false)
-          return closes
-        }}
-        onRenameKey={renameCurrent}
+        onCreate={() =>
+          askName({
+            title: "New design system",
+            action: "Create",
+            name: uniqueName("Untitled", workspace.systems),
+            onSubmit: newSystem,
+          })
+        }
         focusRef={focusPicker}
         withPreview
         renderItemMenu={(item, afterClose) =>
@@ -221,6 +188,7 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
+      <NameDialog request={naming} onClose={() => setNaming(undefined)} />
     </div>
   )
 }

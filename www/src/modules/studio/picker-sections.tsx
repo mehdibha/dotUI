@@ -1,10 +1,9 @@
-import { ORIGIN, PRESET_META, resolvePreset } from "@/modules/presets"
+import { PRESET_META, resolvePreset } from "@/modules/presets"
 import type { PresetPickerSection } from "@/modules/presets/preset-picker"
 
 import { resolveDesignSystem } from "./resolve"
 import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
-import { ago } from "./time"
 import { listed, swatchOf } from "./workspace"
 import type { Workspace } from "./workspace"
 
@@ -25,7 +24,6 @@ export function pickerSections(
           id: current.key,
           name: current.name,
           swatch: current.swatch,
-          subtitle: () => "Shared link",
           resolve: () => resolveDesignSystem(sel.state),
         },
       ],
@@ -40,7 +38,6 @@ export function pickerSections(
         name: system.name,
         swatch: swatchOf(system),
         hasMenu: true,
-        subtitle: () => `Edited ${ago(system.updatedAt, Date.now(), "narrow")}`,
         resolve: () => resolveDesignSystem(system.state),
       })),
     })
@@ -50,7 +47,6 @@ export function pickerSections(
     items: PRESET_META.map((meta) => ({
       ...meta,
       id: selectionKey({ kind: "preset", id: meta.id }),
-      subtitle: meta.id === ORIGIN.id ? () => "Default" : undefined,
       resolve: () => resolvePreset(meta.id),
     })),
   })
