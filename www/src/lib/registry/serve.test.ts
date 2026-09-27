@@ -34,7 +34,7 @@ async function fails(response: Response, status: number) {
   })
 }
 
-async function publish(store: SnapshotStore, state: unknown) {
+async function save(store: SnapshotStore, state: unknown) {
   const response = await createSnapshot(
     new Request("https://dotui.org/api/snapshots", {
       method: "POST",
@@ -105,7 +105,7 @@ describe("/r/p/<preset>/<name>.json", () => {
 describe("/r/s/<id>/<name>.json", () => {
   it("serves a snapshot, keeping the prefix on every URL", async () => {
     const store = memoryStore()
-    const id = await publish(store, getPreset("linear")!.state)
+    const id = await save(store, getPreset("linear")!.state)
     const init = await ok(await get(`/r/s/${id}/init.json`, store))
     expect(registryUrl(init)).toBe(`https://dotui.org/r/s/${id}/{name}.json`)
     expect(init.cssVars).toEqual(

@@ -5,6 +5,7 @@
 
 import { useState } from "react"
 
+import { MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
 import { Button } from "@/registry/ui/button"
 import {
   DialogContent,
@@ -80,7 +81,7 @@ function NameForm({
       <TextField
         value={name}
         onChange={setName}
-        maxLength={64}
+        maxLength={MAX_NAME_LENGTH}
         autoFocus
         onFocus={(e) => (e.target as HTMLInputElement).select()}
         className="w-full"
