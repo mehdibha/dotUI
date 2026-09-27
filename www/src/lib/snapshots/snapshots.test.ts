@@ -22,7 +22,7 @@ const post = (store: SnapshotStore, body: unknown) =>
 
 const valid = { name: "Acme", state: { radiusPx: 4 } }
 
-async function publish(store: SnapshotStore, body: unknown = valid) {
+async function save(store: SnapshotStore, body: unknown = valid) {
   const response = await post(store, body)
   expect(response.status).toBe(200)
   return ((await response.json()) as { id: string }).id
@@ -63,7 +63,7 @@ describe("snapshot id", () => {
 describe("POST /api/snapshots", () => {
   it("stores the validated state, defaults filled in and name trimmed", async () => {
     const store = memoryStore()
-    const id = await publish(store, { ...valid, name: "  Acme  " })
+    const id = await save(store, { ...valid, name: "  Acme  " })
     const stored = parseSnapshot(JSON.parse((await store.get(id))!))
     expect(stored).toEqual({
       schema: 1,
@@ -71,7 +71,7 @@ describe("POST /api/snapshots", () => {
       state: { ...DEFAULT_STATE, radiusPx: 4 },
     })
     expect(
-      await publish(store, {
+      await save(store, {
         ...valid,
         state: { ...DEFAULT_STATE, radiusPx: 4 },
       }),
@@ -80,9 +80,9 @@ describe("POST /api/snapshots", () => {
 
   it("never overwrites an existing id", async () => {
     const store = memoryStore()
-    const id = await publish(store)
+    const id = await save(store)
     await store.put(id, "other")
-    expect(await publish(store)).toBe(id)
+    expect(await save(store)).toBe(id)
     expect(JSON.parse((await store.get(id))!).name).toBe("Acme")
   })
 
@@ -167,7 +167,7 @@ describe("POST /api/snapshots", () => {
 describe("GET /api/snapshots/$id", () => {
   it("returns the snapshot, cached forever", async () => {
     const store = memoryStore()
-    const id = await publish(store)
+    const id = await save(store)
     const response = await readSnapshot(id, store)
     expect(response.status).toBe(200)
     expect(response.headers.get("cache-control")).toBe(

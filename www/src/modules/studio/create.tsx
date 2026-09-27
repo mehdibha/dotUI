@@ -13,17 +13,10 @@ import { Redo2Icon, Undo2Icon } from "lucide-react"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { ORIGIN } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import {
-  copyName,
-  duplicate,
-  newSystem,
-  redo,
-  remove,
-  undo,
-  useUndoRedo,
-} from "./history"
+import { redo, remove, undo, useUndoRedo } from "./history"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
@@ -33,10 +26,20 @@ import { SystemMenu } from "./row-menus"
 import { select, selectionKey, useCurrent } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { rename, uniqueName, useWorkspace } from "./workspace"
+import {
+  copyName,
+  create,
+  duplicate,
+  rename,
+  uniqueName,
+  useWorkspace,
+} from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
+
+const open = (doc: DesignSystemDoc | undefined) =>
+  doc && select({ kind: "system", id: doc.id })
 
 function HistoryButton({
   label,
@@ -142,7 +145,7 @@ export function StudioPanel({ className }: { className?: string }) {
             title: "Duplicate design system",
             action: "Create",
             name: copyName(doc.name),
-            onSubmit: (name) => duplicate(doc.id, name),
+            onSubmit: (name) => open(duplicate(doc.id, name)),
           })
         }
         onDelete={() => afterClose(() => onDelete(doc.id))}
@@ -167,7 +170,8 @@ export function StudioPanel({ className }: { className?: string }) {
             title: "New design system",
             action: "Create",
             name: uniqueName("Untitled", workspace.systems),
-            onSubmit: newSystem,
+            onSubmit: (name) =>
+              open(create({ name, from: ORIGIN.id, state: ORIGIN.state })),
           })
         }
         focusRef={focusPicker}

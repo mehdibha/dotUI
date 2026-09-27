@@ -43,7 +43,7 @@ export function fileStore(dir: string): SnapshotStore {
 }
 
 /** Vercel Blob; authenticates with `BLOB_READ_WRITE_TOKEN`, or OIDC with `BLOB_STORE_ID`. */
-export function blobStore(): SnapshotStore {
+function blobStore(): SnapshotStore {
   const pathname = (id: string) => `snapshots/${id}.json`
   const store: SnapshotStore = {
     async put(id, json) {

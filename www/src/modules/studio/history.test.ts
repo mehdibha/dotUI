@@ -4,7 +4,8 @@ import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
 
-const ORIGIN_RADIUS = getPreset("origin")!.state.radiusPx
+const ORIGIN = getPreset("origin")!
+const ORIGIN_RADIUS = ORIGIN.state.radiusPx
 
 let win: ReturnType<typeof installFakeWindow>
 
@@ -28,14 +29,20 @@ async function load() {
   const radius = (px: number) =>
     parseState({ ...current().state, radiusPx: px })
   const edit = (px: number) => history.edit(radius(px))
-  /** One of the user's systems, current. */
+  /** A new system from Origin, current. */
+  const create = (name = "Untitled") => {
+    const doc = ws.create({ name, from: ORIGIN.id, state: ORIGIN.state })!
+    selection.select({ kind: "system", id: doc.id })
+    return doc.id
+  }
+  /** One of the user's systems, current, edited once. */
   const system = () => {
-    const id = history.newSystem("Untitled")!
+    const id = create()
     edit(3)
     vi.advanceTimersByTime(600)
     return id
   }
-  return { history, ws, selection, current, open, radius, edit, system }
+  return { history, ws, selection, current, open, radius, edit, create, system }
 }
 
 describe("undo stack", () => {
@@ -121,6 +128,21 @@ describe("undo stack", () => {
     history.undo()
     expect(open().state.radiusPx).toBe(9)
   })
+
+  it("never removes or renames a system on undo", async () => {
+    const { history, ws, current, edit, create } = await load()
+    const id = create("Brand")
+    ws.rename(id, "Acme")
+    edit(3)
+    vi.advanceTimersByTime(600)
+    edit(4)
+    for (let i = 0; i < 5; i++) history.undo()
+    expect(current().doc).toMatchObject({ id, name: "Acme" })
+    expect(current().state.radiusPx).toBe(ORIGIN_RADIUS)
+    history.redo()
+    history.redo()
+    expect(current().state.radiusPx).toBe(4)
+  })
 })
 
 describe("views and forks", () => {
@@ -200,24 +222,9 @@ describe("views and forks", () => {
       renamed,
     ])
   })
+})
 
-  it("creates a system from Origin; undo never removes it", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    selection.select({ kind: "preset", id: "linear" })
-    const id = history.newSystem("Brand")!
-    expect(current().doc).toMatchObject({ id, name: "Brand", from: "origin" })
-    ws.rename(id, "Acme")
-    edit(3)
-    vi.advanceTimersByTime(600)
-    edit(4)
-    for (let i = 0; i < 5; i++) history.undo()
-    expect(current().doc).toMatchObject({ id, name: "Acme" })
-    expect(current().state.radiusPx).toBe(ORIGIN_RADIUS)
-    history.redo()
-    history.redo()
-    expect(current().state.radiusPx).toBe(4)
-  })
-
+describe("delete", () => {
   it("leaves the next system alone on undo right after a delete", async () => {
     const { history, ws, selection, current, edit, system } = await load()
     const first = system()
@@ -254,27 +261,6 @@ describe("views and forks", () => {
     expect(current().doc?.id).toBe(second)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([second])
   })
-})
-
-describe("duplicate", () => {
-  it("copies a system under the given name, suggested as <name> copy", async () => {
-    const { history, ws, current, system } = await load()
-    const id = system()
-    ws.rename(id, "Acme")
-    expect(history.copyName("Acme")).toBe("Acme copy")
-    const copy = history.duplicate(id, "Acme copy")!
-    expect(current().doc).toMatchObject({
-      name: "Acme copy",
-      from: "origin",
-    })
-    expect(current().state.radiusPx).toBe(3)
-    expect(history.copyName(current().name)).toBe("Acme copy 2")
-    history.duplicate(copy, "Acme copy")
-    expect(current().name).toBe("Acme copy 2")
-  })
-})
-
-describe("delete", () => {
   it("puts a system back in place from the toast's Undo", async () => {
     const { history, ws, selection, current, system } = await load()
     const { toastManager } = await import("@/registry/ui/toast")

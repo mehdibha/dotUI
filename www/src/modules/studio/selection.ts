@@ -63,14 +63,11 @@ const store = createPersistedStore<{ sel: Selection; at: number } | null>(
 
 export const getSelection = (): Selection => store.get()?.sel ?? ORIGIN_VIEW
 
-export const useSelection = (): Selection =>
-  store.useValue()?.sel ?? ORIGIN_VIEW
-
 /** One key per selection: `preset:<id>`, `link:<id>` or `system:<id>`. */
 export const selectionKey = (sel: Selection) => `${sel.kind}:${sel.id}`
 
 /** A system as a fork made it, before any change. */
-export type Fork = Pick<DesignSystemDoc, "id" | "name" | "state">
+type Fork = Pick<DesignSystemDoc, "id" | "name" | "state">
 
 let fork: Fork | undefined
 
@@ -145,7 +142,7 @@ export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
 
 export function useCurrent(): Current {
-  const sel = useSelection()
+  const sel = store.useValue()?.sel ?? ORIGIN_VIEW
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }

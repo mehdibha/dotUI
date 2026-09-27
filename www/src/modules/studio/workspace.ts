@@ -258,6 +258,18 @@ export function create(
   return doc
 }
 
+/** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
+export const copyName = (name: string) =>
+  uniqueName(name.replace(/ copy( \d+)?$/, ""), getWorkspace().systems, " copy")
+
+export function duplicate(
+  id: string,
+  name: string,
+): DesignSystemDoc | undefined {
+  const source = findSystem(id)
+  if (source) return create({ name, from: source.from, state: source.state })
+}
+
 interface Removed {
   doc: DesignSystemDoc
   index: number

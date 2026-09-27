@@ -3,8 +3,8 @@
 /* Undo and redo. Each system keeps an in-memory undo stack; edits within
    500 ms, or within one pointer press (a slider drag), merge into one step.
    The first edit of a view forks it into a new system whose first step
-   returns to the view's state. Nothing else is a step: New, Duplicate and
-   Rename aren't, and Delete has its toast. */
+   returns to the view's state. Nothing else is a step: Delete has its own
+   Undo toast, and resets the stack so ⌘Z never touches another system. */
 
 import { useEffect, useSyncExternalStore } from "react"
 
@@ -108,34 +108,6 @@ export function edit(next: StudioState): void {
   if (!current.doc) return fork(next)
   const { id, state } = current.doc
   if (workspace.setState(id, next)) recordEdit(id, state, next)
-}
-
-/** Creates a system from Origin and opens it; returns its id. */
-export function newSystem(name: string): string | undefined {
-  const doc = workspace.create({ name, from: ORIGIN.id, state: ORIGIN.state })
-  if (doc) select({ kind: "system", id: doc.id })
-  return doc?.id
-}
-
-/** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
-export const copyName = (name: string) =>
-  workspace.uniqueName(
-    name.replace(/ copy( \d+)?$/, ""),
-    workspace.getWorkspace().systems,
-    " copy",
-  )
-
-/** Opens a copy of one of the user's systems; returns its id. */
-export function duplicate(id: string, name: string): string | undefined {
-  const source = workspace.findSystem(id)
-  if (!source) return
-  const doc = workspace.create({
-    name,
-    from: source.from,
-    state: source.state,
-  })
-  if (doc) select({ kind: "system", id: doc.id })
-  return doc?.id
 }
 
 /** Deletes the system with a toast whose Undo, which `afterUndo` follows,

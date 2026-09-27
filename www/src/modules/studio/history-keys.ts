@@ -5,7 +5,7 @@ const TEXT_ENTRY =
   "textarea, [contenteditable]:not([contenteditable='false']), input:not([type='range'], [type='checkbox'], [type='radio'], [type='button'], [type='color'])"
 
 /** Whether a key event's target keeps the key for itself (a text field). */
-export const inTextEntry = (target: EventTarget | null) =>
+const inTextEntry = (target: EventTarget | null) =>
   target instanceof Element && !!target.closest(TEXT_ENTRY)
 
 /** ⌘Z / ⇧⌘Z (or Ctrl+Y) outside text fields, which keep their own undo. */

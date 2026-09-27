@@ -101,6 +101,17 @@ describe("workspace", () => {
     ])
   })
 
+  it("duplicates under the given name, suggested as <name> copy", async () => {
+    const { ws, doc } = await created()
+    expect(ws.copyName("Acme")).toBe("Acme copy")
+    const copy = ws.duplicate(doc.id, "Acme copy")!
+    expect(copy).toMatchObject({ name: "Acme copy", from: "linear" })
+    expect(copy.state).toEqual(doc.state)
+    expect(ws.copyName(copy.name)).toBe("Acme copy 2")
+    expect(ws.duplicate(copy.id, "Acme copy")!.name).toBe("Acme copy 2")
+    expect(ws.duplicate("missing", "X")).toBeUndefined()
+  })
+
   it("keeps generated names within 64 UTF-16 units", async () => {
     const long = "x".repeat(64)
     const { ws } = await created(long)
