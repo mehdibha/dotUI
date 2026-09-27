@@ -2,6 +2,7 @@ packages:
   - www
   - www/scripts/api-docs-builder
   - packages/*
+  - video
 
 catalog:
   "@tailwindcss/node": ^4.3.0
