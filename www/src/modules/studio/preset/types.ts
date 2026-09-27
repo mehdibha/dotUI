@@ -15,7 +15,7 @@ export type DesignSystem = {
   /** Global CSS vars written on `:root` (radius, fonts, cursors, …). */
   tokens: Record<string, string>
   density: Density
-  /** Generative color recipe; `undefined` means the default generated palette. */
+  /** Generative color recipe; `undefined` means Origin's. */
   color?: ColorConfig
   /** Icon library; `undefined` means the default (lucide). */
   icons?: IconLibraryName

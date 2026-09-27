@@ -9,10 +9,10 @@ const resolve = (overrides: Partial<typeof DEFAULTS>) =>
   resolveDesignSystem(parseState({ ...overrides }))
 
 describe("focus axis", () => {
-  test("defaults emit nothing", () => {
+  test("defaults emit no tokens", () => {
     const system = resolve({})
     expect(system.tokens).toEqual({})
-    expect(system.color).toBeUndefined()
+    expect(system.color).toEqual(DEFAULT_COLOR_CONFIG)
   })
 
   test("ring geometry lands on the ring tokens", () => {

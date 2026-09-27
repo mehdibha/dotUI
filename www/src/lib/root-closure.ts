@@ -16,7 +16,7 @@
  * root/dark, and which properties are excluded from the harvest.
  */
 
-import { DEFAULT_SEMANTICS } from "@/registry/theme"
+import { SITE_SEMANTICS } from "@/registry/theme"
 
 export interface RootClosure {
   light: string
@@ -45,13 +45,13 @@ export function selectorIn(selectorText: string, tokens: Set<string>): boolean {
 
 // The semantic vocabulary's exact prop names, excluded from the harvest by KEY.
 const SEMANTIC_COLOR_PROPS = new Set(
-  Object.keys(DEFAULT_SEMANTICS).map((name) => `--${name}`),
+  Object.keys(SITE_SEMANTICS).map((name) => `--${name}`),
 )
 
 /**
  * Excluded from the closure: non-custom props; `--radius` (the base length
  * rides inline on the scope element so the cloned radius scale recomputes
- * there); and the semantic vocabulary (emitted from `DEFAULT_SEMANTICS`
+ * there); and the semantic vocabulary (emitted from `SITE_SEMANTICS`
  * instead — it's the typed source of truth, and its targets may be authored
  * as `color-mix()`, whose CSSOM read-back is unreliable).
  */

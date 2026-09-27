@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest"
 
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+
 import { resolveDesignSystem } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
@@ -34,7 +36,7 @@ describe("selection controls", () => {
   it("a fill matching the selection source is no fork", () => {
     expect(
       resolveDesignSystem(parseState({ checkboxColor: "accent" })).color,
-    ).toBeUndefined()
+    ).toEqual(DEFAULT_COLOR_CONFIG)
     const neutralChecks = resolveDesignSystem(
       parseState({ selectionColor: "neutral", checkboxColor: "neutral" }),
     ).color

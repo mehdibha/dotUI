@@ -84,6 +84,14 @@ export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   primary: "accent",
 }
 
+/** The site's own chrome (`base/colors.css`): Origin with a neutral primary
+ *  over a softer blue. Previews and exports never fall back to it. */
+export const SITE_COLOR_CONFIG: ColorConfig = {
+  v: 2,
+  seeds: { accent: "#438cd6" },
+  background: { dark: 2 },
+}
+
 /** Engine status defaults, re-exported for the customizer's seed pickers. */
 export const DEFAULT_STATUS_SEEDS = STATUS_SEEDS
 

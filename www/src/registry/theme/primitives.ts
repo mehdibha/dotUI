@@ -115,7 +115,7 @@ export function emitPrimitivesCss(
   if (isRoot) {
     out.push(
       "/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
-      "/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */",
+      "/* Primitive ramps generated from SITE_COLOR_CONFIG (see @/registry/theme). */",
       "",
     )
   }

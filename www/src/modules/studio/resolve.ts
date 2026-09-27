@@ -12,7 +12,6 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { resolveAll } from "./axes"
 import type { StudioState } from "./axes"
-import { isDefaultColorConfig } from "./axes/color"
 
 const enumVars = new Map<
   string,
@@ -55,13 +54,9 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
     componentParams,
     tokens,
     density: resolved.density ?? "default",
-    // Color contributes the full recipe; one equal to the default stays
-    // absent so scoped providers and the export keep the shipped
-    // `base/colors.css`.
-    color:
-      resolved.color && !isDefaultColorConfig(resolved.color as ColorConfig)
-        ? (resolved.color as ColorConfig)
-        : undefined,
+    // Always explicit: the page's `base/colors.css` is the site chrome's
+    // palette, not Origin's.
+    color: resolved.color as ColorConfig,
     icons: resolved.icons,
   }
 }

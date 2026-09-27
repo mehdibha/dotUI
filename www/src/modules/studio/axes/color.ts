@@ -138,30 +138,6 @@ export function buildColorConfig(state: StudioState): ColorConfig {
   })
 }
 
-/** Sorted-key JSON with absent and empty-object fields dropped — the shape
- *  `resolveAll`'s deep merge leaves behind (`overrides: {}`) still reads as
- *  the untouched recipe. */
-function canonical(value: unknown): string {
-  return JSON.stringify(value, (_, v) =>
-    v && typeof v === "object" && !Array.isArray(v)
-      ? Object.fromEntries(
-          Object.entries(v)
-            .filter(
-              ([, x]) =>
-                x !== undefined &&
-                !(x && typeof x === "object" && Object.keys(x).length === 0),
-            )
-            .sort(([a], [b]) => a.localeCompare(b)),
-        )
-      : v,
-  )
-}
-
-/** True when `config` is the default generated palette (`base/colors.css`). */
-export function isDefaultColorConfig(config: ColorConfig): boolean {
-  return canonical(config) === canonical(DEFAULT_COLOR_CONFIG)
-}
-
 export function resolveColor(state: StudioState): Resolved {
   return { color: buildColorConfig(state) }
 }

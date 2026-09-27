@@ -10,7 +10,7 @@
  * modes by construction — no more reversed-ramp casualties).
  */
 
-import { DEFAULT_COLOR_CONFIG } from "./color-config"
+import { DEFAULT_COLOR_CONFIG, SITE_COLOR_CONFIG } from "./color-config"
 import type {
   PrimaryColorSource,
   SemanticTarget,
@@ -314,8 +314,8 @@ export function semanticsFor(
   )
 }
 
-/** The default vocabulary (accent primary). */
-export const DEFAULT_SEMANTICS = semanticsFor()
+/** The vocabulary `base/colors.css` declares (the site chrome's). */
+export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 
 /** The selection cluster re-declared per component scope (`scopes`), keyed
  *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
@@ -331,7 +331,7 @@ export function scopedSemantics(
 }
 
 /**
- * The tokens whose target differs from the default vocabulary — for delta
+ * The tokens whose target differs from the site vocabulary — for delta
  * re-emits on plain `:root`/`.dark` (the v0 bundle, scoped previews), where
  * the full `@theme` layer ships static and only divergences re-point.
  */
@@ -342,7 +342,7 @@ export function semanticDelta(
     Object.entries(semanticsFor(color)).filter(
       ([name, token]) =>
         JSON.stringify(token.target) !==
-        JSON.stringify(DEFAULT_SEMANTICS[name]?.target),
+        JSON.stringify(SITE_SEMANTICS[name]?.target),
     ),
   )
 }

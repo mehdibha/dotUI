@@ -8,7 +8,7 @@ import { DEFAULT_STATE, parseState } from "./index"
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and the grid solid", () => {
     const ds = resolveDesignSystem(DEFAULT_STATE)
-    expect(ds.color).toBeUndefined()
+    expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
     expect(ds.componentParams.chart).toEqual({ grid: "solid" })
     expect(Object.keys(ds.tokens).some((k) => k.startsWith("--chart"))).toBe(
       false,
@@ -29,7 +29,7 @@ describe("charts axes", () => {
     for (const chartGrid of ["dashed", "none"]) {
       const ds = resolveDesignSystem(parseState({ chartGrid }))
       expect(ds.componentParams.chart).toEqual({ grid: chartGrid })
-      expect(ds.color).toBeUndefined()
+      expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
     }
   })
 })

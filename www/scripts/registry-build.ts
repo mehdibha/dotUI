@@ -25,11 +25,12 @@ import { registryHooks } from "../src/registry/hooks/registry"
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map"
 import {
   DEFAULT_COLOR_CONFIG,
-  DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
   resolveColorConfig,
+  SITE_COLOR_CONFIG,
+  SITE_SEMANTICS,
   themeOptionsFromConfig,
 } from "../src/registry/theme"
 import type { ColorConfig } from "../src/registry/theme"
@@ -959,7 +960,7 @@ async function buildShadcnPublishables(
 }
 
 /**
- * Generate base/colors.css from the default ColorConfig: the primitive ramps
+ * Generate base/colors.css from the site's ColorConfig: the primitive ramps
  * (both modes solved independently by the engine) and the semantic `@theme`
  * block that references them. This file is site-only — the shipped theme
  * flattens the semantic tokens to literals instead (see publisher/emit-theme).
@@ -972,6 +973,7 @@ function checkColorConfigs(
 ) {
   const configs = [
     ["default", DEFAULT_COLOR_CONFIG] as const,
+    ["site", SITE_COLOR_CONFIG] as const,
     ...presets.map((preset) => [preset.id, preset.designSystem.color] as const),
   ]
   for (const [name, config] of configs) {
@@ -1013,9 +1015,9 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 }
 
 async function generateBaseColorsCss() {
-  const primitives = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
-  const dark = emitDarkOverridesCss(DEFAULT_SEMANTICS)
-  const semantics = emitCss(DEFAULT_SEMANTICS) + (dark ? `\n${dark}` : "")
+  const primitives = emitPrimitivesCss(resolveColorConfig(SITE_COLOR_CONFIG))
+  const dark = emitDarkOverridesCss(SITE_SEMANTICS)
+  const semantics = emitCss(SITE_SEMANTICS) + (dark ? `\n${dark}` : "")
   await fs.writeFile(
     path.join(REGISTRY_DIR, "base", "colors.css"),
     `${primitives}\n/* Semantic tokens over the ramps above. */\n${semantics}`,

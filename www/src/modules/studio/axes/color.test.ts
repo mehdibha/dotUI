@@ -4,17 +4,14 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { DEFAULT_STATE, DEFAULTS, parseState } from "."
 import { resolveDesignSystem } from "../resolve"
-import {
-  buildColorConfig,
-  isDefaultColorConfig,
-  SOLID_LEAVES,
-  withSource,
-} from "./color"
+import { buildColorConfig, SOLID_LEAVES, withSource } from "./color"
 
 describe("color axis", () => {
-  it("the defaults are the shipped palette, and resolve to no recipe", () => {
+  it("the defaults are the shipped palette, resolved explicitly", () => {
     expect(buildColorConfig(DEFAULT_STATE)).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(resolveDesignSystem(DEFAULT_STATE).color).toBeUndefined()
+    expect(resolveDesignSystem(DEFAULT_STATE).color).toEqual(
+      DEFAULT_COLOR_CONFIG,
+    )
   })
 
   it("maps seeds and engine axes onto ColorConfig, absent when default", () => {
@@ -58,18 +55,6 @@ describe("color axis", () => {
       resolveDesignSystem(parseState({ lightBg: 97, darkBg: 0 })).color
         ?.background,
     ).toEqual({ light: 97, dark: "oled" })
-  })
-
-  it("reads a deep-merged default recipe as untouched", () => {
-    expect(
-      isDefaultColorConfig({
-        ...DEFAULT_COLOR_CONFIG,
-        overrides: {},
-      }),
-    ).toBe(true)
-    expect(
-      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: undefined }),
-    ).toBe(false)
   })
 
   it("keeps a neutral primary off the accent default", () => {
