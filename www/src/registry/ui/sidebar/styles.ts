@@ -43,8 +43,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
       ],
       inner: [
-        "flex h-full w-full flex-col bg-sidebar",
-        "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
+        "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)]",
+        "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:border-(--card-border) group-data-[variant=floating]:shadow-sm",
       ],
       // Mobile panel content (rendered inside a Drawer at < md).
       mobile: "flex h-full w-full flex-col bg-sidebar text-fg",

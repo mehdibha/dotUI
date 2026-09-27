@@ -20,6 +20,8 @@ export const supabase = definePreset({
     neutralTint: 0.3,
     // Primary is exactly #3ecf8e, as live.
     preserveSeed: true,
+    lightBg: 99,
+    darkBg: 6,
 
     // Typography
     headingFont: "Manrope",
@@ -43,12 +45,10 @@ export const supabase = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 99,
-    darkBg: 6,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "subtle",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

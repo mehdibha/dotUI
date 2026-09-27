@@ -38,9 +38,9 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       surface: {
         slots: {
           content:
-            "border bg-popover text-fg shadow-(--shadow-popover,var(--shadow-md))",
+            "border border-(--overlay-border) bg-popover/(--popover-alpha) text-fg shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)]",
           arrow:
-            "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover [&>svg]:stroke-border",
+            "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
         },
       },
     },

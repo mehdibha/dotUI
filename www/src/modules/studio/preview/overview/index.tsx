@@ -637,17 +637,29 @@ function DensitySection({ density }: { density: string }) {
 /* ------------------------------- Elevation -------------------------------- */
 
 const SURFACE_LAYERS: { token: string; label: string }[] = [
-  { token: "--color-bg", label: "Base" },
+  { token: "--color-bg", label: "Page" },
   { token: "--color-card", label: "Card" },
-  { token: "--color-muted", label: "Muted" },
+  { token: "--color-popover", label: "Popover" },
   { token: "--color-inverse", label: "Inverse" },
 ]
 
+/* The system's own roles, as its components draw them. */
 const SHADOWS: { className: string; label: string }[] = [
-  { className: "shadow-xs", label: "xs" },
-  { className: "shadow-sm", label: "sm" },
-  { className: "shadow-md", label: "md" },
-  { className: "shadow-lg", label: "lg" },
+  {
+    className:
+      "border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
+    label: "Card",
+  },
+  {
+    className:
+      "border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
+    label: "Popover",
+  },
+  {
+    className:
+      "border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
+    label: "Dialog",
+  },
 ]
 
 function ElevationSection() {
@@ -679,17 +691,17 @@ function ElevationSection() {
       </div>
       <div className="flex flex-col gap-4">
         <Label>Elevation</Label>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           {SHADOWS.map((s) => (
             <div
               key={s.label}
               className={cn(
-                "flex h-24 items-end rounded-xl border bg-card p-3",
+                "flex h-24 items-end rounded-xl border p-3",
                 s.className,
               )}
             >
-              <span className="font-mono text-xs text-fg-muted">
-                shadow-{s.label}
+              <span className="text-xs font-medium text-fg-muted">
+                {s.label}
               </span>
             </div>
           ))}

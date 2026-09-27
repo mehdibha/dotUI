@@ -81,7 +81,7 @@ export interface PieChartProps extends ChartFamilyProps {
 
   /**
    * Stroke painted between slices.
-   * @default "var(--color-bg)"
+   * @default "var(--surface-bg, var(--color-bg))"
    */
   stroke?: string
 

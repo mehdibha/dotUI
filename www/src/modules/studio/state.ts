@@ -13,7 +13,6 @@ import { MotionSection } from "./sections/motion"
 import { ShapePreview, ShapeSection } from "./sections/shape"
 import { SpacePreview, SpaceSection } from "./sections/space"
 import { StatesPreview, StatesSection } from "./sections/states"
-import { SurfacesPreview, SurfacesSection } from "./sections/surfaces"
 import { TypePreview, TypeSection } from "./sections/type"
 
 export type { StudioState } from "./axes"
@@ -66,12 +65,6 @@ export const CHAPTERS: Chapter[] = [
     label: "Space",
     Body: SpaceSection,
     Preview: SpacePreview,
-  },
-  {
-    id: "surfaces",
-    label: "Surfaces",
-    Body: SurfacesSection,
-    Preview: SurfacesPreview,
   },
   {
     id: "browser",

@@ -21,8 +21,9 @@
    `0 0 #0000`, never `none` — `none` invalidates the whole composite. */
 @utility focus-ring {
   --tw-ring-shadow:
-    inset 0 0 0 var(--focus-ring-inner) var(--color-bg),
-    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),
+    inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)),
+    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset)
+      var(--surface-bg, var(--color-bg)),
     var(--focus-ring-inset,) 0 0 0
       calc(var(--focus-ring-offset) + var(--focus-ring-width))
       var(--focus-ring-color);
@@ -34,8 +35,9 @@
 
 @utility focus-input {
   --tw-ring-shadow:
-    inset 0 0 0 var(--focus-input-inner) var(--color-bg),
-    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),
+    inset 0 0 0 var(--focus-input-inner) var(--surface-bg, var(--color-bg)),
+    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset)
+      var(--surface-bg, var(--color-bg)),
     var(--focus-input-inset,) 0 0 0
       calc(var(--focus-input-offset) + var(--focus-input-width))
       var(--tw-ring-color, var(--focus-input-color));
@@ -91,11 +93,12 @@
   }
 }
 
-/* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.
-   Their shadows ride `--shadow-card` / `--shadow-popover` / `--shadow-modal`,
-   falling back to the registry's own (none · md · lg). The popover tier
-   (menus, pickers, popovers) is solid; glass is the surface at 70% over a
-   blurred, saturated backdrop. */
+/* Surfaces: the edge cards and floating layers (popover, menu, tooltip,
+   toast, dialog) draw. Shadows ride `--shadow-card` / `--shadow-popover` /
+   `--shadow-modal`, falling back to the registry's own (none · md · lg);
+   glass is the floating surface at 70% over a blurred, saturated backdrop.
+   Each surface sets `--surface-bg`, so rings, chips and focus gaps inside it
+   match it instead of the page. */
 :root {
   --card-border: var(--color-border);
   --overlay-border: var(--color-border);

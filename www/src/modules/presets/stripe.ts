@@ -19,6 +19,8 @@ export const stripe = definePreset({
     vividness: 1,
     neutralTint: 2,
     preserveSeed: false,
+    lightBg: 100,
+    darkBg: 2,
 
     // Typography
     headingFont: "",
@@ -43,12 +45,10 @@ export const stripe = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "raised",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 2,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "raised",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

@@ -21,6 +21,8 @@ export const claude = definePreset({
     vividness: 1,
     neutralTint: 1,
     preserveSeed: false,
+    lightBg: 99,
+    darkBg: 7,
 
     // Typography
     // Free stand-ins for Anthropic Serif and Sans.
@@ -46,12 +48,10 @@ export const claude = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "raised",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 99,
-    darkBg: 7,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "raised",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

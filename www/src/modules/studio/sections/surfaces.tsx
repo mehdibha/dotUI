@@ -1,24 +1,25 @@
 "use client"
 
-/* Surfaces — the canvas and what sits on it. Style opens five cards, each
-   the recipe drawn twice, light beside dark: dark behavior is part of a style
-   (shadows die on near-black), so the pick shows both modes instead of asking
-   for them separately. Depth is the one intensity lever, Page whether white
-   surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — sits under Style, whose cards draw
-   both modes. */
+/* Surfaces — one row under Color: the styles, drawn in the system's own
+   neutral light beside dark, then the settings a style is made of and each
+   mode's page. */
+
+import type { StepName, Theme } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 
+import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
-  CANVAS_OPTIONS,
-  DARK_BG_RANGE,
-  DEPTH_OPTIONS,
-  LIGHT_BG_RANGE,
+  EDGE_OPTIONS,
+  flatAllowed,
+  LAYERS_OPTIONS,
+  SHADOW_OPTIONS,
   shadowCss,
-  STRATEGY_OPTIONS,
   surfaceColorCss,
   surfaceRecipe,
+  SURFACE_STYLES,
+  surfaceStyle,
+  withSurface,
 } from "../axes/surfaces"
 import type {
   Mode,
@@ -34,72 +35,70 @@ import {
   DialSlider,
   DialToggle,
   DialTrigger,
+  ModifiedDot,
 } from "../dial"
 import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
-/* The glyph's own neutral ramp, one per mode: grays at the registry's rung
-   lightness, so a style reads the same whichever neutral the system runs. */
-const gray = (l: number, alpha = 1) =>
-  alpha === 1 ? `oklch(${l} 0 0)` : `oklch(${l} 0 0 / ${alpha})`
-const GLYPH_PALETTE: PerMode<SurfacePalette> = {
-  light: {
-    step: (s) =>
-      gray(
-        { "25": 1, "50": 0.985, "100": 0.965, "200": 0.925, "300": 0.87 }[s] ??
-          0.71,
-      ),
-    hairline: gray(0.9),
-  },
-  dark: {
-    step: (s) =>
-      gray(
-        { "25": 0.13, "50": 0.17, "100": 0.21, "200": 0.26, "300": 0.32 }[s] ??
-          0.42,
-      ),
-    hairline: gray(0.235),
-  },
+/** A mode's neutral rungs and hairline, as the registry paints them. */
+function palette(theme: Theme, mode: Mode): SurfacePalette {
+  const m = theme[mode]
+  const step = (s: string) => m.scales.neutral?.[s as StepName] ?? m.background
+  const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
+  return {
+    step,
+    hairline: `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`,
+  }
 }
 
-/** Shadow offsets at the glyph's scale. */
+/** Shadow offsets at the glyph's scale, dark enough to read at its size. */
 const scaleOffset = (offset: string, k: number) =>
   offset.replace(/(-?[\d.]+)px/g, (_, n) => `${Number(n) * k}px`)
+const boost = (color: SurfaceColor): SurfaceColor =>
+  color.kind === "shade"
+    ? { kind: "shade", alpha: Math.min(color.alpha * 3, 0.5) }
+    : color
 
-function lookStyle(look: SurfaceLook, mode: Mode, k: number) {
-  const palette = GLYPH_PALETTE[mode]
-  const color = (pair: PerMode<SurfaceColor>) =>
-    surfaceColorCss(pair[mode], palette)
+function lookStyle(
+  look: SurfaceLook,
+  p: SurfacePalette,
+  mode: Mode,
+  k: number,
+) {
+  const color = (pair: PerMode<SurfaceColor>) => surfaceColorCss(pair[mode], p)
   return {
     background: color(look.bg),
     borderColor: color(look.edge),
     boxShadow: shadowCss(
       look.shadow.map((layer) => ({
-        ...layer,
         offset: scaleOffset(layer.offset, k),
+        color: { light: boost(layer.color.light), dark: boost(layer.color.dark) },
       })),
       color,
     ),
   }
 }
 
-/** One mode of the recipe: a card on the page with a popover over it. */
+/** One mode of the recipe: a card on the page, a popover over it. */
 function Half({
   state,
+  theme,
   mode,
   mini,
 }: {
   state: StudioState
+  theme: Theme
   mode: Mode
   mini?: boolean
 }) {
   const recipe = surfaceRecipe(state)
-  const palette = GLYPH_PALETTE[mode]
-  const bar = { background: gray(mode === "light" ? 0.15 : 0.98, 0.18) }
-  const k = mini ? 0.3 : 0.7
+  const p = palette(theme, mode)
+  const ink = { background: p.step(mode === "light" ? "300" : "400") }
+  const k = mini ? 0.3 : 0.6
   return (
     <span
       className={cn("relative block", mini ? "h-5" : "h-16")}
-      style={{ background: surfaceColorCss(recipe.page[mode], palette) }}
+      style={{ background: surfaceColorCss(recipe.page[mode], p) }}
     >
       <span
         className={cn(
@@ -108,22 +107,22 @@ function Half({
             ? "inset-x-1 top-1 h-3 rounded-[3px]"
             : "inset-x-2 top-2 h-9 rounded-[5px] p-1.5",
         )}
-        style={lookStyle(recipe.card, mode, k)}
+        style={lookStyle(recipe.card, p, mode, k)}
       >
         {!mini && (
           <>
-            <span className="h-1 w-1/2 rounded-full" style={bar} />
-            <span className="h-1 w-1/3 rounded-full" style={bar} />
+            <span className="h-1 w-1/2 rounded-full" style={ink} />
+            <span className="h-1 w-1/3 rounded-full" style={ink} />
           </>
         )}
       </span>
       {!mini && (
         <span
           className="absolute right-2 bottom-1.5 flex h-8 w-[52%] flex-col gap-1 rounded-[5px] border p-1"
-          style={lookStyle(recipe.popover, mode, k)}
+          style={lookStyle(recipe.popover, p, mode, k)}
         >
-          <span className="h-1.5 w-2/3 rounded-full" style={bar} />
-          <span className="h-1.5 w-1/2 rounded-full" style={bar} />
+          <span className="h-1.5 w-2/3 rounded-full" style={ink} />
+          <span className="h-1.5 w-1/2 rounded-full" style={ink} />
         </span>
       )}
     </span>
@@ -131,7 +130,15 @@ function Half({
 }
 
 /** The recipe drawn light beside dark. */
-function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
+function SurfaceGlyph({
+  state,
+  theme,
+  mini,
+}: {
+  state: StudioState
+  theme: Theme
+  mini?: boolean
+}) {
   return (
     <span
       className={cn(
@@ -139,92 +146,111 @@ function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
         mini ? "w-10 rounded" : "w-full rounded-md",
       )}
     >
-      <Half state={state} mode="light" mini={mini} />
-      <Half state={state} mode="dark" mini={mini} />
+      <Half state={state} theme={theme} mode="light" mini={mini} />
+      <Half state={state} theme={theme} mode="dark" mini={mini} />
     </span>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
-
-const strategyLabel = (value: string) =>
-  STRATEGY_OPTIONS.find((o) => o.value === value)?.label ?? value
-
-export function SurfacesPreview({ state }: { state: StudioState }) {
-  return <StyleGlyph state={state} mini />
+const PAGE_NAMES: Record<Mode, Record<number, string>> = {
+  light: { 100: "White", 99: "Off-white" },
+  dark: { 0: "Black", 2: "Near-black", 9: "Soft", 16: "Dim" },
 }
 
-export function surfacesSummary(state: StudioState): string {
-  return strategyLabel(state.surfaceStrategy)
-}
+const formatPage = (mode: Mode) => (v: number) =>
+  PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
-const formatBg = (v: number) => `L* ${v.toFixed(1)}`
-
-export function SurfacesSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const depth = Math.max(
-    0,
-    DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
-  )
+export function SurfacesRow({
+  studio,
+  theme,
+}: {
+  studio: Studio
+  theme: Theme
+}) {
+  const { state, set, setState } = studio
+  const { style, exact } = surfaceStyle(state)
+  const edit = (patch: Parameters<typeof withSurface>[1]) =>
+    setState(withSurface(state, patch))
   return (
-    <>
-      <DialTrigger label="Style" value={strategyLabel(state.surfaceStrategy)}>
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Style"
-            value={state.surfaceStrategy}
-            onChange={set("surfaceStrategy")}
-            options={STRATEGY_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: (
-                <StyleGlyph
-                  state={{ ...state, surfaceStrategy: option.value }}
-                />
-              ),
-            }))}
-          />
-          <DialGap />
-          <DialSlider
-            label="Light background"
-            value={state.lightBg}
-            onChange={set("lightBg")}
-            minValue={LIGHT_BG_RANGE.min}
-            maxValue={LIGHT_BG_RANGE.max}
-            step={LIGHT_BG_RANGE.step}
-            format={formatBg}
-          />
-          <DialSlider
-            label="Dark background"
-            value={state.darkBg}
-            onChange={set("darkBg")}
-            minValue={DARK_BG_RANGE.min}
-            maxValue={DARK_BG_RANGE.max}
-            step={DARK_BG_RANGE.step}
-            format={(v) => (v === 0 ? "OLED" : formatBg(v))}
-          />
-        </DialPopover>
-      </DialTrigger>
-      <DialSlider
-        label="Depth"
-        value={depth}
-        onChange={(i) => set("surfaceDepth")(DEPTH_OPTIONS[i]!.value)}
-        minValue={0}
-        maxValue={DEPTH_OPTIONS.length - 1}
-        step={1}
-        format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
-      />
-      <DialSegmented
-        label="Page"
-        value={state.surfaceCanvas}
-        onChange={set("surfaceCanvas")}
-        options={CANVAS_OPTIONS}
-      />
-      <DialToggle
-        label="Glass"
-        value={state.surfaceMaterial === "glass"}
-        onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
-      />
-    </>
+    <DialTrigger
+      label="Surfaces"
+      chevron={false}
+      value={
+        <>
+          {!exact && <ModifiedDot />}
+          <span className="truncate">
+            {exact ? style.label : `${style.label}, edited`}
+          </span>
+          <SurfaceGlyph state={state} theme={theme} mini />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <CardGrid
+          label="Style"
+          value={exact ? style.id : undefined}
+          onChange={(id) => {
+            const next = SURFACE_STYLES.find((s) => s.id === id)
+            if (next) edit(next.values)
+          }}
+          options={SURFACE_STYLES.map((s) => ({
+            id: s.id,
+            label: s.label,
+            children: (
+              <span className="flex flex-col gap-2">
+                <SurfaceGlyph state={{ ...state, ...s.values }} theme={theme} />
+                <span className="truncate text-xs text-fg/50">{s.hint}</span>
+              </span>
+            ),
+          }))}
+        />
+        <DialGap />
+        <DialSegmented
+          label="Layers"
+          value={state.surfaceLayers}
+          onChange={(surfaceLayers) => edit({ surfaceLayers })}
+          options={LAYERS_OPTIONS}
+        />
+        <DialSegmented
+          label="Edge"
+          value={state.surfaceEdge}
+          onChange={(surfaceEdge) => edit({ surfaceEdge })}
+          options={EDGE_OPTIONS}
+        />
+        <DialSegmented
+          label="Shadow"
+          value={state.surfaceShadow}
+          onChange={(surfaceShadow) => edit({ surfaceShadow })}
+          options={SHADOW_OPTIONS.map((o) => ({
+            ...o,
+            disabled: o.value === "flat" && !flatAllowed(state),
+          }))}
+        />
+        <DialToggle
+          label="Glass"
+          value={state.surfaceGlass}
+          onChange={set("surfaceGlass")}
+        />
+        <DialGap />
+        <DialSlider
+          label="Light page"
+          value={state.lightBg}
+          onChange={set("lightBg")}
+          minValue={LIGHT_BG_RANGE.min}
+          maxValue={LIGHT_BG_RANGE.max}
+          step={LIGHT_BG_RANGE.step}
+          format={formatPage("light")}
+        />
+        <DialSlider
+          label="Dark page"
+          value={state.darkBg}
+          onChange={set("darkBg")}
+          minValue={DARK_BG_RANGE.min}
+          maxValue={DARK_BG_RANGE.max}
+          step={DARK_BG_RANGE.step}
+          format={formatPage("dark")}
+        />
+      </DialPopover>
+    </DialTrigger>
   )
 }
