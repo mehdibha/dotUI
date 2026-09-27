@@ -24,10 +24,13 @@ import { SPACE_DEFAULTS } from "./axes/space"
 import { SURFACE_DEFAULTS } from "./axes/surfaces"
 import { TYPE_DEFAULTS } from "./axes/type"
 import { MOTION_DEFAULTS } from "./motion-controls"
-import { BrowserPreview, BrowserSection } from "./sections/browser"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENTS_DEFAULTS, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
+import {
+  InteractivityPreview,
+  InteractivitySection,
+} from "./sections/interactivity"
 import { MobilePreview, MobileSection } from "./sections/mobile"
 import { MotionSection } from "./sections/motion"
 import { ShapePreview, ShapeSection } from "./sections/shape"
@@ -54,7 +57,7 @@ export interface Chapter {
   Preview?: React.ComponentType<{ state: StudioState }>
 }
 
-/* Identity first, then the page chrome and the treatments every control
+/* Identity first, then interactivity and the treatments every control
    wears, then every component behind one row each. Alert has no axes yet
    and stays off the page until it is rebuilt from preset evidence. */
 export const CHAPTERS: Chapter[] = [
@@ -102,14 +105,11 @@ export const CHAPTERS: Chapter[] = [
     Preview: SurfacesPreview,
   },
   {
-    id: "browser",
-    label: "Browser",
-    defaults: {
-      ...CURSOR_DEFAULTS,
-      ...SELECTION_DEFAULTS,
-    },
-    Body: BrowserSection,
-    Preview: BrowserPreview,
+    id: "interactivity",
+    label: "Interactivity",
+    defaults: { ...CURSOR_DEFAULTS, ...SELECTION_DEFAULTS },
+    Body: InteractivitySection,
+    Preview: InteractivityPreview,
   },
   {
     id: "states",

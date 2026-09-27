@@ -1,20 +1,14 @@
 "use client"
 
-/* Browser — what the product overrides of the browser's own chrome: the
-   pointer over controls, whether UI text selects, the selection highlight.
-   Scrollbars stay native. Cursor is one row opening the four pointer decisions;
-   links keep the hand everywhere, so they are not one of them. */
+/* Interactivity — how the product answers the pointer and text selection: the
+   cursor over each kind of control, whether UI text selects, the selection
+   highlight. Links keep the hand everywhere, so they are not a cursor row. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { CURSOR_DEFAULTS } from "../axes/cursor"
-import {
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialToggle,
-  DialTrigger,
-} from "../dial"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection"
+import { DialPopover, DialSegmented, DialToggle, DialTrigger } from "../dial"
 import type { DialOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 import {
@@ -90,34 +84,31 @@ const CURSOR_ROWS = [
   },
 ] as const
 
-/* ------------------------------- Highlight -------------------------------- */
+/* ----------------------------- Text selection ----------------------------- */
 
 /* Painted words, not cursors: the option is the highlight itself. The blue
    depicts the OS default, which is literal like the cursor drawings. */
-const HIGHLIGHT_OPTIONS = [
-  {
-    value: "accent",
-    label: "Accent",
-    preview: (
-      <span className="rounded-xs bg-text-selection px-1 text-[11px] text-fg-on-text-selection">
-        Aa
-      </span>
-    ),
-  },
-  {
-    value: "browser",
-    label: "Browser",
-    preview: (
-      <span className="rounded-xs bg-[#B3D7FF] px-1 text-[11px] text-[#1B1B1F]">
-        Aa
-      </span>
-    ),
-  },
-]
+const HIGHLIGHT_CHIPS: Record<string, string> = {
+  accent: "bg-text-selection text-fg-on-text-selection",
+  browser: "bg-[#B3D7FF] text-[#1B1B1F]",
+}
+
+function HighlightChip({ value }: { value: string }) {
+  return (
+    <span className={cn("rounded-xs px-1 text-[11px]", HIGHLIGHT_CHIPS[value])}>
+      Aa
+    </span>
+  )
+}
+
+const optionLabel = (
+  options: { value: string; label: string }[],
+  value: string,
+) => options.find((option) => option.value === value)?.label ?? value
 
 /* --------------------------------- Section --------------------------------- */
 
-export function BrowserPreview({ state }: { state: StudioState }) {
+export function InteractivityPreview({ state }: { state: StudioState }) {
   return (
     <Glyph>
       {state.cursorControls === "pointer" ? <HandCursor /> : <ArrowCursor />}
@@ -125,11 +116,11 @@ export function BrowserPreview({ state }: { state: StudioState }) {
   )
 }
 
-export function browserSummary(state: StudioState): string {
+function cursorSummary(state: StudioState): string {
   return state.cursorControls === "pointer" ? "Hand" : "Arrow"
 }
 
-export function BrowserSection({ studio }: { studio: Studio }) {
+export function InteractivitySection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   const changed = CURSOR_ROWS.filter(
     (row) => state[row.key] !== CURSOR_DEFAULTS[row.key],
@@ -140,7 +131,7 @@ export function BrowserSection({ studio }: { studio: Studio }) {
         label="Cursor"
         value={
           <span className="truncate">
-            {browserSummary(state)}
+            {cursorSummary(state)}
             {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
               ` · ${changed}`}
           </span>
@@ -158,17 +149,42 @@ export function BrowserSection({ studio }: { studio: Studio }) {
           ))}
         </DialPopover>
       </DialTrigger>
-      <DialToggle
-        label="Selectable"
-        value={state.selectionUiText === "selectable"}
-        onChange={(on) => set("selectionUiText")(on ? "selectable" : "none")}
-      />
-      <DialSelect
-        label="Highlight"
-        value={state.selectionHighlight}
-        onChange={set("selectionHighlight")}
-        options={HIGHLIGHT_OPTIONS}
-      />
+      <DialTrigger
+        label="Text selection"
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(HIGHLIGHT_OPTIONS, state.selectionHighlight)}
+              {state.selectionUiText === "selectable" && " · Selectable"}
+            </span>
+            <HighlightChip value={state.selectionHighlight} />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <DialSegmented
+            label="Highlight"
+            value={state.selectionHighlight}
+            onChange={set("selectionHighlight")}
+            options={HIGHLIGHT_OPTIONS.map((option) => ({
+              value: option.value,
+              label: (
+                <>
+                  <HighlightChip value={option.value} />
+                  {option.label}
+                </>
+              ),
+            }))}
+          />
+          <DialToggle
+            label="Selectable UI text"
+            value={state.selectionUiText === "selectable"}
+            onChange={(on) =>
+              set("selectionUiText")(on ? "selectable" : "none")
+            }
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }
