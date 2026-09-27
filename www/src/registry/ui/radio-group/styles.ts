@@ -9,11 +9,11 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       root: ["flex items-center has-data-description:items-start"],
       control: [
         "relative flex items-center gap-2 rounded-(--studio-radio-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-radio-card-radius)",
-        "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5",
+        "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease) has-data-label:w-full has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
         "grid size-4 shrink-0 place-content-center rounded-full border border-border-control bg-transparent text-transparent before:size-1.5 before:rounded-full before:bg-current before:content-['']",
-        "transition-[background-color,border-color,box-shadow,color] duration-75",
+        "transition-[background-color,border-color,box-shadow,color] duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease)",
         "selected:border-transparent selected:bg-selection selected:text-fg-on-selection",
         "disabled:border-(--disabled-border,var(--color-border-control)) disabled:selected:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection))",
         "invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-danger",

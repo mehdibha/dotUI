@@ -15,17 +15,17 @@ const drawerVariants = tv({
     overlay:
       "fixed inset-0 isolate z-50 [--drawer-bleed:--spacing(40)] [--drawer-inset:0px] [--drawer-peek:24px]",
     backdrop:
-      "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0 bg-overlay/70",
+      "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity ease-[cubic-bezier(0.32,0.72,0,1)] data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0 duration-450 data-ending-style:duration-[calc(400ms*var(--drawer-swipe-strength,1))] bg-overlay/70",
     viewport: "@container-size fixed inset-0 z-10 touch-none",
     popup:
-      "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [transition-property:transform,box-shadow,height,background-color,margin,padding] duration-[calc(500ms*var(--drawer-swipe-strength,1))] ease-fluid-out will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none",
+      "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border border-(--overlay-border) bg-popover text-fg shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35)) [transition-property:transform,box-shadow,height,background-color,margin,padding] will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-ending-style:shadow-none data-nested-drawer-open:overflow-hidden data-nested-drawer-swiping:transition-none data-starting-style:shadow-none data-swiping:transition-none data-swiping:select-none duration-450 data-ending-style:duration-[calc(400ms*var(--drawer-swipe-strength,1))] ease-[cubic-bezier(0.22,1,0.36,1)]",
     handle:
       "mx-auto my-2 shrink-0 cursor-drag touch-none rounded-full bg-fg/20 select-none active:cursor-dragging orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
     swipeArea: "fixed z-50 touch-none",
     indent:
-      "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] duration-500 ease-fluid-out data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-2xl",
+      "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-2xl duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] data-inactive:duration-400",
     indentBackground:
-      "pointer-events-none fixed inset-0 z-0 bg-overlay transition-opacity duration-500 ease-fluid-out data-inactive:opacity-0 data-active:opacity-100",
+      "pointer-events-none fixed inset-0 z-0 bg-overlay transition-opacity data-inactive:opacity-0 data-active:opacity-100 duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] data-inactive:duration-400",
   },
   variants: {
     placement: {

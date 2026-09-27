@@ -1,5 +1,9 @@
 import { describe, expect, test } from "vitest"
 
+import { publishables } from "@/registry/__generated__/publishables"
+import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
+
 import { resolveDesignSystem } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
@@ -14,7 +18,9 @@ describe("navigation chapters", () => {
       container: "divided",
       marker: "chevron",
       markerPosition: "trailing",
+      motion: "expand",
     })
+    expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
     expect(ds.componentParams.breadcrumbs).toEqual({
       separator: "chevron",
       tone: "muted",
@@ -47,6 +53,7 @@ describe("navigation chapters", () => {
       container: "cards",
       marker: "plus",
       markerPosition: "leading",
+      motion: "expand",
     })
   })
 
@@ -63,5 +70,36 @@ describe("navigation chapters", () => {
       tone: "accent",
     })
     expect(ds.componentParams.pagination).toEqual({ current: "filled" })
+  })
+})
+
+const shipped = async (name: string, tokens: Record<string, string> = {}) => {
+  const preset: PublishPreset = { density: "default", componentParams: {} }
+  const mod = await publishables[name]?.()
+  if (!mod) throw new Error(`${name} is not publishable`)
+  const { item } = publish({
+    publishable: selectPublishable(mod, preset),
+    preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
+  })
+  return item.files?.[0]?.content ?? ""
+}
+
+describe("breadcrumbs motion", () => {
+  test("ships shadcn's default timing: no duration or ease class", async () => {
+    const content = await shipped("breadcrumbs")
+    expect(content).toContain("leading-none transition-colors disabled:")
+    expect(content).not.toMatch(/ (duration|ease)-/)
+    expect(content).not.toContain("--studio-")
+  })
+
+  test("a tweak times the link's hover color", async () => {
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        breadcrumbsMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+      }),
+    )
+    expect(await shipped("breadcrumbs", tokens)).toContain(
+      "transition-colors duration-200 ease-out disabled:",
+    )
   })
 })

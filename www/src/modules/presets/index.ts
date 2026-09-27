@@ -1,4 +1,5 @@
 import type { StudioState } from "@/modules/studio/axes"
+import { sameValue } from "@/modules/studio/axes/schema"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
@@ -45,7 +46,7 @@ export function closestPreset(state: StudioState): Preset {
   let fewest = Infinity
   for (const preset of PRESETS) {
     const differing = (Object.keys(state) as (keyof StudioState)[]).filter(
-      (key) => state[key] !== preset.state[key],
+      (key) => !sameValue(state[key], preset.state[key]),
     ).length
     if (differing < fewest) {
       closest = preset

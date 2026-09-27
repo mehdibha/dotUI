@@ -1,3 +1,5 @@
+import { motionValues } from "@/modules/studio/axes/motion-presets"
+
 import { definePreset } from "./preset"
 
 export const notion = definePreset({
@@ -75,10 +77,7 @@ export const notion = definePreset({
     inputError: "border",
 
     // Motion
-    motionCharacter: "standard",
-    motionSpeed: 1,
-    motionOverlay: "scale",
-    motionState: "quick",
+    ...motionValues("default"),
 
     // Mobile
     mobilePickers: "drawer",

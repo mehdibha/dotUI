@@ -1,0 +1,4 @@
+:root {
+  --studio-breadcrumbs-state-duration: 150ms;
+  --studio-breadcrumbs-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}

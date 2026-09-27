@@ -2,6 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import sidebarMeta from "./meta"
 
+/* Collapse and expand timing is the studio's (styles.css). */
+const collapse =
+  "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
+
 const { useStyles, styles } = createStyles(sidebarMeta, {
   base: {
     slots: {
@@ -17,7 +21,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       root: "group peer hidden text-fg md:block",
       // In-flow spacer that reserves the sidebar's width in the layout row.
       gap: [
-        "relative w-(--sidebar-width) bg-transparent transition-[width] duration-250 ease-fluid-out",
+        "relative w-(--sidebar-width) bg-transparent transition-[width]",
+        collapse,
         "group-data-[collapsible=offcanvas]:w-0",
         "group-data-[side=right]:rotate-180",
         "group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
@@ -27,7 +32,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       // The painted panel. Absolutely positioned over the gap so content reflows
       // around the gap while the panel can slide/resize independently.
       container: [
-        "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-250 ease-fluid-out md:flex",
+        "absolute inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] md:flex",
+        collapse,
         "group-data-[side=left]:left-0 group-data-[side=left]:group-data-[collapsible=offcanvas]:-left-(--sidebar-width)",
         "group-data-[side=right]:right-0 group-data-[side=right]:group-data-[collapsible=offcanvas]:-right-(--sidebar-width)",
         "group-data-[variant=sidebar]:group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
@@ -37,7 +43,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
       ],
       inner: [
-        "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-fluid-out",
+        "flex h-full w-full flex-col bg-sidebar",
         "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
       // Mobile panel content (rendered inside a Drawer at < md).
@@ -51,7 +57,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       // The thin draggable strip on the inner edge that toggles the sidebar.
       rail: [
-        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-fluid-out group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
+        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-(--studio-sidebar-state-ease) group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
         "after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control",
         "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
         "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",
@@ -64,7 +70,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",
       groupLabel: [
-        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] duration-200 ease-fluid-out [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0",
+        collapse,
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
       ],
       groupAction: [

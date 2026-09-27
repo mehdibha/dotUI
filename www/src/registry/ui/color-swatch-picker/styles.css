@@ -1,3 +1,5 @@
 :root {
   --studio-color-swatch-picker-item-radius: var(--studio-radius-item);
+  --studio-color-swatch-picker-state-duration: 100ms;
+  --studio-color-swatch-picker-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

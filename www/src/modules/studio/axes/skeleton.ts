@@ -2,14 +2,24 @@
    place a design system runs continuous ambient motion — shimmer
    (Carbon/Ant) vs pulse (shadcn/MUI) vs none (Linear-style stillness).
 
-   Engine: `animation` is an enum param on `skeleton`. */
+   Motion: one cycle of the shimmer's sweep or the pulse's breath. An
+   attachment in flight pulses on the same loop.
+
+   Engine: `animation` is an enum param on `skeleton`, plus its
+   `--studio-skeleton-loop-*` timing vars (attachment reads them too). */
 
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveLoop } from "./motion"
+import type { Loop } from "./motion"
+import { LOOP, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn's skeleton: Tailwind's `animate-pulse`, 2s on its own curve. */
+const MOTION: Loop = { cycle: 2000, ease: [0.4, 0, 0.6, 1] }
 
 export const SKELETON_DEFAULTS = {
   skeletonAnimation: "shimmer",
+  skeletonMotion: MOTION,
 }
 
 export const ANIMATION_OPTIONS = [
@@ -20,8 +30,12 @@ export const ANIMATION_OPTIONS = [
 
 export const SKELETON_SCHEMA: ChapterSchema<typeof SKELETON_DEFAULTS> = {
   skeletonAnimation: oneOf(ANIMATION_OPTIONS),
+  skeletonMotion: LOOP,
 }
 
 export function resolveSkeleton(state: StudioState): Resolved {
-  return { params: { skeleton: { animation: state.skeletonAnimation } } }
+  return {
+    tokens: resolveLoop("skeleton", state.skeletonMotion, MOTION),
+    params: { skeleton: { animation: state.skeletonAnimation } },
+  }
 }

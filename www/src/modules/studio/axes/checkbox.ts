@@ -7,16 +7,23 @@
    Engine: a fork re-declares the selection tokens under `[data-checkbox]`
    (the recipe's `scopes`), so the component's classes never change. Corner
    rides on the `--studio-checkbox-radius` surface var, resolved to a plain
-   `rounded-*` utility on export. */
+   `rounded-*` utility on export. State timing rides on the
+   `--studio-checkbox-state-*` vars, which Radio reads too (a synced pair). */
 
 import { fillScope, SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn's checkbox: `transition-colors` on Tailwind's default timing (its
+   radio doesn't animate). */
+const MOTION = TAILWIND_TIMING
 
 export const CHECKBOX_DEFAULTS = {
   checkboxColor: "accent",
   checkCorner: "rounded",
+  checkboxMotion: MOTION,
 }
 
 /* Rounded ≈ shadcn's 4px, Square ≈ Material/Carbon's 2px, Circle ≈ iOS-style
@@ -35,10 +42,11 @@ const CORNER_TOKENS: Record<string, string> = {
 export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
   checkboxColor: oneOf(SOURCE_OPTIONS),
   checkCorner: oneOf(CORNER_OPTIONS),
+  checkboxMotion: STATE_CHANGE,
 }
 
 export function resolveCheckbox(state: StudioState): Resolved {
-  const tokens: Record<string, string> = {}
+  const tokens = resolveStateChange("checkbox", state.checkboxMotion, MOTION)
   const corner = CORNER_TOKENS[state.checkCorner]
   if (corner) tokens["--studio-checkbox-radius"] = corner
   return { tokens, color: fillScope(state, "checkbox", state.checkboxColor) }

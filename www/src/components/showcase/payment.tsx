@@ -339,7 +339,7 @@ function MethodPanel({
     <div
       inert={!expanded}
       className={cn(
-        "grid grid-rows-[0fr] opacity-0 duration-300 ease-fluid-out motion-safe:transition-[grid-template-rows,opacity]",
+        "grid grid-rows-[0fr] opacity-0 duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:transition-[grid-template-rows,opacity]",
         expanded && "grid-rows-[1fr] opacity-100",
       )}
     >

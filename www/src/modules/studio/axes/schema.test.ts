@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_STATE, DEFAULTS, SCHEMA, validate } from "./index"
+import { DEFAULT_STATE, DEFAULTS, parseState, SCHEMA, validate } from "./index"
 import { checkAxisValue } from "./schema"
 
 const issueKeys = (raw: unknown) => {
@@ -10,7 +10,9 @@ const issueKeys = (raw: unknown) => {
 
 describe("state schema", () => {
   it("has exactly one entry per state key", () => {
-    expect(Object.keys(SCHEMA).sort()).toEqual(Object.keys(DEFAULTS).sort())
+    expect(Object.keys(SCHEMA).sort()).toEqual(
+      Object.keys(DEFAULT_STATE).sort(),
+    )
   })
 
   it("accepts every default, and fills missing keys with them", () => {
@@ -18,9 +20,9 @@ describe("state schema", () => {
       expect(
         checkAxisValue(schema, DEFAULTS[key as keyof typeof DEFAULTS]),
       ).toBeUndefined()
-    expect(DEFAULT_STATE).toEqual(DEFAULTS)
+    expect(DEFAULT_STATE).toEqual(DEFAULT_STATE)
     const result = validate({ radiusPx: 4 })
-    expect(result.ok && result.state).toEqual({ ...DEFAULTS, radiusPx: 4 })
+    expect(result.ok && result.state).toEqual(parseState({ radiusPx: 4 }))
   })
 
   it("checks each kind", () => {

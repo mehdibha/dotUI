@@ -1,7 +1,7 @@
 "use client"
 
 /* Navigation — how a link announces itself, the selected-tab signature, the
-   breadcrumb trail, and the current page. Link and tab colors are leaves of
+   breadcrumb trail and the current page. Link and tab colors are leaves of
    Color's Primary; pagination's cells wear Buttons' look. */
 
 import { cn } from "@/registry/lib/utils"
@@ -215,7 +215,6 @@ export function NavigationSection({ studio }: { studio: Studio }) {
         label="Tabs"
         value={state.tabStyle}
         onChange={set("tabStyle")}
-        rowPreview={false}
         options={TAB_STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: (

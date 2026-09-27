@@ -1,3 +1,6 @@
+import { DEFAULTS } from "@/modules/studio/axes"
+import { motionValues } from "@/modules/studio/axes/motion-presets"
+
 import { definePreset } from "./preset"
 
 export const airbnb = definePreset({
@@ -76,10 +79,10 @@ export const airbnb = definePreset({
     inputError: "border",
 
     // Motion
-    motionCharacter: "emphasized",
-    motionSpeed: 1,
-    motionOverlay: "slide",
-    motionState: "smooth",
+    ...motionValues("default"),
+    popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
+    tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
+    modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
 
     // Mobile
     mobilePickers: "drawer",

@@ -1,3 +1,5 @@
+import { motionValues } from "@/modules/studio/axes/motion-presets"
+
 import { definePreset } from "./preset"
 
 export const vercel = definePreset({
@@ -76,10 +78,7 @@ export const vercel = definePreset({
     inputError: "border",
 
     // Motion
-    motionCharacter: "standard",
-    motionSpeed: 1,
-    motionOverlay: "scale",
-    motionState: "smooth",
+    ...motionValues("default"),
 
     // Mobile
     mobilePickers: "drawer",

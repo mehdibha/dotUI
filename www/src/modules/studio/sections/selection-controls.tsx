@@ -107,7 +107,6 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
         label="Checkbox"
         value={state.checkCorner}
         onChange={set("checkCorner")}
-        rowPreview={false}
         options={CORNER_OPTIONS.map((option) => ({
           ...option,
           preview: (

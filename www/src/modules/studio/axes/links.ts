@@ -6,17 +6,24 @@
    own color, with weight and the underline axis doing the work.
 
    Engine: `underline` and `color` are enum params on `link`, shaping the
-   default variant; quiet keeps its own underlined, neutral look. Defaults
-   mirror the registry: accent, no underline. */
+   default variant; quiet keeps its own underlined, neutral look; the hover
+   color change rides the `--studio-link-state-*` vars. Defaults mirror the
+   registry: accent, no underline. */
 
 import { SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn has no link; its breadcrumb link is `transition-colors` on
+   Tailwind's default timing. */
+const MOTION = TAILWIND_TIMING
 
 export const LINK_DEFAULTS = {
   linkUnderline: "never",
   linkColor: "accent",
+  linkMotion: MOTION,
 }
 
 export const UNDERLINE_OPTIONS = [
@@ -28,10 +35,12 @@ export const UNDERLINE_OPTIONS = [
 export const LINK_SCHEMA: ChapterSchema<typeof LINK_DEFAULTS> = {
   linkUnderline: oneOf(UNDERLINE_OPTIONS),
   linkColor: oneOf(SOURCE_OPTIONS),
+  linkMotion: STATE_CHANGE,
 }
 
 export function resolveLinks(state: StudioState): Resolved {
   return {
+    tokens: resolveStateChange("link", state.linkMotion, MOTION),
     params: {
       link: {
         underline: state.linkUnderline,

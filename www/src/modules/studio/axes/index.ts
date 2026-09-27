@@ -35,21 +35,23 @@ import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
 import * as menus from "./menus"
+import * as messageScroller from "./message-scroller"
 import * as mobile from "./mobile"
-import * as motion from "./motion"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
 import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
+import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
-import { checkAxisValue } from "./schema"
+import { checkAxisValue, sameValue } from "./schema"
 import type { AxisSchema } from "./schema"
 import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
+import * as sidebar from "./sidebar"
 import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
@@ -90,7 +92,6 @@ export const DEFAULTS = {
   ...scrollbars.SCROLLBAR_DEFAULTS,
   ...disabled.DISABLED_DEFAULTS,
   ...invalid.INVALID_DEFAULTS,
-  ...motion.MOTION_DEFAULTS,
   ...mobile.MOBILE_DEFAULTS,
   ...charts.CHART_DEFAULTS,
   ...links.LINK_DEFAULTS,
@@ -120,12 +121,15 @@ export const DEFAULTS = {
   ...tooltips.TOOLTIP_DEFAULTS,
   ...tabs.TAB_DEFAULTS,
   ...accordion.ACCORDION_DEFAULTS,
+  ...sidebar.SIDEBAR_DEFAULTS,
   ...breadcrumbs.BREADCRUMB_DEFAULTS,
   ...pagination.PAGINATION_DEFAULTS,
   ...badges.BADGE_DEFAULTS,
   ...kbd.KBD_DEFAULTS,
   ...avatars.AVATAR_DEFAULTS,
   ...tables.TABLE_DEFAULTS,
+  ...questionnaire.QUESTIONNAIRE_DEFAULTS,
+  ...messageScroller.MESSAGE_SCROLLER_DEFAULTS,
 }
 
 export type StudioStateInput = typeof DEFAULTS
@@ -143,7 +147,6 @@ export const SCHEMA = {
   ...scrollbars.SCROLLBAR_SCHEMA,
   ...disabled.DISABLED_SCHEMA,
   ...invalid.INVALID_SCHEMA,
-  ...motion.MOTION_SCHEMA,
   ...mobile.MOBILE_SCHEMA,
   ...charts.CHART_SCHEMA,
   ...links.LINK_SCHEMA,
@@ -173,12 +176,15 @@ export const SCHEMA = {
   ...tooltips.TOOLTIP_SCHEMA,
   ...tabs.TAB_SCHEMA,
   ...accordion.ACCORDION_SCHEMA,
+  ...sidebar.SIDEBAR_SCHEMA,
   ...breadcrumbs.BREADCRUMB_SCHEMA,
   ...pagination.PAGINATION_SCHEMA,
   ...badges.BADGE_SCHEMA,
   ...kbd.KBD_SCHEMA,
   ...avatars.AVATAR_SCHEMA,
   ...tables.TABLE_SCHEMA,
+  ...questionnaire.QUESTIONNAIRE_SCHEMA,
+  ...messageScroller.MESSAGE_SCROLLER_SCHEMA,
 } satisfies Record<keyof typeof DEFAULTS, AxisSchema>
 
 // Every schema key is a state key; `satisfies` covers the reverse.
@@ -236,10 +242,10 @@ export function parseState(raw: unknown): StudioState {
 
 export const DEFAULT_STATE = parseState({})
 
-/** Every axis value is a primitive, so key-by-key identity is equality. */
+/** Key-by-key equality; motion values compare by content. */
 export const sameState = (a: StudioState, b: StudioState) =>
   a === b ||
-  (Object.keys(SCHEMA) as SchemaKey[]).every((key) => a[key] === b[key])
+  (Object.keys(SCHEMA) as SchemaKey[]).every((key) => sameValue(a[key], b[key]))
 
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   color.resolveColor,
@@ -254,7 +260,6 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   scrollbars.resolveScrollbars,
   disabled.resolveDisabled,
   invalid.resolveInvalid,
-  motion.resolveMotion,
   mobile.resolveMobile,
   charts.resolveCharts,
   links.resolveLinks,
@@ -284,12 +289,15 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   tooltips.resolveTooltips,
   tabs.resolveTabs,
   accordion.resolveAccordion,
+  sidebar.resolveSidebar,
   breadcrumbs.resolveBreadcrumbs,
   pagination.resolvePagination,
   badges.resolveBadges,
   kbd.resolveKbd,
   avatars.resolveAvatars,
   tables.resolveTables,
+  questionnaire.resolveQuestionnaire,
+  messageScroller.resolveMessageScroller,
 ]
 
 /** The engine's view of the state: every chapter's resolution merged. Later

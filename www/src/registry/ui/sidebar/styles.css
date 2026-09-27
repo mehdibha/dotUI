@@ -2,4 +2,6 @@
   --studio-sidebar-radius: var(--studio-radius-surface);
   --studio-sidebar-inset-radius: var(--studio-radius-panel);
   --studio-sidebar-item-radius: var(--studio-radius-item);
+  --studio-sidebar-state-duration: 200ms;
+  --studio-sidebar-state-ease: linear;
 }

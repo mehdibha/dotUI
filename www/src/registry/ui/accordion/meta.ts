@@ -11,7 +11,15 @@ const accordionMeta = {
       target: "ui/accordion.tsx",
     },
   ],
+  // The collapsible rides on the accordion's motion.
   params: {
+    motion: {
+      kind: "enum",
+      default: "expand",
+      values: ["expand", "fade", "none"] as const,
+      description:
+        "How a panel opens and closes: its height alone, the height with a fade, or at once.",
+    },
     container: {
       kind: "enum",
       default: "divided",

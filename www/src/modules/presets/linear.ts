@@ -1,3 +1,5 @@
+import { motionValues } from "@/modules/studio/axes/motion-presets"
+
 import { definePreset } from "./preset"
 
 export const linear = definePreset({
@@ -75,10 +77,7 @@ export const linear = definePreset({
     inputError: "border",
 
     // Motion
-    motionCharacter: "standard",
-    motionSpeed: 0.6,
-    motionOverlay: "scale",
-    motionState: "instant",
+    ...motionValues("default"),
 
     // Mobile
     mobilePickers: "drawer",

@@ -7,16 +7,22 @@
    (Carbon).
 
    Engine: three enum params on `calendar`; `weekdays` rewrites the shipped
-   grid's `weekdayStyle` and header label (calendar/meta.ts `source`). */
+   grid's `weekdayStyle` and header label (calendar/meta.ts `source`). The
+   day's focus ring eases on the `--studio-calendar-state-*` vars. */
 
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn's day is a ghost Button: Tailwind's default timing. */
+const MOTION = TAILWIND_TIMING
 
 export const CALENDAR_DEFAULTS = {
   calendarDayShape: "rounded",
   calendarToday: "none",
   calendarWeekdays: "single",
+  calendarMotion: MOTION,
 }
 
 export const DAY_SHAPE_OPTIONS = [
@@ -42,10 +48,12 @@ export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
   calendarDayShape: oneOf(DAY_SHAPE_OPTIONS),
   calendarToday: oneOf(TODAY_OPTIONS),
   calendarWeekdays: oneOf(WEEKDAY_OPTIONS),
+  calendarMotion: STATE_CHANGE,
 }
 
 export function resolveCalendar(state: StudioState): Resolved {
   return {
+    tokens: resolveStateChange("calendar", state.calendarMotion, MOTION),
     params: {
       calendar: {
         dayShape: state.calendarDayShape,

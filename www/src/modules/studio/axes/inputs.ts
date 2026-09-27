@@ -3,15 +3,22 @@
    so both axes are enum params on `input` and reach them all.
 
    Engine: `input.style` (the shell) and `input.hover` (the pointer state;
-   focus and invalid keep their own border). */
+   focus and invalid keep their own border); the focus transition rides the
+   `--studio-input-state-*` vars, which the token field reads too. */
 
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn's input, textarea and input group: `transition-colors` on
+   Tailwind's default timing. */
+const MOTION = TAILWIND_TIMING
 
 export const INPUT_DEFAULTS = {
   inputStyle: "outline",
   inputHover: "none",
+  inputMotion: MOTION,
 }
 
 export const STYLE_OPTIONS = [
@@ -32,10 +39,12 @@ export const HOVER_OPTIONS = [
 export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
   inputStyle: oneOf(STYLE_OPTIONS),
   inputHover: oneOf(HOVER_OPTIONS),
+  inputMotion: STATE_CHANGE,
 }
 
 export function resolveInputs(state: StudioState): Resolved {
   return {
+    tokens: resolveStateChange("input", state.inputMotion, MOTION),
     params: {
       input: {
         style: state.inputStyle,

@@ -1,4 +1,6 @@
 :root {
   --studio-switch-radius: var(--radius-full);
   --studio-switch-card-radius: var(--studio-radius-surface);
+  --studio-switch-state-duration: 150ms;
+  --studio-switch-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
       ],
       item: [
         "flex h-8 w-full shrink-0 items-center justify-center rounded-(--studio-time-picker-item-radius) text-sm tabular-nums no-highlight",
-        "cursor-interactive outline-hidden transition-colors",
+        "cursor-interactive outline-hidden transition-colors duration-(--studio-time-picker-state-duration) ease-(--studio-time-picker-state-ease)",
         "hover:bg-accent-muted",
         "focus-visible:focus-ring",
         "selected:bg-accent selected:text-fg-on-accent",

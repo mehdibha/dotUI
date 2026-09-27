@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
       "focus-reset focus-visible:focus-ring",
-      "inline-flex items-center gap-1 transition-colors",
+      "inline-flex items-center gap-1 transition-colors duration-(--studio-link-state-duration) ease-(--studio-link-state-ease)",
     ],
     variants: {
       variant: {

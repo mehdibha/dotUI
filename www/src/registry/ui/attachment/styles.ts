@@ -20,7 +20,7 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
         "max-w-full min-w-0 flex-1 leading-tight group-orientation-vertical/attachment:px-1",
       title: [
         "block max-w-full min-w-0 truncate font-medium",
-        "group-data-[state=processing]/attachment:animate-pulse group-data-[state=uploading]/attachment:animate-pulse",
+        "group-data-[state=processing]/attachment:animate-(--studio-attachment-pulse) group-data-[state=uploading]/attachment:animate-(--studio-attachment-pulse)",
       ],
       description: [
         "mt-0.5 block max-w-full min-w-0 truncate text-fg-muted",

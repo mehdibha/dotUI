@@ -1,0 +1,6 @@
+:root {
+  --studio-message-scroller-enter-duration: 200ms;
+  --studio-message-scroller-exit-duration: 400ms;
+  --studio-message-scroller-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --studio-message-scroller-exit-ease: cubic-bezier(0.7, 0, 0.84, 0);
+}

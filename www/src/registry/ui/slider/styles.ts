@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
         "pointer-events-none relative grow overflow-hidden rounded-(--studio-slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
       fill: "pointer-events-none bg-(--studio-slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--studio-slider-fill-color))",
       thumb: [
-        "top-1/2 left-1/2 grid cursor-(--studio-slider-cursor) place-items-center rounded-(--studio-slider-thumb-radius) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--studio-slider-dragging-cursor)",
+        "top-1/2 left-1/2 grid cursor-(--studio-slider-cursor) place-items-center rounded-(--studio-slider-thumb-radius) focus-reset transition-shadow duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--studio-slider-dragging-cursor)",
       ],
       output:
         "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",

@@ -54,7 +54,7 @@ export interface ChartFamilyProps {
    * `false` to disable, a `{ type: "tween" }` with duration and easing, or a
    * `{ type: "spring" }` with stiffness, damping, and mass. Charts above ~800
    * points animate off automatically, and reduced motion is always respected.
-   * @default { type: "spring", stiffness: 170, damping: 26 }
+   * @default the design system's chart motion ({ type: "spring", stiffness: 170, damping: 26 })
    */
   animate?: ChartAnimate
 

@@ -4,17 +4,23 @@
 
    Engine: `style`, `hover` and `press` are enum params on both `button` and
    `toggle-button` (a synced group — one axis writes both); radius rides on
-   the shared `--studio-btn-radius` var. */
+   the shared `--studio-btn-radius` var, state timing on the
+   `--studio-button-state-*` vars both read. */
 
 import type { Resolved, StudioState } from "./index"
-import { oneOf } from "./schema"
+import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
+
+/* shadcn's button and toggle: `transition-all` on Tailwind's default timing. */
+const MOTION = TAILWIND_TIMING
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
   buttonRadius: "auto",
   buttonHover: "dim",
   buttonPress: "dim",
+  buttonMotion: MOTION,
 }
 
 /* Style families from the Aug 2026 survey: flat (Geist), outline (Primer
@@ -61,6 +67,7 @@ export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
   buttonRadius: oneOf(RADIUS_OPTIONS),
   buttonHover: oneOf(HOVER_OPTIONS),
   buttonPress: oneOf(PRESS_OPTIONS),
+  buttonMotion: STATE_CHANGE,
 }
 
 export function resolveButtons(state: StudioState): Resolved {
@@ -69,7 +76,7 @@ export function resolveButtons(state: StudioState): Resolved {
     hover: state.buttonHover,
     press: state.buttonPress,
   }
-  const tokens: Record<string, string> = {}
+  const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
   const radius = RADIUS_TOKENS[state.buttonRadius]
   if (radius) tokens["--studio-btn-radius"] = radius
   return {

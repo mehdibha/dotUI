@@ -7,6 +7,9 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource/geist-mono";
 @import "./registry/styles.css";
+/* The spinner's turn and the attachment's pulse reach Tailwind's loops through
+   a studio var (`animate-(--studio-…)`), which names no keyframe. */
+@source inline("animate-spin animate-pulse");
 
 /* Site-only: a subtree can pin its own mode with `data-mode="light|dark"` (a
    themed preview inside a differently-themed page); the last definition wins. */
