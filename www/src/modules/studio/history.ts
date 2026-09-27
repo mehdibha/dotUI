@@ -37,8 +37,6 @@ const listeners = new Set<() => void>()
 // The pointer press in progress (0 when none), so a drag is one step.
 let press = 0
 let presses = 0
-// Each deleted system's toast, closed once it is restored or purged.
-const deletedToasts = new Map<string, string>()
 
 const systemKey = (id: string) => selectionKey({ kind: "system", id })
 
@@ -135,26 +133,26 @@ export function duplicate(id: string): string | undefined {
   return doc?.id
 }
 
-/** Moves the system to Recently deleted with a toast whose Undo, which
- *  `afterUndo` follows, brings it back. Deleting the current one opens the
- *  next in the list, else the Origin view. The current selection's undo
- *  history then starts over: ⌘Z right after never touches another system.
- *  Returns the toast's undo. */
+/** Deletes the system with a toast whose Undo, which `afterUndo` follows,
+ *  puts it back. Deleting the current one opens the next in the list, else
+ *  the Origin view. The current selection's undo history then starts over:
+ *  ⌘Z right after never touches another system. Returns the toast's undo. */
 export function remove(
   id: string,
   { afterUndo }: { afterUndo?: () => void } = {},
 ): () => void {
   const list = workspace.listed(workspace.getWorkspace())
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
-  const deleted = workspace.trash(id)
-  if (!deleted) return () => {}
-  deletedToasts.set(
-    id,
-    undoToast(`Deleted ${quoted(deleted.doc.name)}`, () => {
-      recover(id, wasCurrent)
-      afterUndo?.()
-    }),
-  )
+  const removed = workspace.remove(id)
+  if (!removed) return () => {}
+  const restore = () => {
+    workspace.insert(removed.doc, removed.index)
+    if (wasCurrent) select({ kind: "system", id })
+  }
+  undoToast(`Deleted ${quoted(removed.doc.name)}`, () => {
+    restore()
+    afterUndo?.()
+  })
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
     const next = list[at + 1] ?? list[at - 1]
@@ -165,29 +163,7 @@ export function remove(
   }
   stacks.delete(selectionKey(getSelection()))
   emit()
-  return () => recover(id, wasCurrent)
-}
-
-function closeDeletedToast(id: string) {
-  const toast = deletedToasts.get(id)
-  if (toast === undefined) return
-  deletedToasts.delete(id)
-  toastManager.close(toast)
-}
-
-/** Brings a system back from Recently deleted; `open` makes it current.
- *  Returns whether it was there. */
-export function recover(id: string, open = false): boolean {
-  closeDeletedToast(id)
-  if (!workspace.recover(id)) return false
-  if (open) select({ kind: "system", id })
-  return true
-}
-
-/** Deletes a system from Recently deleted for good. */
-export function purge(id: string): void {
-  closeDeletedToast(id)
-  workspace.purge(id)
+  return restore
 }
 
 function travel(from: "past" | "future", to: "past" | "future") {

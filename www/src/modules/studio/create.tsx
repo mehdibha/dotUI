@@ -12,7 +12,6 @@ import { Redo2Icon, Undo2Icon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
@@ -28,13 +27,12 @@ import { renameKey } from "./history-keys"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections, rowSelection } from "./picker-sections"
-import { RecentlyDeleted } from "./recently-deleted"
 import { SystemMenu } from "./row-menus"
 import { getCurrent, select, selectionKey, useCurrent } from "./selection"
 import type { Selection } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { purgeExpired, rename, useTrash, useWorkspace } from "./workspace"
+import { rename, useWorkspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
@@ -85,12 +83,10 @@ export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const current = useCurrent()
   const workspace = useWorkspace()
-  const trash = useTrash()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   // `closes`: Enter also closes the picker, which was opened for this rename.
   const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
-  const [trashOpen, setTrashOpen] = useState(false)
   const focusPicker = useRef<((key: string) => void) | null>(null)
   const lastNew = useRef({ at: 0, key: "" })
 
@@ -100,10 +96,7 @@ export function StudioPanel({ className }: { className?: string }) {
   )
 
   function setGalleryOpen(isOpen: boolean) {
-    if (!isOpen) {
-      setRenaming(undefined)
-      setTrashOpen(false)
-    }
+    if (!isOpen) setRenaming(undefined)
     navigate({
       search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
@@ -114,12 +107,9 @@ export function StudioPanel({ className }: { className?: string }) {
   function renameCurrent() {
     const { doc, key } = getCurrent()
     if (!doc) return
-    setTrashOpen(false)
     setRenaming({ key, closes: gallery !== true })
     setGalleryOpen(true)
   }
-
-  useEffect(() => purgeExpired(), [])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -153,12 +143,10 @@ export function StudioPanel({ className }: { className?: string }) {
   function onDelete(id: string) {
     remove(id, {
       // Back from the toast to the restored row, so Esc and arrows work.
-      afterUndo: () => {
-        setTrashOpen(false)
+      afterUndo: () =>
         requestAnimationFrame(() =>
           focusPicker.current?.(selectionKey({ kind: "system", id })),
-        )
-      },
+        ),
     })
   }
 
@@ -218,25 +206,6 @@ export function StudioPanel({ className }: { className?: string }) {
         withPreview
         renderItemMenu={(item, afterClose) =>
           renderItemMenu(item.id, afterClose)
-        }
-        moreMenu={
-          <MenuContent
-            aria-label="More"
-            onAction={(key) => key === "trash" && setTrashOpen(true)}
-          >
-            <MenuItem
-              id="trash"
-              isDisabled={trash.length === 0}
-              className="pointer-coarse:min-h-11"
-            >
-              {`Recently deleted (${trash.length})`}
-            </MenuItem>
-          </MenuContent>
-        }
-        pane={
-          trashOpen ? (
-            <RecentlyDeleted onBack={() => setTrashOpen(false)} />
-          ) : undefined
         }
       >
         {trigger}

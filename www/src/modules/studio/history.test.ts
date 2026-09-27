@@ -213,7 +213,6 @@ describe("views and forks", () => {
     for (let i = 0; i < 5; i++) history.undo()
     expect(current().doc).toMatchObject({ id, name: "Acme" })
     expect(current().state.radiusPx).toBe(ORIGIN_RADIUS)
-    expect(ws.getTrash()).toEqual([])
     history.redo()
     history.redo()
     expect(current().state.radiusPx).toBe(4)
@@ -230,7 +229,6 @@ describe("views and forks", () => {
     history.undo()
     history.undo()
     expect(ws.findSystem(first)!.state.radiusPx).toBe(3)
-    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
   })
 
   it("leaves the current system alone on undo right after deleting another", async () => {
@@ -242,7 +240,6 @@ describe("views and forks", () => {
     history.remove(second)
     history.undo()
     expect(ws.findSystem(first)!.state.radiusPx).toBe(9)
-    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
   })
 
   it("deletes the current system to the next one, else the Origin view", async () => {
@@ -275,58 +272,20 @@ describe("duplicate", () => {
   })
 })
 
-describe("recently deleted", () => {
-  it("moves a system there; undo brings it back in place", async () => {
+describe("delete", () => {
+  it("puts a system back in place from the toast's Undo", async () => {
     const { history, ws, selection, current, system } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
     const first = system()
     const second = system()
     selection.select({ kind: "system", id: first })
-    const undo = history.remove(second)
-    expect(current().doc?.id).toBe(first)
-    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([second])
-    undo()
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first, second])
-    expect(ws.getTrash()).toEqual([])
-    expect(current().doc?.id).toBe(first)
-  })
-
-  it("empties the list to the Origin view, and restores after a reload", async () => {
-    const { history, ws, current, system } = await load()
-    const id = system()
-    history.remove(id)
-    expect(current().key).toBe("preset:origin")
-    expect(ws.getWorkspace().systems).toEqual([])
-    vi.resetModules()
-    const reloaded = await load()
-    reloaded.history.recover(id)
-    expect(reloaded.ws.getWorkspace().systems.map((s) => s.id)).toEqual([id])
-    expect(reloaded.current().key).toBe("preset:origin")
-  })
-
-  it("closes a deleted system's toast once it is restored or purged", async () => {
-    const { history, system } = await load()
-    const { toastManager } = await import("@/registry/ui/toast")
-    const add = vi.spyOn(toastManager, "add")
-    const close = vi.spyOn(toastManager, "close")
-    const first = system()
-    const second = system()
-    history.remove(first)
-    history.recover(first)
-    expect(close).toHaveBeenCalledWith(add.mock.results[0]!.value)
     history.remove(second)
-    history.purge(second)
-    expect(close).toHaveBeenCalledWith(add.mock.results[1]!.value)
-  })
-
-  it("purges what was deleted over 30 days ago", async () => {
-    const { history, ws, system } = await load()
-    const old = system()
-    history.remove(old)
-    vi.advanceTimersByTime(29 * 86_400_000)
-    const recent = system()
-    history.remove(recent)
-    vi.advanceTimersByTime(2 * 86_400_000)
-    ws.purgeExpired()
-    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([recent])
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first])
+    const toast = add.mock.calls.at(-1)![0]
+    expect(toast).toMatchObject({ title: `Deleted "Untitled 2"` })
+    toast.actionProps!.onClick!({} as never)
+    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first, second])
+    expect(current().doc?.id).toBe(first)
   })
 })

@@ -6,8 +6,8 @@ export function quoted(name: string): string {
   return `"${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}"`
 }
 
-/** A toast whose Undo runs `undo` and closes it; returns its id. */
-export function undoToast(title: string, undo: () => void): string {
+/** A toast whose Undo runs `undo` and closes it. */
+export function undoToast(title: string, undo: () => void): void {
   const id = toastManager.add({
     title,
     timeout: 10_000,
@@ -19,5 +19,4 @@ export function undoToast(title: string, undo: () => void): string {
       },
     },
   })
-  return id
 }

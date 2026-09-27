@@ -93,10 +93,6 @@ interface PresetPickerProps {
   ) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
-  /** The picker's own ⋯ menu, beside New. */
-  moreMenu?: ReactNode
-  /** Shown instead of the list, e.g. Recently deleted. */
-  pane?: ReactNode
   /** F2 in the search field. */
   onRenameKey?: () => void
   /** The row being renamed in place, if any. */
@@ -192,8 +188,6 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
-  moreMenu,
-  pane,
   onRenameKey,
   renamingId,
   onRenameEnd,
@@ -213,13 +207,13 @@ function PresetPickerContent({
     sensitivity: "base",
     ignorePunctuation: true,
   })
-  // The open ⋯ menu: a row's, or the picker's own (id null).
-  const [menu, setMenu] = useState<{ id: string | null } | null>(null)
+  // The row whose ⋯ menu is open.
+  const [menu, setMenu] = useState<string | null>(null)
   const menuTriggerRef = useRef<HTMLElement | null>(null)
   const searchRef = useRef<HTMLInputElement>(null)
-  const openMenu = (id: string | null, trigger: Element) => {
+  const openMenu = (id: string, trigger: Element) => {
     menuTriggerRef.current = trigger as HTMLElement
-    setMenu({ id })
+    setMenu(id)
   }
   const listRef = useRef<ListState<unknown> | null>(null)
   // A row-removing action and the row that takes focus from it.
@@ -340,19 +334,14 @@ function PresetPickerContent({
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
   const flyout = surface === "popover" && withPreview
-  const menuItem = menu?.id
-    ? allItems.find((item) => item.id === menu.id)
-    : undefined
+  const menuItem = menu ? allItems.find((item) => item.id === menu) : undefined
   const rowIds = visible.flatMap((section) => section.items.map((i) => i.id))
   const afterClose = (id: string) => (run: () => void) => {
     const i = rowIds.indexOf(id)
     pendingRef.current = { run, next: rowIds[i + 1] ?? rowIds[i - 1] }
   }
   const menuContent =
-    menu &&
-    (menu.id === null
-      ? moreMenu
-      : menuItem && renderItemMenu?.(menuItem, afterClose(menuItem.id)))
+    menuItem && renderItemMenu?.(menuItem, afterClose(menuItem.id))
 
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -421,18 +410,6 @@ function PresetPickerContent({
           >
             <PlusIcon />
             New
-          </Button>
-        )}
-        {moreMenu && (
-          <Button
-            variant="quiet"
-            size="md"
-            isIconOnly
-            aria-label="More"
-            className="mt-2 shrink-0 text-fg-muted"
-            onPress={(e) => openMenu(null, e.target)}
-          >
-            <MoreHorizontalIcon />
           </Button>
         )}
       </div>
@@ -536,32 +513,26 @@ function PresetPickerContent({
   if (surface === "drawer")
     return (
       <>
-        {pane ?? <Command>{list}</Command>}
+        <Command>{list}</Command>
         {rowMenu}
       </>
     )
 
   return (
     <>
-      {pane ? (
-        <div className="flex max-h-[inherit] w-65 flex-col">{pane}</div>
-      ) : (
-        <Command
-          className="max-h-[inherit] w-65 overflow-hidden"
-          onKeyDownCapture={(e) => {
-            if (e.key.startsWith("Arrow")) navigatedRef.current = true
-          }}
-        >
-          {list}
-        </Command>
-      )}
+      <Command
+        className="max-h-[inherit] w-65 overflow-hidden"
+        onKeyDownCapture={(e) => {
+          if (e.key.startsWith("Arrow")) navigatedRef.current = true
+        }}
+      >
+        {list}
+      </Command>
       {rowMenu}
       {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
-          // Hidden, not unmounted, under a pane: its demos' hidden popovers
-          // would otherwise take over the picker's arrow on remount.
-          isVisible={engaged && !pane}
+          isVisible={engaged}
           forcedMode={previewMode}
         />
       )}

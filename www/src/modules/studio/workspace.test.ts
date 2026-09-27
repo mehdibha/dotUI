@@ -149,35 +149,6 @@ describe("workspace", () => {
     expect(c).toMatchObject({ name: "Untitled", from: undefined })
   })
 
-  it("writes a deleted system to the trash before removing it", async () => {
-    const { ws, doc } = await created()
-    win.localStorage.setItem.mockClear()
-    ws.trash(doc.id)
-    expect(win.localStorage.setItem.mock.calls.map(([key]) => key)).toEqual([
-      "dotui:trash",
-      KEY,
-    ])
-    expect(ws.getWorkspace().systems).toEqual([])
-    expect(ws.recover(doc.id)?.id).toBe(doc.id)
-    expect(win.read("dotui:trash")).toBeNull()
-  })
-
-  it("drops invalid trash entries", async () => {
-    const { ws, doc } = await created()
-    win.seed(
-      "dotui:trash",
-      JSON.stringify({
-        schema: 1,
-        items: [
-          { doc, index: 0, deletedAt: 1 },
-          { doc: { ...doc, id: "y" }, index: "0", deletedAt: 1 },
-          { doc: { ...doc, id: "z" }, index: 0 },
-        ],
-      }),
-    )
-    expect(ws.getTrash().map((i) => i.doc.id)).toEqual([doc.id])
-  })
-
   it("reads an unknown format as empty and never writes over it", async () => {
     const future = JSON.stringify({ schema: 3, systems: [] })
     win.seed(KEY, future)
