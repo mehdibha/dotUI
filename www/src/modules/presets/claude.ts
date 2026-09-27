@@ -1,6 +1,5 @@
-import { motionValues } from "@/modules/studio/axes/motion-presets"
 
-import { definePreset } from "./preset"
+import { DEFAULT_MOTION, definePreset } from "./preset"
 
 export const claude = definePreset({
   id: "claude",
@@ -79,7 +78,7 @@ export const claude = definePreset({
     inputError: "border",
 
     // Motion
-    ...motionValues("default"),
+    ...DEFAULT_MOTION,
 
     // Mobile
     mobilePickers: "drawer",

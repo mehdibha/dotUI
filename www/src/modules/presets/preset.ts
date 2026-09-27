@@ -1,5 +1,6 @@
-import { parseState } from "@/modules/studio/axes"
+import { DEFAULTS, parseState } from "@/modules/studio/axes"
 import type { StudioState, StudioStateInput } from "@/modules/studio/axes"
+import type { MotionValues } from "@/modules/studio/axes/motion-presets"
 
 /** A built-in, read-only starting point. */
 export interface Preset {
@@ -22,3 +23,8 @@ export function definePreset({
 }: PresetMeta & { state: StudioStateInput }): Preset {
   return { ...meta, state: parseState(state) }
 }
+
+/** Every component's default motion, for a preset to spread. */
+export const DEFAULT_MOTION = Object.fromEntries(
+  Object.entries(DEFAULTS).filter(([key]) => key.endsWith("Motion")),
+) as MotionValues

@@ -1,7 +1,6 @@
 import { DEFAULTS } from "@/modules/studio/axes"
-import { motionValues } from "@/modules/studio/axes/motion-presets"
 
-import { definePreset } from "./preset"
+import { DEFAULT_MOTION, definePreset } from "./preset"
 
 export const spotify = definePreset({
   id: "spotify",
@@ -79,7 +78,7 @@ export const spotify = definePreset({
     inputError: "border",
 
     // Motion
-    ...motionValues("default"),
+    ...DEFAULT_MOTION,
     popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
     tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },

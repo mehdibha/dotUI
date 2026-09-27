@@ -1,6 +1,5 @@
-import { motionValues } from "@/modules/studio/axes/motion-presets"
 
-import { definePreset } from "./preset"
+import { DEFAULT_MOTION, definePreset } from "./preset"
 
 export const stripe = definePreset({
   id: "stripe",
@@ -77,7 +76,7 @@ export const stripe = definePreset({
     inputError: "border",
 
     // Motion
-    ...motionValues("default"),
+    ...DEFAULT_MOTION,
 
     // Mobile
     mobilePickers: "drawer",

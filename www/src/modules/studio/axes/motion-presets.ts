@@ -176,13 +176,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
 
 export const MOTION_KEYS = Object.keys(DEFAULT_VALUES) as MotionKey[]
 
-/** A motion preset's values, for a design-system preset to spread. */
-export function motionValues(id: string): MotionValues {
-  const found = MOTION_PRESETS.find((p) => p.id === id)
-  if (!found) throw new Error(`No motion preset ${id}`)
-  return found.values
-}
-
 /** The preset the state sits on: the one most keys match, Default on a tie. */
 export function motionBase(state: StudioState) {
   const score = (p: MotionPreset) =>
