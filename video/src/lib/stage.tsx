@@ -15,6 +15,7 @@ export function Stage({
   gridOffset = [0, 0],
   gridScale = 1,
   gridOpacity = 1,
+  vignette = true,
   style,
 }: {
   children?: ReactNode
@@ -24,6 +25,8 @@ export function Stage({
   gridOffset?: [number, number]
   gridScale?: number
   gridOpacity?: number
+  /** Off when a light product surface fills the frame (it would grey its corners). */
+  vignette?: boolean
   style?: CSSProperties
 }) {
   const dark = tone === "dark"
@@ -38,7 +41,8 @@ export function Stage({
             opacity: gridOpacity,
             backgroundImage: `radial-gradient(${dark ? "rgba(255,255,255,0.11)" : "rgba(0,0,0,0.13)"} ${1.1 * gridScale}px, transparent ${1.3 * gridScale}px)`,
             backgroundSize: `${size}px ${size}px`,
-            backgroundPosition: `${gridOffset[0]}px ${gridOffset[1]}px`,
+            // Phase-centred: a dot sits exactly on (960, 540).
+            backgroundPosition: `calc(50% + ${gridOffset[0]}px) calc(50% + ${gridOffset[1]}px)`,
             maskImage:
               "radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 100%)",
           }}
@@ -47,6 +51,7 @@ export function Stage({
       {children}
       <AbsoluteFill
         style={{
+          display: vignette ? undefined : "none",
           pointerEvents: "none",
           background: dark
             ? "radial-gradient(ellipse 90% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)"

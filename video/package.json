@@ -6,11 +6,12 @@
   "scripts": {
     "studio": "remotion studio",
     "frames": "node scripts/frames.ts",
-    "render": "remotion render Launch out/launch.mp4"
+    "render": "node scripts/render.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource/geist-mono": "^5.2.7",
+    "@internationalized/date": "^3.12.3",
     "@remotion/bundler": "4.0.529",
     "@remotion/cli": "4.0.529",
     "@remotion/renderer": "4.0.529",

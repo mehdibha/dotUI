@@ -22,13 +22,19 @@
 }
 
 /* Every frame is a pure function of the frame number. CSS transitions run on
-   wall-clock time, so they're off; CSS animations are paused and scrubbed by
-   --video-time (seconds, set per frame on <html> by <Root>). */
+   wall-clock time, so they're off. CSS animations are paused and scrubbed by
+   --video-time (seconds, set per frame on <html> by <Film>) — only on nodes
+   that can animate, since every node reading the var restyles each frame. */
 *,
 *::before,
 *::after {
   transition: none !important;
   animation-play-state: paused !important;
+}
+[class*="animate"],
+[class*="animate"]::before,
+[class*="animate"]::after,
+[style*="animation"] {
   animation-delay: calc(var(--video-time, 0) * -1s) !important;
 }
 

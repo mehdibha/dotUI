@@ -18,6 +18,18 @@ export const HEADLINE: CSSProperties = {
 
 export const MUTED = "rgba(250,250,250,0.46)"
 
+/* One type scale for the whole film. Statements are the big lines; labels
+   name an axis or a step; the tagline is the End's second voice. Anchors:
+   optical centre, or top-anchored with the cap line at TOP_ANCHOR. */
+export const TYPE = {
+  statement: 128,
+  label: 80,
+  tagline: 44,
+  /** Smallest UI text meant to be read, as it lands on screen (px at 1080p). */
+  minReadable: 22,
+} as const
+export const TOP_ANCHOR = 150
+
 /**
  * Words that blur-resolve in one after another from `start`, then (optionally)
  * blur out together at `end`. `stagger` is frames between words.
@@ -81,7 +93,7 @@ export function Headline({
   lines,
   start,
   end,
-  size = 112,
+  size = TYPE.statement,
   y = 0,
   align = "center",
   stagger = 4,

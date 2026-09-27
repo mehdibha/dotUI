@@ -3,6 +3,9 @@ import { continueRender, delayRender } from "remotion"
 
 import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
+import { SearchIcon } from "@/registry/icons"
+import { IconLibraryContext } from "@/registry/icons/create-icon"
+import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { PRESETS } from "@/modules/presets/presets-data"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
@@ -115,6 +118,61 @@ export function loadFonts(families: string[], label = "fonts") {
   })
   void Promise.all(missing.map(loadFamily)).finally(() =>
     continueRender(handle),
+  )
+}
+
+/** Resolves once every face `state` draws with is usable — for scenes that
+ *  measure text layout (a measurement taken earlier won't match the frame). */
+export async function facesReady(state: State | string[]) {
+  const google = Array.isArray(state)
+    ? state
+    : fontFamiliesFromTokens(designSystem(state).tokens)
+  await Promise.all(google.map(loadFamily))
+  await Promise.all(
+    ["Geist Variable", "Geist Mono", ...google].flatMap((family) =>
+      ["400", "500", "600", "700"].map((w) =>
+        document.fonts.load(`${w} 16px "${family}"`),
+      ),
+    ),
+  )
+  await document.fonts.ready
+}
+
+/* Registry icons in other libraries lazy-load behind their own Suspense and
+   show lucide meanwhile — which a still would catch. Mount <WarmIcons /> once
+   in a scene that shows other libraries: it starts every loader and holds the
+   first frame until the chunks are in. */
+const LAZY_LIBRARIES: IconLibraryName[] = [
+  "phosphor",
+  "hugeicons",
+  "tabler",
+  "remix",
+]
+
+export function WarmIcons() {
+  useState(() => {
+    const handle = delayRender("icon libraries", {
+      timeoutInMilliseconds: 60_000,
+    })
+    void Promise.all([
+      import("@/registry/__generated__/__phosphor__"),
+      import("@/registry/__generated__/__hugeicons__"),
+      import("@/registry/__generated__/__tabler__"),
+      import("@/registry/__generated__/__remix__"),
+    ]).then(() => setTimeout(() => continueRender(handle), 120))
+    return null
+  })
+  return (
+    <div
+      aria-hidden
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
+    >
+      {LAZY_LIBRARIES.map((library) => (
+        <IconLibraryContext.Provider key={library} value={library}>
+          <SearchIcon />
+        </IconLibraryContext.Provider>
+      ))}
+    </div>
   )
 }
 

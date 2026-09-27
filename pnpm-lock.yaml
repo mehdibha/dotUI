@@ -131,6 +131,9 @@ importers:
       '@fontsource/geist-mono':
         specifier: ^5.2.7
         version: 5.2.7
+      '@internationalized/date':
+        specifier: ^3.12.3
+        version: 3.12.3
       '@remotion/bundler':
         specifier: 4.0.529
         version: 4.0.529(@swc/helpers@0.5.21)(bufferutil@4.1.0)(lightningcss@1.32.0)(postcss@8.5.28)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)

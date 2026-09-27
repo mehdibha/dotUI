@@ -6,76 +6,83 @@ The film sells one idea: _every design decision is yours_ — and proves it with
 
 ## Style bible
 
-**Ground.** `Stage`: near-black `#08080a`, a faint dot grid (the brand's dot), a vignette. Product surfaces can be light; the ground stays dark. Keep the grid moving with the camera so space reads as space.
+**Ground.** `Stage`: near-black `#08080a`, a faint dot grid (phase-centred: a dot sits on 960,540), a vignette. Product surfaces can be light; the ground stays dark. When light UI fills the frame, pass `vignette={false}` (it greys light corners). Keep the grid moving with the camera so space reads as space.
 
-**Type.** The landing hero's voice (`HEADLINE`): Geist ~450, tracking −0.055em, a muted second voice (`MUTED`). Words resolve out of blur with no travel (`BlurWords`), stagger 3–5 frames, exit together on cubic-in. One text block on screen at a time, six words max. Sizes: 120–150 statements, 40–64 labels.
+**Type.** The landing hero's voice (`HEADLINE`): Geist ~450, tracking −0.055em, a muted second voice (`MUTED`). One scale for the whole film (`TYPE` in `lib/type.tsx`): statements `TYPE.statement` (128), labels `TYPE.label` (80), the End tagline `TYPE.tagline` (44). Two anchors only: optical centre, or top-anchored at `TOP_ANCHOR`. Words resolve out of blur with no travel (`BlurWords`), stagger 3–5 frames, exit together on cubic-in. One text block on screen at a time, six words max. Text over busy UI gets a soft scrim or a clean band.
 
-**Motion.** `ease.out` (expo) for arrivals, 20–40 frames. `ease.in` for departures, 12–18 frames. `ease.camera` / `ease.inOut` for camera moves, 60–150 frames. Springs (`springAt`) for physical UI pops. Nothing is ever dead still: planes drift 0.5–1.5 % per bar. Overlap everything — the next thing starts before the last one lands.
+**Brand.** The logo comes only from `lib/brand.tsx` (`Mark`, `Wordmark`, `Lockup`) — the real wordmark path, never "dotUI" typed in Geist.
 
-**Depth.** Real 3D: `Camera` with perspective 2600, tilts ≤ 35°, pushes through planes. Far layers can take 1–3 px blur (sparingly, it's expensive).
+**Motion.** `ease.out` (expo) for arrivals, 20–40 frames. `ease.in` for departures, 12–18 frames. `ease.camera` for camera moves, 60–150 frames (`keys()` defaults to it). Springs (`springAt`) for physical UI pops. The beat accent is `punch()` / `punches()` from `lib/motion.ts` at the film amplitude (2.5 %) — no scene-local punch curves. `pulse()` is the dot's heartbeat. Nothing is ever dead still: planes drift 0.5–1.5 % per bar. Overlap everything — the next thing starts before the last one lands.
 
-**Rules.**
+**Depth.** Real 3D: `Camera` with perspective 2600, tilts ≤ 35°, pushes through planes. Far layers can take 1–3 px blur (sparingly, it's expensive). Chrome rasterizes a 3D layer at 1× and upscales it, so a push past 1× under perspective goes soft: render the content larger (or move the zoom into CSS `zoom` on an inner wrapper, as Wall does) instead of scaling a small layer up.
 
-- No brand names on screen (presets are named after companies — never render those names).
-- No charts in frame (chart colors are being rewritten).
-- Discrete changes (preset swap, toggle, cut) exactly on beat frames: multiples of 30.
-- No crossfades between scenes; hard cuts on the downbeat or match cuts through a shared element.
-- Budget: a frame should render in well under 2 s at 1080p.
+**Legibility (the film is watched on phones).** A 1080p frame shrinks ~5× on an X timeline. Anything meant to be read lands on screen at `TYPE.minReadable` (22 px) or more; the proof of a change is shown in a macro shot (1.5–3× on the element that changed), not in a wide shot of a whole screen. Wide shots of whole products last a bar at most.
+
+**Cuts.** No crossfades; hard cuts on a downbeat or match cuts through a shared element. **No dead frames:** every scene's frame 0 already has content and camera velocity, and its last frames are still moving, so a hard cut carries motion across.
+
+**Content.** Showcase cards and blocks only from `lib/content.ts` (`SAFE_SHOWCASE`, `SAFE_BLOCKS`) — the rest carry charts, real people's names, other brands, or remote images. Custom compositions of registry components are always fine. No brand names on screen (presets are named after companies — never render those names). No charts.
+
+**Beat grid.** Discrete changes (preset swap, toggle, pick) exactly on beat frames: multiples of 30.
+
+**Budget.** Frame cost scales with DOM size (every capture forces a full restyle): mount only what the camera can see; keep a frame well under 2 s at 1080p.
+
+## Story
+
+Every product is built on a design system → most use someone else's → dotUI Studio → start from a preset → make it yours, every decision → built to compose → complete products → install it, own the code → dotUI.
 
 ## Scenes
 
 ### 1 · Open — 2 bars (0:00–0:04)
 
-Black. A single white dot pops in at center on frame 0 (spring, soft bloom) and pulses on every beat. It is the period of the first sentence: "Every product is built on" resolves in (beat 1), then "a design system" (beat 3) — the dot glides into place as the final period. Bar 2, beat 3: the words blur out; the dot stays, recentres and shrinks to 10 px.
+Black. A single white dot pops in at center on frame 0 (spring, soft bloom) and pulses on every beat (`pulse()`). It is the period of the first sentence: "Every product is built on" resolves in, then "a design system" — the dot glides into place as the true final period (measured from the text layout, sitting on the baseline). Bar 2, beat 3: the words blur out; the dot recentres and shrinks to 10 px.
 
-**Hands off:** last frame = black, the white dot alone at (960, 540), 10 px.
+**Hands off:** last frame = INK ground with the vignette and **no** dot grid, the pure-white dot alone at (960, 540), 10 px, no bloom.
 
 ### 2 · Wall — 3 bars (0:04–0:10)
 
-Frame 0: the dot is the inner dot of a selected Radio at center. From it, a ripple of real component tiles pops outward (distance-based delay, spring scale 0.6→1 + fade): 40–60 tiles — buttons, switches, checkboxes, inputs, selects, sliders, tabs, badges, avatars, segmented controls, a calendar, a card — all in the builder's default neutral look. The camera pulls back and tilts the wall into 3D, drifting. Text: "Most are built on someone else's." Bar 3: text out; the wall recedes and dims; the title resolves over it — the dotUI mark (a rounded square with its dot) + "dotUI Studio".
+Frame 0: the dot is the inner dot of a selected Radio at center. From it, a ripple of real component tiles pops outward — the builder's default neutral look. The camera pulls back and tilts the wall into 3D, drifting. Text: "Most are built on someone else's." Bar 3: text out; the wall recedes and dims; the lockup resolves over it: `Lockup` with "Studio".
 
-**Hands off:** last frame = title centered over a dimmed, receding wall.
+**Hands off:** last frame = the lockup over the dimmed, still-drifting wall.
 
-### 3 · Axes — 9 bars (0:10–0:28)
+### 3 · Presets — 3 bars (0:10–0:16)
 
-The heart. The real studio: a dark app frame with the preview on the left (a composition of real components — the landing `CardsGrid`, or group examples) and the real `PanelPage` on the right (~380 px wide), driven frame by frame by `studioAt(state)`. A synthetic `Cursor` works the panel; the preview follows. When a value changes, the preview re-themes as a wave travelling away from the panel (tiles wrapped in their own `Theme`, each at its own progress).
+Hard cut on the downbeat to full frame: a rich board of real cards already moving, switching preset on every beat — each swap a fast clip-path wipe (circle or blade) with a `punch()` on the beat. Names never appear. Bar 1: "Start from a preset." Bars 2–3: no text — push in (~1.45–1.5×) so each look reads, three or four cards large.
 
-- Bar 1: the studio flies in from depth and settles in a gentle tilt. "Design your system." resolves and leaves.
-- Bars 2–8, one axis per bar, each with a big label (Color · Typography · Radius · Density · Icons · Light & dark · Components): the camera leans toward the panel row, the cursor drags or clicks, the state animates, the wave rolls across the preview.
-  - Color: brand hue sweeps (quantize hue to steps).
-  - Typography: body and heading faces swap on beats (e.g. Geist → Inter + serif headings → mono).
-  - Radius: `radiusPx` drags 2 → 20 → back to a middle value (quantize to 0.5 px).
-  - Density: compact ↔ comfortable (`density`, `spacingUnit`).
-  - Icons: lucide → phosphor → hugeicons.
-  - Light & dark: the preview flips mode with a circular wipe from the cursor.
-  - Components: button / input styles change.
-- Bar 9: the camera pulls back to the whole studio: "Every decision is yours."
+**Hands off:** the last beat lands on the Origin look (`preset("origin")`), dark mode, cards large in frame — the same look and on-screen scale the Axes scene opens on.
 
-**Hands off:** last frame = "Every decision is yours." over the pulled-back studio.
+### 4 · Axes — 9 bars (0:16–0:34)
 
-### 4 · Presets — 3 bars (0:28–0:34)
+The heart: the real studio (the site header, the real `PanelPage` at its true width on the left, the preview on the right), driven frame by frame by `studioAt(state)` from `preset("origin")` onward.
 
-Full frame: one rich composition (a block or `CardsGrid`) switches preset on every beat — origin, claude, supabase, stripe, linear, vercel, airbnb, github, notion, spotify — each swap a fast clip-path wipe (diagonal or radial) with a small camera punch on the beat. Names never appear. Bar 1: "Start from a preset." Bar 3: "Make it yours."
+- Bar 1: frame 0 is tight on the preview cards in the Origin look, matching Presets' last frame; the camera pulls back and reveals the panel — "Make it yours."
+- Bars 2–8, one axis per bar, each with a `TYPE.label` label in one fixed clear zone: the cursor works the panel row, then the camera **pushes into the preview element that proves the change** at 2–2.5× macro, alternating sides bar to bar. The change rolls across the preview as a wave.
+- Bar 9: pull back to the whole studio, still alive (slow dolly, a light sweep): "Every decision is yours."
+
+**Hands off:** last frame = "Every decision is yours." over the pulled-back studio, still moving.
 
 ### 5 · Compose — 4 bars (0:34–0:42)
 
-Code on the left (`MagicCode`, frame-driven magic move), the live component on the right on a card, building up a beat pair at a time: `<Input />` → `TextField` + `Label` → `Description` → `InputGroup` + mail icon → a trailing `Button` → wrapped in a `Card` ("Stay in the loop"). Text: "Built to compose." then "Accessible by default." (React Aria underneath; a focus ring travels through the fields on the beat).
+Frame 0 already shows `<Input />` and its render. Code left (`MagicCode`), the live component right, both large; they build up on beats: `<Input />` → `TextField` + `Label` → `Description` → `InputGroup` + mail icon → a trailing primary `Button` → wrapped in a `Card` ("Stay in the loop"). Text: "Built to compose." then "Accessible by default." — a focus ring travels through the fields with a screen-reader caption, large.
 
-**Hands off:** last frame = the finished card alone at center (960, 540), code gone.
+**Hands off:** last frame = the finished card alone at center (960, 540), code gone (Patterns reproduces it exactly).
 
 ### 6 · Patterns — 4 bars (0:42–0:50)
 
-Frame 0: the card from Compose at center. The camera pulls back through it into a vast tilted grid of complete products — the studio blocks (dashboard, mail, settings, checkout, ai-chat, music-player, banking, invoice, messaging, file-manager, customers…) and landing showcase cards — mixed light and dark. The camera glides across. Bar 3: one theme wave sweeps every screen at once (a diagonal re-theme). Text: "From components" / "to complete products."
+Frame 0: the same card at center, already moving. The camera pulls back through it into a tilted field of complete products (`SAFE_BLOCKS`, `SAFE_SHOWCASE`), with one fly-past where two screens cross the lens at readable scale. Bar 3: one clean theme wave sweeps every screen. Text: "From components" / "to complete products."
+
+**Hands off:** last frames still gliding.
 
 ### 7 · Export — 3 bars (0:50–0:56)
 
-A terminal window types `npx shadcn@latest init "https://dotui.org/r/init?preset=…"`; output lines stream; component files fly out into a file tree; an editor pane shows real `button.tsx` source. Text: "Install with the shadcn CLI." then "It's your code." A small "Open in v0" chip lands last.
+Frame 0: the terminal already mid-type, the push-in already moving. `npx shadcn@latest init "https://dotui.org/r/init?preset=…"` → real init output → `npx shadcn@latest add @dotui/…` → component files fly out (large) into a file tree; an editor shows real `button.tsx` source, large. Text: "Install with the shadcn CLI." then "Own the code." An "Open in v0" pill lands last.
+
+**Hands off:** last frame = editor + pill + "Own the code.", still moving.
 
 ### 8 · End — 3 bars (0:56–1:02)
 
-Everything collapses into the dot. The logo draws around it — a rounded square, the dot at its lower right — the wordmark "dotUI" slides out beside it, "The Design System Studio for the Web" resolves below, then "dotui.org". Hold the final bar; the dot pulses on the last beats.
+Frame 0: Export's editor and pill, already swirling — everything collapses into the dot. The dot becomes the mark, the wordmark slides out, "The Design System Studio for the Web" resolves below at `TYPE.tagline`, then "dotui.org". Hold the final bar; the dot pulses on the last beats. The last ~60 frames are the poster frame on X.
 
 ## Open decisions
 
-- Music: pick a 120 BPM track (or re-time: change `BPM` in `src/lib/timing.ts`). Drop it in `public/` and wire it in `src/launch.tsx`.
+- Music: pick a 120 BPM track (or re-time: change `BPM` in `src/lib/timing.ts`). `node scripts/render.ts --music=public/track.mp3` muxes it.
 - Copy is a first pass — every line is a string in its scene file.

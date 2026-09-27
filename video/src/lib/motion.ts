@@ -32,7 +32,7 @@ export function progress(
 export function keys(
   frame: number,
   points: ReadonlyArray<readonly [number, number]>,
-  curve: (t: number) => number = ease.inOut,
+  curve: (t: number) => number = ease.camera,
 ) {
   const first = points[0]!
   if (frame <= first[0]) return first[1]
@@ -89,4 +89,27 @@ export function random(...seeds: number[]) {
   h = Math.imul(h, 0x5bd1e995)
   h ^= h >>> 15
   return (h >>> 0) / 4294967296
+}
+
+/** The film's beat accent: a scale kick that peaks ~2 frames after `at` and
+ *  settles in ~30. Multiply a camera scale by `1 + punch(frame, beat)`. */
+export function punch(frame: number, at: number, amount = 0.025) {
+  const d = frame - at
+  if (d < 0) return 0
+  return amount * 1.6 * (1 - Math.exp(-d / 1.2)) * Math.exp(-d / 9)
+}
+
+/** Sum of punches for every beat in `beats` (frames) — one call per camera. */
+export function punches(
+  frame: number,
+  beats: readonly number[],
+  amount = 0.025,
+) {
+  return beats.reduce((sum, at) => sum + punch(frame, at, amount), 0)
+}
+
+/** A heartbeat: 0 → 1 at `d` = 5 frames → back to ~0 by 24 (dot pulses). */
+export function pulse(d: number) {
+  if (d < 0) return 0
+  return (d / 5) * Math.exp(1 - d / 5)
 }

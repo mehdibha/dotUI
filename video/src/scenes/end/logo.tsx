@@ -1,8 +1,8 @@
 import { Easing } from "remotion"
 
 import { clamp01, ease, lerp, springAt } from "../../lib/motion"
+import { LETTERS } from "../../lib/wordmark"
 import { CX, CY, T } from "./timeline"
-import { LETTERS } from "./wordmark"
 
 /* The dot becomes the logo: the white dot grows and squares off into the
    mark, the dark dot punches in at its lower right, then the wordmark slides

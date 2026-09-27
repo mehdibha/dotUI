@@ -3,8 +3,8 @@
 export const SCENE_LIST = [
   { id: "Open", file: "open", bars: 2 },
   { id: "Wall", file: "wall", bars: 3 },
-  { id: "Axes", file: "axes", bars: 9 },
   { id: "Presets", file: "presets", bars: 3 },
+  { id: "Axes", file: "axes", bars: 9 },
   { id: "Compose", file: "compose", bars: 4 },
   { id: "Patterns", file: "patterns", bars: 4 },
   { id: "Export", file: "export", bars: 3 },

@@ -9,13 +9,14 @@
 
 import { execFileSync } from "node:child_process"
 import fs from "node:fs"
+import { createRequire } from "node:module"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { bundle } from "@remotion/bundler"
 import { openBrowser, renderStill, selectComposition } from "@remotion/renderer"
 
 import { SCENE_LIST } from "../src/scene-list.ts"
-import { webpackOverride } from "../webpack.ts"
+import { makeWebpackOverride } from "../webpack.ts"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const [id, spec = "0", ...flags] = process.argv.slice(2)
@@ -58,7 +59,10 @@ registerRoot(() => (
 
 const serveUrl = await bundle({
   entryPoint,
-  webpackOverride,
+  webpackOverride: makeWebpackOverride({
+    root,
+    resolve: createRequire(import.meta.url).resolve,
+  }),
   enableCaching: !process.env.VIDEO_NO_CACHE,
   onProgress: () => {},
 })
