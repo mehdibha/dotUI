@@ -1,4 +1,3 @@
-
 import { DEFAULT_MOTION, definePreset } from "./preset"
 
 export const supabase = definePreset({
