@@ -12,8 +12,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { ToggleButton } from "@/registry/ui/toggle-button"
-import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
 
 // Twelve months of revenue (in $k). Hardcoded snapshot.
 const revenue = [14, 18, 15, 22, 20, 26, 24, 30, 28, 34, 40, 46]
@@ -94,10 +96,7 @@ export function Metrics({ className, ...props }: React.ComponentProps<"div">) {
       <CardHeader>
         <CardTitle>Monthly revenue</CardTitle>
         <CardAction>
-          <ToggleButtonGroup
-            size="sm"
-            selectionMode="single"
-            disallowEmptySelection
+          <SegmentedControl
             selectedKeys={[range]}
             onSelectionChange={(keys) => {
               const next = [...keys][0]
@@ -106,11 +105,11 @@ export function Metrics({ className, ...props }: React.ComponentProps<"div">) {
             aria-label="Time range"
           >
             {ranges.map((r) => (
-              <ToggleButton key={r.id} id={r.id}>
+              <SegmentedControlItem key={r.id} id={r.id}>
                 {r.label}
-              </ToggleButton>
+              </SegmentedControlItem>
             ))}
-          </ToggleButtonGroup>
+          </SegmentedControl>
         </CardAction>
       </CardHeader>
       <CardContent className="space-y-4">
