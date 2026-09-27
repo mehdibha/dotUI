@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_STATE, DEFAULTS, parseState, SCHEMA, validate } from "./index"
+import {
+  DEFAULT_STATE,
+  DEFAULTS,
+  parseState,
+  salvageState,
+  SCHEMA,
+  validate,
+} from "./index"
 import { checkAxisValue } from "./schema"
 
 const issueKeys = (raw: unknown) => {
@@ -118,5 +125,13 @@ describe("state schema", () => {
     const result = validate(raw)
     raw.radiusPx = 999
     expect(result.ok && result.state.radiusPx).toBe(4)
+  })
+
+  it("salvages stored state key by key", () => {
+    expect(
+      salvageState({ radiusPx: 4, brand: "zzz", retiredAxis: "x" }),
+    ).toEqual(parseState({ radiusPx: 4 }))
+    for (const raw of [null, "state", [DEFAULTS]])
+      expect(salvageState(raw)).toEqual(DEFAULT_STATE)
   })
 })

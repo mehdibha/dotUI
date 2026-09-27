@@ -6,7 +6,8 @@ interface PersistedStoreCodec<T> {
   decode: (raw: string) => T
   /** Return null to clear the key instead of storing. */
   encode: (value: T) => string | null
-  /** Called when a write can't reach storage (private mode, quota). */
+  /** Called when a write can't reach storage (private mode, quota, or a
+   *  stored value `decode` rejected). */
   onWriteError?: () => void
 }
 
@@ -14,9 +15,10 @@ interface PersistedStoreCodec<T> {
  * A localStorage-backed value as a `useSyncExternalStore` hook. Memory mirrors
  * the last raw string seen in storage: it re-reads whenever nothing keeps it in
  * sync (no subscriber, so no `storage` listener) and before every `update`, so
- * a write never sends back a value another tab has since replaced. Writes still
- * apply in memory when persistence fails (private mode, quota). The server and
- * the first client render see `fallback` so hydration matches.
+ * a write never sends back a value another tab has since replaced. A stored
+ * value `decode` throws on reads as `fallback` and is never overwritten. Writes
+ * still apply in memory when persistence fails. The server and the first
+ * client render see `fallback` so hydration matches.
  */
 export function createPersistedStore<T>(
   key: string,
@@ -27,6 +29,7 @@ export function createPersistedStore<T>(
   let value = fallback
   // undefined until storage was first read; null when the key is absent.
   let raw: string | null | undefined
+  let unreadable = false
 
   function sync(): boolean {
     if (typeof window === "undefined") return false
@@ -38,10 +41,12 @@ export function createPersistedStore<T>(
     }
     if (next === raw) return false
     raw = next
+    unreadable = false
     try {
       value = next === null ? fallback : decode(next)
     } catch {
       value = fallback
+      unreadable = true
     }
     return true
   }
@@ -64,6 +69,7 @@ export function createPersistedStore<T>(
     if (raw === undefined) sync()
     value = next
     try {
+      if (unreadable) throw new Error(`${key} holds a value this can't read`)
       const encoded = encode(next)
       if (encoded === null) window.localStorage.removeItem(key)
       else window.localStorage.setItem(key, encoded)

@@ -124,25 +124,22 @@ describe("/r/s/<id>/<name>.json", () => {
     },
   )
 
-  it.each([
-    ["not JSON", "{"],
-    [
-      "an invalid state",
-      JSON.stringify({
-        schema: 1,
-        name: "A",
-        base: "origin",
-        state: { cursor: "url(x)" },
-        createdAt: 1,
-      }),
-    ],
-  ])("answers stored data that is %s with a logged 500", async (_, json) => {
+  it("answers unreadable stored data with a logged 500", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
     const store = memoryStore()
-    await store.put("0123456789", json)
+    await store.put("0123456789", "{")
     await fails(await get("/r/s/0123456789/init.json", store), 500)
     expect(error).toHaveBeenCalled()
     error.mockRestore()
+  })
+
+  it("serves a stored snapshot whose axes have since changed", async () => {
+    const store = memoryStore()
+    await store.put(
+      "0123456789",
+      JSON.stringify({ schema: 1, name: "A", state: { cursor: "url(x)" } }),
+    )
+    await ok(await get("/r/s/0123456789/init.json", store))
   })
 })
 

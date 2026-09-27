@@ -1,4 +1,3 @@
-import { formatIssues } from "@/modules/studio/axes"
 import type { StateIssue } from "@/modules/studio/axes"
 
 import {
@@ -84,8 +83,7 @@ export const createSnapshot = (request: Request, store: SnapshotStore) =>
     return Response.json({ id }, { headers: NO_STORE })
   })
 
-/** The stored snapshot, `null` when absent. Stored data that no longer
- *  validates throws. */
+/** The stored snapshot, `null` when absent. An unreadable one throws. */
 export async function loadSnapshot(
   id: string,
   store: SnapshotStore,
@@ -99,11 +97,8 @@ export async function loadSnapshot(
     raw = undefined
   }
   const snapshot = parseSnapshot(raw)
-  if (!snapshot.ok)
-    throw new Error(
-      `Stored snapshot ${id} is invalid: ${formatIssues(snapshot.issues)}`,
-    )
-  return snapshot.value
+  if (!snapshot) throw new Error(`Stored snapshot ${id} is unreadable`)
+  return snapshot
 }
 
 /** `GET /api/snapshots/$id` → the `Snapshot`. */

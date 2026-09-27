@@ -84,8 +84,7 @@ describe("POST /api/snapshots", () => {
     const store = memoryStore()
     const id = await publish(store, { ...valid, name: "  Acme  " })
     const stored = parseSnapshot(JSON.parse((await store.get(id))!))
-    if (!stored.ok) throw new Error("expected a valid snapshot")
-    expect(stored.value).toMatchObject({
+    expect(stored).toMatchObject({
       schema: 1,
       name: "Acme",
       base: "origin",
@@ -225,16 +224,6 @@ describe("GET /api/snapshots/$id", () => {
   it.each([
     ["not JSON", "{"],
     [
-      "an invalid state",
-      JSON.stringify({
-        schema: 1,
-        name: "A",
-        base: "origin",
-        state: { radiusPx: -1 },
-        createdAt: 1,
-      }),
-    ],
-    [
       "an unknown schema",
       JSON.stringify({
         schema: 2,
@@ -253,6 +242,25 @@ describe("GET /api/snapshots/$id", () => {
     expect(response.headers.get("cache-control")).toBe("no-store")
     expect(error).toHaveBeenCalled()
     vi.restoreAllMocks()
+  })
+
+  it("reads a stored snapshot leniently", async () => {
+    const store = memoryStore()
+    await store.put(
+      "0123456789",
+      JSON.stringify({
+        schema: 1,
+        name: "A",
+        state: { radiusPx: 4, brand: "zzz", retiredAxis: 1 },
+        retiredField: true,
+      }),
+    )
+    const response = await readSnapshot("0123456789", store)
+    expect(response.status).toBe(200)
+    expect(await response.json()).toMatchObject({
+      name: "A",
+      state: { ...DEFAULT_STATE, radiusPx: 4 },
+    })
   })
 
   it("keeps serving a snapshot whose base preset is gone", async () => {

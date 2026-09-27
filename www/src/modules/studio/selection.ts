@@ -10,7 +10,7 @@ import { useMemo } from "react"
 import { createPersistedStore } from "@/lib/persisted-store"
 import { SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import { getPreset, ORIGIN } from "@/modules/presets"
-import { validate } from "@/modules/studio/axes"
+import { salvageState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
 import * as workspace from "./workspace"
@@ -36,11 +36,13 @@ function parseSelection(raw: unknown): Selection | undefined {
     sel.kind === "shared" &&
     SNAPSHOT_ID.test(sel.id) &&
     workspace.isName(sel.name)
-  ) {
-    const state = validate(sel.state)
-    if (state.ok)
-      return { kind: "shared", id: sel.id, name: sel.name, state: state.state }
-  }
+  )
+    return {
+      kind: "shared",
+      id: sel.id,
+      name: sel.name,
+      state: salvageState(sel.state),
+    }
 }
 
 const store = createPersistedStore<{ sel: Selection; at: number } | null>(

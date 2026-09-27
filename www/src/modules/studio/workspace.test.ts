@@ -251,7 +251,7 @@ describe("workspace", () => {
     expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(ws.getWorkspace())
   })
 
-  it("drops invalid records", async () => {
+  it("reads records leniently, field by field", async () => {
     const good = {
       id: "a",
       name: "Acme",
@@ -260,7 +260,6 @@ describe("workspace", () => {
       initial: {},
       state: { radiusPx: 4 },
       published: [],
-      createdAt: 1,
       updatedAt: 1,
     }
     win.seed(
@@ -269,21 +268,25 @@ describe("workspace", () => {
         schema: 2,
         systems: [
           good,
-          { ...good, id: "b", state: { radiusPx: -1000 } },
-          { ...good, id: "c", state: { cursorControls: "url(evil)" } },
-          { ...good, id: "d", name: "" },
-          { ...good, id: "e", published: [{ id: "../x", at: 1 }] },
-          { ...good, id: "f", origin: { kind: "nope" } },
-          { ...good, id: "g", draft: "yes" },
-          { ...good, id: "h", name: "a\u0000b" },
+          { ...good, id: "b", state: { radiusPx: -1000, retired: 1 } },
+          { ...good, id: "c", name: "", origin: { kind: "nope" } },
+          { ...good, id: "d", published: [{ id: "../x", at: 1 }] },
+          { ...good, id: "" },
           null,
         ],
       }),
     )
     const ws = await load()
-    const workspace = ws.getWorkspace()
-    expect(workspace.systems.map((s) => s.id)).toEqual(["a"])
-    expect(workspace.systems[0]!.state.radiusPx).toBe(4)
+    const [a, b, c, d, ...rest] = ws.getWorkspace().systems
+    expect(rest).toEqual([])
+    expect(a).toMatchObject({ id: "a", name: "Acme" })
+    expect(a!.state.radiusPx).toBe(4)
+    expect(b!.state).toEqual(parseState({}))
+    expect(c).toMatchObject({
+      name: "Untitled",
+      origin: { kind: "preset", id: "origin" },
+    })
+    expect(d!.published).toEqual([])
   })
 
   it("writes a deleted system to the trash before removing it", async () => {
@@ -307,7 +310,6 @@ describe("workspace", () => {
         schema: 1,
         items: [
           { doc, index: 0, deletedAt: 1 },
-          { doc: { ...doc, id: "x", name: "" }, index: 0, deletedAt: 1 },
           { doc: { ...doc, id: "y" }, index: "0", deletedAt: 1 },
           { doc: { ...doc, id: "z" }, index: 0 },
         ],
@@ -316,10 +318,18 @@ describe("workspace", () => {
     expect(ws.getTrash().map((i) => i.doc.id)).toEqual([doc.id])
   })
 
-  it("reads anything but schema 2 as empty", async () => {
-    win.seed(KEY, JSON.stringify({ schema: 1, openId: "x", systems: [] }))
+  it("reads an unknown format as empty and never writes over it", async () => {
+    const future = JSON.stringify({ schema: 3, systems: [] })
+    win.seed(KEY, future)
     const ws = await load()
     expect(ws.getWorkspace().systems).toEqual([])
+    ws.create({
+      name: "Acme",
+      origin: { kind: "preset", id: "linear" },
+      initial: linear.state,
+      state: linear.state,
+    })
+    expect(win.read(KEY)).toBe(future)
     win.seed(KEY, "not json")
     expect(ws.getWorkspace().systems).toEqual([])
   })

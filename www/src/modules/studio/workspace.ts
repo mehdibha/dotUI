@@ -1,7 +1,7 @@
 "use client"
 
-/* The user's design systems, kept in this browser. Every record is validated
-   on read (invalid ones are dropped) and every write re-reads storage first,
+/* The user's design systems, kept in this browser. Records are read leniently
+   (a bad field takes its default) and every write re-reads storage first,
    so tabs never clobber each other. Edits land in memory at once and in
    storage at most every 200 ms. What is on screen lives in `selection.ts`. */
 
@@ -18,7 +18,12 @@ import {
 import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
 import { closestPreset, getPreset, ORIGIN } from "@/modules/presets"
-import { formatIssues, sameState, validate } from "@/modules/studio/axes"
+import {
+  formatIssues,
+  salvageState,
+  sameState,
+  validate,
+} from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
 export type Origin =
@@ -36,7 +41,6 @@ export interface DesignSystemDoc {
   initial: StudioState
   state: StudioState
   published: { id: string; at: number }[]
-  createdAt: number
   updatedAt: number
 }
 
@@ -77,49 +81,36 @@ function parseOrigin(raw: unknown): Origin | undefined {
 }
 
 function parseDoc(raw: unknown): DesignSystemDoc | undefined {
-  if (!isRecord(raw)) return
-  const { id, name, draft, published, createdAt, updatedAt } = raw
-  const origin = parseOrigin(raw.origin)
-  const initial = validate(raw.initial)
-  const state = validate(raw.state)
-  if (
-    typeof id !== "string" ||
-    !id ||
-    !isName(name) ||
-    typeof draft !== "boolean" ||
-    !origin ||
-    !initial.ok ||
-    !state.ok ||
-    !isTime(createdAt) ||
-    !isTime(updatedAt) ||
-    !Array.isArray(published) ||
-    !published.every(
-      (entry) =>
-        isRecord(entry) &&
-        typeof entry.id === "string" &&
-        SNAPSHOT_ID.test(entry.id) &&
-        isTime(entry.at),
-    )
-  )
-    return
+  if (!isRecord(raw) || typeof raw.id !== "string" || !raw.id) return
+  const state = salvageState(raw.state)
   return {
-    id,
-    name,
-    draft,
-    origin,
-    initial: initial.state,
-    state: state.state,
-    published: published.map(({ id, at }) => ({ id, at })),
-    createdAt,
-    updatedAt,
+    id: raw.id,
+    name: (typeof raw.name === "string" && cleanName(raw.name)) || "Untitled",
+    draft: raw.draft === true,
+    origin: parseOrigin(raw.origin) ?? { kind: "preset", id: ORIGIN.id },
+    initial: raw.initial === undefined ? state : salvageState(raw.initial),
+    state,
+    published: Array.isArray(raw.published)
+      ? raw.published.flatMap((entry: unknown) =>
+          isRecord(entry) &&
+          typeof entry.id === "string" &&
+          SNAPSHOT_ID.test(entry.id) &&
+          isTime(entry.at)
+            ? [{ id: entry.id, at: entry.at }]
+            : [],
+        )
+      : [],
+    updatedAt: isTime(raw.updatedAt) ? raw.updatedAt : 0,
   }
 }
 
-/** Invalid records are dropped; anything but schema 2 reads as empty. */
+/** A record without an id is dropped. Anything but schema 2 throws, so the
+ *  store never writes over it. */
 export function parseWorkspace(raw: string): Workspace {
   const parsed: unknown = JSON.parse(raw)
+  if (!isRecord(parsed) || parsed.schema !== 2)
+    throw new Error("Unknown design systems format")
   const systems: DesignSystemDoc[] = []
-  if (!isRecord(parsed) || parsed.schema !== 2) return EMPTY
   for (const entry of Array.isArray(parsed.systems) ? parsed.systems : []) {
     const doc = parseDoc(entry)
     if (doc && !systems.some((s) => s.id === doc.id)) systems.push(doc)
@@ -311,15 +302,13 @@ export function create(
   },
 ): DesignSystemDoc | undefined {
   if (!accepts(fields.initial) || !accepts(fields.state)) return
-  const now = Date.now()
   const doc: DesignSystemDoc = {
     id: newId(),
     draft: false,
     published: [],
     ...fields,
     name: uniqueName(fields.name, fields.draft ? [] : getWorkspace().systems),
-    createdAt: now,
-    updatedAt: now,
+    updatedAt: Date.now(),
   }
   update((workspace) => ({
     ...workspace,
@@ -640,7 +629,7 @@ export function publish(
   return request
 }
 
-/** A snapshot fetched by id, validated like the server's own read;
+/** A snapshot fetched by id, read like the server's own read;
  *  undefined when no snapshot has that id. */
 export async function fetchSnapshot(id: string): Promise<Snapshot | undefined> {
   if (!SNAPSHOT_ID.test(id)) return
@@ -651,6 +640,6 @@ export async function fetchSnapshot(id: string): Promise<Snapshot | undefined> {
   if (!response.ok)
     throw new Error(`GET /api/snapshots/${id} → ${response.status}`)
   const snapshot = parseSnapshot(await response.json())
-  if (!snapshot.ok) throw new Error(`Snapshot ${id} is invalid`)
-  return snapshot.value
+  if (!snapshot) throw new Error(`Snapshot ${id} is unreadable`)
+  return snapshot
 }
