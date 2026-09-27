@@ -102,10 +102,11 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  /** Closes the picker for the name dialog. */
+  /** Closes the picker for the name dialog, which opens once focus is back
+   *  on the picker's trigger, to return there. */
   function askName(request: NameRequest) {
     setGalleryOpen(false)
-    setNaming(request)
+    requestAnimationFrame(() => setNaming(request))
   }
 
   function onDelete(id: string) {
