@@ -16,8 +16,9 @@ import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
 import type { Selection } from "@/modules/studio/selection"
+import { fetchSnapshot } from "@/modules/studio/share"
 import { quoted } from "@/modules/studio/toasts"
-import { fetchSnapshot, flush } from "@/modules/studio/workspace"
+import { flush } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
   search: {
@@ -43,7 +44,7 @@ export function createSearchSchema(
     // Opens the design-system switcher — set by the /presets redirect.
     // Coerced boolean: the search parser reads bare `1`/`true` as non-strings.
     gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
-    // The view on screen: a published snapshot, or a preset.
+    // The view on screen: a shared snapshot, or a preset.
     s: text(search.s),
     preset: text(search.preset),
   }

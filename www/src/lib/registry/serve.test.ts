@@ -38,7 +38,7 @@ async function publish(store: SnapshotStore, state: unknown) {
   const response = await createSnapshot(
     new Request("https://dotui.org/api/snapshots", {
       method: "POST",
-      body: JSON.stringify({ name: "Acme", base: "linear", state }),
+      body: JSON.stringify({ name: "Acme", state }),
     }),
     store,
   )

@@ -5,19 +5,13 @@
    picker's own, which leads to Recently deleted. */
 
 import { Kbd } from "@/registry/ui/kbd"
-import {
-  MenuContent,
-  MenuItem,
-  MenuItemDescription,
-  MenuItemLabel,
-} from "@/registry/ui/menu"
+import { MenuContent, MenuItem, MenuItemLabel } from "@/registry/ui/menu"
 import { Separator } from "@/registry/ui/separator"
 import { toastManager } from "@/registry/ui/toast"
 
-import { initCommand, snapshotLink } from "./publish"
 import { viewLink } from "./selection"
 import type { ViewSelection } from "./selection"
-import { usePublishStatus } from "./workspace"
+import { initCommand } from "./share"
 import type { DesignSystemDoc } from "./workspace"
 
 /** Touch-sized rows on phones. */
@@ -69,8 +63,7 @@ export function ViewMenu({
   )
 }
 
-/** One of the user's systems: Copy link copies its latest published link,
- *  and never publishes. F2 renames the current one. */
+/** One of the user's systems. F2 renames the current one. */
 export function SystemMenu({
   doc,
   isCurrent,
@@ -84,15 +77,12 @@ export function SystemMenu({
   onDuplicate: () => void
   onDelete: () => void
 }) {
-  const last = doc.published.at(-1)
-  const unpublished = usePublishStatus(doc) === "changed"
   return (
     <MenuContent
       aria-label={`Actions for ${doc.name}`}
       onAction={(key) => {
         if (key === "rename") onRename()
         if (key === "duplicate") onDuplicate()
-        if (key === "link" && last) copy(snapshotLink(last.id), "Link")
         if (key === "delete") onDelete()
       }}
     >
@@ -102,17 +92,6 @@ export function SystemMenu({
       </MenuItem>
       <MenuItem id="duplicate" className={item}>
         Duplicate
-      </MenuItem>
-      <MenuItem
-        id="link"
-        isDisabled={!last}
-        className={item}
-        textValue={unpublished ? "Copy last published link" : "Copy link"}
-      >
-        <MenuItemLabel>
-          {unpublished ? "Copy last published link" : "Copy link"}
-        </MenuItemLabel>
-        {!last && <MenuItemDescription>Not published yet</MenuItemDescription>}
       </MenuItem>
       <Separator />
       <MenuItem id="delete" variant="danger" className={item}>

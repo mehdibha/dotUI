@@ -78,8 +78,7 @@ export const createSnapshot = (request: Request, store: SnapshotStore) =>
     const input = parseSnapshotInput(raw)
     if (!input.ok) return invalid(input.issues)
     const id = await snapshotId(input.value)
-    const snapshot: Snapshot = { ...input.value, createdAt: Date.now() }
-    await store.put(id, JSON.stringify(snapshot))
+    await store.put(id, JSON.stringify(input.value))
     return Response.json({ id }, { headers: NO_STORE })
   })
 

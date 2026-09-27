@@ -1,7 +1,7 @@
 "use client"
 
 /* The panel header's history cluster: undo, redo, and the History menu —
-   published versions and checkpoints, newest first, then Reset. Views have
+   checkpoints, newest first, then Reset. Views have
    no history of their own. */
 
 import type { ReactNode } from "react"
@@ -16,7 +16,6 @@ import {
   MenuSectionHeader,
 } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { toastManager } from "@/registry/ui/toast"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { getPreset } from "@/modules/presets"
 
@@ -26,7 +25,6 @@ import { checkpoints, redo, reset, restore, undo, useUndoRedo } from "./history"
 import type { Current } from "./selection"
 import { ago, clock } from "./time"
 import { quoted, undoToast } from "./toasts"
-import { fetchSnapshot } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
 function resetLabel(doc: DesignSystemDoc): string {
@@ -96,30 +94,14 @@ function IconButton({
 
 function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
   const now = Date.now()
-  const published = [...doc.published].reverse()
   const saved = checkpoints(doc.id).reverse()
   const label = resetLabel(doc)
 
   function onAction(key: string) {
     if (key === "reset")
       return undoToast(`Reset ${quoted(doc.name)}`, reset(doc.id))
-    const [kind, value] = key.split(":")
-    if (kind === "checkpoint") {
-      const entry = saved[Number(value)]
-      if (entry) restore(doc.id, entry.state)
-      return
-    }
-    const entry = published[Number(value)]
-    if (!entry) return
-    const failed = () =>
-      toastManager.add({ title: "Couldn't open that version", type: "error" })
-    fetchSnapshot(entry.id).then(
-      (snapshot) => (snapshot ? restore(doc.id, snapshot.state) : failed()),
-      (error: unknown) => {
-        console.error(error)
-        failed()
-      },
-    )
+    const entry = saved[Number(key.split(":")[1])]
+    if (entry) restore(doc.id, entry.state)
   }
 
   return (
@@ -128,21 +110,6 @@ function HistoryItems({ doc }: { doc: DesignSystemDoc }) {
       onAction={(key) => onAction(String(key))}
       className="min-w-52"
     >
-      {published.length > 0 && (
-        <MenuSection>
-          <MenuSectionHeader>Published</MenuSectionHeader>
-          {/* Restoring then republishing repeats an id, so key by index. */}
-          {published.map((entry, index) => (
-            <MenuItem
-              key={index}
-              id={`published:${index}`}
-              textValue={ago(entry.at, now)}
-            >
-              <Entry at={entry.at} now={now} />
-            </MenuItem>
-          ))}
-        </MenuSection>
-      )}
       {saved.length > 0 && (
         <MenuSection>
           <MenuSectionHeader>Autosaved</MenuSectionHeader>

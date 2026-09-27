@@ -2,10 +2,10 @@
  * The export surface for /studio: one compact dialog split by the user's
  * situation — scaffold a new app, or install into an existing one — with the
  * shadcn command as the single primary action. The trigger is passed as
- * children (the header CTA, the panel footer button).
+ * children.
  */
 
-import { Fragment, useEffect, useState, type ReactNode } from "react"
+import { Fragment, useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
@@ -16,18 +16,11 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { cn } from "@/registry/lib/utils"
 import { Button, LinkButton } from "@/registry/ui/button"
 import {
-  Collapsible,
-  CollapsiblePanel,
-  CollapsibleTrigger,
-} from "@/registry/ui/collapsible"
-import {
   Dialog,
   DialogBody,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
 } from "@/registry/ui/dialog"
 import { Label } from "@/registry/ui/field"
 import { Modal } from "@/registry/ui/modal"
@@ -41,6 +34,7 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "@/registry/ui/segmented-control"
+import { Skeleton } from "@/registry/ui/skeleton"
 import {
   buildInitCommands,
   buildInstallCommands,
@@ -48,13 +42,9 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
-import { publishSystem } from "@/modules/studio/publish"
-import { useCurrent } from "@/modules/studio/selection"
-import { clock } from "@/modules/studio/time"
-import * as workspace from "@/modules/studio/workspace"
+import { registryPath, useSource } from "@/modules/studio/share"
 
 import { CodeOptions } from "./code-options"
-import { KeepFocus } from "./keep-focus"
 import { OPEN_IN_TARGETS } from "./targets"
 import { useExportUrl } from "./use-export-url"
 
@@ -93,174 +83,21 @@ export function ExportDialog({ children }: { children: ReactNode }) {
       {children}
       <Modal className="sm:max-w-md">
         <DialogContent showCloseButton aria-label="Export design system">
-          <KeepFocus />
-          <ExportDialogBody />
+          <ExportCommands />
         </DialogContent>
       </Modal>
     </Dialog>
   )
 }
 
-/**
- * A view installs from its own path; the user's system from a published
- * version. With changes past the latest one, a switch picks between it and
- * publishing the changes. Opening never publishes.
- */
-function ExportDialogBody() {
-  const { doc, sel } = useCurrent()
-  const status = workspace.usePublishStatus(doc)
-  const [choice, setChoice] = useState<"published" | "latest">("published")
-  const [failed, setFailed] = useState(false)
-  // The version the switch opened on: it stays for the dialog's life, so
-  // publishing the latest changes doesn't pull it from under the pointer.
-  const [before, setBefore] = useState<{ id: string; at: number; n: number }>()
-  const latest = doc?.published.at(-1)
-  // A version published while the dialog is open is the one it installs,
-  // not an older one to pick.
-  const [openedOn] = useState(() => latest?.id)
-  if (
-    doc &&
-    latest &&
-    !before &&
-    (status === "changed" || (status === "pending" && latest.id === openedOn))
-  ) {
-    setBefore({ ...latest, n: doc.published.length })
-    // A publish already on its way (from Publish or Share) is the latest.
-    if (status === "pending") setChoice("latest")
-  }
-  const docId = doc?.id
-  const following = status === "pending" && choice === "latest"
-  useEffect(() => {
-    if (following && docId)
-      workspace.publishing(docId)?.catch(() => setFailed(true))
-  }, [following, docId])
-
-  if (!doc)
-    return (
-      <ExportCommands path={`${sel.kind === "preset" ? "p" : "s"}/${sel.id}`} />
-    )
-  if (status === undefined) return null
-  const id = doc.id
-  const count = doc.published.length
-  const last = doc.published.at(-1)
-
-  function publishLatest() {
-    setFailed(false)
-    publishSystem(id).then(
-      (snapshot) => snapshot || setChoice("published"),
-      () => setFailed(true),
-    )
-  }
-
-  if (!last)
-    return (
-      <>
-        <DialogHeader className="pr-8">
-          <DialogTitle>Publish to export</DialogTitle>
-          <DialogDescription>
-            Export installs a published version of your design system. Later
-            edits need a new publish.
-          </DialogDescription>
-        </DialogHeader>
-        {failed && (
-          <DialogBody>
-            <p className="text-xs text-fg-danger">
-              Couldn't publish this design system.
-            </p>
-          </DialogBody>
-        )}
-        <DialogFooter className="flex-col sm:flex-col">
-          <Button
-            variant="primary"
-            className="w-full"
-            isDisabled={status === "pending"}
-            onPress={publishLatest}
-          >
-            {status === "pending" ? "Publishing…" : "Publish and export"}
-          </Button>
-        </DialogFooter>
-      </>
-    )
-
-  const version = `v${count} · ${clock(last.at)}`
-  if (!before) return <ExportCommands path={`s/${last.id}`} version={version} />
-
-  const versions = (
-    <SegmentedControl
-      aria-label="Version"
-      selectedKeys={[choice]}
-      onSelectionChange={(keys) => {
-        const next = [...keys][0]
-        if (next !== "published" && next !== "latest") return
-        setChoice(next)
-        if (next === "latest") publishLatest()
-      }}
-    >
-      <SegmentedControlItem id="published" className="max-sm:text-xs">
-        Published · {clock(before.at)}
-      </SegmentedControlItem>
-      <SegmentedControlItem id="latest" className="max-sm:text-xs">
-        Include latest changes
-      </SegmentedControlItem>
-    </SegmentedControl>
-  )
-
-  if (choice === "published")
-    return (
-      <ExportCommands
-        path={`s/${before.id}`}
-        version={`v${before.n} · ${clock(before.at)}`}
-        top={versions}
-      />
-    )
-  if (status === "current")
-    return (
-      <ExportCommands path={`s/${last.id}`} version={version} top={versions} />
-    )
-  return (
-    <ExportCommands
-      path={`s/${last.id}`}
-      top={versions}
-      waiting={
-        failed ? (
-          <p className="text-xs text-fg-danger">
-            Couldn't publish your changes ·{" "}
-            <button
-              type="button"
-              onClick={publishLatest}
-              className="underline underline-offset-2"
-            >
-              Try again
-            </button>
-          </p>
-        ) : (
-          <p role="status" className="text-xs text-fg-muted">
-            Publishing your changes…
-          </p>
-        )
-      }
-    />
-  )
-}
-
-function ExportCommands({
-  path,
-  version,
-  top,
-  waiting,
-}: {
-  /** `p/<preset>` or `s/<snapshot>`. */
-  path: string
-  /** The published version it installs, as "v3 · 3:42 PM". */
-  version?: string
-  top?: ReactNode
-  /** Shown instead of the commands until they can be installed. */
-  waiting?: ReactNode
-}) {
+/** Installs exactly what's on screen; the user's system is snapshotted as
+ *  the dialog opens. */
+function ExportCommands() {
+  const { source, failed, retry } = useSource()
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
-  const url = useExportUrl(path)
+  const url = useExportUrl(source ? registryPath(source) : "")
 
   const initCommand = buildInitCommands(url("init"))[packageManager]
   const addCommand = buildInstallCommands(["button"])[packageManager]
@@ -282,6 +119,20 @@ function ExportCommands({
       ? [primary]
       : [primary, { label: "Add components", steps: [addCommand] }]
   const command = joinSteps(primary.steps)
+  const waiting = source ? undefined : failed ? (
+    <p className="text-xs text-fg-danger">
+      Couldn't prepare the command ·{" "}
+      <button
+        type="button"
+        onClick={retry}
+        className="underline underline-offset-2"
+      >
+        Try again
+      </button>
+    </p>
+  ) : (
+    <Skeleton className="h-3 w-3/4" />
+  )
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
   const trackCopy = (line: string) =>
@@ -294,8 +145,6 @@ function ExportCommands({
 
   return (
     <>
-      {/* The close button sits beside the short first row; the version
-          switch below gets the full width. */}
       <DialogHeader>
         <SegmentedControl
           aria-label="Project type"
@@ -312,7 +161,6 @@ function ExportCommands({
             Existing project
           </SegmentedControlItem>
         </SegmentedControl>
-        {top}
       </DialogHeader>
 
       <DialogBody className="gap-4 overflow-y-auto">
@@ -353,37 +201,10 @@ function ExportCommands({
         </Section>
 
         <CommandBlock
-          version={version}
           waiting={waiting}
           commands={commands}
           onCopy={trackCopy}
         />
-
-        {(version || waiting) && (
-          <Collapsible isDisabled={!!waiting}>
-            <CollapsibleTrigger className="text-xs text-fg-muted">
-              Already installed an older version?
-            </CollapsibleTrigger>
-            <CollapsiblePanel>
-              <p className="pb-2 text-xs text-fg-muted">
-                Point the <code className="font-mono">@dotui</code> registry in{" "}
-                <code className="font-mono">components.json</code> at this
-                version, then re-add your components with{" "}
-                <code className="font-mono">--overwrite</code>.
-              </p>
-              <CommandBlock
-                commands={[
-                  {
-                    label: "Registry",
-                    steps: [`"@dotui": "${url("{name}")}"`],
-                  },
-                  { label: "Re-add", steps: [`${addCommand} --overwrite`] },
-                ]}
-                onCopy={trackCopy}
-              />
-            </CollapsiblePanel>
-          </Collapsible>
-        )}
       </DialogBody>
 
       <DialogFooter className="flex-col sm:flex-col">
@@ -446,12 +267,10 @@ const joinSteps = (steps: string[]) => steps.join(" && ")
 function CommandBlock({
   commands,
   onCopy,
-  version,
   waiting,
 }: {
   commands: CommandEntry[]
   onCopy: (line: string) => void
-  version?: string
   /** Holds the commands' place until they can be installed. */
   waiting?: ReactNode
 }) {
@@ -481,11 +300,6 @@ function CommandBlock({
             {pm}
           </ToggleButtonPrimitives.ToggleButton>
         ))}
-        {version && (
-          <span className="ml-auto pr-1 text-xs text-fg-muted tabular-nums">
-            {version}
-          </span>
-        )}
       </ToggleButtonGroupPrimitives.ToggleButtonGroup>
       <div className="flex flex-col divide-y">
         {commands.map((entry, index) =>

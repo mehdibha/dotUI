@@ -10,8 +10,8 @@ import { resolveDesignSystem } from "./resolve"
 import { selectionKey } from "./selection"
 import type { Current, Selection } from "./selection"
 import { ago } from "./time"
-import { listed, swatchOf, usePublishStatus } from "./workspace"
-import type { DesignSystemDoc, PublishStatus, Workspace } from "./workspace"
+import { listed, swatchOf } from "./workspace"
+import type { DesignSystemDoc, Workspace } from "./workspace"
 
 /** Where a system came from: "Based on Linear", "From a shared link"… */
 export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
@@ -21,40 +21,6 @@ export function basedOn(doc: DesignSystemDoc, workspace: Workspace): string {
   if (origin.kind === "snapshot") return "From a shared link"
   const source = workspace.systems.find((s) => s.id === origin.of)
   return `Copy of ${source?.name ?? "a deleted system"}`
-}
-
-const STATUS: Record<PublishStatus, string> = {
-  never: "Unpublished",
-  changed: "Unpublished",
-  pending: "Publishing…",
-  current: "Published",
-}
-
-/** "Based on Linear · Unpublished" once kept, "Based on Linear · 2h ago"
- *  for the draft: two parts fit a row, so the time gives way to the
- *  status, and the origin is what a narrow row cuts. */
-function SystemSubtitle({
-  doc,
-  workspace,
-}: {
-  doc: DesignSystemDoc
-  workspace: Workspace
-}) {
-  const status = usePublishStatus(doc)
-  const origin = basedOn(doc, workspace)
-  const time = ago(doc.updatedAt, Date.now(), "narrow")
-  const label = !doc.draft && status ? STATUS[status] : undefined
-  return (
-    <span
-      title={[origin, time, label].filter(Boolean).join(" · ")}
-      className="flex min-w-0"
-    >
-      <span className="truncate">
-        {doc.draft ? `${origin} · ${time}` : origin}
-      </span>
-      {label && <span className="shrink-0 whitespace-pre"> · {label}</span>}
-    </span>
-  )
 }
 
 /** What the studio and docs pickers list: the shared link on screen, the
@@ -91,7 +57,8 @@ export function pickerSections(
         swatch: swatchOf(system),
         badge: system.draft ? "Draft" : undefined,
         kind: system.draft ? "draft" : undefined,
-        subtitle: () => <SystemSubtitle doc={system} workspace={workspace} />,
+        subtitle: () =>
+          `${basedOn(system, workspace)} · ${ago(system.updatedAt, Date.now(), "narrow")}`,
         resolve: () => resolveDesignSystem(system.state),
       })),
     })

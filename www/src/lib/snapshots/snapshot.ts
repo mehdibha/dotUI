@@ -1,18 +1,12 @@
-import { getPreset } from "@/modules/presets"
 import { salvageState, validate } from "@/modules/studio/axes"
 import type { StateIssue, StudioState } from "@/modules/studio/axes"
 
-/** An immutable published version of a design system. */
+/** An immutable, content-addressed copy of a design system. */
 export interface Snapshot {
   schema: 1
   name: string
-  /** The built-in preset it started from. */
-  base: string
   state: StudioState
-  createdAt: number
 }
-
-export type SnapshotContent = Omit<Snapshot, "createdAt">
 
 export const SNAPSHOT_ID = /^[0-9A-Za-z]{10}$/
 export const MAX_NAME_LENGTH = 64
@@ -34,11 +28,14 @@ export function canonicalJson(value: unknown): string {
 }
 
 /** 10 base62 chars of the content's SHA-256. */
-export async function snapshotId(content: SnapshotContent): Promise<string> {
-  const { schema, name, base, state } = content
+export async function snapshotId({
+  schema,
+  name,
+  state,
+}: Snapshot): Promise<string> {
   const digest = await crypto.subtle.digest(
     "SHA-256",
-    new TextEncoder().encode(canonicalJson({ schema, name, base, state })),
+    new TextEncoder().encode(canonicalJson({ schema, name, state })),
   )
   let n = 0n
   for (const byte of new Uint8Array(digest)) n = (n << 8n) | BigInt(byte)
@@ -56,11 +53,11 @@ type Parsed<T> = { ok: true; value: T } | { ok: false; issues: StateIssue[] }
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value)
 
-const INPUT_KEYS = ["name", "base", "state"]
+const INPUT_KEYS = ["name", "state"]
 
-/** A `POST /api/snapshots` body: `{ name, base, state }`, name trimmed.
+/** A `POST /api/snapshots` body: `{ name, state }`, name trimmed.
  *  Strict: an unknown key or a bad value is an issue. */
-export function parseSnapshotInput(raw: unknown): Parsed<SnapshotContent> {
+export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
   if (!isRecord(raw))
     return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
   const issues: StateIssue[] = Object.keys(raw)
@@ -75,9 +72,6 @@ export function parseSnapshotInput(raw: unknown): Parsed<SnapshotContent> {
       key: "name",
       problem: `expected 1–${MAX_NAME_LENGTH} characters`,
     })
-  const { base } = raw
-  if (typeof base !== "string" || !getPreset(base))
-    issues.push({ key: "base", problem: "unknown preset" })
   const state = validate(raw.state)
   if (!state.ok)
     for (const { key, problem } of state.issues)
@@ -85,7 +79,7 @@ export function parseSnapshotInput(raw: unknown): Parsed<SnapshotContent> {
   if (issues.length > 0 || !state.ok) return { ok: false, issues }
   return {
     ok: true,
-    value: { schema: 1, name, base: base as string, state: state.state },
+    value: { schema: 1, name, state: state.state },
   }
 }
 
@@ -94,12 +88,10 @@ export function parseSnapshotInput(raw: unknown): Parsed<SnapshotContent> {
  *  unknown format is unreadable. */
 export function parseSnapshot(raw: unknown): Snapshot | undefined {
   if (!isRecord(raw) || raw.schema !== 1) return
-  const { name, base, createdAt } = raw
+  const { name } = raw
   return {
     schema: 1,
     name: typeof name === "string" && name.trim() ? name : "Untitled",
-    base: typeof base === "string" ? base : "origin",
     state: salvageState(raw.state),
-    createdAt: typeof createdAt === "number" ? createdAt : 0,
   }
 }

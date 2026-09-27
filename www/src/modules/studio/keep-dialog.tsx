@@ -1,7 +1,7 @@
 "use client"
 
 /* Leaving a changed draft from the studio asks first: keep it under a name,
-   or discard it. Publishing a draft asks for its name the same way. */
+   or discard it. */
 
 import { useEffect, useState, useSyncExternalStore } from "react"
 import { useRouter } from "@tanstack/react-router"
@@ -23,19 +23,11 @@ import { getCurrent, useCurrent } from "./selection"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
 
-type Request =
-  | {
-      kind: "leave"
-      doc: DesignSystemDoc
-      then: () => void
-      cancel?: () => void
-    }
-  | {
-      kind: "publish"
-      doc: DesignSystemDoc
-      done: (kept: boolean) => void
-      asked: Promise<boolean>
-    }
+interface Request {
+  doc: DesignSystemDoc
+  then: () => void
+  cancel?: () => void
+}
 
 let request: Request | null = null
 const listeners = new Set<() => void>()
@@ -50,8 +42,7 @@ function cancel() {
   const closed = request
   if (!closed) return
   set(null)
-  if (closed.kind === "leave") closed.cancel?.()
-  else closed.done(false)
+  closed.cancel?.()
 }
 
 /** Whether leaving the current design system asks first. */
@@ -61,20 +52,8 @@ export const leaving = () => workspace.isChangedDraft(getCurrent().doc)
  *  discarded; `cancel` runs if the user stays. */
 export function leave(then: () => void, cancel?: () => void): void {
   const { doc } = getCurrent()
-  if (doc && workspace.isChangedDraft(doc))
-    set({ kind: "leave", doc, then, cancel })
+  if (doc && workspace.isChangedDraft(doc)) set({ doc, then, cancel })
   else then()
-}
-
-/** Names a draft before it is published; resolves whether it was kept. */
-export function nameDraft(doc: DesignSystemDoc): Promise<boolean> {
-  if (!doc.draft) return Promise.resolve(true)
-  if (request?.kind === "publish" && request.doc.id === doc.id)
-    return request.asked
-  let done: (kept: boolean) => void = () => {}
-  const asked = new Promise<boolean>((resolve) => (done = resolve))
-  set({ kind: "publish", doc, done, asked })
-  return asked
 }
 
 export function KeepDialog() {
@@ -102,10 +81,7 @@ export function KeepDialog() {
   useEffect(
     () =>
       router.subscribe("onBeforeNavigate", ({ pathChanged }) => {
-        const dropped = request
-        if (!pathChanged || !dropped) return
-        set(null)
-        if (dropped.kind === "publish") dropped.done(false)
+        if (pathChanged && request) set(null)
       }),
     [router],
   )
@@ -137,8 +113,7 @@ export function KeepDialog() {
 }
 
 /** Once the dialog is gone, focus that fell to the page goes back to what
- *  opened it — or, as a publish swapped that out, to the dialog it sat in
- *  (Share, Export), else to what replaced it (Published ✓). */
+ *  opened it, else to the dialog it sat in, else to a neighbour. */
 function RestoreFocus() {
   const [opener] = useState(() => {
     const active = document.activeElement
@@ -189,12 +164,11 @@ function KeepForm({ request: current }: { request: Request }) {
   function keep() {
     if (!answer()) return
     workspace.keep(doc.id, workspace.cleanName(name) || workspace.keptName(doc))
-    if (current.kind === "leave") current.then()
-    else current.done(true)
+    current.then()
   }
 
   function discard() {
-    if (current.kind !== "leave" || !answer()) return
+    if (!answer()) return
     remove(doc.id, { verb: "Discarded" })
     current.then()
   }
@@ -208,11 +182,7 @@ function KeepForm({ request: current }: { request: Request }) {
       className="contents"
     >
       <DialogHeader>
-        <DialogTitle>
-          {current.kind === "leave"
-            ? `Keep your changes to ${doc.name}?`
-            : "Name your design system"}
-        </DialogTitle>
+        <DialogTitle>Keep your changes to {doc.name}?</DialogTitle>
       </DialogHeader>
       <TextField
         value={name}
@@ -226,13 +196,9 @@ function KeepForm({ request: current }: { request: Request }) {
         <Input />
       </TextField>
       <DialogFooter>
-        {current.kind === "leave" ? (
-          <Button onPress={discard}>Discard</Button>
-        ) : (
-          <Button slot="close">Cancel</Button>
-        )}
+        <Button onPress={discard}>Discard</Button>
         <Button type="submit" variant="primary">
-          {current.kind === "leave" ? "Keep" : "Publish"}
+          Keep
         </Button>
       </DialogFooter>
     </form>

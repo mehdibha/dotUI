@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { snapshotId } from "@/lib/snapshots/snapshot"
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
@@ -191,44 +190,6 @@ describe("workspace", () => {
     expect(reset.state).toEqual(reset.initial)
   })
 
-  it("publishes once per content", async () => {
-    const { ws, doc } = await created()
-    const post = vi.fn(async (body: { name: string; base: string }) =>
-      snapshotId({ schema: 1, ...body, state: ws.findSystem(doc.id)!.state }),
-    )
-    const first = await ws.publish(doc.id, post)
-    expect(await ws.publish(doc.id, post)).toBe(first)
-    expect(post).toHaveBeenCalledTimes(1)
-    expect(ws.findSystem(doc.id)!.published.map((p) => p.id)).toEqual([first])
-    expect(await ws.hasUnpublishedChanges(ws.findSystem(doc.id)!)).toBe(false)
-    ws.rename(doc.id, "Renamed")
-    expect(await ws.hasUnpublishedChanges(ws.findSystem(doc.id)!)).toBe(true)
-  })
-
-  it("shares one request per system while publishing", async () => {
-    const { ws, doc } = await created()
-    let resolve!: (id: string) => void
-    const post = vi.fn(() => new Promise<string>((done) => (resolve = done)))
-    const first = ws.publish(doc.id, post)
-    expect(ws.publish(doc.id, post)).toBe(first)
-    expect(ws.publishing(doc.id)).toBe(first)
-    await vi.waitFor(() => expect(post).toHaveBeenCalledTimes(1))
-    resolve("abcdefghij")
-    expect(await first).toBe("abcdefghij")
-    expect(ws.publishing(doc.id)).toBeUndefined()
-    expect(ws.findSystem(doc.id)!.published).toHaveLength(1)
-  })
-
-  it("clears the request after a failure", async () => {
-    const { ws, doc } = await created()
-    const post = vi.fn(async () => {
-      throw new Error("offline")
-    })
-    await expect(ws.publish(doc.id, post)).rejects.toThrow("offline")
-    expect(ws.publishing(doc.id)).toBeUndefined()
-    expect(ws.findSystem(doc.id)!.published).toEqual([])
-  })
-
   it("keeps generated names within 64 UTF-16 units", async () => {
     const long = "x".repeat(64)
     const { ws } = await created(long)
@@ -259,8 +220,8 @@ describe("workspace", () => {
       origin: { kind: "preset", id: "linear" },
       initial: {},
       state: { radiusPx: 4 },
-      published: [],
       updatedAt: 1,
+      retiredField: true,
     }
     win.seed(
       KEY,
@@ -270,23 +231,22 @@ describe("workspace", () => {
           good,
           { ...good, id: "b", state: { radiusPx: -1000, retired: 1 } },
           { ...good, id: "c", name: "", origin: { kind: "nope" } },
-          { ...good, id: "d", published: [{ id: "../x", at: 1 }] },
           { ...good, id: "" },
           null,
         ],
       }),
     )
     const ws = await load()
-    const [a, b, c, d, ...rest] = ws.getWorkspace().systems
+    const [a, b, c, ...rest] = ws.getWorkspace().systems
     expect(rest).toEqual([])
     expect(a).toMatchObject({ id: "a", name: "Acme" })
+    expect(a).not.toHaveProperty("retiredField")
     expect(a!.state.radiusPx).toBe(4)
     expect(b!.state).toEqual(parseState({}))
     expect(c).toMatchObject({
       name: "Untitled",
       origin: { kind: "preset", id: "origin" },
     })
-    expect(d!.published).toEqual([])
   })
 
   it("writes a deleted system to the trash before removing it", async () => {

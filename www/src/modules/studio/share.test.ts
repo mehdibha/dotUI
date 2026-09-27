@@ -1,0 +1,48 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+
+import { installFakeWindow } from "@/lib/test-fake-window"
+import { getPreset } from "@/modules/presets"
+
+const linear = getPreset("linear")!
+
+beforeEach(() => {
+  installFakeWindow()
+  vi.resetModules()
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
+
+const respond = (id: string) =>
+  vi.fn(async () => Response.json({ id }, { status: 200 }))
+
+describe("snapshotOf", () => {
+  it("posts each content once", async () => {
+    const fetch = respond("abcdefghij")
+    vi.stubGlobal("fetch", fetch)
+    const { snapshotOf } = await import("./share")
+    const content = { name: "Acme", state: linear.state }
+    const [a, b] = await Promise.all([
+      snapshotOf(content),
+      snapshotOf({ ...content }),
+    ])
+    expect(await snapshotOf(content)).toBe("abcdefghij")
+    expect([a, b]).toEqual(["abcdefghij", "abcdefghij"])
+    expect(fetch).toHaveBeenCalledTimes(1)
+    await snapshotOf({ ...content, name: "Acme 2" })
+    expect(fetch).toHaveBeenCalledTimes(2)
+  })
+
+  it("posts again after a failure", async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(null, { status: 500 }))
+      .mockResolvedValueOnce(Response.json({ id: "abcdefghij" }))
+    vi.stubGlobal("fetch", fetch)
+    const { snapshotOf } = await import("./share")
+    const content = { name: "Acme", state: linear.state }
+    await expect(snapshotOf(content)).rejects.toThrow("500")
+    expect(await snapshotOf(content)).toBe("abcdefghij")
+  })
+})

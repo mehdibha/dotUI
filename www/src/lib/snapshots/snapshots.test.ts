@@ -3,12 +3,11 @@ import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { getPreset } from "@/modules/presets"
 import { DEFAULT_STATE } from "@/modules/studio/axes"
 
 import { createSnapshot, MAX_BODY_BYTES, readSnapshot } from "./handlers"
 import { canonicalJson, parseSnapshot, snapshotId } from "./snapshot"
-import type { SnapshotContent } from "./snapshot"
+import type { Snapshot } from "./snapshot"
 import { fileStore, memoryStore } from "./store"
 import type { SnapshotStore } from "./store"
 
@@ -21,7 +20,7 @@ const post = (store: SnapshotStore, body: unknown) =>
     store,
   )
 
-const valid = { name: "Acme", base: "origin", state: { radiusPx: 4 } }
+const valid = { name: "Acme", state: { radiusPx: 4 } }
 
 async function publish(store: SnapshotStore, body: unknown = valid) {
   const response = await post(store, body)
@@ -30,12 +29,7 @@ async function publish(store: SnapshotStore, body: unknown = valid) {
 }
 
 describe("snapshot id", () => {
-  const content: SnapshotContent = {
-    schema: 1,
-    name: "Acme",
-    base: "origin",
-    state: DEFAULT_STATE,
-  }
+  const content: Snapshot = { schema: 1, name: "Acme", state: DEFAULT_STATE }
 
   it("sorts keys at every depth", () => {
     expect(canonicalJson({ b: [{ d: 1, c: 2 }], a: null })).toBe(
@@ -49,33 +43,20 @@ describe("snapshot id", () => {
     const reversed = Object.fromEntries(
       Object.entries(DEFAULT_STATE).reverse(),
     ) as typeof DEFAULT_STATE
-    expect(
-      await snapshotId({
-        state: reversed,
-        base: "origin",
-        name: "Acme",
-        schema: 1,
-      }),
-    ).toBe(id)
+    expect(await snapshotId({ state: reversed, name: "Acme", schema: 1 })).toBe(
+      id,
+    )
   })
 
-  it("changes with the name, base or any axis", async () => {
+  it("changes with the name or any axis", async () => {
     const id = await snapshotId(content)
     expect(await snapshotId({ ...content, name: "Acme 2" })).not.toBe(id)
-    expect(await snapshotId({ ...content, base: "linear" })).not.toBe(id)
     expect(
       await snapshotId({
         ...content,
         state: { ...DEFAULT_STATE, radiusPx: DEFAULT_STATE.radiusPx + 1 },
       }),
     ).not.toBe(id)
-  })
-
-  it("ignores the creation time", async () => {
-    const store = memoryStore()
-    vi.spyOn(Date, "now").mockReturnValueOnce(1).mockReturnValueOnce(2)
-    expect(await publish(store)).toBe(await publish(store))
-    vi.restoreAllMocks()
   })
 })
 
@@ -84,10 +65,9 @@ describe("POST /api/snapshots", () => {
     const store = memoryStore()
     const id = await publish(store, { ...valid, name: "  Acme  " })
     const stored = parseSnapshot(JSON.parse((await store.get(id))!))
-    expect(stored).toMatchObject({
+    expect(stored).toEqual({
       schema: 1,
       name: "Acme",
-      base: "origin",
       state: { ...DEFAULT_STATE, radiusPx: 4 },
     })
     expect(
@@ -100,12 +80,10 @@ describe("POST /api/snapshots", () => {
 
   it("never overwrites an existing id", async () => {
     const store = memoryStore()
-    const now = vi.spyOn(Date, "now").mockReturnValue(1)
     const id = await publish(store)
-    now.mockReturnValue(2)
+    await store.put(id, "other")
     expect(await publish(store)).toBe(id)
-    expect(JSON.parse((await store.get(id))!).createdAt).toBe(1)
-    vi.restoreAllMocks()
+    expect(JSON.parse((await store.get(id))!).name).toBe("Acme")
   })
 
   it("rejects bodies over 16 KB", async () => {
@@ -128,13 +106,12 @@ describe("POST /api/snapshots", () => {
   it.each([
     ["not JSON", "{", []],
     ["not an object", [valid], [""]],
-    ["missing fields", { name: "Acme" }, ["base", "state"]],
+    ["missing fields", { name: "Acme" }, ["state"]],
     ["unknown fields", { ...valid, id: "abc" }, ["id"]],
     ["an empty name", { ...valid, name: "   " }, ["name"]],
     ["a long name", { ...valid, name: "x".repeat(65) }, ["name"]],
     ["a non-string name", { ...valid, name: 1 }, ["name"]],
-    ["an unknown base", { ...valid, base: "nope" }, ["base"]],
-    ["a prototype base", { ...valid, base: "__proto__" }, ["base"]],
+    ["a retired field", { ...valid, base: "origin" }, ["base"]],
     ["a non-object state", { ...valid, state: "x" }, ["state"]],
     [
       "hostile state",
@@ -196,12 +173,10 @@ describe("GET /api/snapshots/$id", () => {
     expect(response.headers.get("cache-control")).toBe(
       "public, max-age=31536000, immutable",
     )
-    expect(await response.json()).toMatchObject({
+    expect(await response.json()).toEqual({
       schema: 1,
       name: "Acme",
-      base: "origin",
       state: { ...DEFAULT_STATE, radiusPx: 4 },
-      createdAt: expect.any(Number),
     })
   })
 
@@ -223,16 +198,7 @@ describe("GET /api/snapshots/$id", () => {
 
   it.each([
     ["not JSON", "{"],
-    [
-      "an unknown schema",
-      JSON.stringify({
-        schema: 2,
-        name: "A",
-        base: "origin",
-        state: {},
-        createdAt: 1,
-      }),
-    ],
+    ["an unknown schema", JSON.stringify({ schema: 2, name: "A", state: {} })],
   ])("500s when the stored data is %s", async (_, json) => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
     const store = memoryStore()
@@ -251,8 +217,9 @@ describe("GET /api/snapshots/$id", () => {
       JSON.stringify({
         schema: 1,
         name: "A",
+        base: "retired",
         state: { radiusPx: 4, brand: "zzz", retiredAxis: 1 },
-        retiredField: true,
+        createdAt: 1,
       }),
     )
     const response = await readSnapshot("0123456789", store)
@@ -261,22 +228,6 @@ describe("GET /api/snapshots/$id", () => {
       name: "A",
       state: { ...DEFAULT_STATE, radiusPx: 4 },
     })
-  })
-
-  it("keeps serving a snapshot whose base preset is gone", async () => {
-    expect(getPreset("retired")).toBeUndefined()
-    const store = memoryStore()
-    await store.put(
-      "0123456789",
-      JSON.stringify({
-        schema: 1,
-        name: "A",
-        base: "retired",
-        state: {},
-        createdAt: 1,
-      }),
-    )
-    expect((await readSnapshot("0123456789", store)).status).toBe(200)
   })
 })
 

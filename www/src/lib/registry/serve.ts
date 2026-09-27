@@ -1,7 +1,7 @@
 /* `GET /r/…`: the shadcn registry, per design system.
      /r/<name>.json              Origin
      /r/p/<preset>/<name>.json   a built-in preset
-     /r/s/<id>/<name>.json       a published snapshot
+     /r/s/<id>/<name>.json       a snapshot
    `<name>` is a component, a `font-*` item, `init` (what `shadcn init`
    consumes), `registry` (the index) or `v0` (the "Open in v0" project).
    `?code=` sets the code style; every URL an item emits keeps the prefix and

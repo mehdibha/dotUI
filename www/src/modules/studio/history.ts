@@ -4,7 +4,7 @@
    edits within 500 ms, or within one pointer press (a slider drag), merge
    into one step. The first edit of a view forks it into a draft, and that
    step is the bottom of the draft's stack: undoing it removes the draft
-   (unless it was kept or published) and returns to the view, whose redo
+   (unless it was kept) and returns to the view, whose redo
    brings it back with the same id. Nothing else ever adds or removes a
    system from undo: New, Duplicate and Keep are not steps, and Delete has
    its toast. Checkpoints persist in
@@ -247,17 +247,12 @@ export function remove(
   const wasCurrent = selectionKey(getSelection()) === systemKey(id)
   const deleted = workspace.trash(id)
   if (!deleted) return () => {}
-  const { name, published } = deleted.doc
   deletedToasts.set(
     id,
-    undoToast(
-      `${verb} ${quoted(name)}`,
-      () => {
-        recover(id, wasCurrent)
-        afterUndo?.()
-      },
-      published.length ? "Its published links keep working." : undefined,
-    ),
+    undoToast(`${verb} ${quoted(deleted.doc.name)}`, () => {
+      recover(id, wasCurrent)
+      afterUndo?.()
+    }),
   )
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
@@ -331,8 +326,8 @@ function travel(from: "past" | "future", to: "past" | "future") {
     workspace.setState(doc.id, step.state)
     push(entry[to], { state: doc.state })
     entry.head = step.state
-  } else if (!doc.draft || doc.published.length > 0) {
-    // A fork kept, renamed or published since: only its changes go.
+  } else if (!doc.draft) {
+    // A fork kept or renamed since: only its changes go.
     workspace.setState(doc.id, doc.initial)
     push(entry[to], { state: doc.state })
     entry.head = doc.initial

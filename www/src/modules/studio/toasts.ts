@@ -7,14 +7,9 @@ export function quoted(name: string): string {
 }
 
 /** A toast whose Undo runs `undo` and closes it; returns its id. */
-export function undoToast(
-  title: string,
-  undo: () => void,
-  description?: string,
-): string {
+export function undoToast(title: string, undo: () => void): string {
   const id = toastManager.add({
     title,
-    description,
     timeout: 10_000,
     actionProps: {
       children: "Undo",
