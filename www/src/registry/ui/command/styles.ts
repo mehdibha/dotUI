@@ -10,6 +10,8 @@ const { useStyles, styles } = createStyles(commandMeta, {
   base: {
     base: [
       "group/command flex w-full flex-col gap-1 text-fg",
+      // A popover is a picker: the tight inset of shadcn's popup combobox.
+      "[--command-inset:--spacing(2)] in-data-popover:[--command-inset:--spacing(1)]",
       // The search field stays pinned; the list owns all the overflow so the
       // collection's own scroll (keyboard focus, scroll-into-view) works.
       "max-h-[inherit]",
@@ -22,13 +24,17 @@ const { useStyles, styles } = createStyles(commandMeta, {
       "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
       // Command rows and headings sit taller than a menu's (shadcn: py-1.5 in
       // every style), and headings carry weight so they read as group labels.
-      "**:data-listbox-item:py-1.5 **:data-listbox-section-header:py-1.5 **:data-listbox-section-header:font-medium",
+      // In a popover, rows keep the list's density, like shadcn's combobox.
+      "not-in-data-popover:**:data-listbox-item:py-1.5 **:data-listbox-section-header:py-1.5 **:data-listbox-section-header:font-medium",
     ],
   },
   density: {
     compact: {},
     default: {},
-    comfortable: {},
+    comfortable: {
+      // A picker's search matches its rows, not a form field (shadcn vega).
+      base: "in-data-popover:**:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(8)]",
+    },
   },
   params: {
     search: {
@@ -40,13 +46,13 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // concentric by subtracting the inset from the container's own
           // radius var, floored at the input radius so small surfaces never
           // square it off.
-          "**:data-search-field:px-2 **:data-search-field:pt-2 **:data-search-field:pb-0",
-          "**:data-listbox:scroll-py-2 **:data-listbox:pt-0 **:data-listbox:pb-2",
-          "**:data-listbox:**:data-separator:my-2",
+          "**:data-search-field:px-(--command-inset) **:data-search-field:pt-(--command-inset) **:data-search-field:pb-0",
+          "**:data-listbox:scroll-py-(--command-inset) **:data-listbox:pt-0 **:data-listbox:pb-(--command-inset)",
+          "**:data-listbox:**:data-separator:my-(--command-inset)",
           // --surface-radius: set by whichever rounded surface contains the
           // command (popover, modal, card), so one rule stays concentric
           // everywhere.
-          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--studio-input-radius),calc(var(--surface-radius,var(--studio-radius-surface))-(--spacing(2))))]",
+          "**:[[data-search-field]>[data-input-group]]:rounded-[max(var(--studio-input-radius),calc(var(--surface-radius,var(--studio-radius-surface))-var(--command-inset)))]",
         ],
       },
       bar: {
@@ -66,7 +72,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
       inset: {
         base: [
           // The list gutter matches the field inset.
-          "**:data-listbox:px-2 **:data-listbox:**:data-separator:-mx-2",
+          "**:data-listbox:px-(--command-inset) **:data-listbox:**:data-separator:-mx-(--command-inset)",
           "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-menu-item:px-2",
           "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-menu-item:px-2",
         ],
