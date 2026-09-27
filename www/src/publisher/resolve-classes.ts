@@ -210,14 +210,17 @@ function resolvedUtility(utility: string, value: string): string {
   return `${utility}-[${arbitrary.replace(/\s+/g, "_")}]`
 }
 
-function isNoopMotion(
+/** A motion read that changes nothing, or a prefixed radius read equal to its
+ *  unprefixed sibling (`rounded-md has-data-x:rounded-md`). */
+function isNoopRead(
   variants: string,
   utility: string,
   value: string,
   context: string,
   vars: StudioVars,
 ): boolean {
-  if (!(utility in TRANSITION_DEFAULT)) return false
+  const radius = variants !== "" && utility.startsWith("rounded")
+  if (!(utility in TRANSITION_DEFAULT) && !radius) return false
   const shipped = resolvedUtility(utility, value)
   const atDefault = (classes: string) =>
     shipped === `${utility}-${TRANSITION_DEFAULT[utility]}` &&
@@ -260,7 +263,7 @@ function isNoopMotion(
  * Rewrite one class string (or any text carrying class names). A rounded
  * utility whose var resolves to `0` is dropped with its variant prefix — a
  * square system ships no rounded class, not `rounded-none` — and so is a
- * no-op motion read. `context` is every class the element wears (the whole
+ * no-op read (see isNoopRead). `context` is every class the element wears (the whole
  * slot), which those motion drops are judged against.
  */
 export function rewriteClassString(
@@ -295,7 +298,7 @@ export function rewriteClassString(
       if (value === undefined) return match
       if (
         (value === "0" && utility.startsWith("rounded")) ||
-        isNoopMotion(variants, utility, value, context, vars)
+        isNoopRead(variants, utility, value, context, vars)
       ) {
         dropped = true
         return lead && trail ? " " : ""

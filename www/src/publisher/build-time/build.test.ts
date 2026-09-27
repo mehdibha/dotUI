@@ -277,7 +277,7 @@ describe("end-to-end (extract + transform → publish)", () => {
     expect(rawContent).not.toContain(TV_CONFIG_PLACEHOLDER)
   })
 
-  test("alert: a retargeted surface role exports as the utility it resolves to", () => {
+  test("alert: a retargeted container role exports as the utility it resolves to", () => {
     const stylesConfig = extractStylesConfig(
       path.join(REGISTRY_UI, "alert/styles.ts"),
     )
@@ -305,7 +305,7 @@ describe("end-to-end (extract + transform → publish)", () => {
       preset: {
         density: "default",
         componentParams: {},
-        tokens: { "--studio-radius-surface": "var(--radius-md)" },
+        tokens: { "--studio-radius-container": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")

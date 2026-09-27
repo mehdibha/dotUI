@@ -36,7 +36,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceContent: "flex min-w-0 flex-1 flex-col leading-snug",
       choiceDescription: "text-fg-muted",
       shortcut:
-        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-radius-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
+        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-radius-inline-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
       inputWrapper: "group/questionnaire-input relative w-full min-w-0",
       input: [
         "w-full min-w-0 rounded-(--studio-questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) outline-none",

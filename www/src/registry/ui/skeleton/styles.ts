@@ -38,7 +38,7 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
         "[&_strong]:skeleton [&_strong]:rounded-(--studio-skeleton-radius) [&_strong]:text-transparent",
         "[&_em]:skeleton [&_em]:rounded-(--studio-skeleton-radius) [&_em]:text-transparent",
         "[&_code]:skeleton [&_code]:rounded-(--studio-skeleton-radius) [&_code]:text-transparent",
-        "[&_kbd]:skeleton [&_kbd]:rounded-(--studio-skeleton-radius) [&_kbd]:text-transparent",
+        "[&_kbd:not([data-kbd])]:skeleton [&_kbd:not([data-kbd])]:rounded-(--studio-skeleton-radius) [&_kbd:not([data-kbd])]:text-transparent",
         "[&_samp]:skeleton [&_samp]:rounded-(--studio-skeleton-radius) [&_samp]:text-transparent",
         "[&_figcaption]:skeleton [&_figcaption]:rounded-(--studio-skeleton-radius) [&_figcaption]:text-transparent",
         "[&_legend]:skeleton [&_legend]:rounded-(--studio-skeleton-radius) [&_legend]:text-transparent",

@@ -29,14 +29,21 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--studio-input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
         "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
+    radius: {
+      single: "rounded-(--studio-input-radius)",
+      multiline: "rounded-(--studio-input-multiline-radius)",
+      group:
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+    },
   },
+  defaultVariants: { radius: "single" },
 })
 
 const lineField = tv({
@@ -51,25 +58,39 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--studio-input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
       group:
         "group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
+    radius: {
+      single: "rounded-t-(--studio-input-radius)",
+      multiline: "rounded-t-(--studio-input-multiline-radius)",
+      group:
+        "rounded-t-(--studio-input-radius) has-data-textarea:rounded-t-(--studio-input-multiline-radius)",
+    },
   },
+  defaultVariants: { radius: "single" },
 })
 
 const filledField = tv({
-  base: "rounded-(--studio-input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
         "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
+    radius: {
+      single: "rounded-(--studio-input-radius)",
+      multiline: "rounded-(--studio-input-multiline-radius)",
+      group:
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+    },
   },
+  defaultVariants: { radius: "single" },
 })
 
 /* ----------------------------- Addon helpers ----------------------------- */
@@ -115,7 +136,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
         "has-data-textarea:px-0",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
-        "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--studio-input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
+        "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag-group:contents **:data-tag-list:contents",
       ],
       inputGroupAddon: [
         "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
@@ -139,7 +160,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
       dateInputSegment:
-        "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
+        "rounded-(--studio-radius-detail) px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
     },
     variants: {
       size: {
@@ -236,9 +257,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
     style: {
       outline: {
         slots: {
-          inputGroup: outlineField({ focus: "group" }),
+          inputGroup: outlineField({ focus: "group", radius: "group" }),
           input: outlineField({ focus: "self" }),
-          textArea: outlineField({ focus: "self" }),
+          textArea: outlineField({ focus: "self", radius: "multiline" }),
           inputGroupAddon: addonInputModeParadigmB,
         },
       },
@@ -252,17 +273,23 @@ const { useStyles, styles } = createStyles(inputMeta, {
       },
       "filled-line-bottom": {
         slots: {
-          inputGroup: filledLineBottomField({ focus: "group" }),
+          inputGroup: filledLineBottomField({
+            focus: "group",
+            radius: "group",
+          }),
           input: filledLineBottomField({ focus: "self" }),
-          textArea: filledLineBottomField({ focus: "self" }),
+          textArea: filledLineBottomField({
+            focus: "self",
+            radius: "multiline",
+          }),
           inputGroupAddon: addonInputModeParadigmB,
         },
       },
       filled: {
         slots: {
-          inputGroup: filledField({ focus: "group" }),
+          inputGroup: filledField({ focus: "group", radius: "group" }),
           input: filledField({ focus: "self" }),
-          textArea: filledField({ focus: "self" }),
+          textArea: filledField({ focus: "self", radius: "multiline" }),
           inputGroupAddon: addonInputModeParadigmB,
         },
       },

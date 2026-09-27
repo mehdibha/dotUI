@@ -9,7 +9,7 @@
    tag it is the fill. Shape rides on the `--studio-badge-radius` / `--studio-tag-radius`
    surface vars (token-field tokens sit on `--studio-tag-radius` too), resolved to
    plain `rounded-*` on export. Pill is the registry default and emits
-   nothing: badges are full-round, tags keep their `radius-control` corners.
+   nothing: badges are full-round, tags keep their `radius-small` corners.
    Only tags react to the pointer; their timing rides the
    `--studio-tag-state-*` vars. */
 

@@ -18,6 +18,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
       // Modal and drawer commands are spotlight/touch surfaces — taller rows
       // than a dropdown. Their inline padding follows the inset param.
       "in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:py-2",
+      "in-data-modal:**:data-listbox-item:rounded-(--studio-radius-field) in-data-modal:**:data-menu-item:rounded-(--studio-radius-field)",
       "in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:py-2",
       // Command rows and headings sit taller than a menu's (shadcn: py-1.5 in
       // every style), and headings carry weight so they read as group labels.

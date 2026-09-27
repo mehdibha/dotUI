@@ -4,7 +4,7 @@ import calendarMeta from "./meta"
 
 /* The single calendar paints the cell; the range calendar paints the inner
    chip and uses the cell as the band. Day shape owns every radius: rounded
-   and circle share the pill band ends and the xs row-edge rounding (spelled
+   and circle share the pill band ends and the row-edge rounding (spelled
    out twice — the publisher's extractor reads literals only), square runs
    edge to edge. Today markers land on both elements, each scoped to its
    calendar. */

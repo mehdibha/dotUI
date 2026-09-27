@@ -353,6 +353,26 @@ describe("resolve-classes", () => {
     )
   })
 
+  test("rewriteClassString drops a prefixed radius equal to its sibling", () => {
+    const vars = resolveStudioVars({
+      "--studio-input-radius": "var(--radius-md)",
+      "--studio-input-multiline-radius": "var(--radius-md)",
+      "--studio-tag-radius": "var(--radius-2xl)",
+    })
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md")
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-tag-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md has-data-textarea:rounded-2xl")
+  })
+
   test("rewriteClassString drops motion reads that change nothing", () => {
     const vars = resolveStudioVars({
       "--studio-enter": "150ms",
@@ -794,7 +814,7 @@ describe("publish", () => {
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // --studio-alert-radius → --studio-radius-surface → --radius-lg → suffix "lg".
+    // --studio-alert-radius → --studio-radius-container → --radius-lg → suffix "lg".
     expect(rawContent).toContain("rounded-lg")
   })
 
