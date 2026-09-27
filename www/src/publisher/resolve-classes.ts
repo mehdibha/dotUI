@@ -210,6 +210,10 @@ function resolvedUtility(utility: string, value: string): string {
   return `${utility}-[${arbitrary.replace(/\s+/g, "_")}]`
 }
 
+/* Variants that style the element itself — a pseudo-element or child
+   selector (`after:`, `*:`, `[&_x]:`) paints another box. */
+const SAME_BOX_VARIANT = /^(?:has|group|peer|in|data|aria|not)-/
+
 /** A motion read that changes nothing, or a prefixed radius read equal to its
  *  unprefixed sibling (`rounded-md has-data-x:rounded-md`). */
 function isNoopRead(
@@ -219,7 +223,13 @@ function isNoopRead(
   context: string,
   vars: StudioVars,
 ): boolean {
-  const radius = variants !== "" && utility.startsWith("rounded")
+  const radius =
+    variants !== "" &&
+    utility.startsWith("rounded") &&
+    variants
+      .slice(0, -1)
+      .split(":")
+      .every((v) => SAME_BOX_VARIANT.test(v))
   if (!(utility in TRANSITION_DEFAULT) && !radius) return false
   const shipped = resolvedUtility(utility, value)
   const atDefault = (classes: string) =>

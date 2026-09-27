@@ -371,6 +371,13 @@ describe("resolve-classes", () => {
         vars,
       ),
     ).toBe("rounded-md has-data-textarea:rounded-2xl")
+    // A pseudo-element or child is another box: it keeps its own radius.
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) after:rounded-(--studio-input-radius) *:rounded-(--studio-input-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md after:rounded-md *:rounded-md")
   })
 
   test("rewriteClassString drops motion reads that change nothing", () => {
