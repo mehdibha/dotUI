@@ -91,9 +91,12 @@ const scanner = new Scanner({
 })
 scanner.scan()
 const files = scanner.files
+  // Test fixtures hold class strings verbatim on purpose.
   .filter(
     (file) =>
-      !file.includes("/__generated__/") && !file.endsWith("routeTree.gen.ts"),
+      !file.includes("/__generated__/") &&
+      !file.endsWith("routeTree.gen.ts") &&
+      !/\.test\.tsx?$/.test(file),
   )
   .map((file) => {
     const content = fs.readFileSync(file, "utf8")
