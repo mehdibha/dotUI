@@ -25,8 +25,10 @@
  *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>] [--no-build]
  *
  * With no `--origin` the script builds the registry and serves this checkout
- * with the www dev server (reusing one already running on its port). Pass a
- * Vercel preview or production to regenerate from a deployment instead.
+ * with its own www dev server on a free port — never one already running, which
+ * may belong to another checkout. Pass `--origin http://127.0.0.1:4444` to reuse
+ * your `pnpm dev:www`, or a Vercel preview or production to regenerate from a
+ * deployment.
  *
  * Runs offline: the CLI's own base fetches (its style list and base color) are
  * answered from `shadcn-base/`, vendored from shadcn-ui/ui, through the CLI's
@@ -44,6 +46,7 @@ import {
   writeFileSync,
 } from "node:fs"
 import { createServer } from "node:http"
+import { createServer as createNetServer } from "node:net"
 import type { AddressInfo } from "node:net"
 import os from "node:os"
 import path from "node:path"
@@ -51,8 +54,6 @@ import { fileURLToPath } from "node:url"
 
 // Pinned so a CLI release can't change what a green run means. Bump on purpose.
 const SHADCN = "shadcn@4.20.1"
-// The www dev server's port (www/vite.config.ts).
-const LOCAL_ORIGIN = "http://127.0.0.1:4444"
 // What the committed `components.json` points at, whatever origin generated it.
 const CANONICAL_ORIGIN = "https://dotui.org"
 const EXAMPLES_DIR = path.resolve(
@@ -255,18 +256,26 @@ async function isServing(origin: string): Promise<boolean> {
   }
 }
 
+async function freePort(): Promise<number> {
+  const server = createNetServer()
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve))
+  const { port } = server.address() as AddressInfo
+  await new Promise((resolve) => server.close(resolve))
+  return port
+}
+
 /**
- * Serve this checkout's registry on the www dev server. Reuses a server that
- * is already answering on the port (a `pnpm dev:www` you left running);
- * otherwise builds the registry, starts vite, and returns a stop function.
+ * Build this checkout's registry and serve it on its own www dev server, on a
+ * free port so no other checkout's server can answer in its place.
  */
-async function serveLocalRegistry(): Promise<() => void> {
-  if (await isServing(LOCAL_ORIGIN)) {
-    console.log(`registry: reusing the dev server at ${LOCAL_ORIGIN}`)
-    return () => {}
-  }
+async function serveLocalRegistry(): Promise<{
+  origin: string
+  stop: () => void
+}> {
   await run(REPO_DIR, "pnpm", ["build:registry"])
-  const log = path.join(os.tmpdir(), "dotui-examples-www.log")
+  const port = await freePort()
+  const origin = `http://127.0.0.1:${port}`
+  const log = path.join(os.tmpdir(), `dotui-examples-www-${port}.log`)
   const fd = openSync(log, "w")
   const child = spawn(
     "pnpm",
@@ -276,7 +285,8 @@ async function serveLocalRegistry(): Promise<() => void> {
       "vite",
       "dev",
       "--port",
-      "4444",
+      String(port),
+      "--strictPort",
       "--host",
       "127.0.0.1",
     ],
@@ -300,8 +310,8 @@ async function serveLocalRegistry(): Promise<() => void> {
   }
   console.log(`registry: starting the dev server (log: ${log})`)
   for (let attempt = 0; attempt < 60; attempt++) {
-    if (await isServing(LOCAL_ORIGIN)) return stop
     if (child.exitCode !== null) break
+    if (await isServing(origin)) return { origin, stop }
     await new Promise((resolve) => setTimeout(resolve, 3000))
   }
   stop()
@@ -521,8 +531,9 @@ async function main() {
   let stopServer = () => {}
   let origin = options.origin
   if (!origin) {
-    stopServer = await serveLocalRegistry()
-    origin = LOCAL_ORIGIN
+    const local = await serveLocalRegistry()
+    origin = local.origin
+    stopServer = local.stop
   }
   console.log(`registry: ${origin}`)
   const shadcnBase = await serveShadcnBase()
