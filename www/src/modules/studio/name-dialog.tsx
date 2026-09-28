@@ -36,7 +36,7 @@ import {
   useCurrent,
 } from "./selection"
 import type { Selection } from "./selection"
-import { cleanName, listed, useWorkspace } from "./workspace"
+import { cleanName, isUnreadable, listed, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
 
 export interface NameRequest {
@@ -54,12 +54,13 @@ export interface NameRequest {
   onSubmit: (name: string, source: Selection) => void
 }
 
-/** Saving the unsaved slot, as "My <view>" by default. */
+/** Saving the unsaved slot, as "My <view>" by default; never while the
+ *  stored systems can't be read, as the save wouldn't last. */
 export function saveRequest({
   unsaved,
   systems,
 }: Workspace): NameRequest | undefined {
-  if (!unsaved) return
+  if (!unsaved || isUnreadable()) return
   return {
     title: "Save design system",
     action: "Save",
@@ -125,8 +126,9 @@ function NameForm({
   const submitted = useRef(false)
   const clean = cleanName(name)
   // The slot's name marks it alone.
+  const isReserved = clean === UNSAVED_NAME
   const isTaken =
-    clean === UNSAVED_NAME ||
+    isReserved ||
     workspace.systems.some(
       (s) =>
         s.name === clean &&
@@ -163,11 +165,16 @@ function NameForm({
       >
         <Label>Name</Label>
         <Input />
-        <FieldError>Another design system has this name.</FieldError>
+        <FieldError>
+          {isReserved
+            ? "This name is reserved for unsaved changes."
+            : "Another design system has this name."}
+        </FieldError>
       </TextField>
       {startFrom !== undefined && (
         <StartFrom
           current={current.name}
+          currentKey={selectionKey(current.sel)}
           workspace={workspace}
           value={source ? picked : "current"}
           onChange={setPicked}
@@ -185,16 +192,26 @@ function NameForm({
 
 function StartFrom({
   current,
+  currentKey,
   workspace,
   value,
   onChange,
 }: {
   current: string
+  currentKey: string
   workspace: Workspace
   value: string
   onChange: (key: string) => void
 }) {
-  const systems = listed(workspace)
+  // What's on screen is listed once, as Current.
+  const presets = PRESET_META.filter(
+    (preset) => selectionKey({ kind: "preset", id: preset.id }) !== currentKey,
+  )
+  const systems = listed(workspace).filter(
+    (system) => selectionKey({ kind: "system", id: system.id }) !== currentKey,
+  )
+  const unsaved =
+    !!workspace.unsaved && selectionKey({ kind: "unsaved" }) !== currentKey
   return (
     <Select
       value={value}
@@ -208,7 +225,7 @@ function StartFrom({
         <SelectItem id="current">{`Current · ${current}`}</SelectItem>
         <SelectSection>
           <SelectSectionHeader>Presets</SelectSectionHeader>
-          {PRESET_META.map((preset) => (
+          {presets.map((preset) => (
             <SelectItem
               key={preset.id}
               id={selectionKey({ kind: "preset", id: preset.id })}
@@ -217,10 +234,10 @@ function StartFrom({
             </SelectItem>
           ))}
         </SelectSection>
-        {(workspace.unsaved || systems.length > 0) && (
+        {(unsaved || systems.length > 0) && (
           <SelectSection>
             <SelectSectionHeader>My design systems</SelectSectionHeader>
-            {workspace.unsaved && (
+            {unsaved && (
               <SelectItem id={selectionKey({ kind: "unsaved" })}>
                 {UNSAVED_NAME}
               </SelectItem>

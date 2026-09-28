@@ -9,7 +9,7 @@ import { useShortcut } from "@/modules/studio/history"
 import { NameDialog, saveRequest } from "@/modules/studio/name-dialog"
 import type { NameRequest } from "@/modules/studio/name-dialog"
 import { useCurrent } from "@/modules/studio/selection"
-import { useWorkspace } from "@/modules/studio/workspace"
+import { isUnreadable, useWorkspace } from "@/modules/studio/workspace"
 
 import { ExportDialog } from "./export-dialog"
 import { SharePopover } from "./share-popover"
@@ -57,7 +57,10 @@ function SaveButton({
   const workspace = useWorkspace()
   const [naming, setNaming] = useState<NameRequest>()
   const ref = useRef<HTMLButtonElement>(null)
-  const label = doc ? "Saved" : "Save"
+  // Unreadable stored systems: nothing saves, so nothing reads "Saved".
+  const canSave = !isUnreadable()
+  const saved = !!doc && canSave
+  const label = saved ? "Saved" : "Save"
   const save = () => {
     // Never over an open dialog or menu, this one's included.
     if (naming || document.activeElement?.closest("[role=dialog],[role=menu]"))
@@ -76,12 +79,12 @@ function SaveButton({
         size="sm"
         isIconOnly={isMobile}
         aria-label={isMobile ? label : undefined}
-        isDisabled={sel.kind !== "unsaved"}
+        isDisabled={sel.kind !== "unsaved" || !canSave}
         onPress={save}
         className="disabled:bg-transparent"
       >
         {isMobile ? (
-          doc ? (
+          saved ? (
             <CheckIcon />
           ) : (
             <SaveIcon />
@@ -89,8 +92,8 @@ function SaveButton({
         ) : (
           // As wide as either label: the header never shifts between them.
           <span className="grid *:col-start-1 *:row-start-1">
-            <span className={doc ? "invisible" : undefined}>Save</span>
-            <span className={doc ? undefined : "invisible"}>Saved</span>
+            <span className={saved ? "invisible" : undefined}>Save</span>
+            <span className={saved ? undefined : "invisible"}>Saved</span>
           </span>
         )}
       </Button>
