@@ -185,22 +185,18 @@ export function PanelPage({
   const dock = (id: string, axis?: string) => {
     setActive(id)
     setTucked(false)
-    const scroller = layer?.firstElementChild?.lastElementChild
-    if (!scroller) return
-    scroller.scrollTo({ top: 0 })
-    if (!axis) return
-    // A search hit lands on its row (a sub-axis on the row that holds it).
     requestAnimationFrame(() => {
+      const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
+      chapter?.scrollIntoView({ block: "start" })
+      if (!chapter || !axis) return
+      // A search hit lands on its row (a sub-axis on the row that holds it).
       const label = axis.split(" › ")[0]
-      const row = [
-        ...scroller.querySelectorAll(`[data-chapter="${id}"] span`),
-      ].find((span) => span.textContent === label)
+      const row = [...chapter.querySelectorAll("span")].find(
+        (span) => span.textContent === label,
+      )
       const target = row?.closest(".rounded-lg") ?? row
       if (!target) return
-      scroller.scrollTop +=
-        target.getBoundingClientRect().top -
-        scroller.getBoundingClientRect().top -
-        8
+      target.scrollIntoView({ block: "start" })
       target.animate(
         {
           boxShadow: [

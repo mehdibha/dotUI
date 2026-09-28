@@ -115,7 +115,7 @@ export function PanelChrome({
         </div>
         {strip}
       </div>
-      <div className="no-scrollbar flex min-h-0 grow flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0">
+      <div className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0">
         {children}
       </div>
     </div>
