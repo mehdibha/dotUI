@@ -57,22 +57,16 @@ const lineField = tv({
   },
 })
 
+// An underline field ends in a straight rule, so its tops stay small.
 const filledLineBottomField = tv({
-  base: "border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
       group:
         "group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
-    radius: {
-      single: "rounded-t-(--studio-input-radius)",
-      multiline: "rounded-t-(--studio-input-multiline-radius)",
-      group:
-        "rounded-t-(--studio-input-radius) has-data-textarea:rounded-t-(--studio-input-multiline-radius)",
-    },
   },
-  defaultVariants: { radius: "single" },
 })
 
 const filledField = tv({
@@ -273,15 +267,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
       },
       "filled-line-bottom": {
         slots: {
-          inputGroup: filledLineBottomField({
-            focus: "group",
-            radius: "group",
-          }),
+          inputGroup: filledLineBottomField({ focus: "group" }),
           input: filledLineBottomField({ focus: "self" }),
-          textArea: filledLineBottomField({
-            focus: "self",
-            radius: "multiline",
-          }),
+          textArea: filledLineBottomField({ focus: "self" }),
           inputGroupAddon: addonInputModeParadigmB,
         },
       },

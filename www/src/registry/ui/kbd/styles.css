@@ -1,3 +1,3 @@
 :root {
-  --studio-kbd-radius: var(--studio-radius-small);
+  --studio-kbd-radius: var(--studio-radius-control-sm);
 }

@@ -40,7 +40,7 @@ export const SHAPE_RUNGS = [
 
 export const SHAPE_ROLES = [
   { key: "rolePanel", label: "Panels", example: "dialog · drawer" },
-  { key: "roleCard", label: "Cards", example: "card · bubble" },
+  { key: "roleCard", label: "Cards", example: "card · empty" },
   { key: "roleSurface", label: "Surfaces", example: "popover · menu" },
   { key: "roleControl", label: "Controls", example: "button · input" },
   { key: "roleItem", label: "Items", example: "menu item" },
@@ -49,10 +49,10 @@ export const SHAPE_ROLES = [
 export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]["key"]
 export type ShapeVector = Record<ShapeRoleKey, string>
 
-/* Curated role vectors, one per shadcn/create style at a 10px base, each
-   rung the nearest to that style's px: Square = lyra, Crisp = vega,
-   Standard = mira, Gentle = nova, Soft = rhea, Round = luma. Items and cards
-   default to 'auto' (see roleRung). */
+/* Curated role vectors, checked against the shadcn/create style each is
+   closest to: Square ≈ lyra, Crisp ≈ vega, Standard ≈ mira, Gentle ≈ nova,
+   Soft ≈ rhea, Round ≈ luma. Items and cards default to 'auto' (see
+   roleRung). */
 export const SHAPE_CHARACTERS: Array<{
   id: string
   label: string
@@ -144,25 +144,19 @@ const rungAbove = (id: string) => rungAt(rungIndex(id) + 1)
 const minRung = (a: string, b: string) => (rungIndex(a) <= rungIndex(b) ? a : b)
 const atLeast = (id: string, floor: string) => rungIndex(id) >= rungIndex(floor)
 
-/** A role's rung id with 'auto' resolved. Items ride one rung below
- *  Surfaces; cards ride Panels, one rung lower when controls sit below
- *  surfaces (mira) — true of every shadcn style. */
+/** A role's rung id with 'auto' resolved: items sit one rung below the
+ *  surface they nest in, cards one rung below panels. */
 export function roleRung(state: StudioState, key: ShapeRoleKey): string {
   const id = state[key]
   if (id !== "auto") return id
-  if (key === "roleItem") return rungBelow(state.roleSurface)
-  const panel = state.rolePanel
-  return rungIndex(state.roleControl) < rungIndex(state.roleSurface)
-    ? rungBelow(panel)
-    : panel
+  return rungBelow(key === "roleItem" ? state.roleSurface : state.rolePanel)
 }
 
 /* Radii that follow the roles without being picked:
-   - control-sm: xs buttons step one rung down only when controls are ≤ lg
-     under ≥ lg surfaces (mira, nova); vega and the rounder styles don't.
-   - detail: checkbox, date segment — capped at sm.
-   - small: kbd, tags — sm, or the control rung (≤ 2xl) once controls are
-     big enough that shadcn turns them into pills.
+   - control-sm: smaller controls (xs buttons, kbd, tags) keep the controls'
+     shape one rung down — a 24px control is ¾ of a 32px one, the ladder's
+     step. Pill stays pill.
+   - detail: checkbox, date segment, underline-field tops — capped at sm.
    - pill: badge, slider, progress — square with square controls.
    - field: multi-line fields, choice cards, toast, blocks — never rounder
      than controls or surfaces.
@@ -179,13 +173,8 @@ function derivedRungs(state: StudioState): Record<string, string> {
     id === "none" || atLeast(id, cap) ? id : minRung(rungAbove(id), cap)
   return {
     "--studio-radius-control-sm":
-      control !== "none" && !atLeast(control, "xl") && atLeast(surface, "lg")
-        ? rungBelow(control)
-        : control,
+      control === "full" ? control : rungBelow(control),
     "--studio-radius-detail": detail,
-    "--studio-radius-small": atLeast(control, "2xl")
-      ? minRung(control, "2xl")
-      : detail,
     "--studio-radius-pill": control === "none" ? "none" : "full",
     "--studio-radius-field": minRung(control, surface),
     "--studio-radius-container": upTo(surface, "lg"),

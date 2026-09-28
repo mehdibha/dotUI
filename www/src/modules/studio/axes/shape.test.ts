@@ -21,35 +21,28 @@ describe("shape axis", () => {
   })
 
   test("a character retargets only the roles it moves", () => {
-    // vega: menus md over sm items, in-page containers stay lg, xs buttons
-    // don't step down, cards ride panels.
+    // Menus md over sm items; everything else rides Standard's rungs.
     expect(resolve(vector("crisp")).tokens).toEqual({
       "--studio-radius-surface": "var(--radius-md)",
       "--studio-radius-item": "var(--radius-sm)",
-      "--studio-radius-card": "var(--radius-xl)",
-      "--studio-radius-control-sm": "var(--radius-md)",
     })
-    // luma: big controls turn small parts into pills and cap fields at 2xl.
     expect(resolve(vector("round")).tokens).toEqual({
       "--studio-radius-control": "var(--radius-3xl)",
       "--studio-radius-item": "var(--radius-2xl)",
       "--studio-radius-surface": "var(--radius-2xl)",
       "--studio-radius-panel": "var(--radius-3xl)",
-      "--studio-radius-card": "var(--radius-3xl)",
-      "--studio-radius-control-sm": "var(--radius-3xl)",
-      "--studio-radius-small": "var(--radius-2xl)",
+      "--studio-radius-card": "var(--radius-2xl)",
+      "--studio-radius-control-sm": "var(--radius-2xl)",
       "--studio-radius-field": "var(--radius-2xl)",
       "--studio-radius-container": "var(--radius-2xl)",
       "--studio-radius-inline-item": "var(--radius-2xl)",
     })
   })
 
-  test("cards step below panels only when controls sit below surfaces", () => {
+  test("auto cards sit one rung below panels", () => {
     expect(resolve({}).tokens).not.toHaveProperty("--studio-radius-card")
-    expect(resolve(vector("gentle")).tokens).toMatchObject({
+    expect(resolve(vector("soft")).tokens).toMatchObject({
       "--studio-radius-card": "var(--radius-xl)",
-      // nova's xs buttons step down from lg.
-      "--studio-radius-control-sm": "var(--radius-md)",
     })
   })
 
@@ -62,7 +55,6 @@ describe("shape axis", () => {
       "--studio-radius-card": "0",
       "--studio-radius-control-sm": "0",
       "--studio-radius-detail": "0",
-      "--studio-radius-small": "0",
       "--studio-radius-pill": "0",
       "--studio-radius-field": "0",
       "--studio-radius-container": "0",
@@ -70,21 +62,22 @@ describe("shape axis", () => {
     })
   })
 
-  test("details cap at sm, whatever Controls ride", () => {
+  test("smaller controls step one rung down; details cap at sm", () => {
+    expect(resolve(vector("gentle")).tokens).toMatchObject({
+      "--studio-radius-control-sm": "var(--radius-md)",
+    })
     expect(resolve(vector("round")).tokens).not.toHaveProperty(
       "--studio-radius-detail",
     )
     expect(resolve({ roleControl: "xs" }).tokens).toMatchObject({
       "--studio-radius-control-sm": "0",
       "--studio-radius-detail": "var(--radius-xs)",
-      "--studio-radius-small": "var(--radius-xs)",
     })
   })
 
-  test("pill controls keep pill xs buttons", () => {
+  test("pill controls keep pill small controls", () => {
     expect(resolve({ roleControl: "full" }).tokens).toMatchObject({
       "--studio-radius-control-sm": "var(--radius-full)",
-      "--studio-radius-small": "var(--radius-2xl)",
       "--studio-radius-field": "var(--radius-lg)",
     })
   })
