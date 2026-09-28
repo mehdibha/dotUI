@@ -185,7 +185,7 @@ export function PanelPage({
   const dock = (id: string, axis?: string) => {
     setActive(id)
     setTucked(false)
-    const scroller = layer?.firstElementChild
+    const scroller = layer?.firstElementChild?.lastElementChild
     if (!scroller) return
     scroller.scrollTo({ top: 0 })
     if (!axis) return
@@ -197,11 +197,10 @@ export function PanelPage({
       ].find((span) => span.textContent === label)
       const target = row?.closest(".rounded-lg") ?? row
       if (!target) return
-      const header = scroller.firstElementChild?.getBoundingClientRect()
-      const top = scroller.getBoundingClientRect().top
-      const covered = header && header.top <= top + 1 ? header.height : 0
       scroller.scrollTop +=
-        target.getBoundingClientRect().top - top - covered - 8
+        target.getBoundingClientRect().top -
+        scroller.getBoundingClientRect().top -
+        8
       target.animate(
         {
           boxShadow: [
