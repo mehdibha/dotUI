@@ -108,7 +108,13 @@ export function createPersistedStore<T>(
 
   const useValue = (): T => useSyncExternalStore(subscribe, get, () => fallback)
 
-  return { get, set, update, subscribe, useValue }
+  /** Whether the stored value is one `decode` rejected. */
+  function isUnreadable(): boolean {
+    get()
+    return unreadable
+  }
+
+  return { get, set, update, subscribe, useValue, isUnreadable }
 }
 
 /** Codec for a closed string set. Unknown stored values decode to the fallback; the fallback clears the key. */

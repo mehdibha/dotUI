@@ -222,7 +222,7 @@ describe("unsaved slot", () => {
   })
 
   it("is replaced by another view's edit, with an Undo toast back", async () => {
-    const { ws, selection, current, edit } = await load()
+    const { history, ws, selection, current, edit } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
     selection.select({ kind: "preset", id: "stripe" })
@@ -244,6 +244,64 @@ describe("unsaved slot", () => {
       from: { id: "stripe" },
       state: { radiusPx: 3 },
     })
+    // The later edits too are one Redo away each.
+    history.redo()
+    history.redo()
+    expect(current().key).toBe("unsaved")
+    expect(current().state.radiusPx).toBe(6)
+  })
+
+  it("comes back when the edits that replaced it are undone", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    selection.select({ kind: "preset", id: "linear" })
+    edit(5)
+    history.undo()
+    expect(current().key).toBe("preset:linear")
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { id: "stripe" },
+      state: { radiusPx: 3 },
+    })
+    // Redo replaces it again, and undo puts it back again.
+    history.redo()
+    expect(ws.getWorkspace().unsaved).toMatchObject({ from: { id: "linear" } })
+    history.undo()
+    expect(ws.getWorkspace().unsaved).toMatchObject({ from: { id: "stripe" } })
+    selection.select({ kind: "unsaved" })
+    history.undo()
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+  })
+
+  it("keeps a chain of replaced edits, with one toast for the latest", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
+    selection.select({ kind: "preset", id: "linear" })
+    edit(3)
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(4)
+    selection.select({ kind: "preset", id: "notion" })
+    edit(5)
+    const toasts = add.mock.calls.map(([toast]) => toast)
+    expect(toasts.map((toast) => toast.id)).toEqual([
+      "replaced-unsaved",
+      "replaced-unsaved",
+    ])
+    toasts[1]!.actionProps!.onClick!({} as never)
+    expect(current().key).toBe("preset:notion")
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { id: "stripe" },
+      state: { radiusPx: 4 },
+    })
+    selection.select({ kind: "unsaved" })
+    history.undo()
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { id: "linear" },
+      state: { radiusPx: 3 },
+    })
   })
 
   it("saves as a system, keeping its undo history", async () => {
@@ -259,6 +317,20 @@ describe("unsaved slot", () => {
     history.undo()
     expect(current().doc?.id).toBe(doc.id)
     expect(current().state).toEqual(STRIPE.state)
+  })
+
+  it("names an edited link once: never (edited) (edited)", async () => {
+    const { history, ws, selection, current, radius } = await load()
+    selection.select({
+      kind: "link",
+      id: "abcdefghij",
+      name: "Linear (edited)",
+      state: radius(2),
+    })
+    history.edit(radius(3))
+    expect(current().content?.name).toBe("Linear (edited)")
+    const { unsaved, systems } = ws.getWorkspace()
+    expect(history.saveName(unsaved!, systems)).toBe("My Linear")
   })
 
   it("suggests unique names: Untitled from Origin, never My My", async () => {

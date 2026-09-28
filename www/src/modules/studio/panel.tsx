@@ -16,6 +16,8 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 /** The current design system, as the chrome shows it. */
 export interface PanelSystem {
   name: string
+  /** The end of the name that stays when the rest truncates. */
+  note?: string
   swatch: string
   /** Undo and redo. */
   history: ReactNode
@@ -63,8 +65,11 @@ export function PanelChrome({
                   style={{ background: system.swatch }}
                 />
                 <span dir="auto" className="min-w-0 truncate">
-                  {system.name}
+                  {system.note
+                    ? system.name.slice(0, -system.note.length).trimEnd()
+                    : system.name}
                 </span>
+                {system.note && <span className="shrink-0">{system.note}</span>}
                 <ChevronsUpDownIcon
                   data-icon="inline-end"
                   className="size-3 shrink-0 text-fg-muted"

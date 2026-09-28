@@ -20,7 +20,9 @@ export type Selection =
   | { kind: "system"; id: string }
   | { kind: "unsaved" }
 
-export const UNSAVED_NAME = "New system (unsaved)"
+/** What marks the slot's name, which never truncates away. */
+export const UNSAVED_NOTE = "(unsaved)"
+export const UNSAVED_NAME = `New system ${UNSAVED_NOTE}`
 
 const ORIGIN_VIEW: View = { kind: "preset", id: ORIGIN.id }
 
@@ -124,7 +126,11 @@ export function describe(sel: Selection, ws: Workspace): Current {
       view: from,
       unsaved: ws.unsaved,
       content: {
-        name: workspace.uniqueName(base.name, [], " (edited)"),
+        name: workspace.uniqueName(
+          workspace.unedited(base.name),
+          [],
+          " (edited)",
+        ),
         state,
       },
     }

@@ -23,7 +23,13 @@ import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
 import { RowMenu } from "./row-menus"
-import { keySelection, select, UNSAVED_NAME, useCurrent } from "./selection"
+import {
+  keySelection,
+  select,
+  UNSAVED_NAME,
+  UNSAVED_NOTE,
+  useCurrent,
+} from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import { copyName, rename, uniqueName, useWorkspace } from "./workspace"
@@ -130,7 +136,6 @@ export function StudioPanel({ className }: { className?: string }) {
       title: "New design system",
       action: "Create",
       name,
-      taken: workspace.systems.map((s) => s.name),
       startFrom,
       onSubmit: createFrom,
     })
@@ -178,9 +183,7 @@ export function StudioPanel({ className }: { className?: string }) {
                 title: "Rename design system",
                 action: "Save",
                 name: doc.name,
-                taken: workspace.systems
-                  .filter((s) => s.id !== doc.id)
-                  .map((s) => s.name),
+                subject: sel,
                 onSubmit: (name) => rename(doc.id, name),
               }),
           },
@@ -198,6 +201,7 @@ export function StudioPanel({ className }: { className?: string }) {
 
   const system: PanelSystem = {
     name: current.name,
+    note: current.unsaved && UNSAVED_NOTE,
     swatch: current.swatch,
     history: <UndoRedo />,
     triggerRef,

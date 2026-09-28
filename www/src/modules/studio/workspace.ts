@@ -143,6 +143,10 @@ const store = createPersistedStore<Workspace>(KEY, EMPTY, {
   onWriteError: storageFailed,
 })
 
+/** Whether stored systems can't be read: none are listed, and none is
+ *  written over. */
+export const isUnreadable = store.isUnreadable
+
 /* --------------------------- the pending edit --------------------------- */
 
 /** An edit to a system's state, or to the slot (`id` null). */
@@ -315,6 +319,10 @@ export function create(
   }))
   return doc
 }
+
+/** The name a view with changes was shared under, without its " (edited)":
+ *  shared again, it is never "(edited) (edited)". */
+export const unedited = (name: string) => name.replace(/ \(edited\)$/, "")
 
 /** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
 export const copyName = (name: string) =>

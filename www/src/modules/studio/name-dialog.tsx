@@ -3,7 +3,7 @@
 /* The studio's one name field, in a modal: Save, Rename, and New design
    system, which also picks what to start from. */
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
 import { Button } from "@/registry/ui/button"
@@ -28,7 +28,13 @@ import { TextField } from "@/registry/ui/text-field"
 import { PRESET_META } from "@/modules/presets"
 
 import { createFrom, saveName } from "./history"
-import { keySelection, selectionKey, useCurrent } from "./selection"
+import {
+  describe,
+  keySelection,
+  selectionKey,
+  UNSAVED_NAME,
+  useCurrent,
+} from "./selection"
 import type { Selection } from "./selection"
 import { cleanName, listed, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
@@ -38,8 +44,9 @@ export interface NameRequest {
   /** The submit button's label. */
   action: string
   name: string
-  /** Names other systems have: names are unique. */
-  taken: string[]
+  /** What is named, when it exists already: its own name is free, and the
+   *  dialog closes once another tab deletes or saves it. */
+  subject?: Selection
   /** Adds a Start from select, set to this key; "current" is what's on
    *  screen. */
   startFrom?: string
@@ -57,7 +64,7 @@ export function saveRequest({
     title: "Save design system",
     action: "Save",
     name: saveName(unsaved, systems),
-    taken: systems.map((s) => s.name),
+    subject: { kind: "unsaved" },
     onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
   }
 }
@@ -69,6 +76,13 @@ export function NameDialog({
   request?: NameRequest
   onClose: () => void
 }) {
+  const workspace = useWorkspace()
+  const subject = request?.subject
+  const gone =
+    !!subject && describe(subject, workspace).key !== selectionKey(subject)
+  useEffect(() => {
+    if (gone) onClose()
+  }, [gone, onClose])
   // Still shown while the dialog animates out.
   const [shown, setShown] = useState(request)
   if (request && request !== shown) setShown(request)
@@ -76,7 +90,7 @@ export function NameDialog({
     // Not dismissed by a press outside: a double click's second press on
     // what opened it lands there.
     <Modal
-      isOpen={!!request}
+      isOpen={!!request && !gone}
       onOpenChange={(isOpen) => !isOpen && onClose()}
       isDismissable={false}
       className="sm:max-w-sm"
@@ -98,18 +112,32 @@ function NameForm({
   title,
   action,
   name: initial,
-  taken,
+  subject,
   startFrom,
   onSubmit,
   close,
 }: NameRequest & { close: () => void }) {
   const current = useCurrent()
+  const workspace = useWorkspace()
   const [name, setName] = useState(initial)
-  const [source, setSource] = useState(startFrom ?? "current")
+  const [picked, setPicked] = useState(startFrom ?? "current")
   // The form stays while the dialog animates out: a double submit is one.
   const submitted = useRef(false)
   const clean = cleanName(name)
-  const isTaken = taken.includes(clean)
+  // The slot's name marks it alone.
+  const isTaken =
+    clean === UNSAVED_NAME ||
+    workspace.systems.some(
+      (s) =>
+        s.name === clean &&
+        !(subject?.kind === "system" && subject.id === s.id),
+    )
+  // A source gone meanwhile, deleted in another tab, falls back to Current.
+  const source =
+    picked !== "current" &&
+    describe(keySelection(picked), workspace).key === picked
+      ? keySelection(picked)
+      : undefined
   return (
     <form
       onSubmit={(e) => {
@@ -117,10 +145,7 @@ function NameForm({
         if (!clean || isTaken || submitted.current) return
         submitted.current = true
         close()
-        onSubmit(
-          clean,
-          source === "current" ? current.sel : keySelection(source),
-        )
+        onSubmit(clean, source ?? current.sel)
       }}
       className="contents"
     >
@@ -141,7 +166,12 @@ function NameForm({
         <FieldError>Another design system has this name.</FieldError>
       </TextField>
       {startFrom !== undefined && (
-        <StartFrom current={current.name} value={source} onChange={setSource} />
+        <StartFrom
+          current={current.name}
+          workspace={workspace}
+          value={source ? picked : "current"}
+          onChange={setPicked}
+        />
       )}
       <DialogFooter>
         <Button slot="close">Cancel</Button>
@@ -155,14 +185,16 @@ function NameForm({
 
 function StartFrom({
   current,
+  workspace,
   value,
   onChange,
 }: {
   current: string
+  workspace: Workspace
   value: string
   onChange: (key: string) => void
 }) {
-  const systems = listed(useWorkspace())
+  const systems = listed(workspace)
   return (
     <Select
       value={value}
@@ -171,7 +203,8 @@ function StartFrom({
     >
       <Label>Start from</Label>
       <SelectTrigger />
-      <SelectContent>
+      {/* Long names wrap within the field's width. */}
+      <SelectContent className="max-w-(--trigger-width)">
         <SelectItem id="current">{`Current · ${current}`}</SelectItem>
         <SelectSection>
           <SelectSectionHeader>Presets</SelectSectionHeader>
@@ -184,9 +217,14 @@ function StartFrom({
             </SelectItem>
           ))}
         </SelectSection>
-        {systems.length > 0 && (
+        {(workspace.unsaved || systems.length > 0) && (
           <SelectSection>
             <SelectSectionHeader>My design systems</SelectSectionHeader>
+            {workspace.unsaved && (
+              <SelectItem id={selectionKey({ kind: "unsaved" })}>
+                {UNSAVED_NAME}
+              </SelectItem>
+            )}
             {systems.map((system) => (
               <SelectItem
                 key={system.id}
