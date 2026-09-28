@@ -2,6 +2,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource/geist-mono/400.css";
 @import "@fontsource/geist-mono/500.css";
+@import "./fonts.css";
 @import "../../www/node_modules/shadcn/dist/tailwind.css";
 @import "../../www/src/registry/styles.css";
 
