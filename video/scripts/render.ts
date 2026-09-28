@@ -1,7 +1,7 @@
 /* Render the film: one bundle, one MP4 per scene (a crash or a re-take only
    costs that scene), then a lossless concat into out/launch.mp4.
 
-   node scripts/render.ts [--scenes=Open,Wall] [--skip=Patterns] [--scale=1] [--concurrency=3] [--music=public/track.mp3]
+   node scripts/render.ts [--scenes=Open,Wall] [--skip=Patterns] [--scale=1] [--concurrency=3] [--chunk=120] [--music=public/track.mp3]
 
    --scenes re-renders only those scenes and re-concats with the existing
    takes of the others. --skip leaves scenes out of the cut (a preview while one
@@ -13,7 +13,12 @@ import { createRequire } from "node:module"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { bundle } from "@remotion/bundler"
-import { renderMedia, selectComposition } from "@remotion/renderer"
+import {
+  makeCancelSignal,
+  openBrowser,
+  renderMedia,
+  selectComposition,
+} from "@remotion/renderer"
 
 import { SCENE_LIST } from "../src/scene-list.ts"
 import { makeWebpackOverride } from "../webpack.ts"
@@ -26,6 +31,7 @@ const concurrency = Number(flag("concurrency") ?? 3)
 const only = flag("scenes")?.split(",")
 const skip = flag("skip")?.split(",") ?? []
 const music = flag("music")
+const chunk = Number(flag("chunk") ?? 120)
 const suffix = scale === 1 ? "" : `@${scale}x`
 const ffmpeg = fs.existsSync("/opt/homebrew/bin/ffmpeg")
   ? "/opt/homebrew/bin/ffmpeg"
@@ -50,34 +56,69 @@ for (const scene of SCENE_LIST) {
   takes.push(output)
   if (only && !only.includes(scene.id) && fs.existsSync(output)) continue
   const composition = await selectComposition({ serveUrl, id: scene.id })
-  for (let attempt = 1; ; attempt++) {
-    try {
-      const started = performance.now()
-      await renderMedia({
-        composition,
-        serveUrl,
-        codec: "h264",
-        crf: 16,
-        pixelFormat: "yuv420p",
-        imageFormat: "jpeg",
-        jpegQuality: 95,
-        scale,
-        concurrency,
-        timeoutInMilliseconds: 120_000,
-        outputLocation: output,
-        onProgress: ({ progress }) =>
-          process.stdout.write(
-            `\r${scene.id}: ${Math.round(progress * 100)}%   `,
-          ),
-      })
-      const s = (performance.now() - started) / 1000
-      console.log(`\r${scene.id}: done in ${s.toFixed(0)}s`)
-      break
-    } catch (error) {
-      if (attempt >= 3) throw error
-      console.log(`\n${scene.id}: attempt ${attempt} failed, retrying`, error)
+  const parts: string[] = []
+  const started = performance.now()
+  for (let a = 0; a < composition.durationInFrames; a += chunk) {
+    const b = Math.min(a + chunk, composition.durationInFrames) - 1
+    const part = path.join(dir, `${scene.file}${suffix}.${a}.mp4`)
+    parts.push(part)
+    for (let attempt = 1; ; attempt++) {
+      const browser = await openBrowser("chrome")
+      const { cancelSignal, cancel } = makeCancelSignal()
+      // A chunk that stalls (a dropped tab Remotion keeps retrying) is cancelled.
+      const timer = setTimeout(cancel, Math.max(120, (b - a + 1) * 3) * 1000)
+      try {
+        await renderMedia({
+          composition,
+          serveUrl,
+          codec: "h264",
+          crf: 16,
+          pixelFormat: "yuv420p",
+          imageFormat: "jpeg",
+          jpegQuality: 95,
+          scale,
+          concurrency,
+          frameRange: [a, b],
+          timeoutInMilliseconds: 120_000,
+          outputLocation: part,
+          puppeteerInstance: browser,
+          cancelSignal,
+          onProgress: ({ progress }) =>
+            process.stdout.write(
+              `\r${scene.id} ${a}-${b}: ${Math.round(progress * 100)}%   `,
+            ),
+        })
+        break
+      } catch (error) {
+        if (attempt >= 3) throw error
+        console.log(
+          `\n${scene.id} ${a}-${b}: attempt ${attempt} failed, retrying`,
+        )
+      } finally {
+        clearTimeout(timer)
+        await browser.close({ silent: true }).catch(() => {})
+      }
     }
   }
+  const partsList = path.join(dir, `${scene.file}${suffix}.parts.txt`)
+  fs.writeFileSync(partsList, parts.map((p) => `file '${p}'`).join("\n"))
+  execFileSync(ffmpeg, [
+    "-v",
+    "error",
+    "-y",
+    "-f",
+    "concat",
+    "-safe",
+    "0",
+    "-i",
+    partsList,
+    "-c",
+    "copy",
+    output,
+  ])
+  for (const p of [...parts, partsList]) fs.rmSync(p)
+  const s = (performance.now() - started) / 1000
+  console.log(`\r${scene.id}: done in ${s.toFixed(0)}s          `)
 }
 
 const list = path.join(dir, `list${suffix}.txt`)

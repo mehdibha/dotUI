@@ -25,6 +25,8 @@ export const TYPE = {
   statement: 128,
   label: 80,
   tagline: 44,
+  /** Calls to action and on-screen proof (a URL, a CTA pill, a caption). */
+  cta: 48,
   /** Smallest UI text meant to be read, as it lands on screen (px at 1080p). */
   minReadable: 22,
 } as const
