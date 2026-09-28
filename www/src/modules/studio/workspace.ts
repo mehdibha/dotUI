@@ -1,14 +1,15 @@
 "use client"
 
-/* The user's design systems, kept in this browser. Records are read leniently
-   (a bad field takes its default) and every write re-reads storage first,
-   so tabs never clobber each other. Edits land in memory at once and in
-   storage at most every 200 ms. What is on screen lives in `selection.ts`. */
+/* The user's design systems, and the one unsaved slot, kept in this browser.
+   Records are read leniently (a bad field takes its default) and every write
+   re-reads storage first, so tabs never clobber each other. Edits land in
+   memory at once and in storage at most every 200 ms. What is on screen
+   lives in `selection.ts`. */
 
 import { useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
-import { MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
+import { MAX_NAME_LENGTH, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import {
@@ -18,6 +19,11 @@ import {
   validate,
 } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+
+/** A read-only starting point: a preset, or a shared link's snapshot. */
+export type View =
+  | { kind: "preset"; id: string }
+  | { kind: "link"; id: string; name: string; state: StudioState }
 
 export interface DesignSystemDoc {
   id: string
@@ -29,9 +35,16 @@ export interface DesignSystemDoc {
   updatedAt: number
 }
 
+/** Edits to a view, not saved as a system yet. */
+export interface Unsaved {
+  from: View
+  state: StudioState
+}
+
 export interface Workspace {
   schema: 2
   systems: DesignSystemDoc[]
+  unsaved?: Unsaved
 }
 
 const KEY = "dotui:design-systems"
@@ -52,8 +65,21 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const isTime = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)
 
-export const isName = (value: unknown): value is string =>
+const isName = (value: unknown): value is string =>
   typeof value === "string" && value === cleanName(value) && value.length > 0
+
+export function parseView(raw: unknown): View | undefined {
+  if (!isRecord(raw) || typeof raw.id !== "string") return
+  if (raw.kind === "preset" && getPreset(raw.id))
+    return { kind: "preset", id: raw.id }
+  if (raw.kind === "link" && SNAPSHOT_ID.test(raw.id) && isName(raw.name))
+    return {
+      kind: "link",
+      id: raw.id,
+      name: raw.name,
+      state: salvageState(raw.state),
+    }
+}
 
 function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   if (!isRecord(raw) || typeof raw.id !== "string" || !raw.id) return
@@ -69,6 +95,12 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
   }
 }
 
+function parseUnsaved(raw: unknown): Unsaved | undefined {
+  if (!isRecord(raw)) return
+  const from = parseView(raw.from)
+  if (from) return { from, state: salvageState(raw.state) }
+}
+
 /** A record without an id is dropped. Anything but schema 2 throws, so the
  *  store never writes over it. */
 export function parseWorkspace(raw: string): Workspace {
@@ -80,7 +112,7 @@ export function parseWorkspace(raw: string): Workspace {
     const doc = parseDoc(entry)
     if (doc && !systems.some((s) => s.id === doc.id)) systems.push(doc)
   }
-  return { schema: 2, systems }
+  return { schema: 2, systems, unsaved: parseUnsaved(parsed.unsaved) }
 }
 
 const EMPTY: Workspace = { schema: 2, systems: [] }
@@ -113,7 +145,11 @@ const store = createPersistedStore<Workspace>(KEY, EMPTY, {
 
 /* --------------------------- the pending edit --------------------------- */
 
-type Edit = { id: string; state: StudioState }
+/** An edit to a system's state, or to the slot (`id` null). */
+interface Edit {
+  id: string | null
+  apply: (workspace: Workspace) => Workspace
+}
 
 let pending: Edit | null = null
 let timer: ReturnType<typeof setTimeout> | undefined
@@ -140,11 +176,7 @@ export function getWorkspace(): Workspace {
   const base = store.get()
   if (!pending) return base
   if (overlay?.base !== base || overlay.edit !== pending)
-    overlay = {
-      base,
-      edit: pending,
-      value: withDoc(base, pending.id, withState(pending.state)),
-    }
+    overlay = { base, edit: pending, value: pending.apply(base) }
   return overlay.value
 }
 
@@ -156,9 +188,16 @@ export function flush(): void {
   clearTimeout(timer)
   timer = undefined
   if (!pending) return
-  const { id, state } = pending
+  const { apply } = pending
   pending = null
-  store.update((workspace) => withDoc(workspace, id, withState(state)))
+  store.update(apply)
+}
+
+function schedule(edit: Edit) {
+  if (pending && pending.id !== edit.id) flush()
+  pending = edit
+  timer ??= setTimeout(flush, WRITE_INTERVAL)
+  for (const listener of listeners) listener()
 }
 
 export function subscribe(onChange: () => void) {
@@ -177,13 +216,6 @@ export const useWorkspace = (): Workspace =>
 export const listed = (workspace: Workspace): DesignSystemDoc[] =>
   [...workspace.systems].reverse().sort((a, b) => b.updatedAt - a.updatedAt)
 
-export function swatchOf(doc: DesignSystemDoc): string {
-  const preset = doc.from ? getPreset(doc.from) : undefined
-  return preset && doc.state.brand === preset.state.brand
-    ? preset.swatch
-    : doc.state.brand
-}
-
 /* ------------------------------ operations ------------------------------ */
 
 function accepts(state: StudioState): boolean {
@@ -197,21 +229,37 @@ function accepts(state: StudioState): boolean {
  *  whether the state was accepted. */
 export function setState(id: string, state: StudioState): boolean {
   if (!accepts(state)) return false
-  if (pending && pending.id !== id) flush()
-  pending = { id, state }
-  timer ??= setTimeout(flush, WRITE_INTERVAL)
-  for (const listener of listeners) listener()
+  schedule({
+    id,
+    apply: (workspace) => withDoc(workspace, id, withState(state)),
+  })
   return true
 }
 
-let saved = true
+const sameView = (a: View, b: View) => a.kind === b.kind && a.id === b.id
 
-/** Whether the last change to the list reached storage. */
-export const isSaved = () => saved
+/** Fills or, with undefined, empties the slot; storage catches up within
+ *  200 ms. Returns whether the state was accepted. */
+export function setUnsaved(unsaved: Unsaved | undefined): boolean {
+  if (unsaved && !accepts(unsaved.state)) return false
+  schedule({
+    id: null,
+    apply: (workspace) => {
+      const current = workspace.unsaved
+      const same = unsaved
+        ? current &&
+          sameView(current.from, unsaved.from) &&
+          sameState(current.state, unsaved.state)
+        : !current
+      return same ? workspace : { ...workspace, unsaved }
+    },
+  })
+  return true
+}
 
 function update(fn: (workspace: Workspace) => Workspace) {
   flush()
-  saved = store.update(fn)
+  store.update(fn)
 }
 
 // In UTF-16 units, as the server counts, without splitting a character.
@@ -230,7 +278,7 @@ export const cleanName = (name: string) =>
   cut(
     name
       .normalize("NFC")
-      .replace(/[\p{Cc}\u200B\u2060\uFEFF]/gu, "")
+      .replace(/[\p{Cc}​⁠﻿]/gu, "")
       .trim(),
     MAX_NAME_LENGTH,
   ).trim()
@@ -271,14 +319,6 @@ export function create(
 /** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
 export const copyName = (name: string) =>
   uniqueName(name.replace(/ copy( \d+)?$/, ""), getWorkspace().systems, " copy")
-
-export function duplicate(
-  id: string,
-  name: string,
-): DesignSystemDoc | undefined {
-  const source = findSystem(id)
-  if (source) return create({ name, from: source.from, state: source.state })
-}
 
 interface Removed {
   doc: DesignSystemDoc

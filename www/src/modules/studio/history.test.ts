@@ -157,15 +157,17 @@ describe("undo stack", () => {
   })
 })
 
-describe("views and forks", () => {
+describe("unsaved slot", () => {
+  const STRIPE = getPreset("stripe")!
+
   it("writes nothing until a view is edited", async () => {
     const { selection, current } = await load()
     selection.select({ kind: "preset", id: "stripe" })
-    expect(current().tag).toBe("Preset")
+    expect(current().name).toBe("Stripe")
     expect(win.read("dotui:design-systems")).toBeNull()
   })
 
-  it("forks the first edit of a view into My <name>, one step with its drag", async () => {
+  it("fills on a view's first edit, one step with its drag, and no system", async () => {
     const { history, ws, selection, current, edit } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
@@ -175,114 +177,196 @@ describe("views and forks", () => {
     vi.advanceTimersByTime(2000)
     edit(4)
     history.setPressed(false)
-    const fork = current().doc!
-    expect(fork).toMatchObject({ name: "My Stripe", from: "stripe" })
-    expect(fork.state.radiusPx).toBe(4)
-    expect(add).toHaveBeenCalledWith({
-      title: "Saved as “My Stripe” in this browser.",
+    expect(current()).toMatchObject({
+      key: "unsaved",
+      name: "New system (unsaved)",
+      swatch: STRIPE.swatch,
+      content: { name: "Stripe (edited)" },
     })
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { kind: "preset", id: "stripe" },
+      state: { radiusPx: 4 },
+    })
+    expect(ws.getWorkspace().systems).toEqual([])
+    expect(add).not.toHaveBeenCalled()
 
     history.undo()
-    expect(current().doc?.id).toBe(fork.id)
-    expect(current().state).toEqual(getPreset("stripe")!.state)
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
     history.redo()
+    expect(current().key).toBe("unsaved")
     expect(current().state.radiusPx).toBe(4)
-    expect(ws.getWorkspace().systems).toHaveLength(1)
   })
 
-  it("names forks uniquely: Untitled from Origin, never My My", async () => {
-    const { selection, current, radius, edit } = await load()
+  it("empties when an edit lands back on the view", async () => {
+    const { history, ws, current, radius, edit } = await load()
     edit(3)
-    expect(current().name).toBe("Untitled")
+    vi.advanceTimersByTime(600)
+    history.edit(radius(ORIGIN_RADIUS))
+    expect(current().key).toBe("preset:origin")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    history.undo()
+    expect(current().state.radiusPx).toBe(3)
+  })
+
+  it("drops a drag that ends where it began", async () => {
+    const { history, ws, current, radius, edit } = await load()
+    history.setPressed(true)
+    edit(3)
+    history.edit(radius(ORIGIN_RADIUS))
+    history.setPressed(false)
+    expect(current().key).toBe("preset:origin")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    history.undo()
+    expect(current().key).toBe("preset:origin")
+  })
+
+  it("is replaced by another view's edit, with an Undo toast back", async () => {
+    const { ws, selection, current, edit } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
     selection.select({ kind: "preset", id: "stripe" })
     edit(3)
-    selection.select({ kind: "preset", id: "stripe" })
+    selection.select({ kind: "preset", id: "linear" })
     edit(5)
-    expect(current().name).toBe("My Stripe 2")
-    selection.select({
-      kind: "link",
-      id: "abc",
-      name: "My Brand",
-      state: radius(2),
-    })
+    vi.advanceTimersByTime(600)
     edit(6)
-    expect(current().doc).toMatchObject({ name: "My Brand", from: undefined })
-    selection.select({
-      kind: "link",
-      id: "abc",
-      name: "Untitled",
-      state: radius(2),
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { id: "linear" },
+      state: { radiusPx: 6 },
     })
-    edit(7)
-    expect(current().name).toBe("Untitled 2")
+    expect(add).toHaveBeenCalledTimes(1)
+    const toast = add.mock.calls[0]![0]
+    expect(toast.title).toBe("Replaced unsaved changes")
+    toast.actionProps!.onClick!({} as never)
+    expect(current().key).toBe("preset:linear")
+    expect(ws.getWorkspace().unsaved).toMatchObject({
+      from: { id: "stripe" },
+      state: { radiusPx: 3 },
+    })
   })
 
-  it("keeps a fork kept unchanged: renamed to the same name, or duplicated", async () => {
+  it("saves as a system, keeping its undo history", async () => {
     const { history, ws, selection, current, edit } = await load()
     selection.select({ kind: "preset", id: "stripe" })
     edit(3)
+    const { unsaved, systems } = ws.getWorkspace()
+    expect(history.saveName(unsaved!, systems)).toBe("My Stripe")
+    const doc = history.createFrom("My Stripe", { kind: "unsaved" })!
+    expect(doc).toMatchObject({ name: "My Stripe", from: "stripe" })
+    expect(current().doc?.id).toBe(doc.id)
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
     history.undo()
-    const fork = current().doc!
-    selection.keep(fork.id)
-    const copy = ws.duplicate(fork.id, "My Stripe copy")!
-    selection.select({ kind: "system", id: copy.id })
-    selection.select({ kind: "preset", id: "linear" })
-    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual([
-      "My Stripe",
-      "My Stripe copy",
-    ])
+    expect(current().doc?.id).toBe(doc.id)
+    expect(current().state).toEqual(STRIPE.state)
   })
 
-  it("removes an unchanged fork left after a reload", async () => {
+  it("suggests unique names: Untitled from Origin, never My My", async () => {
+    const { history, ws, radius } = await load()
+    const name = (from: Parameters<typeof history.saveName>[0]["from"]) =>
+      history.saveName({ from, state: radius(3) }, ws.getWorkspace().systems)
+    expect(name({ kind: "preset", id: "origin" })).toBe("Untitled")
+    ws.create({ name: "My Linear", state: radius(3) })
+    expect(name({ kind: "preset", id: "linear" })).toBe("My Linear 2")
+    const link = { kind: "link", id: "abcdefghij", state: radius(2) } as const
+    expect(name({ ...link, name: "My Brand" })).toBe("My Brand")
+    expect(name({ ...link, name: "Acme" })).toBe("My Acme")
+  })
+
+  it("is discarded with an Undo toast back", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    const { toastManager } = await import("@/registry/ui/toast")
+    const add = vi.spyOn(toastManager, "add")
+    selection.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    history.discard()
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    const toast = add.mock.calls.at(-1)![0]
+    expect(toast.title).toBe("Discarded unsaved changes")
+    toast.actionProps!.onClick!({} as never)
+    expect(current().key).toBe("unsaved")
+    expect(current().state.radiusPx).toBe(3)
+  })
+
+  it("stays after a reload", async () => {
     const first = await load()
-    first.selection.select({ kind: "preset", id: "stripe" })
     first.edit(3)
-    first.history.undo()
     vi.advanceTimersByTime(600)
     vi.resetModules()
-    const { ws, selection } = await load()
-    expect(selection.getCurrent().name).toBe("My Stripe")
-    selection.select({ kind: "preset", id: "linear" })
-    expect(ws.getWorkspace().systems).toEqual([])
+    const { current } = await load()
+    expect(current().key).toBe("unsaved")
+    expect(current().state.radiusPx).toBe(3)
   })
 
-  it("claims no save when stored systems can't be read", async () => {
+  it("follows another tab's slot, and never undoes over it", async () => {
+    const { history, ws, current, radius, edit } = await load()
+    ws.subscribe(() => {})
+    edit(3)
+    vi.advanceTimersByTime(600)
+    const stored = JSON.parse(win.read("dotui:design-systems")!)
+    stored.unsaved.state = radius(7)
+    win.otherTab("dotui:design-systems", JSON.stringify(stored))
+    expect(current().state.radiusPx).toBe(7)
+    history.undo()
+    expect(current().state.radiusPx).toBe(7)
+    delete stored.unsaved
+    win.otherTab("dotui:design-systems", JSON.stringify(stored))
+    win.otherTab(
+      "dotui:current",
+      JSON.stringify({ kind: "preset", id: "origin" }),
+    )
+    expect(current().key).toBe("preset:origin")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+  })
+
+  it("never writes over stored systems it can't read", async () => {
     win.seed("dotui:design-systems", "not json {{{")
-    const { edit } = await load()
+    const { current, edit } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
     edit(3)
+    expect(current().state.radiusPx).toBe(3)
     expect(add.mock.calls.map(([toast]) => toast.title)).toEqual([
       "Your saved design systems can't be read",
     ])
     expect(win.read("dotui:design-systems")).toBe("not json {{{")
   })
+})
 
-  it("removes a fork left unrenamed and unchanged", async () => {
-    const { history, ws, selection, edit } = await load()
+describe("start from", () => {
+  it("creates a system from a preset, a system or what's on screen", async () => {
+    const { history, ws, selection, current, edit } = await load()
+    const linear = history.createFrom("A", { kind: "preset", id: "linear" })!
+    expect(linear).toMatchObject({ name: "A", from: "linear" })
+    expect(linear.state).toEqual(getPreset("linear")!.state)
+    expect(current().doc?.id).toBe(linear.id)
+    const copy = history.createFrom("B", { kind: "system", id: linear.id })!
+    expect(copy).toMatchObject({ from: "linear", state: linear.state })
+
     selection.select({ kind: "preset", id: "stripe" })
     edit(3)
-    history.undo()
-    selection.select({ kind: "preset", id: "linear" })
-    expect(ws.getWorkspace().systems).toEqual([])
+    history.createFrom("C", { kind: "preset", id: "origin" })
+    expect(ws.getWorkspace().unsaved).toBeDefined()
+    selection.select({ kind: "unsaved" })
+    const saved = history.createFrom("D", current().sel)!
+    expect(saved.state.radiusPx).toBe(3)
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual([
+      "A",
+      "B",
+      "C",
+      "D",
+    ])
   })
 
-  it("keeps a fork left changed or renamed", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    selection.select({ kind: "preset", id: "stripe" })
-    edit(3)
-    const changed = current().doc!.id
-    selection.select({ kind: "preset", id: "linear" })
-    edit(3)
-    const renamed = current().doc!.id
-    selection.keep(renamed)
-    ws.rename(renamed, "Acme")
-    history.undo()
-    selection.select({ kind: "preset", id: "origin" })
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
-      changed,
-      renamed,
-    ])
+  it("creates nothing from a source gone meanwhile", async () => {
+    const { history, ws } = await load()
+    expect(history.createFrom("A", { kind: "system", id: "gone" })).toBe(
+      undefined,
+    )
+    expect(history.createFrom("B", { kind: "unsaved" })).toBeUndefined()
+    expect(ws.getWorkspace().systems).toEqual([])
   })
 })
 

@@ -1,22 +1,32 @@
 "use client"
 
-/* Undo and redo. Each system keeps an in-memory undo stack; edits within
-   500 ms, or within one pointer press (a slider drag), merge into one step.
-   The first edit of a view forks it into a new system whose first step
-   returns to the view's state. Nothing else is a step: Delete has its own
-   Undo toast, and resets the stack so ⌘Z never touches another system. */
+/* Every change to the design on screen. Edits are undoable: each system, and
+   the unsaved slot over each view, keeps an in-memory undo stack; edits
+   within 500 ms, or within one pointer press (a slider drag), merge into one
+   step. Editing a view fills the one unsaved slot, which lasts only while it
+   differs from its view: undoing back to the view empties it. Save makes the
+   slot a system; Discard and Delete have their own Undo toasts. */
 
-import { useEffect, useSyncExternalStore } from "react"
+import { useEffect, useEffectEvent, useSyncExternalStore } from "react"
 
 import { toastManager } from "@/registry/ui/toast"
-import { ORIGIN } from "@/modules/presets"
+import { getPreset, ORIGIN } from "@/modules/presets"
 
 import { sameState } from "./axes"
 import type { StudioState } from "./axes"
-import { historyKey } from "./history-keys"
-import { getCurrent, getSelection, select, selectionKey } from "./selection"
-import type { Selection } from "./selection"
+import { shortcutOf } from "./history-keys"
+import type { Shortcut } from "./history-keys"
+import {
+  describe,
+  getCurrent,
+  getSelection,
+  select,
+  selectionKey,
+  useCurrent,
+} from "./selection"
+import type { Current, Selection } from "./selection"
 import * as workspace from "./workspace"
+import type { DesignSystemDoc, Unsaved } from "./workspace"
 
 /** A design system's name in a toast title: quoted, cut at 32 characters. */
 function quoted(name: string): string {
@@ -32,23 +42,20 @@ interface Stack {
   future: StudioState[]
   editedAt: number
   press: number
-  /** The system's state as this tab last left it: another tab's edit since
-   *  makes the stack stale. */
+  /** The state as this tab last left it: another tab's edit since makes the
+   *  stack stale. */
   head: StudioState
 }
 
-// By system id.
+// By target key.
 const stacks = new Map<string, Stack>()
 const listeners = new Set<() => void>()
 // The pointer press in progress (0 when none), so a drag is one step.
 let press = 0
 let presses = 0
 
-/** The system's stack, unless another tab edited the system since. */
-function live(id: string): Stack | undefined {
-  const entry = stacks.get(id)
-  const doc = workspace.findSystem(id)
-  if (entry && doc && sameState(doc.state, entry.head)) return entry
+function emit() {
+  for (const listener of listeners) listener()
 }
 
 function push(steps: StudioState[], state: StudioState) {
@@ -56,83 +63,10 @@ function push(steps: StudioState[], state: StudioState) {
   if (steps.length > UNDO_LIMIT) steps.shift()
 }
 
-function emit() {
-  for (const listener of listeners) listener()
-}
-
-/** Merges the edit into the last step when it's close enough in time or
- *  in the same press; otherwise starts a step returning to `before`. */
-function recordEdit(id: string, before: StudioState, next: StudioState) {
-  // Undo never steps back over another tab's edit: a stale stack restarts.
-  const last = stacks.get(id)
-  const entry =
-    last && sameState(last.head, before)
-      ? last
-      : { past: [], future: [], editedAt: 0, press: 0, head: before }
-  stacks.set(id, entry)
-  const now = Date.now()
-  const merge =
-    now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
-  if (!merge) {
-    push(entry.past, before)
-    entry.future = []
-    emit()
-  }
-  entry.head = next
-  entry.editedAt = now
-  entry.press = press
-}
-
-/** "My Linear", or "Untitled" from Origin or an "Untitled" link. */
-function forkName({ sel, name }: ReturnType<typeof getCurrent>): string {
-  const base = sel.id === ORIGIN.id ? "Untitled" : name
-  return base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`
-}
-
-function fork(next: StudioState) {
-  const current = getCurrent()
-  const doc = workspace.create({
-    name: forkName(current),
-    from: current.sel.kind === "preset" ? current.sel.id : undefined,
-    state: current.state,
-  })
-  if (!doc) return
-  select({ kind: "system", id: doc.id }, doc)
-  if (!workspace.setState(doc.id, next)) return
-  recordEdit(doc.id, doc.state, next)
-  if (workspace.isSaved())
-    toastManager.add({ title: `Saved as ${quoted(doc.name)} in this browser.` })
-}
-
-/** Edits the current design system as one undoable step, merged with the
- *  edits just before it. On a view, the first edit forks it. */
-export function edit(next: StudioState): void {
-  const current = getCurrent()
-  if (sameState(current.state, next)) return
-  if (!current.doc) return fork(next)
-  const { id, state } = current.doc
-  if (workspace.setState(id, next)) recordEdit(id, state, next)
-}
-
-/** Deletes the system with a toast whose Undo, which `afterUndo` follows,
- *  puts it back. Deleting the current one opens the next in the list, else
- *  the Origin view. The current selection's undo history then starts over:
- *  ⌘Z right after never touches another system. Returns the toast's undo. */
-export function remove(
-  id: string,
-  { afterUndo }: { afterUndo?: () => void } = {},
-): () => void {
-  const list = workspace.listed(workspace.getWorkspace())
-  const wasCurrent =
-    selectionKey(getSelection()) === selectionKey({ kind: "system", id })
-  const removed = workspace.remove(id)
-  if (!removed) return () => {}
-  const restore = () => {
-    workspace.insert(removed.doc, removed.index)
-    if (wasCurrent) select({ kind: "system", id })
-  }
+/** A 10 s toast whose Undo runs `restore`, then `afterUndo`. */
+function undoToast(title: string, restore: () => void, afterUndo?: () => void) {
   const toast = toastManager.add({
-    title: `Deleted ${quoted(removed.doc.name)}`,
+    title,
     timeout: 10_000,
     actionProps: {
       children: "Undo",
@@ -143,35 +77,210 @@ export function remove(
       },
     },
   })
-  if (wasCurrent) {
-    const at = list.findIndex((s) => s.id === id)
-    const next = list[at + 1] ?? list[at - 1]
-    const sel: Selection = next
-      ? { kind: "system", id: next.id }
-      : { kind: "preset", id: ORIGIN.id }
-    select(sel)
+}
+
+/** What an edit changes: the system on screen, or the slot over the view on
+ *  screen, empty on the view itself. The slot and its view share a key. */
+interface Target {
+  key: string
+  state: StudioState
+  /** False when the state was refused. */
+  set: (state: StudioState) => boolean
+}
+
+function targetOf(current: Current): Target {
+  const { sel, state } = current
+  if (current.doc) {
+    const { id } = current.doc
+    return {
+      key: current.key,
+      state,
+      set: (next) => workspace.setState(id, next),
+    }
   }
-  stacks.delete(getSelection().id)
-  emit()
-  return restore
+  const { view } = current
+  // On the view itself, a change replaces what the slot held.
+  const replaced = current.unsaved
+    ? undefined
+    : workspace.getWorkspace().unsaved
+  return {
+    key: selectionKey(view),
+    state,
+    set: (next) => {
+      // Back on the view's own state, the slot empties.
+      const back = sameState(
+        next,
+        describe(view, workspace.getWorkspace()).state,
+      )
+      if (!workspace.setUnsaved(back ? undefined : { from: view, state: next }))
+        return false
+      select(back ? view : { kind: "unsaved" })
+      if (replaced)
+        undoToast("Replaced unsaved changes", () => {
+          workspace.setUnsaved(replaced)
+          select(sel)
+        })
+      return true
+    },
+  }
+}
+
+/** The target's stack, unless another tab changed its state since. */
+function live(target: Target): Stack | undefined {
+  const entry = stacks.get(target.key)
+  if (entry && sameState(entry.head, target.state)) return entry
+}
+
+/** Merges the edit into the last step when it's close enough in time or
+ *  in the same press; otherwise starts a step returning to `before`. */
+function recordEdit(key: string, before: StudioState, next: StudioState) {
+  // Undo never steps back over another tab's edit: a stale stack restarts.
+  const last = stacks.get(key)
+  const entry =
+    last && sameState(last.head, before)
+      ? last
+      : { past: [], future: [], editedAt: 0, press: 0, head: before }
+  stacks.set(key, entry)
+  const now = Date.now()
+  const merge =
+    now - entry.editedAt <= MERGE_MS || (press !== 0 && entry.press === press)
+  entry.head = next
+  entry.editedAt = now
+  entry.press = press
+  const start = entry.past.at(-1)
+  if (!merge) {
+    push(entry.past, before)
+    entry.future = []
+    emit()
+  } else if (start && sameState(start, next)) {
+    // A step back where it began is none; the next edit starts another.
+    entry.past.pop()
+    entry.editedAt = 0
+    entry.press = 0
+    emit()
+  }
+}
+
+/** Edits the design on screen as one undoable step, merged with the edits
+ *  just before it. */
+export function edit(next: StudioState): void {
+  const target = targetOf(getCurrent())
+  if (sameState(target.state, next)) return
+  if (target.set(next)) recordEdit(target.key, target.state, next)
 }
 
 function travel(from: "past" | "future", to: "past" | "future") {
-  const sel = getSelection()
-  const entry = sel.kind === "system" ? live(sel.id) : undefined
-  const state = entry?.[from].pop()
-  const doc = workspace.findSystem(sel.id)
-  if (!entry || !state || !doc) return
+  const target = targetOf(getCurrent())
+  const entry = live(target)
+  const state = entry?.[from].at(-1)
+  if (!entry || !state || !target.set(state)) return
+  entry[from].pop()
   entry.editedAt = 0
   entry.press = 0
-  workspace.setState(doc.id, state)
-  push(entry[to], doc.state)
+  push(entry[to], target.state)
   entry.head = state
   emit()
 }
 
 export const undo = () => travel("past", "future")
 export const redo = () => travel("future", "past")
+
+/** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
+ *  "Untitled" link; free in the list. */
+export function saveName({ from }: Unsaved, systems: DesignSystemDoc[]) {
+  const base =
+    from.kind === "link"
+      ? from.name
+      : from.id === ORIGIN.id
+        ? "Untitled"
+        : (getPreset(from.id)?.name ?? "Untitled")
+  return workspace.uniqueName(
+    base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`,
+    systems,
+  )
+}
+
+/** Creates a system named `name` from what `source` shows, and opens it.
+ *  From the unsaved slot, that saves it: the slot empties and its undo
+ *  history carries over. */
+export function createFrom(
+  name: string,
+  source: Selection,
+): DesignSystemDoc | undefined {
+  const from = describe(source, workspace.getWorkspace())
+  // Gone meanwhile.
+  if (from.key !== selectionKey(source)) return
+  const doc = workspace.create({
+    name,
+    from: from.doc
+      ? from.doc.from
+      : from.view.kind === "preset"
+        ? from.view.id
+        : undefined,
+    state: from.state,
+  })
+  if (!doc) return
+  const sel: Selection = { kind: "system", id: doc.id }
+  if (from.unsaved) {
+    workspace.setUnsaved(undefined)
+    const key = selectionKey(from.unsaved.from)
+    const stack = stacks.get(key)
+    stacks.delete(key)
+    if (stack) stacks.set(selectionKey(sel), stack)
+  }
+  select(sel)
+  return doc
+}
+
+/** Empties the unsaved slot, with a toast whose Undo, which `afterUndo`
+ *  follows, fills it back. On screen, its view shows instead. */
+export function discard({ afterUndo }: { afterUndo?: () => void } = {}) {
+  const { unsaved } = workspace.getWorkspace()
+  if (!unsaved) return
+  const onScreen = getSelection().kind === "unsaved"
+  workspace.setUnsaved(undefined)
+  if (onScreen) select(unsaved.from)
+  undoToast(
+    "Discarded unsaved changes",
+    () => {
+      workspace.setUnsaved(unsaved)
+      if (onScreen) select({ kind: "unsaved" })
+    },
+    afterUndo,
+  )
+}
+
+/** Deletes the system with a toast whose Undo, which `afterUndo` follows,
+ *  puts it back. Deleting the current one opens the next in the list, else
+ *  the Origin view. The undo history on screen then starts over: ⌘Z right
+ *  after never touches another design. Returns the toast's undo. */
+export function remove(
+  id: string,
+  { afterUndo }: { afterUndo?: () => void } = {},
+): () => void {
+  const list = workspace.listed(workspace.getWorkspace())
+  const sel: Selection = { kind: "system", id }
+  const wasCurrent = selectionKey(getSelection()) === selectionKey(sel)
+  const removed = workspace.remove(id)
+  if (!removed) return () => {}
+  const restore = () => {
+    workspace.insert(removed.doc, removed.index)
+    if (wasCurrent) select(sel)
+  }
+  undoToast(`Deleted ${quoted(removed.doc.name)}`, restore, afterUndo)
+  if (wasCurrent) {
+    const at = list.findIndex((s) => s.id === id)
+    const next = list[at + 1] ?? list[at - 1]
+    select(
+      next
+        ? { kind: "system", id: next.id }
+        : { kind: "preset", id: ORIGIN.id },
+    )
+  }
+  stacks.delete(targetOf(getCurrent()).key)
+  emit()
+  return restore
+}
 
 function subscribe(listener: () => void) {
   listeners.add(listener)
@@ -182,13 +291,14 @@ function subscribe(listener: () => void) {
   }
 }
 
-/** Whether the system's edits can be undone or redone here. */
-export function useUndoRedo(id: string | undefined) {
+/** Whether the design on screen can be undone or redone here. */
+export function useUndoRedo() {
+  const current = useCurrent()
   // A primitive snapshot, so it is stable between changes.
   const flags = useSyncExternalStore(
     subscribe,
     () => {
-      const entry = id ? live(id) : undefined
+      const entry = live(targetOf(current))
       return (entry?.past.length ? 1 : 0) | (entry?.future.length ? 2 : 0)
     },
     () => 0,
@@ -196,34 +306,42 @@ export function useUndoRedo(id: string | undefined) {
   return { canUndo: (flags & 1) !== 0, canRedo: (flags & 2) !== 0 }
 }
 
-/** The studio's history wiring: ⌘Z / ⇧⌘Z outside text fields (which keep
- *  their own undo), here or in the preview, and press tracking. */
-export function useHistory() {
+/** Runs `run` on a studio shortcut, pressed here or in the preview (which
+ *  hands its keys up), in place of the browser's own action. */
+export function useShortcut(shortcut: Shortcut, run: () => void) {
+  const onShortcut = useEffectEvent(run)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      const action = historyKey(e)
-      if (!action) return
+      if (shortcutOf(e) !== shortcut) return
       e.preventDefault()
-      if (action === "undo") undo()
-      else redo()
+      onShortcut()
     }
     const onMessage = (e: MessageEvent) => {
       if (e.origin !== window.location.origin) return
-      if (e.data?.type !== "preview-history") return
-      if (e.data.action === "undo") undo()
-      else if (e.data.action === "redo") redo()
+      if (e.data?.type === "preview-shortcut" && e.data.action === shortcut)
+        onShortcut()
     }
+    window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("message", onMessage)
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("message", onMessage)
+    }
+  }, [shortcut])
+}
+
+/** The studio's history wiring: ⌘Z / ⇧⌘Z and press tracking. */
+export function useHistory() {
+  useShortcut("undo", undo)
+  useShortcut("redo", redo)
+  useEffect(() => {
     const onPointerDown = () => setPressed(true)
     const onPointerUp = () => setPressed(false)
     // Capture: a press ends before the control's own pointerup handler runs.
-    window.addEventListener("keydown", onKeyDown)
-    window.addEventListener("message", onMessage)
     window.addEventListener("pointerdown", onPointerDown, true)
     window.addEventListener("pointerup", onPointerUp, true)
     window.addEventListener("pointercancel", onPointerUp, true)
     return () => {
-      window.removeEventListener("keydown", onKeyDown)
-      window.removeEventListener("message", onMessage)
       window.removeEventListener("pointerdown", onPointerDown, true)
       window.removeEventListener("pointerup", onPointerUp, true)
       window.removeEventListener("pointercancel", onPointerUp, true)

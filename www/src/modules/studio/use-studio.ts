@@ -2,7 +2,7 @@
 
 /* The studio's state hook: the current design system (a view or one of the
    user's systems) and its resolved design system — what the panel, the
-   preview and export all read. Editing a view forks it. */
+   preview and export all read. Editing a view fills the unsaved slot. */
 
 import { useMemo } from "react"
 

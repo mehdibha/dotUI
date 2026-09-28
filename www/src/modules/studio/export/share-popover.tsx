@@ -28,7 +28,8 @@ export function SharePopover({ children }: { children: ReactNode }) {
 }
 
 function ShareBody() {
-  const { name } = useCurrent()
+  const current = useCurrent()
+  const name = current.content?.name ?? current.name
   const { source, failed, retry } = useSource()
   const isMobile = useIsMobile()
   const { isCopied, copyToClipboard } = useCopyToClipboard()

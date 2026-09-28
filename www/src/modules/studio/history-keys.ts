@@ -8,10 +8,15 @@ const TEXT_ENTRY =
 const inTextEntry = (target: EventTarget | null) =>
   target instanceof Element && !!target.closest(TEXT_ENTRY)
 
-/** ⌘Z / ⇧⌘Z (or Ctrl+Y) outside text fields, which keep their own undo. */
-export function historyKey(e: KeyboardEvent): "undo" | "redo" | undefined {
-  if (!(e.metaKey || e.ctrlKey) || e.altKey || inTextEntry(e.target)) return
+export type Shortcut = "undo" | "redo" | "save"
+
+/** ⌘S anywhere; ⌘Z / ⇧⌘Z (or Ctrl+Y) outside text fields, which keep their
+ *  own undo. */
+export function shortcutOf(e: KeyboardEvent): Shortcut | undefined {
+  if (!(e.metaKey || e.ctrlKey) || e.altKey) return
   const key = e.key.toLowerCase()
+  if (key === "s" && !e.shiftKey) return "save"
+  if (inTextEntry(e.target)) return
   if (key === "z") return e.shiftKey ? "redo" : "undo"
   if (key === "y" && e.ctrlKey) return "redo"
 }

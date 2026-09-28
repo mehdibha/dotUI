@@ -1,6 +1,6 @@
 "use client"
 
-/* The one name field of the studio, in a modal: Rename, New design system
+/* The studio's one name field, in a modal: Save, Rename, New design system
    and Duplicate. */
 
 import { useRef, useState } from "react"
@@ -18,7 +18,9 @@ import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
 
+import { createFrom, saveName } from "./history"
 import { cleanName } from "./workspace"
+import type { Workspace } from "./workspace"
 
 export interface NameRequest {
   title: string
@@ -28,6 +30,21 @@ export interface NameRequest {
   /** Names other systems have: names are unique. */
   taken: string[]
   onSubmit: (name: string) => void
+}
+
+/** Saving the unsaved slot, as "My <view>" by default. */
+export function saveRequest({
+  unsaved,
+  systems,
+}: Workspace): NameRequest | undefined {
+  if (!unsaved) return
+  return {
+    title: "Save design system",
+    action: "Save",
+    name: saveName(unsaved, systems),
+    taken: systems.map((s) => s.name),
+    onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
+  }
 }
 
 export function NameDialog({
@@ -51,7 +68,11 @@ export function NameDialog({
     >
       <DialogContent>
         {shown && (
-          <NameForm key={shown.title + shown.name} {...shown} close={onClose} />
+          <NameForm
+            key={`${shown.title}:${shown.name}`}
+            {...shown}
+            close={onClose}
+          />
         )}
       </DialogContent>
     </Modal>

@@ -1,9 +1,9 @@
 "use client"
 
 /* What Share and Export point at: a preset or a shared link as is, or the
-   user's system as a snapshot. The snapshot is posted when Share or Export
-   opens, never on a press: the command shows its URL, Open in v0 is a plain
-   link, and iOS share needs the press's activation. */
+   user's system or unsaved slot as a snapshot. The snapshot is posted when
+   Share or Export opens, never on a press: the command shows its URL, Open
+   in v0 is a plain link, and iOS share needs the press's activation. */
 
 import { useEffect, useState } from "react"
 
@@ -69,15 +69,15 @@ export function snapshotOf(content: Content): Promise<string> {
 }
 
 /** The current design system's source, resolved while mounted: the user's
- *  system is snapshotted on mount and after each change. */
+ *  system or unsaved slot is snapshotted on mount and after each change. */
 export function useSource(): {
   source?: Source
   failed: boolean
   retry: () => void
 } {
-  const { sel, doc } = useCurrent()
-  const name = doc?.name
-  const state = doc?.state
+  const { view, content } = useCurrent()
+  const name = content?.name
+  const state = content?.state
   const [attempt, setAttempt] = useState(0)
   const [failed, setFailed] = useState<string>()
   const [, setResolved] = useState<string>()
@@ -99,16 +99,16 @@ export function useSource(): {
     setFailed(undefined)
     setAttempt((n) => n + 1)
   }
-  if (!doc)
+  if (!content)
     return {
-      source: {
-        kind: sel.kind === "preset" ? "preset" : "snapshot",
-        id: sel.id,
+      source: view && {
+        kind: view.kind === "preset" ? "preset" : "snapshot",
+        id: view.id,
       },
       failed: false,
       retry,
     }
-  const key = contentKey(doc)
+  const key = contentKey(content)
   const id = ids.get(key)
   return {
     source: id ? { kind: "snapshot", id } : undefined,

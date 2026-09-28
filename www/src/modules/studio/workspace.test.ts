@@ -47,10 +47,13 @@ describe("workspace", () => {
 
   it("shows its preset's swatch until the brand changes", async () => {
     const { ws, doc } = await created()
-    expect(ws.swatchOf(doc)).toBe(linear.swatch)
+    const { describe } = await import("./selection")
+    const swatch = () =>
+      describe({ kind: "system", id: doc.id }, ws.getWorkspace()).swatch
+    expect(swatch()).toBe(linear.swatch)
     const branded = parseState({ ...doc.state, brand: "#ff0000" })
     ws.setState(doc.id, branded)
-    expect(ws.swatchOf(ws.findSystem(doc.id)!)).toBe(branded.brand)
+    expect(swatch()).toBe(branded.brand)
   })
 
   it("lists the latest edited first", async () => {
@@ -111,15 +114,26 @@ describe("workspace", () => {
     ])
   })
 
-  it("duplicates under the given name, suggested as <name> copy", async () => {
-    const { ws, doc } = await created()
+  it("suggests <name> copy for a duplicate, never copy copy", async () => {
+    const { ws } = await created()
     expect(ws.copyName("Acme")).toBe("Acme copy")
-    const copy = ws.duplicate(doc.id, "Acme copy")!
-    expect(copy).toMatchObject({ name: "Acme copy", from: "linear" })
-    expect(copy.state).toEqual(doc.state)
-    expect(ws.copyName(copy.name)).toBe("Acme copy 2")
-    expect(ws.duplicate(copy.id, "Acme copy")!.name).toBe("Acme copy 2")
-    expect(ws.duplicate("missing", "X")).toBeUndefined()
+    ws.create({ name: "Acme copy", state: linear.state })
+    expect(ws.copyName("Acme copy")).toBe("Acme copy 2")
+  })
+
+  it("writes slot edits at most every 200 ms too", async () => {
+    const ws = await load()
+    vi.useFakeTimers()
+    const from = { kind: "preset", id: "linear" } as const
+    ws.setUnsaved({ from, state: parseState({ radiusPx: 2 }) })
+    ws.setUnsaved({ from, state: parseState({ radiusPx: 3 }) })
+    expect(ws.getWorkspace().unsaved?.state.radiusPx).toBe(3)
+    expect(win.localStorage.setItem).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(200)
+    expect(stored().unsaved.state.radiusPx).toBe(3)
+    ws.setUnsaved(undefined)
+    ws.flush()
+    expect(stored()).not.toHaveProperty("unsaved")
   })
 
   it("keeps generated names within 64 UTF-16 units", async () => {
@@ -162,12 +176,36 @@ describe("workspace", () => {
     )
     const ws = await load()
     const [a, b, c, ...rest] = ws.getWorkspace().systems
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
     expect(rest).toEqual([])
     expect(a).toMatchObject({ id: "a", name: "Acme", from: "linear" })
     expect(a).not.toHaveProperty("retiredField")
     expect(a!.state.radiusPx).toBe(4)
     expect(b!.state).toEqual(parseState({}))
     expect(c).toMatchObject({ name: "Untitled", from: undefined })
+  })
+
+  it("reads the slot leniently, dropping one without a view", async () => {
+    const slot = (from: unknown) =>
+      JSON.stringify({
+        schema: 2,
+        systems: [],
+        unsaved: { from, state: { radiusPx: -1000 } },
+      })
+    win.seed(KEY, slot({ kind: "preset", id: "linear" }))
+    const ws = await load()
+    expect(ws.getWorkspace().unsaved).toEqual({
+      from: { kind: "preset", id: "linear" },
+      state: parseState({}),
+    })
+    for (const from of [
+      { kind: "preset", id: "nope" },
+      { kind: "link", id: "short", name: "Acme" },
+      null,
+    ]) {
+      win.seed(KEY, slot(from))
+      expect(ws.getWorkspace().unsaved).toBeUndefined()
+    }
   })
 
   it("reads an unknown format as empty and never writes over it", async () => {

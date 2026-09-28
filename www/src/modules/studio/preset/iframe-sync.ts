@@ -2,7 +2,8 @@
 
 import * as React from "react"
 
-import { historyKey } from "../history-keys"
+import { shortcutOf } from "../history-keys"
+import type { Shortcut } from "../history-keys"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
@@ -21,7 +22,7 @@ type IframeToParentMessage =
   | { type: "preview-ready" }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
-  | { type: "preview-history"; action: "undo" | "redo" }
+  | { type: "preview-shortcut"; action: Shortcut }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -226,16 +227,16 @@ export function useAnnouncePreviewReady() {
   }, [])
 }
 
-/** Inside the preview iframe: hand ⌘Z / ⇧⌘Z to the studio. */
-export function useForwardHistoryKeys() {
+/** Inside the preview iframe: hand ⌘Z, ⇧⌘Z and ⌘S to the studio. */
+export function useForwardShortcuts() {
   React.useEffect(() => {
     if (!isInIframe()) return
     const onKeyDown = (e: KeyboardEvent) => {
-      const action = historyKey(e)
+      const action = shortcutOf(e)
       if (!action) return
       e.preventDefault()
       window.parent.postMessage(
-        { type: "preview-history", action } satisfies IframeToParentMessage,
+        { type: "preview-shortcut", action } satisfies IframeToParentMessage,
         window.location.origin,
       )
     }

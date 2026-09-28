@@ -17,8 +17,6 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 export interface PanelSystem {
   name: string
   swatch: string
-  /** "Preset" or "Shared"; the user's own systems have none. */
-  tag?: string
   /** Undo and redo. */
   history: ReactNode
   /** Wraps the trigger in the design-system picker. */
@@ -67,11 +65,6 @@ export function PanelChrome({
                 <span dir="auto" className="min-w-0 truncate">
                   {system.name}
                 </span>
-                {system.tag && (
-                  <span className="shrink-0 rounded-sm bg-fg/6 px-0.5 text-[0.5625rem] leading-3.5 font-normal text-fg-muted">
-                    {system.tag}
-                  </span>
-                )}
                 <ChevronsUpDownIcon
                   data-icon="inline-end"
                   className="size-3 shrink-0 text-fg-muted"

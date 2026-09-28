@@ -1,45 +1,44 @@
 "use client"
 
-/* The picker's ⋯ menu on the user's systems. */
+/* The picker's ⋯ menu on the user's rows. */
+
+import { Fragment } from "react"
 
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Separator } from "@/registry/ui/separator"
 
-import type { DesignSystemDoc } from "./workspace"
+export interface RowAction {
+  label: string
+  /** Destructive: last, under a separator. */
+  danger?: boolean
+  run: () => void
+}
 
-/** Touch-sized rows on phones. */
-const item = "pointer-coarse:min-h-11"
-
-export function SystemMenu({
-  doc,
-  onRename,
-  onDuplicate,
-  onDelete,
+export function RowMenu({
+  name,
+  actions,
 }: {
-  doc: DesignSystemDoc
-  onRename: () => void
-  onDuplicate: () => void
-  onDelete: () => void
+  name: string
+  actions: RowAction[]
 }) {
   return (
     <MenuContent
-      aria-label={`Actions for ${doc.name}`}
-      onAction={(key) => {
-        if (key === "rename") onRename()
-        if (key === "duplicate") onDuplicate()
-        if (key === "delete") onDelete()
-      }}
+      aria-label={`Actions for ${name}`}
+      onAction={(key) => actions[Number(key)]?.run()}
     >
-      <MenuItem id="rename" className={item}>
-        Rename…
-      </MenuItem>
-      <MenuItem id="duplicate" className={item}>
-        Duplicate…
-      </MenuItem>
-      <Separator />
-      <MenuItem id="delete" variant="danger" className={item}>
-        Delete
-      </MenuItem>
+      {actions.map(({ label, danger }, index) => (
+        <Fragment key={label}>
+          {danger && <Separator />}
+          <MenuItem
+            id={index}
+            variant={danger ? "danger" : undefined}
+            // Touch-sized rows on phones.
+            className="pointer-coarse:min-h-11"
+          >
+            {label}
+          </MenuItem>
+        </Fragment>
+      ))}
     </MenuContent>
   )
 }

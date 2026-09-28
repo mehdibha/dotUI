@@ -2,8 +2,8 @@
 
 /* The studio panel mounted in /studio's slot: the panel page over the current
    design system, its chrome wired to the workspace. The picker lists the
-   shared link being viewed, the user's systems and the presets, and opens
-   at ?gallery=. */
+   unsaved slot, the user's systems and the presets, and opens at
+   ?gallery=. */
 
 import { useMemo, useRef, useState } from "react"
 import type { ReactNode, RefObject } from "react"
@@ -17,30 +17,22 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { ORIGIN } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { redo, remove, undo, useUndoRedo } from "./history"
-import { NameDialog } from "./name-dialog"
+import { createFrom, discard, redo, remove, undo, useUndoRedo } from "./history"
+import { NameDialog, saveRequest } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { pickerSections, rowSelection } from "./picker-sections"
-import { SystemMenu } from "./row-menus"
-import { keep, select, selectionKey, useCurrent } from "./selection"
+import { pickerSections } from "./picker-sections"
+import { RowMenu } from "./row-menus"
+import { keySelection, select, UNSAVED_NAME, useCurrent } from "./selection"
+import type { Selection } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import {
-  copyName,
-  create,
-  duplicate,
-  rename,
-  uniqueName,
-  useWorkspace,
-} from "./workspace"
-import type { DesignSystemDoc } from "./workspace"
+import { copyName, rename, uniqueName, useWorkspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-const open = (doc: DesignSystemDoc | undefined) =>
-  doc && select({ kind: "system", id: doc.id })
+const ORIGIN_VIEW: Selection = { kind: "preset", id: ORIGIN.id }
 
 function HistoryButton({
   label,
@@ -83,8 +75,8 @@ function HistoryButton({
   )
 }
 
-function UndoRedo({ id }: { id: string | undefined }) {
-  const { canUndo, canRedo } = useUndoRedo(id)
+function UndoRedo() {
+  const { canUndo, canRedo } = useUndoRedo()
   const undoRef = useRef<HTMLButtonElement>(null)
   const redoRef = useRef<HTMLButtonElement>(null)
   return (
@@ -121,10 +113,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const focusPicker = useRef<((key: string) => void) | null>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
 
-  const sections = useMemo(
-    () => pickerSections(current, workspace),
-    [current, workspace],
-  )
+  const sections = useMemo(() => pickerSections(workspace), [workspace])
 
   function setGalleryOpen(isOpen: boolean) {
     navigate({
@@ -140,55 +129,76 @@ export function StudioPanel({ className }: { className?: string }) {
     requestAnimationFrame(() => setNaming(request))
   }
 
-  function onDelete(id: string) {
-    remove(id, {
-      // Back from the toast to the restored row, so Esc and arrows work;
-      // to the picker's trigger once it closed.
-      afterUndo: () =>
-        requestAnimationFrame(() =>
-          focusPicker.current
-            ? focusPicker.current(selectionKey({ kind: "system", id }))
-            : triggerRef.current?.focus(),
-        ),
+  function askNew(title: string, name: string, source: Selection) {
+    askName({
+      title,
+      action: "Create",
+      name,
+      taken: workspace.systems.map((s) => s.name),
+      onSubmit: (name) => createFrom(name, source),
     })
   }
 
+  /** Back from a toast's Undo to the restored row, so Esc and arrows work;
+   *  to the picker's trigger once it closed. */
+  const focusRow = (key: string) => () =>
+    requestAnimationFrame(() =>
+      focusPicker.current
+        ? focusPicker.current(key)
+        : triggerRef.current?.focus(),
+    )
+
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
-    const sel = rowSelection(key, current)
-    const doc: DesignSystemDoc | undefined =
-      sel.kind === "system"
-        ? workspace.systems.find((s) => s.id === sel.id)
-        : undefined
+    const sel = keySelection(key)
+    if (sel.kind === "unsaved") {
+      const save = saveRequest(workspace)
+      return (
+        <RowMenu
+          name={UNSAVED_NAME}
+          actions={[
+            { label: "Save…", run: () => save && askName(save) },
+            {
+              label: "Discard",
+              danger: true,
+              run: () =>
+                afterClose(() => discard({ afterUndo: focusRow(key) })),
+            },
+          ]}
+        />
+      )
+    }
+    const doc =
+      sel.kind === "system" && workspace.systems.find((s) => s.id === sel.id)
     if (!doc) return null
-    const others = workspace.systems.filter((s) => s.id !== doc.id)
     return (
-      <SystemMenu
-        doc={doc}
-        onRename={() =>
-          askName({
-            title: "Rename design system",
-            action: "Save",
-            name: doc.name,
-            taken: others.map((s) => s.name),
-            onSubmit: (name) => {
-              keep(doc.id)
-              rename(doc.id, name)
-            },
-          })
-        }
-        onDuplicate={() =>
-          askName({
-            title: "Duplicate design system",
-            action: "Create",
-            name: copyName(doc.name),
-            taken: workspace.systems.map((s) => s.name),
-            onSubmit: (name) => {
-              keep(doc.id)
-              open(duplicate(doc.id, name))
-            },
-          })
-        }
-        onDelete={() => afterClose(() => onDelete(doc.id))}
+      <RowMenu
+        name={doc.name}
+        actions={[
+          {
+            label: "Rename…",
+            run: () =>
+              askName({
+                title: "Rename design system",
+                action: "Save",
+                name: doc.name,
+                taken: workspace.systems
+                  .filter((s) => s.id !== doc.id)
+                  .map((s) => s.name),
+                onSubmit: (name) => rename(doc.id, name),
+              }),
+          },
+          {
+            label: "Duplicate…",
+            run: () =>
+              askNew("Duplicate design system", copyName(doc.name), sel),
+          },
+          {
+            label: "Delete",
+            danger: true,
+            run: () =>
+              afterClose(() => remove(doc.id, { afterUndo: focusRow(key) })),
+          },
+        ]}
       />
     )
   }
@@ -196,8 +206,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const system: PanelSystem = {
     name: current.name,
     swatch: current.swatch,
-    tag: current.tag,
-    history: <UndoRedo id={current.doc?.id} />,
+    history: <UndoRedo />,
     triggerRef,
     renderSwitcher: (trigger) => (
       <PresetPicker
@@ -205,16 +214,13 @@ export function StudioPanel({ className }: { className?: string }) {
         onOpenChange={setGalleryOpen}
         sections={sections}
         selectedId={current.key}
-        onPick={(item) => select(rowSelection(item.id, current))}
+        onPick={(item) => select(keySelection(item.id))}
         onCreate={() =>
-          askName({
-            title: "New design system",
-            action: "Create",
-            name: uniqueName("Untitled", workspace.systems),
-            taken: workspace.systems.map((s) => s.name),
-            onSubmit: (name) =>
-              open(create({ name, from: ORIGIN.id, state: ORIGIN.state })),
-          })
+          askNew(
+            "New design system",
+            uniqueName("Untitled", workspace.systems),
+            ORIGIN_VIEW,
+          )
         }
         focusRef={focusPicker}
         withPreview
