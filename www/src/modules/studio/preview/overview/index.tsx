@@ -773,9 +773,9 @@ function ComponentsSection() {
   )
 }
 
-/* ------------------------------ Interaction ------------------------------- */
+/* ------------------------------ Interactivity ----------------------------- */
 
-function InteractionSection({
+function InteractivitySection({
   interactive,
   disabled,
 }: {
@@ -986,12 +986,12 @@ export function PresetOverview({
 
         <Section
           index="08"
-          panelId="details"
+          panelId="interactivity"
           icon={MousePointer2Icon}
-          title="Interaction"
+          title="Interactivity"
           description="Cursors signal what's actionable and what isn't."
         >
-          <InteractionSection
+          <InteractivitySection
             interactive={cursorInteractive}
             disabled={cursorDisabled}
           />
