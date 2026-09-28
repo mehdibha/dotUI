@@ -192,7 +192,7 @@ export function DevTweaker() {
   return (
     <>
       {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-110 sits
-          above every registry layer (popovers z-50, modals z-100): you tweak features that live
+          above every registry layer (popovers, drawers and modals at z-50): you tweak features that live
           *inside* those overlays, so the panel has to outrank them. See TOP_LAYER below. */}
       <button
         type="button"

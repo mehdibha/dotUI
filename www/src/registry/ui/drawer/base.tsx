@@ -6,6 +6,7 @@ import { OverlayTriggerStateContext } from "react-aria-components/Dialog"
 import { DismissButton } from "react-aria/Overlay"
 import { useIsHidden } from "react-aria/private/collections/Hidden"
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder"
+import { ariaHideOutside } from "react-aria/private/overlays/ariaHideOutside"
 import { useOverlay } from "react-aria/useOverlay"
 import { useOverlayTriggerState } from "react-stately"
 
@@ -115,6 +116,7 @@ function Drawer({
   const isHidden = useIsHidden()
   const { backdrop, overlay, popup, viewport } = useStyles()()
   const popupRef = React.useRef<HTMLDivElement>(null)
+  const [layer, setLayer] = React.useState<HTMLDivElement | null>(null)
   const contextState = React.useContext(OverlayTriggerStateContext)
   const localState = useOverlayTriggerState({
     isOpen,
@@ -132,6 +134,13 @@ function Drawer({
     { isOpen: state.isOpen, isDismissable, onClose: state.close },
     popupRef,
   )
+
+  // And its hiding, as its popovers do: opened from a modal, the drawer isn't
+  // made inert by it, and makes what's under it inert instead.
+  React.useEffect(() => {
+    if (state.isOpen && layer)
+      return ariaHideOutside([layer], { shouldUseInert: true })
+  }, [state.isOpen, layer])
 
   if (isHidden) {
     return <>{children}</>
@@ -165,7 +174,7 @@ function Drawer({
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
-              <div className={overlay()}>
+              <div ref={setLayer} className={overlay()}>
                 <DrawerPrimitive.Backdrop className={backdrop()} />
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
