@@ -5,7 +5,7 @@
 export const SEARCH_INDEX: Record<string, string[]> = {
 	color: ["Brand", "Keep exact", "Vividness", "Neutral", "Semantics", "Primary", "Primary › Primary"],
 	typography: ["Heading", "Body", "Mono"],
-	icons: ["Library", "Stroke", "Weight"],
+	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius"],
 	space: ["Density", "Unit"],
 	surfaces: ["Style", "Depth", "Page", "Glass"],
