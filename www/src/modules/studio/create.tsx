@@ -14,7 +14,6 @@ import { Redo2Icon, Undo2Icon } from "lucide-react"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-import { ORIGIN } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { createFrom, discard, redo, remove, undo, useUndoRedo } from "./history"
@@ -25,14 +24,11 @@ import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
 import { RowMenu } from "./row-menus"
 import { keySelection, select, UNSAVED_NAME, useCurrent } from "./selection"
-import type { Selection } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import { copyName, rename, uniqueName, useWorkspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
-
-const ORIGIN_VIEW: Selection = { kind: "preset", id: ORIGIN.id }
 
 function HistoryButton({
   label,
@@ -129,13 +125,14 @@ export function StudioPanel({ className }: { className?: string }) {
     requestAnimationFrame(() => setNaming(request))
   }
 
-  function askNew(title: string, name: string, source: Selection) {
+  function askNew(startFrom: string, name: string) {
     askName({
-      title,
+      title: "New design system",
       action: "Create",
       name,
       taken: workspace.systems.map((s) => s.name),
-      onSubmit: (name) => createFrom(name, source),
+      startFrom,
+      onSubmit: createFrom,
     })
   }
 
@@ -187,11 +184,7 @@ export function StudioPanel({ className }: { className?: string }) {
                 onSubmit: (name) => rename(doc.id, name),
               }),
           },
-          {
-            label: "Duplicate…",
-            run: () =>
-              askNew("Duplicate design system", copyName(doc.name), sel),
-          },
+          { label: "Duplicate…", run: () => askNew(key, copyName(doc.name)) },
           {
             label: "Delete",
             danger: true,
@@ -216,11 +209,7 @@ export function StudioPanel({ className }: { className?: string }) {
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
         onCreate={() =>
-          askNew(
-            "New design system",
-            uniqueName("Untitled", workspace.systems),
-            ORIGIN_VIEW,
-          )
+          askNew("current", uniqueName("Untitled", workspace.systems))
         }
         focusRef={focusPicker}
         withPreview
