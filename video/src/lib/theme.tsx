@@ -77,21 +77,9 @@ export function Hold({ label }: { label: string }) {
   return null
 }
 
-/* Font tokens name Google faces. The ones the film uses are self-hosted
-   (src/fonts.css), so a render never waits on the network; any other family
-   falls back to Google's stylesheet. The frame holds until each is loaded,
-   and never longer than FONT_TIMEOUT — a missing face beats a hung render. */
-const SELF_HOSTED = new Set([
-  "Inter",
-  "Source Serif 4",
-  "Space Grotesk",
-  "DM Sans",
-  "Fraunces",
-  "Newsreader",
-  "Plus Jakarta Sans",
-  "Mona Sans",
-  "Figtree",
-])
+/* Font tokens name Google-hosted faces; the frame holds until each is loaded
+   (the provider injects the same <link>s, idempotently), and never longer
+   than FONT_TIMEOUT — a missing face beats a render hung on the network. */
 const FONT_TIMEOUT = 20_000
 const ready = new Set<string>()
 const pending = new Map<string, Promise<void>>()
@@ -100,7 +88,6 @@ function loadFamily(family: string) {
   let p = pending.get(family)
   if (!p) {
     const stylesheet = new Promise<void>((resolve) => {
-      if (SELF_HOSTED.has(family)) return resolve()
       ensureFontStylesheets(document, [family])
       const id = `dotui-font-${family.replaceAll(" ", "-").toLowerCase()}`
       const link = document.getElementById(id) as HTMLLinkElement | null
