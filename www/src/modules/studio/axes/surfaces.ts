@@ -30,21 +30,50 @@ export const SURFACE_DEFAULTS = {
 }
 
 export const LAYERS_OPTIONS = [
-  { value: "same", label: "Same" },
-  { value: "grouped", label: "Grouped" },
-  { value: "tonal", label: "Tonal" },
+  { value: "same", label: "Same", description: "Cards share the page's tone" },
+  {
+    value: "grouped",
+    label: "Grouped",
+    description: "White cards on a gray page",
+  },
+  {
+    value: "tonal",
+    label: "Tonal",
+    description: "Cards shaded below the page",
+  },
 ]
 
 export const EDGE_OPTIONS = [
-  { value: "line", label: "Line" },
-  { value: "none", label: "None" },
+  {
+    value: "line",
+    label: "Line",
+    description: "A hairline around every surface",
+  },
+  {
+    value: "none",
+    label: "None",
+    description: "Shadows and tone do the separating",
+  },
 ]
 
 export const SHADOW_OPTIONS = [
-  { value: "flat", label: "Flat" },
-  { value: "subtle", label: "Subtle" },
-  { value: "raised", label: "Raised" },
-  { value: "floating", label: "Floating" },
+  { value: "flat", label: "Flat", description: "Only menus and dialogs cast" },
+  { value: "subtle", label: "Subtle", description: "Light shadows" },
+  { value: "raised", label: "Raised", description: "Cards lift off the page" },
+  { value: "floating", label: "Floating", description: "Deep, soft shadows" },
+]
+
+export const GLASS_OPTIONS = [
+  {
+    value: "solid",
+    label: "Solid",
+    description: "Opaque menus, popovers and toasts",
+  },
+  {
+    value: "glass",
+    label: "Glass",
+    description: "Translucent over a blurred backdrop",
+  },
 ]
 
 export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
@@ -61,31 +90,66 @@ type StyleKey = "surfaceLayers" | "surfaceEdge" | "surfaceShadow"
 export interface SurfaceStyle {
   id: string
   label: string
-  /** Who draws their surfaces this way. */
-  hint: string
+  /** What it looks like, and who draws their surfaces this way. */
+  description: string
   values: Record<StyleKey, string>
 }
 
 const style = (
   id: string,
   label: string,
-  hint: string,
+  description: string,
   surfaceLayers: string,
   surfaceEdge: string,
   surfaceShadow: string,
 ): SurfaceStyle => ({
   id,
   label,
-  hint,
+  description,
   values: { surfaceLayers, surfaceEdge, surfaceShadow },
 })
 
 export const SURFACE_STYLES: SurfaceStyle[] = [
-  style("outlined", "Outlined", "Vercel, shadcn", "same", "line", "subtle"),
-  style("soft", "Soft", "Linear, Stripe", "same", "line", "raised"),
-  style("elevated", "Elevated", "Fluent, Airbnb", "same", "none", "raised"),
-  style("grouped", "Grouped", "Polaris, Apple", "grouped", "none", "subtle"),
-  style("tonal", "Tonal", "Material", "tonal", "none", "flat"),
+  style(
+    "outlined",
+    "Outlined",
+    "Hairlines around flat surfaces. Vercel, shadcn.",
+    "same",
+    "line",
+    "subtle",
+  ),
+  style(
+    "soft",
+    "Soft",
+    "Hairlines with a soft lift. Linear, Stripe.",
+    "same",
+    "line",
+    "raised",
+  ),
+  style(
+    "elevated",
+    "Elevated",
+    "Shadows instead of lines. Fluent, Airbnb.",
+    "same",
+    "none",
+    "raised",
+  ),
+  style(
+    "grouped",
+    "Grouped",
+    "White cards on a gray page. Polaris, Apple.",
+    "grouped",
+    "none",
+    "subtle",
+  ),
+  style(
+    "tonal",
+    "Tonal",
+    "Cards shaded off the page, no lines. Material.",
+    "tonal",
+    "none",
+    "flat",
+  ),
 ]
 
 const STYLE_KEYS: StyleKey[] = ["surfaceLayers", "surfaceEdge", "surfaceShadow"]

@@ -17,7 +17,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Surfaces › Layers",
 		"Surfaces › Edge",
 		"Surfaces › Shadow",
-		"Surfaces › Glass",
+		"Surfaces › Overlays",
 		"Surfaces › Light page",
 		"Surfaces › Dark page",
 	],

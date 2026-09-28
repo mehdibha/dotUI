@@ -7,14 +7,21 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronsUpDownIcon,
+  RotateCcwIcon,
+} from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
   Disclosure,
   DisclosurePanel,
+  Label as RacLabel,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
+  Select as RacSelect,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -30,6 +37,7 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import {
   ColorPickerPopover,
   PanelPopover,
+  PanelPopoverBoundary,
   PanelPopoverTitle,
   useDraft,
   useMedia,
@@ -218,6 +226,142 @@ export function DialSelect({
       </DialPopover>
     </DialTrigger>
   )
+}
+
+/* --------------------------------- Picks ---------------------------------- */
+
+export interface DialPickOption {
+  value: string
+  label: string
+  description?: string
+  disabled?: boolean
+}
+
+const PICK_ITEM =
+  "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-2 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-disabled disabled:opacity-40"
+
+function PickItem({
+  option,
+  modified,
+}: {
+  option: DialPickOption
+  modified?: boolean
+}) {
+  return (
+    <RacListBoxItem
+      id={option.value}
+      textValue={option.label}
+      className={PICK_ITEM}
+    >
+      {({ isSelected }) => (
+        <>
+          <span className="flex min-w-0 flex-col gap-0.5">
+            <span className="flex items-center gap-1.5 text-[13px] font-medium text-fg/90">
+              {option.label}
+              {modified && <ModifiedDot />}
+            </span>
+            {option.description && (
+              <span className="text-xs leading-snug text-fg/55">
+                {option.description}
+              </span>
+            )}
+          </span>
+          <CheckIcon
+            className={cn("mt-px size-4 shrink-0", !isSelected && "invisible")}
+          />
+        </>
+      )}
+    </RacListBoxItem>
+  )
+}
+
+/** Options laid out in place, each with what it means. `value` undefined
+ *  selects nothing; `modified` marks the option the state was edited from. */
+export function DialPickList({
+  label,
+  value,
+  onChange,
+  options,
+  modified,
+}: {
+  label: string
+  value: string | undefined
+  onChange: (value: string) => void
+  options: DialPickOption[]
+  modified?: string
+}) {
+  return (
+    <RacListBox
+      aria-label={label}
+      selectionMode="single"
+      selectedKeys={value ? [value] : []}
+      onSelectionChange={(keys) => {
+        if (keys === "all") return
+        const next = keys.values().next().value
+        if (next) onChange(next as string)
+      }}
+      className="-mx-0.5 flex flex-col gap-0.5 outline-hidden"
+    >
+      {options.map((option) => (
+        <PickItem
+          key={option.value}
+          option={option}
+          modified={option.value === modified}
+        />
+      ))}
+    </RacListBox>
+  )
+}
+
+/** A setting as a plain line, Linear's settings style: the label left, a
+ *  compact picker right whose menu says what each option does. */
+export function DialPicker({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: DialPickOption[]
+}) {
+  const selected = options.find((option) => option.value === value)
+  return (
+    <RacSelect
+      selectedKey={value}
+      onSelectionChange={(key) => key !== null && onChange(String(key))}
+      disabledKeys={options.filter((o) => o.disabled).map((o) => o.value)}
+      className="flex h-9 w-full shrink-0 items-center justify-between gap-3 pr-1 pl-3"
+    >
+      <RacLabel className={DIAL_LABEL}>{label}</RacLabel>
+      <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
+        <span className="truncate">{selected?.label ?? value}</span>
+        <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
+      </RacButton>
+      <PanelPopoverBoundary.Provider value={null}>
+        <PanelPopoverTitle.Provider value={label}>
+          <PanelPopover
+            placement="bottom end"
+            offset={4}
+            showArrow={false}
+            className="w-64 min-w-0 overflow-y-auto p-1"
+          >
+            <RacListBox className="flex flex-col gap-0.5 outline-hidden">
+              {options.map((option) => (
+                <PickItem key={option.value} option={option} />
+              ))}
+            </RacListBox>
+          </PanelPopover>
+        </PanelPopoverTitle.Provider>
+      </PanelPopoverBoundary.Provider>
+    </RacSelect>
+  )
+}
+
+/** A full-bleed hairline between a popover's parts. */
+export function DialSeparator() {
+  return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
 }
 
 /* --------------------------------- Slider --------------------------------- */
@@ -683,7 +827,6 @@ export function DialColor({
 export interface DialOption {
   value: string
   label: React.ReactNode
-  disabled?: boolean
 }
 
 /** The segmented choice itself; the moving pill is the only motion. `null`
@@ -717,8 +860,7 @@ export function SegmentedGroup({
         <RacToggleButton
           key={option.value}
           id={option.value}
-          isDisabled={option.disabled}
-          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring disabled:cursor-disabled disabled:text-fg/25 pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
+          className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center gap-1.5">
