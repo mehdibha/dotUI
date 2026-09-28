@@ -1,18 +1,12 @@
 import { AbsoluteFill, useCurrentFrame } from "remotion"
 
-import { clamp01, ease, lerp, progress } from "../lib/motion"
+import { clamp01, ease, lerp, progress, random } from "../lib/motion"
 import { Stage } from "../lib/stage"
 import { BlurWords, HEADLINE, TOP_ANCHOR, TYPE } from "../lib/type"
 import { Chips } from "./export/chips"
 import { T } from "./export/data"
 import { ExportPiece } from "./export/handoff"
-import {
-  cameraAt,
-  editorPose,
-  onScreen,
-  terminalPose,
-  topCovered,
-} from "./export/layout"
+import { cameraAt, editorPose, onScreen, terminalPose } from "./export/layout"
 import { TerminalPlane } from "./export/planes"
 
 /* Export — init with the preset URL, add the components, the files fly into
@@ -22,22 +16,24 @@ export function Export() {
   const frame = useCurrentFrame()
   const cam = cameraAt(frame)
   return (
-    <Stage
-      gridOffset={[
-        -frame * 0.35 + cam.x * 0.25 - cam.rotateY * 8,
-        -frame * 0.1 + cam.y * 0.25,
-      ]}
-    >
-      <Glow frame={frame} />
-      <TerminalPlane />
-      {/* The closing pieces go through the handoff, exactly as End gets them. */}
-      <ExportPiece piece="editor" frame={frame} />
-      <Chips frame={frame} />
-      <Scrim amount={topCovered(frame)} />
-      <Title frame={frame} />
-      <ExportPiece piece="line" frame={frame} />
-      <ExportPiece piece="pill" frame={frame} />
-    </Stage>
+    <AbsoluteFill>
+      <Stage
+        gridOffset={[
+          -frame * 0.35 + cam.x * 0.25 - cam.rotateY * 8,
+          -frame * 0.1 + cam.y * 0.25,
+        ]}
+      >
+        <Glow frame={frame} />
+        <TerminalPlane />
+        {/* The closing pieces go through the handoff, exactly as End gets them. */}
+        <ExportPiece piece="editor" frame={frame} />
+        <Chips frame={frame} />
+        <Title frame={frame} />
+        <ExportPiece piece="line" frame={frame} />
+        <ExportPiece piece="pill" frame={frame} />
+      </Stage>
+      <Dither frame={frame} />
+    </AbsoluteFill>
   )
 }
 
@@ -68,15 +64,20 @@ function Title({ frame }: { frame: number }) {
   )
 }
 
-/** A clean band for the headline when the terminal fills the top. */
-function Scrim({ amount }: { amount: number }) {
-  if (amount <= 0) return null
+const NOISE = `url("data:image/svg+xml,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.9' stitchTiles='stitch'/><feColorMatrix values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/><feComponentTransfer><feFuncR type='discrete' tableValues='0 1'/><feFuncG type='discrete' tableValues='0 1'/><feFuncB type='discrete' tableValues='0 1'/></feComponentTransfer></filter><rect width='256' height='256' filter='url(#n)'/></svg>",
+)}")`
+
+/* Binary grain at 0.8 % — ±1 LSB, moving every frame — so the re-encode
+   can't band the big near-black gradients (glow, vignette). */
+function Dither({ frame }: { frame: number }) {
   return (
     <AbsoluteFill
       style={{
-        opacity: amount,
-        background:
-          "linear-gradient(180deg, rgba(8,8,10,0.97) 0%, rgba(8,8,10,0.9) 20%, rgba(8,8,10,0) 40%)",
+        backgroundImage: NOISE,
+        backgroundPosition: `${Math.floor(random(frame, 1) * 256)}px ${Math.floor(random(frame, 2) * 256)}px`,
+        opacity: 0.008,
+        pointerEvents: "none",
       }}
     />
   )

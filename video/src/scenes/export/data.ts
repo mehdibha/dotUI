@@ -9,7 +9,7 @@ export const T = {
   addEnter: 150,
   fly: 180,
   open: 240,
-  closer: 232,
+  closer: 228,
   pill: 300,
 } as const
 
@@ -33,7 +33,7 @@ export const SANS = '"Geist Variable", ui-sans-serif, system-ui, sans-serif'
    is ever magnified on screen, so the 3D layer never upscales. */
 export const TERM = {
   cols: 86,
-  rows: 18,
+  rows: 10,
   font: 24,
   line: 36,
   padX: 36,
@@ -55,8 +55,7 @@ export const TOKEN =
   "q1YqU7Iy0VEqVrKqVkoqSsxLUbJSUjYwMDdKM1XSUUoqLSnJz3POz8kvAoonJien5pUAhZMzUpOzk_IrMCSKElMy8zFEi1NzUpNLMrEYBJcJTk1Ftbk4JzMltQhTQ3lmSXIGmnBtLQA"
 export const INIT_TYPED = "npx shadcn@latest init "
 export const INIT_PASTED = `"https://dotui.org/r/init?preset=${TOKEN}"`
-export const ADD_TYPED =
-  "npx shadcn@latest add @dotui/button @dotui/card @dotui/select"
+export const ADD_TYPED = "npx shadcn@latest add @dotui/button @dotui/card"
 
 /** Frame each typed key lands on, from `from`; `gap` spaces the keys. */
 function keyFrames(
@@ -91,17 +90,13 @@ export type OutLine = {
   file?: number
 }
 
-/* What the add writes — @dotui/button, card and select with their registry
+/* What the add writes — @dotui/button and card with their registry
    dependencies, as the CLI lists them. `dir` is the path before the name. */
 export const FILES = [
   { name: "button.tsx", dir: "src/components/ui/" },
   { name: "loader.tsx", dir: "src/components/ui/" },
   { name: "card.tsx", dir: "src/components/ui/" },
   { name: "text.tsx", dir: "src/components/ui/" },
-  { name: "select.tsx", dir: "src/components/ui/" },
-  { name: "field.tsx", dir: "src/components/ui/" },
-  { name: "list-box.tsx", dir: "src/components/ui/" },
-  { name: "popover.tsx", dir: "src/components/ui/" },
   { name: "focus-styles.ts", dir: "src/lib/" },
 ] as const
 
@@ -194,7 +189,7 @@ export const ADD_ROW =
   INIT_ROWS + OUTPUT.findIndex((line) => line.kind === "command")
 export const ADD_PROMPT_AT = OUTPUT.find((l) => l.kind === "command")!.at
 export const ADD_KEYS = keyFrames(ADD_TYPED, ADD_PROMPT_AT + 3, 29, (_, r) =>
-  r < 0.7 ? 0.5 : 0.75,
+  r < 0.7 ? 0.6 : 0.9,
 )
 
 /** The prompt that comes back when the add is done. */
@@ -207,10 +202,6 @@ export const FILE_ROW = FILES.map(
 )
 /** Column where each file's name starts. */
 export const FILE_COL = FILES.map((f) => 4 + f.dir.length)
-
-/** Frame each file lifts out of the terminal, and its flight length. */
-export const FLY_AT = FILES.map((_, i) => T.fly + i * 4)
-export const FLIGHT = 42
 
 /* The editor, in design px. */
 export const EDITOR = {
@@ -266,6 +257,19 @@ export const LAND_ROW = FILES.map((f, i) => {
   const own = TREE.findIndex((r) => r.file === i)
   return own >= 0 ? own : TREE.findIndex((r) => r.name === "lib")
 })
+
+/** Each file's place in the tree's order, which the card column takes. */
+export const SLOT = FILES.map((_, i) =>
+  [...LAND_ROW].sort((a, b) => a - b).indexOf(LAND_ROW[i]!),
+)
+
+/* Each file's card lifts off its line in the CLI's order (FLY_AT), rises
+   into a column between the windows in the tree's order (RISE), holds there
+   to be read, then files into the tree in that order (DEPART_AT). */
+export const FLY_AT = FILES.map((_, i) => T.fly + i * 3)
+export const RISE = 14
+export const DEPART_AT = SLOT.map((k) => T.fly + 30 + k * 3)
+export const DESCEND = 14
 
 /** x of a row's name, editor-local: padding, indent, chevron, icon, gap. */
 export const nameX = (depth: number) => 16 + depth * EDITOR.indent + 20 + 22 + 8

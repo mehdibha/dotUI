@@ -16,6 +16,8 @@ export interface Pose {
   rx?: number
   ry?: number
   rz?: number
+  /** How far the move into this pose pulls back mid-way (default RHO). */
+  rho?: number
 }
 
 export type CameraKey = readonly [
@@ -37,7 +39,7 @@ function view(pose: Pose) {
   }
 }
 
-function zoomPath(a: Pose, b: Pose, t: number) {
+function zoomPath(a: Pose, b: Pose, t: number, rho = RHO) {
   const v0 = view(a)
   const v1 = view(b)
   const dx = v1.cx - v0.cx
@@ -49,20 +51,20 @@ function zoomPath(a: Pose, b: Pose, t: number) {
       cy: lerp(v0.cy, v1.cy, t),
       w: v0.w * Math.pow(v1.w / v0.w, t),
     }
-  const r2 = RHO * RHO
+  const r2 = rho * rho
   const d1 = Math.sqrt(d2)
   const b0 = (v1.w * v1.w - v0.w * v0.w + r2 * r2 * d2) / (2 * v0.w * r2 * d1)
   const b1 = (v1.w * v1.w - v0.w * v0.w - r2 * r2 * d2) / (2 * v1.w * r2 * d1)
   const r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0)
   const r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1)
-  const s = t * ((r1 - r0) / RHO)
+  const s = t * ((r1 - r0) / rho)
   const u =
     (v0.w / (r2 * d1)) *
-    (Math.cosh(r0) * Math.tanh(RHO * s + r0) - Math.sinh(r0))
+    (Math.cosh(r0) * Math.tanh(rho * s + r0) - Math.sinh(r0))
   return {
     cx: v0.cx + u * dx,
     cy: v0.cy + u * dy,
-    w: (v0.w * Math.cosh(r0)) / Math.cosh(RHO * s + r0),
+    w: (v0.w * Math.cosh(r0)) / Math.cosh(rho * s + r0),
   }
 }
 
@@ -83,7 +85,7 @@ export function shotAt(frame: number, track: readonly CameraKey[]): Shot {
   const [f0, a] = track[Math.max(0, i - 1)]!
   const [f1, b, curve = ease.camera] = track[Math.min(i, track.length - 1)]!
   const t = f1 === f0 ? 1 : curve(clamp01((frame - f0) / (f1 - f0)))
-  const v = zoomPath(a, b, t)
+  const v = zoomPath(a, b, t, b.rho)
   return {
     cx: v.cx,
     cy: v.cy,

@@ -2,7 +2,8 @@ import { AbsoluteFill, useCurrentFrame } from "remotion"
 
 import { ease, lerp, progress } from "../lib/motion"
 import { Stage } from "../lib/stage"
-import { Bloom, Dot, Ring } from "./open/dot"
+import { Dot, Ring } from "./open/dot"
+import { Ground } from "./open/ground"
 import { useLayout } from "./open/measure"
 import { Sentence } from "./open/sentence"
 import {
@@ -30,9 +31,9 @@ export function Open() {
   const s = pushAt(frame)
 
   return (
-    <Stage grid={false}>
+    <Stage grid={false} vignette={false}>
+      <Ground x={dot.x} y={dot.y} d={dot.d} light={dot.light} />
       {probe}
-      <Bloom x={dot.x} y={dot.y} d={dot.d} light={dot.light} />
       <AbsoluteFill
         style={{
           transform: `scale(${s.toFixed(5)})`,

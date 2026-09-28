@@ -24,6 +24,8 @@ import { BUTTON_SOURCE, COMPONENTS_JSON } from "./source"
 const BUTTON = tokenizeTsx(BUTTON_SOURCE.trimEnd())
 const CONFIG = tokenizeTsx(COMPONENTS_JSON)
 const OPENED = TREE.findIndex((r) => r.name === "button.tsx")
+/** The tv() call through the secondary variant: what the closing push reads. */
+const FOCUS = { from: 10, to: 17 } as const
 
 /** Lines of button.tsx scrolled past: eases in, then keeps rolling. */
 function codeScroll(frame: number) {
@@ -35,6 +37,7 @@ function codeScroll(frame: number) {
 
 export function Editor({ frame }: { frame: number }) {
   const open = frame >= T.open
+  const focus = progress(frame, 272, 44, ease.soft)
   return (
     <Window
       width={EDITOR.w}
@@ -62,6 +65,10 @@ export function Editor({ frame }: { frame: number }) {
           <Code
             lines={BUTTON}
             reveal={(i) => progress(frame, T.open + 3 + i * 1.4, 22, ease.out)}
+            dim={(i) =>
+              i >= FOCUS.from && i <= FOCUS.to ? 1 : 1 - 0.55 * focus
+            }
+            band={{ ...FOCUS, amount: focus }}
             scroll={codeScroll(frame)}
             opacity={1}
           />
@@ -70,14 +77,14 @@ export function Editor({ frame }: { frame: number }) {
       </div>
       <Cursor
         path={[
-          [206, 900, 760],
-          [236, 190, rowCentre(frame, OPENED)],
-          [252, 190, rowCentre(frame, OPENED)],
-          [290, 250, rowCentre(frame, OPENED) + 90],
+          [226, 520, 600],
+          [238, 190, rowCentre(frame, OPENED)],
+          [244, 190, rowCentre(frame, OPENED)],
+          [266, 250, rowCentre(frame, OPENED) + 80],
         ]}
         clicks={[T.open]}
-        from={206}
-        to={284}
+        from={226}
+        to={262}
         size={1.25}
       />
     </Window>
@@ -89,9 +96,9 @@ function rowCentre(frame: number, index: number) {
   return row.top + row.height / 2
 }
 
-/** A soft light passing over the glass as the file opens. */
+/** A soft light passing over the code as the closing push begins. */
 function Sweep({ frame }: { frame: number }) {
-  const t = progress(frame, T.open + 2, 56, ease.soft)
+  const t = progress(frame, 268, 64, ease.soft)
   if (t <= 0 || t >= 1) return null
   return (
     <div
@@ -190,13 +197,11 @@ function Sidebar({ frame }: { frame: number }) {
                   ? "rgba(121,184,255,0.17)"
                   : selected
                     ? "rgba(255,255,255,0.06)"
-                    : `rgba(121,184,255,${(0.26 * flash).toFixed(3)})`,
+                    : `rgba(121,184,255,${(0.2 * flash).toFixed(3)})`,
               boxShadow:
                 selected && open
                   ? "inset 0 0 0 1px rgba(121,184,255,0.38)"
-                  : flash > 0.01
-                    ? `inset 0 0 0 1px rgba(121,184,255,${(0.4 * flash).toFixed(3)})`
-                    : undefined,
+                  : undefined,
             }}
           >
             <TreeItem row={row} selected={selected && open} />
@@ -211,7 +216,7 @@ function Sidebar({ frame }: { frame: number }) {
 function flashAt(frame: number, file: number) {
   const d = frame - landAt(file)
   if (d < 0) return 0
-  return 1 - progress(d, 5, 36, ease.out)
+  return 1 - progress(d, 2, 20, ease.out)
 }
 
 function TreeItem({ row, selected }: { row: TreeRow; selected: boolean }) {
@@ -346,12 +351,18 @@ function Tab({
 function Code({
   lines,
   reveal,
+  dim = () => 1,
+  band,
   scroll,
   opacity,
 }: {
   lines: ReturnType<typeof tokenizeTsx>
   /** Per-line entrance, 0→1. */
   reveal: (line: number) => number
+  /** Per-line brightness, for lines out of focus. */
+  dim?: (line: number) => number
+  /** A highlighted run of lines. */
+  band?: { from: number; to: number; amount: number }
   scroll: number
   opacity: number
 }) {
@@ -367,6 +378,19 @@ function Code({
         opacity,
       }}
     >
+      {band && band.amount > 0.01 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: (band.from - scroll) * EDITOR.line - 6,
+            height: (band.to - band.from + 1) * EDITOR.line + 12,
+            background: `rgba(121,184,255,${(0.055 * band.amount).toFixed(3)})`,
+            boxShadow: `inset 3px 0 0 rgba(121,184,255,${(0.6 * band.amount).toFixed(3)})`,
+          }}
+        />
+      ) : null}
       {lines.map((tokens, i) => {
         const y = (i - scroll) * EDITOR.line
         if (y < -EDITOR.line || y > EDITOR.h) return null
@@ -381,7 +405,7 @@ function Code({
               left: 0,
               top: y,
               height: EDITOR.line,
-              opacity: t,
+              opacity: t * dim(i),
               filter: blur > 0.1 ? `blur(${blur.toFixed(2)}px)` : undefined,
               transform: t < 1 ? `translateX(${(1 - t) * -16}px)` : undefined,
             }}

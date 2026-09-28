@@ -4,21 +4,21 @@ import { Appearance } from "@/components/showcase/appearance"
 import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { PanelPage } from "@/modules/studio/page"
-import MusicPlayer from "@/modules/studio/preview/blocks/music-player"
 import { CHAPTERS } from "@/modules/studio/state"
 
 import { studioAt } from "../../lib/studio"
 import { preset, Theme } from "../../lib/theme"
 import type { State } from "../../lib/theme"
 import { PANEL_CSS } from "../axes/panel-css"
-import { stateAt } from "../axes/timeline"
-import { Newsletter } from "../compose/steps"
-import { SCREEN_CSS } from "../patterns/screen"
+import { BUILT } from "../axes/timeline"
+import { IconsReady, LOOK, LOOK_MODE, Newsletter } from "../compose/steps"
+import { SCREEN_CSS, Surface } from "../patterns/screen"
+import { TILE_H, TILE_W } from "../patterns/tiles"
 import { TileContent } from "../wall/tiles"
 
 /* The film's cast, one last time, in the looks each scene showed them in:
    Wall's components, Presets' cards, the studio panel as Axes left it, the
-   Compose card, a Patterns product. Each renders at its largest on-screen
+   Compose card in the system built there, a Patterns product. Each renders at its largest on-screen
    size (`zoom`), so the vortex only ever scales it down. */
 
 export type Actor = {
@@ -28,8 +28,6 @@ export type Actor = {
   zoom: number
   render: () => ReactNode
 }
-
-const AXES_FINAL = stateAt(1079)
 
 function Chip({ kind }: { kind: string }) {
   return (
@@ -119,20 +117,18 @@ export const CAST = {
           className="flex flex-col overflow-hidden rounded-[18px] border border-white/10 bg-bg p-2 text-fg shadow-2xl"
           style={{ width: 256, height: 480 }}
         >
-          <PanelPage
-            chapters={CHAPTERS.slice(0, 2)}
-            studio={studioAt(AXES_FINAL)}
-          />
+          <PanelPage chapters={CHAPTERS.slice(0, 2)} studio={studioAt(BUILT)} />
         </div>
       </Theme>
     ),
   },
   compose: {
-    w: 400,
-    h: 250,
+    w: 420,
+    h: 260,
     zoom: 2,
     render: () => (
-      <Theme mode="light">
+      <Theme state={LOOK} mode={LOOK_MODE}>
+        <IconsReady />
         <div style={{ width: 400 }}>
           <Newsletter />
         </div>
@@ -140,20 +136,17 @@ export const CAST = {
     ),
   },
   product: {
-    w: 1440,
-    h: 900,
+    w: TILE_W,
+    h: TILE_H,
     zoom: 0.46,
+    // Patterns' own surface: it also stops the player's wall-clock timer.
     render: () => (
       <div
-        className="pt-screen overflow-hidden rounded-[28px]"
-        style={{ width: 1440, height: 900, contain: "strict" }}
+        className="relative overflow-hidden rounded-[28px]"
+        style={{ width: TILE_W, height: TILE_H }}
       >
         <style>{SCREEN_CSS}</style>
-        <Theme mode="light">
-          <div className="relative h-full w-full bg-bg">
-            <MusicPlayer />
-          </div>
-        </Theme>
+        <Surface content="music-player" state={{}} mode="light" />
       </div>
     ),
   },

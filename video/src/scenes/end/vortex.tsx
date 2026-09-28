@@ -5,6 +5,7 @@ import { EXPORT_LAST, exportRects, ExportPiece } from "../export/handoff"
 import type { ExportPieceId } from "../export/handoff"
 import { CAST } from "./cast"
 import type { CastId } from "./cast"
+import type { Light } from "./light"
 import { CX, CY, T } from "./timeline"
 
 /* Everything collapses into the dot. Export's last frame is the first ring:
@@ -78,11 +79,13 @@ function orbit(body: Orbit, frame: number) {
 
 function look(body: Orbit, frame: number) {
   const o = orbit(body, frame)
+  const burn = clamp01((1 - o.fall) ** 6 * 2)
   return {
     ...o,
-    scale: body.size * o.depth * o.fall ** 0.85,
     spin: o.turn * 0.4 * (180 / Math.PI),
-    burn: clamp01((1 - o.fall) ** 6 * 2),
+    burn,
+    // A burning body contracts into its light faster than it falls.
+    scale: body.size * o.depth * o.fall ** 0.85 * (1 - 0.45 * burn),
     shade: clamp01((1 - o.depth) * 1.6),
     fade: 1 - clamp01((o.u - 0.9) / 0.1),
   }
@@ -178,9 +181,29 @@ const DUST: Speck[] = [
 const onFrame = (x: number, y: number, radius: number) =>
   x + radius > 0 && x - radius < 1920 && y + radius > 0 && y - radius < 1080
 
-function filterOf(shade: number, burn: number) {
-  const k = (1 - 0.55 * shade) * (1 + 1.4 * burn)
-  return Math.abs(k - 1) > 0.005 ? `brightness(${k.toFixed(3)})` : undefined
+/** Depth shade and burn. `scale` converts the melt's blur (screen px, up
+ *  to 2.5) into the layer's own space. */
+function filterOf(shade: number, burn: number, scale: number) {
+  const k = (1 - 0.2 * shade) * (1 + 0.6 * burn)
+  const blur = (2.5 * burn) / Math.max(scale, 0.05)
+  return (
+    [
+      Math.abs(k - 1) > 0.005 ? `brightness(${k.toFixed(3)})` : "",
+      burn > 0.01 ? `blur(${blur.toFixed(2)}px)` : "",
+    ]
+      .filter(Boolean)
+      .join(" ") || undefined
+  )
+}
+
+/** A burning body melts from its edges into a soft core: an elliptical mask
+ *  (`shape` is the ellipse through the body's corners) that closes as it
+ *  burns, so it never fades as a flat slab. */
+function meltOf(burn: number, shape: string) {
+  if (burn < 0.005) return undefined
+  const inner = 100 * (1 - burn) ** 1.3
+  const outer = inner + 1 + 45 * burn
+  return `radial-gradient(${shape}, #000 ${inner.toFixed(2)}%, transparent ${outer.toFixed(2)}%)`
 }
 
 export function Vortex({ frame }: { frame: number }) {
@@ -222,17 +245,23 @@ function PieceLayer({
   // The line leaves the way every line in the film does: blur out, cubic-in.
   const out = body.piece === "line" ? progress(frame, 0, 18, ease.in) : 0
   const filters = [
-    filterOf(p.shade, p.burn),
+    filterOf(p.shade, p.burn, p.scale),
     out > 0.01 ? `blur(${(out * 14).toFixed(2)}px)` : undefined,
   ].filter(Boolean)
+  const rect = RECTS[body.piece]
+  const mask = meltOf(
+    p.burn,
+    `${(rect.width / Math.SQRT2).toFixed(1)}px ${(rect.height / Math.SQRT2).toFixed(1)}px at ${rect.cx.toFixed(1)}px ${rect.cy.toFixed(1)}px`,
+  )
   return (
     <div
       style={{
         position: "absolute",
         inset: 0,
+        maskImage: mask,
         transformOrigin: `${body.x}px ${body.y}px`,
         transform: `translate(${(p.x - body.x).toFixed(2)}px, ${(p.y - body.y).toFixed(2)}px) rotate(${p.spin.toFixed(3)}deg) scale(${p.scale.toFixed(4)})`,
-        opacity: p.fade * (1 - out) * (1 - 0.85 * p.burn),
+        opacity: p.fade * (1 - out),
         filter: filters.length ? filters.join(" ") : undefined,
       }}
     >
@@ -276,8 +305,9 @@ function BillboardLayer({ body, p }: { body: Billboard; p: Look }) {
         width: w,
         height: h,
         transform: `rotate(${p.spin.toFixed(3)}deg) scale(${p.scale.toFixed(4)})`,
-        opacity: p.fade * (1 - 0.85 * p.burn),
-        filter: filterOf(p.shade, p.burn),
+        opacity: p.fade,
+        filter: filterOf(p.shade, p.burn, p.scale),
+        maskImage: meltOf(p.burn, "ellipse farthest-corner at 50% 50%"),
       }}
     >
       <div style={{ zoom: actor.zoom, width: actor.w, height: actor.h }}>
@@ -357,24 +387,6 @@ function Streaks({ frame }: { frame: number }) {
       const strength = clamp01((speed - 4) / 30)
       trail(body, frame, 7, 1.4 + 3 * strength, 0.2 + 0.5 * strength)
     }
-    // A body burning into the core becomes a point of light as it fades.
-    for (const body of BODIES) {
-      const p = look(body, frame)
-      if (p.u >= 1 || p.burn < 0.02) continue
-      const radius = 30 + 160 * p.scale
-      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius)
-      glow.addColorStop(
-        0,
-        `rgba(255,255,255,${(0.55 * p.burn * p.fade).toFixed(3)})`,
-      )
-      glow.addColorStop(
-        0.25,
-        `rgba(255,255,255,${(0.16 * p.burn * p.fade).toFixed(3)})`,
-      )
-      glow.addColorStop(1, "rgba(255,255,255,0)")
-      ctx.fillStyle = glow
-      ctx.fillRect(p.x - radius, p.y - radius, radius * 2, radius * 2)
-    }
     ctx.fillStyle = "#fff"
     for (const d of DUST) {
       // An arm's streak keeps draining into the core a few frames after its
@@ -408,6 +420,28 @@ function Streaks({ frame }: { frame: number }) {
       style={{ position: "absolute", inset: 0, width: 1920, height: 1080 }}
     />
   )
+}
+
+/** Each burning body's light, drawn over the bodies (see Lights). */
+export function burnLights(frame: number): Light[] {
+  if (frame >= T.impact) return []
+  return BODIES.flatMap((body) => {
+    // The line has already blurred out; it leaves no light.
+    if (body.kind === "piece" && body.piece === "line") return []
+    const p = look(body, frame)
+    if (p.u >= 1 || p.burn < 0.01) return []
+    const [w, h] =
+      body.kind === "piece"
+        ? [RECTS[body.piece].width, RECTS[body.piece].height]
+        : [
+            CAST[body.cast].w * CAST[body.cast].zoom,
+            CAST[body.cast].h * CAST[body.cast].zoom,
+          ]
+    // Its heart ignites: a hot core with a long tail, over the melting body.
+    const reach = (Math.hypot(w, h) / 2) * p.scale
+    const k = p.burn * (0.4 + 0.6 * p.fade)
+    return [{ x: p.x, y: p.y, radius: 40 + reach * 2.2, alpha: 2.4 * k }]
+  })
 }
 
 /** Brightness of the core from arrivals so far: a running total plus a flare per landing. */

@@ -4,17 +4,33 @@ import { Kbd } from "@/registry/ui/kbd"
 
 import { clamp01, ease, hold, lerp, progress } from "../../lib/motion"
 import { Theme } from "../../lib/theme"
+import { TYPE } from "../../lib/type"
+import { LOOK, LOOK_MODE } from "./steps"
 
 /* What the keyboard and a screen reader get for free: a key pressed on the
    beat, and the announcement read straight off the live DOM (the label and
-   description React Aria wired to the input, the button's name). Sized for a
-   phone: the keycap's legend and the caption land at 33–34 px. */
+   description React Aria wired to the input, the button's name). Proof, so
+   it lands at the film's CTA size: legend and caption at TYPE.cta. */
 
 const SANS = '"Geist Variable", ui-sans-serif, system-ui, sans-serif'
 const KEY_ZOOM = 3
-const CAPTION = 34
-const PILL_H = 84
-const PILL_W = 720
+const CAPTION = TYPE.cta
+const ROW_H = 120
+const PILL_PAD = { left: 30, right: 38 }
+const ICON_GAP = 20
+
+/** Sizes the caption pill to its longest announcement (set imperatively). */
+export function fitRow(row: HTMLElement) {
+  const pill = row.querySelector<HTMLElement>("[data-pill]")
+  if (!pill) return
+  const widest = Math.max(
+    0,
+    ...[...row.querySelectorAll<HTMLElement>("[data-said]")].map(
+      (el) => el.offsetWidth,
+    ),
+  )
+  pill.style.width = `${PILL_PAD.left + CAPTION + ICON_GAP + widest + PILL_PAD.right}px`
+}
 
 export function A11yRow({
   ref,
@@ -46,7 +62,7 @@ export function A11yRow({
       ? Math.max(acc, d < 2 ? clamp01((d + 2) / 4) : 1 - ease.out((d - 2) / 10))
       : acc
   }, 0)
-  const blur = (1 - inT) * 10 + outT * 10
+  const blur = (1 - inT) * 8 + outT * 8
   return (
     <div
       ref={ref}
@@ -55,7 +71,7 @@ export function A11yRow({
         left: "50%",
         display: shown > 0 ? "flex" : "none",
         alignItems: "center",
-        gap: 26,
+        gap: 28,
         opacity: shown,
         filter: blur > 0.05 ? `blur(${blur}px)` : undefined,
         transform: `translateX(-50%) translateY(${(1 - inT) * 14}px)`,
@@ -65,29 +81,30 @@ export function A11yRow({
         style={{
           transform: `translateY(${down * 2}px) scale(${1 - down * 0.04})`,
           zoom: KEY_ZOOM,
-          width: 44,
-          height: 28,
+          height: ROW_H / KEY_ZOOM,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Theme mode="light" state={{ kbdTreatment: "keycap" }}>
-          <Kbd className="h-7 w-11 justify-center px-0 text-[0.6875rem]">
+        <Theme mode={LOOK_MODE} state={{ ...LOOK, kbdTreatment: "keycap" }}>
+          <Kbd className="h-10 min-w-16 justify-center px-3 font-sans text-base text-fg">
             {label}
           </Kbd>
         </Theme>
       </div>
       <div
+        data-pill=""
         style={{
           position: "relative",
-          height: PILL_H,
-          width: PILL_W,
-          padding: "0 30px 0 26px",
+          // The key comes first; the reader's line opens as it's pressed.
+          opacity: progress(frame, lines[0]! - 4, 14, ease.out),
+          height: ROW_H,
+          padding: `0 ${PILL_PAD.right}px 0 ${PILL_PAD.left}px`,
           display: "flex",
           alignItems: "center",
-          gap: 18,
-          borderRadius: 22,
+          gap: ICON_GAP,
+          borderRadius: 30,
           background: "rgba(255,255,255,0.07)",
           boxShadow:
             "inset 0 0 0 1px rgba(255,255,255,0.1), 0 24px 60px -24px rgba(0,0,0,0.8)",
@@ -98,7 +115,7 @@ export function A11yRow({
         }}
       >
         <Speaker />
-        <div style={{ position: "relative", flex: 1, height: PILL_H }}>
+        <div style={{ position: "relative", flex: 1, height: ROW_H }}>
           {lines.map((at, i) => {
             const next = lines[i + 1] ?? Infinity
             const t = progress(frame, at + (i ? 5 : 0), 16, ease.out)
@@ -108,16 +125,17 @@ export function A11yRow({
               <span
                 key={at}
                 ref={refs[i]}
+                data-said=""
                 style={{
                   position: "absolute",
                   left: 0,
                   top: 0,
-                  lineHeight: `${PILL_H}px`,
+                  lineHeight: `${ROW_H}px`,
                   whiteSpace: "nowrap",
                   opacity: o,
                   filter:
                     o < 0.99
-                      ? `blur(${lerp(8, 0, t) + gone * 8}px)`
+                      ? `blur(${Math.min(8, lerp(8, 0, t) + gone * 8)}px)`
                       : undefined,
                 }}
               />

@@ -38,7 +38,8 @@ export function waveFront(frame: number) {
 const ANGLE = (Math.atan2(DIR.x, -DIR.y) * 180) / Math.PI
 /** Half a tile's extent along the wave. */
 const REACH = (TILE_W / 2) * Math.abs(DIR.x) + (TILE_H / 2) * Math.abs(DIR.y)
-const FEATHER = 44
+/** Short, so the two looks never ghost over each other across the seam. */
+const FEATHER = 14
 
 /** How far the front has got into a tile, in tile px along the wave. */
 const into = (tile: Tile, front: number) =>
@@ -55,15 +56,16 @@ export function crossing(tile: Tile, front: number) {
   }
 }
 
-const AHEAD = 170
-const BEHIND = 110
+const AHEAD = 120
+const BEHIND = 40
 
-/** The leading edge's light, in tile px: a bright seam and a glow thrown ahead. */
+/** The leading edge's light, in tile px: a thin bright line on the dark side
+    of the seam, warm light thrown into the dark ahead of it, and a trace on
+    the light side (added light on a light surface clips to white). */
 export function glint(tile: Tile, front: number) {
   const d = into(tile, front)
   if (d < -AHEAD || d > 2 * REACH + BEHIND) return null
-  const seam = d - FEATHER / 2
-  return `linear-gradient(${ANGLE}deg, transparent ${seam - BEHIND}px, rgba(255,248,242,0.22) ${seam - 14}px, rgba(255,252,250,0.9) ${seam}px, rgba(255,226,210,0.26) ${seam + 8}px, rgba(255,210,190,0.07) ${seam + 64}px, transparent ${seam + AHEAD}px)`
+  return `linear-gradient(${ANGLE}deg, transparent ${d - FEATHER - BEHIND}px, rgba(255,248,242,0.05) ${d - FEATHER}px, rgba(255,252,248,0.8) ${d + 1}px, rgba(255,236,222,0.16) ${d + 6}px, rgba(255,214,192,0.05) ${d + 40}px, transparent ${d + AHEAD}px)`
 }
 
 /** A screen rises a touch once the front has passed it, then settles (px toward the viewer). */

@@ -1,89 +1,123 @@
+import { Easing } from "remotion"
+
 import { FileCodeIcon } from "@/registry/icons"
 
+import { clamp01, ease, lerp, progress, random } from "../../lib/motion"
 import {
-  clamp01,
-  ease,
-  lerp,
-  progress,
-  random,
-  springAt,
-} from "../../lib/motion"
-import { C, EDITOR, FILES, FLIGHT, FLY_AT, SANS, TERM, TREE } from "./data"
+  C,
+  DEPART_AT,
+  DESCEND,
+  EDITOR,
+  FILES,
+  FLY_AT,
+  RISE,
+  SANS,
+  SLOT,
+  T,
+  TERM,
+  TREE,
+} from "./data"
 import {
   editorPose,
-  flight,
+  landAt,
   onScreen,
   terminalFileAnchor,
   terminalPose,
   treeFileAnchor,
 } from "./layout"
 
-/* Each "Created" line lifts off the terminal as a card, arcs over the output
-   toward the lens, and settles into its row in the editor's tree. Cards live
-   in screen space, projected from both planes, and are drawn at their largest
-   size so they only ever scale down (crisp). */
+/* Each "Created" line lifts off the terminal as a card, rises into a column
+   between the windows (in the tree's order) and holds there to be read, then
+   files into its row in the editor's tree. Cards live in screen space, projected from both
+   planes, and are drawn at their largest size so they only scale down. */
 
-/** Native label size: the size a card reads at the top of its arc. */
+/** Label size at the hold: the size a card reads at. */
 const LABEL = 40
+const HEIGHT = 80
+/** Left inset of the label inside the card: padding, icon, gap. */
+const INSET = 82
+/** The column the cards hold in (label left edge, centre row), and its pitch. */
+const COLUMN = { x: 900, y: 532, pitch: 86 } as const
+
+const riseCurve = Easing.bezier(0.3, 0.05, 0.15, 1)
+const landCurve = Easing.bezier(0.55, 0, 0.25, 1)
 
 type Point = { x: number; y: number }
 
-function path(frame: number, i: number, t: number) {
-  // The card leaves its line, then stops following the (departing) terminal.
-  const lift = Math.min(frame, FLY_AT[i]! + 8)
-  const a = onScreen(lift, terminalPose(lift), ...terminalFileAnchor(lift, i))
-  const b = onScreen(frame, editorPose(frame), ...treeFileAnchor(frame, i))
-  const c: Point = {
-    x: lerp(a.x, b.x, 0.55) + (random(i, 5) - 0.5) * 60,
-    y: Math.min(a.y, b.y) - 50 - random(i, 3) * 120,
-  }
+function quad(a: Point, c: Point, b: Point, t: number): Point {
   const u = 1 - t
   return {
     x: u * u * a.x + 2 * u * t * c.x + t * t * b.x,
     y: u * u * a.y + 2 * u * t * c.y + t * t * b.y,
-    from: (TERM.font * a.k) / LABEL,
-    to: (EDITOR.tree * b.k) / LABEL,
   }
 }
 
-/** Progress along the arc: an even glide, a little slower over the top. */
-const along = (raw: number) => lerp(raw, ease.camera(raw), 0.55)
+/** Card `i`'s slot in the column; the whole column drifts. */
+function slot(frame: number, i: number): Point {
+  const d = frame - T.fly
+  return {
+    x: COLUMN.x + d * 0.35,
+    y: COLUMN.y + (SLOT[i]! - (FILES.length - 1) / 2) * COLUMN.pitch - d * 0.25,
+  }
+}
+
+/** Where card `i` is at `frame`, its scale, and how lifted it is (0–1). */
+function cardAt(frame: number, i: number) {
+  const d = frame - FLY_AT[i]!
+  const m = slot(frame, i)
+  if (frame < DEPART_AT[i]!) {
+    // It follows its line for a few frames, then leaves it behind.
+    const at = Math.min(frame, FLY_AT[i]! + 4)
+    const a = onScreen(at, terminalPose(at), ...terminalFileAnchor(at, i))
+    const t = riseCurve(clamp01(d / RISE))
+    const c = { x: lerp(a.x, m.x, 0.3), y: lerp(a.y, m.y, 0.5) - 30 }
+    return {
+      ...quad(a, c, m, t),
+      s: lerp((TERM.font * a.k) / LABEL, 1, t),
+      up: t,
+      moving: d < RISE,
+    }
+  }
+  const b = onScreen(frame, editorPose(frame), ...treeFileAnchor(frame, i))
+  const t = landCurve(clamp01((frame - DEPART_AT[i]!) / DESCEND))
+  const c = { x: lerp(m.x, b.x, 0.7), y: lerp(m.y, b.y, 0.15) - 20 }
+  return {
+    ...quad(m, c, b, t),
+    s: lerp(1, (EDITOR.tree * b.k) / LABEL, t),
+    up: 1 - t,
+    moving: true,
+  }
+}
 
 export function Chips({ frame }: { frame: number }) {
-  const live = FILES.map((_, i) => i).filter(
-    (i) => frame >= FLY_AT[i]! && flight(frame, i) < 1,
-  )
-  const cards = live.map((i) => {
-    const raw = flight(frame, i)
-    const t = along(raw)
-    const p = path(frame, i, t)
-    const next = path(frame, i, along(clamp01(raw + 1 / FLIGHT)))
-    const speed = Math.hypot(next.x - p.x, next.y - p.y)
-    const arc = Math.sin(Math.PI * t)
-    const pop = springAt(frame, FLY_AT[i]!, "pop")
-    const s = lerp(lerp(p.from, p.to, t), 1, arc ** 1.3) * lerp(0.94, 1, pop)
-    return { i, raw, t, p, speed, arc, s }
-  })
-  cards.sort((a, b) => a.s - b.s)
+  const cards = FILES.map((_, i) => i)
+    .filter((i) => frame >= FLY_AT[i]! && frame < landAt(i))
+    .map((i) => {
+      const p = cardAt(frame, i)
+      const next = cardAt(frame + 1, i)
+      return { i, p, speed: Math.hypot(next.x - p.x, next.y - p.y) }
+    })
+    // Held cards sit under the ones in flight.
+    .sort((a, b) => Number(a.p.moving) - Number(b.p.moving) || a.i - b.i)
   return (
     <>
-      {cards.map(({ i, raw, t, p, speed, arc, s }) => {
+      {cards.map(({ i, p, speed }) => {
+        const d = frame - FLY_AT[i]!
+        const down = DEPART_AT[i]!
         const card =
-          progress(raw, 0.02, 0.14, ease.out) *
-          (1 - progress(raw, 0.7, 0.24, ease.soft))
+          progress(d, 0, 6, ease.out) *
+          (1 - progress(frame, down + DESCEND * 0.45, DESCEND * 0.5, ease.soft))
         const intoFolder = !TREE.some((r) => r.file === i)
         const label =
-          progress(raw, 0, 0.1, ease.out) *
+          progress(d, 0, 4, ease.out) *
           (1 -
-            progress(
-              raw,
-              intoFolder ? 0.72 : 0.9,
-              intoFolder ? 0.22 : 0.1,
-              ease.linear,
-            ))
-        const blur = Math.min(1.4, Math.max(0, (speed - 22) / 16))
-        const rz = arc * (random(i, 11) - 0.5) * 9
-        const ry = lerp(12, -9, t)
+            (intoFolder
+              ? progress(frame, down + DESCEND * 0.2, DESCEND * 0.35)
+              : progress(frame, landAt(i) - 3, 3, ease.linear)))
+        const blur = Math.min(1.4, Math.max(0, (speed - 24) / 16))
+        const swing = Math.sin(Math.PI * (1 - p.up)) * (p.moving ? 1 : 0)
+        const rz = swing * (random(i, 11) - 0.5) * 8
+        const ry = d < RISE ? lerp(14, 0, p.up) : lerp(-10, 0, p.up)
         return (
           <div
             key={FILES[i]!.name}
@@ -94,16 +128,16 @@ export function Chips({ frame }: { frame: number }) {
               width: 0,
               height: 0,
               transformOrigin: "0 0",
-              transform: `perspective(1600px) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg) scale(${s.toFixed(4)})`,
+              transform: `perspective(1600px) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg) scale(${p.s.toFixed(4)})`,
               filter: blur > 0.15 ? `blur(${blur.toFixed(2)}px)` : undefined,
             }}
           >
             <div
               style={{
                 position: "absolute",
-                left: -82,
-                top: -41,
-                height: 82,
+                left: -INSET,
+                top: -HEIGHT / 2,
+                height: HEIGHT,
                 display: "flex",
                 alignItems: "center",
                 gap: 16,
@@ -114,8 +148,8 @@ export function Chips({ frame }: { frame: number }) {
                 boxShadow: [
                   `inset 0 0 0 1px rgba(255,255,255,${(0.17 * card).toFixed(3)})`,
                   `inset 0 1px 0 rgba(255,255,255,${(0.12 * card).toFixed(3)})`,
-                  `0 ${10 + 18 * arc}px ${24 + 34 * arc}px rgba(0,0,0,${(0.55 * card).toFixed(3)})`,
-                  `0 0 ${46 * arc}px rgba(110,140,255,${(0.34 * arc * card).toFixed(3)})`,
+                  `0 ${8 + 18 * p.up}px ${20 + 34 * p.up}px rgba(0,0,0,${(0.55 * card).toFixed(3)})`,
+                  `0 0 ${40 * p.up}px rgba(110,140,255,${(0.3 * p.up * card).toFixed(3)})`,
                 ].join(", "),
               }}
             >

@@ -48,7 +48,7 @@ export function Sentence({
           text={LINE_1}
           start={probe ? Number.MAX_SAFE_INTEGER : T.line1}
           end={probe ? undefined : T.out}
-          stagger={5}
+          stagger={4}
         />
       </div>
       <div style={{ color: MUTED, maskImage: mask }}>

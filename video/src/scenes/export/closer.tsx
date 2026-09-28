@@ -14,8 +14,9 @@ import { T } from "./data"
 export const CLOSER = {
   left: 128,
   top: 318,
-  pillTop: 648,
-  pillZoom: 2.2,
+  pillTop: 642,
+  /** The lg Button's 14 px label, zoomed to the CTA size. */
+  pillZoom: TYPE.cta / 14,
 } as const
 
 /** The column's vertical drift (px), still moving past the cut. */

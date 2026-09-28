@@ -1,21 +1,27 @@
-import { Easing } from "remotion"
+import type { CSSProperties } from "react"
 
 import { Mark, Wordmark } from "../../lib/brand"
-import { clamp01, ease, lerp, pulse, springAt } from "../../lib/motion"
+import {
+  clamp01,
+  ease,
+  lerp,
+  progress,
+  pulse,
+  springAt,
+} from "../../lib/motion"
 import { LETTERS, LOCKUP } from "../../lib/wordmark"
 import { CX, CY, T } from "./timeline"
 
 /* The dot becomes the brand, drawn with lib/brand: the white dot swells and
-   squares off into the mark, its ink dot punches in, then the wordmark
-   slides out from behind it and the lockup rises into the end card. */
+   squares off into the mark, its ink dot punches in, then the lockup glides
+   to centre as the wordmark resolves beside it, and rises into the end card. */
 
 /** Mark side while it's alone, and in the settled lockup. */
 export const HERO = 232
 export const FINAL = 184
 /** The settled lockup's centre sits this far above the frame's. */
-export const RISE = 112
+export const RISE = 132
 
-const quint = Easing.bezier(0.22, 1, 0.36, 1)
 const grow = { damping: 16, stiffness: 95, mass: 1 }
 /** Mark centre → lockup centre, in wordmark units. */
 const SHIFT = LOCKUP.width / 2 - 50
@@ -34,7 +40,7 @@ export function markAt(frame: number) {
     )
   else if (frame < T.grow) size = lerp(9, 28, springAt(frame, T.impact, "pop"))
   else size = lerp(28, HERO, springAt(frame, T.grow, grow))
-  const toFinal = ease.inOut(clamp01((frame - T.word) / 48))
+  const toFinal = ease.camera(clamp01((frame - T.word + 8) / 48))
   size *= lerp(1, FINAL / HERO, toFinal)
   // The ink dot's arrival knocks the square back a hair.
   if (frame >= T.punch) size *= 1 - 0.045 * pulse((frame - T.punch) * 1.4)
@@ -79,7 +85,9 @@ export function EndMark({ pose }: { pose: MarkPose }) {
   )
 }
 
-/** The wordmark, clipped at the mark's right edge so it slides out from behind it. */
+/** The wordmark resolves out of blur left to right, as Wall's lockup does:
+ *  a sharp copy behind a moving front, a blurred copy riding just ahead of
+ *  it. It sits in lockup position beside the mark and glides with it. */
 export function EndWordmark({
   pose,
   frame,
@@ -89,36 +97,35 @@ export function EndWordmark({
 }) {
   if (frame < T.word) return null
   const { x, y, k, size } = pose
-  const OFF = 240
-  const left = x - size / 2 + 102 * k
+  const p = lerp(-30, 130, progress(frame, T.word, 24, ease.soft))
+  const pad = 48
+  const box: CSSProperties = {
+    position: "absolute",
+    left: x - size / 2 + WORD_X0 * k - pad,
+    top: y - size / 2 - pad,
+    padding: pad,
+  }
   return (
-    <div
-      style={{
-        position: "absolute",
-        left,
-        top: y - size / 2 - 20 * k,
-        width: 260 * k,
-        height: 140 * k,
-        overflow: "hidden",
-        maskImage: `linear-gradient(90deg, transparent 0, #000 ${(11 * k).toFixed(2)}px)`,
-      }}
-    >
+    <>
       <div
         style={{
-          position: "absolute",
-          left: (WORD_X0 - 102) * k,
-          top: 20 * k,
+          ...box,
+          maskImage: `linear-gradient(90deg, #000 ${p - 26}%, transparent ${p - 4}%)`,
         }}
       >
-        <Wordmark
-          height={size}
-          letterOffset={(i) =>
-            -OFF *
-            (1 -
-              quint(clamp01((frame - T.word - (LETTERS.length - 1 - i)) / 44)))
-          }
-        />
+        <Wordmark height={size} />
       </div>
-    </div>
+      {p < 125 ? (
+        <div
+          style={{
+            ...box,
+            filter: "blur(12px)",
+            maskImage: `linear-gradient(90deg, transparent ${p - 26}%, #000 ${p - 10}%, #000 ${p}%, transparent ${p + 22}%)`,
+          }}
+        >
+          <Wordmark height={size} />
+        </div>
+      ) : null}
+    </>
   )
 }

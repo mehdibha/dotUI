@@ -14,10 +14,14 @@ import type { Layout } from "./measure"
 
 /* Open's beat map (scene-local; a beat is 30 frames, a bar 120). */
 export const T = {
-  line1: 30,
-  /** The dot leaves the centre for the start of line 2… */
-  glide: 22,
-  /** …touches down, draws back a hair, and writes it on the beat… */
+  /** The dot drops a line, clear of line 1 before its middle words resolve… */
+  fall: 6,
+  /** …and returns to the line's start, a carriage return. */
+  glide: 14,
+  /** Line 1 resolves, readable by ~0.4 s. */
+  line1: 20,
+  settle: 44,
+  /** The dot touches down, draws back a hair, and writes line 2 on the beat… */
   touch: 78,
   sweep: 90,
   /** …and lands as its period on the downbeat of bar 2. */
@@ -34,7 +38,17 @@ const HERO = 34
 /** Wall's frame 0: the radio's inner dot. */
 const HANDOFF = 10
 
-const HEARTBEATS = [30, 60, 90, 120, 150, 180, 210]
+/** Beats and how much light each throws; the hold's beats surge harder so
+ *  the period still pulses at phone size. */
+const HEARTBEATS = [
+  [30, 0.8],
+  [60, 0.8],
+  [90, 0.8],
+  [120, 0.8],
+  [150, 1.5],
+  [180, 1.5],
+  [210, 0.8],
+] as const
 
 /** The pen stroke: pushes off hard, lands on the beat. */
 const stroke = Easing.bezier(0.5, 0, 0.25, 1)
@@ -62,9 +76,6 @@ const quad = (a: Point, c: Point, b: Point, t: number): Point => ({
   y: (1 - t) ** 2 * a.y + 2 * t * (1 - t) * c.y + t * t * b.y,
 })
 
-/** Leaving the centre: out of line 1's way first, then along to the line. */
-const drop = Easing.bezier(0.33, 0, 0.2, 1)
-
 /** Where line 2's pen sits (layout px) during the stroke. */
 export function penX(frame: number, p: Layout) {
   const start = p.words[0]! - p.d * 0.9
@@ -82,7 +93,13 @@ export function wordStarts(p: Layout) {
 }
 
 function heartbeat(frame: number) {
-  return HEARTBEATS.reduce((sum, at) => sum + pulse(frame - at), 0)
+  let size = 0
+  let light = 0
+  for (const [at, glow] of HEARTBEATS) {
+    size += pulse(frame - at)
+    light += glow * pulse(frame - at)
+  }
+  return { size, light }
 }
 
 /** Where the dot is, how big, and how much light it throws. */
@@ -100,8 +117,9 @@ export function dotAt(frame: number, p: Layout) {
   const beat = heartbeat(frame)
   const breath = 1 + 0.008 * Math.sin((frame / 120) * Math.PI * 2)
 
-  // Centre → the start of line 2, curving down onto the baseline.
-  const g = progress(frame, T.glide, T.touch - T.glide, drop)
+  // Centre → a line down, then back to its start, shrinking to the period.
+  const g = progress(frame, T.fall, T.settle - T.fall, ease.camera)
+  const back = progress(frame, T.glide, T.touch - T.glide, ease.camera)
   // Home → the centre (dipping under the words), shrinking to Wall's 10 px.
   const u = progress(frame, T.out, T.end - T.out, ease.camera)
   const pos =
@@ -112,17 +130,17 @@ export function dotAt(frame: number, p: Layout) {
           { x: CX, y: CY },
           u,
         )
-      : quad({ x: CX, y: CY }, { x: CX - 90, y: pen.y + 34 }, pen, g)
+      : { x: lerp(CX, pen.x, back), y: lerp(CY, pen.y, g) }
 
   const periodD = p.d * s
   const size = lerp(lerp(HERO, periodD, g) * pop * breath, HANDOFF, u)
-  const d = size * (1 + (0.16 - 0.02 * g) * beat * (1 - u))
+  const d = size * (1 + (0.16 - 0.02 * g) * beat.size * (1 - u))
   // On the line, pulses grow upward from the baseline, never through it.
   const y = pos.y - ((d - size) / 2) * g * (1 - u)
 
   const flash = 1.5 * Math.exp(-Math.max(0, frame) / 10)
   const light =
-    (lerp(1, 0.6, g) + flash + 0.8 * beat) * (1 - u) ** 1.4 * clamp01(pop * 2)
+    (lerp(1, 0.6, g) + flash + beat.light) * (1 - u) ** 1.4 * clamp01(pop * 2)
 
   return { x: pos.x, y, d, light }
 }

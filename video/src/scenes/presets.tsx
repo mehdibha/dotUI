@@ -8,6 +8,7 @@ import { BlurWords, HEADLINE, TYPE } from "../lib/type"
 import { Board, BOARD_WIDTH, useCardHeights } from "./presets/board"
 import type { Cam } from "./presets/camera"
 import { cameraAt, PERSPECTIVE, viewOf } from "./presets/camera"
+import { LookMode } from "./presets/cards"
 import { SLOTS } from "./presets/slots"
 import type { Wipe } from "./presets/slots"
 import { clipFor, WipeLine, WipeShadow } from "./presets/wipe"
@@ -114,7 +115,9 @@ function Look({
         className="bg-bg"
         style={{ clipPath: wipe ? clipFor(wipe.wipe, wipe.t) : undefined }}
       >
-        <Plane cam={cam} heights={heights} />
+        <LookMode value={mode}>
+          <Plane cam={cam} heights={heights} />
+        </LookMode>
         {/* Atmosphere: the far edge of the tilted board sinks into the page. */}
         <AbsoluteFill
           className="bg-linear-to-b from-bg via-transparent via-22% to-transparent"

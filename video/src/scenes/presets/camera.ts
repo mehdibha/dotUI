@@ -6,7 +6,8 @@ import type { View } from "./board"
 /* The camera over the board: `fx`/`fy` is the plane point at frame centre
    (plane px), `scale` the on-screen size of the plane there, rotations in
    degrees. Keys are joined by a monotone cubic, so the move never stops
-   between them — the push-in's momentum carries into the glide. */
+   between them — the push-in's momentum carries into the glide, and the
+   glide's push peaks on the Origin beat before pulling back into Axes. */
 
 export type Cam = {
   fx: number
@@ -26,16 +27,29 @@ const KEYS: Array<readonly [number, Cam]> = [
   [0, { fx: X - 240, fy: -1180, scale: 1.08, rx: 22, ry: 4, rz: -2.4 }],
   [120, { fx: X - 170, fy: -680, scale: 1.18, rx: 18, ry: 2.5, rz: -1.4 }],
   [190, { fx: X - 110, fy: -130, scale: 1.47, rx: 11, ry: -2.5, rz: -0.6 }],
-  [330, { fx: X, fy: 330, scale: 1.47, rx: 6.4, ry: 0, rz: 0 }],
+  [330, { fx: X + 40, fy: 318, scale: 1.59, rx: 5.5, ry: 2, rz: 0 }],
   [359, { fx: X + 10, fy: 350, scale: 1.45, rx: 6, ry: 0, rz: 0 }],
 ]
 
+/** Per-frame velocity at the last key: Axes' opening pull-back, so the
+ *  cut carries one move — Presets accelerates into it. */
+const EXIT: Cam = {
+  fx: -1.5,
+  fy: 1.18,
+  scale: -0.0142,
+  rx: 0.053,
+  ry: -0.21,
+  rz: 0,
+}
+
 const BEATS = Array.from({ length: 12 }, (_, i) => i * BEAT)
 
-/** Fritsch–Carlson monotone cubic through (t, v) keys. */
+/** Fritsch–Carlson monotone cubic through (t, v) keys, leaving the last
+ *  key at `exit` per frame. */
 function monotone(
   frame: number,
   points: ReadonlyArray<readonly [number, number]>,
+  exit: number,
 ) {
   const n = points.length
   if (frame <= points[0]![0]) return points[0]![1]
@@ -45,7 +59,7 @@ function monotone(
     .map(([t, v], i) => (v - points[i]![1]) / (t - points[i]![0]))
   const tangents = points.map((_, i) => {
     if (i === 0) return slopes[0]!
-    if (i === n - 1) return slopes[n - 2]!
+    if (i === n - 1) return exit
     const a = slopes[i - 1]!
     const b = slopes[i]!
     if (a * b <= 0) return 0
@@ -77,6 +91,7 @@ export function cameraAt(frame: number): Cam {
     monotone(
       frame,
       KEYS.map(([f, cam]) => [f, cam[key]] as const),
+      EXIT[key],
     )
   return {
     fx: field("fx"),

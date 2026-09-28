@@ -16,7 +16,7 @@ import { clamp01, ease, lerp, progress } from "../../lib/motion"
 export const TAB_H = 62
 export const PAD_Y = 26
 export const LINE_H = 1.46
-const MONO = '"Geist Mono", ui-monospace, monospace'
+export const MONO = '"Geist Mono", ui-monospace, monospace'
 const SANS = '"Geist Variable", ui-sans-serif, system-ui, sans-serif'
 const BLUE = "121,184,255"
 
@@ -55,6 +55,7 @@ export function Editor({
   frame,
   sizes,
   carets,
+  accent = BLUE,
   style,
 }: {
   codes: readonly string[]
@@ -64,6 +65,8 @@ export function Editor({
   sizes: readonly number[]
   /** Per step, the line the caret types along and rests at the end of. */
   carets?: readonly number[]
+  /** "r,g,b" of the caret and the change bands. */
+  accent?: string
   style?: CSSProperties
 }) {
   const c = codeAt(frame, codes, at, sizes, durations)
@@ -83,8 +86,8 @@ export function Editor({
     <div
       style={{
         borderRadius: 26,
-        background:
-          "linear-gradient(180deg, rgba(26,26,30,0.98) 0%, rgba(14,14,17,0.99) 100%)",
+        // Flat: a big near-black gradient bands after X's re-encode.
+        background: "#141417",
         boxShadow:
           "0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06), 0 60px 140px -40px rgba(0,0,0,0.95), 0 24px 60px -24px rgba(0,0,0,0.7)",
         overflow: "hidden",
@@ -164,8 +167,8 @@ export function Editor({
                   height: `${LINE_H}em`,
                   opacity: fade * clamp01(sweep * 3),
                   clipPath: `inset(0 ${(1 - sweep) * 100}% 0 0)`,
-                  background: `linear-gradient(90deg, rgba(${BLUE},0.16), rgba(${BLUE},0.05) 70%, rgba(${BLUE},0))`,
-                  boxShadow: `inset 3px 0 0 rgba(${BLUE},0.75)`,
+                  background: `linear-gradient(90deg, rgba(${accent},0.16), rgba(${accent},0.05) 70%, rgba(${accent},0))`,
+                  boxShadow: `inset 3px 0 0 rgba(${accent},0.75)`,
                 }}
               />
             ))
@@ -211,6 +214,7 @@ export function Editor({
           />
           {carets ? (
             <Caret
+              accent={accent}
               frame={frame}
               line={carets[c.step]!}
               code={codes[c.step]!}
@@ -226,11 +230,13 @@ export function Editor({
 /* The caret rides the arrival sweep along the step's key line, then rests at
    its end and blinks on the beat. Hidden while rows make room. */
 function Caret({
+  accent,
   frame,
   line,
   code,
   t,
 }: {
+  accent: string
   frame: number
   line: number
   code: string
@@ -254,7 +260,7 @@ function Caret({
         width: "0.1em",
         height: "1.18em",
         borderRadius: 2,
-        background: `rgb(${BLUE})`,
+        background: `rgb(${accent})`,
         opacity: on ? 1 : 0,
       }}
     />

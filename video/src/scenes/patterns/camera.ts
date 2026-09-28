@@ -19,18 +19,21 @@ const smooth = (keys: ReadonlyArray<readonly [number, number]>) =>
 const HANDOFF_RATE = -0.00465
 
 // Pull back out of the card, lean the plane back, glide right across the
-// field, drop low for the fly-past, rise for the wave, drift onto the hero.
+// field, drop low for the fly-past, rise for the wave, then settle almost
+// square on the hero and push in while it plays.
 const logScale = spline(
   [
     [0, Math.log(HANDOFF_SCALE)],
-    [56, Math.log(0.86)],
-    [118, Math.log(0.5)],
-    [160, Math.log(0.56)],
+    [56, Math.log(0.9)],
+    [118, Math.log(0.58)],
+    [160, Math.log(0.62)],
     [210, Math.log(1.1)],
-    [290, Math.log(0.58)],
-    [360, Math.log(0.68)],
-    [480, Math.log(1.3)],
-    [540, Math.log(1.48)],
+    [270, Math.log(0.74)],
+    [330, Math.log(0.74)],
+    [362, Math.log(1)],
+    [420, Math.log(1.26)],
+    [480, Math.log(1.48)],
+    [540, Math.log(1.62)],
   ],
   { startSlope: HANDOFF_RATE },
 )
@@ -39,16 +42,17 @@ const tiltX = smooth([
   [110, 26],
   [210, 16],
   [290, 28],
-  [480, 7],
-  [540, 5],
+  [362, 12],
+  [440, 5.5],
+  [540, 4],
 ])
 const tiltZ = smooth([
   [0, 0],
   [110, -10],
   [210, -5],
   [290, -11],
-  [480, -3],
-  [540, -2],
+  [430, -2],
+  [540, -1.4],
 ])
 const panX = smooth([
   [0, 0],
@@ -56,17 +60,21 @@ const panX = smooth([
   [165, 1150],
   [210, 2250],
   [290, 3450],
-  [480, 4520],
-  [540, 4620],
+  [362, 4500],
+  [480, 4700],
+  [540, 4760],
 ])
+// Early, the lens rises off the canvas so it sinks below the title's band.
 const panY = smooth([
   [0, 0],
-  [118, -330],
-  [165, -640],
+  [56, -280],
+  [118, -420],
+  [165, -680],
   [210, -1000],
   [290, -1160],
-  [480, -1250],
-  [540, -1275],
+  [362, -1110],
+  [480, -1030],
+  [540, -1022],
 ])
 
 export type Cam = {
@@ -77,8 +85,8 @@ export type Cam = {
   tiltZ: number
 }
 
-/** The beat accent on the wave's downbeat. */
-const PUNCHES = [240]
+/** Beat accents: the wave's downbeat, Play, and each step of the track. */
+const PUNCHES = [240, 360, 390, 420, 450]
 
 export function camAt(frame: number): Cam {
   return {

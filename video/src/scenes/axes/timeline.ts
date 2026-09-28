@@ -1,4 +1,5 @@
 import type { StudioState } from "@/modules/studio/axes"
+import { RADIUS_RANGE } from "@/modules/studio/axes/shape"
 
 import { clamp01, hold, keys } from "../../lib/motion"
 import { preset } from "../../lib/theme"
@@ -69,10 +70,11 @@ export const WEIGHT_PICK = at(3, 2)
 export const ICON_WEIGHT = "fill"
 
 /* Radius: the slider is pressed on the downbeat and dragged 10 → 2, held
-   square while the camera travels, then swung round to 24 and settled on 14. */
+   near square for a beat, then swung to the top of its range and settled
+   on 14. */
 export const RADIUS_PRESS = at(4)
 export const RADIUS_RELEASE = at(4, 2.87)
-export const RADIUS_RANGE = { min: 0, max: 24 }
+export { RADIUS_RANGE }
 
 export function radiusAt(frame: number) {
   const raw = keys(
@@ -81,7 +83,7 @@ export function radiusAt(frame: number) {
       [RADIUS_PRESS, 10],
       [at(4, 0.8), 2],
       [at(4, 1.93), 2],
-      [at(4, 2.53), 24],
+      [at(4, 2.53), RADIUS_RANGE.max],
       [RADIUS_RELEASE, 14],
     ],
     (t) => t * t * (3 - 2 * t),
@@ -89,10 +91,13 @@ export function radiusAt(frame: number) {
   return Math.round(raw * 2) / 2
 }
 
+/* Density: compact is picked on beat 1 and has settled on the controls and
+   the calendar by the time the push lands; comfortable is picked off camera
+   so it reaches the controls on beat 3 and rolls on to the calendar. */
 export const DENSITY_OPEN = at(5)
 export const DENSITY_PICKS = [
   [at(5, 1), "compact"],
-  [at(5, 2), "comfortable"],
+  [at(5, 3) - 10, "comfortable"],
 ] as const
 export const DENSITY_CLOSE = at(5, 1) + 8
 
@@ -117,6 +122,8 @@ interface Axis {
   bar: number
   target: TileId
   lag: number
+  /** Frames after the downbeat the label starts to leave (default 34). */
+  labelOut?: number
   /** Frames where a discrete change leaves the panel (for the tile lift). */
   events: number[]
   apply: (state: StudioState, frame: number) => void
@@ -176,8 +183,8 @@ export const AXES: Axis[] = [
     id: "space",
     label: "Density",
     bar: 5,
-    target: "controls",
-    lag: 30,
+    target: "booking",
+    lag: 22,
     events: DENSITY_PICKS.map(([f]) => f),
     apply: (state, frame) => {
       state.density = hold<string>(frame, [[0, BASE.density], ...DENSITY_PICKS])
@@ -189,6 +196,8 @@ export const AXES: Axis[] = [
     bar: 6,
     target: "storage",
     lag: 0,
+    // Gone before the flip reaches it.
+    labelOut: MODE_FLIP - at(6) - 4,
     events: [],
     apply: () => {},
   },
@@ -226,6 +235,11 @@ export function stateAt(frame: number, tile?: TileId): StudioState {
   return state
 }
 
+/** The system the viewer builds, as the scene leaves it: every axis applied,
+ *  shown in light mode. Compose and Patterns render in it. */
+export const BUILT: StudioState = stateAt(at(9) - 1)
+export const BUILT_MODE = "light" as const
+
 /** 0 → 1 → 0 over ~26 frames each time a change lands on `tile`. */
 export function liftAt(frame: number, tile: TileId) {
   let lift = 0
@@ -240,7 +254,7 @@ export function liftAt(frame: number, tile: TileId) {
   return clamp01(lift * 1.6)
 }
 
-/** Every click of the synthetic cursor. */
+/** Every click of the cursor in the set (Components clicks in its inset). */
 export const CLICKS = [
   COLOR_OPEN,
   TYPE_OPEN,
@@ -250,8 +264,6 @@ export const CLICKS = [
   DENSITY_OPEN,
   DENSITY_PICKS[0][0],
   MODE_FLIP,
-  COMPONENTS_OPEN,
-  COMPONENT_PICKS[0][0],
 ]
 
 /** The beat accents: every click, and every change landing in a macro. */

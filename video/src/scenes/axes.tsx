@@ -8,16 +8,19 @@ import { at } from "../lib/timing"
 import { BlurWords, HEADLINE, MUTED, TOP_ANCHOR, TYPE } from "../lib/type"
 import { SET, shotAt, velocityAt } from "./axes/camera"
 import type { CameraKey, Pose } from "./axes/camera"
+import { Band, ButtonsInset, RadiusInset } from "./axes/insets"
 import { FONT_GROUPS } from "./axes/popovers"
 import { StudioSet } from "./axes/set"
-import { AXES, PUNCHES } from "./axes/timeline"
+import { AXES, MODE_FLIP, PUNCHES, stateAt, WIPE_FRAMES } from "./axes/timeline"
 
 /* 4 · Axes — the heart. The real /studio, driven frame by frame from Origin:
    the panel on the left, the cards canvas on the right. It opens where
    Presets left the cards and pulls back to the studio. Then one axis per
    bar: a cut to the panel row on the downbeat, the pick on beat 1, a push
    into the card that proves it, where the change lands on beat 2 (and 3).
-   Light & dark goes wide instead, so the flip crosses the whole canvas. */
+   Three bars break the pattern: Radius and Components cut straight to the
+   macro with the control inset over it, and Light & dark pushes in on the
+   preview's toggle, then rides the flip out and up to the light cards. */
 
 const P = (
   f: readonly [number, number],
@@ -44,19 +47,23 @@ function bar(start: number, from: Pose, push: [number, number], to: Pose) {
   ] as const
 }
 
+/* Macros with an inset keep the proof right of it (`p`), clear of the
+   label and the control on the left. */
 const MACRO = {
-  color: P([960, 292], 2.2, { rx: 4, ry: -7, rz: 0.3 }),
+  color: P([1012, 292], 2.2, { rx: 4, ry: -7, rz: 0.3 }),
   type: P([1336, 206], 3.1, { rx: 3, ry: 7, rz: -0.3 }),
   icons: P([548, 656], 3.4, { rx: 4, ry: -6, rz: 0.3 }),
-  radius: P([922, 728], 2.8, { rx: 3, ry: 7, rz: -0.3 }),
+  radius: P([918, 720], 2.5, { p: [1240, 590], rx: 3, ry: 7, rz: -0.3 }),
   density: P([690, 284], 2.4, { rx: 4, ry: -7, rz: 0.3 }),
-  mode: P([1440, 330], 2.3, { rx: 3, ry: 7, rz: -0.3 }),
-  components: P([1102, 790], 2.6, { rx: 3, ry: -7, rz: 0.3 }),
+  mode: P([1468, 330], 2.3, { rx: 3, ry: 7, rz: -0.3 }),
+  components: P([1282, 700], 2.3, { p: [1330, 560], rx: 3, ry: -7, rz: 0.3 }),
   end: P([960, 540], 0.58, { p: [960, 762], rx: 22, ry: -2, rz: 0 }),
 }
 
 /** The whole preview, set low so the label keeps its ground above it. */
 const WIDE = P([1100, 540], 0.7, { p: [1000, 630], rx: 12, ry: -7, rz: 0.3 })
+/** In on the preview's tool pill, the light & dark toggle near centre. */
+const TOGGLE = P([1150, 1022], 2.1, { p: [980, 790], rx: 8, ry: -4, rz: 0.2 })
 
 const TRACK: CameraKey[] = [
   // Bar 0: tight on the cards, as Presets left them; pull back to the studio.
@@ -70,17 +77,21 @@ const TRACK: CameraKey[] = [
   [at(2) - 1, drift(MACRO.color, 1.05), ease.linear],
   ...bar(at(2), panel(172, -1), [at(2, 1) + 10, at(2, 2) + 2], MACRO.type),
   ...bar(at(3), panel(172, 1), [at(3, 1) + 10, at(3, 2) + 2], MACRO.icons),
-  ...bar(at(4), panel(172, -1, 420, 2.1), [514, 540], MACRO.radius),
+  // Radius: straight to the card, the slider inset beside it.
+  [at(4), MACRO.radius],
+  [at(5) - 1, drift(MACRO.radius, 1.06), ease.linear],
   ...bar(at(5), panel(172, 1), [at(5, 1) + 10, at(5, 2) + 2], MACRO.density),
-  // Light & dark: wide on the whole studio for the flip, then in on the light.
+  // Light & dark: the whole studio, in on the toggle for the click, then the
+  // flip carries the camera out and up to the light cards.
   [at(6), WIDE],
-  [at(6, 1) + 6, drift(WIDE, 1.05), ease.linear],
-  [at(6, 3) - 4, MACRO.mode],
+  [at(6) + 8, drift(WIDE, 1.015), ease.linear],
+  [MODE_FLIP - 10, TOGGLE],
+  [MODE_FLIP + 2, drift(TOGGLE, 1.015), ease.linear],
+  [at(6, 3) - 4, { ...MACRO.mode, rho: 2.6 }],
   [at(7) - 1, drift(MACRO.mode, 1.04), ease.linear],
-  [at(7), panel(431, -1, 330)],
-  [at(7, 1) + 10, drift(panel(431, -1, 330), 1.03), ease.linear],
-  [at(7, 2) + 2, MACRO.components],
-  [at(7, 3.47), drift(MACRO.components, 1.035), ease.linear],
+  // Components: straight to the buttons, the popover inset beside them.
+  [at(7), MACRO.components],
+  [at(7, 3.47), drift(MACRO.components, 1.05), ease.linear],
   // Pull back: the whole studio, tilted under the line.
   [at(8, 1.67), MACRO.end],
 ]
@@ -89,15 +100,19 @@ const TRACK: CameraKey[] = [
    would grey them). */
 const VIGNETTE = [
   [0, 1],
-  [at(6, 1) + 30, 1],
-  [at(6, 3) - 4, 0],
-  [at(7) - 1, 0],
-  [at(7), 0.3],
-  [at(7, 1) + 10, 0.3],
-  [at(7, 2) + 2, 0],
+  [MODE_FLIP + 4, 1],
+  [MODE_FLIP + 36, 0],
   [at(7, 3.47), 0],
   [at(8, 1.67), 1],
 ] as const
+
+/* ±1–2 LSB of static grain over the vignette, so its near-black ramp
+   dithers instead of banding in the encode. */
+const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>",
+)}")`
+const VIGNETTE_RAMP =
+  "radial-gradient(ellipse 90% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)"
 
 /** Bar 8 never settles: a slow dolly and orbit on top of the track. */
 function alive(frame: number) {
@@ -114,7 +129,7 @@ function Rig({ frame }: { frame: number }) {
   const zoom = Math.max(1, shot.s * life.s * 1.12)
   const s = shot.s * life.s * (1 + punches(frame, PUNCHES))
   const [vx, vy] = velocityAt(frame, TRACK)
-  const blur = [vx, vy].map((v) => Math.min(14, Math.abs(v) * 0.08))
+  const blur = [vx, vy].map((v) => Math.min(8, Math.abs(v) * 0.05))
   const blurred = blur[0]! > 0.6 || blur[1]! > 0.6
   const sweep = progress(frame, at(8, 1.6), 100, ease.inOut)
   return (
@@ -201,16 +216,74 @@ export function Axes() {
     >
       <WarmIcons />
       <Rig frame={frame} />
+      <Vignette opacity={keys(frame, VIGNETTE, ease.inOut)} />
+      <Band frame={frame} />
+      <Titles frame={frame} />
+      <RadiusInset frame={frame} />
+      <ButtonsInset frame={frame} />
+    </Stage>
+  )
+}
+
+function Vignette({ opacity }: { opacity: number }) {
+  if (opacity < 0.005) return null
+  return (
+    <>
+      <AbsoluteFill
+        style={{ pointerEvents: "none", opacity, background: VIGNETTE_RAMP }}
+      />
       <AbsoluteFill
         style={{
           pointerEvents: "none",
-          opacity: keys(frame, VIGNETTE, ease.inOut),
-          background:
-            "radial-gradient(ellipse 90% 80% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+          opacity,
+          backgroundImage: GRAIN,
+          mixBlendMode: "overlay",
+          maskImage:
+            "radial-gradient(ellipse 90% 80% at 50% 45%, transparent 50%, black 80%)",
         }}
       />
-      <Titles frame={frame} />
-    </Stage>
+    </>
+  )
+}
+
+/** The label's scrim and ink: the film's own over dark, the look's over light. */
+function Ink({
+  light,
+  frame,
+  children,
+}: {
+  light: boolean
+  frame: number
+  children: React.ReactNode
+}) {
+  if (!light)
+    return (
+      <div
+        style={
+          {
+            display: "contents",
+            "--scrim": "rgba(8,8,10,0.84)",
+            "--ink": HEADLINE.color,
+          } as React.CSSProperties
+        }
+      >
+        {children}
+      </div>
+    )
+  return (
+    <Theme state={stateAt(frame)} mode="light">
+      <div
+        style={
+          {
+            display: "contents",
+            "--scrim": "color-mix(in oklab, var(--color-bg) 90%, transparent)",
+            "--ink": "var(--color-fg)",
+          } as React.CSSProperties
+        }
+      >
+        {children}
+      </div>
+    </Theme>
   )
 }
 
@@ -226,16 +299,21 @@ function useFonts() {
 }
 
 /* Labels live in one clear zone, top-left on the ground beside the panel;
-   each is gone before the push lands, so a macro never carries text. */
+   each is gone before the push lands, so a macro never carries text. Over
+   the light canvas a label takes the look's own page and ink, as Presets'
+   line does. */
 const LABEL_OUT = 34
 
 function Titles({ frame }: { frame: number }) {
   const current = AXES.find(
     ({ bar }) => frame >= at(bar) && frame < at(bar + 1),
   )
+  const labelEnd = current
+    ? at(current.bar) + (current.labelOut ?? LABEL_OUT)
+    : 0
   const labelFade = current
     ? clamp01((frame - at(current.bar)) / 10) *
-      (1 - progress(frame, at(current.bar) + LABEL_OUT, 14, ease.in))
+      (1 - progress(frame, labelEnd, 12, ease.in))
     : 0
   return (
     <>
@@ -261,13 +339,13 @@ function Titles({ frame }: { frame: number }) {
         </div>
       </AbsoluteFill>
       {current ? (
-        <>
+        <Ink light={frame >= MODE_FLIP + WIPE_FRAMES} frame={frame}>
           <AbsoluteFill
             style={{
               pointerEvents: "none",
               opacity: labelFade,
               background:
-                "radial-gradient(ellipse 900px 380px at 0% 0%, rgba(8,8,10,0.7), rgba(8,8,10,0.36) 50%, transparent 82%)",
+                "radial-gradient(ellipse 640px 220px at 330px 172px, var(--scrim) 0%, var(--scrim) 36%, color-mix(in oklab, var(--scrim) 50%, transparent) 64%, transparent 100%)",
             }}
           />
           <div
@@ -279,17 +357,19 @@ function Titles({ frame }: { frame: number }) {
               top: TOP_ANCHOR - 22,
               fontSize: TYPE.label,
               letterSpacing: "-0.05em",
+              color: "var(--ink)",
             }}
           >
             <BlurWords
               text={current.label}
               start={at(current.bar)}
-              end={at(current.bar) + LABEL_OUT}
+              end={labelEnd}
               stagger={3}
               duration={18}
+              exit={12}
             />
           </div>
-        </>
+        </Ink>
       ) : null}
       <div
         style={{

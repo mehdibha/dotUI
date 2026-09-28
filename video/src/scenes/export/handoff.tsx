@@ -51,9 +51,10 @@ function rect(x: number, y: number, width: number, height: number) {
   return { x, y, width, height, cx: x + width / 2, cy: y + height / 2 }
 }
 
-/* Measured boxes (screen px) of the line and the settled pill. */
-const LINE = { width: 409, height: 266 }
-const PILL = { width: 257, height: 79 }
+/* Measured boxes (screen px) of the line and the settled pill (at
+   TYPE.statement and TYPE.cta — re-measure if either changes). */
+const LINE = { width: 452, height: 266 }
+const PILL = { width: 401, height: 123 }
 
 /** Where each piece sits on screen at `frame` (bounds of its projection). */
 export function exportRects(

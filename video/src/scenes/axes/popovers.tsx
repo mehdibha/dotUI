@@ -75,8 +75,8 @@ export function PopoverSurface({
   x: number
   y: number
   width: number
-  /** The anchor row's center, in the popover's own px. */
-  arrowY: number
+  /** The anchor row's center, in the popover's own px (no arrow without). */
+  arrowY?: number
   children: ReactNode
   className?: string
   style?: CSSProperties
@@ -99,16 +99,18 @@ export function PopoverSurface({
         ...style,
       }}
     >
-      <svg
-        aria-hidden
-        width={10}
-        height={10}
-        viewBox="0 0 8 8"
-        className="absolute fill-card stroke-fg/10"
-        style={{ left: -9, top: arrowY - 5, transform: "rotate(90deg)" }}
-      >
-        <path d="M0 0 L4 4 L8 0" />
-      </svg>
+      {arrowY === undefined ? null : (
+        <svg
+          aria-hidden
+          width={10}
+          height={10}
+          viewBox="0 0 8 8"
+          className="absolute fill-card stroke-fg/10"
+          style={{ left: -9, top: arrowY - 5, transform: "rotate(90deg)" }}
+        >
+          <path d="M0 0 L4 4 L8 0" />
+        </svg>
+      )}
       {children}
     </div>
   )

@@ -1,36 +1,51 @@
-import type { CSSProperties } from "react"
-import { AbsoluteFill, useCurrentFrame } from "remotion"
+import { useRef } from "react"
+import { AbsoluteFill, getInputProps, useCurrentFrame } from "remotion"
+const DBG = getInputProps() as Record<string, boolean>
 
 import { clamp01, ease, keys, progress, random, springAt } from "../lib/motion"
 import { INK, Stage } from "../lib/stage"
 import type { State } from "../lib/theme"
-import { preset } from "../lib/theme"
+import { Theme } from "../lib/theme"
 import { BAR, HEIGHT, WIDTH } from "../lib/timing"
 import { BlurWords, HEADLINE, MUTED, TOP_ANCHOR, TYPE } from "../lib/type"
-import { HANDOFF_SCALE, HandoffCard } from "./compose/steps"
+import { BUILT, BUILT_MODE } from "./axes/timeline"
+import {
+  HANDOFF_SCALE,
+  HandoffCard,
+  IconsReady,
+  LOOK,
+  LOOK_MODE,
+} from "./compose/steps"
 import { camAt, project } from "./patterns/camera"
 import { Canvas } from "./patterns/canvas"
+import { PlayerDriver, useFrozenClock } from "./patterns/player"
 import { SCREEN_CSS, Surface } from "./patterns/screen"
 import type { Placement, Tile } from "./patterns/tiles"
-import { placement, TILE_H, TILE_W, TILES, visible } from "./patterns/tiles"
+import { placement, TILE_H, TILE_W, TILES } from "./patterns/tiles"
 import { crossing, glint, waveFront, waveLift } from "./patterns/wave"
 
 /* 6 · Patterns — 4 bars. Out of Compose's card: its canvas of patterns grows
-   back around it, the camera pulls back and leans the plane, and a field of
-   complete products rises out of the dark. A low fly-past over two screens;
-   on bar 3 one theme wave lights every screen in a new look; the camera
-   drifts onto one product, still gliding at the cut. */
+   back around it in the system the viewer built, the camera pulls back and
+   leans the plane, and a field of complete products — still in the default
+   look — rises out of the dark. A low fly-past over two screens; on bar 3 one
+   theme wave carries the built system across every screen; bar 4 lands on
+   one product and plays it, a step on every beat, still gliding at the cut. */
 
 const BEFORE: State = {}
-const AFTER: State = preset("claude")
 
 /** The screen bar 4 settles on. */
-const HERO = { c: 3, r: -1 }
-const MAX_SCREENS = 14
+const isHero = (tile: Tile) => tile.c === 3 && tile.r === -1
+/** A safety cap: the camera is framed to keep fewer in shot. */
+const MAX_SCREENS = 9
 const RADIUS = 22
 /** Light falling on the glass from above, so dark screens read as lit panels. */
 const SHEEN =
-  "linear-gradient(172deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 38%, rgba(255,255,255,0) 60%)"
+  "linear-gradient(172deg, rgba(255,255,255,0.075) 0%, rgba(255,255,255,0.02) 38%, rgba(255,255,255,0) 60%)"
+
+/* Film scrubs CSS animations by setting --video-time on <html> every frame,
+   which restyles the whole document (~0.5 s a frame with this many apps).
+   Nothing here animates by CSS, so the scene pins it. */
+const PINNED = "html{--video-time:0!important}"
 
 const RISE = { damping: 15, stiffness: 110, mass: 1 }
 
@@ -50,8 +65,18 @@ function floatAt(frame: number, tile: Tile) {
   return 6 * Math.sin((frame / (2 * BAR)) * Math.PI * 2 + phase)
 }
 
+/** A screen sliding out of frame fades with the vignette, so the field only
+    mounts what reads. 0 below 2 % of the frame, whole from 7 %. */
+function edgeFade(shown: number) {
+  const t = clamp01((shown - 0.02) / 0.05)
+  return t * t * (3 - 2 * t)
+}
+
+type Shot = { tile: Tile; at: Placement; opacity: number; dim: number }
+
 export function Patterns() {
   const frame = useCurrentFrame()
+  useFrozenClock()
   const cam = camAt(frame)
   const front = waveFront(frame)
   const lean = clamp01(cam.tiltX / 26)
@@ -81,10 +106,9 @@ export function Patterns() {
   }
 
   // Bar 4 puts one product in the light and lets the rest fall back.
-  const spotlight = progress(frame, 372, 90, ease.inOut)
+  const spotlight = DBG.ns ? 0 : progress(frame, 336, 100, ease.inOut)
 
-  const shots: Array<{ tile: Tile; at: Placement; fade: number; dim: number }> =
-    []
+  const shots: Shot[] = []
   for (const tile of TILES) {
     const rise = riseAt(frame, tile)
     if (rise.fade <= 0) continue
@@ -93,39 +117,37 @@ export function Patterns() {
       floatAt(frame, tile) * clamp01((frame - 60) / 90) +
       waveLift(tile, front)
     const at = placement(cam, tile, z)
-    if (!at || !visible(at)) continue
+    if (!at) continue
+    const opacity = rise.fade * edgeFade(at.shown)
     // A screen sinking under the fog goes to ink with it, so it never pops.
     const haze = lean * (1 - clamp01((at.bounds.bottom - 20) / 140))
-    const hero = tile.c === HERO.c && tile.r === HERO.r
-    shots.push({
-      tile,
-      at,
-      fade: rise.fade,
-      dim: (1 - rise.fade) * 0.6 + haze + (hero ? 0 : spotlight * 0.42),
-    })
+    const dim =
+      (1 - rise.fade) * 0.6 + haze + (isHero(tile) ? 0 : spotlight * 0.42)
+    if (opacity < 0.01 || dim > 0.92) continue
+    shots.push({ tile, at, opacity, dim })
   }
-  // Only what the camera really sees, painted far to near.
+  // What reads most wins the cap; painted far to near.
   const shown = shots
-    .sort((p, q) => q.at.area - p.at.area)
+    .sort((p, q) => q.at.shown * (1 - q.dim) - p.at.shown * (1 - p.dim))
     .slice(0, MAX_SCREENS)
     .sort((p, q) => p.at.depth - q.at.depth)
 
   return (
-    <Stage
-      vignette={false}
-      {...grid}
-      style={{ "--video-time": 0 } as CSSProperties}
-    >
-      <style>{SCREEN_CSS}</style>
-      {shown.map(({ tile, at, fade, dim }) => (
+    <Stage vignette={false} {...grid}>
+      <style>{PINNED + SCREEN_CSS}</style>
+      <Theme state={BUILT} mode={BUILT_MODE}>
+        <IconsReady />
+      </Theme>
+      {shown.map(({ tile, at, opacity, dim }) => (
         <Screen
           key={tile.id}
           tile={tile}
           at={at}
-          fade={fade}
+          opacity={opacity}
           dim={dim}
           frame={frame}
           front={front}
+          hero={isHero(tile)}
         />
       ))}
       <Lens frame={frame} lean={lean} />
@@ -135,10 +157,18 @@ export function Patterns() {
   )
 }
 
-/* One overlay for the whole lens, so it costs one layer: the far field sinks
-   into the ground's ink as the plane leans; the Stage's vignette, eased per
-   shot (full on the cut, where it matches Compose; light while bright screens
-   fill the frame); and the near edge held down once the wave lights the field. */
+/* Static grain at 1.2 % over everything: ±1–2 LSB, so the near-black ramps
+   dither instead of banding in the encode. Plain alpha, not a blend mode —
+   an overlay blend of noise shifts the look's colors. */
+const GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n' color-interpolation-filters='sRGB'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>",
+)}")`
+
+/* One overlay for the whole lens: the far field sinking into the ground's
+   ink as the plane leans (a short ramp, so a light screen near the top isn't
+   washed grey); the Stage's vignette, eased per shot (full on the cut, where
+   it matches Compose); the near edge held down once the wave lights the
+   field; and the grain. */
 function Lens({ frame, lean }: { frame: number; lean: number }) {
   const vignette = keys(frame, [
     [0, 1],
@@ -148,23 +178,38 @@ function Lens({ frame, lean }: { frame: number; lean: number }) {
     [320, 0.5],
     [479, 0.4],
   ])
-  const near = progress(frame, 262, 60, ease.inOut)
+  // Held while the lit field fills the frame; lifted off the landing product.
+  const near =
+    progress(frame, 262, 60, ease.inOut) *
+    (1 - progress(frame, 370, 70, ease.inOut))
+  const fog = lean * lean
   const ink = (a: number) => `rgba(8,8,10,${a.toFixed(3)})`
   const layers = [
     `radial-gradient(ellipse 90% 80% at 50% 45%, transparent 55%, rgba(0,0,0,${(0.55 * vignette).toFixed(3)}) 100%)`,
   ]
-  if (lean > 0.01)
+  if (fog > 0.01)
     layers.push(
-      `linear-gradient(to bottom, ${ink(lean)} 0%, ${ink(0.86 * lean)} 9%, ${ink(0.45 * lean)} 24%, ${ink(0)} 44%)`,
+      `linear-gradient(to bottom, ${ink(fog)} 0%, ${ink(0.78 * fog)} 6%, ${ink(0.3 * fog)} 15%, ${ink(0)} 27%)`,
     )
   if (near > 0)
     layers.push(
       `linear-gradient(to top, ${ink(0.34 * near)} 0%, ${ink(0)} 30%)`,
     )
   return (
-    <AbsoluteFill
-      style={{ pointerEvents: "none", background: layers.join(", ") }}
-    />
+    <>
+      <AbsoluteFill
+        style={{ pointerEvents: "none", background: layers.join(", ") }}
+      />
+      {frame > 0 && !DBG.nr ? (
+        <AbsoluteFill
+          style={{
+            pointerEvents: "none",
+            backgroundImage: GRAIN,
+            opacity: 0.012,
+          }}
+        />
+      ) : null}
+    </>
   )
 }
 
@@ -184,7 +229,7 @@ function Scrim({ frame }: { frame: number }) {
         pointerEvents: "none",
         opacity: o,
         background:
-          "radial-gradient(ellipse 50% 30% at 50% 24%, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.66) 50%, rgba(8,8,10,0) 100%)",
+          "radial-gradient(ellipse 48% 24% at 50% 23%, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.66) 50%, rgba(8,8,10,0) 100%)",
       }}
     />
   )
@@ -225,29 +270,29 @@ function Title({ frame }: { frame: number }) {
 function Screen({
   tile,
   at,
-  fade,
+  opacity,
   dim,
   frame,
   front,
+  hero,
 }: {
   tile: Tile
   at: Placement
-  fade: number
+  opacity: number
   dim: number
   frame: number
   front: number
+  hero: boolean
 }) {
+  const root = useRef<HTMLDivElement>(null)
   const isCanvas = tile.content === "canvas"
-  const wave = crossing(tile, front)
-  const mode = isCanvas ? "light" : "dark"
-  const content = isCanvas ? <Canvas frame={frame} /> : null
-  const light = glint(tile, front)
-  // The canvas draws its own edge while it grows out of the card.
-  const rim = isCanvas ? 0 : 0.14
-
+  // The canvas is already in the built system; only products change.
+  const wave = isCanvas ? { state: "before" as const } : crossing(tile, front)
+  const light = isCanvas || DBG.ng ? null : glint(tile, front)
   const zoom = at.density
   return (
     <div
+      ref={root}
       style={{
         position: "absolute",
         left: 0,
@@ -256,7 +301,7 @@ function Screen({
         height: TILE_H * zoom,
         transformOrigin: "0 0",
         transform: at.matrix,
-        opacity: fade,
+        opacity,
       }}
     >
       {/* The corners clip here, in paint: on the projected layer itself they'd
@@ -271,40 +316,56 @@ function Screen({
           zoom,
           borderRadius: RADIUS,
           overflow: "hidden",
-          boxShadow: rim ? `0 0 0 1.5px rgba(255,255,255,${rim})` : undefined,
+          // The canvas draws its own edge while it grows out of the card.
+          boxShadow: isCanvas
+            ? undefined
+            : "0 0 0 1.5px rgba(255,255,255,0.17)",
         }}
       >
-        {wave.state !== "after" ? (
-          <Surface
-            key="before"
-            content={tile.content}
-            state={BEFORE}
-            mode={mode}
-          >
-            {content}
+        {isCanvas ? (
+          <Surface content="canvas" state={LOOK} mode={LOOK_MODE}>
+            <Canvas frame={frame} />
           </Surface>
-        ) : null}
-        {wave.state !== "before" ? (
-          <div
-            key="after"
-            style={{
-              position: "absolute",
-              inset: 0,
-              maskImage: wave.state === "crossing" ? wave.mask : undefined,
-            }}
-          >
-            <Surface content={tile.content} state={AFTER} mode="light">
-              {content}
-            </Surface>
-          </div>
-        ) : null}
-        {isCanvas || wave.state === "after" ? null : (
-          <div style={{ position: "absolute", inset: 0, background: SHEEN }} />
+        ) : (
+          <>
+            {wave.state !== "after" ? (
+              <Surface
+                key="before"
+                content={tile.content}
+                state={BEFORE}
+                mode="dark"
+              />
+            ) : null}
+            {wave.state !== "before" ? (
+              <div
+                key="after"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  maskImage:
+                    wave.state === "crossing" && !DBG.nm
+                      ? wave.mask
+                      : undefined,
+                }}
+              >
+                <Surface
+                  content={tile.content}
+                  state={BUILT}
+                  mode={BUILT_MODE}
+                />
+              </div>
+            ) : null}
+            {wave.state === "after" ? null : (
+              <div
+                style={{ position: "absolute", inset: 0, background: SHEEN }}
+              />
+            )}
+          </>
         )}
         {light ? (
           <div style={{ position: "absolute", inset: 0, background: light }} />
         ) : null}
-        {dim > 0.005 ? (
+        {dim > 0.005 && !DBG.nD ? (
           <div
             style={{
               position: "absolute",
@@ -315,6 +376,7 @@ function Screen({
           />
         ) : null}
       </div>
+      {hero && !DBG.nd ? <PlayerDriver frame={frame} root={root} /> : null}
     </div>
   )
 }

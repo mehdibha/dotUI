@@ -7,9 +7,11 @@ import { WarmIcons } from "../lib/theme"
 import { BlurWords, HEADLINE, TYPE } from "../lib/type"
 import type { Ripple } from "./end/field"
 import { Field, rippleFront } from "./end/field"
+import type { Light } from "./end/light"
+import { Lights } from "./end/light"
 import { EndMark, EndWordmark, markAt } from "./end/logo"
 import { CX, CY, T } from "./end/timeline"
-import { coreCharge, Vortex } from "./end/vortex"
+import { burnLights, coreCharge, Vortex } from "./end/vortex"
 import { cameraAt as exportCamera } from "./export/layout"
 
 /* End — Export's last frame starts turning on the cut and the whole film
@@ -18,8 +20,10 @@ import { cameraAt as exportCamera } from "./export/layout"
 
 const TAGLINE = "The Design System Studio for the Web"
 const SITE = "dotui.org"
-const TAG_Y = 620
+const TAG_Y = 598
 const SITE_Y = 704
+/** The end card's push grows from here. */
+const PUSH_Y = CY - 20
 
 function darkDot(frame: number) {
   const p = markAt(frame)
@@ -119,15 +123,36 @@ export function End() {
   // The collapse leans in on the cut and on the next beat.
   const pull =
     1 + punches(frame, [0, 30]) + 0.05 * ease.in(clamp01(frame / T.impact))
+  // A slow push from the moment the mark forms, so the reveal never holds.
   const push = keys(
     frame,
     [
-      [T.word, 1],
-      [359, 1.03],
+      [T.grow, 1],
+      [359, 1.035],
     ],
     ease.soft,
   )
 
+  const lights: Light[] = [
+    // The pool on the lockup (pushed with it), and the core while it charges.
+    {
+      x: CX + (pose.cx - CX) * push,
+      y: PUSH_Y + (pose.y - PUSH_Y) * push,
+      radius: Math.max(220, pose.size * 3.4) * push,
+      alpha: glow,
+    },
+    ...(burst > 0.01
+      ? [{ x: CX, y: CY, radius: 170, alpha: 1.5 * burst }]
+      : []),
+    // Bodies burning into the core, pulled with the vortex.
+    ...burnLights(frame).map((l) => ({
+      ...l,
+      x: CX + (l.x - CX) * pull,
+      y: CY + (l.y - CY) * pull,
+      radius: l.radius * pull,
+    })),
+    ...(flash > 0.01 ? [{ x: CX, y: CY, radius: 90, alpha: 2.2 * flash }] : []),
+  ]
   return (
     <Stage grid={false}>
       <WarmIcons />
@@ -154,21 +179,13 @@ export function End() {
           <Vortex frame={frame} />
         </AbsoluteFill>
       ) : null}
-      <Glow
-        x={pose.cx}
-        y={pose.y}
-        radius={Math.max(220, pose.size * 3.4)}
-        alpha={glow}
-      />
-      {burst > 0.01 ? (
-        <Glow x={CX} y={CY} radius={170} alpha={1.5 * burst} />
-      ) : null}
+      <Lights lights={lights} />
       {since >= 0 && since < 70 ? <Shockwave since={since} /> : null}
       {flash > 0.01 ? <Flare flash={flash} since={since} /> : null}
       <AbsoluteFill
         style={{
           transform: `scale(${push.toFixed(4)})`,
-          transformOrigin: `${CX}px ${CY - 20}px`,
+          transformOrigin: `${CX}px ${PUSH_Y}px`,
         }}
       >
         <EndWordmark pose={pose} frame={frame} />
@@ -182,7 +199,7 @@ export function End() {
               ...HEADLINE,
               fontSize: TYPE.tagline,
               letterSpacing: "-0.025em",
-              color: "rgba(250,250,250,0.6)",
+              color: "rgba(250,250,250,0.72)",
             }}
           />
         </Line>
@@ -220,7 +237,7 @@ function Site({ frame }: { frame: number }) {
       style={{
         position: "relative",
         display: "inline-block",
-        padding: "13px 30px 14px",
+        padding: "20px 44px 22px",
       }}
     >
       <span
@@ -228,8 +245,9 @@ function Site({ frame }: { frame: number }) {
           position: "absolute",
           inset: 0,
           borderRadius: 999,
-          border: "1px solid rgba(255,255,255,0.18)",
-          background: "rgba(255,255,255,0.04)",
+          border: "1.5px solid rgba(255,255,255,0.2)",
+          background: "rgba(255,255,255,0.05)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
           opacity: t,
           transform: `scale(${lerp(0.92, 1, t)})`,
         }}
@@ -240,41 +258,13 @@ function Site({ frame }: { frame: number }) {
         style={{
           ...HEADLINE,
           position: "relative",
-          fontSize: 32,
+          fontSize: TYPE.cta,
           fontWeight: 500,
-          letterSpacing: "-0.015em",
+          letterSpacing: "-0.02em",
           color: "rgba(250,250,250,0.94)",
         }}
       />
     </span>
-  )
-}
-
-/** A soft, roughly Gaussian pool of light, screened over what's beneath. */
-function Glow({
-  x,
-  y,
-  radius,
-  alpha,
-}: {
-  x: number
-  y: number
-  radius: number
-  alpha: number
-}) {
-  const a = (k: number) => `rgba(255,255,255,${(alpha * k).toFixed(4)})`
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: x - radius,
-        top: y - radius,
-        width: radius * 2,
-        height: radius * 2,
-        mixBlendMode: "screen",
-        background: `radial-gradient(circle closest-side, ${a(0.42)} 0%, ${a(0.24)} 7%, ${a(0.11)} 18%, ${a(0.045)} 34%, ${a(0.015)} 56%, ${a(0.004)} 78%, transparent 100%)`,
-      }}
-    />
   )
 }
 
@@ -284,7 +274,6 @@ function Flare({ flash, since }: { flash: number; since: number }) {
   const streak = flash ** 1.6
   return (
     <>
-      <Glow x={CX} y={CY} radius={90} alpha={2.2 * flash} />
       <div
         style={{
           position: "absolute",

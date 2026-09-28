@@ -6,7 +6,7 @@ import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { Appearance } from "@/components/showcase/appearance"
 import { ApprovalPrompt } from "@/components/showcase/approval-prompt"
 import { Booking } from "@/components/showcase/booking"
-import { ColorEditorCard } from "@/components/showcase/color-editor"
+import { Controls } from "@/components/showcase/controls"
 import { CookiePreferences } from "@/components/showcase/cookie-preferences"
 import { CustomDomain } from "@/components/showcase/custom-domain"
 import { DisplaySettings } from "@/components/showcase/display-settings"
@@ -42,7 +42,7 @@ const SIDES: Stack[] = [
   {
     x: left2,
     top: -96,
-    cards: [<ColorEditorCard key="a" />, <Appearance key="b" />],
+    cards: [<Controls key="a" />, <Appearance key="b" />],
   },
   {
     x: left1,

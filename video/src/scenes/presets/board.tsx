@@ -3,7 +3,6 @@ import type { ReactNode } from "react"
 import { flushSync } from "react-dom"
 import { continueRender, delayRender } from "remotion"
 
-import { Appearance } from "@/components/showcase/appearance"
 import { ApprovalPrompt } from "@/components/showcase/approval-prompt"
 import { Booking } from "@/components/showcase/booking"
 import { CommandMenu } from "@/components/showcase/command-menu"
@@ -23,6 +22,7 @@ import type { State } from "../../lib/theme"
 import { COLUMNS as AXES_COLUMNS } from "../axes/layout"
 import {
   Alerts,
+  Appearance,
   Billing,
   Deploys,
   Invoice,

@@ -1,7 +1,9 @@
 import type { CSSProperties, ReactNode } from "react"
-import { AbsoluteFill } from "remotion"
+import { use, useEffect, useRef, useState } from "react"
+import { AbsoluteFill, continueRender, delayRender } from "remotion"
 
 import { MailIcon } from "@/registry/icons"
+import { IconLibraryContext } from "@/registry/icons/create-icon"
 import { Button } from "@/registry/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card"
 import { Description, Label } from "@/registry/ui/field"
@@ -9,11 +11,17 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
 import { Theme } from "../../lib/theme"
+import { BUILT, BUILT_MODE } from "../axes/timeline"
 
 /* The newsletter field, built up one composition at a time. Each step is the
    real registry tree; `data-flip` names the parts the preview morphs between
    steps (see flip.ts). A part can carry several names when one element plays
    two roles (a bare Input is both the field box and the text). */
+
+/** The system the viewer just built in Axes: orange brand, serif headings,
+    Phosphor icons, raised pill buttons, comfortable density, light. */
+export const LOOK = BUILT
+export const LOOK_MODE = BUILT_MODE
 
 export const PLACEHOLDER = "you@example.com"
 export const TITLE = "Stay in the loop"
@@ -182,16 +190,17 @@ export function CardStage({
 }
 
 /** Screen px per component px on Compose's last frame. */
-export const HANDOFF_SCALE = 2
+export const HANDOFF_SCALE = 2.4
 
 /**
- * Compose's last frame, minus the ground: the finished card, default builder
- * state, light mode, centred at (960, 540) at HANDOFF_SCALE, nothing focused.
- * Render it full-frame with no transform to match the cut pixel for pixel.
+ * Compose's last frame, minus the ground: the finished card in LOOK, light
+ * mode, centred at (960, 540) at HANDOFF_SCALE, nothing focused. Render it
+ * full-frame with no transform to match the cut pixel for pixel.
  */
 export function HandoffCard() {
   return (
-    <Theme mode="light">
+    <Theme state={LOOK} mode={LOOK_MODE}>
+      <IconsReady />
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         <CardStage zoom={HANDOFF_SCALE}>
           <div style={CENTERED}>
@@ -200,5 +209,47 @@ export function HandoffCard() {
         </CardStage>
       </AbsoluteFill>
     </Theme>
+  )
+}
+
+/**
+ * Holds the frame until the look's icon library has really rendered. It
+ * lazy-loads behind a Suspense that shows lucide meanwhile, and React
+ * throttles that swap (~300 ms), so a timed warm-up can still film lucide.
+ * Mount it inside the look's Theme.
+ */
+export function IconsReady() {
+  const lucide = use(IconLibraryContext) === "lucide"
+  const probe = useRef<HTMLSpanElement>(null)
+  const [handle] = useState(() =>
+    delayRender("compose icons", { timeoutInMilliseconds: 60_000 }),
+  )
+  useEffect(() => {
+    let done = false
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const release = () => {
+      if (done) return
+      done = true
+      continueRender(handle)
+    }
+    const check = () => {
+      const svg = probe.current?.querySelector("svg")
+      if (lucide || (svg && !svg.classList.contains("lucide"))) release()
+      else timer = setTimeout(check, 25)
+    }
+    check()
+    return () => {
+      clearTimeout(timer)
+      release()
+    }
+  }, [handle, lucide])
+  return (
+    <span
+      ref={probe}
+      aria-hidden
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
+    >
+      <MailIcon />
+    </span>
   )
 }

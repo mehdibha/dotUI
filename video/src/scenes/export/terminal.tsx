@@ -224,27 +224,16 @@ function Caret({
 
 function Output({ frame, line }: { frame: number; line: OutLine }) {
   if (line.kind === "file") {
-    const i = line.file!
-    const lift = FLY_AT[i]!
-    const flash =
-      frame >= lift ? 1 - progress(frame, lift + 3, 26, ease.out) : 0
-    const shipped = progress(frame, lift, 8, ease.out)
-    const [dash, dir, name] = line.segs
+    // The row stays behind, dimmed, as its card lifts off.
+    const left = progress(frame, FLY_AT[line.file!]!, 8, ease.out)
     return (
-      <>
-        <span style={{ color: dash![1] }}>{dash![0]}</span>
-        <span style={{ color: dir![1] }}>{dir![0]}</span>
-        <span
-          style={{
-            color: name![1],
-            opacity: 1 - 0.7 * shipped,
-            background: `rgba(121,184,255,${(0.32 * flash).toFixed(3)})`,
-            borderRadius: 4,
-          }}
-        >
-          {name![0]}
-        </span>
-      </>
+      <span style={{ opacity: 1 - 0.75 * left }}>
+        {line.segs.map(([text, color], i) => (
+          <span key={i} style={{ color }}>
+            {text}
+          </span>
+        ))}
+      </span>
     )
   }
   const spinning = line.done !== undefined && frame < line.done

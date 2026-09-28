@@ -58,11 +58,7 @@ for (let r = -5; r <= 4; r++) {
   }
 }
 
-/** World point under a cell's centre. */
-export const cell = (c: number, r: number) => ({
-  x: c * PITCH_X,
-  y: r * PITCH_Y,
-})
+type Point = { x: number; y: number }
 
 /**
  * Where a tile lands on screen, lifted `z` px off the plane. When one affine
@@ -105,14 +101,11 @@ export function placement(cam: Cam, tile: Tile, z = 0) {
     ),
     Math.hypot(c * TILE_H + e - p3.x, d * TILE_H + f - p3.y),
   )
+  const shown = shownArea(corners) / (WIDTH * HEIGHT)
   // Only a screen that holds the shot earns the 2× layer (it costs 4× the
   // pixels); edge-of-frame neighbours stay at 1×.
-  const coverage =
-    (Math.max(0, Math.min(bounds.right, WIDTH) - Math.max(bounds.left, 0)) *
-      Math.max(0, Math.min(bounds.bottom, HEIGHT) - Math.max(bounds.top, 0))) /
-    (WIDTH * HEIGHT)
   const density =
-    coverage > 0.3 &&
+    shown > 0.3 &&
     Math.max(
       Math.hypot(p1.x - p0.x, p1.y - p0.y) / TILE_W,
       Math.hypot(p2.x - p3.x, p2.y - p3.y) / TILE_W,
@@ -121,13 +114,6 @@ export function placement(cam: Cam, tile: Tile, z = 0) {
     ) > 1.02
       ? 2
       : 1
-  // Visible area (shoelace), to rank what the camera actually sees.
-  let area = 0
-  for (let i = 0; i < 4; i++) {
-    const p = corners[i]!
-    const q = corners[(i + 1) % 4]!
-    area += p.x * q.y - q.x * p.y
-  }
   return {
     matrix:
       error > 1.5
@@ -135,13 +121,11 @@ export function placement(cam: Cam, tile: Tile, z = 0) {
         : `matrix(${a / density}, ${b / density}, ${c / density}, ${d / density}, ${e}, ${f})`,
     density,
     bounds,
-    area: Math.abs(area) / 2,
+    /** Share of the frame the screen covers. */
+    shown,
     depth: center.k,
-    center,
   }
 }
-
-type Point = { x: number; y: number }
 
 /** The projective matrix taking a w×h rect onto four screen corners (Heckbert's square-to-quad). */
 export function quadMatrix(q: readonly Point[], w: number, h: number) {
@@ -164,14 +148,36 @@ export function quadMatrix(q: readonly Point[], w: number, h: number) {
 
 export type Placement = NonNullable<ReturnType<typeof placement>>
 
-const MARGIN = 24
+const lerpAt = (p: Point, q: Point, t: number) => ({
+  x: p.x + (q.x - p.x) * t,
+  y: p.y + (q.y - p.y) * t,
+})
 
-/** Overlaps the frame. */
-export function visible({ bounds }: Placement) {
-  return (
-    bounds.right > -MARGIN &&
-    bounds.left < WIDTH + MARGIN &&
-    bounds.bottom > -MARGIN &&
-    bounds.top < HEIGHT + MARGIN
-  )
+/* The frame's four edges: which side is inside, and where a segment cuts it. */
+const EDGES: Array<[(p: Point) => boolean, (p: Point, q: Point) => Point]> = [
+  [(p) => p.x >= 0, (p, q) => lerpAt(p, q, p.x / (p.x - q.x))],
+  [(p) => p.x <= WIDTH, (p, q) => lerpAt(p, q, (WIDTH - p.x) / (q.x - p.x))],
+  [(p) => p.y >= 0, (p, q) => lerpAt(p, q, p.y / (p.y - q.y))],
+  [(p) => p.y <= HEIGHT, (p, q) => lerpAt(p, q, (HEIGHT - p.y) / (q.y - p.y))],
+]
+
+/** Area of a projected quad inside the frame (Sutherland–Hodgman, shoelace). */
+function shownArea(quad: readonly Point[]) {
+  let poly = [...quad]
+  for (const [inside, cut] of EDGES) {
+    const next: Point[] = []
+    poly.forEach((p, i) => {
+      const q = poly[(i + 1) % poly.length]!
+      if (inside(p)) next.push(p)
+      if (inside(p) !== inside(q)) next.push(cut(p, q))
+    })
+    poly = next
+    if (poly.length < 3) return 0
+  }
+  let area = 0
+  poly.forEach((p, i) => {
+    const q = poly[(i + 1) % poly.length]!
+    area += p.x * q.y - q.x * p.y
+  })
+  return Math.abs(area) / 2
 }

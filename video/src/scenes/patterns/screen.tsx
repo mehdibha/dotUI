@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from "react"
-import { memo, useEffect } from "react"
+import { memo } from "react"
 
 import Checkout from "@/modules/studio/preview/blocks/checkout"
 import CodeReview from "@/modules/studio/preview/blocks/code-review"
@@ -27,33 +27,15 @@ const BLOCKS: Record<Exclude<Content, "canvas">, ComponentType> = {
 }
 
 /* Blocks size themselves to the viewport (h-svh, min-h-screen); inside a
-   tile the tile is the viewport. */
+   tile the tile is the viewport. Sticky headers and table heads blur what
+   scrolls under them; nothing scrolls here, so the blur is invisible — and
+   each one is a render pass Chrome's software compositor redraws ~4 times a
+   captured frame (most of a frame's cost once a few screens are up). */
 export const SCREEN_CSS = `
 .pt-screen .h-svh,.pt-screen .h-screen{height:100%!important}
 .pt-screen .min-h-svh,.pt-screen .min-h-screen{min-height:100%!important}
+.pt-screen *,.pt-screen *::before{backdrop-filter:none!important}
 `
-
-/* A block may run a wall-clock timer (the music player ticks its progress
-   every second), which would make a frame depend on how long the tab has been
-   rendering. Mount effects run children first, siblings in order, so a stub
-   placed before the block and a restore placed after bracket exactly its
-   effects: its interval never starts. */
-let realSetInterval: typeof window.setInterval | null = null
-
-function StopClock() {
-  useEffect(() => {
-    realSetInterval ??= window.setInterval
-    window.setInterval = (() => 0) as unknown as typeof window.setInterval
-  }, [])
-  return null
-}
-
-function StartClock() {
-  useEffect(() => {
-    if (realSetInterval) window.setInterval = realSetInterval
-  }, [])
-  return null
-}
 
 /** A themed app surface. Memoized, so camera frames never re-render the app. */
 export const Surface = memo(function Surface({
@@ -87,15 +69,7 @@ export const Surface = memo(function Surface({
             Block ? "relative h-full w-full bg-bg" : "relative h-full w-full"
           }
         >
-          {Block ? (
-            <>
-              <StopClock />
-              <Block />
-              <StartClock />
-            </>
-          ) : (
-            children
-          )}
+          {Block ? <Block /> : children}
         </div>
       </Theme>
     </div>

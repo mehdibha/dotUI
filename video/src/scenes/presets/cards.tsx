@@ -1,3 +1,5 @@
+import { createContext, useContext } from "react"
+
 import {
   BellIcon,
   CheckIcon,
@@ -7,8 +9,11 @@ import {
   DownloadIcon,
   GitBranchIcon,
   MailIcon,
+  MonitorIcon,
+  MoonIcon,
   PlusIcon,
   SparklesIcon,
+  SunIcon,
 } from "@/registry/icons"
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
@@ -55,6 +60,69 @@ import { TextField } from "@/registry/ui/text-field"
 
 /* A few cards in the showcase's idiom, for coverage the landing set lacks
    without names, logos or remote images. */
+
+/** The mode the look is filmed in — cards that show a theme choice pick it. */
+export const LookMode = createContext<"light" | "dark">("dark")
+
+const THEMES = [
+  { id: "light", label: "Light", icon: SunIcon },
+  { id: "dark", label: "Dark", icon: MoonIcon },
+  { id: "system", label: "System", icon: MonitorIcon },
+]
+
+const ACCENTS = [
+  "bg-primary",
+  "bg-info",
+  "bg-success",
+  "bg-warning",
+  "bg-danger",
+  "bg-accent",
+]
+
+/** The showcase's Appearance card, with the theme the look is in. */
+export function Appearance() {
+  const mode = useContext(LookMode)
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Appearance</CardTitle>
+        <CardDescription>Customize how the app looks.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="flex flex-col gap-2">
+          <Label>Theme</Label>
+          <SegmentedControl
+            aria-label="Theme"
+            selectedKeys={new Set([mode])}
+            className="grid w-full grid-cols-3"
+          >
+            {THEMES.map((t) => (
+              <SegmentedControlItem key={t.id} id={t.id}>
+                <t.icon className="size-4" aria-hidden />
+                {t.label}
+              </SegmentedControlItem>
+            ))}
+          </SegmentedControl>
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Label>Accent</Label>
+          <div className="flex items-center gap-2">
+            {ACCENTS.map((bg, i) => (
+              <span
+                key={bg}
+                className={`size-6 rounded-full ${bg} ${i === 0 ? "ring-2 ring-fg ring-offset-2 ring-offset-bg" : ""}`}
+              />
+            ))}
+          </div>
+        </div>
+        <Switch className="w-full justify-between text-sm">
+          <Label>Reduce motion</Label>
+          <SwitchControl />
+        </Switch>
+      </CardContent>
+    </Card>
+  )
+}
 
 export function SignIn() {
   return (

@@ -2,11 +2,11 @@ import { clamp01, ease, keys, lerp, progress, punches } from "../../lib/motion"
 import {
   ADD_ROW,
   CH,
+  DEPART_AT,
+  DESCEND,
   EDITOR,
   FILE_COL,
   FILE_ROW,
-  FLIGHT,
-  FLY_AT,
   IDLE_AT,
   IDLE_ROW,
   INIT_ROWS,
@@ -59,20 +59,34 @@ const gapPush = (frame: number) =>
     [148, 0],
     [204, 1],
     [214, 1],
-    [284, 0],
+    [272, 0],
   ])
 
 /** The world point the push centres on: between the file list and the tree. */
 const GAP = [676, 652] as const
 
+/** The closing push on the tv() variants block: 1 → 1.15, then a creep. */
+const END_PUSH = 0.15
+const endPush = (frame: number) =>
+  END_PUSH *
+    keys(frame, [
+      [252, 0],
+      [352, 1],
+    ]) +
+  Math.max(0, frame - 352) * 0.0003
+
+/** Screen point the closing push grows from, left of the code so the editor
+ *  opens away from the left column. */
+const END_FOCUS = [900, 600] as const
+
 export function cameraAt(frame: number): Cam {
   const p = gapPush(frame)
   const zoom = lerp(1, 1.2, p) + p * clamp01((frame - 204) / 30) * 0.02
-  const tail = Math.max(0, frame - 300) * 0.00028
-  const scale = (zoom + tail) * (1 + punches(frame, BEATS))
+  const end = endPush(frame)
+  const scale = zoom * (1 + end) * (1 + punches(frame, BEATS))
   return {
-    x: p * -(GAP[0] - O[0]) * zoom,
-    y: p * -(GAP[1] - O[1]) * zoom,
+    x: p * -(GAP[0] - O[0]) * zoom - end * (END_FOCUS[0] - O[0]),
+    y: p * -(GAP[1] - O[1]) * zoom - end * (END_FOCUS[1] - O[1]),
     z: 0,
     scale,
     rotateX:
@@ -147,30 +161,34 @@ const lerpFraming = (a: Framing, b: Framing, t: number): Framing => ({
   s: lerp(a.s, b.s, t),
 })
 
+/** Visible row of the add command once init's output has scrolled. */
+const ADD_VISIBLE = Math.min(ADD_ROW, TERM.rows - 1)
+
 /* Close on the init command (bar 1), back out while it runs, close again on
-   the add command, then aside for the files. The window bleeds off the
-   right whenever it's close; every framing creeps so none is ever still. */
+   the add command (framed low, so the headline's band stays clean), then
+   aside for the files. Every framing creeps so none is ever still. */
 export function terminalPose(frame: number): Pose {
   // The cut lands mid-push: fast at frame 0, settling into a creep.
   const settle = 1 - Math.exp(-frame / 45)
   const init = onRow(
     INIT_ROWS / 2,
-    548,
+    580,
     1.54 + 0.06 * settle + 0.0006 * frame,
     26 * settle + 0.3 * frame,
   )
-  const wide = { x: 960 + 0.2 * (frame - 60), y: 612, s: 0.94 }
+  const wide = { x: 960 + 0.2 * (frame - 60), y: 604, s: 1.04 }
   const add = onRow(
-    ADD_ROW + 0.5,
-    744,
-    1.4 + 0.0012 * (frame - 100),
+    ADD_VISIBLE + 0.5,
+    864,
+    1.4 + 0.0008 * (frame - 100),
     0.3 * (frame - 100),
   )
   const aside = { x: 616, y: 540, s: 0.86 }
   const back = progress(frame, T.enter, 50, ease.camera)
   const close = progress(frame, 96, 46, ease.camera)
   const side = progress(frame, 146, 60, ease.camera)
-  const exit = progress(frame, 214, 26, ease.in)
+  // Gone before the closing line resolves, so it lands on clean ground.
+  const exit = progress(frame, 202, 26, ease.in)
   const f = lerpFraming(
     lerpFraming(lerpFraming(init, wide, back), add, close),
     aside,
@@ -183,14 +201,10 @@ export function terminalPose(frame: number): Pose {
     rx: 0,
     ry: 13 * side + exit * 24,
     s: f.s,
-    opacity: 1 - progress(frame, 224, 16, ease.in),
+    opacity: 1 - progress(frame, 212, 16, ease.in),
     blur: exit * exit * 6,
   }
 }
-
-/** How much the terminal fills the top band (the headline needs a scrim). */
-export const topCovered = (frame: number) =>
-  progress(frame, 96, 30, ease.soft) * (1 - progress(frame, 160, 22, ease.soft))
 
 /** Rows scrolled off the top, fractional while a scroll eases. */
 export function terminalScroll(frame: number) {
@@ -232,12 +246,8 @@ export function editorPose(frame: number): Pose {
   }
 }
 
-/** Flight progress of file `i` (0 before lift-off, 1 once landed). */
-export const flight = (frame: number, i: number) =>
-  clamp01((frame - FLY_AT[i]!) / FLIGHT)
-
 /** Frame file `i` lands. */
-export const landAt = (i: number) => FLY_AT[i]! + FLIGHT
+export const landAt = (i: number) => DEPART_AT[i]! + DESCEND
 
 /** A row's slot opens ahead of the file that brings it, so it lands still. */
 const slot = (frame: number, file: number) =>
