@@ -14,6 +14,10 @@ export const T = {
   lockup: 252,
   /** …and lands on the beat. */
   land: 270,
+  /** The mark's ink dot beats — End's heartbeat, early. */
+  pulses: [300, 330],
+  /** The wall starts lifting away, gaining speed into the cut. */
+  lift: 300,
   end: 359,
 } as const
 
@@ -56,13 +60,17 @@ export function cameraAt(frame: number) {
     // A constant truck left; the wall rides up as it falls back — the way
     // Presets' board is already moving on its first frame.
     x: -0.5 * Math.max(0, frame - T.click) - 60 * back,
-    y: 40 * progress(frame, T.click, 200, ease.soft) - 260 * back,
-    /** Wall brightness (0–1): a touch down under the line, sunk under the lockup. */
+    y:
+      40 * progress(frame, T.click, 200, ease.soft) -
+      260 * back -
+      liftAt(frame),
+    /** Wall brightness (0–1): a touch down under the line, sunk under the
+     *  lockup — but not so far that its drift stops reading on a phone. */
     light:
       1 -
       0.1 * progress(frame, T.line - 16, 30, ease.inOut) -
-      0.44 * progress(frame, T.recede, 26, ease.inOut),
-    blur: 1.6 * progress(frame, T.recede + 6, 48, ease.inOut),
+      0.35 * progress(frame, T.recede, 26, ease.inOut),
+    blur: 1.2 * progress(frame, T.recede + 6, 48, ease.inOut),
   }
 }
 
@@ -74,6 +82,13 @@ function recedeAt(frame: number) {
   const u = frame - T.recede
   if (u <= 0) return 0
   return (1 - Math.exp(-u / 66)) * ease.camera(Math.min(1, u / 36))
+}
+
+/** Presets opens rising at ~4 px a frame out of a dark slot; the wall
+ *  accelerates upward over the last two beats so the cut carries one move. */
+function liftAt(frame: number) {
+  const t = Math.max(0, frame - T.lift) / (T.end - T.lift)
+  return 80 * t ** 3
 }
 
 /* Chrome rasterizes a layer under perspective at 1× and upscales it, so the

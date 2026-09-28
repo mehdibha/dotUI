@@ -28,6 +28,9 @@ const HERO = TILES_LAYOUT.find((t) => t.kind === "radio")!
 
 const POP = { damping: 14, stiffness: 150, mass: 0.8 }
 
+/** A touch below the headline's second line, over the UI just under it. */
+const LINE_2_Y = 630
+
 function tileStart(t: Tile, [ox, oy]: [number, number]) {
   const dx = Math.max(t.x - ox, 0, ox - (t.x + t.w))
   const dy = Math.max(t.y - oy, 0, oy - (t.y + t.h))
@@ -153,27 +156,40 @@ function wallFilter(cam: Cam) {
 }
 
 /** Soft pools behind the type: a frosted one hugging the line (the UI under
- *  the words goes soft and dark), a wider dark one under the lockup. */
+ *  the words goes soft and dark), deeper under the muted "someone else's."
+ *  (its letters are translucent, so the tiles show through them), and a
+ *  wider dark one under the lockup. */
 function Scrim({ frame }: { frame: number }) {
   const line =
     progress(frame, T.line - 10, 30, ease.inOut) *
     (1 - progress(frame, T.lineOut, 20, ease.inOut))
   const lockup = progress(frame, T.recede, 26, ease.inOut)
   if (line <= 0 && lockup <= 0) return null
-  const pool = (w: number, h: number) =>
-    `radial-gradient(ellipse ${w}px ${h}px at 50% 50%, #000 35%, transparent 100%)`
+  const pool = (w: number, h: number, y = 540, core = 35) =>
+    `radial-gradient(ellipse ${w}px ${h}px at 50% ${y}px, #000 ${core}%, transparent 100%)`
   return (
     <>
       {line > 0 ? (
-        <AbsoluteFill
-          style={{
-            opacity: line,
-            background: "rgba(8,8,10,0.74)",
-            backdropFilter: "blur(5px)",
-            maskImage: pool(760, 340),
-            pointerEvents: "none",
-          }}
-        />
+        <>
+          <AbsoluteFill
+            style={{
+              opacity: line,
+              background: "rgba(8,8,10,0.74)",
+              backdropFilter: "blur(5px)",
+              maskImage: pool(760, 340),
+              pointerEvents: "none",
+            }}
+          />
+          <AbsoluteFill
+            style={{
+              opacity: line,
+              background: "rgba(8,8,10,0.74)",
+              backdropFilter: "blur(4px)",
+              maskImage: pool(760, 190, LINE_2_Y, 45),
+              pointerEvents: "none",
+            }}
+          />
+        </>
       ) : null}
       {lockup > 0 ? (
         <AbsoluteFill
