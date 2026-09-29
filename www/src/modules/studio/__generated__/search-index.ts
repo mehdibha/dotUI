@@ -9,7 +9,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	shape: ["Character", "Roles", "Radius"],
 	space: ["Density", "Spacing"],
 	surfaces: ["Style", "Depth", "Page", "Glass"],
-	browser: ["Cursor", "Selectable", "Highlight", "Scrollbars", "Cursors"],
+	interactivity: ["Cursor", "Text selection", "Highlight", "Selectable UI text", "Cursors"],
 	states: [
 		"Control focus",
 		"Width",

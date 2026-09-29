@@ -3,7 +3,7 @@
 /* Typography — the three font roles, each row set in its own face so the row
    is the specimen. Heading reads Auto on the body font until pinned. */
 
-import { ChevronDownIcon, RotateCcwIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
@@ -23,15 +23,13 @@ import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
 /** A font role as a dial row: label, the family in its own typeface, the
- *  searchable list under it. With `derived`, '' reads Auto on that family
- *  and a reset appears once pinned. */
+ *  searchable list under it. With `derived`, '' reads Auto on that family. */
 function FontRow({
   label,
   value,
   derived,
   categories,
   onChange,
-  onReset,
 }: {
   label: string
   value: string
@@ -39,7 +37,6 @@ function FontRow({
   derived?: string
   categories: FontCategory[]
   onChange: (family: string) => void
-  onReset?: () => void
 }) {
   const auto = derived !== undefined && value === ""
   const resolved = value || derived || ""
@@ -61,15 +58,6 @@ function FontRow({
           {label}
         </span>
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
-          {onReset && !auto && (
-            <RacButton
-              aria-label={`Reset ${label} to auto`}
-              onPress={onReset}
-              className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:size-7"
-            >
-              <RotateCcwIcon className="size-3.5" />
-            </RacButton>
-          )}
           {auto && <span className={DIAL_VALUE}>Auto ·</span>}
           <span
             className="truncate text-[13px] font-medium text-fg/70"
@@ -111,7 +99,6 @@ export function TypeSection({ studio }: { studio: Studio }) {
         derived={state.bodyFont}
         categories={["sans-serif", "serif", "display", "handwriting"]}
         onChange={set("headingFont")}
-        onReset={() => set("headingFont")("")}
       />
       <FontRow
         label="Body"

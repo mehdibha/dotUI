@@ -1,10 +1,10 @@
 "use client"
 
-/* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
-   whole, its header pinned — the system switcher on the left, global reset
-   and search on the right — over a hairline. Docked under the preview, the
-   header and strip pin to the bottom edge instead, so they stay put as the
-   dock hugs each chapter. Real behavior arrives through `system` (wired by
+/* The panel chrome, after DialKit: one 14px-radius card, its header fixed
+   over a hairline — the system switcher on the left, global reset and search
+   on the right — and only the body below it scrolls. Docked under the
+   preview, the header and strip sit at the bottom edge instead, so they stay
+   put as the dock hugs each chapter. Real behavior arrives through `system` (wired by
    StudioPanel on /studio); without it the chrome is the studio's inert
    design shell. */
 
@@ -81,11 +81,11 @@ export function PanelChrome({
   return (
     <div
       className={cn(
-        "relative no-scrollbar flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain rounded-[14px] border border-fg/6 bg-card px-2 pb-2 [--panel-surface:var(--color-card)] max-lg:pb-0",
+        "relative flex h-full min-h-0 flex-col overflow-clip rounded-[14px] border border-fg/6 bg-card [--panel-surface:var(--color-card)]",
         className,
       )}
     >
-      <div className="sticky top-0 z-20 -mx-2 mb-2 flex shrink-0 flex-col border-b border-fg/6 bg-card p-2 max-lg:mb-0 max-lg:py-1.5 dock-stacked:top-auto dock-stacked:bottom-0 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
+      <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
         <div className="flex items-center justify-between gap-2">
           {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">
@@ -115,7 +115,9 @@ export function PanelChrome({
         </div>
         {strip}
       </div>
-      {children}
+      <div className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0">
+        {children}
+      </div>
     </div>
   )
 }

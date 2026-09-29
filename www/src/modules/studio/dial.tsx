@@ -7,7 +7,7 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon, RotateCcwIcon } from "lucide-react"
+import { CheckIcon, ChevronDownIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
@@ -633,13 +633,12 @@ export function DialSlider({
 /* ---------------------------------- Color --------------------------------- */
 
 /** Label, hex, swatch; the row opens the picker. With `derived`, an empty
- *  value reads "Auto" on the engine's color, and a reset appears once set. */
+ *  value reads "Auto" on the engine's color. */
 export function DialColor({
   label,
   value,
   derived,
   onChange,
-  onReset,
   status,
   footer,
 }: {
@@ -648,7 +647,6 @@ export function DialColor({
   /** The engine's derived color while `value` is '' (any CSS color). */
   derived?: string
   onChange: (hex: string) => void
-  onReset?: () => void
   /** Something to show before the value — a warning glyph. */
   status?: React.ReactNode
   /** Rows under the picker — settings that belong to this one color. */
@@ -677,15 +675,6 @@ export function DialColor({
               through except on its own buttons. */}
           <span className="pointer-events-none relative flex items-center gap-2 pr-2.5">
             {status && <span className="pointer-events-auto">{status}</span>}
-            {onReset && !auto && (
-              <RacButton
-                aria-label={`Reset ${label} to auto`}
-                onPress={onReset}
-                className="pointer-events-auto flex size-5 cursor-interactive items-center justify-center rounded-md text-fg/60 focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:size-7"
-              >
-                <RotateCcwIcon className="size-3.5" />
-              </RacButton>
-            )}
             <span className={cn(DIAL_VALUE, !auto && "uppercase")}>
               {auto ? "Auto" : color.toString("hex")}
             </span>
