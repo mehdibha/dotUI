@@ -12,12 +12,23 @@ export {
   type ChartSet,
   createTheme,
   type ModeOutput,
+  previewScale,
+  previewSolid,
   type Theme,
   type ThemeReport,
 } from "./theme"
 export type { ThemeOptions } from "./schema"
 
-export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from "./data"
+export {
+  CVD_GATE,
+  SEED_SNAP_BOUND,
+  SOLID_LSTAR_WINDOW,
+  STATUS_SEEDS,
+  STEPS,
+  type StatusName,
+  type StepName,
+  WHISPER_LINE,
+} from "./data"
 
 export { type GuaranteeResult } from "./verify"
 export { type Mode } from "./scale"
@@ -31,6 +42,7 @@ export {
   mixOklab,
   type Oklch,
   oklchCss,
+  solveLstar,
   toHex,
   toOklch,
 } from "./space"

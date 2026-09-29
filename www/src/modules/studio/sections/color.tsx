@@ -10,6 +10,7 @@ import { useMemo } from "react"
 import { useTheme } from "starter-themes"
 
 import { STEPS, toOklch } from "@dotui/colors"
+import type { Mode } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
@@ -19,15 +20,14 @@ import type { ColorMode } from "../axes/color"
 import {
   DialColor,
   DialGap,
-  DialPopover,
   DialSlider,
   DialToggle,
   DialTrigger,
 } from "../dial"
-import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
 import { PrimaryRow } from "./primary"
+import { Semantics } from "./semantics"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -58,20 +58,11 @@ function usePanelMode(state: StudioState) {
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
   const { resolvedTheme } = useTheme()
-  return {
-    theme,
-    m: theme[resolvedTheme === "dark" ? "dark" : "light"],
-  }
+  const mode: Mode = resolvedTheme === "dark" ? "dark" : "light"
+  return { theme, mode, m: theme[mode] }
 }
 
 /* --------------------------------- Section --------------------------------- */
-
-const SEMANTIC_SEEDS = [
-  { key: "successSeed", palette: "success", label: "Success" },
-  { key: "warningSeed", palette: "warning", label: "Warning" },
-  { key: "dangerSeed", palette: "danger", label: "Danger" },
-  { key: "selectionSeed", palette: "selection", label: "Selection" },
-] as const
 
 /** The decisions on the page: the two seeds every other color derives from. */
 export function ColorPrimary({ studio }: { studio: Studio }) {
@@ -147,47 +138,10 @@ export function ColorPreview({ state }: { state: StudioState }) {
 
 /** Semantics and primary. */
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const { m } = usePanelMode(state)
-
-  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
-  const semantic = (palette: string) =>
-    palette === "selection"
-      ? (m.scales.selection?.["700"] ??
-        m.scales[state.selectionColor]?.[
-          state.selectionColor === "neutral" ? "950" : "700"
-        ] ??
-        m.background)
-      : solid(palette)
-  const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
+  const { m, mode } = usePanelMode(studio.state)
   return (
     <>
-      <DialTrigger
-        label="Semantics"
-        value={
-          <>
-            <span className="flex items-center gap-1">
-              {SEMANTIC_SEEDS.map(({ key, palette }) => (
-                <PaletteDot key={key} color={semantic(palette)} />
-              ))}
-            </span>
-            {semanticsCustom ? "Custom" : "Auto"}
-          </>
-        }
-      >
-        <DialPopover>
-          {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
-            <DialColor
-              key={key}
-              label={label}
-              value={state[key]}
-              derived={semantic(palette)}
-              onChange={set(key)}
-              onReset={() => set(key)("")}
-            />
-          ))}
-        </DialPopover>
-      </DialTrigger>
+      <Semantics studio={studio} m={m} mode={mode} />
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
     </>
