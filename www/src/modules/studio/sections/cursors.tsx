@@ -1,4 +1,4 @@
-/* macOS cursor drawings for the Browser chapter — see the note on each. */
+/* macOS cursor drawings for the Interactivity chapter — see the note on each. */
 
 /* macOS cursor drawings — literal black/white/blue like the real cursors,
    which never theme; the white casing keeps them readable on dark cards.

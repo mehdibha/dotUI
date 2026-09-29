@@ -1,50 +1,23 @@
 "use client"
 
-/**
- * Rotating hero word, modeled on the x.ai hero swap. The word resolves in and out
- * of focus — `{opacity, blur(6px)}` with no vertical travel — rather than sliding,
- * and the slot springs to the incoming word's measured width so the "for" before it
- * never snaps.
- */
-
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
 const WORDS = ["humans", "agents"] as const
-/** Includes the 460ms swap, so each word holds still for ~2.5s. */
 const INTERVAL_MS = 3000
 
-const ENTER_DURATION = 0.28
-const EXIT_DURATION = 0.18
-const EASE_OUT = [0.16, 1, 0.3, 1] as const // easeOutExpo — arrival
-const EASE_IN = [0.55, 0.055, 0.675, 0.19] as const // easeInCubic — departure
-const BLUR = "blur(6px)"
-/** Settles in ~310ms, so the slot has finished resizing before the word sharpens. */
+const TRANSITION = { duration: 0.28, ease: [0.16, 1, 0.3, 1] } as const
 const WIDTH_SPRING = { type: "spring", stiffness: 260, damping: 30 } as const
 
-// The peak blur lands at opacity 0, so you never see sharp-but-blurred text.
-//
-// The exit eases *in* while the enter eases out. mode="wait" hands over only once
-// the exit's full duration has elapsed, so an ease-out exit would spend its whole
-// tail already invisible — 145ms of empty slot on a 220ms easeOutExpo exit. Easing
-// in holds the word, then releases it exactly as the incoming one mounts (9ms).
-const VARIANTS = {
-  initial: { opacity: 0, filter: BLUR },
-  animate: { opacity: 1, filter: "blur(0px)" },
-  exit: {
-    opacity: 0,
-    filter: BLUR,
-    transition: { duration: EXIT_DURATION, ease: EASE_IN },
-  },
-}
+// Both words share one grid cell and run the same curve in opposite directions,
+// so their opacities always sum to 1: a sequential swap blinks the slot empty.
+const HIDDEN = { opacity: 0, filter: "blur(6px)" }
+const SHOWN = { opacity: 1, filter: "blur(0px)" }
 
-/** Crossfade only — no blur, and the slot width snaps — under prefers-reduced-motion. */
-const REDUCED_VARIANTS = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-}
-
+/**
+ * Words render through `content: attr(data-word)` so crawlers read the sr-only
+ * "humans and agents", not the rotating copies.
+ */
 export function HeroWordSwap() {
   const reduce = useReducedMotion() ?? false
   const [index, setIndex] = useState(0)
@@ -58,10 +31,8 @@ export function HeroWordSwap() {
     return () => window.clearInterval(id)
   }, [])
 
-  // Measure the active word from the invisible sizer, then animate the slot to it.
-  // Animating the real `width` (not a transform) is what keeps the line from
-  // snapping. The ResizeObserver catches width changes without a word change: the
-  // webfont swapping in, or the fluid headline font-size crossing a breakpoint.
+  // Animating the real width keeps "for" from snapping; the observer catches
+  // webfont swaps and fluid font-size changes.
   const sizerRef = useRef<HTMLSpanElement | null>(null)
   const [width, setWidth] = useState<number | undefined>(undefined)
   useEffect(() => {
@@ -77,7 +48,8 @@ export function HeroWordSwap() {
     return () => observer.disconnect()
   }, [word])
 
-  const variants = reduce ? REDUCED_VARIANTS : VARIANTS
+  const cell =
+    "col-start-1 row-start-1 justify-self-start whitespace-nowrap before:content-[attr(data-word)]"
 
   return (
     <>
@@ -88,30 +60,18 @@ export function HeroWordSwap() {
         animate={width != null ? { width } : undefined}
         transition={{ width: reduce ? { duration: 0 } : WIDTH_SPRING }}
       >
-        {/* Sizer: invisibly holds the current word so the slot keeps a baseline and
-            a measurable width through the swap, and never collapses between words. */}
-        <span
-          ref={sizerRef}
-          className="invisible col-start-1 row-start-1 justify-self-start whitespace-nowrap"
-        >
-          {word}
-        </span>
-        {/* Visible word, swapped sequentially over the sizer (mode="wait").
-            `initial={false}` so the first word shows statically on load. */}
-        <span className="col-start-1 row-start-1 justify-self-start whitespace-nowrap">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={word}
-              className="inline-block"
-              initial={variants.initial}
-              animate={variants.animate}
-              exit={variants.exit}
-              transition={{ duration: ENTER_DURATION, ease: EASE_OUT }}
-            >
-              {word}
-            </motion.span>
-          </AnimatePresence>
-        </span>
+        <span ref={sizerRef} data-word={word} className={`invisible ${cell}`} />
+        <AnimatePresence initial={false}>
+          <motion.span
+            key={word}
+            data-word={word}
+            className={cell}
+            initial={reduce ? { opacity: 0 } : HIDDEN}
+            animate={reduce ? { opacity: 1 } : SHOWN}
+            exit={reduce ? { opacity: 0 } : HIDDEN}
+            transition={TRANSITION}
+          />
+        </AnimatePresence>
       </motion.span>
     </>
   )
