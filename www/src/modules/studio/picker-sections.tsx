@@ -3,18 +3,12 @@ import type { PresetPickerSection } from "@/modules/presets/preset-picker"
 
 import { resolveDesignSystem } from "./resolve"
 import { describe, selectionKey } from "./selection"
-import type { Selection } from "./selection"
 import { listed } from "./workspace"
 import type { Workspace } from "./workspace"
 
-/** What the studio and docs pickers list: the unsaved slot and the user's
- *  systems, then the presets, keyed by selection. */
+/** What the studio and docs pickers list: the user's systems, then the
+ *  presets, keyed by selection. The unsaved slot is no row. */
 export function pickerSections(workspace: Workspace): PresetPickerSection[] {
-  const mine: Selection[] = listed(workspace).map((s) => ({
-    kind: "system",
-    id: s.id,
-  }))
-  if (workspace.unsaved) mine.unshift({ kind: "unsaved" })
   const presets: PresetPickerSection = {
     id: "presets",
     title: "Presets",
@@ -24,9 +18,10 @@ export function pickerSections(workspace: Workspace): PresetPickerSection[] {
       resolve: () => resolvePreset(meta.id),
     })),
   }
-  if (mine.length === 0) return [presets]
-  const items = mine.map((sel) => {
-    const shown = describe(sel, workspace)
+  const systems = listed(workspace)
+  if (systems.length === 0) return [presets]
+  const items = systems.map(({ id }) => {
+    const shown = describe({ kind: "system", id }, workspace)
     return {
       id: shown.key,
       name: shown.name,

@@ -32,7 +32,7 @@ async function load() {
   /** A new system from Origin, current. */
   const create = (name = "Untitled") => {
     const doc = ws.create({ name, from: ORIGIN.id, state: ORIGIN.state })!
-    selection.select({ kind: "system", id: doc.id })
+    history.select({ kind: "system", id: doc.id })
     return doc.id
   }
   /** One of the user's systems, current, edited once. */
@@ -42,7 +42,7 @@ async function load() {
     vi.advanceTimersByTime(600)
     return id
   }
-  return { history, ws, selection, current, open, radius, edit, create, system }
+  return { history, ws, current, open, radius, edit, create, system }
 }
 
 describe("undo stack", () => {
@@ -107,12 +107,12 @@ describe("undo stack", () => {
   })
 
   it("keeps a separate stack per system", async () => {
-    const { history, ws, selection, open, system } = await load()
+    const { history, ws, open, system } = await load()
     const first = system()
     const second = system()
     history.undo()
     expect(open().state.radiusPx).toBe(ORIGIN_RADIUS)
-    selection.select({ kind: "system", id: first })
+    history.select({ kind: "system", id: first })
     history.undo()
     expect(ws.findSystem(first)!.state.radiusPx).toBe(ORIGIN_RADIUS)
     expect(ws.findSystem(second)!.state.radiusPx).toBe(ORIGIN_RADIUS)
@@ -159,19 +159,20 @@ describe("undo stack", () => {
 
 describe("unsaved slot", () => {
   const STRIPE = getPreset("stripe")!
+  const LINEAR = getPreset("linear")!
 
   it("writes nothing until a view is edited", async () => {
-    const { selection, current } = await load()
-    selection.select({ kind: "preset", id: "stripe" })
+    const { history, current } = await load()
+    history.select({ kind: "preset", id: "stripe" })
     expect(current().name).toBe("Stripe")
     expect(win.read("dotui:design-systems")).toBeNull()
   })
 
   it("fills on a view's first edit, one step with its drag, and no system", async () => {
-    const { history, ws, selection, current, edit } = await load()
+    const { history, ws, current, edit } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
-    selection.select({ kind: "preset", id: "stripe" })
+    history.select({ kind: "preset", id: "stripe" })
     history.setPressed(true)
     edit(3)
     vi.advanceTimersByTime(2000)
@@ -179,7 +180,7 @@ describe("unsaved slot", () => {
     history.setPressed(false)
     expect(current()).toMatchObject({
       key: "unsaved",
-      name: "New system (unsaved)",
+      name: "Stripe (unsaved)",
       swatch: STRIPE.swatch,
       content: { name: "Stripe (edited)" },
     })
@@ -196,6 +197,20 @@ describe("unsaved slot", () => {
     history.redo()
     expect(current().key).toBe("unsaved")
     expect(current().state.radiusPx).toBe(4)
+  })
+
+  it("is named after its view", async () => {
+    const { history, current, radius, edit } = await load()
+    edit(3)
+    expect(current().name).toBe("Origin (unsaved)")
+    history.select({
+      kind: "link",
+      id: "abcdefghij",
+      name: "Acme",
+      state: radius(2),
+    })
+    edit(4)
+    expect(current().name).toBe("Acme (unsaved)")
   })
 
   it("empties when an edit lands back on the view", async () => {
@@ -221,92 +236,65 @@ describe("unsaved slot", () => {
     expect(current().key).toBe("preset:origin")
   })
 
-  it("is replaced by another view's edit, with an Undo toast back", async () => {
-    const { history, ws, selection, current, edit } = await load()
+  it("is discarded silently on leaving, even for its own view", async () => {
+    const { history, ws, current, radius, edit, create } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
-    selection.select({ kind: "preset", id: "stripe" })
-    edit(3)
-    selection.select({ kind: "preset", id: "linear" })
-    edit(5)
-    vi.advanceTimersByTime(600)
-    edit(6)
-    expect(ws.getWorkspace().unsaved).toMatchObject({
-      from: { id: "linear" },
-      state: { radiusPx: 6 },
-    })
-    expect(add).toHaveBeenCalledTimes(1)
-    const toast = add.mock.calls[0]![0]
-    expect(toast.title).toBe("Replaced unsaved changes")
-    toast.actionProps!.onClick!({} as never)
-    expect(current().key).toBe("preset:linear")
-    expect(ws.getWorkspace().unsaved).toMatchObject({
-      from: { id: "stripe" },
-      state: { radiusPx: 3 },
-    })
-    // The later edits too are one Redo away each.
-    history.redo()
-    history.redo()
-    expect(current().key).toBe("unsaved")
-    expect(current().state.radiusPx).toBe(6)
+    const id = create()
+    const leaves = [
+      () => history.select({ kind: "preset", id: "linear" }),
+      () => history.select({ kind: "preset", id: "stripe" }),
+      () => history.select({ kind: "system", id }),
+      () =>
+        history.select({
+          kind: "link",
+          id: "abcdefghij",
+          name: "Acme",
+          state: radius(2),
+        }),
+    ]
+    for (const leave of leaves) {
+      history.select({ kind: "preset", id: "linear" })
+      edit(3)
+      expect(current().key).toBe("unsaved")
+      leave()
+      expect(current().key).not.toBe("unsaved")
+      expect(ws.getWorkspace().unsaved).toBeUndefined()
+    }
+    expect(current().state.radiusPx).toBe(2)
+    history.select({ kind: "preset", id: "linear" })
+    expect(current().state).toEqual(LINEAR.state)
+    expect(add).not.toHaveBeenCalled()
   })
 
-  it("comes back when the edits that replaced it are undone", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    selection.select({ kind: "preset", id: "stripe" })
+  it("drops its view's undo history on leaving", async () => {
+    const { history, current, radius, edit } = await load()
+    history.select({ kind: "preset", id: "linear" })
     edit(3)
-    selection.select({ kind: "preset", id: "linear" })
-    edit(5)
+    vi.advanceTimersByTime(600)
+    // Back on the view, with an undo step to the edit.
+    history.edit(radius(LINEAR.state.radiusPx))
+    expect(current().key).toBe("preset:linear")
+    history.select({ kind: "preset", id: "stripe" })
+    history.select({ kind: "preset", id: "linear" })
     history.undo()
     expect(current().key).toBe("preset:linear")
-    expect(ws.getWorkspace().unsaved).toMatchObject({
-      from: { id: "stripe" },
-      state: { radiusPx: 3 },
-    })
-    // Redo replaces it again, and undo puts it back again.
-    history.redo()
-    expect(ws.getWorkspace().unsaved).toMatchObject({ from: { id: "linear" } })
-    history.undo()
-    expect(ws.getWorkspace().unsaved).toMatchObject({ from: { id: "stripe" } })
-    selection.select({ kind: "unsaved" })
-    history.undo()
-    expect(current().key).toBe("preset:stripe")
+    expect(current().state).toEqual(LINEAR.state)
+  })
+
+  it("is discarded by creating a system from something else", async () => {
+    const { history, ws, current, edit } = await load()
+    history.select({ kind: "preset", id: "linear" })
+    edit(3)
+    const doc = history.createFrom("Mine", { kind: "preset", id: "stripe" })!
+    expect(current().doc?.id).toBe(doc.id)
+    expect(doc.state).toEqual(STRIPE.state)
     expect(ws.getWorkspace().unsaved).toBeUndefined()
   })
 
-  it("keeps a chain of replaced edits, with one toast for the latest", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    const { toastManager } = await import("@/registry/ui/toast")
-    const add = vi.spyOn(toastManager, "add")
-    selection.select({ kind: "preset", id: "linear" })
-    edit(3)
-    selection.select({ kind: "preset", id: "stripe" })
-    edit(4)
-    selection.select({ kind: "preset", id: "notion" })
-    edit(5)
-    const toasts = add.mock.calls.map(([toast]) => toast)
-    expect(toasts.map((toast) => toast.id)).toEqual([
-      "replaced-unsaved",
-      "replaced-unsaved",
-    ])
-    toasts[1]!.actionProps!.onClick!({} as never)
-    expect(current().key).toBe("preset:notion")
-    expect(ws.getWorkspace().unsaved).toMatchObject({
-      from: { id: "stripe" },
-      state: { radiusPx: 4 },
-    })
-    selection.select({ kind: "unsaved" })
-    history.undo()
-    expect(current().key).toBe("preset:stripe")
-    expect(ws.getWorkspace().unsaved).toMatchObject({
-      from: { id: "linear" },
-      state: { radiusPx: 3 },
-    })
-  })
-
   it("saves as a system, keeping its undo history", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    selection.select({ kind: "preset", id: "stripe" })
+    const { history, ws, current, edit } = await load()
+    history.select({ kind: "preset", id: "stripe" })
     edit(3)
     const { unsaved, systems } = ws.getWorkspace()
     expect(history.saveName(unsaved!, systems)).toBe("My Stripe")
@@ -320,8 +308,8 @@ describe("unsaved slot", () => {
   })
 
   it("names an edited link once: never (edited) (edited)", async () => {
-    const { history, ws, selection, current, radius } = await load()
-    selection.select({
+    const { history, ws, current, radius } = await load()
+    history.select({
       kind: "link",
       id: "abcdefghij",
       name: "Linear (edited)",
@@ -345,30 +333,18 @@ describe("unsaved slot", () => {
     expect(name({ ...link, name: "Acme" })).toBe("My Acme")
   })
 
-  it("is discarded with an Undo toast back", async () => {
-    const { history, ws, selection, current, edit } = await load()
-    const { toastManager } = await import("@/registry/ui/toast")
-    const add = vi.spyOn(toastManager, "add")
-    selection.select({ kind: "preset", id: "stripe" })
-    edit(3)
-    history.discard()
-    expect(current().key).toBe("preset:stripe")
-    expect(ws.getWorkspace().unsaved).toBeUndefined()
-    const toast = add.mock.calls.at(-1)![0]
-    expect(toast.title).toBe("Discarded unsaved changes")
-    toast.actionProps!.onClick!({} as never)
-    expect(current().key).toBe("unsaved")
-    expect(current().state.radiusPx).toBe(3)
-  })
-
   it("stays after a reload", async () => {
     const first = await load()
+    first.history.select({ kind: "preset", id: "linear" })
     first.edit(3)
     vi.advanceTimersByTime(600)
     vi.resetModules()
     const { current } = await load()
-    expect(current().key).toBe("unsaved")
-    expect(current().state.radiusPx).toBe(3)
+    expect(current()).toMatchObject({
+      key: "unsaved",
+      name: "Linear (unsaved)",
+      state: { radiusPx: 3 },
+    })
   })
 
   it("follows another tab's slot, and never undoes over it", async () => {
@@ -408,7 +384,7 @@ describe("unsaved slot", () => {
 
 describe("start from", () => {
   it("creates a system from a preset, a system or what's on screen", async () => {
-    const { history, ws, selection, current, edit } = await load()
+    const { history, ws, current, edit } = await load()
     const linear = history.createFrom("A", { kind: "preset", id: "linear" })!
     expect(linear).toMatchObject({ name: "A", from: "linear" })
     expect(linear.state).toEqual(getPreset("linear")!.state)
@@ -416,19 +392,15 @@ describe("start from", () => {
     const copy = history.createFrom("B", { kind: "system", id: linear.id })!
     expect(copy).toMatchObject({ from: "linear", state: linear.state })
 
-    selection.select({ kind: "preset", id: "stripe" })
+    history.select({ kind: "preset", id: "stripe" })
     edit(3)
-    history.createFrom("C", { kind: "preset", id: "origin" })
-    expect(ws.getWorkspace().unsaved).toBeDefined()
-    selection.select({ kind: "unsaved" })
-    const saved = history.createFrom("D", current().sel)!
-    expect(saved.state.radiusPx).toBe(3)
+    const saved = history.createFrom("C", current().sel)!
+    expect(saved).toMatchObject({ from: "stripe", state: { radiusPx: 3 } })
     expect(ws.getWorkspace().unsaved).toBeUndefined()
     expect(ws.getWorkspace().systems.map((s) => s.name)).toEqual([
       "A",
       "B",
       "C",
-      "D",
     ])
   })
 
@@ -444,10 +416,10 @@ describe("start from", () => {
 
 describe("delete", () => {
   it("leaves the next system alone on undo right after a delete", async () => {
-    const { history, ws, selection, current, edit, system } = await load()
+    const { history, ws, current, edit, system } = await load()
     const first = system()
     const second = system()
-    selection.select({ kind: "system", id: second })
+    history.select({ kind: "system", id: second })
     edit(9)
     history.remove(second)
     expect(current().doc?.id).toBe(first)
@@ -457,10 +429,10 @@ describe("delete", () => {
   })
 
   it("leaves the current system alone on undo right after deleting another", async () => {
-    const { history, ws, selection, edit, system } = await load()
+    const { history, ws, edit, system } = await load()
     const first = system()
     const second = system()
-    selection.select({ kind: "system", id: first })
+    history.select({ kind: "system", id: first })
     edit(9)
     history.remove(second)
     history.undo()
@@ -480,12 +452,12 @@ describe("delete", () => {
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([second])
   })
   it("puts a system back in place from the toast's Undo", async () => {
-    const { history, ws, selection, current, system } = await load()
+    const { history, ws, current, system } = await load()
     const { toastManager } = await import("@/registry/ui/toast")
     const add = vi.spyOn(toastManager, "add")
     const first = system()
     const second = system()
-    selection.select({ kind: "system", id: first })
+    history.select({ kind: "system", id: first })
     history.remove(second)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first])
     const toast = add.mock.calls.at(-1)![0]

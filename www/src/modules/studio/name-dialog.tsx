@@ -28,13 +28,7 @@ import { TextField } from "@/registry/ui/text-field"
 import { PRESET_META } from "@/modules/presets"
 
 import { createFrom, saveName } from "./history"
-import {
-  describe,
-  keySelection,
-  selectionKey,
-  UNSAVED_NAME,
-  useCurrent,
-} from "./selection"
+import { describe, keySelection, selectionKey, useCurrent } from "./selection"
 import type { Selection } from "./selection"
 import { cleanName, isUnreadable, listed, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
@@ -125,15 +119,10 @@ function NameForm({
   // The form stays while the dialog animates out: a double submit is one.
   const submitted = useRef(false)
   const clean = cleanName(name)
-  // The slot's name marks it alone.
-  const isReserved = clean === UNSAVED_NAME
-  const isTaken =
-    isReserved ||
-    workspace.systems.some(
-      (s) =>
-        s.name === clean &&
-        !(subject?.kind === "system" && subject.id === s.id),
-    )
+  const isTaken = workspace.systems.some(
+    (s) =>
+      s.name === clean && !(subject?.kind === "system" && subject.id === s.id),
+  )
   // A source gone meanwhile, deleted in another tab, falls back to Current.
   const source =
     picked !== "current" &&
@@ -165,11 +154,7 @@ function NameForm({
       >
         <Label>Name</Label>
         <Input />
-        <FieldError>
-          {isReserved
-            ? "This name is reserved for unsaved changes."
-            : "Another design system has this name."}
-        </FieldError>
+        <FieldError>Another design system has this name.</FieldError>
       </TextField>
       {startFrom !== undefined && (
         <StartFrom
@@ -210,8 +195,6 @@ function StartFrom({
   const systems = listed(workspace).filter(
     (system) => selectionKey({ kind: "system", id: system.id }) !== currentKey,
   )
-  const unsaved =
-    !!workspace.unsaved && selectionKey({ kind: "unsaved" }) !== currentKey
   return (
     <Select
       value={value}
@@ -234,14 +217,9 @@ function StartFrom({
             </SelectItem>
           ))}
         </SelectSection>
-        {(unsaved || systems.length > 0) && (
+        {systems.length > 0 && (
           <SelectSection>
             <SelectSectionHeader>My design systems</SelectSectionHeader>
-            {unsaved && (
-              <SelectItem id={selectionKey({ kind: "unsaved" })}>
-                {UNSAVED_NAME}
-              </SelectItem>
-            )}
             {systems.map((system) => (
               <SelectItem
                 key={system.id}

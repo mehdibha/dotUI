@@ -11,10 +11,15 @@ import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
+import { select } from "@/modules/studio/history"
 import { pickerSections } from "@/modules/studio/picker-sections"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
-import { keySelection, select, useCurrent } from "@/modules/studio/selection"
+import {
+  keySelection,
+  UNSAVED_NOTE,
+  useCurrent,
+} from "@/modules/studio/selection"
 import { useWorkspace } from "@/modules/studio/workspace"
 
 /**
@@ -177,8 +182,13 @@ function PresetSelector({
         className="gap-1.5"
       >
         <PresetSwatch color={current.swatch} />
-        <span dir="auto" className="max-w-35 truncate">
-          {current.name}
+        <span className="flex max-w-35 min-w-0 gap-1">
+          <span dir="auto" className="truncate">
+            {current.unsaved
+              ? current.name.slice(0, -UNSAVED_NOTE.length).trimEnd()
+              : current.name}
+          </span>
+          {current.unsaved && <span className="shrink-0">{UNSAVED_NOTE}</span>}
         </span>
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>

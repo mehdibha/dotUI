@@ -1,8 +1,8 @@
 "use client"
 
 /* The one current design system, shared by the studio and the docs:
-   `dotui:current` holds a view, the unsaved slot or one of the user's
-   systems. Every tab follows it. */
+   `dotui:current` holds a view, the unsaved slot over one, or one of the
+   user's systems. Every tab follows it. */
 
 import { useMemo } from "react"
 
@@ -22,7 +22,6 @@ export type Selection =
 
 /** What marks the slot's name, which never truncates away. */
 export const UNSAVED_NOTE = "(unsaved)"
-export const UNSAVED_NAME = `New system ${UNSAVED_NOTE}`
 
 const ORIGIN_VIEW: View = { kind: "preset", id: ORIGIN.id }
 
@@ -55,9 +54,8 @@ export const getSelection = (): Selection => store.get() ?? ORIGIN_VIEW
 export const selectionKey = (sel: Selection) =>
   sel.kind === "unsaved" ? "unsaved" : `${sel.kind}:${sel.id}`
 
-/** The selection a key stands for; links have none. */
+/** The preset or system a picker key stands for. */
 export function keySelection(key: string): Selection {
-  if (key === "unsaved") return { kind: "unsaved" }
   const id = key.slice(key.indexOf(":") + 1)
   return key.startsWith("system:")
     ? { kind: "system", id }
@@ -65,8 +63,9 @@ export function keySelection(key: string): Selection {
 }
 
 /** Makes `sel` current, after writing any pending edit: other tabs never
- *  see a selection before what it shows. */
-export function select(sel: Selection): void {
+ *  see a selection before what it shows. Opening a design system is
+ *  history's `select`, which also drops the slot. */
+export function setSelection(sel: Selection): void {
   if (selectionKey(getSelection()) === selectionKey(sel)) return
   workspace.flush()
   store.set(sel)
@@ -120,7 +119,7 @@ export function describe(sel: Selection, ws: Workspace): Current {
     return {
       sel,
       key,
-      name: UNSAVED_NAME,
+      name: `${base.name} ${UNSAVED_NOTE}`,
       swatch: swatchOver(state, base),
       state,
       view: from,

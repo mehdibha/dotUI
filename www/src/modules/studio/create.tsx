@@ -2,8 +2,7 @@
 
 /* The studio panel mounted in /studio's slot: the panel page over the current
    design system, its chrome wired to the workspace. The picker lists the
-   unsaved slot, the user's systems and the presets, and opens at
-   ?gallery=. */
+   user's systems and the presets, and opens at ?gallery=. */
 
 import { useMemo, useRef, useState } from "react"
 import type { ReactNode, RefObject } from "react"
@@ -13,28 +12,26 @@ import { Redo2Icon, Undo2Icon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { createFrom, discard, redo, remove, undo, useUndoRedo } from "./history"
-import { NameDialog, saveRequest } from "./name-dialog"
+import { createFrom, redo, remove, select, undo, useUndoRedo } from "./history"
+import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
-import { RowMenu } from "./row-menus"
-import {
-  keySelection,
-  select,
-  UNSAVED_NAME,
-  UNSAVED_NOTE,
-  useCurrent,
-} from "./selection"
+import { keySelection, UNSAVED_NOTE, useCurrent } from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import { copyName, rename, uniqueName, useWorkspace } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
+
+// Touch-sized rows on phones.
+const MENU_ROW = "pointer-coarse:min-h-11"
 
 function HistoryButton({
   label,
@@ -152,50 +149,42 @@ export function StudioPanel({ className }: { className?: string }) {
 
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
     const sel = keySelection(key)
-    if (sel.kind === "unsaved") {
-      const save = saveRequest(workspace)
-      return (
-        <RowMenu
-          name={UNSAVED_NAME}
-          actions={[
-            { label: "Save…", run: () => save && askName(save) },
-            {
-              label: "Discard",
-              danger: true,
-              run: () =>
-                afterClose(() => discard({ afterUndo: focusRow(key) })),
-            },
-          ]}
-        />
-      )
-    }
     const doc =
       sel.kind === "system" && workspace.systems.find((s) => s.id === sel.id)
     if (!doc) return null
     return (
-      <RowMenu
-        name={doc.name}
-        actions={[
-          {
-            label: "Rename…",
-            run: () =>
-              askName({
-                title: "Rename design system",
-                action: "Save",
-                name: doc.name,
-                subject: sel,
-                onSubmit: (name) => rename(doc.id, name),
-              }),
-          },
-          { label: "Duplicate…", run: () => askNew(key, copyName(doc.name)) },
-          {
-            label: "Delete",
-            danger: true,
-            run: () =>
-              afterClose(() => remove(doc.id, { afterUndo: focusRow(key) })),
-          },
-        ]}
-      />
+      <MenuContent aria-label={`Actions for ${doc.name}`}>
+        <MenuItem
+          onAction={() =>
+            askName({
+              title: "Rename design system",
+              action: "Save",
+              name: doc.name,
+              subject: sel,
+              onSubmit: (name) => rename(doc.id, name),
+            })
+          }
+          className={MENU_ROW}
+        >
+          Rename…
+        </MenuItem>
+        <MenuItem
+          onAction={() => askNew(key, copyName(doc.name))}
+          className={MENU_ROW}
+        >
+          Duplicate…
+        </MenuItem>
+        <Separator />
+        <MenuItem
+          variant="danger"
+          onAction={() =>
+            afterClose(() => remove(doc.id, { afterUndo: focusRow(key) }))
+          }
+          className={MENU_ROW}
+        >
+          Delete
+        </MenuItem>
+      </MenuContent>
     )
   }
 

@@ -1,12 +1,12 @@
 "use client"
 
 /* Every change to the design on screen. Edits are undoable: each system, and
-   the unsaved slot over each view, keeps an in-memory undo stack; edits
-   within 500 ms, or within one pointer press (a slider drag), merge into one
-   step. Editing a view fills the one unsaved slot, which lasts only while it
-   differs from its view: undoing back to the view empties it, or puts back
-   what the view's edits replaced there. Save makes the slot a system;
-   Discard and Delete have their own Undo toasts. */
+   each view, keeps an in-memory undo stack; edits within 500 ms, or within
+   one pointer press (a slider drag), merge into one step. Editing a view
+   fills the one unsaved slot, which lasts only while it differs from its
+   view: undoing back to the view empties it. Opening anything else drops
+   the slot and the view's undo history, silently; Save makes the slot a
+   system. Delete has an Undo toast. */
 
 import { useEffect, useEffectEvent, useSyncExternalStore } from "react"
 
@@ -21,8 +21,8 @@ import {
   describe,
   getCurrent,
   getSelection,
-  select,
   selectionKey,
+  setSelection,
   useCurrent,
 } from "./selection"
 import type { Current, Selection } from "./selection"
@@ -46,8 +46,6 @@ interface Stack {
   /** The state as this tab last left it: another tab's edit since makes the
    *  stack stale. */
   head: StudioState
-  /** Over a view: what the slot held before the view's edits replaced it. */
-  replaced?: Unsaved
 }
 
 // By target key.
@@ -66,15 +64,9 @@ function push(steps: StudioState[], state: StudioState) {
   if (steps.length > UNDO_LIMIT) steps.shift()
 }
 
-/** A 10 s toast whose Undo runs `restore`, then `afterUndo`; with an `id`,
- *  it takes the place of the last one. */
-function undoToast(
-  title: string,
-  restore: () => void,
-  { afterUndo, id }: { afterUndo?: () => void; id?: string } = {},
-) {
+/** A 10 s toast whose Undo runs `restore`, then `afterUndo`. */
+function undoToast(title: string, restore: () => void, afterUndo?: () => void) {
   const toast = toastManager.add({
-    id,
     title,
     timeout: 10_000,
     actionProps: {
@@ -88,8 +80,6 @@ function undoToast(
   })
 }
 
-// One at a time: its Undo only ever rewinds the latest replacement.
-const REPLACED = "replaced-unsaved"
 const UNSAVED: Selection = { kind: "unsaved" }
 
 /** What an edit changes: the system on screen, or the slot over the view on
@@ -98,7 +88,7 @@ interface Target {
   key: string
   state: StudioState
   /** False when the state was refused. */
-  set: (state: StudioState, stack: Stack) => boolean
+  set: (state: StudioState) => boolean
 }
 
 function targetOf(current: Current): Target {
@@ -112,25 +102,17 @@ function targetOf(current: Current): Target {
     }
   }
   const { view } = current
-  const key = selectionKey(view)
   return {
-    key,
+    key: selectionKey(view),
     state,
-    set: (next, stack) => {
-      const ws = workspace.getWorkspace()
-      // Leaving the view replaces what the slot held; coming back puts it
-      // back.
-      const replaced = current.unsaved ? stack.replaced : ws.unsaved
-      const back = sameState(next, describe(view, ws).state)
-      if (!workspace.setUnsaved(back ? replaced : { from: view, state: next }))
+    set: (next) => {
+      const back = sameState(
+        next,
+        describe(view, workspace.getWorkspace()).state,
+      )
+      if (!workspace.setUnsaved(back ? undefined : { from: view, state: next }))
         return false
-      stack.replaced = replaced
-      select(back ? view : UNSAVED)
-      if (back) toastManager.close(REPLACED)
-      else if (!current.unsaved && replaced)
-        undoToast("Replaced unsaved changes", () => rewind(key), {
-          id: REPLACED,
-        })
+      setSelection(back ? view : UNSAVED)
       return true
     },
   }
@@ -181,8 +163,7 @@ function record(stack: Stack, before: StudioState, next: StudioState) {
 export function edit(next: StudioState): void {
   const target = targetOf(getCurrent())
   if (sameState(target.state, next)) return
-  const stack = stackOf(target)
-  if (target.set(next, stack)) record(stack, target.state, next)
+  if (target.set(next)) record(stackOf(target), target.state, next)
 }
 
 /** Steps the design on screen back or forth; false when it can't. */
@@ -190,7 +171,7 @@ function travel(from: "past" | "future", to: "past" | "future"): boolean {
   const target = targetOf(getCurrent())
   const stack = live(target)
   const state = stack?.[from].at(-1)
-  if (!stack || !state || !target.set(state, stack)) return false
+  if (!stack || !state || !target.set(state)) return false
   stack[from].pop()
   stack.editedAt = 0
   stack.press = 0
@@ -203,13 +184,14 @@ function travel(from: "past" | "future", to: "past" | "future"): boolean {
 export const undo = () => void travel("past", "future")
 export const redo = () => void travel("future", "past")
 
-/** Undoes every edit over the view with this key, from its slot: what they
- *  replaced comes back, and they stay one Redo away each. */
-function rewind(key: string) {
-  const { unsaved } = workspace.getWorkspace()
-  if (unsaved && selectionKey(unsaved.from) === key) select(UNSAVED)
-  if (targetOf(getCurrent()).key !== key) return
-  while (travel("past", "future")) continue
+/** Opens `sel`. Leaving a view, or the slot over it, drops the slot and
+ *  the view's undo history: back there, it starts pristine. */
+export function select(sel: Selection): void {
+  if (selectionKey(getSelection()) === selectionKey(sel)) return
+  const { view } = getCurrent()
+  if (view) stacks.delete(selectionKey(view))
+  workspace.setUnsaved(undefined)
+  setSelection(sel)
 }
 
 /** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
@@ -228,8 +210,7 @@ export function saveName({ from }: Unsaved, systems: DesignSystemDoc[]) {
 }
 
 /** Creates a system named `name` from what `source` shows, and opens it.
- *  From the unsaved slot, that saves it: the slot empties and its undo
- *  history carries over. */
+ *  From the unsaved slot, that saves it: its undo history carries over. */
 export function createFrom(
   name: string,
   source: Selection,
@@ -248,35 +229,10 @@ export function createFrom(
   })
   if (!doc) return
   const sel: Selection = { kind: "system", id: doc.id }
-  if (from.unsaved) {
-    toastManager.close(REPLACED)
-    workspace.setUnsaved(undefined)
-    const key = selectionKey(from.unsaved.from)
-    const stack = stacks.get(key)
-    stacks.delete(key)
-    if (stack) stacks.set(selectionKey(sel), stack)
-  }
+  const stack = from.unsaved && stacks.get(selectionKey(from.unsaved.from))
+  if (stack) stacks.set(selectionKey(sel), stack)
   select(sel)
   return doc
-}
-
-/** Empties the unsaved slot, with a toast whose Undo, which `afterUndo`
- *  follows, fills it back. On screen, its view shows instead. */
-export function discard({ afterUndo }: { afterUndo?: () => void } = {}) {
-  const { unsaved } = workspace.getWorkspace()
-  if (!unsaved) return
-  const onScreen = getSelection().kind === "unsaved"
-  toastManager.close(REPLACED)
-  workspace.setUnsaved(undefined)
-  if (onScreen) select(unsaved.from)
-  undoToast(
-    "Discarded unsaved changes",
-    () => {
-      workspace.setUnsaved(unsaved)
-      if (onScreen) select(UNSAVED)
-    },
-    { afterUndo },
-  )
 }
 
 /** Deletes the system with a toast whose Undo, which `afterUndo` follows,
@@ -296,7 +252,7 @@ export function remove(
     workspace.insert(removed.doc, removed.index)
     if (wasCurrent) select(sel)
   }
-  undoToast(`Deleted ${quoted(removed.doc.name)}`, restore, { afterUndo })
+  undoToast(`Deleted ${quoted(removed.doc.name)}`, restore, afterUndo)
   if (wasCurrent) {
     const at = list.findIndex((s) => s.id === id)
     const next = list[at + 1] ?? list[at - 1]
