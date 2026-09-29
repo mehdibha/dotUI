@@ -16,6 +16,7 @@ import {
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
   SelectionIndicator,
+  Text,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -146,6 +147,8 @@ export function DialPopover({
 export interface DialSelectOption {
   value: string
   label: string
+  /** A line under the label, in the popover only. */
+  description?: string
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
 }
@@ -196,11 +199,30 @@ export function DialSelect({
               key={option.value}
               id={option.value}
               textValue={option.label}
-              className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
+              className={cn(
+                DIAL_ROW,
+                DIAL_PRESS,
+                "selected:tint-10",
+                option.description && "h-auto py-2",
+              )}
             >
               {({ isSelected }) => (
                 <>
-                  <span className={DIAL_LABEL}>{option.label}</span>
+                  {option.description ? (
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <Text slot="label" className={DIAL_LABEL}>
+                        {option.label}
+                      </Text>
+                      <Text
+                        slot="description"
+                        className="truncate text-xs text-fg/50"
+                      >
+                        {option.description}
+                      </Text>
+                    </span>
+                  ) : (
+                    <span className={DIAL_LABEL}>{option.label}</span>
+                  )}
                   <span className="flex min-w-0 items-center gap-2 text-fg/70">
                     {option.preview}
                     <CheckIcon

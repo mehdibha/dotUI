@@ -90,7 +90,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "space",
-    label: "Space",
+    label: "Density",
     defaults: SPACE_DEFAULTS,
     Body: SpaceSection,
     Preview: SpacePreview,
