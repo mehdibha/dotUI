@@ -316,6 +316,7 @@ describe("unsaved slot", () => {
       state: radius(2),
     })
     history.edit(radius(3))
+    expect(current().name).toBe("Linear (unsaved)")
     expect(current().content?.name).toBe("Linear (edited)")
     const { unsaved, systems } = ws.getWorkspace()
     expect(history.saveName(unsaved!, systems)).toBe("My Linear")
@@ -331,6 +332,11 @@ describe("unsaved slot", () => {
     const link = { kind: "link", id: "abcdefghij", state: radius(2) } as const
     expect(name({ ...link, name: "My Brand" })).toBe("My Brand")
     expect(name({ ...link, name: "Acme" })).toBe("My Acme")
+    const long =
+      "Northwind Enterprise Platform Design Language Extended Edition"
+    expect(name({ ...link, name: long })).toBe(
+      "My Northwind Enterprise Platform Design Language Extended",
+    )
   })
 
   it("stays after a reload", async () => {
@@ -366,6 +372,71 @@ describe("unsaved slot", () => {
     )
     expect(current().key).toBe("preset:origin")
     expect(ws.getWorkspace().unsaved).toBeUndefined()
+  })
+
+  it("starts a view pristine after another tab leaves it and comes back", async () => {
+    const { history, current, edit } = await load()
+    history.select({ kind: "preset", id: "linear" })
+    edit(3)
+    history.undo()
+    // Another tab picks Notion, then Linear.
+    const pick = (id: string) =>
+      win.otherTab(
+        "dotui:current",
+        JSON.stringify({ kind: "preset", id, visit: `other-${id}` }),
+      )
+    pick("notion")
+    pick("linear")
+    history.redo()
+    expect(current().key).toBe("preset:linear")
+    expect(current().state).toEqual(LINEAR.state)
+  })
+
+  it("never undoes into a slot another tab made again", async () => {
+    const { history, current, edit } = await load()
+    history.select({ kind: "preset", id: "stripe" })
+    edit(3)
+    vi.advanceTimersByTime(600)
+    edit(4)
+    vi.advanceTimersByTime(600)
+    // Another tab left Stripe, came back and made the same edit.
+    win.otherTab(
+      "dotui:current",
+      JSON.stringify({ kind: "unsaved", visit: "other" }),
+    )
+    history.undo()
+    expect(current().key).toBe("unsaved")
+    expect(current().state.radiusPx).toBe(4)
+  })
+
+  it("never commits a drag onto a design opened meanwhile", async () => {
+    const { history, ws, current, edit } = await load()
+    const release = (pointerId: number) => {
+      Object.assign(window, { event: { pointerId } })
+      edit(9)
+      Object.assign(window, { event: undefined })
+      history.setPressed(false, pointerId)
+      vi.runAllTimers()
+    }
+    history.select({ kind: "preset", id: "linear" })
+    history.setPressed(true, 1)
+    history.select({ kind: "preset", id: "stripe" })
+    release(1)
+    expect(current().key).toBe("preset:stripe")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    // Nor when another tab opens it.
+    history.setPressed(true, 2)
+    win.otherTab(
+      "dotui:current",
+      JSON.stringify({ kind: "preset", id: "notion", visit: "other" }),
+    )
+    release(2)
+    expect(current().key).toBe("preset:notion")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
+    // A drag that stays on its design commits.
+    history.setPressed(true, 3)
+    release(3)
+    expect(current()).toMatchObject({ key: "unsaved", state: { radiusPx: 9 } })
   })
 
   it("never writes over stored systems it can't read", async () => {
@@ -428,15 +499,24 @@ describe("delete", () => {
     expect(ws.findSystem(first)!.state.radiusPx).toBe(3)
   })
 
-  it("leaves the current system alone on undo right after deleting another", async () => {
-    const { history, ws, edit, system } = await load()
+  it("keeps the undo history on screen when deleting another system", async () => {
+    const { history, ws, current, edit, create, system } = await load()
     const first = system()
     const second = system()
     history.select({ kind: "system", id: first })
     edit(9)
     history.remove(second)
     history.undo()
-    expect(ws.findSystem(first)!.state.radiusPx).toBe(9)
+    expect(ws.findSystem(first)!.state.radiusPx).toBe(3)
+
+    const other = create("Other")
+    history.select({ kind: "preset", id: "linear" })
+    edit(3)
+    history.remove(other)
+    expect(current().key).toBe("unsaved")
+    history.undo()
+    expect(current().key).toBe("preset:linear")
+    expect(ws.getWorkspace().unsaved).toBeUndefined()
   })
 
   it("deletes the current system to the next one, else the Origin view", async () => {

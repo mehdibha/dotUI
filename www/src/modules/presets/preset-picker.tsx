@@ -496,7 +496,8 @@ function PresetPickerContent({
       {flyout && previewItem && (
         <PresetPreviewFlyout
           item={previewItem}
-          isVisible={engaged}
+          // A row the search filtered out previews nothing.
+          isVisible={engaged && rowIds.includes(previewItem.id)}
           forcedMode={previewMode}
         />
       )}

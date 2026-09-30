@@ -123,8 +123,10 @@ function NameForm({
     (s) =>
       s.name === clean && !(subject?.kind === "system" && subject.id === s.id),
   )
-  // A source gone meanwhile, deleted in another tab, falls back to Current.
+  const currentKey = selectionKey(current.sel)
+  // What's on screen is Current, and so is a source deleted meanwhile.
   const source =
+    picked !== currentKey &&
     picked !== "current" &&
     describe(keySelection(picked), workspace).key === picked
       ? keySelection(picked)
@@ -159,7 +161,7 @@ function NameForm({
       {startFrom !== undefined && (
         <StartFrom
           current={current.name}
-          currentKey={selectionKey(current.sel)}
+          currentKey={currentKey}
           workspace={workspace}
           value={source ? picked : "current"}
           onChange={setPicked}

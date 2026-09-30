@@ -2,7 +2,7 @@
 
 /* The one current design system, shared by the studio and the docs:
    `dotui:current` holds a view, the unsaved slot over one, or one of the
-   user's systems. Every tab follows it. */
+   user's systems, and the visit it was opened for. Every tab follows it. */
 
 import { useMemo } from "react"
 
@@ -34,20 +34,35 @@ function parseSelection(raw: unknown): Selection | undefined {
   return workspace.parseView(raw)
 }
 
-const store = createPersistedStore<Selection | null>("dotui:current", null, {
+interface Stored {
+  sel: Selection
+  /** New each time a design system is opened, in any tab: what this tab
+   *  keeps for a visit (a view's undo history) never outlives it. */
+  visit?: string
+}
+
+const store = createPersistedStore<Stored | null>("dotui:current", null, {
   // Unreadable is Origin: it's only a pointer, safe to write over.
   decode: (raw) => {
     try {
-      return parseSelection(JSON.parse(raw)) ?? null
+      const parsed: unknown = JSON.parse(raw)
+      const sel = parseSelection(parsed)
+      const { visit } = parsed as { visit?: unknown }
+      return sel
+        ? { sel, visit: typeof visit === "string" ? visit : undefined }
+        : null
     } catch {
       return null
     }
   },
-  encode: (sel) => (sel ? JSON.stringify(sel) : null),
+  encode: (stored) =>
+    stored ? JSON.stringify({ ...stored.sel, visit: stored.visit }) : null,
   onWriteError: workspace.storageFailed,
 })
 
-export const getSelection = (): Selection => store.get() ?? ORIGIN_VIEW
+export const getSelection = (): Selection => store.get()?.sel ?? ORIGIN_VIEW
+
+export const getVisit = () => store.get()?.visit
 
 /** One key per selection: `preset:<id>`, `link:<id>`, `system:<id>` or
  *  `unsaved`. */
@@ -64,11 +79,16 @@ export function keySelection(key: string): Selection {
 
 /** Makes `sel` current, after writing any pending edit: other tabs never
  *  see a selection before what it shows. Opening a design system is
- *  history's `select`, which also drops the slot. */
-export function setSelection(sel: Selection): void {
-  if (selectionKey(getSelection()) === selectionKey(sel)) return
+ *  history's `select`, which starts a visit and drops the slot; otherwise
+ *  the visit goes on. */
+export function setSelection(sel: Selection, visit = getVisit()): void {
+  if (
+    selectionKey(getSelection()) === selectionKey(sel) &&
+    visit === getVisit()
+  )
+    return
   workspace.flush()
-  store.set(sel)
+  store.set({ sel, visit })
 }
 
 export type Current = {
@@ -119,7 +139,7 @@ export function describe(sel: Selection, ws: Workspace): Current {
     return {
       sel,
       key,
-      name: `${base.name} ${UNSAVED_NOTE}`,
+      name: `${workspace.unedited(base.name)} ${UNSAVED_NOTE}`,
       swatch: swatchOver(state, base),
       state,
       view: from,
@@ -159,7 +179,7 @@ export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
 
 export function useCurrent(): Current {
-  const sel = store.useValue() ?? ORIGIN_VIEW
+  const sel = store.useValue()?.sel ?? ORIGIN_VIEW
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }

@@ -1,12 +1,12 @@
 "use client"
 
 /* Every change to the design on screen. Edits are undoable: each system, and
-   each view, keeps an in-memory undo stack; edits within 500 ms, or within
-   one pointer press (a slider drag), merge into one step. Editing a view
-   fills the one unsaved slot, which lasts only while it differs from its
-   view: undoing back to the view empties it. Opening anything else drops
-   the slot and the view's undo history, silently; Save makes the slot a
-   system. Delete has an Undo toast. */
+   each visit to a view, keeps an in-memory undo stack; edits within 500 ms,
+   or within one pointer press (a slider drag), merge into one step. Editing
+   a view fills the one unsaved slot, which lasts only while it differs from
+   its view: undoing back to the view empties it. Opening anything else, in
+   any tab, drops the slot and ends the visit, silently; Save makes the slot
+   a system. Delete has an Undo toast. */
 
 import { useEffect, useEffectEvent, useSyncExternalStore } from "react"
 
@@ -21,6 +21,7 @@ import {
   describe,
   getCurrent,
   getSelection,
+  getVisit,
   selectionKey,
   setSelection,
   useCurrent,
@@ -54,6 +55,9 @@ const listeners = new Set<() => void>()
 // The pointer press in progress (0 when none), so a drag is one step.
 let press = 0
 let presses = 0
+// The target each held pointer went down on: a drag never commits onto a
+// design opened meanwhile.
+const pressedOn = new Map<number, string>()
 
 function emit() {
   for (const listener of listeners) listener()
@@ -83,7 +87,8 @@ function undoToast(title: string, restore: () => void, afterUndo?: () => void) {
 const UNSAVED: Selection = { kind: "unsaved" }
 
 /** What an edit changes: the system on screen, or the slot over the view on
- *  screen, empty on the view itself. The slot and its view share a key. */
+ *  screen, empty on the view itself. The slot and its view share a key,
+ *  which a new visit changes. */
 interface Target {
   key: string
   state: StudioState
@@ -103,7 +108,7 @@ function targetOf(current: Current): Target {
   }
   const { view } = current
   return {
-    key: selectionKey(view),
+    key: `${selectionKey(view)}@${getVisit() ?? ""}`,
     state,
     set: (next) => {
       const back = sameState(
@@ -125,10 +130,12 @@ function live(target: Target): Stack | undefined {
 }
 
 /** The target's live stack, else a new one: undo never steps back over
- *  another tab's edit. */
+ *  another tab's edit. Only the view on screen keeps one. */
 function stackOf(target: Target): Stack {
   let stack = live(target)
   if (!stack) {
+    for (const key of stacks.keys())
+      if (!key.startsWith("system:")) stacks.delete(key)
     stack = { past: [], future: [], editedAt: 0, press: 0, head: target.state }
     stacks.set(target.key, stack)
   }
@@ -163,6 +170,9 @@ function record(stack: Stack, before: StudioState, next: StudioState) {
 export function edit(next: StudioState): void {
   const target = targetOf(getCurrent())
   if (sameState(target.state, next)) return
+  const e = typeof window === "undefined" ? undefined : window.event
+  const on = e && "pointerId" in e && pressedOn.get(e.pointerId as number)
+  if (on && on !== target.key) return
   if (target.set(next)) record(stackOf(target), target.state, next)
 }
 
@@ -184,14 +194,12 @@ function travel(from: "past" | "future", to: "past" | "future"): boolean {
 export const undo = () => void travel("past", "future")
 export const redo = () => void travel("future", "past")
 
-/** Opens `sel`. Leaving a view, or the slot over it, drops the slot and
- *  the view's undo history: back there, it starts pristine. */
+/** Opens `sel` for a new visit. Leaving a view, or the slot over it, drops
+ *  the slot and the view's undo history: back there, it starts pristine. */
 export function select(sel: Selection): void {
   if (selectionKey(getSelection()) === selectionKey(sel)) return
-  const { view } = getCurrent()
-  if (view) stacks.delete(selectionKey(view))
   workspace.setUnsaved(undefined)
-  setSelection(sel)
+  setSelection(sel, Math.random().toString(36).slice(2, 10))
 }
 
 /** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
@@ -229,7 +237,7 @@ export function createFrom(
   })
   if (!doc) return
   const sel: Selection = { kind: "system", id: doc.id }
-  const stack = from.unsaved && stacks.get(selectionKey(from.unsaved.from))
+  const stack = from.unsaved && stacks.get(targetOf(from).key)
   if (stack) stacks.set(selectionKey(sel), stack)
   select(sel)
   return doc
@@ -237,8 +245,8 @@ export function createFrom(
 
 /** Deletes the system with a toast whose Undo, which `afterUndo` follows,
  *  puts it back. Deleting the current one opens the next in the list, else
- *  the Origin view. The undo history on screen then starts over: ⌘Z right
- *  after never touches another design. Returns the toast's undo. */
+ *  the Origin view, whose undo history starts over: ⌘Z right after never
+ *  touches it. Returns the toast's undo. */
 export function remove(
   id: string,
   { afterUndo }: { afterUndo?: () => void } = {},
@@ -261,9 +269,9 @@ export function remove(
         ? { kind: "system", id: next.id }
         : { kind: "preset", id: ORIGIN.id },
     )
+    stacks.delete(targetOf(getCurrent()).key)
+    emit()
   }
-  stacks.delete(targetOf(getCurrent()).key)
-  emit()
   return restore
 }
 
@@ -320,8 +328,8 @@ export function useHistory() {
   useShortcut("undo", undo)
   useShortcut("redo", redo)
   useEffect(() => {
-    const onPointerDown = () => setPressed(true)
-    const onPointerUp = () => setPressed(false)
+    const onPointerDown = (e: PointerEvent) => setPressed(true, e.pointerId)
+    const onPointerUp = (e: PointerEvent) => setPressed(false, e.pointerId)
     // Capture: a press ends before the control's own pointerup handler runs.
     window.addEventListener("pointerdown", onPointerDown, true)
     window.addEventListener("pointerup", onPointerUp, true)
@@ -335,6 +343,10 @@ export function useHistory() {
 }
 
 /** A pointer press starting (`true`) or ending. */
-export function setPressed(pressed: boolean) {
+export function setPressed(pressed: boolean, pointer?: number) {
   press = pressed ? ++presses : 0
+  if (pointer === undefined) return
+  if (pressed) pressedOn.set(pointer, targetOf(getCurrent()).key)
+  // After the release's own handlers, which may commit the drag.
+  else setTimeout(() => pressedOn.delete(pointer))
 }

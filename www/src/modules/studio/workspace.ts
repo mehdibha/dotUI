@@ -276,28 +276,32 @@ function cut(text: string, max: number): string {
   return out
 }
 
-/** Trimmed, control characters and invisible spaces stripped, at most 64
- *  characters. Joiners and bidi marks stay: emoji and scripts need them. */
-export const cleanName = (name: string) =>
-  cut(
-    name
-      .normalize("NFC")
-      .replace(/[\p{Cc}​⁠﻿]/gu, "")
-      .trim(),
-    MAX_NAME_LENGTH,
-  ).trim()
+/** Trimmed, control characters and invisible spaces stripped. Joiners and
+ *  bidi marks stay: emoji and scripts need them. */
+const strip = (name: string) =>
+  name
+    .normalize("NFC")
+    .replace(/[\p{Cc}​⁠﻿]/gu, "")
+    .trim()
 
-/** `name` + `suffix`, then " 2", " 3"… until free; the base is cut so the
- *  result stays a valid name. */
+/** Stripped, at most 64 characters. */
+export const cleanName = (name: string) =>
+  cut(strip(name), MAX_NAME_LENGTH).trim()
+
+/** `name` + `suffix`, then " 2", " 3"… until free; the base is cut, at a
+ *  word's start when it has spaces, so the result stays a valid name. */
 export function uniqueName(
   name: string,
   systems: DesignSystemDoc[],
   suffix = "",
 ): string {
   const taken = new Set(systems.map((s) => s.name))
-  const base = cleanName(name) || "Untitled"
-  const fit = (end: string) =>
-    cut(base, MAX_NAME_LENGTH - end.length).trimEnd() + end
+  const base = strip(name) || "Untitled"
+  const fit = (end: string) => {
+    const head = cut(base, MAX_NAME_LENGTH - end.length)
+    const midWord = /\S/.test(base.charAt(head.length))
+    return (midWord ? head.replace(/\s+\S*$/, "") : head).trimEnd() + end
+  }
   let candidate = fit(suffix)
   for (let n = 2; taken.has(candidate); n++) candidate = fit(`${suffix} ${n}`)
   return candidate
