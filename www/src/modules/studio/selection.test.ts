@@ -341,6 +341,28 @@ describe("delete", () => {
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([second])
   })
 
+  it("never leaves another tab on a system that's gone", async () => {
+    const { selection, system } = await load()
+    const first = system()
+    const second = system()
+    const dangling: string[] = []
+    const write = win.localStorage.setItem
+    const impl = write.getMockImplementation()!
+    write.mockImplementation((...args: [string, string]) => {
+      impl(...args)
+      const { kind, id } = JSON.parse(win.read("dotui:current") ?? "{}")
+      const stored = JSON.parse(win.read("dotui:design-systems") ?? "{}")
+      const ids = (stored.systems ?? []).map((s: { id: string }) => s.id)
+      if (kind === "system" && !ids.includes(id)) dangling.push(args[0])
+    })
+    selection.select({ kind: "system", id: second })
+    selection.remove(second)
+    vi.advanceTimersByTime(600)
+    selection.remove(first)
+    vi.advanceTimersByTime(600)
+    expect(dangling).toEqual([])
+  })
+
   it("puts a system back in place from the toast's Undo", async () => {
     const { selection, ws, toasts, current, system } = await load()
     const first = system()

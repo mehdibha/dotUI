@@ -232,8 +232,15 @@ function quoted(name: string): string {
  *  Origin. */
 export function remove(id: string, afterUndo?: () => void): void {
   const list = workspace.listed(workspace.getWorkspace())
+  const at = list.findIndex((s) => s.id === id)
+  if (at === -1) return
   const sel: Selection = { kind: "system", id }
   const wasCurrent = selectionKey(getSelection()) === selectionKey(sel)
+  // Off it first: other tabs never show a selection that's gone.
+  if (wasCurrent) {
+    const next = list[at + 1] ?? list[at - 1]
+    select(next ? { kind: "system", id: next.id } : ORIGIN_VIEW)
+  }
   const removed = workspace.remove(id)
   if (!removed) return
   const toast = toastManager.add({
@@ -249,8 +256,4 @@ export function remove(id: string, afterUndo?: () => void): void {
       },
     },
   })
-  if (!wasCurrent) return
-  const at = list.findIndex((s) => s.id === id)
-  const next = list[at + 1] ?? list[at - 1]
-  select(next ? { kind: "system", id: next.id } : ORIGIN_VIEW)
 }
