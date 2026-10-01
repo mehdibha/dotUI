@@ -2,17 +2,18 @@
    named starting point over three settings; Glass sits beside it, and each
    mode's page L* is Color's (the engine re-anchors every ramp on it).
 
-   - Layers, in light: cards on the page's tone (Same), white cards on a gray
-     page (Grouped — Polaris, Carbon Gray 10, Apple grouped), or cards shaded
-     below the page (Tonal — Material 3). Dark always steps up page → card →
-     overlay, under the field/muted rung so content inside still reads.
-   - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Spectrum). An
+   - Layers, in light: cards on the page's tone (Same — shadcn, Primer), white
+     cards on a gray page (Grouped — Apple, Polaris, HeroUI), or cards shaded
+     below the page (Tonal — Material 3). The page is always the page slider's
+     tone, so Grouped's depth is the page's gray. Dark always steps up page →
+     card → overlay, under the field/muted rung so content inside still reads.
+   - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
      edgeless system's dark is derived: shadows die on near-black, so they
      double, cards lift a quarter rung and overlays take the hairline
      (Atlassian, Spectrum, HeroUI).
-   - Shadow: one lift for cards, popovers and dialogs together, on Tailwind's
-     rungs — the default IS the registry's look (card none · popover md ·
-     modal lg).
+   - Shadow: one ladder for cards, popovers and dialogs together, on
+     Tailwind's rungs. Flat is the registry's look (card none · popover md ·
+     modal lg); Low is shadcn New York, Medium shadcn Luma.
    - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
      dialogs and drawers sit on a scrim and stay solid.
 
@@ -25,21 +26,25 @@ import type { ChapterSchema } from "./schema"
 export const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
-  surfaceShadow: "subtle",
+  surfaceShadow: "flat",
   surfaceGlass: false,
 }
 
 export const LAYERS_OPTIONS = [
-  { value: "same", label: "Same", description: "Cards share the page's tone" },
+  {
+    value: "same",
+    label: "Same",
+    description: "In light, cards share the page's tone",
+  },
   {
     value: "grouped",
     label: "Grouped",
-    description: "White cards on a gray page",
+    description: "In light, white cards on a gray page",
   },
   {
     value: "tonal",
     label: "Tonal",
-    description: "Cards shaded below the page",
+    description: "In light, cards a shade below the page",
   },
 ]
 
@@ -57,10 +62,14 @@ export const EDGE_OPTIONS = [
 ]
 
 export const SHADOW_OPTIONS = [
-  { value: "flat", label: "Flat", description: "Only menus and dialogs cast" },
-  { value: "subtle", label: "Subtle", description: "Light shadows" },
-  { value: "raised", label: "Raised", description: "Cards lift off the page" },
-  { value: "floating", label: "Floating", description: "Deep, soft shadows" },
+  {
+    value: "flat",
+    label: "Flat",
+    description: "No card shadows; menus and dialogs cast",
+  },
+  { value: "low", label: "Low", description: "A small shadow under cards" },
+  { value: "medium", label: "Medium", description: "Cards lift off the page" },
+  { value: "high", label: "High", description: "Deep, soft shadows" },
 ]
 
 export const GLASS_OPTIONS = [
@@ -72,7 +81,7 @@ export const GLASS_OPTIONS = [
   {
     value: "glass",
     label: "Glass",
-    description: "Translucent over a blurred backdrop",
+    description: "Translucent over a blur; dialogs stay solid",
   },
 ]
 
@@ -90,7 +99,8 @@ type StyleKey = "surfaceLayers" | "surfaceEdge" | "surfaceShadow"
 export interface SurfaceStyle {
   id: string
   label: string
-  /** What it looks like, and who draws their surfaces this way. */
+  /** Who draws their surfaces this way. */
+  credits: string
   description: string
   values: Record<StyleKey, string>
 }
@@ -98,6 +108,7 @@ export interface SurfaceStyle {
 const style = (
   id: string,
   label: string,
+  credits: string,
   description: string,
   surfaceLayers: string,
   surfaceEdge: string,
@@ -105,6 +116,7 @@ const style = (
 ): SurfaceStyle => ({
   id,
   label,
+  credits,
   description,
   values: { surfaceLayers, surfaceEdge, surfaceShadow },
 })
@@ -113,83 +125,108 @@ export const SURFACE_STYLES: SurfaceStyle[] = [
   style(
     "outlined",
     "Outlined",
-    "Hairlines around flat surfaces. Vercel, shadcn.",
+    "shadcn, GitHub",
+    "Hairlines, flat cards",
     "same",
     "line",
-    "subtle",
+    "flat",
   ),
   style(
     "soft",
     "Soft",
-    "Hairlines with a soft lift. Linear, Stripe.",
+    "shadcn New York, Radix",
+    "Hairlines and a small shadow",
     "same",
     "line",
-    "raised",
+    "low",
   ),
   style(
     "elevated",
     "Elevated",
-    "Shadows instead of lines. Fluent, Airbnb.",
+    "Fluent, Atlassian",
+    "Shadows instead of lines",
     "same",
     "none",
-    "raised",
+    "low",
   ),
   style(
     "grouped",
     "Grouped",
-    "White cards on a gray page. Polaris, Apple.",
+    "HeroUI, Polaris",
+    "White cards on a gray page",
     "grouped",
     "none",
-    "subtle",
+    "low",
   ),
   style(
     "tonal",
     "Tonal",
-    "Cards shaded off the page, no lines. Material.",
+    "Material",
+    "Cards toned off the page",
     "tonal",
     "none",
     "flat",
   ),
 ]
 
-const STYLE_KEYS: StyleKey[] = ["surfaceLayers", "surfaceEdge", "surfaceShadow"]
+const SHADOWS = SHADOW_OPTIONS.map((o) => o.value)
 
-/** The style the state sits on, or the closest one: Layers outweighs the
- *  other two, and a tie goes to `from`, the style the edits started at. */
-export function surfaceStyle(
-  state: StudioState,
-  from?: string,
-): { style: SurfaceStyle; exact: boolean } {
-  const score = (s: SurfaceStyle) =>
-    STYLE_KEYS.reduce(
-      (n, key) =>
-        state[key] === s.values[key]
-          ? n + (key === "surfaceLayers" ? 3 : 1)
-          : n,
-      0,
-    )
-  const best = SURFACE_STYLES.reduce((a, b) =>
-    score(b) > score(a) || (score(b) === score(a) && b.id === from) ? b : a,
+/** How close the state sits to a style, 9 on it: Layers outweighs Edge,
+ *  which outweighs how far apart the shadows are. */
+export const styleScore = (state: StudioState, { values }: SurfaceStyle) =>
+  (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
+  (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
+  3 -
+  Math.abs(
+    SHADOWS.indexOf(state.surfaceShadow) -
+      SHADOWS.indexOf(values.surfaceShadow),
   )
-  return {
-    style: best,
-    exact: STYLE_KEYS.every((key) => state[key] === best.values[key]),
-  }
+
+/** The style the state sits on, or the closest one. */
+export function surfaceStyle(state: StudioState): {
+  style: SurfaceStyle
+  exact: boolean
+} {
+  const best = SURFACE_STYLES.reduce((a, b) =>
+    styleScore(state, b) > styleScore(state, a) ? b : a,
+  )
+  return { style: best, exact: styleScore(state, best) === 9 }
 }
 
-/** Cards with no edge, no shadow and the page's own tone would vanish. */
-export const flatAllowed = (state: StudioState) =>
-  state.surfaceLayers !== "same" || state.surfaceEdge !== "none"
+/** Grouped's page: its cards are white, so the page's gray is its depth. The
+ *  engine re-anchors every ramp on the page, so fills on those white cards
+ *  read deeper too — contextual fills belong to the color rewrite. */
+export const GROUPED_PAGE = 96
 
-/** `patch` applied, lifting the shadow off Flat when it would hide cards. */
+/** Flat cards need an edge or a tone apart from the page: Same has none, and
+ *  Grouped's white cards none on a near-white page. */
+export const flatAllowed = (state: StudioState) =>
+  state.surfaceEdge !== "none" ||
+  state.surfaceLayers === "tonal" ||
+  (state.surfaceLayers === "grouped" && state.lightBg <= GROUPED_PAGE + 1)
+
+/** `patch` applied. Entering Grouped takes a light page down to gray, and
+ *  leaving gives back `before`, the page it took, unless the page moved since;
+ *  then Flat lifts to Low where it would hide cards. */
 export function withSurface(
   state: StudioState,
   patch: Partial<Record<StyleKey, string>>,
-): StudioState {
+  before?: number,
+): { state: StudioState; before?: number } {
   const next = { ...state, ...patch }
-  return flatAllowed(next) || next.surfaceShadow !== "flat"
-    ? next
-    : { ...next, surfaceShadow: "subtle" }
+  const grouped = (s: StudioState) => s.surfaceLayers === "grouped"
+  let kept = before
+  if (grouped(next) && !grouped(state)) {
+    kept = state.lightBg > GROUPED_PAGE + 1 ? state.lightBg : undefined
+    if (kept !== undefined) next.lightBg = GROUPED_PAGE
+  } else if (grouped(state) && !grouped(next)) {
+    if (before !== undefined && state.lightBg === GROUPED_PAGE)
+      next.lightBg = before
+    kept = undefined
+  }
+  if (!flatAllowed(next) && next.surfaceShadow === "flat")
+    next.surfaceShadow = "low"
+  return { state: next, before: kept }
 }
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -201,9 +238,11 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, the system's hairline, black at an alpha, or nothing. */
+ *  of two rungs, white, the system's hairline, black at an alpha, or
+ *  nothing. */
 export type SurfaceColor =
   | { kind: "none" }
+  | { kind: "white" }
   | { kind: "hairline" }
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
@@ -220,8 +259,8 @@ export interface SurfaceLook {
   shadow: ShadowLayer[]
 }
 
+/** The page is always the neutral's 25 rung — the page slider's tone. */
 export interface SurfaceRecipe {
-  page: PerMode<SurfaceColor>
   card: SurfaceLook
   /** Popovers, menus, tooltips, toasts; dialogs share its color and edge. */
   popover: SurfaceLook
@@ -230,6 +269,7 @@ export interface SurfaceRecipe {
 }
 
 const NONE: SurfaceColor = { kind: "none" }
+const WHITE: SurfaceColor = { kind: "white" }
 const HAIRLINE: SurfaceColor = { kind: "hairline" }
 const step = (step: string): SurfaceColor => ({ kind: "step", step })
 /** Halfway between the 50 and 100 rungs: the registry's dark popover. */
@@ -262,22 +302,22 @@ const RUNGS: Array<Array<[string, number]>> = [
   [["0 25px 50px -12px", 0.25]],
 ]
 
-/** Rung per role — card, popover, modal — at each shadow step. Edgeless
- *  cards start a rung higher: their shadow is their edge. */
-const LADDERS = {
-  line: {
-    flat: [0, 2, 3],
-    subtle: [0, 3, 4],
-    raised: [2, 4, 5],
-    floating: [3, 5, 6],
-  },
-  none: {
-    flat: [0, 2, 3],
-    subtle: [2, 3, 4],
-    raised: [3, 4, 5],
-    floating: [4, 5, 6],
-  },
-} satisfies Record<string, Record<string, [number, number, number]>>
+/** Rung per role — card, popover, modal — at each shadow step. */
+const LADDER = {
+  flat: [0, 3, 4],
+  low: [2, 3, 4],
+  medium: [3, 4, 5],
+  high: [4, 5, 6],
+} satisfies Record<string, [number, number, number]>
+
+/** Flat where it would hide cards renders as Low, whatever wrote the state. */
+const ladder = (state: StudioState) =>
+  state.surfaceShadow === "flat" && !flatAllowed(state)
+    ? LADDER.low
+    : (LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat)
+
+/** The card's rung, for glyphs that hint at its shadow. */
+export const cardRung = (state: StudioState) => ladder(state)[0]
 
 /* The soft 0-offset outline shadow-led systems draw around every raised
    surface (Fluent's 0 0 2px). */
@@ -305,22 +345,22 @@ export function surfaceRecipe(state: StudioState): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
-  const ladder = LADDERS[edgeless ? "none" : "line"]
-  const [card, popover, modal] =
-    ladder[state.surfaceShadow as keyof typeof ladder] ?? ladder.subtle
+  const [card, popover, modal] = ladder(state)
   return {
-    page: { light: grouped ? HALF : step("25"), dark: step("25") },
     card: {
       edge: both(edgeless ? NONE : HAIRLINE),
       bg: {
-        light: grouped ? step("25") : tonal ? HALF : step("50"),
+        light: grouped ? WHITE : tonal ? HALF : step("25"),
         dark: edgeless || tonal ? QUARTER : step("50"),
       },
       shadow: shadowLayers(card, edgeless),
     },
     popover: {
       edge: { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
-      bg: { light: grouped ? step("25") : step("50"), dark: HALF },
+      bg: {
+        light: grouped ? WHITE : tonal ? step("50") : step("25"),
+        dark: HALF,
+      },
       shadow: shadowLayers(popover, edgeless),
     },
     modalShadow: shadowLayers(modal, edgeless),
@@ -346,6 +386,8 @@ export function surfaceColorCss(
   switch (color.kind) {
     case "none":
       return "transparent"
+    case "white":
+      return "oklch(1 0 0)"
     case "hairline":
       return palette.hairline
     case "step":
@@ -383,14 +425,13 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
 }
 
 function surfaceTokens(state: StudioState): Record<string, string> {
-  const { page, card, popover, modalShadow, glass } = surfaceRecipe(state)
+  const { card, popover, modalShadow, glass } = surfaceRecipe(state)
   return {
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
     "--shadow-card": shadowCss(card.shadow, pairCss),
     "--shadow-popover": shadowCss(popover.shadow, pairCss),
     "--shadow-modal": shadowCss(modalShadow, pairCss),
-    "--color-bg": pairCss(page),
     "--color-card": pairCss(card.bg),
     "--color-popover": pairCss(popover.bg),
     "--popover-alpha": glass ? "70%" : "100%",

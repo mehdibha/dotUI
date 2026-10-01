@@ -50,7 +50,7 @@ export const airbnb = definePreset({
     // Surfaces
     surfaceLayers: "same",
     surfaceEdge: "none",
-    surfaceShadow: "subtle",
+    surfaceShadow: "low",
     surfaceGlass: false,
 
     // Browser

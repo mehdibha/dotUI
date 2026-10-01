@@ -291,8 +291,8 @@
     --border-focus-muted: oklch(0.8984 0.0496 241.05);
     --tooltip: oklch(0.2399 0.0126 258.05);
     --fg-on-tooltip: oklch(0.992 0.0021 258.05);
-    --card: oklch(0.9831 0.003 258.05);
-    --popover: oklch(0.9831 0.003 258.05);
+    --card: oklch(0.992 0.0021 258.05);
+    --popover: oklch(0.992 0.0021 258.05);
     --sidebar: oklch(0.9831 0.003 258.05);
     --overlay: oklch(0 0 0);
     --thumb: oklch(1 0 0);

@@ -49,7 +49,7 @@ export const vercel = definePreset({
     // Surfaces
     surfaceLayers: "same",
     surfaceEdge: "line",
-    surfaceShadow: "subtle",
+    surfaceShadow: "flat",
     surfaceGlass: false,
 
     // Browser

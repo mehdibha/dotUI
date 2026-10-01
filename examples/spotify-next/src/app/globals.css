@@ -330,8 +330,8 @@
     --popover-alpha: 100%;
     --popover-backdrop-filter: none;
     --dotui-density: comfortable;
-    --shadow-popover: 0 0 2px 0 rgb(0 0 0 / 0.12), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-modal: 0 0 2px 0 rgb(0 0 0 / 0.12), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-popover: 0 0 2px 0 rgb(0 0 0 / 0.12), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-modal: 0 0 2px 0 rgb(0 0 0 / 0.12), 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --scrollbar-width: thin;
     --scrollbar-color: transparent transparent;
     --scrollbar-color-hover: oklch(0.9249 0 0) transparent;
@@ -456,8 +456,8 @@
     --chart-7: oklch(0.453 0.1289 148.67);
     --chart-8: oklch(0.4002 0.1139 148.67);
     --overlay-border: oklch(0.2726 0 0);
-    --shadow-popover: 0 0 2px 0 rgb(0 0 0 / 0.24), 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
-    --shadow-modal: 0 0 2px 0 rgb(0 0 0 / 0.24), 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-popover: 0 0 2px 0 rgb(0 0 0 / 0.24), 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-modal: 0 0 2px 0 rgb(0 0 0 / 0.24), 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
     --scrollbar-color-hover: oklch(0.2726 0 0) transparent;
 }
 

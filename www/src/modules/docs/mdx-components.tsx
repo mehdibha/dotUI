@@ -172,7 +172,7 @@ export const mdxComponents: MDXComponents = {
   },
   code: (props) => (
     <code
-      className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:text-[0.8rem] not-in-[pre]:font-normal **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+      className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-muted/30 not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:text-[0.8rem] not-in-[pre]:font-normal **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
       {...props}
     />
   ),

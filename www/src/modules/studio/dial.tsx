@@ -235,6 +235,10 @@ export interface DialPickOption {
   label: string
   description?: string
   disabled?: boolean
+  /** A muted aside on the label's line. */
+  note?: string
+  /** A specimen beside the label. */
+  visual?: React.ReactNode
 }
 
 const PICK_ITEM =
@@ -255,16 +259,24 @@ function PickItem({
     >
       {({ isSelected }) => (
         <>
-          <span className="flex min-w-0 flex-col gap-0.5">
-            <span className="flex items-center gap-1.5 text-[13px] font-medium text-fg/90">
-              {option.label}
-              {modified && <ModifiedDot />}
-            </span>
-            {option.description && (
-              <span className="text-xs leading-snug text-fg/55">
-                {option.description}
+          <span className="flex min-w-0 items-center gap-3">
+            {option.visual}
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="flex items-center gap-1.5 text-[13px] font-medium text-fg/90">
+                {option.label}
+                {modified && <ModifiedDot />}
+                {option.note && (
+                  <span className="truncate text-xs font-normal text-fg/45">
+                    {option.note}
+                  </span>
+                )}
               </span>
-            )}
+              {option.description && (
+                <span className="text-xs leading-snug text-fg/55">
+                  {option.description}
+                </span>
+              )}
+            </span>
           </span>
           <CheckIcon
             className={cn("mt-px size-4 shrink-0", !isSelected && "invisible")}

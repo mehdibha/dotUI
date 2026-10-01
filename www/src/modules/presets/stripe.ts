@@ -47,7 +47,7 @@ export const stripe = definePreset({
     // Surfaces
     surfaceLayers: "same",
     surfaceEdge: "line",
-    surfaceShadow: "raised",
+    surfaceShadow: "low",
     surfaceGlass: false,
 
     // Browser

@@ -3,7 +3,8 @@ import { describe, expect, test } from "vitest"
 import { lstarOf, mixOklab, toOklch } from "@dotui/colors"
 import type { Mode as EngineMode, Oklch, StepName } from "@dotui/colors"
 
-import { resolveColorConfig } from "@/registry/theme"
+import { resolveColorConfig, semanticsFor } from "@/registry/theme"
+import type { SemanticTarget } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
 import { buildColorConfig } from "./color"
@@ -11,6 +12,7 @@ import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import {
   EDGE_OPTIONS,
   flatAllowed,
+  GROUPED_PAGE,
   LAYERS_OPTIONS,
   NO_SHADOW,
   SHADOW_OPTIONS,
@@ -18,10 +20,11 @@ import {
   surfaceColorCss,
   surfaceRecipe,
   SURFACE_STYLES,
+  styleScore,
   surfaceStyle,
   withSurface,
 } from "./surfaces"
-import type { PerMode, SurfaceColor } from "./surfaces"
+import type { Mode, PerMode, SurfaceColor } from "./surfaces"
 
 const SURFACE_TOKENS = [
   "--card-border",
@@ -29,23 +32,55 @@ const SURFACE_TOKENS = [
   "--shadow-card",
   "--shadow-popover",
   "--shadow-modal",
-  "--color-bg",
   "--color-card",
   "--color-popover",
   "--popover-alpha",
   "--popover-backdrop-filter",
 ]
 
-/* Tailwind's md / lg — what popover and modal ship by default. */
+/* Tailwind's sm / md / lg. */
+const SHADOW_SM =
+  "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
 const SHADOW_MD =
   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
 const SHADOW_LG =
   "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
 const HALF = "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))"
 const QUARTER = "color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100))"
+const WHITE = "oklch(1 0 0)"
 
 const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
   resolveDesignSystem(parseState({ ...overrides })).tokens
+
+const PALETTE = {
+  step: (s: string) => `var(--neutral-${s})`,
+  hairline: "var(--color-border)",
+}
+
+/** A registry semantic target as the CSS `base/colors.css` declares. */
+function targetCss(target: SemanticTarget): string {
+  if ("ref" in target) return `var(--${target.ref.palette}-${target.ref.step})`
+  if ("on" in target) return `var(--on-${target.on.palette}-${target.on.step})`
+  if ("value" in target) return target.value
+  const [a, weight, b] = target.mix
+  return `color-mix(in oklab, ${targetCss(a)} ${weight}%, ${targetCss(b)})`
+}
+
+const registryColor = (token: string, mode: Mode) => {
+  const target = semanticsFor()[token]?.target
+  if (!target) throw new Error(`no registry token ${token}`)
+  return targetCss("light" in target ? target[mode] : target)
+}
+
+const combos = LAYERS_OPTIONS.flatMap((l) =>
+  EDGE_OPTIONS.flatMap((e) =>
+    SHADOW_OPTIONS.map((s) => ({
+      surfaceLayers: l.value,
+      surfaceEdge: e.value,
+      surfaceShadow: s.value,
+    })),
+  ),
+)
 
 describe("surfaces", () => {
   test("defaults emit no surface tokens", () => {
@@ -53,15 +88,21 @@ describe("surfaces", () => {
     for (const name of SURFACE_TOKENS) expect(tokens).not.toHaveProperty(name)
   })
 
-  test("the default recipe is the registry's look (card none · popover md · modal lg)", () => {
-    const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_STATE)
-    const palette = { step: (s: string) => s, hairline: "" }
-    const plain = (pair: PerMode<SurfaceColor>) =>
-      surfaceColorCss(pair.light, palette)
-    expect(shadowCss(card.shadow, plain)).toBe(NO_SHADOW)
-    expect(shadowCss(popover.shadow, plain)).toBe(SHADOW_MD)
-    expect(shadowCss(modalShadow, plain)).toBe(SHADOW_LG)
-  })
+  test.each(["light", "dark"] as const)(
+    "the default recipe is the registry's look in %s",
+    (mode) => {
+      const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_STATE)
+      const css = (pair: PerMode<SurfaceColor>) =>
+        surfaceColorCss(pair[mode], PALETTE)
+      expect(css(card.bg)).toBe(registryColor("color-card", mode))
+      expect(css(popover.bg)).toBe(registryColor("color-popover", mode))
+      expect(css(card.edge)).toBe(PALETTE.hairline)
+      expect(css(popover.edge)).toBe(PALETTE.hairline)
+      expect(shadowCss(card.shadow, css)).toBe(NO_SHADOW)
+      expect(shadowCss(popover.shadow, css)).toBe(SHADOW_MD)
+      expect(shadowCss(modalShadow, css)).toBe(SHADOW_LG)
+    },
+  )
 
   test("Outlined is the default, and every style reads back as itself", () => {
     expect(surfaceStyle(DEFAULT_STATE)).toMatchObject({
@@ -75,48 +116,99 @@ describe("surfaces", () => {
     }
   })
 
-  test("an edited style keeps its layers' name, then the one it came from", () => {
-    const named = (values: Partial<typeof DEFAULTS>, from?: string) =>
-      surfaceStyle(parseState(values), from)
-    expect(named({ surfaceLayers: "tonal", surfaceEdge: "none" })).toEqual({
-      style: expect.objectContaining({ id: "tonal" }),
-      exact: false,
-    })
-    expect(
-      named({ surfaceLayers: "grouped", surfaceShadow: "raised" }),
-    ).toEqual({
-      style: expect.objectContaining({ id: "grouped" }),
-      exact: false,
-    })
-    const floating = { surfaceShadow: "floating" }
-    expect(named(floating).style.id).toBe("outlined")
-    expect(named(floating, "soft").style.id).toBe("soft")
+  test("every combination names one closest style, without ties", () => {
+    for (const values of combos) {
+      const state = parseState(values)
+      const scores = SURFACE_STYLES.map((s) => styleScore(state, s))
+      const best = Math.max(...scores)
+      expect(
+        scores.filter((n) => n === best),
+        JSON.stringify(values),
+      ).toHaveLength(1)
+    }
+    const named = (values: Partial<typeof DEFAULTS>) =>
+      surfaceStyle(parseState(values)).style.id
+    expect(named({ surfaceShadow: "medium" })).toBe("soft")
+    expect(named({ surfaceEdge: "none", surfaceShadow: "high" })).toBe(
+      "elevated",
+    )
+    expect(named({ surfaceLayers: "grouped", surfaceEdge: "line" })).toBe(
+      "grouped",
+    )
+    expect(named({ surfaceLayers: "tonal", surfaceShadow: "low" })).toBe(
+      "tonal",
+    )
   })
 
-  test("dropping the edge off flat cards on the page lifts the shadow", () => {
-    const flat = parseState({ surfaceShadow: "flat" })
-    expect(withSurface(flat, { surfaceEdge: "none" }).surfaceShadow).toBe(
-      "subtle",
+  test("dropping the edge off flat cards on the page lifts them to Low", () => {
+    const { state } = withSurface(DEFAULT_STATE, { surfaceEdge: "none" })
+    expect(state.surfaceShadow).toBe("low")
+    expect(surfaceStyle(state)).toMatchObject({
+      style: { id: "elevated" },
+      exact: true,
+    })
+    const tonal = parseState({ surfaceLayers: "tonal" })
+    expect(
+      withSurface(tonal, { surfaceEdge: "none" }).state.surfaceShadow,
+    ).toBe("flat")
+  })
+
+  test("Flat that would hide cards renders and edits as Low", () => {
+    const flat = withSurface(DEFAULT_STATE, {
+      surfaceLayers: "grouped",
+      surfaceEdge: "none",
+      surfaceShadow: "flat",
+    }).state
+    expect(flat).toMatchObject({ lightBg: GROUPED_PAGE, surfaceShadow: "flat" })
+    // The page slider goes through the same guard…
+    const white = withSurface({ ...flat, lightBg: 100 }, {}).state
+    expect(white.surfaceShadow).toBe("low")
+    // …and a state written elsewhere still renders a shadow.
+    const raw = parseState({ ...flat, lightBg: 100 })
+    expect(flatAllowed(raw)).toBe(false)
+    expect(surfaceRecipe(raw).card.shadow.length).toBeGreaterThan(0)
+  })
+
+  test("Grouped takes a light page down to gray and gives it back", () => {
+    const white = parseState({ lightBg: 100 })
+    const entered = withSurface(white, { surfaceLayers: "grouped" })
+    expect(entered).toEqual({
+      state: expect.objectContaining({ lightBg: GROUPED_PAGE }),
+      before: 100,
+    })
+    const left = withSurface(
+      entered.state,
+      { surfaceLayers: "same" },
+      entered.before,
     )
-    const tonal = parseState({ surfaceLayers: "tonal", surfaceShadow: "flat" })
-    expect(withSurface(tonal, { surfaceEdge: "none" }).surfaceShadow).toBe(
-      "flat",
-    )
+    expect(left.state.lightBg).toBe(100)
+    expect(left.before).toBeUndefined()
+
+    // A page moved while grouped stays; a gray page is kept on the way in.
+    const moved = { ...entered.state, lightBg: 94 }
+    expect(
+      withSurface(moved, { surfaceLayers: "same" }, entered.before).state
+        .lightBg,
+    ).toBe(94)
+    const gray = withSurface(parseState({ lightBg: 95 }), {
+      surfaceLayers: "grouped",
+    })
+    expect(gray).toEqual({
+      state: expect.objectContaining({ lightBg: 95 }),
+    })
   })
 
   test("shadow moves every role together", () => {
-    const raised = tokensFor({ surfaceShadow: "raised" })
-    expect(raised["--shadow-card"]).toBe(
-      "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-    )
-    expect(raised["--shadow-popover"]).toBe(SHADOW_LG)
-    const flat = tokensFor({ surfaceShadow: "flat" })
-    expect(flat).not.toHaveProperty("--shadow-card")
-    expect(flat["--shadow-modal"]).toBe(SHADOW_MD)
+    const low = tokensFor({ surfaceShadow: "low" })
+    expect(low["--shadow-card"]).toBe(SHADOW_SM)
+    expect(low).not.toHaveProperty("--shadow-popover")
+    const medium = tokensFor({ surfaceShadow: "medium" })
+    expect(medium["--shadow-card"]).toBe(SHADOW_MD)
+    expect(medium["--shadow-popover"]).toBe(SHADOW_LG)
   })
 
   test("an edgeless system rings its overlays and doubles its shadows in dark", () => {
-    const tokens = tokensFor({ surfaceEdge: "none" })
+    const tokens = tokensFor({ surfaceEdge: "none", surfaceShadow: "low" })
     expect(tokens["--card-border"]).toBe("transparent")
     expect(tokens["--overlay-border"]).toBe(
       "light-dark(transparent, var(--color-border))",
@@ -125,25 +217,24 @@ describe("surfaces", () => {
       "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
     )
     expect(tokens["--color-card"]).toBe(
-      `light-dark(var(--neutral-50), ${QUARTER})`,
+      `light-dark(var(--neutral-25), ${QUARTER})`,
     )
   })
 
-  test("grouped lifts white cards off a gray page in light only", () => {
+  test("grouped puts white cards and overlays on the page in light", () => {
     const tokens = tokensFor({ surfaceLayers: "grouped" })
-    expect(tokens["--color-bg"]).toBe(`light-dark(${HALF}, var(--neutral-25))`)
     expect(tokens["--color-card"]).toBe(
-      "light-dark(var(--neutral-25), var(--neutral-50))",
+      `light-dark(${WHITE}, var(--neutral-50))`,
     )
-    expect(tokens["--color-popover"]).toBe(
-      `light-dark(var(--neutral-25), ${HALF})`,
-    )
+    expect(tokens["--color-popover"]).toBe(`light-dark(${WHITE}, ${HALF})`)
   })
 
   test("tonal shades cards below the page, above it in dark", () => {
     const tokens = tokensFor({ surfaceLayers: "tonal" })
     expect(tokens["--color-card"]).toBe(`light-dark(${HALF}, ${QUARTER})`)
-    expect(tokens).not.toHaveProperty("--color-bg")
+    expect(tokens["--color-popover"]).toBe(
+      `light-dark(var(--neutral-50), ${HALF})`,
+    )
   })
 
   test("glass turns the floating tier translucent; solid is the default", () => {
@@ -165,28 +256,16 @@ describe("surfaces", () => {
 describe("surfaces stay legible", () => {
   const MIN_TONE = 1.5
 
-  const combos = LAYERS_OPTIONS.flatMap((l) =>
-    EDGE_OPTIONS.flatMap((e) =>
-      SHADOW_OPTIONS.map((s) => ({
-        surfaceLayers: l.value,
-        surfaceEdge: e.value,
-        surfaceShadow: s.value,
-      })),
-    ),
-  ).filter(
-    (values) =>
-      flatAllowed(parseState(values)) || values.surfaceShadow !== "flat",
-  )
-
   const pages = [
     { lightBg: 99, darkBg: 2 },
     { lightBg: 100, darkBg: 0 },
     { lightBg: 96, darkBg: 16 },
   ]
 
-  for (const page of pages) {
+  const lstarFor = (page: (typeof pages)[number]) => {
     const theme = resolveColorConfig(buildColorConfig(parseState(page)))
-    const lstar = (color: SurfaceColor, mode: EngineMode): number => {
+    return (color: SurfaceColor, mode: EngineMode): number => {
+      if (color.kind === "white") return 100
       const ramp: Partial<Record<StepName, string>> =
         theme[mode].scales.neutral ?? {}
       const at = (s: string) => toOklch(ramp[s as StepName] ?? "")
@@ -198,11 +277,16 @@ describe("surfaces stay legible", () => {
             : at("25")
       return lstarOf(oklch(color))
     }
+  }
+
+  for (const page of pages) {
+    const lstar = lstarFor(page)
+    const PAGE: SurfaceColor = { kind: "step", step: "25" }
 
     test.each(combos)(`page ${page.lightBg}/${page.darkBg}: %o`, (values) => {
       const recipe = surfaceRecipe(parseState({ ...values, ...page }))
       const tones = (mode: EngineMode) => ({
-        page: lstar(recipe.page[mode], mode),
+        page: lstar(PAGE, mode),
         card: lstar(recipe.card.bg[mode], mode),
         popover: lstar(recipe.popover.bg[mode], mode),
       })
@@ -227,4 +311,21 @@ describe("surfaces stay legible", () => {
       )
     })
   }
+
+  test("in light, Same sits on the page and Tonal and Grouped read apart", () => {
+    const at = (values: Partial<typeof DEFAULTS>) => {
+      const state = parseState(values)
+      const lstar = lstarFor({ lightBg: state.lightBg, darkBg: state.darkBg })
+      const recipe = surfaceRecipe(state)
+      return (
+        lstar(recipe.card.bg.light, "light") -
+        lstar({ kind: "step", step: "25" }, "light")
+      )
+    }
+    expect(at({})).toBe(0)
+    expect(at({ surfaceLayers: "tonal" })).toBeLessThan(-2)
+    expect(
+      at(withSurface(DEFAULT_STATE, { surfaceLayers: "grouped" }).state),
+    ).toBeGreaterThan(3.5)
+  })
 })
