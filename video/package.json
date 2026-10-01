@@ -1,0 +1,34 @@
+{
+  "name": "video",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio",
+    "frames": "node scripts/frames.ts",
+    "render": "node scripts/render.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.2.8",
+    "@fontsource/geist-mono": "^5.2.7",
+    "@internationalized/date": "^3.12.3",
+    "@remotion/bundler": "4.0.529",
+    "@remotion/cli": "4.0.529",
+    "@remotion/renderer": "4.0.529",
+    "@tailwindcss/webpack": "4.3.0",
+    "css-loader": "7.1.4",
+    "diff-match-patch-es": "^1.0.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "remotion": "4.0.529",
+    "shiki-magic-move": "^1.4.0",
+    "style-loader": "4.0.0",
+    "tailwindcss": "catalog:"
+  },
+  "devDependencies": {
+    "@dotui/ts-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

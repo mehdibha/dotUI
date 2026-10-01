@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+@import "../../www/node_modules/shadcn/dist/tailwind.css";
+@import "../../www/src/registry/styles.css";
+
+@source "../../www/src/registry";
+@source "../../www/src/components/showcase";
+@source "../../www/src/modules/studio/preview/blocks";
+@source "../../www/src/modules/studio";
+@source "./";
+
+/* A themed subtree pins its own mode with data-mode (see DesignSystemProvider). */
+@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
+@custom-variant dock-stacked (@media (width < 64rem) and (height > 500px));
+@custom-variant dock-side (@media (width < 64rem) and (height <= 500px));
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+/* Every frame is a pure function of the frame number. CSS transitions run on
+   wall-clock time, so they're off. CSS animations are paused and scrubbed by
+   --video-time (seconds, set per frame on <html> by <Film>) — only on nodes
+   that can animate, since every node reading the var restyles each frame. */
+*,
+*::before,
+*::after {
+  transition: none !important;
+  animation-play-state: paused !important;
+}
+[class*="animate"],
+[class*="animate"]::before,
+[class*="animate"]::after,
+[style*="animation"] {
+  animation-delay: calc(var(--video-time, 0) * -1s) !important;
+}
+
+html,
+body {
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+}
