@@ -4,20 +4,16 @@ import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { siteConfig } from "@/config/site"
-import { traversedHistory } from "@/lib/history-traversal"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
-import { useHistory } from "@/modules/studio/history"
-import { KeepDialog, leave } from "@/modules/studio/keep-dialog"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
-import { getCurrent, select, useCurrent } from "@/modules/studio/selection"
-import type { Selection } from "@/modules/studio/selection"
-import { quoted } from "@/modules/studio/toasts"
-import { fetchSnapshot, flush } from "@/modules/studio/workspace"
+import { getCurrent, select } from "@/modules/studio/selection"
+import { fetchSnapshot } from "@/modules/studio/share"
+import { flush, isUnreadable, storageFailed } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
   search: {
@@ -43,7 +39,7 @@ export function createSearchSchema(
     // Opens the design-system switcher — set by the /presets redirect.
     // Coerced boolean: the search parser reads bare `1`/`true` as non-strings.
     gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
-    // The view on screen: a published snapshot, or a preset.
+    // A link to open: a shared snapshot, or a preset.
     s: text(search.s),
     preset: text(search.preset),
   }
@@ -97,132 +93,51 @@ const useHydrated = () =>
     () => false,
   )
 
-const linkKey = (s?: string, preset?: string) =>
-  s !== undefined
-    ? `shared:${s}`
-    : preset !== undefined
-      ? `preset:${preset}`
-      : ""
-
-/** Keeps the URL on the current selection: `?preset=` and `?s=` for views,
- *  bare `/studio` for the user's systems. A link opened that isn't the
- *  current selection opens it (asking first when leaving a changed draft,
- *  the link staying in the address bar until answered); one reached with
- *  Back/Forward, or broken (with a toast), gives way to the selection.
- *  Returns whether a shared link is loading. */
-function useSelectionUrl(): boolean {
+/** Opens a `?preset=` or `?s=` link once, as a read-only view, and strips
+ *  it from the URL. The current view stays while a shared link loads. */
+function useOpenLink() {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
-  const { doc, key } = useCurrent()
-  const url = linkKey(s, preset)
-  const wanted = doc ? "" : key
-  // The link the URL last held that has been dealt with.
-  const seen = useRef<string>(undefined)
-  // The link being fetched or waiting on the keep dialog, and the last
-  // shared link whose fetch ended.
-  const loading = useRef<string>(undefined)
-  const [fetched, setFetched] = useState<string>()
+  const opened = useRef<string>(undefined)
 
   useEffect(() => {
-    if (url === wanted) {
-      seen.current = url
+    const link = s !== undefined ? `s:${s}` : preset && `preset:${preset}`
+    if (!link) {
+      opened.current = undefined
       return
     }
-    // Reads the selection live: an effect run can be a render behind.
-    const sync = () => {
-      const { sel, doc } = getCurrent()
-      navigate({
-        search: (prev) => ({
-          ...prev,
-          s: !doc && sel.kind === "shared" ? sel.id : undefined,
-          preset: !doc && sel.kind === "preset" ? sel.id : undefined,
-        }),
-        replace: true,
-      })
-    }
-    if (!url) return void sync()
-    if (url === seen.current) {
-      // Not while it's pending: the effect reruns (a storage event).
-      if (url !== loading.current) sync()
-      return
-    }
-    seen.current = url
-    if (traversedHistory()) return void sync()
-    const open = (sel: Selection) => {
-      loading.current = url
-      const done = () => {
-        if (loading.current === url) loading.current = undefined
-      }
-      leave(
-        () => {
-          done()
-          select(sel)
-        },
-        () => {
-          done()
-          sync()
-        },
-      )
-    }
-    const broken = (title: string, description?: string) => {
-      toastManager.add({ title, description, type: "error" })
-      sync()
-    }
+    if (link === opened.current) return
+    opened.current = link
+    navigate({
+      search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
+      replace: true,
+    })
+    const broken = () =>
+      toastManager.add({ title: "This link doesn't work", type: "error" })
     if (s === undefined) {
-      if (preset !== undefined && getPreset(preset))
-        open({ kind: "preset", id: preset })
-      else broken(`No preset called ${quoted(preset ?? "")}`)
+      if (preset && getPreset(preset)) select({ kind: "preset", id: preset })
+      else broken()
       return
     }
-    const dead = () =>
-      broken(
-        "This link doesn't work",
-        "It's broken or no longer exists. Links made on a preview or local site only open there.",
-      )
-    const slow = () => {
-      const id = toastManager.add({
-        title: "This link doesn't work",
-        description: "It took too long to load.",
-        type: "error",
-        actionProps: {
-          children: "Retry",
-          onClick: () => {
-            toastManager.close(id)
-            load()
-          },
-        },
-      })
-      sync()
-    }
-    const load = () => {
-      loading.current = url
-      return fetchSnapshot(s)
-        .finally(() => {
-          loading.current = undefined
-          setFetched(url)
+    const from = getCurrent().key
+    fetchSnapshot(s).then(
+      (snapshot) => {
+        if (!snapshot) return broken()
+        // A pick made while it loaded wins.
+        if (getCurrent().key !== from) return
+        select({
+          kind: "link",
+          id: s,
+          name: snapshot.name,
+          state: snapshot.state,
         })
-        .then(
-          (snapshot) =>
-            snapshot
-              ? open({
-                  kind: "shared",
-                  id: s,
-                  name: snapshot.name,
-                  state: snapshot.state,
-                })
-              : dead(),
-          (error: unknown) => {
-            console.error(error)
-            if (error instanceof DOMException && error.name === "TimeoutError")
-              slow()
-            else dead()
-          },
-        )
-    }
-    load()
-  }, [url, wanted, s, preset, navigate])
-
-  return s !== undefined && url !== wanted && fetched !== url
+      },
+      (error: unknown) => {
+        console.error(error)
+        broken()
+      },
+    )
+  }, [s, preset, navigate])
 }
 
 function StudioPage() {
@@ -270,43 +185,32 @@ const TOP_LAYER = {
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {
-  const loading = useSelectionUrl()
-  useHistory(useCurrent().doc?.id)
+  useOpenLink()
   const isMobile = useIsMobile()
+  // Said on arrival, before the list looks emptied.
+  useEffect(() => {
+    if (isUnreadable()) storageFailed(true)
+  }, [])
   return (
     <>
-      {/* First in both branches, so a toast raised while loading stays. */}
       <ToastProvider
         portalProps={TOP_LAYER}
         position={isMobile ? "top-center" : undefined}
       />
-      {loading ? (
-        // Not the selection it replaces: nothing until the link opens.
-        <StudioSkeleton label="Opening shared link…" />
-      ) : (
-        <>
-          <StudioHeaderActions />
-          <KeepDialog />
-          {/* Below `lg` the panel docks under the preview; on short screens
-              (a phone on its side) it sits beside it instead. */}
-          <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
-          <PreviewPanel />
-        </>
-      )}
+      <StudioHeaderActions />
+      {/* Below `lg` the panel docks under the preview; on short screens
+          (a phone on its side) it sits beside it instead. */}
+      <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-72" />
+      <PreviewPanel />
     </>
   )
 }
 
-function StudioSkeleton({ label }: { label?: string }) {
+function StudioSkeleton() {
   return (
     <>
       <div className="rounded-[14px] border border-fg/6 bg-card max-lg:order-last max-lg:h-40 lg:w-64 lg:shrink-0" />
-      <div
-        aria-busy={label ? true : undefined}
-        className="flex min-h-0 flex-1 items-center justify-center rounded-[14px] border border-fg/6 bg-card text-sm text-fg-muted"
-      >
-        {label && <p role="status">{label}</p>}
-      </div>
+      <div className="flex-1 rounded-[14px] border border-fg/6 bg-card" />
     </>
   )
 }

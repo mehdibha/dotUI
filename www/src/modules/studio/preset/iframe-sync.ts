@@ -2,7 +2,6 @@
 
 import * as React from "react"
 
-import { historyKey, renameKey } from "../history-keys"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
@@ -21,8 +20,7 @@ type IframeToParentMessage =
   | { type: "preview-ready" }
   | { type: "preview-inspect"; panel: string }
   | { type: "inspector-exit" }
-  | { type: "preview-history"; action: "undo" | "redo" }
-  | { type: "preview-rename" }
+  | { type: "preview-save" }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -227,23 +225,52 @@ export function useAnnouncePreviewReady() {
   }, [])
 }
 
-/** Inside the preview iframe: hand ⌘Z / ⇧⌘Z and F2 to the studio. */
-export function useForwardHistoryKeys() {
+const isSaveKey = (e: KeyboardEvent) =>
+  (e.metaKey || e.ctrlKey) &&
+  !e.altKey &&
+  !e.shiftKey &&
+  e.key.toLowerCase() === "s"
+
+/** Inside the preview iframe: hand ⌘S to the studio. */
+export function useForwardSave() {
   React.useEffect(() => {
     if (!isInIframe()) return
     const onKeyDown = (e: KeyboardEvent) => {
-      const action = historyKey(e)
-      const message: IframeToParentMessage | undefined = action
-        ? { type: "preview-history", action }
-        : renameKey(e)
-          ? { type: "preview-rename" }
-          : undefined
-      if (!message) return
+      if (!isSaveKey(e)) return
       e.preventDefault()
-      window.parent.postMessage(message, window.location.origin)
+      window.parent.postMessage(
+        { type: "preview-save" } satisfies IframeToParentMessage,
+        window.location.origin,
+      )
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
+  }, [])
+}
+
+/** In the studio: runs `onSave` on ⌘S, pressed here or in the preview, in
+ *  place of the browser's own save. */
+export function useSaveShortcut(onSave: () => void) {
+  const save = React.useEffectEvent(onSave)
+  React.useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!isSaveKey(e)) return
+      e.preventDefault()
+      save()
+    }
+    const onMessage = (e: MessageEvent) => {
+      if (
+        e.origin === window.location.origin &&
+        e.data?.type === "preview-save"
+      )
+        save()
+    }
+    window.addEventListener("keydown", onKeyDown)
+    window.addEventListener("message", onMessage)
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      window.removeEventListener("message", onMessage)
+    }
   }, [])
 }
 

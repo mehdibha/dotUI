@@ -2,16 +2,15 @@
 
 /* The studio's state hook: the current design system (a view or one of the
    user's systems) and its resolved design system — what the panel, the
-   preview and export all read. Editing a view makes a draft. */
+   preview and export all read. Editing a view fills the unsaved slot. */
 
 import { useMemo } from "react"
 
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
-import { edit } from "./history"
 import { resolveDesignSystem } from "./resolve"
-import { useCurrent } from "./selection"
+import { edit, useCurrent } from "./selection"
 
 export interface Studio {
   state: StudioState

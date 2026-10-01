@@ -6,17 +6,19 @@ interface PersistedStoreCodec<T> {
   decode: (raw: string) => T
   /** Return null to clear the key instead of storing. */
   encode: (value: T) => string | null
-  /** Called when a write can't reach storage (private mode, quota). */
-  onWriteError?: () => void
+  /** Called when a write can't reach storage: `unreadable` when the stored
+   *  value is one `decode` rejected, else private mode or quota. */
+  onWriteError?: (unreadable: boolean) => void
 }
 
 /**
  * A localStorage-backed value as a `useSyncExternalStore` hook. Memory mirrors
  * the last raw string seen in storage: it re-reads whenever nothing keeps it in
  * sync (no subscriber, so no `storage` listener) and before every `update`, so
- * a write never sends back a value another tab has since replaced. Writes still
- * apply in memory when persistence fails (private mode, quota). The server and
- * the first client render see `fallback` so hydration matches.
+ * a write never sends back a value another tab has since replaced. A stored
+ * value `decode` throws on reads as `fallback` and is never overwritten. Writes
+ * still apply in memory when persistence fails. The server and the first
+ * client render see `fallback` so hydration matches.
  */
 export function createPersistedStore<T>(
   key: string,
@@ -27,6 +29,7 @@ export function createPersistedStore<T>(
   let value = fallback
   // undefined until storage was first read; null when the key is absent.
   let raw: string | null | undefined
+  let unreadable = false
 
   function sync(): boolean {
     if (typeof window === "undefined") return false
@@ -38,10 +41,12 @@ export function createPersistedStore<T>(
     }
     if (next === raw) return false
     raw = next
+    unreadable = false
     try {
       value = next === null ? fallback : decode(next)
     } catch {
       value = fallback
+      unreadable = true
     }
     return true
   }
@@ -59,28 +64,34 @@ export function createPersistedStore<T>(
     return value
   }
 
-  function set(next: T): void {
+  /** Returns whether `next` reached storage; it applies in memory anyway. */
+  function set(next: T): boolean {
     // Baseline `raw` so a failed write isn't undone by the next re-read.
     if (raw === undefined) sync()
     value = next
+    let saved = false
     try {
+      if (unreadable) throw new Error(`${key} holds a value this can't read`)
       const encoded = encode(next)
       if (encoded === null) window.localStorage.removeItem(key)
       else window.localStorage.setItem(key, encoded)
       raw = encoded
+      saved = true
     } catch {
-      // The in-memory value still applies.
-      onWriteError?.()
+      onWriteError?.(unreadable)
     }
     emit()
+    return saved
   }
 
-  /** Read-modify-write against the latest stored value. */
-  function update(fn: (current: T) => T): void {
+  /** Read-modify-write against the latest stored value. Returns whether the
+   *  result is in storage. */
+  function update(fn: (current: T) => T): boolean {
     const changed = sync()
     const next = fn(value)
-    if (next !== value) set(next)
-    else if (changed) emit()
+    if (next !== value) return set(next)
+    if (changed) emit()
+    return !unreadable
   }
 
   function subscribe(onChange: () => void): () => void {
@@ -97,7 +108,13 @@ export function createPersistedStore<T>(
 
   const useValue = (): T => useSyncExternalStore(subscribe, get, () => fallback)
 
-  return { get, set, update, subscribe, useValue }
+  /** Whether the stored value is one `decode` rejected. */
+  function isUnreadable(): boolean {
+    get()
+    return unreadable
+  }
+
+  return { get, set, update, subscribe, useValue, isUnreadable }
 }
 
 /** Codec for a closed string set. Unknown stored values decode to the fallback; the fallback clears the key. */

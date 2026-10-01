@@ -103,6 +103,21 @@ describe("createPersistedStore", () => {
     expect(store.get()).toEqual([])
   })
 
+  it("never writes over a value it couldn't decode", () => {
+    win.seed(KEY, "{not json")
+    const onWriteError = vi.fn()
+    const store = createPersistedStore<string[]>(KEY, [], {
+      ...listCodec,
+      onWriteError,
+    })
+
+    store.update((list) => [...list, "Acme"])
+
+    expect(win.read(KEY)).toBe("{not json")
+    expect(store.get()).toEqual(["Acme"])
+    expect(onWriteError).toHaveBeenCalled()
+  })
+
   it("skips the write when update returns the current value", () => {
     win.seed(KEY, JSON.stringify(["Acme"]))
     const store = createPersistedStore<string[]>(KEY, [], listCodec)

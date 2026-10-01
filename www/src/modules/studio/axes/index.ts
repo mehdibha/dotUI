@@ -205,29 +205,39 @@ export type Validation =
   | { ok: true; state: StudioState }
   | { ok: false; issues: StateIssue[] }
 
+const isObject = (raw: unknown): raw is Record<string, unknown> =>
+  typeof raw === "object" && raw !== null && !Array.isArray(raw)
+
+// Every axis, with a missing or bad value taking the default.
+function checkAxes(input: Record<string, unknown>) {
+  const issues: StateIssue[] = []
+  const state: Record<string, unknown> = {}
+  for (const [key, schema] of Object.entries(SCHEMA)) {
+    const fallback = DEFAULTS[key as SchemaKey]
+    const value = Object.hasOwn(input, key) ? input[key] : fallback
+    const problem = checkAxisValue(schema, value)
+    if (problem) issues.push({ key, problem })
+    state[key] = problem ? fallback : value
+  }
+  return { state: state as StudioState, issues }
+}
+
 /** Checks raw state against every axis schema. A missing key takes the axis
  *  default; an unknown key or a bad value is an issue — nothing is salvaged. */
 export function validate(raw: unknown): Validation {
-  if (typeof raw !== "object" || raw === null || Array.isArray(raw))
+  if (!isObject(raw))
     return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
-  const input = raw as Record<string, unknown>
-  const issues: StateIssue[] = []
-  for (const key of Object.keys(input))
+  const { state, issues } = checkAxes(raw)
+  for (const key of Object.keys(raw))
     if (!Object.hasOwn(SCHEMA, key))
       issues.push({ key, problem: "unknown key" })
-  const state: Record<string, unknown> = {}
-  for (const [key, schema] of Object.entries(SCHEMA)) {
-    const value = Object.hasOwn(input, key)
-      ? input[key]
-      : DEFAULTS[key as SchemaKey]
-    const problem = checkAxisValue(schema, value)
-    if (problem) issues.push({ key, problem })
-    else state[key] = value
-  }
-  return issues.length > 0
-    ? { ok: false, issues }
-    : { ok: true, state: state as StudioState }
+  return issues.length > 0 ? { ok: false, issues } : { ok: true, state }
 }
+
+/** Stored state read leniently, so a schema change never loses it: unknown
+ *  keys are dropped and a missing or bad value takes the axis default. */
+export const salvageState = (raw: unknown): StudioState =>
+  checkAxes(isObject(raw) ? raw : {}).state
 
 export const formatIssues = (issues: StateIssue[]) =>
   issues.map(({ key, problem }) => `${key || "state"}: ${problem}`).join("; ")

@@ -2,220 +2,237 @@
 
 /* The studio panel mounted in /studio's slot: the panel page over the current
    design system, its chrome wired to the workspace. The picker lists the
-   shared link being viewed, the user's systems (the draft first) and the
-   presets, each with a ⋯ menu, and opens at ?gallery=. */
+   user's systems and the presets, and opens at ?gallery=. */
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
+import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
+import { CheckIcon, RotateCcwIcon, SaveIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Separator } from "@/registry/ui/separator"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { duplicate, newSystem, remove } from "./history"
-import { renameKey } from "./history-keys"
-import { HistoryControls } from "./history-menu"
-import { leave, leaving } from "./keep-dialog"
+import { NameDialog } from "./name-dialog"
+import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
-import { basedOn, pickerSections, rowSelection } from "./picker-sections"
-import { RecentlyDeleted } from "./recently-deleted"
-import { SystemMenu, ViewMenu } from "./row-menus"
-import { getCurrent, select, selectionKey, useCurrent } from "./selection"
-import type { Current, Selection } from "./selection"
+import { pickerSections } from "./picker-sections"
+import { useSaveShortcut } from "./preset/iframe-sync"
+import {
+  createFrom,
+  keySelection,
+  remove,
+  reset,
+  select,
+  UNSAVED_NOTE,
+  useCurrent,
+} from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { purgeExpired, rename, useTrash, useWorkspace } from "./workspace"
-import type { Workspace } from "./workspace"
+import {
+  copyName,
+  isUnreadable,
+  rename,
+  saveName,
+  uniqueName,
+  useWorkspace,
+} from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-/** What the trigger's tooltip says after the name. */
-function kindOf({ sel, doc }: Current, workspace: Workspace): string {
-  if (sel.kind === "preset") return "preset, edits create a draft"
-  if (sel.kind === "shared") return "shared link, edits create a draft"
-  if (!doc) return ""
-  const source = basedOn(doc, workspace)
-  const lower = source.charAt(0).toLowerCase() + source.slice(1)
-  return doc.draft ? `draft, ${lower}` : lower
+// Touch-sized rows on phones.
+const MENU_ROW = "pointer-coarse:min-h-11"
+
+function HeaderButton({
+  label,
+  tooltip = label,
+  isDisabled,
+  onPress,
+  children,
+}: {
+  label: string
+  tooltip?: string
+  isDisabled: boolean
+  onPress: () => void
+  children: ReactNode
+}) {
+  return (
+    <Tooltip delay={0}>
+      <Button
+        size="sm"
+        variant="quiet"
+        isIconOnly
+        aria-label={label}
+        isDisabled={isDisabled}
+        onPress={onPress}
+        className="text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
+      >
+        {children}
+      </Button>
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
+  )
 }
 
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const current = useCurrent()
   const workspace = useWorkspace()
-  const trash = useTrash()
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  // `closes`: Enter also closes the picker, which was opened for this rename.
-  const [renaming, setRenaming] = useState<{ key: string; closes: boolean }>()
-  const [trashOpen, setTrashOpen] = useState(false)
+  const [naming, setNaming] = useState<NameRequest>()
   const focusPicker = useRef<((key: string) => void) | null>(null)
-  const lastNew = useRef({ at: 0, key: "" })
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
-  const sections = useMemo(
-    () => pickerSections(current, workspace),
-    [current, workspace],
-  )
+  const sections = useMemo(() => pickerSections(workspace), [workspace])
 
   function setGalleryOpen(isOpen: boolean) {
-    if (!isOpen) {
-      setRenaming(undefined)
-      setTrashOpen(false)
-    }
     navigate({
       search: (prev) => ({ ...prev, gallery: isOpen ? true : undefined }),
       replace: true,
     })
   }
 
-  /** Opens the picker with the current system's row in rename mode. */
-  function renameCurrent() {
-    const { doc, key } = getCurrent()
-    if (!doc) return
-    setTrashOpen(false)
-    setRenaming({ key, closes: gallery !== true })
-    setGalleryOpen(true)
+  /** Closes the picker for the name dialog, which opens once focus is back
+   *  on the picker's trigger, to return there. */
+  function askName(request: NameRequest) {
+    setGalleryOpen(false)
+    requestAnimationFrame(() => setNaming(request))
   }
 
-  useEffect(() => purgeExpired(), [])
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (!renameKey(e)) return
-      e.preventDefault()
-      renameCurrent()
-    }
-    // F2 pressed in the preview, handed up by its iframe.
-    const onMessage = (e: MessageEvent) => {
-      if (
-        e.origin === window.location.origin &&
-        e.data?.type === "preview-rename"
-      )
-        renameCurrent()
-    }
-    window.addEventListener("keydown", onKeyDown)
-    window.addEventListener("message", onMessage)
-    return () => {
-      window.removeEventListener("keydown", onKeyDown)
-      window.removeEventListener("message", onMessage)
-    }
-  })
-
-  function onPick(key: string) {
-    if (key !== current.key) leave(() => select(rowSelection(key, current)))
-  }
-
-  /** Runs `create` (which opens a new system) past the keep dialog, then
-   *  renames the new row. */
-  function created(create: () => string | undefined, leaves = true) {
-    const run = () => {
-      const id = create()
-      if (!id) return
-      setRenaming({ key: selectionKey({ kind: "system", id }), closes: true })
-      setGalleryOpen(true)
-    }
-    if (!leaves) return run()
-    // The keep dialog can't sit over the picker.
-    if (leaving()) setGalleryOpen(false)
-    leave(run)
-  }
-
-  function onDelete(id: string) {
-    remove(id, {
-      // Back from the toast to the restored row, so Esc and arrows work.
-      afterUndo: () => {
-        setTrashOpen(false)
-        requestAnimationFrame(() =>
-          focusPicker.current?.(selectionKey({ kind: "system", id })),
-        )
-      },
+  function askNew(startFrom: string, name: string) {
+    askName({
+      title: "New design system",
+      action: "Create",
+      name,
+      startFrom,
+      onSubmit: createFrom,
     })
   }
 
+  // Unreadable stored systems: nothing saves, so nothing reads "Saved".
+  const canSave = !isUnreadable()
+  const saved = !!current.doc && canSave
+
+  /** Saves the slot as a system, also on ⌘S; never over a modal or a menu,
+   *  but over a panel popover. The user's systems save themselves. */
+  function save() {
+    const { unsaved } = current
+    if (
+      !unsaved ||
+      !canSave ||
+      naming ||
+      document.activeElement?.closest("[data-modal],[role=menu]")
+    )
+      return
+    setNaming({
+      title: "Save design system",
+      action: "Save",
+      name: saveName(unsaved.from),
+      subject: { kind: "unsaved" },
+      onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
+    })
+  }
+  useSaveShortcut(save)
+
+  /** Back from a toast's Undo to the restored row, so Esc and arrows work;
+   *  to the picker's trigger once it closed. */
+  const focusRow = (key: string) => () =>
+    requestAnimationFrame(() =>
+      focusPicker.current
+        ? focusPicker.current(key)
+        : triggerRef.current?.focus(),
+    )
+
   function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
-    const sel: Selection = rowSelection(key, current)
-    const onDuplicate = () =>
-      // Duplicating the draft on screen doesn't leave it.
-      created(() => duplicate(sel), key !== current.key)
-    if (sel.kind !== "system")
-      return <ViewMenu sel={sel} onDuplicate={onDuplicate} />
-    const doc = workspace.systems.find((s) => s.id === sel.id)
+    const sel = keySelection(key)
+    const doc =
+      sel.kind === "system" && workspace.systems.find((s) => s.id === sel.id)
     if (!doc) return null
     return (
-      <SystemMenu
-        doc={doc}
-        isCurrent={key === current.key}
-        onRename={() => setRenaming({ key, closes: false })}
-        onDuplicate={onDuplicate}
-        onDelete={() => afterClose(() => onDelete(doc.id))}
-      />
+      <MenuContent aria-label={`Actions for ${doc.name}`}>
+        <MenuItem
+          onAction={() =>
+            askName({
+              title: "Rename design system",
+              action: "Save",
+              name: doc.name,
+              subject: sel,
+              onSubmit: (name) => rename(doc.id, name),
+            })
+          }
+          className={MENU_ROW}
+        >
+          Rename…
+        </MenuItem>
+        <MenuItem
+          onAction={() => askNew(key, copyName(doc.name))}
+          className={MENU_ROW}
+        >
+          Duplicate…
+        </MenuItem>
+        <Separator />
+        <MenuItem
+          variant="danger"
+          onAction={() => afterClose(() => remove(doc.id, focusRow(key)))}
+          className={MENU_ROW}
+        >
+          Delete
+        </MenuItem>
+      </MenuContent>
     )
   }
 
-  const kind = kindOf(current, workspace)
   const system: PanelSystem = {
     name: current.name,
+    note: current.unsaved && UNSAVED_NOTE,
     swatch: current.swatch,
-    tag: current.tag,
-    description: kind ? `${current.name} · ${kind}` : current.name,
-    history: <HistoryControls current={current} />,
+    // Both disable once pressed: focus moves to the trigger, where the name
+    // dialog also returns it.
+    buttons: (
+      <>
+        <HeaderButton
+          label="Reset"
+          isDisabled={!current.unsaved}
+          onPress={() => {
+            triggerRef.current?.focus()
+            reset()
+          }}
+        >
+          <RotateCcwIcon />
+        </HeaderButton>
+        <HeaderButton
+          label={saved ? "Saved" : "Save"}
+          tooltip="Save ⌘S"
+          isDisabled={!current.unsaved || !canSave}
+          onPress={() => {
+            triggerRef.current?.focus()
+            save()
+          }}
+        >
+          {saved ? <CheckIcon /> : <SaveIcon />}
+        </HeaderButton>
+      </>
+    ),
+    triggerRef,
     renderSwitcher: (trigger) => (
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
         sections={sections}
         selectedId={current.key}
-        onPick={(item) => onPick(item.id)}
-        onCreate={() => {
-          // The second click of a double click is the same New: back to
-          // renaming the row the first one made. Timed by input, as the
-          // first New can hold the second press back past the window.
-          const now = window.event?.timeStamp ?? performance.now()
-          const { at, key } = lastNew.current
-          if (now - at < 500) return key && setRenaming({ key, closes: true })
-          lastNew.current = { at: now, key: "" }
-          created(() => {
-            const id = newSystem()
-            if (id) lastNew.current.key = selectionKey({ kind: "system", id })
-            return id
-          })
-        }}
-        renamingId={renaming?.key}
-        onRenameEnd={(key, name, submit) => {
-          setRenaming(undefined)
-          const doc = workspace.systems.find(
-            (s) => selectionKey({ kind: "system", id: s.id }) === key,
-          )
-          if (doc && name !== null) rename(doc.id, name)
-          const closes = submit && renaming?.closes === true
-          if (closes) setGalleryOpen(false)
-          return closes
-        }}
-        onRenameKey={renameCurrent}
+        onPick={(item) => select(keySelection(item.id))}
+        onCreate={() =>
+          askNew("current", uniqueName("Untitled", workspace.systems))
+        }
         focusRef={focusPicker}
         withPreview
         renderItemMenu={(item, afterClose) =>
           renderItemMenu(item.id, afterClose)
-        }
-        moreMenu={
-          <MenuContent
-            aria-label="More"
-            onAction={(key) => key === "trash" && setTrashOpen(true)}
-          >
-            <MenuItem
-              id="trash"
-              isDisabled={trash.length === 0}
-              className="pointer-coarse:min-h-11"
-            >
-              {`Recently deleted (${trash.length})`}
-            </MenuItem>
-          </MenuContent>
-        }
-        pane={
-          trashOpen ? (
-            <RecentlyDeleted onBack={() => setTrashOpen(false)} />
-          ) : undefined
         }
       >
         {trigger}
@@ -231,6 +248,7 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
+      <NameDialog request={naming} onClose={() => setNaming(undefined)} />
     </div>
   )
 }

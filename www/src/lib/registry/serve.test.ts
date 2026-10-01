@@ -34,11 +34,11 @@ async function fails(response: Response, status: number) {
   })
 }
 
-async function publish(store: SnapshotStore, state: unknown) {
+async function save(store: SnapshotStore, state: unknown) {
   const response = await createSnapshot(
     new Request("https://dotui.org/api/snapshots", {
       method: "POST",
-      body: JSON.stringify({ name: "Acme", base: "linear", state }),
+      body: JSON.stringify({ name: "Acme", state }),
     }),
     store,
   )
@@ -105,7 +105,7 @@ describe("/r/p/<preset>/<name>.json", () => {
 describe("/r/s/<id>/<name>.json", () => {
   it("serves a snapshot, keeping the prefix on every URL", async () => {
     const store = memoryStore()
-    const id = await publish(store, getPreset("linear")!.state)
+    const id = await save(store, getPreset("linear")!.state)
     const init = await ok(await get(`/r/s/${id}/init.json`, store))
     expect(registryUrl(init)).toBe(`https://dotui.org/r/s/${id}/{name}.json`)
     expect(init.cssVars).toEqual(
@@ -124,25 +124,22 @@ describe("/r/s/<id>/<name>.json", () => {
     },
   )
 
-  it.each([
-    ["not JSON", "{"],
-    [
-      "an invalid state",
-      JSON.stringify({
-        schema: 1,
-        name: "A",
-        base: "origin",
-        state: { cursor: "url(x)" },
-        createdAt: 1,
-      }),
-    ],
-  ])("answers stored data that is %s with a logged 500", async (_, json) => {
+  it("answers unreadable stored data with a logged 500", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
     const store = memoryStore()
-    await store.put("0123456789", json)
+    await store.put("0123456789", "{")
     await fails(await get("/r/s/0123456789/init.json", store), 500)
     expect(error).toHaveBeenCalled()
     error.mockRestore()
+  })
+
+  it("serves a stored snapshot whose axes have since changed", async () => {
+    const store = memoryStore()
+    await store.put(
+      "0123456789",
+      JSON.stringify({ schema: 1, name: "A", state: { cursor: "url(x)" } }),
+    )
+    await ok(await get("/r/s/0123456789/init.json", store))
   })
 })
 

@@ -481,7 +481,9 @@ export function PreviewPanel({ className }: { className?: string }) {
         size="sm"
         variant="quiet"
         isIconOnly
-        className="rounded-full pointer-coarse:data-icon-only:size-9"
+        // Not on phones: the header has no room, and the preview already
+        // spans the screen there.
+        className="rounded-full max-sm:hidden pointer-coarse:data-icon-only:size-9"
         onPress={() => {
           // Built at click time — the iframe src is frozen at mount, so
           // it no longer reflects the current preview or mode.

@@ -13,6 +13,7 @@ import {
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
+  ColorFieldStateContext,
   composeRenderProps,
   OverlayTriggerStateContext,
   ToggleButton as RacToggleButton,
@@ -253,12 +254,23 @@ export function ColorPickerPopover({
             <InputGroupAddon>
               <ColorSwatch className="size-4 rounded-full" />
             </InputGroupAddon>
-            <Input className="font-mono uppercase" />
+            <HexInput />
           </InputGroup>
         </ColorField>
         {children}
       </DialogContent>
     </PanelPopover>
+  )
+}
+
+/** The hex field's input: Enter commits, as leaving the field does. */
+function HexInput() {
+  const state = useContext(ColorFieldStateContext)
+  return (
+    <Input
+      onKeyDown={(e) => e.key === "Enter" && state?.commit()}
+      className="font-mono uppercase"
+    />
   )
 }
 

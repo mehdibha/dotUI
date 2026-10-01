@@ -1,48 +1,50 @@
 "use client"
 
-/* The user's design systems, kept in this browser. Every record is validated
-   on read (invalid ones are dropped) and every write re-reads storage first,
-   so tabs never clobber each other. Edits land in memory at once and in
-   storage at most every 200 ms. What is on screen lives in `selection.ts`. */
+/* The user's design systems, and the one unsaved slot, kept in this browser.
+   Records are read leniently (a bad field takes its default) and every write
+   re-reads storage first, so tabs never clobber each other. Edits land in
+   memory at once and in storage at most every 200 ms. What is on screen
+   lives in `selection.ts`. */
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react"
+import { useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
-import {
-  canonicalJson,
-  MAX_NAME_LENGTH,
-  parseSnapshot,
-  SNAPSHOT_ID,
-  snapshotId,
-} from "@/lib/snapshots/snapshot"
-import type { Snapshot, SnapshotContent } from "@/lib/snapshots/snapshot"
+import { MAX_NAME_LENGTH, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { closestPreset, getPreset, ORIGIN } from "@/modules/presets"
-import { formatIssues, sameState, validate } from "@/modules/studio/axes"
+import { getPreset, ORIGIN } from "@/modules/presets"
+import {
+  formatIssues,
+  salvageState,
+  sameState,
+  validate,
+} from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
-export type Origin =
+/** A read-only starting point: a preset, or a shared link's snapshot. */
+export type View =
   | { kind: "preset"; id: string }
-  | { kind: "snapshot"; id: string }
-  | { kind: "copy"; of: string }
+  | { kind: "link"; id: string; name: string; state: StudioState }
 
 export interface DesignSystemDoc {
   id: string
   name: string
-  /** Made by editing a preset or a shared link; kept once named. */
-  draft: boolean
-  origin: Origin
-  /** What Reset returns to; set once. */
-  initial: StudioState
+  /** The preset it started from, whose swatch it shows until the brand
+   *  changes. */
+  from?: string
   state: StudioState
-  published: { id: string; at: number }[]
-  createdAt: number
   updatedAt: number
+}
+
+/** Edits to a view, not saved as a system yet. */
+export interface Unsaved {
+  from: View
+  state: StudioState
 }
 
 export interface Workspace {
   schema: 2
   systems: DesignSystemDoc[]
+  unsaved?: Unsaved
 }
 
 const KEY = "dotui:design-systems"
@@ -63,78 +65,69 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const isTime = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value)
 
-export const isName = (value: unknown): value is string =>
+const isName = (value: unknown): value is string =>
   typeof value === "string" && value === cleanName(value) && value.length > 0
 
-function parseOrigin(raw: unknown): Origin | undefined {
-  if (!isRecord(raw)) return
-  if (raw.kind === "preset" && typeof raw.id === "string")
+export function parseView(raw: unknown): View | undefined {
+  if (!isRecord(raw) || typeof raw.id !== "string") return
+  if (raw.kind === "preset" && getPreset(raw.id))
     return { kind: "preset", id: raw.id }
-  if (raw.kind === "snapshot" && typeof raw.id === "string")
-    return { kind: "snapshot", id: raw.id }
-  if (raw.kind === "copy" && typeof raw.of === "string")
-    return { kind: "copy", of: raw.of }
+  if (raw.kind === "link" && SNAPSHOT_ID.test(raw.id) && isName(raw.name))
+    return {
+      kind: "link",
+      id: raw.id,
+      name: raw.name,
+      state: salvageState(raw.state),
+    }
 }
 
 function parseDoc(raw: unknown): DesignSystemDoc | undefined {
-  if (!isRecord(raw)) return
-  const { id, name, draft, published, createdAt, updatedAt } = raw
-  const origin = parseOrigin(raw.origin)
-  const initial = validate(raw.initial)
-  const state = validate(raw.state)
-  if (
-    typeof id !== "string" ||
-    !id ||
-    !isName(name) ||
-    typeof draft !== "boolean" ||
-    !origin ||
-    !initial.ok ||
-    !state.ok ||
-    !isTime(createdAt) ||
-    !isTime(updatedAt) ||
-    !Array.isArray(published) ||
-    !published.every(
-      (entry) =>
-        isRecord(entry) &&
-        typeof entry.id === "string" &&
-        SNAPSHOT_ID.test(entry.id) &&
-        isTime(entry.at),
-    )
-  )
-    return
+  if (!isRecord(raw) || typeof raw.id !== "string" || !raw.id) return
   return {
-    id,
-    name,
-    draft,
-    origin,
-    initial: initial.state,
-    state: state.state,
-    published: published.map(({ id, at }) => ({ id, at })),
-    createdAt,
-    updatedAt,
+    id: raw.id,
+    name: (typeof raw.name === "string" && cleanName(raw.name)) || "Untitled",
+    from:
+      typeof raw.from === "string" && getPreset(raw.from)
+        ? raw.from
+        : undefined,
+    state: salvageState(raw.state),
+    updatedAt: isTime(raw.updatedAt) ? raw.updatedAt : 0,
   }
 }
 
-/** Invalid records are dropped; anything but schema 2 reads as empty. */
+function parseUnsaved(raw: unknown): Unsaved | undefined {
+  if (!isRecord(raw)) return
+  const from = parseView(raw.from)
+  if (from) return { from, state: salvageState(raw.state) }
+}
+
+/** A record without an id is dropped. Anything but schema 2 throws, so the
+ *  store never writes over it. */
 export function parseWorkspace(raw: string): Workspace {
   const parsed: unknown = JSON.parse(raw)
+  if (!isRecord(parsed) || parsed.schema !== 2)
+    throw new Error("Unknown design systems format")
   const systems: DesignSystemDoc[] = []
-  if (!isRecord(parsed) || parsed.schema !== 2) return EMPTY
   for (const entry of Array.isArray(parsed.systems) ? parsed.systems : []) {
     const doc = parseDoc(entry)
     if (doc && !systems.some((s) => s.id === doc.id)) systems.push(doc)
   }
-  return { schema: 2, systems }
+  return { schema: 2, systems, unsaved: parseUnsaved(parsed.unsaved) }
 }
 
 const EMPTY: Workspace = { schema: 2, systems: [] }
 
 /** Stays until dismissed; the next failed write shows it again. */
-export function storageFailed() {
+export function storageFailed(unreadable = false) {
   const id = "storage-failed"
   toastManager.add({
     id,
-    title: "Changes can't be saved in this browser",
+    title: unreadable
+      ? "Your saved design systems can't be read"
+      : "Changes can't be saved in this browser",
+    description: unreadable
+      ? "They're left as they are, and new changes aren't saved."
+      : undefined,
     type: "warning",
     timeout: 0,
     actionProps: {
@@ -150,9 +143,17 @@ const store = createPersistedStore<Workspace>(KEY, EMPTY, {
   onWriteError: storageFailed,
 })
 
+/** Whether stored systems can't be read: none are listed, and none is
+ *  written over. */
+export const isUnreadable = store.isUnreadable
+
 /* --------------------------- the pending edit --------------------------- */
 
-type Edit = { id: string; state: StudioState }
+/** An edit to a system's state, or to the slot (`id` null). */
+interface Edit {
+  id: string | null
+  apply: (workspace: Workspace) => Workspace
+}
 
 let pending: Edit | null = null
 let timer: ReturnType<typeof setTimeout> | undefined
@@ -179,11 +180,7 @@ export function getWorkspace(): Workspace {
   const base = store.get()
   if (!pending) return base
   if (overlay?.base !== base || overlay.edit !== pending)
-    overlay = {
-      base,
-      edit: pending,
-      value: withDoc(base, pending.id, withState(pending.state)),
-    }
+    overlay = { base, edit: pending, value: pending.apply(base) }
   return overlay.value
 }
 
@@ -195,9 +192,16 @@ export function flush(): void {
   clearTimeout(timer)
   timer = undefined
   if (!pending) return
-  const { id, state } = pending
+  const { apply } = pending
   pending = null
-  store.update((workspace) => withDoc(workspace, id, withState(state)))
+  store.update(apply)
+}
+
+function schedule(edit: Edit) {
+  if (pending && pending.id !== edit.id) flush()
+  pending = edit
+  timer ??= setTimeout(flush, WRITE_INTERVAL)
+  for (const listener of listeners) listener()
 }
 
 export function subscribe(onChange: () => void) {
@@ -212,26 +216,9 @@ export function subscribe(onChange: () => void) {
 export const useWorkspace = (): Workspace =>
   useSyncExternalStore(subscribe, getWorkspace, () => EMPTY)
 
-/** The list as pickers show it: the draft first, then the latest edited. */
+/** The list as pickers show it: the latest edited first. */
 export const listed = (workspace: Workspace): DesignSystemDoc[] =>
-  [...workspace.systems]
-    .reverse()
-    .sort(
-      (a, b) => Number(b.draft) - Number(a.draft) || b.updatedAt - a.updatedAt,
-    )
-
-/** A system's dot: its preset's until the brand color changes. */
-export function swatchOf(doc: DesignSystemDoc): string {
-  const preset =
-    doc.origin.kind === "preset" ? getPreset(doc.origin.id) : undefined
-  return preset && doc.state.brand === doc.initial.brand
-    ? preset.swatch
-    : doc.state.brand
-}
-
-/** A draft with changes worth keeping. */
-export const isChangedDraft = (doc: DesignSystemDoc | undefined) =>
-  !!doc?.draft && !sameState(doc.state, doc.initial)
+  [...workspace.systems].reverse().sort((a, b) => b.updatedAt - a.updatedAt)
 
 /* ------------------------------ operations ------------------------------ */
 
@@ -242,14 +229,33 @@ function accepts(state: StudioState): boolean {
   return valid.ok
 }
 
-/** Edits the system's state; storage catches up within 200 ms. Returns
- *  whether the state was accepted. */
-export function setState(id: string, state: StudioState): boolean {
-  if (!accepts(state)) return false
-  if (pending && pending.id !== id) flush()
-  pending = { id, state }
-  timer ??= setTimeout(flush, WRITE_INTERVAL)
-  for (const listener of listeners) listener()
+/** Edits the system's state; storage catches up within 200 ms. */
+export function setState(id: string, state: StudioState): void {
+  if (!accepts(state)) return
+  schedule({
+    id,
+    apply: (workspace) => withDoc(workspace, id, withState(state)),
+  })
+}
+
+const sameView = (a: View, b: View) => a.kind === b.kind && a.id === b.id
+
+/** Fills or, with undefined, empties the slot; storage catches up within
+ *  200 ms. Returns whether the state was accepted. */
+export function setUnsaved(unsaved: Unsaved | undefined): boolean {
+  if (unsaved && !accepts(unsaved.state)) return false
+  schedule({
+    id: null,
+    apply: (workspace) => {
+      const current = workspace.unsaved
+      const same = unsaved
+        ? current &&
+          sameView(current.from, unsaved.from) &&
+          sameState(current.state, unsaved.state)
+        : !current
+      return same ? workspace : { ...workspace, unsaved }
+    },
+  })
   return true
 }
 
@@ -268,58 +274,46 @@ function cut(text: string, max: number): string {
   return out
 }
 
-/** Trimmed, control characters and invisible spaces stripped, at most 64
- *  characters. Joiners and bidi marks stay: emoji and scripts need them. */
-export const cleanName = (name: string) =>
-  cut(
-    name
-      .normalize("NFC")
-      .replace(/[\p{Cc}\u200B\u2060\uFEFF]/gu, "")
-      .trim(),
-    MAX_NAME_LENGTH,
-  ).trim()
+/** Trimmed, control characters and invisible spaces stripped. Joiners and
+ *  bidi marks stay: emoji and scripts need them. */
+const strip = (name: string) =>
+  name
+    .normalize("NFC")
+    .replace(/[\p{Cc}​⁠﻿]/gu, "")
+    .trim()
 
-/** `name` + `suffix`, then " 2", " 3"… until free; the base is cut so the
- *  result stays a valid name. */
+/** Stripped, at most 64 characters. */
+export const cleanName = (name: string) =>
+  cut(strip(name), MAX_NAME_LENGTH).trim()
+
+/** `name` + `suffix`, then " 2", " 3"… until free; the base is cut, at a
+ *  word's start when it has spaces, so the result stays a valid name. */
 export function uniqueName(
   name: string,
   systems: DesignSystemDoc[],
   suffix = "",
 ): string {
   const taken = new Set(systems.map((s) => s.name))
-  const base = cleanName(name) || "Untitled"
-  const fit = (end: string) =>
-    cut(base, MAX_NAME_LENGTH - end.length).trimEnd() + end
+  const base = strip(name) || "Untitled"
+  const fit = (end: string) => {
+    const head = cut(base, MAX_NAME_LENGTH - end.length)
+    const midWord = /\S/.test(base.charAt(head.length))
+    return (midWord ? head.replace(/\s+\S*$/, "") : head).trimEnd() + end
+  }
   let candidate = fit(suffix)
   for (let n = 2; taken.has(candidate); n++) candidate = fit(`${suffix} ${n}`)
   return candidate
 }
 
-/** What keeping a draft named after its source suggests: "My Linear", or
- *  "Untitled" for Origin, like New. */
-export const keptName = (doc: DesignSystemDoc) =>
-  uniqueName(
-    doc.origin.kind === "preset" && doc.origin.id === ORIGIN.id
-      ? "Untitled"
-      : `My ${doc.name}`,
-    getWorkspace().systems.filter((s) => s.id !== doc.id),
-  )
-
 export function create(
-  fields: Pick<DesignSystemDoc, "name" | "origin" | "initial" | "state"> & {
-    draft?: boolean
-  },
+  fields: Pick<DesignSystemDoc, "name" | "from" | "state">,
 ): DesignSystemDoc | undefined {
-  if (!accepts(fields.initial) || !accepts(fields.state)) return
-  const now = Date.now()
+  if (!accepts(fields.state)) return
   const doc: DesignSystemDoc = {
     id: newId(),
-    draft: false,
-    published: [],
     ...fields,
-    name: uniqueName(fields.name, fields.draft ? [] : getWorkspace().systems),
-    createdAt: now,
-    updatedAt: now,
+    name: uniqueName(fields.name, getWorkspace().systems),
+    updatedAt: Date.now(),
   }
   update((workspace) => ({
     ...workspace,
@@ -328,39 +322,47 @@ export function create(
   return doc
 }
 
-/** Where history.ts keeps a system's checkpoints; they go with the system. */
-export const checkpointsKey = (id: string) => `dotui:history:${id}`
+/** The name a view with changes was shared under, without its " (edited)":
+ *  shared again, it is never "(edited) (edited)". */
+export const unedited = (name: string) => name.replace(/ \(edited\)$/, "")
+
+/** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
+ *  "Untitled" link; free in the list. */
+export function saveName(from: View): string {
+  const base =
+    from.kind === "link"
+      ? unedited(from.name)
+      : from.id === ORIGIN.id
+        ? "Untitled"
+        : (getPreset(from.id)?.name ?? "Untitled")
+  return uniqueName(
+    base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`,
+    getWorkspace().systems,
+  )
+}
+
+/** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
+export const copyName = (name: string) =>
+  uniqueName(name.replace(/ copy( \d+)?$/, ""), getWorkspace().systems, " copy")
 
 interface Removed {
   doc: DesignSystemDoc
   index: number
-  checkpoints: string | null
 }
 
-/** Puts a removed system back (same id), at its old position, with its
- *  checkpoints. */
-export function insert(
-  doc: DesignSystemDoc,
-  index?: number,
-  checkpoints: string | null = null,
-): void {
+/** Puts a removed system back (same id), at its old position. */
+export function insert(doc: DesignSystemDoc, index?: number): void {
   update((workspace) => {
     if (workspace.systems.some((s) => s.id === doc.id)) return workspace
     const systems = [...workspace.systems]
     systems.splice(index ?? systems.length, 0, doc)
     return { ...workspace, systems }
   })
-  if (checkpoints === null) return
-  try {
-    window.localStorage.setItem(checkpointsKey(doc.id), checkpoints)
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
 }
 
-/** Removes the system and its checkpoints; returns them and where it was. */
+/** Removes the system; returns it and where it was. */
 export function remove(id: string): Removed | undefined {
-  let removed: Omit<Removed, "checkpoints"> | undefined
+  let removed: Removed | undefined
   update((workspace) => {
     const index = workspace.systems.findIndex((s) => s.id === id)
     if (index === -1) return workspace
@@ -370,287 +372,16 @@ export function remove(id: string): Removed | undefined {
       systems: workspace.systems.filter((s) => s.id !== id),
     }
   })
-  if (!removed) return
-  let checkpoints: string | null = null
-  try {
-    checkpoints = window.localStorage.getItem(checkpointsKey(id))
-    window.localStorage.removeItem(checkpointsKey(id))
-  } catch {
-    // Best effort, as above.
-  }
-  return { ...removed, checkpoints }
+  return removed
 }
 
-/* --------------------------- recently deleted --------------------------- */
-
-export interface Deleted {
-  doc: DesignSystemDoc
-  /** Its place in the list, to come back to. */
-  index: number
-  deletedAt: number
-}
-
-const TRASH_MS = 30 * 86_400_000
-
-function parseTrash(raw: string): Deleted[] {
-  const parsed: unknown = JSON.parse(raw)
-  if (!isRecord(parsed) || parsed.schema !== 1 || !Array.isArray(parsed.items))
-    return []
-  return parsed.items.flatMap((entry: unknown) => {
-    if (!isRecord(entry)) return []
-    const doc = parseDoc(entry.doc)
-    const { index, deletedAt } = entry
-    return doc && Number.isInteger(index) && isTime(deletedAt)
-      ? [{ doc, index: index as number, deletedAt }]
-      : []
-  })
-}
-
-const trashStore = createPersistedStore<Deleted[]>("dotui:trash", [], {
-  decode: parseTrash,
-  encode: (items) =>
-    items.length ? JSON.stringify({ schema: 1, items }) : null,
-  onWriteError: storageFailed,
-})
-
-/** Recently deleted, oldest first. */
-export const getTrash = trashStore.get
-export const useTrash = trashStore.useValue
-
-/** Moves the system to Recently deleted, writing it there first. */
-export function trash(id: string): Deleted | undefined {
-  let deleted: Deleted | undefined
-  update((workspace) => {
-    const index = workspace.systems.findIndex((s) => s.id === id)
-    if (index === -1) return workspace
-    const item = {
-      doc: workspace.systems[index]!,
-      index,
-      deletedAt: Date.now(),
-    }
-    trashStore.update((items) => [
-      ...items.filter((i) => i.doc.id !== id),
-      item,
-    ])
-    deleted = item
-    return {
-      ...workspace,
-      systems: workspace.systems.filter((s) => s.id !== id),
-    }
-  })
-  return deleted
-}
-
-/** Brings a system back from Recently deleted, in its old place. */
-export function recover(id: string): DesignSystemDoc | undefined {
-  const item = trashStore.get().find((i) => i.doc.id === id)
-  if (!item) return
-  insert(item.doc, item.index)
-  trashStore.update((items) => items.filter((i) => i.doc.id !== id))
-  return item.doc
-}
-
-/** Deletes a system from Recently deleted for good, with its checkpoints. */
-export function purge(id: string): void {
-  trashStore.update((items) => items.filter((i) => i.doc.id !== id))
-  try {
-    window.localStorage.removeItem(checkpointsKey(id))
-  } catch {
-    // Best effort: checkpoints are a convenience.
-  }
-}
-
-/** Purges what was deleted over 30 days ago. */
-export function purgeExpired(now = Date.now()): void {
-  for (const { doc, deletedAt } of trashStore.get())
-    if (now - deletedAt > TRASH_MS) purge(doc.id)
-}
-
-/** Names the system; a draft that gets a new name is kept. */
+/** Renames in place: the list stays in the order of edits to the design. */
 export function rename(id: string, name: string): void {
-  const clean = cleanName(name)
-  if (clean && findSystem(id)?.name !== clean) keep(id, clean)
-}
-
-/** Keeps a draft under `name`. */
-export function keep(id: string, name: string): void {
   const clean = cleanName(name)
   if (!clean) return
   update((workspace) =>
     withDoc(workspace, id, (doc) =>
-      doc.name === clean && !doc.draft
-        ? doc
-        : { ...doc, name: clean, draft: false, updatedAt: Date.now() },
+      doc.name === clean ? doc : { ...doc, name: clean },
     ),
   )
-}
-
-/** Returns the system to its initial state. */
-export function reset(id: string): void {
-  update((workspace) =>
-    withDoc(workspace, id, (doc) => withState(doc.initial)(doc)),
-  )
-}
-
-/** What publishing the system would store. */
-export function snapshotContent(doc: DesignSystemDoc): SnapshotContent {
-  return {
-    schema: 1,
-    name: doc.name,
-    base: closestPreset(doc.state).id,
-    state: doc.state,
-  }
-}
-
-// Content → snapshot id, so a known answer never waits on hashing.
-const contentIds = new Map<string, string>()
-const contentKey = (doc: DesignSystemDoc) => canonicalJson(snapshotContent(doc))
-
-/** Whether the content differs from the latest published version. Hashing
- *  needs a secure context; without one, only what this tab published
- *  counts as published. */
-export async function hasUnpublishedChanges(
-  doc: DesignSystemDoc,
-): Promise<boolean> {
-  const last = doc.published.at(-1)
-  if (!last) return true
-  const key = contentKey(doc)
-  let id = contentIds.get(key)
-  if (!id) {
-    try {
-      id = await snapshotId(snapshotContent(doc))
-    } catch {
-      return true
-    }
-    contentIds.set(key, id)
-  }
-  return id !== last.id
-}
-
-const inflight = new Map<string, Promise<string>>()
-const inflightListeners = new Set<() => void>()
-const notifyInflight = () => {
-  for (const listener of inflightListeners) listener()
-}
-
-/** The system's publish request, while one runs. */
-export const publishing = (id: string) => inflight.get(id)
-
-export type PublishStatus = "never" | "changed" | "pending" | "current"
-
-/** Where the system stands against its latest published version;
- *  `undefined` until first known. */
-export function usePublishStatus(
-  doc: DesignSystemDoc | undefined,
-): PublishStatus | undefined {
-  const pending = useSyncExternalStore(
-    (listener) => {
-      inflightListeners.add(listener)
-      return () => inflightListeners.delete(listener)
-    },
-    () => !!doc && inflight.has(doc.id),
-    () => false,
-  )
-  const known = useMemo(() => {
-    const last = doc?.published.at(-1)
-    if (!doc || !last) return
-    const id = contentIds.get(contentKey(doc))
-    return id && id === last.id
-  }, [doc])
-  const [computed, setComputed] = useState<{
-    doc: DesignSystemDoc
-    unpublished: boolean
-  }>()
-  useEffect(() => {
-    if (!doc || known !== undefined) return
-    let live = true
-    void hasUnpublishedChanges(doc).then(
-      (unpublished) => live && setComputed({ doc, unpublished }),
-    )
-    return () => {
-      live = false
-    }
-  }, [doc, known])
-  if (!doc) return
-  if (pending) return "pending"
-  if (!doc.published.length) return "never"
-  const unpublished =
-    known !== undefined
-      ? !known
-      : computed?.doc === doc
-        ? computed.unpublished
-        : undefined
-  if (unpublished === undefined) return
-  return unpublished ? "changed" : "current"
-}
-
-type Post = (body: Omit<SnapshotContent, "schema">) => Promise<string>
-
-async function postSnapshot(body: Omit<SnapshotContent, "schema">) {
-  const response = await fetch("/api/snapshots", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  })
-  if (!response.ok) throw new Error(`POST /api/snapshots → ${response.status}`)
-  const { id } = (await response.json()) as { id: unknown }
-  if (typeof id !== "string" || !SNAPSHOT_ID.test(id))
-    throw new Error("POST /api/snapshots returned no id")
-  return id
-}
-
-/** Publishes the system as a snapshot and resolves its id; a no-op when
- *  nothing changed since the latest published version. One request per
- *  system at a time: a call while one runs gets the same promise. */
-export function publish(
-  id: string,
-  post: Post = postSnapshot,
-): Promise<string> {
-  const running = inflight.get(id)
-  if (running) return running
-  flush()
-  const doc = findSystem(id)
-  if (!doc) return Promise.reject(new Error(`No design system ${id}`))
-  const request = (async () => {
-    const last = doc.published.at(-1)
-    if (last && !(await hasUnpublishedChanges(doc))) return last.id
-    const { schema: _, ...body } = snapshotContent(doc)
-    const snapshot = await post(body)
-    contentIds.set(contentKey(doc), snapshot)
-    update((workspace) =>
-      withDoc(workspace, id, (current) =>
-        current.published.at(-1)?.id === snapshot
-          ? current
-          : {
-              ...current,
-              published: [
-                ...current.published,
-                { id: snapshot, at: Date.now() },
-              ],
-            },
-      ),
-    )
-    return snapshot
-  })().finally(() => {
-    inflight.delete(id)
-    notifyInflight()
-  })
-  inflight.set(id, request)
-  notifyInflight()
-  return request
-}
-
-/** A snapshot fetched by id, validated like the server's own read;
- *  undefined when no snapshot has that id. */
-export async function fetchSnapshot(id: string): Promise<Snapshot | undefined> {
-  if (!SNAPSHOT_ID.test(id)) return
-  const response = await fetch(`/api/snapshots/${id}`, {
-    signal: AbortSignal.timeout(8000),
-  })
-  if (response.status === 404) return
-  if (!response.ok)
-    throw new Error(`GET /api/snapshots/${id} → ${response.status}`)
-  const snapshot = parseSnapshot(await response.json())
-  if (!snapshot.ok) throw new Error(`Snapshot ${id} is invalid`)
-  return snapshot.value
 }
