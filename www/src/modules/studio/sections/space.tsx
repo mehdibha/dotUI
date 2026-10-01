@@ -3,8 +3,15 @@
 /* Density — one row: the tier, and under it in the same popover the spacing
    unit that scales everything the tier measures. */
 
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxItemDescription,
+  ListBoxItemLabel,
+} from "@/registry/ui/list-box"
+
 import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
-import { DialSelect, DialSeparator, DialSlider } from "../dial"
+import { DialPopover, DialSeparator, DialSlider, DialTrigger } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /** The three tiers as bars, the current one lit. */
@@ -26,27 +33,42 @@ export function SpacePreview({ state }: { state: StudioState }) {
 
 export function SpaceSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const tier = densityTier(state.density)
   return (
-    <DialSelect
-      label="Density"
-      value={densityTier(state.density).id}
-      onChange={set("density")}
-      options={DENSITY_TIERS.map((t) => ({ value: t.id, label: t.label }))}
-    >
-      <DialSeparator />
-      <DialSlider
-        label="Spacing"
-        value={state.spacingUnit}
-        onChange={set("spacingUnit")}
-        minValue={UNIT_RANGE.min}
-        maxValue={UNIT_RANGE.max}
-        step={UNIT_RANGE.step}
-        format={(v) => `${v}px`}
-      />
-      <p className="px-3 text-xs/relaxed text-fg/50">
-        The base unit every padding, gap and control height is a multiple of.
-        Raise it for a roomier UI; text size stays the same.
-      </p>
-    </DialSelect>
+    <DialTrigger label="Density" value={tier.label}>
+      <DialPopover>
+        <ListBox
+          aria-label="Density"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[tier.id]}
+          onSelectionChange={(keys) => {
+            if (keys === "all") return
+            const next = keys.values().next().value
+            if (next) set("density")(next as string)
+          }}
+        >
+          {DENSITY_TIERS.map((t) => (
+            <ListBoxItem key={t.id} id={t.id} textValue={t.label}>
+              <ListBoxItemLabel>{t.label}</ListBoxItemLabel>
+              <ListBoxItemDescription>{t.description}</ListBoxItemDescription>
+            </ListBoxItem>
+          ))}
+        </ListBox>
+        <DialSeparator />
+        <DialSlider
+          label="Spacing"
+          value={state.spacingUnit}
+          onChange={set("spacingUnit")}
+          minValue={UNIT_RANGE.min}
+          maxValue={UNIT_RANGE.max}
+          step={UNIT_RANGE.step}
+          format={(v) => `${v}px`}
+        />
+        <p className="px-3 text-xs text-fg/50">
+          Scales every padding, gap and height.
+        </p>
+      </DialPopover>
+    </DialTrigger>
   )
 }

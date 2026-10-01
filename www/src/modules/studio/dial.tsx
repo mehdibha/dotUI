@@ -165,15 +165,12 @@ export function DialSelect({
   onChange,
   options,
   rowPreview = true,
-  children,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialSelectOption[]
   rowPreview?: boolean
-  /** More of the popover, after the list. */
-  children?: React.ReactNode
 }) {
   const selected = options.find((option) => option.value === value)
   return (
@@ -223,7 +220,6 @@ export function DialSelect({
             </RacListBoxItem>
           ))}
         </RacListBox>
-        {children}
       </DialPopover>
     </DialTrigger>
   )
