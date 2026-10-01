@@ -7,14 +7,12 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
   Disclosure,
   DisclosurePanel,
-  ListBox as RacListBox,
-  ListBoxItem as RacListBoxItem,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -26,6 +24,13 @@ import { cn } from "@/registry/lib/utils"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxItemDescription,
+  ListBoxItemLabel,
+} from "@/registry/ui/list-box"
+import { Separator } from "@/registry/ui/separator"
 
 import {
   ColorPickerPopover,
@@ -91,11 +96,6 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
-/** A hairline between groups of a popover, edge to edge. */
-export function DialSeparator() {
-  return <div role="separator" className="-mx-2 my-0.5 h-px bg-fg/8" />
-}
-
 /** A row that opens something: label, its value, a chevron. Wraps the
  *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
  *  values that end in a swatch: the swatch is the affordance, inset like
@@ -151,26 +151,31 @@ export function DialPopover({
 export interface DialSelectOption {
   value: string
   label: string
+  /** A line under the label, in the popover. */
+  description?: string
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
 }
 
 /** A pick from a short list: the row shows the choice (and its specimen,
  *  unless the chapter title already carries it), the popover lists every
- *  option as a row. Picking keeps the popover up — the choice is a
- *  comparison against the preview behind it. */
+ *  option in the registry's own ListBox. Picking keeps the popover up — the
+ *  choice is a comparison against the preview behind it. `children` are dial
+ *  rows under the list, past a separator. */
 export function DialSelect({
   label,
   value,
   onChange,
   options,
   rowPreview = true,
+  children,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialSelectOption[]
   rowPreview?: boolean
+  children?: React.ReactNode
 }) {
   const selected = options.find((option) => option.value === value)
   return (
@@ -183,44 +188,47 @@ export function DialSelect({
         </>
       }
     >
-      <DialPopover>
-        <RacListBox
-          aria-label={label}
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[value]}
-          onSelectionChange={(keys) => {
-            if (keys === "all") return
-            const next = keys.values().next().value
-            if (next) onChange(next as string)
-          }}
-          className="flex flex-col gap-1.5 outline-hidden"
-        >
-          {options.map((option) => (
-            <RacListBoxItem
-              key={option.value}
-              id={option.value}
-              textValue={option.label}
-              className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
-            >
-              {({ isSelected }) => (
-                <>
-                  <span className={DIAL_LABEL}>{option.label}</span>
-                  <span className="flex min-w-0 items-center gap-2 text-fg/70">
+      <PanelPopover className="w-64 min-w-0">
+        <DialogContent className="flex min-h-0 flex-col gap-0 overflow-y-auto overscroll-contain p-0">
+          <ListBox
+            aria-label={label}
+            selectionMode="single"
+            disallowEmptySelection
+            selectedKeys={[value]}
+            onSelectionChange={(keys) => {
+              if (keys === "all") return
+              const next = keys.values().next().value
+              if (next) onChange(next as string)
+            }}
+          >
+            {options.map((option) => (
+              <ListBoxItem
+                key={option.value}
+                id={option.value}
+                textValue={option.label}
+              >
+                <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
+                {option.description && (
+                  <ListBoxItemDescription>
+                    {option.description}
+                  </ListBoxItemDescription>
+                )}
+                {option.preview && (
+                  <span className="ml-auto flex items-center gap-2">
                     {option.preview}
-                    <CheckIcon
-                      className={cn(
-                        "size-4 shrink-0 text-fg",
-                        !isSelected && "invisible",
-                      )}
-                    />
                   </span>
-                </>
-              )}
-            </RacListBoxItem>
-          ))}
-        </RacListBox>
-      </DialPopover>
+                )}
+              </ListBoxItem>
+            ))}
+          </ListBox>
+          {children && (
+            <>
+              <Separator />
+              <div className="flex flex-col gap-1.5 p-2">{children}</div>
+            </>
+          )}
+        </DialogContent>
+      </PanelPopover>
     </DialTrigger>
   )
 }
