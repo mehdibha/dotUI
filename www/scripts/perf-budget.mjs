@@ -77,9 +77,9 @@ if (pages.length === 0) {
 }
 
 const home = pages.find((page) => page.route === "/")
-// The entry chunk is what the inline bootstrap dynamically imports.
+// The entry chunk: the module script, or what an inline bootstrap imports.
 const entry = home?.html.match(
-  /import\(\s*["']\/assets\/([^"']+?\.js)["']\s*\)/,
+  /(?:<script\b(?=[^>]*\btype="module")[^>]*\bsrc=|import\(\s*)["']\/assets\/([^"']+?\.js)["']/,
 )
 if (!entry) {
   console.error("perf-budget: could not find the entry chunk in the home HTML.")
