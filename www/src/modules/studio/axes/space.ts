@@ -23,19 +23,16 @@ export const DENSITY_TIERS = [
   {
     id: "compact",
     label: "Compact",
-    description: "Tight, for data-dense tools",
     control: 7,
   },
   {
     id: "default",
     label: "Default",
-    description: "Balanced, for most products",
     control: 8,
   },
   {
     id: "comfortable",
     label: "Comfortable",
-    description: "Roomy, for touch and content",
     control: 9,
   },
 ] as const

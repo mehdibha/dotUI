@@ -1,10 +1,10 @@
 "use client"
 
-/* Density — the tier, picked from a described list, then the spacing unit
-   that scales everything under it. */
+/* Density — one row: the tier, and under it in the same popover the spacing
+   unit that scales everything the tier measures. */
 
 import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
-import { DialSelect, DialSlider } from "../dial"
+import { DialSelect, DialSeparator, DialSlider } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /** The three tiers as bars, the current one lit. */
@@ -27,17 +27,13 @@ export function SpacePreview({ state }: { state: StudioState }) {
 export function SpaceSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <>
-      <DialSelect
-        label="Density"
-        value={densityTier(state.density).id}
-        onChange={set("density")}
-        options={DENSITY_TIERS.map((t) => ({
-          value: t.id,
-          label: t.label,
-          description: t.description,
-        }))}
-      />
+    <DialSelect
+      label="Density"
+      value={densityTier(state.density).id}
+      onChange={set("density")}
+      options={DENSITY_TIERS.map((t) => ({ value: t.id, label: t.label }))}
+    >
+      <DialSeparator />
       <DialSlider
         label="Spacing"
         value={state.spacingUnit}
@@ -47,6 +43,10 @@ export function SpaceSection({ studio }: { studio: Studio }) {
         step={UNIT_RANGE.step}
         format={(v) => `${v}px`}
       />
-    </>
+      <p className="px-3 text-xs/relaxed text-fg/50">
+        The base unit every padding, gap and control height is a multiple of.
+        Raise it for a roomier UI; text size stays the same.
+      </p>
+    </DialSelect>
   )
 }

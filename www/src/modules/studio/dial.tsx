@@ -16,7 +16,6 @@ import {
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
   SelectionIndicator,
-  Text,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -92,6 +91,11 @@ export function DialGap() {
   return <div className="h-1" />
 }
 
+/** A hairline between groups of a popover, edge to edge. */
+export function DialSeparator() {
+  return <div role="separator" className="-mx-2 my-0.5 h-px bg-fg/8" />
+}
+
 /** A row that opens something: label, its value, a chevron. Wraps the
  *  popover passed as `children` in a Dialog trigger. `chevron={false}` for
  *  values that end in a swatch: the swatch is the affordance, inset like
@@ -147,8 +151,6 @@ export function DialPopover({
 export interface DialSelectOption {
   value: string
   label: string
-  /** A line under the label, in the popover only. */
-  description?: string
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
 }
@@ -163,12 +165,15 @@ export function DialSelect({
   onChange,
   options,
   rowPreview = true,
+  children,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   options: DialSelectOption[]
   rowPreview?: boolean
+  /** More of the popover, after the list. */
+  children?: React.ReactNode
 }) {
   const selected = options.find((option) => option.value === value)
   return (
@@ -199,30 +204,11 @@ export function DialSelect({
               key={option.value}
               id={option.value}
               textValue={option.label}
-              className={cn(
-                DIAL_ROW,
-                DIAL_PRESS,
-                "selected:tint-10",
-                option.description && "h-auto py-2",
-              )}
+              className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
             >
               {({ isSelected }) => (
                 <>
-                  {option.description ? (
-                    <span className="flex min-w-0 flex-col gap-0.5">
-                      <Text slot="label" className={DIAL_LABEL}>
-                        {option.label}
-                      </Text>
-                      <Text
-                        slot="description"
-                        className="truncate text-xs text-fg/50"
-                      >
-                        {option.description}
-                      </Text>
-                    </span>
-                  ) : (
-                    <span className={DIAL_LABEL}>{option.label}</span>
-                  )}
+                  <span className={DIAL_LABEL}>{option.label}</span>
                   <span className="flex min-w-0 items-center gap-2 text-fg/70">
                     {option.preview}
                     <CheckIcon
@@ -237,6 +223,7 @@ export function DialSelect({
             </RacListBoxItem>
           ))}
         </RacListBox>
+        {children}
       </DialPopover>
     </DialTrigger>
   )
