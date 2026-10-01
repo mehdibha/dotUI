@@ -1,7 +1,6 @@
 /* Color — the seeds and engine axes behind the generated palette, mapped
    straight onto `ColorConfig` (the one recipe `@dotui/colors` resolves; the
-   provider and the export both run it). Each mode's background L* is owned
-   by Surfaces. */
+   provider and the export both run it). */
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
@@ -23,6 +22,9 @@ export const COLOR_DEFAULTS = {
   vividness: 1,
   neutralTint: 1,
   preserveSeed: false,
+  /** Page L* per mode; dark 2 is dotUI's (the engine would pick 6). */
+  lightBg: 99,
+  darkBg: 2,
 }
 
 /* What a role draws from: the neutral's text end (the shadcn school,
@@ -36,6 +38,9 @@ export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
 export const NEUTRAL_HUE_RANGE = { min: 0, max: 360, step: 1 }
 /** Up to twice the engine's default lean; 0 is a pure gray. */
 export const NEUTRAL_TINT_RANGE = { min: 0, max: 2, step: 0.05 }
+/** The engine's accepted page range per mode; 0 on dark is OLED black. */
+export const LIGHT_BG_RANGE = { min: 90, max: 100, step: 0.5 }
+export const DARK_BG_RANGE = { min: 0, max: 20, step: 0.5 }
 
 export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   brand: COLOR,
@@ -49,6 +54,8 @@ export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   vividness: range(VIVIDNESS_RANGE),
   neutralTint: range(NEUTRAL_TINT_RANGE),
   preserveSeed: BOOLEAN,
+  lightBg: range(LIGHT_BG_RANGE),
+  darkBg: range(DARK_BG_RANGE),
 }
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view

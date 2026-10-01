@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(alertMeta, {
         "rounded-(--studio-alert-radius)",
         "has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto]",
         "*:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current",
-        "border bg-card",
+        "border bg-card [--surface-bg:var(--color-card)]",
       ],
       title: "font-medium tracking-tight [svg~&]:col-start-2",
       description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",

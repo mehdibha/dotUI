@@ -41,7 +41,7 @@ export function DemoPage() {
             <h3 className="px-1.5 py-2 text-xs font-medium text-fg-muted">
               {demo.name.replace(/-/g, " ")}
             </h3>
-            <div className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-xl bg-card p-12 text-fg *:[div:not([class*='w-'])]:w-full">
+            <div className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-xl border bg-card p-12 text-fg *:[div:not([class*='w-'])]:w-full">
               <Suspense fallback={null}>
                 <Component />
               </Suspense>

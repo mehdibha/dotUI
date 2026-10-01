@@ -226,14 +226,17 @@ export function semanticVocabulary(
     // ---- component surfaces ----
     "color-tooltip": bg(ref("neutral", "950"), NEUTRAL),
     "color-fg-on-tooltip": fg(ref("neutral", "25")),
-    "color-card": bg(ref("neutral", "50"), NEUTRAL),
-    // Dark overlays get their own rung between card (50) and muted (100), so a
-    // popover lifts off the card it floats over while field/muted content
-    // inside it still reads. Light keeps the card value — there the shadow
-    // separates, as in Atlassian/shadcn.
+    // Light cards and overlays sit on the page's own tone (shadcn, Primer):
+    // the edge and shadow separate them. Dark steps up page → card → overlay,
+    // the overlay between card (50) and muted (100) so field/muted content
+    // inside it still reads.
+    "color-card": bg(
+      { light: ref("neutral", "25"), dark: ref("neutral", "50") },
+      NEUTRAL,
+    ),
     "color-popover": bg(
       {
-        light: ref("neutral", "50"),
+        light: ref("neutral", "25"),
         dark: mix(ref("neutral", "50"), 50, ref("neutral", "100")),
       },
       NEUTRAL,

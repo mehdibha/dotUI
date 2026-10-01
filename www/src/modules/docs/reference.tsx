@@ -83,7 +83,7 @@ function PropsTable({
   return (
     <div className="w-full overflow-hidden rounded-md border text-sm">
       <table className="w-full border-collapse [&>tbody:last-child>tr:last-child]:border-b-0 [&>tbody:last-child>tr:last-child>td]:border-b-0">
-        <thead className="border-b bg-card">
+        <thead className="border-b bg-muted/30">
           <tr className={GRID_LAYOUT}>
             <th className="px-3 py-2 text-left font-medium text-fg-muted">
               Prop
@@ -142,7 +142,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
   return (
     <React.Fragment>
       <tr
-        className={`${GRID_LAYOUT} cursor-pointer border-b transition-colors hover:bg-card`}
+        className={`${GRID_LAYOUT} cursor-pointer border-b transition-colors hover:bg-muted/30`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <td className="overflow-hidden px-3 py-2.5">
@@ -193,7 +193,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
       </tr>
 
       {isOpen && (
-        <tr className="border-b bg-card">
+        <tr className="border-b bg-muted/30">
           <td colSpan={4} className="px-3 py-3">
             <dl className={PANEL_GRID_LAYOUT}>
               <DescriptionItem label="Name">
@@ -206,7 +206,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
               {prop.description && (
                 <DescriptionItem label="Description" hasSeparator>
-                  <div className="leading-relaxed text-fg-muted [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-card [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
+                  <div className="leading-relaxed text-fg-muted [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
                     {prop.description}
                   </div>
                 </DescriptionItem>
@@ -279,7 +279,7 @@ function DisclosureGroup({
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
-            className={`focus-visible:ring-ring flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors outline-none hover:bg-card/50 focus-visible:ring-2 focus-visible:ring-offset-1 ${isExpanded ? "bg-card/30" : ""}`}
+            className={`focus-visible:ring-ring flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors outline-none hover:bg-muted/30 focus-visible:ring-2 focus-visible:ring-offset-1 ${isExpanded ? "bg-muted/20" : ""}`}
           >
             <ChevronRightIcon
               className={`size-4 text-fg-muted transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}

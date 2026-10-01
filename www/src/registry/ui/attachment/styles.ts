@@ -27,7 +27,7 @@ const { useStyles, styles } = createStyles(attachmentMeta, {
         "group-data-[state=error]/attachment:text-fg-danger",
       ],
       actions: [
-        "relative z-20 flex shrink-0 items-center",
+        "relative z-20 flex shrink-0 items-center [--surface-bg:var(--color-card)]",
         "group-orientation-vertical/attachment:absolute group-orientation-vertical/attachment:top-3 group-orientation-vertical/attachment:right-3 group-orientation-vertical/attachment:gap-1",
       ],
       trigger: "absolute inset-0 z-10 cursor-interactive focus-reset",

@@ -43,14 +43,15 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "group-data-[variant=inset]:group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]",
       ],
       inner: [
-        "flex h-full w-full flex-col bg-sidebar",
+        "flex h-full w-full flex-col bg-sidebar [--surface-bg:var(--color-sidebar)]",
         "group-data-[variant=floating]:rounded-(--studio-sidebar-radius) group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
       ],
       // Mobile panel content (rendered inside a Drawer at < md).
-      mobile: "flex h-full w-full flex-col bg-sidebar text-fg",
+      mobile:
+        "flex h-full w-full flex-col bg-sidebar text-fg [--surface-bg:var(--color-sidebar)]",
       // The main content area beside the sidebar.
       inset: [
-        "relative flex w-full flex-1 flex-col bg-bg",
+        "relative flex w-full flex-1 flex-col bg-bg [--surface-bg:var(--color-bg)]",
         "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius) md:peer-data-[variant=inset]:shadow-sm",
         "md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=left]:peer-data-[state=collapsed]:ml-2",
         "md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:peer-data-[side=right]:peer-data-[state=collapsed]:mr-2",
