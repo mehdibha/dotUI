@@ -11,7 +11,7 @@ import { useSyncExternalStore } from "react"
 import { createPersistedStore } from "@/lib/persisted-store"
 import { MAX_NAME_LENGTH, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { getPreset } from "@/modules/presets"
+import { getPreset, ORIGIN } from "@/modules/presets"
 import {
   formatIssues,
   salvageState,
@@ -229,15 +229,13 @@ function accepts(state: StudioState): boolean {
   return valid.ok
 }
 
-/** Edits the system's state; storage catches up within 200 ms. Returns
- *  whether the state was accepted. */
-export function setState(id: string, state: StudioState): boolean {
-  if (!accepts(state)) return false
+/** Edits the system's state; storage catches up within 200 ms. */
+export function setState(id: string, state: StudioState): void {
+  if (!accepts(state)) return
   schedule({
     id,
     apply: (workspace) => withDoc(workspace, id, withState(state)),
   })
-  return true
 }
 
 const sameView = (a: View, b: View) => a.kind === b.kind && a.id === b.id
@@ -327,6 +325,21 @@ export function create(
 /** The name a view with changes was shared under, without its " (edited)":
  *  shared again, it is never "(edited) (edited)". */
 export const unedited = (name: string) => name.replace(/ \(edited\)$/, "")
+
+/** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
+ *  "Untitled" link; free in the list. */
+export function saveName(from: View): string {
+  const base =
+    from.kind === "link"
+      ? unedited(from.name)
+      : from.id === ORIGIN.id
+        ? "Untitled"
+        : (getPreset(from.id)?.name ?? "Untitled")
+  return uniqueName(
+    base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`,
+    getWorkspace().systems,
+  )
+}
 
 /** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
 export const copyName = (name: string) =>

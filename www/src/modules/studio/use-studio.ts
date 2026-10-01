@@ -9,9 +9,8 @@ import { useMemo } from "react"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { StudioState } from "./axes"
-import { edit } from "./history"
 import { resolveDesignSystem } from "./resolve"
-import { useCurrent } from "./selection"
+import { edit, useCurrent } from "./selection"
 
 export interface Studio {
   state: StudioState

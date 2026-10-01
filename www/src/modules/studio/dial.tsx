@@ -331,14 +331,10 @@ export function DialSlider({
     track.style.translate = `${Math.min(s, 0)}px 0`
   }
 
-  // Sync the fill when the value changes from outside (reset, a preset),
-  // dropping a drag in progress; a value this slider just committed is
-  // already painted, mid-snap.
+  // Sync the fill when the value changes from outside (reset, a preset); a
+  // value this slider just committed is already painted, mid-snap.
   useEffect(() => {
-    if (value !== committed.current) {
-      if (interacting) onPointerCancel()
-      else paint(toPct(value))
-    }
+    if (!interacting && value !== committed.current) paint(toPct(value))
     committed.current = value
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, minValue, maxValue])

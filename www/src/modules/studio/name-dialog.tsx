@@ -27,10 +27,9 @@ import {
 import { TextField } from "@/registry/ui/text-field"
 import { PRESET_META } from "@/modules/presets"
 
-import { createFrom, saveName } from "./history"
 import { describe, keySelection, selectionKey, useCurrent } from "./selection"
 import type { Selection } from "./selection"
-import { cleanName, isUnreadable, listed, useWorkspace } from "./workspace"
+import { cleanName, listed, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
 
 export interface NameRequest {
@@ -46,22 +45,6 @@ export interface NameRequest {
   startFrom?: string
   /** `source` is the Start from choice, else what's on screen. */
   onSubmit: (name: string, source: Selection) => void
-}
-
-/** Saving the unsaved slot, as "My <view>" by default; never while the
- *  stored systems can't be read, as the save wouldn't last. */
-export function saveRequest({
-  unsaved,
-  systems,
-}: Workspace): NameRequest | undefined {
-  if (!unsaved || isUnreadable()) return
-  return {
-    title: "Save design system",
-    action: "Save",
-    name: saveName(unsaved, systems),
-    subject: { kind: "unsaved" },
-    onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
-  }
 }
 
 export function NameDialog({

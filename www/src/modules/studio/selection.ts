@@ -1,13 +1,17 @@
 "use client"
 
-/* The one current design system, shared by the studio and the docs:
-   `dotui:current` holds a view, the unsaved slot over one, or one of the
-   user's systems, and the visit it was opened for. Every tab follows it. */
+/* The one current design system, shared by the studio and the docs, and
+   every change to it. `dotui:current` holds a view, the unsaved slot over
+   one, or one of the user's systems; every tab follows it. Editing a view
+   fills the slot, which lasts while it differs from its view: Reset, Save,
+   or opening anything else, in any tab, drops it silently. */
 
 import { useMemo } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
+import { toastManager } from "@/registry/ui/toast"
 import { getPreset, ORIGIN } from "@/modules/presets"
+import { sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
 import * as workspace from "./workspace"
@@ -24,6 +28,7 @@ export type Selection =
 export const UNSAVED_NOTE = "(unsaved)"
 
 const ORIGIN_VIEW: View = { kind: "preset", id: ORIGIN.id }
+const UNSAVED: Selection = { kind: "unsaved" }
 
 function parseSelection(raw: unknown): Selection | undefined {
   if (typeof raw !== "object" || raw === null) return
@@ -34,35 +39,20 @@ function parseSelection(raw: unknown): Selection | undefined {
   return workspace.parseView(raw)
 }
 
-interface Stored {
-  sel: Selection
-  /** New each time a design system is opened, in any tab: what this tab
-   *  keeps for a visit (a view's undo history) never outlives it. */
-  visit?: string
-}
-
-const store = createPersistedStore<Stored | null>("dotui:current", null, {
+const store = createPersistedStore<Selection | null>("dotui:current", null, {
   // Unreadable is Origin: it's only a pointer, safe to write over.
   decode: (raw) => {
     try {
-      const parsed: unknown = JSON.parse(raw)
-      const sel = parseSelection(parsed)
-      const { visit } = parsed as { visit?: unknown }
-      return sel
-        ? { sel, visit: typeof visit === "string" ? visit : undefined }
-        : null
+      return parseSelection(JSON.parse(raw)) ?? null
     } catch {
       return null
     }
   },
-  encode: (stored) =>
-    stored ? JSON.stringify({ ...stored.sel, visit: stored.visit }) : null,
+  encode: (sel) => (sel ? JSON.stringify(sel) : null),
   onWriteError: workspace.storageFailed,
 })
 
-export const getSelection = (): Selection => store.get()?.sel ?? ORIGIN_VIEW
-
-export const getVisit = () => store.get()?.visit
+const getSelection = (): Selection => store.get() ?? ORIGIN_VIEW
 
 /** One key per selection: `preset:<id>`, `link:<id>`, `system:<id>` or
  *  `unsaved`. */
@@ -78,17 +68,11 @@ export function keySelection(key: string): Selection {
 }
 
 /** Makes `sel` current, after writing any pending edit: other tabs never
- *  see a selection before what it shows. Opening a design system is
- *  history's `select`, which starts a visit and drops the slot; otherwise
- *  the visit goes on. */
-export function setSelection(sel: Selection, visit = getVisit()): void {
-  if (
-    selectionKey(getSelection()) === selectionKey(sel) &&
-    visit === getVisit()
-  )
-    return
+ *  see a selection before what it shows. */
+function setSelection(sel: Selection): void {
+  if (selectionKey(getSelection()) === selectionKey(sel)) return
   workspace.flush()
-  store.set({ sel, visit })
+  store.set(sel)
 }
 
 export type Current = {
@@ -179,7 +163,91 @@ export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
 
 export function useCurrent(): Current {
-  const sel = store.useValue()?.sel ?? ORIGIN_VIEW
+  const sel = store.useValue() ?? ORIGIN_VIEW
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
+}
+
+/** Edits the design on screen: a system saves itself; a view fills the
+ *  slot, which empties once the edit lands back on the view. */
+export function edit(next: StudioState): void {
+  const current = getCurrent()
+  if (sameState(current.state, next)) return
+  if (current.doc) {
+    workspace.setState(current.doc.id, next)
+    return
+  }
+  const { view } = current
+  const back = sameState(next, describe(view, workspace.getWorkspace()).state)
+  if (workspace.setUnsaved(back ? undefined : { from: view, state: next }))
+    setSelection(back ? view : UNSAVED)
+}
+
+/** Opens `sel`, dropping the slot: back on its view, it starts pristine. */
+export function select(sel: Selection): void {
+  if (selectionKey(getSelection()) === selectionKey(sel)) return
+  workspace.setUnsaved(undefined)
+  setSelection(sel)
+}
+
+/** Drops the slot for its untouched view. */
+export function reset(): void {
+  const { unsaved } = getCurrent()
+  if (unsaved) select(unsaved.from)
+}
+
+/** Creates a system named `name` from what `source` shows, and opens it:
+ *  from the slot, that saves it. */
+export function createFrom(
+  name: string,
+  source: Selection,
+): DesignSystemDoc | undefined {
+  const from = describe(source, workspace.getWorkspace())
+  // Gone meanwhile.
+  if (from.key !== selectionKey(source)) return
+  const doc = workspace.create({
+    name,
+    from: from.doc
+      ? from.doc.from
+      : from.view.kind === "preset"
+        ? from.view.id
+        : undefined,
+    state: from.state,
+  })
+  if (doc) select({ kind: "system", id: doc.id })
+  return doc
+}
+
+/** A design system's name in a toast title: quoted, cut at 32 characters. */
+function quoted(name: string): string {
+  const chars = [...name]
+  return `“${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}”`
+}
+
+/** Deletes the system with a 10 s toast whose Undo puts it back, then runs
+ *  `afterUndo`. Deleting the current one opens the next in the list, else
+ *  Origin. */
+export function remove(id: string, afterUndo?: () => void): void {
+  const list = workspace.listed(workspace.getWorkspace())
+  const sel: Selection = { kind: "system", id }
+  const wasCurrent = selectionKey(getSelection()) === selectionKey(sel)
+  const removed = workspace.remove(id)
+  if (!removed) return
+  const toast = toastManager.add({
+    title: `Deleted ${quoted(removed.doc.name)}`,
+    timeout: 10_000,
+    actionProps: {
+      children: "Undo",
+      onClick: () => {
+        toastManager.close(toast)
+        workspace.insert(removed.doc, removed.index)
+        if (wasCurrent) select(sel)
+        afterUndo?.()
+      },
+    },
+  })
+  if (!wasCurrent) return
+  const at = list.findIndex((s) => s.id === id)
+  const next = list[at + 1] ?? list[at - 1]
+  select(next ? { kind: "system", id: next.id } : ORIGIN_VIEW)
 }

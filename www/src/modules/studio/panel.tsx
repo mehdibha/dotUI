@@ -2,7 +2,7 @@
 
 /* The panel chrome, after DialKit: one 14px-radius card that scrolls as a
    whole, its header pinned — the design-system picker's trigger on the left,
-   history and search on the right — over a hairline.
+   Reset, Save and search on the right — over a hairline.
    Docked under the preview, the header and strip pin to the bottom edge
    instead, so they stay put as the dock hugs each chapter. */
 
@@ -19,8 +19,8 @@ export interface PanelSystem {
   /** The end of the name that stays when the rest truncates. */
   note?: string
   swatch: string
-  /** Undo and redo. */
-  history: ReactNode
+  /** Reset and Save. */
+  buttons: ReactNode
   /** Wraps the trigger in the design-system picker. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
   triggerRef?: Ref<HTMLButtonElement>
@@ -79,7 +79,7 @@ export function PanelChrome({
             </Tooltip>,
           )}
           <span className="flex shrink-0 items-center pointer-coarse:gap-1">
-            {system.history}
+            {system.buttons}
             {actions}
           </span>
         </div>

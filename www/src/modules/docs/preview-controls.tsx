@@ -11,12 +11,12 @@ import { Button, type ButtonProps } from "@/registry/ui/button"
 import { Loader } from "@/registry/ui/loader"
 import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { select } from "@/modules/studio/history"
 import { pickerSections } from "@/modules/studio/picker-sections"
 import type { DesignSystem } from "@/modules/studio/preset"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 import {
   keySelection,
+  select,
   UNSAVED_NOTE,
   useCurrent,
 } from "@/modules/studio/selection"

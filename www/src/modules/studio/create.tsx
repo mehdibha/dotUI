@@ -5,10 +5,9 @@
    user's systems and the presets, and opens at ?gallery=. */
 
 import { useMemo, useRef, useState } from "react"
-import type { ReactNode, RefObject } from "react"
-import { flushSync } from "react-dom"
+import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
-import { Redo2Icon, Undo2Icon } from "lucide-react"
+import { CheckIcon, RotateCcwIcon, SaveIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -17,88 +16,65 @@ import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
-import { createFrom, redo, remove, select, undo, useUndoRedo } from "./history"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
-import { keySelection, UNSAVED_NOTE, useCurrent } from "./selection"
+import { useSaveShortcut } from "./preset/iframe-sync"
+import {
+  createFrom,
+  keySelection,
+  remove,
+  reset,
+  select,
+  UNSAVED_NOTE,
+  useCurrent,
+} from "./selection"
 import { CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
-import { copyName, rename, uniqueName, useWorkspace } from "./workspace"
+import {
+  copyName,
+  isUnreadable,
+  rename,
+  saveName,
+  uniqueName,
+  useWorkspace,
+} from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
 // Touch-sized rows on phones.
 const MENU_ROW = "pointer-coarse:min-h-11"
 
-function HistoryButton({
+function HeaderButton({
   label,
+  tooltip = label,
   isDisabled,
   onPress,
-  buttonRef,
-  otherRef,
   children,
 }: {
   label: string
+  tooltip?: string
   isDisabled: boolean
   onPress: () => void
-  buttonRef: RefObject<HTMLButtonElement | null>
-  /** Takes focus when this one disables under it. */
-  otherRef: RefObject<HTMLButtonElement | null>
   children: ReactNode
 }) {
   return (
     <Tooltip delay={0}>
       <Button
-        ref={buttonRef}
         size="sm"
         variant="quiet"
         isIconOnly
         aria-label={label}
         isDisabled={isDisabled}
-        onPress={() => {
-          const button = buttonRef.current
-          const focused = !!button && document.activeElement === button
-          flushSync(onPress)
-          // A disabled button drops focus to the page.
-          if (focused && button.disabled) otherRef.current?.focus()
-        }}
+        onPress={onPress}
         className="text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
       >
         {children}
       </Button>
-      <TooltipContent>{label}</TooltipContent>
+      <TooltipContent>{tooltip}</TooltipContent>
     </Tooltip>
-  )
-}
-
-function UndoRedo() {
-  const { canUndo, canRedo } = useUndoRedo()
-  const undoRef = useRef<HTMLButtonElement>(null)
-  const redoRef = useRef<HTMLButtonElement>(null)
-  return (
-    <>
-      <HistoryButton
-        label="Undo"
-        isDisabled={!canUndo}
-        onPress={undo}
-        buttonRef={undoRef}
-        otherRef={redoRef}
-      >
-        <Undo2Icon />
-      </HistoryButton>
-      <HistoryButton
-        label="Redo"
-        isDisabled={!canRedo}
-        onPress={redo}
-        buttonRef={redoRef}
-        otherRef={undoRef}
-      >
-        <Redo2Icon />
-      </HistoryButton>
-    </>
   )
 }
 
@@ -137,6 +113,31 @@ export function StudioPanel({ className }: { className?: string }) {
       onSubmit: createFrom,
     })
   }
+
+  // Unreadable stored systems: nothing saves, so nothing reads "Saved".
+  const canSave = !isUnreadable()
+  const saved = !!current.doc && canSave
+
+  /** Saves the slot as a system, also on ⌘S; never over an open dialog or
+   *  menu. The user's systems save themselves. */
+  function save() {
+    const { unsaved } = current
+    if (
+      !unsaved ||
+      !canSave ||
+      naming ||
+      document.activeElement?.closest("[role=dialog],[role=menu]")
+    )
+      return
+    setNaming({
+      title: "Save design system",
+      action: "Save",
+      name: saveName(unsaved.from),
+      subject: { kind: "unsaved" },
+      onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
+    })
+  }
+  useSaveShortcut(save)
 
   /** Back from a toast's Undo to the restored row, so Esc and arrows work;
    *  to the picker's trigger once it closed. */
@@ -177,9 +178,7 @@ export function StudioPanel({ className }: { className?: string }) {
         <Separator />
         <MenuItem
           variant="danger"
-          onAction={() =>
-            afterClose(() => remove(doc.id, { afterUndo: focusRow(key) }))
-          }
+          onAction={() => afterClose(() => remove(doc.id, focusRow(key)))}
           className={MENU_ROW}
         >
           Delete
@@ -192,7 +191,33 @@ export function StudioPanel({ className }: { className?: string }) {
     name: current.name,
     note: current.unsaved && UNSAVED_NOTE,
     swatch: current.swatch,
-    history: <UndoRedo />,
+    // Both disable once pressed: focus moves to the trigger, where the name
+    // dialog also returns it.
+    buttons: (
+      <>
+        <HeaderButton
+          label="Reset"
+          isDisabled={!current.unsaved}
+          onPress={() => {
+            triggerRef.current?.focus()
+            reset()
+          }}
+        >
+          <RotateCcwIcon />
+        </HeaderButton>
+        <HeaderButton
+          label={saved ? "Saved" : "Save"}
+          tooltip="Save ⌘S"
+          isDisabled={!current.unsaved || !canSave}
+          onPress={() => {
+            triggerRef.current?.focus()
+            save()
+          }}
+        >
+          {saved ? <CheckIcon /> : <SaveIcon />}
+        </HeaderButton>
+      </>
+    ),
     triggerRef,
     renderSwitcher: (trigger) => (
       <PresetPicker

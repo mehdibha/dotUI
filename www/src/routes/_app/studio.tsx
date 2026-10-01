@@ -9,10 +9,9 @@ import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
-import { select, useHistory } from "@/modules/studio/history"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
-import { getCurrent } from "@/modules/studio/selection"
+import { getCurrent, select } from "@/modules/studio/selection"
 import { fetchSnapshot } from "@/modules/studio/share"
 import { flush, isUnreadable, storageFailed } from "@/modules/studio/workspace"
 
@@ -187,7 +186,6 @@ const TOP_LAYER = {
 
 function StudioBody() {
   useOpenLink()
-  useHistory()
   const isMobile = useIsMobile()
   // Said on arrival, before the list looks emptied.
   useEffect(() => {
