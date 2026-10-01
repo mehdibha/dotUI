@@ -118,15 +118,15 @@ export function StudioPanel({ className }: { className?: string }) {
   const canSave = !isUnreadable()
   const saved = !!current.doc && canSave
 
-  /** Saves the slot as a system, also on ⌘S; never over an open dialog or
-   *  menu. The user's systems save themselves. */
+  /** Saves the slot as a system, also on ⌘S; never over a modal or a menu,
+   *  but over a panel popover. The user's systems save themselves. */
   function save() {
     const { unsaved } = current
     if (
       !unsaved ||
       !canSave ||
       naming ||
-      document.activeElement?.closest("[role=dialog],[role=menu]")
+      document.activeElement?.closest("[data-modal],[role=menu]")
     )
       return
     setNaming({

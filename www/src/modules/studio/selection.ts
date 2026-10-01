@@ -178,16 +178,19 @@ export function edit(next: StudioState): void {
     return
   }
   const { view } = current
-  const back = sameState(next, describe(view, workspace.getWorkspace()).state)
-  if (workspace.setUnsaved(back ? undefined : { from: view, state: next }))
-    setSelection(back ? view : UNSAVED)
+  if (sameState(next, describe(view, workspace.getWorkspace()).state))
+    select(view)
+  else if (workspace.setUnsaved({ from: view, state: next }))
+    setSelection(UNSAVED)
 }
 
-/** Opens `sel`, dropping the slot: back on its view, it starts pristine. */
+/** Opens `sel`, dropping the slot: back on its view, it starts pristine.
+ *  The slot goes after the selection: no tab is left on a missing slot. */
 export function select(sel: Selection): void {
   if (selectionKey(getSelection()) === selectionKey(sel)) return
-  workspace.setUnsaved(undefined)
   setSelection(sel)
+  workspace.setUnsaved(undefined)
+  workspace.flush()
 }
 
 /** Drops the slot for its untouched view. */

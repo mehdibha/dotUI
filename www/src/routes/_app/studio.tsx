@@ -200,7 +200,7 @@ function StudioBody() {
       <StudioHeaderActions />
       {/* Below `lg` the panel docks under the preview; on short screens
           (a phone on its side) it sits beside it instead. */}
-      <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
+      <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-72" />
       <PreviewPanel />
     </>
   )

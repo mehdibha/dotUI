@@ -199,14 +199,48 @@ describe("unsaved slot", () => {
     stored.unsaved.state = radius(7)
     win.otherTab("dotui:design-systems", JSON.stringify(stored))
     expect(current().state.radiusPx).toBe(7)
-    delete stored.unsaved
-    win.otherTab("dotui:design-systems", JSON.stringify(stored))
     win.otherTab(
       "dotui:current",
       JSON.stringify({ kind: "preset", id: "origin" }),
     )
+    delete stored.unsaved
+    win.otherTab("dotui:design-systems", JSON.stringify(stored))
     expect(current().key).toBe("preset:origin")
     expect(ws.getWorkspace().unsaved).toBeUndefined()
+  })
+
+  it("never leaves another tab on a slot that's gone", async () => {
+    const { selection, radius, edit } = await load()
+    const dangling: string[] = []
+    for (const write of [
+      win.localStorage.setItem,
+      win.localStorage.removeItem,
+    ]) {
+      const impl = write.getMockImplementation()!
+      write.mockImplementation((...args: [string, string]) => {
+        impl(...args)
+        const stored = JSON.parse(win.read("dotui:design-systems") ?? "{}")
+        if (
+          win.read("dotui:current") === '{"kind":"unsaved"}' &&
+          !stored.unsaved
+        )
+          dangling.push(args[0])
+      })
+    }
+    const leaves = [
+      () => selection.reset(),
+      () => selection.select({ kind: "preset", id: "stripe" }),
+      () => selection.createFrom("Mine", { kind: "unsaved" }),
+      () => selection.edit(radius(LINEAR.state.radiusPx)),
+    ]
+    for (const leave of leaves) {
+      selection.select({ kind: "preset", id: "linear" })
+      edit(3)
+      vi.advanceTimersByTime(600)
+      leave()
+      vi.advanceTimersByTime(600)
+    }
+    expect(dangling).toEqual([])
   })
 
   it("never writes over stored systems it can't read", async () => {
