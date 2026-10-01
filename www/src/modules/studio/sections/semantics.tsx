@@ -1,9 +1,9 @@
 "use client"
 
-/* Semantics: a tab per role; its card shows the role at work, curated picks,
-   a hue and tone editor and a color field. */
+/* Semantics: the row shows each role's color; its popover has a tab per role
+   with the role at work, curated picks, hue and tone, and a color field. */
 
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import {
   CheckIcon,
   CircleCheckIcon,
@@ -13,7 +13,6 @@ import {
 } from "lucide-react"
 import type { LucideProps } from "lucide-react"
 import {
-  Button as RacButton,
   Slider as RacSlider,
   SliderThumb as RacSliderThumb,
   SliderTrack as RacSliderTrack,
@@ -37,7 +36,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { buildColorConfig, SEMANTIC_PICKS, SEMANTIC_ROLES } from "../axes/color"
 import type { SemanticRole } from "../axes/color"
-import { DIAL_LABEL, DIAL_PRESS, DIAL_ROW, DIAL_VALUE } from "../dial"
+import { DialPopover, DialTrigger } from "../dial"
 import { GROUP_LABEL } from "../rows"
 import {
   atTone,
@@ -367,7 +366,6 @@ function SeedField({
     [],
   )
 
-  const shown = (text ?? value) || placeholder
   return (
     <input
       aria-label={`${label} color`}
@@ -422,17 +420,7 @@ function SeedField({
         setText(null)
         setInvalid(false)
       }}
-      // Sized to its text; 16px on touch against focus zoom, drawn at 13px.
-      style={
-        {
-          "--w": `calc(${shown.length}ch + 0.923em + 1px)`,
-        } as React.CSSProperties
-      }
-      className={cn(
-        DIAL_VALUE,
-        "h-[2.1538em] w-(--w) min-w-0 rounded-[0.4615em] bg-transparent px-[0.4615em] text-right uppercase outline-none placeholder:text-fg/70 placeholder:normal-case hover:bg-fg/5 focus:bg-fg/10 focus:text-fg aria-invalid:text-fg-danger",
-        "pointer-coarse:-mx-[calc(var(--w)*0.09375)] pointer-coarse:-my-[0.2019em] pointer-coarse:scale-[0.8125] pointer-coarse:text-base",
-      )}
+      className="h-full min-w-0 flex-1 bg-transparent font-mono text-[13px] font-medium text-fg/70 uppercase outline-none placeholder:text-fg/70 placeholder:normal-case focus:text-fg aria-invalid:text-fg-danger pointer-coarse:text-base"
     />
   )
 }
@@ -474,12 +462,6 @@ function Chip({
     </RacToggleButton>
   )
 }
-
-/* The custom chip at rest: every hue, a ring. */
-const HUE_RING = `conic-gradient(${Array.from(
-  { length: 7 },
-  (_, i) => `oklch(0.72 0.15 ${i * 60})`,
-).join(", ")})`
 
 /* --------------------------------- Sliders -------------------------------- */
 
@@ -622,9 +604,6 @@ function RoleCard({
   mode,
   engine,
   solids,
-  flagged,
-  editing,
-  setEditing,
   written,
   setWritten,
 }: {
@@ -634,9 +613,6 @@ function RoleCard({
   mode: Mode
   engine: Engine
   solids: Record<Party, string>
-  flagged: boolean
-  editing: boolean
-  setEditing: (editing: boolean) => void
   written: WrittenSeeds
   setWritten: React.Dispatch<React.SetStateAction<WrittenSeeds>>
 }) {
@@ -646,9 +622,6 @@ function RoleCard({
   const vividness = engine?.vividness
   const picks = SEMANTIC_PICKS[palette]
   const pick = picks.find((p) => sameHex(p.hex, value))
-  const custom = value !== "" && !pick
-  const editorId = useId()
-  const healthRef = useRef<HTMLParagraphElement>(null)
 
   // A hovered or focused chip ('' = Auto) or a slider mid-drag, until it lands.
   const [hover, setHover] = useState<string | null>(null)
@@ -684,14 +657,6 @@ function RoleCard({
     palette,
   )
 
-  // Docked, a commit that flags the role brings its health line into view.
-  const wasFlagged = useRef(flagged)
-  useEffect(() => {
-    if (flagged && !wasFlagged.current)
-      healthRef.current?.scrollIntoView({ block: "nearest" })
-    wasFlagged.current = flagged
-  }, [flagged])
-
   // The editor moves the committed seed, else Auto's; a gray borrows a hue.
   const seed = value || autoSeed(state, palette)
   const mine = written[key]
@@ -722,29 +687,7 @@ function RoleCard({
   const thumb = shipped(drag?.seed ?? seed, vividness).solid
 
   return (
-    <>
-      <div className="flex h-9 items-center justify-between gap-2 pointer-coarse:h-10">
-        <span className={DIAL_LABEL}>{label}</span>
-        <span className="-mr-0.5 flex min-w-0 items-center gap-0.5">
-          {clash && (
-            <TriangleAlertIcon
-              role="img"
-              aria-label={clash.detail}
-              className="size-3.5 shrink-0 text-fg-warning"
-            >
-              <title>{clash.detail}</title>
-            </TriangleAlertIcon>
-          )}
-          <SeedField
-            label={label}
-            value={drag?.seed ?? value}
-            placeholder={palette === "selection" ? "Primary" : "Auto"}
-            onCommit={commit}
-          />
-          <Swatch seed={draft ?? value} solid={ink.solid} />
-        </span>
-      </div>
-
+    <div className="flex flex-col gap-3">
       <div
         className="flex h-9 items-center justify-between gap-2 rounded-md px-2 inset-ring-1 inset-ring-fg/8"
         style={{ background: m.background }}
@@ -752,133 +695,105 @@ function RoleCard({
         <Specimen palette={palette} ink={ink} m={m} state={state} />
       </div>
 
-      <div className="mt-3 flex items-center gap-2.5 pointer-coarse:gap-3">
-        <RacToggleButtonGroup
-          aria-label={`${label} presets`}
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={value === "" ? ["auto"] : pick ? [pick.hex] : []}
-          onSelectionChange={(keys) => {
-            const next = keys.values().next().value as string | undefined
-            if (next !== undefined) commit(next === "auto" ? "" : next)
-          }}
-          className="flex items-center gap-2.5 pointer-coarse:gap-3"
+      <RacToggleButtonGroup
+        aria-label={`${label} presets`}
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={value === "" ? ["auto"] : pick ? [pick.hex] : []}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value as string | undefined
+          if (next !== undefined) commit(next === "auto" ? "" : next)
+        }}
+        className="flex items-center justify-between px-0.5"
+      >
+        <Chip
+          id="auto"
+          name={palette === "selection" ? "Primary" : "Auto"}
+          color={auto.solid}
+          onPreview={(on) => setHover(on ? "" : null)}
         >
-          <Chip
-            id="auto"
-            name={palette === "selection" ? "Primary" : "Auto"}
-            color={auto.solid}
-            onPreview={(on) => setHover(on ? "" : null)}
+          <span
+            className="text-[10px] leading-none font-bold"
+            style={{ color: auto.on }}
           >
-            <span
-              className="text-[10px] leading-none font-bold"
-              style={{ color: auto.on }}
-            >
-              A
-            </span>
-          </Chip>
-          {picks.map((p) => (
-            <Chip
-              key={p.hex}
-              id={p.hex}
-              name={p.name}
-              color={shipped(p.hex, vividness).solid}
-              onPreview={(on) => setHover(on ? p.hex : null)}
-            />
-          ))}
-        </RacToggleButtonGroup>
-        <RacButton
-          aria-label={`Custom ${label.toLowerCase()} color`}
-          aria-expanded={editing}
-          aria-controls={editing ? editorId : undefined}
-          onPress={() => setEditing(!editing)}
-          style={{ "--chip": committed.solid } as React.CSSProperties}
-          className={cn(
-            CHIP,
-            "-mr-0.5 ml-auto",
-            custom
-              ? "bg-(--chip) not-focus-visible:outline-(--chip)"
-              : "not-focus-visible:hover:outline-fg/15 not-focus-visible:aria-expanded:outline-fg/25",
-          )}
-        >
-          <span title="Custom" className="grid size-full place-items-center">
-            {!custom && (
-              <span
-                className="size-full rounded-full"
-                style={{
-                  background: HUE_RING,
-                  maskImage:
-                    "radial-gradient(closest-side, transparent 55%, #000 60%)",
-                }}
-              />
-            )}
+            A
           </span>
-        </RacButton>
-      </div>
+        </Chip>
+        {picks.map((p) => (
+          <Chip
+            key={p.hex}
+            id={p.hex}
+            name={p.name}
+            color={shipped(p.hex, vividness).solid}
+            onPreview={(on) => setHover(on ? p.hex : null)}
+          />
+        ))}
+      </RacToggleButtonGroup>
 
-      {editing && (
-        <div id={editorId} className="mt-3 flex flex-col gap-3">
-          <SeedSlider
-            label="Hue"
-            name={`${label} hue`}
-            value={hueValue}
-            maxValue={360}
-            track={hueTrack(base, chroma, tone, vividness)}
-            thumb={thumb}
-            formatOptions={{
-              style: "unit",
-              unit: "degree",
-              unitDisplay: "long",
-            }}
-            onChange={(h) =>
-              setDrag({ slider: "hue", value: h, seed: seedHex(hueSeed(h)) })
-            }
-            onChangeEnd={(h) =>
-              h === shownHue ? setDrag(null) : write(hueSeed(h))
-            }
-            onKeyDownCapture={(e) => {
-              const dir = {
-                ArrowRight: 1,
-                ArrowUp: 1,
-                ArrowLeft: -1,
-                ArrowDown: -1,
-              }[e.key]
-              if (!e.shiftKey || !dir) return
-              e.preventDefault()
-              e.stopPropagation()
-              write(hueSeed(clamp(shownHue + dir * 10, 0, 360)))
-            }}
-          />
-          <SeedSlider
-            label="Tone"
-            name={`${label} tone`}
-            value={toneValue}
-            maxValue={TONE_MAX}
-            track={toneTrack(chroma, hue, vividness)}
-            mask={NOTCH}
-            thumb={thumb}
-            valueText={`Lightness ${lstarAt(toneValue)}`}
-            onChange={(t) =>
-              setDrag({ slider: "tone", value: t, seed: seedHex(toneSeed(t)) })
-            }
-            onChangeEnd={(t) =>
-              t === tone ? setDrag(null) : write(toneSeed(t), t)
-            }
-          />
-        </div>
-      )}
+      <SeedSlider
+        label="Hue"
+        name={`${label} hue`}
+        value={hueValue}
+        maxValue={360}
+        track={hueTrack(base, chroma, tone, vividness)}
+        thumb={thumb}
+        formatOptions={{ style: "unit", unit: "degree", unitDisplay: "long" }}
+        onChange={(h) =>
+          setDrag({ slider: "hue", value: h, seed: seedHex(hueSeed(h)) })
+        }
+        onChangeEnd={(h) =>
+          h === shownHue ? setDrag(null) : write(hueSeed(h))
+        }
+        onKeyDownCapture={(e) => {
+          const dir = {
+            ArrowRight: 1,
+            ArrowUp: 1,
+            ArrowLeft: -1,
+            ArrowDown: -1,
+          }[e.key]
+          if (!e.shiftKey || !dir) return
+          e.preventDefault()
+          e.stopPropagation()
+          write(hueSeed(clamp(shownHue + dir * 10, 0, 360)))
+        }}
+      />
+      <SeedSlider
+        label="Tone"
+        name={`${label} tone`}
+        value={toneValue}
+        maxValue={TONE_MAX}
+        track={toneTrack(chroma, hue, vividness)}
+        mask={NOTCH}
+        thumb={thumb}
+        valueText={`Lightness ${lstarAt(toneValue)}`}
+        onChange={(t) =>
+          setDrag({ slider: "tone", value: t, seed: seedHex(toneSeed(t)) })
+        }
+        onChangeEnd={(t) =>
+          t === tone ? setDrag(null) : write(toneSeed(t), t)
+        }
+      />
+
+      <div className="flex h-9 items-center gap-2 rounded-lg tint-5 px-3 focus-within:tint-10 pointer-coarse:h-10">
+        <Swatch seed={draft ?? value} solid={ink.solid} />
+        <SeedField
+          label={label}
+          value={drag?.seed ?? value}
+          placeholder={palette === "selection" ? "Primary" : "Auto"}
+          onCommit={commit}
+        />
+      </div>
 
       {clash && (
         <p
-          ref={healthRef}
           title={clash.detail}
-          className="mt-3 flex items-center gap-1.5 text-xs font-medium text-fg/70 dock-stacked:scroll-mb-[calc(var(--dock-chrome)+24px)]"
+          className="flex items-center gap-1.5 px-1 text-xs font-medium text-fg/70"
         >
           <TriangleAlertIcon className="size-3.5 shrink-0 text-fg-warning" />
           {clash.label}
         </p>
       )}
-    </>
+    </div>
   )
 }
 
@@ -894,19 +809,8 @@ export function Semantics({
   mode: Mode
 }) {
   const { state } = studio
-  const [open, setOpen] = useState(false)
   const [active, setActive] = useState<RoleKey>("successSeed")
-  const [editing, setEditing] = useState(false)
   const [written, setWritten] = useState<WrittenSeeds>({})
-  // Whether the pressed tab was the open one — read before the press selects.
-  const wasOpen = useRef(false)
-  const panelId = useId()
-  const panelRef = useRef<HTMLDivElement>(null)
-
-  // Docked, the dock is short: a card that opens, swaps or grows comes into view.
-  useEffect(() => {
-    if (open) panelRef.current?.scrollIntoView({ block: "nearest" })
-  }, [open, active, editing])
 
   const { vividness, background } = buildColorConfig(state)
   const engine: Engine = { vividness, background }
@@ -925,76 +829,67 @@ export function Semantics({
   const role = SEMANTIC_ROLES.find((r) => r.key === active) ?? SEMANTIC_ROLES[0]
 
   return (
-    <Tabs
-      selectedKey={active}
-      onSelectionChange={(key) => {
-        setActive(key as RoleKey)
-        setOpen(true)
-      }}
-      className="flex flex-col gap-1.5"
-    >
-      <div className={cn(DIAL_ROW, "relative pr-0.5")}>
-        <RacButton
-          aria-label="Semantics"
-          aria-expanded={open}
-          aria-controls={panelId}
-          onPress={() => setOpen(!open)}
-          className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
-        />
-        <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
-          Semantics
+    <DialTrigger
+      label="Semantics"
+      chevron={false}
+      value={
+        <span className="flex items-center gap-1.5">
+          {SEMANTIC_ROLES.map((r) => (
+            // Pressing a tile opens the popover on its role.
+            <span
+              key={r.key}
+              onPointerDown={() => setActive(r.key)}
+              className="flex"
+            >
+              <RoleTile
+                name={r.label}
+                palette={r.palette}
+                ink={inks[r.key]}
+                custom={state[r.key] !== ""}
+                flagged={Boolean(clashFor(clashes, r.palette))}
+              />
+            </span>
+          ))}
         </span>
-        <TabList
-          aria-label="Semantic colors"
-          className="pointer-events-none relative flex p-0.5 pointer-coarse:gap-4"
+      }
+    >
+      <DialPopover className="w-72">
+        <Tabs
+          selectedKey={active}
+          onSelectionChange={(key) => setActive(key as RoleKey)}
+          className="flex flex-col gap-3"
         >
-          {SEMANTIC_ROLES.map((role) => {
-            const custom = state[role.key] !== ""
-            const health = clashFor(clashes, role.palette)
-            const name = [role.label, custom && "custom", health?.label]
-              .filter(Boolean)
-              .join(", ")
-            return (
-              <Tab
-                key={role.key}
-                id={role.key}
-                aria-label={name}
-                onPressStart={() => {
-                  wasOpen.current = open && role.key === active
-                }}
-                onPress={() => setOpen(!wasOpen.current)}
-                className={cn(
-                  "pointer-events-auto relative grid size-7 cursor-interactive place-items-center rounded-md focus-reset focus-visible:focus-ring pointer-coarse:after:absolute pointer-coarse:after:-inset-x-2 pointer-coarse:after:-inset-y-1",
-                  open
-                    ? "not-selected:*:opacity-85 not-selected:hover:*:opacity-100 selected:bg-fg/10"
-                    : "hover:bg-fg/5",
-                )}
-              >
-                <RoleTile
-                  name={name}
-                  palette={role.palette}
-                  ink={inks[role.key]}
-                  custom={custom}
-                  flagged={Boolean(health)}
-                />
-              </Tab>
-            )
-          })}
-        </TabList>
-      </div>
-      <div
-        ref={panelRef}
-        id={panelId}
-        hidden={!open}
-        className="dock-stacked:scroll-mb-[calc(var(--dock-chrome)+12px)]"
-      >
-        {/* Remounted per tab: a deselected RAC panel lingers and skews the scroll. */}
-        <TabPanel
-          key={active}
-          id={active}
-          className="flex flex-col rounded-lg tint-5 px-3 pb-3 focus-reset focus-visible:focus-ring"
-        >
-          {open && (
+          <TabList
+            aria-label="Semantic colors"
+            className="flex h-9 shrink-0 items-center rounded-lg tint-5 p-1 pointer-coarse:h-10"
+          >
+            {SEMANTIC_ROLES.map((r) => {
+              const custom = state[r.key] !== ""
+              const health = clashFor(clashes, r.palette)
+              return (
+                <Tab
+                  key={r.key}
+                  id={r.key}
+                  aria-label={[r.label, custom && "custom", health?.label]
+                    .filter(Boolean)
+                    .join(", ")}
+                  className="relative flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:bg-fg/10 selected:text-fg/95"
+                >
+                  {r.label}
+                  {(custom || health) && (
+                    <span
+                      className={cn(
+                        "absolute top-1 right-1 size-1 rounded-full",
+                        health ? "bg-fg-warning" : "bg-accent",
+                      )}
+                    />
+                  )}
+                </Tab>
+              )
+            })}
+          </TabList>
+          {/* Remounted per tab: a deselected RAC panel lingers. */}
+          <TabPanel key={active} id={active} className="focus-reset">
             <RoleCard
               role={role}
               studio={studio}
@@ -1002,15 +897,12 @@ export function Semantics({
               mode={mode}
               engine={engine}
               solids={solids}
-              flagged={Boolean(clashFor(clashes, role.palette))}
-              editing={editing}
-              setEditing={setEditing}
               written={written}
               setWritten={setWritten}
             />
-          )}
-        </TabPanel>
-      </div>
-    </Tabs>
+          </TabPanel>
+        </Tabs>
+      </DialPopover>
+    </DialTrigger>
   )
 }
