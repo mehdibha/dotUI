@@ -1,3 +1,3 @@
 :root {
-  --studio-bubble-radius: var(--studio-radius-surface);
+  --studio-bubble-radius: var(--studio-radius-card);
 }

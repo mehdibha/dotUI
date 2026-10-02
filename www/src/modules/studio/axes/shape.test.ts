@@ -21,15 +21,28 @@ describe("shape axis", () => {
   })
 
   test("a character retargets only the roles it moves", () => {
+    // Menus md over sm items; everything else rides Standard's rungs.
     expect(resolve(vector("crisp")).tokens).toEqual({
       "--studio-radius-surface": "var(--radius-md)",
-      // Items follow Surfaces one rung down: md → sm.
       "--studio-radius-item": "var(--radius-sm)",
     })
-    expect(resolve(vector("pill")).tokens).toEqual({
-      "--studio-radius-control": "var(--radius-full)",
-      // Small controls step one rung down from Controls: full → 3xl.
-      "--studio-radius-control-sm": "var(--radius-3xl)",
+    expect(resolve(vector("round")).tokens).toEqual({
+      "--studio-radius-control": "var(--radius-3xl)",
+      "--studio-radius-item": "var(--radius-2xl)",
+      "--studio-radius-surface": "var(--radius-2xl)",
+      "--studio-radius-panel": "var(--radius-3xl)",
+      "--studio-radius-card": "var(--radius-2xl)",
+      "--studio-radius-control-sm": "var(--radius-2xl)",
+      "--studio-radius-field": "var(--radius-2xl)",
+      "--studio-radius-container": "var(--radius-2xl)",
+      "--studio-radius-inline-item": "var(--radius-2xl)",
+    })
+  })
+
+  test("auto cards sit one rung below panels", () => {
+    expect(resolve({}).tokens).not.toHaveProperty("--studio-radius-card")
+    expect(resolve(vector("soft")).tokens).toMatchObject({
+      "--studio-radius-card": "var(--radius-xl)",
     })
   })
 
@@ -39,13 +52,20 @@ describe("shape axis", () => {
       "--studio-radius-item": "0",
       "--studio-radius-surface": "0",
       "--studio-radius-panel": "0",
+      "--studio-radius-card": "0",
       "--studio-radius-control-sm": "0",
       "--studio-radius-detail": "0",
       "--studio-radius-pill": "0",
+      "--studio-radius-field": "0",
+      "--studio-radius-container": "0",
+      "--studio-radius-inline-item": "0",
     })
   })
 
-  test("details cap at sm, whatever Controls ride", () => {
+  test("smaller controls step one rung down; details cap at sm", () => {
+    expect(resolve(vector("gentle")).tokens).toMatchObject({
+      "--studio-radius-control-sm": "var(--radius-md)",
+    })
     expect(resolve(vector("round")).tokens).not.toHaveProperty(
       "--studio-radius-detail",
     )
@@ -55,10 +75,19 @@ describe("shape axis", () => {
     })
   })
 
+  test("pill controls keep pill small controls", () => {
+    expect(resolve({ roleControl: "full" }).tokens).toMatchObject({
+      "--studio-radius-control-sm": "var(--radius-full)",
+      "--studio-radius-field": "var(--radius-lg)",
+    })
+  })
+
   test("a hand-set role reads as custom", () => {
     expect(activeCharacter({ ...DEFAULTS, rolePanel: "2xl" })).toBeUndefined()
     expect(resolve({ rolePanel: "2xl" }).tokens).toEqual({
       "--studio-radius-panel": "var(--radius-2xl)",
+      // Auto cards follow, a rung below.
+      "--studio-radius-card": "var(--radius-xl)",
     })
   })
 })

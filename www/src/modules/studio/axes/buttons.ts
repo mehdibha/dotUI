@@ -61,6 +61,13 @@ const RADIUS_TOKENS: Record<string, string> = {
   pill: "var(--radius-full)",
 }
 
+/* xs buttons under a picked radius: round steps down a rung, as nova's do. */
+const XS_RADIUS_TOKENS: Record<string, string> = {
+  sharp: "0",
+  round: "var(--radius-md)",
+  pill: "var(--radius-full)",
+}
+
 export function resolveButtons(state: StudioState): Resolved {
   const selection = {
     style: pick(STYLE_OPTIONS, state.buttonStyle, "flat"),
@@ -69,7 +76,10 @@ export function resolveButtons(state: StudioState): Resolved {
   }
   const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
   const radius = RADIUS_TOKENS[state.buttonRadius]
-  if (radius) tokens["--studio-btn-radius"] = radius
+  if (radius) {
+    tokens["--studio-btn-radius"] = radius
+    tokens["--studio-btn-xs-radius"] = XS_RADIUS_TOKENS[state.buttonRadius]!
+  }
   return {
     tokens,
     params: { button: selection, "toggle-button": selection },

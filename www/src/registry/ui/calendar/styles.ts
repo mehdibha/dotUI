@@ -3,10 +3,10 @@ import { createStyles } from "@/lib/styles"
 import calendarMeta from "./meta"
 
 /* The single calendar paints the cell; the range calendar paints the inner
-   chip and uses the cell as the band. Day shape owns every radius: rounded
-   and circle share the pill band ends and the xs row-edge rounding (spelled
-   out twice — the publisher's extractor reads literals only), square runs
-   edge to edge. Today markers land on both elements, each scoped to its
+   chip and uses the cell as the band. Day shape owns every radius: the band
+   ends match the chip (the cell radius, or full for circle), and both share
+   the row-edge rounding (spelled out twice — the publisher's extractor reads
+   literals only); square runs edge to edge. Today markers land on both elements, each scoped to its
    calendar. */
 
 const { useStyles, styles } = createStyles(calendarMeta, {
@@ -43,13 +43,15 @@ const { useStyles, styles } = createStyles(calendarMeta, {
         slots: {
           cell: [
             "in-data-calendar:rounded-(--cell-radius)",
-            "selection-start:rounded-l-full selection-end:rounded-r-full",
+            "selection-start:rounded-l-(--cell-radius) selection-end:rounded-r-(--cell-radius)",
             "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
             "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
             "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
             "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
           ],
-          cellInner: "rounded-(--cell-radius)",
+          // Mid-range chips take the band's shape, as shadcn's one element does.
+          cellInner:
+            "rounded-(--cell-radius) in-selected:not-in-selection-start:not-in-selection-end:rounded-[inherit]",
         },
       },
       circle: {

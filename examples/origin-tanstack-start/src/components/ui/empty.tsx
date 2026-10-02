@@ -3,7 +3,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 const emptyVariants = tv({
   slots: {
-    base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-xl p-6",
+    base: "flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance border-dashed gap-4 rounded-lg p-6",
     header: "flex max-w-sm flex-col items-center gap-2",
     title: "font-heading text-lg font-medium tracking-tight text-base",
     description:

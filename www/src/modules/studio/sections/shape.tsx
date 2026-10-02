@@ -99,11 +99,11 @@ function CharacterPanel({ studio }: { studio: Studio }) {
   const active = activeCharacter(state)
   const [open, setOpen] = useState(active === undefined)
   const options = (key: ShapeRoleKey) => [
-    ...(key === "roleItem"
+    ...(key === "roleItem" || key === "roleCard"
       ? [
           {
             value: "auto",
-            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, roleItem: "auto" }, key))}`,
+            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, [key]: "auto" }, key))}`,
           },
         ]
       : []),
