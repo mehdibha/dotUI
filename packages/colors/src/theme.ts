@@ -31,6 +31,7 @@ import {
 import { deltaEok, minPairwiseDeltaEok } from "./meters"
 import {
   buildScale,
+  buildSolid,
   type Mode,
   type ScaleColors,
   transposeSkeleton,
@@ -69,6 +70,55 @@ export interface Theme {
   report: ThemeReport
 }
 
+interface SeededRole {
+  seed: Oklch
+  neutral: boolean
+  tintPeak: number
+  vividness: number
+  hueShift: number
+}
+
+/** Any seeded role (D7/D8): an achromatic seed rides the neutral model,
+ *  tinted by its own chroma. */
+function seeded(seed: Oklch, vividness: number, hueShift: number): SeededRole {
+  return {
+    seed,
+    neutral: seed.c < WHISPER_LINE,
+    tintPeak: Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
+    vividness,
+    hueShift,
+  }
+}
+
+/** Backgrounds (D9/D12): transpose skeletons when the user moves the floor. */
+function skeletonsFor(background: ThemeOptions["background"]) {
+  const lightBg = background?.light ?? LIGHT_BG_LSTAR
+  const darkBgOption = background?.dark
+  const darkBg = darkBgOption === "oled" ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
+  return {
+    light: {
+      chromatic:
+        lightBg === LIGHT_BG_LSTAR
+          ? LIGHT_SKELETON
+          : transposeSkeleton(LIGHT_SKELETON, lightBg),
+      neutral:
+        lightBg === LIGHT_BG_LSTAR
+          ? LIGHT_SKELETON_NEUTRAL
+          : transposeSkeleton(LIGHT_SKELETON_NEUTRAL, lightBg),
+    },
+    dark: {
+      chromatic:
+        darkBg === DARK_BG_LSTAR
+          ? DARK_SKELETON
+          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
+      neutral:
+        darkBg === DARK_BG_LSTAR
+          ? DARK_SKELETON
+          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
+    },
+  }
+}
+
 const CORE_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"]
 
 export function createTheme(input: string | ThemeOptions): Theme {
@@ -100,14 +150,16 @@ export function createTheme(input: string | ThemeOptions): Theme {
   )
   const neutralSeed: Oklch = { l: 0.6, c: tintPeak, h: neutralHue }
 
-  // Seed table: core palettes + any custom extras. Every seed classifies at
-  // the whisper line (D7) — an achromatic brand rides the neutral model.
-  const classify = (seed: Oklch) => ({
-    seed,
-    neutral: seed.c < WHISPER_LINE,
-  })
-  const seeds: Record<string, { seed: Oklch; neutral: boolean }> = {
-    neutral: { seed: neutralSeed, neutral: true },
+  // Seed table: core palettes + any custom extras.
+  const classify = (seed: Oklch) => seeded(seed, vividness, hueShift)
+  const seeds: Record<string, SeededRole> = {
+    neutral: {
+      seed: neutralSeed,
+      neutral: true,
+      tintPeak,
+      vividness,
+      hueShift,
+    },
     accent: classify(accentSeed),
   }
   for (const status of Object.keys(STATUS_SEEDS) as StatusName[]) {
@@ -120,32 +172,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
     seeds[name] = classify(toOklch(value))
   }
 
-  // Backgrounds (D9/D12): transpose skeletons when the user moves the floor.
-  const lightBg = options.background?.light ?? LIGHT_BG_LSTAR
-  const darkBgOption = options.background?.dark
-  const darkBg = darkBgOption === "oled" ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
-  const skeletons = {
-    light: {
-      chromatic:
-        lightBg === LIGHT_BG_LSTAR
-          ? LIGHT_SKELETON
-          : transposeSkeleton(LIGHT_SKELETON, lightBg),
-      neutral:
-        lightBg === LIGHT_BG_LSTAR
-          ? LIGHT_SKELETON_NEUTRAL
-          : transposeSkeleton(LIGHT_SKELETON_NEUTRAL, lightBg),
-    },
-    dark: {
-      chromatic:
-        darkBg === DARK_BG_LSTAR
-          ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
-      neutral:
-        darkBg === DARK_BG_LSTAR
-          ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
-    },
-  }
+  const skeletons = skeletonsFor(options.background)
 
   const warnings: string[] = []
   const guarantees: GuaranteeResult[] = []
@@ -156,19 +183,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
     dark: {},
   }
 
-  for (const [name, { seed, neutral }] of Object.entries(seeds)) {
-    const shared = {
-      seed,
-      neutral,
-      vividness,
-      hueShift,
-      // Seed-classified neutrals tint from their own chroma (D8 explicit rule).
-      tintPeak:
-        name === "neutral"
-          ? tintPeak
-          : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
-      preserveSeed: preserveSeed && name === "accent",
-    }
+  for (const [name, role] of Object.entries(seeds)) {
+    const { seed, neutral } = role
+    const shared = { ...role, preserveSeed: preserveSeed && name === "accent" }
     const light = buildScale({
       ...shared,
       mode: "light",
@@ -316,5 +333,47 @@ export function createTheme(input: string | ThemeOptions): Theme {
     dark: modeOutput("dark"),
     charts,
     report: { ok: misses.length === 0, guarantees, warnings, seedDelta },
+  }
+}
+
+/* ------------------------------- Previews -------------------------------- */
+
+type PreviewOptions = Pick<ThemeOptions, "vividness" | "hueShift">
+
+const candidate = (color: string, options: PreviewOptions) =>
+  seeded(toOklch(color), options.vividness ?? 1, options.hueShift ?? 1)
+
+/** What a seed ships as in a status (or extra) role — its solid and label —
+ *  without a theme run. For pickers painting candidate seeds. */
+export function previewSolid(
+  color: string,
+  options: PreviewOptions = {},
+): { solid: string; on: string } {
+  const { solid, on } = buildSolid(candidate(color, options))
+  return { solid: oklchCss(solid), on: oklchCss(on) }
+}
+
+/** One such role's scale in one mode, built as createTheme builds it — a
+ *  picker's live draft, without the other roles, the charts or the report. */
+export function previewScale(
+  color: string,
+  mode: Mode,
+  options: PreviewOptions & Pick<ThemeOptions, "background"> = {},
+): { steps: Record<StepName, string>; on: string } {
+  const shared = { ...candidate(color, options), preserveSeed: false }
+  const skeleton = skeletonsFor(options.background)[mode][
+    shared.neutral ? "neutral" : "chromatic"
+  ]
+  const scale = buildScale({
+    ...shared,
+    mode,
+    skeleton,
+    sharedSolid: mode === "dark" ? buildSolid(shared) : undefined,
+  })
+  return {
+    steps: Object.fromEntries(
+      STEPS.map((step) => [step, oklchCss(scale.steps[step])]),
+    ) as Record<StepName, string>,
+    on: oklchCss(scale.on["700"]),
   }
 }

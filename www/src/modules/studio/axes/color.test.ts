@@ -1,12 +1,24 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import {
+  CVD_GATE,
+  deltaEok,
+  previewSolid,
+  STATUS_SEEDS,
+  toOklch,
+} from "@dotui/colors"
+
+import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
+import { ORIGIN } from "@/modules/presets/presets-data"
 
 import { DEFAULTS } from "."
+import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
   buildColorConfig,
   isDefaultColorConfig,
+  SEMANTIC_PICKS,
+  SEMANTIC_ROLES,
   SOLID_LEAVES,
   withSource,
 } from "./color"
@@ -79,5 +91,53 @@ describe("color axis", () => {
     expect(
       isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: "accent" }),
     ).toBe(false)
+  })
+})
+
+describe("semantic picks", () => {
+  const bases: [string, StudioState][] = [
+    ["the defaults", DEFAULTS],
+    ["Origin", ORIGIN.state],
+  ]
+
+  for (const [name, base] of bases) {
+    it(`each ships clean alone on ${name}`, () => {
+      for (const role of SEMANTIC_ROLES) {
+        for (const pick of SEMANTIC_PICKS[role.palette]) {
+          const { report } = resolveColorConfig(
+            buildColorConfig({ ...base, [role.key]: pick.hex }),
+          )
+          expect(report.warnings, `${role.label} ${pick.name}`).toEqual([])
+        }
+      }
+    })
+  }
+
+  it("keep Selection clear of Success and Danger", () => {
+    const solid = (hex: string) => toOklch(previewSolid(hex).solid)
+    const statuses = (["success", "danger"] as const).flatMap((palette) => [
+      STATUS_SEEDS[palette],
+      ...SEMANTIC_PICKS[palette].map((pick) => pick.hex),
+    ])
+    for (const pick of SEMANTIC_PICKS.selection)
+      for (const status of statuses)
+        expect(
+          deltaEok(solid(pick.hex), solid(status)),
+          `${pick.name} ~ ${status}`,
+        ).toBeGreaterThanOrEqual(CVD_GATE.normal)
+  })
+
+  it("are distinct within a role", () => {
+    for (const role of SEMANTIC_ROLES) {
+      const solids = SEMANTIC_PICKS[role.palette].map((pick) => {
+        const { light } = resolveColorConfig(
+          buildColorConfig({ ...DEFAULTS, [role.key]: pick.hex }),
+        )
+        return toOklch(light.scales[role.palette]?.["700"] ?? "")
+      })
+      for (const [i, a] of solids.entries())
+        for (const b of solids.slice(i + 1))
+          expect(deltaEok(a, b)).toBeGreaterThanOrEqual(0.03)
+    }
   })
 })

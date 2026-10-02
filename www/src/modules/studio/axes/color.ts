@@ -39,6 +39,53 @@ export const COLOR_DEFAULTS = {
   preserveSeed: false,
 }
 
+/* The Semantics row: one seed per role, '' = Auto (the engine's status seed;
+   Selection follows the Primary row's selection source). */
+export const SEMANTIC_ROLES = [
+  { key: "successSeed", palette: "success", label: "Success" },
+  { key: "warningSeed", palette: "warning", label: "Warning" },
+  { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "selectionSeed", palette: "selection", label: "Selection" },
+] as const
+
+export type SemanticRole = (typeof SEMANTIC_ROLES)[number]
+
+/* Seeds from Radix, Tailwind, Primer, Material 3 and Apple, each shipping as
+   itself with no engine warning (gated in color.test.ts). */
+export const SEMANTIC_PICKS: Record<
+  SemanticRole["palette"],
+  { name: string; hex: string }[]
+> = {
+  success: [
+    { name: "Grass", hex: "#46A758" },
+    { name: "Emerald", hex: "#059669" },
+    { name: "Teal", hex: "#12A594" },
+    { name: "Forest", hex: "#1F883D" },
+    { name: "Mint", hex: "#86EAD4" },
+  ],
+  warning: [
+    { name: "Amber", hex: "#FFC53D" },
+    { name: "Lemon", hex: "#FFE629" },
+    { name: "Peach", hex: "#FDBA74" },
+    { name: "Orange", hex: "#D97706" },
+    { name: "Ochre", hex: "#CA8A04" },
+  ],
+  danger: [
+    { name: "Red", hex: "#DC2626" },
+    { name: "Rose", hex: "#E11D48" },
+    { name: "Pink", hex: "#DB2777" },
+    { name: "Tomato", hex: "#E54D2E" },
+    { name: "Brick", hex: "#B3261E" },
+  ],
+  selection: [
+    { name: "Blue", hex: "#0090FF" },
+    { name: "Cyan", hex: "#0E7490" },
+    { name: "Indigo", hex: "#6366F1" },
+    { name: "Violet", hex: "#8B5CF6" },
+    { name: "Purple", hex: "#AF52DE" },
+  ],
+}
+
 /* What a role draws from: the neutral's text end (the shadcn school,
    black/white) or the brand ramp (Material, Linear, Radix Themes). */
 export const SOURCE_OPTIONS = [

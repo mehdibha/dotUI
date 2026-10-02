@@ -317,7 +317,7 @@ const nearestFamilyName = (hue: number) =>
       : best,
   ).label
 
-const GROUP_LABEL =
+export const GROUP_LABEL =
   "text-[11px] font-medium tracking-wider text-fg-muted uppercase"
 
 /** A slider painted with the neutrals it selects between — the track is the

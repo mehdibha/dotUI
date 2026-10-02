@@ -3,7 +3,16 @@
 
 /** Settings row labels per chapter id, for the panel search. */
 export const SEARCH_INDEX: Record<string, string[]> = {
-	color: ["Brand", "Keep exact", "Vividness", "Neutral", "Semantics", "Primary", "Primary › Primary"],
+	color: [
+		"Brand",
+		"Keep exact",
+		"Vividness",
+		"Neutral",
+		"Primary",
+		"Primary › Primary",
+		"Semantics",
+		"Semantics › Semantics",
+	],
 	typography: ["Heading", "Body", "Mono"],
 	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius"],

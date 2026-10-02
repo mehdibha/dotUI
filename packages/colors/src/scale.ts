@@ -242,15 +242,36 @@ function solveText(
   return color
 }
 
-/** Build one scale for one mode. */
-export function buildScale(options: ScaleOptions): ScaleColors {
-  const { seed, mode, neutral, vividness, hueShift } = options
+type ModelOptions = Pick<
+  ScaleOptions,
+  "seed" | "neutral" | "vividness" | "hueShift" | "tintPeak"
+>
+
+function models(
+  { seed, neutral, vividness, hueShift, tintPeak }: ModelOptions,
+  mode: Mode,
+) {
   const chroma: ChromaModel = neutral
-    ? neutralChroma(mode, options.tintPeak)
+    ? neutralChroma(mode, tintPeak)
     : chromaticChroma(seed, mode, vividness)
   const hueAt = neutral
     ? () => seed.h
     : (l: number) => bentHue(seed, l, hueShift)
+  return { chroma, hueAt }
+}
+
+/** Step 700 and its label alone, as buildScale solves them (the light
+ *  solve; the dark pass shares it). */
+export function buildSolid(options: ModelOptions): { solid: Oklch; on: Oklch } {
+  const { chroma, hueAt } = models(options, "light")
+  const { solid, on } = solveSolid(options.seed, chroma, hueAt, false)
+  return { solid, on }
+}
+
+/** Build one scale for one mode. */
+export function buildScale(options: ScaleOptions): ScaleColors {
+  const { seed, mode, neutral } = options
+  const { chroma, hueAt } = models(options, mode)
 
   const skeleton =
     options.skeleton ??
