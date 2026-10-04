@@ -35,6 +35,7 @@ import {
   scopedSemantics,
   semanticDelta,
   semanticsFor,
+  SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
 import type {
@@ -200,6 +201,8 @@ function buildScopedThemeCss(
 
   const base = forcedMode === "dark" ? `${light}\n${dark}` : light
   const darkOverrides = forcedMode === "light" ? light : dark
+  // No color keeps the site's chrome, whose primitives the closure carries.
+  const vocabulary = color ? semanticsFor(color) : SITE_SEMANTICS
 
   const blocks = [
     // `color` re-establishes the base text color from the scope's own tokens,
@@ -211,16 +214,14 @@ function buildScopedThemeCss(
     // A forced mode flattens per-mode targets to that mode — the `.dark`-selector
     // re-point below can't reach a forced-dark scope on a light page.
     emitCss(
-      forcedMode
-        ? flattenSemanticsToMode(semanticsFor(color), forcedMode)
-        : semanticsFor(color),
+      forcedMode ? flattenSemanticsToMode(vocabulary, forcedMode) : vocabulary,
       { selector },
     ),
     // `.dark` re-points for per-mode targets (per-mode token overrides).
     ...(forcedMode
       ? []
       : [
-          emitDarkOverridesCss(semanticsFor(color), {
+          emitDarkOverridesCss(vocabulary, {
             selector: `.dark ${selector}`,
           }),
         ]),

@@ -285,8 +285,9 @@ export function mergePresetCssFields(
   const dark: Record<string, string> = { ...base.cssVars?.dark }
   // The color layer: every semantic token flattened to a literal per mode,
   // named shadcn-style in `:root`/`.dark` and aliased into the vocabulary.
-  const engine = resolveColorConfig(preset.color ?? DEFAULT_COLOR_CONFIG)
-  const literals = semanticLiterals(semanticsFor(preset.color), engine)
+  const color = preset.color ?? DEFAULT_COLOR_CONFIG
+  const engine = resolveColorConfig(color)
+  const literals = semanticLiterals(semanticsFor(color), engine)
   const split = splitPresetTokens(
     preset,
     new Set([...FONT_TOKEN_VARS, ...Object.keys(theme)]),
