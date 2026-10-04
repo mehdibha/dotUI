@@ -9,7 +9,13 @@
 import { useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
-import { MAX_NAME_LENGTH, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
+import {
+  cleanName,
+  cutName,
+  MAX_NAME_LENGTH,
+  SNAPSHOT_ID,
+  stripName,
+} from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
 import { getPreset, ORIGIN } from "@/modules/presets"
 import {
@@ -264,28 +270,6 @@ function update(fn: (workspace: Workspace) => Workspace) {
   store.update(fn)
 }
 
-// In UTF-16 units, as the server counts, without splitting a character.
-function cut(text: string, max: number): string {
-  let out = ""
-  for (const char of text) {
-    if (out.length + char.length > max) break
-    out += char
-  }
-  return out
-}
-
-/** Trimmed, control characters and invisible spaces stripped. Joiners and
- *  bidi marks stay: emoji and scripts need them. */
-const strip = (name: string) =>
-  name
-    .normalize("NFC")
-    .replace(/[\p{Cc}​⁠﻿]/gu, "")
-    .trim()
-
-/** Stripped, at most 64 characters. */
-export const cleanName = (name: string) =>
-  cut(strip(name), MAX_NAME_LENGTH).trim()
-
 /** `name` + `suffix`, then " 2", " 3"… until free; the base is cut, at a
  *  word's start when it has spaces, so the result stays a valid name. */
 export function uniqueName(
@@ -294,9 +278,9 @@ export function uniqueName(
   suffix = "",
 ): string {
   const taken = new Set(systems.map((s) => s.name))
-  const base = strip(name) || "Untitled"
+  const base = stripName(name) || "Untitled"
   const fit = (end: string) => {
-    const head = cut(base, MAX_NAME_LENGTH - end.length)
+    const head = cutName(base, MAX_NAME_LENGTH - end.length)
     const midWord = /\S/.test(base.charAt(head.length))
     return (midWord ? head.replace(/\s+\S*$/, "") : head).trimEnd() + end
   }

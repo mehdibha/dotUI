@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { cleanName } from "@/lib/snapshots/snapshot"
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
@@ -146,8 +147,8 @@ describe("workspace", () => {
     expect(ws.uniqueName(`${"x".repeat(58)}😀😀`, [], " copy")).toBe(
       `${"x".repeat(58)} copy`,
     )
-    expect(ws.cleanName("😀".repeat(40))).toBe("😀".repeat(32))
-    expect(ws.cleanName(" a\u0007\u200b👩\u200d👧\u200f ")).toBe(
+    expect(cleanName("😀".repeat(40))).toBe("😀".repeat(32))
+    expect(cleanName(" a\u0007\u200b👩\u200d👧\u200f ")).toBe(
       "a👩\u200d👧\u200f",
     )
     expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(ws.getWorkspace())
