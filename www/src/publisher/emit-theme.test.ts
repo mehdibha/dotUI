@@ -227,7 +227,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         tokens: {
           "--radius": "0.5rem",
-          "--scrollbar-width": "thin",
+          "--user-select-ui": "auto",
           "--studio-btn-radius": "--radius-md",
         },
       },
@@ -239,7 +239,7 @@ describe("emitInitItem", () => {
     // the component publisher resolves them into utilities.
     expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
     expect(item.css?.[":root"]).toEqual({
-      "--scrollbar-width": "thin",
+      "--user-select-ui": "auto",
     })
   })
 

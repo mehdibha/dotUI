@@ -332,9 +332,6 @@
     --dotui-density: comfortable;
     --shadow-popover: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
     --shadow-modal: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
-    --scrollbar-width: thin;
-    --scrollbar-color: transparent transparent;
-    --scrollbar-color-hover: oklch(0.9249 0 0) transparent;
     --disabled-opacity: 0.5;
 }
 
@@ -455,7 +452,6 @@
     --chart-6: oklch(0.5013 0.1426 148.67);
     --chart-7: oklch(0.453 0.1289 148.67);
     --chart-8: oklch(0.4002 0.1139 148.67);
-    --scrollbar-color-hover: oklch(0.2726 0 0) transparent;
 }
 
 @utility focus-reset {
@@ -484,11 +480,6 @@
 @layer base {
   * {
     @apply border-border;
-    scrollbar-width: var(--scrollbar-width, auto);
-    scrollbar-color: var(--scrollbar-color, auto);
-    }
-  *:hover {
-    scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
     }
   h1,
   h2,

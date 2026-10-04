@@ -60,7 +60,6 @@ export const airbnb = definePreset({
     cursorDisabled: "not-allowed",
     selectionUiText: "none",
     selectionHighlight: "browser",
-    scrollbarStyle: "native",
 
     // States
     // Airbnb never rings in Rausch.

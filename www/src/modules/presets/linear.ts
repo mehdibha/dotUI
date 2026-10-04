@@ -58,7 +58,6 @@ export const linear = definePreset({
     cursorDisabled: "default",
     selectionUiText: "none",
     selectionHighlight: "accent",
-    scrollbarStyle: "thin",
 
     // States
     focusColor: "accent",

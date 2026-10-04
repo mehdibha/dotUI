@@ -58,7 +58,6 @@ export const notion = definePreset({
     cursorDisabled: "default",
     selectionUiText: "none",
     selectionHighlight: "accent",
-    scrollbarStyle: "native",
 
     // States
     focusColor: "accent",

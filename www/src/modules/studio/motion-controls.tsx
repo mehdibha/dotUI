@@ -3,7 +3,7 @@
 /* Every animated component once, with its state and control. Followers
    (synced group members) ride their lead's key, never a second one. */
 
-import { ChevronLeftIcon, ChevronRightIcon, RotateCcwIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
@@ -396,8 +396,7 @@ export function MotionRow({
   )
 }
 
-/** One component's controls, under a header that goes back and resets it
- *  to the preset. */
+/** One component's controls, under a header that goes back. */
 export function MotionDetail({
   entry,
   studio,
@@ -409,15 +408,6 @@ export function MotionDetail({
   base: MotionPreset
   onBack: () => void
 }) {
-  const { state, setState } = studio
-  const modified = differs(entry, state, base)
-  const reset = () =>
-    setState({
-      ...state,
-      ...Object.fromEntries(
-        entry.keys.map((key) => [key, base.values[key as never]]),
-      ),
-    })
   return (
     <>
       <div className="flex h-9 shrink-0 items-center gap-1">
@@ -432,20 +422,7 @@ export function MotionDetail({
         <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-fg/70">
           {entry.label}
         </span>
-        {modified ? (
-          <RacButton
-            onPress={reset}
-            aria-label={`Reset ${entry.label} to ${base.label}`}
-            className="flex h-7 shrink-0 cursor-interactive items-center gap-1 rounded-md px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:tint-10 hover:text-fg focus-visible:focus-ring"
-          >
-            <RotateCcwIcon className="size-3" />
-            {base.label}
-          </RacButton>
-        ) : (
-          <span className="shrink-0 px-1.5 text-xs text-fg/50">
-            {base.label}
-          </span>
-        )}
+        <span className="shrink-0 px-1.5 text-xs text-fg/50">{base.label}</span>
       </div>
       {entry.followers && (
         <p className="px-1 pb-0.5 text-xs text-fg/50">

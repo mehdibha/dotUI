@@ -16,18 +16,13 @@ export const SELECTION_DEFAULTS = {
   selectionHighlight: "accent",
 }
 
-export const UI_TEXT_OPTIONS = [
-  { value: "none", label: "Non-selectable" },
-  { value: "selectable", label: "Selectable" },
-]
-
 export const HIGHLIGHT_OPTIONS = [
   { value: "accent", label: "Accent" },
   { value: "browser", label: "Browser" },
 ]
 
 export const SELECTION_SCHEMA: ChapterSchema<typeof SELECTION_DEFAULTS> = {
-  selectionUiText: oneOf(UI_TEXT_OPTIONS),
+  selectionUiText: oneOf([{ value: "none" }, { value: "selectable" }]),
   selectionHighlight: oneOf(HIGHLIGHT_OPTIONS),
 }
 

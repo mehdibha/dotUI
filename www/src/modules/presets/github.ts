@@ -59,7 +59,6 @@ export const github = definePreset({
     cursorDisabled: "not-allowed",
     selectionUiText: "none",
     selectionHighlight: "browser",
-    scrollbarStyle: "native",
 
     // States
     focusColor: "accent",

@@ -47,7 +47,6 @@ import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
 import { checkAxisValue, sameValue } from "./schema"
 import type { AxisSchema } from "./schema"
-import * as scrollbars from "./scrollbars"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
@@ -89,7 +88,6 @@ export const DEFAULTS = {
   ...focus.FOCUS_DEFAULTS,
   ...cursor.CURSOR_DEFAULTS,
   ...selection.SELECTION_DEFAULTS,
-  ...scrollbars.SCROLLBAR_DEFAULTS,
   ...disabled.DISABLED_DEFAULTS,
   ...invalid.INVALID_DEFAULTS,
   ...mobile.MOBILE_DEFAULTS,
@@ -144,7 +142,6 @@ export const SCHEMA = {
   ...focus.FOCUS_SCHEMA,
   ...cursor.CURSOR_SCHEMA,
   ...selection.SELECTION_SCHEMA,
-  ...scrollbars.SCROLLBAR_SCHEMA,
   ...disabled.DISABLED_SCHEMA,
   ...invalid.INVALID_SCHEMA,
   ...mobile.MOBILE_SCHEMA,
@@ -257,7 +254,6 @@ const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   focus.resolveFocus,
   cursor.resolveCursor,
   selection.resolveSelection,
-  scrollbars.resolveScrollbars,
   disabled.resolveDisabled,
   invalid.resolveInvalid,
   mobile.resolveMobile,

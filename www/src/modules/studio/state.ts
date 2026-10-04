@@ -4,10 +4,13 @@
    section in sections/ owns its body; its axes live in axes/. */
 
 import type { StudioState } from "./axes"
-import { BrowserPreview, BrowserSection } from "./sections/browser"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
+import {
+  InteractivityPreview,
+  InteractivitySection,
+} from "./sections/interactivity"
 import { MobilePreview, MobileSection } from "./sections/mobile"
 import { MotionSection } from "./sections/motion"
 import { ShapePreview, ShapeSection } from "./sections/shape"
@@ -32,7 +35,7 @@ export interface Chapter {
   Preview?: React.ComponentType<{ state: StudioState }>
 }
 
-/* Identity first, then the page chrome and the treatments every control
+/* Identity first, then interactivity and the treatments every control
    wears, then every component behind one row each. Alert has no axes yet
    and stays off the page until it is rebuilt from preset evidence. */
 export const CHAPTERS: Chapter[] = [
@@ -63,7 +66,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "space",
-    label: "Space",
+    label: "Density",
     Body: SpaceSection,
     Preview: SpacePreview,
   },
@@ -74,10 +77,10 @@ export const CHAPTERS: Chapter[] = [
     Preview: SurfacesPreview,
   },
   {
-    id: "browser",
-    label: "Browser",
-    Body: BrowserSection,
-    Preview: BrowserPreview,
+    id: "interactivity",
+    label: "Interactivity",
+    Body: InteractivitySection,
+    Preview: InteractivityPreview,
   },
   {
     id: "states",

@@ -5,11 +5,11 @@
 export const SEARCH_INDEX: Record<string, string[]> = {
 	color: ["Brand", "Keep exact", "Vividness", "Neutral", "Semantics", "Primary", "Primary › Primary"],
 	typography: ["Heading", "Body", "Mono"],
-	icons: ["Library", "Stroke", "Weight"],
+	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius"],
-	space: ["Density", "Unit"],
+	space: ["Density", "Spacing"],
 	surfaces: ["Style", "Light background", "Dark background", "Depth", "Page", "Glass"],
-	browser: ["Cursor", "Selectable", "Highlight", "Scrollbars", "Cursors"],
+	interactivity: ["Cursor", "Text selection", "Highlight", "Selectable UI text", "Cursors"],
 	states: [
 		"Control focus",
 		"Width",
