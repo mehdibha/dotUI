@@ -1,77 +1,233 @@
-/* Surfaces — how cards and floating layers separate from the page (#590).
-   Five decisions, never resolver parameters:
+/* Surfaces — how the page, cards and floating layers separate. A style is a
+   named starting point over three settings; Glass sits beside it, and each
+   mode's page L* is Color's (the engine re-anchors every ramp on it).
 
-   - Separation: which means leads (edge, shadow, contrast) and how it shifts
-     per mode. Dark behavior lives INSIDE the option — shadows die on
-     near-black, so each strategy encodes its own dark translation (12-system
-     survey, 2026-08-09): Hairline ≈ shadcn/Geist, Adaptive ≈ Radix Themes/
-     Primer (shadow-led light → hairline + elevation dark), Shadow ≈ Fluent/
-     Spectrum (shadows strengthen in dark), Tonal ≈ Material 3 (contrast-led
-     in BOTH modes, containers darker than the page in light). Linear is
-     Hairline at a raised depth.
-   - Depth: the one intensity lever — hairline weight, shadow size and dark
-     elevation move together. Shadow-led systems (Fluent, Material,
-     Atlassian) ship a key + ambient pair, so the Shadow strategy does too.
-   - Canvas: white-on-white, or a tinted page white surfaces lift off (Vercel,
-     Stripe, Apple); dark lifts the same surfaces a full rung instead.
-   - Backgrounds: each mode's background L* — how white the light page is,
-     how black the dark one (OLED at 0). The color engine reads them.
-   - Material: the popover tier (menus, pickers, popovers) solid, or as
-     glass — shadcn's recipe, the surface at 70% over a blurred, saturated
-     backdrop. Modals and drawers stay solid either way; they sit over a
-     scrim, so there is nothing to see through.
+   - Layers, in light: cards on the page's tone (Same — shadcn, Primer), white
+     cards on a gray page (Grouped — Apple, Polaris, HeroUI), or cards shaded
+     below the page (Tonal — Material 3). The page is always the page slider's
+     tone, so Grouped's depth is the page's gray. Dark always steps up page →
+     card → overlay, under the field/muted rung so content inside still reads.
+   - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
+     edgeless system's dark is derived: shadows die on near-black, so they
+     double, cards lift a quarter rung and overlays take the hairline
+     (Atlassian, Spectrum, HeroUI).
+   - Shadow: one ladder for cards, popovers and dialogs together, on
+     Tailwind's rungs. Flat is the registry's look (card none · popover md ·
+     modal lg); Low is shadcn New York, Medium shadcn Luma.
+   - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
+     dialogs and drawers sit on a scrim and stay solid.
 
-   Engine: every combination resolves to the tokens card, popover (menus,
-   pickers, chart tooltips), modal and drawer read — an edge per role (`--card-border`,
-   `--overlay-border`), a shadow per role (`--shadow-card`, `--shadow-popover`,
-   `--shadow-modal`), the surface colors (`--color-bg`, `--color-card`,
-   `--color-popover`) and the popover material (`--popover-alpha`,
-   `--popover-backdrop-filter`).
-   Shadows are Tailwind's own rungs, so the default recipe IS the registry's
-   look (card none · popover md · modal lg); per-mode values ride on
-   `light-dark()`; only what differs from the defaults is emitted. */
+   Only what differs from the registry's defaults is emitted. */
 
 import type { Resolved, StudioState } from "./index"
-import { oneOf, range } from "./schema"
+import { BOOLEAN, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const SURFACE_DEFAULTS = {
-  surfaceStrategy: "hairline",
-  surfaceDepth: "subtle",
-  surfaceCanvas: "same",
-  surfaceMaterial: "solid",
-  /** Background L*; dark 2 is dotUI's (the engine would pick 6). */
-  lightBg: 99,
-  darkBg: 2,
+  surfaceLayers: "same",
+  surfaceEdge: "line",
+  surfaceShadow: "flat",
+  surfaceGlass: false,
 }
 
-/** Where each mode's background runs — the engine's accepted range. */
-export const LIGHT_BG_RANGE = { min: 90, max: 100, step: 0.5 }
-export const DARK_BG_RANGE = { min: 0, max: 20, step: 0.5 }
-
-export const STRATEGY_OPTIONS = [
-  { value: "hairline", label: "Hairline" },
-  { value: "adaptive", label: "Adaptive" },
-  { value: "shadow", label: "Shadow" },
-  { value: "tonal", label: "Tonal" },
+export const LAYERS_OPTIONS = [
+  {
+    value: "same",
+    label: "Same",
+    description: "In light, cards share the page's tone",
+  },
+  {
+    value: "grouped",
+    label: "Grouped",
+    description: "In light, white cards on a gray page",
+  },
+  {
+    value: "tonal",
+    label: "Tonal",
+    description: "In light, cards a shade below the page",
+  },
 ]
 
-export const DEPTH_OPTIONS = [
-  { value: "flat", label: "Flat" },
-  { value: "subtle", label: "Subtle" },
-  { value: "raised", label: "Raised" },
-  { value: "floating", label: "Floating" },
+export const EDGE_OPTIONS = [
+  {
+    value: "line",
+    label: "Line",
+    description: "A hairline around every surface",
+  },
+  {
+    value: "none",
+    label: "None",
+    description: "Shadows and tone do the separating",
+  },
 ]
 
-export const CANVAS_OPTIONS = [
-  { value: "same", label: "Plain" },
-  { value: "tinted", label: "Tinted" },
+export const SHADOW_OPTIONS = [
+  {
+    value: "flat",
+    label: "Flat",
+    description: "No card shadows; menus and dialogs cast",
+  },
+  { value: "low", label: "Low", description: "A small shadow under cards" },
+  { value: "medium", label: "Medium", description: "Cards lift off the page" },
+  { value: "high", label: "High", description: "Deep, soft shadows" },
 ]
 
-export const MATERIAL_OPTIONS = [
-  { value: "solid", label: "Solid" },
-  { value: "glass", label: "Glass" },
+export const GLASS_OPTIONS = [
+  {
+    value: "solid",
+    label: "Solid",
+    description: "Opaque menus, popovers and toasts",
+  },
+  {
+    value: "glass",
+    label: "Glass",
+    description: "Translucent over a blur; dialogs stay solid",
+  },
 ]
+
+export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
+  surfaceLayers: oneOf(LAYERS_OPTIONS),
+  surfaceEdge: oneOf(EDGE_OPTIONS),
+  surfaceShadow: oneOf(SHADOW_OPTIONS),
+  surfaceGlass: BOOLEAN,
+}
+
+/* --------------------------------- Styles --------------------------------- */
+
+type StyleKey = "surfaceLayers" | "surfaceEdge" | "surfaceShadow"
+
+export interface SurfaceStyle {
+  id: string
+  label: string
+  /** Who draws their surfaces this way. */
+  credits: string
+  description: string
+  values: Record<StyleKey, string>
+}
+
+const style = (
+  id: string,
+  label: string,
+  credits: string,
+  description: string,
+  surfaceLayers: string,
+  surfaceEdge: string,
+  surfaceShadow: string,
+): SurfaceStyle => ({
+  id,
+  label,
+  credits,
+  description,
+  values: { surfaceLayers, surfaceEdge, surfaceShadow },
+})
+
+export const SURFACE_STYLES: SurfaceStyle[] = [
+  style(
+    "outlined",
+    "Outlined",
+    "shadcn, GitHub",
+    "Hairlines, flat cards",
+    "same",
+    "line",
+    "flat",
+  ),
+  style(
+    "soft",
+    "Soft",
+    "shadcn New York, Radix",
+    "Hairlines and a small shadow",
+    "same",
+    "line",
+    "low",
+  ),
+  style(
+    "elevated",
+    "Elevated",
+    "Fluent, Atlassian",
+    "Shadows instead of lines",
+    "same",
+    "none",
+    "low",
+  ),
+  style(
+    "grouped",
+    "Grouped",
+    "HeroUI, Polaris",
+    "White cards on a gray page",
+    "grouped",
+    "none",
+    "low",
+  ),
+  style(
+    "tonal",
+    "Tonal",
+    "Material",
+    "Cards toned off the page",
+    "tonal",
+    "none",
+    "flat",
+  ),
+]
+
+const SHADOWS = SHADOW_OPTIONS.map((o) => o.value)
+
+/** How close the state sits to a style, 9 on it: Layers outweighs Edge,
+ *  which outweighs how far apart the shadows are. */
+export const styleScore = (state: StudioState, { values }: SurfaceStyle) =>
+  (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
+  (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
+  3 -
+  Math.abs(
+    SHADOWS.indexOf(state.surfaceShadow) -
+      SHADOWS.indexOf(values.surfaceShadow),
+  )
+
+/** The style the state sits on, or the closest one. */
+export function surfaceStyle(state: StudioState): {
+  style: SurfaceStyle
+  exact: boolean
+} {
+  const best = SURFACE_STYLES.reduce((a, b) =>
+    styleScore(state, b) > styleScore(state, a) ? b : a,
+  )
+  return { style: best, exact: styleScore(state, best) === 9 }
+}
+
+/** Grouped's page: its cards are white, so the page's gray is its depth. The
+ *  engine re-anchors every ramp on the page, so fills on those white cards
+ *  read deeper too — contextual fills belong to the color rewrite. */
+export const GROUPED_PAGE = 96
+
+/** Flat cards need an edge or a tone apart from the page: Same has none, and
+ *  Grouped's white cards none on a near-white page. */
+export const flatAllowed = (state: StudioState) =>
+  state.surfaceEdge !== "none" ||
+  state.surfaceLayers === "tonal" ||
+  (state.surfaceLayers === "grouped" && state.lightBg <= GROUPED_PAGE + 1)
+
+/** `patch` applied. Entering Grouped takes a light page down to gray, and
+ *  leaving gives back `before`, the page it took, unless the page moved since;
+ *  then Flat lifts to Low where it would hide cards. */
+export function withSurface(
+  state: StudioState,
+  patch: Partial<Record<StyleKey, string>>,
+  before?: number,
+): { state: StudioState; before?: number } {
+  const next = { ...state, ...patch }
+  const grouped = (s: StudioState) => s.surfaceLayers === "grouped"
+  let kept = before
+  if (grouped(next) && !grouped(state)) {
+    kept = state.lightBg > GROUPED_PAGE + 1 ? state.lightBg : undefined
+    if (kept !== undefined) next.lightBg = GROUPED_PAGE
+  } else if (grouped(state) && !grouped(next)) {
+    if (before !== undefined && state.lightBg === GROUPED_PAGE)
+      next.lightBg = before
+    kept = undefined
+  }
+  if (!flatAllowed(next) && next.surfaceShadow === "flat")
+    next.surfaceShadow = "low"
+  return { state: next, before: kept }
+}
 
 /* -------------------------------- Recipe --------------------------------- */
 
@@ -82,10 +238,11 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, the system's hairline, black at an alpha, or nothing. The
- *  resolver writes it as CSS vars. */
+ *  of two rungs, white, the system's hairline, black at an alpha, or
+ *  nothing. */
 export type SurfaceColor =
   | { kind: "none" }
+  | { kind: "white" }
   | { kind: "hairline" }
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
@@ -102,49 +259,27 @@ export interface SurfaceLook {
   shadow: ShadowLayer[]
 }
 
+/** The page is always the neutral's 25 rung — the page slider's tone. */
 export interface SurfaceRecipe {
-  page: PerMode<SurfaceColor>
   card: SurfaceLook
+  /** Popovers, menus, tooltips, toasts; dialogs share its color and edge. */
   popover: SurfaceLook
-  modal: SurfaceLook
+  modalShadow: ShadowLayer[]
   glass: boolean
 }
 
-type Role = "card" | "popover" | "modal"
-
 const NONE: SurfaceColor = { kind: "none" }
+const WHITE: SurfaceColor = { kind: "white" }
 const HAIRLINE: SurfaceColor = { kind: "hairline" }
 const step = (step: string): SurfaceColor => ({ kind: "step", step })
-/** `weight`% of rung `a` mixed with rung `b`. */
-const mix = (a: string, b: string, weight: number): SurfaceColor =>
-  weight >= 100
-    ? step(a)
-    : weight <= 0
-      ? step(b)
-      : { kind: "mix", a, b, weight }
+/** Halfway between the 50 and 100 rungs: the registry's dark popover. */
+const HALF: SurfaceColor = { kind: "mix", a: "50", b: "100", weight: 50 }
+/** A quarter rung above 50: a lifted dark card, still under the popover. */
+const QUARTER: SurfaceColor = { kind: "mix", a: "50", b: "100", weight: 75 }
 const both = <T>(value: T): PerMode<T> => ({ light: value, dark: value })
 
-const DEPTHS = ["flat", "subtle", "raised", "floating"]
-
-/* Hairline weight per depth, as neutral rungs — the registry's own hairline
-   (theme.css `color-border`) is the subtle step. */
-const EDGE_LIGHT = [step("200"), HAIRLINE, step("300"), step("400")]
-const EDGE_DARK = [step("100"), HAIRLINE, step("200"), step("300")]
-
-/* Dark elevation ladders. Step 0 is the registry default (theme.css: card =
-   50, popover = a rung between 50 and 100); cards cap a step below floating
-   surfaces so the ladder never flattens. */
-const CARD_ELEVATION = [step("50"), mix("50", "100", 50), step("100")]
-const OVERLAY_ELEVATION = [
-  mix("50", "100", 50),
-  step("100"),
-  mix("100", "200", 50),
-]
-
-/* Tailwind's shadow ladder, indexed 0 (none) → 6 (2xl), as `[offset, alpha]`
-   layers. The registry ships popover = md and modal = lg, so a recipe that
-   lands on a rung is the registry's exact value. `AMBIENT` is the wide soft
-   layer the layered character adds under each rung. */
+/* Tailwind's shadow ladder as `[offset, alpha]` layers: 0 none, then xs, sm,
+   md, lg, xl, 2xl. */
 const RUNGS: Array<Array<[string, number]>> = [
   [],
   [["0 1px 2px 0", 0.05]],
@@ -166,163 +301,77 @@ const RUNGS: Array<Array<[string, number]>> = [
   ],
   [["0 25px 50px -12px", 0.25]],
 ]
-const AMBIENT = [
-  "",
-  "0 2px 8px 1px",
-  "0 4px 12px 2px",
-  "0 8px 24px 4px",
-  "0 12px 36px 6px",
-  "0 20px 48px 8px",
-  "0 28px 64px 12px",
-]
 
-/** How a strategy's shadows translate to dark: unchanged (shadcn ships the
- *  same shadow-md on near-black), gone (dark leans on hairline + elevation),
- *  or harder (a shadow that reads on white vanishes on near-black). */
-type DarkCast = "same" | "none" | "harder"
+/** Rung per role — card, popover, modal — at each shadow step. */
+const LADDER = {
+  flat: [0, 3, 4],
+  low: [2, 3, 4],
+  medium: [3, 4, 5],
+  high: [4, 5, 6],
+} satisfies Record<string, [number, number, number]>
 
-function shadowLayers(
-  rung: number,
-  weight: number,
-  dark: DarkCast,
-  layered: boolean,
-): ShadowLayer[] {
+/** Flat where it would hide cards renders as Low, whatever wrote the state. */
+const ladder = (state: StudioState) =>
+  state.surfaceShadow === "flat" && !flatAllowed(state)
+    ? LADDER.low
+    : (LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat)
+
+/** The card's rung, for glyphs that hint at its shadow. */
+export const cardRung = (state: StudioState) => ladder(state)[0]
+
+/* The soft 0-offset outline shadow-led systems draw around every raised
+   surface (Fluent's 0 0 2px). */
+const PERIMETER: [string, number] = ["0 0 2px 0", 0.12]
+
+function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
-  const color = (alpha: number): PerMode<SurfaceColor> => {
-    const light = Math.min(alpha * weight, 0.7)
-    return {
-      light: { kind: "shade", alpha: light },
-      dark:
-        dark === "none"
-          ? NONE
-          : {
-              kind: "shade",
-              alpha: dark === "harder" ? Math.min(light * 2.2, 0.6) : light,
-            },
-    }
-  }
-  const out: ShadowLayer[] = layers.map(([offset, alpha]) => ({
-    offset,
-    color: color(alpha),
-  }))
-  const key = layers[0]
-  if (layered && key)
-    out.push({ offset: AMBIENT[rung] ?? "", color: color(key[1] * 0.5) })
-  return out
+  if (layers.length === 0) return []
+  return [...(edgeless ? [PERIMETER] : []), ...layers].map(
+    ([offset, alpha]) => ({
+      offset,
+      color: {
+        light: { kind: "shade", alpha },
+        dark: {
+          kind: "shade",
+          alpha: edgeless ? Math.min(alpha * 2, 0.6) : alpha,
+        },
+      },
+    }),
+  )
 }
 
-/** Shadow rung per role at each depth (flat · subtle · raised · floating). */
-type Ladder = Record<Role, [number, number, number, number]>
-
-/** The whole chapter in one place: each strategy resolves edge, shadow and
- *  dark elevation together from the depth lever, so no combination of the
- *  axes can contradict itself. */
+/** Every setting resolved together, so no combination contradicts itself. */
 export function surfaceRecipe(state: StudioState): SurfaceRecipe {
-  const d = Math.max(0, DEPTHS.indexOf(state.surfaceDepth))
-  const tinted = state.surfaceCanvas === "tinted"
-
-  const look = (role: Role): SurfaceLook => {
-    const floating = role !== "card"
-    let edge: PerMode<SurfaceColor> = both(NONE)
-    let ladder: Ladder
-    let weight = 1
-    let dark: DarkCast = "same"
-    /* Dark-mode elevation steps this strategy adds at this depth. */
-    let elevation = 0
-    /* Tonal only: % of the way from the card rung to the next. */
-    let tonal: number | null = null
-
-    switch (state.surfaceStrategy) {
-      case "hairline":
-        // Edge-led in both modes; shadows stay subordinate (the registry's
-        // own md/lg at subtle), none on cards until raised.
-        edge = {
-          light: EDGE_LIGHT[d] ?? HAIRLINE,
-          dark: EDGE_DARK[d] ?? HAIRLINE,
-        }
-        ladder = {
-          card: [0, 0, 1, 2],
-          popover: [2, 3, 4, 5],
-          modal: [3, 4, 5, 6],
-        }
-        if (floating && d >= 2) elevation = 1
-        break
-      case "adaptive":
-        // Shadow-only in light; dark swaps the means to hairline + elevation.
-        edge = { light: NONE, dark: EDGE_DARK[Math.min(d + 1, 3)] ?? HAIRLINE }
-        ladder = {
-          card: [1, 2, 3, 4],
-          popover: [3, 4, 5, 6],
-          modal: [4, 5, 6, 6],
-        }
-        dark = "none"
-        if (floating && d >= 1) elevation = 1
-        break
-      case "shadow":
-        // Depth-led: real shadows even at flat, elevation carries dark.
-        ladder = {
-          card: [2, 3, 4, 5],
-          popover: [3, 4, 5, 6],
-          modal: [4, 5, 6, 6],
-        }
-        weight = 1.2
-        dark = "harder"
-        elevation = (floating ? 1 : 0) + (d >= 2 ? 1 : 0)
-        break
-      default:
-        // Tonal: contrast-led in BOTH modes — containers step off the page
-        // by background alone, shadows subordinate (floating layers only).
-        tonal = floating
-          ? ([55, 70, 85, 100][d] ?? 70)
-          : ([25, 35, 50, 60][d] ?? 35)
-        ladder = {
-          card: [0, 0, 0, 0],
-          popover: [0, 2, 3, 4],
-          modal: [0, 3, 4, 5],
-        }
-        weight = 0.8
-    }
-
-    const shadow = shadowLayers(
-      ladder[role][d] ?? 0,
-      weight,
-      dark,
-      state.surfaceStrategy === "shadow",
-    )
-    // Light lifts via the canvas tint instead, so elevation is dark-only;
-    // a tinted canvas lifts cards a full rung there.
-    const steps = floating ? OVERLAY_ELEVATION : CARD_ELEVATION
-    const lift = Math.min(
-      floating ? 2 : 1 + (tinted ? 1 : 0),
-      elevation + (tinted ? (floating ? 1 : 2) : 0),
-    )
-    const bg: PerMode<SurfaceColor> =
-      tonal !== null
-        ? both(mix("50", "100", 100 - tonal))
-        : {
-            light: tinted ? step("25") : step("50"),
-            dark: steps[lift] ?? step("50"),
-          }
-
-    return { edge, bg, shadow }
-  }
-
+  const edgeless = state.surfaceEdge === "none"
+  const grouped = state.surfaceLayers === "grouped"
+  const tonal = state.surfaceLayers === "tonal"
+  const [card, popover, modal] = ladder(state)
   return {
-    page: {
-      light: tinted ? mix("50", "100", 50) : step("25"),
-      dark: step("25"),
+    card: {
+      edge: both(edgeless ? NONE : HAIRLINE),
+      bg: {
+        light: grouped ? WHITE : tonal ? HALF : step("25"),
+        dark: edgeless || tonal ? QUARTER : step("50"),
+      },
+      shadow: shadowLayers(card, edgeless),
     },
-    card: look("card"),
-    popover: look("popover"),
-    modal: look("modal"),
-    glass: state.surfaceMaterial === "glass",
+    popover: {
+      edge: { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
+      bg: {
+        light: grouped ? WHITE : tonal ? step("50") : step("25"),
+        dark: HALF,
+      },
+      shadow: shadowLayers(popover, edgeless),
+    },
+    modalShadow: shadowLayers(modal, edgeless),
+    glass: state.surfaceGlass,
   }
 }
 
 /* ----------------------------- Serialization ----------------------------- */
 
 /** How a SurfaceColor's references resolve: to CSS vars (the resolver) or to
- *  a mode's solved scales (tests). */
+ *  a mode's solved scales (the panel glyphs, tests). */
 export interface SurfacePalette {
   step: (step: string) => string
   hairline: string
@@ -337,6 +386,8 @@ export function surfaceColorCss(
   switch (color.kind) {
     case "none":
       return "transparent"
+    case "white":
+      return "oklch(1 0 0)"
     case "hairline":
       return palette.hairline
     case "step":
@@ -374,14 +425,13 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
 }
 
 function surfaceTokens(state: StudioState): Record<string, string> {
-  const { page, card, popover, modal, glass } = surfaceRecipe(state)
+  const { card, popover, modalShadow, glass } = surfaceRecipe(state)
   return {
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
     "--shadow-card": shadowCss(card.shadow, pairCss),
     "--shadow-popover": shadowCss(popover.shadow, pairCss),
-    "--shadow-modal": shadowCss(modal.shadow, pairCss),
-    "--color-bg": pairCss(page),
+    "--shadow-modal": shadowCss(modalShadow, pairCss),
     "--color-card": pairCss(card.bg),
     "--color-popover": pairCss(popover.bg),
     "--popover-alpha": glass ? "70%" : "100%",
@@ -390,15 +440,6 @@ function surfaceTokens(state: StudioState): Record<string, string> {
 }
 
 const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
-
-export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
-  surfaceStrategy: oneOf(STRATEGY_OPTIONS),
-  surfaceDepth: oneOf(DEPTH_OPTIONS),
-  surfaceCanvas: oneOf(CANVAS_OPTIONS),
-  surfaceMaterial: oneOf(MATERIAL_OPTIONS),
-  lightBg: range(LIGHT_BG_RANGE),
-  darkBg: range(DARK_BG_RANGE),
-}
 
 export function resolveSurfaces(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}

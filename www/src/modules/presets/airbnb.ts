@@ -22,6 +22,8 @@ export const airbnb = definePreset({
     vividness: 1,
     neutralTint: 0,
     preserveSeed: true,
+    lightBg: 100,
+    darkBg: 5,
 
     // Typography
     headingFont: "",
@@ -46,12 +48,10 @@ export const airbnb = definePreset({
     spacingUnit: 4.5,
 
     // Surfaces
-    surfaceStrategy: "adaptive",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 5,
+    surfaceLayers: "same",
+    surfaceEdge: "none",
+    surfaceShadow: "low",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

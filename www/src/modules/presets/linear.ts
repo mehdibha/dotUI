@@ -19,6 +19,9 @@ export const linear = definePreset({
     vividness: 1,
     neutralTint: 1,
     preserveSeed: false,
+    lightBg: 99,
+    // Linear's dark-first page is near-black #08090a.
+    darkBg: 2,
 
     // Typography
     headingFont: "",
@@ -42,13 +45,10 @@ export const linear = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "raised",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 99,
-    // Linear's dark-first page is near-black #08090a.
-    darkBg: 2,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "low",
+    surfaceGlass: false,
 
     // Browser
     // The app's --pointer is default.

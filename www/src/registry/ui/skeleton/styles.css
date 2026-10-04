@@ -43,7 +43,11 @@
   --skeleton-image: linear-gradient(
     to right,
     var(--color-muted) 33%,
-    color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
+    color-mix(
+      in oklab,
+      var(--color-muted),
+      var(--surface-bg, var(--color-bg)) 45%
+    ),
     var(--color-muted) 66%
   );
   --skeleton-animation: var(--animate-skeleton-shimmer);

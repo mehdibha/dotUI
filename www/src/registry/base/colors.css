@@ -289,8 +289,8 @@
 	--color-border-focus-muted: var(--accent-300);
 	--color-tooltip: var(--neutral-950);
 	--color-fg-on-tooltip: var(--neutral-25);
-	--color-card: var(--neutral-50);
-	--color-popover: var(--neutral-50);
+	--color-card: var(--neutral-25);
+	--color-popover: var(--neutral-25);
 	--color-sidebar: var(--neutral-50);
 	--color-overlay: oklch(0 0 0);
 	--color-thumb: oklch(1 0 0);
@@ -300,5 +300,6 @@
 
 .dark {
 	--color-border: color-mix(in oklab, var(--neutral-100) 50%, var(--neutral-200));
+	--color-card: var(--neutral-50);
 	--color-popover: color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100));
 }

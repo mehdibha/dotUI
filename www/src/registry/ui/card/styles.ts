@@ -5,7 +5,7 @@ import cardMeta from "./meta"
 const { useStyles, styles } = createStyles(cardMeta, {
   base: {
     slots: {
-      root: "group/card flex flex-col rounded-(--studio-card-radius) border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-radius:var(--studio-card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-(--studio-card-radius) *:[img]:last:rounded-b-(--studio-card-radius)",
+      root: "group/card flex flex-col rounded-(--studio-card-radius) border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] [--surface-radius:var(--studio-card-radius)] has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-(--studio-card-radius) *:[img]:last:rounded-b-(--studio-card-radius)",
       header:
         "group/card-header @container/card-header grid auto-rows-min items-start rounded-t-(--studio-card-radius) has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto]",
       title: "font-heading",
