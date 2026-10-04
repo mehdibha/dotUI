@@ -57,11 +57,11 @@ export function PanelChrome({
                 variant="quiet"
                 size="sm"
                 aria-label={`Design system: ${system.name}. Change design system`}
-                className="min-w-0 shrink justify-start gap-1 pl-1.5 font-medium has-data-[icon=inline-end]:pr-1"
+                className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
               >
                 <span
                   aria-hidden
-                  className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                  className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
                   style={{ background: system.swatch }}
                 />
                 <span dir="auto" className="min-w-0 truncate">
