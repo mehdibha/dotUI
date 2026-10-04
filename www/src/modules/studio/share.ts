@@ -15,7 +15,7 @@ import {
 import type { Snapshot } from "@/lib/snapshots/snapshot"
 
 import type { StudioState } from "./axes"
-import { useCurrent } from "./selection"
+import type { Current } from "./selection"
 
 export type Source = { kind: "preset" | "snapshot"; id: string }
 
@@ -68,14 +68,16 @@ export function snapshotOf(content: Content): Promise<string> {
   return request
 }
 
-/** The current design system's source, resolved while mounted: the user's
- *  system or unsaved slot is snapshotted on mount and after each change. */
-export function useSource(): {
+/** A design system's source, resolved while mounted: the user's system or
+ *  unsaved slot is snapshotted on mount and after each change. */
+export function useSource({
+  view,
+  content,
+}: Pick<Current, "view" | "content">): {
   source?: Source
   failed: boolean
   retry: () => void
 } {
-  const { view, content } = useCurrent()
   const name = content?.name
   const state = content?.state
   const [attempt, setAttempt] = useState(0)

@@ -1,4 +1,4 @@
-import { Share2Icon } from "lucide-react"
+import { LinkIcon } from "lucide-react"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { Button } from "@/registry/ui/button"
@@ -17,12 +17,12 @@ export function StudioHeaderActions() {
       <div className="flex items-center gap-2">
         <SharePopover>
           <Button
-            variant="quiet"
+            variant="secondary"
             size="sm"
             isIconOnly={isMobile}
             aria-label={isMobile ? "Share" : undefined}
           >
-            <Share2Icon />
+            <LinkIcon />
             {!isMobile && "Share"}
           </Button>
         </SharePopover>

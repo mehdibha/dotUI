@@ -42,6 +42,7 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
+import { useCurrent } from "@/modules/studio/selection"
 import { registryPath, useSource } from "@/modules/studio/share"
 
 import { CodeOptions } from "./code-options"
@@ -93,7 +94,7 @@ export function ExportDialog({ children }: { children: ReactNode }) {
 /** Installs exactly what's on screen; the user's system is snapshotted as
  *  the dialog opens. */
 function ExportCommands() {
-  const { source, failed, retry } = useSource()
+  const { source, failed, retry } = useSource(useCurrent())
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()

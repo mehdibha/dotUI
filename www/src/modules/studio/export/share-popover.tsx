@@ -1,11 +1,11 @@
 "use client"
 
 /* Share: a popover with the link to what's on screen, previewed in its own
-   design system. */
+   design system. Unsaved edits can be shared, or the version they edit. */
 
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import type { ReactNode } from "react"
-import { CheckIcon, CopyIcon } from "lucide-react"
+import { CheckIcon, LinkIcon } from "lucide-react"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
@@ -14,14 +14,22 @@ import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import { Checkbox } from "@/registry/ui/checkbox"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { FieldGroup, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
+import {
+  Radio,
+  RadioControl,
+  RadioGroup,
+  RadioIndicator,
+} from "@/registry/ui/radio-group"
 import { Switch } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
 import type { StudioState } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
-import { useCurrent } from "@/modules/studio/selection"
+import { describe, useCurrent } from "@/modules/studio/selection"
 import { studioLink, useSource } from "@/modules/studio/share"
+import { useWorkspace } from "@/modules/studio/workspace"
 
 export function SharePopover({ children }: { children: ReactNode }) {
   return (
@@ -38,8 +46,14 @@ export function SharePopover({ children }: { children: ReactNode }) {
 
 function ShareBody() {
   const current = useCurrent()
-  const name = current.content?.name ?? current.name
-  const { source, failed, retry } = useSource()
+  const workspace = useWorkspace()
+  const [version, setVersion] = useState<"edited" | "saved">("edited")
+  const shared =
+    version === "saved" && current.unsaved
+      ? describe(current.unsaved.from, workspace)
+      : current
+  const name = shared.content?.name ?? shared.name
+  const { source, failed, retry } = useSource(shared)
   const isMobile = useIsMobile()
   const { isCopied, copyToClipboard } = useCopyToClipboard()
   const link = source && studioLink(source)
@@ -53,7 +67,29 @@ function ShareBody() {
           install it.
         </p>
       </div>
-      <SharedPreview name={name} state={current.state} />
+      {current.unsaved && (
+        <RadioGroup
+          aria-label="Version"
+          value={version}
+          onChange={(value) => setVersion(value as "edited" | "saved")}
+        >
+          <FieldGroup className="grid grid-cols-2 gap-2">
+            <Radio value="edited">
+              <RadioControl>
+                <RadioIndicator />
+                <Label>Edited</Label>
+              </RadioControl>
+            </Radio>
+            <Radio value="saved">
+              <RadioControl>
+                <RadioIndicator />
+                <Label>Saved</Label>
+              </RadioControl>
+            </Radio>
+          </FieldGroup>
+        </RadioGroup>
+      )}
+      <SharedPreview name={name} state={shared.state} />
       <TextField
         value={link ?? ""}
         isReadOnly
@@ -73,12 +109,12 @@ function ShareBody() {
             onPress={() => link && copyToClipboard(link)}
             className="shrink-0"
           >
-            {isCopied ? <CheckIcon /> : <CopyIcon />}
-            {isCopied ? "Copied" : "Copy"}
+            {isCopied ? <CheckIcon /> : <LinkIcon />}
+            {isCopied ? "Copied" : "Copy link"}
           </Button>
         </div>
       </TextField>
-      {failed ? (
+      {failed && (
         <p className="text-xs text-fg-danger">
           Couldn't create the link ·{" "}
           <button
@@ -89,12 +125,6 @@ function ShareBody() {
             Try again
           </button>
         </p>
-      ) : (
-        current.content && (
-          <p className="text-xs text-fg-muted">
-            The link keeps what's on screen now: share again after more edits.
-          </p>
-        )
       )}
       {isMobile && link && typeof navigator.share === "function" && (
         <Button
