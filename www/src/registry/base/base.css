@@ -60,13 +60,6 @@
 @layer base {
   * {
     @apply border-border;
-    /* Scrollbar axis: native unless the tokens say thin/themed; the hover
-       pair reveals an overlay-style bar while the pointer is over the area. */
-    scrollbar-width: var(--scrollbar-width, auto);
-    scrollbar-color: var(--scrollbar-color, auto);
-  }
-  *:hover {
-    scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
   }
   /* The heading voice: face, weight and tracking are design-system axes. */
   h1,

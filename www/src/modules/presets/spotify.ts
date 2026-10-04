@@ -60,7 +60,6 @@ export const spotify = definePreset({
     cursorDisabled: "not-allowed",
     selectionUiText: "none",
     selectionHighlight: "browser",
-    scrollbarStyle: "overlay",
 
     // States
     focusColor: "neutral",

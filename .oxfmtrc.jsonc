@@ -108,6 +108,8 @@
     "examples/*/src/hooks/**",
     "examples/*/src/lib/**",
     "examples/*/components.json",
+    // pnpm writes minimumReleaseAgeExclude here during the smoke install.
+    "examples/*/pnpm-workspace.yaml",
     "examples/*/src/app/globals.css",
     "examples/*/src/app/layout.tsx",
     "examples/*/src/styles.css",

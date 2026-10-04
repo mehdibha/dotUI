@@ -57,7 +57,6 @@ export const supabase = definePreset({
     cursorDisabled: "not-allowed",
     selectionUiText: "none",
     selectionHighlight: "accent",
-    scrollbarStyle: "native",
 
     // States
     focusColor: "accent",
