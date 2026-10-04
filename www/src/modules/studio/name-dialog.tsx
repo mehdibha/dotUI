@@ -138,7 +138,7 @@ function NameForm({
         className="w-full"
       >
         <Label>Name</Label>
-        <Input />
+        <Input placeholder="My design system" />
         <FieldError>Another design system has this name.</FieldError>
       </TextField>
       {startFrom !== undefined && (

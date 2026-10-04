@@ -38,7 +38,6 @@ import {
   isUnreadable,
   rename,
   saveName,
-  uniqueName,
   useWorkspace,
 } from "./workspace"
 import type { DesignSystemDoc } from "./workspace"
@@ -212,11 +211,7 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={sections}
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
-        onCreate={
-          canSave
-            ? () => askNew("current", uniqueName("Untitled", workspace.systems))
-            : undefined
-        }
+        onCreate={canSave ? () => askNew("current", "") : undefined}
         withPreview
         renderItemMenu={(item) => renderItemMenu(item.id)}
       >
