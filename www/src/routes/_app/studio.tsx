@@ -93,9 +93,10 @@ const useHydrated = () =>
     () => false,
   )
 
-/** Opens a `?preset=` or `?s=` link once, as a read-only view, and strips
- *  it from the URL. The current view stays while a shared link loads. */
-function useOpenLink() {
+/** Opens a `?preset=` or `?s=` link once, as a read-only view, then strips
+ *  it from the URL; until then the studio waits. After hydration, so its
+ *  toast has a provider. */
+function useOpenLink(hydrated: boolean): boolean {
   const { s, preset } = Route.useSearch()
   const navigate = Route.useNavigate()
   const opened = useRef<string>(undefined)
@@ -106,42 +107,49 @@ function useOpenLink() {
       opened.current = undefined
       return
     }
-    if (link === opened.current) return
+    if (!hydrated || link === opened.current) return
     opened.current = link
-    navigate({
-      search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
-      replace: true,
-    })
+    const done = () =>
+      navigate({
+        search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
+        replace: true,
+      })
     const broken = () =>
       toastManager.add({ title: "This link doesn't work", type: "error" })
     if (s === undefined) {
       if (preset && getPreset(preset)) select({ kind: "preset", id: preset })
       else broken()
+      done()
       return
     }
     const from = getCurrent().key
-    fetchSnapshot(s).then(
-      (snapshot) => {
-        if (!snapshot) return broken()
-        // A pick made while it loaded wins.
-        if (getCurrent().key !== from) return
-        select({
-          kind: "link",
-          id: s,
-          name: snapshot.name,
-          state: snapshot.state,
-        })
-      },
-      (error: unknown) => {
-        console.error(error)
-        broken()
-      },
-    )
-  }, [s, preset, navigate])
+    fetchSnapshot(s)
+      .then(
+        (snapshot) => {
+          if (!snapshot) return broken()
+          // A pick made meanwhile, in another tab, wins.
+          if (getCurrent().key !== from) return
+          select({
+            kind: "link",
+            id: s,
+            name: snapshot.name,
+            state: snapshot.state,
+          })
+        },
+        (error: unknown) => {
+          console.error(error)
+          broken()
+        },
+      )
+      .finally(done)
+  }, [hydrated, s, preset, navigate])
+  return s !== undefined || preset !== undefined
 }
 
 function StudioPage() {
   const hydrated = useHydrated()
+  const opening = useOpenLink(hydrated)
+  const isMobile = useIsMobile()
   const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
 
   // Edits reach storage on a throttle; leaving writes the last one.
@@ -167,17 +175,23 @@ function StudioPage() {
           className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 dock-side:flex-row"
         >
           {/* The workspace lives in this browser: the server renders the
-              frame only. */}
-          {hydrated ? <StudioBody /> : <StudioSkeleton />}
+              frame only, and a shared link shows once it has loaded. */}
+          {hydrated && !opening ? <StudioBody /> : <StudioSkeleton />}
         </div>
       </PanelPopoverBoundary.Provider>
+      {hydrated && (
+        <ToastProvider
+          portalProps={TOP_LAYER}
+          position={isMobile ? "top-center" : undefined}
+        />
+      )}
     </div>
   )
 }
 
-// Live and on top of modal overlays, the picker's drawer included: a delete's
-// Undo works with the picker open. On phones they sit at the top, clear of
-// the drawers and below the header's Share and Export.
+// Live and on top of modal overlays, the picker's drawer included. On phones
+// they sit at the top, clear of the drawers and below the header's Share and
+// Export.
 const TOP_LAYER = {
   "data-react-aria-top-layer": "true",
   // Portaled out of the layout's --header-height: 14 plus a gap.
@@ -185,18 +199,12 @@ const TOP_LAYER = {
 } as ComponentProps<typeof ToastProvider>["portalProps"]
 
 function StudioBody() {
-  useOpenLink()
-  const isMobile = useIsMobile()
   // Said on arrival, before the list looks emptied.
   useEffect(() => {
     if (isUnreadable()) storageFailed(true)
   }, [])
   return (
     <>
-      <ToastProvider
-        portalProps={TOP_LAYER}
-        position={isMobile ? "top-center" : undefined}
-      />
       <StudioHeaderActions />
       {/* Below `lg` the panel docks under the preview; on short screens
           (a phone on its side) it sits beside it instead. */}
