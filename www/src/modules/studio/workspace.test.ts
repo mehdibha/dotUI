@@ -133,7 +133,8 @@ describe("workspace", () => {
     expect(stored().unsaved.state.radiusPx).toBe(3)
     ws.setUnsaved(undefined)
     ws.flush()
-    expect(stored()).not.toHaveProperty("unsaved")
+    // Empty again: nothing is stored.
+    expect(win.read(KEY)).toBeNull()
   })
 
   it("keeps generated names within 64 UTF-16 units", async () => {

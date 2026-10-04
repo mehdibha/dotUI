@@ -39,20 +39,21 @@ function parseSelection(raw: unknown): Selection | undefined {
   return workspace.parseView(raw)
 }
 
-const store = createPersistedStore<Selection | null>("dotui:current", null, {
+// Origin is the fallback, never stored: see preview-pending.ts.
+const store = createPersistedStore<Selection>("dotui:current", ORIGIN_VIEW, {
   // Unreadable is Origin: it's only a pointer, safe to write over.
   decode: (raw) => {
     try {
-      return parseSelection(JSON.parse(raw)) ?? null
+      return parseSelection(JSON.parse(raw)) ?? ORIGIN_VIEW
     } catch {
-      return null
+      return ORIGIN_VIEW
     }
   },
-  encode: (sel) => (sel ? JSON.stringify(sel) : null),
+  encode: (sel) => JSON.stringify(sel),
   onWriteError: workspace.storageFailed,
 })
 
-const getSelection = (): Selection => store.get() ?? ORIGIN_VIEW
+const getSelection = store.get
 
 /** One key per selection: `preset:<id>`, `link:<id>`, `system:<id>` or
  *  `unsaved`. */
@@ -163,7 +164,7 @@ export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
 
 export function useCurrent(): Current {
-  const sel = store.useValue() ?? ORIGIN_VIEW
+  const sel = store.useValue()
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }

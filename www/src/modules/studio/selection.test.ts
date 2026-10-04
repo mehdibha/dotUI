@@ -40,6 +40,18 @@ async function load() {
   return { selection, ws, toasts, current, radius, edit, system }
 }
 
+describe("current", () => {
+  it("is stored only off Origin, so the docs veil nothing for it", async () => {
+    const { selection, system } = await load()
+    selection.select({ kind: "preset", id: "linear" })
+    expect(win.read("dotui:current")).not.toBeNull()
+    selection.select({ kind: "preset", id: "origin" })
+    expect(win.read("dotui:current")).toBeNull()
+    selection.remove(system())
+    expect(win.read("dotui:current")).toBeNull()
+  })
+})
+
 describe("unsaved slot", () => {
   it("writes nothing until a view is edited", async () => {
     const { selection, current } = await load()

@@ -18,13 +18,15 @@ interface PersistedStoreCodec<T> {
  * a write never sends back a value another tab has since replaced. A stored
  * value `decode` throws on reads as `fallback` and is never overwritten. Writes
  * still apply in memory when persistence fails. The server and the first
- * client render see `fallback` so hydration matches.
+ * client render see `fallback` so hydration matches. `fallback` itself is
+ * never stored: a present key always means another value.
  */
 export function createPersistedStore<T>(
   key: string,
   fallback: T,
   { decode, encode, onWriteError }: PersistedStoreCodec<T>,
 ) {
+  const encodedFallback = encode(fallback)
   const listeners = new Set<() => void>()
   let value = fallback
   // undefined until storage was first read; null when the key is absent.
@@ -73,9 +75,10 @@ export function createPersistedStore<T>(
     try {
       if (unreadable) throw new Error(`${key} holds a value this can't read`)
       const encoded = encode(next)
-      if (encoded === null) window.localStorage.removeItem(key)
-      else window.localStorage.setItem(key, encoded)
-      raw = encoded
+      const stored = encoded === encodedFallback ? null : encoded
+      if (stored === null) window.localStorage.removeItem(key)
+      else window.localStorage.setItem(key, stored)
+      raw = stored
       saved = true
     } catch {
       onWriteError?.(unreadable)
@@ -117,7 +120,7 @@ export function createPersistedStore<T>(
   return { get, set, update, subscribe, useValue, isUnreadable }
 }
 
-/** Codec for a closed string set. Unknown stored values decode to the fallback; the fallback clears the key. */
+/** Codec for a closed string set. Unknown stored values decode to the fallback. */
 export function enumCodec<T extends string>(
   values: readonly T[],
   fallback: T,
@@ -125,6 +128,6 @@ export function enumCodec<T extends string>(
   const valid = new Set<string>(values)
   return {
     decode: (raw) => (valid.has(raw) ? (raw as T) : fallback),
-    encode: (value) => (value === fallback ? null : value),
+    encode: (value) => value,
   }
 }
