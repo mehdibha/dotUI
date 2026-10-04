@@ -1,16 +1,25 @@
 "use client"
 
-/* Share: a popover (a drawer on phones) with the link to what's on screen. */
+/* Share: a popover with the link to what's on screen, previewed in its own
+   design system. */
 
+import { useMemo } from "react"
 import type { ReactNode } from "react"
+import { CheckIcon, CopyIcon } from "lucide-react"
 
+import { DesignSystemProvider } from "@/lib/styles"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
+import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
+import { Checkbox } from "@/registry/ui/checkbox"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { Input } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
+import { Switch } from "@/registry/ui/switch"
 import { TextField } from "@/registry/ui/text-field"
+import type { StudioState } from "@/modules/studio/axes"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 import { useCurrent } from "@/modules/studio/selection"
 import { studioLink, useSource } from "@/modules/studio/share"
 
@@ -37,9 +46,14 @@ function ShareBody() {
 
   return (
     <>
-      <h2 className="truncate text-sm font-medium" dir="auto">
-        Share {name}
-      </h2>
+      <div className="flex flex-col gap-1">
+        <h2 className="text-sm font-medium">Share design system</h2>
+        <p className="text-xs text-fg-muted">
+          Anyone with the link can open it in the studio, then save, edit or
+          install it.
+        </p>
+      </div>
+      <SharedPreview name={name} state={current.state} />
       <TextField
         value={link ?? ""}
         isReadOnly
@@ -59,11 +73,12 @@ function ShareBody() {
             onPress={() => link && copyToClipboard(link)}
             className="shrink-0"
           >
+            {isCopied ? <CheckIcon /> : <CopyIcon />}
             {isCopied ? "Copied" : "Copy"}
           </Button>
         </div>
       </TextField>
-      {failed && (
+      {failed ? (
         <p className="text-xs text-fg-danger">
           Couldn't create the link ·{" "}
           <button
@@ -74,6 +89,12 @@ function ShareBody() {
             Try again
           </button>
         </p>
+      ) : (
+        current.content && (
+          <p className="text-xs text-fg-muted">
+            The link keeps what's on screen now: share again after more edits.
+          </p>
+        )
       )}
       {isMobile && link && typeof navigator.share === "function" && (
         <Button
@@ -87,5 +108,44 @@ function ShareBody() {
         </Button>
       )}
     </>
+  )
+}
+
+/** What the link opens, drawn in its own design system. */
+function SharedPreview({ name, state }: { name: string; state: StudioState }) {
+  const designSystem = useMemo(() => resolveDesignSystem(state), [state])
+  return (
+    <DesignSystemProvider
+      scoped
+      params={designSystem.componentParams}
+      tokens={designSystem.tokens}
+      density={designSystem.density}
+      color={designSystem.color}
+      icons={designSystem.icons}
+    >
+      <div
+        aria-hidden
+        inert
+        className="flex flex-col gap-3 rounded-lg border bg-bg p-3 select-none"
+      >
+        <p
+          dir="auto"
+          className="truncate font-heading text-sm font-semibold text-fg"
+        >
+          {name}
+        </p>
+        <div className="flex items-center gap-2">
+          <Button variant="primary" size="sm">
+            Get started
+          </Button>
+          <Button size="sm">Learn more</Button>
+        </div>
+        <div className="flex items-center gap-3">
+          <Switch aria-label="Switch" defaultSelected />
+          <Checkbox aria-label="Checkbox" defaultSelected />
+          <Badge>New</Badge>
+        </div>
+      </div>
+    </DesignSystemProvider>
   )
 }
