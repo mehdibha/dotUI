@@ -37,6 +37,7 @@ import {
   ICON_STROKE_WIDTH_VAR,
   LIBRARY_OPTIONS,
   STROKE_DEFAULTS,
+  STROKE_RANGE,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
 import {
@@ -156,7 +157,7 @@ function IconLibraryRow({
         </SelectValue>
       </RacButton>
       <PanelPopoverTitle.Provider value={label}>
-        <PanelPopover className="w-[26rem] min-w-0">
+        <PanelPopover className="w-104 min-w-0">
           {/* Crossing to the wall keeps the peek; leaving falls back to the focused row. */}
           <div
             className="flex min-h-0 gap-1.5 overflow-y-auto overscroll-contain p-2"
@@ -233,9 +234,9 @@ export function IconsSection({ studio }: { studio: Studio }) {
           label="Stroke"
           value={state.iconStroke}
           onChange={set("iconStroke")}
-          minValue={1}
-          maxValue={3}
-          step={0.25}
+          minValue={STROKE_RANGE.min}
+          maxValue={STROKE_RANGE.max}
+          step={STROKE_RANGE.step}
           format={(v) => v.toFixed(2)}
         />
       )}

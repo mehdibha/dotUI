@@ -25,6 +25,7 @@ import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppStudioRouteImport } from './routes/_app/studio'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as ApiSnapshotsRouteImport } from './routes/api/snapshots'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as InternalIndexRouteImport } from './routes/internal.index'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
@@ -34,12 +35,10 @@ import { Route as InternalHighlightCompareRouteImport } from './routes/internal.
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
-import { Route as RNameRouteImport } from './routes/r/$name'
-import { Route as RInitRouteImport } from './routes/r/init'
-import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json'
-import { Route as RV0RouteImport } from './routes/r/v0'
+import { Route as RSplatRouteImport } from './routes/r/$'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
+import { Route as ApiSnapshotsIdRouteImport } from './routes/api/snapshots.$id'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -120,6 +119,11 @@ const ApiSearchRoute = ApiSearchRouteImport.update({
   path: '/api/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSnapshotsRoute = ApiSnapshotsRouteImport.update({
+  id: '/api/snapshots',
+  path: '/api/snapshots',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
@@ -167,24 +171,9 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
   path: '/preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RNameRoute = RNameRouteImport.update({
-  id: '/r/$name',
-  path: '/r/$name',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RInitRoute = RInitRouteImport.update({
-  id: '/r/init',
-  path: '/r/init',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RRegistryDotjsonRoute = RRegistryDotjsonRouteImport.update({
-  id: '/r/registry.json',
-  path: '/r/registry.json',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RV0Route = RV0RouteImport.update({
-  id: '/r/v0',
-  path: '/r/v0',
+const RSplatRoute = RSplatRouteImport.update({
+  id: '/r/$',
+  path: '/r/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
@@ -198,6 +187,11 @@ const AppDocsChar123Char125DotmdRoute =
     path: '/{$}.md',
     getParentRoute: () => AppDocsRouteRoute,
   } as any)
+const ApiSnapshotsIdRoute = ApiSnapshotsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiSnapshotsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -215,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
+  '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
@@ -223,13 +218,11 @@ export interface FileRoutesByFullPath {
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/$name': typeof RNameRoute
-  '/r/init': typeof RInitRoute
-  '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/v0': typeof RV0Route
+  '/r/$': typeof RSplatRoute
   '/internal/': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/api/snapshots/$id': typeof ApiSnapshotsIdRoute
 }
 export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
@@ -245,6 +238,7 @@ export interface FileRoutesByTo {
   '/presets': typeof AppPresetsRoute
   '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
+  '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
@@ -253,14 +247,12 @@ export interface FileRoutesByTo {
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/$name': typeof RNameRoute
-  '/r/init': typeof RInitRoute
-  '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/v0': typeof RV0Route
+  '/r/$': typeof RSplatRoute
   '/': typeof AppIndexRoute
   '/internal': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/api/snapshots/$id': typeof ApiSnapshotsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -279,6 +271,7 @@ export interface FileRoutesById {
   '/_app/presets': typeof AppPresetsRoute
   '/_app/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
+  '/api/snapshots': typeof ApiSnapshotsRouteWithChildren
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
@@ -287,14 +280,12 @@ export interface FileRoutesById {
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/$name': typeof RNameRoute
-  '/r/init': typeof RInitRoute
-  '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/v0': typeof RV0Route
+  '/r/$': typeof RSplatRoute
   '/_app/': typeof AppIndexRoute
   '/internal/': typeof InternalIndexRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/api/snapshots/$id': typeof ApiSnapshotsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -314,6 +305,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/studio'
     | '/api/search'
+    | '/api/snapshots'
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
@@ -322,13 +314,11 @@ export interface FileRouteTypes {
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
-    | '/r/$name'
-    | '/r/init'
-    | '/r/registry.json'
-    | '/r/v0'
+    | '/r/$'
     | '/internal/'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/api/snapshots/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/home.md'
@@ -344,6 +334,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/studio'
     | '/api/search'
+    | '/api/snapshots'
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
@@ -352,14 +343,12 @@ export interface FileRouteTypes {
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
-    | '/r/$name'
-    | '/r/init'
-    | '/r/registry.json'
-    | '/r/v0'
+    | '/r/$'
     | '/'
     | '/internal'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/api/snapshots/$id'
   id:
     | '__root__'
     | '/_app'
@@ -377,6 +366,7 @@ export interface FileRouteTypes {
     | '/_app/presets'
     | '/_app/studio'
     | '/api/search'
+    | '/api/snapshots'
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
@@ -385,14 +375,12 @@ export interface FileRouteTypes {
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
-    | '/r/$name'
-    | '/r/init'
-    | '/r/registry.json'
-    | '/r/v0'
+    | '/r/$'
     | '/_app/'
     | '/internal/'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
+    | '/api/snapshots/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -405,12 +393,10 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
+  ApiSnapshotsRoute: typeof ApiSnapshotsRouteWithChildren
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
-  RNameRoute: typeof RNameRoute
-  RInitRoute: typeof RInitRoute
-  RRegistryDotjsonRoute: typeof RRegistryDotjsonRoute
-  RV0Route: typeof RV0Route
+  RSplatRoute: typeof RSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -527,6 +513,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/snapshots': {
+      id: '/api/snapshots'
+      path: '/api/snapshots'
+      fullPath: '/api/snapshots'
+      preLoaderRoute: typeof ApiSnapshotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demos/$slug': {
       id: '/demos/$slug'
       path: '/demos/$slug'
@@ -590,32 +583,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PreviewSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/r/$name': {
-      id: '/r/$name'
-      path: '/r/$name'
-      fullPath: '/r/$name'
-      preLoaderRoute: typeof RNameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/r/init': {
-      id: '/r/init'
-      path: '/r/init'
-      fullPath: '/r/init'
-      preLoaderRoute: typeof RInitRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/r/registry.json': {
-      id: '/r/registry.json'
-      path: '/r/registry.json'
-      fullPath: '/r/registry.json'
-      preLoaderRoute: typeof RRegistryDotjsonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/r/v0': {
-      id: '/r/v0'
-      path: '/r/v0'
-      fullPath: '/r/v0'
-      preLoaderRoute: typeof RV0RouteImport
+    '/r/$': {
+      id: '/r/$'
+      path: '/r/$'
+      fullPath: '/r/$'
+      preLoaderRoute: typeof RSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/docs/$': {
@@ -631,6 +603,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/docs/{$}.md'
       preLoaderRoute: typeof AppDocsChar123Char125DotmdRouteImport
       parentRoute: typeof AppDocsRouteRoute
+    }
+    '/api/snapshots/$id': {
+      id: '/api/snapshots/$id'
+      path: '/$id'
+      fullPath: '/api/snapshots/$id'
+      preLoaderRoute: typeof ApiSnapshotsIdRouteImport
+      parentRoute: typeof ApiSnapshotsRoute
     }
   }
 }
@@ -697,6 +676,18 @@ const InternalRouteWithChildren = InternalRoute._addFileChildren(
   InternalRouteChildren,
 )
 
+interface ApiSnapshotsRouteChildren {
+  ApiSnapshotsIdRoute: typeof ApiSnapshotsIdRoute
+}
+
+const ApiSnapshotsRouteChildren: ApiSnapshotsRouteChildren = {
+  ApiSnapshotsIdRoute: ApiSnapshotsIdRoute,
+}
+
+const ApiSnapshotsRouteWithChildren = ApiSnapshotsRoute._addFileChildren(
+  ApiSnapshotsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   HomeDotmdRoute: HomeDotmdRoute,
@@ -707,12 +698,10 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
+  ApiSnapshotsRoute: ApiSnapshotsRouteWithChildren,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
-  RNameRoute: RNameRoute,
-  RInitRoute: RInitRoute,
-  RRegistryDotjsonRoute: RRegistryDotjsonRoute,
-  RV0Route: RV0Route,
+  RSplatRoute: RSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

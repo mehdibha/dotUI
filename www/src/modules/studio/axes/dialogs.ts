@@ -15,7 +15,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Bezier, Entrance } from "./motion"
-import { pick } from "./pick"
+import { entrance, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's (style-nova + tw-animate): the panel fades and zooms from 95%,
    the overlay fades, 100ms both ways on CSS `ease`. */
@@ -66,27 +67,27 @@ export const MODAL_PATTERNS = [
 /** The drawer always slides; there's no pattern to pick. */
 export const DRAWER_PATTERNS = [{ value: "slide", label: "Slide" }]
 
+export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
+  dialogBackdrop: oneOf(BACKDROP_OPTIONS),
+  dialogPosition: oneOf(POSITION_OPTIONS),
+  modalMotion: entrance(MODAL_PATTERNS),
+  drawerMotion: entrance(DRAWER_PATTERNS),
+}
+
 export function resolveDialogs(state: StudioState): Resolved {
-  const backdrop = pick(BACKDROP_OPTIONS, state.dialogBackdrop, "dim")
-  const position = pick(POSITION_OPTIONS, state.dialogPosition, "center")
-  const modal = resolveEntrance(
-    "modal",
-    state.modalMotion,
-    MODAL_MOTION,
-    MODAL_PATTERNS,
-  )
+  const backdrop = state.dialogBackdrop
+  const modal = resolveEntrance("modal", state.modalMotion, MODAL_MOTION)
   return {
     tokens: {
       ...modal.tokens,
-      ...resolveEntrance(
-        "drawer",
-        state.drawerMotion,
-        DRAWER_MOTION,
-        DRAWER_PATTERNS,
-      ).tokens,
+      ...resolveEntrance("drawer", state.drawerMotion, DRAWER_MOTION).tokens,
     },
     params: {
-      modal: { backdrop, position, motion: modal.pattern },
+      modal: {
+        backdrop,
+        position: state.dialogPosition,
+        motion: modal.pattern,
+      },
       drawer: { backdrop },
     },
   }

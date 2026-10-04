@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
-import { DEFAULTS } from "@/modules/studio/axes"
+import type { PublishPreset } from "@/publisher/types"
+import { DEFAULT_STATE, DEFAULTS, parseState } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 describe("overlays chapters", () => {
   test("the defaults yield the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULTS)
+    const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.modal).toMatchObject({
       backdrop: "dim",
@@ -21,11 +21,9 @@ describe("overlays chapters", () => {
   })
 
   test("dialogs: backdrop writes modal and drawer together, position the modal", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      dialogBackdrop: "blur",
-      dialogPosition: "top",
-    })
+    const ds = resolveDesignSystem(
+      parseState({ dialogBackdrop: "blur", dialogPosition: "top" }),
+    )
     expect(ds.componentParams.modal).toMatchObject({
       backdrop: "blur",
       position: "top",
@@ -34,30 +32,24 @@ describe("overlays chapters", () => {
   })
 
   test("popovers: tip on popover, header on dialog", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      popoverTip: "tip",
-      popoverHeader: "band",
-    })
+    const ds = resolveDesignSystem(
+      parseState({ popoverTip: "tip", popoverHeader: "band" }),
+    )
     expect(ds.componentParams.popover).toMatchObject({ tip: "tip" })
     expect(ds.componentParams.dialog).toMatchObject({ header: "band" })
   })
 
-  test("tooltips: style on tooltip; unknown values fall back", () => {
+  test("tooltips: style on tooltip", () => {
     expect(
-      resolveDesignSystem({ ...DEFAULTS, tooltipStyle: "surface" })
+      resolveDesignSystem(parseState({ tooltipStyle: "surface" }))
         .componentParams.tooltip,
     ).toMatchObject({ style: "surface" })
-    expect(
-      resolveDesignSystem({ ...DEFAULTS, tooltipStyle: "translucid" })
-        .componentParams.tooltip,
-    ).toMatchObject({ style: "inverted" })
   })
 })
 
 describe("drawer motion", () => {
   const shipped = async (tokens: Record<string, string> = {}) => {
-    const preset = defaultPreset()
+    const preset: PublishPreset = { density: "default", componentParams: {} }
     const mod = await publishables["drawer"]?.()
     if (!mod) throw new Error("drawer is not publishable")
     const { item } = publish({
@@ -79,14 +71,15 @@ describe("drawer motion", () => {
   })
 
   test("a spring slide ships linear(); the exit keeps its bezier", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      drawerMotion: {
-        ...DEFAULTS.drawerMotion,
-        curve: { type: "spring", bounce: 0.2 },
-        exitEase: [0, 0, 0.2, 1],
-      },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        drawerMotion: {
+          ...DEFAULTS.drawerMotion,
+          curve: { type: "spring", bounce: 0.2 },
+          exitEase: [0, 0, 0.2, 1],
+        },
+      }),
+    )
     expect(Object.keys(tokens).sort()).toEqual([
       "--studio-drawer-ease",
       "--studio-drawer-enter-duration",
@@ -100,7 +93,7 @@ describe("drawer motion", () => {
 
 describe("tooltip, modal and toast motion", () => {
   const shipped = async (name: string, tokens: Record<string, string> = {}) => {
-    const preset = defaultPreset()
+    const preset: PublishPreset = { density: "default", componentParams: {} }
     const mod = await publishables[name]?.()
     if (!mod) throw new Error(`${name} is not publishable`)
     const { item } = publish({
@@ -110,15 +103,16 @@ describe("tooltip, modal and toast motion", () => {
     return item.files?.[0]?.content ?? ""
   }
   const tokensFor = (state: Partial<typeof DEFAULTS>) =>
-    resolveDesignSystem({ ...DEFAULTS, ...state }).tokens
+    resolveDesignSystem(parseState({ ...state })).tokens
 
   test("each writes its own pattern param", () => {
-    const { componentParams } = resolveDesignSystem({
-      ...DEFAULTS,
-      tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "fade" },
-      modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
-      toastMotion: { ...DEFAULTS.toastMotion, pattern: "none" },
-    })
+    const { componentParams } = resolveDesignSystem(
+      parseState({
+        tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "fade" },
+        modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
+        toastMotion: { ...DEFAULTS.toastMotion, pattern: "none" },
+      }),
+    )
     expect(componentParams.tooltip).toMatchObject({ motion: "fade" })
     expect(componentParams.modal).toMatchObject({ motion: "slide" })
     expect(componentParams.toast).toMatchObject({ motion: "none" })

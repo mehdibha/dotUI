@@ -9,6 +9,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn has neither picker: today's look. The time column is a bare
    `transition-colors` (Tailwind's default); the swatch ring a 100ms one. */
@@ -26,10 +28,13 @@ export const CARET_OPTIONS = [
   { value: "double", label: "Up-down" },
 ]
 
+export const PICKER_SCHEMA: ChapterSchema<typeof PICKER_DEFAULTS> = {
+  pickerCaret: oneOf(CARET_OPTIONS),
+  timePickerMotion: STATE_CHANGE,
+  colorSwatchPickerMotion: STATE_CHANGE,
+}
+
 export function resolvePickers(state: StudioState): Resolved {
-  const caret = CARET_OPTIONS.some((o) => o.value === state.pickerCaret)
-    ? state.pickerCaret
-    : "chevron"
   return {
     tokens: {
       ...resolveStateChange(
@@ -43,6 +48,6 @@ export function resolvePickers(state: StudioState): Resolved {
         COLOR_SWATCH_PICKER_MOTION,
       ),
     },
-    params: { select: { caret } },
+    params: { select: { caret: state.pickerCaret } },
   }
 }

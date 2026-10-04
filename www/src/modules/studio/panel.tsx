@@ -1,83 +1,46 @@
 "use client"
 
 /* The panel chrome, after DialKit: one 14px-radius card, its header fixed
-   over a hairline — the system switcher on the left, global reset and search
-   on the right — and only the body below it scrolls. Docked under the
-   preview, the header and strip sit at the bottom edge instead, so they stay
-   put as the dock hugs each chapter. Real behavior arrives through `system` (wired by
-   StudioPanel on /studio); without it the chrome is the studio's inert
-   design shell. */
+   over a hairline — the design-system picker's trigger on the left, Reset,
+   Save and search on the right — and only the body below it scrolls. Docked
+   under the preview, the header and strip sit at the bottom edge instead, so
+   they stay put as the dock hugs each chapter. */
 
-import type { ReactNode } from "react"
-import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
+import type { ReactNode, Ref } from "react"
+import { ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { DEFAULTS } from "./state"
-import type { Studio } from "./state"
-
-/** The create-engine wiring the chrome acts through. Everything here operates
- *  on the real design system (URL preset + localStorage); the studio's own axes
- *  reset alongside it but aren't persisted until their chapters are wired. */
+/** The current design system, as the chrome shows it. */
 export interface PanelSystem {
-  /** What's being edited: the active saved system's name, else the working name. */
   name: string
-  /** Edits past the active saved snapshot (or any built-in) — unsaved work. */
-  dirty: boolean
-  /** Engine state differs from the defaults. */
-  modified: boolean
-  onReset: () => void
-  onSave: () => void
-  /** Wraps the header name button in the preset picker's trigger. */
+  /** The end of the name that stays when the rest truncates. */
+  note?: string
+  swatch: string
+  /** Reset and Save. */
+  buttons: ReactNode
+  /** Wraps the trigger in the design-system picker. */
   renderSwitcher: (trigger: ReactNode) => ReactNode
-  /** Wraps the Export button in the export dialog's trigger. */
-  renderExport: (trigger: ReactNode) => ReactNode
+  triggerRef?: Ref<HTMLButtonElement>
 }
 
 export function PanelChrome({
-  studio,
   system,
   actions,
   strip,
   className,
   children,
 }: {
-  studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
   /** Search and the dock toggle, supplied by the page (it owns navigation). */
-  actions?: ReactNode
+  actions: ReactNode
   /** Mobile chapter navigation, pinned with the header. */
   strip?: ReactNode
   className?: string
   children: ReactNode
 }) {
-  // The only reset in the panel. It clears the studio axes and the engine
-  // state as one.
-  const whole = studio.section(DEFAULTS)
-  const modified = whole.modified || (system?.modified ?? false)
-  const resetAll = () => {
-    whole.onReset()
-    system?.onReset()
-  }
-
-  const switcherTrigger = (
-    <Button
-      variant="quiet"
-      size="sm"
-      className="min-w-0 justify-start gap-1.5 font-medium"
-    >
-      <span className="truncate">{system?.name ?? "Acme design system"}</span>
-      {system?.dirty && (
-        <span
-          aria-label="Unsaved changes"
-          className="size-1.5 shrink-0 rounded-full bg-fg-muted"
-        />
-      )}
-      <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
-    </Button>
-  )
-
   return (
     <div
       className={cn(
@@ -86,31 +49,38 @@ export function PanelChrome({
       )}
     >
       <div className="flex shrink-0 flex-col border-b border-fg/6 p-2 max-lg:py-1.5 dock-stacked:order-last dock-stacked:border-t dock-stacked:border-b-0">
-        <div className="flex items-center justify-between gap-2">
-          {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
-          <span className="flex shrink-0 items-center pointer-coarse:gap-1">
-            {modified && (
+        <div className="flex items-center justify-between gap-1">
+          {system.renderSwitcher(
+            <Tooltip>
               <Button
-                size="sm"
+                ref={system.triggerRef}
                 variant="quiet"
-                isIconOnly
-                aria-label="Reset design system"
-                onPress={resetAll}
-                className="text-fg-muted pointer-coarse:data-icon-only:size-9"
-              >
-                <RotateCcwIcon />
-              </Button>
-            )}
-            {actions ?? (
-              <Button
                 size="sm"
-                variant="quiet"
-                isIconOnly
-                aria-label="Search settings"
+                aria-label={`Design system: ${system.name}. Change design system`}
+                className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
               >
-                <SearchIcon />
+                <span
+                  aria-hidden
+                  className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                  style={{ background: system.swatch }}
+                />
+                <span dir="auto" className="min-w-0 truncate">
+                  {system.note
+                    ? system.name.slice(0, -system.note.length).trimEnd()
+                    : system.name}
+                </span>
+                {system.note && <span className="shrink-0">{system.note}</span>}
+                <ChevronsUpDownIcon
+                  data-icon="inline-end"
+                  className="size-3 shrink-0 text-fg-muted"
+                />
               </Button>
-            )}
+              <TooltipContent>{system.name}</TooltipContent>
+            </Tooltip>,
+          )}
+          <span className="flex shrink-0 items-center gap-1">
+            {system.buttons}
+            {actions}
           </span>
         </div>
         {strip}

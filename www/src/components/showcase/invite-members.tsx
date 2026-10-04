@@ -2,7 +2,7 @@
 
 import { ExternalLinkIcon } from "@/registry/__generated__/icons"
 import { PlusCircleIcon } from "@/registry/icons"
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
 import {
   Card,
@@ -25,24 +25,9 @@ import { Separator } from "@/registry/ui/separator"
 import { TextField } from "@/registry/ui/text-field"
 
 const teamMembers = [
-  {
-    name: "shadcn",
-    email: "shadcn@vercel.com",
-    avatar: "https://github.com/shadcn.png",
-    role: "owner",
-  },
-  {
-    name: "rauchg",
-    email: "rauchg@vercel.com",
-    avatar: "https://github.com/rauchg.png",
-    role: "member",
-  },
-  {
-    name: "Lee Robinson",
-    email: "lee@cursor.com",
-    avatar: "https://github.com/leerob.png",
-    role: "member",
-  },
+  { name: "Ava Moreau", initials: "AM", role: "owner" },
+  { name: "Noah Castell", initials: "NC", role: "member" },
+  { name: "Iris Halvorsen", initials: "IH", role: "member" },
 ]
 
 export function InviteMembers(props: React.ComponentProps<"div">) {
@@ -92,8 +77,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
                 >
                   <div className="flex items-center gap-2">
                     <Avatar size="sm">
-                      <AvatarImage src={member.avatar} alt={member.name} />
-                      <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback>{member.initials}</AvatarFallback>
                     </Avatar>
                     <div className="text-sm">
                       <p>{member.name}</p>

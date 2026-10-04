@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
-  const preset = defaultPreset()
+  const preset: PublishPreset = { density: "default", componentParams: {} }
   const mod = await publishables["switch"]?.()
   if (!mod) throw new Error("switch is not publishable")
   const { item } = publish({
@@ -26,10 +26,9 @@ describe("switch motion", () => {
   })
 
   test("a tweak times the card, track and thumb together", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      switchMotion: { duration: 250, ease: [0, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({ switchMotion: { duration: 250, ease: [0, 0, 0.2, 1] } }),
+    )
     const content = await shipped(tokens)
     expect(content.match(/ duration-250 ease-out/g)).toHaveLength(3)
   })

@@ -4,11 +4,11 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { CardsGrid } from "@/components/showcase/cards-grid"
 import { PresetSwitcher } from "@/modules/marketing/preset-switcher"
 import { SkeletonRail } from "@/modules/marketing/skeleton-cards"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
 export function Cards() {
   const [selected, setSelected] = useState(0)
-  const preset = (PRESETS[selected] ?? PRESETS[0]!).designSystem
+  const preset = (PRESET_CATALOG[selected] ?? PRESET_CATALOG[0]!).designSystem
 
   // Re-theming the grid re-renders every styled component in it; as a transition
   // that render is interruptible and doesn't block the click.

@@ -1,52 +1,17 @@
-import { useEffect, useMemo, useState } from "react"
+import { codeFlags } from "@/publisher/code-options"
 
-import { siteConfig } from "@/config/site"
-import { useStudio } from "@/modules/studio/use-studio"
-
-import type { PresetUrl } from "./types"
-
-const DEFAULT_REGISTRY_HOST: string = siteConfig.url
+import { useCodeOptions } from "./code-options-store"
+import type { ExportUrl } from "./types"
 
 /**
- * The origin to build registry URLs against. v0 and the shadcn CLI fetch these
- * URLs server-side, so on localhost (or a `file:`/null origin) we point back at
- * the deployed host — fetching `http://localhost` would fail for them. Match on
- * `hostname` (not the full origin) so any dev port (e.g. :4444) still counts.
+ * Registry URLs under a preset (`p/<id>`) or a snapshot
+ * (`s/<id>`), in the user's code style — e.g. `url("init")` →
+ * `https://dotui.org/r/s/<id>/init.json?code=arrays`. A snapshot lives on
+ * the origin that stored it, so exports from localhost only resolve on this
+ * machine.
  */
-function getRegistryHost(): string {
-  if (typeof window === "undefined") return DEFAULT_REGISTRY_HOST
-  const { origin, hostname } = window.location
-  if (
-    origin === "null" ||
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    origin.startsWith("file:")
-  ) {
-    return DEFAULT_REGISTRY_HOST
-  }
-  return origin
-}
-
-/**
- * Returns a `presetUrl(path)` builder that resolves a registry path against the
- * right host and appends the current design system as `?preset=<encoded>` —
- * e.g. `presetUrl('/r/init')` → `https://host/r/init?preset=…`.
- *
- * The host hydrates in an effect (SSR renders the default host, the client then
- * swaps to the live origin) so the URL stays stable across hydration.
- */
-export function useExportUrl(): PresetUrl {
-  const { encoded } = useStudio()
-  const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
-
-  useEffect(() => {
-    setHost(getRegistryHost())
-  }, [])
-
-  return useMemo(() => {
-    return (path: string) => {
-      const base = `${host}${path}`
-      return encoded ? `${base}?preset=${encoded}` : base
-    }
-  }, [encoded, host])
+export function useExportUrl(path: string): ExportUrl {
+  const flags = codeFlags(useCodeOptions())
+  const query = flags ? `?code=${flags}` : ""
+  return (file) => `${window.location.origin}/r/${path}/${file}.json${query}`
 }

@@ -3,16 +3,16 @@ import { describe, expect, test } from "vitest"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULTS, parseState } from "./index"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem({ ...DEFAULTS, ...overrides })
+  resolveDesignSystem(parseState({ ...overrides }))
 
 describe("focus axis", () => {
-  test("defaults emit nothing", () => {
+  test("defaults emit no tokens", () => {
     const system = resolve({})
     expect(system.tokens).toEqual({})
-    expect(system.color).toBeUndefined()
+    expect(system.color).toEqual(DEFAULT_COLOR_CONFIG)
   })
 
   test("ring geometry lands on the ring tokens", () => {

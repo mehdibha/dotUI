@@ -1,7 +1,8 @@
 /* The studio's design-system state, and how it becomes a design system.
 
    Each axis module owns one chapter's slice: its defaults (the state shape),
-   its option vocabularies, and `resolve` — the pure mapping from that slice
+   its option vocabularies, the schema raw values are validated against, and
+   `resolve` — the pure mapping from that slice
    to what the engine consumes: global tokens (CSS vars), per-component
    registry params, the density tier, the color recipe, the icon library. No
    React here: the same resolver runs in the panel, the preview, the docs
@@ -44,6 +45,8 @@ import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
+import { checkAxisValue, sameValue } from "./schema"
+import type { AxisSchema } from "./schema"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
@@ -68,9 +71,9 @@ export interface Resolved {
   /** Registry param selections: component → param → value. */
   params?: Record<string, Record<string, string>>
   density?: Density
-  /** A slice of the recipe — a chapter other than Color contributes token
-   *  overrides, border targets or a control's fill scope;
-   *  `resolveDesignSystem` completes it. */
+  /** A slice of the recipe — Color contributes the full recipe; another
+   *  chapter adds token overrides, border targets or a control's fill scope
+   *  on top. */
   color?: Partial<ColorConfig>
   icons?: IconLibraryName
 }
@@ -127,7 +130,129 @@ export const DEFAULTS = {
   ...messageScroller.MESSAGE_SCROLLER_DEFAULTS,
 }
 
-export type StudioState = typeof DEFAULTS
+export type StudioStateInput = typeof DEFAULTS
+
+export const SCHEMA = {
+  ...color.COLOR_SCHEMA,
+  ...type.TYPE_SCHEMA,
+  ...icons.ICON_SCHEMA,
+  ...shape.SHAPE_SCHEMA,
+  ...space.SPACE_SCHEMA,
+  ...surfaces.SURFACE_SCHEMA,
+  ...focus.FOCUS_SCHEMA,
+  ...cursor.CURSOR_SCHEMA,
+  ...selection.SELECTION_SCHEMA,
+  ...disabled.DISABLED_SCHEMA,
+  ...invalid.INVALID_SCHEMA,
+  ...mobile.MOBILE_SCHEMA,
+  ...charts.CHART_SCHEMA,
+  ...links.LINK_SCHEMA,
+  ...alert.ALERT_SCHEMA,
+  ...toast.TOAST_SCHEMA,
+  ...skeleton.SKELETON_SCHEMA,
+  ...spinner.SPINNER_SCHEMA,
+  ...progress.PROGRESS_SCHEMA,
+  ...buttons.BUTTON_SCHEMA,
+  ...buttonGroups.BUTTON_GROUP_SCHEMA,
+  ...toggles.TOGGLE_SCHEMA,
+  ...segmentedControl.SEGMENTED_SCHEMA,
+  ...switchAxis.SWITCH_SCHEMA,
+  ...checkbox.CHECKBOX_SCHEMA,
+  ...radio.RADIO_SCHEMA,
+  ...choiceCards.CHOICE_CARD_SCHEMA,
+  ...inputs.INPUT_SCHEMA,
+  ...inputGroups.INPUT_GROUP_SCHEMA,
+  ...numberField.NUMBER_FIELD_SCHEMA,
+  ...otpField.OTP_FIELD_SCHEMA,
+  ...pickers.PICKER_SCHEMA,
+  ...calendar.CALENDAR_SCHEMA,
+  ...sliders.SLIDER_SCHEMA,
+  ...menus.MENU_SCHEMA,
+  ...dialogs.DIALOG_SCHEMA,
+  ...popovers.POPOVER_SCHEMA,
+  ...tooltips.TOOLTIP_SCHEMA,
+  ...tabs.TAB_SCHEMA,
+  ...accordion.ACCORDION_SCHEMA,
+  ...sidebar.SIDEBAR_SCHEMA,
+  ...breadcrumbs.BREADCRUMB_SCHEMA,
+  ...pagination.PAGINATION_SCHEMA,
+  ...badges.BADGE_SCHEMA,
+  ...kbd.KBD_SCHEMA,
+  ...avatars.AVATAR_SCHEMA,
+  ...tables.TABLE_SCHEMA,
+  ...questionnaire.QUESTIONNAIRE_SCHEMA,
+  ...messageScroller.MESSAGE_SCROLLER_SCHEMA,
+} satisfies Record<keyof typeof DEFAULTS, AxisSchema>
+
+// Every schema key is a state key; `satisfies` covers the reverse.
+type StateKey<K extends keyof StudioStateInput> = K
+type SchemaKey = StateKey<keyof typeof SCHEMA>
+
+declare const VALID: unique symbol
+
+/** Axis values that passed `validate()` — the only way to mint one. */
+export type StudioState = StudioStateInput & { readonly [VALID]: true }
+
+export interface StateIssue {
+  key: string
+  problem: string
+}
+
+export type Validation =
+  | { ok: true; state: StudioState }
+  | { ok: false; issues: StateIssue[] }
+
+const isObject = (raw: unknown): raw is Record<string, unknown> =>
+  typeof raw === "object" && raw !== null && !Array.isArray(raw)
+
+// Every axis, with a missing or bad value taking the default.
+function checkAxes(input: Record<string, unknown>) {
+  const issues: StateIssue[] = []
+  const state: Record<string, unknown> = {}
+  for (const [key, schema] of Object.entries(SCHEMA)) {
+    const fallback = DEFAULTS[key as SchemaKey]
+    const value = Object.hasOwn(input, key) ? input[key] : fallback
+    const problem = checkAxisValue(schema, value)
+    if (problem) issues.push({ key, problem })
+    state[key] = problem ? fallback : value
+  }
+  return { state: state as StudioState, issues }
+}
+
+/** Checks raw state against every axis schema. A missing key takes the axis
+ *  default; an unknown key or a bad value is an issue — nothing is salvaged. */
+export function validate(raw: unknown): Validation {
+  if (!isObject(raw))
+    return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
+  const { state, issues } = checkAxes(raw)
+  for (const key of Object.keys(raw))
+    if (!Object.hasOwn(SCHEMA, key))
+      issues.push({ key, problem: "unknown key" })
+  return issues.length > 0 ? { ok: false, issues } : { ok: true, state }
+}
+
+/** Stored state read leniently, so a schema change never loses it: unknown
+ *  keys are dropped and a missing or bad value takes the axis default. */
+export const salvageState = (raw: unknown): StudioState =>
+  checkAxes(isObject(raw) ? raw : {}).state
+
+export const formatIssues = (issues: StateIssue[]) =>
+  issues.map(({ key, problem }) => `${key || "state"}: ${problem}`).join("; ")
+
+/** `validate()` for sources that must be valid (built-ins, tests): throws. */
+export function parseState(raw: unknown): StudioState {
+  const result = validate(raw)
+  if (!result.ok)
+    throw new Error(`Invalid studio state — ${formatIssues(result.issues)}`)
+  return result.state
+}
+
+export const DEFAULT_STATE = parseState({})
+
+/** Key-by-key equality; motion values compare by content. */
+export const sameState = (a: StudioState, b: StudioState) =>
+  a === b ||
+  (Object.keys(SCHEMA) as SchemaKey[]).every((key) => sameValue(a[key], b[key]))
 
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [
   color.resolveColor,

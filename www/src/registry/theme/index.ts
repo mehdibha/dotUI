@@ -21,8 +21,8 @@ export type {
 export { JOB_STEPS } from "./types"
 export {
   applyTokenOverrides,
-  DEFAULT_SEMANTICS,
   scopedSemantics,
+  SITE_SEMANTICS,
   semanticDelta,
   semanticsFor,
   semanticVocabulary,
@@ -39,8 +39,8 @@ export {
   type ColorConfig,
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
-  migrateColorConfig,
   type PaletteSeeds,
+  SITE_COLOR_CONFIG,
 } from "./color-config"
 export {
   DEFAULT_RADIUS,

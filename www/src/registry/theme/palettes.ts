@@ -1,7 +1,7 @@
 /**
  * Palette identity — the single source for which palettes exist and in what
- * order. Imported by the resolver, the codec, and the customizer so none of
- * them re-declare the list. (The engine names the brand palette `accent`
+ * order. Imported by the resolver and the customizer so neither re-declares
+ * the list. (The engine names the brand palette `accent`
  * natively — the v1 `primary` rename seam is gone.)
  */
 

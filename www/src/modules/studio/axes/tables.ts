@@ -8,6 +8,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's TableRow is a bare `transition-colors`: Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -34,16 +36,19 @@ export const HEADER_OPTIONS = [
   { value: "filled", label: "Filled" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const TABLE_SCHEMA: ChapterSchema<typeof TABLE_DEFAULTS> = {
+  tableSeparation: oneOf(SEPARATION_OPTIONS),
+  tableHeader: oneOf(HEADER_OPTIONS),
+  tableMotion: STATE_CHANGE,
+}
 
 export function resolveTables(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("table", state.tableMotion, MOTION),
     params: {
       table: {
-        separation: pick(SEPARATION_OPTIONS, state.tableSeparation, "lines"),
-        header: pick(HEADER_OPTIONS, state.tableHeader, "plain"),
+        separation: state.tableSeparation,
+        header: state.tableHeader,
       },
     },
   }

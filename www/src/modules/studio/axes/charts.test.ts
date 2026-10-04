@@ -7,17 +7,12 @@ import chartMeta from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { resolveDesignSystem } from "../resolve"
-import {
-  gridOption,
-  motionOption,
-  MOTION_OPTIONS,
-  paletteOption,
-} from "./charts"
-import { DEFAULTS } from "./index"
+import { MOTION_OPTIONS } from "./charts"
+import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** What the chart container ships under the studio state. */
-async function shipped(state: StudioState = DEFAULTS) {
+async function shipped(state: StudioState = DEFAULT_STATE) {
   const ds = resolveDesignSystem(state)
   const preset = {
     density: ds.density,
@@ -35,8 +30,8 @@ async function shipped(state: StudioState = DEFAULTS) {
 
 describe("charts axes", () => {
   it("defaults keep the recipe untouched and the grid solid", () => {
-    const ds = resolveDesignSystem(DEFAULTS)
-    expect(ds.color).toBeUndefined()
+    const ds = resolveDesignSystem(DEFAULT_STATE)
+    expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
     expect(ds.componentParams.chart).toEqual({
       grid: "solid",
       motion: "spring",
@@ -47,10 +42,7 @@ describe("charts axes", () => {
   })
 
   it("a hue-spread palette rides on the color recipe, completed from the default", () => {
-    const { color } = resolveDesignSystem({
-      ...DEFAULTS,
-      chartPalette: "vivid",
-    })
+    const { color } = resolveDesignSystem(parseState({ chartPalette: "vivid" }))
     expect(color).toEqual({ ...DEFAULT_COLOR_CONFIG, chartPalette: "vivid" })
     if (!color) throw new Error("unreachable")
     const vivid = resolveColorConfig(color).charts
@@ -59,27 +51,14 @@ describe("charts axes", () => {
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
   })
 
-  it("a stored value outside the options (the pre-rename `auto`) reads as the default", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      chartPalette: "auto",
-      chartGrid: "dotted",
-      chartMotion: "bouncy",
-    })
-    expect(ds).toEqual(resolveDesignSystem(DEFAULTS))
-    expect(paletteOption("auto")).toBe("mono")
-    expect(gridOption("dotted")).toBe("solid")
-    expect(motionOption("bouncy")).toBe("spring")
-  })
-
   it("the grid is a param on the chart container", () => {
     for (const chartGrid of ["dashed", "none"]) {
-      const ds = resolveDesignSystem({ ...DEFAULTS, chartGrid })
+      const ds = resolveDesignSystem(parseState({ chartGrid }))
       expect(ds.componentParams.chart).toEqual({
         grid: chartGrid,
         motion: "spring",
       })
-      expect(ds.color).toBeUndefined()
+      expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
     }
   })
 })
@@ -108,17 +87,17 @@ describe("chart motion", () => {
   })
 
   it("a pick is a chart param, never a token", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, chartMotion: "wobbly" })
+    const ds = resolveDesignSystem(parseState({ chartMotion: "wobbly" }))
     expect(ds.componentParams.chart).toEqual({
       grid: "solid",
       motion: "wobbly",
     })
-    expect(ds.tokens).toEqual(resolveDesignSystem(DEFAULTS).tokens)
+    expect(ds.tokens).toEqual(resolveDesignSystem(DEFAULT_STATE).tokens)
   })
 
   it("ships the selected transition as a literal", async () => {
     for (const option of MOTION_OPTIONS) {
-      const content = await shipped({ ...DEFAULTS, chartMotion: option.value })
+      const content = await shipped(parseState({ chartMotion: option.value }))
       expect(content).toContain(
         `const systemMotion: Exclude<ChartAnimate, true> = ${transitionSource(option)}`,
       )

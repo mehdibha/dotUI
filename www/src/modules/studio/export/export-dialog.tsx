@@ -2,10 +2,11 @@
  * The export surface for /studio: one compact dialog split by the user's
  * situation — scaffold a new app, or install into an existing one — with the
  * shadcn command as the single primary action. The trigger is passed as
- * children (the header CTA, the panel footer button).
+ * children.
  */
 
-import { useState, type ReactNode } from "react"
+import { Fragment, useState, type ReactNode } from "react"
+import { track } from "@vercel/analytics"
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
@@ -33,6 +34,7 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "@/registry/ui/segmented-control"
+import { Skeleton } from "@/registry/ui/skeleton"
 import {
   buildInitCommands,
   buildInstallCommands,
@@ -40,6 +42,8 @@ import {
   packageManagerStore,
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
+import { useCurrent } from "@/modules/studio/selection"
+import { registryPath, useSource } from "@/modules/studio/share"
 
 import { CodeOptions } from "./code-options"
 import { OPEN_IN_TARGETS } from "./targets"
@@ -56,6 +60,8 @@ const TEMPLATES = [
   { id: "react-router", name: "React Router" },
 ] as const
 type Template = (typeof TEMPLATES)[number]["id"]
+
+const PROJECT_NAME = "my-app"
 
 // Both remembered: someone with an existing project exports there every time.
 const modeStore = createPersistedStore<Mode>(
@@ -78,30 +84,69 @@ export function ExportDialog({ children }: { children: ReactNode }) {
       {children}
       <Modal className="sm:max-w-md">
         <DialogContent showCloseButton aria-label="Export design system">
-          <ExportDialogBody />
+          <ExportCommands />
         </DialogContent>
       </Modal>
     </Dialog>
   )
 }
 
-function ExportDialogBody() {
+/** Installs exactly what's on screen; the user's system is snapshotted as
+ *  the dialog opens. */
+function ExportCommands() {
+  const { source, failed, retry } = useSource(useCurrent())
   const [mode, setMode] = useState<Mode>(() => modeStore.get())
   const [template, setTemplate] = useState<Template>(() => templateStore.get())
   const packageManager = packageManagerStore.useValue()
-  const presetUrl = useExportUrl()
+  const url = useExportUrl(source ? registryPath(source) : "")
 
-  const initUrl = presetUrl("/r/init")
-  const command =
-    buildInitCommands(initUrl)[packageManager] +
-    (mode === "new" ? ` --template ${template}` : "")
+  const initCommand = buildInitCommands(url("init"))[packageManager]
   const addCommand = buildInstallCommands(["button"])[packageManager]
+  // The template ships shadcn's cva button; swap in dotUI's so the app builds.
+  // Existing: skip the overwrite and reinstall prompts; components stay as is.
+  const primary: CommandEntry =
+    mode === "new"
+      ? {
+          label: "Scaffold",
+          steps: [
+            `${initCommand} --template ${template} --name ${PROJECT_NAME}`,
+            `cd ${PROJECT_NAME}`,
+            `${addCommand} --overwrite --yes`,
+          ],
+        }
+      : { label: "Register", steps: [`${initCommand} --force --no-reinstall`] }
+  const commands =
+    mode === "new"
+      ? [primary]
+      : [primary, { label: "Add components", steps: [addCommand] }]
+  const command = joinSteps(primary.steps)
+  const waiting = source ? undefined : failed ? (
+    <p className="text-xs text-fg-danger">
+      Couldn't prepare the command ·{" "}
+      <button
+        type="button"
+        onClick={retry}
+        className="underline underline-offset-2"
+      >
+        Try again
+      </button>
+    </p>
+  ) : (
+    <Skeleton className="h-3 w-3/4" />
+  )
 
   const { isCopied, copyToClipboard } = useCopyToClipboard()
+  const trackCopy = (line: string) =>
+    track("export_command_copied", {
+      mode,
+      template: mode === "new" ? template : null,
+      packageManager,
+      line,
+    })
 
   return (
     <>
-      <DialogHeader className="pr-8">
+      <DialogHeader>
         <SegmentedControl
           aria-label="Project type"
           selectedKeys={[mode]}
@@ -145,7 +190,10 @@ function ExportDialogBody() {
           <p className="text-xs text-fg-muted">
             Run in your project root. Registers the design system in{" "}
             <code className="font-mono">components.json</code>; every component
-            you add after installs already themed.
+            you add after installs already themed. Your theme tokens, fonts and{" "}
+            <code className="font-mono">lib/utils</code> are replaced, and
+            adding a component means overwriting yours of the same name, like{" "}
+            <code className="font-mono">button.tsx</code>.
           </p>
         )}
 
@@ -154,14 +202,9 @@ function ExportDialogBody() {
         </Section>
 
         <CommandBlock
-          commands={
-            mode === "new"
-              ? [{ label: "Scaffold", command }]
-              : [
-                  { label: "Register", command },
-                  { label: "Add components", command: addCommand },
-                ]
-          }
+          waiting={waiting}
+          commands={commands}
+          onCopy={trackCopy}
         />
       </DialogBody>
 
@@ -169,28 +212,33 @@ function ExportDialogBody() {
         <Button
           variant="primary"
           className="w-full"
-          onPress={() => copyToClipboard(command)}
+          isDisabled={!!waiting}
+          onPress={() => {
+            copyToClipboard(command)
+            trackCopy("primary")
+          }}
         >
           {isCopied ? "Copied" : "Copy command"}
         </Button>
-        {mode === "new"
-          ? OPEN_IN_TARGETS.map((target) => (
-              <LinkButton
-                key={target.id}
-                variant="secondary"
-                href={target.href(presetUrl)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-              >
-                <span className="flex items-center gap-1.5">
-                  Open in
-                  <span aria-label={target.name}>{target.wordmark}</span>
-                </span>
-                <ArrowUpRightIcon data-icon="inline-end" />
-              </LinkButton>
-            ))
-          : null}
+        {mode === "new" &&
+          OPEN_IN_TARGETS.map((target) => (
+            <LinkButton
+              key={target.id}
+              variant="secondary"
+              href={target.href(url)}
+              isDisabled={!!waiting}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+              onPress={() => track("export_open_in", { target: target.id })}
+            >
+              <span className="flex items-center gap-1.5">
+                Open in
+                <span aria-label={target.name}>{target.wordmark}</span>
+              </span>
+              <ArrowUpRightIcon data-icon="inline-end" />
+            </LinkButton>
+          ))}
       </DialogFooter>
     </>
   )
@@ -205,14 +253,27 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
+interface CommandEntry {
+  label: string
+  /** Chained with `&&` when copied; shown one per line. */
+  steps: string[]
+}
+
+const joinSteps = (steps: string[]) => steps.join(" && ")
+
 /**
  * The commands to run, under a package-manager switch shared with the docs.
  * Each line copies on its own; the first is what the footer button copies.
  */
 function CommandBlock({
   commands,
+  onCopy,
+  waiting,
 }: {
-  commands: { label: string; command: string }[]
+  commands: CommandEntry[]
+  onCopy: (line: string) => void
+  /** Holds the commands' place until they can be installed. */
+  waiting?: ReactNode
 }) {
   const packageManager = packageManagerStore.useValue()
 
@@ -229,7 +290,7 @@ function CommandBlock({
             packageManagerStore.set(next as PackageManager)
           }
         }}
-        className="flex gap-1 border-b px-2 py-1.5"
+        className="flex items-center gap-1 border-b px-2 py-1.5"
       >
         {PACKAGE_MANAGERS.map((pm) => (
           <ToggleButtonPrimitives.ToggleButton
@@ -242,28 +303,61 @@ function CommandBlock({
         ))}
       </ToggleButtonGroupPrimitives.ToggleButtonGroup>
       <div className="flex flex-col divide-y">
-        {commands.map((entry) => (
-          <CommandLine key={entry.label} {...entry} />
-        ))}
+        {commands.map((entry, index) =>
+          waiting ? (
+            <div key={entry.label} className="flex h-9 items-center pl-3">
+              {index === 0 && waiting}
+            </div>
+          ) : (
+            <CommandLine key={entry.label} {...entry} onCopy={onCopy} />
+          ),
+        )}
       </div>
     </div>
   )
 }
 
-function CommandLine({ label, command }: { label: string; command: string }) {
+function CommandLine({
+  label,
+  steps,
+  onCopy,
+}: CommandEntry & { onCopy: (line: string) => void }) {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
 
   return (
     <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-      <code className="min-w-0 flex-1 scrollbar-none overflow-x-auto mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] font-mono text-xs whitespace-nowrap text-fg">
-        {command}
+      <code className="min-w-0 flex-1 font-mono text-xs text-fg">
+        {steps.map((step, i) => (
+          <span key={step} className="block">
+            {/* Only the URL may break; flags wrap as whole tokens. */}
+            {[...step.split(" "), ...(i < steps.length - 1 ? ["&&"] : [])].map(
+              (token, j) => (
+                <Fragment key={j}>
+                  {j > 0 ? " " : null}
+                  <span
+                    className={
+                      token.includes("://")
+                        ? "wrap-anywhere"
+                        : "whitespace-nowrap"
+                    }
+                  >
+                    {token}
+                  </span>
+                </Fragment>
+              ),
+            )}
+          </span>
+        ))}
       </code>
       <Button
         variant="quiet"
         size="xs"
         isIconOnly
         aria-label={`Copy ${label.toLowerCase()} command`}
-        onPress={() => copyToClipboard(command)}
+        onPress={() => {
+          copyToClipboard(joinSteps(steps))
+          onCopy(label.toLowerCase())
+        }}
         className={cn(isCopied && "text-fg")}
       >
         {isCopied ? <CheckIcon /> : <CopyIcon />}

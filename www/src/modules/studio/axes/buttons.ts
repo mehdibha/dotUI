@@ -9,7 +9,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { pick } from "./pick"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's button and toggle: `transition-all` on Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -61,11 +62,19 @@ const RADIUS_TOKENS: Record<string, string> = {
   pill: "var(--radius-full)",
 }
 
+export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
+  buttonStyle: oneOf(STYLE_OPTIONS),
+  buttonRadius: oneOf(RADIUS_OPTIONS),
+  buttonHover: oneOf(HOVER_OPTIONS),
+  buttonPress: oneOf(PRESS_OPTIONS),
+  buttonMotion: STATE_CHANGE,
+}
+
 export function resolveButtons(state: StudioState): Resolved {
   const selection = {
-    style: pick(STYLE_OPTIONS, state.buttonStyle, "flat"),
-    hover: pick(HOVER_OPTIONS, state.buttonHover, "dim"),
-    press: pick(PRESS_OPTIONS, state.buttonPress, "dim"),
+    style: state.buttonStyle,
+    hover: state.buttonHover,
+    press: state.buttonPress,
   }
   const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
   const radius = RADIUS_TOKENS[state.buttonRadius]

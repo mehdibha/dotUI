@@ -13,7 +13,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
-import { pick } from "./pick"
+import { entrance, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's (style-nova + tw-animate): fade, zoom from 95% and an 8px slide
    in, fade and zoom out, 100ms both ways on CSS `ease`. */
@@ -48,21 +49,19 @@ export const MOTION_PATTERNS = [
   { value: "none", label: "None" },
 ]
 
+export const POPOVER_SCHEMA: ChapterSchema<typeof POPOVER_DEFAULTS> = {
+  popoverTip: oneOf(TIP_OPTIONS),
+  popoverHeader: oneOf(HEADER_OPTIONS),
+  popoverMotion: entrance(MOTION_PATTERNS),
+}
+
 export function resolvePopovers(state: StudioState): Resolved {
-  const motion = resolveEntrance(
-    "popover",
-    state.popoverMotion,
-    MOTION,
-    MOTION_PATTERNS,
-  )
+  const motion = resolveEntrance("popover", state.popoverMotion, MOTION)
   return {
     tokens: motion.tokens,
     params: {
-      popover: {
-        tip: pick(TIP_OPTIONS, state.popoverTip, "none"),
-        motion: motion.pattern,
-      },
-      dialog: { header: pick(HEADER_OPTIONS, state.popoverHeader, "title") },
+      popover: { tip: state.popoverTip, motion: motion.pattern },
+      dialog: { header: state.popoverHeader },
     },
   }
 }

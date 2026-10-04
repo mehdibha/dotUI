@@ -8,6 +8,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's breadcrumb link: `transition-colors` on Tailwind's default. */
 const MOTION = TAILWIND_TIMING
@@ -28,24 +30,19 @@ export const TONE_OPTIONS = [
   { value: "muted", label: "Muted" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const BREADCRUMB_SCHEMA: ChapterSchema<typeof BREADCRUMB_DEFAULTS> = {
+  breadcrumbSeparator: oneOf(SEPARATOR_OPTIONS),
+  breadcrumbTone: oneOf(TONE_OPTIONS),
+  breadcrumbsMotion: STATE_CHANGE,
+}
 
 export function resolveBreadcrumbs(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("breadcrumbs", state.breadcrumbsMotion, MOTION),
     params: {
       breadcrumbs: {
-        separator: pick(
-          SEPARATOR_OPTIONS,
-          state.breadcrumbSeparator,
-          BREADCRUMB_DEFAULTS.breadcrumbSeparator,
-        ),
-        tone: pick(
-          TONE_OPTIONS,
-          state.breadcrumbTone,
-          BREADCRUMB_DEFAULTS.breadcrumbTone,
-        ),
+        separator: state.breadcrumbSeparator,
+        tone: state.breadcrumbTone,
       },
     },
   }

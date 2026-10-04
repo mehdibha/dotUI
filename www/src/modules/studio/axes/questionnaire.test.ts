@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
-  const preset = defaultPreset()
+  const preset: PublishPreset = { density: "default", componentParams: {} }
   const mod = await publishables.questionnaire?.()
   if (!mod) throw new Error("questionnaire is not publishable")
   const { item } = publish({
@@ -20,7 +20,7 @@ const shipped = async (tokens: Record<string, string> = {}) => {
 
 describe("questionnaire motion", () => {
   test("defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULTS).tokens).toEqual({})
+    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("ships Tailwind's default timing: no duration or ease class", async () => {
@@ -34,10 +34,11 @@ describe("questionnaire motion", () => {
   })
 
   test("a tweak times the choices and the text answer together", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      questionnaireMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        questionnaireMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+      }),
+    )
     const content = await shipped(tokens)
     expect(content).toContain(
       "transition-colors duration-200 ease-out select-ui",

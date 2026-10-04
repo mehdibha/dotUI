@@ -11,7 +11,7 @@ const calendarMeta = {
       target: "ui/calendar.tsx",
     },
   ],
-  registryDependencies: ["button", "select", "text", "focus-styles"],
+  registryDependencies: ["button", "focus-styles"],
   params: {
     dayShape: {
       kind: "enum",

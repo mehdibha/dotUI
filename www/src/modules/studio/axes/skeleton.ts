@@ -11,6 +11,8 @@
 import type { Resolved, StudioState } from "./index"
 import { resolveLoop } from "./motion"
 import type { Loop } from "./motion"
+import { LOOP, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's skeleton: Tailwind's `animate-pulse`, 2s on its own curve. */
 const MOTION: Loop = { cycle: 2000, ease: [0.4, 0, 0.6, 1] }
@@ -26,14 +28,14 @@ export const ANIMATION_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
+export const SKELETON_SCHEMA: ChapterSchema<typeof SKELETON_DEFAULTS> = {
+  skeletonAnimation: oneOf(ANIMATION_OPTIONS),
+  skeletonMotion: LOOP,
+}
+
 export function resolveSkeleton(state: StudioState): Resolved {
-  const animation = ANIMATION_OPTIONS.some(
-    (o) => o.value === state.skeletonAnimation,
-  )
-    ? state.skeletonAnimation
-    : SKELETON_DEFAULTS.skeletonAnimation
   return {
     tokens: resolveLoop("skeleton", state.skeletonMotion, MOTION),
-    params: { skeleton: { animation } },
+    params: { skeleton: { animation: state.skeletonAnimation } },
   }
 }
