@@ -114,7 +114,7 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  // Unreadable stored systems: nothing saves, so nothing reads "Saved".
+  // Unreadable stored systems: nothing saves or is created, so nothing reads "Saved".
   const canSave = !isUnreadable()
   const saved = !!current.doc && canSave
 
@@ -226,8 +226,10 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={sections}
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
-        onCreate={() =>
-          askNew("current", uniqueName("Untitled", workspace.systems))
+        onCreate={
+          canSave
+            ? () => askNew("current", uniqueName("Untitled", workspace.systems))
+            : undefined
         }
         focusRef={focusPicker}
         withPreview

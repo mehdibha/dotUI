@@ -292,7 +292,8 @@ export function uniqueName(
 export function create(
   fields: Pick<DesignSystemDoc, "name" | "from" | "state">,
 ): DesignSystemDoc | undefined {
-  if (!accepts(fields.state)) return
+  // Unreadable: it would live only in memory.
+  if (isUnreadable() || !accepts(fields.state)) return
   const doc: DesignSystemDoc = {
     id: newId(),
     ...fields,
