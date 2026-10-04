@@ -102,17 +102,12 @@ describe("workspace", () => {
     expect(stored().systems[0].state.radiusPx).toBe(3)
   })
 
-  it("removes and inserts back in place", async () => {
+  it("removes", async () => {
     const { ws, doc } = await created()
     const other = ws.create({ name: "Other", state: linear.state })!
-    const removed = ws.remove(doc.id)!
+    ws.remove(doc.id)
+    ws.remove(doc.id)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([other.id])
-    ws.insert(removed.doc, removed.index)
-    ws.insert(removed.doc, removed.index)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
-      doc.id,
-      other.id,
-    ])
   })
 
   it("suggests <name> copy for a duplicate, never copy copy", async () => {

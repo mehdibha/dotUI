@@ -78,7 +78,7 @@ export function PanelChrome({
               <TooltipContent>{system.name}</TooltipContent>
             </Tooltip>,
           )}
-          <span className="flex shrink-0 items-center pointer-coarse:gap-1">
+          <span className="flex shrink-0 items-center gap-1">
             {system.buttons}
             {actions}
           </span>

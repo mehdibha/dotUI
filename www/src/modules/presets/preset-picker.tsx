@@ -1,14 +1,7 @@
 "use client"
 
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import type { ReactNode, Ref, RefObject } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import type { ReactNode, Ref } from "react"
 import {
   CheckIcon,
   MoreHorizontalIcon,
@@ -17,8 +10,6 @@ import {
 } from "lucide-react"
 import type { Key } from "react-aria-components"
 import { useFilter } from "react-aria-components/Autocomplete"
-import { ListStateContext } from "react-aria-components/ListBox"
-import type { ListState } from "react-aria-components/ListBox"
 import {
   MenuContext,
   RootMenuTriggerStateContext,
@@ -82,17 +73,10 @@ interface PresetPickerProps {
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
   /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
-   *  search never filters it. `afterClose` runs an action that removes the
-   *  row once the menu has closed and focus has moved to the next row. */
-  renderItemMenu?: (
-    item: PresetPickerItem,
-    afterClose: (run: () => void) => void,
-  ) => ReactNode
+   *  search never filters it. */
+  renderItemMenu?: (item: PresetPickerItem) => ReactNode
   /** Adds a "+ New" button beside the search field. */
   onCreate?: () => void
-  /** Filled, while the picker is open, with a function that moves focus back
-   *  to the list and highlights a row. */
-  focusRef?: RefObject<((id: string) => void) | null>
 }
 
 /**
@@ -177,7 +161,6 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
-  focusRef,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
@@ -201,57 +184,18 @@ function PresetPickerContent({
     menuTriggerRef.current = trigger as HTMLElement
     setMenu(id)
   }
-  const listRef = useRef<ListState<unknown> | null>(null)
-  // A row-removing action and the row that takes focus from it.
-  const pendingRef = useRef<{ run: () => void; next?: string } | null>(null)
-  // Moves focus to a row: the popover's search keeps focus and highlights it;
-  // on the drawer its ⋯ takes focus, so the keyboard stays down. With no row,
-  // the search or the drawer itself.
-  const focusRow = (id: string | undefined) => {
-    const highlight = () => {
-      if (id === undefined) return
-      listRef.current?.selectionManager.setFocused(true)
-      listRef.current?.selectionManager.setFocusedKey(id)
-    }
-    const search = searchRef.current
-    if (surface === "popover") {
-      search?.focus()
-      // After the search's own focus handling, which restores the old one.
-      queueMicrotask(highlight)
-      return
-    }
-    // Before focusing, which would otherwise highlight the first row.
-    highlight()
-    const dialog = search?.closest<HTMLElement>("[role=dialog]")
-    const rowMenu = id
-      ? dialog?.querySelector<HTMLElement>(
-          `[data-key="${CSS.escape(id)}"] [data-row-menu]`,
-        )
-      : null
-    ;(rowMenu ?? dialog)?.focus()
-  }
-  useEffect(() => {
-    if (!focusRef) return
-    focusRef.current = focusRow
-    return () => {
-      focusRef.current = null
-    }
-  })
   const closeMenu = () => {
     setMenu(null)
     // Two frames: after the popover's own focus restore. Focus must never be
-    // lost to the body, or the picker closes.
+    // lost to the body, or the picker closes: back to the search, or to the
+    // drawer itself.
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
-        const pending = pendingRef.current
-        pendingRef.current = null
-        if (pending) {
-          focusRow(pending.next)
-          pending.run()
-          return
-        }
         const active = document.activeElement
-        if (!active || active === document.body) focusRow(undefined)
+        if (active && active !== document.body) return
+        const search = searchRef.current
+        if (surface === "popover") search?.focus()
+        else search?.closest<HTMLElement>("[role=dialog]")?.focus()
       }),
     )
   }
@@ -322,13 +266,7 @@ function PresetPickerContent({
   const flyout = surface === "popover" && withPreview
   const menuItem = menu ? allItems.find((item) => item.id === menu) : undefined
   const rowIds = visible.flatMap((section) => section.items.map((i) => i.id))
-  const afterClose = (id: string) => (run: () => void) => {
-    const i = rowIds.indexOf(id)
-    pendingRef.current = { run, next: rowIds[i + 1] ?? rowIds[i - 1] }
-    swallowDoubleClick()
-  }
-  const menuContent =
-    menuItem && renderItemMenu?.(menuItem, afterClose(menuItem.id))
+  const menuContent = menuItem && renderItemMenu?.(menuItem)
 
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -435,7 +373,6 @@ function PresetPickerContent({
                     // flyout open.
                     isFocused={isFocusVisible}
                     isHovered={isHovered}
-                    listRef={listRef}
                     onShow={surface === "popover" ? showPreview : undefined}
                     onHide={surface === "popover" ? hidePreview : undefined}
                     onMenu={
@@ -550,7 +487,6 @@ function PresetOptionRow({
   onShow,
   onHide,
   onMenu,
-  listRef,
 }: {
   item: PresetPickerItem
   isSelected: boolean
@@ -559,14 +495,7 @@ function PresetOptionRow({
   onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
   onMenu?: (trigger: Element) => void
-  listRef: RefObject<ListState<unknown> | null>
 }) {
-  // Hands the list's state up, to move its highlight after a delete.
-  const list = useContext(ListStateContext)
-  useEffect(() => {
-    listRef.current = list
-  }, [list, listRef])
-
   // Route this row to the flyout: the pointer and the keyboard highlight both
   // land here, and whichever spoke last wins. Losing both signals the flyout
   // to close — unless another row claims it first.
