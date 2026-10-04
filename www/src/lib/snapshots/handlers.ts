@@ -100,13 +100,17 @@ export async function loadSnapshot(
   return snapshot
 }
 
-/** `GET /api/snapshots/$id` → the `Snapshot`. */
+/** `GET /api/snapshots/$id` → the stored `Snapshot`, byte for byte: ids hash
+ *  the content, so it is cached forever and the reader parses it. */
 export const readSnapshot = (id: string, store: SnapshotStore) =>
   guard(async () => {
     if (!SNAPSHOT_ID.test(id)) return error(400, "Invalid snapshot id")
-    const snapshot = await loadSnapshot(id, store)
-    if (!snapshot) return error(404, "Snapshot not found")
-    return Response.json(snapshot, {
-      headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+    const json = await store.get(id)
+    if (json === null) return error(404, "Snapshot not found")
+    return new Response(json, {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
     })
   })

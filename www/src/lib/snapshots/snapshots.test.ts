@@ -5,7 +5,12 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { DEFAULT_STATE } from "@/modules/studio/axes"
 
-import { createSnapshot, MAX_BODY_BYTES, readSnapshot } from "./handlers"
+import {
+  createSnapshot,
+  loadSnapshot,
+  MAX_BODY_BYTES,
+  readSnapshot,
+} from "./handlers"
 import { canonicalJson, parseSnapshot, snapshotId } from "./snapshot"
 import type { Snapshot } from "./snapshot"
 import { fileStore, memoryStore } from "./store"
@@ -196,20 +201,18 @@ describe("GET /api/snapshots/$id", () => {
     expect(await response.json()).toEqual({ error: "Snapshot not found" })
   })
 
-  it.each([
-    ["not JSON", "{"],
-    ["an unknown schema", JSON.stringify({ schema: 2, name: "A", state: {} })],
-  ])("500s when the stored data is %s", async (_, json) => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {})
+  it("serves what was stored, byte for byte, for the reader to parse", async () => {
     const store = memoryStore()
+    const json = JSON.stringify({ schema: 1, name: "A", retiredKey: 1 })
     await store.put("0123456789", json)
     const response = await readSnapshot("0123456789", store)
-    expect(response.status).toBe(500)
-    expect(response.headers.get("cache-control")).toBe("no-store")
-    expect(error).toHaveBeenCalled()
-    vi.restoreAllMocks()
+    expect(response.status).toBe(200)
+    expect(response.headers.get("content-type")).toBe("application/json")
+    expect(await response.text()).toBe(json)
   })
+})
 
+describe("loadSnapshot", () => {
   it("reads a stored snapshot leniently", async () => {
     const store = memoryStore()
     await store.put(
@@ -222,12 +225,21 @@ describe("GET /api/snapshots/$id", () => {
         createdAt: 1,
       }),
     )
-    const response = await readSnapshot("0123456789", store)
-    expect(response.status).toBe(200)
-    expect(await response.json()).toMatchObject({
+    expect(await loadSnapshot("0123456789", store)).toMatchObject({
       name: "A",
       state: { ...DEFAULT_STATE, radiusPx: 4 },
     })
+  })
+
+  it.each([
+    ["not JSON", "{"],
+    ["an unknown schema", JSON.stringify({ schema: 2, name: "A", state: {} })],
+  ])("throws when the stored data is %s", async (_, json) => {
+    const store = memoryStore()
+    await store.put("0123456789", json)
+    await expect(loadSnapshot("0123456789", store)).rejects.toThrow(
+      "unreadable",
+    )
   })
 })
 
