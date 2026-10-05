@@ -1,0 +1,29 @@
+/* The site's own stylesheet — registry tokens, the panel's tint-* utilities,
+   the dock variants — so the studio renders exactly as it does on dotui.org. */
+@import "../../www/src/styles.css";
+
+@source "../../www/src";
+@source "./";
+
+/* Every frame is a pure function of the frame number. CSS transitions run on
+   wall-clock time, so they're off. CSS animations are paused and scrubbed by
+   --video-time (seconds, set per frame on <html> by <Film>) — only on nodes
+   that can animate, since every node reading the var restyles each frame. */
+*,
+*::before,
+*::after {
+  transition: none !important;
+  animation-play-state: paused !important;
+}
+[class*="animate"],
+[class*="animate"]::before,
+[class*="animate"]::after,
+[style*="animation"] {
+  animation-delay: calc(var(--video-time, 0) * -1s) !important;
+}
+
+html,
+body {
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+}

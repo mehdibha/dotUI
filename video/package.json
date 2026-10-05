@@ -1,0 +1,30 @@
+{
+  "name": "video",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio",
+    "frames": "node scripts/frames.ts",
+    "render": "node scripts/render.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.529",
+    "@remotion/cli": "4.0.529",
+    "@remotion/renderer": "4.0.529",
+    "@tailwindcss/webpack": "4.3.0",
+    "css-loader": "7.1.4",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "remotion": "4.0.529",
+    "style-loader": "4.0.0",
+    "tailwindcss": "catalog:"
+  },
+  "devDependencies": {
+    "@dotui/ts-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}
