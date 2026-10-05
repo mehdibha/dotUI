@@ -93,8 +93,6 @@ export const linear = definePreset({
     buttonStyle: "flat",
     // Every app button computes 9999px.
     buttonRadius: "pill",
-    buttonHover: "lighten",
-    buttonPress: "none",
     groupSeparator: "auto",
     toggleSelected: "fill",
     segmentedSelected: "flat",

@@ -1,11 +1,12 @@
-/* Buttons — the synced family's shared axes: Button sets the look, and the
-   Button groups and Toggles sections reuse it. Style is a family look
-   reshaping every fill variant at once; the variant enum stays API.
+/* Buttons — the synced family's look: Button sets it, and the toggles,
+   groups and segmented control on the same page stay coherent with it. Each
+   style is a real system's recipe, copied whole (fills, edges, hover and
+   press); the variant enum stays API.
 
-   Engine: `style`, `hover` and `press` are enum params on both `button` and
-   `toggle-button` (a synced group — one axis writes both); radius rides on
-   the shared `--studio-btn-radius` var, state timing on the
-   `--studio-button-state-*` vars both read. */
+   Engine: `style` is an enum param on both `button` and `toggle-button` (a
+   synced group — one axis writes both); radius rides on the shared
+   `--studio-btn-radius` var, state timing on the `--studio-button-state-*`
+   vars both read. */
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
@@ -18,18 +19,18 @@ const MOTION = TAILWIND_TIMING
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
   buttonRadius: "auto",
-  buttonHover: "dim",
-  buttonPress: "dim",
   buttonMotion: MOTION,
 }
 
-/* Style families from the Aug 2026 survey: flat (Geist), outline (Primer
-   hairline), raised (Radix classic 3D), elevated (Stripe). */
+/* Source-verified in Oct 2026: flat to deep, then the two hard-shadow looks. */
 export const STYLE_OPTIONS = [
   { value: "flat", label: "Flat" },
-  { value: "outline", label: "Outline" },
-  { value: "raised", label: "Raised" },
-  { value: "elevated", label: "Elevated" },
+  { value: "hairline", label: "Hairline", description: "Primer" },
+  { value: "rim-light", label: "Rim light", description: "Untitled UI" },
+  { value: "gloss", label: "Gloss", description: "Clerk" },
+  { value: "bevel", label: "Bevel", description: "Polaris" },
+  { value: "offset", label: "Offset", description: "Gumroad" },
+  { value: "ledge", label: "Ledge", description: "Duolingo" },
 ]
 
 export const RADIUS_OPTIONS = [
@@ -37,23 +38,6 @@ export const RADIUS_OPTIONS = [
   { value: "sharp", label: "Sharp" },
   { value: "round", label: "Round" },
   { value: "pill", label: "Pill" },
-]
-
-/* Hover: of 16 systems surveyed, 14 dim, 2 lighten (Linear, Ant), zero use
-   none or lift — dim is the default, lighten is the Linear feel. Press is
-   where systems diverge: darker step (8), nothing (5), scale .97
-   (Linear/HeroUI/Spectrum pressScale), 1px push (shadcn v4 styles). */
-export const HOVER_OPTIONS = [
-  { value: "dim", label: "Dim" },
-  { value: "lighten", label: "Lighten" },
-  { value: "none", label: "None" },
-]
-
-export const PRESS_OPTIONS = [
-  { value: "dim", label: "Dim" },
-  { value: "scale", label: "Scale" },
-  { value: "push", label: "Push" },
-  { value: "none", label: "None" },
 ]
 
 const RADIUS_TOKENS: Record<string, string> = {
@@ -65,17 +49,11 @@ const RADIUS_TOKENS: Record<string, string> = {
 export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
   buttonStyle: oneOf(STYLE_OPTIONS),
   buttonRadius: oneOf(RADIUS_OPTIONS),
-  buttonHover: oneOf(HOVER_OPTIONS),
-  buttonPress: oneOf(PRESS_OPTIONS),
   buttonMotion: STATE_CHANGE,
 }
 
 export function resolveButtons(state: StudioState): Resolved {
-  const selection = {
-    style: state.buttonStyle,
-    hover: state.buttonHover,
-    press: state.buttonPress,
-  }
+  const selection = { style: state.buttonStyle }
   const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
   const radius = RADIUS_TOKENS[state.buttonRadius]
   if (radius) tokens["--studio-btn-radius"] = radius

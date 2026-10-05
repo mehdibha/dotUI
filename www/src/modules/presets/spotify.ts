@@ -98,8 +98,6 @@ export const spotify = definePreset({
     progressGap: false,
     buttonStyle: "flat",
     buttonRadius: "pill",
-    buttonHover: "lighten",
-    buttonPress: "dim",
     groupSeparator: "auto",
     toggleSelected: "inverse",
     segmentedSelected: "flat",
