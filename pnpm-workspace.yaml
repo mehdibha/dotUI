@@ -44,6 +44,7 @@ supportedArchitectures:
 overrides:
   "@types/react": 19.2.2
   "@types/react-dom": 19.2.1
+  'brace-expansion': '5.0.12'
 
 # @hookform/resolvers/zod imports zod/v4/core but doesn't declare zod as a
 # peer, so pnpm never links zod into its instance; the import only survives
