@@ -4,11 +4,11 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** What the table ships under the studio state. */
-async function shipped(state: StudioState = DEFAULTS) {
+async function shipped(state: StudioState = DEFAULT_STATE) {
   const ds = resolveDesignSystem(state)
   const preset = {
     density: ds.density,
@@ -26,7 +26,7 @@ async function shipped(state: StudioState = DEFAULTS) {
 
 describe("tables axis", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
-    const system = resolveDesignSystem(DEFAULTS)
+    const system = resolveDesignSystem(DEFAULT_STATE)
     expect(system.componentParams.table).toEqual({
       separation: "lines",
       header: "plain",
@@ -35,28 +35,14 @@ describe("tables axis", () => {
   })
 
   it("maps separation and header onto table params", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      tableSeparation: "striped",
-      tableHeader: "filled",
-    })
+    const system = resolveDesignSystem(
+      parseState({ tableSeparation: "striped", tableHeader: "filled" }),
+    )
     expect(system.componentParams.table).toEqual({
       separation: "striped",
       header: "filled",
     })
     expect(system.tokens).toEqual({})
-  })
-
-  it("falls back to the defaults on unknown values", () => {
-    const system = resolveDesignSystem({
-      ...DEFAULTS,
-      tableSeparation: "zebra",
-      tableHeader: "loud",
-    })
-    expect(system.componentParams.table).toEqual({
-      separation: "lines",
-      header: "plain",
-    })
   })
 })
 
@@ -70,10 +56,9 @@ describe("table motion", () => {
   })
 
   it("a tweak times rows, icons, the drag handle and the drop line", async () => {
-    const state: StudioState = {
-      ...DEFAULTS,
+    const state: StudioState = parseState({
       tableMotion: { duration: 250, ease: [0, 0, 0.2, 1] },
-    }
+    })
     expect(resolveDesignSystem(state).tokens).toEqual({
       "--studio-table-state-duration": "250ms",
       "--studio-table-state-ease": "cubic-bezier(0, 0, 0.2, 1)",

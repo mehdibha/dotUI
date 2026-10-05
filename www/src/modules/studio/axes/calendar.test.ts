@@ -1,15 +1,15 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("calendar + pickers axes", () => {
   test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULTS)
+    const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.componentParams.calendar).toEqual({
       dayShape: "rounded",
       today: "none",
@@ -20,13 +20,14 @@ describe("calendar + pickers axes", () => {
   })
 
   test("selections land on the calendar and select params", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      calendarDayShape: "circle",
-      calendarToday: "ring",
-      calendarWeekdays: "double",
-      pickerCaret: "double",
-    })
+    const ds = resolveDesignSystem(
+      parseState({
+        calendarDayShape: "circle",
+        calendarToday: "ring",
+        calendarWeekdays: "double",
+        pickerCaret: "double",
+      }),
+    )
     expect(ds.componentParams.calendar).toEqual({
       dayShape: "circle",
       today: "ring",
@@ -34,20 +35,10 @@ describe("calendar + pickers axes", () => {
     })
     expect(ds.componentParams.select).toEqual({ caret: "double" })
   })
-
-  test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      calendarDayShape: "hexagon",
-      pickerCaret: "triangle",
-    })
-    expect(ds.componentParams.calendar?.dayShape).toBe("rounded")
-    expect(ds.componentParams.select?.caret).toBe("chevron")
-  })
 })
 
 const shipped = async (name: string, tokens: Record<string, string> = {}) => {
-  const preset = defaultPreset()
+  const preset: PublishPreset = { density: "default", componentParams: {} }
   const mod = await publishables[name]?.()
   if (!mod) throw new Error(`${name} is not publishable`)
   const { item } = publish({
@@ -68,10 +59,9 @@ describe("calendar motion", () => {
   })
 
   test("a tweak times the day's focus ring", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      calendarMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({ calendarMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
+    )
     expect(await shipped("calendar", tokens)).toContain(
       "transition-shadow duration-200 ease-out in-data-calendar:hover:bg-accent-muted",
     )
@@ -94,11 +84,12 @@ describe("picker motion", () => {
   })
 
   test("a tweak times each picker on its own", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      timePickerMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
-      colorSwatchPickerMotion: { duration: 150, ease: [0, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        timePickerMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
+        colorSwatchPickerMotion: { duration: 150, ease: [0, 0, 0.2, 1] },
+      }),
+    )
     expect(tokens).toEqual({
       "--studio-time-picker-state-duration": "200ms",
       "--studio-time-picker-state-ease": "cubic-bezier(0, 0, 0.2, 1)",

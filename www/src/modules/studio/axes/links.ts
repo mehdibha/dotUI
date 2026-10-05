@@ -13,6 +13,8 @@
 import { SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn has no link; its breadcrumb link is `transition-colors` on
    Tailwind's default timing. */
@@ -30,20 +32,19 @@ export const UNDERLINE_OPTIONS = [
   { value: "never", label: "Never" },
 ]
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const LINK_SCHEMA: ChapterSchema<typeof LINK_DEFAULTS> = {
+  linkUnderline: oneOf(UNDERLINE_OPTIONS),
+  linkColor: oneOf(SOURCE_OPTIONS),
+  linkMotion: STATE_CHANGE,
+}
 
 export function resolveLinks(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("link", state.linkMotion, MOTION),
     params: {
       link: {
-        underline: pick(
-          UNDERLINE_OPTIONS,
-          state.linkUnderline,
-          LINK_DEFAULTS.linkUnderline,
-        ),
-        color: pick(SOURCE_OPTIONS, state.linkColor, LINK_DEFAULTS.linkColor),
+        underline: state.linkUnderline,
+        color: state.linkColor,
       },
     },
   }

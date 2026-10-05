@@ -10,9 +10,14 @@ import { cn } from "@/registry/lib/utils"
 
 import { TREATMENT_OPTIONS } from "../axes/disabled"
 import {
+  FOCUS_GAP_RANGE,
+  FOCUS_INPUT_BORDER_RANGE,
   FOCUS_INPUT_STYLE_OPTIONS,
+  FOCUS_INPUT_WIDTH_RANGE,
   FOCUS_OFFSET_OPTIONS,
+  FOCUS_STRENGTH_RANGE,
   FOCUS_STYLE_OPTIONS,
+  FOCUS_WIDTH_RANGE,
 } from "../axes/focus"
 import { ERROR_OPTIONS } from "../axes/invalid"
 import {
@@ -210,9 +215,9 @@ function FocusPanel({ studio }: { studio: Studio }) {
         label="Width"
         value={state.focusWidth}
         onChange={set("focusWidth")}
-        minValue={1}
-        maxValue={6}
-        step={1}
+        minValue={FOCUS_WIDTH_RANGE.min}
+        maxValue={FOCUS_WIDTH_RANGE.max}
+        step={FOCUS_WIDTH_RANGE.step}
         format={px}
       />
       {state.focusStyle === "halo" && (
@@ -220,9 +225,9 @@ function FocusPanel({ studio }: { studio: Studio }) {
           label="Strength"
           value={state.focusHaloStrength}
           onChange={set("focusHaloStrength")}
-          minValue={10}
-          maxValue={100}
-          step={5}
+          minValue={FOCUS_STRENGTH_RANGE.min}
+          maxValue={FOCUS_STRENGTH_RANGE.max}
+          step={FOCUS_STRENGTH_RANGE.step}
           format={(v) => `${v}%`}
         />
       )}
@@ -239,9 +244,9 @@ function FocusPanel({ studio }: { studio: Studio }) {
           label="Gap"
           value={state.focusGap}
           onChange={set("focusGap")}
-          minValue={1}
-          maxValue={6}
-          step={1}
+          minValue={FOCUS_GAP_RANGE.min}
+          maxValue={FOCUS_GAP_RANGE.max}
+          step={FOCUS_GAP_RANGE.step}
           format={px}
         />
       )}
@@ -264,18 +269,18 @@ function FocusPanel({ studio }: { studio: Studio }) {
             label="Width"
             value={state.focusInputWidth}
             onChange={set("focusInputWidth")}
-            minValue={1}
-            maxValue={8}
-            step={1}
+            minValue={FOCUS_INPUT_WIDTH_RANGE.min}
+            maxValue={FOCUS_INPUT_WIDTH_RANGE.max}
+            step={FOCUS_INPUT_WIDTH_RANGE.step}
             format={px}
           />
           <DialSlider
             label="Strength"
             value={state.focusInputStrength}
             onChange={set("focusInputStrength")}
-            minValue={10}
-            maxValue={100}
-            step={5}
+            minValue={FOCUS_STRENGTH_RANGE.min}
+            maxValue={FOCUS_STRENGTH_RANGE.max}
+            step={FOCUS_STRENGTH_RANGE.step}
             format={(v) => `${v}%`}
           />
         </>
@@ -285,9 +290,9 @@ function FocusPanel({ studio }: { studio: Studio }) {
           label="Width"
           value={state.focusInputBorderWidth}
           onChange={set("focusInputBorderWidth")}
-          minValue={1}
-          maxValue={4}
-          step={1}
+          minValue={FOCUS_INPUT_BORDER_RANGE.min}
+          maxValue={FOCUS_INPUT_BORDER_RANGE.max}
+          step={FOCUS_INPUT_BORDER_RANGE.step}
           format={px}
         />
       )}

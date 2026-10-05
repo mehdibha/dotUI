@@ -20,10 +20,10 @@ import { tv } from "tailwind-variants";
 
 const colorEditorVariants = tv({
   slots: {
-    root: "flex w-fit flex-col gap-2",
-    area: "flex gap-2",
-    fields: "flex flex-col gap-2",
-    fieldGroup: "flex flex-1 items-center gap-2",
+    root: "flex w-fit flex-col gap-2.5",
+    area: "flex gap-2.5",
+    fields: "flex flex-col gap-2.5",
+    fieldGroup: "flex flex-1 items-center gap-2.5",
   },
 });
 

@@ -1,31 +1,11 @@
 "use client"
 
-/* The panel's composition root: the chapter list, in page order, and the
-   design-system state it reads. Each section in sections/ owns its own axes —
-   its defaults, its options, its body — and this file only orders them into
-   a panel.
+/* The panel's composition root: the chapter list, in page order. Each
+   section in sections/ owns its body; its axes live in axes/. */
 
-   A section's defaults slice IS its state slice: it's what the chapter diffs
-   to show "modified", and what Reset writes back. Adding an axis means adding
-   a key to that one section's defaults; nothing here changes. */
-
-import { DEFAULTS } from "./axes"
 import type { StudioState } from "./axes"
-import { COLOR_DEFAULTS } from "./axes/color"
-import { CURSOR_DEFAULTS } from "./axes/cursor"
-import { DISABLED_DEFAULTS } from "./axes/disabled"
-import { FOCUS_DEFAULTS } from "./axes/focus"
-import { ICON_DEFAULTS } from "./axes/icons"
-import { INVALID_DEFAULTS } from "./axes/invalid"
-import { MOBILE_DEFAULTS } from "./axes/mobile"
-import { SELECTION_DEFAULTS } from "./axes/selection"
-import { SHAPE_DEFAULTS } from "./axes/shape"
-import { SPACE_DEFAULTS } from "./axes/space"
-import { SURFACE_DEFAULTS } from "./axes/surfaces"
-import { TYPE_DEFAULTS } from "./axes/type"
-import { MOTION_DEFAULTS } from "./motion-controls"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
-import { COMPONENTS_DEFAULTS, ComponentsSection } from "./sections/components"
+import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
 import {
   InteractivityPreview,
@@ -39,7 +19,6 @@ import { StatesPreview, StatesSection } from "./sections/states"
 import { SurfacesPreview, SurfacesSection } from "./sections/surfaces"
 import { TypePreview, TypeSection } from "./sections/type"
 
-export { DEFAULTS }
 export type { StudioState } from "./axes"
 import type { Studio } from "./use-studio"
 
@@ -48,13 +27,21 @@ export type { Studio }
 export interface Chapter {
   id: string
   label: string
-  defaults: Partial<StudioState>
   /** The rows on the page: the chapter's two or three decisions that matter. */
   Primary?: React.ComponentType<{ studio: Studio }>
   /** The rest of the chapter. */
   Body: React.ComponentType<{ studio: Studio }>
   /** A glyph-sized specimen of the chapter's state, beside its title. */
   Preview?: React.ComponentType<{ state: StudioState }>
+  /** Pages the body's rows open in place of the panel page. */
+  pages?: ChapterPage[]
+}
+
+export interface ChapterPage {
+  id: string
+  label: string
+  Preview?: React.ComponentType<{ state: StudioState }>
+  Body: React.ComponentType<{ studio: Studio }>
 }
 
 /* Identity first, then interactivity and the treatments every control
@@ -64,7 +51,6 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "color",
     label: "Color",
-    defaults: COLOR_DEFAULTS,
     Primary: ColorPrimary,
     Body: ColorSection,
     Preview: ColorPreview,
@@ -72,69 +58,60 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "typography",
     label: "Typography",
-    defaults: TYPE_DEFAULTS,
     Body: TypeSection,
     Preview: TypePreview,
   },
   {
     id: "icons",
     label: "Icons",
-    defaults: ICON_DEFAULTS,
     Body: IconsSection,
     Preview: IconsPreview,
   },
   {
     id: "shape",
     label: "Shape",
-    defaults: SHAPE_DEFAULTS,
     Body: ShapeSection,
     Preview: ShapePreview,
   },
   {
     id: "space",
-    label: "Space",
-    defaults: SPACE_DEFAULTS,
+    label: "Density",
     Body: SpaceSection,
     Preview: SpacePreview,
   },
   {
     id: "surfaces",
     label: "Surfaces",
-    defaults: SURFACE_DEFAULTS,
     Body: SurfacesSection,
     Preview: SurfacesPreview,
   },
   {
     id: "interactivity",
     label: "Interactivity",
-    defaults: { ...CURSOR_DEFAULTS, ...SELECTION_DEFAULTS },
     Body: InteractivitySection,
     Preview: InteractivityPreview,
   },
   {
     id: "states",
     label: "States",
-    defaults: { ...FOCUS_DEFAULTS, ...DISABLED_DEFAULTS, ...INVALID_DEFAULTS },
     Body: StatesSection,
     Preview: StatesPreview,
   },
   {
     id: "motion",
     label: "Motion",
-    defaults: MOTION_DEFAULTS,
     Body: MotionSection,
   },
   {
     id: "mobile",
     label: "Mobile",
-    defaults: MOBILE_DEFAULTS,
     Body: MobileSection,
     Preview: MobilePreview,
   },
   {
     id: "components",
     label: "Components",
-    defaults: COMPONENTS_DEFAULTS,
     Body: ComponentsSection,
+    pages: COMPONENT_PAGES,
   },
 ]

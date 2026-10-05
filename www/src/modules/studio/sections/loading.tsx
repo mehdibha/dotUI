@@ -12,7 +12,9 @@ import { INDETERMINATE_OPTIONS, TRACK_OPTIONS } from "../axes/progress"
 import { ANIMATION_OPTIONS } from "../axes/skeleton"
 import { STYLE_OPTIONS } from "../axes/spinner"
 import {
+  DialGap,
   DialGlyph,
+  DialList,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -104,6 +106,16 @@ export function LoadingSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
+      <DialList
+        label="Spinner"
+        value={state.spinnerStyle}
+        onChange={set("spinnerStyle")}
+        options={STYLE_OPTIONS.map((option) => {
+          const Loader = LOADERS[option.value] ?? RingLoader
+          return { ...option, preview: <Loader className="size-5" /> }
+        })}
+      />
+      <DialGap />
       <DialSelect
         label="Skeleton"
         value={state.skeletonAnimation}
@@ -116,16 +128,6 @@ export function LoadingSection({ studio }: { studio: Studio }) {
             </DialGlyph>
           ),
         }))}
-      />
-      <DialSelect
-        label="Spinner"
-        value={state.spinnerStyle}
-        onChange={set("spinnerStyle")}
-        rowPreview={false}
-        options={STYLE_OPTIONS.map((option) => {
-          const Loader = LOADERS[option.value] ?? RingLoader
-          return { ...option, preview: <Loader className="size-4" /> }
-        })}
       />
       <DialTrigger
         label="Progress"

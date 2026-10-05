@@ -10,16 +10,18 @@
    `rounded-*` utility on export. State timing rides on the
    `--studio-checkbox-state-*` vars, which Radio reads too (a synced pair). */
 
-import { fillScope } from "./color"
+import { fillScope, SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's checkbox: `transition-colors` on Tailwind's default timing (its
    radio doesn't animate). */
 const MOTION = TAILWIND_TIMING
 
 export const CHECKBOX_DEFAULTS = {
-  checkboxColor: "neutral",
+  checkboxColor: "accent",
   checkCorner: "rounded",
   checkboxMotion: MOTION,
 }
@@ -35,6 +37,12 @@ export const CORNER_OPTIONS = [
 const CORNER_TOKENS: Record<string, string> = {
   square: "var(--radius-xs)",
   circle: "var(--radius-full)",
+}
+
+export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
+  checkboxColor: oneOf(SOURCE_OPTIONS),
+  checkCorner: oneOf(CORNER_OPTIONS),
+  checkboxMotion: STATE_CHANGE,
 }
 
 export function resolveCheckbox(state: StudioState): Resolved {

@@ -10,6 +10,7 @@
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import buttonMeta from "../../registry/ui/button/meta"
 import fieldMeta from "../../registry/ui/field/meta"
 import { publish, TV_CONFIG_PLACEHOLDER } from "../publish"
 import { extractStylesConfig } from "./extract-config"
@@ -31,9 +32,9 @@ describe("extractStylesConfig", () => {
     expect(Array.isArray(cfg.base.base)).toBe(true)
     expect((cfg.base.base as string[])[0]).toMatch(/group\/button/)
 
-    // `base.variants.variant.primary` is a string.
+    // `base.variants.variant.primary` is a string; the fill is the style's.
     expect(typeof cfg.base.variants?.variant?.primary).toBe("string")
-    expect(cfg.base.variants?.variant?.primary).toContain("bg-primary")
+    expect(cfg.base.variants?.variant?.primary).toContain("text-fg-on-primary")
 
     // All three density entries exist.
     expect(cfg.density?.compact).toBeDefined()
@@ -256,28 +257,17 @@ describe("end-to-end (extract + transform → publish)", () => {
       publishable: {
         template,
         stylesConfig,
-        meta: {
-          name: "button",
-          type: "registry:ui",
-          files: [
-            {
-              type: "registry:ui",
-              path: "ui/button/base.tsx",
-              target: "ui/button.tsx",
-            },
-          ],
-          registryDependencies: ["loader", "focus-styles"],
-        },
+        meta: buttonMeta,
       },
       preset: { density: "default", componentParams: {} },
     })
 
-    expect(rawContent).toContain("bg-primary") // primary variant
+    expect(rawContent).toContain("bg-primary") // flat style, primary variant
     expect(rawContent).toContain("h-8") // default density size md
     expect(rawContent).not.toContain(TV_CONFIG_PLACEHOLDER)
   })
 
-  test("alert: a retargeted surface role exports as the utility it resolves to", () => {
+  test("alert: a retargeted container role exports as the utility it resolves to", () => {
     const stylesConfig = extractStylesConfig(
       path.join(REGISTRY_UI, "alert/styles.ts"),
     )
@@ -305,7 +295,7 @@ describe("end-to-end (extract + transform → publish)", () => {
       preset: {
         density: "default",
         componentParams: {},
-        tokens: { "--studio-radius-surface": "var(--radius-md)" },
+        tokens: { "--studio-radius-container": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")

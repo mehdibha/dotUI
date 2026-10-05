@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
 import { familyFromStack, FONT_SANS_VAR, googleFontsUrl } from "@/lib/fonts"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { PRESET_CATALOG } from "@/modules/presets/__generated__/catalog"
 
 /**
  * Display font for a preset's name in the landing switcher — the preset's own
@@ -9,7 +9,7 @@ import { PRESETS } from "@/modules/presets/presets-data"
  * Presets without a font token label in the self-hosted default (Geist).
  */
 export function presetLabelStack(presetId: string): string {
-  const preset = PRESETS.find((p) => p.id === presetId)
+  const preset = PRESET_CATALOG.find((p) => p.id === presetId)
   return (
     preset?.designSystem.tokens[FONT_SANS_VAR] ?? "'Geist Variable', sans-serif"
   )
@@ -24,7 +24,7 @@ export function usePresetLabelFonts() {
   useEffect(() => {
     const families = [
       ...new Set(
-        PRESETS.map((p) => p.designSystem.tokens[FONT_SANS_VAR])
+        PRESET_CATALOG.map((p) => p.designSystem.tokens[FONT_SANS_VAR])
           .filter((stack): stack is string => stack !== undefined)
           .map(familyFromStack),
       ),
@@ -33,7 +33,9 @@ export function usePresetLabelFonts() {
 
     const load = () => {
       if (document.getElementById("preset-label-fonts")) return
-      const text = [...new Set(PRESETS.flatMap((p) => [...p.name]))].join("")
+      const text = [
+        ...new Set(PRESET_CATALOG.flatMap((p) => [...p.name])),
+      ].join("")
       const link = document.createElement("link")
       link.id = "preset-label-fonts"
       link.rel = "stylesheet"

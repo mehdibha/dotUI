@@ -5,6 +5,8 @@
 import type { Resolved, StudioState } from "./index"
 import { resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
+import { entrance } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn has no message scroller: today's look, a quick strong ease-out in
    and a slower ease-in out. */
@@ -23,13 +25,18 @@ export const MESSAGE_SCROLLER_DEFAULTS = {
   messageScrollerMotion: MOTION,
 }
 
+export const MESSAGE_SCROLLER_SCHEMA: ChapterSchema<
+  typeof MESSAGE_SCROLLER_DEFAULTS
+> = {
+  messageScrollerMotion: entrance(MOTION_PATTERNS),
+}
+
 export function resolveMessageScroller(state: StudioState): Resolved {
   return {
     tokens: resolveEntrance(
       "message-scroller",
       state.messageScrollerMotion,
       MOTION,
-      MOTION_PATTERNS,
     ).tokens,
   }
 }

@@ -5,7 +5,7 @@
    leaf of Color's Primary. */
 
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -73,11 +73,10 @@ export function SlidersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Thumb"
         value={state.sliderThumb}
         onChange={set("sliderThumb")}
-        rowPreview={false}
         options={THUMB_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -87,6 +86,7 @@ export function SlidersSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialSegmented
         label="Track"
         value={state.sliderTrack}

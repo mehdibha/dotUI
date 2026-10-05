@@ -35,6 +35,7 @@ import {
   scopedSemantics,
   semanticDelta,
   semanticsFor,
+  SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
 import type {
@@ -114,7 +115,7 @@ let rootClosureCache: RootClosure | null = null
  * are skipped.
  *
  * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted
- * from `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed
+ * from `SITE_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed
  * source of truth, and its targets may be authored as `color-mix()` (the
  * vocabulary supports it), whose CSSOM read-back is unreliable.
  */
@@ -163,7 +164,7 @@ function getRootClosure(): RootClosure {
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
- * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `getRootClosure`),
+ * `--color-*` layer from `SITE_SEMANTICS` (the reliable source — see `getRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
  * `--radius` + param vars ride inline on the scope element.
  *
@@ -200,6 +201,8 @@ function buildScopedThemeCss(
 
   const base = forcedMode === "dark" ? `${light}\n${dark}` : light
   const darkOverrides = forcedMode === "light" ? light : dark
+  // No color keeps the site's chrome, whose primitives the closure carries.
+  const vocabulary = color ? semanticsFor(color) : SITE_SEMANTICS
 
   const blocks = [
     // `color` re-establishes the base text color from the scope's own tokens,
@@ -211,16 +214,14 @@ function buildScopedThemeCss(
     // A forced mode flattens per-mode targets to that mode — the `.dark`-selector
     // re-point below can't reach a forced-dark scope on a light page.
     emitCss(
-      forcedMode
-        ? flattenSemanticsToMode(semanticsFor(color), forcedMode)
-        : semanticsFor(color),
+      forcedMode ? flattenSemanticsToMode(vocabulary, forcedMode) : vocabulary,
       { selector },
     ),
     // `.dark` re-points for per-mode targets (per-mode token overrides).
     ...(forcedMode
       ? []
       : [
-          emitDarkOverridesCss(semanticsFor(color), {
+          emitDarkOverridesCss(vocabulary, {
             selector: `.dark ${selector}`,
           }),
         ]),

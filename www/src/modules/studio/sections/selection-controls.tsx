@@ -10,10 +10,11 @@ import { cn } from "@/registry/lib/utils"
 import { CORNER_OPTIONS } from "../axes/checkbox"
 import { CONTROL_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards"
 import {
+  DialGap,
   DialGlyph,
+  DialList,
   DialPopover,
   DialSegmented,
-  DialSelect,
   DialTrigger,
   optionLabel,
 } from "../dial"
@@ -103,7 +104,7 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Checkbox"
         value={state.checkCorner}
         onChange={set("checkCorner")}
@@ -116,6 +117,7 @@ export function SelectionControlsSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialTrigger
         label="Choice cards"
         value={

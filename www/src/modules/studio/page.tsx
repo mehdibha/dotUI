@@ -6,10 +6,15 @@
 
    Below `lg` the same page is a dock under the preview (beside it on short
    screens): one chapter's rows, hugged, over a chapter strip that scrolls
-   sideways. The header's toggle tucks it to its strip. */
+   sideways. The header's toggle tucks it to its strip.
 
-import { useEffect, useRef, useState } from "react"
+   A chapter's row can open a page (a component family) in place of the
+   whole page: a back button and the page's title pin over its body, and
+   going back lands where the page was left. */
+
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import {
+  ChevronLeftIcon,
   ChevronRightIcon,
   PanelBottomCloseIcon,
   PanelBottomOpenIcon,
@@ -24,9 +29,9 @@ import { Button } from "@/registry/ui/button"
 
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
-import { DOCKED_QUERY, DockLayer, useDockSide } from "./rows"
+import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import type { Chapter, Studio } from "./state"
+import type { Chapter, ChapterPage, Studio } from "./state"
 
 function ChapterBlock({
   chapter,
@@ -162,11 +167,18 @@ export function PanelPage({
 }: {
   chapters: Chapter[]
   studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
 }) {
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
   const [active, setActive] = useState(chapters[0]?.id ?? "")
   const [tucked, setTucked] = useState(false)
+  const [pageId, setPageId] = useState<string | null>(null)
+  const scroller = useRef<HTMLDivElement>(null)
+  const scrolled = useRef(0)
+  const pages: (ChapterPage & { chapter: Chapter })[] = chapters.flatMap(
+    (chapter) => (chapter.pages ?? []).map((page) => ({ ...page, chapter })),
+  )
+  const page = pages.find((p) => p.id === pageId)
   // Beside the preview, tucking would only empty the column.
   const side = useDockSide()
   const open = !tucked || side
@@ -182,30 +194,47 @@ export function PanelPage({
     return () => observer.disconnect()
   }, [layer])
 
+  // Going back lands where the page was left; a new page opens at its top.
+  useLayoutEffect(() => {
+    if (scroller.current)
+      scroller.current.scrollTop = pageId ? 0 : scrolled.current
+  }, [pageId])
+
+  const openPage = (id: string) => {
+    const target = pages.find((p) => p.id === id)
+    if (!target) return
+    if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
+    setActive(target.chapter.id)
+    setPageId(id)
+  }
+
+  // A search hit lands on its row (a sub-axis on the row that holds it).
+  const flash = (container: Element | null | undefined, label: string) => {
+    const row = [...(container?.querySelectorAll("span") ?? [])].find(
+      (span) => span.textContent === label,
+    )
+    const target = row?.closest(".rounded-lg") ?? row
+    if (!target) return
+    target.scrollIntoView({ block: "start" })
+    target.animate(
+      {
+        boxShadow: [
+          "inset 0 0 0 1.5px var(--color-accent)",
+          "inset 0 0 0 1.5px transparent",
+        ],
+      },
+      { duration: 1200, easing: "ease-in" },
+    )
+  }
+
   const dock = (id: string, axis?: string) => {
     setActive(id)
     setTucked(false)
+    setPageId(null)
     requestAnimationFrame(() => {
       const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
       chapter?.scrollIntoView({ block: "start" })
-      if (!chapter || !axis) return
-      // A search hit lands on its row (a sub-axis on the row that holds it).
-      const label = axis.split(" › ")[0]
-      const row = [...chapter.querySelectorAll("span")].find(
-        (span) => span.textContent === label,
-      )
-      const target = row?.closest(".rounded-lg") ?? row
-      if (!target) return
-      target.scrollIntoView({ block: "start" })
-      target.animate(
-        {
-          boxShadow: [
-            "inset 0 0 0 1.5px var(--color-accent)",
-            "inset 0 0 0 1.5px transparent",
-          ],
-        },
-        { duration: 1200, easing: "ease-in" },
-      )
+      if (axis) flash(chapter, axis.split(" › ")[0]!)
     })
   }
 
@@ -229,63 +258,120 @@ export function PanelPage({
   }
 
   const reveal = (id: string, axis?: string) => {
+    // "Buttons › Style" names a page and a row on it.
+    const [first, label] = axis?.split(" › ") ?? []
+    const target = pages.find((p) => p.chapter.id === id && p.label === first)
+    if (target) {
+      setTucked(false)
+      openPage(target.id)
+      if (label)
+        requestAnimationFrame(() =>
+          flash(layer?.querySelector(`[data-page="${target.id}"]`), label),
+        )
+      return
+    }
     if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
-    layer
-      ?.querySelector(`[data-chapter="${id}"]`)
-      ?.scrollIntoView({ block: "start" })
+    setPageId(null)
+    // After an open page has given way to the chapters.
+    requestAnimationFrame(() =>
+      layer
+        ?.querySelector(`[data-chapter="${id}"]`)
+        ?.scrollIntoView({ block: "start" }),
+    )
   }
 
   return (
-    <DockLayer.Provider value={layer}>
-      {/* Docked, the positioned box row popovers portal into. */}
-      <div
-        ref={setLayer}
-        onPointerUp={replay}
-        className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
-      >
-        <PanelChrome
-          studio={studio}
-          system={system}
-          actions={
-            <>
-              <PanelSearch chapters={chapters} onOpenChapter={reveal} />
-              <Button
-                size="sm"
-                variant="quiet"
-                isIconOnly
-                aria-label={open ? "Collapse panel" : "Expand panel"}
-                aria-expanded={open}
-                onPress={() => setTucked(open)}
-                className="lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
-              >
-                {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
-              </Button>
-            </>
-          }
-          strip={
-            <ChapterStrip
-              chapters={chapters}
-              active={active}
-              open={open}
-              onChange={dock}
-            />
-          }
-          className={
-            open
-              ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
-              : "max-lg:h-auto max-lg:[&>:first-child]:border-0"
-          }
+    <PanelNav.Provider value={openPage}>
+      <DockLayer.Provider value={layer}>
+        {/* Docked, the positioned box row popovers portal into. */}
+        <div
+          ref={setLayer}
+          onPointerUp={replay}
+          className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
         >
-          {chapters.map((chapter) => (
-            <ChapterBlock
-              key={chapter.id}
-              chapter={chapter}
-              studio={studio}
-              docked={open && chapter.id === active}
-            />
-          ))}
-        </PanelChrome>
-      </div>
-    </DockLayer.Provider>
+          <PanelChrome
+            system={system}
+            actions={
+              <>
+                <PanelSearch chapters={chapters} onOpenChapter={reveal} />
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  isIconOnly
+                  aria-label={open ? "Collapse panel" : "Expand panel"}
+                  aria-expanded={open}
+                  onPress={() => setTucked(open)}
+                  className="data-icon-only:size-6 lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
+                >
+                  {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
+                </Button>
+              </>
+            }
+            strip={
+              <ChapterStrip
+                chapters={chapters}
+                active={active}
+                open={open}
+                onChange={dock}
+              />
+            }
+            page={
+              open &&
+              page && (
+                <>
+                  <Button
+                    size="sm"
+                    variant="quiet"
+                    isIconOnly
+                    aria-label={`Back to ${page.chapter.label}`}
+                    onPress={() => setPageId(null)}
+                    className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
+                  >
+                    <ChevronLeftIcon />
+                  </Button>
+                  <span className="min-w-0 flex-1 truncate text-[13px] font-medium">
+                    {page.label}
+                  </span>
+                  {page.Preview && (
+                    <span className="flex shrink-0 items-center pr-1 text-fg/60">
+                      <page.Preview state={studio.state} />
+                    </span>
+                  )}
+                </>
+              )
+            }
+            scrollRef={scroller}
+            className={
+              open
+                ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
+                : "max-lg:h-auto max-lg:*:first:border-0"
+            }
+          >
+            {page ? (
+              <section
+                key={page.id}
+                data-page={page.id}
+                aria-label={page.label}
+                className={cn(
+                  "flex w-full shrink-0 flex-col gap-1.5 pb-2.5 max-lg:py-2",
+                  !open && "max-lg:hidden",
+                )}
+              >
+                <page.Body studio={studio} />
+              </section>
+            ) : (
+              chapters.map((chapter) => (
+                <ChapterBlock
+                  key={chapter.id}
+                  chapter={chapter}
+                  studio={studio}
+                  docked={open && chapter.id === active}
+                />
+              ))
+            )}
+          </PanelChrome>
+        </div>
+      </DockLayer.Provider>
+    </PanelNav.Provider>
   )
 }

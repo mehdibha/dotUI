@@ -158,11 +158,15 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
     >
       {/* The prompt itself is a Mention on the TokenField primitive: `@` browses
           files, `/` lists commands, and picked items become inline tokens. */}
-      <Mention allowsNewlines trigger={/[@/]/} defaultValue={DEFAULT_PROMPT}>
+      <Mention
+        aria-label="Prompt"
+        allowsNewlines
+        trigger={/[@/]/}
+        defaultValue={DEFAULT_PROMPT}
+      >
         {({ trigger }) => (
           <>
             <TokenInput
-              aria-label="Prompt"
               placeholder="How can I help you today?"
               className="min-h-14 rounded-none border-0 bg-transparent px-2 pt-2 text-base focus:ring-0"
             />
@@ -199,7 +203,6 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
             size="sm"
             isIconOnly
             aria-label="Add files and tools"
-            className="rounded-full"
           >
             <PlusIcon />
           </Button>
@@ -376,7 +379,6 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
                 size="sm"
                 isIconOnly
                 aria-label="Microphone settings"
-                className="rounded-full"
               >
                 <MicIcon />
               </Button>
@@ -384,8 +386,8 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
                 <DialogContent className="gap-1.5 p-1.5">
                   <div className="flex items-center gap-2 px-2 pt-1.5">
                     <MicIcon className="size-4 shrink-0 text-fg-muted" />
-                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-border">
-                      <div className="h-full w-1/5 rounded-full bg-accent" />
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-(--studio-radius-pill) bg-border">
+                      <div className="h-full w-1/5 rounded-(--studio-radius-pill) bg-accent" />
                     </div>
                   </div>
                   <ListBox
@@ -427,7 +429,6 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
               size="sm"
               isIconOnly
               aria-label="Voice mode"
-              className="rounded-full"
               onPress={() => setVoiceMode(true)}
             >
               <AudioLinesIcon />

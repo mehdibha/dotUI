@@ -4,13 +4,8 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import {
-  GRID_OPTIONS,
-  gridOption,
-  PALETTE_OPTIONS,
-  paletteOption,
-} from "../axes/charts"
-import { DialGlyph, DialSelect } from "../dial"
+import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
+import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -68,26 +63,26 @@ function GridGlyph({ grid }: { grid: string }) {
 /* --------------------------------- Section --------------------------------- */
 
 export function ChartsPreview({ state }: { state: StudioState }) {
-  return <SeriesGlyph palette={paletteOption(state.chartPalette)} />
+  return <SeriesGlyph palette={state.chartPalette} />
 }
 
 export function ChartsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Palette"
-        value={paletteOption(state.chartPalette)}
+        value={state.chartPalette}
         onChange={set("chartPalette")}
-        rowPreview={false}
         options={PALETTE_OPTIONS.map((option) => ({
           ...option,
           preview: <SeriesGlyph palette={option.value} />,
         }))}
       />
+      <DialGap />
       <DialSelect
         label="Grid"
-        value={gridOption(state.chartGrid)}
+        value={state.chartGrid}
         onChange={set("chartGrid")}
         options={GRID_OPTIONS.map((option) => ({
           ...option,

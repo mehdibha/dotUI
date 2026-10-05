@@ -4,8 +4,8 @@
  * a Google Fonts stylesheet URL, and an idempotent <link> injection.
  *
  * Fonts are stored in the design system as plain global tokens (full CSS
- * font-family stacks) so they ride the existing codec → provider → publisher
- * pipeline unchanged:
+ * font-family stacks) so they ride the existing provider → publisher pipeline
+ * unchanged:
  *   --font-sans     body font (Tailwind's `font-sans`, applied on <body>)
  *   --font-heading  heading font (defaults to var(--font-sans) in the theme)
  *   --font-mono     monospace font (`font-mono`)

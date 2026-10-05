@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(messageMeta, {
       group: "flex min-w-0 flex-col",
       root: "group/message relative flex w-full min-w-0 data-[align=end]:flex-row-reverse",
       avatar:
-        "flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-message-footer/message:-translate-y-8",
+        "flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full group-has-data-message-footer/message:-translate-y-8",
       content: [
         "flex w-full min-w-0 flex-col wrap-break-word",
         "group-data-[align=end]/message:*:self-end",

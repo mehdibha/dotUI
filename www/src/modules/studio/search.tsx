@@ -154,7 +154,7 @@ export function PanelSearch({
       variant="quiet"
       isIconOnly
       aria-label="Search"
-      className="pointer-coarse:data-icon-only:size-9"
+      className="data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
     >
       <SearchIcon />
     </Button>

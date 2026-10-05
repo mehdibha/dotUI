@@ -1,13 +1,4 @@
-export {
-  DEFAULT_PRESET,
-  decodePreset,
-  decodeState,
-  encodePreset,
-  encodeState,
-  type StudioPreset,
-} from "./codec"
 export { DEFAULTS } from "./defaults"
-export { type SavedPreset, useMyPresets } from "./my-presets"
 export {
   pingIframe,
   type PreviewMode,
@@ -26,9 +17,4 @@ export {
   useIsEmbeddedPreview,
   usePreviewForcedTheme,
 } from "./iframe-sync"
-export type {
-  CodeOptions,
-  Density,
-  DesignSystem,
-  IconLibraryName,
-} from "./types"
+export type { Density, DesignSystem, IconLibraryName } from "./types"

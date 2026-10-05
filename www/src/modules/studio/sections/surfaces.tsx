@@ -10,11 +10,11 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { modeFor } from "../axes/color"
-import type { ColorMode } from "../axes/color"
 import {
   CANVAS_OPTIONS,
+  DARK_BG_RANGE,
   DEPTH_OPTIONS,
+  LIGHT_BG_RANGE,
   shadowCss,
   STRATEGY_OPTIONS,
   surfaceColorCss,
@@ -158,8 +158,7 @@ export function surfacesSummary(state: StudioState): string {
   return strategyLabel(state.surfaceStrategy)
 }
 
-const formatBg = (mode: ColorMode, v: number) =>
-  mode.polarity === "dark" && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`
+const formatBg = (v: number) => `L* ${v.toFixed(1)}`
 
 export function SurfacesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
@@ -167,8 +166,6 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
     0,
     DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
   )
-  const setBg = (mode: ColorMode) => (bg: number) =>
-    set("modes")(state.modes.map((m) => (m.id === mode.id ? { ...m, bg } : m)))
   return (
     <>
       <DialTrigger label="Style" value={strategyLabel(state.surfaceStrategy)}>
@@ -188,22 +185,24 @@ export function SurfacesSection({ studio }: { studio: Studio }) {
             }))}
           />
           <DialGap />
-          {(["light", "dark"] as const).map((polarity) => {
-            const mode = modeFor(state, polarity)
-            const light = polarity === "light"
-            return (
-              <DialSlider
-                key={mode.id}
-                label={`${mode.name} background`}
-                value={mode.bg}
-                onChange={setBg(mode)}
-                minValue={light ? 90 : 0}
-                maxValue={light ? 100 : 20}
-                step={0.5}
-                format={(v) => formatBg(mode, v)}
-              />
-            )
-          })}
+          <DialSlider
+            label="Light background"
+            value={state.lightBg}
+            onChange={set("lightBg")}
+            minValue={LIGHT_BG_RANGE.min}
+            maxValue={LIGHT_BG_RANGE.max}
+            step={LIGHT_BG_RANGE.step}
+            format={formatBg}
+          />
+          <DialSlider
+            label="Dark background"
+            value={state.darkBg}
+            onChange={set("darkBg")}
+            minValue={DARK_BG_RANGE.min}
+            maxValue={DARK_BG_RANGE.max}
+            step={DARK_BG_RANGE.step}
+            format={(v) => (v === 0 ? "OLED" : formatBg(v))}
+          />
         </DialPopover>
       </DialTrigger>
       <DialSlider

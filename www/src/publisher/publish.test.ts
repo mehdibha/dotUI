@@ -8,7 +8,7 @@
  *                scalar param ("radius") whose var ref must be rewritten
  */
 
-import { afterEach, describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest"
 
 import {
   publishables,
@@ -23,8 +23,6 @@ import {
   depsFromFileImports,
   publish,
   selectPublishable,
-  setDotuiDepResolver,
-  setKnownDotuiNames,
   TV_CONFIG_PLACEHOLDER,
 } from "./publish"
 import {
@@ -36,11 +34,6 @@ import {
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
 import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
-
-afterEach(() => {
-  setKnownDotuiNames([])
-  setDotuiDepResolver("")
-})
 
 /* ============================================================ */
 /* flatten                                                       */
@@ -353,6 +346,33 @@ describe("resolve-classes", () => {
     )
   })
 
+  test("rewriteClassString drops a prefixed radius equal to its sibling", () => {
+    const vars = resolveStudioVars({
+      "--studio-input-radius": "var(--radius-md)",
+      "--studio-input-multiline-radius": "var(--radius-md)",
+      "--studio-tag-radius": "var(--radius-2xl)",
+    })
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md")
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-tag-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md has-data-textarea:rounded-2xl")
+    // A pseudo-element or child is another box: it keeps its own radius.
+    expect(
+      rewriteClassString(
+        "rounded-(--studio-input-radius) after:rounded-(--studio-input-radius) *:rounded-(--studio-input-radius)",
+        vars,
+      ),
+    ).toBe("rounded-md after:rounded-md *:rounded-md")
+  })
+
   test("rewriteClassString drops motion reads that change nothing", () => {
     const vars = resolveStudioVars({
       "--studio-enter": "150ms",
@@ -614,8 +634,7 @@ describe("publish", () => {
     expect(item.type).toBe("registry:ui")
     // `focus-styles` is bundled into the registry:base init item so it gets
     // dropped from per-component registryDependencies. `loader` stays as a
-    // bare name — without a `setKnownDotuiNames` + `setDotuiDepResolver`
-    // call there's no URL rewrite.
+    // bare name — without a `deps` resolver there's no URL rewrite.
     expect(item.registryDependencies).toEqual(["loader"])
     const file = item.files?.[0]
     // Shipped as a flat `path` with no `target`, so the shadcn CLI honours the
@@ -683,17 +702,18 @@ describe("publish", () => {
     }
   })
 
-  test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {
-    setKnownDotuiNames(["loader"])
-    setDotuiDepResolver("https://dotui.com", "?preset=abc")
-
+  test("button: rewrites known dotui deps through the resolver", () => {
     const { item } = publish({
       publishable: buttonPublishable,
       preset: { density: "default", componentParams: {} },
+      deps: {
+        url: (name) => `https://dotui.org/r/p/linear/${name}.json?code=arrays`,
+        known: new Set(["loader"]),
+      },
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.com/r/loader?preset=abc",
+      "https://dotui.org/r/p/linear/loader.json?code=arrays",
     ])
   })
 
@@ -701,9 +721,6 @@ describe("publish", () => {
     // Regression for #477: `input` used to pass through bare (it had no
     // publishable), so `shadcn add` resolved it against shadcn's default
     // registry. With `input` publishable, both deps rewrite to dotui URLs.
-    setKnownDotuiNames(["field", "input"])
-    setDotuiDepResolver("https://dotui.org")
-
     const { item } = publish({
       publishable: {
         template: TV_CONFIG_PLACEHOLDER,
@@ -722,17 +739,23 @@ describe("publish", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
+      deps: {
+        url: (name) => `https://dotui.org/r/${name}.json`,
+        known: new Set(["field", "input"]),
+      },
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.org/r/field",
-      "https://dotui.org/r/input",
+      "https://dotui.org/r/field.json",
+      "https://dotui.org/r/input.json",
     ])
   })
 
   test("popover: ships a param value's registry deps only when it is selected", () => {
-    setKnownDotuiNames(["drawer", "use-mobile"])
-    setDotuiDepResolver("https://dotui.org")
+    const deps = {
+      url: (name: string) => `https://dotui.org/r/${name}.json`,
+      known: new Set(["drawer", "use-mobile"]),
+    }
     const publishable = {
       template: TV_CONFIG_PLACEHOLDER,
       stylesConfig: { base: {} },
@@ -760,10 +783,11 @@ describe("publish", () => {
     const drawer = publish({
       publishable,
       preset: { density: "default", componentParams: {} },
+      deps,
     })
     expect(drawer.item.registryDependencies).toEqual([
-      "https://dotui.org/r/drawer",
-      "https://dotui.org/r/use-mobile",
+      "https://dotui.org/r/drawer.json",
+      "https://dotui.org/r/use-mobile.json",
     ])
 
     const plain = publish({
@@ -772,6 +796,7 @@ describe("publish", () => {
         density: "default",
         componentParams: { popover: { mobile: "popover" } },
       },
+      deps,
     })
     expect(plain.item.registryDependencies).toBeUndefined()
   })
@@ -794,7 +819,7 @@ describe("publish", () => {
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // --studio-alert-radius → --studio-radius-surface → --radius-lg → suffix "lg".
+    // --studio-alert-radius → --studio-radius-container → --radius-lg → suffix "lg".
     expect(rawContent).toContain("rounded-lg")
   })
 

@@ -1,6 +1,6 @@
 :root {
   --studio-skeleton-radius: var(--studio-radius-detail);
-  --studio-skeleton-block-radius: var(--studio-radius-control);
+  --studio-skeleton-block-radius: var(--studio-radius-field);
   --studio-skeleton-loop-duration: 2000ms;
   --studio-skeleton-loop-ease: cubic-bezier(0.4, 0, 0.6, 1);
 }

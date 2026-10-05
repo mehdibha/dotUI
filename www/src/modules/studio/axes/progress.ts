@@ -12,7 +12,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { pick } from "./pick"
+import { BOOLEAN, oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's indicator rides Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -34,17 +35,20 @@ export const INDETERMINATE_OPTIONS = [
   { value: "pulse", label: "Pulse" },
 ]
 
+export const PROGRESS_SCHEMA: ChapterSchema<typeof PROGRESS_DEFAULTS> = {
+  progressTrack: oneOf(TRACK_OPTIONS),
+  progressIndeterminate: oneOf(INDETERMINATE_OPTIONS),
+  progressGap: BOOLEAN,
+  progressMotion: STATE_CHANGE,
+}
+
 export function resolveProgress(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("progress", state.progressMotion, MOTION),
     params: {
       "progress-bar": {
-        track: pick(TRACK_OPTIONS, state.progressTrack, "thin"),
-        indeterminate: pick(
-          INDETERMINATE_OPTIONS,
-          state.progressIndeterminate,
-          "slide",
-        ),
+        track: state.progressTrack,
+        indeterminate: state.progressIndeterminate,
         gap: state.progressGap ? "cut" : "none",
       },
     },

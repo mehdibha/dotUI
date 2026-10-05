@@ -4,8 +4,8 @@
  * shadcn installs a font per framework from one of these — on Next.js it wires
  * `next/font/google` into the root layout, elsewhere it adds the `@fontsource`
  * package and imports it — and sets the token's CSS variable either way. The
- * init item references one per font token the preset sets (see emit-theme)
- * instead of appending a Google Fonts `@import url()` to the consumer's
+ * init item references one per font role, Geist defaults included (see
+ * emit-theme), instead of appending a Google Fonts `@import url()` to the consumer's
  * stylesheet: shadcn's CSS updater inserts registry imports after
  * `@import "tailwindcss"`, which is invalid once Tailwind expands, and
  * bundlers drop it silently (the examples smoke caught this).
@@ -17,6 +17,8 @@
  */
 
 import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
   familyFromStack,
   FONT_CATALOG,
   FONT_HEADING_VAR,
@@ -82,14 +84,24 @@ export function parseFontItemName(
   return undefined
 }
 
+// The default faces bind create-next-app's variables, which the base theme
+// reads (`--font-sans: var(--font-geist-sans)`). shadcn skips a layout that
+// already imports Geist only for `--font-sans|serif|mono`, and never rewrites
+// the theme's own tokens — so a later font change still overrides them.
+const DEFAULT_FACE_VARS: Record<string, string> = {
+  [fontItemName(FONT_SANS_VAR, DEFAULT_BODY_FAMILY)]: "--font-geist-sans",
+  [fontItemName(FONT_MONO_VAR, DEFAULT_MONO_FAMILY)]: "--font-geist-mono",
+}
+
 export function emitFontItem(name: string): RegistryItem | undefined {
   const parsed = parseFontItemName(name)
   if (!parsed) return undefined
-  const { variable, family } = parsed
+  const { family } = parsed
+  const variable = DEFAULT_FACE_VARS[name] ?? parsed.variable
   const role =
-    variable === FONT_HEADING_VAR
+    parsed.variable === FONT_HEADING_VAR
       ? " (Heading)"
-      : variable === FONT_MONO_VAR
+      : parsed.variable === FONT_MONO_VAR
         ? " (Mono)"
         : ""
   const item = {
@@ -106,6 +118,11 @@ export function emitFontItem(name: string): RegistryItem | undefined {
       variable,
       subsets: ["latin"],
       dependency: `@fontsource-variable/${fontSlug(family)}`,
+      // Without a selector shadcn applies `font-mono` to <html>, turning the
+      // whole page monospace.
+      ...(variable === FONT_MONO_VAR
+        ? { selector: "code, kbd, samp, pre" }
+        : {}),
     },
   }
   return item as unknown as RegistryItem

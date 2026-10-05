@@ -9,49 +9,40 @@ import {
 } from "@dotui/colors"
 
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { ORIGIN } from "@/modules/presets"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, DEFAULTS, parseState } from "."
 import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 import {
   buildColorConfig,
-  isDefaultColorConfig,
   SEMANTIC_PICKS,
   SEMANTIC_ROLES,
   SOLID_LEAVES,
   withSource,
 } from "./color"
 
-const withModes = (
-  light: Partial<(typeof DEFAULTS.modes)[number]>,
-  dark: Partial<(typeof DEFAULTS.modes)[number]> = {},
-) => ({
-  ...DEFAULTS,
-  modes: DEFAULTS.modes.map((mode) => ({
-    ...mode,
-    ...(mode.polarity === "light" ? light : dark),
-  })),
-})
-
 describe("color axis", () => {
-  it("the defaults are the shipped palette, and resolve to no recipe", () => {
-    expect(buildColorConfig(DEFAULTS)).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(resolveDesignSystem(DEFAULTS).color).toBeUndefined()
+  it("the defaults are the shipped palette, resolved explicitly", () => {
+    expect(buildColorConfig(DEFAULT_STATE)).toEqual(DEFAULT_COLOR_CONFIG)
+    expect(resolveDesignSystem(DEFAULT_STATE).color).toEqual(
+      DEFAULT_COLOR_CONFIG,
+    )
   })
 
   it("maps seeds and engine axes onto ColorConfig, absent when default", () => {
-    const { color } = resolveDesignSystem({
-      ...DEFAULTS,
-      brand: "#5e6ad2",
-      ...withSource(SOLID_LEAVES, "accent"),
-      successSeed: "#16a34a",
-      selectionSeed: "#0072f5",
-      neutralHue: 250,
-      neutralTint: 2,
-      vividness: 1.3,
-      preserveSeed: true,
-    })
+    const { color } = resolveDesignSystem(
+      parseState({
+        brand: "#5e6ad2",
+        ...withSource(SOLID_LEAVES, "accent"),
+        successSeed: "#16a34a",
+        selectionSeed: "#0072f5",
+        neutralHue: 250,
+        neutralTint: 2,
+        vividness: 1.3,
+        preserveSeed: true,
+      }),
+    )
     expect(color).toEqual({
       v: 2,
       seeds: { accent: "#5e6ad2", success: "#16a34a", selection: "#0072f5" },
@@ -66,37 +57,34 @@ describe("color axis", () => {
 
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
-      buildColorConfig({ ...DEFAULTS, ...state }).selection
-    expect(source({ selectionColor: "neutral" })).toBeUndefined()
-    expect(source({ selectionColor: "accent" })).toBe("accent")
-    expect(source(withSource(SOLID_LEAVES, "accent"))).toBeUndefined()
-    expect(source({ buttonColor: "accent", selectionColor: "neutral" })).toBe(
-      "neutral",
+      buildColorConfig(parseState({ ...state })).selection
+    expect(source({ selectionColor: "accent" })).toBeUndefined()
+    expect(source({ selectionColor: "neutral" })).toBe("neutral")
+    expect(source(withSource(SOLID_LEAVES, "neutral"))).toBeUndefined()
+    expect(source({ buttonColor: "neutral", selectionColor: "accent" })).toBe(
+      "accent",
     )
   })
 
-  it("maps the mode pair onto per-polarity backgrounds (0 dark = OLED)", () => {
+  it("maps the backgrounds onto per-polarity backgrounds (0 dark = OLED)", () => {
     expect(
-      resolveDesignSystem(withModes({ bg: 97 }, { bg: 0 })).color?.background,
+      resolveDesignSystem(parseState({ lightBg: 97, darkBg: 0 })).color
+        ?.background,
     ).toEqual({ light: 97, dark: "oled" })
   })
 
-  it("reads a deep-merged default recipe as untouched", () => {
-    expect(
-      isDefaultColorConfig({
-        ...DEFAULT_COLOR_CONFIG,
-        overrides: {},
-      }),
-    ).toBe(true)
-    expect(
-      isDefaultColorConfig({ ...DEFAULT_COLOR_CONFIG, primary: "accent" }),
-    ).toBe(false)
+  it("keeps a neutral primary off the accent default", () => {
+    const { color } = resolveDesignSystem(
+      parseState(withSource(SOLID_LEAVES, "neutral")),
+    )
+    expect(color).toBeDefined()
+    expect(color?.primary).toBeUndefined()
   })
 })
 
 describe("semantic picks", () => {
   const bases: [string, StudioState][] = [
-    ["the defaults", DEFAULTS],
+    ["the defaults", DEFAULT_STATE],
     ["Origin", ORIGIN.state],
   ]
 
@@ -131,7 +119,7 @@ describe("semantic picks", () => {
     for (const role of SEMANTIC_ROLES) {
       const solids = SEMANTIC_PICKS[role.palette].map((pick) => {
         const { light } = resolveColorConfig(
-          buildColorConfig({ ...DEFAULTS, [role.key]: pick.hex }),
+          buildColorConfig({ ...DEFAULT_STATE, [role.key]: pick.hex }),
         )
         return toOklch(light.scales[role.palette]?.["700"] ?? "")
       })

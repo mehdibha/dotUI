@@ -14,8 +14,6 @@
    by its visual duration and bounce, or a spring by its physics. Springs
    ship as `linear()` over their settle time; exits never spring. */
 
-import { pick } from "./pick"
-
 export type Bezier = [number, number, number, number]
 
 export type Curve =
@@ -235,37 +233,43 @@ function changed(vars: Record<string, string>, base: Record<string, string>) {
   )
 }
 
-const isNumber = (v: unknown): v is number =>
-  typeof v === "number" && Number.isFinite(v)
+const isDuration = (v: unknown): v is number =>
+  typeof v === "number" && Number.isFinite(v) && v >= 0
 const isBezier = (v: unknown): v is Bezier =>
-  Array.isArray(v) && v.length === 4 && v.every(isNumber)
+  Array.isArray(v) &&
+  v.length === 4 &&
+  v.every((n) => typeof n === "number" && Number.isFinite(n))
+
 function isCurve(v: unknown): v is Curve {
   const c = v as Record<string, unknown> | null
   if (c?.type === "easing") return isBezier(c.ease)
-  if (c?.type === "spring") return isNumber(c.bounce)
+  if (c?.type === "spring")
+    return typeof c.bounce === "number" && Number.isFinite(c.bounce)
   return (
     c?.type === "physics" &&
-    [c.stiffness, c.damping, c.mass].every((n) => isNumber(n) && n > 0)
+    [c.stiffness, c.damping, c.mass].every((n) => isDuration(n) && n > 0)
   )
 }
 
-/* The preset codec only checks a stored value's top-level type, so each
-   field falls back to its default unless it has the default's shape. */
-function sanitize<T extends object>(value: unknown, defaults: T): T {
-  const stored = (value ?? {}) as Record<string, unknown>
-  const out = { ...defaults } as Record<string, unknown>
-  for (const [key, fallback] of Object.entries(defaults)) {
-    const v = stored[key]
-    const ok = isBezier(fallback)
-      ? isBezier(v)
-      : typeof fallback === "object"
-        ? isCurve(v)
-        : typeof fallback === "number"
-          ? isNumber(v) && v >= 0
-          : typeof v === typeof fallback
-    if (ok) out[key] = v
-  }
-  return out as T
+const isRecord = (v: unknown): v is Record<string, unknown> =>
+  typeof v === "object" && v !== null && !Array.isArray(v)
+
+/** Whether `v` has the shape of a motion value of `kind`. */
+export function isMotionValue(
+  kind: "entrance" | "state-change" | "loop",
+  v: unknown,
+  patterns: readonly { value: string }[] = [],
+): boolean {
+  if (!isRecord(v)) return false
+  if (kind === "state-change") return isDuration(v.duration) && isBezier(v.ease)
+  if (kind === "loop") return isDuration(v.cycle) && isBezier(v.ease)
+  return (
+    patterns.some((p) => p.value === v.pattern) &&
+    isDuration(v.enter) &&
+    isCurve(v.curve) &&
+    (v.exit === undefined || isDuration(v.exit)) &&
+    (v.exitEase === undefined || isBezier(v.exitEase))
+  )
 }
 
 /** An entrance's `--studio-<id>-*` tokens and its pattern param. */
@@ -273,12 +277,10 @@ export function resolveEntrance(
   id: string,
   value: Entrance,
   defaults: Entrance,
-  patterns: { value: string }[],
 ) {
-  const entrance = sanitize(value, defaults)
   return {
-    tokens: changed(entranceVars(id, entrance), entranceVars(id, defaults)),
-    pattern: pick(patterns, entrance.pattern, defaults.pattern),
+    tokens: changed(entranceVars(id, value), entranceVars(id, defaults)),
+    pattern: value.pattern,
   }
 }
 
@@ -288,16 +290,10 @@ export function resolveStateChange(
   value: StateChange,
   defaults: StateChange,
 ) {
-  return changed(
-    stateChangeVars(id, sanitize(value, defaults)),
-    stateChangeVars(id, defaults),
-  )
+  return changed(stateChangeVars(id, value), stateChangeVars(id, defaults))
 }
 
 /** A keyframe loop's `--studio-<id>-loop-*` tokens. */
 export function resolveLoop(id: string, value: Loop, defaults: Loop) {
-  return changed(
-    loopVars(id, sanitize(value, defaults)),
-    loopVars(id, defaults),
-  )
+  return changed(loopVars(id, value), loopVars(id, defaults))
 }

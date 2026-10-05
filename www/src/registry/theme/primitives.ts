@@ -15,7 +15,7 @@ import {
   type ThemeOptions,
 } from "@dotui/colors"
 
-import { type ColorConfig, migrateColorConfig } from "./color-config"
+import { type ColorConfig, salvageColorConfig } from "./color-config"
 import { PALETTE_ORDER } from "./palettes"
 
 export type Ramp = Record<string, string>
@@ -55,7 +55,7 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
  * deep engine throw.
  */
 export function resolveColorConfig(config: ColorConfig): Theme {
-  return createTheme(themeOptionsFromConfig(migrateColorConfig(config)))
+  return createTheme(themeOptionsFromConfig(salvageColorConfig(config)))
 }
 
 export interface EmitPrimitivesOptions {
@@ -115,7 +115,7 @@ export function emitPrimitivesCss(
   if (isRoot) {
     out.push(
       "/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
-      "/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */",
+      "/* Primitive ramps generated from SITE_COLOR_CONFIG (see @/registry/theme). */",
       "",
     )
   }

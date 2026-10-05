@@ -14,7 +14,6 @@ import { rimraf } from "rimraf"
 
 import { themeOptionsSchema } from "@dotui/colors/schema"
 
-import { PRESETS } from "../src/modules/presets/presets-data"
 import {
   buildPublishables,
   collectBaseFiles,
@@ -26,13 +25,15 @@ import { registryHooks } from "../src/registry/hooks/registry"
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map"
 import {
   DEFAULT_COLOR_CONFIG,
-  DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
   resolveColorConfig,
+  SITE_COLOR_CONFIG,
+  SITE_SEMANTICS,
   themeOptionsFromConfig,
 } from "../src/registry/theme"
+import type { ColorConfig } from "../src/registry/theme"
 import type { RegistryItem } from "../src/registry/types"
 
 // Directories — relative to www/ (process.cwd())
@@ -723,7 +724,7 @@ async function checkRegistryIntegrity(
 // ============================================================================
 // Post-publish guards: the emitted publishable set is a CONTRACT — every skip
 // is explained, every declared dep resolves, every docs-advertised name ships.
-// These catch the #477 bug class (a component silently missing from /r/{name},
+// These catch the #477 bug class (a component silently missing from /r/{name}.json,
 // or a dep that falls through to shadcn's default registry) at build, not in
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
 // ============================================================================
@@ -761,7 +762,7 @@ function checkPublishableSkips(build: PublishablesBuild): string[] {
 
 /**
  * Registered lib/hook items referenced as `registryDependencies` that are NOT
- * independently servable at GET /r/{name} (only ui items become publishables).
+ * independently servable at GET /r/{name}.json (only ui items become publishables).
  * shadcn add would fall through to its DEFAULT registry for these bare names —
  * the exact #477 failure. They are a KNOWN packaging gap: the fix is to ship the
  * file inline (as ui/tabs does with lib/context) or make lib/hooks servable.
@@ -828,9 +829,9 @@ function checkDependencyClosure(
 const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
 
 /**
- * Names that resolve to a real `/r/<name>` route but aren't components, so they
- * never appear in `builtNames`. `init` serves the `registry:base` item that
- * `shadcn init https://dotui.org/r/init` consumes (see routes/r/init.tsx). Docs
+ * Names that resolve to a real `/r/<name>.json` file but aren't components, so
+ * they never appear in `builtNames`. `init` serves the `registry:base` item
+ * that `shadcn init` consumes (see lib/registry/serve.ts). Docs
  * may advertise these; the guard treats them as served, not dangling.
  */
 const SERVED_ROUTE_NAMES = new Set(["init"])
@@ -950,7 +951,7 @@ async function checkPublishableIntegrity(
 
 interface PublishablesBuild {
   skipped: Array<{ name: string; reason: string }>
-  /** Names of items that emitted a publishable — the exact set GET /r/{name} serves. */
+  /** Names of items that emitted a publishable — the exact set GET /r/{name}.json serves. */
   builtNames: Set<string>
 }
 
@@ -982,7 +983,7 @@ async function buildShadcnPublishables(
 }
 
 /**
- * Generate base/colors.css from the default ColorConfig: the primitive ramps
+ * Generate base/colors.css from the site's ColorConfig: the primitive ramps
  * (both modes solved independently by the engine) and the semantic `@theme`
  * block that references them. This file is site-only — the shipped theme
  * flattens the semantic tokens to literals instead (see publisher/emit-theme).
@@ -990,10 +991,13 @@ async function buildShadcnPublishables(
 // The engine's input contract is a zod schema checked here, at build time,
 // for the default and every built-in preset — `createTheme` itself trusts
 // its typed input so the client never ships zod.
-function checkColorConfigs() {
+function checkColorConfigs(
+  presets: { id: string; designSystem: { color?: ColorConfig } }[],
+) {
   const configs = [
     ["default", DEFAULT_COLOR_CONFIG] as const,
-    ...PRESETS.map((preset) => [preset.id, preset.designSystem.color] as const),
+    ["site", SITE_COLOR_CONFIG] as const,
+    ...presets.map((preset) => [preset.id, preset.designSystem.color] as const),
   ]
   for (const [name, config] of configs) {
     if (!config) continue
@@ -1007,10 +1011,36 @@ function checkColorConfigs() {
   console.log(`  ✓ color configs (${configs.length} presets)`)
 }
 
+/** The built-ins resolved at build time, so the landing never loads the
+ *  resolver. Imported late: resolution reads the registry files written above. */
+async function buildPresetCatalog() {
+  const { PRESET_META, resolvePreset } =
+    await import("../src/modules/presets/index")
+  const catalog = PRESET_META.map((meta) => ({
+    ...meta,
+    designSystem: resolvePreset(meta.id),
+  }))
+  checkColorConfigs(catalog)
+  const targetPath = path.join(
+    process.cwd(),
+    "src/modules/presets/__generated__/catalog.ts",
+  )
+  const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+import type { PresetMeta } from "../preset"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+
+export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> = ${JSON.stringify(catalog)}
+`
+  await fs.mkdir(path.dirname(targetPath), { recursive: true })
+  await writeGeneratedFile(targetPath, content)
+  console.log(`  ✓ presets/__generated__/catalog.ts (${catalog.length})`)
+}
+
 async function generateBaseColorsCss() {
-  const primitives = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
-  const dark = emitDarkOverridesCss(DEFAULT_SEMANTICS)
-  const semantics = emitCss(DEFAULT_SEMANTICS) + (dark ? `\n${dark}` : "")
+  const primitives = emitPrimitivesCss(resolveColorConfig(SITE_COLOR_CONFIG))
+  const dark = emitDarkOverridesCss(SITE_SEMANTICS)
+  const semantics = emitCss(SITE_SEMANTICS) + (dark ? `\n${dark}` : "")
   await fs.writeFile(
     path.join(REGISTRY_DIR, "base", "colors.css"),
     `${primitives}\n/* Semantic tokens over the ramps above. */\n${semantics}`,
@@ -1023,7 +1053,6 @@ async function main() {
 
   try {
     console.log("Generating base color css")
-    checkColorConfigs()
     await generateBaseColorsCss()
 
     // Fresh item lists globbed from disk — never the (possibly stale) committed
@@ -1055,6 +1084,9 @@ async function main() {
 
     console.log("\nChecking publishable integrity")
     await checkPublishableIntegrity(registryUi, publishablesBuild)
+
+    console.log("\nGenerating preset catalog")
+    await buildPresetCatalog()
 
     console.log("\n✅ Registry built successfully!")
   } catch (error) {

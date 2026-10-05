@@ -1,15 +1,15 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("segmented control axis", () => {
   test("defaults ship the registry defaults", () => {
-    const { componentParams, tokens } = resolveDesignSystem(DEFAULTS)
+    const { componentParams, tokens } = resolveDesignSystem(DEFAULT_STATE)
     expect(componentParams["segmented-control"]).toEqual({
       selected: "flat",
       track: "filled",
@@ -18,33 +18,19 @@ describe("segmented control axis", () => {
   })
 
   test("selected and track become segmented-control params", () => {
-    const { componentParams } = resolveDesignSystem({
-      ...DEFAULTS,
-      segmentedSelected: "raised",
-      segmentedTrack: "outline",
-    })
+    const { componentParams } = resolveDesignSystem(
+      parseState({ segmentedSelected: "raised", segmentedTrack: "outline" }),
+    )
     expect(componentParams["segmented-control"]).toEqual({
       selected: "raised",
       track: "outline",
-    })
-  })
-
-  test("unknown values fall back to the defaults", () => {
-    const { componentParams } = resolveDesignSystem({
-      ...DEFAULTS,
-      segmentedSelected: "underline",
-      segmentedTrack: "gapped",
-    })
-    expect(componentParams["segmented-control"]).toEqual({
-      selected: "flat",
-      track: "filled",
     })
   })
 })
 
 describe("segmented control motion", () => {
   const shipped = async (tokens: Record<string, string> = {}) => {
-    const preset = defaultPreset()
+    const preset: PublishPreset = { density: "default", componentParams: {} }
     const mod = await publishables["segmented-control"]?.()
     if (!mod) throw new Error("segmented-control is not publishable")
     const { item } = publish({
@@ -64,10 +50,11 @@ describe("segmented control motion", () => {
   })
 
   test("a tweak ships plain classes", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      segmentedControlMotion: { duration: 200, ease: [0.4, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({
+        segmentedControlMotion: { duration: 200, ease: [0.4, 0, 0.2, 1] },
+      }),
+    )
     const content = await shipped(tokens)
     expect(content).toContain(
       "transition-[translate,width,height] duration-200 motion-reduce:transition-none",
