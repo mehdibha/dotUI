@@ -36,6 +36,7 @@ export const linear = definePreset({
     roleItem: "auto",
     roleSurface: "lg",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "default",

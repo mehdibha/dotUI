@@ -40,6 +40,7 @@ export const claude = definePreset({
     roleItem: "auto",
     roleSurface: "lg",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "default",

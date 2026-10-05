@@ -40,6 +40,7 @@ export const airbnb = definePreset({
     roleItem: "auto",
     roleSurface: "md",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "comfortable",

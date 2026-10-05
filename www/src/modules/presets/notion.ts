@@ -37,6 +37,7 @@ export const notion = definePreset({
     roleItem: "auto",
     roleSurface: "lg",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "default",

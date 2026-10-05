@@ -107,7 +107,9 @@ function CharacterPanel({ studio }: { studio: Studio }) {
           },
         ]
       : []),
-    ...SHAPE_RUNGS.map(({ id, label, ratio }) => ({
+    ...SHAPE_RUNGS.filter(
+      ({ id }) => id !== "full" || (key !== "rolePanel" && key !== "roleCard"),
+    ).map(({ id, label, ratio }) => ({
       value: id,
       label: rungLabel(label, ratio, state.radiusPx),
     })),
