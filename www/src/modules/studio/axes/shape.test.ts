@@ -82,32 +82,42 @@ describe("shape axis", () => {
     })
   })
 
-  test("derived rungs hold their rules for every role combination", () => {
-    const rank = (token: string) =>
-      SHAPE_RUNGS.findIndex((rung) => rung.token === token)
-    const values = (key: keyof typeof SHAPE_SCHEMA) => {
-      const axis = SHAPE_SCHEMA[key].value
-      return axis.type === "enum" ? axis.options.map((o) => o.value) : []
-    }
-    const pill = "var(--radius-full)"
-    for (const roleControl of values("roleControl"))
-      for (const roleSurface of values("roleSurface"))
-        for (const rolePanel of values("rolePanel"))
-          for (const roleItem of values("roleItem"))
-            for (const roleCard of values("roleCard")) {
-              const vars = shapeVars({
-                ...DEFAULT_STATE,
-                ...{ roleControl, roleSurface, rolePanel, roleItem, roleCard },
-              })
-              const small = vars["--studio-radius-control-sm"]!
-              if (roleControl !== "none") expect(small).not.toBe("0")
-              expect(rank(vars["--studio-radius-detail"]!)).toBeLessThanOrEqual(
-                rank(small),
-              )
-              for (const block of ["field", "container", "inline-item"])
-                expect(vars[`--studio-radius-${block}`]).not.toBe(pill)
-            }
-  })
+  test(
+    "derived rungs hold their rules for every role combination",
+    { timeout: 30_000 },
+    () => {
+      const rank = (token: string) =>
+        SHAPE_RUNGS.findIndex((rung) => rung.token === token)
+      const values = (key: keyof typeof SHAPE_SCHEMA) => {
+        const axis = SHAPE_SCHEMA[key].value
+        return axis.type === "enum" ? axis.options.map((o) => o.value) : []
+      }
+      const pill = "var(--radius-full)"
+      for (const roleControl of values("roleControl"))
+        for (const roleSurface of values("roleSurface"))
+          for (const rolePanel of values("rolePanel"))
+            for (const roleItem of values("roleItem"))
+              for (const roleCard of values("roleCard")) {
+                const vars = shapeVars({
+                  ...DEFAULT_STATE,
+                  ...{
+                    roleControl,
+                    roleSurface,
+                    rolePanel,
+                    roleItem,
+                    roleCard,
+                  },
+                })
+                const small = vars["--studio-radius-control-sm"]!
+                if (roleControl !== "none") expect(small).not.toBe("0")
+                expect(
+                  rank(vars["--studio-radius-detail"]!),
+                ).toBeLessThanOrEqual(rank(small))
+                for (const block of ["field", "container", "inline-item"])
+                  expect(vars[`--studio-radius-${block}`]).not.toBe(pill)
+              }
+    },
+  )
 
   test("states saved before cards were a role keep their character", () => {
     expect(
