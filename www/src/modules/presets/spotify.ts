@@ -41,6 +41,7 @@ export const spotify = definePreset({
     roleItem: "auto",
     roleSurface: "lg",
     rolePanel: "lg",
+    roleCard: "lg",
 
     // Space
     // Live controls are 32/48px; comfortable is the closest tier.

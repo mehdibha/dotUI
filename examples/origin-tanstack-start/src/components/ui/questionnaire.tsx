@@ -30,7 +30,7 @@ const questionnaireVariants = tv({
     choiceContent: "flex min-w-0 flex-1 flex-col leading-snug gap-0.5",
     choiceDescription: "text-fg-muted",
     shortcut:
-      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-md border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
+      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
       "w-full min-w-0 rounded-md border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none placeholder:text-fg-muted focus:focus-input focus:not-aria-invalid:border-border-focus aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted disabled:pointer-events-none disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) disabled:text-(--disabled-fg,currentColor) h-8 px-2.5 py-1 text-base md:text-sm",

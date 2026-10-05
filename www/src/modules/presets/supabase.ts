@@ -39,6 +39,7 @@ export const supabase = definePreset({
     roleItem: "xs",
     roleSurface: "md",
     rolePanel: "lg",
+    roleCard: "lg",
 
     // Space
     density: "default",

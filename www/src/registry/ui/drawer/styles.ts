@@ -31,7 +31,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         "mx-auto my-2 shrink-0 cursor-drag touch-none rounded-(--studio-drawer-handle-radius) bg-fg/20 select-none active:cursor-dragging orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
       swipeArea: "fixed z-50 touch-none",
       indent: [
-        "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-2xl",
+        "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-(--studio-drawer-radius)",
         behind,
       ],
       indentBackground: [

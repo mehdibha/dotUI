@@ -39,6 +39,7 @@ export const origin = definePreset({
     roleItem: "auto",
     roleSurface: "lg",
     rolePanel: "xl",
+    roleCard: "auto",
 
     // Space
     density: "default",

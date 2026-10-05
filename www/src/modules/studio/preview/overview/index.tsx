@@ -43,6 +43,15 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
+import { DEFAULT_STATE } from "@/modules/studio/axes"
+import {
+  resolveShape,
+  ROLE_VARS,
+  SHAPE_CHARACTERS,
+  SHAPE_ROLES,
+  SHAPE_RUNGS,
+  shapeVars,
+} from "@/modules/studio/axes/shape"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/studio/preset"
 import type { DesignSystem } from "@/modules/studio/preset"
 
@@ -67,17 +76,6 @@ const DENSITY_DESCRIPTION: Record<string, string> = {
   default: "Balanced spacing — the everyday baseline.",
   comfortable:
     "Generous padding and breathing room for a relaxed, spacious feel.",
-}
-
-/** A descriptive word for the base radius in px (10 = builder default). */
-function radiusLabel(px: number): string {
-  if (Number.isNaN(px)) return "Default"
-  if (px === 0) return "Square"
-  if (px <= 5) return "Sharp"
-  if (px < 10) return "Tight"
-  if (px === 10) return "Default"
-  if (px >= 20) return "Pill"
-  return "Rounded"
 }
 
 /** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */
@@ -207,7 +205,7 @@ function Cover({
       </div>
 
       {/* Brand panel — the accent as a confident color field over its own ramp. */}
-      <div className="overflow-hidden rounded-2xl border shadow-sm">
+      <div className="overflow-hidden rounded-(--studio-radius-panel) border shadow-sm">
         <div
           className="flex aspect-16/10 flex-col justify-between p-5"
           style={{
@@ -269,7 +267,7 @@ function RampRow({
           </span>
         ) : null}
       </div>
-      <div className="overflow-hidden rounded-lg border">
+      <div className="overflow-hidden rounded-(--studio-radius-surface) border">
         <div className="flex">
           {steps.map((step) => (
             <div
@@ -315,7 +313,7 @@ function TokenSwatch({ token, label }: { token: string; label: string }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div
-        className="h-14 rounded-lg border"
+        className="h-14 rounded-(--studio-radius-surface) border"
         style={{ background: `var(${token})` }}
       />
       <div className="flex flex-col">
@@ -430,7 +428,7 @@ function TypographySection({
         {families.map((f) => (
           <div
             key={f.label}
-            className="flex items-end justify-between gap-2 rounded-xl border bg-card p-5"
+            className="flex items-end justify-between gap-2 rounded-(--studio-radius-card) border bg-card p-5"
           >
             <div className="flex min-w-0 flex-col gap-1">
               <Label>{f.label}</Label>
@@ -445,7 +443,7 @@ function TypographySection({
         ))}
       </div>
 
-      <div className="flex flex-col divide-y rounded-xl border">
+      <div className="flex flex-col divide-y rounded-(--studio-radius-card) border">
         {TYPE_SCALE.map((t) => (
           <div key={t.label} className="flex items-center gap-4 px-5 py-4">
             <div className="flex w-24 shrink-0 flex-col">
@@ -462,7 +460,7 @@ function TypographySection({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-[1.4fr_1fr]">
-        <div className="rounded-xl border bg-card p-5">
+        <div className="rounded-(--studio-radius-card) border bg-card p-5">
           <Label>Paragraph</Label>
           <p className="mt-3 text-pretty text-fg-muted">
             A design system is a shared language. Consistent color, type,
@@ -471,7 +469,7 @@ function TypographySection({
             considered defaults, so every screen reads as unmistakably yours.
           </p>
         </div>
-        <div className="rounded-xl border bg-card p-5">
+        <div className="rounded-(--studio-radius-card) border bg-card p-5">
           <Label>Weights</Label>
           <div className="mt-3 flex flex-col gap-1.5">
             {WEIGHTS.map((w) => (
@@ -509,7 +507,7 @@ function IconSection() {
           curated set.
         </span>
       </div>
-      <div className="grid grid-cols-6 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-10 lg:grid-cols-12">
+      <div className="grid grid-cols-6 gap-px overflow-hidden rounded-(--studio-radius-card) border bg-border sm:grid-cols-10 lg:grid-cols-12">
         {ICON_ENTRIES.map(([name, Icon]) => {
           const IconComponent = Icon as React.ComponentType<{
             className?: string
@@ -540,13 +538,44 @@ const RADII: { token: string; className: string }[] = [
   { token: "3xl", className: "rounded-3xl" },
 ]
 
+/** The character whose role tokens the design system carries, or Custom. */
+function shapeCharacter(tokens: Record<string, string>): string {
+  const radiusVars = (t: Record<string, string>) =>
+    Object.fromEntries(
+      Object.entries(t).filter(([name]) => name.startsWith("--studio-radius-")),
+    )
+  const actual = radiusVars(tokens)
+  const match = SHAPE_CHARACTERS.find((character) => {
+    const expected = radiusVars(
+      resolveShape({ ...DEFAULT_STATE, ...character.vector }).tokens ?? {},
+    )
+    const names = new Set([...Object.keys(expected), ...Object.keys(actual)])
+    return [...names].every((name) => expected[name] === actual[name])
+  })
+  return match?.label ?? "Custom"
+}
+
 function ShapeSection({
   radiusPx,
-  radiusText,
+  tokens,
 }: {
   radiusPx: number
-  radiusText: string
+  tokens: Record<string, string>
 }) {
+  const defaults = shapeVars(DEFAULT_STATE)
+  const roles = SHAPE_ROLES.map(({ key, label }) => {
+    const name = ROLE_VARS[key]
+    const rung = SHAPE_RUNGS.find(
+      (r) => r.token === (tokens[name] ?? defaults[name]),
+    )
+    const value =
+      !rung || rung.ratio === 0
+        ? "None"
+        : rung.ratio === Infinity
+          ? "Pill"
+          : `${rung.label} · ${Math.round(radiusPx * rung.ratio * 10) / 10}px`
+    return { name, label, value }
+  })
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
@@ -557,8 +586,22 @@ function ShapeSection({
           <span className="text-fg-muted">base radius</span>
         </div>
         <Badge variant="accent" size="lg">
-          {radiusText}
+          {shapeCharacter(tokens)}
         </Badge>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+        {roles.map((role) => (
+          <div key={role.name} className="flex flex-col gap-2">
+            <div
+              className="aspect-4/3 w-full border-2 border-border-control bg-card"
+              style={{ borderRadius: `var(${role.name})` }}
+            />
+            <span className="text-sm font-medium">{role.label}</span>
+            <span className="font-mono text-[10px] text-fg-muted">
+              {role.value}
+            </span>
+          </div>
+        ))}
       </div>
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
         {RADII.map((r) => (
@@ -604,7 +647,7 @@ function DensitySection({ density }: { density: string }) {
           {DENSITY_DESCRIPTION[density]}
         </p>
         {/* Live proof — these controls adopt the density above automatically. */}
-        <div className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-5">
+        <div className="flex flex-wrap items-center gap-3 rounded-(--studio-radius-card) border bg-card p-5">
           <Button size="sm">Small</Button>
           <Button>Default</Button>
           <Button size="lg" variant="primary">
@@ -612,7 +655,7 @@ function DensitySection({ density }: { density: string }) {
           </Button>
         </div>
       </div>
-      <div className="flex flex-col gap-3 rounded-xl border bg-card p-5">
+      <div className="flex flex-col gap-3 rounded-(--studio-radius-card) border bg-card p-5">
         <Label>Spacing scale</Label>
         <div className="flex items-end gap-3">
           {SPACING_STEPS.map((s) => (
@@ -647,17 +690,17 @@ const SURFACE_LAYERS: { token: string; label: string }[] = [
 const SHADOWS: { className: string; label: string }[] = [
   {
     className:
-      "border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
+      "rounded-(--studio-radius-card) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
     label: "Card",
   },
   {
     className:
-      "border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
+      "rounded-(--studio-radius-surface) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
     label: "Popover",
   },
   {
     className:
-      "border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
+      "rounded-(--studio-radius-panel) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
     label: "Dialog",
   },
 ]
@@ -671,7 +714,7 @@ function ElevationSection() {
           {SURFACE_LAYERS.map((s) => (
             <div
               key={s.token}
-              className="flex h-24 items-end rounded-xl border p-3"
+              className="flex h-24 items-end rounded-(--studio-radius-card) border p-3"
               style={{ background: `var(${s.token})` }}
             >
               <span
@@ -695,10 +738,7 @@ function ElevationSection() {
           {SHADOWS.map((s) => (
             <div
               key={s.label}
-              className={cn(
-                "flex h-24 items-end rounded-xl border p-3",
-                s.className,
-              )}
+              className={cn("flex h-24 items-end border p-3", s.className)}
             >
               <span className="text-xs font-medium text-fg-muted">
                 {s.label}
@@ -715,7 +755,7 @@ function ElevationSection() {
 
 function Atom({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border bg-card p-5">
+    <div className="flex flex-col gap-3 rounded-(--studio-radius-card) border bg-card p-5">
       <Label>{title}</Label>
       <div className="flex flex-1 flex-wrap items-center gap-3">{children}</div>
     </div>
@@ -803,14 +843,14 @@ function InteractivitySection({
       {items.map((it) => (
         <div
           key={it.label}
-          className="flex items-center justify-between gap-4 rounded-xl border bg-card p-5"
+          className="flex items-center justify-between gap-4 rounded-(--studio-radius-card) border bg-card p-5"
         >
           <div className="flex flex-col gap-1">
             <Label>{it.label} cursor</Label>
             <span className="font-mono text-sm">{it.value}</span>
           </div>
           <div
-            className="flex size-12 items-center justify-center rounded-lg border bg-bg text-fg-muted"
+            className="flex size-12 items-center justify-center rounded-(--studio-radius-item) border bg-bg text-fg-muted"
             style={{ cursor: it.value }}
           >
             <MousePointer2Icon className="size-5" />
@@ -903,7 +943,7 @@ export function PresetOverview({
       label: "Density",
       value: DENSITY_LABEL[designSystem.density] ?? "Default",
     },
-    { label: "Radius", value: radiusLabel(numericRadius) },
+    { label: "Shape", value: shapeCharacter(designSystem.tokens) },
     {
       label: "Type",
       value:
@@ -958,12 +998,9 @@ export function PresetOverview({
           panelId="shape"
           icon={ShapesIcon}
           title="Shape"
-          description="A single base radius scales the whole corner-radius ramp at once, setting the softness of the entire system."
+          description="A base radius scales the corner ramp; the character decides which rung each kind of component wears."
         >
-          <ShapeSection
-            radiusPx={numericRadius}
-            radiusText={radiusLabel(numericRadius)}
-          />
+          <ShapeSection radiusPx={numericRadius} tokens={designSystem.tokens} />
         </Section>
 
         <Section

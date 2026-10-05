@@ -39,6 +39,7 @@ export const stripe = definePreset({
     roleItem: "sm",
     roleSurface: "lg",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "default",

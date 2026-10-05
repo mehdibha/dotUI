@@ -38,7 +38,7 @@ export function ApprovalPrompt({
         </CardAction>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="rounded-md bg-neutral p-3 font-mono text-xs">
+        <div className="rounded-(--studio-radius-item) bg-neutral p-3 font-mono text-xs">
           <span className="text-fg-muted select-none">$ </span>
           pnpm db:migrate --env production
         </div>

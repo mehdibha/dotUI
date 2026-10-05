@@ -48,8 +48,8 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         },
         pill: {
           list: "gap-1",
-          tab: "rounded-full orientation-horizontal:h-full",
-          selectionIndicator: "inset-0 rounded-full",
+          tab: "rounded-(--studio-radius-pill) orientation-horizontal:h-full",
+          selectionIndicator: "inset-0 rounded-(--studio-radius-pill)",
         },
         enclosed: {
           list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",

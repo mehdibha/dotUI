@@ -41,6 +41,7 @@ export const github = definePreset({
     roleItem: "md",
     roleSurface: "xl",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     density: "default",
