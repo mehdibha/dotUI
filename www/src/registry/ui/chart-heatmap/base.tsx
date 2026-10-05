@@ -36,7 +36,7 @@ export function heatmapColors(
     const t = steps === 1 ? 0.5 : index / (steps - 1)
     const [weight, target] =
       t <= 0.5
-        ? [20 + t * 160, "var(--color-bg)"]
+        ? [20 + t * 160, "var(--surface-bg,var(--color-bg))"]
         : [100 - (t - 0.5) * 136, "var(--color-fg)"]
     return `color-mix(in oklab, ${color} ${Math.round(weight)}%, ${target})`
   })

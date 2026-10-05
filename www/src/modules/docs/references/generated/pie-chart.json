@@ -163,7 +163,7 @@
         "type": "string"
       },
       "description": "Stroke painted between slices.",
-      "default": "\"var(--color-bg)\""
+      "default": "\"var(--surface-bg,var(--color-bg))\""
     },
     "strokeWidth": {
       "type": "number",

@@ -22,6 +22,8 @@ export const github = definePreset({
     vividness: 1,
     neutralTint: 1.4,
     preserveSeed: true,
+    lightBg: 100,
+    darkBg: 5,
 
     // Typography
     headingFont: "",
@@ -46,12 +48,10 @@ export const github = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 5,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

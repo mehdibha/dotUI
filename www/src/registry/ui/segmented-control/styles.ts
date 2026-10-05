@@ -45,7 +45,8 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       raised: {
         slots: {
           item: "selected:text-fg",
-          indicator: "bg-bg shadow-sm ring-1 ring-border-control",
+          indicator:
+            "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-1 ring-border-control",
         },
       },
       flat: {

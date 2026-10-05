@@ -20,6 +20,8 @@ export const notion = definePreset({
     vividness: 1,
     neutralTint: 0.5,
     preserveSeed: false,
+    lightBg: 100,
+    darkBg: 8.8,
 
     // Typography
     headingFont: "",
@@ -45,12 +47,10 @@ export const notion = definePreset({
     spacingUnit: 3.5,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 8.8,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

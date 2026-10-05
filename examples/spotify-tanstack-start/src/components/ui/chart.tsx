@@ -532,7 +532,8 @@ export type ChartComponentProps<TOptions, TDatum> = TOptions &
    The vars sit on the tooltip element itself, so the portal cannot detach
    them from the chart container. */
 const TOOLTIP_SURFACE_CLASS = [
-  "[--ts-chart-tooltip-background:var(--color-popover)]",
+  "[--ts-chart-tooltip-background:color-mix(in_oklab,var(--color-popover)_var(--popover-alpha),transparent)]",
+  "[backdrop-filter:var(--popover-backdrop-filter)]",
   "[--ts-chart-tooltip-color:var(--color-fg)]",
   "[--ts-chart-tooltip-border:1px_solid_var(--overlay-border)]",
   "[--ts-chart-tooltip-border-radius:var(--radius-lg)]",

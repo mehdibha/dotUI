@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
   base: {
     slots: {
       container:
-        "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-(--studio-table-radius) border bg-bg",
+        "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-(--studio-table-radius) border bg-(--surface-bg,var(--color-bg))",
       table: "min-w-full text-sm text-fg outline-hidden select-ui",
       // The blur lives on the cells, not the thead: a backdrop-filter is
       // clipped by its own border-radius but escapes the scroll container's
@@ -37,7 +37,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default bg-bg/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) [div]:h-full",
+        "group/row relative box-border cursor-default bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) [div]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
         "focus-visible:bg-accent-muted/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
@@ -63,7 +63,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
       dropIndicatorLine: [
         "pointer-events-none relative z-30 block h-0 w-full opacity-0 transition-opacity duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
-        "before:absolute before:inset-x-2 before:top-0 before:h-0.5 before:-translate-y-1/2 before:rounded-full before:bg-border-focus before:shadow-[0_0_0_1px_var(--color-bg)] before:content-['']",
+        "before:absolute before:inset-x-2 before:top-0 before:h-0.5 before:-translate-y-1/2 before:rounded-full before:bg-border-focus before:shadow-[0_0_0_1px_var(--surface-bg,var(--color-bg))] before:content-['']",
       ],
       expandButton: [
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset focus-visible:focus-ring",
@@ -132,11 +132,12 @@ const { useStyles, styles } = createStyles(tableMeta, {
     header: {
       plain: {
         slots: {
-          header: "bg-bg/95 supports-[-moz-appearance:none]:bg-bg",
+          header:
+            "bg-(--surface-bg,var(--color-bg))/95 supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
           column:
-            "border-b bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+            "border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
           chromeColumn:
-            "border-b bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+            "border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
         },
       },
       filled: {

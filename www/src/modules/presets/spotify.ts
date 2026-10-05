@@ -21,6 +21,8 @@ export const spotify = definePreset({
     vividness: 1,
     neutralTint: 0,
     preserveSeed: true,
+    lightBg: 100,
+    darkBg: 5.5,
 
     // Typography
     headingFont: "",
@@ -47,12 +49,10 @@ export const spotify = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "tonal",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 5.5,
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
+    surfaceShadow: "flat",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

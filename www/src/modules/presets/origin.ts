@@ -20,6 +20,8 @@ export const origin = definePreset({
     vividness: 1,
     neutralTint: 1,
     preserveSeed: false,
+    lightBg: 99,
+    darkBg: 2,
 
     // Typography
     headingFont: "",
@@ -44,12 +46,10 @@ export const origin = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 99,
-    darkBg: 2,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

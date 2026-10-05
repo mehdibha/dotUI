@@ -146,7 +146,10 @@ export function PanelPopover({
       UNSTABLE_portalContainer={docked ? (layer ?? undefined) : undefined}
       showArrow={!docked}
       className={cn(
-        "flex max-h-[calc(100dvh-24px)]! flex-col rounded-[14px] border-fg/6 bg-card shadow-lg transition-none will-change-auto [--panel-surface:var(--color-card)] before:hidden",
+        // Anchored in the studio, it can't rise above the panel's top (header
+        // + gap) or sink past its bottom padding: 56 + 8 + 24.
+        boundary ? "max-h-[calc(100dvh-88px)]!" : "max-h-[calc(100dvh-24px)]!",
+        "flex flex-col rounded-[14px] border-fg/6 bg-card shadow-lg [backdrop-filter:none] transition-none will-change-auto [--panel-surface:var(--color-card)]",
         className,
         docked &&
           "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",

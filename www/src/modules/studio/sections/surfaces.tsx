@@ -1,230 +1,259 @@
 "use client"
 
-/* Surfaces — the canvas and what sits on it. Style opens five cards, each
-   the recipe drawn twice, light beside dark: dark behavior is part of a style
-   (shadows die on near-black), so the pick shows both modes instead of asking
-   for them separately. Depth is the one intensity lever, Page whether white
-   surfaces lift off a gray page, Glass the popover material. Each mode's
-   background — how white, how black — sits under Style, whose cards draw
-   both modes. */
+/* Surfaces — one row under Color. Its popover leads with the styles, each
+   drawn and described; under a hairline, the settings a style is made of and
+   each mode's page. */
 
+import { useState } from "react"
+
+import type { StepName, Theme } from "@dotui/colors"
+
+import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
 
+import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
-  CANVAS_OPTIONS,
-  DARK_BG_RANGE,
-  DEPTH_OPTIONS,
-  LIGHT_BG_RANGE,
-  shadowCss,
-  STRATEGY_OPTIONS,
+  cardRung,
+  EDGE_OPTIONS,
+  flatAllowed,
+  GLASS_OPTIONS,
+  LAYERS_OPTIONS,
+  SHADOW_OPTIONS,
   surfaceColorCss,
   surfaceRecipe,
+  SURFACE_STYLES,
+  surfaceStyle,
+  withSurface,
 } from "../axes/surfaces"
 import type {
   Mode,
   PerMode,
   SurfaceColor,
-  SurfaceLook,
-  SurfacePalette,
+  SurfaceStyle,
 } from "../axes/surfaces"
 import {
-  DialGap,
+  DialPicker,
+  DialPickList,
   DialPopover,
-  DialSegmented,
+  DialSeparator,
   DialSlider,
-  DialToggle,
   DialTrigger,
+  ModifiedDot,
 } from "../dial"
-import { CardGrid } from "../patterns"
+import { selectionKey, useCurrent } from "../selection"
 import type { Studio, StudioState } from "../state"
 
-/* The glyph's own neutral ramp, one per mode: grays at the registry's rung
-   lightness, so a style reads the same whichever neutral the system runs. */
-const gray = (l: number, alpha = 1) =>
-  alpha === 1 ? `oklch(${l} 0 0)` : `oklch(${l} 0 0 / ${alpha})`
-const GLYPH_PALETTE: PerMode<SurfacePalette> = {
-  light: {
-    step: (s) =>
-      gray(
-        { "25": 1, "50": 0.985, "100": 0.965, "200": 0.925, "300": 0.87 }[s] ??
-          0.71,
-      ),
-    hairline: gray(0.9),
-  },
-  dark: {
-    step: (s) =>
-      gray(
-        { "25": 0.13, "50": 0.17, "100": 0.21, "200": 0.26, "300": 0.32 }[s] ??
-          0.42,
-      ),
-    hairline: gray(0.235),
-  },
-}
+/* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
+   drawn heavier than life so it reads at this size. */
+const GLYPH_SHADOWS = [
+  "0 0 #0000",
+  "0 0.5px 1px rgb(0 0 0 / 0.18)",
+  "0 1px 2px rgb(0 0 0 / 0.22)",
+  "0 1.5px 3px rgb(0 0 0 / 0.28)",
+  "0 2px 4px rgb(0 0 0 / 0.32)",
+]
 
-/** Shadow offsets at the glyph's scale. */
-const scaleOffset = (offset: string, k: number) =>
-  offset.replace(/(-?[\d.]+)px/g, (_, n) => `${Number(n) * k}px`)
-
-function lookStyle(look: SurfaceLook, mode: Mode, k: number) {
-  const palette = GLYPH_PALETTE[mode]
-  const color = (pair: PerMode<SurfaceColor>) =>
-    surfaceColorCss(pair[mode], palette)
-  return {
-    background: color(look.bg),
-    borderColor: color(look.edge),
-    boxShadow: shadowCss(
-      look.shadow.map((layer) => ({
-        ...layer,
-        offset: scaleOffset(layer.offset, k),
-      })),
-      color,
-    ),
-  }
-}
-
-/** One mode of the recipe: a card on the page with a popover over it. */
-function Half({
+/** A card on the page, light beside dark, in the system's own neutral. */
+function SurfaceGlyph({
   state,
-  mode,
-  mini,
+  theme,
+  large,
 }: {
   state: StudioState
-  mode: Mode
-  mini?: boolean
+  theme: Theme
+  large?: boolean
 }) {
   const recipe = surfaceRecipe(state)
-  const palette = GLYPH_PALETTE[mode]
-  const bar = { background: gray(mode === "light" ? 0.15 : 0.98, 0.18) }
-  const k = mini ? 0.3 : 0.7
-  return (
-    <span
-      className={cn("relative block", mini ? "h-5" : "h-16")}
-      style={{ background: surfaceColorCss(recipe.page[mode], palette) }}
-    >
-      <span
-        className={cn(
-          "absolute flex flex-col gap-1 border",
-          mini
-            ? "inset-x-1 top-1 h-3 rounded-[3px]"
-            : "inset-x-2 top-2 h-9 rounded-[5px] p-1.5",
-        )}
-        style={lookStyle(recipe.card, mode, k)}
-      >
-        {!mini && (
-          <>
-            <span className="h-1 w-1/2 rounded-full" style={bar} />
-            <span className="h-1 w-1/3 rounded-full" style={bar} />
-          </>
-        )}
-      </span>
-      {!mini && (
-        <span
-          className="absolute right-2 bottom-1.5 flex h-8 w-[52%] flex-col gap-1 rounded-[5px] border p-1"
-          style={lookStyle(recipe.popover, mode, k)}
-        >
-          <span className="h-1.5 w-2/3 rounded-full" style={bar} />
-          <span className="h-1.5 w-1/2 rounded-full" style={bar} />
-        </span>
-      )}
-    </span>
-  )
-}
-
-/** The recipe drawn light beside dark. */
-function StyleGlyph({ state, mini }: { state: StudioState; mini?: boolean }) {
   return (
     <span
       className={cn(
         "grid shrink-0 grid-cols-2 overflow-hidden border border-fg/15",
-        mini ? "w-10 rounded" : "w-full rounded-md",
+        large ? "w-16 rounded-md" : "w-10 rounded",
       )}
     >
-      <Half state={state} mode="light" mini={mini} />
-      <Half state={state} mode="dark" mini={mini} />
+      {(["light", "dark"] as const).map((mode) => {
+        const m = theme[mode]
+        const step = (s: string) =>
+          m.scales.neutral?.[s as StepName] ?? m.background
+        const [a, b] = mode === "light" ? ["200", "300"] : ["100", "200"]
+        const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
+        const color = (pair: PerMode<SurfaceColor>) =>
+          surfaceColorCss(pair[mode], { step, hairline })
+        return (
+          <span
+            key={mode}
+            className={cn("relative block", large ? "h-10" : "h-5")}
+            style={{ background: step("25") }}
+          >
+            <span
+              className={cn(
+                "absolute border",
+                large
+                  ? "inset-x-1.5 inset-y-2 rounded-[4px]"
+                  : "inset-x-1 inset-y-1 rounded-[3px]",
+              )}
+              style={{
+                background: color(recipe.card.bg),
+                borderColor: color(recipe.card.edge),
+                boxShadow: GLYPH_SHADOWS[Math.min(cardRung(state), 4)],
+              }}
+            />
+          </span>
+        )
+      })}
     </span>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
-
-const strategyLabel = (value: string) =>
-  STRATEGY_OPTIONS.find((o) => o.value === value)?.label ?? value
-
-export function SurfacesPreview({ state }: { state: StudioState }) {
-  return <StyleGlyph state={state} mini />
+const PAGE_NAMES: Record<Mode, Record<number, string>> = {
+  light: { 100: "White", 99: "Off-white", 96: "Gray" },
+  dark: { 0: "Black", 2: "Near-black", 16: "Dim" },
 }
 
-export function surfacesSummary(state: StudioState): string {
-  return strategyLabel(state.surfaceStrategy)
-}
+const formatPage = (mode: Mode) => (v: number) =>
+  PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
-const formatBg = (v: number) => `L* ${v.toFixed(1)}`
-
-export function SurfacesSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const depth = Math.max(
-    0,
-    DEPTH_OPTIONS.findIndex((o) => o.value === state.surfaceDepth),
-  )
+export function SurfacesRow({
+  studio,
+  theme,
+}: {
+  studio: Studio
+  theme: Theme
+}) {
+  const { state, set, setState } = studio
+  // The light page Grouped took, given back when Layers leaves it — kept per
+  // design system; editing a view keeps its key.
+  const { doc, view } = useCurrent()
+  const key = doc ? `system:${doc.id}` : selectionKey(view)
+  const [memory, setMemory] = useState<{ key: string; page?: number }>()
+  const before = memory?.key === key ? memory.page : undefined
+  const { style, exact } = surfaceStyle(state)
+  const commit = (next: ReturnType<typeof withSurface>) => {
+    setMemory({ key, page: next.before })
+    setState(next.state)
+  }
+  const edit = (patch: Parameters<typeof withSurface>[1]) =>
+    commit(withSurface(state, patch, before))
   return (
-    <>
-      <DialTrigger label="Style" value={strategyLabel(state.surfaceStrategy)}>
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Style"
-            value={state.surfaceStrategy}
-            onChange={set("surfaceStrategy")}
-            options={STRATEGY_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: (
-                <StyleGlyph
-                  state={{ ...state, surfaceStrategy: option.value }}
-                />
-              ),
-            }))}
-          />
-          <DialGap />
-          <DialSlider
-            label="Light background"
-            value={state.lightBg}
-            onChange={set("lightBg")}
-            minValue={LIGHT_BG_RANGE.min}
-            maxValue={LIGHT_BG_RANGE.max}
-            step={LIGHT_BG_RANGE.step}
-            format={formatBg}
-          />
-          <DialSlider
-            label="Dark background"
-            value={state.darkBg}
-            onChange={set("darkBg")}
-            minValue={DARK_BG_RANGE.min}
-            maxValue={DARK_BG_RANGE.max}
-            step={DARK_BG_RANGE.step}
-            format={(v) => (v === 0 ? "OLED" : formatBg(v))}
-          />
-        </DialPopover>
-      </DialTrigger>
-      <DialSlider
-        label="Depth"
-        value={depth}
-        onChange={(i) => set("surfaceDepth")(DEPTH_OPTIONS[i]!.value)}
-        minValue={0}
-        maxValue={DEPTH_OPTIONS.length - 1}
-        step={1}
-        format={(i) => DEPTH_OPTIONS[Math.round(i)]?.label ?? ""}
-      />
-      <DialSegmented
-        label="Page"
-        value={state.surfaceCanvas}
-        onChange={set("surfaceCanvas")}
-        options={CANVAS_OPTIONS}
-      />
-      <DialToggle
-        label="Glass"
-        value={state.surfaceMaterial === "glass"}
-        onChange={(on) => set("surfaceMaterial")(on ? "glass" : "solid")}
-      />
-    </>
+    <DialTrigger
+      label="Surfaces"
+      chevron={false}
+      value={
+        <>
+          {!exact && <ModifiedDot />}
+          <span className="truncate">{style.label}</span>
+          <SurfaceGlyph state={state} theme={theme} />
+        </>
+      }
+    >
+      <DialPopover className="w-80">
+        <StyleList
+          state={state}
+          theme={theme}
+          before={before}
+          onChange={edit}
+        />
+        <DialSeparator />
+        <DialPicker
+          label="Layers"
+          value={state.surfaceLayers}
+          onChange={(surfaceLayers) => edit({ surfaceLayers })}
+          options={LAYERS_OPTIONS}
+        />
+        <DialPicker
+          label="Edge"
+          value={state.surfaceEdge}
+          onChange={(surfaceEdge) => edit({ surfaceEdge })}
+          options={EDGE_OPTIONS}
+        />
+        <DialPicker
+          label="Shadow"
+          value={state.surfaceShadow}
+          onChange={(surfaceShadow) => edit({ surfaceShadow })}
+          options={SHADOW_OPTIONS.map((o) =>
+            o.value === "flat" && !flatAllowed(state)
+              ? {
+                  ...o,
+                  disabled: true,
+                  description: "Needs an edge, a tone or a gray page",
+                }
+              : o,
+          )}
+        />
+        <DialPicker
+          label="Overlays"
+          value={state.surfaceGlass ? "glass" : "solid"}
+          onChange={(value) => set("surfaceGlass")(value === "glass")}
+          options={GLASS_OPTIONS}
+        />
+        <DialSlider
+          label="Light page"
+          value={state.lightBg}
+          onChange={(lightBg) =>
+            commit(withSurface({ ...state, lightBg }, {}, before))
+          }
+          minValue={LIGHT_BG_RANGE.min}
+          maxValue={LIGHT_BG_RANGE.max}
+          step={LIGHT_BG_RANGE.step}
+          format={formatPage("light")}
+        />
+        <DialSlider
+          label="Dark page"
+          value={state.darkBg}
+          onChange={set("darkBg")}
+          minValue={DARK_BG_RANGE.min}
+          maxValue={DARK_BG_RANGE.max}
+          step={DARK_BG_RANGE.step}
+          format={formatPage("dark")}
+        />
+      </DialPopover>
+    </DialTrigger>
+  )
+}
+
+/** The styles, each drawn as picking it would land. Mounted only while the
+ *  popover is open, so the Grouped preview's color solve runs on demand. */
+function StyleList({
+  state,
+  theme,
+  before,
+  onChange,
+}: {
+  state: StudioState
+  theme: Theme
+  before: number | undefined
+  onChange: (values: SurfaceStyle["values"]) => void
+}) {
+  const { style, exact } = surfaceStyle(state)
+  return (
+    <DialPickList
+      label="Style"
+      value={exact ? style.id : undefined}
+      modified={exact ? undefined : style.id}
+      onChange={(id) => {
+        const next = SURFACE_STYLES.find((s) => s.id === id)
+        if (next) onChange(next.values)
+      }}
+      options={SURFACE_STYLES.map((s) => {
+        const preview = withSurface(state, s.values, before).state
+        return {
+          value: s.id,
+          label: s.label,
+          note: s.credits,
+          description: s.description,
+          visual: (
+            <SurfaceGlyph
+              large
+              state={preview}
+              theme={
+                preview.lightBg === state.lightBg
+                  ? theme
+                  : resolveColorConfigCached(buildColorConfig(preview))
+              }
+            />
+          ),
+        }
+      })}
+    />
   )
 }

@@ -3,12 +3,28 @@
 
 /** Settings row labels per chapter id, for the panel search. */
 export const SEARCH_INDEX: Record<string, string[]> = {
-	color: ["Brand", "Keep exact", "Vividness", "Neutral", "Semantics", "Primary", "Primary › Primary"],
+	color: [
+		"Brand",
+		"Keep exact",
+		"Vividness",
+		"Neutral",
+		"Semantics",
+		"Primary",
+		"Primary › Primary",
+		"Surfaces",
+		"Surfaces › Surfaces",
+		"Surfaces › Layers",
+		"Surfaces › Edge",
+		"Surfaces › Shadow",
+		"Surfaces › Overlays",
+		"Surfaces › Light page",
+		"Surfaces › Dark page",
+		"Surfaces › Style",
+	],
 	typography: ["Heading", "Body", "Mono"],
 	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius"],
 	space: ["Density", "Spacing"],
-	surfaces: ["Style", "Light background", "Dark background", "Depth", "Page", "Glass"],
 	interactivity: ["Cursor", "Text selection", "Highlight", "Selectable UI text", "Cursors"],
 	states: [
 		"Control focus",

@@ -20,6 +20,8 @@ export const vercel = definePreset({
     vividness: 1,
     neutralTint: 0,
     preserveSeed: false,
+    lightBg: 100,
+    darkBg: 0,
 
     // Typography
     headingFont: "",
@@ -46,12 +48,10 @@ export const vercel = definePreset({
     spacingUnit: 4,
 
     // Surfaces
-    surfaceStrategy: "hairline",
-    surfaceDepth: "subtle",
-    surfaceCanvas: "same",
-    surfaceMaterial: "solid",
-    lightBg: 100,
-    darkBg: 0,
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    surfaceGlass: false,
 
     // Browser
     cursorControls: "pointer",

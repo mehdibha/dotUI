@@ -230,7 +230,7 @@ function CanvasColumn({
 
 export function CardsCanvas() {
   return (
-    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
+    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]">
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
       <div className="flex w-full min-w-max justify-center">

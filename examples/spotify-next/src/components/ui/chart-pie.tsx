@@ -33,7 +33,7 @@ const pieDefaults = {
   innerRadius: 0,
   outerRadius: 1,
   activeOffset: 0.08,
-  stroke: "var(--color-bg)",
+  stroke: "var(--surface-bg,var(--color-bg))",
   strokeWidth: 2,
   labelFontSize: 12,
 } as const;

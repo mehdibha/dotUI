@@ -154,7 +154,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       // Chip: a page-colored chip lifted on shadow; borderless variants gain a
       // hairline ring so it survives dark wells (secondary keeps its border).
       chip: {
-        base: "selected:bg-bg selected:text-fg selected:shadow-sm selected:hover:bg-muted selected:pressed:bg-highlight",
+        base: "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-sm selected:hover:bg-muted selected:pressed:bg-highlight",
         variants: {
           variant: {
             primary: "selected:ring-1 selected:ring-border-control",
@@ -169,7 +169,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
         variants: {
           variant: {
             primary:
-              "selected:bg-bg selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
+              "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
             secondary:
               "selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
             quiet:

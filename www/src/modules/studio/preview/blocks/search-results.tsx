@@ -872,7 +872,7 @@ export default function SearchResultsBlock() {
         </div>
       </header>
 
-      <section className="border-b bg-card/40">
+      <section className="border-b bg-muted/20">
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
           <h1 className="font-heading text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
             Search the registry

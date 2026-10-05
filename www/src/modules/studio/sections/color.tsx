@@ -31,15 +31,11 @@ import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
 import { PrimaryRow } from "./primary"
+import { SurfacesRow } from "./surfaces"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
-/* The backgrounds live under Surfaces but feed the same recipe. */
-const COLOR_KEYS = [
-  ...Object.keys(COLOR_DEFAULTS),
-  "lightBg",
-  "darkBg",
-] as (keyof StudioState)[]
+const COLOR_KEYS = Object.keys(COLOR_DEFAULTS) as (keyof StudioState)[]
 
 /** The state's recipe, reference-stable on its values so the engine runs
  *  once per color edit (never for edits in other sections). */
@@ -70,10 +66,11 @@ const SEMANTIC_SEEDS = [
   { key: "selectionSeed", palette: "selection", label: "Selection" },
 ] as const
 
-/** The decisions on the page: the two seeds every other color derives from. */
+/** The decisions on the page: the two seeds every other color derives from,
+ *  and the surfaces they paint. */
 export function ColorPrimary({ studio }: { studio: Studio }) {
   const { state, set, setState } = studio
-  const { m } = usePanelMode(state)
+  const { theme, m } = usePanelMode(state)
   const neutral = { hue: state.neutralHue, tint: state.neutralTint }
   const brandHue = toOklch(state.brand).h
   const ramp = STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)
@@ -121,6 +118,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
           ramp={ramp}
         />
       </DialTrigger>
+      <SurfacesRow studio={studio} theme={theme} />
     </>
   )
 }

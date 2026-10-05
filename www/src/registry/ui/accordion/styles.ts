@@ -57,14 +57,14 @@ const { useStyles, styles } = createStyles(accordionMeta, {
       },
       boxed: {
         slots: {
-          root: "rounded-(--studio-accordion-radius) border bg-card",
+          root: "rounded-(--studio-accordion-radius) border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]",
           item: "px-3 not-last:border-b",
         },
       },
       cards: {
         slots: {
           root: "gap-2",
-          item: "rounded-(--studio-accordion-radius) border bg-card px-3",
+          item: "rounded-(--studio-accordion-radius) border border-(--card-border) bg-card px-3 shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]",
         },
       },
     },

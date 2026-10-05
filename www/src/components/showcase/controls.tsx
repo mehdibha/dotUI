@@ -103,14 +103,14 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
               Subtle
             </Badge>
           </div>
-          <AvatarGroup size="sm" className="*:data-avatar:ring-card">
+          <AvatarGroup size="sm">
             <Avatar size="sm">
               <AvatarFallback>AK</AvatarFallback>
             </Avatar>
             <Avatar size="sm">
               <AvatarFallback>JR</AvatarFallback>
             </Avatar>
-            <AvatarGroupCount className="ring-card">+3</AvatarGroupCount>
+            <AvatarGroupCount>+3</AvatarGroupCount>
           </AvatarGroup>
         </div>
         <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
