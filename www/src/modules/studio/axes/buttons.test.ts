@@ -67,3 +67,18 @@ describe("button styles", () => {
       }
   })
 })
+
+describe("button radius", () => {
+  const radii = (content: string) => content.match(/\brounded-[\w-]+/g) ?? []
+
+  test("matches inputs by default and goes pill at every size", async () => {
+    const pill = resolveDesignSystem(parseState({ buttonRadius: "pill" }))
+    for (const name of ["button", "toggle-button"]) {
+      expect(radii(await shipped(name))).toEqual(["rounded-md", "rounded-sm"])
+      expect(radii(await shipped(name, pill.tokens))).toEqual([
+        "rounded-full",
+        "rounded-full",
+      ])
+    }
+  })
+})

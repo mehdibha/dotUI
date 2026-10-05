@@ -32,25 +32,12 @@ export const STYLE_OPTIONS = [
   { value: "ledge", label: "Ledge", description: "Duolingo" },
 ]
 
+/* Buttons match inputs (Shape's Controls role) unless they go pill — the one
+   split real systems make (Material 3, X, Spotify). */
 export const RADIUS_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "sharp", label: "Sharp" },
-  { value: "round", label: "Round" },
+  { value: "auto", label: "Inputs" },
   { value: "pill", label: "Pill" },
 ]
-
-const RADIUS_TOKENS: Record<string, string> = {
-  sharp: "0",
-  round: "var(--radius-lg)",
-  pill: "var(--radius-full)",
-}
-
-/* xs buttons under a picked radius: round steps down a rung, as nova's do. */
-const XS_RADIUS_TOKENS: Record<string, string> = {
-  sharp: "0",
-  round: "var(--radius-md)",
-  pill: "var(--radius-full)",
-}
 
 export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
   buttonStyle: oneOf(STYLE_OPTIONS),
@@ -61,10 +48,9 @@ export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
 export function resolveButtons(state: StudioState): Resolved {
   const selection = { style: state.buttonStyle }
   const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
-  const radius = RADIUS_TOKENS[state.buttonRadius]
-  if (radius) {
-    tokens["--studio-btn-radius"] = radius
-    tokens["--studio-btn-xs-radius"] = XS_RADIUS_TOKENS[state.buttonRadius]!
+  if (state.buttonRadius === "pill") {
+    tokens["--studio-btn-radius"] = "var(--radius-full)"
+    tokens["--studio-btn-xs-radius"] = "var(--radius-full)"
   }
   return {
     tokens,

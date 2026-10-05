@@ -73,22 +73,6 @@ function StyleSpecimen({ style, tiny }: { style: string; tiny?: boolean }) {
   )
 }
 
-const CORNER: Record<string, string> = {
-  auto: "rounded-[4px] border-dashed",
-  sharp: "rounded-none",
-  round: "rounded-[5px]",
-  pill: "rounded-full",
-}
-
-/** A button's outline at one corner; Auto is dashed, it follows Shape. */
-function RadiusGlyph({ radius }: { radius: string }) {
-  return (
-    <span
-      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[radius])}
-    />
-  )
-}
-
 const TOGGLE_LOOK: Record<string, string> = {
   fill: "bg-selected text-fg-on-selected",
   chip: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
@@ -186,14 +170,11 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
-      <DialSelect
+      <DialSegmented
         label="Radius"
         value={state.buttonRadius}
         onChange={set("buttonRadius")}
-        options={RADIUS_OPTIONS.map((option) => ({
-          ...option,
-          preview: <RadiusGlyph radius={option.value} />,
-        }))}
+        options={RADIUS_OPTIONS}
       />
       <GroupTitle>Toggles & groups</GroupTitle>
       <DialSelect
