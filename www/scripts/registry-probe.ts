@@ -11,7 +11,7 @@
  * Steps, against --origin (default https://dotui.org):
  *   1. GET /r/registry.json to learn the deployed component list. Never
  *      hardcoded — the probe tracks whatever the deploy actually shipped.
- *   2. GET /r/<name>.json for every item plus /r/init.json. Fail on any non-200 or
+ *   2. GET /r/<name>.json for every item plus /r/init.json and /r/all.json. Fail on any non-200 or
  *      non-JSON response.
  *   3. Assert no BARE registryDependencies in any served item: every entry must
  *      be an absolute URL or an "@namespace/…" id. A bare name means the dep
@@ -38,8 +38,9 @@ const CONCURRENCY = 6
 // past undici's ~300s default headers timeout (× retries).
 const REQUEST_TIMEOUT_MS = 15_000
 // Extra names to probe that don't appear in registry.json's items list: the
-// init item, and one `registry:font` item of the kind init depends on.
-const EXTRA_NAMES = ["init", "font-inter"]
+// init item, the all item, and one `registry:font` item of the kind init
+// depends on.
+const EXTRA_NAMES = ["init", "all", "font-inter"]
 
 interface Failure {
   name: string
