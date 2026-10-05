@@ -40,7 +40,7 @@ const outlineField = tv({
       single: "rounded-(--studio-input-radius)",
       multiline: "rounded-(--studio-input-multiline-radius)",
       group:
-        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+        "not-has-data-textarea:rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
     },
   },
   defaultVariants: { radius: "single" },
@@ -81,7 +81,7 @@ const filledField = tv({
       single: "rounded-(--studio-input-radius)",
       multiline: "rounded-(--studio-input-multiline-radius)",
       group:
-        "rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
+        "not-has-data-textarea:rounded-(--studio-input-radius) has-data-textarea:rounded-(--studio-input-multiline-radius)",
     },
   },
   defaultVariants: { radius: "single" },
@@ -136,7 +136,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
         "text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
         "group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
-        "**:data-button:rounded-[max(min(var(--radius-sm),var(--studio-input-radius)),calc(var(--studio-input-radius)-3px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+        "**:data-button:rounded-[max(min(var(--radius-sm),var(--studio-input-radius)),calc(var(--studio-input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
         "group-has-data-textarea/input-group:px-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",

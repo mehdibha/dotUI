@@ -24,7 +24,7 @@ const drawerVariants = tv({
       "mx-auto my-2 shrink-0 cursor-drag touch-none rounded-full bg-fg/20 select-none active:cursor-dragging orientation-horizontal:h-1.5 orientation-horizontal:w-12 orientation-vertical:h-12 orientation-vertical:w-1.5",
     swipeArea: "fixed z-50 touch-none",
     indent:
-      "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-xl duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] data-inactive:duration-400",
+      "relative z-1 min-h-screen bg-bg transition-[transform,border-radius] data-inactive:transform-[translate3d(0,0,0)_scale(1)] data-inactive:rounded-none data-active:transform-[translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-active:rounded-lg duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] data-inactive:duration-400",
     indentBackground:
       "pointer-events-none fixed inset-0 z-0 bg-overlay transition-opacity data-inactive:opacity-0 data-active:opacity-100 duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] data-inactive:duration-400",
   },

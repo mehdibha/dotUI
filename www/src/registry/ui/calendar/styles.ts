@@ -44,10 +44,10 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cell: [
             "in-data-calendar:rounded-(--cell-radius)",
             "selection-start:rounded-l-(--cell-radius) selection-end:rounded-r-(--cell-radius)",
-            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
+            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
+            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
+            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
           ],
           // Mid-range chips take the band's shape, as shadcn's one element does.
           cellInner:
@@ -59,10 +59,10 @@ const { useStyles, styles } = createStyles(calendarMeta, {
           cell: [
             "in-data-calendar:rounded-full",
             "selection-start:rounded-l-full selection-end:rounded-r-full",
-            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--studio-calendar-range-radius)",
-            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--studio-calendar-range-radius)",
+            "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
+            "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
+            "in-data-range-calendar:[td:first-child>&[data-selected]:not([data-selection-start])]:rounded-l-(--cell-radius)",
+            "in-data-range-calendar:[td:last-child>&[data-selected]:not([data-selection-end])]:rounded-r-(--cell-radius)",
           ],
           cellInner: "rounded-full",
         },

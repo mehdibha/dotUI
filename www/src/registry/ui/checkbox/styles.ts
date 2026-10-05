@@ -7,7 +7,7 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
     slots: {
       root: "flex items-center has-data-description:items-start",
       control: [
-        "relative flex items-center gap-2 rounded-(--studio-checkbox-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-checkbox-card-radius)",
+        "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-(--studio-checkbox-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-checkbox-card-radius)",
         "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease) has-data-label:w-full has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
