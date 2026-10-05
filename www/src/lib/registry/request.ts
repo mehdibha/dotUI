@@ -19,7 +19,7 @@ export type RegistrySource =
   | { kind: "snapshot"; id: string }
 
 export interface RegistryRequest {
-  /** The file without `.json`: `button`, `init`, `registry`, `v0`, `font-inter`. */
+  /** The file without `.json`: `button`, `init`, `registry`, `all`, `v0`, `font-inter`. */
   name: string
   source: RegistrySource
   codeOptions: CodeOptions
