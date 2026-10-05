@@ -12,22 +12,19 @@ const toggleButtonMeta = {
     },
   ],
   registryDependencies: ["context", "focus-styles"],
-  // Synced with button: the studio's Buttons axes write both.
+  // Synced with button: the studio's Buttons style writes both.
   params: {
     style: {
       kind: "enum",
       default: "flat",
-      values: ["flat", "outline", "raised", "elevated"] as const,
-    },
-    hover: {
-      kind: "enum",
-      default: "dim",
-      values: ["dim", "lighten", "none"] as const,
-    },
-    press: {
-      kind: "enum",
-      default: "dim",
-      values: ["dim", "scale", "push", "none"] as const,
+      values: [
+        "flat",
+        "hairline",
+        "rim-light",
+        "gloss",
+        "bevel",
+        "ledge",
+      ] as const,
     },
     selected: {
       kind: "enum",

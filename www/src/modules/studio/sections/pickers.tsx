@@ -14,6 +14,7 @@ import { CARET_OPTIONS } from "../axes/pickers"
 import {
   DialGap,
   DialGlyph,
+  DialList,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -114,11 +115,10 @@ export function PickersSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Caret"
         value={state.pickerCaret}
         onChange={set("pickerCaret")}
-        rowPreview={false}
         options={CARET_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -128,6 +128,7 @@ export function PickersSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialTrigger
         label="Calendar"
         value={

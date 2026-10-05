@@ -1,18 +1,15 @@
 "use client"
 
-/* Buttons — the family: Button sets the look that Toggle, Group and
-   Segmented control reuse. Style opens the button recipe whole — the family
-   cards, then radius, hover and press. Color is a leaf of Color's Primary. */
+/* Buttons — the family's page: Button sets the look, a real system's recipe
+   copied whole, and the toggles, groups and segmented control below stay
+   coherent with it. Color is a leaf of Color's Primary. */
 
+import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import { useStyles } from "@/registry/ui/button/styles"
 
 import { SEPARATOR_OPTIONS } from "../axes/button-groups"
-import {
-  HOVER_OPTIONS,
-  PRESS_OPTIONS,
-  RADIUS_OPTIONS,
-  STYLE_OPTIONS,
-} from "../axes/buttons"
+import { RADIUS_OPTIONS, STYLE_OPTIONS } from "../axes/buttons"
 import {
   SELECTED_OPTIONS as SEGMENT_OPTIONS,
   TRACK_OPTIONS,
@@ -20,6 +17,7 @@ import {
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
 import {
   DialGap,
+  DialList,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -27,63 +25,67 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
+import { GroupTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* Each family's shadow recipe, as the registry's button styles.ts draws it. */
-const FLAT = { primary: "", secondary: "" }
-const FAMILY: Record<string, { primary: string; secondary: string }> = {
-  flat: FLAT,
-  outline: {
-    primary: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
-    secondary: "shadow-[0_1px_0_rgb(0_0_0/0.08)]",
-  },
-  raised: {
-    primary:
-      "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
-    secondary:
-      "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
-  },
-  elevated: {
-    primary: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
-    secondary:
-      "border-transparent shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
-  },
-}
+/* One stable context per style, so the registry's style cache hits. */
+const STYLE_CONTEXT = Object.fromEntries(
+  STYLE_OPTIONS.map(({ value }) => [
+    value,
+    { params: { button: { style: value } }, density: "default" as const },
+  ]),
+)
 
-/** A primary button in one family; on a card, a secondary beside it. */
-function ButtonGlyph({ style, card }: { style: string; card?: boolean }) {
-  const family = FAMILY[style] ?? FLAT
-  const size = card ? "h-6 px-2.5 text-[11px]" : "h-4 px-1.5 text-[9px]"
-  return (
-    <span
-      className={cn(
-        "flex shrink-0 items-center gap-1.5",
-        card && "justify-center py-1.5",
-      )}
-    >
+function Specimen({ tiny }: { tiny?: boolean }) {
+  const styles = useStyles()
+  if (tiny)
+    return (
       <span
-        className={cn(
-          "flex items-center rounded-md bg-primary font-semibold text-fg-on-primary",
-          size,
-          family.primary,
-        )}
+        className={styles({
+          variant: "primary",
+          size: "xs",
+          className: "h-4 px-1.5 text-[9px]",
+        })}
       >
         Save
       </span>
-      {card && (
-        <span
-          className={cn(
-            "flex items-center rounded-md border border-border-control bg-neutral font-medium text-fg-on-neutral",
-            size,
-            family.secondary,
-          )}
-        >
-          Cancel
-        </span>
-      )}
-    </span>
+    )
+  return (
+    <>
+      <span className={styles({ variant: "primary", size: "xs" })}>Save</span>
+      <span className={styles({ variant: "secondary", size: "xs" })}>
+        Cancel
+      </span>
+    </>
+  )
+}
+
+/** Buttons drawn by the registry's own recipe for one style. */
+function StyleSpecimen({ style, tiny }: { style: string; tiny?: boolean }) {
+  return (
+    <DesignSystemContext.Provider
+      value={STYLE_CONTEXT[style] ?? STYLE_CONTEXT.flat!}
+    >
+      <Specimen tiny={tiny} />
+    </DesignSystemContext.Provider>
+  )
+}
+
+const CORNER: Record<string, string> = {
+  auto: "rounded-[4px] border-dashed",
+  sharp: "rounded-none",
+  round: "rounded-[5px]",
+  pill: "rounded-full",
+}
+
+/** A button's outline at one corner; Auto is dashed, it follows Shape. */
+function RadiusGlyph({ radius }: { radius: string }) {
+  return (
+    <span
+      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[radius])}
+    />
   )
 }
 
@@ -167,56 +169,33 @@ function SegmentedGlyph({
 /* --------------------------------- Section --------------------------------- */
 
 export function ButtonsPreview({ state }: { state: StudioState }) {
-  return <ButtonGlyph style={state.buttonStyle} />
+  return <StyleSpecimen style={state.buttonStyle} tiny />
 }
 
 export function ButtonsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialTrigger
+      <DialList
         label="Style"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(STYLE_OPTIONS, state.buttonStyle)}
-            </span>
-            <ButtonGlyph style={state.buttonStyle} />
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Style"
-            value={state.buttonStyle}
-            onChange={set("buttonStyle")}
-            options={STYLE_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: <ButtonGlyph style={option.value} card />,
-            }))}
-          />
-          <DialGap />
-          <DialSegmented
-            label="Radius"
-            value={state.buttonRadius}
-            onChange={set("buttonRadius")}
-            options={RADIUS_OPTIONS}
-          />
-          <DialSegmented
-            label="Hover"
-            value={state.buttonHover}
-            onChange={set("buttonHover")}
-            options={HOVER_OPTIONS}
-          />
-          <DialSegmented
-            label="Press"
-            value={state.buttonPress}
-            onChange={set("buttonPress")}
-            options={PRESS_OPTIONS}
-          />
-        </DialPopover>
-      </DialTrigger>
+        value={state.buttonStyle}
+        onChange={set("buttonStyle")}
+        options={STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <StyleSpecimen style={option.value} />,
+        }))}
+      />
+      <DialGap />
+      <DialSelect
+        label="Radius"
+        value={state.buttonRadius}
+        onChange={set("buttonRadius")}
+        options={RADIUS_OPTIONS.map((option) => ({
+          ...option,
+          preview: <RadiusGlyph radius={option.value} />,
+        }))}
+      />
+      <GroupTitle>Toggles & groups</GroupTitle>
       <DialSelect
         label="Toggles"
         value={state.toggleSelected}

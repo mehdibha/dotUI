@@ -4,9 +4,15 @@
    arrow at the trigger and how a title sits. The tooltip's surface is its
    own, never synced to the popover's. */
 
-import { HEADER_OPTIONS } from "../axes/popovers"
+import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
-import { DialGlyph, DialSegmented, DialSelect, DialToggle } from "../dial"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -83,11 +89,20 @@ export function PopoversSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialToggle
+      <DialList
         label="Arrow"
-        value={state.popoverTip === "tip"}
-        onChange={(on) => set("popoverTip")(on ? "tip" : "none")}
+        value={state.popoverTip}
+        onChange={set("popoverTip")}
+        options={TIP_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <TipGlyph tip={option.value === "tip"} />
+            </DialGlyph>
+          ),
+        }))}
       />
+      <DialGap />
       <DialSegmented
         label="Header"
         value={state.popoverHeader}

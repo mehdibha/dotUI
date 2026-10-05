@@ -13,7 +13,9 @@ import {
   SEARCH_OPTIONS,
 } from "../axes/menus"
 import {
+  DialGap,
   DialGlyph,
+  DialList,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -174,6 +176,20 @@ export function MenusSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
+      <DialList
+        label="Highlight"
+        value={state.menuHighlight}
+        onChange={set("menuHighlight")}
+        options={HIGHLIGHT_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <HighlightGlyph highlight={option.value} />
+            </DialGlyph>
+          ),
+        }))}
+      />
+      <DialGap />
       <DialSelect
         label="Indicator"
         value={state.menuIndicator}
@@ -183,20 +199,6 @@ export function MenusSection({ studio }: { studio: Studio }) {
           preview: (
             <DialGlyph>
               <IndicatorGlyph indicator={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="Highlight"
-        value={state.menuHighlight}
-        onChange={set("menuHighlight")}
-        rowPreview={false}
-        options={HIGHLIGHT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <HighlightGlyph highlight={option.value} />
             </DialGlyph>
           ),
         }))}

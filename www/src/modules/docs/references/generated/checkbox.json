@@ -944,7 +944,7 @@
           "name": "type",
           "value": {
             "type": "identifier",
-            "name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
           },
           "optional": false,
           "readonly": false,

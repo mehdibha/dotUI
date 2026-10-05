@@ -93,8 +93,6 @@ export const stripe = definePreset({
     progressGap: false,
     buttonStyle: "flat",
     buttonRadius: "auto",
-    buttonHover: "dim",
-    buttonPress: "dim",
     groupSeparator: "auto",
     toggleSelected: "fill",
     segmentedSelected: "flat",

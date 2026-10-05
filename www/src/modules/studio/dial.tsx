@@ -7,7 +7,12 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon } from "lucide-react"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronsUpDownIcon,
+} from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
@@ -64,7 +69,11 @@ export const optionLabel = (
 
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
-  return <span className="size-4 shrink-0 *:size-full">{children}</span>
+  return (
+    <span data-slot="glyph" className="size-4 shrink-0 *:size-full">
+      {children}
+    </span>
+  )
 }
 
 /** The accent dot beside anything that leaves its defaults. */
@@ -148,6 +157,29 @@ export function DialPopover({
         {children}
       </DialogContent>
     </PanelPopover>
+  )
+}
+
+/** A row that opens a page in place of the panel: label, value, a chevron. */
+export function DialLink({
+  label,
+  value,
+  onPress,
+}: {
+  label: string
+  value: React.ReactNode
+  onPress: () => void
+}) {
+  return (
+    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS)}>
+      <span className={DIAL_LABEL}>{label}</span>
+      <span className="flex min-w-0 items-center gap-2">
+        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
+          {value}
+        </span>
+        <ChevronRightIcon className={DIAL_CHEVRON} />
+      </span>
+    </RacButton>
   )
 }
 
@@ -384,6 +416,67 @@ export function DialPicker({
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
   return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
+}
+
+/** A page's main decision, every option in view: a titled list of rows, each
+ *  a radio dot, the label and its specimen. */
+export function DialList({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: DialSelectOption[]
+}) {
+  return (
+    <div className="flex flex-col">
+      <span className="flex h-9 items-center px-1 text-xs font-medium text-fg/50">
+        {label}
+      </span>
+      <RacToggleButtonGroup
+        aria-label={label}
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[value]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) onChange(next as string)
+        }}
+        orientation="vertical"
+        className="flex flex-col gap-1"
+      >
+        {options.map((option) => (
+          <RacToggleButton
+            key={option.value}
+            id={option.value}
+            className="group/option flex min-h-10 w-full cursor-interactive items-center justify-between gap-3 rounded-lg tint-5 py-2 pr-2 pl-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
+          >
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="size-3 shrink-0 rounded-full border border-fg/30 transition-[border-width] group-selected/option:border-4 group-selected/option:border-fg" />
+              <span className="flex min-w-0 flex-col">
+                <span className="truncate text-[13px] font-medium text-fg/85">
+                  {option.label}
+                </span>
+                {option.description && (
+                  <span className="truncate text-xs text-fg/50">
+                    {option.description}
+                  </span>
+                )}
+              </span>
+            </span>
+            {option.preview && (
+              <span className="flex shrink-0 items-center gap-1.5 **:data-[slot=glyph]:size-5">
+                {option.preview}
+              </span>
+            )}
+          </RacToggleButton>
+        ))}
+      </RacToggleButtonGroup>
+    </div>
+  )
 }
 
 /* --------------------------------- Slider --------------------------------- */

@@ -4,7 +4,7 @@
    a dialog rests. Backdrop writes Dialog and Drawer together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -65,11 +65,10 @@ export function DialogsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Backdrop"
         value={state.dialogBackdrop}
         onChange={set("dialogBackdrop")}
-        rowPreview={false}
         options={BACKDROP_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -79,6 +78,7 @@ export function DialogsSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialSegmented
         label="Position"
         value={state.dialogPosition}

@@ -94,8 +94,6 @@ export const vercel = definePreset({
     progressGap: false,
     buttonStyle: "flat",
     buttonRadius: "auto",
-    buttonHover: "dim",
-    buttonPress: "none",
     groupSeparator: "auto",
     toggleSelected: "fill",
     segmentedSelected: "flat",
