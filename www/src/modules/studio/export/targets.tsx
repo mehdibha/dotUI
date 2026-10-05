@@ -2,7 +2,6 @@ import type { ComponentType, SVGProps } from "react"
 import { compressToEncodedURIComponent } from "lz-string"
 
 import { BoltIcon } from "@/components/icons/bolt"
-import { ClaudeIcon } from "@/components/icons/claude"
 import { FigmaIcon } from "@/components/icons/figma"
 import { GeminiIcon } from "@/components/icons/gemini"
 import { LovableIcon } from "@/components/icons/lovable"
@@ -10,7 +9,7 @@ import { OpenAIIcon } from "@/components/icons/openai"
 import { ReplitIcon } from "@/components/icons/replit"
 import { V0Icon } from "@/components/icons/v0"
 
-import { buildFetchPrompt, buildPrompt } from "./prompt"
+import { buildPrompt } from "./prompt"
 import type { ExportUrl } from "./types"
 
 /**
@@ -31,6 +30,10 @@ export interface OpenInTarget {
 
 const uri = (prompt: string) => encodeURIComponent(prompt)
 const lz = (prompt: string) => compressToEncodedURIComponent(prompt)
+
+/** ChatGPT Work builds and hosts the app through its Sites plugin. */
+const sites = (mention: string, url: ExportUrl) =>
+  uri(`${mention} Build and host this as a website.\n\n${buildPrompt(url)}`)
 
 export const OPEN_IN_TARGETS: OpenInTarget[] = [
   {
@@ -78,16 +81,18 @@ export const OPEN_IN_TARGETS: OpenInTarget[] = [
       `https://aistudio.google.com/apps?prompt=${uri(buildPrompt(url))}`,
   },
   {
-    id: "claude",
-    name: "Claude",
-    icon: ClaudeIcon,
-    href: (url) => `https://claude.ai/new?q=${uri(buildFetchPrompt(url))}`,
-  },
-  {
     id: "chatgpt",
     name: "ChatGPT",
     icon: OpenAIIcon,
-    // Submits on open.
-    href: (url) => `https://chatgpt.com/?q=${uri(buildPrompt(url))}`,
+    // The web composer shows plugin links as literal text.
+    href: (url) =>
+      `https://chatgpt.com/?surface=work&prompt=${sites("@Sites", url)}`,
+  },
+  {
+    id: "chatgpt-app",
+    name: "ChatGPT app",
+    icon: OpenAIIcon,
+    href: (url) =>
+      `https://chatgpt.com/codex/open-app?mode=work&q=${sites("[@Sites](plugin://sites@openai-curated-remote)", url)}`,
   },
 ]
