@@ -61,7 +61,7 @@ export function ConnectedTools({
         <ul className="space-y-3">
           {servers.map((server) => (
             <li key={server.name} className="flex items-center gap-3">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-neutral">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-neutral">
                 <server.icon className="size-4 text-fg-muted" />
               </div>
               <div className="min-w-0 flex-1">
