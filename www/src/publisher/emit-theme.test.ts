@@ -8,6 +8,7 @@ type InitItemConfig = {
   config?: {
     tailwind?: { cssVariables?: boolean }
     registries?: Record<string, unknown>
+    aliases?: unknown
   }
 }
 
@@ -32,12 +33,14 @@ function hueOf(value: string | undefined): number {
   return Number(value?.match(/oklch\([\d.]+ [\d.]+ ([\d.]+)\)/)?.[1])
 }
 
+const itemUrl = (name: string) => `https://dotui.org/r/${name}.json`
+
 describe("emitInitItem", () => {
   test("emits base CSS through registry fields instead of a CSS file", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.type).toBe("registry:base")
@@ -46,17 +49,25 @@ describe("emitInitItem", () => {
     expect(item.dependencies).not.toContain("tailwindcss-autocontrast")
     expect((item as InitItemConfig).config?.tailwind?.cssVariables).toBe(true)
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=",
+      "https://dotui.org/r/{name}.json",
     )
-    expect(item.files?.map((file) => file.target)).toEqual(["src/lib/utils.ts"])
+    expect(item.files?.map((file) => [file.path, file.target])).toEqual([
+      ["lib/utils.ts", undefined],
+    ])
+    expect((item as InitItemConfig).config?.aliases).toBeUndefined()
     expect(JSON.stringify(item)).not.toContain("dotui-base.css")
+    // Nothing else loads the default faces in a consumer project.
+    expect(item.registryDependencies).toEqual([
+      "https://dotui.org/r/font-geist.json",
+      "https://dotui.org/r/font-mono-geist-mono.json",
+    ])
   })
 
   test("ships semantic tokens as per-mode literals in the shadcn shape", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const { theme, light, dark } = item.cssVars ?? {}
 
@@ -79,10 +90,9 @@ describe("emitInitItem", () => {
       Object.keys({ ...light, ...dark }).some((k) => k.startsWith("--")),
     ).toBe(false)
     expect(light).toMatchObject({ radius: "0.625rem" })
-    // A neutral primary is the inverse surface: dark text in light mode …
-    expect(light?.["primary"]).toBe(light?.["fg"])
-    // … and light in dark mode.
-    expect(dark?.["primary"]).toBe(dark?.["fg"])
+    // The default primary is the brand accent's solid in both modes.
+    expect(light?.["primary"]).toBe(light?.["accent"])
+    expect(dark?.["primary"]).toBe(dark?.["accent"])
     // Recipes flatten to literals — no `color-mix()` or `var()` escapes.
     expect(light?.["primary-hover"]).toMatch(OKLCH)
     expect(dark?.["border"]).toMatch(OKLCH)
@@ -94,16 +104,86 @@ describe("emitInitItem", () => {
     expect(dark?.["chart-8"]).toMatch(OKLCH)
   })
 
-  test("writes the preset into the @dotui registry URL string", () => {
+  test("sets every shadcn token in both modes, from dotUI's", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "default", componentParams: {} },
-      encodedPreset: "abc123",
-      registryRoot: "https://dotui.com",
+      itemUrl,
+    })
+    const { theme, light, dark } = item.cssVars ?? {}
+
+    // What shadcn's own init sets: an existing project keeps a full palette.
+    for (const name of [
+      "background",
+      "foreground",
+      "card",
+      "card-foreground",
+      "popover",
+      "popover-foreground",
+      "primary",
+      "primary-foreground",
+      "secondary",
+      "secondary-foreground",
+      "muted",
+      "muted-foreground",
+      "accent",
+      "accent-foreground",
+      "destructive",
+      "border",
+      "input",
+      "ring",
+      "sidebar",
+      "sidebar-foreground",
+      "sidebar-primary",
+      "sidebar-primary-foreground",
+      "sidebar-accent",
+      "sidebar-accent-foreground",
+      "sidebar-border",
+      "sidebar-ring",
+    ]) {
+      expect(light?.[name]).toMatch(OKLCH)
+      expect(dark?.[name]).toMatch(OKLCH)
+      expect(theme?.[`--color-${name}`]).toBe(`var(--${name})`)
+    }
+    for (const mode of [light, dark]) {
+      expect(mode?.["background"]).toBe(mode?.["bg"])
+      expect(mode?.["foreground"]).toBe(mode?.["fg"])
+      expect(mode?.["primary-foreground"]).toBe(mode?.["fg-on-primary"])
+      expect(mode?.["accent-foreground"]).toBe(mode?.["fg-on-accent"])
+    }
+  })
+
+  test("keeps shadcn's style family for later shadcn adds", () => {
+    const styleFor = (shadcnBase?: string) =>
+      (
+        emitInitItem({
+          baseRegistryCss,
+          preset: { density: "default", componentParams: {} },
+          itemUrl,
+          shadcnBase,
+        }) as { config?: Record<string, unknown> }
+      ).config
+
+    expect(styleFor()).toMatchObject({
+      style: "base-nova",
+      menuColor: "default",
+      menuAccent: "subtle",
+    })
+    expect(styleFor("radix")?.style).toBe("new-york")
+    expect(styleFor("aria")?.style).toBe("aria-nova")
+    expect(styleFor("default")?.style).toBe("base-nova")
+  })
+
+  test("writes the design system's path into the @dotui registry URL", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: { density: "default", componentParams: {} },
+      itemUrl: (name) =>
+        `https://dotui.org/r/s/abc123DEF4/${name}.json?code=arrays`,
     })
 
     expect((item as InitItemConfig).config?.registries?.["@dotui"]).toBe(
-      "https://dotui.com/r/{name}?preset=abc123",
+      "https://dotui.org/r/s/abc123DEF4/{name}.json?code=arrays",
     )
   })
 
@@ -111,7 +191,7 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: { density: "compact", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.css?.[":root"]).toMatchObject({ "--dotui-density": "compact" })
@@ -129,7 +209,7 @@ describe("emitInitItem", () => {
         },
       },
       preset: { density: "default", componentParams: {} },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const theme = item.cssVars?.theme ?? {}
     expect(theme["--disabled-bg"]).toBe("var(--disabled)")
@@ -147,11 +227,11 @@ describe("emitInitItem", () => {
         componentParams: {},
         tokens: {
           "--radius": "0.5rem",
-          "--scrollbar-width": "thin",
+          "--user-select-ui": "auto",
           "--studio-btn-radius": "--radius-md",
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     // Radius rides with the colors; other tokens stay in a plain `:root`
@@ -159,7 +239,7 @@ describe("emitInitItem", () => {
     // the component publisher resolves them into utilities.
     expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
     expect(item.css?.[":root"]).toEqual({
-      "--scrollbar-width": "thin",
+      "--user-select-ui": "auto",
     })
   })
 
@@ -190,7 +270,7 @@ describe("emitInitItem", () => {
           "--studio-btn-radius": "--radius-md",
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
     const { theme, light, dark } = item.cssVars ?? {}
     const root = item.css?.[":root"]
@@ -236,13 +316,17 @@ describe("emitInitItem", () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset,
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     expect(item.registryDependencies).toEqual([
-      "https://dotui.com/r/font-figtree",
-      "https://dotui.com/r/font-heading-figtree",
+      "https://dotui.org/r/font-figtree.json",
+      "https://dotui.org/r/font-heading-figtree.json",
+      "https://dotui.org/r/font-mono-geist-mono.json",
     ])
+    // Font tokens live only in `@theme`, so a later font item, re-init or
+    // theme edit overrides them.
+    expect(JSON.stringify(item.css)).not.toMatch(/--font-(sans|heading|mono)/)
     // shadcn would place a CSS import after `@import "tailwindcss"`, where
     // bundlers drop it — the faces travel as font items instead.
     expect(
@@ -269,7 +353,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#ef4444" } },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}
@@ -293,7 +377,7 @@ describe("emitInitItem", () => {
         componentParams: {},
         color: { v: 2, seeds: { accent: "#3ecf8e" }, primary: "accent" },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}
@@ -320,7 +404,7 @@ describe("emitInitItem", () => {
           scopes: { checkbox: "neutral" },
         },
       },
-      registryRoot: "https://dotui.com",
+      itemUrl,
     })
 
     const light = item.cssVars?.light ?? {}

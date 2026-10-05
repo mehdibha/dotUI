@@ -5,7 +5,8 @@ import {
   SegmentedControlItem,
 } from "@/registry/ui/segmented-control"
 import { Switch } from "@/registry/ui/switch"
-import { useStudio } from "@/modules/studio/use-studio"
+
+import { setCodeOption, useCodeOptions } from "./code-options-store"
 
 /**
  * The `codeOptions` axes: how the exported source is written. Only what
@@ -13,7 +14,7 @@ import { useStudio } from "@/modules/studio/use-studio"
  * indentation are Prettier's job, `"use client"` the shadcn CLI's.
  */
 export function CodeOptions() {
-  const { codeOptions, setCodeOption } = useStudio()
+  const codeOptions = useCodeOptions()
 
   return (
     <div className="divide-y rounded-md border">

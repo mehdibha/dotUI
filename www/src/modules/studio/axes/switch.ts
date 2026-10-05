@@ -3,16 +3,23 @@
    mechanism), and its motion: how long the thumb, track and card take to
    flip (`--studio-switch-state-*`). */
 
-import { fillScope } from "./color"
+import { fillScope, SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's switch and thumb ride Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
 
 export const SWITCH_DEFAULTS = {
-  switchColor: "neutral",
+  switchColor: "accent",
   switchMotion: MOTION,
+}
+
+export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {
+  switchColor: oneOf(SOURCE_OPTIONS),
+  switchMotion: STATE_CHANGE,
 }
 
 export function resolveSwitch(state: StudioState): Resolved {

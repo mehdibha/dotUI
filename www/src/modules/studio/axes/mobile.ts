@@ -11,6 +11,8 @@
    slice that docks the modal to the bottom edge. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const MOBILE_DEFAULTS = {
   mobilePickers: "drawer",
@@ -26,6 +28,11 @@ export const DIALOG_OPTIONS = [
   { value: "center", label: "Center" },
   { value: "sheet", label: "Sheet" },
 ]
+
+export const MOBILE_SCHEMA: ChapterSchema<typeof MOBILE_DEFAULTS> = {
+  mobilePickers: oneOf(PICKER_OPTIONS),
+  mobileDialogs: oneOf(DIALOG_OPTIONS),
+}
 
 export function resolveMobile(state: StudioState): Resolved {
   return {

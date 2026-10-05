@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("menus axis", () => {
   it("defaults yield the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULTS)
+    const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.menu).toEqual({
       indicator: "check-end",
@@ -22,15 +22,16 @@ describe("menus axis", () => {
   })
 
   it("one axis writes the whole family", () => {
-    const ds = resolveDesignSystem({
-      ...DEFAULTS,
-      menuIndicator: "check-start",
-      menuHighlight: "accent",
-      menuInset: "full-bleed",
-      menuLabels: "caps",
-      menuSearch: "prompt",
-      menuScale: "large",
-    })
+    const ds = resolveDesignSystem(
+      parseState({
+        menuIndicator: "check-start",
+        menuHighlight: "accent",
+        menuInset: "full-bleed",
+        menuLabels: "caps",
+        menuSearch: "prompt",
+        menuScale: "large",
+      }),
+    )
     const list = {
       indicator: "check-start",
       highlight: "accent",
@@ -48,11 +49,5 @@ describe("menus axis", () => {
       "--color-highlight": "var(--accent-700)",
       "--color-fg-on-highlight": "var(--on-accent-700)",
     })
-  })
-
-  it("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, menuHighlight: "edge" })
-    expect(ds.componentParams.menu?.highlight).toBe("neutral")
-    expect(ds.tokens).toEqual({})
   })
 })

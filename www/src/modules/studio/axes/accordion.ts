@@ -9,7 +9,8 @@
 import type { Resolved, StudioState } from "./index"
 import { resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
-import { pick } from "./pick"
+import { entrance, oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's (tw-animate's accordion-down/up): the height alone, 200ms on CSS
    `ease-out` both ways. */
@@ -48,24 +49,22 @@ export const MOTION_PATTERNS = [
   { value: "none", label: "None" },
 ]
 
+export const ACCORDION_SCHEMA: ChapterSchema<typeof ACCORDION_DEFAULTS> = {
+  accordionContainer: oneOf(CONTAINER_OPTIONS),
+  accordionMarker: oneOf(MARKER_OPTIONS),
+  accordionMarkerPosition: oneOf(POSITION_OPTIONS),
+  accordionMotion: entrance(MOTION_PATTERNS),
+}
+
 export function resolveAccordion(state: StudioState): Resolved {
-  const motion = resolveEntrance(
-    "accordion",
-    state.accordionMotion,
-    MOTION,
-    MOTION_PATTERNS,
-  )
+  const motion = resolveEntrance("accordion", state.accordionMotion, MOTION)
   return {
     tokens: motion.tokens,
     params: {
       accordion: {
-        container: pick(CONTAINER_OPTIONS, state.accordionContainer, "divided"),
-        marker: pick(MARKER_OPTIONS, state.accordionMarker, "chevron"),
-        markerPosition: pick(
-          POSITION_OPTIONS,
-          state.accordionMarkerPosition,
-          "trailing",
-        ),
+        container: state.accordionContainer,
+        marker: state.accordionMarker,
+        markerPosition: state.accordionMarkerPosition,
         motion: motion.pattern,
       },
       collapsible: { motion: motion.pattern },

@@ -3,11 +3,11 @@ import { describe, expect, test } from "vitest"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 
-import { DEFAULTS } from "."
+import { DEFAULT_STATE, parseState } from "."
 import type { StudioState } from "."
 import { resolveDesignSystem } from "../resolve"
 
-async function shipped(state: StudioState = DEFAULTS) {
+async function shipped(state: StudioState = DEFAULT_STATE) {
   const ds = resolveDesignSystem(state)
   const preset = {
     density: ds.density,
@@ -35,10 +35,9 @@ describe("sidebar motion", () => {
   })
 
   test("Tailwind's default timing ships no class", async () => {
-    const content = await shipped({
-      ...DEFAULTS,
-      sidebarMotion: { duration: 150, ease: [0.4, 0, 0.2, 1] },
-    })
+    const content = await shipped(
+      parseState({ sidebarMotion: { duration: 150, ease: [0.4, 0, 0.2, 1] } }),
+    )
     expect(content).not.toMatch(/duration-150|ease-in-out|ease-linear/)
   })
 })

@@ -12,6 +12,8 @@
 import { SOURCE_OPTIONS } from "./color"
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's tab trigger rides Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -29,15 +31,15 @@ export const TAB_STYLE_OPTIONS = [
   { value: "enclosed", label: "Enclosed" },
 ]
 
+export const TAB_SCHEMA: ChapterSchema<typeof TAB_DEFAULTS> = {
+  tabStyle: oneOf(TAB_STYLE_OPTIONS),
+  tabsColor: oneOf(SOURCE_OPTIONS),
+  tabsMotion: STATE_CHANGE,
+}
+
 export function resolveTabs(state: StudioState): Resolved {
-  const style = TAB_STYLE_OPTIONS.some((o) => o.value === state.tabStyle)
-    ? state.tabStyle
-    : TAB_DEFAULTS.tabStyle
-  const color = SOURCE_OPTIONS.some((o) => o.value === state.tabsColor)
-    ? state.tabsColor
-    : TAB_DEFAULTS.tabsColor
   return {
     tokens: resolveStateChange("tabs", state.tabsMotion, MOTION),
-    params: { tabs: { style, color } },
+    params: { tabs: { style: state.tabStyle, color: state.tabsColor } },
   }
 }

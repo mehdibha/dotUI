@@ -1,41 +1,47 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import type { ComponentProps } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
 import type { SearchSchemaInput } from "@tanstack/react-router"
 
-import { ORIGIN } from "@/modules/presets/presets-data"
+import { siteConfig } from "@/config/site"
+import { useIsMobile } from "@/registry/hooks/use-mobile"
+import { toastManager, ToastProvider } from "@/registry/ui/toast"
+import { getPreset } from "@/modules/presets"
 import { StudioPanel } from "@/modules/studio/create"
-import { ExportHeaderAction } from "@/modules/studio/export"
-import { DEFAULT_PRESET } from "@/modules/studio/preset/codec"
-import {
-  loadStoredPreset,
-  saveStoredPreset,
-} from "@/modules/studio/preset/storage"
+import { StudioHeaderActions } from "@/modules/studio/export"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
-import { useStudio } from "@/modules/studio/use-studio"
+import { getCurrent, select } from "@/modules/studio/selection"
+import { fetchSnapshot } from "@/modules/studio/share"
+import { flush, isUnreadable, storageFailed } from "@/modules/studio/workspace"
 
 export function createSearchSchema(
   search: {
     panel?: string
     preview?: string
-    preset?: string
     gallery?: boolean
+    s?: string
+    preset?: string
   } & SearchSchemaInput,
 ): {
   panel?: string
   preview: string
-  preset?: string
   gallery?: boolean
+  s?: string
+  preset?: string
 } {
+  // An empty param (`?preset=`) is no param.
+  const text = (value: unknown) =>
+    typeof value === "string" && value ? value : undefined
   return {
-    panel: typeof search.panel === "string" ? search.panel : undefined,
-    preview: typeof search.preview === "string" ? search.preview : "cards",
-    preset: typeof search.preset === "string" ? search.preset : undefined,
-    // Opens the preset gallery modal — set by the panel's Presets button and the
-    // /presets permanent redirect. Coerced boolean: the search parser reads bare
-    // `1`/`true` as non-strings, so a string check would reject them and the
-    // param would be dropped.
+    panel: text(search.panel),
+    preview: text(search.preview) ?? "cards",
+    // Opens the design-system switcher — set by the /presets redirect.
+    // Coerced boolean: the search parser reads bare `1`/`true` as non-strings.
     gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
+    // A link to open: a shared snapshot, or a preset.
+    s: text(search.s),
+    preset: text(search.preset),
   }
 }
 
@@ -46,56 +52,173 @@ export const Route = createFileRoute("/_app/studio")({
   search: {
     middlewares: [stripSearchParams(searchDefaults)],
   },
+  head: () => {
+    const title = `${siteConfig.name} Studio - Build your design system`
+    const description =
+      "Compose colors, typography, icons, density, radius and per-component styles, preview every change on real components, then export code you own."
+    const url = `${siteConfig.url}/studio`
+    const image = `${siteConfig.url}/images/og-studio.png`
+    const imageAlt =
+      "dotUI Studio: the design-system panel beside a live wall of components"
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: image },
+        { property: "og:image:type", content: "image/png" },
+        { property: "og:image:width", content: "2400" },
+        { property: "og:image:height", content: "1260" },
+        { property: "og:image:alt", content: imageAlt },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: image },
+        { name: "twitter:image:alt", content: imageAlt },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    }
+  },
   component: StudioPage,
 })
 
-function StudioPage() {
-  const { preset } = Route.useSearch()
-  const { preset: current, setPreset, setState } = useStudio()
-  const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
 
-  // The user's selected preset is persisted in localStorage so every docs
-  // component demo renders in it. Seed the editor from it on open (unless a
-  // shared ?preset= link is being viewed), then persist back as it's edited.
-  // First visit — nothing stored — starts on Origin, the default preset.
-  const seededFromStorage = useRef(false)
-  useEffect(() => {
-    if (seededFromStorage.current) return
-    seededFromStorage.current = true
-    if (preset) return // a shared / deep-linked preset wins over the saved one
-    const stored = loadStoredPreset()
-    if (stored !== DEFAULT_PRESET) setPreset(stored)
-    else setState(ORIGIN.state)
-  }, [preset, setPreset, setState])
+/** Opens a `?preset=` or `?s=` link once, as a read-only view, then strips
+ *  it from the URL; until then the studio waits. After hydration, so its
+ *  toast has a provider. */
+function useOpenLink(hydrated: boolean): boolean {
+  const { s, preset } = Route.useSearch()
+  const navigate = Route.useNavigate()
+  const opened = useRef<string>(undefined)
 
-  const skipFirstPersist = useRef(true)
   useEffect(() => {
-    // Skip the initial value so merely opening a shared link doesn't overwrite
-    // the saved preset; persist once the user actually changes something.
-    if (skipFirstPersist.current) {
-      skipFirstPersist.current = false
+    const link = s !== undefined ? `s:${s}` : preset && `preset:${preset}`
+    if (!link) {
+      opened.current = undefined
       return
     }
-    saveStoredPreset(current)
-  }, [current])
+    if (!hydrated || link === opened.current) return
+    opened.current = link
+    const done = () =>
+      navigate({
+        search: (prev) => ({ ...prev, s: undefined, preset: undefined }),
+        replace: true,
+      })
+    const broken = () =>
+      toastManager.add({ title: "This link doesn't work", type: "error" })
+    if (s === undefined) {
+      if (preset && getPreset(preset)) select({ kind: "preset", id: preset })
+      else broken()
+      done()
+      return
+    }
+    const from = getCurrent().key
+    fetchSnapshot(s)
+      .then(
+        (snapshot) => {
+          if (!snapshot) return broken()
+          // A pick made meanwhile, in another tab, wins.
+          if (getCurrent().key !== from) return
+          select({
+            kind: "link",
+            id: s,
+            name: snapshot.name,
+            state: snapshot.state,
+          })
+        },
+        (error: unknown) => {
+          console.error(error)
+          broken()
+        },
+      )
+      .finally(done)
+  }, [hydrated, s, preset, navigate])
+  return s !== undefined || preset !== undefined
+}
+
+function StudioPage() {
+  const hydrated = useHydrated()
+  const opening = useOpenLink(hydrated)
+  const isMobile = useIsMobile()
+  const [boundary, setBoundary] = useState<HTMLDivElement | null>(null)
+
+  // Edits reach storage on a throttle; leaving writes the last one.
+  useEffect(() => {
+    const onHide = () => document.visibilityState === "hidden" && flush()
+    window.addEventListener("pagehide", flush)
+    document.addEventListener("visibilitychange", onHide)
+    return () => {
+      flush()
+      window.removeEventListener("pagehide", flush)
+      document.removeEventListener("visibilitychange", onHide)
+    }
+  }, [])
 
   return (
     // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
     // lines up with the Export button above it.
     <div className="h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 max-sm:px-2 max-sm:pb-2 lg:p-6 lg:pt-2 lg:pr-4">
-      <ExportHeaderAction />
       {/* The row is the panel's height: panel popovers stay within it. */}
       <PanelPopoverBoundary.Provider value={boundary}>
         <div
           ref={setBoundary}
           className="flex h-full min-h-0 flex-col gap-3 max-sm:gap-2 lg:flex-row lg:gap-6 dock-side:flex-row"
         >
-          {/* Below `lg` the panel docks under the preview; on short screens
-              (a phone on its side) it sits beside it instead. */}
-          <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-64" />
-          <PreviewPanel />
+          {/* The workspace lives in this browser: the server renders the
+              frame only, and a shared link shows once it has loaded. */}
+          {hydrated && !opening ? <StudioBody /> : <StudioSkeleton />}
         </div>
       </PanelPopoverBoundary.Provider>
+      {hydrated && (
+        <ToastProvider
+          portalProps={TOP_LAYER}
+          position={isMobile ? "top-center" : undefined}
+        />
+      )}
     </div>
+  )
+}
+
+// Live and on top of modal overlays, the picker's drawer included. On phones
+// they sit at the top, clear of the drawers and below the header's Share and
+// Export.
+const TOP_LAYER = {
+  "data-react-aria-top-layer": "true",
+  // Portaled out of the layout's --header-height: 14 plus a gap.
+  className: "relative z-60 max-md:*:data-[slot=toast-viewport]:top-16!",
+} as ComponentProps<typeof ToastProvider>["portalProps"]
+
+function StudioBody() {
+  // Said on arrival, before the list looks emptied.
+  useEffect(() => {
+    if (isUnreadable()) storageFailed(true)
+  }, [])
+  return (
+    <>
+      <StudioHeaderActions />
+      {/* Below `lg` the panel docks under the preview; on short screens
+          (a phone on its side) it sits beside it instead. */}
+      <StudioPanel className="max-lg:flex-none dock-stacked:order-last dock-side:w-72" />
+      <PreviewPanel />
+    </>
+  )
+}
+
+function StudioSkeleton() {
+  return (
+    <>
+      <div className="rounded-[14px] border border-fg/6 bg-card max-lg:order-last max-lg:h-40 lg:w-64 lg:shrink-0" />
+      <div className="flex-1 rounded-[14px] border border-fg/6 bg-card" />
+    </>
   )
 }

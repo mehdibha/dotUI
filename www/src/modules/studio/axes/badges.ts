@@ -15,6 +15,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn has no tag; its badge rides Tailwind's default timing. */
 const MOTION = TAILWIND_TIMING
@@ -43,11 +45,14 @@ const SHAPE_TOKENS: Record<string, string> = {
   rounded: "var(--radius-sm)",
 }
 
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
+export const BADGE_SCHEMA: ChapterSchema<typeof BADGE_DEFAULTS> = {
+  badgeStyle: oneOf(STYLE_OPTIONS),
+  badgeShape: oneOf(SHAPE_OPTIONS),
+  tagMotion: STATE_CHANGE,
+}
 
 export function resolveBadges(state: StudioState): Resolved {
-  const style = pick(STYLE_OPTIONS, state.badgeStyle, "solid")
+  const style = state.badgeStyle
   const tokens = resolveStateChange("tag", state.tagMotion, MOTION)
   const radius = SHAPE_TOKENS[state.badgeShape]
   if (radius) {

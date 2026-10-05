@@ -6,6 +6,7 @@ import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { DismissButton } from "react-aria/Overlay";
 import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
+import { ariaHideOutside } from "react-aria/private/overlays/ariaHideOutside";
 import { useOverlay } from "react-aria/useOverlay";
 import { useOverlayTriggerState } from "react-stately";
 import { tv } from "tailwind-variants";
@@ -110,11 +111,28 @@ function DrawerPopupElement({
   // A swipe that starts on a pressable (menu item, button) never cancels the
   // react-aria press: the content moves with the finger, so the pointer stays
   // over the target, and the drawer claims the gesture before the browser
-  // would fire pointercancel. Releasing then fires onPress. Cancel in-flight
-  // presses the way the platform does when a gesture is taken over.
+  // would fire pointercancel. Releasing then fires onPress. Base UI arms a
+  // swipe on every touchstart, so cancel in-flight presses only once the
+  // finger actually drags, the way the platform does when a gesture takes over.
   React.useEffect(() => {
     if (!swiping) return;
-    document.dispatchEvent(new PointerEvent("pointercancel"));
+    let origin: { x: number; y: number } | undefined;
+    const onMove = (event: PointerEvent | TouchEvent) => {
+      const point = "touches" in event ? event.touches[0] : event;
+      if (!point) return;
+      origin ??= { x: point.clientX, y: point.clientY };
+      if (Math.hypot(point.clientX - origin.x, point.clientY - origin.y) < 8)
+        return;
+      stop();
+      document.dispatchEvent(new PointerEvent("pointercancel"));
+    };
+    const stop = () => {
+      document.removeEventListener("pointermove", onMove, true);
+      document.removeEventListener("touchmove", onMove, true);
+    };
+    document.addEventListener("pointermove", onMove, true);
+    document.addEventListener("touchmove", onMove, true);
+    return stop;
   }, [swiping]);
 
   return <div {...props} />;
@@ -155,6 +173,7 @@ function Drawer({
 }: DrawerProps) {
   const isHidden = useIsHidden();
   const popupRef = React.useRef<HTMLDivElement>(null);
+  const [layer, setLayer] = React.useState<HTMLDivElement | null>(null);
   const contextState = React.useContext(OverlayTriggerStateContext);
   const localState = useOverlayTriggerState({
     isOpen,
@@ -172,6 +191,13 @@ function Drawer({
     { isOpen: state.isOpen, isDismissable, onClose: state.close },
     popupRef,
   );
+
+  // And its hiding, as its popovers do: opened from a modal, the drawer isn't
+  // made inert by it, and makes what's under it inert instead.
+  React.useEffect(() => {
+    if (state.isOpen && layer)
+      return ariaHideOutside([layer], { shouldUseInert: true });
+  }, [state.isOpen, layer]);
 
   if (isHidden) {
     return <>{children}</>;
@@ -205,7 +231,7 @@ function Drawer({
         <DrawerPrimitive.VirtualKeyboardProvider>
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
-              <div className={overlay()}>
+              <div ref={setLayer} className={overlay()}>
                 <DrawerPrimitive.Backdrop className={backdrop()} />
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup

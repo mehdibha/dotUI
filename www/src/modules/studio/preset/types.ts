@@ -1,9 +1,8 @@
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
-import type { CodeOptions } from "@/publisher/code-options"
 
-export type { CodeOptions, Density, IconLibraryName }
+export type { Density, IconLibraryName }
 
 /**
  * The engine's view of a design system — what the provider renders and the
@@ -16,7 +15,7 @@ export type DesignSystem = {
   /** Global CSS vars written on `:root` (radius, fonts, cursors, …). */
   tokens: Record<string, string>
   density: Density
-  /** Generative color recipe; `undefined` means the default generated palette. */
+  /** Generative color recipe; `undefined` means Origin's. */
   color?: ColorConfig
   /** Icon library; `undefined` means the default (lucide). */
   icons?: IconLibraryName

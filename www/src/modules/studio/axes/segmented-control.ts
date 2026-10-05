@@ -11,7 +11,8 @@
 import type { Resolved, StudioState } from "./index"
 import { ease, resolveStateChange } from "./motion"
 import type { StateChange } from "./motion"
-import { pick } from "./pick"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn has no segmented control: today's glide, 150ms on ease-out. */
 const MOTION: StateChange = { duration: 150, ease: ease("ease-out") }
@@ -33,6 +34,12 @@ export const TRACK_OPTIONS = [
   { value: "outline", label: "Outline" },
 ]
 
+export const SEGMENTED_SCHEMA: ChapterSchema<typeof SEGMENTED_DEFAULTS> = {
+  segmentedSelected: oneOf(SELECTED_OPTIONS),
+  segmentedTrack: oneOf(TRACK_OPTIONS),
+  segmentedControlMotion: STATE_CHANGE,
+}
+
 export function resolveSegmentedControl(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange(
@@ -42,8 +49,8 @@ export function resolveSegmentedControl(state: StudioState): Resolved {
     ),
     params: {
       "segmented-control": {
-        selected: pick(SELECTED_OPTIONS, state.segmentedSelected, "flat"),
-        track: pick(TRACK_OPTIONS, state.segmentedTrack, "filled"),
+        selected: state.segmentedSelected,
+        track: state.segmentedTrack,
       },
     },
   }

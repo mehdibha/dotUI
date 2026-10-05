@@ -8,6 +8,8 @@
 
 import type { Resolved, StudioState } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
+import { oneOf, STATE_CHANGE } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* shadcn's input, textarea and input group: `transition-colors` on
    Tailwind's default timing. */
@@ -34,19 +36,19 @@ export const HOVER_OPTIONS = [
   { value: "tint", label: "Tint" },
 ]
 
-export const pick = (
-  options: { value: string }[],
-  value: string,
-  fallback: string,
-) => (options.some((o) => o.value === value) ? value : fallback)
+export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
+  inputStyle: oneOf(STYLE_OPTIONS),
+  inputHover: oneOf(HOVER_OPTIONS),
+  inputMotion: STATE_CHANGE,
+}
 
 export function resolveInputs(state: StudioState): Resolved {
   return {
     tokens: resolveStateChange("input", state.inputMotion, MOTION),
     params: {
       input: {
-        style: pick(STYLE_OPTIONS, state.inputStyle, "outline"),
-        hover: pick(HOVER_OPTIONS, state.inputHover, "none"),
+        style: state.inputStyle,
+        hover: state.inputHover,
       },
     },
   }

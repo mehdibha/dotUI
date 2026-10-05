@@ -78,7 +78,7 @@ resolver; the four hand-maintained `primary === 'accent'` branches die. The
 model generalizes to future role remaps (e.g. `info → accent`) without new
 emitters.
 
-## T5. Config schema v2 + migration ✅
+## T5. Config schema v2 ✅
 
 ```ts
 interface ColorConfig2 {
@@ -102,12 +102,6 @@ interface ColorConfig2 {
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
 }
 ```
-
-Old presets (`c.algorithm` present) migrate in `decodePreset`: seeds carry
-over, `primary` carries over, `chromaMult → vividness`, `hueTorsion →
-hueShift`; other knobs drop. Old URLs/localStorage/components.json keep
-producing a sensible theme — never silent `DEFAULTS` wipes. `sanitizeColor`
-validates the full shape (zod), not just the discriminant.
 
 ## T6. Emission ✅
 

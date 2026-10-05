@@ -162,7 +162,7 @@ export function PanelPage({
 }: {
   chapters: Chapter[]
   studio: Studio
-  system?: PanelSystem
+  system: PanelSystem
 }) {
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
   const [active, setActive] = useState(chapters[0]?.id ?? "")
@@ -185,23 +185,18 @@ export function PanelPage({
   const dock = (id: string, axis?: string) => {
     setActive(id)
     setTucked(false)
-    const scroller = layer?.firstElementChild
-    if (!scroller) return
-    scroller.scrollTo({ top: 0 })
-    if (!axis) return
-    // A search hit lands on its row (a sub-axis on the row that holds it).
     requestAnimationFrame(() => {
+      const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
+      chapter?.scrollIntoView({ block: "start" })
+      if (!chapter || !axis) return
+      // A search hit lands on its row (a sub-axis on the row that holds it).
       const label = axis.split(" › ")[0]
-      const row = [
-        ...scroller.querySelectorAll(`[data-chapter="${id}"] span`),
-      ].find((span) => span.textContent === label)
+      const row = [...chapter.querySelectorAll("span")].find(
+        (span) => span.textContent === label,
+      )
       const target = row?.closest(".rounded-lg") ?? row
       if (!target) return
-      const header = scroller.firstElementChild?.getBoundingClientRect()
-      const top = scroller.getBoundingClientRect().top
-      const covered = header && header.top <= top + 1 ? header.height : 0
-      scroller.scrollTop +=
-        target.getBoundingClientRect().top - top - covered - 8
+      target.scrollIntoView({ block: "start" })
       target.animate(
         {
           boxShadow: [
@@ -249,7 +244,6 @@ export function PanelPage({
         className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
       >
         <PanelChrome
-          studio={studio}
           system={system}
           actions={
             <>
@@ -261,7 +255,7 @@ export function PanelPage({
                 aria-label={open ? "Collapse panel" : "Expand panel"}
                 aria-expanded={open}
                 onPress={() => setTucked(open)}
-                className="lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
+                className="data-icon-only:size-6 lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
               >
                 {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
               </Button>
@@ -278,7 +272,7 @@ export function PanelPage({
           className={
             open
               ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
-              : "max-lg:h-auto max-lg:[&>:first-child]:border-0"
+              : "max-lg:h-auto max-lg:*:first:border-0"
           }
         >
           {chapters.map((chapter) => (

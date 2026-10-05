@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest"
 
-import { defaultPreset } from "@/lib/registry-preset"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { resolveDesignSystem } from "../resolve"
-import { DEFAULTS } from "./index"
+import { parseState } from "./index"
 
 const shipped = async (name: string, tokens: Record<string, string> = {}) => {
-  const preset = defaultPreset()
+  const preset: PublishPreset = { density: "default", componentParams: {} }
   const mod = await publishables[name]?.()
   if (!mod) throw new Error(`${name} is not publishable`)
   const { item } = publish({
@@ -31,10 +31,9 @@ describe("button motion", () => {
   })
 
   test("one tweak times button and toggle alike", async () => {
-    const { tokens } = resolveDesignSystem({
-      ...DEFAULTS,
-      buttonMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
-    })
+    const { tokens } = resolveDesignSystem(
+      parseState({ buttonMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
+    )
     for (const name of ["button", "toggle-button"])
       expect(await shipped(name, tokens)).toContain(
         "transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-200 ease-out select-ui",

@@ -60,7 +60,7 @@ export function Skeleton({
   const rootClassName = shouldShowSkeleton
     ? root({
         className: cn(
-          !hasChildren && "skeleton block h-6 rounded-md",
+          !hasChildren && "skeleton block h-6 rounded-full",
           className,
         ),
       })

@@ -8,7 +8,8 @@
    so the two rows fold into `inside | boxed | boxed-flush`. */
 
 import type { Resolved, StudioState } from "./index"
-import { pick } from "./inputs"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export const INPUT_GROUP_DEFAULTS = {
   addonLayout: "inside",
@@ -25,9 +26,14 @@ export const ADDON_DIVIDER_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
+export const INPUT_GROUP_SCHEMA: ChapterSchema<typeof INPUT_GROUP_DEFAULTS> = {
+  addonLayout: oneOf(ADDON_LAYOUT_OPTIONS),
+  addonDivider: oneOf(ADDON_DIVIDER_OPTIONS),
+}
+
 export function resolveInputGroups(state: StudioState): Resolved {
-  const layout = pick(ADDON_LAYOUT_OPTIONS, state.addonLayout, "inside")
-  const divider = pick(ADDON_DIVIDER_OPTIONS, state.addonDivider, "hairline")
+  const layout = state.addonLayout
+  const divider = state.addonDivider
   const addon =
     layout === "boxed"
       ? divider === "none"

@@ -6,6 +6,8 @@
    pair, re-pointed at the OS highlight when the system leaves it alone. */
 
 import type { Resolved, StudioState } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 /* Defaults mirror the registry: controls are unselectable, `::selection` is
    the accent tint. */
@@ -14,15 +16,15 @@ export const SELECTION_DEFAULTS = {
   selectionHighlight: "accent",
 }
 
-export const UI_TEXT_OPTIONS = [
-  { value: "none", label: "Non-selectable" },
-  { value: "selectable", label: "Selectable" },
-]
-
 export const HIGHLIGHT_OPTIONS = [
   { value: "accent", label: "Accent" },
   { value: "browser", label: "Browser" },
 ]
+
+export const SELECTION_SCHEMA: ChapterSchema<typeof SELECTION_DEFAULTS> = {
+  selectionUiText: oneOf([{ value: "none" }, { value: "selectable" }]),
+  selectionHighlight: oneOf(HIGHLIGHT_OPTIONS),
+}
 
 export function resolveSelection(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
