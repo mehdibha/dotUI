@@ -7,7 +7,7 @@
 
 import { Fragment, useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
-import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "lucide-react"
+import { CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 
@@ -46,7 +46,9 @@ import { useCurrent } from "@/modules/studio/selection"
 import { registryPath, useSource } from "@/modules/studio/share"
 
 import { CodeOptions } from "./code-options"
+import { buildPrompt } from "./prompt"
 import { OPEN_IN_TARGETS } from "./targets"
+import type { ExportUrl } from "./types"
 import { useExportUrl } from "./use-export-url"
 
 const MODES = ["new", "existing"] as const
@@ -220,27 +222,62 @@ function ExportCommands() {
         >
           {isCopied ? "Copied" : "Copy command"}
         </Button>
-        {mode === "new" &&
-          OPEN_IN_TARGETS.map((target) => (
-            <LinkButton
-              key={target.id}
-              variant="secondary"
-              href={target.href(url)}
-              isDisabled={!!waiting}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full"
-              onPress={() => track("export_open_in", { target: target.id })}
-            >
-              <span className="flex items-center gap-1.5">
-                Open in
-                <span aria-label={target.name}>{target.wordmark}</span>
-              </span>
-              <ArrowUpRightIcon data-icon="inline-end" />
-            </LinkButton>
-          ))}
+        {mode === "new" && <OpenIn url={url} isDisabled={!!waiting} />}
       </DialogFooter>
     </>
+  )
+}
+
+/** AI builders that start the project from a prompt installing the design
+ *  system; "Copy prompt" covers every other tool. */
+function OpenIn({ url, isDisabled }: { url: ExportUrl; isDisabled: boolean }) {
+  const { isCopied, copyToClipboard } = useCopyToClipboard()
+
+  return (
+    <div className="flex w-full flex-col gap-2 pt-2">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-fg-muted">Start with AI</span>
+        <Button
+          variant="quiet"
+          size="xs"
+          isDisabled={isDisabled}
+          onPress={() => {
+            copyToClipboard(buildPrompt(url))
+            track("export_prompt_copied")
+          }}
+        >
+          {isCopied ? <CheckIcon /> : <CopyIcon />}
+          {isCopied ? "Copied" : "Copy prompt"}
+        </Button>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+        {OPEN_IN_TARGETS.map((target) => (
+          <LinkButton
+            key={target.id}
+            variant="secondary"
+            size="sm"
+            href={target.href(url)}
+            isDisabled={isDisabled}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open in ${target.name}`}
+            onPress={() => {
+              if (target.copy) copyToClipboard(target.copy(url))
+              track("export_open_in", { target: target.id })
+            }}
+          >
+            {target.wordmark ? (
+              <target.icon className="h-2.5 w-auto" />
+            ) : (
+              <>
+                <target.icon />
+                {target.name}
+              </>
+            )}
+          </LinkButton>
+        ))}
+      </div>
+    </div>
   )
 }
 

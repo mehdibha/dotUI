@@ -1,31 +1,93 @@
-import type { ReactNode } from "react"
+import type { ComponentType, SVGProps } from "react"
+import { compressToEncodedURIComponent } from "lz-string"
 
+import { BoltIcon } from "@/components/icons/bolt"
+import { ClaudeIcon } from "@/components/icons/claude"
+import { FigmaIcon } from "@/components/icons/figma"
+import { GeminiIcon } from "@/components/icons/gemini"
+import { LovableIcon } from "@/components/icons/lovable"
+import { OpenAIIcon } from "@/components/icons/openai"
+import { ReplitIcon } from "@/components/icons/replit"
 import { V0Icon } from "@/components/icons/v0"
 
+import { buildFetchPrompt, buildPrompt } from "./prompt"
 import type { ExportUrl } from "./types"
 
 /**
- * An external tool that boots a new project from the design system. Listed
- * under "New project" as secondary actions next to the CLI command; adding one
- * (Bolt, Lovable, …) is one entry here plus, if it needs its own artifact, a
- * `routes/r/` endpoint.
+ * An AI builder that starts a new project from the design system. Every tool
+ * but v0 opens with a prompt that installs the registry. These only work from
+ * the deployed origin: the tools fetch the registry server-side.
  */
 export interface OpenInTarget {
   id: string
   name: string
-  /** Brand wordmark, tinted by `currentColor`. */
-  wordmark: ReactNode
+  icon: ComponentType<SVGProps<SVGSVGElement>>
+  /** The icon already spells the name. */
+  wordmark?: boolean
   href: (url: ExportUrl) => string
+  /** Copied on open, for tools that drop the prefilled prompt. */
+  copy?: (url: ExportUrl) => string
 }
+
+const uri = (prompt: string) => encodeURIComponent(prompt)
+const lz = (prompt: string) => compressToEncodedURIComponent(prompt)
 
 export const OPEN_IN_TARGETS: OpenInTarget[] = [
   {
     id: "v0",
     name: "v0",
-    wordmark: <V0Icon className="h-3 w-auto" />,
-    // v0 fetches the item server-side, so this only works from the deployed
-    // origin (never localhost).
+    icon: V0Icon,
+    wordmark: true,
+    // v0 writes the item's files verbatim, no AI setup step.
+    href: (url) => `https://v0.app/chat/api/open?url=${uri(url("v0"))}`,
+  },
+  {
+    id: "bolt",
+    name: "Bolt",
+    icon: BoltIcon,
+    // Submits on open when signed in.
+    href: (url) => `https://bolt.new/?prompt=${uri(buildPrompt(url))}`,
+  },
+  {
+    id: "lovable",
+    name: "Lovable",
+    icon: LovableIcon,
+    href: (url) => `https://lovable.dev/#prompt=${uri(buildPrompt(url))}`,
+  },
+  {
+    id: "replit",
+    name: "Replit",
+    icon: ReplitIcon,
+    // Prefills only for signed-out visitors; the signed-in home ignores it.
     href: (url) =>
-      `https://v0.dev/chat/api/open?url=${encodeURIComponent(url("v0"))}`,
+      `https://replit.com/?stack=Build&prompt=${lz(buildPrompt(url))}&referrer=dotui.org`,
+    copy: buildPrompt,
+  },
+  {
+    id: "figma-make",
+    name: "Figma Make",
+    icon: FigmaIcon,
+    href: (url) =>
+      `https://www.figma.com/make/new#prompt=${lz(buildPrompt(url))}`,
+  },
+  {
+    id: "ai-studio",
+    name: "AI Studio",
+    icon: GeminiIcon,
+    href: (url) =>
+      `https://aistudio.google.com/apps?prompt=${uri(buildPrompt(url))}`,
+  },
+  {
+    id: "claude",
+    name: "Claude",
+    icon: ClaudeIcon,
+    href: (url) => `https://claude.ai/new?q=${uri(buildFetchPrompt(url))}`,
+  },
+  {
+    id: "chatgpt",
+    name: "ChatGPT",
+    icon: OpenAIIcon,
+    // Submits on open.
+    href: (url) => `https://chatgpt.com/?q=${uri(buildPrompt(url))}`,
   },
 ]
