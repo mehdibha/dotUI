@@ -5,7 +5,7 @@
 
 import type { StudioState } from "./axes"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
-import { ComponentsSection } from "./sections/components"
+import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
 import {
   InteractivityPreview,
@@ -33,6 +33,15 @@ export interface Chapter {
   Body: React.ComponentType<{ studio: Studio }>
   /** A glyph-sized specimen of the chapter's state, beside its title. */
   Preview?: React.ComponentType<{ state: StudioState }>
+  /** Pages the body's rows open in place of the panel page. */
+  pages?: ChapterPage[]
+}
+
+export interface ChapterPage {
+  id: string
+  label: string
+  Preview?: React.ComponentType<{ state: StudioState }>
+  Body: React.ComponentType<{ studio: Studio }>
 }
 
 /* Identity first, then interactivity and the treatments every control
@@ -103,5 +112,6 @@ export const CHAPTERS: Chapter[] = [
     id: "components",
     label: "Components",
     Body: ComponentsSection,
+    pages: COMPONENT_PAGES,
   },
 ]

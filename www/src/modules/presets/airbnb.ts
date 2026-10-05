@@ -99,8 +99,6 @@ export const airbnb = definePreset({
     progressGap: false,
     buttonStyle: "flat",
     buttonRadius: "auto",
-    buttonHover: "dim",
-    buttonPress: "scale",
     groupSeparator: "auto",
     toggleSelected: "fill",
     segmentedSelected: "raised",

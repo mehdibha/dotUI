@@ -3,7 +3,7 @@
 /* Tables — how a data grid separates its rows, and how loud its header is. */
 
 import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /** The grid: a header band or line, then three rows divided as chosen. */
@@ -78,11 +78,10 @@ export function TablesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Rows"
         value={state.tableSeparation}
         onChange={set("tableSeparation")}
-        rowPreview={false}
         options={SEPARATION_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -95,6 +94,7 @@ export function TablesSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialSegmented
         label="Header"
         value={state.tableHeader}

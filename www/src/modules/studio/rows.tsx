@@ -93,6 +93,9 @@ export const DockLayer = createContext<Element | null>(null)
 /** The row a popover edits, named over it when docked — the sheet covers it. */
 export const PanelPopoverTitle = createContext<string | null>(null)
 
+/** Opens a chapter's page (a component family) in place of the panel page. */
+export const PanelNav = createContext<(page: string) => void>(() => {})
+
 function DockedTitle({ title }: { title: string }) {
   const state = useContext(OverlayTriggerStateContext)
   return (

@@ -11,7 +11,9 @@ import { UNDERLINE_OPTIONS } from "../axes/links"
 import { CURRENT_OPTIONS } from "../axes/pagination"
 import { TAB_STYLE_OPTIONS } from "../axes/tabs"
 import {
+  DialGap,
   DialGlyph,
+  DialList,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -202,16 +204,7 @@ export function NavigationSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
-        label="Links"
-        value={state.linkUnderline}
-        onChange={set("linkUnderline")}
-        options={UNDERLINE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <LinkGlyph underline={option.value} />,
-        }))}
-      />
-      <DialSelect
+      <DialList
         label="Tabs"
         value={state.tabStyle}
         onChange={set("tabStyle")}
@@ -222,6 +215,16 @@ export function NavigationSection({ studio }: { studio: Studio }) {
               <TabGlyph style={option.value} />
             </DialGlyph>
           ),
+        }))}
+      />
+      <DialGap />
+      <DialSelect
+        label="Links"
+        value={state.linkUnderline}
+        onChange={set("linkUnderline")}
+        options={UNDERLINE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <LinkGlyph underline={option.value} />,
         }))}
       />
       <DialTrigger

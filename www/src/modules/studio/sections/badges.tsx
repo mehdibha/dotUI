@@ -9,7 +9,13 @@ import { cn } from "@/registry/lib/utils"
 
 import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
 import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -97,16 +103,16 @@ export function BadgesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Style"
         value={state.badgeStyle}
         onChange={set("badgeStyle")}
-        rowPreview={false}
         options={STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: <ChipGlyph style={option.value} shape={state.badgeShape} />,
         }))}
       />
+      <DialGap />
       <DialSegmented
         label="Shape"
         value={state.badgeShape}

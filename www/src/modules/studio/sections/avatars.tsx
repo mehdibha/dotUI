@@ -6,15 +6,28 @@
 import { cn } from "@/registry/lib/utils"
 
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
-import { DialSegmented } from "../dial"
+import { DialGap, DialList, DialSegmented } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-function AvatarGlyph({ shape, fallback }: { shape: string; fallback: string }) {
+function AvatarGlyph({
+  shape,
+  fallback,
+  large,
+}: {
+  shape: string
+  fallback: string
+  large?: boolean
+}) {
   return (
     <span
       className={cn(
-        "flex size-4 shrink-0 items-center justify-center text-[7px] font-semibold",
-        shape === "circle" ? "rounded-full" : "rounded-[5px]",
+        "flex shrink-0 items-center justify-center font-semibold",
+        large ? "size-6 text-[9px]" : "size-4 text-[7px]",
+        shape === "circle"
+          ? "rounded-full"
+          : large
+            ? "rounded-[7px]"
+            : "rounded-[5px]",
         fallback === "tinted"
           ? "bg-accent-muted text-fg-accent"
           : "bg-muted text-fg-muted",
@@ -35,12 +48,22 @@ export function AvatarsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSegmented
+      <DialList
         label="Shape"
         value={state.avatarShape}
         onChange={set("avatarShape")}
-        options={SHAPE_OPTIONS}
+        options={SHAPE_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <AvatarGlyph
+              shape={option.value}
+              fallback={state.avatarFallback}
+              large
+            />
+          ),
+        }))}
       />
+      <DialGap />
       <DialSegmented
         label="Fallback"
         value={state.avatarFallback}
