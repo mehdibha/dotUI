@@ -11,8 +11,8 @@ dotUI is a shadcn-compatible registry: React components built on React Aria Comp
 2. Install the theme (use pnpm dlx if npx is missing):
    npx shadcn@latest init ${url("init")} --force --yes --no-reinstall
    This writes the theme tokens and fonts into the global CSS and adds the @dotui registry to components.json.
-3. Add every component you use from that registry, replacing any existing file of the same name:
-   npx shadcn@latest add @dotui/button @dotui/card @dotui/input --overwrite --yes
+3. Add every component, replacing any existing file of the same name:
+   npx shadcn@latest add @dotui/all --overwrite --yes
 
 - Build only with these components and the theme tokens (bg-bg, bg-primary, text-fg, text-fg-muted, border-border…). Don't use Radix or other shadcn styles, don't restyle the components, don't hardcode colors.
 - The components compose the React Aria way, not the Radix way: check each file's exports before using it. A dialog, for example, is <Dialog><Button>Open</Button><Modal><DialogContent>…</DialogContent></Modal></Dialog>.

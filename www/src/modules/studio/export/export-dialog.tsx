@@ -5,7 +5,7 @@
  * children.
  */
 
-import { Fragment, useState, type ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
 import { CheckIcon, CopyIcon } from "lucide-react"
 import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
@@ -45,7 +45,7 @@ import type { PackageManager } from "@/modules/docs/install-commands"
 import { useCurrent } from "@/modules/studio/selection"
 import { registryPath, useSource } from "@/modules/studio/share"
 
-import { CodeOptions } from "./code-options"
+import { CodeStyle } from "./code-style"
 import { buildPrompt } from "./prompt"
 import { OPEN_IN_TARGETS } from "./targets"
 import type { ExportUrl } from "./types"
@@ -84,7 +84,7 @@ export function ExportDialog({ children }: { children: ReactNode }) {
   return (
     <Dialog>
       {children}
-      <Modal className="sm:max-w-md">
+      <Modal className="bg-popover/(--popover-alpha) [backdrop-filter:var(--popover-backdrop-filter)] [--surface-bg:var(--color-popover)] sm:max-w-lg">
         <DialogContent showCloseButton aria-label="Export design system">
           <ExportCommands />
         </DialogContent>
@@ -199,11 +199,8 @@ function ExportCommands() {
           </p>
         )}
 
-        <Section label="Code style">
-          <CodeOptions />
-        </Section>
-
         <CommandBlock
+          url={url}
           waiting={waiting}
           commands={commands}
           onCopy={trackCopy}
@@ -303,10 +300,12 @@ const joinSteps = (steps: string[]) => steps.join(" && ")
  * Each line copies on its own; the first is what the footer button copies.
  */
 function CommandBlock({
+  url,
   commands,
   onCopy,
   waiting,
 }: {
+  url: ExportUrl
   commands: CommandEntry[]
   onCopy: (line: string) => void
   /** Holds the commands' place until they can be installed. */
@@ -316,29 +315,32 @@ function CommandBlock({
 
   return (
     <div className="rounded-md border bg-muted/40">
-      <ToggleButtonGroupPrimitives.ToggleButtonGroup
-        aria-label="Package manager"
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={[packageManager]}
-        onSelectionChange={(keys) => {
-          const next = [...keys][0]
-          if (typeof next === "string") {
-            packageManagerStore.set(next as PackageManager)
-          }
-        }}
-        className="flex items-center gap-1 border-b px-2 py-1.5"
-      >
-        {PACKAGE_MANAGERS.map((pm) => (
-          <ToggleButtonPrimitives.ToggleButton
-            key={pm}
-            id={pm}
-            className="rounded-sm px-1.5 py-0.5 font-mono text-xs text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:bg-neutral selected:text-fg"
-          >
-            {pm}
-          </ToggleButtonPrimitives.ToggleButton>
-        ))}
-      </ToggleButtonGroupPrimitives.ToggleButtonGroup>
+      <div className="flex items-center justify-between border-b pr-1.5">
+        <ToggleButtonGroupPrimitives.ToggleButtonGroup
+          aria-label="Package manager"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[packageManager]}
+          onSelectionChange={(keys) => {
+            const next = [...keys][0]
+            if (typeof next === "string") {
+              packageManagerStore.set(next as PackageManager)
+            }
+          }}
+          className="flex items-center gap-1 px-2 py-1.5"
+        >
+          {PACKAGE_MANAGERS.map((pm) => (
+            <ToggleButtonPrimitives.ToggleButton
+              key={pm}
+              id={pm}
+              className="rounded-sm px-1.5 py-0.5 font-mono text-xs text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:bg-neutral selected:text-fg"
+            >
+              {pm}
+            </ToggleButtonPrimitives.ToggleButton>
+          ))}
+        </ToggleButtonGroupPrimitives.ToggleButtonGroup>
+        <CodeStyle url={url} isDisabled={!!waiting} />
+      </div>
       <div className="flex flex-col divide-y">
         {commands.map((entry, index) =>
           waiting ? (
@@ -363,28 +365,11 @@ function CommandLine({
 
   return (
     <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3">
-      <code className="min-w-0 flex-1 font-mono text-xs text-fg">
-        {steps.map((step, i) => (
-          <span key={step} className="block">
-            {/* Only the URL may break; flags wrap as whole tokens. */}
-            {[...step.split(" "), ...(i < steps.length - 1 ? ["&&"] : [])].map(
-              (token, j) => (
-                <Fragment key={j}>
-                  {j > 0 ? " " : null}
-                  <span
-                    className={
-                      token.includes("://")
-                        ? "wrap-anywhere"
-                        : "whitespace-nowrap"
-                    }
-                  >
-                    {token}
-                  </span>
-                </Fragment>
-              ),
-            )}
-          </span>
-        ))}
+      <code
+        title={joinSteps(steps)}
+        className="min-w-0 flex-1 truncate font-mono text-xs text-fg"
+      >
+        {joinSteps(steps)}
       </code>
       <Button
         variant="quiet"
