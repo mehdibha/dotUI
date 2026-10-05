@@ -23,7 +23,6 @@ const buttonMeta = {
         "rim-light",
         "gloss",
         "bevel",
-        "offset",
         "ledge",
       ] as const,
       description:

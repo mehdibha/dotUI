@@ -160,22 +160,6 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           },
         },
       },
-      // Gumroad / neobrutalism.dev: an ink outline and a hard ink shadow;
-      // hover and press slide the button into it.
-      offset: {
-        variants: {
-          variant: {
-            primary:
-              "border-2 border-fg bg-primary shadow-[4px_4px_0_0_var(--color-fg)] hover:translate-1 hover:shadow-none disabled:translate-none disabled:shadow-none dark:border-fg/35 dark:shadow-[4px_4px_0_0_color-mix(in_oklab,var(--color-fg)_40%,var(--color-bg))] dark:hover:shadow-none pressed:translate-1 pressed:shadow-none dark:pressed:shadow-none",
-            secondary:
-              "border-2 border-fg bg-neutral shadow-[4px_4px_0_0_var(--color-fg)] hover:translate-1 hover:shadow-none disabled:translate-none disabled:shadow-none dark:border-fg/35 dark:shadow-[4px_4px_0_0_color-mix(in_oklab,var(--color-fg)_40%,var(--color-bg))] dark:hover:shadow-none pressed:translate-1 pressed:shadow-none dark:pressed:shadow-none",
-            warning:
-              "border-2 border-fg bg-warning shadow-[4px_4px_0_0_var(--color-fg)] hover:translate-1 hover:shadow-none disabled:translate-none disabled:shadow-none dark:border-fg/35 dark:shadow-[4px_4px_0_0_color-mix(in_oklab,var(--color-fg)_40%,var(--color-bg))] dark:hover:shadow-none pressed:translate-1 pressed:shadow-none dark:pressed:shadow-none",
-            danger:
-              "border-2 border-fg bg-danger shadow-[4px_4px_0_0_var(--color-fg)] hover:translate-1 hover:shadow-none disabled:translate-none disabled:shadow-none dark:border-fg/35 dark:shadow-[4px_4px_0_0_color-mix(in_oklab,var(--color-fg)_40%,var(--color-bg))] dark:hover:shadow-none pressed:translate-1 pressed:shadow-none dark:pressed:shadow-none",
-          },
-        },
-      },
       // Duolingo: a slab under the button in a darker shade of its fill;
       // press sinks the face by the whole slab.
       ledge: {

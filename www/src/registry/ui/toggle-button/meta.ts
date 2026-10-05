@@ -23,7 +23,6 @@ const toggleButtonMeta = {
         "rim-light",
         "gloss",
         "bevel",
-        "offset",
         "ledge",
       ] as const,
     },

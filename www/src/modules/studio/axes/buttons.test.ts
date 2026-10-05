@@ -51,7 +51,6 @@ const SIGNATURE: Record<string, string> = {
   "rim-light": "after:mask-b-from-0%",
   gloss: "after:from-white/11",
   bevel: "from-63%",
-  offset: "shadow-[4px_4px_0_0_var(--color-fg)]",
   ledge: "pressed:translate-y-0.5",
 }
 

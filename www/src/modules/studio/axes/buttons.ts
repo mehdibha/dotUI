@@ -22,14 +22,13 @@ export const BUTTON_DEFAULTS = {
   buttonMotion: MOTION,
 }
 
-/* Source-verified in Oct 2026: flat to deep, then the two hard-shadow looks. */
+/* Source-verified in Oct 2026: flat to deep, then Duolingo's slab. */
 export const STYLE_OPTIONS = [
   { value: "flat", label: "Flat" },
   { value: "hairline", label: "Hairline", description: "Primer" },
   { value: "rim-light", label: "Rim light", description: "Untitled UI" },
   { value: "gloss", label: "Gloss", description: "Clerk" },
   { value: "bevel", label: "Bevel", description: "Polaris" },
-  { value: "offset", label: "Offset", description: "Gumroad" },
   { value: "ledge", label: "Ledge", description: "Duolingo" },
 ]
 
