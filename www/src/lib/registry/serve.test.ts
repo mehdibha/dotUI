@@ -69,6 +69,17 @@ describe("/r/<name>.json (Origin)", () => {
     expect(font.type).toBe("registry:font")
   })
 
+  it("serves every indexed component as all, which the index leaves out", async () => {
+    const index = await ok(await get("/r/registry.json"))
+    const all = await ok(await get("/r/all.json"))
+    const names = index.items.map((item: { name: string }) => item.name)
+    expect(all.files).toEqual([])
+    expect(all.registryDependencies).toEqual(
+      names.map((name: string) => `https://dotui.org/r/${name}.json`),
+    )
+    expect(names).not.toContain("all")
+  })
+
   it("serves the v0 project", async () => {
     const item = await ok(await get("/r/v0.json"))
     expect(item.files.length).toBeGreaterThan(0)
@@ -91,6 +102,10 @@ describe("/r/p/<preset>/<name>.json", () => {
     expect(button.registryDependencies).toEqual([
       "https://dotui.org/r/p/linear/loader.json",
     ])
+    const all = await ok(await get("/r/p/linear/all.json"))
+    expect(all.registryDependencies).toContain(
+      "https://dotui.org/r/p/linear/button.json",
+    )
   })
 
   it.each(["nope", "__proto__", "LINEAR", "linear%2F"])(
@@ -115,6 +130,10 @@ describe("/r/s/<id>/<name>.json", () => {
     expect(button.registryDependencies).toEqual([
       `https://dotui.org/r/s/${id}/loader.json`,
     ])
+    const all = await ok(await get(`/r/s/${id}/all.json`, store))
+    expect(all.registryDependencies).toContain(
+      `https://dotui.org/r/s/${id}/button.json`,
+    )
   })
 
   it.each(["0123456789", "short", "01234567890", "0123456789/.."])(
@@ -153,6 +172,10 @@ describe("?code=", () => {
     expect(styled.registryDependencies).toEqual([
       "https://dotui.org/r/p/linear/loader.json?code=arrays,no-sections",
     ])
+    const all = await ok(await get("/r/p/linear/all.json?code=arrays"))
+    expect(all.registryDependencies).toContain(
+      "https://dotui.org/r/p/linear/button.json?code=arrays",
+    )
     const init = await ok(await get("/r/init.json?code=arrays"))
     expect(registryUrl(init)).toBe(
       "https://dotui.org/r/{name}.json?code=arrays",

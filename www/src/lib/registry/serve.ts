@@ -3,7 +3,8 @@
      /r/p/<preset>/<name>.json   a built-in preset
      /r/s/<id>/<name>.json       a snapshot
    `<name>` is a component, a `font-*` item, `init` (what `shadcn init`
-   consumes), `registry` (the index) or `v0` (the "Open in v0" project).
+   consumes), `registry` (the index), `all` (every component) or `v0` (the
+   "Open in v0" project).
    `?code=` sets the code style; every URL an item emits keeps the prefix and
    the flags. */
 
@@ -69,6 +70,17 @@ export const serveRegistry = (request: Request, store: SnapshotStore) =>
 
     if (name === "registry")
       return registryJson(registryIndex(url.origin, preset))
+    if (name === "all")
+      return registryJson({
+        $schema: "https://ui.shadcn.com/schema/registry-item.json",
+        name: "all",
+        type: "registry:item",
+        title: "All components",
+        registryDependencies: [...PUBLISHABLE_NAMES]
+          .sort((a, b) => a.localeCompare(b))
+          .map(itemUrl),
+        files: [],
+      })
     if (name === "init")
       return registryJson(
         emitInitItem({
