@@ -166,6 +166,8 @@ function PresetSelector({
   const workspace = useWorkspace()
   const previewMode = useForcedPreviewMode()
   const sections = useMemo(() => pickerSections(workspace), [workspace])
+  // Until hydration reads the stored design system, a skeleton, not Origin.
+  usePreviewPending()
 
   return (
     <PresetPicker
@@ -181,15 +183,23 @@ function PresetSelector({
         aria-label="Preview design system"
         className="gap-1.5"
       >
-        <PresetSwatch color={current.swatch} />
-        <span className="flex max-w-35 min-w-0 gap-1">
-          <span dir="auto" className="truncate">
-            {current.unsaved
-              ? current.name.slice(0, -UNSAVED_NOTE.length).trimEnd()
-              : current.name}
+        <span className="contents in-data-preview-pending:hidden">
+          <PresetSwatch color={current.swatch} />
+          <span className="flex max-w-35 min-w-0 gap-1">
+            <span dir="auto" className="truncate">
+              {current.unsaved
+                ? current.name.slice(0, -UNSAVED_NOTE.length).trimEnd()
+                : current.name}
+            </span>
+            {current.unsaved && (
+              <span className="shrink-0">{UNSAVED_NOTE}</span>
+            )}
           </span>
-          {current.unsaved && <span className="shrink-0">{UNSAVED_NOTE}</span>}
         </span>
+        <span
+          aria-hidden
+          className="hidden h-3.5 w-20 animate-pulse rounded-full bg-fg/10 in-data-preview-pending:block"
+        />
         <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
       </Button>
     </PresetPicker>

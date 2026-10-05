@@ -7,7 +7,7 @@
 import { useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
-import { CheckIcon, RotateCcwIcon, SaveIcon } from "lucide-react"
+import { RotateCcwIcon, SaveIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -16,12 +16,12 @@ import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
+import { DeleteDialog } from "./delete-dialog"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
-import { useSaveShortcut } from "./preset/iframe-sync"
 import {
   createFrom,
   keySelection,
@@ -38,9 +38,9 @@ import {
   isUnreadable,
   rename,
   saveName,
-  uniqueName,
   useWorkspace,
 } from "./workspace"
+import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
@@ -49,14 +49,10 @@ const MENU_ROW = "pointer-coarse:min-h-11"
 
 function HeaderButton({
   label,
-  tooltip = label,
-  isDisabled,
   onPress,
   children,
 }: {
   label: string
-  tooltip?: string
-  isDisabled: boolean
   onPress: () => void
   children: ReactNode
 }) {
@@ -67,13 +63,12 @@ function HeaderButton({
         variant="quiet"
         isIconOnly
         aria-label={label}
-        isDisabled={isDisabled}
         onPress={onPress}
-        className="text-fg-muted disabled:bg-transparent data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
+        className="text-fg-muted data-icon-only:size-6 pointer-coarse:data-icon-only:size-9"
       >
         {children}
       </Button>
-      <TooltipContent>{tooltip}</TooltipContent>
+      <TooltipContent>{label}</TooltipContent>
     </Tooltip>
   )
 }
@@ -85,7 +80,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const { gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const [naming, setNaming] = useState<NameRequest>()
-  const focusPicker = useRef<((key: string) => void) | null>(null)
+  const [deleting, setDeleting] = useState<DesignSystemDoc>()
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const sections = useMemo(() => pickerSections(workspace), [workspace])
@@ -97,12 +92,15 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  /** Closes the picker for the name dialog, which opens once focus is back
-   *  on the picker's trigger, to return there. */
-  function askName(request: NameRequest) {
+  /** Closes the picker for a dialog, which opens once focus is back on the
+   *  picker's trigger, to return there. */
+  function afterPicker(open: () => void) {
     setGalleryOpen(false)
-    requestAnimationFrame(() => setNaming(request))
+    requestAnimationFrame(open)
   }
+
+  const askName = (request: NameRequest) =>
+    afterPicker(() => setNaming(request))
 
   function askNew(startFrom: string, name: string) {
     askName({
@@ -114,41 +112,27 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  // Unreadable stored systems: nothing saves, so nothing reads "Saved".
+  // Unreadable stored systems: nothing saves or is created.
   const canSave = !isUnreadable()
-  const saved = !!current.doc && canSave
+  // The unsaved slot, or a shared link as is; the user's systems save
+  // themselves.
+  const savable = current.unsaved
+    ? current.view
+    : current.view?.kind === "link" && current.view
 
-  /** Saves the slot as a system, also on ⌘S; never over a modal or a menu,
-   *  but over a panel popover. The user's systems save themselves. */
   function save() {
-    const { unsaved } = current
-    if (
-      !unsaved ||
-      !canSave ||
-      naming ||
-      document.activeElement?.closest("[data-modal],[role=menu]")
-    )
-      return
+    if (!savable) return
+    const { sel } = current
     setNaming({
       title: "Save design system",
       action: "Save",
-      name: saveName(unsaved.from),
-      subject: { kind: "unsaved" },
-      onSubmit: (name) => createFrom(name, { kind: "unsaved" }),
+      name: saveName(savable),
+      subject: sel,
+      onSubmit: (name) => createFrom(name, sel),
     })
   }
-  useSaveShortcut(save)
 
-  /** Back from a toast's Undo to the restored row, so Esc and arrows work;
-   *  to the picker's trigger once it closed. */
-  const focusRow = (key: string) => () =>
-    requestAnimationFrame(() =>
-      focusPicker.current
-        ? focusPicker.current(key)
-        : triggerRef.current?.focus(),
-    )
-
-  function renderItemMenu(key: string, afterClose: (run: () => void) => void) {
+  function renderItemMenu(key: string) {
     const sel = keySelection(key)
     const doc =
       sel.kind === "system" && workspace.systems.find((s) => s.id === sel.id)
@@ -178,10 +162,10 @@ export function StudioPanel({ className }: { className?: string }) {
         <Separator />
         <MenuItem
           variant="danger"
-          onAction={() => afterClose(() => remove(doc.id, focusRow(key)))}
+          onAction={() => afterPicker(() => setDeleting(doc))}
           className={MENU_ROW}
         >
-          Delete
+          Delete…
         </MenuItem>
       </MenuContent>
     )
@@ -191,31 +175,32 @@ export function StudioPanel({ className }: { className?: string }) {
     name: current.name,
     note: current.unsaved && UNSAVED_NOTE,
     swatch: current.swatch,
-    // Both disable once pressed: focus moves to the trigger, where the name
-    // dialog also returns it.
+    // Shown only when they apply. Both go once pressed: focus moves to the
+    // trigger, where the name dialog also returns it.
     buttons: (
       <>
-        <HeaderButton
-          label="Reset"
-          isDisabled={!current.unsaved}
-          onPress={() => {
-            triggerRef.current?.focus()
-            reset()
-          }}
-        >
-          <RotateCcwIcon />
-        </HeaderButton>
-        <HeaderButton
-          label={saved ? "Saved" : "Save"}
-          tooltip="Save ⌘S"
-          isDisabled={!current.unsaved || !canSave}
-          onPress={() => {
-            triggerRef.current?.focus()
-            save()
-          }}
-        >
-          {saved ? <CheckIcon /> : <SaveIcon />}
-        </HeaderButton>
+        {current.unsaved && (
+          <HeaderButton
+            label="Reset"
+            onPress={() => {
+              triggerRef.current?.focus()
+              reset()
+            }}
+          >
+            <RotateCcwIcon />
+          </HeaderButton>
+        )}
+        {savable && canSave && (
+          <HeaderButton
+            label="Save"
+            onPress={() => {
+              triggerRef.current?.focus()
+              save()
+            }}
+          >
+            <SaveIcon />
+          </HeaderButton>
+        )}
       </>
     ),
     triggerRef,
@@ -226,14 +211,9 @@ export function StudioPanel({ className }: { className?: string }) {
         sections={sections}
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
-        onCreate={() =>
-          askNew("current", uniqueName("Untitled", workspace.systems))
-        }
-        focusRef={focusPicker}
+        onCreate={canSave ? () => askNew("current", "") : undefined}
         withPreview
-        renderItemMenu={(item, afterClose) =>
-          renderItemMenu(item.id, afterClose)
-        }
+        renderItemMenu={(item) => renderItemMenu(item.id)}
       >
         {trigger}
       </PresetPicker>
@@ -249,6 +229,11 @@ export function StudioPanel({ className }: { className?: string }) {
     >
       <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
       <NameDialog request={naming} onClose={() => setNaming(undefined)} />
+      <DeleteDialog
+        system={deleting}
+        onDelete={remove}
+        onClose={() => setDeleting(undefined)}
+      />
     </div>
   )
 }

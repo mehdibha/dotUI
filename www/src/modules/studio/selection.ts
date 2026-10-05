@@ -9,7 +9,6 @@
 import { useMemo } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
-import { toastManager } from "@/registry/ui/toast"
 import { getPreset, ORIGIN } from "@/modules/presets"
 import { sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
@@ -39,20 +38,21 @@ function parseSelection(raw: unknown): Selection | undefined {
   return workspace.parseView(raw)
 }
 
-const store = createPersistedStore<Selection | null>("dotui:current", null, {
+// Origin is the fallback, never stored: see preview-pending.ts.
+const store = createPersistedStore<Selection>("dotui:current", ORIGIN_VIEW, {
   // Unreadable is Origin: it's only a pointer, safe to write over.
   decode: (raw) => {
     try {
-      return parseSelection(JSON.parse(raw)) ?? null
+      return parseSelection(JSON.parse(raw)) ?? ORIGIN_VIEW
     } catch {
-      return null
+      return ORIGIN_VIEW
     }
   },
-  encode: (sel) => (sel ? JSON.stringify(sel) : null),
+  encode: (sel) => JSON.stringify(sel),
   onWriteError: workspace.storageFailed,
 })
 
-const getSelection = (): Selection => store.get() ?? ORIGIN_VIEW
+const getSelection = store.get
 
 /** One key per selection: `preset:<id>`, `link:<id>`, `system:<id>` or
  *  `unsaved`. */
@@ -163,7 +163,7 @@ export const getCurrent = () =>
   describe(getSelection(), workspace.getWorkspace())
 
 export function useCurrent(): Current {
-  const sel = store.useValue() ?? ORIGIN_VIEW
+  const sel = store.useValue()
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }
@@ -221,39 +221,16 @@ export function createFrom(
   return doc
 }
 
-/** A design system's name in a toast title: quoted, cut at 32 characters. */
-function quoted(name: string): string {
-  const chars = [...name]
-  return `“${chars.length > 32 ? `${chars.slice(0, 31).join("")}…` : name}”`
-}
-
-/** Deletes the system with a 10 s toast whose Undo puts it back, then runs
- *  `afterUndo`. Deleting the current one opens the next in the list, else
- *  Origin. */
-export function remove(id: string, afterUndo?: () => void): void {
+/** Deletes the system. Deleting the current one opens the next in the
+ *  list, else Origin. */
+export function remove(id: string): void {
   const list = workspace.listed(workspace.getWorkspace())
   const at = list.findIndex((s) => s.id === id)
   if (at === -1) return
-  const sel: Selection = { kind: "system", id }
-  const wasCurrent = selectionKey(getSelection()) === selectionKey(sel)
   // Off it first: other tabs never show a selection that's gone.
-  if (wasCurrent) {
+  if (selectionKey(getSelection()) === `system:${id}`) {
     const next = list[at + 1] ?? list[at - 1]
     select(next ? { kind: "system", id: next.id } : ORIGIN_VIEW)
   }
-  const removed = workspace.remove(id)
-  if (!removed) return
-  const toast = toastManager.add({
-    title: `Deleted ${quoted(removed.doc.name)}`,
-    timeout: 10_000,
-    actionProps: {
-      children: "Undo",
-      onClick: () => {
-        toastManager.close(toast)
-        workspace.insert(removed.doc, removed.index)
-        if (wasCurrent) select(sel)
-        afterUndo?.()
-      },
-    },
-  })
+  workspace.remove(id)
 }

@@ -3,7 +3,11 @@ import { describe, expect, test } from "vitest"
 import { lstarOf, mixOklab, toOklch } from "@dotui/colors"
 import type { Mode as EngineMode, Oklch, StepName } from "@dotui/colors"
 
-import { resolveColorConfig, semanticsFor } from "@/registry/theme"
+import {
+  DEFAULT_COLOR_CONFIG,
+  resolveColorConfig,
+  semanticsFor,
+} from "@/registry/theme"
 import type { SemanticTarget } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
@@ -67,7 +71,7 @@ function targetCss(target: SemanticTarget): string {
 }
 
 const registryColor = (token: string, mode: Mode) => {
-  const target = semanticsFor()[token]?.target
+  const target = semanticsFor(DEFAULT_COLOR_CONFIG)[token]?.target
   if (!target) throw new Error(`no registry token ${token}`)
   return targetCss("light" in target ? target[mode] : target)
 }

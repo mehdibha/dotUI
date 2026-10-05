@@ -10,7 +10,7 @@
  * modes by construction — no more reversed-ramp casualties).
  */
 
-import { DEFAULT_COLOR_CONFIG, SITE_COLOR_CONFIG } from "./color-config"
+import { SITE_COLOR_CONFIG } from "./color-config"
 import type {
   PrimaryColorSource,
   SemanticTarget,
@@ -303,9 +303,7 @@ type ColorSlice = {
 }
 
 /** The one resolver every emitter goes through (T4): sources + overrides. */
-export function semanticsFor(
-  color: ColorSlice = DEFAULT_COLOR_CONFIG,
-): SemanticVocabulary {
+export function semanticsFor(color: ColorSlice): SemanticVocabulary {
   const primary = color.primary ?? "neutral"
   return applyTokenOverrides(
     semanticVocabulary(
@@ -338,9 +336,7 @@ export function scopedSemantics(
  * re-emits on plain `:root`/`.dark` (the v0 bundle, scoped previews), where
  * the full `@theme` layer ships static and only divergences re-point.
  */
-export function semanticDelta(
-  color: ColorSlice | undefined,
-): SemanticVocabulary {
+export function semanticDelta(color: ColorSlice): SemanticVocabulary {
   return Object.fromEntries(
     Object.entries(semanticsFor(color)).filter(
       ([name, token]) =>

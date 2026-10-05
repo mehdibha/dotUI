@@ -5,7 +5,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
+import { cleanName, MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
 import { Button } from "@/registry/ui/button"
 import {
   DialogContent,
@@ -29,7 +29,7 @@ import { PRESET_META } from "@/modules/presets"
 
 import { describe, keySelection, selectionKey, useCurrent } from "./selection"
 import type { Selection } from "./selection"
-import { cleanName, listed, useWorkspace } from "./workspace"
+import { listed, useWorkspace } from "./workspace"
 import type { Workspace } from "./workspace"
 
 export interface NameRequest {
@@ -138,7 +138,7 @@ function NameForm({
         className="w-full"
       >
         <Label>Name</Label>
-        <Input />
+        <Input placeholder="My design system" />
         <FieldError>Another design system has this name.</FieldError>
       </TextField>
       {startFrom !== undefined && (

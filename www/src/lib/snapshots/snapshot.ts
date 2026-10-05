@@ -11,6 +11,28 @@ export interface Snapshot {
 export const SNAPSHOT_ID = /^[0-9A-Za-z]{10}$/
 export const MAX_NAME_LENGTH = 64
 
+// In UTF-16 units, as `length` counts, without splitting a character.
+export function cutName(text: string, max: number): string {
+  let out = ""
+  for (const char of text) {
+    if (out.length + char.length > max) break
+    out += char
+  }
+  return out
+}
+
+/** Trimmed, control characters and invisible spaces stripped. Joiners and
+ *  bidi marks stay: emoji and scripts need them. */
+export const stripName = (name: string) =>
+  name
+    .normalize("NFC")
+    .replace(/[\p{Cc}​⁠﻿]/gu, "")
+    .trim()
+
+/** Stripped, at most 64 characters. */
+export const cleanName = (name: string) =>
+  cutName(stripName(name), MAX_NAME_LENGTH).trim()
+
 const BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 /** JSON with object keys sorted at every depth. */
@@ -55,7 +77,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const INPUT_KEYS = ["name", "state"]
 
-/** A `POST /api/snapshots` body: `{ name, state }`, name trimmed.
+/** A `POST /api/snapshots` body: `{ name, state }`, name stripped.
  *  Strict: an unknown key or a bad value is an issue. */
 export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
   if (!isRecord(raw))
@@ -66,7 +88,7 @@ export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
   for (const key of INPUT_KEYS)
     if (!Object.hasOwn(raw, key)) issues.push({ key, problem: "missing" })
   if (issues.length > 0) return { ok: false, issues }
-  const name = typeof raw.name === "string" ? raw.name.trim() : ""
+  const name = typeof raw.name === "string" ? stripName(raw.name) : ""
   if (name.length === 0 || name.length > MAX_NAME_LENGTH)
     issues.push({
       key: "name",
@@ -91,7 +113,7 @@ export function parseSnapshot(raw: unknown): Snapshot | undefined {
   const { name } = raw
   return {
     schema: 1,
-    name: typeof name === "string" && name.trim() ? name : "Untitled",
+    name: (typeof name === "string" && cleanName(name)) || "Untitled",
     state: salvageState(raw.state),
   }
 }

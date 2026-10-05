@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { cleanName } from "@/lib/snapshots/snapshot"
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
@@ -101,17 +102,12 @@ describe("workspace", () => {
     expect(stored().systems[0].state.radiusPx).toBe(3)
   })
 
-  it("removes and inserts back in place", async () => {
+  it("removes", async () => {
     const { ws, doc } = await created()
     const other = ws.create({ name: "Other", state: linear.state })!
-    const removed = ws.remove(doc.id)!
+    ws.remove(doc.id)
+    ws.remove(doc.id)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([other.id])
-    ws.insert(removed.doc, removed.index)
-    ws.insert(removed.doc, removed.index)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([
-      doc.id,
-      other.id,
-    ])
   })
 
   it("suggests <name> copy for a duplicate, never copy copy", async () => {
@@ -133,7 +129,8 @@ describe("workspace", () => {
     expect(stored().unsaved.state.radiusPx).toBe(3)
     ws.setUnsaved(undefined)
     ws.flush()
-    expect(stored()).not.toHaveProperty("unsaved")
+    // Empty again: nothing is stored.
+    expect(win.read(KEY)).toBeNull()
   })
 
   it("keeps generated names within 64 UTF-16 units", async () => {
@@ -145,8 +142,8 @@ describe("workspace", () => {
     expect(ws.uniqueName(`${"x".repeat(58)}😀😀`, [], " copy")).toBe(
       `${"x".repeat(58)} copy`,
     )
-    expect(ws.cleanName("😀".repeat(40))).toBe("😀".repeat(32))
-    expect(ws.cleanName(" a\u0007\u200b👩\u200d👧\u200f ")).toBe(
+    expect(cleanName("😀".repeat(40))).toBe("😀".repeat(32))
+    expect(cleanName(" a\u0007\u200b👩\u200d👧\u200f ")).toBe(
       "a👩\u200d👧\u200f",
     )
     expect(ws.parseWorkspace(win.read(KEY)!)).toEqual(ws.getWorkspace())
@@ -214,7 +211,8 @@ describe("workspace", () => {
     const ws = await load()
     expect(ws.getWorkspace().systems).toEqual([])
     expect(ws.isUnreadable()).toBe(true)
-    ws.create({ name: "Acme", state: linear.state })
+    expect(ws.create({ name: "Acme", state: linear.state })).toBeUndefined()
+    expect(ws.getWorkspace().systems).toEqual([])
     expect(win.read(KEY)).toBe(future)
     win.seed(KEY, "not json")
     expect(ws.getWorkspace().systems).toEqual([])

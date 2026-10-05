@@ -9,9 +9,15 @@
 import { useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
-import { MAX_NAME_LENGTH, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
+import {
+  cleanName,
+  cutName,
+  MAX_NAME_LENGTH,
+  SNAPSHOT_ID,
+  stripName,
+} from "@/lib/snapshots/snapshot"
 import { toastManager } from "@/registry/ui/toast"
-import { getPreset, ORIGIN } from "@/modules/presets"
+import { getPreset } from "@/modules/presets"
 import {
   formatIssues,
   salvageState,
@@ -264,28 +270,6 @@ function update(fn: (workspace: Workspace) => Workspace) {
   store.update(fn)
 }
 
-// In UTF-16 units, as the server counts, without splitting a character.
-function cut(text: string, max: number): string {
-  let out = ""
-  for (const char of text) {
-    if (out.length + char.length > max) break
-    out += char
-  }
-  return out
-}
-
-/** Trimmed, control characters and invisible spaces stripped. Joiners and
- *  bidi marks stay: emoji and scripts need them. */
-const strip = (name: string) =>
-  name
-    .normalize("NFC")
-    .replace(/[\p{Cc}​⁠﻿]/gu, "")
-    .trim()
-
-/** Stripped, at most 64 characters. */
-export const cleanName = (name: string) =>
-  cut(strip(name), MAX_NAME_LENGTH).trim()
-
 /** `name` + `suffix`, then " 2", " 3"… until free; the base is cut, at a
  *  word's start when it has spaces, so the result stays a valid name. */
 export function uniqueName(
@@ -294,9 +278,9 @@ export function uniqueName(
   suffix = "",
 ): string {
   const taken = new Set(systems.map((s) => s.name))
-  const base = strip(name) || "Untitled"
+  const base = stripName(name) || "Untitled"
   const fit = (end: string) => {
-    const head = cut(base, MAX_NAME_LENGTH - end.length)
+    const head = cutName(base, MAX_NAME_LENGTH - end.length)
     const midWord = /\S/.test(base.charAt(head.length))
     return (midWord ? head.replace(/\s+\S*$/, "") : head).trimEnd() + end
   }
@@ -308,7 +292,8 @@ export function uniqueName(
 export function create(
   fields: Pick<DesignSystemDoc, "name" | "from" | "state">,
 ): DesignSystemDoc | undefined {
-  if (!accepts(fields.state)) return
+  // Unreadable: it would live only in memory.
+  if (isUnreadable() || !accepts(fields.state)) return
   const doc: DesignSystemDoc = {
     id: newId(),
     ...fields,
@@ -326,53 +311,23 @@ export function create(
  *  shared again, it is never "(edited) (edited)". */
 export const unedited = (name: string) => name.replace(/ \(edited\)$/, "")
 
-/** Save's name for the slot: "My Linear", or "Untitled" from Origin or an
- *  "Untitled" link; free in the list. */
-export function saveName(from: View): string {
-  const base =
-    from.kind === "link"
-      ? unedited(from.name)
-      : from.id === ORIGIN.id
-        ? "Untitled"
-        : (getPreset(from.id)?.name ?? "Untitled")
-  return uniqueName(
-    base === "Untitled" || base.startsWith("My ") ? base : `My ${base}`,
-    getWorkspace().systems,
-  )
-}
+/** Save's name: a shared link keeps its own, free in the list; a preset's
+ *  isn't the user's, so it starts empty. */
+export const saveName = (from: View): string =>
+  from.kind === "link"
+    ? uniqueName(unedited(from.name), getWorkspace().systems)
+    : ""
 
 /** "Acme copy", free in the list; a copy of a copy is never "copy copy". */
 export const copyName = (name: string) =>
   uniqueName(name.replace(/ copy( \d+)?$/, ""), getWorkspace().systems, " copy")
 
-interface Removed {
-  doc: DesignSystemDoc
-  index: number
-}
-
-/** Puts a removed system back (same id), at its old position. */
-export function insert(doc: DesignSystemDoc, index?: number): void {
-  update((workspace) => {
-    if (workspace.systems.some((s) => s.id === doc.id)) return workspace
-    const systems = [...workspace.systems]
-    systems.splice(index ?? systems.length, 0, doc)
-    return { ...workspace, systems }
-  })
-}
-
-/** Removes the system; returns it and where it was. */
-export function remove(id: string): Removed | undefined {
-  let removed: Removed | undefined
-  update((workspace) => {
-    const index = workspace.systems.findIndex((s) => s.id === id)
-    if (index === -1) return workspace
-    removed = { doc: workspace.systems[index]!, index }
-    return {
-      ...workspace,
-      systems: workspace.systems.filter((s) => s.id !== id),
-    }
-  })
-  return removed
+export function remove(id: string): void {
+  update((workspace) =>
+    workspace.systems.some((s) => s.id === id)
+      ? { ...workspace, systems: workspace.systems.filter((s) => s.id !== id) }
+      : workspace,
+  )
 }
 
 /** Renames in place: the list stays in the order of edits to the design. */

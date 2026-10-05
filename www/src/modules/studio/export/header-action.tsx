@@ -1,4 +1,4 @@
-import { Share2Icon } from "lucide-react"
+import { LinkIcon } from "lucide-react"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { Button } from "@/registry/ui/button"
@@ -14,21 +14,24 @@ export function StudioHeaderActions() {
 
   return (
     <HeaderActions>
-      <SharePopover>
-        <Button
-          variant="quiet"
-          size="sm"
-          isIconOnly={isMobile}
-          aria-label={isMobile ? "Share" : undefined}
-        >
-          {isMobile ? <Share2Icon /> : "Share"}
-        </Button>
-      </SharePopover>
-      <ExportDialog>
-        <Button variant="primary" size="sm">
-          Export
-        </Button>
-      </ExportDialog>
+      <div className="flex items-center gap-2">
+        <SharePopover>
+          <Button
+            variant="secondary"
+            size="sm"
+            isIconOnly={isMobile}
+            aria-label={isMobile ? "Share" : undefined}
+          >
+            <LinkIcon />
+            {!isMobile && "Share"}
+          </Button>
+        </SharePopover>
+        <ExportDialog>
+          <Button variant="primary" size="sm">
+            Export
+          </Button>
+        </ExportDialog>
+      </div>
     </HeaderActions>
   )
 }

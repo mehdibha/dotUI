@@ -40,6 +40,18 @@ async function load() {
   return { selection, ws, toasts, current, radius, edit, system }
 }
 
+describe("current", () => {
+  it("is stored only off Origin, so the docs veil nothing for it", async () => {
+    const { selection, system } = await load()
+    selection.select({ kind: "preset", id: "linear" })
+    expect(win.read("dotui:current")).not.toBeNull()
+    selection.select({ kind: "preset", id: "origin" })
+    expect(win.read("dotui:current")).toBeNull()
+    selection.remove(system())
+    expect(win.read("dotui:current")).toBeNull()
+  })
+})
+
 describe("unsaved slot", () => {
   it("writes nothing until a view is edited", async () => {
     const { selection, current } = await load()
@@ -133,7 +145,7 @@ describe("unsaved slot", () => {
     const { selection, ws, current, edit } = await load()
     selection.select({ kind: "preset", id: "stripe" })
     edit(3)
-    expect(ws.saveName(ws.getWorkspace().unsaved!.from)).toBe("My Stripe")
+    expect(ws.saveName(ws.getWorkspace().unsaved!.from)).toBe("")
     const doc = selection.createFrom("My Stripe", { kind: "unsaved" })!
     expect(doc).toMatchObject({
       name: "My Stripe",
@@ -158,22 +170,25 @@ describe("unsaved slot", () => {
     selection.edit(radius(3))
     expect(current().name).toBe("Linear (unsaved)")
     expect(current().content?.name).toBe("Linear (edited)")
-    expect(ws.saveName(ws.getWorkspace().unsaved!.from)).toBe("My Linear")
+    expect(ws.saveName(ws.getWorkspace().unsaved!.from)).toBe("Linear")
   })
 
-  it("suggests unique names: Untitled from Origin, never My My", async () => {
+  it("saves a link under its name, free in the list; a preset unnamed", async () => {
     const { ws, radius } = await load()
-    expect(ws.saveName({ kind: "preset", id: "origin" })).toBe("Untitled")
-    ws.create({ name: "My Linear", state: radius(3) })
-    expect(ws.saveName({ kind: "preset", id: "linear" })).toBe("My Linear 2")
+    expect(ws.saveName({ kind: "preset", id: "linear" })).toBe("")
     const link = { kind: "link", id: "abcdefghij", state: radius(2) } as const
-    expect(ws.saveName({ ...link, name: "My Brand" })).toBe("My Brand")
-    expect(ws.saveName({ ...link, name: "Acme" })).toBe("My Acme")
-    const long =
-      "Northwind Enterprise Platform Design Language Extended Edition"
-    expect(ws.saveName({ ...link, name: long })).toBe(
-      "My Northwind Enterprise Platform Design Language Extended",
-    )
+    expect(ws.saveName({ ...link, name: "Acme" })).toBe("Acme")
+    ws.create({ name: "Acme", state: radius(3) })
+    expect(ws.saveName({ ...link, name: "Acme" })).toBe("Acme 2")
+  })
+
+  it("saves a link as is", async () => {
+    const { selection, current, radius } = await load()
+    const state = radius(2)
+    selection.select({ kind: "link", id: "abcdefghij", name: "Acme", state })
+    const doc = selection.createFrom("Acme", current().sel)!
+    expect(doc).toMatchObject({ name: "Acme", from: undefined, state })
+    expect(current().doc?.id).toBe(doc.id)
   })
 
   it("stays after a reload", async () => {
@@ -328,17 +343,14 @@ describe("start from", () => {
 
 describe("delete", () => {
   it("deletes the current system to the next one, else the Origin view", async () => {
-    const { selection, ws, toasts, current, system } = await load()
+    const { selection, ws, current, system } = await load()
     const first = system()
     const second = system()
     selection.remove(second)
-    const undo = toasts.mock.calls.at(-1)![0].actionProps!.onClick!
     expect(current().doc?.id).toBe(first)
     selection.remove(first)
     expect(current().key).toBe("preset:origin")
-    undo({} as never)
-    expect(current().doc?.id).toBe(second)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([second])
+    expect(ws.getWorkspace().systems).toEqual([])
   })
 
   it("never leaves another tab on a system that's gone", async () => {
@@ -363,17 +375,13 @@ describe("delete", () => {
     expect(dangling).toEqual([])
   })
 
-  it("puts a system back in place from the toast's Undo", async () => {
-    const { selection, ws, toasts, current, system } = await load()
+  it("stays on the current system when deleting another", async () => {
+    const { selection, ws, current, system } = await load()
     const first = system()
     const second = system()
     selection.select({ kind: "system", id: first })
     selection.remove(second)
     expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first])
-    const toast = toasts.mock.calls.at(-1)![0]
-    expect(toast).toMatchObject({ title: "Deleted “Untitled 2”" })
-    toast.actionProps!.onClick!({} as never)
-    expect(ws.getWorkspace().systems.map((s) => s.id)).toEqual([first, second])
     expect(current().doc?.id).toBe(first)
   })
 })

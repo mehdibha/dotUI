@@ -107,8 +107,8 @@ const EXAMPLES: Record<
   string,
   { framework: Framework; preset: string; seeds?: Record<string, string> }
 > = {
-  // Stock create-next-app layout: Geist is already imported, so shadcn leaves
-  // the layout alone and the default fonts must still render.
+  // Stock create-next-app layout: Geist is already imported under the
+  // variables the default fonts read, and they must still render.
   "origin-next": {
     framework: "next",
     preset: "origin",
@@ -133,11 +133,12 @@ interface FrameworkSetup {
    */
   seeds: Record<string, string>
   /**
-   * Where `shadcn init` wires a `registry:font` item on this framework: the
-   * `next/font/google` import in the root layout on Next.js, the `@fontsource`
-   * import in the stylesheet elsewhere.
+   * Throws unless the preset's fonts are wired the framework's way: every
+   * font variable the theme leaves to the page is a `next/font` variable of
+   * the root layout on Next.js; an `@fontsource` import in the stylesheet
+   * elsewhere. Returns what it found.
    */
-  fontWiring: { file: string; needle: string }
+  checkFonts: (cwd: string) => string
 }
 
 const NEXT_LAYOUT = `import "./globals.css"
@@ -165,12 +166,27 @@ const FRAMEWORKS: Record<Framework, FrameworkSetup> = {
   next: {
     stylesheet: "src/app/globals.css",
     seeds: { "src/app/layout.tsx": NEXT_LAYOUT },
-    fontWiring: { file: "src/app/layout.tsx", needle: "next/font/google" },
+    checkFonts: (cwd) => {
+      const read = (file: string) => readFileSync(path.join(cwd, file), "utf8")
+      const layout = read("src/app/layout.tsx")
+      const vars = pageFontVars(read("src/app/globals.css"))
+      for (const name of vars)
+        if (!new RegExp(`variable:\\s*["']${name}["']`).test(layout))
+          throw new Error(`font not wired: no next/font variable ${name}`)
+      return `next/font variables ${vars.join(", ")}`
+    },
   },
   "tanstack-start": {
     stylesheet: "src/styles.css",
     seeds: {},
-    fontWiring: { file: "src/styles.css", needle: '@import "@fontsource' },
+    checkFonts: (cwd) => {
+      const needle = '@import "@fontsource'
+      if (
+        !readFileSync(path.join(cwd, "src/styles.css"), "utf8").includes(needle)
+      )
+        throw new Error(`font not wired: src/styles.css has no ${needle}`)
+      return needle
+    },
   },
 }
 
@@ -406,11 +422,25 @@ async function registryNames(registry: string): Promise<string[]> {
  * one line buried in a large diff.
  */
 function checkFontWiring(cwd: string, framework: FrameworkSetup): void {
-  const { file, needle } = framework.fontWiring
-  if (!readFileSync(path.join(cwd, file), "utf8").includes(needle)) {
-    throw new Error(`font not wired: ${file} has no ${needle}`)
+  console.log(`fonts wired via ${framework.checkFonts(cwd)}`)
+}
+
+/** The font variables the theme's families end on that the stylesheet
+ *  leaves to the page: undeclared, or declared as themselves. */
+function pageFontVars(css: string): string[] {
+  const declared = new Map<string, string>()
+  for (const [, name, value] of css.matchAll(/(--font-[\w-]+):\s*([^;]+);/g))
+    if (!declared.has(name!)) declared.set(name!, value!.trim())
+  const open = new Set<string>()
+  const follow = (name: string, seen: Set<string>) => {
+    const value = declared.get(name)
+    const next = value?.match(/^var\((--font-[\w-]+)\)$/)?.[1]
+    if (value === undefined || next === name) open.add(name)
+    else if (next && !seen.has(next)) follow(next, seen.add(name))
   }
-  console.log(`fonts wired via ${needle}`)
+  for (const family of ["--font-sans", "--font-heading", "--font-mono"])
+    follow(family, new Set())
+  return [...open]
 }
 
 /* -------------------------------- normalizing ------------------------------- */

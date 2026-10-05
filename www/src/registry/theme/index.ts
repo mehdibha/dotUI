@@ -40,7 +40,6 @@ export {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   type PaletteSeeds,
-  salvageColorConfig,
   SITE_COLOR_CONFIG,
 } from "./color-config"
 export {

@@ -21,6 +21,18 @@ afterEach(() => {
 })
 
 describe("createPersistedStore", () => {
+  it("never stores the fallback", () => {
+    const store = createPersistedStore<string>(KEY, "a", {
+      decode: (raw) => raw,
+      encode: (value) => value,
+    })
+    store.set("b")
+    expect(win.read(KEY)).toBe("b")
+    store.set("a")
+    expect(win.read(KEY)).toBeNull()
+    expect(store.get()).toBe("a")
+  })
+
   it("merges another tab's write made while nothing was subscribed", () => {
     const store = createPersistedStore<string[]>(KEY, [], listCodec)
     store.set(["Acme"])
