@@ -10,8 +10,7 @@
  *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
  *   3. `shadcn init <origin>/r/p/<preset>/init.json` — the built-in preset's
  *      registry path, so a run never needs the snapshot store.
- *   4. `shadcn add @dotui/<name>` for every item in the preset's
- *      `registry.json`.
+ *   4. `shadcn add @dotui/all`, every item in the preset's `registry.json`.
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
  *
@@ -406,14 +405,6 @@ async function initHasFonts(registry: string): Promise<boolean> {
   return (item.registryDependencies ?? []).some((dep) => /\/font-/.test(dep))
 }
 
-async function registryNames(registry: string): Promise<string[]> {
-  const url = `${registry}/registry.json`
-  const index = await fetchJson<{ items?: Array<{ name: string }> }>(url)
-  const names = (index.items ?? []).map((item) => item.name)
-  if (names.length === 0) throw new Error(`GET ${url} lists no items`)
-  return names
-}
-
 /* ----------------------------------- checks --------------------------------- */
 
 /**
@@ -505,8 +496,6 @@ async function regenerate(
   const cwd = path.join(EXAMPLES_DIR, example)
   const registry = `${origin}/r/p/${preset}`
   console.log(`\n=== ${example} ===`)
-  const names = await registryNames(registry)
-  console.log(`items: ${names.length}`)
   const expectFonts = await initHasFonts(registry)
   const packageJsonBefore = readFileSync(path.join(cwd, "package.json"), "utf8")
 
@@ -535,14 +524,7 @@ async function regenerate(
   await run(
     cwd,
     "pnpm",
-    [
-      "dlx",
-      SHADCN,
-      "add",
-      ...names.map((name) => `@dotui/${name}`),
-      "--yes",
-      "--overwrite",
-    ],
+    ["dlx", SHADCN, "add", "@dotui/all", "--yes", "--overwrite"],
     shadcnEnv,
   )
   canonicalizeOrigin(cwd, origin)

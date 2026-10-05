@@ -832,8 +832,8 @@ const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
  * Names that resolve to a real `/r/<name>.json` file but aren't components, so
  * they never appear in `builtNames`. `init` serves the `registry:base` item
  * that `shadcn init` consumes, `all` every component (see
- * lib/registry/serve.ts). Docs
- * may advertise these; the guard treats them as served, not dangling.
+ * lib/registry/serve.ts). Docs may advertise these; the guard treats them as
+ * served, not dangling.
  */
 const SERVED_ROUTE_NAMES = new Set(["init", "all"])
 

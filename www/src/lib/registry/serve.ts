@@ -22,33 +22,32 @@ import { parseRegistryRequest, resolveSource } from "./request"
 import { guard, notFound, registryJson } from "./response"
 
 const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
+const NAMES = [...PUBLISHABLE_NAMES].sort((a, b) => a.localeCompare(b))
 
 /** The discovery index: identity and dependency metadata per installable
  *  item; files come from `<name>.json`. Library primitives ship in `init`. */
 function registryIndex(origin: string, preset: PublishPreset) {
-  const items = [...PUBLISHABLE_NAMES]
-    .sort((a, b) => a.localeCompare(b))
-    .map((name) => {
-      const item = META_BY_NAME.get(name)
-      if (!item) return { name, type: "registry:ui" }
-      const registryDependencies = registryDepsFor(
-        item,
-        preset.componentParams[name] ?? {},
-      )
-      return {
-        name: item.name,
-        type: item.type,
-        ...(item.title !== undefined ? { title: item.title } : {}),
-        ...(item.description !== undefined
-          ? { description: item.description }
-          : {}),
-        ...(item.dependencies ? { dependencies: item.dependencies } : {}),
-        ...(item.devDependencies
-          ? { devDependencies: item.devDependencies }
-          : {}),
-        ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
-      }
-    })
+  const items = NAMES.map((name) => {
+    const item = META_BY_NAME.get(name)
+    if (!item) return { name, type: "registry:ui" }
+    const registryDependencies = registryDepsFor(
+      item,
+      preset.componentParams[name] ?? {},
+    )
+    return {
+      name: item.name,
+      type: item.type,
+      ...(item.title !== undefined ? { title: item.title } : {}),
+      ...(item.description !== undefined
+        ? { description: item.description }
+        : {}),
+      ...(item.dependencies ? { dependencies: item.dependencies } : {}),
+      ...(item.devDependencies
+        ? { devDependencies: item.devDependencies }
+        : {}),
+      ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
+    }
+  })
   return {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "dotui",
@@ -76,9 +75,7 @@ export const serveRegistry = (request: Request, store: SnapshotStore) =>
         name: "all",
         type: "registry:item",
         title: "All components",
-        registryDependencies: [...PUBLISHABLE_NAMES]
-          .sort((a, b) => a.localeCompare(b))
-          .map(itemUrl),
+        registryDependencies: NAMES.map(itemUrl),
         files: [],
       })
     if (name === "init")
