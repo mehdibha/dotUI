@@ -1,7 +1,7 @@
 "use client"
 
-/* Inputs — the field family: every field renders through Input / InputGroup,
-   so Style (shell, hover) reaches them all. Addons fold the
+/* Inputs — the field family's page: every field renders through Input /
+   InputGroup, so Style (the shell) and Hover reach them all. Addons fold the
    group's layout and divider into one pick; steppers and OTP cells are the
    two fields with a layout of their own. Focus and invalid live in States. */
 
@@ -13,13 +13,10 @@ import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
 import {
   DialGap,
   DialGlyph,
-  DialPopover,
+  DialList,
   DialSegmented,
   DialSelect,
-  DialTrigger,
-  optionLabel,
 } from "../dial"
-import { CardGrid } from "../patterns"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -32,20 +29,17 @@ const SHELL: Record<string, string> = {
 }
 
 /** A field wearing one shell, with a line of placeholder. */
-function FieldGlyph({ style, card }: { style: string; card?: boolean }) {
+function FieldGlyph({ style, large }: { style: string; large?: boolean }) {
   return (
     <span
       className={cn(
         "flex shrink-0 items-center",
-        card ? "my-1 h-7 w-full px-2.5" : "h-4 w-7 px-1",
+        large ? "h-6 w-20 px-2" : "h-4 w-7 px-1",
         SHELL[style],
       )}
     >
       <span
-        className={cn(
-          "rounded-full bg-fg/25",
-          card ? "h-1.5 w-1/2" : "h-1 w-3",
-        )}
+        className={cn("rounded-full bg-fg/25", large ? "h-1.5 w-8" : "h-1 w-3")}
       />
     </span>
   )
@@ -167,37 +161,22 @@ export function InputsSection({ studio }: { studio: Studio }) {
     })
   return (
     <>
-      <DialTrigger
+      <DialList
         label="Style"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(STYLE_OPTIONS, state.inputStyle)}
-            </span>
-            <FieldGlyph style={state.inputStyle} />
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Style"
-            value={state.inputStyle}
-            onChange={set("inputStyle")}
-            options={STYLE_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: <FieldGlyph style={option.value} card />,
-            }))}
-          />
-          <DialGap />
-          <DialSegmented
-            label="Hover"
-            value={state.inputHover}
-            onChange={set("inputHover")}
-            options={HOVER_OPTIONS}
-          />
-        </DialPopover>
-      </DialTrigger>
+        value={state.inputStyle}
+        onChange={set("inputStyle")}
+        options={STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <FieldGlyph style={option.value} large />,
+        }))}
+      />
+      <DialGap />
+      <DialSegmented
+        label="Hover"
+        value={state.inputHover}
+        onChange={set("inputHover")}
+        options={HOVER_OPTIONS}
+      />
       <DialSelect
         label="Addons"
         value={addonValue(state)}

@@ -30,6 +30,8 @@ export function PanelChrome({
   system,
   actions,
   strip,
+  page,
+  scrollRef,
   className,
   children,
 }: {
@@ -38,6 +40,9 @@ export function PanelChrome({
   actions: ReactNode
   /** Mobile chapter navigation, pinned with the header. */
   strip?: ReactNode
+  /** An open page's header (back, title), pinned over the body. */
+  page?: ReactNode
+  scrollRef?: Ref<HTMLDivElement>
   className?: string
   children: ReactNode
 }) {
@@ -85,7 +90,15 @@ export function PanelChrome({
         </div>
         {strip}
       </div>
-      <div className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0">
+      {page && (
+        <div className="flex h-11 shrink-0 items-center gap-1 border-b border-fg/6 px-2">
+          {page}
+        </div>
+      )}
+      <div
+        ref={scrollRef}
+        className="no-scrollbar flex min-h-0 grow scroll-pt-2 flex-col overflow-y-auto overscroll-contain p-2 max-lg:py-0"
+      >
         {children}
       </div>
     </div>

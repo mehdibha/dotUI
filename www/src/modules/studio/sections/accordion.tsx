@@ -8,7 +8,13 @@ import {
   MARKER_OPTIONS,
   POSITION_OPTIONS,
 } from "../axes/accordion"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -98,11 +104,10 @@ export function AccordionSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
     <>
-      <DialSelect
+      <DialList
         label="Container"
         value={state.accordionContainer}
         onChange={set("accordionContainer")}
-        rowPreview={false}
         options={CONTAINER_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -112,6 +117,7 @@ export function AccordionSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialGap />
       <DialSelect
         label="Marker"
         value={state.accordionMarker}
