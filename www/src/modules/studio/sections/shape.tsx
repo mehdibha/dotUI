@@ -99,15 +99,17 @@ function CharacterPanel({ studio }: { studio: Studio }) {
   const active = activeCharacter(state)
   const [open, setOpen] = useState(active === undefined)
   const options = (key: ShapeRoleKey) => [
-    ...(key === "roleItem"
+    ...(key === "roleItem" || key === "roleCard"
       ? [
           {
             value: "auto",
-            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, roleItem: "auto" }, key))}`,
+            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, [key]: "auto" }, key))}`,
           },
         ]
       : []),
-    ...SHAPE_RUNGS.map(({ id, label, ratio }) => ({
+    ...SHAPE_RUNGS.filter(
+      ({ id }) => id !== "full" || (key !== "rolePanel" && key !== "roleCard"),
+    ).map(({ id, label, ratio }) => ({
       value: id,
       label: rungLabel(label, ratio, state.radiusPx),
     })),

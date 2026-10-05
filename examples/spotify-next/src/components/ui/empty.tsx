@@ -20,7 +20,7 @@ const emptyVariants = tv({
       },
       icon: {
         media:
-          "rounded-full bg-muted text-fg size-10 **:[svg]:not-with-[size]:size-6",
+          "rounded-md bg-muted text-fg size-10 **:[svg]:not-with-[size]:size-6",
       },
     },
   },

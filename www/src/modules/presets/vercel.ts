@@ -38,6 +38,7 @@ export const vercel = definePreset({
     roleItem: "md",
     roleSurface: "xl",
     rolePanel: "xl",
+    roleCard: "xl",
 
     // Space
     // Geist's default control is 36px.

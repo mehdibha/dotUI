@@ -19,7 +19,7 @@ const questionnaireVariants = tv({
     description: "text-pretty text-fg-muted text-sm",
     choices: "group/questionnaire-choices grid min-w-0 gap-3",
     choice:
-      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-full border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-primary/40 data-checked:bg-muted data-invalid:border-border-danger has-[>input:focus-visible]:focus-ring data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50 gap-3 px-4 py-3.5 text-sm",
+      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-lg border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-primary/40 data-checked:bg-muted data-invalid:border-border-danger has-[>input:focus-visible]:focus-ring data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50 gap-3 px-4 py-3.5 text-sm",
     choiceInput: "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
     choiceIndicator:
       "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-[type=radio]/questionnaire-choice:rounded-full group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
@@ -30,7 +30,7 @@ const questionnaireVariants = tv({
     choiceContent: "flex min-w-0 flex-1 flex-col leading-snug gap-1",
     choiceDescription: "text-fg-muted",
     shortcut:
-      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-md border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
+      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-full border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
       "w-full min-w-0 rounded-full border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none placeholder:text-fg-muted focus:focus-input focus:not-aria-invalid:border-border-focus aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted disabled:pointer-events-none disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) disabled:text-(--disabled-fg,currentColor) h-9 px-2.5 py-1 text-base md:text-sm",

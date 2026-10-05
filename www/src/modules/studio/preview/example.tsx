@@ -19,7 +19,7 @@ export function Example({
       <h3 className="px-1.5 py-2 text-xs font-medium text-fg-muted">{title}</h3>
       <div
         data-example-preview=""
-        className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-xl border p-12 text-fg"
+        className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-(--studio-radius-panel) border p-12 text-fg"
       >
         {children}
       </div>
