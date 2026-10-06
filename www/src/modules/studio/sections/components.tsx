@@ -48,14 +48,14 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "menus",
-    owners: ["menus", "popovers", "tooltips", "mobilePickers"],
+    owners: ["menus", "tooltips"],
     label: "Menus & popovers",
     Preview: MenusPreview,
     Body: MenusSection,
   },
   {
     id: "dialogs",
-    owners: ["dialogs", "mobileDialogs"],
+    owners: ["dialogs"],
     label: "Dialogs",
     Preview: DialogsPreview,
     Body: DialogsSection,

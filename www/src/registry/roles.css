@@ -17,6 +17,8 @@
   --studio-radius-inline-item: var(--radius-md);
   /* Every control edge: field shells, checks, secondary buttons, seams. */
   --studio-control-stroke: 1px;
+  /* Every scrim's frost (modal, drawer). */
+  --studio-scrim-blur: var(--blur-sm);
   /* Action labels only (Button, ToggleButton, GroupText). */
   --studio-font-weight-label: var(--font-weight-medium);
 }

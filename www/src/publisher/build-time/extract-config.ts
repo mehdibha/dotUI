@@ -81,12 +81,7 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
   if (node.isKind(SyntaxKind.NullKeyword)) return null
   if (node.isKind(SyntaxKind.Identifier)) {
     if (node.getText() === "undefined") return undefined
-    const name = node.getText()
-    // Module-level `const x = <literal>` (input's `compactText`), or one
-    // imported by relative path (toggle-button's `BUTTON_STYLES`).
-    if (ctx.sourceFile.getVariableDeclaration(name))
-      return exprToValue(resolveLocalConst(name, ctx), ctx)
-    return resolveImportedConst(name, ctx)
+    return resolveConst(node.getText(), ctx)
   }
 
   if (node.isKind(SyntaxKind.CallExpression)) {
@@ -176,6 +171,35 @@ function propertyKey(nameNode: Node, filePath: string): string {
 
 /* ------------------------- runtime-helper resolution ------------------------- */
 
+/** A module-level `const`: in this file (input's `compactText`), or exported
+ *  by a relative import — a shared recipe (menu's `LIST_ROWS`,
+ *  toggle-button's `BUTTON_STYLES`). */
+function resolveConst(name: string, ctx: ExtractCtx): unknown {
+  if (ctx.sourceFile.getVariableDeclaration(name))
+    return exprToValue(resolveLocalConst(name, ctx), ctx)
+  const { specifier, imported } = importOf(name, ctx)
+  if (!specifier.startsWith(".")) {
+    throw new Error(
+      `[publisher/extract] "${name}" must be a local const or come from a relative import (${ctx.filePath})`,
+    )
+  }
+  const filePath = path.resolve(path.dirname(ctx.filePath), `${specifier}.ts`)
+  const project = getProject()
+  const loaded = project.getSourceFile(filePath)
+  const sourceFile = loaded ?? project.addSourceFileAtPath(filePath)
+  const there = { ...ctx, sourceFile, filePath }
+  try {
+    if (!sourceFile.getVariableDeclaration(imported)?.isExported()) {
+      throw new Error(
+        `[publisher/extract] "${imported}" is not an exported const of ${filePath}`,
+      )
+    }
+    return exprToValue(resolveLocalConst(imported, there), there)
+  } finally {
+    if (!loaded) project.removeSourceFile(sourceFile)
+  }
+}
+
 /** Initializer of a module-level `const <name> = …` in the current file. */
 function resolveLocalConst(name: string, ctx: ExtractCtx): Expression {
   const decl = ctx.sourceFile.getVariableDeclaration(name)
@@ -186,47 +210,6 @@ function resolveLocalConst(name: string, ctx: ExtractCtx): Expression {
     )
   }
   return init
-}
-
-/** An exported `const` of a sibling registry file, named-imported by a
- *  relative path (a synced group's shared recipe table). */
-function resolveImportedConst(name: string, ctx: ExtractCtx): unknown {
-  const imp = ctx.sourceFile
-    .getImportDeclarations()
-    .find((decl) =>
-      decl
-        .getNamedImports()
-        .some((n) => (n.getAliasNode()?.getText() ?? n.getName()) === name),
-    )
-  const spec = imp?.getModuleSpecifierValue()
-  if (!imp || !spec?.startsWith(".")) {
-    throw new Error(
-      `[publisher/extract] cannot resolve identifier "${name}" — no local const or relative import in ${ctx.filePath}`,
-    )
-  }
-  const imported = imp
-    .getNamedImports()
-    .find((n) => (n.getAliasNode()?.getText() ?? n.getName()) === name)!
-    .getName()
-  const filePath = path.resolve(path.dirname(ctx.filePath), `${spec}.ts`)
-  const project = getProject()
-  const existing = project.getSourceFile(filePath)
-  const sourceFile = existing ?? project.addSourceFileAtPath(filePath)
-  try {
-    const decl = sourceFile.getVariableDeclaration(imported)
-    if (!decl?.isExported()) {
-      throw new Error(
-        `[publisher/extract] "${imported}" is not an exported const of ${filePath}`,
-      )
-    }
-    return exprToValue(decl.getInitializerOrThrow(), {
-      ...ctx,
-      sourceFile,
-      filePath,
-    })
-  } finally {
-    if (!existing) project.removeSourceFile(sourceFile)
-  }
 }
 
 /**
@@ -330,7 +313,7 @@ const importedStylesCache = new Map<string, () => unknown>()
  * slot freezes at the param defaults: it doesn't follow the preset.
  */
 function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
-  const spec = importSpecifierFor(name, ctx)
+  const spec = importOf(name, ctx).specifier
   const match = spec.match(/^@\/registry\/ui\/([a-z0-9-]+)(?:\/styles)?$/)
   if (!match) {
     throw new Error(
@@ -365,12 +348,17 @@ function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
   return stylesFn
 }
 
-/** Module specifier of the import that binds `name` in the current file. */
-function importSpecifierFor(name: string, ctx: ExtractCtx): string {
+/** The import that binds `name` in the current file: its module and the
+ *  name that module exports. */
+function importOf(name: string, ctx: ExtractCtx) {
   for (const imp of ctx.sourceFile.getImportDeclarations()) {
     for (const named of imp.getNamedImports()) {
       const local = named.getAliasNode()?.getText() ?? named.getName()
-      if (local === name) return imp.getModuleSpecifierValue()
+      if (local === name)
+        return {
+          specifier: imp.getModuleSpecifierValue(),
+          imported: named.getName(),
+        }
     }
   }
   throw new Error(

@@ -2,6 +2,21 @@ import { createStyles } from "@/lib/styles"
 
 import dialogMeta from "./meta"
 
+/* Footer actions. End stacks full width below sm (shadcn); Spread stays a
+   row (Geist); Stack is a column at every width, primary on top (Duolingo);
+   Bleed makes the buttons the footer: square, 64px, labels top-left (Carbon). */
+const end = "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"
+const spread = "flex flex-row justify-between gap-2"
+const stack = "flex flex-col-reverse gap-2 *:w-full"
+const bleed =
+  "-mx-(--dialog-padding) -mb-(--dialog-padding) grid auto-cols-fr grid-flow-col overflow-hidden rounded-b-[calc(var(--surface-radius)-1px)] *:h-16 *:items-start *:justify-start *:rounded-none *:px-4 *:pt-3.5 *:pb-8"
+
+/* The footer's edge: a full-bleed rule above it (Supabase, Polaris), or a
+   tinted band (shadcn nova, Geist). */
+const rule = "-mx-(--dialog-padding) border-t px-(--dialog-padding) pt-4"
+const band =
+  "-mx-(--dialog-padding) -mb-(--dialog-padding) rounded-b-[calc(var(--surface-radius)-1px)] border-t bg-muted/50 p-(--dialog-padding)"
+
 const { useStyles, styles } = createStyles(dialogMeta, {
   base: {
     slots: {
@@ -11,7 +26,7 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       title: "font-heading",
       description: "text-fg-muted",
       body: "-mx-(--dialog-padding) flex min-h-0 flex-1 flex-col gap-2 px-(--dialog-padding) in-data-modal:[@container_(height<31.25rem)]:mx-0 in-data-modal:[@container_(height<31.25rem)]:shrink-0 in-data-modal:[@container_(height<31.25rem)]:overflow-y-visible in-data-modal:[@container_(height<31.25rem)]:px-0",
-      footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+      footer: "",
       closeButton: "absolute",
     },
   },
@@ -44,14 +59,56 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     },
   },
   params: {
-    header: {
-      title: {},
-      band: {
+    /* Popover-hosted dialogs keep their own header. */
+    sections: {
+      open: {},
+      // Material 3, Stripe: rules at the body's edges only while it scrolls
+      // past them, drawn by background-attachment so nothing listens.
+      "on-scroll": {
         slots: {
-          content:
-            "in-data-popover:has-data-[slot=dialog-heading]:[&~[data-slot=popover-arrow][data-placement=bottom]>svg]:fill-muted",
-          title:
-            "in-data-popover:-mx-(--dialog-padding) in-data-popover:-mt-(--dialog-padding) in-data-popover:mb-1 in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] in-data-popover:border-b in-data-popover:bg-muted in-data-popover:px-(--dialog-padding) in-data-popover:py-2",
+          body: "not-in-data-popover:overflow-y-auto not-in-data-popover:[background:linear-gradient(var(--surface-bg),var(--surface-bg))_top/100%_1px_no-repeat_local,linear-gradient(var(--surface-bg),var(--surface-bg))_bottom/100%_1px_no-repeat_local,linear-gradient(var(--color-border),var(--color-border))_top/100%_1px_no-repeat,linear-gradient(var(--color-border),var(--color-border))_bottom/100%_1px_no-repeat]",
+        },
+      },
+      // Supabase: a full-bleed rule under the header.
+      divided: {
+        slots: {
+          header:
+            "not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:border-b not-in-data-popover:px-(--dialog-padding) not-in-data-popover:pb-4",
+        },
+      },
+      // Polaris: a tinted header band over a rule.
+      "header-band": {
+        slots: {
+          header:
+            "not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:-mt-(--dialog-padding) not-in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] not-in-data-popover:border-b not-in-data-popover:bg-muted not-in-data-popover:px-(--dialog-padding) not-in-data-popover:py-4",
+        },
+      },
+    },
+    footer: {
+      end: { slots: { footer: end } },
+      spread: { slots: { footer: spread } },
+      stack: { slots: { footer: stack } },
+      bleed: { slots: { footer: bleed } },
+      "end-rule": { slots: { footer: [end, rule] } },
+      "spread-rule": { slots: { footer: [spread, rule] } },
+      "stack-rule": { slots: { footer: [stack, rule] } },
+      "end-band": { slots: { footer: [end, band] } },
+      "spread-band": { slots: { footer: [spread, band] } },
+      "stack-band": { slots: { footer: [stack, band] } },
+    },
+    close: {
+      quiet: {},
+      // shadcn luma, rhea, sera: the quiet button on the secondary fill.
+      filled: {
+        slots: {
+          closeButton:
+            "bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        },
+      },
+      // Supabase: faint until hovered or focused.
+      faint: {
+        slots: {
+          closeButton: "opacity-20 hover:opacity-100 focus-visible:opacity-100",
         },
       },
     },

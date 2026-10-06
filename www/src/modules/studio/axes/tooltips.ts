@@ -1,6 +1,5 @@
-/* Tooltips — a surface decision of its own: shadcn, Radix and GitHub invert to
-   a near-black chip; MUI and Linear keep the tooltip on a bordered surface.
-   How it enters is Motion's, shared with the popover.
+/* Tooltips: the one anchored layer that breaks rank with the popover
+   material. Whether it points is Menus' Arrows row; how it enters, Motion's.
 
    Engine: `style` is an enum param on `tooltip`. */
 
@@ -14,8 +13,16 @@ export const TOOLTIP_DEFAULTS = {
 }
 
 export const TOOLTIP_STYLE_OPTIONS = [
-  { value: "inverted", label: "Inverted" },
-  { value: "surface", label: "Surface" },
+  {
+    value: "inverted",
+    label: "Inverted",
+    description: "shadcn, Geist, Duolingo",
+  },
+  {
+    value: "surface",
+    label: "Same as popovers",
+    description: "Linear, Polaris, Supabase",
+  },
 ]
 
 export const TOOLTIP_SCHEMA: ChapterSchema<typeof TOOLTIP_DEFAULTS> = {
