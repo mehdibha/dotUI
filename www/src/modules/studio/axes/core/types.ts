@@ -90,15 +90,16 @@ export interface Explained {
 
 /** One axis module: its keys' defaults and schema, the resolver over the
  *  effective state, and the follows and rules on its own keys. */
-export interface Chapter<D extends object = object> {
+export interface Chapter<D extends object = object, R = unknown> {
   id: string
   defaults: D
   schema: { [K in keyof D]: AxisSchema }
-  /** `(state: Effective) => Resolved`, typed in its module: the state type is
-   *  derived from every chapter, so naming it here would be circular. */
-  resolve: unknown
+  /** `(state: Effective) => Resolved`; index.ts checks the parameter (the
+   *  state type is derived from every chapter, so it can't be named here). */
+  resolve: R
   follows?: { readonly [K in keyof D]?: readonly Follow[] }
   rules?: readonly Rule<keyof D & string>[]
 }
 
-export const defineChapter = <D extends object>(chapter: Chapter<D>) => chapter
+export const defineChapter = <D extends object, R>(chapter: Chapter<D, R>) =>
+  chapter

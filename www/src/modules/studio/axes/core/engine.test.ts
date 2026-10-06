@@ -35,6 +35,16 @@ const enumValues = (key: string) => {
     : undefined
 }
 
+/** A key's domain, numbers at min, default and max. */
+function sample(key: string): unknown[] {
+  const kind = SCHEMA[key as keyof typeof SCHEMA]?.value
+  const fallback = DEFAULTS[key as keyof typeof DEFAULTS]
+  if (kind?.type === "enum") return kind.options.map((o) => o.value)
+  if (kind?.type === "number") return [kind.min, fallback, kind.max]
+  if (kind?.type === "boolean") return [false, true]
+  return [fallback]
+}
+
 describe("catalog", () => {
   it("every key has one owner and a default its schema accepts", () => {
     const keys = CHAPTERS.flatMap((chapter) => Object.keys(chapter.defaults))
@@ -106,20 +116,17 @@ describe("catalog", () => {
     for (const [target, rules] of byTarget) {
       if (rules.length < 2) continue
       const keys = [...new Set(rules.flatMap((rule) => condKeys(rule.when)))]
-      const domains = keys.map(
-        (key) => enumValues(key) ?? [DEFAULTS[key as keyof typeof DEFAULTS]],
-      )
       let states: Raw[] = [{}]
-      for (const [i, key] of keys.entries())
+      for (const key of keys)
         states = states.flatMap((s) =>
-          domains[i]!.map((v) => ({ ...s, [key]: v })),
+          sample(key).map((v) => ({ ...s, [key]: v })),
         )
       for (const values of states) {
         const active = rules.filter((rule) => holds(rule.when, values))
         expect(
-          new Set(active.map((r) => r.effect.kind)).size,
-          target,
-        ).toBeLessThanOrEqual(1)
+          active.map((r) => r.id),
+          `${target} at ${JSON.stringify(values)}`,
+        ).toHaveLength(Math.min(active.length, 1))
       }
     }
   })

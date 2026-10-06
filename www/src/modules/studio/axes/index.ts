@@ -259,14 +259,16 @@ export const effective = engine.effective as unknown as (
 
 export const DEFAULT_EFFECTIVE = effective(DEFAULT_STATE).values
 
-/** Why a key holds its effective value. */
-export function explainKey(state: StudioState, key: Key): Explained {
-  const { values, explain } = effective(state)
-  return explain[key] ?? { saved: state[key], effective: values[key] }
-}
-
-const RESOLVERS = CHAPTERS.map(
-  (chapter) => chapter.resolve as (state: Effective) => Resolved,
+/* A chapter whose resolver reads anything but the branded Effective (saved
+   state, a plain object) is not assignable here: a compile-time check. */
+type Checked<C> = C extends { resolve: (state: infer S) => Resolved }
+  ? [S, Effective] extends [Effective, S]
+    ? C
+    : never
+  : never
+const CHECKED: readonly Checked<(typeof CHAPTERS)[number]>[] = CHAPTERS
+const RESOLVERS = CHECKED.map(
+  (chapter): ((state: Effective) => Resolved) => chapter.resolve,
 )
 
 /** The engine's view of the state: every chapter's resolution merged. Later

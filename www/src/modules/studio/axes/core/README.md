@@ -13,7 +13,8 @@ saved ──effective()──▶ Effective ──resolveDesignSystem()──▶ 
 ## Add an axis
 
 1. Add the key to its module's `*_DEFAULTS` and `*_SCHEMA` (default = Origin's look).
-2. Read it in that module's `resolve(state: Effective)`; emit only what differs
+2. Read it in that module's `resolve(state: Effective)` (index.ts fails to
+   compile on a resolver typed over anything else); emit only what differs
    from the registry defaults (Origin stays token-free).
 
 The module's `chapter` is already in the list in `../index.ts`; DEFAULTS,
