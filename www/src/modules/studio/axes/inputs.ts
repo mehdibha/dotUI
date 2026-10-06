@@ -43,6 +43,7 @@ export const AUTO_STYLE: Record<string, string> = {
   hairline: "inset",
   "rim-light": "raised",
   gloss: "outline",
+  // Spec pairing, uncredited: Polaris (Bevel's source) measured Outline.
   bevel: "inset",
   ledge: "well",
 }

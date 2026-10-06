@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import inputMeta from "@/registry/ui/input/meta"
-import { FIELD_SHELLS } from "@/registry/ui/input/styles"
+import { FIELD_SHELLS, inputStyles } from "@/registry/ui/input/styles"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
@@ -37,6 +37,10 @@ const SIGNATURE: Record<string, string> = {
   indicator: "rounded-t-sm border-b",
   underline: "invalid:focus:border-fg-danger",
 }
+
+/** The class tokens of a shell slot. */
+const shellClasses = (value: unknown): string[] =>
+  [value].flat(Infinity).join(" ").split(/\s+/).filter(Boolean)
 
 /** Every class list in a shipped file, by slot line. */
 const classLists = (content: string) =>
@@ -142,6 +146,7 @@ describe("field shells", () => {
     )
     for (const [style, shell] of Object.entries(FIELD_SHELLS))
       expect(Object.keys(shell.slots).sort(), style).toEqual([
+        "divider",
         "input",
         "inputGroup",
         "inputGroupAddon",
@@ -159,6 +164,49 @@ describe("field shells", () => {
         )
       expect(content).not.toContain("--studio-")
       expect(content).not.toContain("shadow-control")
+    }
+  })
+
+  /* The inner control wears its shell too; inside a group it must shed every
+     fill and shadow, including the state and dark ones that out-specify a
+     plain descendant reset (Outline's dark tint stacked twice). */
+  it("a group strips every fill and shadow its inner control wears", () => {
+    const strip = String(inputStyles().inputGroup())
+    const stateFills = new Set<string>()
+    for (const shell of Object.values(FIELD_SHELLS))
+      for (const c of shellClasses(shell.slots.input))
+        if (
+          c.includes(":") &&
+          /(^|:)(bg-(?!size|position|no-repeat|\[linear)|shadow|focus-input)/.test(
+            c,
+          )
+        )
+          stateFills.add(c)
+    expect([...stateFills]).toContain("dark:bg-border-control/30")
+    for (const reset of [
+      "**:data-input-control:bg-transparent!",
+      "**:data-input-control:shadow-none!",
+      "**:data-input-control:ring-0!",
+    ])
+      expect(strip).toContain(reset)
+  })
+
+  it("only edged shells divide their parts", async () => {
+    for (const [style, shell] of Object.entries(FIELD_SHELLS))
+      expect(shell.slots.divider, style).toBe(
+        style === "filled" || style === "underline"
+          ? "border-transparent"
+          : "border-border-control",
+      )
+    for (const steppers of ["right-cells", "stacked-cells", "split"]) {
+      const content = await shipped("number-field", {
+        "number-field": { steppers },
+      })
+      // Dividers take the shell's color; right cells (Carbon) have none.
+      expect(content, steppers).not.toContain("border-border-control")
+      if (steppers === "right-cells")
+        expect(content).not.toMatch(/\bborder-[lrtb]\b/)
+      else expect(content, steppers).toContain("divider({")
     }
   })
 
@@ -200,12 +248,64 @@ describe("shell consumers", () => {
       expect(source).not.toContain("bg-field")
     })
 
-  for (const file of ["token-field/styles.ts", "questionnaire/styles.ts"])
-    it(`${file} holds no shell`, () => {
+  /* Every look class any shell ships. A consumer that re-copies one (an
+     Outline fork in token-field, say) defeats Inputs › Style, since its
+     className merges over the hook's slot. */
+  const SHELL_LOOK = new Set(
+    Object.values(FIELD_SHELLS)
+      .flatMap((shell) =>
+        ["input", "textArea", "inputGroup", "trigger"].flatMap((slot) =>
+          shellClasses(shell.slots[slot as keyof typeof shell.slots]),
+        ),
+      )
+      .filter((c) =>
+        /(^|:)(border|bg-|rounded|shadow|ring|px-|py-|focus-input)/.test(c),
+      ),
+  )
+  const looksIn = (classes: string) =>
+    classes.split(/\s+/).filter((c) => SHELL_LOOK.has(c))
+
+  for (const file of CONSUMERS)
+    it(`${file} copies no shell class`, () => {
       const source = readFileSync(path.join(UI, file), "utf8")
-      expect(source).not.toContain("bg-field")
-      expect(source).not.toContain("focus-input")
+      const strings = [...source.matchAll(/"([^"\n]*)"/g)].map((m) => m[1]!)
+      expect(strings.flatMap(looksIn)).toEqual([])
     })
+
+  for (const file of ["token-field/styles.ts", "questionnaire/styles.ts"])
+    it(`${file} adds no shell to the slot that wears one`, () => {
+      const source = readFileSync(path.join(UI, file), "utf8")
+      const slot = /\binput:\s*"([^"]*)"/.exec(source)?.[1]
+      expect(slot).toBeDefined()
+      expect(looksIn(slot!)).toEqual([])
+      expect(slot).not.toMatch(
+        /(^|\s)(bg-|rounded|shadow-|px-|py-|border(-[a-z]+)?(\s|$))/,
+      )
+    })
+
+  it("no consumer ships a shell of its own", async () => {
+    const consumers: [string, PublishPreset["componentParams"]][] = [
+      ["token-field", {}],
+      ["questionnaire", {}],
+      ["select", { select: { trigger: "field" } }],
+      ...["right-cells", "stacked-cells", "stacked-inset", "split"].map(
+        (steppers) =>
+          ["number-field", { "number-field": { steppers } }] as [
+            string,
+            PublishPreset["componentParams"],
+          ],
+      ),
+    ]
+    for (const style of Object.keys(SIGNATURE))
+      for (const [name, params] of consumers) {
+        const content = await shipped(name, { ...params, input: { style } })
+        for (const [other, signature] of Object.entries(SIGNATURE))
+          expect(
+            content.includes(signature),
+            `${name} @${style}: ${other}`,
+          ).toBe(false)
+      }
+  })
 
   it("a style reaches every consumer's shipped shell", async () => {
     const token = await shipped("token-field", { input: { style: "raised" } })
