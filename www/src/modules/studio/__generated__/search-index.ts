@@ -21,7 +21,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Surfaces › Dark page",
 		"Surfaces › Style",
 	],
-	typography: ["Heading", "Body", "Mono"],
+	typography: ["Heading", "Font", "Mono"],
 	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius"],
 	space: ["Density", "Spacing"],

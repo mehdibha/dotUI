@@ -26,8 +26,8 @@ import {
   DialSlider,
   DialToggle,
   DialTrigger,
+  ModifiedDot,
 } from "../dial"
-import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Studio, StudioState } from "../state"
 import { PrimaryRow } from "./primary"
@@ -101,7 +101,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
       />
       <DialTrigger
         label="Neutral"
-        chevron={false}
+        swatch
         value={
           <>
             <span className="truncate">{neutralFamily(neutral, brandHue)}</span>
@@ -159,14 +159,19 @@ export function ColorSection({ studio }: { studio: Studio }) {
     <>
       <DialTrigger
         label="Semantics"
+        swatch
         value={
           <>
-            <span className="flex items-center gap-1">
+            {semanticsCustom && <ModifiedDot />}
+            <span className="grid size-4 shrink-0 grid-cols-2 gap-0.5">
               {SEMANTIC_SEEDS.map(({ key, palette }) => (
-                <PaletteDot key={key} color={semantic(palette)} />
+                <span
+                  key={key}
+                  className="rounded-full"
+                  style={{ background: semantic(palette) }}
+                />
               ))}
             </span>
-            {semanticsCustom ? "Custom" : "Auto"}
           </>
         }
       >

@@ -43,6 +43,7 @@ import {
 } from "@/registry/ui/list-box"
 import { Popover } from "@/registry/ui/popover/base.popover"
 import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
 import {
   Slider,
   SliderControl,
@@ -553,17 +554,26 @@ export function NeutralPickerPopover({
 
 /** The searchable font list shared by every font trigger: search on top, the
  *  catalog grouped by category, each family previewed in its own lazily-loaded
- *  face. Must render inside a Select. */
+ *  face. `children` sit above it, past a separator. Must render inside a
+ *  Select. */
 export function FontListPopover({
   categories,
+  children,
 }: {
   categories: FontCategory[]
+  children?: React.ReactNode
 }) {
   const listRef = useLazyFontPreviews()
   // On touch, a focused field would raise the keyboard over the list.
   const finePointer = useMedia("(pointer: fine)")
   return (
     <PanelPopover className="w-(--trigger-width) outline-hidden">
+      {children && (
+        <>
+          <div className="p-3">{children}</div>
+          <Separator />
+        </>
+      )}
       {/* Docked, the list fills the sheet over the field, which sits on the
           keyboard. */}
       <Command className="max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col-reverse">
