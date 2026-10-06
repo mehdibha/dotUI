@@ -27,6 +27,8 @@ export const COLOR_DEFAULTS = {
    *  is Auto: Surfaces' Grouped takes it down to gray. */
   lightBg: "auto" as number | "auto",
   darkBg: 2,
+  controlEdge: "firm",
+  selectedWash: "neutral",
 }
 
 /* What a role draws from: the neutral's text end (the shadcn school,
@@ -35,6 +37,53 @@ export const SOURCE_OPTIONS = [
   { value: "neutral", label: "Neutral" },
   { value: "accent", label: "Accent" },
 ]
+
+/* How far a control's edge (fields, unchecked checks, outline buttons) sits
+   from the surface hairline. */
+export const CONTROL_EDGE_OPTIONS = [
+  {
+    value: "soft",
+    label: "Soft",
+    description: "The hairline — shadcn, Primer, Geist",
+  },
+  {
+    value: "firm",
+    label: "Firm",
+    description: "A step firmer — Radix Themes, Linear",
+  },
+  {
+    value: "strong",
+    label: "Strong",
+    description: "A dark gray — Polaris, Atlassian, Material 3",
+  },
+]
+
+const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
+  soft: ["var(--color-border)", "var(--neutral-400)"],
+  strong: ["var(--neutral-700)", "var(--neutral-800)"],
+}
+
+/* The wash on a persistent selected item: table and tree rows, tags,
+   token-field tokens, toggles. */
+export const SELECTED_WASH_OPTIONS = [
+  {
+    value: "neutral",
+    label: "Neutral",
+    description: "shadcn, Primer, Polaris, Carbon",
+  },
+  {
+    value: "brand",
+    label: "Brand",
+    description: "Material 3, Atlassian, Ant, Linear",
+  },
+]
+
+const BRAND_WASH = {
+  "--color-selected": "var(--accent-100)",
+  "--color-selected-hover": "var(--accent-200)",
+  "--color-selected-active": "var(--accent-300)",
+  "--color-fg-on-selected": "var(--color-fg-accent)",
+}
 
 export const VIVIDNESS_RANGE = { min: 0, max: 2, step: 0.05 }
 export const NEUTRAL_HUE_RANGE = { min: 0, max: 360, step: 1 }
@@ -64,6 +113,8 @@ export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   preserveSeed: BOOLEAN,
   lightBg: range(LIGHT_BG_RANGE),
   darkBg: range(DARK_BG_RANGE),
+  controlEdge: oneOf(CONTROL_EDGE_OPTIONS),
+  selectedWash: oneOf(SELECTED_WASH_OPTIONS),
 }
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view
@@ -156,7 +207,14 @@ export function buildColorConfig(state: Effective): ColorConfig {
 }
 
 export function resolveColor(state: Effective): Resolved {
-  return { color: buildColorConfig(state) }
+  const tokens: Record<string, string> = {}
+  const edge = CONTROL_EDGE_TOKENS[state.controlEdge]
+  if (edge) {
+    tokens["--color-border-control"] = edge[0]
+    tokens["--color-border-control-hover"] = edge[1]
+  }
+  if (state.selectedWash === "brand") Object.assign(tokens, BRAND_WASH)
+  return { tokens, color: buildColorConfig(state) }
 }
 
 export const chapter = defineChapter({

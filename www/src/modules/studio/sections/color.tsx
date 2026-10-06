@@ -10,6 +10,7 @@ import { useMemo } from "react"
 import { useTheme } from "starter-themes"
 
 import { STEPS, toOklch } from "@dotui/colors"
+import type { Mode, StepName } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
@@ -17,16 +18,20 @@ import type { ColorConfig } from "@/registry/theme"
 import {
   buildColorConfig,
   COLOR_DEFAULTS,
+  CONTROL_EDGE_OPTIONS,
+  SELECTED_WASH_OPTIONS,
   VIVIDNESS_RANGE,
 } from "../axes/color"
 import {
   DialColor,
   DialGap,
   DialPopover,
+  DialSelect,
   DialSlider,
   DialToggle,
   DialTrigger,
 } from "../dial"
+import { More } from "../family-page"
 import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Effective, Studio } from "../state"
@@ -51,10 +56,8 @@ function usePanelMode(state: Effective) {
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
   const { resolvedTheme } = useTheme()
-  return {
-    theme,
-    m: theme[resolvedTheme === "dark" ? "dark" : "light"],
-  }
+  const mode: Mode = resolvedTheme === "dark" ? "dark" : "light"
+  return { theme, mode, m: theme[mode] }
 }
 
 /* --------------------------------- Section --------------------------------- */
@@ -141,12 +144,26 @@ export function ColorPreview({ state }: { state: Effective }) {
   )
 }
 
-/** Semantics and primary. */
+/* The rungs each edge mixes, per mode (the hairline steps down in dark). */
+const EDGE_STEPS: Record<string, Record<Mode, [StepName, StepName]>> = {
+  soft: { light: ["200", "300"], dark: ["100", "200"] },
+  firm: { light: ["400", "400"], dark: ["400", "400"] },
+  strong: { light: ["700", "700"], dark: ["700", "700"] },
+}
+
+const WASH: Record<string, [string, StepName]> = {
+  neutral: ["neutral", "300"],
+  brand: ["accent", "100"],
+}
+
+/** Semantics, primary, the control edge and the selected wash. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const { m } = usePanelMode(studio.effective)
+  const { m, mode } = usePanelMode(studio.effective)
+  const step = (palette: string, name: StepName) =>
+    m.scales[palette]?.[name] ?? m.background
 
-  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
+  const solid = (palette: string) => step(palette, "700")
   const semantic = (palette: string) =>
     palette === "selection"
       ? (m.scales.selection?.["700"] ??
@@ -185,6 +202,43 @@ export function ColorSection({ studio }: { studio: Studio }) {
       </DialTrigger>
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
+      <DialSelect
+        axis="controlEdge"
+        label="Control edge"
+        options={CONTROL_EDGE_OPTIONS.map((option) => {
+          const [a, b] = EDGE_STEPS[option.value]?.[mode] ?? ["400", "400"]
+          return {
+            ...option,
+            preview: (
+              <span
+                className="h-3.5 w-6 shrink-0 rounded-[4px] border"
+                style={{
+                  backgroundColor: m.background,
+                  borderColor: `color-mix(in oklab, ${step("neutral", a)} 50%, ${step("neutral", b)})`,
+                }}
+              />
+            ),
+          }
+        })}
+      />
+      <More keys={["selectedWash"]}>
+        <DialSelect
+          axis="selectedWash"
+          label="Selected"
+          options={SELECTED_WASH_OPTIONS.map((option) => {
+            const [palette, name] = WASH[option.value] ?? ["neutral", "300"]
+            return {
+              ...option,
+              preview: (
+                <span
+                  className="h-3.5 w-6 shrink-0 rounded-[4px]"
+                  style={{ backgroundColor: step(palette, name) }}
+                />
+              ),
+            }
+          })}
+        />
+      </More>
     </>
   )
 }

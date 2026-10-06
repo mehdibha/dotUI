@@ -67,22 +67,22 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
     style: {
       solid: {
         slots: {
-          tag: "bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-accent-muted selected:text-fg-accent",
+          tag: "bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-selected selected:text-fg-on-selected",
         },
       },
       soft: {
         slots: {
-          tag: "bg-muted/50 text-fg disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-accent-muted selected:text-fg-accent",
+          tag: "bg-muted/50 text-fg disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
         },
       },
       outline: {
         slots: {
-          tag: "border border-border text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:text-fg-accent",
+          tag: "border border-border text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
         },
       },
       "soft-outline": {
         slots: {
-          tag: "border border-border bg-muted/50 text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:border-border-accent selected:bg-accent-muted selected:text-fg-accent",
+          tag: "border border-border bg-muted/50 text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
         },
       },
     },
