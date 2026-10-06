@@ -87,6 +87,7 @@ The cartesian families also export their marks on their own — `barSeries`, `li
 - **Tooltip** — your popover surface, titled by the category and one row per series. Values read the way the axes print them, so an axis `format` is the tooltip's too.
 - **Focus** — `group-x`: hovering a position reports every series there. Arrow keys move between positions.
 - **Motion** — marks spring between data states, bars and slices enter in sequence, and reduced motion is respected.
+- **Size** — without a `height`, 16:9 of its width; square for charts without x and y scales, like pies, radars, and radial bars.
 
 `withChartDefaults(definition)` applies the same defaults outside `Chart` — for an SVG export, or another framework's host.
 
@@ -96,7 +97,7 @@ The `chart` item also exports the pieces the builders are made of, for charts yo
 
 - `chartScales({ x, y, axes, grid })` — the x and y scales. Kinds are `"point"`, `"band"`, `"linear"`, and `"time"`; pass an object to add a `format`, a `label`, or any TanStack Charts scale option.
 - `chartSeries(data, { x, y, series, labels, order })` — reads wide or long rows into one row per value: `{ x, y, series, key, datum }`.
-- `chartLegend()` — the color legend, below the plot.
+- `chartLegend({ toggle })` — the color legend, below the plot. With `toggle`, readers click a series to hide or show it and hover one to dim the rest; `Chart` keeps which series are hidden. Add `legendEmphasis` to a mark's `states` for the dimming.
 - `chartColors`, `chartColor(index)`, `chartCurves` — the palette and the named curves.
 - `chartTooltipContent` — the default tooltip rows, to call from your own `content`.
 - `polarDecorative(mark)` — paints a polar mark without making it a focus stop.

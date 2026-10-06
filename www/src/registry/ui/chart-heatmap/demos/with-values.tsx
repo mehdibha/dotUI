@@ -31,7 +31,7 @@ const chart = defineChart(
     y: "region",
     value: "share",
     label: "Adoption",
-    values: true,
+    dataLabels: true,
     formatValue: (value) => percent.format(Number(value)),
   }),
 )

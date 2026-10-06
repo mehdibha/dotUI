@@ -106,26 +106,20 @@ export interface PieRingOptions {
    */
   activeOffset?: number
 
-  /** Text drawn on each slice: its name or its value. */
-  sliceLabel?: "name" | "value"
-
   /**
-   * Where slice labels sit, as a share of the radius. Defaults to the middle
-   * of the ring.
+   * Text on each slice. `true` prints the values; the object form picks the
+   * text (`"value"` or `"name"`), its `fill` and `fontSize` (12), and the
+   * `radius` it sits at, as a share of the chart radius (the ring's middle).
+   * @default false
    */
-  sliceLabelRadius?: number
-
-  /**
-   * Slice label color.
-   * @default "var(--color-fg)"
-   */
-  sliceLabelFill?: string
-
-  /**
-   * Slice label size, in pixels.
-   * @default 12
-   */
-  sliceLabelFontSize?: number
+  dataLabels?:
+    | boolean
+    | {
+        text?: "value" | "name"
+        fill?: string
+        fontSize?: number
+        radius?: number
+      }
 
   /** Formats slice values in labels and the tooltip. */
   formatValue?: (value: ChartValue) => string

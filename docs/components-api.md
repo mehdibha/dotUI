@@ -16739,7 +16739,7 @@ import { QRCode } from "@/components/ui/qr-code"
 
 # Charts
 
-Charts are TanStack Charts definitions rendered by `Chart`, which fills in the design system's theme, axis look, tooltip, focus, and motion wherever the definition is silent. Each family ships a builder — `barChart`, `lineChart`, `areaChart`, `pieChart`, `radarChart`, `radialChart`, `heatmapChart` — that returns a plain spec for `defineChart`: rows plus the fields to read (`x`, `y` as one field or several for wide rows, `series` for long rows), `labels` for display names, `order` for color order, `axes`, `grid`, `legend`, `formatX` / `formatY`. Spread the result to extend it with raw `@tanstack/charts` marks; `barSeries`, `lineSeries`, and `areaSeries` return marks to compose several kinds in one chart. Keep definitions at module scope or in `useMemo` — they're compared by identity. `ariaLabel` is required. Series take `--chart-1..8` in order.
+Charts are TanStack Charts definitions rendered by `Chart`, which fills in the design system's theme, axis look, tooltip, focus, and motion wherever the definition is silent. Each family ships a builder — `barChart`, `lineChart`, `areaChart`, `pieChart`, `radarChart`, `radialChart`, `heatmapChart` — that returns a plain spec for `defineChart`: rows plus the fields to read (`x`, `y` as one field or several for wide rows, `series` for long rows), `labels` for display names, `order` for color order, `axes`, `grid`, `legend` (`"toggle"` to hide series), `formatX` / `formatY`, `dataLabels` on pies, radial bars, and heatmaps. Spread the result to extend it with raw `@tanstack/charts` marks; `barSeries`, `lineSeries`, and `areaSeries` return marks to compose several kinds in one chart. Keep definitions at module scope or in `useMemo` — they're compared by identity. `ariaLabel` is required. Series take `--chart-1..8` in order.
 
 ## Chart
 
@@ -17445,6 +17445,45 @@ export function ChartLineMultiple() {
     <Chart
       definition={chart}
       ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
+```
+
+## Line chart toggle legend
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80, tablet: 45 },
+  { month: "Feb", desktop: 305, mobile: 200, tablet: 100 },
+  { month: "Mar", desktop: 237, mobile: 120, tablet: 150 },
+  { month: "Apr", desktop: 73, mobile: 190, tablet: 50 },
+  { month: "May", desktop: 209, mobile: 130, tablet: 100 },
+  { month: "Jun", desktop: 214, mobile: 140, tablet: 160 },
+]
+
+/* Click a series to hide it; hover one to dim the rest. */
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: ["desktop", "mobile", "tablet"],
+    labels: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" },
+    legend: "toggle",
+  }),
+)
+
+export function ChartLineLegend() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop, mobile and tablet visitors, January through June"
     />
   )
 }
@@ -18568,8 +18607,7 @@ const chart = defineChart(
     value: "visitors",
     name: "browser",
     labels,
-    sliceLabel: "value",
-    sliceLabelRadius: 0.72,
+    dataLabels: { radius: 0.72 },
   }),
 )
 
@@ -18614,10 +18652,7 @@ const chart = defineChart(
     value: "visitors",
     name: "browser",
     labels,
-    sliceLabel: "value",
-    sliceLabelRadius: 0.6,
-    sliceLabelFill: "var(--color-bg)",
-    sliceLabelFontSize: 15,
+    dataLabels: { radius: 0.6, fill: "var(--color-bg)", fontSize: 15 },
   }),
 )
 
@@ -18662,9 +18697,7 @@ const chart = defineChart(
     value: "visitors",
     name: "browser",
     labels,
-    sliceLabel: "name",
-    sliceLabelRadius: 0.68,
-    sliceLabelFontSize: 11,
+    dataLabels: { text: "name", radius: 0.68, fontSize: 11 },
   }),
 )
 
@@ -19231,6 +19264,85 @@ export function ChartRadarGridCircle() {
 }
 ```
 
+## Radar chart circular grid, no spokes
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+    spokes: false,
+  }),
+)
+
+export function ChartRadarGridCircleNoLines() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
+```
+
+## Radar chart circular grid, filled
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+    gridFill: 0.2,
+    fill: 0.5,
+  }),
+)
+
+export function ChartRadarGridCircleFill() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
+```
+
 ## Radar chart filled grid
 
 ```tsx
@@ -19387,85 +19499,6 @@ export function ChartRadarRadius() {
 }
 ```
 
-## Radar chart circular grid, filled
-
-```tsx
-import { defineChart } from "@tanstack/charts"
-
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
-```
-
-```tsx
-const data = [
-  { month: "Jan", desktop: 186 },
-  { month: "Feb", desktop: 305 },
-  { month: "Mar", desktop: 237 },
-  { month: "Apr", desktop: 273 },
-  { month: "May", desktop: 209 },
-  { month: "Jun", desktop: 214 },
-]
-
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    gridFill: 0.2,
-    fill: 0.5,
-  }),
-)
-
-export function ChartRadarGridCircleFill() {
-  return (
-    <Chart
-      definition={chart}
-      ariaLabel="Desktop visitors, January through June"
-    />
-  )
-}
-```
-
-## Radar chart circular grid, no spokes
-
-```tsx
-import { defineChart } from "@tanstack/charts"
-
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
-```
-
-```tsx
-const data = [
-  { month: "Jan", desktop: 186 },
-  { month: "Feb", desktop: 305 },
-  { month: "Mar", desktop: 237 },
-  { month: "Apr", desktop: 273 },
-  { month: "May", desktop: 209 },
-  { month: "Jun", desktop: 214 },
-]
-
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    spokes: false,
-  }),
-)
-
-export function ChartRadarGridCircleNoLines() {
-  return (
-    <Chart
-      definition={chart}
-      ariaLabel="Desktop visitors, January through June"
-    />
-  )
-}
-```
-
 ## Radial chart default
 
 ```tsx
@@ -19584,7 +19617,7 @@ const chart = defineChart(
     innerRadius: 0.25,
     radiusRatio: 0.95,
     track: true,
-    barLabels: true,
+    dataLabels: true,
   }),
 )
 
@@ -19939,7 +19972,7 @@ const chart = defineChart(
     y: "region",
     value: "share",
     label: "Adoption",
-    values: true,
+    dataLabels: true,
     formatValue: (value) => percent.format(Number(value)),
   }),
 )

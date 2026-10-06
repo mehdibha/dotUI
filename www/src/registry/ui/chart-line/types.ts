@@ -19,10 +19,11 @@ export interface LineChartOptions extends LineSeriesOptions {
   grid?: boolean
 
   /**
-   * A color legend below the plot.
+   * A color legend below the plot. `"toggle"` lets readers click a series to
+   * hide it and hover one to dim the rest.
    * @default false
    */
-  legend?: boolean
+  legend?: boolean | "toggle"
 
   /** Formats x ticks and tooltip titles. */
   formatX?: (value: ChartValue) => string

@@ -473,6 +473,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-line/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label")),
 	},
+	"chart-line/demos/legend": {
+		files: ["ui/chart-line/demos/legend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/legend")),
+	},
 	"chart-line/demos/linear": {
 		files: ["ui/chart-line/demos/linear.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/linear")),

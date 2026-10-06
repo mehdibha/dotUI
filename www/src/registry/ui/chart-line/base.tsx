@@ -15,6 +15,7 @@ import {
   chartLegend,
   chartScales,
   chartSeries,
+  legendEmphasis,
 } from "@/registry/ui/chart"
 
 export interface LineSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
@@ -42,7 +43,7 @@ function lineMark<TDatum>(
     strokeWidth: options.strokeWidth ?? 2,
     strokeDasharray: options.strokeDasharray,
     points: options.points ?? false,
-    states: options.states,
+    states: [...legendEmphasis, ...(options.states ?? [])],
   })
 }
 
@@ -59,8 +60,8 @@ export interface LineChartOptions<TDatum> extends LineSeriesOptions<TDatum> {
   axes?: boolean | "x" | "y"
   /** Horizontal gridlines. @default true */
   grid?: boolean
-  /** A color legend below the plot. */
-  legend?: boolean
+  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  legend?: boolean | "toggle"
   /** Formats x ticks and tooltip titles. */
   formatX?: ChartFormat
   /** Formats y ticks and tooltip values. */
@@ -85,7 +86,9 @@ export function lineChart<TDatum>(
     }),
     color: {
       domain: series.names,
-      legend: options.legend ? chartLegend() : undefined,
+      legend: options.legend
+        ? chartLegend({ toggle: options.legend === "toggle" })
+        : undefined,
     },
     marks: [lineMark(series, options)],
   }

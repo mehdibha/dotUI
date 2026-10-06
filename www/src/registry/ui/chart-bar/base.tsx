@@ -11,7 +11,12 @@ import type {
   ChartSeriesOptions,
   ChartSeriesRow,
 } from "@/registry/ui/chart"
-import { chartLegend, chartScales, chartSeries } from "@/registry/ui/chart"
+import {
+  chartLegend,
+  chartScales,
+  chartSeries,
+  legendEmphasis,
+} from "@/registry/ui/chart"
 
 export interface BarSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
   /** Categories down the y axis, values along x. */
@@ -45,7 +50,7 @@ function barMark<TDatum>(
     key: "key",
     inset: options.inset,
     fillOpacity: options.fill,
-    states: options.states,
+    states: [...legendEmphasis, ...(options.states ?? [])],
     radius: options.stacked ? { end: radius } : radius,
     layout: options.stacked
       ? stack({
@@ -74,8 +79,8 @@ export interface BarChartOptions<TDatum> extends BarSeriesOptions<TDatum> {
   axes?: boolean | "x" | "y"
   /** Gridlines along the value axis. @default true */
   grid?: boolean
-  /** A color legend below the plot. */
-  legend?: boolean
+  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  legend?: boolean | "toggle"
   /** Formats x ticks and the matching tooltip values. */
   formatX?: ChartFormat
   /** Formats y ticks and the matching tooltip values. */
@@ -100,7 +105,9 @@ export function barChart<TDatum>(
     }),
     color: {
       domain: series.names,
-      legend: options.legend ? chartLegend() : undefined,
+      legend: options.legend
+        ? chartLegend({ toggle: options.legend === "toggle" })
+        : undefined,
     },
     marks: [barMark(series, options)],
     // Points sharing a band share its scene coordinate on the category axis.

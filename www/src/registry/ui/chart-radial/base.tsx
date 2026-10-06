@@ -17,7 +17,11 @@ import { scaleBand } from "@tanstack/charts/scales/band"
 import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { tooltip } from "@tanstack/charts/tooltip"
 
-import type { ChartField, ChartFormat } from "@/registry/ui/chart"
+import type {
+  ChartDataLabels,
+  ChartField,
+  ChartFormat,
+} from "@/registry/ui/chart"
 import { chartLegend, polarDecorative } from "@/registry/ui/chart"
 
 const TAU = Math.PI * 2
@@ -56,11 +60,8 @@ export interface RadialChartOptions<TDatum> {
   trackFill?: string
   /** The value that fills the whole sweep. @default the largest value */
   max?: number
-  /** Each ring's name at the start of its arc. */
-  barLabels?: boolean
-  barLabelFill?: string
-  /** @default 11 */
-  barLabelFontSize?: number
+  /** Text at the start of each ring: its name, or its value with `{ text: "value" }`. */
+  dataLabels?: boolean | ChartDataLabels
   /** Concentric rings behind the bars. */
   grid?: boolean
   /** @default 4 */
@@ -174,7 +175,9 @@ export function radialChart<TDatum>(
         cornerRadius,
       }),
     )
-    if (options.barLabels) {
+    const labels = options.dataLabels === true ? {} : options.dataLabels
+    if (labels) {
+      const format = options.formatValue ?? ((value) => value.toLocaleString())
       // Band centers as radius ratios, for the linear `label` scale below.
       const step = (outer - inner) / Math.max(1, names.length - padding)
       const bandwidth = step * (1 - padding)
@@ -185,11 +188,14 @@ export function radialChart<TDatum>(
             angle: 0,
             radius: (_row, { index }) => inner + index * step + bandwidth / 2,
             radiusScale: "label",
-            text: nameOf,
+            text: (row) =>
+              labels.text === "value"
+                ? format(finite(row[field]))
+                : nameOf(row),
             anchor: "start",
             dx: 8,
-            fill: options.barLabelFill ?? "var(--color-fg)",
-            fontSize: options.barLabelFontSize ?? 11,
+            fill: labels.fill ?? "var(--color-fg)",
+            fontSize: labels.fontSize ?? 11,
           }),
         ),
       )
@@ -225,7 +231,7 @@ export function radialChart<TDatum>(
           angle: { scale: scaleLinear().domain([0, max]) },
           radius: { scale: radiusScale, range },
           ...(options.grid && { grid: unit }),
-          ...(options.barLabels && { label: unit }),
+          ...(options.dataLabels && { label: unit }),
         },
         startAngle: options.startAngle ?? 0,
         endAngle: options.endAngle ?? TAU,

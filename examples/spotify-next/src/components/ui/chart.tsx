@@ -1,13 +1,16 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type {
   ChannelField,
   ChartAxisOptions,
+  ChartColorLegend,
+  ChartHostControlExtension,
   ChartKey,
   ChartMotionDefinition,
   ChartPoint,
+  ChartScene,
   ChartTheme,
   ChartTooltipContent,
   ChartTooltipContentContext,
@@ -19,7 +22,12 @@ import type {
 } from "@tanstack/charts";
 import { isResponsiveChartDefinition } from "@tanstack/charts";
 import { d3Curve } from "@tanstack/charts/d3/shape";
-import { colorLegend, colorLegendItems } from "@tanstack/charts/legend";
+import { controlledSignal } from "@tanstack/charts/interaction/signal";
+import {
+  colorLegend,
+  colorLegendItems,
+  interactiveColorLegend,
+} from "@tanstack/charts/legend";
 import { decorative } from "@tanstack/charts/mark/decorative";
 import { motion, stagger } from "@tanstack/charts/motion";
 import type { PolarMark } from "@tanstack/charts/polar";
@@ -72,6 +80,14 @@ export const chartCurves = {
 } as const satisfies Record<ChartCurveName, unknown>;
 
 export type ChartFormat = (value: ChartValue) => string;
+
+/** Text drawn on each slice, ring or cell. */
+export interface ChartDataLabels {
+  /** What each label prints. */
+  text?: "value" | "name";
+  fill?: string;
+  fontSize?: number;
+}
 
 /* ------------------------------------------------------------------ */
 /* Series                                                              */
@@ -269,8 +285,26 @@ export function chartScales({
   };
 }
 
-export function chartLegend() {
-  return colorLegend({
+/* ------------------------------------------------------------------ */
+/* Legend                                                              */
+/* ------------------------------------------------------------------ */
+
+const TOGGLE = Symbol("chart-legend-toggle");
+
+export interface ChartLegendOptions {
+  /**
+   * Readers click a series to hide or show it, and hovering one dims the
+   * rest. `Chart` keeps which series are hidden; the chart needs a
+   * `color.domain`.
+   */
+  toggle?: boolean;
+}
+
+/** The color legend, below the plot. */
+export function chartLegend({
+  toggle = false,
+}: ChartLegendOptions = {}): ChartColorLegend {
+  const legend = colorLegend({
     placement: "bottom",
     items: colorLegendItems({
       justify: "center",
@@ -278,6 +312,204 @@ export function chartLegend() {
       indicator: { shape: "square", width: 8, height: 8, gap: 6 },
     }),
   });
+  return toggle ? Object.assign(legend, { [TOGGLE]: true }) : legend;
+}
+
+/* Dims every series but the one under the legend pointer. Builders add it to
+   their marks; it only matches legend hover. */
+export const legendEmphasis = [
+  { when: { focus: "unmatched", source: "legend" }, style: { opacity: 0.25 } },
+] as const;
+
+export interface ChartHiddenSeries {
+  hidden: readonly ChartKey[];
+  onHiddenChange: (hidden: readonly ChartKey[]) => void;
+}
+
+interface LegendItem {
+  key: string;
+  value: ChartKey;
+  label: string;
+  color: string;
+  visible: boolean;
+  ariaLabel: string;
+}
+
+/* The library's interactive legend control, read by the renderer below. A
+   test pins this shape. */
+interface LegendControl {
+  bounds: { x: number; y: number; width: number; height: number };
+  ariaLabel: string;
+  emptyLabel: string;
+  hover: boolean;
+  items: readonly LegendItem[];
+  toggle: (value: ChartKey) => void;
+}
+
+const LEGEND_ITEM_HEIGHT = 24;
+const LEGEND_GAP = 4;
+// Room per item before the row wraps; labels are short series names.
+const LEGEND_ITEM_WIDTH = 104;
+
+const LEGEND_ITEM_CLASS = [
+  "inline-flex h-6 cursor-interactive items-center gap-1.5 rounded-sm px-2 text-xs text-fg select-ui",
+  "transition-[background-color,opacity] hover:bg-inverse/10 focus-reset focus-visible:focus-ring",
+  "aria-[pressed=false]:text-fg-muted aria-[pressed=false]:opacity-60",
+].join(" ");
+
+/* The library's legend logic — visibility, filtering, hover emphasis — drawn
+   as design-system buttons instead of its inline-styled pills. */
+const legendControl: ChartHostControlExtension = {
+  id: "dotui-chart-legend",
+  create: ({ container, setStateFocus }) => {
+    const document = container.ownerDocument;
+    const root = document.createElement("div");
+    root.setAttribute("role", "group");
+    root.className =
+      "absolute flex flex-wrap content-center items-center justify-center gap-1";
+    const status = document.createElement("span");
+    status.setAttribute("role", "status");
+    status.className = "sr-only";
+    root.append(status);
+    const buttons = new Map<string, HTMLButtonElement>();
+    let hovered: ChartKey | null = null;
+    let focused: ChartKey | null = null;
+    let painted: ChartKey | null = null;
+    let scene: ChartScene | undefined;
+
+    const paint = (force = false) => {
+      const value = hovered ?? focused;
+      if (!force && Object.is(value, painted)) return;
+      const group =
+        value === null
+          ? []
+          : (scene?.points.filter((point) => Object.is(point.group, value)) ??
+            []);
+      setStateFocus(
+        group[0] === undefined
+          ? null
+          : { primary: group[0], group, source: "legend", pinned: false },
+      );
+      painted = value;
+    };
+
+    const button = (key: string) => {
+      const element = document.createElement("button");
+      element.type = "button";
+      element.className = LEGEND_ITEM_CLASS;
+      const swatch = document.createElement("span");
+      swatch.className = "size-2 shrink-0 rounded-[2px] border-[1.5px]";
+      element.append(swatch, document.createElement("span"));
+      buttons.set(key, element);
+      return element;
+    };
+
+    return {
+      update(next, nextScene) {
+        const control = next as unknown as LegendControl;
+        if (root.parentElement !== container) container.append(root);
+        root.setAttribute("aria-label", control.ariaLabel);
+        root.style.left = `${control.bounds.x}px`;
+        root.style.top = `${control.bounds.y}px`;
+        root.style.width = `${control.bounds.width}px`;
+        root.style.height = `${control.bounds.height}px`;
+
+        const keys = new Set(control.items.map((item) => item.key));
+        for (const [key, element] of buttons) {
+          if (keys.has(key)) continue;
+          element.remove();
+          buttons.delete(key);
+        }
+        for (const item of control.items) {
+          const element = buttons.get(item.key) ?? button(item.key);
+          root.insertBefore(element, status);
+          const [swatch, label] = element.children as unknown as [
+            HTMLElement,
+            HTMLElement,
+          ];
+          element.setAttribute("aria-pressed", String(item.visible));
+          element.setAttribute("aria-label", item.ariaLabel);
+          element.onclick = () => control.toggle(item.value);
+          swatch.style.borderColor = item.color;
+          swatch.style.background = item.visible ? item.color : "transparent";
+          label.textContent = item.label;
+          const emphasize = control.hover && item.visible;
+          element.onpointerenter = emphasize
+            ? () => {
+                hovered = item.value;
+                paint();
+              }
+            : null;
+          element.onpointerleave = emphasize
+            ? () => {
+                hovered = null;
+                paint();
+              }
+            : null;
+          element.onfocus = emphasize
+            ? () => {
+                focused = item.value;
+                paint();
+              }
+            : null;
+          element.onblur = emphasize
+            ? () => {
+                focused = null;
+                paint();
+              }
+            : null;
+        }
+        status.textContent = control.items.some((item) => item.visible)
+          ? ""
+          : control.emptyLabel;
+
+        const shown = (value: ChartKey | null) =>
+          control.items.some((item) => item.visible && item.value === value);
+        if (!shown(hovered)) hovered = null;
+        if (!shown(focused)) focused = null;
+        const changed = scene !== nextScene;
+        scene = nextScene;
+        paint(painted !== null && changed);
+      },
+      contains: (target) => target instanceof Node && root.contains(target),
+      destroy() {
+        hovered = null;
+        focused = null;
+        paint();
+        root.remove();
+        buttons.clear();
+      },
+    };
+  },
+};
+
+function toggleLegend(
+  legend: ChartColorLegend,
+  domain: readonly ChartKey[],
+  { hidden, onHiddenChange }: ChartHiddenSeries,
+): ChartColorLegend {
+  const { control, ...interactive } = interactiveColorLegend<ChartKey>({
+    hover: "series",
+    placement: "bottom",
+    visible: controlledSignal<readonly ChartKey[]>(
+      domain.filter((value) => !hidden.includes(value)),
+      (visible) =>
+        onHiddenChange(domain.filter((value) => !visible.includes(value))),
+    ),
+  });
+  return {
+    ...interactive,
+    height: (count, { chart }) => {
+      const perRow = Math.max(1, Math.floor(chart.width / LEGEND_ITEM_WIDTH));
+      const rows = Math.ceil(count / perRow);
+      return rows * LEGEND_ITEM_HEIGHT + (rows - 1) * LEGEND_GAP + 8;
+    },
+    // Painted until the buttons mount: on the server, and in exports.
+    render: legend.render,
+    control:
+      control &&
+      ((context) => ({ ...control(context), extension: legendControl })),
+  };
 }
 
 /* ------------------------------------------------------------------ */
@@ -311,6 +543,7 @@ interface AxisFormats {
 
 type SpecLike = {
   scales?: Record<string, unknown>;
+  color?: { domain?: readonly ChartKey[]; legend?: ChartColorLegend };
   theme?: Partial<ChartTheme>;
 };
 
@@ -352,6 +585,7 @@ function tickFormat(entry: unknown): ChartFormat | undefined {
 function houseSpec<TSpec extends SpecLike>(
   spec: TSpec,
   formats: AxisFormats,
+  series?: ChartHiddenSeries,
 ): TSpec {
   const scales = Object.fromEntries(
     Object.entries(spec.scales ?? {}).map(([id, entry]) => [
@@ -361,7 +595,17 @@ function houseSpec<TSpec extends SpecLike>(
   );
   formats.x = tickFormat(scales.x);
   formats.y = tickFormat(scales.y);
-  return { ...spec, scales, theme: { ...chartTheme, ...spec.theme } };
+  const { color } = spec;
+  const legend = color?.legend;
+  const toggles = series && legend && TOGGLE in legend && color.domain;
+  return {
+    ...spec,
+    scales,
+    ...(toggles && {
+      color: { ...color, legend: toggleLegend(legend, toggles, series) },
+    }),
+    theme: { ...chartTheme, ...spec.theme },
+  };
 }
 
 function sameValue(left: ChartValue, right: ChartValue) {
@@ -470,7 +714,8 @@ function houseTooltip(
 /**
  * Fills in what a definition leaves unset — the theme, the axis look, focus,
  * keyboard, the tooltip and motion — and keeps everything it sets. Pure, so
- * any host can apply it; `<Chart>` does.
+ * any host can apply it; `<Chart>` does. With `series`, a toggle legend
+ * hides and shows series through it.
  */
 export function withChartDefaults<
   TDatum,
@@ -478,6 +723,7 @@ export function withChartDefaults<
   TYValue extends ChartValue,
 >(
   definition: DomChartDefinition<TDatum, TXValue, TYValue>,
+  series?: ChartHiddenSeries,
 ): DomChartDefinition<TDatum, TXValue, TYValue> {
   const formats: AxisFormats = {};
   const behavior = {
@@ -494,11 +740,11 @@ export function withChartDefaults<
     return {
       ...definition,
       ...behavior,
-      chart: (context) => houseSpec(build(context), formats),
+      chart: (context) => houseSpec(build(context), formats, series),
     } as DomChartDefinition<TDatum, TXValue, TYValue>;
   }
   return {
-    ...houseSpec(definition, formats),
+    ...houseSpec(definition, formats, series),
     ...behavior,
   } as DomChartDefinition<TDatum, TXValue, TYValue>;
 }
@@ -568,12 +814,23 @@ export function Chart<
   className,
   ...props
 }: ChartProps<TDatum, TXValue, TYValue>) {
-  const themed = useMemo(() => withChartDefaults(definition), [definition]);
+  const [hidden, setHidden] = useState<readonly ChartKey[]>([]);
+  const themed = useMemo(
+    () => withChartDefaults(definition, { hidden, onHiddenChange: setHidden }),
+    [definition, hidden],
+  );
+  // Without x and y scales — a pie, a radar, radial bars — the chart is round.
+  const round =
+    !isResponsiveChartDefinition(definition) &&
+    definition.scales.x === null &&
+    definition.scales.y === null;
   return (
     <div className={cn("relative", className)}>
       <RendererChart
         renderer={RENDERER}
-        aspectRatio={props.height === undefined ? 16 / 9 : undefined}
+        aspectRatio={
+          props.height === undefined ? (round ? 1 : 16 / 9) : undefined
+        }
         definition={themed}
         {...props}
       />

@@ -90,7 +90,7 @@ Interpolation only changes how the line travels between observations — it does
 
 ## Axes and formatting
 
-`axes` shows the x axis (the default), both, the y axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+`axes` shows the x axis (the default), both, the y axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
 
 ## Composing
 
@@ -129,6 +129,7 @@ Wrap an annotation in `decorative` so it paints without becoming a focus stop �
 <Examples>
   <Example name="chart-line/demos/default" title="Default" />
   <Example name="chart-line/demos/multiple" title="Multiple Series" />
+  <Example name="chart-line/demos/legend" title="Toggle Legend" />
   <Example name="chart-line/demos/linear" title="Linear" />
   <Example name="chart-line/demos/step" title="Step" />
   <Example name="chart-line/demos/dots" title="Dots" />

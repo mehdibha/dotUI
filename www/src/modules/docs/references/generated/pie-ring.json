@@ -153,49 +153,104 @@
       "description": "How far the active slice grows, as a share of the radius.",
       "default": "0.08"
     },
-    "sliceLabel": {
-      "type": "\"name\" | \"value\"",
-      "detailedType": "'name' | 'value' | undefined",
+    "dataLabels": {
+      "type": "\"value\" | boolean | undefined; fill?: string | undefined; fontSize?: number | undefined; radius?: number | undefined; } | { text?: \"name\"",
+      "detailedType": "\"value\" | boolean | undefined | undefined; fill?: string | undefined; fontSize?: number | undefined; radius?: number | undefined; } | { text?: \"name\"",
       "typeAst": {
         "type": "union",
         "elements": [
           {
-            "type": "stringLiteral",
-            "value": "name"
+            "type": "undefined"
           },
           {
-            "type": "stringLiteral",
-            "value": "value"
+            "type": "boolean"
+          },
+          {
+            "type": "objectLiteral",
+            "properties": {
+              "fill": {
+                "type": "property",
+                "name": "fill",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              },
+              "fontSize": {
+                "type": "property",
+                "name": "fontSize",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              },
+              "radius": {
+                "type": "property",
+                "name": "radius",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              },
+              "text": {
+                "type": "property",
+                "name": "text",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "name"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "value"
+                    },
+                    {
+                      "type": "undefined"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              }
+            }
           }
         ]
       },
-      "description": "Text drawn on each slice: its name or its value."
-    },
-    "sliceLabelRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Where slice labels sit, as a share of the radius. Defaults to the middle\nof the ring."
-    },
-    "sliceLabelFill": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Slice label color.",
-      "default": "\"var(--color-fg)\""
-    },
-    "sliceLabelFontSize": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Slice label size, in pixels.",
-      "default": "12"
+      "description": "Text on each slice. `true` prints the values; the object form picks the\ntext (`\"value\"` or `\"name\"`), its `fill` and `fontSize` (12), and the\n`radius` it sits at, as a share of the chart radius (the ring's middle).",
+      "default": "false"
     },
     "formatValue": {
       "type": "((value: ChartValue) => string)",

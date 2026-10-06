@@ -19,6 +19,7 @@ import {
   chartLegend,
   chartScales,
   chartSeries,
+  legendEmphasis,
 } from "@/registry/ui/chart"
 
 export interface AreaSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
@@ -71,7 +72,10 @@ function areaMarks<TDatum>(
   const fill = options.fill ?? 0.4
   const gradient = fill === "gradient"
   const series = { curve, color: "series", key: "key" } as const
-  const states = options.states as AreaYOptions<object>["states"]
+  const states = [
+    ...legendEmphasis,
+    ...(options.states ?? []),
+  ] as AreaYOptions<object>["states"]
   const area = { ...series, fillOpacity: gradient ? 0 : fill, states }
   const fade = {
     ...series,
@@ -122,8 +126,8 @@ export interface AreaChartOptions<TDatum> extends AreaSeriesOptions<TDatum> {
   axes?: boolean | "x" | "y"
   /** Horizontal gridlines. @default true */
   grid?: boolean
-  /** A color legend below the plot. */
-  legend?: boolean
+  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  legend?: boolean | "toggle"
   /** Formats x ticks and tooltip titles. */
   formatX?: ChartFormat
   /** Formats y ticks and tooltip values. */
@@ -148,7 +152,9 @@ export function areaChart<TDatum>(
     }),
     color: {
       domain: series.names,
-      legend: options.legend ? chartLegend() : undefined,
+      legend: options.legend
+        ? chartLegend({ toggle: options.legend === "toggle" })
+        : undefined,
     },
     marks: areaMarks(series, options),
     gradients:

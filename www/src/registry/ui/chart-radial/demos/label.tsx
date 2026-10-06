@@ -27,7 +27,7 @@ const chart = defineChart(
     innerRadius: 0.25,
     radiusRatio: 0.95,
     track: true,
-    barLabels: true,
+    dataLabels: true,
   }),
 )
 

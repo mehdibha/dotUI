@@ -31,10 +31,12 @@ export interface HeatmapChartOptions {
   thresholds?: readonly number[]
 
   /**
-   * Each value printed inside its cell. Only legible on large cells.
+   * Each value printed inside its cell, in black or white ink picked from the
+   * cell's lightness. The object form sets `fontSize` (11), or a `fill` that
+   * replaces the automatic ink. Only legible on large cells.
    * @default false
    */
-  values?: boolean
+  dataLabels?: boolean | { fill?: string; fontSize?: number }
 
   /** Formats values in the cells, the legend, and the tooltip. */
   formatValue?: (value: ChartValue) => string

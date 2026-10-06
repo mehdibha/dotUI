@@ -84,7 +84,7 @@ Without `max`, the stack's total fills the sweep.
 
 ## Labels and grid
 
-`barLabels` prints each ring's name at the start of its arc — start the sweep at twelve o'clock so the names stack down the rings. `grid` draws concentric gridlines behind them, and `legend` adds a color legend. `formatValue` formats the values in the tooltip.
+`dataLabels` prints each ring's name at the start of its arc — or its value, with `{ text: "value" }` — start the sweep at twelve o'clock so the names stack down the rings. `grid` draws concentric gridlines behind them, and `legend` adds a color legend. `formatValue` formats the values in the tooltip.
 
 ## Center label
 
@@ -145,7 +145,7 @@ const chart = defineChart({ ...radialChart(data, options), motion: false })
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between arcs, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Color alone never carries the distinction — the tooltip and the legend name every ring, and `barLabels` prints the names on the arcs themselves.
+- Color alone never carries the distinction — the tooltip and the legend name every ring, and `dataLabels` prints the names on the arcs themselves.
 - A ring's angle is harder to compare than a bar's length. Print the numbers when the exact values matter.
 
 ## Examples

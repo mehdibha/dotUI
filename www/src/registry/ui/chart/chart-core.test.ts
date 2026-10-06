@@ -1,10 +1,12 @@
 import type {
+  ChartKey,
   ChartPoint,
   ChartTooltipContentContext,
   ChartTooltipOptions,
 } from "@tanstack/charts"
 import { defineChart } from "@tanstack/charts"
 import { barY } from "@tanstack/charts/bar"
+import { lineY } from "@tanstack/charts/line"
 import { pie, polar, radialArc } from "@tanstack/charts/polar"
 import { createChartRuntime } from "@tanstack/charts/runtime"
 import { scaleLinear } from "@tanstack/charts/scales/linear"
@@ -13,6 +15,7 @@ import { tooltip } from "@tanstack/charts/tooltip"
 import { describe, expect, it } from "vitest"
 
 import {
+  chartLegend,
   chartScales,
   chartSeries,
   chartTheme,
@@ -311,5 +314,66 @@ describe("polarDecorative", () => {
     runtime.destroy()
     expect(scene.points.map((point) => point.markId)).toEqual(["arc", "arc"])
     expect(JSON.stringify(scene.nodes)).toContain('"active:')
+  })
+})
+
+describe("toggle legend", () => {
+  const series = chartSeries(rows, { x: "month", y: ["desktop", "mobile"] })
+  const lines = defineChart({
+    scales: chartScales(),
+    color: { domain: series.names, legend: chartLegend({ toggle: true }) },
+    marks: [lineY(series.rows, { x: "x", y: "y", color: "series" })],
+  })
+
+  function render(definition: unknown) {
+    const runtime = createChartRuntime()
+    const scene = runtime.render(definition as typeof lines, {
+      width: 400,
+      height: 300,
+    })
+    runtime.destroy()
+    return scene
+  }
+
+  // The renderer reads the library's control descriptor; pin its shape.
+  it("draws the library's legend control with the design-system renderer", () => {
+    const changes: (readonly ChartKey[])[] = []
+    const scene = render(
+      withChartDefaults(lines as never, {
+        hidden: ["mobile"],
+        onHiddenChange: (hidden) => changes.push(hidden),
+      }),
+    )
+    const control = scene.controls?.[0] as unknown as {
+      extension: { id: string }
+      bounds: object
+      ariaLabel: string
+      emptyLabel: string
+      hover: boolean
+      items: { key: string; label: string; color: string; visible: boolean }[]
+      toggle: (value: ChartKey) => void
+    }
+    expect(control.extension.id).toBe("dotui-chart-legend")
+    expect(control).toMatchObject({
+      bounds: expect.any(Object),
+      ariaLabel: expect.any(String),
+      emptyLabel: expect.any(String),
+      hover: true,
+    })
+    expect(
+      control.items.map((item) => [item.label, item.visible, item.color]),
+    ).toEqual([
+      ["desktop", true, "var(--chart-1)"],
+      ["mobile", false, "var(--chart-2)"],
+    ])
+    expect(typeof control.items[0]?.key).toBe("string")
+    control.toggle("desktop")
+    expect(changes).toEqual([["desktop", "mobile"]])
+    const marks = scene.nodes.find((node) => node.key === "marks")
+    expect(JSON.stringify(marks)).not.toContain('"group":"mobile"')
+  })
+
+  it("stays a static legend without a host keeping hidden series", () => {
+    expect(render(withChartDefaults(lines as never)).controls ?? []).toEqual([])
   })
 })

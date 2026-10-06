@@ -26,8 +26,7 @@ const chart = defineChart(
     value: "visitors",
     name: "browser",
     labels,
-    sliceLabel: "value",
-    sliceLabelRadius: 0.72,
+    dataLabels: { radius: 0.72 },
   }),
 )
 

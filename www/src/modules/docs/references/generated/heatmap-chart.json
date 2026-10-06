@@ -73,13 +73,62 @@
       },
       "description": "Explicit cuts between bins — one fewer than `colors`. Without them the\nobserved extent is split into equal bins."
     },
-    "values": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "dataLabels": {
+      "type": "boolean | undefined; fontSize?: number | undefined; } | { fill?: string",
+      "detailedType": "boolean | undefined | undefined; fontSize?: number | undefined; } | { fill?: string",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "objectLiteral",
+            "properties": {
+              "fill": {
+                "type": "property",
+                "name": "fill",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              },
+              "fontSize": {
+                "type": "property",
+                "name": "fontSize",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": true,
+                "readonly": false,
+                "description": ""
+              }
+            }
+          }
+        ]
       },
-      "description": "Each value printed inside its cell. Only legible on large cells.",
+      "description": "Each value printed inside its cell, in black or white ink picked from the\ncell's lightness. The object form sets `fontSize` (11), or a `fill` that\nreplaces the automatic ink. Only legible on large cells.",
       "default": "false"
     },
     "formatValue": {

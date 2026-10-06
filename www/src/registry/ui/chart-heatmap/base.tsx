@@ -14,7 +14,11 @@ import { text } from "@tanstack/charts/text"
 import { tooltip } from "@tanstack/charts/tooltip"
 import { scaleQuantize, scaleThreshold } from "d3-scale"
 
-import type { ChartField, ChartFormat } from "@/registry/ui/chart"
+import type {
+  ChartDataLabels,
+  ChartField,
+  ChartFormat,
+} from "@/registry/ui/chart"
 import { chartColor, chartScales } from "@/registry/ui/chart"
 
 /* A sequential ramp mixed from one series color: the low half fades into the
@@ -53,8 +57,8 @@ export interface HeatmapChartOptions<TDatum> {
   colors?: readonly string[]
   /** Explicit cuts between bins — one fewer than `colors`. */
   thresholds?: readonly number[]
-  /** Each value printed inside its cell. */
-  values?: boolean
+  /** Each value printed inside its cell, in ink that contrasts with it. */
+  dataLabels?: boolean | Omit<ChartDataLabels, "text">
   /** Formats values in cells, the legend and the tooltip. */
   formatValue?: ChartFormat
   /** What the value means — the legend title and the tooltip label. */
@@ -118,6 +122,7 @@ export function heatmapChart<TDatum>(
     const value = valueOf(row)
     return value === null ? null : format(value)
   }
+  const labels = options.dataLabels === true ? {} : options.dataLabels
   const bin = binner(data.map(valueOf), options.thresholds, colors.length)
   const { key } = options
   const position = {
@@ -132,15 +137,17 @@ export function heatmapChart<TDatum>(
       radius: 2,
       inset: 1,
     }),
-    ...(options.values
+    ...(labels
       ? [
           decorative(
             text(data, {
               ...position,
               text: print,
-              fill: (row) =>
-                contrastInk(colors[bin(valueOf(row))] ?? chartColor(0)),
-              fontSize: 11,
+              fill:
+                labels.fill ??
+                ((row) =>
+                  contrastInk(colors[bin(valueOf(row))] ?? chartColor(0))),
+              fontSize: labels.fontSize ?? 11,
             }),
           ),
         ]

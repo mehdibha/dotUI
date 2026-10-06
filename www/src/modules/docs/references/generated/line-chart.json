@@ -37,12 +37,24 @@
       "default": "true"
     },
     "legend": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+      "type": "\"toggle\" | boolean",
+      "detailedType": "'toggle' | boolean | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "toggle"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
       },
-      "description": "A color legend below the plot.",
+      "description": "A color legend below the plot. `\"toggle\"` lets readers click a series to\nhide it and hover one to dim the rest.",
       "default": "false"
     },
     "formatX": {

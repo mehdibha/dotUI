@@ -74,7 +74,7 @@ pieChart(data, {
 
 ## Labels and center content
 
-`sliceLabel` draws text on each slice — `"value"` for the size, `"name"` for the slice name — placed with `sliceLabelRadius` and styled with `sliceLabelFill` and `sliceLabelFontSize`. `formatValue` formats the values, in the labels and the tooltip alike. Slice labels are decorative: they paint but never become keyboard stops or tooltip targets — the arc beneath them carries the interaction.
+`dataLabels` draws text on each slice — `true` for the values, or an object that picks `text: "name"`, places the labels with `radius`, and styles them with `fill` and `fontSize`. `formatValue` formats the values, in the labels and the tooltip alike. Slice labels are decorative: they paint but never become keyboard stops or tooltip targets — the arc beneath them carries the interaction.
 
 The hole in a donut is best filled with plain HTML: `Chart`'s children render over the chart and ignore the pointer.
 

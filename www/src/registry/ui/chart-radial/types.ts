@@ -84,23 +84,14 @@ export interface RadialChartOptions {
   max?: number
 
   /**
-   * Each ring's name at the start of its arc. Not drawn when `value` lists
-   * several fields.
+   * Text at the start of each ring. `true` prints the ring names; the object
+   * form picks the text (`"name"` or `"value"`), its `fill` and `fontSize`
+   * (11). Not drawn when `value` lists several fields.
    * @default false
    */
-  barLabels?: boolean
-
-  /**
-   * Fill of the ring names.
-   * @default "var(--color-fg)"
-   */
-  barLabelFill?: string
-
-  /**
-   * Font size of the ring names.
-   * @default 11
-   */
-  barLabelFontSize?: number
+  dataLabels?:
+    | boolean
+    | { text?: "name" | "value"; fill?: string; fontSize?: number }
 
   /**
    * Concentric gridlines behind the rings.

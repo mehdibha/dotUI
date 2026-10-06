@@ -11,7 +11,11 @@ import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar";
 import { scaleLinear } from "@tanstack/charts/scales/linear";
 import { tooltip } from "@tanstack/charts/tooltip";
 
-import type { ChartField, ChartFormat } from "@/components/ui/chart";
+import type {
+  ChartDataLabels,
+  ChartField,
+  ChartFormat,
+} from "@/components/ui/chart";
 import { chartLegend, polarDecorative } from "@/components/ui/chart";
 
 const TAU = Math.PI * 2;
@@ -50,13 +54,13 @@ export interface PieRingOptions<TDatum extends object> {
   activeIndex?: number;
   /** How far the active slice grows, as a share of the radius. @default 0.08 */
   activeOffset?: number;
-  /** Text drawn on each slice. */
-  sliceLabel?: "name" | "value";
-  /** Where slice labels sit, as a share of the radius. @default the ring's middle */
-  sliceLabelRadius?: number;
-  sliceLabelFill?: string;
-  /** @default 12 */
-  sliceLabelFontSize?: number;
+  /** Text on each slice: its value, or its name with `{ text: "name" }`. */
+  dataLabels?:
+    | boolean
+    | (ChartDataLabels & {
+        /** Where labels sit, as a share of the radius. @default the ring's middle */
+        radius?: number;
+      });
   /** Formats slice values in labels and the tooltip. */
   formatValue?: ChartFormat;
 }
@@ -119,9 +123,10 @@ export function pieRing<TDatum extends object>(
       ),
     );
   }
-  if (options.sliceLabel !== undefined) {
+  const labels = options.dataLabels === true ? {} : options.dataLabels;
+  if (labels) {
     const format = options.formatValue ?? ((value) => value.toLocaleString());
-    const at = options.sliceLabelRadius ?? (inner + outer) / 2;
+    const at = labels.radius ?? (inner + outer) / 2;
     marks.push(
       polarDecorative(
         radialText(slices, {
@@ -129,9 +134,9 @@ export function pieRing<TDatum extends object>(
           angle: (slice) => slice.angle,
           radius: () => at,
           text: (slice) =>
-            options.sliceLabel === "name" ? nameOf(slice) : format(slice.value),
-          fill: options.sliceLabelFill ?? "var(--color-fg)",
-          fontSize: options.sliceLabelFontSize ?? 12,
+            labels.text === "name" ? nameOf(slice) : format(slice.value),
+          fill: labels.fill ?? "var(--color-fg)",
+          fontSize: labels.fontSize ?? 12,
         }),
       ),
     );
