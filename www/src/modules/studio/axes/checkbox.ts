@@ -2,7 +2,8 @@
    cards). Fill is a leaf of Color's Primary: off the selection leaf it
    re-declares the selection tokens under `[data-checkbox]` (a recipe scope),
    so the classes never change. Corner rides on `--studio-checkbox-radius`,
-   the unchecked edge of checkbox and radio on `--studio-check-edge`. */
+   the unchecked edge of checkbox and radio on `--studio-check-edge`, which
+   Strong points at a `--check-edge` token so the export flattens it. */
 
 import { fillScope, SOURCE_OPTIONS, STRONG_EDGE } from "./color"
 import { defineChapter } from "./core/types"
@@ -41,7 +42,12 @@ export function cornerTokens(corner: string) {
 }
 
 export function edgeTokens(edge: string) {
-  return edge === "strong" ? { "--studio-check-edge": STRONG_EDGE } : undefined
+  return edge === "strong"
+    ? {
+        "--check-edge": STRONG_EDGE,
+        "--studio-check-edge": "var(--check-edge)",
+      }
+    : undefined
 }
 
 export function resolveCheckbox(state: Effective): Resolved {

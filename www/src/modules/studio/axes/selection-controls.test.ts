@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest"
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { Density } from "@/registry/types"
+import { mergePresetCssFields } from "@/publisher/emit-theme"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue } from "@/publisher/types"
@@ -142,11 +143,20 @@ describe("selection controls", () => {
 
   it("Strong check edge is Color's Strong edge; Same as fields writes nothing", () => {
     expect(designSystemOf(parseState({ checkEdge: "strong" })).tokens).toEqual({
-      "--studio-check-edge": STRONG_EDGE,
+      "--check-edge": STRONG_EDGE,
+      "--studio-check-edge": "var(--check-edge)",
     })
     expect(designSystemOf(parseState({ checkEdge: "fields" })).tokens).toEqual(
       {},
     )
+  })
+
+  it("Strong check edge ships its token as a literal", () => {
+    const preset = designSystemOf(parseState({ checkEdge: "strong" }))
+    const { css } = mergePresetCssFields({}, preset)
+    expect(css?.[":root"]).toMatchObject({
+      "--check-edge": expect.stringMatching(/^oklch\(/),
+    })
   })
 
   it.each(["checkbox", "radio-group"])(
@@ -164,8 +174,8 @@ describe("selection controls", () => {
       expect(origin).toMatch(/ border-border-control /)
       expect(origin).not.toMatch(/--studio-/)
       const strong = await shipped({ checkEdge: "strong" })
-      expect(strong).toMatch(/ border-\(--neutral-700\) /)
-      expect(strong).not.toMatch(/--studio-/)
+      expect(strong).toMatch(/ border-\(--check-edge\) /)
+      expect(strong).not.toMatch(/--studio-|--neutral-/)
     },
   )
 
