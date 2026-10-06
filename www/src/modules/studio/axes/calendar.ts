@@ -7,8 +7,7 @@
    `weekdays` are enum params on `calendar`; `weekdays` rewrites the shipped
    grid's `weekdayStyle` and header label (calendar/meta.ts `source`). */
 
-import type { PrimaryColorSource } from "@/registry/theme"
-
+import { fillScope } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -80,7 +79,6 @@ export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
 const DATE_CELL_HOSTS = ["calendar", "range-calendar", "time-picker-columns"]
 
 export function resolveCalendar(state: Effective): Resolved {
-  const fill = state.checkboxColor as PrimaryColorSource
   return {
     params: {
       calendar: {
@@ -92,14 +90,7 @@ export function resolveCalendar(state: Effective): Resolved {
         weekdays: state.calendarWeekdays,
       },
     },
-    color:
-      fill !== state.selectionColor
-        ? {
-            scopes: Object.fromEntries(
-              DATE_CELL_HOSTS.map((host) => [host, fill]),
-            ),
-          }
-        : undefined,
+    color: fillScope(state, DATE_CELL_HOSTS, state.checkboxColor),
   }
 }
 

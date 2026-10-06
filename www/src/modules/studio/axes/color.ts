@@ -165,11 +165,16 @@ export function withSource<K extends PrimaryLeaf>(
  *  seed included). */
 export function fillScope(
   state: Effective,
-  scope: string,
+  scope: string | readonly string[],
   fill: string,
 ): Partial<ColorConfig> | undefined {
   if (fill === state.selectionColor) return undefined
-  return { scopes: { [scope]: fill as PrimaryColorSource } }
+  const scopes = typeof scope === "string" ? [scope] : scope
+  return {
+    scopes: Object.fromEntries(
+      scopes.map((s) => [s, fill as PrimaryColorSource]),
+    ),
+  }
 }
 
 /** Drops undefined entries so absent stays absent (the config's "default"). */

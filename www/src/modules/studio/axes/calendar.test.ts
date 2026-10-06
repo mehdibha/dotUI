@@ -30,6 +30,21 @@ async function published(name: string) {
 }
 const dateCells = DATE_CELLS.split(/\s+/)
 
+/** Range-end fills with no outside-month guard: RAC flags an outside-month
+ *  range end selection-start/end but never selected, and it draws no band. */
+const unguardedRangeEnds = (classList: string[]) =>
+  classList.filter((token) => {
+    const parts = token.split(":")
+    const utility = parts.at(-1) ?? ""
+    return (
+      /^(in-)?selection-(start|end)$/.test(
+        parts.find((p) => /selection-(start|end)$/.test(p)) ?? "",
+      ) &&
+      /^(bg|text)-/.test(utility) &&
+      !parts.some((p) => /^not-(in-)?outside-month$/.test(p))
+    )
+  })
+
 describe("date & time axes", () => {
   test("Origin resolves to the registry defaults and no tokens", () => {
     const ds = designSystemOf(DEFAULT_STATE)
@@ -88,6 +103,37 @@ describe("date & time axes", () => {
     const band = classes(calendarStyles({ range: true }).cell())
     for (const token of dateCells) expect(band, token).not.toContain(token)
     expect(band).toContain("selected:bg-selection-muted")
+  })
+
+  test("range ends paint only inside the month", async () => {
+    expect(unguardedRangeEnds(["in-selection-end:bg-selection"])).toHaveLength(
+      1,
+    )
+    expect(
+      unguardedRangeEnds([
+        "in-selection-end:not-in-outside-month:bg-selection",
+      ]),
+    ).toHaveLength(0)
+    const { publishable } = await publishables.calendar!()
+    for (const today of calendarMeta.params.today.values)
+      for (const dayShape of calendarMeta.params.dayShape.values) {
+        const shipped = flatten({
+          stylesConfig: publishable.stylesConfig,
+          meta: publishable.meta,
+          density: "default",
+          paramSelections: { today, dayShape },
+        })
+        const range = shipped.variants?.range as
+          | Record<string, Record<string, ClassValue>>
+          | undefined
+        const classList = [
+          ...Object.values(shipped.slots ?? {}).flatMap(tokens),
+          ...Object.values(range?.true ?? {}).flatMap(tokens),
+        ]
+        expect(unguardedRangeEnds(classList), `${today} ${dayShape}`).toEqual(
+          [],
+        )
+      }
   })
 
   test("the shipped day and time cells carry the date-cell recipe", async () => {
