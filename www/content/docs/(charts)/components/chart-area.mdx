@@ -87,13 +87,13 @@ Positive values stack up from zero and negative values down from it, so a mixed-
 
 ## Shape
 
-`curve` sets the interpolation: `natural` (the default), `monotone`, `linear`, or `step`. `fill` takes an opacity, or `"gradient"` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge.
+`curve` sets the interpolation: `natural`, `monotone`, `linear`, or `step`. `fill` takes an opacity, or `"gradient"` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge. Left unset, the curve and width follow the `lines` look and the fill the `area` look.
 
 Interpolation only changes the path drawn between observations. It does not smooth the data or create evidence between samples.
 
 ## Axes and formatting
 
-`axes` shows the x axis (the default), both, the y axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+`axes` shows the x axis, both, the y axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `crosshair` draws a guide at the hovered position. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
 
 ## Composing
 
@@ -110,7 +110,7 @@ const chart = defineChart({
 })
 ```
 
-`areaSeries` returns just the marks — the fill and its edge — to draw areas inside any chart. With `fill: "gradient"`, add `areaGradients(seriesCount)` to the chart's `gradients`.
+`areaSeries` returns just the marks — the fill and its edge — to draw areas inside any chart. With `fill: "gradient"`, add `chartFades()` to the chart's `gradients`.
 
 ## Accessibility
 

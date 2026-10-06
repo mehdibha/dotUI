@@ -10,6 +10,7 @@ import { cn } from "@/registry/lib/utils"
 
 import type { StudioStateInput } from "./axes"
 import { MOTION_PATTERNS as ACCORDION_PATTERNS } from "./axes/accordion"
+import { MOTION_OPTIONS as CHART_MOTION } from "./axes/charts"
 import { DRAWER_PATTERNS, MODAL_PATTERNS } from "./axes/dialogs"
 import { MOTION_PATTERNS as MESSAGE_SCROLLER_PATTERNS } from "./axes/message-scroller"
 import { bezierCss, curveTiming, formatMs } from "./axes/motion"
@@ -24,6 +25,7 @@ import {
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
+  DialChips,
   DialGlyph,
   ModifiedDot,
   optionLabel,
@@ -45,7 +47,7 @@ type KeyOf<T> = {
 export interface MotionEntry {
   id: string
   label: string
-  kind: "entrance" | "state" | "loop"
+  kind: "entrance" | "state" | "loop" | "js"
   /** Its state; the first key is the one timed. */
   keys: [keyof StudioStateInput, ...(keyof StudioStateInput)[]]
   /** Entrance patterns, for the summary. */
@@ -262,6 +264,24 @@ export const MOTION: MotionEntry[] = [
       })),
     ),
   },
+  {
+    // Charts animate their marks' geometry in JS, not CSS: the motion is a
+    // named transition the publisher folds into the kit's defaults.
+    id: "chart",
+    label: "Chart",
+    kind: "js",
+    keys: ["chartMotion"],
+    Control: function ChartMotion({ studio }) {
+      return (
+        <DialChips
+          label="Transition"
+          value={studio.state.chartMotion}
+          onChange={studio.set("chartMotion")}
+          options={CHART_MOTION}
+        />
+      )
+    },
+  },
 ]
 
 /* --------------------------------- Timing --------------------------------- */
@@ -293,6 +313,13 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
       curve: v.curve,
     }
   }
+  if (entry.kind === "js") {
+    const option = CHART_MOTION.find((o) => o.value === value)
+    if (!option?.curve) return { off: true, enter: 0, ease: "linear" }
+    // The tween's 300ms is the chart's own; a spring times itself.
+    const { ms, ease } = curveTiming(option.curve, 300)
+    return { off: false, enter: ms, ease, curve: option.curve }
+  }
   const v = value as StateChange | Loop
   return {
     off: false,
@@ -304,6 +331,7 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
 
 /** The row's value: the pattern and how long it takes, or the pick. */
 export function summaryOf(entry: MotionEntry, state: StudioState): string {
+  if (entry.kind === "js") return optionLabel(CHART_MOTION, state.chartMotion)
   const timing = timingOf(entry, state)
   if (entry.kind !== "entrance" || (entry.patterns?.length ?? 0) < 2)
     return timing.off ? "None" : formatMs(timing.enter)

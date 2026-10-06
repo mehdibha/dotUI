@@ -126,7 +126,7 @@
         ]
       },
       "description": "Path interpolation between points.",
-      "default": "\"natural\""
+      "default": "the defaults' `lines`"
     },
     "strokeWidth": {
       "type": "number",
@@ -135,7 +135,7 @@
         "type": "number"
       },
       "description": "Width of each line.",
-      "default": "2"
+      "default": "the defaults' `lines`"
     },
     "strokeDasharray": {
       "type": "string",

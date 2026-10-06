@@ -1,6 +1,6 @@
 "use client"
 
-import type { AreaYOptions, ChartLinearGradient } from "@tanstack/charts"
+import type { AreaYOptions } from "@tanstack/charts"
 import { areaY } from "@tanstack/charts/area"
 import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
@@ -14,9 +14,13 @@ import type {
   ChartSeriesRow,
 } from "@/registry/ui/chart"
 import {
-  chartColor,
+  chartColorScale,
   chartCurves,
-  chartLegend,
+  chartFade,
+  chartFades,
+  chartGuide,
+  chartLook,
+  chartMarks,
   chartScales,
   chartSeries,
   legendEmphasis,
@@ -25,38 +29,20 @@ import {
 export interface AreaSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
   /** Series stacked on one another; `"normalize"` for a 100% stack. */
   stacked?: boolean | "normalize"
-  /** @default "natural" */
+  /** @default the defaults' `lines` */
   curve?: ChartCurveName
   /**
    * Fill opacity, or `"gradient"` to fade toward the baseline — the chart
-   * then needs `areaGradients()`.
-   * @default 0.4
+   * then needs `chartFades()`.
+   * @default the defaults' `area`
    */
   fill?: number | "gradient"
-  /** Width of the upper edge. @default 2 */
+  /** Width of the upper edge. @default the defaults' `lines` */
   strokeWidth?: number
   /** A dot at every point. */
   points?: boolean
   /** Focus-driven restyling of the fill — dim the series that aren't focused. */
   states?: AreaYOptions<ChartSeriesRow<TDatum>>["states"]
-}
-
-const FADE_ID = "chart-area-fade"
-
-/** One fade per series slot, for `fill: "gradient"`. */
-export function areaGradients(count: number): ChartLinearGradient[] {
-  return Array.from({ length: count }, (_, slot) => {
-    const color = chartColor(slot)
-    return {
-      id: `${FADE_ID}-${slot}`,
-      y1: 1,
-      y2: 0,
-      stops: [
-        { offset: 0, color, opacity: 0.02 },
-        { offset: 1, color, opacity: 0.5 },
-      ],
-    }
-  })
 }
 
 /* The fill and its upper edge are two marks — an area's own stroke would
@@ -67,9 +53,10 @@ export function areaGradients(count: number): ChartLinearGradient[] {
 function areaMarks<TDatum>(
   { rows, names }: ChartSeries<TDatum>,
   options: AreaSeriesOptions<TDatum>,
+  look: ReturnType<typeof chartLook>,
 ) {
-  const curve = chartCurves[options.curve ?? "natural"]
-  const fill = options.fill ?? 0.4
+  const curve = chartCurves[options.curve ?? look.curve]
+  const fill = options.fill ?? look.areaFill
   const gradient = fill === "gradient"
   const series = { curve, color: "series", key: "key" } as const
   const states = [
@@ -80,12 +67,11 @@ function areaMarks<TDatum>(
   const fade = {
     ...series,
     states,
-    fill: (row: { series: string }) =>
-      `url(#${FADE_ID}-${names.indexOf(row.series)})`,
+    fill: (row: { series: string }) => chartFade(names.indexOf(row.series)),
   }
   const edge = {
     ...series,
-    strokeWidth: options.strokeWidth ?? 2,
+    strokeWidth: options.strokeWidth ?? look.strokeWidth,
     points: options.points ?? false,
   }
 
@@ -118,16 +104,21 @@ export function areaSeries<TDatum>(
   data: readonly TDatum[],
   options: AreaSeriesOptions<TDatum>,
 ) {
-  return areaMarks(chartSeries(data, options), options)
+  const series = chartSeries(data, options)
+  return chartMarks((defaults) =>
+    areaMarks(series, options, chartLook(defaults)),
+  )
 }
 
 export interface AreaChartOptions<TDatum> extends AreaSeriesOptions<TDatum> {
-  /** The axes to show. @default "x" */
+  /** The axes to show. @default the defaults' `axes` */
   axes?: boolean | "x" | "y"
-  /** Horizontal gridlines. @default true */
+  /** `false` drops the gridlines. @default the defaults' `grid` */
   grid?: boolean
-  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  /** A color legend; `"toggle"` lets readers hide series. @default the defaults' `legend` */
   legend?: boolean | "toggle"
+  /** A guide at the hovered position. @default the defaults' `guide` */
+  crosshair?: boolean
   /** Formats x ticks and tooltip titles. */
   formatX?: ChartFormat
   /** Formats y ticks and tooltip values. */
@@ -148,18 +139,14 @@ export function areaChart<TDatum>(
       },
       y: { format: options.formatY },
       axes: options.axes,
-      grid: options.grid === false ? false : "y",
+      grid: options.grid === false ? false : undefined,
     }),
-    color: {
-      domain: series.names,
-      legend: options.legend
-        ? chartLegend({ toggle: options.legend === "toggle" })
-        : undefined,
-    },
-    marks: areaMarks(series, options),
+    color: chartColorScale(series.names, options.legend),
+    marks: chartMarks((defaults) =>
+      areaMarks(series, options, chartLook(defaults)),
+    ),
     gradients:
-      options.fill === "gradient"
-        ? areaGradients(series.names.length)
-        : undefined,
+      options.fill === "gradient" ? chartFades(series.names.length) : undefined,
+    ...chartGuide(options.crosshair),
   }
 }

@@ -27,6 +27,16 @@
       },
       "description": "Longer description, announced after the name."
     },
+    "defaults": {
+      "type": "ChartDefaults",
+      "detailedType": "ChartDefaults | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartDefaults"
+      },
+      "description": "The look a definition's unset values are filled from: axes, grid, lines,\narea, bars, legend, hover guide and motion. Anything the definition or\nits builder sets wins.",
+      "default": "chartDefaults"
+    },
     "height": {
       "type": "number",
       "detailedType": "number | undefined",

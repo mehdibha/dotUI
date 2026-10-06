@@ -7,8 +7,10 @@ import type {
   ChartAxisOptions,
   ChartColorLegend,
   ChartHostControlExtension,
+  ChartColorOptions,
   ChartKey,
-  ChartMotionDefinition,
+  ChartLinearGradient,
+  ChartMotionTransition,
   ChartPoint,
   ChartScene,
   ChartTheme,
@@ -21,6 +23,7 @@ import type {
   MarkScene,
 } from "@tanstack/charts";
 import { isResponsiveChartDefinition } from "@tanstack/charts";
+import { crosshair } from "@tanstack/charts/crosshair";
 import { d3Curve } from "@tanstack/charts/d3/shape";
 import { controlledSignal } from "@tanstack/charts/interaction/signal";
 import {
@@ -87,6 +90,132 @@ export interface ChartDataLabels {
   text?: "value" | "name";
   fill?: string;
   fontSize?: number;
+}
+
+/* ------------------------------------------------------------------ */
+/* Defaults                                                            */
+/* ------------------------------------------------------------------ */
+
+/** The design system's chart look. */
+export interface ChartDefaults {
+  /** `minimal`: category labels only. `labeled`: value labels too. `baseline`: and a line along the category axis. `right`: value labels on the right, with the baseline. */
+  axes: "minimal" | "labeled" | "baseline" | "right";
+  /** Gridlines along the value axis, dashed, or on both axes. */
+  grid: "lines" | "dashed" | "full";
+  /** Smooth 2px curves, straight 2px segments, or straight 1.5px ones. */
+  lines: "smooth" | "straight" | "fine";
+  /** A 40% tint, a fade toward the baseline, or a 70% fill. */
+  area: "tint" | "gradient" | "solid";
+  /** Rounded, rounded at the value end, square, or square and at most 16px thick. */
+  bars: "rounded" | "tip" | "square" | "slim";
+  /** Where a chart with several series shows its legend. */
+  legend: "off" | "bottom" | "top";
+  /** The guide drawn at the hovered position. */
+  guide: "none" | "line" | "dashed";
+  /** How marks move between data states. */
+  motion: "off" | "quick" | "spring" | "bouncy";
+}
+
+/**
+ * Every chart fills what it leaves unset from these; anything a chart sets
+ * wins. `Chart` takes others through its `defaults` prop.
+ */
+export const chartDefaults: ChartDefaults = {
+  axes: "minimal",
+  grid: "lines",
+  lines: "smooth",
+  area: "tint",
+  bars: "rounded",
+  legend: "off",
+  guide: "none",
+  motion: "spring",
+};
+
+const LINES = {
+  smooth: { curve: "natural", strokeWidth: 2 },
+  straight: { curve: "linear", strokeWidth: 2 },
+  fine: { curve: "linear", strokeWidth: 1.5 },
+} as const satisfies Record<
+  ChartDefaults["lines"],
+  { curve: ChartCurveName; strokeWidth: number }
+>;
+
+const BARS = {
+  rounded: { radius: 4, end: false, maxThickness: undefined },
+  tip: { radius: 4, end: true, maxThickness: undefined },
+  square: { radius: 0, end: false, maxThickness: undefined },
+  slim: { radius: 0, end: false, maxThickness: 16 },
+} as const;
+
+const MOTION: Record<ChartDefaults["motion"], ChartMotionTransition | false> = {
+  off: false,
+  quick: { type: "tween", duration: 300, easing: "ease-out" },
+  spring: { type: "spring", stiffness: 170, damping: 26 },
+  bouncy: { type: "spring", stiffness: 180, damping: 12 },
+};
+
+/** What builders draw marks with, resolved from the defaults. */
+export function chartLook(defaults: ChartDefaults = chartDefaults) {
+  const bars = BARS[defaults.bars];
+  return {
+    ...LINES[defaults.lines],
+    areaFill: (defaults.area === "tint"
+      ? 0.4
+      : defaults.area === "solid"
+        ? 0.7
+        : "gradient") as number | "gradient",
+    barRadius: bars.radius,
+    /** Round only the value end of a bar. */
+    barEnd: bars.end,
+    barMaxThickness: bars.maxThickness as number | undefined,
+    cellRadius: bars.radius === 0 ? 0 : 2,
+    gridDash: defaults.grid === "dashed" ? "3 3" : undefined,
+  };
+}
+
+const REBUILDS = new WeakMap<object, (defaults: ChartDefaults) => object>();
+
+/* A builder's marks remember how to rebuild themselves, so `Chart`'s
+   `defaults` restyles them too — even inside a spread spec. */
+export function chartMarks<TMarks extends readonly object[]>(
+  build: (defaults: ChartDefaults) => TMarks,
+): TMarks {
+  const marks = build(chartDefaults);
+  const built = new Map<string, TMarks>();
+  marks.forEach((mark, index) =>
+    REBUILDS.set(mark, (defaults) => {
+      const key = JSON.stringify(defaults);
+      const next = built.get(key) ?? build(defaults);
+      built.set(key, next);
+      return next[index] ?? mark;
+    }),
+  );
+  return marks;
+}
+
+const FADE_ID = "chart-fade";
+
+/** The `fill` of a series fading toward the baseline; the chart needs `chartFades`. */
+export function chartFade(slot: number): string {
+  return `url(#${FADE_ID}-${slot})`;
+}
+
+/** One fade per series color, for `chartFade`. */
+export function chartFades(
+  count: number = chartColors.length,
+): ChartLinearGradient[] {
+  return Array.from({ length: count }, (_, slot) => {
+    const color = chartColor(slot);
+    return {
+      id: `${FADE_ID}-${slot}`,
+      y1: 1,
+      y2: 0,
+      stops: [
+        { offset: 0, color, opacity: 0.02 },
+        { offset: 1, color, opacity: 0.5 },
+      ],
+    };
+  });
 }
 
 /* ------------------------------------------------------------------ */
@@ -241,10 +370,26 @@ export interface ChartScalesOptions {
   x?: ChartScaleKind | ChartAxis;
   /** @default "linear" */
   y?: ChartScaleKind | ChartAxis;
-  /** The axes to show. @default "x" */
+  /** The axis carrying the values. @default "y" */
+  value?: "x" | "y";
+  /** The axes to show. @default the category axis, and the value axis as the defaults' `axes` says */
   axes?: boolean | "x" | "y";
-  /** The axis drawing gridlines. @default "y" */
-  grid?: "x" | "y" | false;
+  /** The axes drawing gridlines. @default the value axis, or both with the defaults' `grid: "full"` */
+  grid?: "x" | "y" | "both" | false;
+}
+
+/* What `chartScales` left to the defaults, read again by `Chart`. */
+const AUTO = Symbol("chart-auto");
+
+type AxisPresentation = Exclude<ChartScale["axis"], false | undefined>;
+
+interface AutoScale {
+  role: "category" | "value";
+  kind: ChartScaleKind;
+  /** The axis presentation, kept while the axis is hidden. */
+  presentation: AxisPresentation;
+  axis: boolean;
+  grid: boolean;
 }
 
 function chartAxis(
@@ -252,6 +397,7 @@ function chartAxis(
   fallback: ChartScaleKind,
   grid: boolean,
   visible: boolean,
+  auto: Omit<AutoScale, "kind" | "presentation">,
 ): ChartScale {
   const {
     kind = fallback,
@@ -259,37 +405,69 @@ function chartAxis(
     label,
     ...rest
   } = typeof input === "string" ? { kind: input } : input;
+  const presentation: AxisPresentation = {
+    ...(format && { ticks: { format } }),
+    ...(label && { label }),
+  };
   return {
     scale: SCALES[kind],
     nice: kind === "linear" || kind === "time",
     grid,
-    axis: visible && {
-      ...(format && { ticks: { format } }),
-      ...(label && { label }),
-    },
+    axis: visible && presentation,
     ...rest,
     ...(format && { [FORMAT]: format }),
+    ...{ [AUTO]: { ...auto, kind, presentation } },
   };
 }
 
-/** The x and y scales, with the axes and gridlines the house look shows. */
+function autoAxis(role: AutoScale["role"], defaults: ChartDefaults) {
+  return role === "category" || defaults.axes !== "minimal";
+}
+
+function autoGrid(
+  role: AutoScale["role"],
+  kind: ChartScaleKind,
+  defaults: ChartDefaults,
+) {
+  return role === "value" || (defaults.grid === "full" && kind !== "band");
+}
+
+/** The x and y scales, with the axes and gridlines the defaults call for. */
 export function chartScales({
   x = "point",
   y = "linear",
-  axes = "x",
-  grid = "y",
+  value = "y",
+  axes,
+  grid,
 }: ChartScalesOptions = {}): { x: ChartScale; y: ChartScale } {
-  return {
-    x: chartAxis(x, "point", grid === "x", axes === true || axes === "x"),
-    y: chartAxis(y, "linear", grid === "y", axes === true || axes === "y"),
+  const scale = (
+    id: "x" | "y",
+    input: ChartScaleKind | ChartAxis,
+    fallback: ChartScaleKind,
+  ) => {
+    const role = id === value ? "value" : "category";
+    const kind = (typeof input === "string" ? input : input.kind) ?? fallback;
+    return chartAxis(
+      input,
+      fallback,
+      grid === undefined
+        ? autoGrid(role, kind, chartDefaults)
+        : grid === id || grid === "both",
+      axes === undefined
+        ? autoAxis(role, chartDefaults)
+        : axes === true || axes === id,
+      { role, axis: axes === undefined, grid: grid === undefined },
+    );
   };
+  return { x: scale("x", x, "point"), y: scale("y", y, "linear") };
 }
 
 /* ------------------------------------------------------------------ */
 /* Legend                                                              */
 /* ------------------------------------------------------------------ */
 
-const TOGGLE = Symbol("chart-legend-toggle");
+const LEGEND = Symbol("chart-legend");
+const AUTO_LEGEND = Symbol("chart-auto-legend");
 
 export interface ChartLegendOptions {
   /**
@@ -298,21 +476,39 @@ export interface ChartLegendOptions {
    * `color.domain`.
    */
   toggle?: boolean;
+  /** @default where the defaults put legends, or the bottom */
+  placement?: "top" | "bottom";
 }
 
-/** The color legend, below the plot. */
+/** The color legend. */
 export function chartLegend({
   toggle = false,
+  placement,
 }: ChartLegendOptions = {}): ChartColorLegend {
   const legend = colorLegend({
-    placement: "bottom",
+    placement: placement ?? "bottom",
     items: colorLegendItems({
       justify: "center",
       gap: 16,
       indicator: { shape: "square", width: 8, height: 8, gap: 6 },
     }),
   });
-  return toggle ? Object.assign(legend, { [TOGGLE]: true }) : legend;
+  return Object.assign(legend, { [LEGEND]: { toggle, placement } });
+}
+
+/**
+ * The categorical color scale over `names`. Without `legend`, the chart
+ * shows one when it has several series and the defaults call for it.
+ */
+export function chartColorScale(
+  names: readonly ChartKey[],
+  legend?: boolean | "toggle",
+): ChartColorOptions {
+  const color: ChartColorOptions = { domain: names };
+  if (legend) color.legend = chartLegend({ toggle: legend === "toggle" });
+  return legend === undefined
+    ? Object.assign(color, { [AUTO_LEGEND]: true })
+    : color;
 }
 
 /* Dims every series but the one under the legend pointer. Builders add it to
@@ -487,10 +683,11 @@ function toggleLegend(
   legend: ChartColorLegend,
   domain: readonly ChartKey[],
   { hidden, onHiddenChange }: ChartHiddenSeries,
+  placement: "top" | "bottom",
 ): ChartColorLegend {
   const { control, ...interactive } = interactiveColorLegend<ChartKey>({
     hover: "series",
-    placement: "bottom",
+    placement,
     visible: controlledSignal<readonly ChartKey[]>(
       domain.filter((value) => !hidden.includes(value)),
       (visible) =>
@@ -516,12 +713,19 @@ function toggleLegend(
 /* Defaults                                                            */
 /* ------------------------------------------------------------------ */
 
-const CHART_MOTION: ChartMotionDefinition = {
-  transition: { type: "spring", stiffness: 170, damping: 26 },
-  // Lines and areas are single paths; dots and cells can number in the
-  // hundreds.
-  ...stagger({ each: 25, roles: ["arc", "bar"] }),
-};
+// Lines and areas are single paths; dots and cells can number in the
+// hundreds.
+const STAGGER = stagger({ each: 25, roles: ["arc", "bar"] });
+
+const GUIDE = Symbol("chart-guide");
+
+/**
+ * Spread into a spec to draw the defaults' hover guide at the focused
+ * position. `false` opts out; `true` draws one even when the defaults don't.
+ */
+export function chartGuide(guide?: boolean) {
+  return guide === false ? {} : { [GUIDE]: guide ?? ("auto" as const) };
+}
 
 /* The library's tooltip surface defaults to UA `Canvas` colors and
    `system-ui`. The vars sit on the tooltip itself, so the portal can't
@@ -543,27 +747,54 @@ interface AxisFormats {
 
 type SpecLike = {
   scales?: Record<string, unknown>;
-  color?: { domain?: readonly ChartKey[]; legend?: ChartColorLegend };
+  color?: ChartColorOptions;
+  marks?: readonly object[];
+  gradients?: readonly { id: string }[];
   theme?: Partial<ChartTheme>;
 };
 
-/* The house axis: no domain line, no tick marks, labels clear of the plot.
-   The library paints the grid at 11% — the border token is already a
-   hairline. */
-function houseScale(entry: unknown): unknown {
+type HouseScale = ChartScale & { side?: string; [AUTO]?: AutoScale };
+
+const BASELINE = { stroke: "var(--color-border-control)", strokeOpacity: 1 };
+
+/* The house axis: no tick marks, labels clear of the plot, and the domain
+   line, side and gridlines the defaults call for. The library paints the grid
+   at 11% — the border token is already a hairline. */
+function houseScale(
+  entry: unknown,
+  defaults: ChartDefaults,
+  rightTaken: boolean,
+): unknown {
   if (entry === null || typeof entry !== "object" || !("scale" in entry)) {
     return entry;
   }
-  const scale = entry as ChartScale;
-  const { grid, axis } = scale;
+  const scale = entry as HouseScale;
+  const auto = scale[AUTO];
+  const grid = auto?.grid
+    ? autoGrid(auto.role, auto.kind, defaults)
+    : scale.grid;
+  const axis = auto?.axis
+    ? autoAxis(auto.role, defaults) && auto.presentation
+    : scale.axis;
+  const dash = defaults.grid === "dashed" && { strokeDasharray: "3 3" };
+  const baseline =
+    auto?.role === "category" &&
+    (defaults.axes === "baseline" || defaults.axes === "right");
+  const right =
+    auto?.axis &&
+    auto.role === "value" &&
+    defaults.axes === "right" &&
+    !rightTaken &&
+    scale.side === undefined;
   return {
     ...scale,
+    ...(right && { side: "right" }),
     grid:
       grid === true
-        ? { strokeOpacity: 1 }
-        : grid && { strokeOpacity: 1, ...grid },
+        ? { strokeOpacity: 1, ...dash }
+        : grid && { strokeOpacity: 1, ...dash, ...grid },
     axis: axis !== false && {
-      line: false,
+      line: baseline && BASELINE,
       ...axis,
       ticks: axis?.ticks !== false && {
         size: 0,
@@ -574,6 +805,26 @@ function houseScale(entry: unknown): unknown {
   };
 }
 
+/* A rule at the focused category — or, for `line` over bars, its band —
+   behind the marks. */
+function guideMark(scales: Record<string, unknown>, style: "line" | "dashed") {
+  const [axis, auto] =
+    (["x", "y"] as const)
+      .map((id) => [id, (scales[id] as HouseScale | null)?.[AUTO]] as const)
+      .find(([, scale]) => scale?.role === "category") ??
+    (["x", undefined] as const);
+  const guide =
+    style === "line" && auto?.kind === "band"
+      ? { band: { fill: "var(--color-muted)" } }
+      : {
+          stroke: "var(--color-border-control)",
+          strokeOpacity: 1,
+          strokeWidth: 1,
+          ...(style === "dashed" && { strokeDasharray: "4 4" }),
+        };
+  return crosshair({ x: axis === "x" && guide, y: axis === "y" && guide });
+}
+
 function tickFormat(entry: unknown): ChartFormat | undefined {
   if (entry === null || typeof entry !== "object") return undefined;
   const { axis, [FORMAT]: format } = entry as ChartScale & {
@@ -582,27 +833,80 @@ function tickFormat(entry: unknown): ChartFormat | undefined {
   return (axis ? (axis.ticks || undefined)?.format : undefined) ?? format;
 }
 
+function sameDefaults(left: ChartDefaults, right: ChartDefaults) {
+  return (Object.keys(left) as (keyof ChartDefaults)[]).every(
+    (key) => left[key] === right[key],
+  );
+}
+
+/* The legend the defaults call for: one when a chart left it to them, and
+   the placement of every kit legend that didn't pick one. */
+function houseLegend(
+  color: ChartColorOptions | undefined,
+  defaults: ChartDefaults,
+  series: ChartHiddenSeries | undefined,
+): ChartColorLegend | undefined {
+  const domain = color?.domain ?? [];
+  const placement = defaults.legend === "top" ? "top" : "bottom";
+  const legend =
+    color?.legend ??
+    (color &&
+    AUTO_LEGEND in color &&
+    defaults.legend !== "off" &&
+    domain.length > 1
+      ? chartLegend()
+      : undefined);
+  const kit = (legend as { [LEGEND]?: ChartLegendOptions } | undefined)?.[
+    LEGEND
+  ];
+  if (!legend || !kit) return legend;
+  const at = kit.placement ?? placement;
+  if (kit.toggle && series) return toggleLegend(legend, domain, series, at);
+  return at === "bottom" ? legend : chartLegend({ ...kit, placement: at });
+}
+
 function houseSpec<TSpec extends SpecLike>(
   spec: TSpec,
   formats: AxisFormats,
+  defaults: ChartDefaults,
   series?: ChartHiddenSeries,
 ): TSpec {
+  const entries = Object.entries(spec.scales ?? {});
+  const rightTaken = entries.some(
+    ([, entry]) => (entry as HouseScale | null)?.side === "right",
+  );
   const scales = Object.fromEntries(
-    Object.entries(spec.scales ?? {}).map(([id, entry]) => [
-      id,
-      houseScale(entry),
-    ]),
+    entries.map(([id, entry]) => [id, houseScale(entry, defaults, rightTaken)]),
   );
   formats.x = tickFormat(scales.x);
   formats.y = tickFormat(scales.y);
-  const { color } = spec;
-  const legend = color?.legend;
-  const toggles = series && legend && TOGGLE in legend && color.domain;
+
+  const restyled = !sameDefaults(defaults, chartDefaults);
+  let marks = (spec.marks ?? []).map((mark) =>
+    restyled ? (REBUILDS.get(mark)?.(defaults) ?? mark) : mark,
+  );
+  const guide = (spec as { [GUIDE]?: true | "auto" })[GUIDE];
+  const style =
+    defaults.guide !== "none"
+      ? defaults.guide
+      : guide === true
+        ? "line"
+        : undefined;
+  if (guide && style) marks = [guideMark(scales, style), ...marks];
+
+  const legend = houseLegend(spec.color, defaults, series);
+  const declared = new Set(spec.gradients?.map((gradient) => gradient.id));
+  const fades =
+    defaults.area === "gradient"
+      ? chartFades().filter((fade) => !declared.has(fade.id))
+      : [];
   return {
     ...spec,
     scales,
-    ...(toggles && {
-      color: { ...color, legend: toggleLegend(legend, toggles, series) },
+    marks,
+    ...(spec.color && { color: { ...spec.color, legend } }),
+    ...(fades.length > 0 && {
+      gradients: [...(spec.gradients ?? []), ...fades],
     }),
     theme: { ...chartTheme, ...spec.theme },
   };
@@ -711,11 +1015,16 @@ function houseTooltip(
   };
 }
 
+export interface ChartHost extends Partial<ChartHiddenSeries> {
+  /** @default chartDefaults */
+  defaults?: ChartDefaults;
+}
+
 /**
  * Fills in what a definition leaves unset — the theme, the axis look, focus,
- * keyboard, the tooltip and motion — and keeps everything it sets. Pure, so
- * any host can apply it; `<Chart>` does. With `series`, a toggle legend
- * hides and shows series through it.
+ * keyboard, the tooltip and motion — from `defaults`, and keeps everything it
+ * sets. Pure, so any host can apply it; `<Chart>` does. With
+ * `onHiddenChange`, a toggle legend hides and shows series through it.
  */
 export function withChartDefaults<
   TDatum,
@@ -723,9 +1032,11 @@ export function withChartDefaults<
   TYValue extends ChartValue,
 >(
   definition: DomChartDefinition<TDatum, TXValue, TYValue>,
-  series?: ChartHiddenSeries,
+  { defaults = chartDefaults, hidden = [], onHiddenChange }: ChartHost = {},
 ): DomChartDefinition<TDatum, TXValue, TYValue> {
   const formats: AxisFormats = {};
+  const series = onHiddenChange && { hidden, onHiddenChange };
+  const transition = MOTION[defaults.motion];
   const behavior = {
     focus: definition.focus ?? "group-x",
     keyboard: definition.keyboard ?? true,
@@ -733,18 +1044,18 @@ export function withChartDefaults<
       definition.tooltip as ChartTooltipInput<never, never, never, "dom">,
       formats,
     ),
-    motion: definition.motion ?? CHART_MOTION,
+    motion: definition.motion ?? (transition && { transition, ...STAGGER }),
   };
   if (isResponsiveChartDefinition(definition)) {
     const build = definition.chart;
     return {
       ...definition,
       ...behavior,
-      chart: (context) => houseSpec(build(context), formats, series),
+      chart: (context) => houseSpec(build(context), formats, defaults, series),
     } as DomChartDefinition<TDatum, TXValue, TYValue>;
   }
   return {
-    ...houseSpec(definition, formats, series),
+    ...houseSpec(definition, formats, defaults, series),
     ...behavior,
   } as DomChartDefinition<TDatum, TXValue, TYValue>;
 }
@@ -800,6 +1111,8 @@ export type ChartProps<
 > & {
   /** Keep its identity stable: define it at module scope, or memoize it. */
   definition: DomChartDefinition<TDatum, TXValue, TYValue>;
+  /** The look this chart fills its unset values from. @default chartDefaults */
+  defaults?: ChartDefaults;
   /** HTML laid over the chart — a donut's total, a badge. */
   children?: ReactNode;
 };
@@ -810,14 +1123,23 @@ export function Chart<
   TYValue extends ChartValue = ChartValue,
 >({
   definition,
+  defaults = chartDefaults,
   children,
   className,
   ...props
 }: ChartProps<TDatum, TXValue, TYValue>) {
   const [hidden, setHidden] = useState<readonly ChartKey[]>([]);
+  // Keyed by value, so an inline `defaults` object doesn't rebuild the chart.
+  const key = JSON.stringify(defaults);
   const themed = useMemo(
-    () => withChartDefaults(definition, { hidden, onHiddenChange: setHidden }),
-    [definition, hidden],
+    () =>
+      withChartDefaults(definition, {
+        defaults,
+        hidden,
+        onHiddenChange: setHidden,
+      }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    [definition, hidden, key],
   );
   // Without x and y scales — a pie, a radar, radial bars — the chart is round.
   const round =

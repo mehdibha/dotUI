@@ -192,6 +192,8 @@ const categoryChart = defineChart(
     labels: categoryLabels,
     innerRadius: 0.6,
     strokeWidth: 4,
+    // The category list below is the legend.
+    legend: false,
   }),
 )
 
@@ -388,6 +390,12 @@ const TABS = [
   { id: "pending", label: "Pending" },
 ] as const
 
+const compactCurrency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  notation: "compact",
+})
+
 const currency = (value: number, fractionDigits = 2) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -484,7 +492,14 @@ function AccountSparkline({
       value,
     }))
     return defineChart({
-      ...lineChart(data, { x: "point", y: "value", axes: false, grid: false }),
+      ...lineChart(data, {
+        x: "point",
+        y: "value",
+        axes: false,
+        grid: false,
+        legend: false,
+        crosshair: false,
+      }),
       color: { range: [color] },
       tooltip: false,
     })
@@ -609,6 +624,7 @@ function CashflowCard() {
           y: ["income", "spending"],
           labels: cashflowLabels,
           formatX: (value) => String(value).slice(0, 3),
+          formatY: (value) => compactCurrency.format(Number(value)),
         }),
       ),
     [data],

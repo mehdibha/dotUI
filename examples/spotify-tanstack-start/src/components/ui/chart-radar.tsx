@@ -25,10 +25,16 @@ import { scalePoint } from "@tanstack/charts/scales/point";
 import { tooltip } from "@tanstack/charts/tooltip";
 import { curveLinearClosed, pointRadial } from "d3-shape";
 
-import type { ChartFormat, ChartSeriesOptions } from "@/components/ui/chart";
+import type {
+  ChartDefaults,
+  ChartFormat,
+  ChartSeriesOptions,
+} from "@/components/ui/chart";
 import {
   chartColor,
-  chartLegend,
+  chartColorScale,
+  chartLook,
+  chartMarks,
   chartSeries,
   polarDecorative,
 } from "@/components/ui/chart";
@@ -66,7 +72,7 @@ export interface RadarChartOptions<TDatum> extends ChartSeriesOptions<TDatum> {
   axes?: boolean;
   /** A second, muted label line above each category. */
   axisDetail?: ChartFormat;
-  /** A color legend below the radar. */
+  /** A color legend. @default the defaults' `legend` */
   legend?: boolean;
   /** Formats category labels and tooltip titles. */
   formatX?: ChartFormat;
@@ -142,88 +148,90 @@ export function radarChart<TDatum>(
   const fill = options.fill ?? 0.6;
   const detail = axes && options.axisDetail !== undefined;
 
-  const guides: PolarGuide[] = [];
-  if (options.gridFill !== undefined) {
-    guides.push(
-      gridFillGuide(
-        shape,
-        options.gridFillColor ?? chartColor(0),
-        options.gridFill,
-      ),
-    );
-  }
-  if (grid) guides.push(radialGrid({ ticks, shape, labels: false }));
-  if (spokes || axes) {
-    guides.push(
-      angleGrid({
-        labels: axes,
-        // Spokes and circumference labels are one guide.
-        strokeOpacity: spokes ? undefined : 0,
-        format: options.formatX,
-        labelDx,
-        labelDy: labelDy(detail ? LABEL_LINE : 0),
-      }),
-    );
-  }
-  if (detail) {
-    guides.push(
-      angleGrid({
-        labels: true,
-        strokeOpacity: 0,
-        format: options.axisDetail,
-        labelDx,
-        labelDy: labelDy(-LABEL_LINE),
-        labelFill: "var(--color-fg-muted)",
-      }),
-    );
-  }
+  const build = (defaults: ChartDefaults) => {
+    const dash = chartLook(defaults).gridDash;
+    const legend =
+      options.legend ?? (defaults.legend !== "off" && names.length > 1);
+    const guides: PolarGuide[] = [];
+    if (options.gridFill !== undefined) {
+      guides.push(
+        gridFillGuide(
+          shape,
+          options.gridFillColor ?? chartColor(0),
+          options.gridFill,
+        ),
+      );
+    }
+    if (grid) {
+      guides.push(
+        radialGrid({ ticks, shape, labels: false, strokeDasharray: dash }),
+      );
+    }
+    if (spokes || axes) {
+      guides.push(
+        angleGrid({
+          labels: axes,
+          // Spokes and circumference labels are one guide.
+          strokeOpacity: spokes ? undefined : 0,
+          strokeDasharray: dash,
+          format: options.formatX,
+          labelDx,
+          labelDy: labelDy(detail ? LABEL_LINE : 0),
+        }),
+      );
+    }
+    if (detail) {
+      guides.push(
+        angleGrid({
+          labels: true,
+          strokeOpacity: 0,
+          format: options.axisDetail,
+          labelDx,
+          labelDy: labelDy(-LABEL_LINE),
+          labelFill: "var(--color-fg-muted)",
+        }),
+      );
+    }
 
-  const channels = {
-    angle: "x",
-    radius: "y",
-    color: "series",
-    key: "key",
-  } as const;
-  const marks: AnyPolarMark[] = [
-    ...(fill > 0
-      ? [
-          radialArea(rows, {
-            ...channels,
-            id: "radar-area",
-            radius1: 0,
-            curve: curveLinearClosed,
-            fillOpacity: fill,
-          }),
-        ]
-      : []),
-    radialLine(rows, {
-      ...channels,
-      id: "radar-line",
-      curve: curveLinearClosed,
-      strokeWidth: options.strokeWidth ?? 1.5,
-    }),
-    ...(options.points
-      ? // The line already carries each point's focus.
-        [
-          polarDecorative(
-            radialDot(rows, { ...channels, id: "radar-dot", r: 4 }),
-          ),
-        ]
-      : []),
-    ...(options.marks ?? []),
-  ];
+    const channels = {
+      angle: "x",
+      radius: "y",
+      color: "series",
+      key: "key",
+    } as const;
+    const marks: AnyPolarMark[] = [
+      ...(fill > 0
+        ? [
+            radialArea(rows, {
+              ...channels,
+              id: "radar-area",
+              radius1: 0,
+              curve: curveLinearClosed,
+              fillOpacity: fill,
+            }),
+          ]
+        : []),
+      radialLine(rows, {
+        ...channels,
+        id: "radar-line",
+        curve: curveLinearClosed,
+        strokeWidth: options.strokeWidth ?? 1.5,
+      }),
+      ...(options.points
+        ? // The line already carries each point's focus.
+          [
+            polarDecorative(
+              radialDot(rows, { ...channels, id: "radar-dot", r: 4 }),
+            ),
+          ]
+        : []),
+      ...(options.marks ?? []),
+    ];
 
-  const formatX = options.formatX ?? String;
-  return {
-    scales: { x: null, y: null },
-    color: {
-      domain: names,
-      legend: options.legend ? chartLegend() : undefined,
-    },
-    marks: [
+    return [
       polar({
         // The category labels sit outside the circle: a legend needs the room.
-        radiusRatio: options.radiusRatio ?? (options.legend ? 0.68 : 0.78),
+        radiusRatio: options.radiusRatio ?? (legend ? 0.68 : 0.78),
         scales: {
           angle: {
             scale: scalePoint<ChartValue>().domain(categories),
@@ -238,7 +246,14 @@ export function radarChart<TDatum>(
         guides,
         marks,
       }),
-    ],
+    ] as const;
+  };
+
+  const formatX = options.formatX ?? String;
+  return {
+    scales: { x: null, y: null },
+    color: chartColorScale(names, options.legend),
+    marks: chartMarks(build),
     // Two spokes can share a scene x; group by the nearest ray instead.
     focus: focusGroupAngle,
     tooltip: {

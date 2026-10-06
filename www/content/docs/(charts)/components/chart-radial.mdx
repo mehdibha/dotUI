@@ -65,7 +65,7 @@ radialChart(data, {
 })
 ```
 
-`max` sets the value that fills the whole sweep — without it the largest value fills it. Give a gauge an explicit `max` so the arc reads as a share of a target, and turn on `track` to draw the unfilled remainder. `cornerRadius` rounds the arc ends; a large value gives pills.
+`max` sets the value that fills the whole sweep — without it the largest value fills it. Give a gauge an explicit `max` so the arc reads as a share of a target, and turn on `track` to draw the unfilled remainder. `cornerRadius` rounds the arc ends — the `bars` look by default; a large value gives pills.
 
 ## Stacking
 
@@ -84,7 +84,7 @@ Without `max`, the stack's total fills the sweep.
 
 ## Labels and grid
 
-`dataLabels` prints each ring's name at the start of its arc — or its value, with `{ text: "value" }` — start the sweep at twelve o'clock so the names stack down the rings. `grid` draws concentric gridlines behind them, and `legend` adds a color legend. `formatValue` formats the values in the tooltip.
+`dataLabels` prints each ring's name at the start of its arc — or its value, with `{ text: "value" }` — start the sweep at twelve o'clock so the names stack down the rings. `grid` draws concentric gridlines behind them, and `legend` shows or hides the color legend, which otherwise follows the [chart defaults](/docs/components/chart#defaults). `formatValue` formats the values in the tooltip.
 
 ## Center label
 

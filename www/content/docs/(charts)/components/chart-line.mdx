@@ -84,13 +84,13 @@ When `x` holds `Date`s, the axis is a time scale.
 
 ## Shape
 
-`curve` sets the path between points: `natural` (the default), `monotone`, `linear`, or `step`. `strokeWidth` and `strokeDasharray` set the stroke, and `points` draws a dot at every point.
+`curve` sets the path between points: `natural`, `monotone`, `linear`, or `step`. `strokeWidth` and `strokeDasharray` set the stroke — curve and width default to the `lines` look — and `points` draws a dot at every point.
 
 Interpolation only changes how the line travels between observations — it does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side.
 
 ## Axes and formatting
 
-`axes` shows the x axis (the default), both, the y axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+`axes` shows the x axis, both, the y axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `crosshair` draws a guide at the hovered position. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
 
 ## Composing
 

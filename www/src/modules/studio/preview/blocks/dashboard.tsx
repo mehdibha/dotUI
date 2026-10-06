@@ -399,6 +399,12 @@ const currency = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 })
 
+const compactCurrency = new Intl.NumberFormat("en-US", {
+  currency: "USD",
+  style: "currency",
+  notation: "compact",
+})
+
 /* -------------------------------- Sections -------------------------------- */
 
 function AppSidebar() {
@@ -639,6 +645,7 @@ function RevenueChart() {
           labels: chartLabels,
           fill: "gradient",
           formatX: (value) => String(value).slice(0, 3),
+          formatY: (value) => compactCurrency.format(Number(value)),
         }),
       ),
     [data],

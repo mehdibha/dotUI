@@ -247,8 +247,8 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "A color legend below the radar.",
-      "default": "false"
+      "description": "A color legend, where the defaults place it.",
+      "default": "the defaults' `legend` — shown for several series unless it's `\"off\"`"
     },
     "formatX": {
       "type": "((value: ChartValue) => string)",

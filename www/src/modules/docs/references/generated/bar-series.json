@@ -138,7 +138,16 @@
         "type": "number"
       },
       "description": "Corner radius in pixels. A stack rounds only its outer end.",
-      "default": "4"
+      "default": "the defaults' `bars`"
+    },
+    "maxThickness": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The widest a bar gets, in pixels.",
+      "default": "the defaults' `bars` — no limit, or 16 when `slim`"
     },
     "inset": {
       "type": "number",

@@ -25,7 +25,7 @@
         ]
       },
       "description": "The axes to show.",
-      "default": "\"x\""
+      "default": "the category axis, and the value axis as the defaults' `axes` says"
     },
     "grid": {
       "type": "boolean",
@@ -33,8 +33,8 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Horizontal gridlines.",
-      "default": "true"
+      "description": "Gridlines — `false` drops them.",
+      "default": "the defaults' `grid`"
     },
     "legend": {
       "type": "\"toggle\" | boolean",
@@ -54,8 +54,17 @@
           }
         ]
       },
-      "description": "A color legend below the plot. `\"toggle\"` lets readers click a series to\nhide it and hover one to dim the rest.",
-      "default": "false"
+      "description": "A color legend, where the defaults place it. `\"toggle\"` lets readers\nclick a series to hide it and hover one to dim the rest.",
+      "default": "the defaults' `legend` — shown for several series unless it's `\"off\"`"
+    },
+    "crosshair": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A guide at the hovered position.",
+      "default": "the defaults' `guide`"
     },
     "formatX": {
       "type": "((value: ChartValue) => string)",
@@ -231,7 +240,7 @@
         ]
       },
       "description": "Path interpolation between points.",
-      "default": "\"natural\""
+      "default": "the defaults' `lines`"
     },
     "strokeWidth": {
       "type": "number",
@@ -240,7 +249,7 @@
         "type": "number"
       },
       "description": "Width of each line.",
-      "default": "2"
+      "default": "the defaults' `lines`"
     },
     "strokeDasharray": {
       "type": "string",

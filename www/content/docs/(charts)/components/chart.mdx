@@ -86,18 +86,64 @@ The cartesian families also export their marks on their own — `barSeries`, `li
 - **Axes** — no domain line and no tick marks; labels sit clear of the plot.
 - **Tooltip** — your popover surface, titled by the category and one row per series. Values read the way the axes print them, so an axis `format` is the tooltip's too.
 - **Focus** — `group-x`: hovering a position reports every series there. Arrow keys move between positions.
-- **Motion** — marks spring between data states, bars and slices enter in sequence, and reduced motion is respected.
+- **Motion** — marks move between data states, bars and slices enter in sequence, and reduced motion is respected.
 - **Size** — without a `height`, 16:9 of its width; square for charts without x and y scales, like pies, radars, and radial bars.
 
 `withChartDefaults(definition)` applies the same defaults outside `Chart` — for an SVG export, or another framework's host.
+
+## Defaults
+
+How those defaults look is your design system's, set in the studio and written into `chartDefaults` at the top of `chart.tsx`:
+
+```tsx
+export const chartDefaults: ChartDefaults = {
+  axes: "minimal",
+  grid: "lines",
+  lines: "smooth",
+  area: "tint",
+  bars: "rounded",
+  legend: "off",
+  guide: "none",
+  motion: "spring",
+}
+```
+
+| Key      | Values                                    | What it sets                                                               |
+| -------- | ----------------------------------------- | -------------------------------------------------------------------------- |
+| `axes`   | `minimal`, `labeled`, `baseline`, `right` | Category labels only, value labels too, a baseline, or values on the right |
+| `grid`   | `lines`, `dashed`, `full`                 | Gridlines along the value axis, dashed, or on both axes                    |
+| `lines`  | `smooth`, `straight`, `fine`              | The curve and width of lines and area edges                                |
+| `area`   | `tint`, `gradient`, `solid`               | How areas are filled                                                       |
+| `bars`   | `rounded`, `tip`, `square`, `slim`        | The shape of bars, radial bars, and heatmap cells                          |
+| `legend` | `off`, `bottom`, `top`                    | Where a chart with several series shows its legend                         |
+| `guide`  | `none`, `line`, `dashed`                  | The guide drawn at the hovered position                                    |
+| `motion` | `off`, `quick`, `spring`, `bouncy`        | How marks move between data states                                         |
+
+They only fill gaps. A builder option or anything set in the definition wins — `barChart(data, { cornerRadius: 0 })` draws square bars whatever `bars` says, and `legend: false` hides a legend the defaults would show.
+
+Edit the literal to change every chart at once, or pass `defaults` to one `Chart`:
+
+```tsx
+<Chart
+  definition={chart}
+  defaults={{ ...chartDefaults, lines: "straight", guide: "dashed" }}
+  ariaLabel="Revenue by month"
+/>
+```
+
+Builder marks — including `barSeries`, `lineSeries`, and `areaSeries` inside your own spec — follow the lines, area, and bars looks. Raw TanStack Charts marks draw exactly as you wrote them. Hand-written specs pick up the axes, grid, legend, and guide looks through the helpers below.
 
 ## Helpers
 
 The `chart` item also exports the pieces the builders are made of, for charts you write by hand:
 
-- `chartScales({ x, y, axes, grid })` — the x and y scales. Kinds are `"point"`, `"band"`, `"linear"`, and `"time"`; pass an object to add a `format`, a `label`, or any TanStack Charts scale option.
+- `chartScales({ x, y, axes, grid })` — the x and y scales. Kinds are `"point"`, `"band"`, `"linear"`, and `"time"`; pass an object to add a `format`, a `label`, or any TanStack Charts scale option. Leave `axes` and `grid` unset to follow the defaults.
 - `chartSeries(data, { x, y, series, labels, order })` — reads wide or long rows into one row per value: `{ x, y, series, key, datum }`.
-- `chartLegend({ toggle })` — the color legend, below the plot. With `toggle`, readers click a series to hide or show it and hover one to dim the rest; `Chart` keeps which series are hidden. Add `legendEmphasis` to a mark's `states` for the dimming.
+- `chartColorScale(names, legend)` — the categorical color scale. Leave `legend` unset to follow the defaults, or pass `true`, `false`, or `"toggle"`.
+- `chartLegend({ toggle, placement })` — the color legend. With `toggle`, readers click a series to hide or show it and hover one to dim the rest; `Chart` keeps which series are hidden. Add `legendEmphasis` to a mark's `states` for the dimming.
+- `chartGuide(crosshair)` — spread into a spec to draw the defaults' hover guide; `true` draws one even when the defaults don't.
+- `chartLook(defaults)` and `chartMarks(build)` — for your own builder: `chartLook` resolves the curve, widths, and radii marks draw with, and marks returned through `chartMarks` restyle when a `Chart` gets other `defaults`.
+- `chartFade(slot)` and `chartFades()` — a series fill that fades toward the baseline, and the gradients the chart needs for it.
 - `chartColors`, `chartColor(index)`, `chartCurves` — the palette and the named curves.
 - `chartTooltipContent` — the default tooltip rows, to call from your own `content`.
 - `polarDecorative(mark)` — paints a polar mark without making it a focus stop.

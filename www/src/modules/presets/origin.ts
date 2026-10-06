@@ -82,6 +82,14 @@ export const origin = definePreset({
 
     // Components
     chartPalette: "mono",
+    chartAxes: "minimal",
+    chartGrid: "lines",
+    chartLines: "smooth",
+    chartArea: "tint",
+    chartBars: "rounded",
+    chartLegend: "off",
+    chartGuide: "none",
+    chartMotion: "spring",
     linkUnderline: "never",
     linkColor: "accent",
     skeletonAnimation: "shimmer",

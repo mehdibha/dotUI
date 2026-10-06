@@ -16,7 +16,7 @@ import type {
   ChartField,
   ChartFormat,
 } from "@/registry/ui/chart"
-import { chartLegend, polarDecorative } from "@/registry/ui/chart"
+import { chartColorScale, polarDecorative } from "@/registry/ui/chart"
 
 const TAU = Math.PI * 2
 
@@ -161,7 +161,7 @@ function bindsScales(marks: readonly AnyPolarMark[]) {
 export interface PieChartOptions<
   TDatum extends object,
 > extends PieRingOptions<TDatum> {
-  /** A color legend below the pie. */
+  /** A color legend. @default the defaults' `legend` */
   legend?: boolean
   /** Share of the available radius the pie fills. @default 0.9 */
   radiusRatio?: number
@@ -182,10 +182,7 @@ export function pieChart<TDatum extends object>(
   const marks = [...pieRing(data, options), ...(options.marks ?? [])]
   return {
     scales: { x: null, y: null },
-    color: {
-      domain: [...new Set(data.map(nameOf))],
-      legend: options.legend ? chartLegend() : undefined,
-    },
+    color: chartColorScale([...new Set(data.map(nameOf))], options.legend),
     marks: [
       polar({
         scales: bindsScales(marks)

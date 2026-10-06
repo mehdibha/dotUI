@@ -63,7 +63,7 @@ export interface RadialChartOptions {
 
   /**
    * Corner radius of each arc, in pixels. A large value gives pill ends.
-   * @default 4
+   * @default the defaults' `bars`
    */
   cornerRadius?: number
 
@@ -106,8 +106,8 @@ export interface RadialChartOptions {
   gridTicks?: number
 
   /**
-   * A color legend below the chart.
-   * @default false
+   * A color legend, where the defaults place it.
+   * @default the defaults' `legend` — shown for several series unless it's `"off"`
    */
   legend?: boolean
 

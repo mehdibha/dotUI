@@ -16,10 +16,16 @@ import { scaleQuantize, scaleThreshold } from "d3-scale";
 
 import type {
   ChartDataLabels,
+  ChartDefaults,
   ChartField,
   ChartFormat,
 } from "@/components/ui/chart";
-import { chartColor, chartScales } from "@/components/ui/chart";
+import {
+  chartColor,
+  chartLook,
+  chartMarks,
+  chartScales,
+} from "@/components/ui/chart";
 
 /* A sequential ramp mixed from one series color: the low half fades into the
    surface, the high half toward the foreground, so lightness stays monotone
@@ -130,11 +136,11 @@ export function heatmapChart<TDatum>(
     y: (row: TDatum) => read(row, options.y),
     key: key && ((row: TDatum) => read(row, key)),
   };
-  const marks = [
+  const marks = (defaults: ChartDefaults) => [
     cell(data, {
       ...position,
       color: valueOf,
-      radius: 2,
+      radius: chartLook(defaults).cellRadius,
       inset: 1,
     }),
     ...(labels
@@ -186,7 +192,7 @@ export function heatmapChart<TDatum>(
           ? undefined
           : colorLegend({ label: options.label, format: options.formatValue }),
     },
-    marks,
+    marks: chartMarks(marks),
     // A cell is read on its own, not against its column.
     focus: "nearest" as const,
     tooltip: {

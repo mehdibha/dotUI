@@ -7,8 +7,8 @@ import type { PolarMark } from "@tanstack/charts/polar"
  */
 export interface PieChartOptions extends PieRingOptions {
   /**
-   * A color legend below the pie.
-   * @default false
+   * A color legend, where the defaults place it.
+   * @default the defaults' `legend` — shown for several series unless it's `"off"`
    */
   legend?: boolean
 

@@ -1,11 +1,20 @@
 "use client"
 
-/* Charts — the categorical series palette. */
+/* Charts — the categorical series palette and the chart looks. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { PALETTE_OPTIONS } from "../axes/charts"
-import { DialList } from "../dial"
+import {
+  AREA_OPTIONS,
+  AXES_OPTIONS,
+  BARS_OPTIONS,
+  GRID_OPTIONS,
+  GUIDE_OPTIONS,
+  LEGEND_OPTIONS,
+  LINES_OPTIONS,
+  PALETTE_OPTIONS,
+} from "../axes/charts"
+import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -37,6 +46,161 @@ function SeriesGlyph({ palette }: { palette: string }) {
   )
 }
 
+const CURVE = "M3 16C6 16 7 8 11 8s5 6 10 2"
+const POLYLINE = "M3 16 8 9l5 4 8-7"
+
+function Glyph({ children }: { children: React.ReactNode }) {
+  return (
+    <DialGlyph>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        {children}
+      </svg>
+    </DialGlyph>
+  )
+}
+
+const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
+  axes: {
+    minimal: <path d="M5 21h1m5 0h1m5 0h1" opacity=".6" />,
+    labeled: <path d="M2 6h2m-2 6h2m-2 6h2M8 21h1m5 0h1m5 0h1" opacity=".6" />,
+    baseline: (
+      <>
+        <path d="M2 6h2m-2 6h2" opacity=".6" />
+        <path d="M6 18h16" />
+      </>
+    ),
+    right: (
+      <>
+        <path d="M20 6h2m-2 6h2" opacity=".6" />
+        <path d="M2 18h16" />
+      </>
+    ),
+  },
+  grid: {
+    lines: <path d="M3 7h18M3 12h18M3 17h18" opacity=".5" />,
+    dashed: (
+      <path d="M3 7h18M3 12h18M3 17h18" strokeDasharray="2 2" opacity=".5" />
+    ),
+    full: (
+      <path d="M3 7h18M3 12h18M3 17h18M7 3v18M12 3v18M17 3v18" opacity=".5" />
+    ),
+  },
+  lines: {
+    smooth: <path d={CURVE} strokeWidth="2" />,
+    straight: <path d={POLYLINE} strokeWidth="2" />,
+    fine: <path d={POLYLINE} strokeWidth="1" />,
+  },
+  area: {
+    tint: <path d={`${POLYLINE}v14H3Z`} fill="currentColor" fillOpacity=".3" />,
+    gradient: (
+      <>
+        <defs>
+          <linearGradient id="chart-glyph-fade" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stopColor="currentColor" stopOpacity=".6" />
+            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={`${POLYLINE}v14H3Z`} fill="url(#chart-glyph-fade)" />
+      </>
+    ),
+    solid: (
+      <path d={`${POLYLINE}v14H3Z`} fill="currentColor" fillOpacity=".7" />
+    ),
+  },
+  bars: {
+    rounded: (
+      <path
+        d="M4 21V12a2 2 0 0 1 4 0v9m2 0V6a2 2 0 0 1 4 0v15m2 0V10a2 2 0 0 1 4 0v11"
+        fill="currentColor"
+        stroke="none"
+      />
+    ),
+    tip: (
+      <path
+        d="M4 21V12a2 2 0 0 1 4 0v9Zm6 0V6a2 2 0 0 1 4 0v15Zm6 0V10a2 2 0 0 1 4 0v11Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    ),
+    square: (
+      <path
+        d="M4 21V10h4v11Zm6 0V4h4v17Zm6 0V8h4v13Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    ),
+    slim: (
+      <path
+        d="M5 21V10h2v11Zm6 0V4h2v17Zm6 0V8h2v13Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    ),
+  },
+  legend: {
+    off: <path d={POLYLINE} />,
+    bottom: (
+      <>
+        <path d="M3 13 8 7l5 3 8-6" />
+        <path d="M5 20h4m4 0h4" strokeWidth="3" opacity=".6" />
+      </>
+    ),
+    top: (
+      <>
+        <path d="M5 4h4m4 0h4" strokeWidth="3" opacity=".6" />
+        <path d="M3 20 8 14l5 3 8-6" />
+      </>
+    ),
+  },
+  guide: {
+    none: <path d={POLYLINE} />,
+    line: (
+      <>
+        <path d="M13 3v18" opacity=".5" />
+        <path d={POLYLINE} />
+      </>
+    ),
+    dashed: (
+      <>
+        <path d="M13 3v18" strokeDasharray="2 2" opacity=".5" />
+        <path d={POLYLINE} />
+      </>
+    ),
+  },
+}
+
+const LOOKS = [
+  { key: "chartAxes", label: "Axes", glyphs: "axes", options: AXES_OPTIONS },
+  { key: "chartGrid", label: "Grid", glyphs: "grid", options: GRID_OPTIONS },
+  {
+    key: "chartLines",
+    label: "Lines",
+    glyphs: "lines",
+    options: LINES_OPTIONS,
+  },
+  { key: "chartArea", label: "Area", glyphs: "area", options: AREA_OPTIONS },
+  { key: "chartBars", label: "Bars", glyphs: "bars", options: BARS_OPTIONS },
+  {
+    key: "chartLegend",
+    label: "Legend",
+    glyphs: "legend",
+    options: LEGEND_OPTIONS,
+  },
+  {
+    key: "chartGuide",
+    label: "Hover guide",
+    glyphs: "guide",
+    options: GUIDE_OPTIONS,
+  },
+] as const
+
 /* --------------------------------- Section --------------------------------- */
 
 export function ChartsPreview({ state }: { state: StudioState }) {
@@ -46,14 +210,29 @@ export function ChartsPreview({ state }: { state: StudioState }) {
 export function ChartsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <DialList
-      label="Palette"
-      value={state.chartPalette}
-      onChange={set("chartPalette")}
-      options={PALETTE_OPTIONS.map((option) => ({
-        ...option,
-        preview: <SeriesGlyph palette={option.value} />,
-      }))}
-    />
+    <>
+      <DialList
+        label="Palette"
+        value={state.chartPalette}
+        onChange={set("chartPalette")}
+        options={PALETTE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <SeriesGlyph palette={option.value} />,
+        }))}
+      />
+      <DialGap />
+      {LOOKS.map((look) => (
+        <DialSelect
+          key={look.key}
+          label={look.label}
+          value={state[look.key]}
+          onChange={set(look.key)}
+          options={look.options.map((option) => ({
+            ...option,
+            preview: <Glyph>{GLYPHS[look.glyphs]?.[option.value]}</Glyph>,
+          }))}
+        />
+      ))}
+    </>
   )
 }

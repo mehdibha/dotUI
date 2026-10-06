@@ -104,11 +104,11 @@ barChart(data, { x: "month", y: "desktop", horizontal: true })
 
 ## Shape
 
-`cornerRadius` rounds the corners (4 pixels by default), `inset` trims pixels from both categorical edges of every bar, and `fill` sets the fill opacity.
+`cornerRadius` rounds the corners and `maxThickness` caps how thick a bar gets — both default to the `bars` look. `inset` trims pixels from both categorical edges of every bar, and `fill` sets the fill opacity.
 
 ## Axes and formatting
 
-`axes` shows the category axis (the default), both, the value axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest, when series share a band. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+`axes` shows the category axis, both, the value axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest, when series share a band. `crosshair` highlights the hovered category. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
 
 ## Composing
 

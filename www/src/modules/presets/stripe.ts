@@ -83,6 +83,14 @@ export const stripe = definePreset({
 
     // Components
     chartPalette: "mono",
+    chartAxes: "right",
+    chartGrid: "lines",
+    chartLines: "fine",
+    chartArea: "tint",
+    chartBars: "slim",
+    chartLegend: "top",
+    chartGuide: "dashed",
+    chartMotion: "spring",
     linkUnderline: "never",
     linkColor: "accent",
     skeletonAnimation: "shimmer",

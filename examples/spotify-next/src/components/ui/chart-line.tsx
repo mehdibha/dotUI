@@ -11,17 +11,20 @@ import type {
   ChartSeriesRow,
 } from "@/components/ui/chart";
 import {
+  chartColorScale,
   chartCurves,
-  chartLegend,
+  chartGuide,
+  chartLook,
+  chartMarks,
   chartScales,
   chartSeries,
   legendEmphasis,
 } from "@/components/ui/chart";
 
 export interface LineSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
-  /** @default "natural" */
+  /** @default the defaults' `lines` */
   curve?: ChartCurveName;
-  /** @default 2 */
+  /** @default the defaults' `lines` */
   strokeWidth?: number;
   strokeDasharray?: string;
   /** A dot at every point. */
@@ -30,21 +33,24 @@ export interface LineSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
   states?: LineYOptions<ChartSeriesRow<TDatum>>["states"];
 }
 
-function lineMark<TDatum>(
+function lineMarks<TDatum>(
   { rows }: ChartSeries<TDatum>,
   options: LineSeriesOptions<TDatum>,
+  look: ReturnType<typeof chartLook>,
 ) {
-  return lineY(rows, {
-    x: "x",
-    y: "y",
-    color: "series",
-    key: "key",
-    curve: chartCurves[options.curve ?? "natural"],
-    strokeWidth: options.strokeWidth ?? 2,
-    strokeDasharray: options.strokeDasharray,
-    points: options.points ?? false,
-    states: [...legendEmphasis, ...(options.states ?? [])],
-  });
+  return [
+    lineY(rows, {
+      x: "x",
+      y: "y",
+      color: "series",
+      key: "key",
+      curve: chartCurves[options.curve ?? look.curve],
+      strokeWidth: options.strokeWidth ?? look.strokeWidth,
+      strokeDasharray: options.strokeDasharray,
+      points: options.points ?? false,
+      states: [...legendEmphasis, ...(options.states ?? [])],
+    }),
+  ] as const;
 }
 
 /** The lines of one or more series, as one mark. */
@@ -52,16 +58,21 @@ export function lineSeries<TDatum>(
   data: readonly TDatum[],
   options: LineSeriesOptions<TDatum>,
 ) {
-  return lineMark(chartSeries(data, options), options);
+  const series = chartSeries(data, options);
+  return chartMarks((defaults) =>
+    lineMarks(series, options, chartLook(defaults)),
+  )[0];
 }
 
 export interface LineChartOptions<TDatum> extends LineSeriesOptions<TDatum> {
-  /** The axes to show. @default "x" */
+  /** The axes to show. @default the defaults' `axes` */
   axes?: boolean | "x" | "y";
-  /** Horizontal gridlines. @default true */
+  /** `false` drops the gridlines. @default the defaults' `grid` */
   grid?: boolean;
-  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  /** A color legend; `"toggle"` lets readers hide series. @default the defaults' `legend` */
   legend?: boolean | "toggle";
+  /** A guide at the hovered position. @default the defaults' `guide` */
+  crosshair?: boolean;
   /** Formats x ticks and tooltip titles. */
   formatX?: ChartFormat;
   /** Formats y ticks and tooltip values. */
@@ -82,14 +93,12 @@ export function lineChart<TDatum>(
       },
       y: { format: options.formatY },
       axes: options.axes,
-      grid: options.grid === false ? false : "y",
+      grid: options.grid === false ? false : undefined,
     }),
-    color: {
-      domain: series.names,
-      legend: options.legend
-        ? chartLegend({ toggle: options.legend === "toggle" })
-        : undefined,
-    },
-    marks: [lineMark(series, options)],
+    color: chartColorScale(series.names, options.legend),
+    marks: chartMarks((defaults) =>
+      lineMarks(series, options, chartLook(defaults)),
+    ),
+    ...chartGuide(options.crosshair),
   };
 }

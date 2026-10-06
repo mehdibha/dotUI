@@ -8,22 +8,28 @@ import type { ChartMarkState, ChartValue } from "@tanstack/charts"
 export interface LineChartOptions extends LineSeriesOptions {
   /**
    * The axes to show.
-   * @default "x"
+   * @default the category axis, and the value axis as the defaults' `axes` says
    */
   axes?: boolean | "x" | "y"
 
   /**
-   * Horizontal gridlines.
-   * @default true
+   * Gridlines — `false` drops them.
+   * @default the defaults' `grid`
    */
   grid?: boolean
 
   /**
-   * A color legend below the plot. `"toggle"` lets readers click a series to
-   * hide it and hover one to dim the rest.
-   * @default false
+   * A color legend, where the defaults place it. `"toggle"` lets readers
+   * click a series to hide it and hover one to dim the rest.
+   * @default the defaults' `legend` — shown for several series unless it's `"off"`
    */
   legend?: boolean | "toggle"
+
+  /**
+   * A guide at the hovered position.
+   * @default the defaults' `guide`
+   */
+  crosshair?: boolean
 
   /** Formats x ticks and tooltip titles. */
   formatX?: (value: ChartValue) => string
@@ -54,13 +60,13 @@ export interface LineSeriesOptions {
 
   /**
    * Path interpolation between points.
-   * @default "natural"
+   * @default the defaults' `lines`
    */
   curve?: "linear" | "natural" | "monotone" | "step"
 
   /**
    * Width of each line.
-   * @default 2
+   * @default the defaults' `lines`
    */
   strokeWidth?: number
 

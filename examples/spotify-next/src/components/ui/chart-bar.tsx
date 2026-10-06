@@ -12,7 +12,10 @@ import type {
   ChartSeriesRow,
 } from "@/components/ui/chart";
 import {
-  chartLegend,
+  chartColorScale,
+  chartGuide,
+  chartLook,
+  chartMarks,
   chartScales,
   chartSeries,
   legendEmphasis,
@@ -23,8 +26,10 @@ export interface BarSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
   horizontal?: boolean;
   /** Series stacked in each band; `"normalize"` for a 100% stack. Otherwise series sharing a band sit side by side. */
   stacked?: boolean | "normalize";
-  /** Corner radius in pixels. @default 4 */
+  /** Corner radius in pixels. @default the defaults' `bars` */
   cornerRadius?: number;
+  /** The widest a bar gets, in pixels. @default the defaults' `bars` */
+  maxThickness?: number;
   /** Pixels trimmed from both categorical edges of every bar. */
   inset?: number;
   /** Fill opacity. @default 1 */
@@ -37,11 +42,12 @@ export interface BarSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
    category keeps full-width bars. A stack rounds only its outer end, so
    segments meet flush. Bars name their series from `color` only when they
    share a band — otherwise `z` does, or the tooltip shows the mark id. */
-function barMark<TDatum>(
+function barMarks<TDatum>(
   { rows, names }: ChartSeries<TDatum>,
   options: BarSeriesOptions<TDatum>,
+  look: ReturnType<typeof chartLook>,
 ) {
-  const radius = options.cornerRadius ?? 4;
+  const radius = options.cornerRadius ?? look.barRadius;
   const bands = new Set(rows.map(({ x }) => (x instanceof Date ? +x : x)));
   const shared = bands.size < rows.length;
   const bar = {
@@ -50,8 +56,9 @@ function barMark<TDatum>(
     key: "key",
     inset: options.inset,
     fillOpacity: options.fill,
+    maxThickness: options.maxThickness ?? look.barMaxThickness,
     states: [...legendEmphasis, ...(options.states ?? [])],
-    radius: options.stacked ? { end: radius } : radius,
+    radius: options.stacked || look.barEnd ? { end: radius } : radius,
     layout: options.stacked
       ? stack({
           order: names,
@@ -61,9 +68,11 @@ function barMark<TDatum>(
         ? group({ padding: 0.15 })
         : undefined,
   } as const;
-  return options.horizontal
-    ? barX(rows, { ...bar, x: "y", y: "x" })
-    : barY(rows, { ...bar, x: "x", y: "y" });
+  return [
+    options.horizontal
+      ? barX(rows, { ...bar, x: "y", y: "x" })
+      : barY(rows, { ...bar, x: "x", y: "y" }),
+  ] as const;
 }
 
 /** The bars of one or more series, as one mark. */
@@ -71,16 +80,21 @@ export function barSeries<TDatum>(
   data: readonly TDatum[],
   options: BarSeriesOptions<TDatum>,
 ) {
-  return barMark(chartSeries(data, options), options);
+  const series = chartSeries(data, options);
+  return chartMarks((defaults) =>
+    barMarks(series, options, chartLook(defaults)),
+  )[0];
 }
 
 export interface BarChartOptions<TDatum> extends BarSeriesOptions<TDatum> {
-  /** The axes to show. @default the category axis */
+  /** The axes to show. @default the category axis, and the value axis as the defaults' `axes` says */
   axes?: boolean | "x" | "y";
-  /** Gridlines along the value axis. @default true */
+  /** `false` drops the gridlines. @default the defaults' `grid` */
   grid?: boolean;
-  /** A color legend below the plot; `"toggle"` lets readers hide series. */
+  /** A color legend; `"toggle"` lets readers hide series. @default the defaults' `legend` */
   legend?: boolean | "toggle";
+  /** A guide at the hovered category. @default the defaults' `guide` */
+  crosshair?: boolean;
   /** Formats x ticks and the matching tooltip values. */
   formatX?: ChartFormat;
   /** Formats y ticks and the matching tooltip values. */
@@ -94,23 +108,20 @@ export function barChart<TDatum>(
 ) {
   const series = chartSeries(data, options);
   const horizontal = options.horizontal ?? false;
-  const category = horizontal ? "y" : "x";
-  const value = horizontal ? "x" : "y";
   return {
     scales: chartScales({
       x: { kind: horizontal ? "linear" : "band", format: options.formatX },
       y: { kind: horizontal ? "band" : "linear", format: options.formatY },
-      axes: options.axes ?? category,
-      grid: options.grid === false ? false : value,
+      value: horizontal ? "x" : "y",
+      axes: options.axes,
+      grid: options.grid === false ? false : undefined,
     }),
-    color: {
-      domain: series.names,
-      legend: options.legend
-        ? chartLegend({ toggle: options.legend === "toggle" })
-        : undefined,
-    },
-    marks: [barMark(series, options)],
+    color: chartColorScale(series.names, options.legend),
+    marks: chartMarks((defaults) =>
+      barMarks(series, options, chartLook(defaults)),
+    ),
     // Points sharing a band share its scene coordinate on the category axis.
     focus: horizontal ? ("group-y" as const) : ("group-x" as const),
+    ...chartGuide(options.crosshair),
   };
 }

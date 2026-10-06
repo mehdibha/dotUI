@@ -147,7 +147,7 @@
         ]
       },
       "description": "Path interpolation between points.",
-      "default": "\"natural\""
+      "default": "the defaults' `lines`"
     },
     "fill": {
       "type": "\"gradient\" | number",
@@ -168,7 +168,7 @@
         ]
       },
       "description": "Fill opacity, or `\"gradient\"` to fade toward the baseline.",
-      "default": "0.4"
+      "default": "the defaults' `area`"
     },
     "strokeWidth": {
       "type": "number",
@@ -177,7 +177,7 @@
         "type": "number"
       },
       "description": "Width of the upper edge.",
-      "default": "2"
+      "default": "the defaults' `lines`"
     },
     "points": {
       "type": "boolean",

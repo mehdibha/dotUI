@@ -136,7 +136,7 @@
         "type": "number"
       },
       "description": "Corner radius of each arc, in pixels. A large value gives pill ends.",
-      "default": "4"
+      "default": "the defaults' `bars`"
     },
     "track": {
       "type": "boolean",
@@ -269,8 +269,8 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "A color legend below the chart.",
-      "default": "false"
+      "description": "A color legend, where the defaults place it.",
+      "default": "the defaults' `legend` — shown for several series unless it's `\"off\"`"
     },
     "formatValue": {
       "type": "((value: ChartValue) => string)",

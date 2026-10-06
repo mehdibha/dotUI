@@ -72,6 +72,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Tag",
 		"Table",
 		"Accordion",
+		"Chart",
 		"Toggle button",
 		"Radio",
 		"Menu",

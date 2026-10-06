@@ -7,6 +7,8 @@ import type {
 } from "@tanstack/charts"
 import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
+import type { ChartDefaults } from "./base"
+
 /**
  * Renders a TanStack Charts definition with the design system's defaults:
  * the theme, the axis look, focus, keyboard navigation, the tooltip, and
@@ -24,6 +26,14 @@ export interface ChartProps {
 
   /** Longer description, announced after the name. */
   ariaDescription?: string
+
+  /**
+   * The look a definition's unset values are filled from: axes, grid, lines,
+   * area, bars, legend, hover guide and motion. Anything the definition or
+   * its builder sets wins.
+   * @default chartDefaults
+   */
+  defaults?: ChartDefaults
 
   /** Chart height in pixels. Without it the chart is 16:9 of its width. */
   height?: number

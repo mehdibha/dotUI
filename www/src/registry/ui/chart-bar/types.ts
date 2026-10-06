@@ -8,22 +8,28 @@ import type { ChartMarkState, ChartValue } from "@tanstack/charts"
 export interface BarChartOptions extends BarSeriesOptions {
   /**
    * The axes to show.
-   * @default "x", or "y" when `horizontal` — the category axis
+   * @default the category axis, and the value axis as the defaults' `axes` says
    */
   axes?: boolean | "x" | "y"
 
   /**
-   * Gridlines along the value axis.
-   * @default true
+   * Gridlines along the value axis — `false` drops them.
+   * @default the defaults' `grid`
    */
   grid?: boolean
 
   /**
-   * A color legend below the plot. `"toggle"` lets readers click a series to
-   * hide it and hover one to dim the rest.
-   * @default false
+   * A color legend, where the defaults place it. `"toggle"` lets readers
+   * click a series to hide it and hover one to dim the rest.
+   * @default the defaults' `legend` — shown for several series unless it's `"off"`
    */
   legend?: boolean | "toggle"
+
+  /**
+   * A guide at the hovered category.
+   * @default the defaults' `guide`
+   */
+  crosshair?: boolean
 
   /** Formats x ticks and the matching tooltip values — the value axis when `horizontal`. */
   formatX?: (value: ChartValue) => string
@@ -67,9 +73,15 @@ export interface BarSeriesOptions {
 
   /**
    * Corner radius in pixels. A stack rounds only its outer end.
-   * @default 4
+   * @default the defaults' `bars`
    */
   cornerRadius?: number
+
+  /**
+   * The widest a bar gets, in pixels.
+   * @default the defaults' `bars` — no limit, or 16 when `slim`
+   */
+  maxThickness?: number
 
   /**
    * Pixels trimmed from both categorical edges of every bar.
