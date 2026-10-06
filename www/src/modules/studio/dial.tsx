@@ -281,11 +281,15 @@ export function DialSelect({
   rowPreview?: boolean
   children?: React.ReactNode
 }) {
-  const { axis, hidden, pinned, exclude, held } = useAxisGate(key)
+  const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
   if (hidden) return null
-  const value = valueProp ?? String(axis?.effective)
+  // While a follow resolves it, the list marks Auto and the row reads "Auto · x".
+  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
+  const shown = following
+    ? options.find((option) => option.value === String(axis?.effective))
+    : selected
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -299,8 +303,11 @@ export function DialSelect({
       aside={held && <CauseChip cause={held} />}
       value={
         <>
-          <span className="truncate">{selected?.label ?? value}</span>
-          {rowPreview && selected?.preview}
+          <span className="truncate">
+            {following && `${selected?.label ?? value} · `}
+            {shown?.label ?? value}
+          </span>
+          {rowPreview && shown?.preview}
         </>
       }
     >
