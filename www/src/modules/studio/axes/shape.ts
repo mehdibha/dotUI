@@ -1,12 +1,14 @@
 /* Shape — one base length scales the whole radius ladder; a character picks
-   which rung each role of component wears.
+   which rung each role of component wears. Stroke is the width every control
+   edge draws at; tracks, whether switch, slider and progress stay round.
 
    Engine: `--radius` is the base every `--radius-*` rung derives from
    (base/theme.css). The role vars (roles.css) point each role at a rung —
    five picked, the rest derived — and every component's `--studio-<c>-radius`
    points at a role. On publish the chain resolves to a plain utility per
    component — `rounded-md`, `rounded-xl` — and a role at None ships no
-   rounded class at all. */
+   rounded class at all. `--studio-control-stroke` resolves the same way, to
+   `border` · `border-2` · `border-[0.5px]`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioStateInput } from "./index"
@@ -21,7 +23,34 @@ export const SHAPE_DEFAULTS = {
   roleSurface: "lg",
   rolePanel: "xl",
   roleCard: "auto",
+  controlStroke: "regular",
+  tracks: "round",
 }
+
+/* Control edges only: surfaces keep their hairline, since Duolingo's 2px
+   cards and Spectrum 2's 1px ones disagree. */
+export const STROKE_OPTIONS = [
+  { value: "fine", label: "Fine", description: "Linear, Polaris", px: 0.5 },
+  {
+    value: "regular",
+    label: "Regular",
+    description: "shadcn, Geist, Primer",
+    px: 1,
+  },
+  { value: "bold", label: "Bold", description: "Spectrum 2, Duolingo", px: 2 },
+]
+
+export const strokePx = (id: string) =>
+  STROKE_OPTIONS.find((option) => option.value === id)?.px ?? 1
+
+export const TRACK_OPTIONS = [
+  { value: "round", label: "Round", description: "Carbon, shadcn" },
+  {
+    value: "follow",
+    label: "Follow",
+    description: "Radix Themes, shadcn sera",
+  },
+]
 
 /** Where the base slider runs. Square is a character, not a base of 0: at 0
  *  the exported code would still carry rounded classes reading a dead token. */
@@ -52,6 +81,8 @@ export const SHAPE_SCHEMA: ChapterSchema<typeof SHAPE_DEFAULTS> = {
   roleSurface: oneOf(RUNG_OPTIONS),
   rolePanel: oneOf(BLOCK_RUNG_OPTIONS),
   roleCard: oneOf([{ value: "auto" }, ...BLOCK_RUNG_OPTIONS]),
+  controlStroke: oneOf(STROKE_OPTIONS),
+  tracks: oneOf(TRACK_OPTIONS),
 }
 
 export const SHAPE_ROLES = [
@@ -139,6 +170,7 @@ export function roleRung(state: Effective, key: ShapeRoleKey): string {
    - control-sm: one rung below controls, never square while they're rounded.
    - detail: capped at sm and at control-sm.
    - pill: square with square controls.
+   - track: full, or the detail rung when tracks follow corners.
    - field / container / inline-item: multi-line, so never a pill. */
 function derivedRungs(state: Effective): Record<string, string> {
   const control = roleRung(state, "roleControl")
@@ -151,10 +183,12 @@ function derivedRungs(state: Effective): Record<string, string> {
   const upTo = (id: string, cap: string) =>
     id === "none" || atLeast(id, cap) ? id : minRung(rungAbove(id), cap)
   const block = (id: string) => minRung(id, "3xl")
+  const detail = minRung(minRung(control, "sm"), controlSm)
   return {
     "--studio-radius-control-sm": controlSm,
-    "--studio-radius-detail": minRung(minRung(control, "sm"), controlSm),
+    "--studio-radius-detail": detail,
     "--studio-radius-pill": control === "none" ? "none" : "full",
+    "--studio-radius-track": state.tracks === "follow" ? detail : "full",
     "--studio-radius-field": block(minRung(control, surface)),
     "--studio-radius-container": block(upTo(surface, "lg")),
     "--studio-radius-inline-item": block(upTo(item, "md")),
@@ -210,6 +244,8 @@ export function resolveShape(state: Effective): Resolved {
   const defaults = shapeVars(SHAPE_DEFAULTS as Effective)
   for (const [name, token] of Object.entries(shapeVars(state)))
     if (token !== defaults[name]) tokens[name] = token
+  if (state.controlStroke !== SHAPE_DEFAULTS.controlStroke)
+    tokens["--studio-control-stroke"] = `${strokePx(state.controlStroke)}px`
   return { tokens }
 }
 

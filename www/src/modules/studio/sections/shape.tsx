@@ -1,7 +1,7 @@
 "use client"
 
 /* Shape — the base radius, and a character: which rung each role of component
-   wears. The character opens a grid of cards, each a small app drawn at that
+   wears; then the control stroke, and (folded) whether tracks stay round. The character opens a grid of cards, each a small app drawn at that
    character's real radii on the current base, so the pick is made by feel.
    Roles fold under the cards for the system that needs one role off the
    curated path; a hand-set vector reads Custom. */
@@ -18,15 +18,19 @@ import {
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
+  STROKE_OPTIONS,
+  TRACK_OPTIONS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
 import {
   DialFolder,
   DialPopover,
+  DialSegmented,
   DialSelect,
   DialSlider,
   DialTrigger,
 } from "../dial"
+import { More } from "../family-page"
 import { CardGrid } from "../patterns"
 import type { Effective, Studio } from "../state"
 
@@ -173,6 +177,14 @@ export function ShapeSection({ studio }: { studio: Studio }) {
           <CharacterPanel studio={studio} />
         </DialPopover>
       </DialTrigger>
+      <DialSegmented
+        axis="controlStroke"
+        label="Control stroke"
+        options={STROKE_OPTIONS}
+      />
+      <More keys={["tracks"]}>
+        <DialSegmented axis="tracks" label="Tracks" options={TRACK_OPTIONS} />
+      </More>
     </>
   )
 }

@@ -46,7 +46,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
         slots: {
           item: "selected:text-fg",
           indicator:
-            "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-1 ring-border-control",
+            "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-(length:--studio-control-stroke) ring-border-control",
         },
       },
       flat: {
@@ -68,7 +68,9 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
         slots: { root: "bg-muted p-[3px]" },
       },
       outline: {
-        slots: { root: "border border-border p-[2px]" },
+        slots: {
+          root: "border-(length:--studio-control-stroke) border-border p-[calc(3px-var(--studio-control-stroke))]",
+        },
       },
     },
   },

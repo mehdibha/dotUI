@@ -119,6 +119,43 @@ describe("shape axis", () => {
     },
   )
 
+  test("control stroke writes the edge width; Regular writes nothing", () => {
+    expect(resolve({ controlStroke: "bold" }).tokens).toEqual({
+      "--studio-control-stroke": "2px",
+    })
+    expect(resolve({ controlStroke: "fine" }).tokens).toEqual({
+      "--studio-control-stroke": "0.5px",
+    })
+    expect(STYLE_VAR_DEFAULTS["--studio-control-stroke"]).toBe("1px")
+  })
+
+  test("a border focus adds only what the stroke doesn't draw", () => {
+    const focus = { focusInputStyle: "border", focusInputBorderWidth: 2 }
+    expect(resolve(focus).tokens["--focus-input-width"]).toBe("1px")
+    expect(
+      resolve({ ...focus, controlStroke: "bold" }).tokens[
+        "--focus-input-width"
+      ],
+    ).toBe("0px")
+    expect(
+      resolve({ ...focus, controlStroke: "fine" }).tokens[
+        "--focus-input-width"
+      ],
+    ).toBe("1.5px")
+  })
+
+  test("tracks stay round, or follow the detail rung", () => {
+    expect(resolve({ tracks: "follow" }).tokens).toEqual({
+      "--studio-radius-track": "var(--radius-sm)",
+    })
+    expect(resolve({ ...vector("square"), tracks: "follow" }).tokens).toEqual(
+      expect.objectContaining({ "--studio-radius-track": "0" }),
+    )
+    expect(resolve(vector("square")).tokens).not.toHaveProperty(
+      "--studio-radius-track",
+    )
+  })
+
   test("states saved before cards were a role keep their character", () => {
     expect(
       activeCharacter(
@@ -149,30 +186,55 @@ describe("shipped shape", () => {
     }
     return depth === 0
   }
-  test.each(SHAPE_CHARACTERS.map((c) => c.id))(
-    "%s ships whole radius classes and no studio vars",
-    async (id) => {
-      const ds = designSystemOf(parseState(vector(id)))
-      const preset: PublishPreset = {
-        density: ds.density,
-        componentParams: ds.componentParams,
-        tokens: ds.tokens,
-        color: ds.color,
-        icons: ds.icons,
-      }
-      const broken: string[] = []
-      for (const [name, load] of Object.entries(publishables)) {
-        const { item } = publish({
-          publishable: selectPublishable(await load(), preset),
-          preset,
-        })
-        const code = (item.files ?? []).map((f) => f.content).join("\n")
-        for (const [, literal] of code.matchAll(/"([^"\n]*)"/g))
-          for (const token of literal!.split(/\s+/))
-            if (!balanced(token)) broken.push(`${name}: ${token}`)
-        if (code.includes("--studio-")) broken.push(`${name}: --studio- var`)
-      }
-      expect(broken).toEqual([])
-    },
-  )
+  const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
+    const ds = designSystemOf(parseState(state))
+    return {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+  }
+  const shipped = async (name: string, preset: PublishPreset) => {
+    const { item } = publish({
+      publishable: selectPublishable(await publishables[name]!(), preset),
+      preset,
+    })
+    return (item.files ?? []).map((f) => f.content).join("\n")
+  }
+
+  test.each([
+    ...SHAPE_CHARACTERS.map((c) => [c.id, vector(c.id)] as const),
+    ["bold stroke", { controlStroke: "bold" }] as const,
+    ["fine stroke", { controlStroke: "fine" }] as const,
+  ])("%s ships whole classes and no studio vars", async (_, state) => {
+    const preset = presetOf(state)
+    const broken: string[] = []
+    for (const name of Object.keys(publishables)) {
+      const code = await shipped(name, preset)
+      for (const [, literal] of code.matchAll(/"([^"\n]*)"/g))
+        for (const token of literal!.split(/\s+/))
+          if (!balanced(token)) broken.push(`${name}: ${token}`)
+      if (code.includes("--studio-")) broken.push(`${name}: --studio- var`)
+    }
+    expect(broken).toEqual([])
+  })
+
+  test("each stroke ships as Tailwind spells it", async () => {
+    const at = async (controlStroke: string) => ({
+      input: await shipped("input", presetOf({ controlStroke })),
+      otp: await shipped("otp-field", presetOf({ controlStroke })),
+    })
+    const regular = await at("regular")
+    expect(regular.input).toContain("border border-border-control bg-field")
+    expect(regular.input).toContain("calc(var(--addon-button-inset)-1px)")
+    expect(regular.otp).toContain("-space-x-px")
+    expect(regular.input).not.toContain("length:")
+    const bold = await at("bold")
+    expect(bold.input).toContain("border-2 border-border-control bg-field")
+    expect(bold.otp).toContain("-space-x-[2px]")
+    const fine = await at("fine")
+    expect(fine.input).toContain("border-[0.5px] border-border-control")
+  })
 })

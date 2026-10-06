@@ -82,7 +82,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
             primary:
               "bg-primary hover:bg-primary-hover pressed:bg-primary-active",
             secondary:
-              "border border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+              "border-(length:--studio-control-stroke) border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
           },
         },
       },
@@ -94,7 +94,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
             primary:
               "border border-black/15 bg-primary shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-primary-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-primary-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
             secondary:
-              "border border-border-control bg-neutral shadow-[0_1px_0_0_rgb(31_35_40/0.04)] hover:bg-neutral-hover disabled:shadow-none dark:shadow-none pressed:bg-neutral-active",
+              "border-(length:--studio-control-stroke) border-border-control bg-neutral shadow-[0_1px_0_0_rgb(31_35_40/0.04)] hover:bg-neutral-hover disabled:shadow-none dark:shadow-none pressed:bg-neutral-active",
           },
         },
       },
@@ -106,7 +106,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
             primary:
               "bg-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-primary-hover disabled:shadow-none disabled:after:hidden",
             secondary:
-              "border border-border-control bg-bg shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
+              "border-(length:--studio-control-stroke) border-border-control bg-bg shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
           },
         },
       },
@@ -142,7 +142,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
             primary:
               "bg-primary shadow-[0_3px_0_0_color-mix(in_srgb,var(--color-primary),black_13%)] hover:brightness-110 disabled:shadow-none disabled:brightness-100 pressed:translate-y-[3px] pressed:shadow-none",
             secondary:
-              "border border-border-control bg-bg shadow-[0_2px_0_0_var(--color-border-control)] hover:brightness-90 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
+              "border-(length:--studio-control-stroke) border-border-control bg-bg shadow-[0_2px_0_0_var(--color-border-control)] hover:brightness-90 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
           },
         },
       },
@@ -157,8 +157,10 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
         base: "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-sm selected:hover:bg-muted selected:pressed:bg-highlight",
         variants: {
           variant: {
-            primary: "selected:ring-1 selected:ring-border-control",
-            quiet: "selected:ring-1 selected:ring-border-control",
+            primary:
+              "selected:ring-(length:--studio-control-stroke) selected:ring-border-control",
+            quiet:
+              "selected:ring-(length:--studio-control-stroke) selected:ring-border-control",
           },
         },
       },

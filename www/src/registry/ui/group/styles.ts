@@ -16,15 +16,15 @@ const { useStyles, styles } = createStyles(groupMeta, {
         "has-data-[slot=group]:gap-2",
         "*:hover:z-1 *:focus:z-3 *:focus-visible:z-3 *:has-[input]:z-2 *:[input]:z-2",
         "*:data-button:shadow-none",
-        "*:data-label:shrink-0 *:data-label:rounded-(--studio-group-radius) *:data-label:border *:data-label:bg-card *:data-label:px-4",
+        "*:data-label:shrink-0 *:data-label:rounded-(--studio-group-radius) *:data-label:border-(length:--studio-control-stroke) *:data-label:bg-card *:data-label:px-4",
       ],
-      text: "flex items-center gap-2 rounded-(--studio-group-radius) border bg-card px-4 text-sm font-(--studio-font-weight-label) shadow-xs **:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4",
+      text: "flex items-center gap-2 rounded-(--studio-group-radius) border-(length:--studio-control-stroke) bg-card px-4 text-sm font-(--studio-font-weight-label) shadow-xs **:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4",
     },
     variants: {
       orientation: {
         horizontal: {
           root: [
-            "-space-x-px not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
+            "-space-x-(--studio-control-stroke) not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
             "not-has-data-group:*:not-last:data-select:*:data-button:rounded-r-none not-has-data-group:*:not-[:nth-child(2)]:data-select:*:data-button:rounded-l-none",
           ],
         },
@@ -48,13 +48,13 @@ const { useStyles, styles } = createStyles(groupMeta, {
             horizontal: {
               root: [
                 "*:data-button:[&:has(+[data-button])]:me-0 *:data-button:[&:has(+[data-button])]:border-r-0 *:data-button:[[data-button]+&]:border-l-0",
-                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-y-1.5 *:data-button:[[data-button]+&]:before:left-0 *:data-button:[[data-button]+&]:before:w-px *:data-button:[[data-button]+&]:before:bg-current/20",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-y-1.5 *:data-button:[[data-button]+&]:before:left-0 *:data-button:[[data-button]+&]:before:w-(--studio-control-stroke) *:data-button:[[data-button]+&]:before:bg-current/20",
               ],
             },
             vertical: {
               root: [
                 "*:data-button:[&:has(+[data-button])]:border-b-0 *:data-button:[[data-button]+&]:border-t-0",
-                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-x-1.5 *:data-button:[[data-button]+&]:before:top-0 *:data-button:[[data-button]+&]:before:h-px *:data-button:[[data-button]+&]:before:bg-current/20",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-x-1.5 *:data-button:[[data-button]+&]:before:top-0 *:data-button:[[data-button]+&]:before:h-(--studio-control-stroke) *:data-button:[[data-button]+&]:before:bg-current/20",
               ],
             },
           },

@@ -11,9 +11,12 @@
   --studio-radius-control-sm: var(--radius-sm);
   --studio-radius-detail: var(--radius-sm);
   --studio-radius-pill: var(--radius-full);
+  --studio-radius-track: var(--radius-full);
   --studio-radius-field: var(--radius-md);
   --studio-radius-container: var(--radius-lg);
   --studio-radius-inline-item: var(--radius-md);
+  /* Every control edge: field shells, checks, secondary buttons, seams. */
+  --studio-control-stroke: 1px;
   /* Action labels only (Button, ToggleButton, GroupText). */
   --studio-font-weight-label: var(--font-weight-medium);
 }

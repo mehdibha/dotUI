@@ -24,7 +24,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceInput:
         "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
       choiceIndicator: [
-        "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-questionnaire-indicator-radius) border border-border-control",
+        "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-questionnaire-indicator-radius) border-(length:--studio-control-stroke) border-border-control",
         "group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5",
         "group-data-[type=radio]/questionnaire-choice:rounded-full",
         "group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
@@ -39,7 +39,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-radius-control-sm) border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
       inputWrapper: "group/questionnaire-input relative w-full min-w-0",
       input: [
-        "w-full min-w-0 rounded-(--studio-questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) outline-none",
+        "w-full min-w-0 rounded-(--studio-questionnaire-input-radius) border-(length:--studio-control-stroke) border-border-control bg-field transition-[box-shadow,border-color,color] duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) outline-none",
         "placeholder:text-fg-muted",
         "focus:focus-input focus:not-aria-invalid:border-border-focus",
         "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted",

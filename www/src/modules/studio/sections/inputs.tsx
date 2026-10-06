@@ -218,6 +218,7 @@ export function InputsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
+      <UsesRow axis="controlStroke" label="Control stroke" />
       <UsesRow axis="focusInputStyle" label="Field focus" />
       <UsesRow axis="inputError" label="Invalid" />
       <More keys={["inputHover", "addonLayout", "addonDivider"]}>

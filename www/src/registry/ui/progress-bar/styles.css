@@ -1,5 +1,5 @@
 :root {
-  --studio-progress-radius: var(--studio-radius-pill);
+  --studio-progress-radius: var(--studio-radius-track);
   --studio-progress-state-duration: 150ms;
   --studio-progress-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -29,7 +29,7 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "border border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "border-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -47,7 +47,7 @@ const outlineField = tv({
 })
 
 const lineField = tv({
-  base: "border-b border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
+  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -59,7 +59,7 @@ const lineField = tv({
 
 // An underline field ends in a straight rule, so its tops stay small.
 const filledLineBottomField = tv({
-  base: "rounded-t-(--studio-radius-detail) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
@@ -70,7 +70,7 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "border border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "border-(length:--studio-control-stroke) border-transparent bg-field px-(--edge-to-text) shadow-(--shadow-control,0_0_#0000) transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -93,7 +93,7 @@ const filledField = tv({
 
 // Paradigm B (outline / filled / filled-line-bottom) — addon owns asymmetric inline padding.
 const addonInputModeParadigmB =
-  "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]"
+  "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-var(--studio-control-stroke))] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-var(--studio-control-stroke))]"
 
 // Line style — symmetric inline padding (no bg/border to "yield to").
 const addonInputModeLine =
@@ -111,7 +111,7 @@ const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
 const addonBoxed =
   "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)"
 const addonDivider =
-  "border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t"
+  "border-border-control group-has-data-input/input-group:first:border-r-(length:--studio-control-stroke) group-has-data-input/input-group:last:border-l-(length:--studio-control-stroke) group-has-data-textarea/input-group:first:border-b-(length:--studio-control-stroke) group-has-data-textarea/input-group:last:border-t-(length:--studio-control-stroke)"
 
 /* -------------------------------------------------------------------------- */
 
@@ -136,7 +136,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
         "text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
         "group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
-        "**:data-button:rounded-[max(min(var(--radius-sm),var(--studio-input-radius)),calc(var(--studio-input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+        "**:data-button:rounded-[max(min(var(--radius-sm),var(--studio-input-radius)),calc(var(--studio-input-radius)-(var(--addon-button-inset)-var(--studio-control-stroke))))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
         "group-has-data-textarea/input-group:px-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text)",
         "group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",

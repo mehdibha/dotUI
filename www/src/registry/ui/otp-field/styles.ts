@@ -19,7 +19,7 @@ const { useStyles, styles } = createStyles(otpFieldMeta, {
       group: {
         slots: {
           group:
-            "w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
+            "w-fit items-stretch -space-x-(--studio-control-stroke) *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
         },
       },
       boxes: {

@@ -1,6 +1,6 @@
 :root {
-  --studio-slider-track-radius: var(--studio-radius-pill);
-  --studio-slider-thumb-radius: var(--studio-radius-pill);
+  --studio-slider-track-radius: var(--studio-radius-track);
+  --studio-slider-thumb-radius: var(--studio-radius-track);
   --studio-slider-thumb-shadow: 0 0 #0000;
   --studio-slider-fill-color: var(--color-primary);
   --studio-slider-cursor: var(--cursor-drag);

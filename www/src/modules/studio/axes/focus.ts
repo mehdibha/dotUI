@@ -11,6 +11,7 @@ import type { Cond, Rule } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
+import { strokePx } from "./shape"
 
 /* Defaults mirror base.css: a 2px accent ring over a 2px bg gap; fields wear
    a 2px muted halo. */
@@ -124,11 +125,16 @@ export function resolveFocus(state: Effective): Resolved {
       if (tokens["--focus-ring-inset"]) tokens["--focus-input-inset"] = "inset"
       break
     case "border":
-      // The field's own 1px border swaps color; the rest of the width is an
+      // The field's own border swaps color; the rest of the width is an
       // inset stroke, so the box never shifts.
       tokens["--focus-input-inset"] = "inset"
       tokens["--focus-input-offset"] = "0px"
-      tokens["--focus-input-width"] = px(state.focusInputBorderWidth - 1)
+      tokens["--focus-input-width"] = px(
+        Math.max(
+          0,
+          state.focusInputBorderWidth - strokePx(state.controlStroke),
+        ),
+      )
       tokens["--focus-input-color"] = "var(--color-border-focus)"
       break
   }
