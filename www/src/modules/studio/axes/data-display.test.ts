@@ -106,6 +106,53 @@ describe("shipped data display", () => {
       expect(content, cls).toContain(cls)
   })
 
+  test("the boxed color editor wears the container surface", async () => {
+    const base = presetOf({})
+    const preset = {
+      ...base,
+      componentParams: {
+        ...base.componentParams,
+        "color-editor": { style: "hammamet" },
+      },
+    }
+    const { item } = publish({
+      publishable: selectPublishable(
+        await publishables["color-editor"]!(),
+        preset,
+      ),
+      preset,
+    })
+    const content = item.files?.[0]?.content ?? ""
+    for (const cls of CONTAINER_SURFACE.split(" "))
+      expect(content, cls).toContain(cls)
+  })
+
+  test("boxed accordions draw the ring inside the trigger; divided keeps it outside", async () => {
+    for (const accordionContainer of ["contained", "separated"])
+      expect(
+        await shipped("accordion", { accordionContainer }),
+        accordionContainer,
+      ).toContain("[--focus-ring-inset:inset]")
+    expect(await shipped("accordion")).not.toContain("--focus-ring-inset")
+  })
+
+  test("only the contained accordion fills the open item", async () => {
+    expect(
+      await shipped("accordion", { accordionContainer: "contained" }),
+    ).toContain("expanded:bg-muted/50")
+    for (const accordionContainer of ["divided", "separated", "plain"])
+      expect(
+        await shipped("accordion", { accordionContainer }),
+        accordionContainer,
+      ).not.toContain("expanded:bg")
+  })
+
+  test("striped rows ship behind the striped prop", async () => {
+    const content = await shipped("table")
+    expect(content).toContain("in-data-striped:odd:bg-muted/40")
+    expect(content).toContain("data-striped={striped || undefined}")
+  })
+
   test("divided and plain accordions wear no surface", async () => {
     for (const accordionContainer of ["divided", "plain"])
       expect(
