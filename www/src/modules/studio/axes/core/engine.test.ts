@@ -100,6 +100,18 @@ describe("catalog", () => {
     }
   })
 
+  it("param vars write only their item's own --studio-<item>-* vars", () => {
+    for (const item of registryUi)
+      for (const [param, def] of Object.entries(item.params ?? {}))
+        for (const vars of Object.values(
+          ("vars" in def && def.vars) || {},
+        ) as Record<string, string>[])
+          for (const name of Object.keys(vars))
+            expect(name, `${item.name}.${param}`).toMatch(
+              new RegExp(`^--studio-${item.name}-`),
+            )
+  })
+
   it("rules are well formed and authored by their target's owner", () => {
     const ids = RULES.map((rule) => rule.id)
     expect(new Set(ids).size).toBe(ids.length)
@@ -332,6 +344,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { motionEntrance: "fade" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
+  "menus/check-or-fill": [
+    { menuIndicator: "none" },
+    { menuIndicator: "check-start" },
+  ],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

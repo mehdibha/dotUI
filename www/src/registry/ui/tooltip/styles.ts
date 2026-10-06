@@ -44,6 +44,10 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
         },
       },
     },
+    tip: {
+      tip: {},
+      none: { slots: { arrow: "hidden" } },
+    },
     motion: {
       // shadcn's: in from 8px off, toward the trigger; out in place.
       scale: {

@@ -13,13 +13,6 @@ const dialogMeta = {
   ],
   registryDependencies: ["responsive", "modal", "drawer", "popover", "button"],
   params: {
-    header: {
-      kind: "enum",
-      default: "title",
-      values: ["title", "band"] as const,
-      description:
-        "How a popover titles itself: a plain title, or a tinted divided band.",
-    },
     titles: {
       kind: "enum",
       default: "quiet",
