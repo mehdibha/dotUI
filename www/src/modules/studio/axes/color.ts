@@ -58,9 +58,12 @@ export const CONTROL_EDGE_OPTIONS = [
   },
 ]
 
+/** The Strong edge, also Selection's check edge. */
+export const STRONG_EDGE = "var(--neutral-700)"
+
 const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
   soft: ["var(--color-border)", "var(--neutral-400)"],
-  strong: ["var(--neutral-700)", "var(--neutral-800)"],
+  strong: [STRONG_EDGE, "var(--neutral-800)"],
 }
 
 /* The wash on a persistent selected item: table and tree rows, tags,

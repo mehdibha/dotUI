@@ -12,7 +12,12 @@ import { useStyles as useSliderStyles } from "@/registry/ui/slider/styles"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 
 import { effective as resolve } from "../axes"
-import { CORNER_OPTIONS, cornerTokens } from "../axes/checkbox"
+import {
+  CORNER_OPTIONS,
+  cornerTokens,
+  EDGE_OPTIONS,
+  edgeTokens,
+} from "../axes/checkbox"
 import { SELECTED_OPTIONS } from "../axes/choice-cards"
 import { MARK_OPTIONS } from "../axes/radio"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
@@ -61,13 +66,18 @@ function Recipe({
 
 const ON = { "data-selected": "true" }
 
-function CheckboxMark({ corner }: { corner: string }) {
+function CheckboxMark({ corner, edge }: { corner: string; edge?: string }) {
   const { indicator } = useCheckboxStyles()()
   return (
     <span
-      {...ON}
+      {...(edge ? {} : ON)}
       className={indicator()}
-      style={cornerTokens(corner) as React.CSSProperties | undefined}
+      style={
+        {
+          ...cornerTokens(corner),
+          ...(edge && edgeTokens(edge)),
+        } as React.CSSProperties
+      }
     >
       <CheckIcon />
     </span>
@@ -140,6 +150,12 @@ const corner = (value: string) => (
   </Recipe>
 )
 
+const edge = (value: string) => (
+  <Recipe name="checkbox" params={{}}>
+    <CheckboxMark corner="auto" edge={value} />
+  </Recipe>
+)
+
 const mark = (value: string) => (
   <Recipe name="radio-group" params={{ mark: value }}>
     <RadioMark />
@@ -194,15 +210,24 @@ export function SelectionSection({ studio }: { studio: Studio }) {
         </HeroMember>
       </FamilyHero>
       <UsesRow axis="checkboxColor" label="Checked color" />
+      <UsesRow axis="controlEdge" label="Control edge" />
       <UsesRow axis="controlStroke" label="Control stroke" />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["checkCorner"]}>
+      <More keys={["checkCorner", "checkEdge"]}>
         <DialSelect
           axis="checkCorner"
           label="Checkbox corner"
           options={CORNER_OPTIONS.map((option) => ({
             ...option,
             preview: corner(option.value),
+          }))}
+        />
+        <DialSelect
+          axis="checkEdge"
+          label="Check edge"
+          options={EDGE_OPTIONS.map((option) => ({
+            ...option,
+            preview: edge(option.value),
           }))}
         />
       </More>

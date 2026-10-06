@@ -5,10 +5,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { Density } from "@/registry/types"
 import { flatten } from "@/publisher/flatten"
+import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { SELECTED_OPTIONS } from "./choice-cards"
+import { STRONG_EDGE } from "./color"
 import { DEFAULT_STATE, parseState } from "./index"
 import { MARK_OPTIONS } from "./radio"
 import { STYLE_OPTIONS } from "./switch"
@@ -137,6 +139,35 @@ describe("selection controls", () => {
       {},
     )
   })
+
+  it("Strong check edge is Color's Strong edge; Same as fields writes nothing", () => {
+    expect(designSystemOf(parseState({ checkEdge: "strong" })).tokens).toEqual({
+      "--studio-check-edge": STRONG_EDGE,
+    })
+    expect(designSystemOf(parseState({ checkEdge: "fields" })).tokens).toEqual(
+      {},
+    )
+  })
+
+  it.each(["checkbox", "radio-group"])(
+    "%s ships the field edge at Origin and the strong edge under Strong",
+    async (name) => {
+      const shipped = async (raw: Record<string, unknown>) => {
+        const preset = designSystemOf(parseState(raw))
+        const { item } = publish({
+          publishable: selectPublishable(await publishables[name]!(), preset),
+          preset,
+        })
+        return (item.files ?? []).map((f) => f.content).join("\n")
+      }
+      const origin = await shipped({})
+      expect(origin).toMatch(/ border-border-control /)
+      expect(origin).not.toMatch(/--studio-/)
+      const strong = await shipped({ checkEdge: "strong" })
+      expect(strong).toMatch(/ border-\(--neutral-700\) /)
+      expect(strong).not.toMatch(/--studio-/)
+    },
+  )
 
   it("radio mark and switch style land as their item's params", () => {
     const ds = designSystemOf(

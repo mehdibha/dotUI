@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
         "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease) has-data-label:w-full has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
-        "grid size-4 shrink-0 place-content-center rounded-full border-(length:--studio-control-stroke) border-border-control bg-transparent text-transparent before:rounded-full before:bg-current before:content-['']",
+        "grid size-4 shrink-0 place-content-center rounded-full border-(length:--studio-control-stroke) border-(--studio-check-edge) bg-transparent text-transparent before:rounded-full before:bg-current before:content-['']",
         "transition-[background-color,border-color,box-shadow,color] duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease)",
         "disabled:border-(--disabled-border,var(--color-border-control))",
         "invalid:border-border-danger",
