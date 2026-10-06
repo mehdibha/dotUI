@@ -69,7 +69,7 @@ import * as type from "./type"
 export type { Resolved }
 
 /* Resolver order: a later chapter wins a token or param collision. */
-const CHAPTERS = [
+export const CHAPTERS = [
   color.chapter,
   type.chapter,
   icons.chapter,
