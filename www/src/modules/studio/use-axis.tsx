@@ -57,19 +57,37 @@ export function valueLabel(key: AxisKey, value: unknown): string {
  *  first opens the row's chapter or page. */
 export const RevealAxis = createContext<(key: AxisKey) => void>(flashAxis)
 
+const closedFolder = (row: Element) =>
+  row.closest<HTMLElement>("[data-folder]:not([data-expanded])")
+
+/** Flashes a row in view, opening the folded More it sits in first. */
+export function revealRow(row: Element) {
+  const folder = closedFolder(row)
+  folder?.querySelector<HTMLElement>("[data-folder-trigger]")?.click()
+  requestAnimationFrame(() => {
+    row.scrollIntoView({ block: "nearest" })
+    row.animate(
+      {
+        boxShadow: [
+          "inset 0 0 0 1.5px var(--color-accent)",
+          "inset 0 0 0 1.5px transparent",
+        ],
+      },
+      { duration: 1200, easing: "ease-in" },
+    )
+  })
+}
+
+/** The key's row, or the row whose popover edits it; false when neither is
+ *  on screen. */
 export function flashAxis(key: string): boolean {
-  const row = document.querySelector(`[data-axis="${key}"]`)
+  const row = [
+    ...document.querySelectorAll(
+      `[data-axis="${key}"], [data-holds~="${key}"]`,
+    ),
+  ].find((el) => (closedFolder(el) ?? el).checkVisibility())
   if (!row) return false
-  row.scrollIntoView({ block: "nearest" })
-  row.animate(
-    {
-      boxShadow: [
-        "inset 0 0 0 1.5px var(--color-accent)",
-        "inset 0 0 0 1.5px transparent",
-      ],
-    },
-    { duration: 1200, easing: "ease-in" },
-  )
+  revealRow(row)
   return true
 }
 
@@ -119,6 +137,11 @@ export function useAxisGate(key: AxisKey | undefined) {
     hidden: lock?.kind === "hide" && !lock.part,
     pinned: lock?.kind === "pin" ? lock.cause : undefined,
     exclude: axis?.explain.exclude,
+    /** The cause of an exclusion the saved value falls in. */
+    held:
+      axis?.explain.rule && axis.explain.rule === axis.explain.exclude?.rule
+        ? axis.explain.exclude.cause
+        : undefined,
     /** The follow id the row reads through, while it does. */
     following: axis?.explain.via,
   }
