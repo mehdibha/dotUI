@@ -1,8 +1,6 @@
-/* OTP field — how the digit cells sit: one attached group with hairline
-   dividers (the registry today, shadcn), separate boxes (iOS), or a bare
-   dash per digit (Material-ish minimal). Cells wear the Inputs style.
-
-   Engine: `otp-field.cells` styles the OTPFieldGroup that lays the inputs out. */
+/* OTP field — whether the digit cells attach into one row or stand apart,
+   each wearing the field shell. Engine: `otp-field.cells` styles the group
+   that lays the inputs out. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -10,13 +8,16 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const OTP_FIELD_DEFAULTS = {
-  otpStyle: "group",
+  otpStyle: "attached",
 }
 
 export const OTP_STYLE_OPTIONS = [
-  { value: "group", label: "Group" },
-  { value: "boxes", label: "Boxes" },
-  { value: "underline", label: "Underline" },
+  { value: "attached", label: "Attached", credits: ["shadcn", "Supabase"] },
+  {
+    value: "separate",
+    label: "Separate",
+    credits: ["Ant", "Mantine", "Clerk", "Untitled UI", "shadcn sera"],
+  },
 ]
 
 export const OTP_FIELD_SCHEMA: ChapterSchema<typeof OTP_FIELD_DEFAULTS> = {
@@ -36,4 +37,14 @@ export const chapter = defineChapter({
   defaults: OTP_FIELD_DEFAULTS,
   schema: OTP_FIELD_SCHEMA,
   resolve: resolveOtpField,
+  rules: [
+    {
+      // Attached cells' bottom rules merge into one line.
+      id: "otp-field/underline-separates-cells",
+      target: "otpStyle",
+      when: { key: "inputStyle", in: ["underline", "indicator"] },
+      effect: { kind: "pin", value: "separate" },
+      cause: "inputStyle",
+    },
+  ],
 })

@@ -11,7 +11,7 @@ describe("calendar + pickers axes", () => {
       today: "none",
       weekdays: "single",
     })
-    expect(ds.componentParams.select).toEqual({ caret: "chevron" })
+    expect(ds.componentParams.select).toMatchObject({ caret: "chevron" })
     expect(ds.tokens).toEqual({})
   })
 
@@ -29,6 +29,6 @@ describe("calendar + pickers axes", () => {
       today: "ring",
       weekdays: "double",
     })
-    expect(ds.componentParams.select).toEqual({ caret: "double" })
+    expect(ds.componentParams.select).toMatchObject({ caret: "double" })
   })
 })

@@ -110,15 +110,21 @@ describe("extractStylesConfig", () => {
     fs.rmSync(dir, { recursive: true })
   })
 
-  test("input: resolves local tv() factory calls (tokens, outlineField)", () => {
+  test("input: resolves local tv() factory calls (tokens, outlineShell)", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "input/styles.ts"))
-    // `tokens({ h: 6 })` in density.compact size.sm → the h=6 token string.
-    const sm = cfg.density?.compact?.variants?.size?.sm as Record<
+    // `h6` → `tokens({ h: 6 })` at height.controls, compact, size sm.
+    const controls = cfg.params?.height?.controls as {
+      density?: Record<
+        string,
+        { variants?: { size?: Record<string, unknown> } }
+      >
+    }
+    const sm = controls.density?.compact?.variants?.size?.sm as Record<
       string,
       string
     >
     expect(sm.input).toContain("[--input-h:--spacing(6)]")
-    // `outlineField({ focus: 'self' })` in params.style.outline.
+    // `outlineShell({ focus: 'self' })` in params.style.outline.
     const outline = cfg.params?.style?.outline?.slots?.input as string
     expect(outline).toContain("focus:focus-input")
     expect(outline).toContain("border-border-control")

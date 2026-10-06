@@ -1,7 +1,7 @@
 "use client"
 
 /* States — the treatments every control wears at once: focus, disabled,
-   invalid, the cursor over each kind of control and text selection. Focus
+   the cursor over each kind of control and text selection. Focus
    is one popover: each pick, then only the knobs its style reads. The ring's
    ink is a leaf of Color's Primary. */
 
@@ -20,11 +20,9 @@ import {
   FOCUS_STYLE_OPTIONS,
   FOCUS_WIDTH_RANGE,
 } from "../axes/focus"
-import { ERROR_OPTIONS } from "../axes/invalid"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import {
   DialGap,
-  DialGlyph,
   DialPopover,
   DialSegmented,
   DialSelect,
@@ -102,92 +100,6 @@ function DisabledSpecimen({ treatment }: { treatment: string }) {
         treatment === "alpha" && "bg-fg/12",
       )}
     />
-  )
-}
-
-function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {kind === "border" && (
-        <>
-          <rect
-            x="3.75"
-            y="8"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <path
-            d="M7 12h5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            opacity=".35"
-          />
-        </>
-      )}
-      {kind === "message" && (
-        <>
-          <rect
-            x="3.75"
-            y="4.5"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <circle
-            cx="5.5"
-            cy="17.25"
-            r="1.4"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 17.25h7.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-        </>
-      )}
-      {kind === "bar" && (
-        <>
-          <rect
-            x="4"
-            y="4.5"
-            width="2"
-            height="15"
-            rx="1"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 7h7"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-          <rect
-            x="9"
-            y="10.5"
-            width="11"
-            height="7"
-            rx="1.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            opacity=".45"
-          />
-        </>
-      )}
-    </svg>
   )
 }
 
@@ -407,18 +319,6 @@ export function StatesSection({ studio }: { studio: Studio }) {
         options={TREATMENT_OPTIONS.map((option) => ({
           ...option,
           preview: <DisabledSpecimen treatment={option.value} />,
-        }))}
-      />
-      <DialSelect
-        axis="inputError"
-        label="Invalid"
-        options={ERROR_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <ErrorGlyph kind={option.value as "border" | "message" | "bar"} />
-            </DialGlyph>
-          ),
         }))}
       />
       <DialTrigger

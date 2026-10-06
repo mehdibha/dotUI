@@ -368,9 +368,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { dialogSections: "divided", dialogActions: "bleed" },
     { dialogSections: "on-scroll", dialogActions: "bleed" },
   ],
-  "input-groups/divider-only-boxed": [
-    { addonDivider: "none" },
-    { addonLayout: "boxed", addonDivider: "none" },
+  "otp-field/underline-separates-cells": [
+    { inputStyle: "underline" },
+    { inputStyle: "filled" },
   ],
 }
 

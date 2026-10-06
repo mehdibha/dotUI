@@ -34,15 +34,3 @@ describe("disabled", () => {
     expect(tokens["--disabled-selected-fg"]).toBe("var(--color-bg)")
   })
 })
-
-describe("invalid", () => {
-  test("drives the field error param; the bar carries its vars", () => {
-    const plain = designSystemOf(DEFAULT_STATE)
-    expect(plain.componentParams.field?.error).toBe("border")
-    expect(plain.tokens["--studio-field-error-bar"]).toBeUndefined()
-
-    const bar = designSystemOf(parseState({ inputError: "bar" }))
-    expect(bar.componentParams.field?.error).toBe("bar")
-    expect(bar.tokens["--studio-field-error-bar"]).toBe("3px")
-  })
-})

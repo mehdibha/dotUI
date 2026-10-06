@@ -40,7 +40,7 @@ export const supabase = definePreset({
     buttonStyle: "hairline",
     segmentedSelected: "tone",
     checkboxColor: "neutral",
-    inputHover: "border",
+    inputHover: "edge",
     sliderColor: "neutral",
     menuIndicator: "check-start",
     menuSearch: "bar",

@@ -66,23 +66,31 @@ const { useStyles, styles } = createStyles(fieldMeta, {
       },
     },
   },
-  /* Invalid treatment: the danger border alone (shadcn), an icon on the
-     message line (Material, Spectrum, Polaris), or GOV.UK's bar with the
-     message above the field. The bar itself is a styles.css rule on every
-     `data-field` root, driven by the value's vars. */
   params: {
+    // The error line: plain danger text (shadcn), or led by an icon (Polaris,
+    // Primer, Geist). The icon-in-field option draws on input instead.
     error: {
-      border: {},
-      message: {
+      plain: {},
+      "icon-message": {
         slots: {
           fieldError:
             "flex items-center gap-1 *:[svg]:size-[1em] *:[svg]:shrink-0",
         },
       },
-      bar: {
+    },
+    // Form-field labels only; a checkbox, radio or switch keeps its own.
+    label: {
+      regular: {},
+      medium: {
         slots: {
-          label: "order-first",
-          fieldError: "order-first font-semibold",
+          label:
+            "not-in-data-checkbox:not-in-data-radio:not-in-data-switch:font-medium",
+        },
+      },
+      semibold: {
+        slots: {
+          label:
+            "not-in-data-checkbox:not-in-data-radio:not-in-data-switch:font-semibold",
         },
       },
     },

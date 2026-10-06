@@ -554,13 +554,10 @@ export default function Checkout() {
                             maxValue={9}
                             className="w-fit"
                           >
-                            <NumberFieldGroup>
-                              <NumberFieldDecrement size="sm" />
-                              <Input
-                                size="sm"
-                                className="w-9 text-center tabular-nums"
-                              />
-                              <NumberFieldIncrement size="sm" />
+                            <NumberFieldGroup size="sm">
+                              <NumberFieldDecrement />
+                              <Input className="w-9 text-center tabular-nums" />
+                              <NumberFieldIncrement />
                             </NumberFieldGroup>
                           </NumberField>
                         </div>

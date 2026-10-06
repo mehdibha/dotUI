@@ -6,6 +6,7 @@ import { Examples } from "@/modules/studio/preview/examples"
 import Addons from "./demos/addons"
 import Basic from "./demos/basic"
 import Buttons from "./demos/buttons"
+import Cells from "./demos/cells"
 import DateDemo from "./demos/date"
 import InCard from "./demos/in-card"
 import KbdDemo from "./demos/kbd"
@@ -24,6 +25,9 @@ export default function InputGroupExamples() {
       </Example>
       <Example title="With addons">
         <Addons />
+      </Example>
+      <Example title="Cell addons">
+        <Cells />
       </Example>
       <Example title="With buttons">
         <Buttons />
