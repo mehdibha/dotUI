@@ -71,7 +71,7 @@ export const STYLE_HOVER: Record<string, string> = {
   inset: "none", // Primer
   well: "edge", // Supabase
   filled: "tint", // Ant filled
-  indicator: "tint", // Material 3 state layer
+  indicator: "tint", // Material 3 state layer (Carbon draws none)
   underline: "edge", // Fluent
 }
 

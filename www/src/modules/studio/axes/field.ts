@@ -45,7 +45,7 @@ export const ERROR_OPTIONS = [
   {
     value: "icon-field",
     label: "Icon in field",
-    credits: ["Carbon", "Material 3"],
+    credits: ["Carbon", "Material 3", "Untitled UI"],
   },
 ]
 
