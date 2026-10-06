@@ -5,17 +5,17 @@ import * as right from "./base.right"
 import type { NumberFieldGroupProps, NumberFieldProps } from "./base.right"
 import * as split from "./base.split"
 import * as stacked from "./base.stacked"
+import meta from "./meta"
 
-type Steppers = "right" | "split" | "stacked"
+type Steppers = (typeof meta.params.steppers.values)[number]
 
 const dynamic = <Props extends object>(
   displayName: keyof typeof right,
   components: Record<Steppers, React.ComponentType<Props>>,
 ) =>
-  createDynamicComponent<Props, Steppers>({
-    componentName: "number-field",
+  createDynamicComponent({
+    meta,
     paramName: "steppers",
-    defaultValue: "right",
     components,
     displayName,
   })

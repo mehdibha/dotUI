@@ -2,14 +2,14 @@ import { createDynamicComponent } from "@/lib/styles"
 
 import { Popover as DrawerPopover } from "./base.drawer"
 import { type PopoverProps, Popover as PlainPopover } from "./base.popover"
+import meta from "./meta"
 
-const Popover = createDynamicComponent<PopoverProps, "drawer" | "popover">({
-  componentName: "popover",
+const Popover = createDynamicComponent({
+  meta,
   paramName: "mobile",
-  defaultValue: "drawer",
   components: {
     drawer: DrawerPopover,
-    popover: PlainPopover,
+    anchored: PlainPopover,
   },
   displayName: "Popover",
 })
