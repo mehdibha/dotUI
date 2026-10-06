@@ -1,13 +1,4 @@
-/* Typography — the three font roles, the component-title recipe, the UI text
-   size, the weight of action labels and the case of section labels.
-
-   Engine: faces are `--font-*` tokens (loaded from Google Fonts, shipped as
-   registry:font items; System loads nothing). Titles is a `titles` enum param
-   on every title slot; non-Quiet recipes also write the base h1–h6 weight and
-   tracking. Label weight rides the builder var `--studio-font-weight-label`,
-   read by actions only (Button, ToggleButton, GroupText). 13px re-points the
-   density's text rung. Section labels is a `labels` param on the menu,
-   list-box and sidebar section headers. */
+/* Typography: fonts, titles, UI text size, label weight, section labels. */
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -54,7 +45,7 @@ export const LABEL_WEIGHT_OPTIONS = [
   { value: "bold", label: "Bold", description: "Duolingo" },
 ]
 
-/* Sentence: Spectrum 2, Atlassian. Caps: shadcn sera, Supabase, Duolingo. */
+/* Sentence: Spectrum 2, Atlassian. Caps: shadcn sera. */
 export const SECTION_LABEL_OPTIONS = [
   { value: "sentence", label: "Sentence" },
   { value: "caps", label: "Caps" },
@@ -71,7 +62,10 @@ export const TYPE_SCHEMA: ChapterSchema<typeof TYPE_DEFAULTS> = {
 }
 
 /** What a non-Quiet title recipe hands base h1–h6. */
-const HEADING_VOICE: Record<string, { weight: string; tracking?: string }> = {
+export const TITLE_VOICE: Record<
+  string,
+  { weight: string; tracking?: string }
+> = {
   compact: { weight: "semibold" },
   tight: { weight: "semibold", tracking: "tight" },
   bold: { weight: "bold" },
@@ -92,7 +86,7 @@ export function resolveType(state: Effective): Resolved {
   if (state.monoFont !== DEFAULT_MONO_FAMILY)
     tokens["--font-mono"] = fontStack(state.monoFont)
 
-  const voice = HEADING_VOICE[state.titleStyle]
+  const voice = TITLE_VOICE[state.titleStyle]
   if (voice) {
     tokens["--font-weight-heading"] = `var(--font-weight-${voice.weight})`
     if (voice.tracking)

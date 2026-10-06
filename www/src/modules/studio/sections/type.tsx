@@ -18,6 +18,7 @@ import {
   LABEL_WEIGHT_OPTIONS,
   SECTION_LABEL_OPTIONS,
   TITLE_OPTIONS,
+  TITLE_VOICE,
   UI_TEXT_OPTIONS,
 } from "../axes/type"
 import {
@@ -119,19 +120,15 @@ const WEIGHTS: Record<string, number> = {
   bold: 700,
 }
 
-/* Each title recipe's weight, tracking and case, for its specimen. */
-const TITLE_SPECIMEN: Record<string, React.CSSProperties> = {
-  quiet: { fontWeight: 500 },
-  compact: { fontWeight: 600, fontSize: 12 },
-  tight: { fontWeight: 600, letterSpacing: "-0.025em" },
-  bold: { fontWeight: 700 },
-  display: { fontWeight: 400, fontSize: 15 },
-  caps: {
-    fontWeight: 600,
-    letterSpacing: "0.05em",
-    textTransform: "uppercase",
-    fontSize: 11,
-  },
+const TRACKING: Record<string, string> = { tight: "-0.025em", wider: "0.05em" }
+
+function titleSpecimen(value: string): React.CSSProperties {
+  const voice = TITLE_VOICE[value]
+  return {
+    fontWeight: WEIGHTS[voice?.weight ?? "medium"],
+    letterSpacing: voice?.tracking && TRACKING[voice.tracking],
+    textTransform: value === "caps" ? "uppercase" : undefined,
+  }
 }
 
 export function TypeSection({ studio }: { studio: Studio }) {
@@ -170,7 +167,7 @@ export function TypeSection({ studio }: { studio: Studio }) {
               className="text-[13px] text-fg/80"
               style={{
                 fontFamily: fontStack(effective.headingFont),
-                ...TITLE_SPECIMEN[option.value],
+                ...titleSpecimen(option.value),
               }}
             >
               Aa

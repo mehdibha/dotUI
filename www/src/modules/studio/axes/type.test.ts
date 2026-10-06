@@ -72,16 +72,56 @@ describe("typography axis", () => {
   })
 
   it("Quiet titles flatten to the classes they shipped before", async () => {
-    const quiet = { titles: "quiet" }
-    expect(await slot("card", "title", "default", quiet)).toBe(
-      "font-heading text-base leading-snug font-medium",
-    )
-    expect(await slot("dialog", "title", "comfortable", quiet)).toBe(
-      "font-heading text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
-    )
-    expect(await slot("empty", "title", "compact", quiet)).toBe(
-      "font-heading text-sm font-medium tracking-tight",
-    )
+    const gap =
+      "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)"
+    const before: Record<string, Record<Density, string>> = {
+      card: {
+        compact: "font-heading text-sm font-medium",
+        default: "font-heading text-base leading-snug font-medium",
+        comfortable:
+          "font-heading text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+      },
+      dialog: {
+        compact: "font-heading text-sm font-medium",
+        default:
+          "font-heading font-medium in-data-modal:text-base in-data-modal:leading-none",
+        comfortable:
+          "font-heading text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
+      },
+      empty: {
+        compact: "font-heading text-sm font-medium tracking-tight",
+        default: "font-heading text-base font-medium tracking-tight",
+        comfortable: "font-heading text-lg font-medium tracking-tight",
+      },
+      questionnaire: {
+        compact: `${gap} text-sm font-semibold`,
+        default: `${gap} text-base leading-snug font-medium`,
+        comfortable: `${gap} text-base leading-snug font-medium`,
+      },
+    }
+    for (const name of TITLE_SLOTS)
+      for (const density of DENSITIES)
+        expect(
+          await slot(name, "title", density, { titles: "quiet" }),
+          `${name}/${density}`,
+        ).toBe(before[name]?.[density])
+  })
+
+  it("non-title headings opt out of the heading face and tracking", async () => {
+    const headings: [string, string, Record<string, string>][] = [
+      ["accordion", "heading", {}],
+      ["calendar", "heading", {}],
+      ["sidebar", "groupLabel", { labels: "sentence" }],
+      ["sidebar", "groupLabel", { labels: "caps" }],
+    ]
+    for (const [name, slotName, params] of headings)
+      for (const density of DENSITIES) {
+        const value = await slot(name, slotName, density, params)
+        const where = `${name}.${slotName}/${density}/${params.labels}`
+        expect(value, `${where}`).toMatch(/\bfont-sans\b/)
+        expect(value, `${where}`).toMatch(/\btracking-(normal|wider)\b/)
+        expectNoConflicts(value, where)
+      }
   })
 
   it("every title recipe ships one size, weight, tracking and case", async () => {

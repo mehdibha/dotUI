@@ -12,7 +12,7 @@ describe("icons axis", () => {
       expect(explain.iconStroke?.rule, `${iconLibrary}`).toBeUndefined()
       expect(
         designSystemOf(parseState({ iconLibrary })).tokens,
-        iconLibrary,
+        `${iconLibrary}`,
       ).toEqual({})
     }
   })
