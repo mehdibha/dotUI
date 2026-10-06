@@ -55,8 +55,8 @@ const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
         cn(
           "inline-grid w-fit grid-cols-[1fr_auto] grid-rows-2 *:focus:z-2 *:[input]:z-1",
           "*:data-input:row-span-2 *:data-input:rounded-r-none",
-          "*:[[slot=increment]]:col-start-2 *:[[slot=increment]]:row-start-1 *:[[slot=increment]]:-ml-px *:[[slot=increment]]:h-auto *:[[slot=increment]]:min-h-0 *:[[slot=increment]]:w-7 *:[[slot=increment]]:rounded-l-none *:[[slot=increment]]:rounded-b-none *:[[slot=increment]]:px-0",
-          "*:[[slot=decrement]]:col-start-2 *:[[slot=decrement]]:row-start-2 *:[[slot=decrement]]:-mt-px *:[[slot=decrement]]:-ml-px *:[[slot=decrement]]:h-auto *:[[slot=decrement]]:min-h-0 *:[[slot=decrement]]:w-7 *:[[slot=decrement]]:rounded-t-none *:[[slot=decrement]]:rounded-l-none *:[[slot=decrement]]:px-0",
+          "*:[[slot=increment]]:col-start-2 *:[[slot=increment]]:row-start-1 *:[[slot=increment]]:-ml-(--studio-control-stroke) *:[[slot=increment]]:h-auto *:[[slot=increment]]:min-h-0 *:[[slot=increment]]:w-7 *:[[slot=increment]]:rounded-l-none *:[[slot=increment]]:rounded-b-none *:[[slot=increment]]:px-0",
+          "*:[[slot=decrement]]:col-start-2 *:[[slot=decrement]]:row-start-2 *:[[slot=decrement]]:-mt-(--studio-control-stroke) *:[[slot=decrement]]:-ml-(--studio-control-stroke) *:[[slot=decrement]]:h-auto *:[[slot=decrement]]:min-h-0 *:[[slot=decrement]]:w-7 *:[[slot=decrement]]:rounded-t-none *:[[slot=decrement]]:rounded-l-none *:[[slot=decrement]]:px-0",
           className,
         ),
       )}

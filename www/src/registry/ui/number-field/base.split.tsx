@@ -52,7 +52,7 @@ const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
       data-slot="number-field-group"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex w-fit items-stretch -space-x-px *:focus:z-2 *:[input]:z-1",
+          "flex w-fit items-stretch -space-x-(--studio-control-stroke) *:focus:z-2 *:[input]:z-1",
           "*:data-input:rounded-none *:data-input:text-center",
           "*:[[slot=decrement]]:-order-1 *:[[slot=decrement]]:rounded-r-none",
           "*:[[slot=increment]]:order-1 *:[[slot=increment]]:rounded-l-none",
