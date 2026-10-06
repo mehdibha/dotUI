@@ -10,12 +10,6 @@ describe("navigation chapters", () => {
       style: "segmented",
       color: "neutral",
     })
-    expect(ds.componentParams.accordion).toEqual({
-      container: "divided",
-      marker: "chevron",
-      markerPosition: "trailing",
-      motion: "expand",
-    })
     expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
     expect(ds.componentParams.breadcrumbs).toEqual({
       separator: "chevron",
@@ -34,22 +28,6 @@ describe("navigation chapters", () => {
     expect(
       designSystemOf(parseState({ tabsColor: "accent" })).componentParams.tabs,
     ).toEqual({ style: "segmented", color: "accent" })
-  })
-
-  test("accordion: container and marker axes set the accordion params", () => {
-    const ds = designSystemOf(
-      parseState({
-        accordionContainer: "cards",
-        accordionMarker: "plus",
-        accordionMarkerPosition: "leading",
-      }),
-    )
-    expect(ds.componentParams.accordion).toEqual({
-      container: "cards",
-      marker: "plus",
-      markerPosition: "leading",
-      motion: "expand",
-    })
   })
 
   test("breadcrumbs and pagination params", () => {

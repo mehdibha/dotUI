@@ -76,7 +76,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "display",
-    owners: ["tables", "accordion", "avatars", "kbd"],
+    owners: ["tables", "accordion", "avatars", "kbd", "card"],
     label: "Data display",
     Preview: DataDisplayPreview,
     Body: DataDisplaySection,

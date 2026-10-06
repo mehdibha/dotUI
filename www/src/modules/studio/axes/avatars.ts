@@ -1,13 +1,7 @@
-/* Avatars — two axes. Shape: circle is the people-first default (GitHub,
-   Slack DMs, Material), the rounded square marks entities (Slack workspaces,
-   GitHub orgs, Notion, Linear). Fallback: what initials sit on when no
-   image loads — one uniform gray (Geist, shadcn — dotUI's current look) or
-   a per-entity tinted wash (Radix Themes, Ant, Atlassian) that tells
-   stacked strangers apart.
+/* Avatars — a circle or a rounded square (each size on a corner rung, so a
+   square character squares them), and what initials sit on.
 
-   Engine: shape rides on the `--studio-avatar-radius` surface var, resolved to a
-   plain `rounded-*` on export; `fallback` is an enum param on `avatar`,
-   painting by the `data-tint` index the fallback hashes from its text. */
+   Engine: two enum params on `avatar`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -20,18 +14,43 @@ export const AVATAR_DEFAULTS = {
 }
 
 export const SHAPE_OPTIONS = [
-  { value: "circle", label: "Circle" },
-  { value: "rounded", label: "Rounded" },
+  {
+    value: "circle",
+    label: "Circle",
+    credits: [
+      "shadcn",
+      "Geist",
+      "Primer",
+      "Fluent 2",
+      "Chakra",
+      "Mantine",
+      "HeroUI",
+      "Spectrum 2",
+      "Ant Design",
+      "Atlassian",
+      "Untitled UI",
+      "Material 3",
+    ],
+  },
+  {
+    value: "rounded",
+    label: "Rounded",
+    credits: ["Polaris", "Radix Themes", "Stripe"],
+  },
 ]
 
 export const FALLBACK_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "tinted", label: "Tinted" },
+  {
+    value: "neutral",
+    label: "Neutral",
+    credits: ["shadcn", "Primer", "Atlassian", "Untitled UI", "Fluent 2"],
+  },
+  {
+    value: "accent",
+    label: "Accent",
+    credits: ["Radix Themes (soft)", "Material 3 (list)"],
+  },
 ]
-
-const SHAPE_TOKENS: Record<string, string> = {
-  rounded: "var(--radius-lg)",
-}
 
 export const AVATAR_SCHEMA: ChapterSchema<typeof AVATAR_DEFAULTS> = {
   avatarShape: oneOf(SHAPE_OPTIONS),
@@ -39,15 +58,9 @@ export const AVATAR_SCHEMA: ChapterSchema<typeof AVATAR_DEFAULTS> = {
 }
 
 export function resolveAvatars(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  const radius = SHAPE_TOKENS[state.avatarShape]
-  if (radius) tokens["--studio-avatar-radius"] = radius
   return {
-    tokens,
     params: {
-      avatar: {
-        fallback: state.avatarFallback,
-      },
+      avatar: { shape: state.avatarShape, fallback: state.avatarFallback },
     },
   }
 }

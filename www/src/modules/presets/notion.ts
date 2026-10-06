@@ -43,10 +43,9 @@ export const notion = definePreset({
     linkColor: "neutral",
     menuSearch: "bar",
     tabStyle: "pill",
-    accordionMarkerPosition: "leading",
+    accordionMarker: "leading-caret",
     breadcrumbSeparator: "slash",
     badgeStyle: "soft",
     badgeShape: "rounded",
-    kbdTreatment: "text",
   },
 })
