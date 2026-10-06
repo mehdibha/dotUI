@@ -2,14 +2,24 @@
 
 /* Interactivity — how the product answers the pointer and text selection: the
    cursor over each kind of control, whether UI text selects, the selection
-   highlight. Links keep the hand everywhere, so they are not a cursor row. */
+   highlight. Links keep `pointer` everywhere, so they are not a cursor row. */
+
+import { MousePointer2Icon, PointerIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
+import { DialogContent } from "@/registry/ui/dialog"
+import {
+  MenuContent,
+  MenuItem,
+  MenuItemLabel,
+  MenuSection,
+  MenuSectionHeader,
+} from "@/registry/ui/menu"
 
-import { CURSOR_DEFAULTS } from "../axes/cursor"
+import { CURSOR_DEFAULTS, CURSOR_OPTIONS } from "../axes/cursor"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import { DialPopover, DialSegmented, DialToggle, DialTrigger } from "../dial"
-import type { DialOption } from "../dial"
+import { PanelPopover } from "../rows"
 import type { Studio, StudioState } from "../state"
 import {
   ArrowCursor,
@@ -20,69 +30,57 @@ import {
   WaitCursor,
 } from "./cursors"
 
-function Glyph({
-  children,
-  className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <span className={cn("size-4 shrink-0 *:size-full", className)}>
-      {children}
-    </span>
-  )
+const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
+  default: <ArrowCursor />,
+  pointer: <HandCursor />,
+  progress: <ProgressCursor />,
+  wait: <WaitCursor />,
+  grab: <OpenHandCursor />,
+  "not-allowed": <NotAllowedCursor />,
 }
 
-const cursor = (
-  value: string,
-  label: string,
-  glyph: React.ReactNode,
-): DialOption => ({
-  value,
-  label: (
-    <>
-      <Glyph>{glyph}</Glyph>
-      {label}
-    </>
-  ),
-})
-
-const CURSOR_ROWS = [
-  {
-    key: "cursorControls",
-    label: "Controls",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("pointer", "Hand", <HandCursor />),
-    ],
-  },
-  {
-    key: "cursorPending",
-    label: "Pending",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("progress", "Progress", <ProgressCursor />),
-      cursor("wait", "Wait", <WaitCursor />),
-    ],
-  },
-  {
-    key: "cursorDragging",
-    label: "Dragging",
-    options: [
-      cursor("inherit", "Arrow", <ArrowCursor />),
-      cursor("grab", "Grab", <OpenHandCursor />),
-    ],
-  },
-  {
-    key: "cursorDisabled",
-    label: "Disabled",
-    options: [
-      cursor("default", "Arrow", <ArrowCursor />),
-      cursor("not-allowed", "Blocked", <NotAllowedCursor />),
-    ],
-  },
+const CURSOR_SECTIONS = [
+  { key: "cursorControls", label: "Controls" },
+  { key: "cursorPending", label: "Pending" },
+  { key: "cursorDragging", label: "Dragging" },
+  { key: "cursorDisabled", label: "Disabled" },
 ] as const
+
+/* One section per state, each its own single pick. Item ids carry the
+   section key: a collection's keys are unique across sections. A menu in a
+   DialogTrigger closes it on pick by default. */
+function CursorMenu({ studio }: { studio: Studio }) {
+  const { state, set } = studio
+  return (
+    <MenuContent aria-label="Cursor" shouldCloseOnSelect={false}>
+      {CURSOR_SECTIONS.map(({ key, label }) => (
+        <MenuSection
+          key={key}
+          id={key}
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={[`${key}:${state[key]}`]}
+          onSelectionChange={(keys) => {
+            if (keys === "all") return
+            const next = keys.values().next().value
+            if (next) set(key)(String(next).slice(key.length + 1))
+          }}
+        >
+          <MenuSectionHeader>{label}</MenuSectionHeader>
+          {CURSOR_OPTIONS[key].map(({ value }) => {
+            const css = value === "inherit" ? state.cursorControls : value
+            return (
+              <MenuItem key={value} id={`${key}:${value}`} textValue={css}>
+                {CURSOR_GLYPHS[css]}
+                <MenuItemLabel>{css}</MenuItemLabel>
+              </MenuItem>
+            )
+          })}
+        </MenuSection>
+      ))}
+    </MenuContent>
+  )
+}
 
 /* ----------------------------- Text selection ----------------------------- */
 
@@ -109,21 +107,16 @@ const optionLabel = (
 /* --------------------------------- Section --------------------------------- */
 
 export function InteractivityPreview({ state }: { state: StudioState }) {
-  return (
-    <Glyph>
-      {state.cursorControls === "pointer" ? <HandCursor /> : <ArrowCursor />}
-    </Glyph>
-  )
-}
-
-function cursorSummary(state: StudioState): string {
-  return state.cursorControls === "pointer" ? "Hand" : "Arrow"
+  const Icon =
+    state.cursorControls === "pointer" ? PointerIcon : MousePointer2Icon
+  return <Icon aria-hidden className="size-4" />
 }
 
 export function InteractivitySection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const changed = CURSOR_ROWS.filter(
-    (row) => state[row.key] !== CURSOR_DEFAULTS[row.key],
+  const others = CURSOR_SECTIONS.filter(
+    ({ key }) =>
+      key !== "cursorControls" && state[key] !== CURSOR_DEFAULTS[key],
   ).length
   return (
     <>
@@ -131,23 +124,16 @@ export function InteractivitySection({ studio }: { studio: Studio }) {
         label="Cursor"
         value={
           <span className="truncate">
-            {cursorSummary(state)}
-            {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
-              ` · ${changed}`}
+            {state.cursorControls}
+            {others > 0 && ` · +${others}`}
           </span>
         }
       >
-        <DialPopover className="w-80">
-          {CURSOR_ROWS.map((row) => (
-            <DialSegmented
-              key={row.key}
-              label={row.label}
-              value={state[row.key]}
-              onChange={set(row.key)}
-              options={[...row.options]}
-            />
-          ))}
-        </DialPopover>
+        <PanelPopover className="w-56 min-w-0">
+          <DialogContent className="flex min-h-0 flex-col overflow-y-auto overscroll-contain p-0">
+            <CursorMenu studio={studio} />
+          </DialogContent>
+        </PanelPopover>
       </DialTrigger>
       <DialTrigger
         label="Text selection"

@@ -14,25 +14,17 @@ export const CURSOR_DEFAULTS = {
   cursorDisabled: "not-allowed",
 }
 
-/* Keyword values only: a cursor token is written straight into CSS. */
+/* CSS cursor keywords, written straight into the tokens. `inherit` is ours:
+   dragging keeps the controls cursor. */
 export const CURSOR_OPTIONS = {
-  cursorControls: [
-    { value: "default", label: "Arrow" },
-    { value: "pointer", label: "Hand" },
-  ],
+  cursorControls: [{ value: "default" }, { value: "pointer" }],
   cursorPending: [
-    { value: "default", label: "Arrow" },
-    { value: "progress", label: "Progress" },
-    { value: "wait", label: "Wait" },
+    { value: "default" },
+    { value: "progress" },
+    { value: "wait" },
   ],
-  cursorDragging: [
-    { value: "inherit", label: "Arrow" },
-    { value: "grab", label: "Grab" },
-  ],
-  cursorDisabled: [
-    { value: "default", label: "Arrow" },
-    { value: "not-allowed", label: "Blocked" },
-  ],
+  cursorDragging: [{ value: "inherit" }, { value: "grab" }],
+  cursorDisabled: [{ value: "default" }, { value: "not-allowed" }],
 } satisfies Record<keyof typeof CURSOR_DEFAULTS, unknown>
 
 export const CURSOR_SCHEMA: ChapterSchema<typeof CURSOR_DEFAULTS> = {
