@@ -191,13 +191,18 @@ describe("field shells", () => {
       expect(strip).toContain(reset)
   })
 
-  it("only edged shells divide their parts", async () => {
-    for (const [style, shell] of Object.entries(FIELD_SHELLS))
+  it("only shells with side edges divide their parts", async () => {
+    const edgeless = ["filled", "indicator", "underline"]
+    for (const [style, shell] of Object.entries(FIELD_SHELLS)) {
       expect(shell.slots.divider, style).toBe(
-        style === "filled" || style === "underline"
+        edgeless.includes(style)
           ? "border-transparent"
           : "border-border-control",
       )
+      expect("variants" in shell, `${style} cell addon`).toBe(
+        !edgeless.includes(style),
+      )
+    }
     for (const steppers of ["right-cells", "stacked-cells", "split"]) {
       const content = await shipped("number-field", {
         "number-field": { steppers },
@@ -207,6 +212,37 @@ describe("field shells", () => {
       if (steppers === "right-cells")
         expect(content).not.toMatch(/\bborder-[lrtb]\b/)
       else expect(content, steppers).toContain("divider({")
+    }
+  })
+
+  /* React Aria marks the Select invalid, not its trigger; the field build
+     forwards it so the shell's own invalid edge applies. */
+  it("an invalid Field select wears the shell's danger edge", async () => {
+    const select = await shipped("select", { select: { trigger: "field" } })
+    expect(select).toContain("use(SelectPrimitives.SelectStateContext)")
+    expect(select).toMatch(/data-invalid=\{isInvalid \|\| undefined\}/)
+    for (const style of Object.keys(SIGNATURE)) {
+      const content = await shipped("input", { input: { style } })
+      const trigger = /\btrigger: "([^"]*)"/.exec(content)?.[1]
+      expect(trigger, style).toContain("invalid:border-border-danger")
+    }
+  })
+
+  /* Supabase: 34px select buttons beside 34px fields. */
+  it("a Button select trigger takes the field height past the controls", async () => {
+    const select = await shipped("select")
+    expect(select).toContain("buttonTrigger({")
+    const origin = await shipped("input")
+    expect(/\bbuttonTrigger: "([^"]*)"/.exec(origin)?.[1]).toBe("")
+    for (const height of ["step", "tall"]) {
+      const content = await shipped("input", { input: { height } })
+      const size = (slot: string) =>
+        [...content.matchAll(new RegExp(`\\b${slot}: "([^"]*)"`, "g"))]
+          .map((m) => /\[--input-h:[^\]]*\]/.exec(m[1]!)?.[0])
+          .filter(Boolean)
+      expect(size("buttonTrigger"), height).toEqual(size("trigger"))
+      expect(size("buttonTrigger"), height).toHaveLength(3)
+      expect(content).toContain('h-(--input-h)",')
     }
   })
 

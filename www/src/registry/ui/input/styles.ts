@@ -55,29 +55,62 @@ const h10 = {
   textArea: tokens({ h: 10 }),
   trigger: tokens({ h: 10 }),
 }
-const h11 = {
+// Past the control ladder, a Button select trigger takes the field height.
+const taller7 = {
+  inputGroup: tokens({ h: 7 }),
+  input: tokens({ h: 7 }),
+  textArea: tokens({ h: 7 }),
+  trigger: tokens({ h: 7 }),
+  buttonTrigger: [tokens({ h: 7 }), "h-(--input-h)"],
+}
+const taller8 = {
+  inputGroup: tokens({ h: 8 }),
+  input: tokens({ h: 8 }),
+  textArea: tokens({ h: 8 }),
+  trigger: tokens({ h: 8 }),
+  buttonTrigger: [tokens({ h: 8 }), "h-(--input-h)"],
+}
+const taller9 = {
+  inputGroup: tokens({ h: 9 }),
+  input: tokens({ h: 9 }),
+  textArea: tokens({ h: 9 }),
+  trigger: tokens({ h: 9 }),
+  buttonTrigger: [tokens({ h: 9 }), "h-(--input-h)"],
+}
+const taller10 = {
+  inputGroup: tokens({ h: 10 }),
+  input: tokens({ h: 10 }),
+  textArea: tokens({ h: 10 }),
+  trigger: tokens({ h: 10 }),
+  buttonTrigger: [tokens({ h: 10 }), "h-(--input-h)"],
+}
+const taller11 = {
   inputGroup: tokens({ h: 11 }),
   input: tokens({ h: 11 }),
   textArea: tokens({ h: 11 }),
   trigger: tokens({ h: 11 }),
+  buttonTrigger: [tokens({ h: 11 }), "h-(--input-h)"],
 }
-const h12 = {
+const taller12 = {
   inputGroup: tokens({ h: 12 }),
   input: tokens({ h: 12 }),
   textArea: tokens({ h: 12 }),
   trigger: tokens({ h: 12 }),
+  buttonTrigger: [tokens({ h: 12 }), "h-(--input-h)"],
 }
-const h13 = {
+const taller13 = {
   inputGroup: tokens({ h: 13 }),
   input: tokens({ h: 13 }),
   textArea: tokens({ h: 13 }),
   trigger: tokens({ h: 13 }),
+  buttonTrigger: [tokens({ h: 13 }), "h-(--input-h)"],
 }
-const h14 = {
+const taller14 = {
   inputGroup: tokens({ h: 14 }),
   input: tokens({ h: 14 }),
   textArea: tokens({ h: 14 }),
   trigger: tokens({ h: 14 }),
+  buttonTrigger: [tokens({ h: 14 }), "h-(--input-h)"],
 }
 
 const compactText = "text-base sm:text-xs/relaxed"
@@ -195,7 +228,7 @@ const addonUnderline =
 
 /* A cell addon (Bootstrap input-group, Ant addonBefore, Geist prefix): a
    tinted cell hugging the shell, divided by the shell's own edge. Shells
-   without a side edge (Underline, Filled) keep it inline. */
+   without a side edge (Underline, Filled, Indicator) keep it inline. */
 const addonCell = [
   "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)",
   edgeDivider,
@@ -281,9 +314,8 @@ export const FIELD_SHELLS = {
       textArea: indicatorShell({ focus: "self" }),
       trigger: [indicatorShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
-      divider: edgeDivider,
+      divider: noDivider,
     },
-    variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
   underline: {
     slots: {
@@ -345,6 +377,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "*:[svg]:pointer-events-none *:[svg]:size-(--icon-size) *:[svg]:shrink-0 *:[svg]:text-fg-muted",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
+      // A select trigger drawn by Button: it only borrows the field height.
+      buttonTrigger: "",
       divider: "",
       dateInputSegment:
         "rounded-(--studio-radius-detail) px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
@@ -432,16 +466,28 @@ const { useStyles, styles } = createStyles(inputMeta, {
       },
       step: {
         density: {
-          compact: { variants: { size: { sm: h7, md: h8, lg: h9 } } },
-          default: { variants: { size: { sm: h8, md: h9, lg: h10 } } },
-          comfortable: { variants: { size: { sm: h9, md: h10, lg: h11 } } },
+          compact: {
+            variants: { size: { sm: taller7, md: taller8, lg: taller9 } },
+          },
+          default: {
+            variants: { size: { sm: taller8, md: taller9, lg: taller10 } },
+          },
+          comfortable: {
+            variants: { size: { sm: taller9, md: taller10, lg: taller11 } },
+          },
         },
       },
       tall: {
         density: {
-          compact: { variants: { size: { sm: h10, md: h11, lg: h12 } } },
-          default: { variants: { size: { sm: h11, md: h12, lg: h13 } } },
-          comfortable: { variants: { size: { sm: h12, md: h13, lg: h14 } } },
+          compact: {
+            variants: { size: { sm: taller10, md: taller11, lg: taller12 } },
+          },
+          default: {
+            variants: { size: { sm: taller11, md: taller12, lg: taller13 } },
+          },
+          comfortable: {
+            variants: { size: { sm: taller12, md: taller13, lg: taller14 } },
+          },
         },
       },
     },

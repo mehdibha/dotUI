@@ -8,6 +8,7 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import type { ButtonProps } from "@/registry/ui/button"
 import { useStyles } from "@/registry/ui/field/styles"
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
   ListBox,
   ListBoxItem,
@@ -50,9 +51,16 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 // MARK: Separator
 
-const SelectTrigger = (props: ButtonProps) => {
+const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
+  const { buttonTrigger } = useInputStyles()()
   return (
-    <Button {...props}>
+    <Button
+      size={size}
+      className={composeRenderProps(className, (className) =>
+        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+      )}
+      {...props}
+    >
       {composeRenderProps(props.children, (children) => {
         return (
           <>

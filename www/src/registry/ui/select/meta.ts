@@ -11,13 +11,13 @@ const selectMeta = {
       target: "ui/select.tsx",
     },
   ],
-  registryDependencies: ["field", "list-box", "popover"],
+  registryDependencies: ["field", "input", "list-box", "popover"],
   params: {
     trigger: {
       kind: "enum",
       default: "button",
       values: ["button", "field"] as const,
-      registryDependencies: { button: ["button"], field: ["input"] },
+      registryDependencies: { button: ["button"] },
       files: {
         field: [
           {

@@ -1,5 +1,7 @@
+import { use } from "react"
 import * as ButtonPrimitive from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { SelectStateContext } from "react-aria-components/Select"
 
 import { useComponentParams } from "@/lib/styles"
 import { ChevronsUpDownIcon } from "@/registry/icons"
@@ -29,10 +31,12 @@ const FieldDoubleTrigger = ({
   ...props
 }: React.ComponentProps<typeof FieldTrigger>) => {
   const { trigger } = useInputStyles()()
+  const isInvalid = use(SelectStateContext)?.displayValidation.isInvalid
   return (
     <ButtonPrimitive.Button
       data-select-trigger=""
       data-size={size}
+      data-invalid={isInvalid || undefined}
       className={composeRenderProps(className, (className) =>
         trigger({ className, size }),
       )}
@@ -40,6 +44,21 @@ const FieldDoubleTrigger = ({
     >
       {withDoubleCaret(children)}
     </ButtonPrimitive.Button>
+  )
+}
+
+const ButtonDoubleTrigger = ({ className, size, ...props }: ButtonProps) => {
+  const { buttonTrigger } = useInputStyles()()
+  return (
+    <Button
+      size={size}
+      className={composeRenderProps(className, (className) =>
+        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+      )}
+      {...props}
+    >
+      {withDoubleCaret(props.children)}
+    </Button>
   )
 }
 
@@ -54,19 +73,9 @@ const SelectTrigger = ({
     const Field = caret === "double" ? FieldDoubleTrigger : FieldTrigger
     return <Field {...props} size={size === "xs" ? "sm" : size} />
   }
-  if (caret === "double")
-    return (
-      <Button variant={variant} isIconOnly={isIconOnly} size={size} {...props}>
-        {withDoubleCaret(props.children)}
-      </Button>
-    )
+  const Trigger = caret === "double" ? ButtonDoubleTrigger : ButtonTrigger
   return (
-    <ButtonTrigger
-      variant={variant}
-      isIconOnly={isIconOnly}
-      size={size}
-      {...props}
-    />
+    <Trigger variant={variant} isIconOnly={isIconOnly} size={size} {...props} />
   )
 }
 
