@@ -369,7 +369,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { dialogSections: "on-scroll", dialogActions: "bleed" },
   ],
   "navigation/surface-needs-shell": [
-    { navMarker: "surface", shellTone: "page" },
+    { navMarker: "surface", shellTone: "subtle" },
     { navMarker: "surface", shellTone: "recessed" },
   ],
   "input-groups/divider-only-boxed": [

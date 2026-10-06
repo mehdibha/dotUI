@@ -10,6 +10,15 @@ import { ChevronRightIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
+import {
+  WEIGHT_BOLD,
+  WEIGHT_MEDIUM,
+  WEIGHT_MEDIUM_SEMIBOLD,
+  WEIGHT_REGULAR,
+  WEIGHT_REGULAR_MEDIUM,
+  WEIGHT_REGULAR_SEMIBOLD,
+  WEIGHT_SEMIBOLD,
+} from "@/registry/ui/segmented-control/styles"
 import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
@@ -20,6 +29,7 @@ import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs"
 import { SOURCE_OPTIONS } from "../axes/color"
 import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
 import {
+  ITEM_WEIGHT_OPTIONS,
   MARKER_OPTIONS,
   PILL_OPTIONS,
   TAB_STYLE_OPTIONS,
@@ -115,13 +125,12 @@ function TabsSpecimen() {
   )
 }
 
-/** Sidebar items on the sidebar's tone, the first current; `current` alone
- *  for an option's specimen. */
-function SidebarSpecimen({ current }: { current?: boolean }) {
+/** Sidebar items on the sidebar's tone, the first current. */
+function SidebarSpecimen() {
   const { menuButton } = useSidebarStyles()()
   return (
     <span className="flex w-20 flex-col gap-0.5 rounded-md bg-sidebar p-1">
-      {(current ? ["Inbox"] : ["Inbox", "Drafts"]).map((label, i) => (
+      {["Inbox", "Drafts"].map((label, i) => (
         <span
           key={label}
           data-size="sm"
@@ -148,37 +157,45 @@ function BreadcrumbsSpecimen({ separator }: { separator: string }) {
   const { root, link, separator: glyph } = useBreadcrumbsStyles()()
   return (
     <span className={cn(root(), "flex-nowrap")}>
-      <span className={link({ isCurrent: false })}>Docs</span>
+      <span className={link()}>Docs</span>
       <span aria-hidden className={glyph()}>
         {separator === "slash" ? "/" : <ChevronRightIcon />}
       </span>
-      <span data-current="" className={link({ isCurrent: true })}>
+      <span data-current="" className={link()}>
         Tabs
       </span>
     </span>
   )
 }
 
-const WEIGHT_CLASS: Record<string, [rest: string, current: string]> = {
-  regular: ["font-normal", "font-normal"],
-  "regular-medium": ["font-normal", "font-medium"],
-  "regular-semibold": ["font-normal", "font-semibold"],
-  medium: ["font-medium", "font-medium"],
-  "medium-semibold": ["font-medium", "font-semibold"],
-  semibold: ["font-semibold", "font-semibold"],
-  bold: ["font-bold", "font-bold"],
+const WEIGHTS: Record<string, { item: string }> = {
+  regular: WEIGHT_REGULAR,
+  "regular-medium": WEIGHT_REGULAR_MEDIUM,
+  "regular-semibold": WEIGHT_REGULAR_SEMIBOLD,
+  medium: WEIGHT_MEDIUM,
+  "medium-semibold": WEIGHT_MEDIUM_SEMIBOLD,
+  semibold: WEIGHT_SEMIBOLD,
+  bold: WEIGHT_BOLD,
 }
 
-/** A label at rest, then current. */
+/** A label at rest, then current, in the registry's weight classes. */
 function WeightGlyph({ weight }: { weight: string }) {
-  const [rest, current] = WEIGHT_CLASS[weight]!
+  const { item } = WEIGHTS[weight]!
   return (
     <span className="flex items-center gap-1 text-[13px]">
-      <span className={cn(rest, "text-fg/50")}>Aa</span>
-      <span className={cn(current, "text-fg")}>Aa</span>
+      <span className={cn(item, "text-fg/50")}>Aa</span>
+      <span data-selected="" className={cn(item, "text-fg")}>
+        Aa
+      </span>
     </span>
   )
 }
+
+const weightOptions = (options: typeof ITEM_WEIGHT_OPTIONS) =>
+  options.map((option) => ({
+    ...option,
+    preview: WEIGHTS[option.value] && <WeightGlyph weight={option.value} />,
+  }))
 
 /* --------------------------------- Section --------------------------------- */
 
@@ -249,7 +266,7 @@ export function NavigationSection({ studio }: { studio: Studio }) {
           ...option,
           preview: (
             <System ds={markers[option.value]!}>
-              <SidebarSpecimen current />
+              <SidebarSpecimen />
             </System>
           ),
         }))}
@@ -262,14 +279,16 @@ export function NavigationSection({ studio }: { studio: Studio }) {
       <UsesRow axis="segmentedSelected" label="Segmented chip" />
       <UsesRow axis="shellTone" label="App shell" />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["navWeight", "tabsPill"]}>
+      <More keys={["navWeight", "navItemWeight", "tabsPill"]}>
         <DialSelect
           axis="navWeight"
           label="Weight"
-          options={WEIGHT_OPTIONS.map((option) => ({
-            ...option,
-            preview: <WeightGlyph weight={option.value} />,
-          }))}
+          options={weightOptions(WEIGHT_OPTIONS)}
+        />
+        <DialSelect
+          axis="navItemWeight"
+          label="Sidebar weight"
+          options={weightOptions(ITEM_WEIGHT_OPTIONS)}
         />
         <DialSelect
           axis="tabsPill"

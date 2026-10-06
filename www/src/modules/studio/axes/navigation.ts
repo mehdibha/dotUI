@@ -1,8 +1,8 @@
 /* Navigation — how the current location is marked: the default tab look,
    the sidebar's current item, the indicator color both share, and the
-   weight tabs, sidebar items and segmented items rest and step to.
-   Segmented tabs wear the segmented control's chip (segmented-control.ts
-   writes it), pill tabs a toggle's selected look.
+   weights tabs, segmented items and sidebar items rest and step to (the
+   sidebar's follows the tabs'). Segmented tabs wear the segmented control's
+   chip (segmented-control.ts writes it), pill tabs a toggle's selected look.
 
    Engine: `style`, `color`, `pill` and `weight` params on `tabs`; `marker`
    (folded with the color) and `weight` on `sidebar`; `weight` on
@@ -19,6 +19,15 @@ export const NAVIGATION_DEFAULTS = {
   tabsColor: "neutral",
   navMarker: "fill",
   navWeight: "medium",
+  navItemWeight: "auto" as
+    | "auto"
+    | "regular"
+    | "regular-medium"
+    | "regular-semibold"
+    | "medium"
+    | "medium-semibold"
+    | "semibold"
+    | "bold",
   tabsPill: "same" as "same" | "tone" | "solid" | "tint" | "inverse",
 }
 
@@ -65,7 +74,7 @@ export const WEIGHT_OPTIONS = [
   {
     value: "medium",
     label: "Medium",
-    description: "shadcn tabs, Linear, Material 3, Notion",
+    description: "shadcn tabs, Linear, Material 3, Notion, Supabase",
   },
   {
     value: "medium-semibold",
@@ -76,6 +85,17 @@ export const WEIGHT_OPTIONS = [
   { value: "bold", label: "Bold", description: "Duolingo, Spotify" },
 ]
 
+// Auto: shadcn's sidebar rests a step under its medium tabs.
+export const ITEM_WEIGHT_OPTIONS = [
+  { value: "auto", label: "Auto", description: "shadcn" },
+  ...WEIGHT_OPTIONS,
+]
+
+const ITEM_WEIGHT_AUTO: Record<string, string> = {
+  ...Object.fromEntries(WEIGHT_OPTIONS.map(({ value }) => [value, value])),
+  medium: "regular-medium",
+}
+
 export const PILL_OPTIONS = [
   {
     value: "same",
@@ -84,7 +104,7 @@ export const PILL_OPTIONS = [
   },
   { value: "tone", label: "Tone", description: "Claude" },
   { value: "solid", label: "Solid", description: "Mantine" },
-  { value: "tint", label: "Tint", description: "Fluent 2, Untitled UI" },
+  { value: "tint", label: "Tint", description: "Fluent 2" },
   // Reached through Same as toggles (Spotify's inverse chips).
   { value: "inverse", label: "Inverse", description: "Spotify" },
 ]
@@ -94,6 +114,7 @@ export const NAVIGATION_SCHEMA: ChapterSchema<typeof NAVIGATION_DEFAULTS> = {
   tabsColor: oneOf(SOURCE_OPTIONS),
   navMarker: oneOf(MARKER_OPTIONS),
   navWeight: oneOf(WEIGHT_OPTIONS),
+  navItemWeight: oneOf(WEIGHT_OPTIONS),
   tabsPill: oneOf(PILL_OPTIONS.slice(1)),
 }
 
@@ -110,7 +131,7 @@ export function resolveNavigation(state: Effective): Resolved {
         pill: state.tabsPill,
         weight: state.navWeight,
       },
-      sidebar: { marker, weight: state.navWeight },
+      sidebar: { marker, weight: state.navItemWeight },
       "segmented-control": { weight: state.navWeight },
     },
   }
@@ -122,14 +143,17 @@ export const chapter = defineChapter({
   schema: NAVIGATION_SCHEMA,
   resolve: resolveNavigation,
   follows: {
+    navItemWeight: [
+      { kind: "auto", id: "auto", from: "navWeight", table: ITEM_WEIGHT_AUTO },
+    ],
     tabsPill: [{ kind: "same", id: "same", from: "toggleSelected" }],
   },
   rules: [
     {
-      // A page-toned chip on a page-toned sidebar marks nothing.
+      // The page-toned chip reads only on a sidebar below the page.
       id: "navigation/surface-needs-shell",
       target: "navMarker",
-      when: { key: "shellTone", in: ["page"] },
+      when: { key: "shellTone", notIn: ["recessed"] },
       effect: { kind: "exclude", options: ["surface"], fallback: "fill" },
       cause: "shellTone",
     },

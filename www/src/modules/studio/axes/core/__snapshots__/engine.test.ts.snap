@@ -8,6 +8,8 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "style": "ledge",
@@ -18,6 +20,8 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -40,6 +44,8 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "style": "ledge",
@@ -50,6 +56,8 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -72,6 +80,8 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "style": "bevel",
@@ -91,6 +101,8 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "selected": "tone",
@@ -430,17 +442,8 @@ exports[`rules > navigation/surface-needs-shell: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
-  "params": {
-    "sidebar": {
-      "labels": "sentence",
-      "marker": "fill",
-      "shell": "page",
-      "weight": "medium",
-    },
-  },
-  "tokens": {
-    "--color-sidebar": "var(--color-bg)",
-  },
+  "params": {},
+  "tokens": {},
 }
 `;
 

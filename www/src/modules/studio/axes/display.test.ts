@@ -40,3 +40,34 @@ describe("display chapters (badges, kbd, avatars)", () => {
     expect(ds.componentParams.avatar).toEqual({ fallback: "tinted" })
   })
 })
+
+describe("accordion, breadcrumbs and pagination params", () => {
+  it("defaults land on the registry defaults", () => {
+    const ds = designSystemOf(DEFAULT_STATE)
+    expect(ds.componentParams.accordion).toMatchObject({
+      container: "divided",
+      marker: "chevron",
+      markerPosition: "trailing",
+    })
+    expect(ds.componentParams.pagination).toEqual({ current: "secondary" })
+  })
+
+  it("each axis writes its param", () => {
+    const ds = designSystemOf(
+      parseState({
+        accordionContainer: "cards",
+        accordionMarker: "plus",
+        accordionMarkerPosition: "leading",
+        breadcrumbSeparator: "slash",
+        paginationCurrent: "primary",
+      }),
+    )
+    expect(ds.componentParams.accordion).toMatchObject({
+      container: "cards",
+      marker: "plus",
+      markerPosition: "leading",
+    })
+    expect(ds.componentParams.breadcrumbs?.separator).toBe("slash")
+    expect(ds.componentParams.pagination).toEqual({ current: "primary" })
+  })
+})

@@ -1,9 +1,10 @@
-/* Links — the one link recipe: links, and breadcrumb ancestors drawn as
-   links. Color is a leaf of Color's Primary (Same as ink until Emphasis
-   lands).
+/* Links — the one link recipe: links, link buttons, and breadcrumb
+   ancestors drawn as links. Color is a leaf of Color's Primary (Same as ink
+   until Emphasis lands).
 
-   Engine: `underline` and `color` enum params on `link`, shaping the default
-   variant; breadcrumbs fold both into their `ancestors` param. */
+   Engine: `underline` and `color` enum params on `link` (its default
+   variant), `linkUnderline` and `linkColor` on `button` and `toggle-button`
+   (their link variant); breadcrumbs fold both into `ancestors`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -30,12 +31,13 @@ export const UNDERLINE_OPTIONS = [
   { value: "never", label: "Never", description: "Stripe, Duolingo, Ant" },
 ]
 
-// Primer's and Duolingo's blue links need their own ink (Emphasis).
+// Primer's, Duolingo's, Polaris' and Geist's blue links beside other fills
+// need their own ink (Emphasis).
 export const LINK_COLOR_OPTIONS = [
   {
     value: "accent",
     label: "Accent",
-    description: "Carbon, Polaris, Geist, Stripe",
+    description: "Carbon, Stripe, Polaris, Geist",
   },
   {
     value: "neutral",
@@ -53,6 +55,14 @@ export function resolveLinks(state: Effective): Resolved {
   return {
     params: {
       link: { underline: state.linkUnderline, color: state.linkColor },
+      button: {
+        linkUnderline: state.linkUnderline,
+        linkColor: state.linkColor,
+      },
+      "toggle-button": {
+        linkUnderline: state.linkUnderline,
+        linkColor: state.linkColor,
+      },
     },
   }
 }
