@@ -123,9 +123,6 @@ describe("shape axis", () => {
     expect(resolve({ controlStroke: "bold" }).tokens).toEqual({
       "--studio-control-stroke": "2px",
     })
-    expect(resolve({ controlStroke: "fine" }).tokens).toEqual({
-      "--studio-control-stroke": "0.5px",
-    })
     expect(STYLE_VAR_DEFAULTS["--studio-control-stroke"]).toBe("1px")
   })
 
@@ -137,11 +134,6 @@ describe("shape axis", () => {
         "--focus-input-width"
       ],
     ).toBe("0px")
-    expect(
-      resolve({ ...focus, controlStroke: "fine" }).tokens[
-        "--focus-input-width"
-      ],
-    ).toBe("1.5px")
   })
 
   test("tracks stay round, or follow the detail rung", () => {
@@ -207,7 +199,6 @@ describe("shipped shape", () => {
   test.each([
     ...SHAPE_CHARACTERS.map((c) => [c.id, vector(c.id)] as const),
     ["bold stroke", { controlStroke: "bold" }] as const,
-    ["fine stroke", { controlStroke: "fine" }] as const,
   ])("%s ships whole classes and no studio vars", async (_, state) => {
     const preset = presetOf(state)
     const broken: string[] = []
@@ -234,7 +225,25 @@ describe("shipped shape", () => {
     const bold = await at("bold")
     expect(bold.input).toContain("border-2 border-border-control bg-field")
     expect(bold.otp).toContain("-space-x-[2px]")
-    const fine = await at("fine")
-    expect(fine.input).toContain("border-[0.5px] border-border-control")
+  })
+
+  test("bold reaches every control edge and seam", async () => {
+    const bold = (name: string, state: Partial<typeof DEFAULTS> = {}) =>
+      shipped(name, presetOf({ controlStroke: "bold", ...state }))
+    for (const name of ["checkbox", "radio-group", "button", "toggle-button"])
+      expect(await bold(name), name).toContain("border-2 border-border-control")
+    for (const name of ["group", "toggle-button-group"]) {
+      const divided = await bold(name, { groupSeparator: "divider" })
+      expect(divided, name).toContain("-space-x-[2px]")
+      expect(divided, name).toContain("before:w-[2px]")
+    }
+    expect(await bold("toggle-button-group")).toContain("-space-y-[2px]")
+    const outline = await bold("segmented-control", {
+      segmentedTrack: "outline",
+    })
+    expect(outline).toContain("border-2 border-border p-[1px]")
+    expect(
+      await bold("segmented-control", { segmentedSelected: "raised" }),
+    ).toContain("ring-2 ring-border-control")
   })
 })
