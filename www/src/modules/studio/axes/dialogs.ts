@@ -53,7 +53,7 @@ export const BACKDROP_OPTIONS = [
   {
     value: "wash",
     label: "Wash",
-    credits: ["Geist", "Primer", "Linear (marketing)", "Stripe"],
+    credits: ["Geist", "Primer", "Linear (side panel)", "Stripe"],
   },
 ]
 

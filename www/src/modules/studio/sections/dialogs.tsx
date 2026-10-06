@@ -3,6 +3,7 @@
 /* Dialogs — one scrim for every modal layer, the panel's sections and
    actions, sheets, and dialogs on a phone. */
 
+import { effective as resolveEffective } from "../axes"
 import {
   ACTIONS_OPTIONS,
   BACKDROP_OPTIONS,
@@ -90,22 +91,14 @@ function BackdropGlyph({
   )
 }
 
-/** Bleed needs an open footer, as the rule does. */
-const actionsUnder = (sections: string, actions: string) =>
-  actions === "bleed" &&
-  ["divided", "footer-band", "header-band"].includes(sections)
-    ? "end"
-    : actions
-
 /** A dialog panel: title, body, the footer's actions, the section edges. */
 function PanelGlyph({
   sections,
-  actions: saved,
+  actions,
 }: {
   sections: string
   actions: string
 }) {
-  const actions = actionsUnder(sections, saved)
   const rule = (y: number) => (
     <path
       d={`M3.75 ${y}h16.5`}
@@ -311,7 +304,7 @@ export function DialogsPreview({ state }: { state: Effective }) {
 }
 
 export function DialogsSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+  const { effective, state } = studio
   return (
     <>
       <FamilyHero>
@@ -346,7 +339,10 @@ export function DialogsSection({ studio }: { studio: Studio }) {
           preview: glyph(
             <PanelGlyph
               sections={option.value}
-              actions={effective.dialogActions}
+              actions={
+                resolveEffective({ ...state, dialogSections: option.value })
+                  .values.dialogActions
+              }
             />,
           ),
         }))}

@@ -165,6 +165,18 @@ describe("dialogs axes", () => {
     }
   })
 
+  it("Fullscreen stretches the dialog so its footer docks to the bottom", async () => {
+    const code = await content("modal", {}, { modal: { mobile: "fullscreen" } })
+    for (const cls of [
+      "max-md:min-h-(--visual-viewport-height)",
+      "max-md:*:max-h-none",
+      "max-md:*:flex-1",
+      "max-md:**:data-[slot=dialog-footer]:mt-auto",
+    ])
+      expect(code).toContain(cls)
+    expect(await content("modal")).not.toContain("max-md:*:flex-1")
+  })
+
   it("Frost hides under Scrim and Wash; Bleed falls back to End under a footer edge", () => {
     const frost = effective(
       parseState({ dialogBackdrop: "wash", dialogFrost: "subtle" }),
