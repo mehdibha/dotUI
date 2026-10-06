@@ -91,7 +91,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
             "disabled:border-(--disabled-border,var(--color-border-control)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
-            "scale-60 rounded-(--studio-switch-radius) bg-border-control transition-[background-color,margin,scale] pressed:scale-105 selected:scale-90 selected:bg-fg-on-selection",
+            "scale-60 rounded-(--studio-switch-radius) bg-border-control transition-[background-color,margin,scale] pressed:scale-105 selected:scale-90 selected:bg-fg-on-selection selected:pressed:scale-105",
             "disabled:bg-(--disabled-fg,var(--color-border-control)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
           ],
         },
@@ -112,7 +112,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
           ],
           thumb: [
             "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-border-control bg-bg transition-[background-color,border-color,margin] dark:bg-highlight selected:ml-[50%] selected:border-selection",
-            "disabled:bg-(--disabled-fg,var(--color-bg))",
+            "disabled:bg-(--disabled-fg,var(--color-bg)) disabled:selected:border-(--disabled-border,var(--color-border-control))",
           ],
         },
       },

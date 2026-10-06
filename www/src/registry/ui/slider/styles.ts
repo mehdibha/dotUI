@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
         "pointer-events-none relative grow overflow-hidden rounded-(--studio-slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
       fill: "pointer-events-none bg-selection disabled:bg-(--disabled-selected-bg,var(--color-selection))",
       thumb:
-        "top-1/2 left-1/2 grid cursor-drag place-items-center focus-reset duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-dragging",
+        "top-1/2 left-1/2 grid cursor-drag place-items-center focus-reset duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) disabled:cursor-disabled dragging:cursor-dragging",
       output:
         "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
     },
@@ -56,30 +56,30 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       knob: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-(length:--studio-control-stroke) border-border-control bg-thumb transition-shadow hover:outline-3 hover:outline-border-control/50 hover:outline-solid dragging:outline-3 dragging:outline-border-control/50 dragging:outline-solid",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-(length:--studio-control-stroke) border-border-control bg-thumb ring-border-control/50 transition-shadow hover:ring-3 focus-visible:focus-ring dragging:ring-3",
         },
       },
       ring: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-2 border-selection bg-thumb shadow-sm transition-shadow hover:outline-4 hover:outline-border-control/50 hover:outline-solid dragging:outline-4 dragging:outline-border-control/50 dragging:outline-solid",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-2 border-selection bg-thumb shadow-sm ring-border-control/50 transition-shadow hover:ring-4 focus-visible:focus-ring dragging:ring-4",
         },
       },
       solid: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) bg-selection transition-shadow hover:outline-2 hover:outline-border-control/30 hover:outline-solid dragging:outline-2 dragging:outline-border-control/30 dragging:outline-solid",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) bg-selection ring-border-control/30 transition-shadow hover:ring-2 focus-visible:focus-ring dragging:ring-2",
         },
       },
       // A bar in the fill color, a gap cut from the track, a stop dot.
       handle: {
         slots: {
           thumb: [
-            "bg-(--surface-bg,var(--color-bg)) before:absolute before:rounded-(--studio-slider-thumb-radius) before:bg-selection before:transition-[width,height] before:content-['']",
+            "bg-(--surface-bg,var(--color-bg)) before:absolute before:rounded-(--studio-slider-thumb-radius) before:bg-selection before:transition-[width,height] before:content-[''] focus-visible:before:focus-ring",
             "disabled:before:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           track:
-            "after:absolute after:size-1 after:rounded-full after:bg-selection after:content-['']",
+            "after:absolute after:size-1 after:rounded-full after:bg-selection after:content-[''] disabled:after:bg-(--disabled-selected-bg,var(--color-selection))",
         },
         variants: {
           orientation: {
