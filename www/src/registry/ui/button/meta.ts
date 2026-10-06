@@ -61,6 +61,18 @@ const buttonMeta = {
       values: ["none", "tone", "solid", "tint", "inverse"] as const,
       description: "The selected look a current pagination page wears.",
     },
+    linkUnderline: {
+      kind: "enum",
+      default: "never",
+      values: ["always", "hover", "never"] as const,
+      description: "The link variant's underline, from the link recipe.",
+    },
+    linkColor: {
+      kind: "enum",
+      default: "accent",
+      values: ["accent", "neutral"] as const,
+      description: "The link variant's color, from the link recipe.",
+    },
   },
 } satisfies RegistryItem
 

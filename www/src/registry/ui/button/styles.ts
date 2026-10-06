@@ -1,5 +1,11 @@
 import { createStyles } from "@/lib/styles"
 
+import {
+  LINK_ACCENT,
+  LINK_ALWAYS,
+  LINK_HOVER,
+  LINK_NEUTRAL,
+} from "../link/styles"
 import buttonMeta from "./meta"
 
 /* The recipe tables below are the single source for Button and
@@ -12,7 +18,7 @@ export const BUTTON_VARIANTS = {
     "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border",
   quiet:
     "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
-  link: "text-fg underline-offset-4 hover:underline disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
+  link: "disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
   warning:
     "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
   danger:
@@ -213,23 +219,33 @@ export const BUTTON_CASE = {
   },
 }
 
+/* A quiet toggle's selected fill and ink per look, apart: pill tabs put the
+   ink on the tab and the fill on their gliding indicator. */
+export const SELECTED_TONE_FILL =
+  "selected:bg-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active"
+export const SELECTED_TONE_INK = "selected:text-fg-on-selected"
+export const SELECTED_SOLID_FILL =
+  "selected:bg-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover"
+export const SELECTED_SOLID_INK = "selected:text-fg-on-selection"
+export const SELECTED_TINT_FILL = "selected:bg-selection-muted"
+export const SELECTED_TINT_INK = "selected:text-fg"
+export const SELECTED_INVERSE_FILL =
+  "selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80"
+export const SELECTED_INVERSE_INK = "selected:text-fg-inverse"
+
 /* A selected toggle's look; a current pagination page can wear it too. */
 export const SELECTED_LOOKS = {
   // One neutral step down (shadcn, Fluent, Polaris, Untitled UI).
-  tone: {
-    base: "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
-  },
+  tone: { base: [SELECTED_TONE_FILL, SELECTED_TONE_INK] },
   // M3, Spectrum 2: the selection fill. A primary toggle already wears a
   // fill, so it keeps the tone.
   solid: {
     variants: {
       variant: {
-        primary:
-          "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
+        primary: [SELECTED_TONE_FILL, SELECTED_TONE_INK],
         secondary:
           "selected:border-selection selected:bg-selection selected:text-fg-on-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover",
-        quiet:
-          "selected:bg-selection selected:text-fg-on-selection selected:hover:bg-selection-hover selected:pressed:bg-selection-hover",
+        quiet: [SELECTED_SOLID_FILL, SELECTED_SOLID_INK],
       },
     },
   },
@@ -238,10 +254,10 @@ export const SELECTED_LOOKS = {
   tint: {
     variants: {
       variant: {
-        primary: "selected:bg-selection-muted selected:text-fg",
+        primary: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
         secondary:
           "selected:border-selection/25 selected:bg-selection-muted selected:text-fg",
-        quiet: "selected:bg-selection-muted selected:text-fg",
+        quiet: [SELECTED_TINT_FILL, SELECTED_TINT_INK],
       },
     },
   },
@@ -255,11 +271,21 @@ export const SELECTED_LOOKS = {
           "selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
         secondary:
           "selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
-        quiet:
-          "selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        quiet: [SELECTED_INVERSE_FILL, SELECTED_INVERSE_INK],
       },
     },
   },
+}
+
+/* The link variant wears the link recipe; the button keeps its label weight. */
+export const BUTTON_LINK_UNDERLINE = {
+  always: { variants: { variant: { link: LINK_ALWAYS } } },
+  hover: { variants: { variant: { link: LINK_HOVER } } },
+  never: {},
+}
+export const BUTTON_LINK_COLOR = {
+  accent: { variants: { variant: { link: LINK_ACCENT } } },
+  neutral: { variants: { variant: { link: LINK_NEUTRAL } } },
 }
 
 export const BUTTON_DENSITY = {
@@ -331,6 +357,8 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     press: BUTTON_PRESS,
     case: BUTTON_CASE,
     current: SELECTED_LOOKS,
+    linkUnderline: BUTTON_LINK_UNDERLINE,
+    linkColor: BUTTON_LINK_COLOR,
   },
 })
 

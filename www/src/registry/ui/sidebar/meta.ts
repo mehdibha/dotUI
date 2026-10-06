@@ -53,7 +53,7 @@ const sidebarMeta = {
     },
     weight: {
       kind: "enum",
-      default: "medium",
+      default: "regular-medium",
       values: [
         "regular",
         "regular-medium",

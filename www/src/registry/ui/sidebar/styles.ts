@@ -43,9 +43,13 @@ const FILL_BAR_ACCENT = [
   bar,
   "data-active:before:w-1 data-active:before:bg-accent",
 ]
-// Stripe: the label and icon alone.
+// Stripe: the label and icon alone, a brand wash on hover. Sub-item icons
+// rest muted, so the current one takes the ink.
 const INK = [wash, "data-active:text-fg"]
-const INK_ACCENT = [wash, "data-active:text-fg-accent"]
+const INK_ACCENT = [
+  "hover:bg-accent-muted pressed:bg-accent-muted data-active:text-fg-accent",
+]
+const INK_ICON = "data-active:[&>svg]:text-current"
 // Duolingo: the wash inside a 2px ring.
 const OUTLINE = [
   wash,
@@ -213,9 +217,12 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       "fill-bar-accent": {
         slots: { menuButton: FILL_BAR_ACCENT, menuSubButton: FILL_BAR_ACCENT },
       },
-      ink: { slots: { menuButton: INK, menuSubButton: INK } },
+      ink: { slots: { menuButton: INK, menuSubButton: [INK, INK_ICON] } },
       "ink-accent": {
-        slots: { menuButton: INK_ACCENT, menuSubButton: INK_ACCENT },
+        slots: {
+          menuButton: INK_ACCENT,
+          menuSubButton: [INK_ACCENT, INK_ICON],
+        },
       },
       outline: { slots: { menuButton: OUTLINE, menuSubButton: OUTLINE } },
       "outline-accent": {

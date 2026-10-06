@@ -69,8 +69,8 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
   return (
     <BreadcrumbsPrimitive.Link
       data-breadcrumb-link=""
-      className={composeRenderProps(className, (className, { isCurrent }) =>
-        link({ isCurrent, className }),
+      className={composeRenderProps(className, (className) =>
+        link({ className }),
       )}
       {...props}
     />

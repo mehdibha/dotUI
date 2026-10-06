@@ -5,11 +5,12 @@ import {
   LINK_ALWAYS,
   LINK_HOVER,
   LINK_NEUTRAL,
+  LINK_NEUTRAL_WEIGHT,
 } from "../link/styles"
 import breadcrumbsMeta from "./meta"
 
 /* Ancestors are muted labels that sharpen on hover, or the link recipe in
-   its color and underline. The current crumb is plain foreground in both. */
+   its color and underline. The current crumb stays plain foreground. */
 
 const { useStyles, styles } = createStyles(breadcrumbsMeta, {
   base: {
@@ -18,15 +19,9 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
       item: "inline-flex items-center gap-1",
       link: [
         "focus-reset focus-visible:focus-ring",
-        "inline-flex items-center gap-1 px-0.5 leading-none transition-colors duration-(--studio-breadcrumbs-state-duration) ease-(--studio-breadcrumbs-state-ease) disabled:cursor-disabled disabled:not-current:text-(--disabled-fg,currentColor)",
+        "inline-flex items-center gap-1 px-0.5 leading-none transition-colors duration-(--studio-breadcrumbs-state-duration) ease-(--studio-breadcrumbs-state-ease) disabled:cursor-disabled disabled:not-current:text-(--disabled-fg,currentColor) current:text-fg",
       ],
       separator: "[&_svg]:size-4",
-    },
-    variants: {
-      isCurrent: {
-        true: { link: "text-fg" },
-        false: { link: "" },
-      },
     },
   },
   density: {
@@ -38,28 +33,25 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
     ancestors: {
       muted: { slots: { link: "hover:[a]:text-fg" } },
       "accent-always": {
-        variants: {
-          isCurrent: { false: { link: [LINK_ACCENT, LINK_ALWAYS] } },
-        },
+        slots: { link: [LINK_ACCENT, LINK_ALWAYS, "current:no-underline"] },
       },
-      "accent-hover": {
-        variants: { isCurrent: { false: { link: [LINK_ACCENT, LINK_HOVER] } } },
-      },
-      "accent-never": {
-        variants: { isCurrent: { false: { link: LINK_ACCENT } } },
-      },
+      "accent-hover": { slots: { link: [LINK_ACCENT, LINK_HOVER] } },
+      "accent-never": { slots: { link: LINK_ACCENT } },
       "neutral-always": {
-        variants: {
-          isCurrent: { false: { link: [LINK_NEUTRAL, LINK_ALWAYS] } },
+        slots: {
+          link: [
+            LINK_NEUTRAL_WEIGHT,
+            LINK_NEUTRAL,
+            LINK_ALWAYS,
+            "current:no-underline",
+          ],
         },
       },
       "neutral-hover": {
-        variants: {
-          isCurrent: { false: { link: [LINK_NEUTRAL, LINK_HOVER] } },
-        },
+        slots: { link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL, LINK_HOVER] },
       },
       "neutral-never": {
-        variants: { isCurrent: { false: { link: LINK_NEUTRAL } } },
+        slots: { link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL] },
       },
     },
   },

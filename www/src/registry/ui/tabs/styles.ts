@@ -1,6 +1,12 @@
 import { createStyles } from "@/lib/styles"
 
 import {
+  SELECTED_INVERSE_INK,
+  SELECTED_SOLID_INK,
+  SELECTED_TINT_INK,
+  SELECTED_TONE_INK,
+} from "../button/styles"
+import {
   CHIP_INVERSE,
   CHIP_RAISED,
   CHIP_RING,
@@ -19,7 +25,7 @@ import tabsMeta from "./meta"
 
 /* The `variant` prop is per-instance API; the `style` param sets its default
    for the design system. Segmented wears the segmented control's chip and
-   track, pill a toggle's selected look, line the indicator color. */
+   track, pill a quiet toggle's selected look, line the indicator color. */
 
 const { useStyles, styles } = createStyles(tabsMeta, {
   base: {
@@ -59,10 +65,9 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           indicator:
             "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
         },
-        // Polaris, Notion, Claude: a faint wash on hover.
         pill: {
           list: "gap-1",
-          item: "rounded-(--studio-tabs-pill-radius) hover:bg-inverse/5 orientation-horizontal:h-full",
+          item: "group/tab rounded-(--studio-tabs-pill-radius) orientation-horizontal:h-full",
           indicator: "inset-0 rounded-(--studio-tabs-pill-radius)",
         },
         enclosed: {
@@ -128,14 +133,16 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         variants: { variant: { segmented: { list: TRACK_OUTLINE } } },
       },
     },
-    // A quiet toggle's selected fill and ink.
+    // A quiet toggle's selected ink and fill; the fill rides the indicator,
+    // so the tab's hover and press reach it through the group.
     pill: {
       tone: {
         variants: {
           variant: {
             pill: {
-              item: "selected:text-fg-on-selected",
-              indicator: "bg-selected",
+              item: SELECTED_TONE_INK,
+              indicator:
+                "bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active",
             },
           },
         },
@@ -144,8 +151,9 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         variants: {
           variant: {
             pill: {
-              item: "selected:text-fg-on-selection",
-              indicator: "bg-selection",
+              item: SELECTED_SOLID_INK,
+              indicator:
+                "bg-selection group-hover/tab:bg-selection-hover group-pressed/tab:bg-selection-hover",
             },
           },
         },
@@ -153,14 +161,18 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       tint: {
         variants: {
           variant: {
-            pill: { item: "selected:text-fg", indicator: "bg-selection-muted" },
+            pill: { item: SELECTED_TINT_INK, indicator: "bg-selection-muted" },
           },
         },
       },
       inverse: {
         variants: {
           variant: {
-            pill: { item: "selected:text-fg-inverse", indicator: "bg-inverse" },
+            pill: {
+              item: SELECTED_INVERSE_INK,
+              indicator:
+                "bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
+            },
           },
         },
       },
