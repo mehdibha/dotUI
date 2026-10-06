@@ -1,12 +1,15 @@
 import { createStyles } from "@/lib/styles"
 
+import { CONTAINER_SURFACE } from "../card/styles"
 import attachmentMeta from "./meta"
 
 const { useStyles, styles } = createStyles(attachmentMeta, {
   base: {
     slots: {
       root: [
-        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--studio-attachment-radius) border border-(--card-border) bg-card text-fg shadow-(--shadow-card,0_0_#0000) transition-colors",
+        "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-(--studio-attachment-radius)",
+        CONTAINER_SURFACE,
+        "text-fg transition-colors",
         "has-[>a,>button]:hover:bg-muted/50",
         "has-[[data-attachment-trigger]:focus-visible]:focus-ring",
         "data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
