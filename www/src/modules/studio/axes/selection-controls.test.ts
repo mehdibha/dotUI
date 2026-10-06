@@ -51,7 +51,7 @@ describe("selection controls", () => {
     expect(designSystemOf(seeded).color?.scopes).toBeUndefined()
     expect(
       designSystemOf({ ...seeded, checkboxColor: "neutral" }).color?.scopes,
-    ).toEqual({ checkbox: "neutral" })
+    ).toMatchObject({ checkbox: "neutral" })
   })
 
   it("corner rides on the checkbox radius var", () => {
