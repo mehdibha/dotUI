@@ -24,7 +24,7 @@ export const notion = definePreset({
     roleCard: "xl",
 
     // Space
-    // 28px controls; 13px keeps the text near Notion's 14px.
+    // 28px controls with 13px text; Notion pairs 28px with 14px.
     density: "compact",
 
     // Browser

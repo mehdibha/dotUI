@@ -8,7 +8,7 @@
    points at a role. On publish the chain resolves to a plain utility per
    component — `rounded-md`, `rounded-xl` — and a role at None ships no
    rounded class at all. `--studio-control-stroke` resolves the same way, to
-   `border` · `border-2` · `border-[0.5px]`. */
+   `border` · `border-2`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioStateInput } from "./index"
@@ -28,9 +28,10 @@ export const SHAPE_DEFAULTS = {
 }
 
 /* Control edges only: surfaces keep their hairline, since Duolingo's 2px
-   cards and Spectrum 2's 1px ones disagree. */
+   cards and Spectrum 2's 1px ones disagree. No sub-pixel option: Chromium
+   draws a 0.5px border at 1px, so seams and insets would subtract the wrong
+   width. */
 export const STROKE_OPTIONS = [
-  { value: "fine", label: "Fine", description: "Linear, Polaris", px: 0.5 },
   {
     value: "regular",
     label: "Regular",
@@ -44,7 +45,7 @@ export const strokePx = (id: string) =>
   STROKE_OPTIONS.find((option) => option.value === id)?.px ?? 1
 
 export const TRACK_OPTIONS = [
-  { value: "round", label: "Round", description: "Carbon, shadcn" },
+  { value: "round", label: "Round", description: "Carbon" },
   {
     value: "follow",
     label: "Follow",

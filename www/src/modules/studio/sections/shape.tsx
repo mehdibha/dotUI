@@ -1,7 +1,7 @@
 "use client"
 
 /* Shape — the base radius, and a character: which rung each role of component
-   wears; then the control stroke, and (folded) whether tracks stay round. The character opens a grid of cards, each a small app drawn at that
+   wears. The character opens a grid of cards, each a small app drawn at that
    character's real radii on the current base, so the pick is made by feel.
    Roles fold under the cards for the system that needs one role off the
    curated path; a hand-set vector reads Custom. */
