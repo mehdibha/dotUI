@@ -78,7 +78,7 @@ export function tonalCategoricalPalette(
 }
 
 /** Gate for tonal palettes: strictly descending with readable L* steps. */
-export function tonalGateReport(palette: Oklch[]) {
+export function tonalGateReport(palette: readonly Oklch[]) {
   const lstars = palette.map(lstarOf)
   let minAdjacent = Infinity
   let monotonic = true

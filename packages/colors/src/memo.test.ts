@@ -12,7 +12,7 @@ import {
   sequentialPalette,
   tonalCategoricalPalette,
 } from "./charts"
-import { lru, setMemoEnabled } from "./memo"
+import { memoize, setMemoEnabled } from "./memo"
 import { buildScale } from "./scale"
 import type { ThemeOptions } from "./schema"
 import { createTheme } from "./theme"
@@ -192,19 +192,31 @@ function drags(): ThemeOptions[] {
   const base = PRESETS[1]!
   const steps = (n: number, at: (t: number) => ThemeOptions) =>
     Array.from({ length: n }, (_, i) => at(i / n))
-  const accent = (h: number) => ({
-    ...base.seeds,
-    accent: `oklch(0.62 0.17 ${h})`,
-  })
+  const seeds = (patch: Record<string, string>) => ({ ...base.seeds, ...patch })
+  const hue = (h: number) => seeds({ accent: `oklch(0.62 0.17 ${h})` })
+  // Chroma- and lightness-only moves at a fixed hue: a ColorArea drag.
+  const chroma = (c: number) => seeds({ accent: `oklch(0.62 ${c} 250)` })
+  const lightness = (l: number) => seeds({ accent: `oklch(${l} 0.12 250)` })
   return [
-    ...steps(8, (t) => ({ ...base, seeds: accent(t * 360) })),
+    ...steps(8, (t) => ({ ...base, seeds: hue(t * 360) })),
+    ...steps(6, (t) => ({ ...base, seeds: chroma(0.04 + t * 0.18) })),
+    ...steps(6, (t) => ({ ...base, seeds: lightness(0.4 + t * 0.4) })),
+    ...steps(6, (t) => ({
+      ...base,
+      seeds: seeds({ danger: `oklch(0.58 ${0.06 + t * 0.16} 25)` }),
+    })),
     ...steps(8, (t) => ({ ...base, neutralTint: t * 2 })),
     ...steps(8, (t) => ({ ...base, neutralHue: t * 360 })),
     ...steps(4, (t) => ({ ...base, background: { dark: t * 20 } })),
     ...steps(3, (t) => ({
       ...base,
       chartPalette: "vivid",
-      seeds: accent(t * 360),
+      seeds: hue(t * 360),
+    })),
+    ...steps(3, (t) => ({
+      ...base,
+      chartPalette: "vivid",
+      seeds: lightness(0.4 + t * 0.4),
     })),
     ...steps(3, (t) => ({ ...base, chartPalette: "muted", neutralTint: t })),
   ]
@@ -309,18 +321,23 @@ describe("a drag re-solves only what it moves", () => {
   })
 })
 
-test("lru evicts the least recently used entry and freezes values", () => {
-  const memo = lru<{ n: number[] }>(2)
+test("memoize keys on argument values, evicts the oldest, freezes", () => {
   let computed = 0
-  const get = (key: string) => memo(key, () => ({ n: [computed++] }))
-  get("a")
-  get("b")
-  get("a")
-  get("c")
+  const memo = memoize(2, (_: { a: number; b: number[] }) => ({
+    n: [computed++],
+  }))
+  const get = (a: number, b: number[]) => memo({ a, b })
+  get(1, [1])
+  get(1, [2])
+  get(1, [1])
+  get(2, [1])
   expect(computed).toBe(3)
-  get("a")
+  memo({ b: [1], a: 1 })
   expect(computed).toBe(3)
-  get("b")
+  get(1, [2])
   expect(computed).toBe(4)
-  expect(Object.isFrozen(get("a").n)).toBe(true)
+  expect(Object.isFrozen(get(1, [2]).n)).toBe(true)
+  setMemoEnabled(true)
+  get(1, [2])
+  expect(computed).toBe(5)
 })

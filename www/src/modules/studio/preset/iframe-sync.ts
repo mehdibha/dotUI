@@ -152,67 +152,107 @@ function onNextFrame(fn: () => void) {
   return cancel
 }
 
-/** Inside the preview iframe: applies only the newest design system, painted
- *  in the next frame. */
-export function useDesignSystemMessages(apply: (data: DesignSystem) => void) {
-  const applyRef = React.useRef(apply)
+export interface DesignSystemMessage {
+  data: DesignSystem
+  live: boolean
+}
+
+/** Hands `ready` what applying `message` needs, now or later. */
+export type PrepareDesignSystem<T> = (
+  message: DesignSystemMessage,
+  ready: (prepared: T) => void,
+) => void
+
+/** Applies only the newest prepared design system, painted in the next frame.
+ *  Returns the cleanup. */
+export function listenDesignSystemMessages<T>(
+  prepare: PrepareDesignSystem<T>,
+  apply: (data: DesignSystem, prepared: T) => void,
+) {
+  const root = document.documentElement
+  let pending: { message: DesignSystemMessage; prepared: T } | null = null
+  let received = 0
+  // The newest message prepared: a slower, older one never replaces it.
+  let accepted = 0
+  let readyAt = 0
+  let cancelApply: (() => void) | undefined
+  let cancelUnlive: (() => void) | undefined
+
+  const flush = () => {
+    cancelApply = undefined
+    const next = pending
+    pending = null
+    if (!next) return
+    const { message, prepared } = next
+    cancelUnlive?.()
+    if (message.live) root.setAttribute(LIVE_ATTR, "")
+    const start = performance.now()
+    flushSync(() => apply(message.data, prepared))
+    // Restyles now, so the measure includes it.
+    void root.offsetHeight
+    const end = performance.now()
+    readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
+    // A frame later, so the commit itself doesn't animate.
+    if (!message.live && root.hasAttribute(LIVE_ATTR))
+      cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
+  }
+
+  const schedule = () => {
+    if (cancelApply) return
+    const wait = readyAt - performance.now()
+    if (wait <= 0) {
+      cancelApply = onNextFrame(flush)
+      return
+    }
+    const timer = setTimeout(() => {
+      cancelApply = onNextFrame(flush)
+    }, wait)
+    cancelApply = () => clearTimeout(timer)
+  }
+
+  const handleMessage = (event: MessageEvent) => {
+    if (
+      event.origin !== window.location.origin ||
+      event.data?.type !== "design-system"
+    )
+      return
+    const message = { data: event.data.data, live: event.data.live === true }
+    const id = ++received
+    prepare(message, (prepared) => {
+      if (id <= accepted) return
+      accepted = id
+      pending = { message, prepared }
+      schedule()
+    })
+  }
+
+  window.addEventListener("message", handleMessage)
+  return () => {
+    window.removeEventListener("message", handleMessage)
+    accepted = Infinity
+    cancelApply?.()
+    cancelUnlive?.()
+    root.removeAttribute(LIVE_ATTR)
+  }
+}
+
+/** Inside the preview iframe: see `listenDesignSystemMessages`. */
+export function useDesignSystemMessages<T>(
+  prepare: PrepareDesignSystem<T>,
+  apply: (data: DesignSystem, prepared: T) => void,
+) {
+  const handlers = React.useRef({ prepare, apply })
 
   React.useEffect(() => {
-    applyRef.current = apply
-  }, [apply])
+    handlers.current = { prepare, apply }
+  }, [prepare, apply])
 
   React.useEffect(() => {
     if (!isInIframe()) return
-    const root = document.documentElement
-    let pending: { data: DesignSystem; live: boolean } | null = null
-    let readyAt = 0
-    let cancelApply: (() => void) | undefined
-    let cancelUnlive: (() => void) | undefined
-
-    const flush = () => {
-      cancelApply = undefined
-      const message = pending
-      pending = null
-      if (!message) return
-      cancelUnlive?.()
-      if (message.live) root.setAttribute(LIVE_ATTR, "")
-      const start = performance.now()
-      flushSync(() => applyRef.current(message.data))
-      // Restyles now, so the measure includes it.
-      void root.offsetHeight
-      const end = performance.now()
-      readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
-      // A frame later, so the commit itself doesn't animate.
-      if (!message.live && root.hasAttribute(LIVE_ATTR))
-        cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
-    }
-
-    const handleMessage = (event: MessageEvent) => {
-      if (
-        event.origin !== window.location.origin ||
-        event.data?.type !== "design-system"
-      )
-        return
-      pending = { data: event.data.data, live: event.data.live === true }
-      if (cancelApply) return
-      const wait = readyAt - performance.now()
-      if (wait <= 0) {
-        cancelApply = onNextFrame(flush)
-        return
-      }
-      const timer = setTimeout(() => {
-        cancelApply = onNextFrame(flush)
-      }, wait)
-      cancelApply = () => clearTimeout(timer)
-    }
-
-    window.addEventListener("message", handleMessage)
-    return () => {
-      window.removeEventListener("message", handleMessage)
-      cancelApply?.()
-      cancelUnlive?.()
-      root.removeAttribute(LIVE_ATTR)
-    }
+    return listenDesignSystemMessages<T>(
+      (message, ready) => handlers.current.prepare(message, ready),
+      (data, prepared) => handlers.current.apply(data, prepared),
+    )
   }, [])
 }
 

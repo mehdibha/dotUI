@@ -165,7 +165,8 @@ export const CardsGrid = memo(function CardsGrid({
 // horizontally scrollable life-size surface rather than a fluid grid, so card
 // size comes from the ~340px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col
-// sub-grid. `content-visibility` keeps off-screen columns free to lay out.
+// sub-grid. `content-visibility` skips the off-screen columns and cards, so a
+// theme change restyles only what's on screen.
 const CANVAS_1: CardKey[] = [
   "controls",
   "twoFactor",
@@ -222,8 +223,18 @@ function CanvasColumn({
       )}
     >
       {cards.map((key) => (
-        <div key={key}>{CARDS[key]}</div>
+        <CanvasCard key={key} card={key} />
       ))}
+    </div>
+  )
+}
+
+// Its paint clip holds the card's shadow: padding no wider than the gap,
+// taken back by the margins, and deeper below, where later cards paint over.
+function CanvasCard({ card }: { card: CardKey }) {
+  return (
+    <div className="-mx-4 -mt-4 -mb-8 px-4 pt-4 pb-8 [contain-intrinsic-size:auto_320px] [content-visibility:auto]">
+      {CARDS[card]}
     </div>
   )
 }
@@ -244,12 +255,12 @@ export function CardsCanvas() {
             <div className="grid grid-cols-2 items-start gap-(--gap)">
               <div className="flex flex-col gap-(--gap)">
                 {CANVAS_WIDE_LEFT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
+                  <CanvasCard key={key} card={key} />
                 ))}
               </div>
               <div className="flex flex-col gap-(--gap)">
                 {CANVAS_WIDE_RIGHT.map((key) => (
-                  <div key={key}>{CARDS[key]}</div>
+                  <CanvasCard key={key} card={key} />
                 ))}
               </div>
             </div>

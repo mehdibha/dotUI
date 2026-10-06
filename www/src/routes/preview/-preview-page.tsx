@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
-import { ensureFontStylesheets } from "@/lib/fonts"
+import { loadFontFaces } from "@/lib/fonts"
 import { DesignSystemProvider } from "@/lib/styles"
 import { SearchIcon } from "@/registry/icons"
 import { IconLibraryContext } from "@/registry/icons/create-icon"
@@ -18,12 +18,19 @@ import {
   usePreviewNavigationMessages,
   usePreviewWarmMessages,
 } from "@/modules/studio/preset/iframe-sync"
-import type { PreviewAssets } from "@/modules/studio/preset/iframe-sync"
+import type {
+  PrepareDesignSystem,
+  PreviewAssets,
+} from "@/modules/studio/preset/iframe-sync"
 import { shareDesignSystem } from "@/modules/studio/preset/share-design-system"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
+import {
+  themeCssLater,
+  themeCssNow,
+} from "@/modules/studio/preview/theme-css-worker"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
@@ -67,6 +74,25 @@ const LOADED_LIBRARIES = new Set<string>(
     .filter((name) => name !== "lucide"),
 )
 
+// Faces load once the pointer rests on a font, so sweeping the list fetches
+// nothing; the preview itself settles later.
+const FONT_DWELL_MS = 30
+let fontTimer: ReturnType<typeof setTimeout> | undefined
+function warmFonts(families: string[]) {
+  clearTimeout(fontTimer)
+  fontTimer = setTimeout(() => loadFontFaces(document, families), FONT_DWELL_MS)
+}
+
+// Live color changes compute their CSS off the main thread.
+const prepareThemeCss: PrepareDesignSystem<string | undefined> = (
+  { data: { color }, live },
+  ready,
+) => {
+  if (!color) ready(undefined)
+  else if (live) themeCssLater(color, ready)
+  else ready(themeCssNow(color))
+}
+
 // One hidden icon per library loads its chunk before a preview needs it.
 function WarmIcons({ libraries }: { libraries: IconLibraryName[] }) {
   return (
@@ -84,9 +110,13 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
-  const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(getCurrent().state),
-  )
+  const [{ designSystem, themeCss }, setApplied] = useState(() => {
+    const initial = resolveDesignSystem(getCurrent().state)
+    return {
+      designSystem: initial,
+      themeCss: initial.color && themeCssNow(initial.color),
+    }
+  })
 
   const navigate = route.useNavigate()
 
@@ -94,7 +124,7 @@ export function PreviewPage() {
   const [warmIcons, setWarmIcons] = useState<IconLibraryName[]>([])
   usePreviewWarmMessages(
     useCallback(({ fonts, icons }: PreviewAssets) => {
-      if (fonts) ensureFontStylesheets(document, fonts)
+      if (fonts) warmFonts(fonts)
       const added = (icons ?? []).filter((name) => LOADED_LIBRARIES.has(name))
       if (added.length)
         setWarmIcons((prev) => {
@@ -105,9 +135,15 @@ export function PreviewPage() {
   )
 
   useDesignSystemMessages(
+    prepareThemeCss,
     useCallback(
-      (next: DesignSystem) =>
-        setDesignSystem((prev) => shareDesignSystem(prev, next)),
+      (next: DesignSystem, css: string | undefined) =>
+        setApplied((prev) => {
+          const shared = shareDesignSystem(prev.designSystem, next)
+          return shared === prev.designSystem && css === prev.themeCss
+            ? prev
+            : { designSystem: shared, themeCss: css }
+        }),
       [],
     ),
   )
@@ -178,6 +214,7 @@ export function PreviewPage() {
       tokens={tokens}
       density={density}
       color={color}
+      themeCss={themeCss}
       icons={designSystem.icons}
     >
       {chrome}

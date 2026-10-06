@@ -16,7 +16,23 @@ let settleTimer: ReturnType<typeof setTimeout> | undefined
 let capture: ((next: StudioState | null) => void) | undefined
 // Hovers fire mid-drag (RAC sliders don't capture the pointer): drags win.
 let dragging = false
+// Pointers down: a drag needs one; keys and assistive tech step and commit.
+const held = new Set<number>()
 const listeners = new Set<() => void>()
+
+if (typeof window !== "undefined") {
+  window.addEventListener("pointerdown", (e) => held.add(e.pointerId), true)
+  for (const type of LIFT)
+    window.addEventListener(
+      type,
+      (e) => {
+        held.delete(e.pointerId)
+        // After the release's own handlers: a drag that didn't commit drops.
+        setTimeout(() => dragging && !held.size && clearLive())
+      },
+      true,
+    )
+}
 
 function show(next: StudioState | null) {
   clearTimeout(settleTimer)
@@ -39,11 +55,13 @@ export const useLive = () =>
 
 /** Drops the overlay, and any preview about to show, at once. */
 export function clearLive() {
-  if (dragging) {
-    dragging = false
-    for (const type of LIFT) window.removeEventListener(type, lift, true)
-  }
+  dragging = false
   show(null)
+}
+
+/** Drops the overlay unless a drag holds it. */
+export function clearSettled() {
+  if (!dragging) clearLive()
 }
 
 /** Shows `next` over the committed design (null: the committed design);
@@ -71,19 +89,13 @@ function captured(run: () => void): StudioState | null | undefined {
   return caught
 }
 
-// After the release's own handlers: a drag that didn't commit drops.
-function lift() {
-  setTimeout(() => dragging && clearLive())
-}
-
-/** Previews what `run` would commit, at once: a drag tick. */
+/** Previews what `run` would commit, at once, while a pointer drags;
+ *  without one it's a step, and `run` commits. */
 export function previewNow(run: () => void) {
+  if (!held.size) return run()
   const next = captured(run)
   if (next === undefined) return
-  if (!dragging) {
-    dragging = true
-    for (const type of LIFT) window.addEventListener(type, lift, true)
-  }
+  dragging = true
   show(next)
 }
 

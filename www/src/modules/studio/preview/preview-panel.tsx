@@ -37,7 +37,7 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { onWarmPreview, useLive } from "@/modules/studio/live"
+import { clearSettled, onWarmPreview, useLive } from "@/modules/studio/live"
 import {
   pingIframe,
   sendInspectorMode,
@@ -107,12 +107,19 @@ function DesignSystemSync({
 }) {
   const { state } = useCurrent()
   const live = useLive()
-  const message = useMemo(
-    () => ({ data: resolveDesignSystem(live ?? state), live: live !== null }),
-    [live, state],
-  )
+  const committed = useMemo(() => resolveDesignSystem(state), [state])
+  const message = useMemo(() => {
+    const data = live && resolveDesignSystem(live)
+    // A preview that resolves to the committed design isn't one.
+    return data && JSON.stringify(data) !== JSON.stringify(committed)
+      ? { data, live: true }
+      : { data: committed, live: false }
+  }, [live, committed])
   const latest = useRef(message)
   const sent = useRef("")
+
+  // Another tab's change drops a hover's preview; a drag keeps its own.
+  useEffect(() => clearSettled(), [state])
 
   useEffect(() => {
     latest.current = message

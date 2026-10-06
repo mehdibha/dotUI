@@ -28,7 +28,7 @@ import {
   type StepName,
   WHISPER_LINE,
 } from "./data"
-import { lru } from "./memo"
+import { type DeepReadonly, memoize } from "./memo"
 import { deltaEok, minPairwiseDeltaEok } from "./meters"
 import {
   buildScale,
@@ -73,31 +73,16 @@ export interface Theme {
 
 const CORE_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"]
 
-const scaleCache = lru<Record<Mode, ScaleColors>>(64)
-
 /**
  * Both modes of one scale. Step 700 is mode-invariant (verified on Radix) —
  * the dark pass shares the light solve.
  */
-function buildScales(
-  shared: Omit<ScaleOptions, "mode" | "skeleton" | "sharedSolid">,
-  skeleton: Record<Mode, number[]>,
-): Record<Mode, ScaleColors> {
-  const { seed } = shared
-  // Every buildScale input; the dark pass's sharedSolid derives from light.
-  const key = [
-    seed.l,
-    seed.c,
-    seed.h,
-    shared.neutral,
-    shared.vividness,
-    shared.hueShift,
-    shared.tintPeak,
-    shared.preserveSeed,
-    skeleton.light,
-    skeleton.dark,
-  ].join("|")
-  return scaleCache(key, () => {
+const buildScales = memoize(
+  64,
+  (
+    shared: Omit<ScaleOptions, "mode" | "skeleton" | "sharedSolid">,
+    skeleton: Record<Mode, number[]>,
+  ): Record<Mode, ScaleColors> => {
     const light = buildScale({
       ...shared,
       mode: "light",
@@ -110,8 +95,8 @@ function buildScales(
       sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
     })
     return { light, dark }
-  })
-}
+  },
+)
 
 interface AccentCharts {
   categorical: Oklch[]
@@ -119,14 +104,13 @@ interface AccentCharts {
   arms: [Oklch[], Oklch[]]
 }
 
-const chartCache = lru<Record<Mode, AccentCharts>>(16)
-
 /** D11 — accent-only chart work; the neutral diverging midpoint joins later. */
-function accentCharts(
-  accent: Oklch,
-  palette: NonNullable<ThemeOptions["chartPalette"]>,
-): Record<Mode, AccentCharts> {
-  return chartCache([palette, accent.l, accent.c, accent.h].join("|"), () => {
+const accentCharts = memoize(
+  16,
+  (
+    accent: Oklch,
+    palette: NonNullable<ThemeOptions["chartPalette"]>,
+  ): Record<Mode, AccentCharts> => {
     const hueSpread =
       palette === "tonal"
         ? undefined
@@ -138,8 +122,8 @@ function accentCharts(
       arms: divergingArms(accent.h, 3, mode),
     })
     return { light: forMode("light"), dark: forMode("dark") }
-  })
-}
+  },
+)
 
 export function createTheme(input: string | ThemeOptions): Theme {
   const options: ThemeOptions =
@@ -212,7 +196,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const guarantees: GuaranteeResult[] = []
   const seedDelta: Record<string, number> = {}
 
-  const built: Record<Mode, Record<string, ScaleColors>> = {
+  const built: Record<Mode, Record<string, DeepReadonly<ScaleColors>>> = {
     light: {},
     dark: {},
   }

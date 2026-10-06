@@ -16,6 +16,10 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
+/** A pointer going down or up, as the window's capture phase sees it. */
+const pointer = (type: "pointerdown" | "pointerup", pointerId = 1) =>
+  window.dispatchEvent(Object.assign(new Event(type), { pointerId }))
+
 async function load() {
   const live = await import("./live")
   const selection = await import("./selection")
@@ -27,6 +31,7 @@ async function load() {
   const shown = () => live.getLive()?.radiusPx ?? null
   const listener = vi.fn<() => void>()
   live.subscribeLive(listener)
+  pointer("pointerdown")
   return { live, selection, committed, radius, onChange, shown, listener }
 }
 
@@ -137,13 +142,48 @@ describe("drag", () => {
   it("drops when the pointer lifts without a commit", async () => {
     const { live, onChange, shown } = await load()
     live.previewNow(onChange(7))
-    window.dispatchEvent(new Event("pointerup"))
+    pointer("pointerup")
     expect(shown()).toBe(7)
     vi.runAllTimers()
     expect(shown()).toBeNull()
     live.previewSettled(onChange(5))
     vi.runAllTimers()
     expect(shown()).toBe(5)
+  })
+
+  it("holds while another pointer lifts", async () => {
+    const { live, onChange, shown } = await load()
+    live.previewNow(onChange(7))
+    pointer("pointerdown", 2)
+    pointer("pointerup", 2)
+    vi.runAllTimers()
+    expect(shown()).toBe(7)
+    pointer("pointerup")
+    vi.runAllTimers()
+    expect(shown()).toBeNull()
+  })
+
+  it("commits a step made without a pointer: keys, assistive tech", async () => {
+    const { live, selection, onChange, shown } = await load()
+    pointer("pointerup")
+    live.previewNow(onChange(7))
+    expect(shown()).toBeNull()
+    expect(selection.getCurrent().state.radiusPx).toBe(7)
+    live.previewSettled(onChange(5))
+    vi.runAllTimers()
+    expect(shown()).toBe(5)
+  })
+
+  it("keeps its preview when the committed design changes elsewhere", async () => {
+    const { live, onChange, shown } = await load()
+    live.previewNow(onChange(7))
+    live.clearSettled()
+    expect(shown()).toBe(7)
+    onChange(7)()
+    live.previewSettled(onChange(5))
+    vi.runAllTimers()
+    live.clearSettled()
+    expect(shown()).toBeNull()
   })
 })
 

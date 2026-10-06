@@ -381,6 +381,7 @@ export function DialPickList({
     <RacListBox
       aria-label={label}
       selectionMode="single"
+      disallowEmptySelection
       selectedKeys={value ? [value] : []}
       onSelectionChange={(keys) => {
         if (keys === "all") return

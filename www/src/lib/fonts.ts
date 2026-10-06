@@ -672,14 +672,35 @@ export function loadFontPreview(doc: Document, family: string): void {
  * links (not one combined) so switching fonts never re-fetches already-loaded
  * ones. Links are never removed — a font once loaded stays usable.
  */
-export function ensureFontStylesheets(doc: Document, families: string[]): void {
-  for (const family of families) {
+export function ensureFontStylesheets(
+  doc: Document,
+  families: string[],
+): HTMLLinkElement[] {
+  return families.map((family) => {
     const id = `dotui-font-${family.replaceAll(" ", "-").toLowerCase()}`
-    if (doc.getElementById(id)) continue
+    const existing = doc.getElementById(id)
+    if (existing) return existing as HTMLLinkElement
     const link = doc.createElement("link")
     link.id = id
     link.rel = "stylesheet"
     link.href = googleFontsUrl([family])
     doc.head.append(link)
-  }
+    return link
+  })
+}
+
+/**
+ * Fetches the families' font files now. A stylesheet alone downloads no faces
+ * until text uses them, so a font previewed next would paint its fallback.
+ */
+export function loadFontFaces(doc: Document, families: string[]): void {
+  const links = ensureFontStylesheets(doc, families)
+  families.forEach((family, i) => {
+    const load = () => {
+      for (const weight of ["400", "500", "600", "700"])
+        doc.fonts.load(`${weight} 1em "${family}"`).catch(() => {})
+    }
+    if (links[i]?.sheet) load()
+    else links[i]?.addEventListener("load", load, { once: true })
+  })
 }

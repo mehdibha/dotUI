@@ -7,6 +7,7 @@
 import {
   createContext,
   useContext,
+  useRef,
   useState,
   useSyncExternalStore,
 } from "react"
@@ -702,9 +703,11 @@ function FontLabel({
   highlighted: boolean
   run: () => void
 }) {
-  useHighlightPreview(highlighted, run)
+  const ref = useRef<HTMLSpanElement>(null)
+  useHighlightPreview(ref, highlighted, run)
   return (
     <span
+      ref={ref}
       data-preview-family={family}
       style={{ fontFamily: fontStack(family) }}
     >

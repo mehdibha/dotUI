@@ -280,6 +280,13 @@ function PresetPickerContent({
   const rowIds = visible.flatMap((section) => section.items.map((i) => i.id))
   const menuContent = menuItem && renderItemMenu?.(menuItem)
 
+  // A row the search filtered out unmounts without letting go of the preview.
+  useEffect(() => {
+    const active = activeRowRef.current
+    if (active && closeTimerRef.current == null && !rowIds.includes(active))
+      hidePreview(active)
+  })
+
   // Shift+F10 or the ContextMenu key opens the highlighted row's menu.
   function onSearchKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (

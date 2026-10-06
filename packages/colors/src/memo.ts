@@ -1,23 +1,36 @@
-// Bounded LRU for createTheme's per-palette work; shared values are frozen.
+// Bounded LRU memo for createTheme's per-palette work; values are frozen.
 
-const caches: Map<string, unknown>[] = []
+export type DeepReadonly<T> = T extends object
+  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+  : T
+
 let enabled = true
+let generation = 0
 
-/** Test hook: bypass (and empty) every memo. */
+/** Test hook: bypass the memo; every call also empties it. */
 export function setMemoEnabled(value: boolean): void {
   enabled = value
-  for (const cache of caches) cache.clear()
+  generation++
 }
 
-export function lru<T>(size: number): (key: string, compute: () => T) => T {
-  const cache = new Map<string, T>()
-  caches.push(cache)
-  return (key, compute) => {
-    if (!enabled) return compute()
+/** `compute` memoized on its arguments' values; it must read nothing else. */
+export function memoize<A extends unknown[], T>(
+  size: number,
+  compute: (...args: A) => T,
+): (...args: A) => DeepReadonly<T> {
+  const cache = new Map<string, DeepReadonly<T>>()
+  let seen = generation
+  return (...args) => {
+    if (!enabled) return deepFreeze(compute(...args))
+    if (seen !== generation) {
+      cache.clear()
+      seen = generation
+    }
+    const key = keyOf(args)
     // Map order is the recency list: a hit re-inserts, a miss evicts the oldest.
     let value = cache.get(key)
     if (value === undefined) {
-      value = deepFreeze(compute())
+      value = deepFreeze(compute(...args))
       if (cache.size >= size) cache.delete(cache.keys().next().value!)
     } else cache.delete(key)
     cache.set(key, value)
@@ -25,10 +38,21 @@ export function lru<T>(size: number): (key: string, compute: () => T) => T {
   }
 }
 
-function deepFreeze<T>(value: T): T {
+/** Every leaf of `value`, object keys sorted so field order never matters. */
+function keyOf(value: unknown): string {
+  if (typeof value !== "object" || value === null) return String(value)
+  if (Array.isArray(value)) return `[${value.map(keyOf).join()}]`
+  const record = value as Record<string, unknown>
+  const fields = Object.keys(record)
+    .sort()
+    .map((k) => `${k}:${keyOf(record[k])}`)
+  return `{${fields.join()}}`
+}
+
+function deepFreeze<T>(value: T): DeepReadonly<T> {
   if (typeof value === "object" && value !== null && !Object.isFrozen(value)) {
     Object.freeze(value)
     for (const child of Object.values(value)) deepFreeze(child)
   }
-  return value
+  return value as DeepReadonly<T>
 }

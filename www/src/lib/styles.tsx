@@ -22,6 +22,7 @@ import {
 } from "@/lib/root-closure"
 import type { RootClosure } from "@/lib/root-closure"
 import serverRootClosure from "@/lib/root-closure-data"
+import { themeCss } from "@/lib/theme-css"
 import {
   IconLibraryContext,
   IconWeightContext,
@@ -33,7 +34,6 @@ import {
   emitDarkOverridesCss,
   emitPrimitivesCss,
   scopedSemantics,
-  semanticDelta,
   semanticsFor,
   SITE_SEMANTICS,
 } from "@/registry/theme"
@@ -353,6 +353,9 @@ interface DesignSystemProviderProps {
    * the registry's dark custom-variant honors for raw `dark:` utilities.
    */
   forcedMode?: "light" | "dark"
+  /** `themeCss(color)`, when the caller already has it (the studio preview
+   *  computes it off the main thread). */
+  themeCss?: string
   children: React.ReactNode
 }
 
@@ -364,6 +367,7 @@ function DesignSystemProvider({
   icons = "lucide",
   scoped = false,
   forcedMode,
+  themeCss: precomputedThemeCss,
   children,
 }: DesignSystemProviderProps) {
   const value = React.useMemo(() => ({ params, density }), [params, density])
@@ -440,27 +444,11 @@ function DesignSystemProvider({
   // provider renders no <style> and SSR/first paint stay byte-identical to the bare
   // children. A plain <style> (no `precedence`) renders in place — fine, its rules are
   // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
-  const themeCss = React.useMemo(() => {
-    if (scoped || !color) return null
-    const primitives = emitPrimitivesCss(resolveColorConfigCached(color))
-    // Tokens the config re-points (primary source, per-token overrides)
-    // re-declare on plain `:root` (beats the layered `@theme` declarations),
-    // plus their per-mode re-points on `.dark`.
-    const delta = semanticDelta(color)
-    const forks = Object.entries(scopedSemantics(color))
-      .map(([selector, vocab]) => emitCss(vocab, { selector }))
-      .join("")
-    if (Object.keys(delta).length === 0) return primitives + forks
-    return (
-      primitives +
-      emitCss(delta, { selector: ":root" }) +
-      emitDarkOverridesCss(delta, { selector: ".dark" }) +
-      forks
-    )
-  }, [scoped, color])
-  const themeStyle = themeCss ? (
-    <style data-dotui-color>{themeCss}</style>
-  ) : null
+  const css = React.useMemo(
+    () => (scoped || !color ? null : (precomputedThemeCss ?? themeCss(color))),
+    [scoped, color, precomputedThemeCss],
+  )
+  const themeStyle = css ? <style data-dotui-color>{css}</style> : null
 
   // The weight axis rides in tokens (so it round-trips the preset URL like any
   // global token) but reaches icons as a component prop, hence the context.

@@ -14,15 +14,39 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-/** Just enough of an element: a parent, and keydown listeners to fire. */
-function element(parentElement: Element | null = null) {
-  const keydown = new Set<() => void>()
-  return {
+interface FakeElement {
+  parentElement: FakeElement | null
+  contains: (node: unknown) => boolean
+  addEventListener: (type: string, fn: (e: unknown) => void) => void
+  removeEventListener: (type: string, fn: (e: unknown) => void) => void
+  fire: (type: string, e: unknown) => void
+}
+
+/** Just enough of an element: a parent, containment and listeners. */
+function element(parentElement: FakeElement | null = null): FakeElement {
+  const listeners = new Map<string, Set<(e: unknown) => void>>()
+  const el: FakeElement = {
     parentElement,
-    addEventListener: (_: string, fn: () => void) => keydown.add(fn),
-    removeEventListener: (_: string, fn: () => void) => keydown.delete(fn),
-    pressKey: () => keydown.forEach((fn) => fn()),
+    contains: (node) => {
+      for (let n = node as FakeElement | null; n; n = n.parentElement)
+        if (n === el) return true
+      return false
+    },
+    addEventListener: (type, fn) => {
+      if (!listeners.has(type)) listeners.set(type, new Set())
+      listeners.get(type)?.add(fn)
+    },
+    removeEventListener: (type, fn) => listeners.get(type)?.delete(fn),
+    fire: (type, e) => listeners.get(type)?.forEach((fn) => fn(e)),
   }
+  return el
+}
+
+/** A keydown as the window's capture phase sees it. */
+function press(key: string, target: unknown) {
+  const e = Object.assign(new Event("keydown"), { key })
+  Object.defineProperty(e, "target", { value: target })
+  window.dispatchEvent(e)
 }
 
 async function load() {
@@ -40,10 +64,28 @@ async function load() {
     return live.getLive()?.radiusPx ?? null
   }
   const popover = element()
-  const option = element(popover as unknown as Element)
-  const focus = (props: ReturnType<typeof preview.optionPreviewProps>) =>
-    props.onFocus?.({ currentTarget: option } as never)
-  return { modality, preview, live, selection, run, shown, popover, focus }
+  const option = element(popover)
+  const other = element(popover)
+  const stop = preview.watchPopover(popover as unknown as HTMLElement)
+  const props = (px: number) => preview.optionPreviewProps(true, run(px))
+  const on = (target: FakeElement) =>
+    ({ target, currentTarget: target }) as never
+  const move = (pointerType = "mouse") =>
+    popover.fire("pointermove", { pointerType })
+  modality.setInteractionModality("keyboard")
+  return {
+    modality,
+    preview,
+    run,
+    shown,
+    popover,
+    option,
+    other,
+    stop,
+    props,
+    on,
+    move,
+  }
 }
 
 describe("option preview", () => {
@@ -53,45 +95,108 @@ describe("option preview", () => {
     expect(preview.optionPreviewProps(true, undefined)).toEqual({})
   })
 
-  it("previews on hover once it settles, committing nothing", async () => {
-    const { preview, selection, run, shown } = await load()
-    preview.optionPreviewProps(true, run(7)).onHoverStart?.()
-    expect(shown()).toBe(7)
-    expect(selection.getCurrent().key).toBe("preset:stripe")
-  })
-
-  it("skips the focus a popover opens on, until a key goes down in it", async () => {
-    const { modality, preview, run, shown, popover, focus } = await load()
-    const stop = preview.watchPopover(popover as unknown as HTMLElement)
-    modality.setInteractionModality("keyboard")
-    focus(preview.optionPreviewProps(true, run(7)))
-    expect(shown()).toBeNull()
-    popover.pressKey()
-    focus(preview.optionPreviewProps(true, run(7)))
+  it("drops the preview on close", async () => {
+    const { shown, option, stop, props, on, move } = await load()
+    move()
+    props(7).onHoverStart?.(on(option))
     expect(shown()).toBe(7)
     stop?.()
+    expect(shown()).toBeNull()
+  })
+})
+
+describe("hover", () => {
+  it("previews once it settles, committing nothing", async () => {
+    const { shown, option, props, on, move } = await load()
+    move()
+    props(7).onHoverStart?.(on(option))
+    expect(shown()).toBe(7)
   })
 
-  it("previews no focus that came from the pointer", async () => {
-    const { modality, preview, run, shown, popover, focus } = await load()
-    preview.watchPopover(popover as unknown as HTMLElement)
-    popover.pressKey()
+  it("waits for the pointer to move: a popover opens under a still one", async () => {
+    const { shown, option, props, on, move } = await load()
+    props(7).onHoverStart?.(on(option))
+    expect(shown()).toBeNull()
+    move("touch")
+    expect(shown()).toBeNull()
+    move()
+    expect(shown()).toBe(7)
+  })
+
+  it("forgets the option the pointer left before moving", async () => {
+    const { shown, option, props, on, move } = await load()
+    props(7).onHoverStart?.(on(option))
+    props(7).onHoverEnd?.(on(option))
+    move()
+    expect(shown()).toBeNull()
+  })
+})
+
+describe("keyboard", () => {
+  it("skips the focus a popover opens on, until a key navigates in it", async () => {
+    const { shown, option, other, props, on } = await load()
+    props(7).onFocus?.(on(option))
+    expect(shown()).toBeNull()
+    press("Shift", option)
+    press("ArrowDown", element())
+    props(6).onFocus?.(on(other))
+    expect(shown()).toBeNull()
+    press("ArrowDown", option)
+    props(6).onFocus?.(on(other))
+    expect(shown()).toBe(6)
+  })
+
+  it("arms on typeahead too", async () => {
+    const { shown, option, props, on } = await load()
+    press("f", option)
+    props(7).onFocus?.(on(option))
+    expect(shown()).toBe(7)
+  })
+
+  it("previews no focus that Tab or the pointer moved", async () => {
+    const { modality, shown, option, other, props, on } = await load()
+    press("ArrowDown", option)
+    press("Tab", option)
+    props(7).onFocus?.(on(other))
+    expect(shown()).toBeNull()
+    press("ArrowDown", option)
     modality.setInteractionModality("pointer")
-    focus(preview.optionPreviewProps(true, run(7)))
+    props(7).onFocus?.(on(other))
     expect(shown()).toBeNull()
   })
 
-  it("drops the preview on close, and disarms the keyboard", async () => {
-    const { modality, preview, run, shown, popover, focus } = await load()
-    const stop = preview.watchPopover(popover as unknown as HTMLElement)
-    popover.pressKey()
-    modality.setInteractionModality("keyboard")
-    focus(preview.optionPreviewProps(true, run(7)))
+  it("withdraws a focus preview as focus leaves, unless the next replaces it", async () => {
+    const { shown, option, other, props, on } = await load()
+    press("ArrowDown", option)
+    props(7).onFocus?.(on(option))
     expect(shown()).toBe(7)
-    stop?.()
+    props(7).onBlur?.(on(option))
+    props(6).onFocus?.(on(other))
+    expect(shown()).toBe(6)
+    press("Tab", other)
+    props(6).onBlur?.(on(other))
     expect(shown()).toBeNull()
-    preview.watchPopover(popover as unknown as HTMLElement)
-    focus(preview.optionPreviewProps(true, run(6)))
+  })
+
+  it("leaves a hover's preview alone when focus leaves", async () => {
+    const { shown, option, other, props, on, move } = await load()
+    press("ArrowDown", option)
+    props(7).onFocus?.(on(option))
+    move()
+    props(6).onHoverStart?.(on(other))
+    props(7).onBlur?.(on(option))
+    expect(shown()).toBe(6)
+  })
+
+  it("previews a virtual highlight only once a key navigates", async () => {
+    const { preview, run, shown, option } = await load()
+    const target = option as unknown as Element
+    expect(preview.highlightPreview(target, run(7))).toBeUndefined()
+    expect(shown()).toBeNull()
+    press("ArrowDown", option)
+    const leave = preview.highlightPreview(target, run(7))
+    expect(shown()).toBe(7)
+    leave?.()
     expect(shown()).toBeNull()
   })
 })
