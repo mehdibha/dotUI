@@ -26,6 +26,7 @@ import {
   FONT_SANS_VAR,
   FONT_TOKEN_VARS,
   fontStack,
+  isSystemFamily,
 } from "@/lib/fonts"
 import type { RegistryItem } from "@/registry/types"
 
@@ -45,8 +46,12 @@ const PARSE_ORDER: FontTokenVar[] = [
   FONT_SANS_VAR,
 ]
 
+// System stacks load nothing, so they have no font item.
 const FAMILY_BY_SLUG = new Map(
-  FONT_CATALOG.map((font) => [fontSlug(font.family), font.family]),
+  FONT_CATALOG.filter((font) => !isSystemFamily(font.family)).map((font) => [
+    fontSlug(font.family),
+    font.family,
+  ]),
 )
 
 export function fontSlug(family: string): string {

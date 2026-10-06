@@ -47,6 +47,7 @@ export interface FontOption {
  */
 export const FONT_CATALOG: FontOption[] = [
   // Sans serif (285)
+  { family: "System", category: "sans-serif" },
   { family: "Geist", category: "sans-serif" },
   { family: "Inter", category: "sans-serif" },
   { family: "Roboto", category: "sans-serif" },
@@ -491,6 +492,7 @@ export const FONT_CATALOG: FontOption[] = [
   { family: "Wavefont", category: "display" },
 
   // Monospace (22)
+  { family: "System Mono", category: "mono" },
   { family: "Geist Mono", category: "mono" },
   { family: "JetBrains Mono", category: "mono" },
   { family: "Fira Code", category: "mono" },
@@ -607,14 +609,32 @@ const FALLBACK_STACKS: Record<FontCategory, string> = {
   mono: "ui-monospace, 'SF Mono', monospace",
 }
 
+/* The OS faces (Primer's stacks; Radix Themes, Stripe and Ant Design ship
+   the same idea): nothing loads, the token is the platform stack. */
+const SYSTEM_STACKS: Record<string, string> = {
+  System:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
+  "System Mono":
+    "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
+}
+
+export const isSystemFamily = (family: string) =>
+  Object.hasOwn(SYSTEM_STACKS, family)
+
 /** `'Inter', ui-sans-serif, system-ui, sans-serif` — the token value. */
 export function fontStack(family: string): string {
+  const system = SYSTEM_STACKS[family]
+  if (system) return system
   const category = CATEGORY_BY_FAMILY.get(family) ?? "sans-serif"
   return `'${family}', ${FALLBACK_STACKS[category]}`
 }
 
 /** First family of a stack, unquoted — the display name / load target. */
 export function familyFromStack(stack: string): string {
+  const system = Object.keys(SYSTEM_STACKS).find(
+    (family) => SYSTEM_STACKS[family] === stack,
+  )
+  if (system) return system
   const first = stack.split(",")[0] ?? stack
   return first.trim().replace(/^['"]|['"]$/g, "")
 }
@@ -628,7 +648,8 @@ export function fontFamiliesFromTokens(
     const stack = tokens[varName]
     if (!stack) continue
     const family = familyFromStack(stack)
-    if (family && !families.includes(family)) families.push(family)
+    if (family && !isSystemFamily(family) && !families.includes(family))
+      families.push(family)
   }
   return families
 }
@@ -657,6 +678,7 @@ export function googleFontsUrl(
  * fetches only the handful actually seen instead of every face up front.
  */
 export function loadFontPreview(doc: Document, family: string): void {
+  if (isSystemFamily(family)) return
   const id = `dotui-font-preview-${family.replaceAll(" ", "-").toLowerCase()}`
   if (doc.getElementById(id)) return
   const text = [...new Set([...family])].join("")
@@ -674,6 +696,7 @@ export function loadFontPreview(doc: Document, family: string): void {
  */
 export function ensureFontStylesheets(doc: Document, families: string[]): void {
   for (const family of families) {
+    if (isSystemFamily(family)) continue
     const id = `dotui-font-${family.replaceAll(" ", "-").toLowerCase()}`
     if (doc.getElementById(id)) continue
     const link = doc.createElement("link")
