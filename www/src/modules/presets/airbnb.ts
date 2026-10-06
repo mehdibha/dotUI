@@ -31,7 +31,6 @@ export const airbnb = definePreset({
 
     // Space
     density: "comfortable",
-    spacingUnit: 4.5,
 
     // Surfaces
     surfaceEdge: "none",

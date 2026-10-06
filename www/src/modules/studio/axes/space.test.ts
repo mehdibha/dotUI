@@ -16,10 +16,4 @@ describe("space axis", () => {
   test("density selects a registry tier", () => {
     expect(resolve({ density: "compact" }).density).toBe("compact")
   })
-
-  test("the unit lands on Tailwind's --spacing in rem", () => {
-    expect(resolve({ spacingUnit: 5 }).tokens).toEqual({
-      "--spacing": "0.3125rem",
-    })
-  })
 })

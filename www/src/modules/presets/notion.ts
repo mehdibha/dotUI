@@ -17,14 +17,15 @@ export const notion = definePreset({
 
     // Typography
     bodyFont: "Inter",
+    uiTextSize: "13",
 
     // Shape
     radiusPx: 8,
     roleCard: "xl",
 
     // Space
-    // 28px controls; density stays default.
-    spacingUnit: 3.5,
+    // 28px controls; 13px keeps the text near Notion's 14px.
+    density: "compact",
 
     // Browser
     cursorDragging: "grab",
