@@ -293,9 +293,9 @@ function isNoopRead(
 }
 
 /**
- * Rewrite one class string (or any text carrying class names). A rounded
- * utility whose var resolves to `0` is dropped with its variant prefix — a
- * square system ships no rounded class, not `rounded-none` — and so is a
+ * Rewrite one class string (or any text carrying class names). A rounded or
+ * backdrop-blur utility whose var resolves to `0` is dropped with its variant
+ * prefix — a square system ships no rounded class, not `rounded-none` — and so is a
  * no-op read (see isNoopRead). `context` is every class the element wears (the whole
  * slot), which those motion drops are judged against.
  */
@@ -330,7 +330,8 @@ export function rewriteClassString(
       const value = vars.get(name)
       if (value === undefined) return match
       if (
-        (value === "0" && utility.startsWith("rounded")) ||
+        (value === "0" &&
+          (utility.startsWith("rounded") || utility === "backdrop-blur")) ||
         isNoopRead(variants, utility, value, context, vars)
       ) {
         dropped = true
