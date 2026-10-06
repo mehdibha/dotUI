@@ -496,6 +496,19 @@ export function resolveCssFields<
   return visit(css as CssObject) as T | undefined
 }
 
+/** A primitive ramp step (`--neutral-700`, `--on-accent-700`). Chart slots
+ *  ship; the ramps live only on the site. */
+const RAMP_VAR = /--(?!chart-)(?:on-)?[a-z]+-\d+(?![\w-])/g
+
+/** Shipped output must read semantic tokens, never a ramp the consumer lacks. */
+export function assertNoRampVars(text: string, where: string): void {
+  const hits = [...new Set(text.match(RAMP_VAR))]
+  if (hits.length === 0) return
+  throw new Error(
+    `${where}: palette ramp vars ${hits.join(", ")} never reach consumer CSS — read a semantic token`,
+  )
+}
+
 /** Shipped output must carry no studio var — the export owns its values. */
 export function assertNoStudioVars(text: string, where: string): void {
   const hits = [
