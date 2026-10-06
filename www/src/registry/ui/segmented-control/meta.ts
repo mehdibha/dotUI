@@ -15,8 +15,8 @@ const segmentedControlMeta = {
   params: {
     selected: {
       kind: "enum",
-      default: "flat",
-      values: ["raised", "flat", "inverse"] as const,
+      default: "tone",
+      values: ["tone", "raised", "ring", "inverse"] as const,
     },
     track: {
       kind: "enum",

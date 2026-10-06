@@ -38,6 +38,7 @@ export const supabase = definePreset({
     linkColor: "neutral",
     skeletonAnimation: "pulse",
     buttonStyle: "hairline",
+    segmentedSelected: "tone",
     checkboxColor: "neutral",
     inputHover: "border",
     sliderColor: "neutral",

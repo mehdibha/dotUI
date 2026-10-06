@@ -21,7 +21,7 @@ describe("navigation chapters", () => {
       separator: "chevron",
       tone: "muted",
     })
-    expect(ds.componentParams.pagination).toEqual({ current: "outline" })
+    expect(ds.componentParams.pagination).toEqual({ current: "secondary" })
     expect(ds.tokens).toEqual({})
   })
 
@@ -57,13 +57,13 @@ describe("navigation chapters", () => {
       parseState({
         breadcrumbSeparator: "slash",
         breadcrumbTone: "accent",
-        paginationCurrent: "filled",
+        paginationCurrent: "primary",
       }),
     )
     expect(ds.componentParams.breadcrumbs).toEqual({
       separator: "slash",
       tone: "accent",
     })
-    expect(ds.componentParams.pagination).toEqual({ current: "filled" })
+    expect(ds.componentParams.pagination).toEqual({ current: "primary" })
   })
 })
