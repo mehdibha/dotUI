@@ -196,6 +196,42 @@ describe("selection controls", () => {
     )
   })
 
+  // `dark:` outranks `disabled:` in the cascade, so a dark paint must opt out
+  // of disabled wherever the slot also paints that property when disabled.
+  it("no dark rule repaints a disabled control", async () => {
+    const utility = (cls: string) => (cls.split(":").at(-1) ?? "").split("-")[0]
+    const cases: [string, Record<string, string>][] = [
+      ...STYLE_OPTIONS.map(({ value }): [string, Record<string, string>] => [
+        "switch",
+        { style: value },
+      ]),
+      ...MARK_OPTIONS.map(({ value }): [string, Record<string, string>] => [
+        "radio-group",
+        { mark: value },
+      ]),
+      ["checkbox", {}],
+      ...["knob", "ring", "solid", "handle"].map(
+        (thumb): [string, Record<string, string>] => ["slider", { thumb }],
+      ),
+    ]
+    const dark: string[] = []
+    const offenders: string[] = []
+    for (const [name, params] of cases)
+      for (const [slot, value] of await slotStrings(name, "default", params)) {
+        const list = value.split(" ")
+        const disabled = new Set(
+          list.filter((c) => c.split(":").includes("disabled")).map(utility),
+        )
+        for (const cls of list.filter((c) => c.split(":").includes("dark"))) {
+          dark.push(cls)
+          if (disabled.has(utility(cls)) && !cls.includes("not-disabled:"))
+            offenders.push(`${name} ${JSON.stringify(params)} ${slot}: ${cls}`)
+        }
+      }
+    expect(dark).not.toEqual([])
+    expect(offenders).toEqual([])
+  })
+
   it("no option ships two conflicting classes", async () => {
     const cases: [string, Record<string, string>][] = [
       ...MARK_OPTIONS.map(({ value }): [string, Record<string, string>] => [

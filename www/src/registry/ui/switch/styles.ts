@@ -65,7 +65,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
             "disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
-            "rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] dark:selected:bg-fg-on-selection",
+            "rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] dark:not-disabled:selected:bg-fg-on-selection",
             "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
           ],
         },
@@ -111,7 +111,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
             "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
-            "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-border-control bg-bg transition-[background-color,border-color,margin] dark:bg-highlight selected:ml-[50%] selected:border-selection",
+            "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-border-control bg-bg transition-[background-color,border-color,margin] dark:not-disabled:bg-highlight selected:ml-[50%] selected:border-selection",
             "disabled:bg-(--disabled-fg,var(--color-bg)) disabled:selected:border-(--disabled-border,var(--color-border-control))",
           ],
         },
