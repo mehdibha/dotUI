@@ -48,6 +48,8 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
       "command",
       "palette",
       "contextmenu",
+      "overlays",
+      "menus",
     ],
   ],
   [
@@ -76,7 +78,16 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
   ],
   [
     "selection",
-    ["checkbox", "radio", "switch", "toggle", "slider", "choice", "choicelist"],
+    [
+      "checkbox",
+      "radio",
+      "switch",
+      "toggle",
+      "slider",
+      "choice",
+      "choicelist",
+      "choicebox",
+    ],
   ],
   [
     "fields",
@@ -127,11 +138,21 @@ const KEYWORDS: [sheet: string, words: string[]][] = [
       "kbd",
       "list",
       "collection",
+      "tile",
     ],
   ],
   [
     "actions",
-    ["button", "buttons", "segmented", "pagination", "group", "cta", "actions"],
+    [
+      "button",
+      "buttons",
+      "segmented",
+      "pagination",
+      "group",
+      "cta",
+      "actions",
+      "groups",
+    ],
   ],
   [
     "type",
@@ -153,9 +174,9 @@ function match(file: string) {
     .toLowerCase()
     .split(/[^a-z0-9]+/)
   const mode = tokens.includes("dark") ? "dark" : "light"
-  const sheet = KEYWORDS.find(([, words]) =>
-    words.some((w) => tokens.includes(w)),
-  )?.[0]
+  const sheet =
+    KEYWORDS.find(([name]) => tokens.includes(name))?.[0] ??
+    KEYWORDS.find(([, words]) => words.some((w) => tokens.includes(w)))?.[0]
   return { file, sheet, mode }
 }
 
