@@ -28,7 +28,10 @@ const modalMeta = {
       kind: "enum",
       default: "center",
       values: ["center", "sheet", "fullscreen"] as const,
-      registryDependencies: { sheet: ["drawer", "use-mobile"] },
+      registryDependencies: {
+        sheet: ["drawer", "use-mobile"],
+        fullscreen: ["button"],
+      },
       files: {
         center: [
           {
@@ -47,7 +50,7 @@ const modalMeta = {
         fullscreen: [
           {
             type: "registry:ui",
-            path: "ui/modal/base.tsx",
+            path: "ui/modal/base.fullscreen.tsx",
             target: "ui/modal.tsx",
           },
         ],

@@ -86,9 +86,10 @@ const { useStyles, styles } = createStyles(modalMeta, {
       none: {},
     },
     /* Below the mobile line. Sheet swaps the panel for a Drawer
-       (base.sheet.tsx); Fullscreen fills the visual viewport, its min sizes
-       beating the max sizes the position and density set, and stretches the
-       dialog so its footer rests on the bottom edge. */
+       (base.sheet.tsx); Fullscreen (base.fullscreen.tsx, which adds a close
+       button) fills the visual viewport, its min sizes beating the max sizes
+       the position and density set, and stretches the dialog so its footer
+       rests on the bottom edge, clear of the home indicator. */
     mobile: {
       center: {},
       sheet: {},
@@ -96,7 +97,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
         slots: {
           viewport: "max-md:pt-0",
           modal:
-            "max-md:min-h-(--visual-viewport-height) max-md:min-w-full max-md:rounded-none max-md:border-0 max-md:[--surface-radius:0px] max-md:*:max-h-none max-md:*:flex-1 max-md:**:data-[slot=dialog-footer]:mt-auto",
+            "max-md:min-h-(--visual-viewport-height) max-md:min-w-full max-md:rounded-none max-md:border-0 max-md:pb-[env(safe-area-inset-bottom)] max-md:[--surface-radius:0px] max-md:*:max-h-none max-md:*:flex-1 max-md:**:data-[slot=dialog-footer]:mt-auto",
         },
       },
     },

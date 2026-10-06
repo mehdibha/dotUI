@@ -1,6 +1,7 @@
 import { createDynamicComponent } from "@/lib/styles"
 
 import { type ModalProps, Modal as CenterModal } from "./base"
+import { Modal as FullscreenModal } from "./base.fullscreen"
 import { Modal as SheetModal } from "./base.sheet"
 
 const Modal = createDynamicComponent<
@@ -13,7 +14,7 @@ const Modal = createDynamicComponent<
   components: {
     center: CenterModal,
     sheet: SheetModal,
-    fullscreen: CenterModal,
+    fullscreen: FullscreenModal,
   },
   displayName: "Modal",
 })
