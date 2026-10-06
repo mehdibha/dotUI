@@ -1,35 +1,27 @@
 "use client";
 
-import type { ChartBuildContext } from "@tanstack/charts";
-import { colorLegend } from "@tanstack/charts/legend";
-import { cell } from "@tanstack/charts/rect";
-import { text } from "@tanstack/charts/text";
-import { scaleBand, scaleQuantize, scaleThreshold } from "d3-scale";
-
 import type {
-  ChartBaseSpecOptions,
-  ChartComponentProps,
-  ChartFormat,
-  ChartMarkLayer,
-  ChartSpec,
-  ChartXField,
-  ChartYField,
-} from "@/components/ui/chart";
-import {
-  Chart,
-  chartDefaults,
-  chartFrame,
-  decorative,
-  finiteOrNull,
-  paletteColor,
-  useChartDefinition,
-} from "@/components/ui/chart";
+  ChartKey,
+  ChartPoint,
+  ChartTooltipContentContext,
+  ChartValue,
+} from "@tanstack/charts";
+import { colorLegend } from "@tanstack/charts/legend";
+import { decorative } from "@tanstack/charts/mark/decorative";
+import { cell } from "@tanstack/charts/rect";
+import { scaleBand } from "@tanstack/charts/scales/band";
+import { text } from "@tanstack/charts/text";
+import { tooltip } from "@tanstack/charts/tooltip";
+import { scaleQuantize, scaleThreshold } from "d3-scale";
 
-/* A sequential ramp mixed from one palette slot: the low half fades into the
-   surface, the high half toward the foreground, so luminance stays monotone
+import type { ChartField, ChartFormat } from "@/components/ui/chart";
+import { chartColor, chartScales } from "@/components/ui/chart";
+
+/* A sequential ramp mixed from one series color: the low half fades into the
+   surface, the high half toward the foreground, so lightness stays monotone
    in light and dark. */
 export function heatmapColors(
-  color: string = paletteColor(0),
+  color: string = chartColor(0),
   steps: number = 5,
 ): readonly string[] {
   return Array.from({ length: steps }, (_, index) => {
@@ -42,161 +34,175 @@ export function heatmapColors(
   });
 }
 
-const HEATMAP_COLORS = /* @__PURE__ */ heatmapColors();
-
 // Black or white ink from the cell's own lightness; the 0.58 crossover
 // measures ≥ 4.9:1 across the default ramp.
 function contrastInk(color: string): string {
   return `oklch(from ${color} calc((0.58 - l) * 100) 0 0)`;
 }
 
-/* The cell edges are the grid, so `grid` is dropped rather than ignored. */
-export interface HeatmapChartSpecOptions<TDatum> extends Omit<
-  ChartBaseSpecOptions<TDatum>,
-  "grid"
-> {
+export interface HeatmapChartOptions<TDatum> {
   /** Field holding the column category. */
-  x: ChartXField<TDatum>;
+  x: ChartField<TDatum, ChartValue>;
   /** Field holding the row category. */
-  y: ChartXField<TDatum>;
-  /** Numeric field the color scale reads. */
-  value: ChartYField<TDatum>;
-  /** Ramp from low to high. The number of colors is the number of bins. */
+  y: ChartField<TDatum, ChartValue>;
+  /** Numeric field the color reads. */
+  value: ChartField<TDatum, number | null | undefined>;
+  /** Stable cell identity. */
+  key?: ChartField<TDatum, ChartKey>;
+  /** The ramp from low to high; one bin per color. @default heatmapColors() */
   colors?: readonly string[];
   /** Explicit cuts between bins — one fewer than `colors`. */
   thresholds?: readonly number[];
-  /** Draw each value inside its cell. */
+  /** Each value printed inside its cell. */
   values?: boolean;
-  /** Formats values in the legend, the tooltip, and the cells. */
+  /** Formats values in cells, the legend and the tooltip. */
   formatValue?: ChartFormat;
   /** What the value means — the legend title and the tooltip label. */
   label?: string;
-  /** Axis titles. They also name the two coordinates in the tooltip. */
+  /** Axis titles. */
   labelX?: string;
   labelY?: string;
+  /** Formats column labels and the tooltip title. */
+  formatX?: ChartFormat;
+  /** Formats row labels and the tooltip title. */
+  formatY?: ChartFormat;
+  /** The axes to show. @default true */
+  axes?: boolean | "x" | "y";
+  /** The color legend. @default true */
+  legend?: boolean;
+}
+
+function read<TDatum, TValue>(row: TDatum, field: ChartField<TDatum, TValue>) {
+  return typeof field === "function"
+    ? field(row)
+    : (row[field as keyof TDatum] as TValue);
 }
 
 /* Which ramp step a value lands on: the chart's own color scale rebuilt over
    step indices, nicened domain included, so a label never disagrees with the
    cell under it. */
-function binner<TDatum>(
-  options: HeatmapChartSpecOptions<TDatum>,
-  read: (row: TDatum) => number | null,
+function binner(
+  values: readonly (number | null)[],
+  thresholds: readonly number[] | undefined,
   steps: number,
-): (row: TDatum) => number {
+): (value: number | null) => number {
   const range = Array.from({ length: steps }, (_, index) => index);
-  if (options.thresholds) {
+  if (thresholds) {
     const scale = scaleThreshold<number, number>()
-      .domain(options.thresholds)
+      .domain(thresholds)
       .range(range);
-    return (row) => scale(read(row) ?? -Infinity);
+    return (value) => scale(value ?? -Infinity);
   }
-  let minimum = Infinity;
-  let maximum = -Infinity;
-  for (const row of options.data) {
-    const value = read(row);
-    if (value === null) continue;
-    minimum = Math.min(minimum, value);
-    maximum = Math.max(maximum, value);
-  }
-  if (!Number.isFinite(minimum)) return () => 0;
+  const finite = values.filter((value) => value !== null);
+  if (finite.length === 0) return () => 0;
+  const minimum = Math.min(...finite);
   const scale = scaleQuantize<number>()
     .range(range)
-    .domain([minimum, maximum])
+    .domain([minimum, Math.max(...finite)])
     .nice(5);
-  return (row) => scale(read(row) ?? minimum);
+  return (value) => scale(value ?? minimum);
 }
 
-export function heatmapChartSpec<TDatum>(
-  options: HeatmapChartSpecOptions<TDatum>,
-  ctx: ChartBuildContext,
-): ChartSpec<TDatum> {
-  const colors = options.colors ?? HEATMAP_COLORS;
+/** A complete heatmap — pass it to `defineChart`, or spread it and extend. */
+export function heatmapChart<TDatum>(
+  data: readonly TDatum[],
+  options: HeatmapChartOptions<TDatum>,
+) {
+  const colors = options.colors ?? heatmapColors();
   const format = options.formatValue ?? String;
-  const read = (row: TDatum) =>
-    finiteOrNull(row[options.value as keyof TDatum]);
+  const valueOf = (row: TDatum) => {
+    const value = read(row, options.value);
+    return typeof value === "number" && Number.isFinite(value) ? value : null;
+  };
   const print = (row: TDatum) => {
-    const value = read(row);
+    const value = valueOf(row);
     return value === null ? null : format(value);
   };
-  const cells: ChartMarkLayer = cell(options.data, {
-    x: options.x,
-    y: options.y,
-    color: read,
-    // The tooltip titles a point with its group; a cell's group is its value.
-    z: (row: TDatum) => {
-      const value = print(row);
-      if (value === null) return null;
-      return options.label ? `${options.label}: ${value}` : value;
-    },
-    key: options.rowKey,
-    radius: chartDefaults.cellRadius,
-    inset: chartDefaults.cellInset,
-  });
-  const bin = binner(options, read, colors.length);
-  const values: ChartMarkLayer = decorative(
-    text(options.data, {
-      x: options.x,
-      y: options.y,
-      text: print,
-      fill: (row: TDatum) => contrastInk(colors[bin(row)] ?? paletteColor(0)),
-      fontSize: 11,
-    }),
-  );
-  return {
-    // Axes and legend on by default: the labels are the cells' identity and
-    // the ramp is the only key to the color.
-    ...chartFrame(
-      {
-        ...options,
-        axes: options.axes ?? true,
-        legend: options.legend ?? true,
-      },
-      ctx,
-      {
-        x: { scale: scaleBand, nice: false, label: options.labelX },
-        y: { scale: scaleBand, nice: false, label: options.labelY },
-        grid: "none",
-        color: {
-          scale: options.thresholds
-            ? scaleThreshold<number, string>
-            : scaleQuantize<string>,
-          domain: options.thresholds,
-          range: colors,
-          nice: options.thresholds ? undefined : true,
-          legend: colorLegend({
-            label: options.label,
-            format: options.formatValue,
-          }),
-        },
-      },
-    ),
-    marks: [
-      ...(options.marksBefore ?? []),
-      cells,
-      ...(options.values ? [values] : []),
-      ...(options.marks ?? []),
-    ],
+  const bin = binner(data.map(valueOf), options.thresholds, colors.length);
+  const { key } = options;
+  const position = {
+    x: (row: TDatum) => read(row, options.x),
+    y: (row: TDatum) => read(row, options.y),
+    key: key && ((row: TDatum) => read(row, key)),
   };
-}
-
-export type HeatmapChartProps<TDatum> = ChartComponentProps<
-  HeatmapChartSpecOptions<TDatum>,
-  TDatum
->;
-
-export function HeatmapChart<TDatum>(props: HeatmapChartProps<TDatum>) {
-  const { definition, host, children } = useChartDefinition<
-    TDatum,
-    HeatmapChartSpecOptions<TDatum>
-  >(props, heatmapChartSpec, {
-    // A cell is read on its own, not against its column.
-    focus: "nearest",
-    tooltipAnchor: "point",
+  const marks = [
+    cell(data, {
+      ...position,
+      color: valueOf,
+      radius: 2,
+      inset: 1,
+    }),
+    ...(options.values
+      ? [
+          decorative(
+            text(data, {
+              ...position,
+              text: print,
+              fill: (row) =>
+                contrastInk(colors[bin(valueOf(row))] ?? chartColor(0)),
+              fontSize: 11,
+            }),
+          ),
+        ]
+      : []),
+  ];
+  const scales = chartScales({
+    x: {
+      scale: scaleBand,
+      nice: false,
+      label: options.labelX,
+      format: options.formatX,
+    },
+    y: {
+      scale: scaleBand,
+      nice: false,
+      label: options.labelY,
+      format: options.formatY,
+    },
+    // The labels are the cells' identity.
+    axes: options.axes ?? true,
+    // The cell edges are the grid.
+    grid: false,
   });
-  return (
-    <Chart definition={definition} {...host}>
-      {children}
-    </Chart>
-  );
+  return {
+    scales,
+    color: {
+      scale: options.thresholds
+        ? scaleThreshold<number, string>
+        : scaleQuantize<string>,
+      domain: options.thresholds,
+      range: colors,
+      nice: options.thresholds ? undefined : true,
+      // The ramp is the only key to the color.
+      legend:
+        options.legend === false
+          ? undefined
+          : colorLegend({ label: options.label, format: options.formatValue }),
+    },
+    marks,
+    // A cell is read on its own, not against its column.
+    focus: "nearest" as const,
+    tooltip: {
+      use: tooltip,
+      anchor: "point" as const,
+      content: (
+        points: readonly ChartPoint[],
+        context: ChartTooltipContentContext,
+      ) => {
+        const point = points[0];
+        if (point === undefined) return { rows: [] };
+        const row = point.datum as TDatum;
+        return {
+          title: `${context.formatX(point.xValue)} · ${context.formatY(point.yValue)}`,
+          rows: [
+            {
+              label: options.label ?? "Value",
+              value: print(row) ?? "–",
+              color: point.color,
+            },
+          ],
+        };
+      },
+    },
+  };
 }

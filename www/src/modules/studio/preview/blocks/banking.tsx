@@ -1,6 +1,7 @@
 "use client"
 
-import { type CSSProperties, type ReactNode, useMemo, useState } from "react"
+import { type ReactNode, useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
 
 import {
   ArrowDownIcon,
@@ -50,10 +51,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { paletteColor } from "@/registry/ui/chart"
-import { BarChart } from "@/registry/ui/chart-bar"
-import { LineChart } from "@/registry/ui/chart-line"
-import { PieChart } from "@/registry/ui/chart-pie"
+import { Chart, chartColor } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
+import { lineChart } from "@/registry/ui/chart-line"
+import { pieChart } from "@/registry/ui/chart-pie"
 import {
   Dialog,
   DialogBody,
@@ -163,7 +164,7 @@ const CASHFLOW = [
 const cashflowLabels = { income: "Income", spending: "Spending" }
 
 /* Row order drives the pie's palette-slot assignment, so the dot list below
-   can reuse the same index via `paletteColor`. */
+   can reuse the same index via `chartColor`. */
 const CATEGORY_SPEND = [
   { category: "housing", amount: 1850 },
   { category: "groceries", amount: 642 },
@@ -183,6 +184,16 @@ const categoryLabels = {
 }
 
 const CATEGORY_TOTAL = CATEGORY_SPEND.reduce((sum, row) => sum + row.amount, 0)
+
+const categoryChart = defineChart(
+  pieChart(CATEGORY_SPEND, {
+    value: "amount",
+    name: "category",
+    labels: categoryLabels,
+    innerRadius: 0.6,
+    strokeWidth: 4,
+  }),
+)
 
 const RANGES = [
   { id: "3m", label: "3M", months: 3 },
@@ -467,35 +478,19 @@ function AccountSparkline({
   series: readonly number[]
   label: string
 }) {
-  // Charts compare data by identity, so the rows must be stable per series.
-  const data = useMemo(
-    () => series.map((value, index) => ({ point: `M${index + 1}`, value })),
-    [series],
-  )
+  const chart = useMemo(() => {
+    const data = series.map((value, index) => ({
+      point: `M${index + 1}`,
+      value,
+    }))
+    return defineChart({
+      ...lineChart(data, { x: "point", y: "value", axes: false, grid: false }),
+      color: { range: [color] },
+      tooltip: false,
+    })
+  }, [color, series])
 
-  return (
-    // A single series always paints slot 1; remap it to the account's color.
-    // Skipped for slot 1 itself — `--chart-1: var(--chart-1)` is a cycle.
-    <div
-      style={
-        color === "var(--chart-1)"
-          ? undefined
-          : ({ "--chart-1": color } as CSSProperties)
-      }
-    >
-      <LineChart
-        data={data}
-        x="point"
-        y="value"
-        axes={false}
-        grid={false}
-        legend={false}
-        tooltip={false}
-        height={48}
-        ariaLabel={label}
-      />
-    </div>
-  )
+  return <Chart definition={chart} height={48} ariaLabel={label} />
 }
 
 function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
@@ -605,8 +600,19 @@ function CashflowCard() {
   const [range, setRange] = useState<string>("6m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? 6
-  // Charts compare data by identity, so the slice must be stable per range.
   const data = useMemo(() => CASHFLOW.slice(CASHFLOW.length - months), [months])
+  const chart = useMemo(
+    () =>
+      defineChart(
+        barChart(data, {
+          x: "month",
+          y: ["income", "spending"],
+          labels: cashflowLabels,
+          formatX: (value) => String(value).slice(0, 3),
+        }),
+      ),
+    [data],
+  )
   const spent = data.reduce((sum, row) => sum + row.spending, 0)
   const earned = data.reduce((sum, row) => sum + row.income, 0)
 
@@ -653,12 +659,8 @@ function CashflowCard() {
             </p>
           </div>
         </div>
-        <BarChart
-          data={data}
-          x="month"
-          y={["income", "spending"]}
-          labels={cashflowLabels}
-          formatX={(value) => String(value).slice(0, 3)}
+        <Chart
+          definition={chart}
           height={224}
           ariaLabel="Monthly income and spending"
         />
@@ -676,14 +678,8 @@ function CategoriesCard() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="mx-auto h-52 max-w-52">
-          <PieChart
-            data={CATEGORY_SPEND}
-            value="amount"
-            name="category"
-            labels={categoryLabels}
-            innerRadius={0.6}
-            strokeWidth={4}
-            legend={false}
+          <Chart
+            definition={categoryChart}
             height={208}
             ariaLabel="Spending by category in August"
           >
@@ -693,7 +689,7 @@ function CategoriesCard() {
               </span>
               <span className="text-xs text-fg-muted">spent</span>
             </div>
-          </PieChart>
+          </Chart>
         </div>
         <ul className="space-y-2">
           {CATEGORY_SPEND.map((row, index) => (
@@ -701,7 +697,7 @@ function CategoriesCard() {
               <span
                 aria-hidden
                 className="size-2.5 shrink-0 rounded-full"
-                style={{ background: paletteColor(index) }}
+                style={{ background: chartColor(index) }}
               />
               <span className="truncate">
                 {categoryLabels[row.category as keyof typeof categoryLabels]}

@@ -82,7 +82,6 @@ export const origin = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
     linkUnderline: "never",
     linkColor: "accent",
     skeletonAnimation: "shimmer",

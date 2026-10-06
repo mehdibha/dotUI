@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import type { ChartValue } from "@tanstack/charts"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
 
-import { LineChart } from "@/registry/ui/chart-line"
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -16,14 +17,17 @@ const start = Date.UTC(2024, 3, 1)
 const data = Array.from({ length: DAYS }, (_, index) => {
   const wave = Math.sin(index / 6) * 0.5 + 0.5
   return {
-    date: new Date(start + index * 86_400_000).toISOString().slice(0, 10),
+    date: new Date(start + index * 86_400_000),
     desktop: Math.round(150 + wave * 300 + ((index * 37) % 50)),
     mobile: Math.round(100 + (1 - wave) * 220 + ((index * 53) % 40)),
   }
 })
 
-const day = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" })
-const formatDay = (value: ChartValue) => day.format(new Date(String(value)))
+const day = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+})
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 type Series = keyof typeof labels
@@ -35,6 +39,19 @@ const totals = {
 
 export default function ChartLineInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
+  const chart = useMemo(
+    () =>
+      defineChart(
+        lineChart(data, {
+          x: "date",
+          y: series,
+          labels,
+          curve: "monotone",
+          formatX: (value) => day.format(value as Date),
+        }),
+      ),
+    [series],
+  )
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -56,13 +73,8 @@ export default function ChartLineInteractive() {
           </SegmentedControlItem>
         ))}
       </SegmentedControl>
-      <LineChart
-        data={data}
-        x="date"
-        y={series}
-        labels={labels}
-        curve="monotone"
-        formatX={formatDay}
+      <Chart
+        definition={chart}
         ariaLabel={`${labels[series]} visitors per day`}
       />
     </div>

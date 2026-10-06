@@ -1,9 +1,10 @@
 "use client"
 
-import { heatmapColors, HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
 
-/* Incidents per service and week. The cuts are a policy, not an extent: one
-   incident is already worth seeing, ten is an outage week. */
+import { Chart } from "@/registry/ui/chart"
+import { heatmapChart, heatmapColors } from "@/registry/ui/chart-heatmap"
+
 const services = [
   { service: "api", counts: [0, 1, 0, 3, 12, 4, 1, 0] },
   { service: "auth", counts: [1, 0, 0, 0, 2, 1, 0, 0] },
@@ -20,18 +21,25 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
+/* The cuts are a policy, not an extent: one incident is already worth
+   seeing, ten is an outage week. */
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "week",
+    y: "service",
+    value: "incidents",
+    label: "Incidents",
+    colors: heatmapColors("var(--chart-4)", 4),
+    thresholds: [1, 4, 10],
+  }),
+)
+
 export default function ChartHeatmapDiscreteScale() {
   return (
-    <HeatmapChart
-      data={data}
-      x="week"
-      y="service"
-      value="incidents"
-      colors={heatmapColors("var(--chart-4)", 4)}
-      thresholds={[1, 4, 10]}
-      label="Incidents"
-      ariaLabel="Incidents per service and week"
+    <Chart
+      definition={chart}
       height={200}
+      ariaLabel="Incidents per service and week"
     />
   )
 }

@@ -1,6 +1,9 @@
 "use client"
 
-import { RadialBarChart } from "@/registry/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { radialChart } from "@/registry/ui/chart-radial"
 
 const data = [
   { browser: "chrome", visitors: 275 },
@@ -10,24 +13,27 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    innerRadius: 0.3,
+    radiusRatio: 0.95,
+    grid: true,
+  }),
+)
 
 export default function ChartRadialGrid() {
   return (
-    <RadialBarChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      innerRadius={0.3}
-      radiusRatio={0.95}
-      grid
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, over a circular grid"
     />
   )

@@ -109,7 +109,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
     ),
     ...each(OVERLAYS, (k) => ({ ...DEFAULTS[k], pattern: "none" })),
     ...each(SLIDES, (k) => ({ ...DEFAULTS[k], enter: 0, exit: 0 })),
-    chartMotion: "none",
   }),
   preset("snappy", "Snappy", {
     ...each(COLOR, () => timed(100, "ease-out")),
@@ -129,7 +128,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
       "ease-in",
     ),
     accordionMotion: entrance("accordionMotion", 150, "snappy"),
-    chartMotion: "ease",
   }),
   preset("default", "Default", {}),
   preset("smooth", "Smooth", {
@@ -150,7 +148,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
       "fluid",
     ),
     accordionMotion: entrance("accordionMotion", 300, "fluid"),
-    chartMotion: "spring",
   }),
   preset("expressive", "Expressive", {
     ...each(COLOR, () => timed(150, "ease-out")),
@@ -170,7 +167,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
       "ease-in",
     ),
     accordionMotion: entrance("accordionMotion", 200, "spring"),
-    chartMotion: "wobbly",
   }),
 ]
 

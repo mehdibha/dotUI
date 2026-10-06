@@ -1,6 +1,9 @@
 "use client"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { areaChart } from "@/registry/ui/chart-area"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80, other: 45 },
@@ -11,14 +14,19 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile", "other"],
+    labels: { desktop: "Desktop", mobile: "Mobile", other: "Other" },
+    stacked: true,
+  }),
+)
+
 export default function ChartAreaStacked() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y={["desktop", "mobile", "other"]}
-      labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-      stacked
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by device, stacked, January through June"
     />
   )

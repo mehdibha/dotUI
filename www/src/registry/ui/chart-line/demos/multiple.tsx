@@ -1,6 +1,9 @@
 "use client"
 
-import { LineChart } from "@/registry/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
@@ -11,14 +14,19 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    curve: "monotone",
+  }),
+)
+
 export default function ChartLineMultiple() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y={["desktop", "mobile"]}
-      labels={{ desktop: "Desktop", mobile: "Mobile" }}
-      curve="monotone"
+    <Chart
+      definition={chart}
       ariaLabel="Desktop and mobile visitors, January through June"
     />
   )

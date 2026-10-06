@@ -1,6 +1,9 @@
 "use client"
 
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { radarChart } from "@/registry/ui/chart-radar"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,15 +14,20 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    radiusRatio: 0.62,
+    points: true,
+  }),
+)
+
 export default function ChartRadarRadius() {
   return (
-    <RadarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      radiusRatio={0.62}
-      points
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

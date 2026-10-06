@@ -1,6 +1,9 @@
 "use client"
 
-import { HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { heatmapChart } from "@/registry/ui/chart-heatmap"
 
 /* Sessions per weekday and hour: a daily shape scaled by how busy the day is. */
 const hours = [
@@ -34,17 +37,17 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "hour",
+    y: "day",
+    value: "sessions",
+    label: "Sessions",
+    labelX: "Hour",
+    labelY: "Day",
+  }),
+)
+
 export default function ChartHeatmapMatrix() {
-  return (
-    <HeatmapChart
-      data={data}
-      x="hour"
-      y="day"
-      value="sessions"
-      label="Sessions"
-      labelX="Hour"
-      labelY="Day"
-      ariaLabel="Sessions by weekday and hour"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />
 }

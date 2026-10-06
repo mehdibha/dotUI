@@ -1,0 +1,128 @@
+---
+title: Chart
+description: Renders any TanStack Charts definition in your design system — colors, axes, tooltip, focus, and motion included.
+---
+
+<Demo name="chart/demos/composed" />
+
+dotUI charts are [TanStack Charts](https://tanstack.com/charts) definitions. You write them with the library's grammar — marks, scales, and channels — or start from a chart builder like `barChart` or `areaChart`. Either way, `Chart` renders the definition and fills in everything it leaves unset with your design system's defaults.
+
+There is no second chart vocabulary to learn: what TanStack Charts documents works here, and anything you set wins.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart
+```
+
+Every chart family installs it along with its builder.
+
+## Usage
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
+```
+
+Build the definition, then render it:
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+]
+
+const chart = defineChart(barChart(data, { x: "month", y: "desktop" }))
+
+export function Example() {
+  return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
+}
+```
+
+A definition is compared by identity. Define it at module scope, or memoize it over the values it captures — a fresh definition on every render rebuilds the chart instead of animating it:
+
+```tsx
+const chart = useMemo(
+  () => defineChart(barChart(rows, { x: "month", y: metric })),
+  [rows, metric],
+)
+```
+
+## Builders
+
+Each chart family ships a builder that returns a plain chart spec — scales, color, marks, and the focus and tooltip behavior that chart type needs. Pass it straight to `defineChart`, or spread it and change what you need:
+
+```tsx
+import { ruleY } from "@tanstack/charts/rule"
+
+const bars = barChart(data, { x: "month", y: "desktop" })
+
+const chart = defineChart({
+  ...bars,
+  marks: [...bars.marks, ruleY([250], { strokeDasharray: "4 4" })],
+})
+```
+
+The cartesian families also export their marks on their own — `barSeries`, `lineSeries`, `areaSeries` — so several kinds share one chart. The example above draws a `barSeries`, a raw `lineY` on a second y axis, and a dashed target in one definition.
+
+| Builder        | Family                                        |
+| -------------- | --------------------------------------------- |
+| `barChart`     | [Bar Chart](/docs/components/chart-bar)       |
+| `lineChart`    | [Line Chart](/docs/components/chart-line)     |
+| `areaChart`    | [Area Chart](/docs/components/chart-area)     |
+| `pieChart`     | [Pie Chart](/docs/components/chart-pie)       |
+| `radarChart`   | [Radar Chart](/docs/components/chart-radar)   |
+| `radialChart`  | [Radial Chart](/docs/components/chart-radial) |
+| `heatmapChart` | [Heatmap](/docs/components/chart-heatmap)     |
+
+## What Chart fills in
+
+`Chart` applies these defaults to every definition, builder or hand-written. Each one only fills a gap:
+
+- **Theme** — series colors from `--chart-1` through `--chart-8`, muted text, and border-colored gridlines, in light and dark.
+- **Axes** — no domain line and no tick marks; labels sit clear of the plot.
+- **Tooltip** — your popover surface, titled by the category and one row per series. Values read the way the axes print them, so an axis `format` is the tooltip's too.
+- **Focus** — `group-x`: hovering a position reports every series there. Arrow keys move between positions.
+- **Motion** — marks spring between data states, bars and slices enter in sequence, and reduced motion is respected.
+
+`withChartDefaults(definition)` applies the same defaults outside `Chart` — for an SVG export, or another framework's host.
+
+## Helpers
+
+The `chart` item also exports the pieces the builders are made of, for charts you write by hand:
+
+- `chartScales({ x, y, axes, grid })` — the x and y scales. Kinds are `"point"`, `"band"`, `"linear"`, and `"time"`; pass an object to add a `format`, a `label`, or any TanStack Charts scale option.
+- `chartSeries(data, { x, y, series, labels, order })` — reads wide or long rows into one row per value: `{ x, y, series, key, datum }`.
+- `chartLegend()` — the color legend, below the plot.
+- `chartColors`, `chartColor(index)`, `chartCurves` — the palette and the named curves.
+- `chartTooltipContent` — the default tooltip rows, to call from your own `content`.
+- `polarDecorative(mark)` — paints a polar mark without making it a focus stop.
+
+Annotations — labels, target rules, highlights — usually shouldn't be focus stops. Wrap them in `decorative()` from `@tanstack/charts/mark/decorative`, or `polarDecorative()` inside a polar chart, so arrow keys and the tooltip skip them.
+
+## Overlays
+
+`children` render as HTML over the chart, without catching the pointer — a donut's total, a badge, a status:
+
+```tsx
+<Chart definition={chart} ariaLabel="Visitors by browser">
+  <div className="flex h-full items-center justify-center text-3xl font-bold">
+    925
+  </div>
+</Chart>
+```
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- `tooltip: false` in a definition keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
+
+## API Reference
+
+### Chart
+
+<Reference name="chart" />

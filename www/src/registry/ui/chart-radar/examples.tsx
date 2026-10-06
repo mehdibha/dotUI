@@ -1,4 +1,7 @@
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { radarChart } from "@/registry/ui/chart-radar"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -13,26 +16,28 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
+const single = defineChart(
+  radarChart(data, { x: "month", y: "desktop", labels }),
+)
+
+const multiple = defineChart(
+  radarChart(data, { x: "month", y: ["desktop", "mobile"], labels }),
+)
+
 export default function ChartRadarExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <RadarChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y="desktop"
-          labels={labels}
+          definition={single}
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>
       <Example title="Multiple Series">
-        <RadarChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y={["desktop", "mobile"]}
-          labels={labels}
+          definition={multiple}
           ariaLabel="Desktop and mobile visitors, January through June"
         />
       </Example>

@@ -89,7 +89,6 @@ export const airbnb = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
     linkUnderline: "always",
     linkColor: "neutral",
     skeletonAnimation: "shimmer",

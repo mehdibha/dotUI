@@ -1,6 +1,9 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 
 const data = [
   { browser: "chrome", visitors: 275 },
@@ -18,16 +21,21 @@ const labels = {
   other: "Other",
 }
 
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    sliceLabel: "name",
+    sliceLabelRadius: 0.68,
+    sliceLabelFontSize: 11,
+  }),
+)
+
 export default function ChartPieLabelList() {
   return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      sliceLabel="name"
-      sliceLabelRadius={0.68}
-      sliceLabelFontSize={11}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with names on the slices"
     />
   )

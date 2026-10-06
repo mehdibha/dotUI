@@ -11,8 +11,8 @@ const chartRadarMeta = {
       target: "ui/chart-radar.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.18.0", "d3-scale", "d3-shape"],
-  devDependencies: ["@types/d3-scale", "@types/d3-shape"],
+  dependencies: ["@tanstack/charts@1.0.0", "d3-shape"],
+  devDependencies: ["@types/d3-shape"],
   registryDependencies: ["chart"],
 } satisfies RegistryItem
 

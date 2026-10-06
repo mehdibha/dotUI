@@ -1,6 +1,9 @@
 "use client"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,14 +14,19 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    horizontal: true,
+  }),
+)
+
 export default function ChartBarHorizontal() {
   return (
-    <BarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      horizontal
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors per month, horizontal bars"
     />
   )

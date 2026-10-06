@@ -1,6 +1,9 @@
 "use client"
 
-import { HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { heatmapChart } from "@/registry/ui/chart-heatmap"
 
 /* Contributions per day over sixteen weeks: mostly quiet, busier midweek. */
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -24,17 +27,22 @@ const data = weeks.flatMap((week) =>
   }),
 )
 
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "week",
+    y: "day",
+    value: "contributions",
+    label: "Contributions",
+    thresholds: [1, 2, 3, 4],
+    axes: false,
+  }),
+)
+
 export default function ChartHeatmapContributions() {
   return (
-    <HeatmapChart
-      data={data}
-      x="week"
-      y="day"
-      value="contributions"
-      thresholds={[1, 2, 3, 4]}
-      label="Contributions"
+    <Chart
+      definition={chart}
       height={96}
-      axes={false}
       ariaLabel="Contributions per day over sixteen weeks"
     />
   )

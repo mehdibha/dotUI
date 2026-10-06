@@ -1,6 +1,9 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 
 const data = [
   { browser: "chrome", visitors: 275 },
@@ -18,18 +21,23 @@ const labels = {
   other: "Other",
 }
 
+// Static, so the highlighted slice reads without hovering.
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.55,
+    outerRadius: 0.88,
+    activeIndex: 0,
+    activeOffset: 0.12,
+  }),
+)
+
 export default function ChartPieDonutActive() {
   return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      innerRadius={0.55}
-      outerRadius={0.88}
-      // Static, so the highlighted slice reads without hovering.
-      activeIndex={0}
-      activeOffset={0.12}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with Chrome highlighted"
     />
   )

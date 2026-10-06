@@ -1,4 +1,7 @@
-import { heatmapColors, HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { heatmapChart, heatmapColors } from "@/registry/ui/chart-heatmap"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -29,30 +32,40 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
+const ramp = defineChart(
+  heatmapChart(data, {
+    x: "hour",
+    y: "day",
+    value: "sessions",
+    label: "Sessions",
+  }),
+)
+
+const banded = defineChart(
+  heatmapChart(data, {
+    x: "hour",
+    y: "day",
+    value: "sessions",
+    label: "Sessions",
+    colors: heatmapColors("var(--chart-4)", 4),
+    thresholds: [40, 60, 80],
+  }),
+)
+
 export default function ChartHeatmapExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <HeatmapChart
+        <Chart
           className="w-full"
-          data={data}
-          x="hour"
-          y="day"
-          value="sessions"
-          label="Sessions"
+          definition={ramp}
           ariaLabel="Sessions by weekday and hour"
         />
       </Example>
       <Example title="Thresholds">
-        <HeatmapChart
+        <Chart
           className="w-full"
-          data={data}
-          x="hour"
-          y="day"
-          value="sessions"
-          colors={heatmapColors("var(--chart-4)", 4)}
-          thresholds={[40, 60, 80]}
-          label="Sessions"
+          definition={banded}
           ariaLabel="Sessions by weekday and hour, banded"
         />
       </Example>

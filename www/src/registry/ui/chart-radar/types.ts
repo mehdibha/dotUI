@@ -1,65 +1,55 @@
-import type { ChartFormat, PolarMarkLayer } from "@/registry/ui/chart"
-import type { ChartFamilyProps, ChartFocus } from "@/registry/ui/chart/types"
-
-export type { ChartFormat, PolarMarkLayer }
+import type { ChartValue } from "@tanstack/charts"
+import type { PolarMark } from "@tanstack/charts/polar"
 
 /**
- * Radar chart. Give it one row per category plus the fields to read: one `y`
- * field per series for wide rows, or a single `y` with `series` for long rows.
+ * Builds a complete radar chart for `defineChart`. Give it one row per
+ * category plus the fields to read: one `y` field per series for wide rows,
+ * or a single `y` with `series` for long rows.
  */
-export interface RadarChartProps extends ChartFamilyProps {
-  /** The rows to plot. Compared by identity — define it outside render. */
-  data: readonly unknown[]
-
-  /** Field holding the category laid around the circumference. */
+export interface RadarChartOptions {
+  /** Field holding the category laid around the circle. */
   x: string
 
-  /**
-   * One field per series (wide rows), or a single field paired with `series`
-   * (long rows).
-   */
+  /** The value field, or one field per series when rows are wide. */
   y: string | readonly string[]
 
-  /** Field splitting rows into series — the long-format alternative to `y`. */
+  /** Field naming each row's series, when rows are long. */
   series?: string
 
-  /**
-   * Leading series order — drives color-slot assignment and the legend. Series
-   * the data carries but this omits follow it.
-   */
-  seriesOrder?: readonly string[]
-
-  /** Display names for series keys, used by the legend and the tooltip. */
+  /** Display names for series keys, read by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Stable row identity, so filtered rows animate instead of respawning. */
-  rowKey?: string
+  /** Series keys in color and stacking order; series it leaves out follow in data order. */
+  order?: readonly string[]
+
+  /** Stable row identity, so reordered or filtered rows move instead of respawning. */
+  key?: string
 
   /**
-   * Series fill opacity. `0` draws outlines only.
+   * Series fill opacity — `0` draws outlines only.
    * @default 0.6
    */
   fill?: number
 
   /**
-   * Stroke width of the outline.
+   * Width of the outline.
    * @default 1.5
    */
   strokeWidth?: number
 
   /**
-   * Draw a dot at every point.
+   * A dot at every point.
    * @default false
    */
   points?: boolean
 
   /**
-   * Fraction of the available radius the chart fills.
-   * @default 0.78
+   * Share of the available radius the radar fills.
+   * @default 0.78, or 0.68 with a legend
    */
   radiusRatio?: number
 
-  /** Outer value of the radius scale. Defaults to the largest value, rounded up. */
+  /** The value at the outer ring. Defaults to the largest value, nicened. */
   max?: number
 
   /**
@@ -74,55 +64,45 @@ export interface RadarChartProps extends ChartFamilyProps {
    */
   gridTicks?: number
 
-  /** Fill opacity of the area inside the outer ring. Omitted leaves it unfilled. */
+  /**
+   * Rings behind the series.
+   * @default true
+   */
+  grid?: boolean
+
+  /** Spokes out to each category. Defaults to `grid`. */
+  spokes?: boolean
+
+  /** Fill opacity of the area inside the outer ring. Unset leaves it unfilled. */
   gridFill?: number
 
   /**
-   * Color of that fill.
+   * Color of the grid fill.
    * @default "var(--chart-1)"
    */
   gridFillColor?: string
 
   /**
-   * Draw the spokes running out to each category.
-   * @default matches `grid`
-   */
-  spokes?: boolean
-
-  /** A second, muted label line above each category label. Define it outside render. */
-  axisDetail?: ChartFormat
-
-  /**
-   * Show the circumference labels.
+   * The category labels around the circle.
    * @default true
    */
   axes?: boolean
 
-  /**
-   * Show the rings.
-   * @default true
-   */
-  grid?: boolean
+  /** A second, muted label line above each category — a value, a share, a delta. */
+  axisDetail?: (value: ChartValue) => string
 
   /**
-   * Show the color legend below the chart.
+   * A color legend below the radar.
    * @default false
    */
   legend?: boolean
 
-  /** Formats the circumference labels and the tooltip title. Define it outside render. */
-  formatX?: ChartFormat
+  /** Formats the category labels and tooltip titles. */
+  formatX?: (value: ChartValue) => string
 
-  /** Formats the tooltip values. Define it outside render. */
-  formatY?: ChartFormat
+  /** Formats tooltip values. */
+  formatY?: (value: ChartValue) => string
 
-  /** Extra polar mark layers painted over the series — annotations, rules, labels. */
-  polarMarks?: readonly PolarMarkLayer[]
-
-  /**
-   * How pointer and keyboard resolve to points. By default the nearest spoke
-   * is focused as a group — every series at that category.
-   * @default groups by angular ray
-   */
-  focus?: ChartFocus
+  /** More polar layers drawn over the series, on the same angle and radius scales. */
+  marks?: readonly PolarMark[]
 }

@@ -1,9 +1,10 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
 
-import { chartDefaults } from "@/registry/ui/chart"
-import { LineChart } from "@/registry/ui/chart-line"
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 
 const SERIES = "Visitors"
 
@@ -15,27 +16,26 @@ const data = [
   { browser: "Other", visitors: 90, color: "var(--chart-5)" },
 ]
 
-/* `dot.fill` is a constant, so per-point color means one mark per color. Each
-   reuses the line's `z` so grouped focus still shows a single tooltip row. */
+const line = lineChart(data, {
+  x: "browser",
+  y: "visitors",
+  labels: { visitors: SERIES },
+})
+
+/* `dot.fill` is a constant, so per-point color means one mark per color. The
+   line's series name as `z` keeps each dot in the line's focus group. */
 const dots = data.map((row) =>
   dot([row], {
     x: "browser",
     y: "visitors",
     z: () => SERIES,
+    r: 4,
     fill: row.color,
-    r: chartDefaults.dotRadius,
   }),
 )
 
+const chart = defineChart({ ...line, marks: [...line.marks, ...dots] })
+
 export default function ChartLineDotsColors() {
-  return (
-    <LineChart
-      data={data}
-      x="browser"
-      y="visitors"
-      labels={{ visitors: SERIES }}
-      marks={dots}
-      ariaLabel="Visitors by browser"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

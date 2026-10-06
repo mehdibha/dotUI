@@ -7,7 +7,7 @@ description: A filled line chart for values that accumulate, compose, or are rea
 
 An area chart is a line chart whose fill carries meaning: distance from a baseline, or the span between two boundaries. Reach for it when the reader should compare magnitude or composition — not just because a filled chart looks stronger. When only the trend matters, use the [line chart](/docs/components/chart-line).
 
-`AreaChart` takes your rows and the names of the fields to read. Colors, typography, grid, tooltip, and legend all come from your design system.
+`areaChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
 
 ## Installation
 
@@ -15,12 +15,15 @@ An area chart is a line chart whose fill carries meaning: distance from a baseli
 npx shadcn@latest add @dotui/chart-area
 ```
 
-It brings the `chart` core — the host, the palette, and the shared frame — along with it.
+It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
@@ -32,20 +35,14 @@ const data = [
   { month: "Mar", desktop: 237 },
 ]
 
+const chart = defineChart(
+  areaChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
+)
+
 export function Example() {
-  return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      ariaLabel="Desktop visitors by month"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
 }
 ```
-
-`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
 
 ## Data shape
 
@@ -54,86 +51,78 @@ Two shapes work, and both draw the same chart.
 **Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
 
 ```tsx
-<AreaChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  ariaLabel="Visitors by device"
-/>
+areaChart(data, {
+  x: "month",
+  y: ["desktop", "mobile"],
+  labels: { desktop: "Desktop", mobile: "Mobile" },
+})
 ```
 
-**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`, and set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
+**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`; series take colors in the order they first appear, or in the order of the keys you list in `order`:
 
 ```tsx
-<AreaChart
-  data={data}
-  x="month"
-  y="visitors"
-  series="channel"
-  seriesOrder={["paid_social", "organic_search"]}
-  labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
-  ariaLabel="Visitors by acquisition channel"
-/>
+areaChart(data, {
+  x: "month",
+  y: "visitors",
+  series: "channel",
+  labels: { organic_search: "Organic search", paid_social: "Paid social" },
+})
 ```
 
-Series take colors from `--chart-1` through `--chart-8` in order. A `null` value leaves a gap rather than dropping to zero.
+Series take colors from `--chart-1` through `--chart-8` in order. A `null` value leaves a gap rather than dropping to zero. When `x` holds `Date`s, the axis is a time scale.
 
 ## Stacking
 
-`stacked` stacks the series on one another, in `seriesOrder`; the tooltip still reports each band's own value.
+`stacked` stacks the series on one another, in order; the tooltip still reports each band's own value.
 
 ```tsx
-<AreaChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile", "other"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-  stacked
-  ariaLabel="Visitors by device, stacked"
-/>
+areaChart(data, {
+  x: "month",
+  y: ["desktop", "mobile", "other"],
+  stacked: true,
+})
 ```
 
-Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. `stacked="normalize"` divides each band by its own x-group total for a 100% stack — format the value axis as a percentage with `formatY`.
+Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. `stacked: "normalize"` divides each band by its own x-group total for a 100% stack — format the value axis as a percentage with `formatY`.
 
 ## Shape
 
-`curve` sets the interpolation: `natural` (the default), `monotone`, `linear`, or `step`. `fill` takes an opacity, or `'gradient'` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge.
+`curve` sets the interpolation: `natural` (the default), `monotone`, `linear`, or `step`. `fill` takes an opacity, or `"gradient"` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge.
 
 Interpolation only changes the path drawn between observations. It does not smooth the data or create evidence between samples.
 
-## Annotations
+## Axes and formatting
 
-`marks` and `marksBefore` accept raw [TanStack Charts](https://tanstack.com/charts) mark layers, painted over and under the areas on the same scales. Use them for a target rule, a highlighted band, or end labels.
+`axes` shows the x axis (the default), both, the y axis, or neither; `grid: false` drops the gridlines and `legend` adds a color legend. `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+
+## Composing
+
+`areaChart` returns a plain spec, so you extend it like any TanStack Charts definition — add a target rule, a highlighted band, or end labels:
 
 ```tsx
 import { ruleY } from "@tanstack/charts/rule"
 
-const target = ruleY([200], { strokeDasharray: "4 4" })
+const areas = areaChart(data, { x: "month", y: "desktop" })
+
+const chart = defineChart({
+  ...areas,
+  marks: [...areas.marks, ruleY([200], { strokeDasharray: "4 4" })],
+})
 ```
 
-```tsx
-<AreaChart
-  data={data}
-  x="month"
-  y="desktop"
-  marks={[target]}
-  ariaLabel="Desktop visitors against target"
-/>
-```
+`areaSeries` returns just the marks — the fill and its edge — to draw areas inside any chart. With `fill: "gradient"`, add `areaGradients(seriesCount)` to the chart's `gradients`.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
 - Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
-- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 
 <Examples>
   <Example name="chart-area/demos/default" title="Default" />
-  <Example name="chart-area/demos/legend" title="Multiple Series" />
+  <Example name="chart-area/demos/legend" title="Legend" />
   <Example name="chart-area/demos/gradient" title="Gradient" />
   <Example name="chart-area/demos/stacked" title="Stacked" />
   <Example name="chart-area/demos/stacked-expand" title="Stacked Expanded" />
@@ -146,6 +135,10 @@ const target = ruleY([200], { strokeDasharray: "4 4" })
 
 ## API Reference
 
-### AreaChart
+### areaChart
 
 <Reference name="area-chart" />
+
+### areaSeries
+
+<Reference name="area-series" />

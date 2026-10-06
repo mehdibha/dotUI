@@ -1,11 +1,11 @@
 "use client"
 
-/* Charts — the categorical series palette and the gridline treatment. */
+/* Charts — the categorical series palette. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
-import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
+import { PALETTE_OPTIONS } from "../axes/charts"
+import { DialList } from "../dial"
 import type { Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -37,29 +37,6 @@ function SeriesGlyph({ palette }: { palette: string }) {
   )
 }
 
-function GridGlyph({ grid }: { grid: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {grid !== "none" && (
-        <path
-          d="M3 7h18M3 12h18M3 17h18"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeDasharray={grid === "dashed" ? "2 2" : undefined}
-          opacity=".35"
-        />
-      )}
-      <path
-        d="M4 17 9 10l4 3 7-8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 /* --------------------------------- Section --------------------------------- */
 
 export function ChartsPreview({ state }: { state: StudioState }) {
@@ -69,30 +46,14 @@ export function ChartsPreview({ state }: { state: StudioState }) {
 export function ChartsSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
   return (
-    <>
-      <DialList
-        label="Palette"
-        value={state.chartPalette}
-        onChange={set("chartPalette")}
-        options={PALETTE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <SeriesGlyph palette={option.value} />,
-        }))}
-      />
-      <DialGap />
-      <DialSelect
-        label="Grid"
-        value={state.chartGrid}
-        onChange={set("chartGrid")}
-        options={GRID_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <GridGlyph grid={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-    </>
+    <DialList
+      label="Palette"
+      value={state.chartPalette}
+      onChange={set("chartPalette")}
+      options={PALETTE_OPTIONS.map((option) => ({
+        ...option,
+        preview: <SeriesGlyph palette={option.value} />,
+      }))}
+    />
   )
 }

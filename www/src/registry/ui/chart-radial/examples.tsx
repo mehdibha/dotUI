@@ -1,4 +1,7 @@
-import { RadialBarChart } from "@/registry/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { radialChart } from "@/registry/ui/chart-radial"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -10,53 +13,59 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const rings = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    innerRadius: 0.3,
+    radiusRatio: 0.95,
+    track: true,
+  }),
+)
 
-const total = [{ browser: "safari", visitors: 1260 }]
+const progress = defineChart(
+  radialChart([{ browser: "safari", visitors: 1260 }], {
+    value: "visitors",
+    name: "browser",
+    labels: { safari: "Safari" },
+    endAngle: (250 * Math.PI) / 180,
+    innerRadius: 0.78,
+    outerRadius: 0.95,
+    radiusRatio: 0.9,
+    cornerRadius: 999,
+    track: true,
+    max: 1600,
+  }),
+)
 
 export default function ChartRadialExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <RadialBarChart
+        <Chart
           className="w-full"
-          data={data}
-          value="visitors"
-          name="browser"
-          labels={labels}
-          innerRadius={0.3}
-          radiusRatio={0.95}
-          track
+          definition={rings}
           ariaLabel="Visitors by browser"
         />
       </Example>
       <Example title="Progress Ring">
-        <RadialBarChart
+        <Chart
           className="w-full"
-          data={total}
-          value="visitors"
-          name="browser"
-          labels={{ safari: "Safari" }}
-          endAngle={(250 * Math.PI) / 180}
-          innerRadius={0.78}
-          outerRadius={0.95}
-          radiusRatio={0.9}
-          cornerRadius={999}
-          track
-          max={1600}
+          definition={progress}
           ariaLabel="Safari visitors as a progress ring"
         >
           <div className="flex h-full flex-col items-center justify-center">
             <span className="text-2xl font-bold">1,260</span>
             <span className="text-sm text-fg-muted">Visitors</span>
           </div>
-        </RadialBarChart>
+        </Chart>
       </Example>
     </Examples>
   )

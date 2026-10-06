@@ -1,4 +1,7 @@
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { areaChart } from "@/registry/ui/chart-area"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -13,27 +16,33 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
+const single = defineChart(
+  areaChart(data, { x: "month", y: "desktop", labels }),
+)
+
+const gradient = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels,
+    fill: "gradient",
+  }),
+)
+
 export default function ChartAreaExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <AreaChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y="desktop"
-          labels={labels}
+          definition={single}
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>
       <Example title="Gradient">
-        <AreaChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y={["desktop", "mobile"]}
-          labels={labels}
-          fill="gradient"
+          definition={gradient}
           ariaLabel="Desktop and mobile visitors, January through June"
         />
       </Example>

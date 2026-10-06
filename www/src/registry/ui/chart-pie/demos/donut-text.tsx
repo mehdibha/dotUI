@@ -1,6 +1,9 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 
 const data = [
   { browser: "chrome", visitors: 275 },
@@ -20,22 +23,26 @@ const labels = {
 
 const total = data.reduce((sum, row) => sum + row.visitors, 0)
 
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.6,
+  }),
+)
+
 export default function ChartPieDonutText() {
   return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      innerRadius={0.6}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with the total in the centre"
     >
-      {/* The hole is an HTML overlay, so the total is real text, not a label
-          mark competing for focus. */}
+      {/* Real text, not a mark competing for focus. */}
       <div className="flex h-full flex-col items-center justify-center">
         <span className="text-3xl font-bold">{total}</span>
         <span className="text-sm text-fg-muted">Visitors</span>
       </div>
-    </PieChart>
+    </Chart>
   )
 }

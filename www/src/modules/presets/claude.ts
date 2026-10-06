@@ -85,7 +85,6 @@ export const claude = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
     linkUnderline: "always",
     linkColor: "neutral",
     skeletonAnimation: "shimmer",

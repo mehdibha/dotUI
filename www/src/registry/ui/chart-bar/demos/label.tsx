@@ -1,8 +1,11 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -13,27 +16,34 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
-const labels = [
-  text(data, {
-    x: "month",
-    y: "desktop",
-    text: "desktop",
-    z: () => "Desktop",
-    fill: "var(--color-fg-muted)",
-    fontSize: 12,
-    dy: -10,
-  }),
-]
+const bars = barChart(data, {
+  x: "month",
+  y: "desktop",
+  labels: { desktop: "Desktop" },
+})
+
+// Decorative, so the labels never become focus stops or tooltip rows.
+const chart = defineChart({
+  ...bars,
+  marks: [
+    ...bars.marks,
+    decorative(
+      text(data, {
+        x: "month",
+        y: "desktop",
+        text: "desktop",
+        fill: "var(--color-fg-muted)",
+        fontSize: 12,
+        dy: -10,
+      }),
+    ),
+  ],
+})
 
 export default function ChartBarLabel() {
   return (
-    <BarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      marks={labels}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors per month, labelled"
     />
   )

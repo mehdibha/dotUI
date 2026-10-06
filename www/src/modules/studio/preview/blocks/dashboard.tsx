@@ -1,4 +1,5 @@
 import * as React from "react"
+import { defineChart } from "@tanstack/charts"
 
 import {
   BellIcon,
@@ -43,7 +44,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { AreaChart } from "@/registry/ui/chart-area"
+import { Chart } from "@/registry/ui/chart"
+import { areaChart } from "@/registry/ui/chart-area"
 import { Input } from "@/registry/ui/input"
 import {
   Menu,
@@ -624,10 +626,22 @@ function RevenueChart() {
   const [range, setRange] = React.useState<RangeId>("12m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
-  // Charts compare data by identity, so the slice must be stable per range.
   const data = React.useMemo(
     () => MONTHLY.slice(MONTHLY.length - months),
     [months],
+  )
+  const chart = React.useMemo(
+    () =>
+      defineChart(
+        areaChart(data, {
+          x: "month",
+          y: ["revenue", "target"],
+          labels: chartLabels,
+          fill: "gradient",
+          formatX: (value) => String(value).slice(0, 3),
+        }),
+      ),
+    [data],
   )
   const total = data.reduce((sum, d) => sum + d.revenue, 0)
   const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
@@ -668,13 +682,8 @@ function RevenueChart() {
             {overTarget.toFixed(1)}% vs. plan
           </Badge>
         </div>
-        <AreaChart
-          data={data}
-          x="month"
-          y={["revenue", "target"]}
-          labels={chartLabels}
-          fill="gradient"
-          formatX={(value) => String(value).slice(0, 3)}
+        <Chart
+          definition={chart}
           height={224}
           ariaLabel="Monthly revenue against plan"
         />

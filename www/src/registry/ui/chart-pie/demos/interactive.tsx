@@ -1,8 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 import {
   Select,
   SelectContent,
@@ -29,6 +31,20 @@ const labels = {
 export default function ChartPieInteractive() {
   const [active, setActive] = useState(0)
   const row = data[active] ?? data[0]
+  const chart = useMemo(
+    () =>
+      defineChart(
+        pieChart(data, {
+          value: "desktop",
+          name: "month",
+          labels,
+          innerRadius: 0.6,
+          outerRadius: 0.88,
+          activeIndex: active,
+        }),
+      ),
+    [active],
+  )
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -50,14 +66,8 @@ export default function ChartPieInteractive() {
           ))}
         </SelectContent>
       </Select>
-      <PieChart
-        data={data}
-        value="desktop"
-        name="month"
-        labels={labels}
-        innerRadius={0.6}
-        outerRadius={0.88}
-        activeIndex={active}
+      <Chart
+        definition={chart}
         ariaLabel="Desktop visitors by month, with one month highlighted"
       >
         <div className="flex h-full flex-col items-center justify-center">
@@ -66,7 +76,7 @@ export default function ChartPieInteractive() {
           </span>
           <span className="text-sm text-fg-muted">Visitors</span>
         </div>
-      </PieChart>
+      </Chart>
     </div>
   )
 }

@@ -1,24 +1,13 @@
 {
-  "name": "RadarChartProps",
-  "description": "Radar chart. Give it one row per category plus the fields to read: one `y`\nfield per series for wide rows, or a single `y` with `series` for long rows.",
+  "name": "RadarChartOptions",
+  "description": "Builds a complete radar chart for `defineChart`. Give it one row per\ncategory plus the fields to read: one `y` field per series for wide rows,\nor a single `y` with `series` for long rows.",
   "props": {
-    "data": {
-      "type": "readonly unknown[]",
-      "typeAst": {
-        "type": "array",
-        "elementType": {
-          "type": "unknown"
-        }
-      },
-      "description": "The rows to plot. Compared by identity — define it outside render.",
-      "required": true
-    },
     "x": {
       "type": "string",
       "typeAst": {
         "type": "string"
       },
-      "description": "Field holding the category laid around the circumference.",
+      "description": "Field holding the category laid around the circle.",
       "required": true
     },
     "y": {
@@ -37,7 +26,7 @@
           }
         ]
       },
-      "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
+      "description": "The value field, or one field per series when rows are wide.",
       "required": true
     },
     "series": {
@@ -46,26 +35,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Field splitting rows into series — the long-format alternative to `y`."
-    },
-    "seriesOrder": {
-      "type": "readonly string[]",
-      "detailedType": "readonly string[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "description": "Leading series order — drives color-slot assignment and the legend. Series\nthe data carries but this omits follow it."
+      "description": "Field naming each row's series, when rows are long."
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -102,15 +72,34 @@
           }
         ]
       },
-      "description": "Display names for series keys, used by the legend and the tooltip."
+      "description": "Display names for series keys, read by the legend and the tooltip."
     },
-    "rowKey": {
+    "order": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "Series keys in color and stacking order; series it leaves out follow in data order."
+    },
+    "key": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Stable row identity, so filtered rows animate instead of respawning."
+      "description": "Stable row identity, so reordered or filtered rows move instead of respawning."
     },
     "fill": {
       "type": "number",
@@ -118,7 +107,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Series fill opacity. `0` draws outlines only.",
+      "description": "Series fill opacity — `0` draws outlines only.",
       "default": "0.6"
     },
     "strokeWidth": {
@@ -127,7 +116,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Stroke width of the outline.",
+      "description": "Width of the outline.",
       "default": "1.5"
     },
     "points": {
@@ -136,7 +125,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Draw a dot at every point.",
+      "description": "A dot at every point.",
       "default": "false"
     },
     "radiusRatio": {
@@ -145,8 +134,8 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Fraction of the available radius the chart fills.",
-      "default": "0.78"
+      "description": "Share of the available radius the radar fills.",
+      "default": "0.78, or 0.68 with a legend"
     },
     "max": {
       "type": "number",
@@ -154,7 +143,7 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Outer value of the radius scale. Defaults to the largest value, rounded up."
+      "description": "The value at the outer ring. Defaults to the largest value, nicened."
     },
     "gridShape": {
       "type": "\"circle\" | \"polygon\"",
@@ -184,22 +173,14 @@
       "description": "Number of rings.",
       "default": "4"
     },
-    "gridFill": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "number"
+        "type": "boolean"
       },
-      "description": "Fill opacity of the area inside the outer ring. Omitted leaves it unfilled."
-    },
-    "gridFillColor": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Color of that fill.",
-      "default": "\"var(--chart-1)\""
+      "description": "Rings behind the series.",
+      "default": "true"
     },
     "spokes": {
       "type": "boolean",
@@ -207,17 +188,24 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Draw the spokes running out to each category.",
-      "default": "matches `grid`"
+      "description": "Spokes out to each category. Defaults to `grid`."
     },
-    "axisDetail": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
+    "gridFill": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
+        "type": "number"
       },
-      "description": "A second, muted label line above each category label. Define it outside render."
+      "description": "Fill opacity of the area inside the outer ring. Unset leaves it unfilled."
+    },
+    "gridFillColor": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Color of the grid fill.",
+      "default": "\"var(--chart-1)\""
     },
     "axes": {
       "type": "boolean",
@@ -225,17 +213,33 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the circumference labels.",
+      "description": "The category labels around the circle.",
       "default": "true"
     },
-    "grid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "axisDetail": {
+      "type": "((value: ChartValue) => string)",
+      "detailedType": "((value: ChartValue) => string) | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "ChartValue",
+              "name": "ChartValue"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "string"
+        },
+        "typeParameters": []
       },
-      "description": "Show the rings.",
-      "default": "true"
+      "description": "A second, muted label line above each category — a value, a share, a delta."
     },
     "legend": {
       "type": "boolean",
@@ -243,30 +247,62 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the color legend below the chart.",
+      "description": "A color legend below the radar.",
       "default": "false"
     },
     "formatX": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
+      "type": "((value: ChartValue) => string)",
+      "detailedType": "((value: ChartValue) => string) | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "ChartValue",
+              "name": "ChartValue"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "string"
+        },
+        "typeParameters": []
       },
-      "description": "Formats the circumference labels and the tooltip title. Define it outside render."
+      "description": "Formats the category labels and tooltip titles."
     },
     "formatY": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
+      "type": "((value: ChartValue) => string)",
+      "detailedType": "((value: ChartValue) => string) | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "ChartValue",
+              "name": "ChartValue"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "string"
+        },
+        "typeParameters": []
       },
-      "description": "Formats the tooltip values. Define it outside render."
+      "description": "Formats tooltip values."
     },
-    "polarMarks": {
-      "type": "readonly PolarMarkLayer[]",
-      "detailedType": "readonly PolarMarkLayer[] | undefined",
+    "marks": {
+      "type": "readonly PolarMark<unknown, ChartValue, ChartValue, \"angle\", \"radius\">[]",
+      "detailedType": "| readonly PolarMark<\n    unknown,\n    ChartValue,\n    ChartValue,\n    'angle',\n    'radius'\n  >[]\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -276,575 +312,17 @@
           {
             "type": "array",
             "elementType": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
-                "name": "PolarMark"
-              },
-              "typeParameters": [
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                }
-              ]
+              "type": "link",
+              "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
+              "name": "PolarMark"
             }
           }
         ]
       },
-      "description": "Extra polar mark layers painted over the series — annotations, rules, labels."
-    },
-    "focus": {
-      "type": "'nearest' | 'nearest-x' | 'nearest-y' | 'group-x' | 'group-y'",
-      "detailedType": "| 'nearest'\n| 'nearest-x'\n| 'nearest-y'\n| 'group-x'\n| 'group-y'\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "group-x"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "group-y"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "nearest"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "nearest-x"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "nearest-y"
-          },
-          {
-            "type": "undefined"
-          }
-        ]
-      },
-      "description": "How pointer and keyboard resolve to points. By default the nearest spoke\nis focused as a group — every series at that category.",
-      "default": "groups by angular ray"
-    },
-    "ariaLabel": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
-    },
-    "ariaDescription": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Longer description, announced after the name."
-    },
-    "maxFocusDistance": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Pixel radius beyond which the pointer stops matching a point."
-    },
-    "tooltipAnchor": {
-      "type": "'point' | 'pointer' | 'group-center'",
-      "detailedType": "'point' | 'pointer' | 'group-center' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "group-center"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "point"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "pointer"
-          },
-          {
-            "type": "undefined"
-          }
-        ]
-      },
-      "description": "Where the tooltip attaches: to the focused point, to the pointer, or to\nthe center of the focused group.",
-      "default": "\"group-center\""
-    },
-    "tooltip": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Pass `false` to remove the tooltip entirely. Keyboard focus stops remain\nbut lose their live region, so screen readers get silent stops — keep the\ntooltip unless the chart is decorative.",
-      "default": "true"
-    },
-    "animate": {
-      "type": "ChartAnimate",
-      "detailedType": "ChartAnimate | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ChartAnimate"
-      },
-      "description": "Animation between data states, and the entrance on first client paint:\n`false` to disable, a `{ type: \"tween\" }` with duration and easing, or a\n`{ type: \"spring\" }` with stiffness, damping, and mass. Charts above ~800\npoints animate off automatically, and reduced motion is always respected.",
-      "default": "the design system's chart motion ({ type: \"spring\", stiffness: 170, damping: 26 })"
-    },
-    "height": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Chart height in pixels. Without it the chart is 16:9 of its width."
-    },
-    "aspectRatio": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Width/height ratio, used instead of `height` when set."
-    },
-    "width": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Fixed width. Omit to fill the container and track resizes."
-    },
-    "initialWidth": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Width assumed for the first render, before the container is measured."
-    },
-    "className": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Class applied to the chart's outer box — size and place the chart with it."
-    },
-    "style": {
-      "type": "CSSProperties",
-      "detailedType": "CSSProperties | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "CSSProperties"
-      },
-      "description": "Style applied to the chart surface."
-    },
-    "tabIndex": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Tab index of the chart surface. Charts are keyboard-focusable."
-    },
-    "idPrefix": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Prefix for generated element ids."
-    },
-    "onFocusChange": {
-      "type": "((point: ChartPoint<unknown, ChartValue, number> | null) => void)",
-      "detailedType": "| ((\n    point: ChartPoint<unknown, ChartValue, number> | null,\n  ) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "point",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "application",
-                      "base": {
-                        "type": "link",
-                        "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
-                        "name": "ChartPoint"
-                      },
-                      "typeParameters": [
-                        {
-                          "type": "unknown"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ChartValue"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Called when the focused point changes, by pointer or keyboard."
-    },
-    "onFocusGroupChange": {
-      "type": "((points: readonly ChartPoint<unknown, ChartValue, number>[]) => void)",
-      "detailedType": "| ((\n    points: readonly ChartPoint<\n      unknown,\n      ChartValue,\n      number\n    >[],\n  ) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "points",
-                "value": {
-                  "type": "array",
-                  "elementType": {
-                    "type": "application",
-                    "base": {
-                      "type": "link",
-                      "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
-                      "name": "ChartPoint"
-                    },
-                    "typeParameters": [
-                      {
-                        "type": "unknown"
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "ChartValue"
-                      },
-                      {
-                        "type": "number"
-                      }
-                    ]
-                  }
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Called when the focused group changes, in the group focus modes."
-    },
-    "onSelect": {
-      "type": "((point: ChartPoint<unknown, ChartValue, number> | null) => void)",
-      "detailedType": "| ((\n    point: ChartPoint<unknown, ChartValue, number> | null,\n  ) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "point",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "application",
-                      "base": {
-                        "type": "link",
-                        "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
-                        "name": "ChartPoint"
-                      },
-                      "typeParameters": [
-                        {
-                          "type": "unknown"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ChartValue"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Called when a point is activated with Enter, Space, or a click."
-    },
-    "onRender": {
-      "type": "((context: ChartRendererRenderContext<unknown, ChartValue, number>) => void)",
-      "detailedType": "| ((\n    context: ChartRendererRenderContext<\n      unknown,\n      ChartValue,\n      number\n    >,\n  ) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "context",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext",
-                    "name": "ChartRendererRenderContext"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "unknown"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "ChartValue"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Called after every paint, with the container, SVG, and scene."
-    },
-    "renderTooltipBody": {
-      "type": "((context: ChartTooltipBodyRenderContext<unknown, ChartValue, number>) => ReactNode)",
-      "detailedType": "| ((\n    context: ChartTooltipBodyRenderContext<\n      unknown,\n      ChartValue,\n      number\n    >,\n  ) => ReactNode)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "context",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext",
-                    "name": "ChartTooltipBodyRenderContext"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "unknown"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "ChartValue"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Replaces the tooltip body. Receives the default body to wrap or discard."
-    },
-    "children": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "Overlay rendered above the chart surface, ignoring pointer events."
+      "description": "More polar layers drawn over the series, on the same angle and radius scales."
     }
   },
   "typeLinks": {
-    "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext": {
-      "type": "interface",
-      "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext",
-      "name": "ChartRendererRenderContext",
-      "extends": [],
-      "properties": {
-        "container": {
-          "type": "property",
-          "name": "container",
-          "value": {
-            "type": "identifier",
-            "name": "HTMLElement"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "interaction": {
-          "type": "property",
-          "name": "interaction",
-          "value": {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "@tanstack/charts/dist/dom-types.d.ts:ChartInteractionController",
-              "name": "ChartInteractionController"
-            },
-            "typeParameters": [
-              {
-                "type": "unknown"
-              },
-              {
-                "type": "identifier",
-                "name": "ChartValue"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "scene": {
-          "type": "property",
-          "name": "scene",
-          "value": {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "@tanstack/charts/dist/types.d.ts:ChartScene",
-              "name": "ChartScene"
-            },
-            "typeParameters": [
-              {
-                "type": "unknown"
-              },
-              {
-                "type": "identifier",
-                "name": "ChartValue"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "surface": {
-          "type": "property",
-          "name": "surface",
-          "value": {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "@tanstack/charts/dist/dom-types.d.ts:ChartSurface",
-              "name": "ChartSurface"
-            },
-            "typeParameters": [
-              {
-                "type": "unknown"
-              },
-              {
-                "type": "identifier",
-                "name": "ChartValue"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "@tanstack/charts/dist/polar.d.ts:PolarMark": {
       "type": "interface",
       "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
@@ -855,7 +333,22 @@
           "type": "property",
           "name": "__angle",
           "value": {
-            "type": "any"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "Date"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -865,7 +358,16 @@
           "type": "property",
           "name": "__angleScaleId",
           "value": {
-            "type": "any"
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "angle"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -875,7 +377,7 @@
           "type": "property",
           "name": "__datum",
           "value": {
-            "type": "any"
+            "type": "unknown"
           },
           "optional": true,
           "readonly": false,
@@ -885,7 +387,22 @@
           "type": "property",
           "name": "__radius",
           "value": {
-            "type": "any"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "Date"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -895,7 +412,16 @@
           "type": "property",
           "name": "__radiusScaleId",
           "value": {
-            "type": "any"
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "radius"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -920,23 +446,9 @@
               }
             ],
             "return": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
-                "name": "InitializedPolarMark"
-              },
-              "typeParameters": [
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                }
-              ]
+              "type": "link",
+              "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
+              "name": "InitializedPolarMark"
             },
             "typeParameters": []
           },
@@ -1009,184 +521,6 @@
                 "type": "link",
                 "id": "@tanstack/charts/dist/types.d.ts:ChartMarkRenderer",
                 "name": "ChartMarkRenderer"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext": {
-      "type": "interface",
-      "id": "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext",
-      "name": "ChartTooltipBodyRenderContext",
-      "extends": [
-        {
-          "type": "application",
-          "base": {
-            "type": "link",
-            "id": "@tanstack/charts/dist/types.d.ts:ChartTooltipBodyContext",
-            "name": "ChartTooltipBodyContext"
-          },
-          "typeParameters": [
-            {
-              "type": "typeParameter",
-              "name": "TDatum",
-              "constraint": null,
-              "default": {
-                "type": "identifier",
-                "name": "unknown"
-              }
-            },
-            {
-              "type": "typeParameter",
-              "name": "TXValue",
-              "constraint": {
-                "type": "identifier",
-                "name": "ChartValue"
-              },
-              "default": {
-                "type": "identifier",
-                "name": "ChartValue"
-              }
-            },
-            {
-              "type": "typeParameter",
-              "name": "TYValue",
-              "constraint": {
-                "type": "identifier",
-                "name": "ChartValue"
-              },
-              "default": {
-                "type": "identifier",
-                "name": "ChartValue"
-              }
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "content": {
-          "type": "property",
-          "name": "content",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "link",
-                "id": "@tanstack/charts/dist/types.d.ts:ChartTooltipContent",
-                "name": "ChartTooltipContent"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "defaultBody": {
-          "type": "property",
-          "name": "defaultBody",
-          "value": {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "dismiss": {
-          "type": "method",
-          "name": "dismiss",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        },
-        "pinned": {
-          "type": "property",
-          "name": "pinned",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "points": {
-          "type": "property",
-          "name": "points",
-          "value": {
-            "type": "array",
-            "elementType": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
-                "name": "ChartPoint"
-              },
-              "typeParameters": [
-                {
-                  "type": "identifier",
-                  "name": "unknown"
-                },
-                {
-                  "type": "identifier",
-                  "name": "ChartValue"
-                },
-                {
-                  "type": "identifier",
-                  "name": "number"
-                }
-              ]
-            }
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
-        "primaryPoint": {
-          "type": "property",
-          "name": "primaryPoint",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "application",
-                "base": {
-                  "type": "link",
-                  "id": "@tanstack/charts/dist/types.d.ts:ChartPoint",
-                  "name": "ChartPoint"
-                },
-                "typeParameters": [
-                  {
-                    "type": "identifier",
-                    "name": "unknown"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "ChartValue"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "number"
-                  }
-                ]
               }
             ]
           },

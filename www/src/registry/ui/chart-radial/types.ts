@@ -1,64 +1,58 @@
-import type { PolarMarkLayer } from "@/registry/ui/chart"
-import type {
-  ChartFamilyProps,
-  ChartFocus,
-  ChartTooltipAnchor,
-} from "@/registry/ui/chart/types"
-
-export type { PolarMarkLayer }
+import type { ChartValue } from "@tanstack/charts"
+import type { PolarMark } from "@tanstack/charts/polar"
 
 /**
- * Radial bar chart. Give it rows, the field holding each value, and the field
- * naming it. Angles are radians and radii are ratios of the circle the chart
- * resolves for its box.
+ * Builds a complete radial bar chart for `defineChart`. Give it rows, the
+ * field holding each value, and the field naming each ring. Angles are
+ * radians; radii are shares of the chart radius.
  */
-export interface RadialBarChartProps extends ChartFamilyProps {
-  /** The rows to plot. Compared by identity — define it outside render. */
-  data: readonly unknown[]
-
+export interface RadialChartOptions {
   /**
-   * Field holding the value. One field draws a ring per row, innermost
-   * first; an array of fields stacks the first row's values into one ring.
+   * The value field: one ring per row, innermost first. Several fields stack
+   * the first row's values around one ring.
    */
   value: string | readonly string[]
 
   /** Field naming each ring. */
   name: string
 
-  /** Display names for ring keys, used by the legend and the tooltip. */
+  /** Display names for ring keys and stacked fields, read by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
   /**
-   * Start of the angular sweep, in radians, clockwise from twelve o'clock.
+   * Start of the sweep, in radians clockwise from twelve o'clock.
    * @default 0
    */
   startAngle?: number
 
   /**
-   * End of the angular sweep, in radians.
+   * End of the sweep, in radians.
    * @default Math.PI * 2
    */
   endAngle?: number
 
   /**
-   * Inner edge of the innermost ring, as a ratio of the radius.
+   * Inner edge of the innermost ring, as a share of the chart radius.
    * @default 0.35
    */
   innerRadius?: number
 
   /**
-   * Outer edge of the outermost ring, as a ratio of the radius.
+   * Outer edge of the outermost ring, as a share of the chart radius.
    * @default 1
    */
   outerRadius?: number
 
   /**
-   * Shrinks the circle inside its box.
+   * Share of the available radius the chart fills.
    * @default 1
    */
   radiusRatio?: number
 
-  /** Pixel inset applied before `radiusRatio`. */
+  /**
+   * Pixels kept clear around the chart.
+   * @default 0
+   */
   inset?: number
 
   /**
@@ -74,73 +68,64 @@ export interface RadialBarChartProps extends ChartFamilyProps {
   cornerRadius?: number
 
   /**
-   * Draw an unfilled arc behind every ring, spanning the whole sweep.
-   * Has no effect in stacked mode (array `value`).
+   * An unfilled arc behind every ring, spanning the whole sweep. Not drawn
+   * when `value` lists several fields.
    * @default false
    */
   track?: boolean
 
   /**
-   * Fill of the background track.
+   * Fill of the track.
    * @default "var(--color-muted)"
    */
   trackFill?: string
 
-  /** Value that fills the whole sweep. Defaults to the largest value. */
+  /** The value that fills the whole sweep. Defaults to the largest value, or the stack's total. */
   max?: number
 
   /**
-   * Print each ring's name at the start of its arc.
+   * Each ring's name at the start of its arc. Not drawn when `value` lists
+   * several fields.
    * @default false
    */
   barLabels?: boolean
 
   /**
-   * Fill of the ring labels.
+   * Fill of the ring names.
    * @default "var(--color-fg)"
    */
   barLabelFill?: string
 
   /**
-   * Font size of the ring labels.
+   * Font size of the ring names.
    * @default 11
    */
   barLabelFontSize?: number
 
   /**
-   * Show the grid lines — concentric rings behind the bars.
+   * Concentric gridlines behind the rings.
    * @default false
    */
   grid?: boolean
 
   /**
-   * Approximate number of grid rings.
+   * Approximate number of gridlines.
    * @default 4
    */
   gridTicks?: number
 
   /**
-   * Show the color legend below the chart.
+   * A color legend below the chart.
    * @default false
    */
   legend?: boolean
 
-  /** Extra polar mark layers painted under the bars. */
-  polarMarksBefore?: readonly PolarMarkLayer[]
-
-  /** Extra polar mark layers painted over the bars — annotations, rules, labels. */
-  polarMarks?: readonly PolarMarkLayer[]
+  /** Formats values in the tooltip. */
+  formatValue?: (value: ChartValue) => string
 
   /**
-   * How pointer and keyboard resolve to points. An arc's x value is its
-   * angle, so bars match by their painted geometry.
-   * @default "nearest"
+   * More polar layers drawn over the rings. They share the chart's scales:
+   * angles are values, radii are ring names.
    */
-  focus?: ChartFocus
-
-  /**
-   * Where the tooltip attaches.
-   * @default "point"
-   */
-  tooltipAnchor?: ChartTooltipAnchor
+  marks?: readonly PolarMark[]
 }

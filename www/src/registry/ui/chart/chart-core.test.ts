@@ -1,180 +1,315 @@
+import type {
+  ChartPoint,
+  ChartTooltipContentContext,
+  ChartTooltipOptions,
+} from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
+import { createChartRuntime } from "@tanstack/charts/runtime"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { tooltip } from "@tanstack/charts/tooltip"
 import { describe, expect, it } from "vitest"
 
 import {
-  decorative,
-  orderSeries,
-  planChart,
-  sameOption,
-  sameOptions,
-  splitChartProps,
+  chartScales,
+  chartSeries,
+  chartTheme,
+  chartTooltipContent,
+  polarDecorative,
+  withChartDefaults,
 } from "./base"
 
-interface Row {
-  month: string
-  desktop: number
-  mobile: number
-}
-
-const rows: Row[] = [
+const rows = [
   { month: "Jan", desktop: 10, mobile: 30 },
-  { month: "Feb", desktop: 20, mobile: 5 },
+  { month: "Feb", desktop: 20, mobile: null },
 ]
 
-describe("planChart", () => {
-  it("keeps a single field's rows and labels its series", () => {
-    const plan = planChart({
-      data: rows,
+describe("chartSeries", () => {
+  it("names a single field's series with its label", () => {
+    const { rows: out, names } = chartSeries(rows, {
       x: "month",
       y: "desktop",
       labels: { desktop: "Desktop" },
     })
-    expect(plan.rows).toBe(rows)
-    expect(plan.order).toEqual(["Desktop"])
-    expect(rows.map(plan.z)).toEqual(["Desktop", "Desktop"])
-    expect(plan.wide).toBe(false)
-  })
-
-  it("folds several fields into one row per series, in seriesOrder", () => {
-    const plan = planChart({
-      data: rows,
-      x: "month",
-      y: ["desktop", "mobile"],
-      seriesOrder: ["mobile"],
-    })
-    expect(plan.order).toEqual(["mobile", "desktop"])
-    expect(plan.y).toBe("value")
-    expect(plan.rows).toHaveLength(4)
-    expect(plan.rows[0]).toMatchObject({
-      month: "Jan",
-      series: "mobile",
-      value: 30,
-    })
-    expect(plan.rows.map(plan.z)).toEqual([
-      "mobile",
-      "desktop",
-      "mobile",
-      "desktop",
+    expect(names).toEqual(["Desktop"])
+    expect(out.map((row) => [row.x, row.y, row.series])).toEqual([
+      ["Jan", 10, "Desktop"],
+      ["Feb", 20, "Desktop"],
     ])
-    expect(plan.wide).toBe(true)
+    expect(out[0]?.datum).toBe(rows[0])
   })
 
-  it("derives series order from data order in long mode, after seriesOrder", () => {
+  it("folds wide rows into one row per field, in field order", () => {
+    const { rows: out, names } = chartSeries(rows, {
+      x: "month",
+      y: ["mobile", "desktop"],
+    })
+    expect(names).toEqual(["mobile", "desktop"])
+    expect(out.map((row) => [row.x, row.series, row.y])).toEqual([
+      ["Jan", "mobile", 30],
+      ["Jan", "desktop", 10],
+      ["Feb", "mobile", null],
+      ["Feb", "desktop", 20],
+    ])
+  })
+
+  it("reads long rows' series in order of appearance", () => {
     const long = [
-      { month: "Jan", series: "b", value: 1 },
-      { month: "Jan", series: "a", value: 2 },
-      { month: "Jan", series: "c", value: 3 },
+      { day: "Mon", channel: "paid", visits: 3 },
+      { day: "Mon", channel: "organic", visits: 5 },
+      { day: "Tue", channel: "paid", visits: Number.NaN },
     ]
-    const plan = planChart({
-      data: long,
-      x: "month",
-      y: "value",
-      series: "series",
-      seriesOrder: ["a"],
+    const { rows: out, names } = chartSeries(long, {
+      x: "day",
+      y: "visits",
+      series: "channel",
+      labels: { organic: "Organic" },
     })
-    expect(plan.rows).toBe(long)
-    expect(plan.order).toEqual(["a", "b", "c"])
+    expect(names).toEqual(["paid", "Organic"])
+    expect(out.map((row) => row.y)).toEqual([3, 5, null])
   })
 
-  it("keys rows by rowKey and series", () => {
-    const plan = planChart({
-      data: rows,
-      x: "month",
-      y: ["desktop", "mobile"],
-      rowKey: "month",
+  it("leads with the listed order, then data order", () => {
+    expect(
+      chartSeries(rows, {
+        x: "month",
+        y: ["desktop", "mobile"],
+        order: ["mobile"],
+      }).names,
+    ).toEqual(["mobile", "desktop"])
+    const long = [
+      { day: "Mon", channel: "paid", visits: 3 },
+      { day: "Mon", channel: "organic", visits: 5 },
+    ]
+    expect(
+      chartSeries(long, {
+        x: "day",
+        y: "visits",
+        series: "channel",
+        order: ["organic", "missing"],
+      }).names,
+    ).toEqual(["organic", "paid"])
+  })
+
+  it("keys rows by x, timestamps for dates, or by the key field", () => {
+    const date = new Date(Date.UTC(2024, 0, 1))
+    expect(
+      chartSeries([{ date, v: 1 }], { x: "date", y: "v" }).rows[0]?.key,
+    ).toBe(+date)
+    expect(
+      chartSeries([{ id: "a", x: 1, v: 1 }], { x: "x", y: "v", key: "id" })
+        .rows[0]?.key,
+    ).toBe("a")
+  })
+})
+
+describe("chartScales", () => {
+  it("shows the x axis, grids the y axis, and nicens linear scales", () => {
+    const { x, y } = chartScales()
+    expect(x.axis).toEqual({})
+    expect(x.grid).toBe(false)
+    expect(y.axis).toBe(false)
+    expect(y.grid).toBe(true)
+    expect(y.nice).toBe(true)
+  })
+
+  it("passes formats and labels to the axis, and scale options through", () => {
+    const format = (value: unknown) => String(value)
+    const { y } = chartScales({
+      y: { kind: "linear", format, label: "Visitors", reverse: true },
+      axes: true,
     })
-    expect(plan.rows.map(plan.key ?? String)).toEqual([
-      "Jan:desktop",
-      "Jan:mobile",
-      "Feb:desktop",
-      "Feb:mobile",
-    ])
+    expect(y.axis).toEqual({ ticks: { format }, label: "Visitors" })
+    expect(y.reverse).toBe(true)
   })
 })
 
-describe("orderSeries", () => {
-  it("leads with the listed series and appends the rest once", () => {
-    expect(orderSeries(["b"], ["a", "b", "c", "a"])).toEqual(["b", "a", "c"])
-  })
+const bars = defineChart({
+  scales: {
+    x: {
+      scale: () => scalePoint(),
+      axis: { ticks: { format: (v) => `~${v}` } },
+    },
+    y: {
+      scale: scaleLinear,
+      grid: true,
+      axis: { line: true, ticks: { format: (v) => `$${v}` } },
+    },
+  },
+  marks: [barY(rows, { x: "month", y: "desktop" })],
 })
 
-describe("sameOption", () => {
-  it("compares arrays of scalars and flat records by value", () => {
-    expect(sameOption(["a", "b"], ["a", "b"])).toBe(true)
-    expect(sameOption(["a", "b"], ["a", "c"])).toBe(false)
-    expect(sameOption({ a: "A" }, { a: "A" })).toBe(true)
-    expect(sameOption({ a: "A" }, { a: "A", b: "B" })).toBe(false)
-  })
+function tooltipOf(definition: { tooltip?: unknown }) {
+  return definition.tooltip as ChartTooltipOptions
+}
 
-  it("compares anything nested, functions and class instances by identity", () => {
-    const fn = () => 1
-    const data = [{ a: 1 }]
-    expect(sameOption(fn, fn)).toBe(true)
-    expect(sameOption(fn, () => 1)).toBe(false)
-    expect(sameOption(data, data)).toBe(true)
-    expect(sameOption(data, [{ a: 1 }])).toBe(false)
-    expect(sameOption({ a: { b: 1 } }, { a: { b: 1 } })).toBe(false)
-    expect(sameOption(new Date(1), new Date(1))).toBe(false)
-  })
-})
+const plainContext = {
+  formatX: String,
+  formatY: String,
+} as unknown as ChartTooltipContentContext
 
-describe("sameOptions", () => {
-  it("is true only when every key matches", () => {
-    const build = () => null
-    expect(sameOptions({ build, y: ["a"] }, { build, y: ["a"] })).toBe(true)
-    expect(sameOptions({ build, y: ["a"] }, { build, y: ["b"] })).toBe(false)
-    expect(sameOptions({ build }, { build, y: ["a"] })).toBe(false)
-  })
-})
-
-describe("splitChartProps", () => {
-  it("routes each prop to the host, behavior or spec bucket", () => {
-    const onSelect = () => {}
-    const { host, behavior, spec } = splitChartProps({
-      data: rows,
-      x: "month",
-      ariaLabel: "Visitors",
-      onSelect,
-      focus: "nearest",
-      animate: false,
-      tooltip: undefined,
-      children: null,
+describe("withChartDefaults", () => {
+  it("fills what the definition leaves unset", () => {
+    const themed = withChartDefaults(bars) as unknown as {
+      focus: unknown
+      keyboard: unknown
+      motion: unknown
+      theme: unknown
+      scales: Record<string, Record<string, unknown>>
+    }
+    expect(themed.focus).toBe("group-x")
+    expect(themed.keyboard).toBe(true)
+    expect(themed.motion).toBeTruthy()
+    expect(themed.theme).toEqual(chartTheme)
+    const { x, y } = themed.scales
+    // The library paints the grid at 11%; the border token is the hairline.
+    expect(y?.grid).toEqual({ strokeOpacity: 1 })
+    expect(x?.axis).toMatchObject({
+      line: false,
+      ticks: { size: 0, padding: 10 },
     })
-    expect(host).toEqual({ ariaLabel: "Visitors", onSelect })
-    expect(behavior).toEqual({ focus: "nearest", animate: false })
-    expect(spec).toEqual({ data: rows, x: "month" })
+    expect(y?.axis).toMatchObject({ line: true })
   })
-})
 
-describe("decorative", () => {
-  const mark = {
-    initialize: (_context: unknown) => ({
-      id: "mark",
-      render: (_context: unknown) => ({
-        nodes: [
-          {
-            kind: "group",
-            focus: {
-              retarget: true,
-              candidates: [{ kind: "rect", interaction: {} }],
-            },
-            states: [],
-            children: [],
+  it("keeps what the definition sets", () => {
+    const themed = withChartDefaults(
+      defineChart(bars, {
+        focus: "nearest",
+        keyboard: false,
+        motion: false,
+        tooltip: false,
+      }),
+    )
+    expect(themed.focus).toBe("nearest")
+    expect(themed.keyboard).toBe(false)
+    expect(themed.motion).toBe(false)
+    expect(themed.tooltip).toBe(false)
+  })
+
+  it("reads tooltip values the way the axes print them", () => {
+    const themed = withChartDefaults(bars)
+    const point = {
+      xValue: "Jan",
+      yValue: 10,
+      groupLabel: "Desktop",
+      color: "red",
+    } as ChartPoint
+    const content = tooltipOf(themed).content?.([point], plainContext)
+    expect(content).toEqual({
+      title: "~Jan",
+      rows: [{ label: "Desktop", value: "$10", color: "red", active: false }],
+    })
+  })
+
+  it("reads the format of a hidden axis", () => {
+    const themed = withChartDefaults(
+      defineChart({
+        scales: chartScales({ y: { format: (value) => `$${value}` } }),
+        marks: [barY(rows, { x: "month", y: "desktop" })],
+      }),
+    )
+    const point = {
+      xValue: "Jan",
+      yValue: 10,
+      groupLabel: "Desktop",
+    } as ChartPoint
+    expect(
+      tooltipOf(themed).content?.([point], plainContext).rows[0]?.value,
+    ).toBe("$10")
+  })
+
+  it("passes the axis formats to a custom tooltip and keeps the surface", () => {
+    let seen: ChartTooltipContentContext | undefined
+    const themed = withChartDefaults(
+      defineChart(bars, {
+        tooltip: {
+          use: tooltip,
+          className: "mine",
+          content: (_, context) => {
+            seen = context
+            return { rows: [] }
           },
-          { kind: "label", pointOwner: {} },
-          { kind: "rect", interaction: {}, pointOwner: {} },
+        },
+      }),
+    )
+    const options = tooltipOf(themed)
+    options.content?.([], plainContext)
+    expect(seen?.formatY(5)).toBe("$5")
+    expect(options.className).toContain("mine")
+    expect(options.className).toContain("--ts-chart-tooltip-background")
+  })
+
+  it("themes responsive definitions on every build", () => {
+    const themed = withChartDefaults(
+      defineChart(() => ({
+        scales: {
+          x: { scale: () => scalePoint() },
+          y: { scale: scaleLinear, grid: true },
+        },
+        marks: [barY(rows, { x: "month", y: "desktop" })],
+      })),
+    )
+    const runtime = createChartRuntime()
+    const scene = runtime.render(themed, { width: 300, height: 200 })
+    runtime.destroy()
+    expect(JSON.stringify(scene.nodes)).toContain("var(--color-border)")
+  })
+})
+
+describe("chartTooltipContent", () => {
+  const context = {
+    formatX: (value: unknown) => `x:${value}`,
+    formatY: (value: unknown) => `y:${value}`,
+  } as unknown as ChartTooltipContentContext
+
+  it("titles a horizontal point by its category on y", () => {
+    const point = { xValue: 5, yValue: "Jan", groupLabel: "A" } as ChartPoint
+    expect(chartTooltipContent([point], context).title).toBe("y:Jan")
+  })
+
+  it("reports a stacked segment's own size", () => {
+    const point = {
+      xValue: "Jan",
+      yValue: 30,
+      y1Value: 10,
+      y2Value: 30,
+      yInterval: "difference",
+      groupLabel: "A",
+    } as ChartPoint
+    expect(chartTooltipContent([point], context).rows[0]?.value).toBe("y:20")
+  })
+})
+
+describe("polarDecorative", () => {
+  const slices = pie(
+    [
+      { name: "a", value: 3 },
+      { name: "b", value: 1 },
+    ],
+    { value: "value" },
+  )
+
+  it("paints inside polar() without becoming a focus target", () => {
+    const runtime = createChartRuntime()
+    const scene = runtime.render(
+      defineChart({
+        scales: { x: null, y: null },
+        marks: [
+          polar({
+            scales: { angle: null, radius: null },
+            marks: [
+              radialArc(slices, { id: "arc", key: "name" }),
+              polarDecorative(radialArc(slices.slice(0, 1), { id: "active" })),
+            ],
+          }),
         ],
       }),
-    }),
-  }
-
-  it("strips interaction metadata at every depth and keeps the rest", () => {
-    const nodes = decorative(mark)
-      .initialize(undefined as never)
-      .render(undefined as never).nodes
-    expect(nodes).toEqual([
-      { kind: "group", children: [{ kind: "rect" }] },
-      { kind: "label" },
-      { kind: "rect" },
-    ])
+      { width: 200, height: 200 },
+    )
+    runtime.destroy()
+    expect(scene.points.map((point) => point.markId)).toEqual(["arc", "arc"])
+    expect(JSON.stringify(scene.nodes)).toContain('"active:')
   })
 })

@@ -1,10 +1,9 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { barY } from "@tanstack/charts/bar"
+import { defineChart } from "@tanstack/charts"
 
-import { chartDefaults } from "@/registry/ui/chart"
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { browser: "chrome", visitors: 187 },
@@ -14,51 +13,26 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const LABELS: Record<string, string> = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
+const chart = defineChart(
+  barChart(data, {
+    x: "browser",
+    y: "visitors",
+    series: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    states: [{ when: { focus: "unmatched" }, style: { fillOpacity: 0.3 } }],
+  }),
+)
 
 export default function ChartBarActive() {
-  const [active, setActive] = useState<string | null>(null)
-
-  /* The focused bar is repainted by a second layer at full opacity: `marks` is
-     identity-compared, so a new array is what rebuilds the chart. */
-  const highlight = useMemo(
-    () =>
-      active === null
-        ? []
-        : [
-            barY(
-              data.filter((row) => row.browser === active),
-              {
-                x: "browser",
-                y: "visitors",
-                z: labelOf,
-                color: labelOf,
-                radius: chartDefaults.barRadius,
-              },
-            ),
-          ],
-    [active],
-  )
-
   return (
-    <BarChart
-      data={data}
-      x="browser"
-      y="visitors"
-      series="browser"
-      labels={LABELS}
-      fillOpacity={active === null ? 1 : 0.3}
-      marks={highlight}
-      animate={false}
-      onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with the focused bar highlighted"
     />
   )

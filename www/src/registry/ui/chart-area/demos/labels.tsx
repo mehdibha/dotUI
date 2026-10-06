@@ -1,6 +1,9 @@
 "use client"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { areaChart } from "@/registry/ui/chart-area"
 
 /* Long format: one row per series per x value, with the series key in a field. */
 const data = [
@@ -18,15 +21,20 @@ const data = [
   { month: "Jun", channel: "paid_social", visitors: 140 },
 ]
 
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "visitors",
+    series: "channel",
+    order: ["paid_social", "organic_search"],
+    labels: { organic_search: "Organic search", paid_social: "Paid social" },
+  }),
+)
+
 export default function ChartAreaLabels() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="visitors"
-      series="channel"
-      seriesOrder={["paid_social", "organic_search"]}
-      labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by acquisition channel, January through June"
     />
   )

@@ -1,17 +1,17 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { chartDefaults } from "@/registry/ui/chart"
-import { LineChart } from "@/registry/ui/chart-line"
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 
 interface Row {
   month: string
   desktop: number
 }
-
-const SERIES = "Desktop"
 
 const data: Row[] = [
   { month: "Jan", desktop: 186 },
@@ -36,32 +36,37 @@ const extremes = [
   { ...pick(data, (a, b) => a.desktop < b.desktop), label: "Low", dy: 22 },
 ]
 
-const markers = dot(extremes, {
+const line = lineChart(data, {
   x: "month",
   y: "desktop",
-  z: () => SERIES,
-  r: chartDefaults.dotRadius,
+  labels: { desktop: "Desktop" },
 })
 
-const callouts = text(extremes, {
-  x: "month",
-  y: "desktop",
-  text: (row) => `${row.label} · ${row.desktop}`,
-  z: () => SERIES,
-  dy: (row) => row.dy,
-  fontSize: 12,
-  fontWeight: 600,
-  fill: "var(--color-fg)",
+const markers = decorative(
+  dot(extremes, { x: "month", y: "desktop", r: 4, fill: "var(--chart-1)" }),
+)
+
+const callouts = decorative(
+  text(extremes, {
+    x: "month",
+    y: "desktop",
+    text: (row) => `${row.label} · ${row.desktop}`,
+    dy: (row) => row.dy,
+    fontSize: 12,
+    fontWeight: 600,
+    fill: "var(--color-fg)",
+  }),
+)
+
+const chart = defineChart({
+  ...line,
+  marks: [...line.marks, markers, callouts],
 })
 
 export default function ChartLineLabelCustom() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: SERIES }}
-      marks={[markers, callouts]}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, with the peak and low months annotated"
     />
   )

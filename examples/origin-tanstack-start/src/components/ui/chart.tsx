@@ -1,75 +1,46 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRef } from "react";
+import { useMemo } from "react";
 import type {
   ChannelField,
   ChartAxisOptions,
-  ChartBuildContext,
-  ChartColorOptions,
-  ChartDefinitionOptions,
   ChartKey,
-  ChartLinearGradient,
-  ChartMark,
-  ChartMotionSpringTransition,
-  ChartMotionTweenTransition,
+  ChartMotionDefinition,
   ChartPoint,
   ChartTheme,
   ChartTooltipContent,
   ChartTooltipContentContext,
+  ChartTooltipInput,
+  ChartTooltipOptions,
   ChartValue,
   DomChartDefinition,
+  MarkScene,
 } from "@tanstack/charts";
-import { defineChart } from "@tanstack/charts";
+import { isResponsiveChartDefinition } from "@tanstack/charts";
 import { d3Curve } from "@tanstack/charts/d3/shape";
 import { colorLegend, colorLegendItems } from "@tanstack/charts/legend";
+import { decorative } from "@tanstack/charts/mark/decorative";
 import { motion, stagger } from "@tanstack/charts/motion";
 import type { PolarMark } from "@tanstack/charts/polar";
 import type { RendererChartCommonProps } from "@tanstack/charts/react/tooltip";
 import { RendererChart } from "@tanstack/charts/react/tooltip";
-import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip";
-import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal";
-import { scaleBand, scaleLinear, scalePoint } from "d3-scale";
+import { scaleBand } from "@tanstack/charts/scales/band";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scalePoint } from "@tanstack/charts/scales/point";
+import { tooltip } from "@tanstack/charts/tooltip";
+import { portal } from "@tanstack/charts/tooltip/portal";
+import { scaleUtc } from "d3-scale";
 import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape";
-import { tv } from "tailwind-variants";
 
-const chartVariants = tv({
-  slots: {
-    container: "relative",
-  },
-});
+import { cn } from "@/lib/utils";
 
-const { container } = chartVariants();
+/* ------------------------------------------------------------------ */
+/* Theme                                                               */
+/* ------------------------------------------------------------------ */
 
-/* Every design decision the chart families share. Read from here, never
-   scatter a literal into a `??` fallback. */
-export const chartDefaults = {
-  aspectRatio: 16 / 9,
-  curve: "natural",
-  strokeWidth: 2,
-  fill: 0.4,
-  points: false,
-  dotRadius: 4,
-  barRadius: 4,
-  cellRadius: 2,
-  cellInset: 1,
-  bandPadding: 0.2,
-  bandOuterPadding: 0.1,
-  groupPadding: 0.15,
-  grid: true,
-  axes: "x",
-  legend: false,
-  focus: "group-x",
-  tooltipAnchor: "group-center",
-  animateMaxPoints: 800,
-  enterStagger: 25,
-  narrowWidth: 420,
-  narrowTickCount: 4,
-} as const;
-
-// Eight slots: the color engine generates --chart-1..8, the library's own
-// theme carries only six.
-export const CHART_PALETTE = [
+/** The series colors, in slot order. The library's own theme has six. */
+export const chartColors = [
   "var(--chart-1)",
   "var(--chart-2)",
   "var(--chart-3)",
@@ -80,277 +51,221 @@ export const CHART_PALETTE = [
   "var(--chart-8)",
 ] as const;
 
-export const CHART_THEME: Partial<ChartTheme> = {
-  palette: CHART_PALETTE,
+export function chartColor(index: number): string {
+  return chartColors[index % chartColors.length] ?? chartColors[0];
+}
+
+export const chartTheme = {
+  palette: chartColors,
   foreground: "var(--color-fg-muted)",
   muted: "var(--color-fg-muted)",
   grid: "var(--color-border)",
-};
+} satisfies Partial<ChartTheme>;
 
-export function paletteColor(index: number): string {
-  return CHART_PALETTE[index % CHART_PALETTE.length] ?? CHART_PALETTE[0];
-}
+export type ChartCurveName = "linear" | "natural" | "monotone" | "step";
 
-export type ChartCurve = "linear" | "natural" | "monotone" | "step";
-export type ChartFocus =
-  | "nearest"
-  | "nearest-x"
-  | "nearest-y"
-  | "group-x"
-  | "group-y";
-export type ChartTooltipAnchor = "point" | "pointer" | "group-center";
-export type ChartFormat = (value: ChartValue) => string;
-
-export const CURVES = {
+export const chartCurves = {
   linear: undefined,
   natural: /* @__PURE__ */ d3Curve(curveNatural),
   monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),
   step: /* @__PURE__ */ d3Curve(curveStepAfter),
-} as const satisfies Record<ChartCurve, unknown>;
+} as const satisfies Record<ChartCurveName, unknown>;
 
-// oxlint-disable-next-line no-explicit-any
-export type ChartMarkLayer = ChartMark<unknown, any, any>;
-/** Mark layers spliced inside a polar container — cartesian marks would land outside it. */
-// oxlint-disable-next-line no-explicit-any
-export type PolarMarkLayer = PolarMark<any, any, any, any, any>;
+export type ChartFormat = (value: ChartValue) => string;
 
-export type ChartXField<TDatum> = ChannelField<
-  TDatum,
-  ChartValue | null | undefined
->;
-export type ChartYField<TDatum> = ChannelField<
-  TDatum,
-  number | null | undefined
->;
-export type ChartSeriesField<TDatum> = ChannelField<
-  TDatum,
-  ChartKey | null | undefined
->;
+/* ------------------------------------------------------------------ */
+/* Series                                                              */
+/* ------------------------------------------------------------------ */
 
-/** The value when it is a finite number, `null` otherwise — a gap, not a zero. */
-export function finiteOrNull(value: unknown): number | null {
+/** A field name, or a function reading the value from a row. */
+export type ChartField<TDatum, TValue> =
+  | ChannelField<TDatum, TValue>
+  | ((row: TDatum) => TValue);
+
+export interface ChartSeriesOptions<TDatum> {
+  /** Field holding the category or time value. */
+  x: ChartField<TDatum, ChartValue | null | undefined>;
+  /** The value field, or one field per series when rows are wide. */
+  y:
+    | ChartField<TDatum, number | null | undefined>
+    | readonly ChannelField<TDatum, number | null | undefined>[];
+  /** Field naming each row's series, when rows are long. */
+  series?: ChartField<TDatum, ChartKey | null | undefined>;
+  /** Display names for series keys, read by the legend and the tooltip. */
+  labels?: Readonly<Record<string, string>>;
+  /** Series keys in color and stacking order; series it leaves out follow in data order. */
+  order?: readonly string[];
+  /** Stable row identity, so reordered or filtered rows move instead of respawning. */
+  key?: ChartField<TDatum, ChartKey>;
+}
+
+/** One plotted value: the source row, its position, and the series it belongs to. */
+export interface ChartSeriesRow<TDatum> {
+  x: ChartValue;
+  /** `null` is a gap, never a zero. */
+  y: number | null;
+  series: string;
+  /** Identity within its series: the `key` option, or the x value. */
+  key: ChartKey;
+  datum: TDatum;
+}
+
+export interface ChartSeries<TDatum> {
+  rows: readonly ChartSeriesRow<TDatum>[];
+  /** Series names, in color-slot order. */
+  names: readonly string[];
+}
+
+function read<TDatum, TValue>(
+  row: TDatum,
+  field: ChartField<TDatum, TValue>,
+): TValue {
+  return typeof field === "function"
+    ? field(row)
+    : (row[field as keyof TDatum] as TValue);
+}
+
+function finite(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-/* ------------------------------------------------------------------ */
-/* Spec options                                                        */
-/* ------------------------------------------------------------------ */
-
-export interface ChartSpec<TDatum> {
-  marks: readonly ChartMarkLayer[];
-  scales: {
-    x: ChartAxisOptions | null;
-    y: ChartAxisOptions | null;
-  };
-  color?: ChartColorOptions;
-  gradients?: readonly ChartLinearGradient[];
-  theme?: Partial<ChartTheme>;
-  readonly __datum?: TDatum;
-  readonly __xValue?: ChartValue;
-  readonly __yValue?: number;
-}
-
-export interface ChartFrameOptions {
-  grid?: boolean;
-  /** Both axes, neither, or just one. */
-  axes?: boolean | "x" | "y";
-  legend?: boolean;
-  formatX?: ChartFormat;
-  formatY?: ChartFormat;
-}
-
-export interface ChartBaseSpecOptions<TDatum> extends ChartFrameOptions {
-  data: readonly TDatum[];
-  /** Stable row identity, so sorted or filtered data is retained, not respawned. */
-  rowKey?: ChannelField<TDatum, ChartKey>;
-  /** Mark layers painted under the built-ins. */
-  marksBefore?: readonly ChartMarkLayer[];
-  /** Mark layers painted over the built-ins. */
-  marks?: readonly ChartMarkLayer[];
-}
-
-export interface XYChartSpecOptions<
-  TDatum,
-> extends ChartBaseSpecOptions<TDatum> {
-  /** Field holding the category / time value. */
-  x: ChartXField<TDatum>;
-  /** One field per series (wide rows), or a single field with `series`. */
-  y: ChartYField<TDatum> | readonly ChartYField<TDatum>[];
-  /** Field splitting rows into series — the long-format alternative to `y`. */
-  series?: ChartSeriesField<TDatum>;
-  /** Leading series order — drives color-slot assignment and the legend. */
-  seriesOrder?: readonly string[];
-  /** Display names for series keys. */
-  labels?: Readonly<Record<string, string>>;
-}
-
-/* ------------------------------------------------------------------ */
-/* Series plan                                                         */
-/* ------------------------------------------------------------------ */
-
-export interface ChartPlan<TDatum> {
-  /** Series labels, in color-slot and legend order. */
-  order: readonly string[];
-  /** The rows the mark reads: the input, or one row per series when `y` lists several fields. */
-  rows: readonly TDatum[];
-  x: ChartXField<TDatum>;
-  y: ChartYField<TDatum>;
-  /** Reads a row's series label — the `z` and color channel. */
-  z: (row: TDatum) => string;
-  key?: (row: TDatum) => string;
-  /** Several `y` fields were folded into one series per field. */
-  wide: boolean;
-}
-
-/* `seriesOrder` leads, then any series only the data carries, so the color
-   domain covers every row and the legend never hides one. */
-export function orderSeries(
-  leading: readonly string[],
-  found: readonly string[],
-): string[] {
-  const listed = new Set(leading);
-  return [...leading, ...new Set(found.filter((label) => !listed.has(label)))];
-}
-
-/* Long rows read `series` directly. Wide rows with several `y` fields fold
-   into one row per field, so every family is a single mark split by `z` and
-   the library's stack and group layouts apply. */
-export function planChart<TDatum>(
-  options: XYChartSpecOptions<TDatum>,
-): ChartPlan<TDatum> {
-  const labelOf = (key: string) => options.labels?.[key] ?? key;
-  const fields = (
-    Array.isArray(options.y) ? options.y : [options.y]
-  ) as readonly ChartYField<TDatum>[];
-  const first = fields[0];
-  if (first === undefined) throw new Error("charts: `y` needs a field");
-  const rowKey = options.rowKey as keyof TDatum | undefined;
-  const idOf = (row: TDatum) => String(rowKey === undefined ? "" : row[rowKey]);
-
-  if (options.series !== undefined) {
-    const series = options.series as keyof TDatum;
-    const z = (row: TDatum) => labelOf(String(row[series]));
+/* Wide rows (several `y` fields) and long rows (a `series` field) both come
+   out as one row per value, so a single mark draws every series and the
+   library's stack and group layouts apply. */
+export function chartSeries<TDatum>(
+  data: readonly TDatum[],
+  options: ChartSeriesOptions<TDatum>,
+): ChartSeries<TDatum> {
+  const label = (key: string) => options.labels?.[key] ?? key;
+  const ordered = (keys: readonly string[]) => [
+    ...new Set([
+      ...(options.order ?? []).filter((key) => keys.includes(key)),
+      ...keys,
+    ]),
+  ];
+  const row = (
+    datum: TDatum,
+    y: unknown,
+    series: string,
+  ): ChartSeriesRow<TDatum> => {
+    const x = read(datum, options.x) as ChartValue;
     return {
-      order: orderSeries(
-        options.seriesOrder?.map(labelOf) ?? [],
-        options.data.map(z),
+      x,
+      y: finite(y),
+      series,
+      key:
+        options.key === undefined
+          ? x instanceof Date
+            ? +x
+            : x
+          : read(datum, options.key),
+      datum,
+    };
+  };
+
+  if (Array.isArray(options.y)) {
+    const fields = ordered(options.y as readonly string[]) as (keyof TDatum &
+      string)[];
+    return {
+      rows: data.flatMap((datum) =>
+        fields.map((field) => row(datum, datum[field], label(field))),
       ),
-      rows: options.data,
-      x: options.x,
-      y: first,
-      z,
-      key: rowKey && ((row) => `${idOf(row)}:${z(row)}`),
-      wide: false,
+      names: fields.map(label),
     };
   }
 
-  if (fields.length === 1) {
-    const label = labelOf(String(first));
+  const y = options.y as ChartField<TDatum, number | null | undefined>;
+  const { series } = options;
+  if (series === undefined) {
+    const name = label(typeof y === "string" ? y : "value");
     return {
-      order: [label],
-      rows: options.data,
-      x: options.x,
-      y: first,
-      z: () => label,
-      key: rowKey && idOf,
-      wide: false,
+      rows: data.map((datum) => row(datum, read(datum, y), name)),
+      names: [name],
     };
   }
-
-  const rank = (field: string) => {
-    const index = options.seriesOrder?.indexOf(field) ?? -1;
-    return index === -1 ? Number.MAX_SAFE_INTEGER : index;
-  };
-  const ordered = [...fields].sort(
-    (a, b) => rank(String(a)) - rank(String(b)),
-  ) as readonly (keyof TDatum & string)[];
-  const rows = options.data.flatMap((row) =>
-    ordered.map((field) => ({
-      ...row,
-      series: field,
-      value: finiteOrNull(row[field]),
-    })),
-  ) as readonly TDatum[];
-  const z = (row: TDatum) => labelOf((row as { series: string }).series);
-  return {
-    order: ordered.map(labelOf),
-    rows,
-    x: options.x,
-    y: "value" as ChartYField<TDatum>,
-    z,
-    key: rowKey && ((row) => `${idOf(row)}:${z(row)}`),
-    wide: true,
-  };
+  const keys = data.map((datum) => String(read(datum, series)));
+  const rows = data.map((datum, index) =>
+    row(datum, read(datum, y), label(keys[index] ?? "")),
+  );
+  return { rows, names: ordered([...new Set(keys)]).map(label) };
 }
 
 /* ------------------------------------------------------------------ */
 /* Frame                                                               */
 /* ------------------------------------------------------------------ */
 
-export type ChartScaleKind = "band" | "point" | "linear";
+export type ChartScaleKind = "point" | "band" | "linear" | "time";
 
-const SCALES: Record<ChartScaleKind, () => ChartAxisOptions["scale"]> = {
-  band: () =>
-    scaleBand()
-      .paddingInner(chartDefaults.bandPadding)
-      .paddingOuter(chartDefaults.bandOuterPadding),
+/* An axis format rides on the scale, so the tooltip reads it even when the
+   axis is hidden. A symbol, so the library never sees it. */
+const FORMAT = Symbol("chart-format");
+
+const SCALES = {
   point: () => scalePoint(),
-  linear: () => scaleLinear(),
-};
+  band: () => scaleBand().paddingInner(0.2).paddingOuter(0.1),
+  linear: scaleLinear,
+  time: scaleUtc,
+} satisfies Record<ChartScaleKind, ChartAxisOptions["scale"]>;
 
-/** Axis options merged over the computed axis; `label` is the axis title. */
-export interface ChartAxisOverrides extends Partial<
-  Omit<ChartAxisOptions, "axis">
-> {
+/* No `viewport`: the spec checker only admits one on a continuous scale. */
+// oxlint-disable-next-line no-explicit-any
+export type ChartScale = Omit<ChartAxisOptions<any>, "viewport">;
+
+export interface ChartAxis extends Partial<ChartScale> {
+  /** The scale family. Ignored when `scale` is set. */
+  kind?: ChartScaleKind;
+  /** Formats the tick labels — and the tooltip values on this axis. */
+  format?: ChartFormat;
+  /** Axis title. */
   label?: string;
 }
 
-export interface ChartFrameSpec {
-  /** Color-scale domain and legend order — usually `planChart().order`. */
-  order?: readonly string[];
-  x?: ChartScaleKind | ChartAxisOverrides;
-  y?: ChartScaleKind | ChartAxisOverrides;
-  /** Axis carrying the grid. */
-  grid?: "x" | "y" | "none";
-  /** Merged over the categorical default — a sequential scale goes here. */
-  color?: ChartColorOptions;
+export interface ChartScalesOptions {
+  /** @default "point" */
+  x?: ChartScaleKind | ChartAxis;
+  /** @default "linear" */
+  y?: ChartScaleKind | ChartAxis;
+  /** The axes to show. @default "x" */
+  axes?: boolean | "x" | "y";
+  /** The axis drawing gridlines. @default "y" */
+  grid?: "x" | "y" | false;
 }
 
-export interface ChartFrame {
-  scales: {
-    x: ChartAxisOptions | null;
-    y: ChartAxisOptions | null;
-  };
-  color?: ChartColorOptions;
-  theme?: Partial<ChartTheme>;
-}
-
-interface AxisTicks {
-  format?: ChartFormat;
-  count?: number;
-}
-
-function frameAxis(
-  spec: ChartScaleKind | ChartAxisOverrides | undefined,
+function chartAxis(
+  input: ChartScaleKind | ChartAxis,
   fallback: ChartScaleKind,
   grid: boolean,
-  ticks: false | AxisTicks,
-): ChartAxisOptions {
-  const kind = typeof spec === "string" ? spec : fallback;
-  const { label, ...overrides }: ChartAxisOverrides =
-    typeof spec === "object" ? spec : {};
+  visible: boolean,
+): ChartScale {
+  const {
+    kind = fallback,
+    format,
+    label,
+    ...rest
+  } = typeof input === "string" ? { kind: input } : input;
   return {
     scale: SCALES[kind],
-    nice: kind === "linear",
-    // The library paints the cartesian grid at 11% — the border token is
-    // already a hairline.
-    grid: grid && { strokeOpacity: 1 },
-    axis: ticks && {
-      line: false,
-      ticks: { size: 0, padding: 10, ...ticks },
-      label,
+    nice: kind === "linear" || kind === "time",
+    grid,
+    axis: visible && {
+      ...(format && { ticks: { format } }),
+      ...(label && { label }),
     },
-    ...overrides,
+    ...rest,
+    ...(format && { [FORMAT]: format }),
+  };
+}
+
+/** The x and y scales, with the axes and gridlines the house look shows. */
+export function chartScales({
+  x = "point",
+  y = "linear",
+  axes = "x",
+  grid = "y",
+}: ChartScalesOptions = {}): { x: ChartScale; y: ChartScale } {
+  return {
+    x: chartAxis(x, "point", grid === "x", axes === true || axes === "x"),
+    y: chartAxis(y, "linear", grid === "y", axes === true || axes === "y"),
   };
 }
 
@@ -365,173 +280,21 @@ export function chartLegend() {
   });
 }
 
-/* The axes, color scale and theme every cartesian family shares. `ctx` is
-   the library's responsiveness lever: the builder re-runs on resize. */
-export function chartFrame(
-  options: ChartFrameOptions,
-  ctx: ChartBuildContext,
-  spec: ChartFrameSpec = {},
-): ChartFrame {
-  const axes = options.axes ?? chartDefaults.axes;
-  const grid = options.grid ?? chartDefaults.grid;
-  const gridOn = spec.grid ?? "y";
-  const legend =
-    (options.legend ?? chartDefaults.legend)
-      ? (spec.color?.legend ?? chartLegend())
-      : undefined;
-  const order = spec.order ?? [];
-  return {
-    scales: {
-      x: frameAxis(
-        spec.x,
-        "point",
-        grid && gridOn === "x",
-        (axes === true || axes === "x") && {
-          format: options.formatX,
-          count:
-            ctx.width < chartDefaults.narrowWidth
-              ? chartDefaults.narrowTickCount
-              : undefined,
-        },
-      ),
-      y: frameAxis(
-        spec.y,
-        "linear",
-        grid && gridOn === "y",
-        (axes === true || axes === "y") && { format: options.formatY },
-      ),
-    },
-    color: {
-      ...(order.length > 0 ? { domain: order } : null),
-      ...spec.color,
-      legend,
-    },
-    theme: CHART_THEME,
-  };
-}
-
 /* ------------------------------------------------------------------ */
-/* Decorative marks                                                    */
+/* Defaults                                                            */
 /* ------------------------------------------------------------------ */
 
-interface DecorativeMark {
-  initialize: (context: never) => {
-    render: (context: never) => { nodes: readonly unknown[] };
-  };
-}
-
-/* Strips a mark's focus points: it still paints, but never becomes a keyboard
-   stop or tooltip target. The library's own `decorative` works through
-   `postDomain`, which the polar container never calls — this one accepts
-   cartesian and polar marks alike. */
-export function decorative<TMark extends DecorativeMark>(mark: TMark): TMark {
-  const initialize = (context: never) => {
-    const initialized = mark.initialize(context);
-    return {
-      ...initialized,
-      render: (renderContext: never) => ({
-        nodes: initialized.render(renderContext).nodes.map(stripInteraction),
-      }),
-    };
-  };
-  return { ...mark, initialize } as TMark;
-}
-
-interface SceneNodeLike {
-  kind?: string;
-  children?: readonly unknown[];
-  focus?: { retarget?: boolean; candidates?: readonly unknown[] };
-  [key: string]: unknown;
-}
-
-// The scene compiler re-collects points by walking the nodes, so the metadata
-// has to go at every depth.
-function stripInteraction(node: unknown): unknown {
-  if (node === null || typeof node !== "object") return node;
-  const source = node as SceneNodeLike;
-  if (source.kind === "group") {
-    const {
-      focus,
-      states: _states,
-      pointOwner: _groupOwner,
-      focusCandidateIndex: _focusCandidateIndex,
-      ...rest
-    } = source;
-    const children =
-      focus?.retarget && focus.candidates ? focus.candidates : source.children;
-    return { ...rest, children: (children ?? []).map(stripInteraction) };
-  }
-  if (source.kind === "label") {
-    const { pointOwner: _labelOwner, ...rest } = source;
-    return rest;
-  }
-  const {
-    interaction: _interaction,
-    pointOwner: _pointOwner,
-    ...rest
-  } = source;
-  return rest;
-}
-
-/* A configured polar scale no mark binds is rejected at runtime, so families
-   only configure identity scales when a layer needs them. `initialize` is
-   pure data preparation and exposes the bindings. */
-export function polarMarksBindScales(
-  marks: readonly PolarMarkLayer[] | undefined,
-): boolean {
-  return (marks ?? []).some((mark) => {
-    const probed = mark.initialize({ markIndex: 0, parentId: "probe" });
-    return Boolean(
-      probed.angleScale ??
-      probed.radiusScale ??
-      (probed.requiresAngleScale || probed.requiresRadiusScale),
-    );
-  });
-}
-
-/* ------------------------------------------------------------------ */
-/* Host                                                                */
-/* ------------------------------------------------------------------ */
-
-/* Function easing is excluded: the named easings cover the design space and
-   an inline easing would defeat the memo. */
-export type ChartAnimate =
-  | boolean
-  | (Omit<ChartMotionTweenTransition, "easing"> & {
-      easing?: Extract<ChartMotionTweenTransition["easing"], string>;
-    })
-  | ChartMotionSpringTransition;
-
-export interface ChartBehaviorProps {
-  focus?: ChartFocus;
-  /** Pixel radius beyond which a pointer stops matching a point. */
-  maxFocusDistance?: number;
-  tooltipAnchor?: ChartTooltipAnchor;
-  tooltip?: boolean;
-  animate?: ChartAnimate;
-}
-
-/* `renderer` and `measureText` are the host's: a renderer identity change
-   remounts the whole surface. */
-export type ChartHostProps<TDatum> = Omit<
-  RendererChartCommonProps<TDatum, ChartValue, number>,
-  "renderer" | "measureText"
->;
-
-export type ChartProps<TDatum> = ChartHostProps<TDatum> & {
-  definition: DomChartDefinition<TDatum, ChartValue, number>;
-  children?: ReactNode;
+const CHART_MOTION: ChartMotionDefinition = {
+  transition: { type: "spring", stiffness: 170, damping: 26 },
+  // Lines and areas are single paths; dots and cells can number in the
+  // hundreds.
+  ...stagger({ each: 25, roles: ["arc", "bar"] }),
 };
 
-/** The full prop surface of a family component, from its spec options. */
-export type ChartComponentProps<TOptions, TDatum> = TOptions &
-  ChartBehaviorProps &
-  ChartHostProps<TDatum> & { children?: ReactNode };
-
-/* The library tooltip surface defaults to UA `Canvas` colors and `system-ui`.
-   The vars sit on the tooltip element itself, so the portal cannot detach
-   them from the chart container. */
-const TOOLTIP_SURFACE_CLASS = [
+/* The library's tooltip surface defaults to UA `Canvas` colors and
+   `system-ui`. The vars sit on the tooltip itself, so the portal can't
+   detach them from the chart. */
+const TOOLTIP_CLASS = [
   "[--ts-chart-tooltip-background:color-mix(in_oklab,var(--color-popover)_var(--popover-alpha),transparent)]",
   "[backdrop-filter:var(--popover-backdrop-filter)]",
   "[--ts-chart-tooltip-color:var(--color-fg)]",
@@ -541,26 +304,277 @@ const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ");
 
-/* Module scope: a renderer identity change remounts the surface. `initial:
-   "always"` because the React adapter adopts its own prerendered markup on
-   every mount, which would otherwise suppress the entrance everywhere. */
-const MOTION_RENDERER = motion({ initial: "always" });
+interface AxisFormats {
+  x?: ChartFormat;
+  y?: ChartFormat;
+}
 
-/* The tooltip-capable host driving the motion renderer, with `children` as an
-   HTML overlay above the surface. The tooltip is portaled, so it paints above
-   the overlay. */
-export function Chart<TDatum>({
+type SpecLike = {
+  scales?: Record<string, unknown>;
+  theme?: Partial<ChartTheme>;
+};
+
+/* The house axis: no domain line, no tick marks, labels clear of the plot.
+   The library paints the grid at 11% — the border token is already a
+   hairline. */
+function houseScale(entry: unknown): unknown {
+  if (entry === null || typeof entry !== "object" || !("scale" in entry)) {
+    return entry;
+  }
+  const scale = entry as ChartScale;
+  const { grid, axis } = scale;
+  return {
+    ...scale,
+    grid:
+      grid === true
+        ? { strokeOpacity: 1 }
+        : grid && { strokeOpacity: 1, ...grid },
+    axis: axis !== false && {
+      line: false,
+      ...axis,
+      ticks: axis?.ticks !== false && {
+        size: 0,
+        padding: 10,
+        ...axis?.ticks,
+      },
+    },
+  };
+}
+
+function tickFormat(entry: unknown): ChartFormat | undefined {
+  if (entry === null || typeof entry !== "object") return undefined;
+  const { axis, [FORMAT]: format } = entry as ChartScale & {
+    [FORMAT]?: ChartFormat;
+  };
+  return (axis ? (axis.ticks || undefined)?.format : undefined) ?? format;
+}
+
+function houseSpec<TSpec extends SpecLike>(
+  spec: TSpec,
+  formats: AxisFormats,
+): TSpec {
+  const scales = Object.fromEntries(
+    Object.entries(spec.scales ?? {}).map(([id, entry]) => [
+      id,
+      houseScale(entry),
+    ]),
+  );
+  formats.x = tickFormat(scales.x);
+  formats.y = tickFormat(scales.y);
+  return { ...spec, scales, theme: { ...chartTheme, ...spec.theme } };
+}
+
+function sameValue(left: ChartValue, right: ChartValue) {
+  return left instanceof Date && right instanceof Date
+    ? +left === +right
+    : Object.is(left, right);
+}
+
+/* The value a point stands for: a stacked segment reports its own size. */
+function pointValue(
+  point: ChartPoint,
+  axis: "x" | "y",
+  format: (value: ChartValue) => string,
+): string {
+  const interval = axis === "x" ? point.xInterval : point.yInterval;
+  const start = axis === "x" ? point.x1Value : point.y1Value;
+  const end = axis === "x" ? point.x2Value : point.y2Value;
+  if (
+    interval === "difference" &&
+    typeof start === "number" &&
+    typeof end === "number"
+  ) {
+    return format(end - start);
+  }
+  if (interval === "range" && start !== undefined && end !== undefined) {
+    return `${format(start)}–${format(end)}`;
+  }
+  return format(axis === "x" ? point.xValue : point.yValue);
+}
+
+/* Title from the category axis, one row per series. Values read the way the
+   axes print them. */
+export function chartTooltipContent(
+  points: readonly ChartPoint[],
+  context: ChartTooltipContentContext,
+): ChartTooltipContent {
+  const first = points[0];
+  if (first === undefined) return { rows: [] };
+  const byY =
+    points.length > 1
+      ? points.every((point) => sameValue(point.yValue, first.yValue)) &&
+        !points.every((point) => sameValue(point.xValue, first.xValue))
+      : typeof first.xValue === "number" && typeof first.yValue !== "number";
+  const [titleAxis, valueAxis] = byY
+    ? (["y", "x"] as const)
+    : (["x", "y"] as const);
+  const formatOf = (axis: "x" | "y") =>
+    axis === "x" ? context.formatX : context.formatY;
+  return {
+    title: formatOf(titleAxis)(titleAxis === "x" ? first.xValue : first.yValue),
+    rows: points.map((point) => ({
+      label: point.groupLabel,
+      value: pointValue(point, valueAxis, formatOf(valueAxis)),
+      color: point.color,
+      active: points.length > 1 && point === context.primaryPoint,
+    })),
+  };
+}
+
+type TooltipCallbacks = Pick<
+  ChartTooltipOptions,
+  "content" | "format" | "formatGroup"
+>;
+
+function houseTooltip(
+  input: ChartTooltipInput<never, never, never, "dom"> | false | undefined,
+  formats: AxisFormats,
+) {
+  if (input === false) return false;
+  const options = (
+    input === undefined ? {} : "use" in input ? input : { use: input }
+  ) as ChartTooltipOptions & TooltipCallbacks;
+  // Callbacks read values the way the axes print them.
+  const withFormats = (context: ChartTooltipContentContext) => ({
+    ...context,
+    formatX: formats.x ?? context.formatX,
+    formatY: formats.y ?? context.formatY,
+  });
+  const { content, format, formatGroup, items } = options;
+  const custom = format ?? formatGroup ?? items;
+  return {
+    use: tooltip,
+    anchor: "group-center",
+    sort: "color-domain",
+    portal,
+    ...options,
+    className: cn(TOOLTIP_CLASS, options.className),
+    content:
+      content || !custom
+        ? (
+            points: readonly ChartPoint[],
+            context: ChartTooltipContentContext,
+          ) => (content ?? chartTooltipContent)(points, withFormats(context))
+        : undefined,
+    format:
+      format &&
+      ((point: ChartPoint, context: ChartTooltipContentContext) =>
+        format(point, withFormats(context))),
+    formatGroup:
+      formatGroup &&
+      ((points: readonly ChartPoint[], context: ChartTooltipContentContext) =>
+        formatGroup(points, withFormats(context))),
+  };
+}
+
+/**
+ * Fills in what a definition leaves unset — the theme, the axis look, focus,
+ * keyboard, the tooltip and motion — and keeps everything it sets. Pure, so
+ * any host can apply it; `<Chart>` does.
+ */
+export function withChartDefaults<
+  TDatum,
+  TXValue extends ChartValue,
+  TYValue extends ChartValue,
+>(
+  definition: DomChartDefinition<TDatum, TXValue, TYValue>,
+): DomChartDefinition<TDatum, TXValue, TYValue> {
+  const formats: AxisFormats = {};
+  const behavior = {
+    focus: definition.focus ?? "group-x",
+    keyboard: definition.keyboard ?? true,
+    tooltip: houseTooltip(
+      definition.tooltip as ChartTooltipInput<never, never, never, "dom">,
+      formats,
+    ),
+    motion: definition.motion ?? CHART_MOTION,
+  };
+  if (isResponsiveChartDefinition(definition)) {
+    const build = definition.chart;
+    return {
+      ...definition,
+      ...behavior,
+      chart: (context) => houseSpec(build(context), formats),
+    } as DomChartDefinition<TDatum, TXValue, TYValue>;
+  }
+  return {
+    ...houseSpec(definition, formats),
+    ...behavior,
+  } as DomChartDefinition<TDatum, TXValue, TYValue>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Polar                                                               */
+/* ------------------------------------------------------------------ */
+
+// oxlint-disable-next-line no-explicit-any
+type AnyPolarMark = PolarMark<any, any, any, any, any>;
+
+/* Paints without becoming a focus stop or tooltip target. The library's
+   `decorative` strips interaction in `postDomain`, which `polar()` never
+   calls — this runs it in `render`. */
+export function polarDecorative<TMark extends AnyPolarMark>(
+  mark: TMark,
+): TMark {
+  const wrapped = decorative(mark as never) as unknown as TMark;
+  return {
+    ...wrapped,
+    initialize: (context) => {
+      const initialized = wrapped.initialize(context);
+      const { postDomain } = initialized as {
+        postDomain?: (scene: MarkScene) => MarkScene;
+      };
+      return {
+        ...initialized,
+        render: (renderContext) => {
+          const scene = initialized.render(renderContext);
+          return postDomain ? postDomain(scene) : scene;
+        },
+      };
+    },
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Host                                                                */
+/* ------------------------------------------------------------------ */
+
+/* Module scope: a renderer identity change remounts the surface. `initial:
+   "always"` because the React adapter adopts its own prerendered markup,
+   which would otherwise skip the entrance. */
+const RENDERER = motion({ initial: "always" });
+
+export type ChartProps<
+  TDatum,
+  TXValue extends ChartValue = ChartValue,
+  TYValue extends ChartValue = ChartValue,
+> = Omit<
+  RendererChartCommonProps<TDatum, TXValue, TYValue>,
+  "renderer" | "measureText"
+> & {
+  /** Keep its identity stable: define it at module scope, or memoize it. */
+  definition: DomChartDefinition<TDatum, TXValue, TYValue>;
+  /** HTML laid over the chart — a donut's total, a badge. */
+  children?: ReactNode;
+};
+
+export function Chart<
+  TDatum,
+  TXValue extends ChartValue = ChartValue,
+  TYValue extends ChartValue = ChartValue,
+>({
+  definition,
   children,
   className,
   ...props
-}: ChartProps<TDatum>) {
+}: ChartProps<TDatum, TXValue, TYValue>) {
+  const themed = useMemo(() => withChartDefaults(definition), [definition]);
   return (
-    <div className={container({ className })}>
+    <div className={cn("relative", className)}>
       <RendererChart
-        renderer={MOTION_RENDERER}
-        aspectRatio={
-          props.height === undefined ? chartDefaults.aspectRatio : undefined
-        }
+        renderer={RENDERER}
+        aspectRatio={props.height === undefined ? 16 / 9 : undefined}
+        definition={themed}
         {...props}
       />
       {children == null || typeof children === "boolean" ? null : (
@@ -568,201 +582,4 @@ export function Chart<TDatum>({
       )}
     </div>
   );
-}
-
-/* ------------------------------------------------------------------ */
-/* Definition                                                          */
-/* ------------------------------------------------------------------ */
-
-/* Tracks `RendererChartCommonProps` minus `renderer`/`measureText`. */
-const HOST_PROP_NAMES = new Set([
-  "ariaLabel",
-  "ariaDescription",
-  "height",
-  "aspectRatio",
-  "width",
-  "initialWidth",
-  "className",
-  "style",
-  "tabIndex",
-  "idPrefix",
-  "onFocusChange",
-  "onFocusGroupChange",
-  "onSelect",
-  "onRender",
-  "renderTooltipBody",
-]);
-
-const BEHAVIOR_PROP_NAMES = new Set([
-  "focus",
-  "maxFocusDistance",
-  "tooltip",
-  "tooltipAnchor",
-  "animate",
-]);
-
-export function splitChartProps(props: object): {
-  host: Record<string, unknown>;
-  behavior: ChartBehaviorProps;
-  spec: Record<string, unknown>;
-} {
-  const source = props as Record<string, unknown>;
-  const host: Record<string, unknown> = {};
-  const behavior: Record<string, unknown> = {};
-  const spec: Record<string, unknown> = {};
-  for (const name of Object.keys(source)) {
-    const value = source[name];
-    if (value === undefined || name === "children") continue;
-    if (HOST_PROP_NAMES.has(name)) host[name] = value;
-    else if (BEHAVIOR_PROP_NAMES.has(name)) behavior[name] = value;
-    else spec[name] = value;
-  }
-  return { host, behavior: behavior as ChartBehaviorProps, spec };
-}
-
-const isFlat = (value: unknown) =>
-  typeof value !== "object" && typeof value !== "function";
-
-/* Identity, except for the option shapes JSX tends to write inline: arrays of
-   scalars (`y`, `seriesOrder`) and flat records (`labels`). `data` and mark
-   layers stay identity-compared, the list contract React already has. */
-export function sameOption(left: unknown, right: unknown): boolean {
-  if (Object.is(left, right)) return true;
-  if (Array.isArray(left) && Array.isArray(right)) {
-    return (
-      left.length === right.length &&
-      left.every((value, index) => isFlat(value) && value === right[index])
-    );
-  }
-  if (
-    left !== null &&
-    right !== null &&
-    typeof left === "object" &&
-    typeof right === "object" &&
-    Object.getPrototypeOf(left) === Object.prototype &&
-    Object.getPrototypeOf(right) === Object.prototype
-  ) {
-    const a = left as Record<string, unknown>;
-    const b = right as Record<string, unknown>;
-    const keys = Object.keys(a);
-    return (
-      keys.length === Object.keys(b).length &&
-      keys.every((key) => isFlat(a[key]) && a[key] === b[key])
-    );
-  }
-  return false;
-}
-
-export function sameOptions(
-  left: Record<string, unknown>,
-  right: Record<string, unknown>,
-): boolean {
-  const keys = Object.keys(left);
-  return (
-    keys.length === Object.keys(right).length &&
-    keys.every((key) => key in right && sameOption(left[key], right[key]))
-  );
-}
-
-function useOptionsMemo<T>(
-  compute: () => T,
-  options: Record<string, unknown>,
-): T {
-  const cache = useRef<{ options: Record<string, unknown>; value: T } | null>(
-    null,
-  );
-  if (cache.current !== null && sameOptions(cache.current.options, options)) {
-    return cache.current.value;
-  }
-  const value = compute();
-  cache.current = { options, value };
-  return value;
-}
-
-/* Bars and arcs enter in sequence; lines and areas are single paths, and
-   dots or cells can number in the hundreds. */
-const ENTER_STAGGER = stagger({
-  each: chartDefaults.enterStagger,
-  roles: ["arc", "bar"],
-});
-export type ChartTooltipContentOf<TOptions> = (
-  points: readonly ChartPoint[],
-  context: ChartTooltipContentContext,
-  options: TOptions,
-) => ChartTooltipContent;
-
-export interface ChartFamilyConfig<TOptions> {
-  // oxlint-disable-next-line no-explicit-any
-  focus?: ChartDefinitionOptions<any, any, any>["focus"];
-  tooltipAnchor?: ChartTooltipAnchor;
-  /** Replaces the library's tooltip rows — polar families, whose scale values are angles. */
-  tooltipContent?: ChartTooltipContentOf<TOptions>;
-}
-
-/**
- * The one hook every family component calls: it routes props to the host,
- * the behavior or the spec, and rebuilds the definition only when a spec or
- * behavior option changes. `build` is compared by identity — declare it at
- * module scope.
- */
-export function useChartDefinition<TDatum, TOptions>(
-  props: object,
-  build: (options: TOptions, ctx: ChartBuildContext) => ChartSpec<TDatum>,
-  family: ChartFamilyConfig<TOptions> = {},
-): {
-  definition: DomChartDefinition<TDatum, ChartValue, number>;
-  host: ChartHostProps<TDatum>;
-  children: ReactNode;
-} {
-  const { host, behavior, spec } = splitChartProps(props);
-  const options = spec as TOptions;
-  const rows = Array.isArray(spec.data) ? spec.data.length : 0;
-  const series = Array.isArray(spec.y) ? spec.y.length : 1;
-  const degrade = rows * series > chartDefaults.animateMaxPoints;
-  // Every chart's motion unless its `animate` prop says otherwise; the
-  // annotation types the transition literal.
-  const systemMotion: Exclude<ChartAnimate, true> = {
-    type: "spring",
-    stiffness: 170,
-    damping: 26,
-  };
-  const animate = behavior.animate ?? true;
-  const transition = animate === true ? systemMotion : animate;
-  const { tooltipContent } = family;
-  const definition = useOptionsMemo(
-    () =>
-      defineChart({
-        chart: (ctx) => build(options, ctx),
-        focus: behavior.focus ?? family.focus ?? chartDefaults.focus,
-        maxFocusDistance: behavior.maxFocusDistance,
-        keyboard: true,
-        tooltip:
-          behavior.tooltip === false
-            ? false
-            : {
-                use: tooltipExtension,
-                anchor:
-                  behavior.tooltipAnchor ??
-                  family.tooltipAnchor ??
-                  chartDefaults.tooltipAnchor,
-                sort: "color-domain",
-                portal: tooltipPortal,
-                className: TOOLTIP_SURFACE_CLASS,
-                ...(tooltipContent && {
-                  content: (points, context) =>
-                    tooltipContent(points, context, options),
-                }),
-              },
-        motion:
-          degrade || transition === false
-            ? false
-            : { transition, ...ENTER_STAGGER },
-      }),
-    { ...spec, ...behavior, build, degrade, transition },
-  );
-  return {
-    definition: definition as DomChartDefinition<TDatum, ChartValue, number>,
-    host: host as ChartHostProps<TDatum>,
-    children: (props as { children?: ReactNode }).children,
-  };
 }

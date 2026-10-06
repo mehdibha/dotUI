@@ -1,6 +1,9 @@
 "use client"
 
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { radarChart } from "@/registry/ui/chart-radar"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -13,14 +16,19 @@ const data = [
 
 const values = new Map(data.map((row) => [row.month, row.desktop]))
 
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axisDetail: (month) => String(values.get(String(month)) ?? ""),
+  }),
+)
+
 export default function ChartRadarLabelCustom() {
   return (
-    <RadarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      axisDetail={(month) => String(values.get(String(month)) ?? "")}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

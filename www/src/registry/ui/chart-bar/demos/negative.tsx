@@ -1,8 +1,10 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
 import { ruleY } from "@tanstack/charts/rule"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { month: "Jan", change: 186, trend: "gain" },
@@ -13,19 +15,23 @@ const data = [
   { month: "Jun", change: 214, trend: "gain" },
 ]
 
+const bars = barChart(data, {
+  x: "month",
+  y: "change",
+  series: "trend",
+  labels: { gain: "Gain", loss: "Loss" },
+})
+
 // A baseline under the bars, so the sign flip reads as a crossing.
-const baseline = [ruleY([0], { stroke: "var(--color-border)" })]
+const chart = defineChart({
+  ...bars,
+  marks: [ruleY([0], { stroke: "var(--color-border)" }), ...bars.marks],
+})
 
 export default function ChartBarNegative() {
   return (
-    <BarChart
-      data={data}
-      x="month"
-      y="change"
-      series="trend"
-      seriesOrder={["gain", "loss"]}
-      labels={{ gain: "Gain", loss: "Loss" }}
-      marksBefore={baseline}
+    <Chart
+      definition={chart}
       ariaLabel="Monthly change in visitors, gains and losses"
     />
   )

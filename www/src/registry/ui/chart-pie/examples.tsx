@@ -1,4 +1,7 @@
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -18,29 +21,35 @@ const labels = {
   other: "Other",
 }
 
+const pie = defineChart(
+  pieChart(data, { value: "visitors", name: "browser", labels }),
+)
+
+const donut = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.55,
+    radiusRatio: 0.85,
+    legend: true,
+  }),
+)
+
 export default function ChartPieExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <PieChart
+        <Chart
           className="w-full"
-          data={data}
-          value="visitors"
-          name="browser"
-          labels={labels}
+          definition={pie}
           ariaLabel="Visitors by browser"
         />
       </Example>
       <Example title="Donut">
-        <PieChart
+        <Chart
           className="w-full"
-          data={data}
-          value="visitors"
-          name="browser"
-          labels={labels}
-          innerRadius={0.55}
-          radiusRatio={0.85}
-          legend
+          definition={donut}
           ariaLabel="Visitors by browser, donut"
         />
       </Example>

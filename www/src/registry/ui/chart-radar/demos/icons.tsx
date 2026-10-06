@@ -1,8 +1,10 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { Chart } from "@/registry/ui/chart"
+import { radarChart } from "@/registry/ui/chart-radar"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
@@ -15,16 +17,16 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
-/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
-   draws color swatches. */
+const chart = defineChart(
+  radarChart(data, { x: "month", y: ["desktop", "mobile"], labels }),
+)
+
+/* An icon legend is HTML beside the chart: the SVG legend draws color swatches. */
 export default function ChartRadarIcons() {
   return (
     <div>
-      <RadarChart
-        data={data}
-        x="month"
-        y={["desktop", "mobile"]}
-        labels={labels}
+      <Chart
+        definition={chart}
         ariaLabel="Desktop and mobile visitors, January through June"
       />
       <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">

@@ -1,6 +1,9 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart } from "@/registry/ui/chart-pie"
 
 const data = [
   { browser: "chrome", visitors: 275 },
@@ -18,16 +21,16 @@ const labels = {
   other: "Other",
 }
 
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    legend: true,
+    radiusRatio: 0.85,
+  }),
+)
+
 export default function ChartPieLegend() {
-  return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      legend
-      radiusRatio={0.85}
-      ariaLabel="Visitors by browser"
-    />
-  )
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }

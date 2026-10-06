@@ -88,7 +88,6 @@ export const github = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
     // Underlined at rest so links don't rely on color alone (WCAG 1.4.1).
     linkUnderline: "always",
     linkColor: "neutral",

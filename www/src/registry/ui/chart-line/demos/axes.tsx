@@ -1,8 +1,9 @@
 "use client"
 
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
 
-import { LineChart } from "@/registry/ui/chart-line"
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 
 const data = [
   { month: "January", desktop: 18600 },
@@ -13,21 +14,24 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-// Module scope: a formatter defined in render would rebuild the scene.
-const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
-const formatCompact = (value: ChartValue) => compact.format(Number(value))
+
+/* The axis formats are the tooltip's too. */
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axes: true,
+    formatX: (value) => String(value).slice(0, 3),
+    formatY: (value) => compact.format(Number(value)),
+  }),
+)
 
 export default function ChartLineAxes() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      axes
-      formatX={shortMonth}
-      formatY={formatCompact}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

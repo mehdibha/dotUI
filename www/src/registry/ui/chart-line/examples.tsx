@@ -1,4 +1,7 @@
-import { LineChart } from "@/registry/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -13,28 +16,33 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
+const single = defineChart(
+  lineChart(data, { x: "month", y: "desktop", labels, points: true }),
+)
+
+const multiple = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels,
+    curve: "monotone",
+  }),
+)
+
 export default function ChartLineExamples() {
   return (
     <Examples>
       <Example title="Default">
-        <LineChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y="desktop"
-          labels={labels}
-          points
+          definition={single}
           ariaLabel="Desktop visitors, January through June"
         />
       </Example>
       <Example title="Multiple Series">
-        <LineChart
+        <Chart
           className="w-full"
-          data={data}
-          x="month"
-          y={["desktop", "mobile"]}
-          labels={labels}
-          curve="monotone"
+          definition={multiple}
           ariaLabel="Desktop and mobile visitors, January through June"
         />
       </Example>

@@ -1,6 +1,9 @@
 "use client"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { areaChart } from "@/registry/ui/chart-area"
 
 const data = [
   { month: "Jan", desktop: 96 },
@@ -13,18 +16,23 @@ const data = [
   { month: "Aug", desktop: 352 },
 ]
 
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    fill: "gradient",
+    strokeWidth: 1.5,
+    points: true,
+    grid: false,
+  }),
+)
+
 export default function ChartAreaVisitors() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      fill="gradient"
-      strokeWidth={1.5}
-      points
+    <Chart
+      definition={chart}
       height={96}
-      grid={false}
       ariaLabel="Desktop visitors, January through August"
     />
   )

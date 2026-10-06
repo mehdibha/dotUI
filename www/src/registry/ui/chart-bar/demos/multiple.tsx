@@ -1,6 +1,9 @@
 "use client"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
@@ -11,13 +14,18 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+  }),
+)
+
 export default function ChartBarMultiple() {
   return (
-    <BarChart
-      data={data}
-      x="month"
-      y={["desktop", "mobile"]}
-      labels={{ desktop: "Desktop", mobile: "Mobile" }}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop and mobile visitors per month, side by side"
     />
   )

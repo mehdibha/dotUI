@@ -99,8 +99,7 @@ async function run(options: RunOptions) {
       const componentRef = await formatComponentData(exportNode, parserContext)
       const json = `${JSON.stringify(componentRef, null, 2)}\n`
 
-      // Remove "Props" suffix for filename
-      const baseName = exportNode.name.replace(/Props$/, "")
+      const baseName = exportNode.name.replace(/(Props|Options)$/, "")
       const fileName = `${kebabCase(baseName)}.json`
       const outputPath = path.join(OUTPUT_DIR, fileName)
 

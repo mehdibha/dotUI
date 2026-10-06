@@ -1,41 +1,17 @@
-import { readFileSync } from "node:fs"
 import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
-import chartMeta from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { resolveDesignSystem } from "../resolve"
-import { MOTION_OPTIONS } from "./charts"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
-import type { StudioState } from "./index"
-
-/** What the chart container ships under the studio state. */
-async function shipped(state: StudioState = DEFAULT_STATE) {
-  const ds = resolveDesignSystem(state)
-  const preset = {
-    density: ds.density,
-    componentParams: ds.componentParams,
-    tokens: ds.tokens,
-  }
-  const mod = await publishables["chart"]?.()
-  if (!mod) throw new Error("chart is not publishable")
-  const { item } = publish({
-    publishable: selectPublishable(mod, preset),
-    preset,
-  })
-  return item.files?.[0]?.content ?? ""
-}
+import { DEFAULT_STATE, parseState } from "./index"
 
 describe("charts axes", () => {
-  it("defaults keep the recipe untouched and the grid solid", () => {
+  it("defaults keep the recipe untouched", () => {
     const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "spring",
-    })
+    expect(ds.componentParams.chart).toBeUndefined()
     expect(Object.keys(ds.tokens).some((k) => k.startsWith("--chart"))).toBe(
       false,
     )
@@ -51,58 +27,21 @@ describe("charts axes", () => {
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
   })
 
-  it("the grid is a param on the chart container", () => {
-    for (const chartGrid of ["dashed", "none"]) {
-      const ds = resolveDesignSystem(parseState({ chartGrid }))
-      expect(ds.componentParams.chart).toEqual({
-        grid: chartGrid,
-        motion: "spring",
-      })
-      expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
+  it("the chart kit ships with every builder-only var resolved", async () => {
+    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const preset = {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
     }
-  })
-})
-
-/* The transition each option ships, as `ui/chart/base.tsx` writes it. */
-function transitionSource(option: (typeof MOTION_OPTIONS)[number]): string {
-  const { curve } = option
-  if (!curve) return "false"
-  if (curve.type === "physics")
-    return `{ type: "spring", stiffness: ${curve.stiffness}, damping: ${curve.damping} }`
-  return `{ type: "tween", duration: 400, easing: "ease" }`
-}
-
-describe("chart motion", () => {
-  it("the options are the chart's motion param, specimens included", () => {
-    expect(MOTION_OPTIONS.map((o) => o.value)).toEqual([
-      ...chartMeta.params.motion.values,
-    ])
-    expect(DEFAULTS.chartMotion).toBe(chartMeta.params.motion.default)
-    const base = readFileSync(
-      new URL("../../../registry/ui/chart/base.tsx", import.meta.url),
-      "utf8",
-    )
-    for (const option of MOTION_OPTIONS)
-      expect(base).toContain(`${option.value}: ${transitionSource(option)},`)
-  })
-
-  it("a pick is a chart param, never a token", () => {
-    const ds = resolveDesignSystem(parseState({ chartMotion: "wobbly" }))
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "wobbly",
+    const mod = await publishables["chart"]?.()
+    if (!mod) throw new Error("chart is not publishable")
+    const { item } = publish({
+      publishable: selectPublishable(mod, preset),
+      preset,
     })
-    expect(ds.tokens).toEqual(resolveDesignSystem(DEFAULT_STATE).tokens)
-  })
-
-  it("ships the selected transition as a literal", async () => {
-    for (const option of MOTION_OPTIONS) {
-      const content = await shipped(parseState({ chartMotion: option.value }))
-      expect(content).toContain(
-        `const systemMotion: Exclude<ChartAnimate, true> = ${transitionSource(option)}`,
-      )
-      expect(content).not.toContain("createParamValue")
-      expect(content).not.toContain("--studio-")
-    }
+    const content = item.files?.[0]?.content ?? ""
+    expect(content).toContain("export function Chart")
+    expect(content).not.toContain("--studio-")
   })
 })

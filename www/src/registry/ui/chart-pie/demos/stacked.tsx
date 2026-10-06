@@ -1,6 +1,9 @@
 "use client"
 
-import { pieRing, PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { pieChart, pieRing } from "@/registry/ui/chart-pie"
 
 const desktop = [
   { month: "january", desktop: 186 },
@@ -26,28 +29,29 @@ const labels = {
   may: "May",
 }
 
-/* A second series is a second ring, built at module scope so it keeps its
-   identity across renders. Both rings key their colors off the month, so a
+/* A second series is a second ring. Both rings name slices by month, so a
    month is one color from the middle out. */
-const mobileRing = pieRing({
-  id: "mobile",
-  data: mobile,
-  value: "mobile",
-  name: "month",
-  labels,
-  innerRadius: 0.7,
-  outerRadius: 0.95,
-})
+const chart = defineChart(
+  pieChart(desktop, {
+    value: "desktop",
+    name: "month",
+    labels,
+    outerRadius: 0.6,
+    marks: pieRing(mobile, {
+      id: "mobile",
+      value: "mobile",
+      name: "month",
+      labels,
+      innerRadius: 0.7,
+      outerRadius: 0.95,
+    }),
+  }),
+)
 
 export default function ChartPieStacked() {
   return (
-    <PieChart
-      data={desktop}
-      value="desktop"
-      name="month"
-      labels={labels}
-      outerRadius={0.6}
-      polarMarks={mobileRing}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop and mobile visitors by month, as concentric rings"
     />
   )

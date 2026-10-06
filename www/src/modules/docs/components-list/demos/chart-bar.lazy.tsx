@@ -1,6 +1,9 @@
 "use client"
 
-import { BarChart } from "@/registry/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { barChart } from "@/registry/ui/chart-bar"
 
 const data = [
   { browser: "chrome", visitors: 187 },
@@ -10,25 +13,24 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart(
+  barChart(data, {
+    x: "browser",
+    y: "visitors",
+    series: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    grid: false,
+  }),
+)
 
 export default function ChartBarBrowsers() {
   return (
-    <BarChart
-      data={data}
-      x="browser"
-      y="visitors"
-      series="browser"
-      labels={labels}
-      height={96}
-      grid={false}
-      ariaLabel="Visitors by browser"
-    />
+    <Chart definition={chart} height={96} ariaLabel="Visitors by browser" />
   )
 }

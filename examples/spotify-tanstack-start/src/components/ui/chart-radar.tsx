@@ -1,10 +1,15 @@
 "use client";
 
-import type { ChartBuildContext, ChartValue } from "@tanstack/charts";
+import type {
+  ChartPoint,
+  ChartTooltipContentContext,
+  ChartValue,
+} from "@tanstack/charts";
 import type {
   PolarGuide,
   PolarGuideLabelContext,
   PolarLayoutContext,
+  PolarMark,
 } from "@tanstack/charts/polar";
 import {
   angleGrid,
@@ -15,63 +20,60 @@ import {
   radialGrid,
   radialLine,
 } from "@tanstack/charts/polar";
-import { scaleLinear, scalePoint } from "d3-scale";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { scalePoint } from "@tanstack/charts/scales/point";
+import { tooltip } from "@tanstack/charts/tooltip";
 import { curveLinearClosed, pointRadial } from "d3-shape";
 
-import type {
-  ChartComponentProps,
-  ChartFormat,
-  ChartSpec,
-  ChartTooltipContentOf,
-  PolarMarkLayer,
-  XYChartSpecOptions,
-} from "@/components/ui/chart";
+import type { ChartFormat, ChartSeriesOptions } from "@/components/ui/chart";
 import {
-  Chart,
-  CHART_THEME,
-  chartDefaults,
+  chartColor,
   chartLegend,
-  finiteOrNull,
-  paletteColor,
-  planChart,
-  useChartDefinition,
+  chartSeries,
+  polarDecorative,
 } from "@/components/ui/chart";
 
-// A radar reads as a shape: heavier fill, lighter outline than a cartesian area.
-const radarDefaults = {
-  radiusRatio: 0.78,
-  fill: 0.6,
-  strokeWidth: 1.5,
-  gridTicks: 4,
-  /** Half the gap between the two lines of a detailed circumference label. */
-  labelLine: 7,
-} as const;
+// oxlint-disable-next-line no-explicit-any
+type AnyPolarMark = PolarMark<any, any, any, any, any>;
 
-export interface RadarChartSpecOptions<TDatum> extends Omit<
-  XYChartSpecOptions<TDatum>,
-  "marks" | "marksBefore"
-> {
-  /** Series fill opacity — `0` draws outlines only. */
+/* Half the gap between the two lines of a detailed circumference label. */
+const LABEL_LINE = 7;
+
+export interface RadarChartOptions<TDatum> extends ChartSeriesOptions<TDatum> {
+  /** Series fill opacity — `0` draws outlines only. @default 0.6 */
   fill?: number;
+  /** @default 1.5 */
   strokeWidth?: number;
-  /** Draw a dot at every point. */
+  /** A dot at every point. */
   points?: boolean;
-  /** Fraction of the available radius the chart fills. */
+  /** Share of the available radius the radar fills. @default 0.78, or 0.68 with a legend */
   radiusRatio?: number;
-  /** Outer value of the radius scale. */
+  /** The value at the outer ring. @default the largest value, nicened */
   max?: number;
+  /** @default "polygon" */
   gridShape?: "circle" | "polygon";
-  /** Number of rings. */
+  /** Number of rings. @default 4 */
   gridTicks?: number;
+  /** Rings behind the series. @default true */
+  grid?: boolean;
+  /** Spokes out to each category. @default `grid` */
+  spokes?: boolean;
   /** Fill opacity of the area inside the outer ring. */
   gridFill?: number;
+  /** @default the first series color */
   gridFillColor?: string;
-  /** Draw the spokes running out to each category. */
-  spokes?: boolean;
-  /** A second, muted label line above each category label. */
+  /** The category labels around the circle. @default true */
+  axes?: boolean;
+  /** A second, muted label line above each category. */
   axisDetail?: ChartFormat;
-  /** Extra polar mark layers painted over the series. */
-  polarMarks?: readonly PolarMarkLayer[];
+  /** A color legend below the radar. */
+  legend?: boolean;
+  /** Formats category labels and tooltip titles. */
+  formatX?: ChartFormat;
+  /** Formats tooltip values. */
+  formatY?: ChartFormat;
+  /** More polar layers drawn over the series. */
+  marks?: readonly AnyPolarMark[];
 }
 
 /* `radialGrid` reads its rings from the nicened radius scale, so the filled
@@ -123,29 +125,21 @@ function labelDx({ x }: PolarGuideLabelContext) {
   return x < -1 ? -3 : x > 1 ? 3 : 0;
 }
 
-export function radarChartSpec<TDatum>(
-  options: RadarChartSpecOptions<TDatum>,
-  _ctx: ChartBuildContext,
-): ChartSpec<TDatum> {
-  const plan = planChart(options);
-  const categories = [
-    ...new Set(
-      options.data.map((row) => row[options.x as keyof TDatum] as ChartValue),
-    ),
-  ];
-  const observed = plan.rows.reduce(
-    (max, row) => Math.max(max, finiteOrNull(row[plan.y as keyof TDatum]) ?? 0),
-    0,
-  );
+/** A complete radar chart — pass it to `defineChart`, or spread it and extend. */
+export function radarChart<TDatum>(
+  data: readonly TDatum[],
+  options: RadarChartOptions<TDatum>,
+) {
+  const { rows, names } = chartSeries(data, options);
+  const categories = [...new Set(rows.map((row) => row.x))];
+  const observed = rows.reduce((max, row) => Math.max(max, row.y ?? 0), 0);
 
-  const grid = options.grid ?? chartDefaults.grid;
+  const grid = options.grid ?? true;
   const spokes = options.spokes ?? grid;
-  // One label ring, so the per-axis values mean "on". On by default: the
-  // ring labels are the categories, not axis chrome.
-  const axes = (options.axes ?? true) !== false;
+  const axes = options.axes ?? true;
   const shape = options.gridShape ?? "polygon";
-  const ticks = options.gridTicks ?? radarDefaults.gridTicks;
-  const fill = options.fill ?? radarDefaults.fill;
+  const ticks = options.gridTicks ?? 4;
+  const fill = options.fill ?? 0.6;
   const detail = axes && options.axisDetail !== undefined;
 
   const guides: PolarGuide[] = [];
@@ -153,7 +147,7 @@ export function radarChartSpec<TDatum>(
     guides.push(
       gridFillGuide(
         shape,
-        options.gridFillColor ?? paletteColor(0),
+        options.gridFillColor ?? chartColor(0),
         options.gridFill,
       ),
     );
@@ -167,7 +161,7 @@ export function radarChartSpec<TDatum>(
         strokeOpacity: spokes ? undefined : 0,
         format: options.formatX,
         labelDx,
-        labelDy: labelDy(detail ? radarDefaults.labelLine : 0),
+        labelDy: labelDy(detail ? LABEL_LINE : 0),
       }),
     );
   }
@@ -178,23 +172,22 @@ export function radarChartSpec<TDatum>(
         strokeOpacity: 0,
         format: options.axisDetail,
         labelDx,
-        labelDy: labelDy(-radarDefaults.labelLine),
+        labelDy: labelDy(-LABEL_LINE),
         labelFill: "var(--color-fg-muted)",
       }),
     );
   }
 
   const channels = {
-    angle: plan.x,
-    radius: plan.y,
-    z: plan.z,
-    color: plan.z,
-    key: plan.key,
-  };
-  const marks: PolarMarkLayer[] = [
+    angle: "x",
+    radius: "y",
+    color: "series",
+    key: "key",
+  } as const;
+  const marks: AnyPolarMark[] = [
     ...(fill > 0
       ? [
-          radialArea(plan.rows, {
+          radialArea(rows, {
             ...channels,
             id: "radar-area",
             radius1: 0,
@@ -203,34 +196,34 @@ export function radarChartSpec<TDatum>(
           }),
         ]
       : []),
-    radialLine(plan.rows, {
+    radialLine(rows, {
       ...channels,
       id: "radar-line",
       curve: curveLinearClosed,
-      strokeWidth: options.strokeWidth ?? radarDefaults.strokeWidth,
+      strokeWidth: options.strokeWidth ?? 1.5,
     }),
-    ...((options.points ?? chartDefaults.points)
-      ? [
-          radialDot(plan.rows, {
-            ...channels,
-            id: "radar-dot",
-            r: chartDefaults.dotRadius,
-          }),
+    ...(options.points
+      ? // The line already carries each point's focus.
+        [
+          polarDecorative(
+            radialDot(rows, { ...channels, id: "radar-dot", r: 4 }),
+          ),
         ]
       : []),
+    ...(options.marks ?? []),
   ];
 
+  const formatX = options.formatX ?? String;
   return {
     scales: { x: null, y: null },
     color: {
-      domain: plan.order,
-      legend:
-        (options.legend ?? chartDefaults.legend) ? chartLegend() : undefined,
+      domain: names,
+      legend: options.legend ? chartLegend() : undefined,
     },
-    theme: CHART_THEME,
     marks: [
       polar({
-        radiusRatio: options.radiusRatio ?? radarDefaults.radiusRatio,
+        // The category labels sit outside the circle: a legend needs the room.
+        radiusRatio: options.radiusRatio ?? (options.legend ? 0.68 : 0.78),
         scales: {
           angle: {
             scale: scalePoint<ChartValue>().domain(categories),
@@ -243,48 +236,24 @@ export function radarChartSpec<TDatum>(
           },
         },
         guides,
-        marks: [...marks, ...(options.polarMarks ?? [])],
+        marks,
       }),
     ],
-  };
-}
-
-// oxlint-disable-next-line no-explicit-any
-const radarTooltip: ChartTooltipContentOf<RadarChartSpecOptions<any>> = (
-  points,
-  _context,
-  options,
-) => {
-  const first = points[0];
-  const formatX = options.formatX ?? String;
-  const formatY = options.formatY ?? String;
-  return {
-    title: first === undefined ? undefined : formatX(first.xValue),
-    rows: points.map((point) => ({
-      label: point.groupLabel,
-      value: formatY(point.yValue),
-      color: point.color,
-    })),
-  };
-};
-
-export type RadarChartProps<TDatum> = ChartComponentProps<
-  RadarChartSpecOptions<TDatum>,
-  TDatum
->;
-
-export function RadarChart<TDatum>(props: RadarChartProps<TDatum>) {
-  const { definition, host, children } = useChartDefinition<
-    TDatum,
-    RadarChartSpecOptions<TDatum>
-  >(props, radarChartSpec, {
-    // Two spokes can share a scene x; group by the nearest angular ray instead.
+    // Two spokes can share a scene x; group by the nearest ray instead.
     focus: focusGroupAngle,
-    tooltipContent: radarTooltip,
-  });
-  return (
-    <Chart definition={definition} {...host}>
-      {children}
-    </Chart>
-  );
+    tooltip: {
+      use: tooltip,
+      content: (
+        points: readonly ChartPoint[],
+        context: ChartTooltipContentContext,
+      ) => ({
+        title: points[0] && formatX(points[0].xValue),
+        rows: points.map((point) => ({
+          label: point.groupLabel,
+          value: (options.formatY ?? context.formatY)(point.yValue),
+          color: point.color,
+        })),
+      }),
+    },
+  };
 }

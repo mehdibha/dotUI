@@ -1,47 +1,58 @@
-import type {
-  ChartCurve,
-  ChartFormat,
-  ChartMarkLayer,
-} from "@/registry/ui/chart"
-import type { ChartFamilyProps } from "@/registry/ui/chart/types"
-
-export type { ChartCurve, ChartFormat, ChartMarkLayer }
+import type { ChartMarkState, ChartValue } from "@tanstack/charts"
 
 /**
- * Area chart. Give it rows plus the fields to read: one `y` field per series
- * for wide rows, or a single `y` with `series` for long rows.
+ * Builds a complete area chart for `defineChart`. Give it rows plus the
+ * fields to read: one `y` field per series for wide rows, or a single `y`
+ * with `series` for long rows.
  */
-export interface AreaChartProps extends ChartFamilyProps {
-  /** The rows to plot. Compared by identity — define it outside render. */
-  data: readonly unknown[]
+export interface AreaChartOptions extends AreaSeriesOptions {
+  /**
+   * The axes to show.
+   * @default "x"
+   */
+  axes?: boolean | "x" | "y"
 
-  /** Field holding the category or time value. */
+  /**
+   * Horizontal gridlines.
+   * @default true
+   */
+  grid?: boolean
+
+  /**
+   * A color legend below the plot.
+   * @default false
+   */
+  legend?: boolean
+
+  /** Formats x ticks and tooltip titles. */
+  formatX?: (value: ChartValue) => string
+
+  /** Formats y ticks and tooltip values. */
+  formatY?: (value: ChartValue) => string
+}
+
+/** The fill and edge marks of one or more area series, to compose into any chart. */
+export interface AreaSeriesOptions {
+  /** Field holding the category or time value. Dates put the x axis on a time scale. */
   x: string
 
-  /**
-   * One field per series (wide rows), or a single field paired with `series`
-   * (long rows).
-   */
+  /** The value field, or one field per series when rows are wide. */
   y: string | readonly string[]
 
-  /** Field splitting rows into series — the long-format alternative to `y`. */
+  /** Field naming each row's series, when rows are long. */
   series?: string
 
-  /**
-   * Leading series order — drives color-slot assignment and the legend. Series
-   * the data carries but this omits follow it.
-   */
-  seriesOrder?: readonly string[]
-
-  /** Display names for series keys, used by the legend and the tooltip. */
+  /** Display names for series keys, read by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Stable row identity, so filtered rows animate instead of respawning. */
-  rowKey?: string
+  /** Series keys in color and stacking order; series it leaves out follow in data order. */
+  order?: readonly string[]
+
+  /** Stable row identity, so reordered or filtered rows move instead of respawning. */
+  key?: string
 
   /**
-   * Series stacked on one another, in `seriesOrder`. `"normalize"` divides
-   * each band by its own total for a 100% stack.
+   * Series stacked on one another; `"normalize"` for a 100% stack.
    * @default false
    */
   stacked?: boolean | "normalize"
@@ -50,53 +61,26 @@ export interface AreaChartProps extends ChartFamilyProps {
    * Path interpolation between points.
    * @default "natural"
    */
-  curve?: ChartCurve
+  curve?: "linear" | "natural" | "monotone" | "step"
 
   /**
-   * Fill opacity, or `'gradient'` to fade the fill out toward the baseline.
+   * Fill opacity, or `"gradient"` to fade toward the baseline.
    * @default 0.4
    */
   fill?: number | "gradient"
 
   /**
-   * Stroke width of the upper edge.
+   * Width of the upper edge.
    * @default 2
    */
   strokeWidth?: number
 
   /**
-   * Draw a dot at every point.
+   * A dot at every point.
    * @default false
    */
   points?: boolean
 
-  /**
-   * Show the axes and their tick labels: both, neither, or one.
-   * @default "x"
-   */
-  axes?: boolean | "x" | "y"
-
-  /**
-   * Show the value-axis grid lines.
-   * @default true
-   */
-  grid?: boolean
-
-  /**
-   * Show the color legend below the plot.
-   * @default false
-   */
-  legend?: boolean
-
-  /** Formats x tick labels. Define it outside render. */
-  formatX?: ChartFormat
-
-  /** Formats y tick labels. Define it outside render. */
-  formatY?: ChartFormat
-
-  /** Extra mark layers painted under the areas. */
-  marksBefore?: readonly ChartMarkLayer[]
-
-  /** Extra mark layers painted over the areas — annotations, rules, labels. */
-  marks?: readonly ChartMarkLayer[]
+  /** Focus-driven restyling of the fill, e.g. dimming the series that aren't focused. */
+  states?: readonly ChartMarkState[]
 }

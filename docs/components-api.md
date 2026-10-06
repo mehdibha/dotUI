@@ -16739,12 +16739,123 @@ import { QRCode } from "@/components/ui/qr-code"
 
 # Charts
 
-Every chart is one component per family, fed rows plus the names of the fields to read. Shared props: `data` (compared by identity — keep it at module scope), `x`, `y` (one field, or several for wide rows), `series` for long rows, `labels` to rename keys in the legend, tooltip, and screen reader, `legend`, `axes` (off by default on x/y charts), `grid`, `formatX` / `formatY`, `animate`, and a required `ariaLabel`. Series take the palette slots `--chart-1..8` in the order you list them. `marks` and `marksBefore` paint raw `@tanstack/charts` layers over or under the family's own on the same scales.
+Charts are TanStack Charts definitions rendered by `Chart`, which fills in the design system's theme, axis look, tooltip, focus, and motion wherever the definition is silent. Each family ships a builder — `barChart`, `lineChart`, `areaChart`, `pieChart`, `radarChart`, `radialChart`, `heatmapChart` — that returns a plain spec for `defineChart`: rows plus the fields to read (`x`, `y` as one field or several for wide rows, `series` for long rows), `labels` for display names, `order` for color order, `axes`, `grid`, `legend`, `formatX` / `formatY`. Spread the result to extend it with raw `@tanstack/charts` marks; `barSeries`, `lineSeries`, and `areaSeries` return marks to compose several kinds in one chart. Keep definitions at module scope or in `useMemo` — they're compared by identity. `ariaLabel` is required. Series take `--chart-1..8` in order.
 
-## Bar chart
+## Chart
 
 ```tsx
-import { BarChart } from "@/components/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { ruleY } from "@tanstack/charts/rule"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { text } from "@tanstack/charts/text"
+import { tooltip } from "@tanstack/charts/tooltip"
+
+import { Chart, chartCurves, chartScales } from "@/components/ui/chart"
+import { barSeries } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", revenue: 18_600, margin: 0.21 },
+  { month: "Feb", revenue: 30_500, margin: 0.28 },
+  { month: "Mar", revenue: 23_700, margin: 0.24 },
+  { month: "Apr", revenue: 7_300, margin: 0.12 },
+  { month: "May", revenue: 20_900, margin: 0.26 },
+  { month: "Jun", revenue: 21_400, margin: 0.31 },
+]
+
+const TARGET = 25_000
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  notation: "compact",
+})
+const percent = new Intl.NumberFormat("en-US", { style: "percent" })
+
+/* A dotUI bar series, a raw TanStack line on a second y axis, and a dashed
+   target: one definition, every mark on the house look. */
+const chart = defineChart({
+  scales: {
+    ...chartScales({
+      x: "band",
+      y: { format: (value) => usd.format(Number(value)) },
+      axes: true,
+    }),
+    margin: {
+      scale: scaleLinear,
+      channel: "y",
+      side: "right",
+      nice: true,
+      axis: { ticks: { format: (value) => percent.format(value) } },
+    },
+  },
+  marks: [
+    barSeries(data, {
+      x: "month",
+      y: "revenue",
+      labels: { revenue: "Revenue" },
+    }),
+    ruleY([TARGET], {
+      stroke: "var(--color-fg-muted)",
+      strokeDasharray: "4 4",
+    }),
+    decorative(
+      text([TARGET], {
+        x: () => "Jan",
+        y: (value) => value,
+        text: () => "Target",
+        anchor: "start",
+        dx: -26,
+        dy: -6,
+        fill: "var(--color-fg-muted)",
+        fontSize: 11,
+      }),
+    ),
+    lineY(data, {
+      id: "margin",
+      x: "month",
+      y: "margin",
+      yScale: "margin",
+      color: () => "Margin",
+      curve: chartCurves.monotone,
+      points: true,
+    }),
+  ],
+  tooltip: {
+    use: tooltip,
+    content: (points) => ({
+      title: String(points[0]?.xValue ?? ""),
+      rows: points.map((point) => ({
+        label: point.groupLabel,
+        value:
+          point.markId === "margin"
+            ? percent.format(Number(point.yValue))
+            : usd.format(Number(point.yValue)),
+        color: point.color,
+      })),
+    }),
+  },
+})
+
+export function ChartComposed() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Monthly revenue against target, with margin on its own axis"
+    />
+  )
+}
+```
+
+## Bar chart default
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16757,20 +16868,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<BarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  ariaLabel="Desktop visitors per month, January through June"
-/>
+const chart = defineChart(
+  barChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
+)
+
+export function ChartBarDefault() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors per month, January through June"
+    />
+  )
+}
 ```
 
 ## Bar chart grouped
 
 ```tsx
-import { BarChart } from "@/components/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16783,24 +16901,35 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<BarChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  ariaLabel="Desktop and mobile visitors per month, side by side"
-/>
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+  }),
+)
+
+export function ChartBarMultiple() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors per month, side by side"
+    />
+  )
+}
 ```
 
 ## Bar chart stacked
 
 ```tsx
-import { stackY } from "@/components/ui/chart"
-import { BarChart } from "@/components/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-const rows = [
+const data = [
   { month: "Jan", desktop: 186, mobile: 80, tablet: 45 },
   { month: "Feb", desktop: 305, mobile: 200, tablet: 90 },
   { month: "Mar", desktop: 237, mobile: 120, tablet: 60 },
@@ -16809,29 +16938,33 @@ const rows = [
   { month: "Jun", desktop: 214, mobile: 140, tablet: 85 },
 ]
 
-// Module scope: the stacked rows keep one identity for the whole session.
-const data = stackY(rows, {
-  x: "month",
-  y: ["desktop", "mobile", "tablet"],
-})
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: ["desktop", "mobile", "tablet"],
+    labels: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" },
+    stacked: true,
+    legend: true,
+  }),
+)
 
-<BarChart
-  data={data}
-  x="x"
-  y="top"
-  y1="base"
-  series="series"
-  seriesOrder={["desktop", "mobile", "tablet"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }}
-  radius={2}
-  ariaLabel="Visitors per month by device, stacked"
-/>
+export function ChartBarStacked() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors per month by device, stacked"
+    />
+  )
+}
 ```
 
 ## Bar chart horizontal
 
 ```tsx
-import { BarChart } from "@/components/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16844,23 +16977,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<BarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  horizontal
-  legend={false}
-  focus="group-y"
-  axes="y"
-  ariaLabel="Desktop visitors per month, horizontal bars"
-/>
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    horizontal: true,
+  }),
+)
+
+export function ChartBarHorizontal() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors per month, horizontal bars"
+    />
+  )
+}
 ```
 
 ## Bar chart per-category color
 
 ```tsx
-import { BarChart } from "@/components/ui/chart-bar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16872,33 +17014,36 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-<BarChart
-  data={data}
-  x="browser"
-  y="visitors"
-  // One series per category: every bar lands on its own palette slot.
-  series="browser"
-  labels={{
-    chrome: "Chrome",
-    safari: "Safari",
-    firefox: "Firefox",
-    edge: "Edge",
-    other: "Other",
-  }}
-  horizontal
-  legend={false}
-  focus="group-y"
-  axes="y"
-  ariaLabel="Visitors by browser"
-/>
+// One series per category: every bar lands on its own palette slot.
+const chart = defineChart(
+  barChart(data, {
+    x: "browser",
+    y: "visitors",
+    series: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    horizontal: true,
+  }),
+)
+
+export function ChartBarMixed() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
 ## Bar chart negative values
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
 import { ruleY } from "@tanstack/charts/rule"
 
-import { BarChart } from "@/components/ui/chart-bar"
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16911,27 +17056,36 @@ const data = [
   { month: "Jun", change: 214, trend: "gain" },
 ]
 
-// A baseline under the bars, so the sign flip reads as a crossing.
-const baseline = [ruleY([0], { stroke: "var(--color-border)" })]
+const bars = barChart(data, {
+  x: "month",
+  y: "change",
+  series: "trend",
+  labels: { gain: "Gain", loss: "Loss" },
+})
 
-<BarChart
-  data={data}
-  x="month"
-  y="change"
-  series="trend"
-  seriesOrder={["gain", "loss"]}
-  labels={{ gain: "Gain", loss: "Loss" }}
-  marksBefore={baseline}
-  ariaLabel="Monthly change in visitors, gains and losses"
-/>
+// A baseline under the bars, so the sign flip reads as a crossing.
+const chart = defineChart({
+  ...bars,
+  marks: [ruleY([0], { stroke: "var(--color-border)" }), ...bars.marks],
+})
+
+export function ChartBarNegative() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Monthly change in visitors, gains and losses"
+    />
+  )
+}
 ```
 
 ## Bar chart axes
 
 ```tsx
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
 
-import { BarChart } from "@/components/ui/chart-bar"
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16944,29 +17098,39 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-/* Module scope: a formatter defined in render would rebuild the scene every
-   time. Option-object formatters (see `formatY`) are free of that constraint. */
-const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-<BarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  axes
-  formatX={shortMonth}
-  formatY={{ locale: "en-US", number: { notation: "compact" } }}
-  ariaLabel="Desktop visitors, January through June"
-/>
+/* The axis formats are the tooltip's too. */
+const chart = defineChart(
+  barChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axes: true,
+    formatX: (value) => String(value).slice(0, 3),
+    formatY: (value) => compact.format(Number(value)),
+  }),
+)
+
+export function ChartBarAxes() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Bar chart labels
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { BarChart } from "@/components/ui/chart-bar"
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -16979,36 +17143,49 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
-const labels = [
-  text(data, {
-    x: "month",
-    y: "desktop",
-    text: "desktop",
-    z: () => "Desktop",
-    fill: "var(--color-fg-muted)",
-    fontSize: 12,
-    dy: -10,
-  }),
-]
+const bars = barChart(data, {
+  x: "month",
+  y: "desktop",
+  labels: { desktop: "Desktop" },
+})
 
-<BarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  marks={labels}
-  ariaLabel="Desktop visitors per month, labelled"
-/>
+// Decorative, so the labels never become focus stops or tooltip rows.
+const chart = defineChart({
+  ...bars,
+  marks: [
+    ...bars.marks,
+    decorative(
+      text(data, {
+        x: "month",
+        y: "desktop",
+        text: "desktop",
+        fill: "var(--color-fg-muted)",
+        fontSize: 12,
+        dy: -10,
+      }),
+    ),
+  ],
+})
+
+export function ChartBarLabel() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors per month, labelled"
+    />
+  )
+}
 ```
 
 ## Bar chart labels inside bars
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { BarChart } from "@/components/ui/chart-bar"
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -17021,54 +17198,63 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-/* Both labels ride inside the bar, so even the category axis can go: the
-   category anchors to the value baseline, the value to the bar's end. */
-const labels = [
-  text(data, {
-    x: () => 0,
-    y: "month",
-    text: "month",
-    z: () => "Desktop",
-    fill: "var(--color-bg)",
-    fontSize: 12,
-    fontWeight: 500,
-    anchor: "start",
-    dx: 10,
-  }),
-  text(data, {
-    x: "desktop",
-    y: "month",
-    text: "desktop",
-    z: () => "Desktop",
-    fill: "var(--color-bg)",
-    fontSize: 12,
-    anchor: "end",
-    dx: -10,
-  }),
-]
+const bars = barChart(data, {
+  x: "month",
+  y: "desktop",
+  labels: { desktop: "Desktop" },
+  horizontal: true,
+  grid: false,
+})
 
-<BarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  horizontal
-  grid={false}
-  legend={false}
-  marks={labels}
-  focus="group-y"
-  ariaLabel="Desktop visitors per month, labelled inside each bar"
-/>
+/* Both labels ride inside the bar: the category anchors to the value
+   baseline, the value to the bar's end. */
+const chart = defineChart({
+  ...bars,
+  marks: [
+    ...bars.marks,
+    decorative(
+      text(data, {
+        x: () => 0,
+        y: "month",
+        text: "month",
+        fill: "var(--color-bg)",
+        fontSize: 12,
+        fontWeight: 500,
+        anchor: "start",
+        dx: 10,
+      }),
+    ),
+    decorative(
+      text(data, {
+        x: "desktop",
+        y: "month",
+        text: "desktop",
+        fill: "var(--color-bg)",
+        fontSize: 12,
+        anchor: "end",
+        dx: -10,
+      }),
+    ),
+  ],
+})
+
+export function ChartBarLabelCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors per month, labelled inside each bar"
+    />
+  )
+}
 ```
 
 ## Bar chart highlight on focus
 
 ```tsx
-import { useMemo, useState } from "react"
-import { barY } from "@tanstack/charts/bar"
+import { defineChart } from "@tanstack/charts"
 
-import { chartDefaults } from "@/components/ui/chart"
-import { BarChart } from "@/components/ui/chart-bar"
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -17080,58 +17266,126 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const LABELS: Record<string, string> = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
-
-const [active, setActive] = useState<string | null>(null)
-
-/* The focused bar is repainted by a second layer at full opacity: `marks` is
-   identity-compared, so a new array is what rebuilds the chart. */
-const highlight = useMemo(
-  () =>
-    active === null
-      ? []
-      : [
-          barY(
-            data.filter((row) => row.browser === active),
-            {
-              x: "browser",
-              y: "visitors",
-              z: labelOf,
-              color: labelOf,
-              radius: chartDefaults.barRadius,
-            },
-          ),
-        ],
-  [active],
+const chart = defineChart(
+  barChart(data, {
+    x: "browser",
+    y: "visitors",
+    series: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    states: [{ when: { focus: "unmatched" }, style: { fillOpacity: 0.3 } }],
+  }),
 )
 
-<BarChart
-  data={data}
-  x="browser"
-  y="visitors"
-  series="browser"
-  labels={LABELS}
-  fillOpacity={active === null ? 1 : 0.3}
-  legend={false}
-  marks={highlight}
-  animate={false}
-  onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
-  ariaLabel="Visitors by browser, with the focused bar highlighted"
-/>
+export function ChartBarActive() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with the focused bar highlighted"
+    />
+  )
+}
 ```
 
-## Line chart
+## Bar chart interactive
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { barChart } from "@/components/ui/chart-bar"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/components/ui/segmented-control"
+```
+
+```tsx
+const DAYS = 90
+const start = Date.UTC(2024, 3, 1)
+
+// Deterministic, so the server and the client render the same rows.
+const data = Array.from({ length: DAYS }, (_, index) => {
+  const wave = Math.sin(index / 6) * 0.5 + 0.5
+  return {
+    date: new Date(start + index * 86_400_000).toISOString().slice(0, 10),
+    desktop: Math.round(150 + wave * 300 + ((index * 37) % 50)),
+    mobile: Math.round(100 + (1 - wave) * 220 + ((index * 53) % 40)),
+  }
+})
+
+const day = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+})
+
+const labels = { desktop: "Desktop", mobile: "Mobile" }
+type Series = keyof typeof labels
+
+const totals = {
+  desktop: data.reduce((sum, row) => sum + row.desktop, 0),
+  mobile: data.reduce((sum, row) => sum + row.mobile, 0),
+}
+
+export function ChartBarInteractive() {
+  const [series, setSeries] = useState<Series>("desktop")
+  const chart = useMemo(
+    () =>
+      defineChart(
+        barChart(data, {
+          x: "date",
+          y: series,
+          labels,
+          cornerRadius: 2,
+          formatX: (value) => day.format(new Date(String(value))),
+        }),
+      ),
+    [series],
+  )
+
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <SegmentedControl
+        aria-label="Series"
+        selectedKeys={[series]}
+        onSelectionChange={(keys) => {
+          const [key] = keys
+          if (key !== undefined) setSeries(key as Series)
+        }}
+        className="self-end"
+      >
+        {(Object.keys(labels) as Series[]).map((key) => (
+          <SegmentedControlItem key={key} id={key}>
+            {labels[key]}
+            <span className="ml-2 text-fg-muted tabular-nums">
+              {totals[key].toLocaleString("en-US")}
+            </span>
+          </SegmentedControlItem>
+        ))}
+      </SegmentedControl>
+      <Chart
+        definition={chart}
+        ariaLabel={`${labels[series]} visitors per day`}
+      />
+    </div>
+  )
+}
+```
+
+## Line chart default
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17144,20 +17398,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  lineChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
+)
+
+export function ChartLineDefault() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Line chart multiple Series
+## Line chart multiple series
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17170,20 +17431,32 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<LineChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  curve="monotone"
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    curve: "monotone",
+  }),
+)
+
+export function ChartLineMultiple() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Line chart linear
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17196,21 +17469,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  curve="linear"
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    curve: "linear",
+  }),
+)
+
+export function ChartLineLinear() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Line chart step
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17223,21 +17507,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  curve="step"
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    curve: "step",
+  }),
+)
+
+export function ChartLineStep() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Line chart dots
 
 ```tsx
-import { LineChart } from "@/components/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17250,28 +17545,37 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  points
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    points: true,
+  }),
+)
+
+export function ChartLineDots() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Line chart custom Dots
+## Line chart custom dots
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { decorative } from "@tanstack/charts/mark/decorative"
 
-import { LineChart } from "@/components/ui/chart-line"
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
-const SERIES = "Desktop"
-
 const data = [
   { month: "Jan", desktop: 186 },
   { month: "Feb", desktop: 305 },
@@ -17281,36 +17585,44 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-/* Ring markers instead of the built-in `points` dots. Reusing the line's `z`
-   keeps the pair in one focus group. */
-const rings = dot(data, {
+const line = lineChart(data, {
   x: "month",
   y: "desktop",
-  z: () => SERIES,
-  r: 5,
-  fill: "var(--color-bg)",
-  stroke: "var(--chart-1)",
-  strokeWidth: 2,
+  labels: { desktop: "Desktop" },
 })
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: SERIES }}
-  legend={false}
-  marks={[rings]}
-  ariaLabel="Desktop visitors, January through June"
-/>
+// Decorative: the line keeps the focus stops and the tooltip rows.
+const rings = decorative(
+  dot(data, {
+    x: "month",
+    y: "desktop",
+    r: 5,
+    fill: "var(--color-bg)",
+    stroke: "var(--chart-1)",
+    strokeWidth: 2,
+  }),
+)
+
+const chart = defineChart({ ...line, marks: [...line.marks, rings] })
+
+export function ChartLineDotsCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Line chart dot Colors
+## Line chart dot colors
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
 
-import { chartDefaults } from "@/components/ui/chart"
-import { LineChart } from "@/components/ui/chart-line"
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17324,35 +17636,38 @@ const data = [
   { browser: "Other", visitors: 90, color: "var(--chart-5)" },
 ]
 
-/* `dot.fill` is a constant, so per-point color means one mark per color. Each
-   reuses the line's `z` so grouped focus still shows a single tooltip row. */
+const line = lineChart(data, {
+  x: "browser",
+  y: "visitors",
+  labels: { visitors: SERIES },
+})
+
+/* `dot.fill` is a constant, so per-point color means one mark per color. The
+   line's series name as `z` keeps each dot in the line's focus group. */
 const dots = data.map((row) =>
   dot([row], {
     x: "browser",
     y: "visitors",
     z: () => SERIES,
+    r: 4,
     fill: row.color,
-    r: chartDefaults.dotRadius,
   }),
 )
 
-<LineChart
-  data={data}
-  x="browser"
-  y="visitors"
-  labels={{ visitors: SERIES }}
-  legend={false}
-  marks={dots}
-  ariaLabel="Visitors by browser"
-/>
+const chart = defineChart({ ...line, marks: [...line.marks, ...dots] })
+
+export function ChartLineDotsColors() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
 ## Line chart axes
 
 ```tsx
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
 
-import { LineChart } from "@/components/ui/chart-line"
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17365,34 +17680,42 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-/* Module scope: a formatter defined in render would rebuild the scene every
-   time. Option-object formatters (see `formatY`) are free of that constraint. */
-const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  axes
-  formatX={shortMonth}
-  formatY={{ locale: "en-US", number: { notation: "compact" } }}
-  ariaLabel="Desktop visitors, January through June"
-/>
+/* The axis formats are the tooltip's too. */
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axes: true,
+    formatX: (value) => String(value).slice(0, 3),
+    formatY: (value) => compact.format(Number(value)),
+  }),
+)
+
+export function ChartLineAxes() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Line chart labels
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { LineChart } from "@/components/ui/chart-line"
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
-const SERIES = "Desktop"
-
 const data = [
   { month: "Jan", desktop: 186 },
   { month: "Feb", desktop: 305 },
@@ -17402,36 +17725,133 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const labels = text(data, {
+const line = lineChart(data, {
   x: "month",
   y: "desktop",
-  text: "desktop",
-  z: () => SERIES,
-  dy: -12,
-  fontSize: 12,
-  fill: "var(--color-fg-muted)",
+  labels: { desktop: "Desktop" },
+  points: true,
 })
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: SERIES }}
-  legend={false}
-  points
-  marks={[labels]}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const labels = decorative(
+  text(data, {
+    x: "month",
+    y: "desktop",
+    text: "desktop",
+    dy: -12,
+    fontSize: 12,
+    fill: "var(--color-fg-muted)",
+  }),
+)
+
+const chart = defineChart({ ...line, marks: [...line.marks, labels] })
+
+export function ChartLineLabel() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Line chart custom Labels
+## Line chart interactive
 
 ```tsx
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/components/ui/segmented-control"
+```
+
+```tsx
+const DAYS = 90
+const start = Date.UTC(2024, 3, 1)
+
+// Deterministic, so the server and the client render the same rows.
+const data = Array.from({ length: DAYS }, (_, index) => {
+  const wave = Math.sin(index / 6) * 0.5 + 0.5
+  return {
+    date: new Date(start + index * 86_400_000),
+    desktop: Math.round(150 + wave * 300 + ((index * 37) % 50)),
+    mobile: Math.round(100 + (1 - wave) * 220 + ((index * 53) % 40)),
+  }
+})
+
+const day = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+})
+
+const labels = { desktop: "Desktop", mobile: "Mobile" }
+type Series = keyof typeof labels
+
+const totals = {
+  desktop: data.reduce((sum, row) => sum + row.desktop, 0),
+  mobile: data.reduce((sum, row) => sum + row.mobile, 0),
+}
+
+export function ChartLineInteractive() {
+  const [series, setSeries] = useState<Series>("desktop")
+  const chart = useMemo(
+    () =>
+      defineChart(
+        lineChart(data, {
+          x: "date",
+          y: series,
+          labels,
+          curve: "monotone",
+          formatX: (value) => day.format(value as Date),
+        }),
+      ),
+    [series],
+  )
+
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <SegmentedControl
+        aria-label="Series"
+        selectedKeys={[series]}
+        onSelectionChange={(keys) => {
+          const [key] = keys
+          if (key !== undefined) setSeries(key as Series)
+        }}
+        className="self-end"
+      >
+        {(Object.keys(labels) as Series[]).map((key) => (
+          <SegmentedControlItem key={key} id={key}>
+            {labels[key]}
+            <span className="ml-2 text-fg-muted tabular-nums">
+              {totals[key].toLocaleString("en-US")}
+            </span>
+          </SegmentedControlItem>
+        ))}
+      </SegmentedControl>
+      <Chart
+        definition={chart}
+        ariaLabel={`${labels[series]} visitors per day`}
+      />
+    </div>
+  )
+}
+```
+
+## Line chart custom labels
+
+```tsx
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-import { chartDefaults } from "@/components/ui/chart"
-import { LineChart } from "@/components/ui/chart-line"
+import { Chart } from "@/components/ui/chart"
+import { lineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
@@ -17439,8 +17859,6 @@ interface Row {
   month: string
   desktop: number
 }
-
-const SERIES = "Desktop"
 
 const data: Row[] = [
   { month: "Jan", desktop: 186 },
@@ -17465,39 +17883,50 @@ const extremes = [
   { ...pick(data, (a, b) => a.desktop < b.desktop), label: "Low", dy: 22 },
 ]
 
-const markers = dot(extremes, {
+const line = lineChart(data, {
   x: "month",
   y: "desktop",
-  z: () => SERIES,
-  r: chartDefaults.dotRadius,
+  labels: { desktop: "Desktop" },
 })
 
-const callouts = text(extremes, {
-  x: "month",
-  y: "desktop",
-  text: (row) => `${row.label} · ${row.desktop}`,
-  z: () => SERIES,
-  dy: (row) => row.dy,
-  fontSize: 12,
-  fontWeight: 600,
-  fill: "var(--color-fg)",
+const markers = decorative(
+  dot(extremes, { x: "month", y: "desktop", r: 4, fill: "var(--chart-1)" }),
+)
+
+const callouts = decorative(
+  text(extremes, {
+    x: "month",
+    y: "desktop",
+    text: (row) => `${row.label} · ${row.desktop}`,
+    dy: (row) => row.dy,
+    fontSize: 12,
+    fontWeight: 600,
+    fill: "var(--color-fg)",
+  }),
+)
+
+const chart = defineChart({
+  ...line,
+  marks: [...line.marks, markers, callouts],
 })
 
-<LineChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: SERIES }}
-  legend={false}
-  marks={[markers, callouts]}
-  ariaLabel="Desktop visitors, with the peak and low months annotated"
-/>
+export function ChartLineLabelCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, with the peak and low months annotated"
+    />
+  )
+}
 ```
 
-## Area chart
+## Area chart default
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17510,20 +17939,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
+)
+
+export function ChartAreaDefault() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Area chart multiple Series
+## Area chart legend
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17536,19 +17972,32 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    legend: true,
+  }),
+)
+
+export function ChartAreaLegend() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Area chart gradient
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17561,21 +18010,32 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  fill="gradient"
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    fill: "gradient",
+  }),
+)
+
+export function ChartAreaGradient() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Area chart stacked
 
 ```tsx
-import { stackY } from "@/components/ui/chart"
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17588,30 +18048,32 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-/* Stacking is a data transform, not a chart flag: wide rows in, one long row
-   per band out, carrying `base`/`top` plus its own `value` for the tooltip. */
-const stacked = stackY(data, {
-  x: "month",
-  y: ["desktop", "mobile", "other"],
-})
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile", "other"],
+    labels: { desktop: "Desktop", mobile: "Mobile", other: "Other" },
+    stacked: true,
+  }),
+)
 
-<AreaChart
-  data={stacked}
-  x="x"
-  y="top"
-  y1="base"
-  series="series"
-  seriesOrder={["desktop", "mobile", "other"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-  ariaLabel="Visitors by device, stacked, January through June"
-/>
+export function ChartAreaStacked() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by device, stacked, January through June"
+    />
+  )
+}
 ```
 
-## Area chart stacked Expanded
+## Area chart stacked expanded
 
 ```tsx
-import { stackY } from "@/components/ui/chart"
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17624,31 +18086,38 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-/* `normalize` divides each band by its own x-group total, so the stack fills
+const percent = new Intl.NumberFormat("en-US", { style: "percent" })
+
+/* `"normalize"` divides each band by its x-group total, so the stack fills
    the plot and reads as share rather than volume. */
-const shares = stackY(data, {
-  x: "month",
-  y: ["desktop", "mobile", "other"],
-  normalize: true,
-})
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: ["desktop", "mobile", "other"],
+    labels: { desktop: "Desktop", mobile: "Mobile", other: "Other" },
+    stacked: "normalize",
+    axes: true,
+    formatY: (value) => percent.format(Number(value)),
+  }),
+)
 
-<AreaChart
-  data={shares}
-  x="x"
-  y="top"
-  y1="base"
-  series="series"
-  seriesOrder={["desktop", "mobile", "other"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-  formatY={{ locale: "en-US", number: { style: "percent" } }}
-  ariaLabel="Share of visitors by device, January through June"
-/>
+export function ChartAreaStackedExpand() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Share of visitors by device, January through June"
+    />
+  )
+}
 ```
 
-## Area chart long Format Labels
+## Area chart long format labels
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17668,23 +18137,33 @@ const data = [
   { month: "Jun", channel: "paid_social", visitors: 140 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y="visitors"
-  series="channel"
-  seriesOrder={["paid_social", "organic_search"]}
-  labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
-  ariaLabel="Visitors by acquisition channel, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "visitors",
+    series: "channel",
+    order: ["paid_social", "organic_search"],
+    labels: { organic_search: "Organic search", paid_social: "Paid social" },
+  }),
+)
+
+export function ChartAreaLabels() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by acquisition channel, January through June"
+    />
+  )
+}
 ```
 
-## Area chart axis Formatting
+## Area chart axis formatting
 
 ```tsx
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
 
-import { AreaChart } from "@/components/ui/chart-area"
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17697,27 +18176,37 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-/* Module scope: a formatter defined in render would rebuild the scene every
-   time. Option-object formatters (see `formatY`) are free of that constraint. */
-const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-<AreaChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  axes
-  formatX={shortMonth}
-  formatY={{ locale: "en-US", number: { notation: "compact" } }}
-  ariaLabel="Desktop visitors, January through June"
-/>
+/* The axis formats are the tooltip's too. */
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axes: true,
+    formatX: (value) => String(value).slice(0, 3),
+    formatY: (value) => compact.format(Number(value)),
+  }),
+)
+
+export function ChartAreaAxes() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Area chart linear
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17730,21 +18219,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  curve="linear"
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    curve: "linear",
+  }),
+)
+
+export function ChartAreaLinear() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Area chart step
 
 ```tsx
-import { AreaChart } from "@/components/ui/chart-area"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
@@ -17757,21 +18257,112 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<AreaChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  curve="step"
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  areaChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    curve: "step",
+  }),
+)
+
+export function ChartAreaStep() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Pie chart
+## Area chart interactive
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { areaChart } from "@/components/ui/chart-area"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/components/ui/segmented-control"
+```
+
+```tsx
+const DAYS = 90
+const start = Date.UTC(2024, 3, 1)
+
+// Deterministic, so the server and the client render the same rows.
+const data = Array.from({ length: DAYS }, (_, index) => {
+  const wave = Math.sin(index / 6) * 0.5 + 0.5
+  return {
+    date: new Date(start + index * 86_400_000),
+    desktop: Math.round(150 + wave * 300 + ((index * 37) % 50)),
+    mobile: Math.round(100 + (1 - wave) * 220 + ((index * 53) % 40)),
+  }
+})
+
+const day = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+})
+
+const RANGES = { "90d": 90, "30d": 30, "7d": 7 } as const
+type Range = keyof typeof RANGES
+
+export function ChartAreaInteractive() {
+  const [range, setRange] = useState<Range>("90d")
+  // Dates put the x axis on a time scale.
+  const chart = useMemo(
+    () =>
+      defineChart(
+        areaChart(data.slice(-RANGES[range]), {
+          x: "date",
+          y: ["mobile", "desktop"],
+          labels: { desktop: "Desktop", mobile: "Mobile" },
+          stacked: true,
+          fill: "gradient",
+          legend: true,
+          formatX: (value) => day.format(value as Date),
+        }),
+      ),
+    [range],
+  )
+
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <SegmentedControl
+        aria-label="Time range"
+        selectedKeys={[range]}
+        onSelectionChange={(keys) => {
+          const [key] = keys
+          if (key !== undefined) setRange(key as Range)
+        }}
+        className="self-end"
+      >
+        <SegmentedControlItem id="90d">Last 3 months</SegmentedControlItem>
+        <SegmentedControlItem id="30d">Last 30 days</SegmentedControlItem>
+        <SegmentedControlItem id="7d">Last 7 days</SegmentedControlItem>
+      </SegmentedControl>
+      <Chart
+        definition={chart}
+        ariaLabel="Desktop and mobile visitors per day"
+      />
+    </div>
+  )
+}
+```
+
+## Pie chart default
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17791,21 +18382,26 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+  }),
+)
+
+export function ChartPieSimple() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
 ## Pie chart donut
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17825,22 +18421,27 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  innerRadius={0.55}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.55,
+  }),
+)
+
+export function ChartPieDonut() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
-## Pie chart active Slice
+## Pie chart active slice
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17860,26 +18461,36 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  innerRadius={0.55}
-  outerRadius={0.88}
-  // Static, so the highlighted slice reads without hovering.
-  activeIndex={0}
-  activeOffset={0.12}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser, with Chrome highlighted"
-/>
+// Static, so the highlighted slice reads without hovering.
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.55,
+    outerRadius: 0.88,
+    activeIndex: 0,
+    activeOffset: 0.12,
+  }),
+)
+
+export function ChartPieDonutActive() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with Chrome highlighted"
+    />
+  )
+}
 ```
 
-## Pie chart donut with Text
+## Pie chart donut with text
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17901,29 +18512,38 @@ const labels = {
 
 const total = data.reduce((sum, row) => sum + row.visitors, 0)
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  innerRadius={0.6}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser, with the total in the centre"
->
-  {/* The hole is an HTML overlay, so the total is real text, not a label
-      mark competing for focus. */}
-  <div className="flex h-full flex-col items-center justify-center">
-    <span className="text-3xl font-bold">{total}</span>
-    <span className="text-sm text-fg-muted">Visitors</span>
-  </div>
-</PieChart>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    innerRadius: 0.6,
+  }),
+)
+
+export function ChartPieDonutText() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with the total in the centre"
+    >
+      {/* Real text, not a mark competing for focus. */}
+      <div className="flex h-full flex-col items-center justify-center">
+        <span className="text-3xl font-bold">{total}</span>
+        <span className="text-sm text-fg-muted">Visitors</span>
+      </div>
+    </Chart>
+  )
+}
 ```
 
-## Pie chart value Labels
+## Pie chart value labels
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17943,23 +18563,33 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  sliceLabel="value"
-  sliceLabelRadius={0.72}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser, with values on the slices"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    sliceLabel: "value",
+    sliceLabelRadius: 0.72,
+  }),
+)
+
+export function ChartPieLabel() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with values on the slices"
+    />
+  )
+}
 ```
 
-## Pie chart custom Labels
+## Pie chart custom labels
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -17979,23 +18609,35 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  sliceLabel="value"
-  sliceLabelRadius={0.6}
-  sliceLabelFill="var(--color-bg)"
-  sliceLabelFontSize={15}
-  ariaLabel="Visitors by browser, with values inside the slices"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    sliceLabel: "value",
+    sliceLabelRadius: 0.6,
+    sliceLabelFill: "var(--color-bg)",
+    sliceLabelFontSize: 15,
+  }),
+)
+
+export function ChartPieLabelCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with values inside the slices"
+    />
+  )
+}
 ```
 
-## Pie chart name Labels
+## Pie chart name labels
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -18015,24 +18657,34 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  sliceLabel="name"
-  sliceLabelRadius={0.68}
-  sliceLabelFontSize={11}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser, with names on the slices"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    sliceLabel: "name",
+    sliceLabelRadius: 0.68,
+    sliceLabelFontSize: 11,
+  }),
+)
+
+export function ChartPieLabelList() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, with names on the slices"
+    />
+  )
+}
 ```
 
 ## Pie chart legend
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -18052,23 +18704,28 @@ const labels = {
   other: "Other",
 }
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  legend
-  radiusRatio={0.85}
-  stroke="var(--color-bg)"
-  strokeWidth={2}
-  ariaLabel="Visitors by browser"
-/>
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    legend: true,
+    radiusRatio: 0.85,
+  }),
+)
+
+export function ChartPieLegend() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
-## Pie chart no Separator
+## Pie chart no separator
 
 ```tsx
-import { PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -18088,23 +18745,32 @@ const labels = {
   other: "Other",
 }
 
-/* No stroke and no pad angle: the slices meet edge to edge. Compare with the
-   donut demo, which separates them with a background-colored stroke. */
+const chart = defineChart(
+  pieChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels,
+    strokeWidth: 0,
+  }),
+)
 
-<PieChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  padAngle={0}
-  ariaLabel="Visitors by browser, without slice separators"
-/>
+export function ChartPieSeparatorNone() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, without slice separators"
+    />
+  )
+}
 ```
 
-## Pie chart stacked Rings
+## Pie chart stacked rings
 
 ```tsx
-import { pieRing, PieChart } from "@/components/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart, pieRing } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
@@ -18132,34 +18798,129 @@ const labels = {
   may: "May",
 }
 
-/* A second series is a second ring, built at module scope so it keeps its
-   identity across renders. Both rings key their colors off the month, so a
+/* A second series is a second ring. Both rings name slices by month, so a
    month is one color from the middle out. */
-const mobileRing = pieRing({
-  id: "mobile",
-  data: mobile,
-  value: "mobile",
-  name: "month",
-  labels,
-  innerRadius: 0.7,
-  outerRadius: 0.95,
-})
+const chart = defineChart(
+  pieChart(desktop, {
+    value: "desktop",
+    name: "month",
+    labels,
+    outerRadius: 0.6,
+    marks: pieRing(mobile, {
+      id: "mobile",
+      value: "mobile",
+      name: "month",
+      labels,
+      innerRadius: 0.7,
+      outerRadius: 0.95,
+    }),
+  }),
+)
 
-<PieChart
-  data={desktop}
-  value="desktop"
-  name="month"
-  labels={labels}
-  outerRadius={0.6}
-  polarMarks={mobileRing}
-  ariaLabel="Desktop and mobile visitors by month, as concentric rings"
-/>
+export function ChartPieStacked() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors by month, as concentric rings"
+    />
+  )
+}
 ```
 
-## Radar chart
+## Pie chart interactive
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { pieChart } from "@/components/ui/chart-pie"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select"
+```
+
+```tsx
+const data = [
+  { month: "january", desktop: 186 },
+  { month: "february", desktop: 305 },
+  { month: "march", desktop: 237 },
+  { month: "april", desktop: 173 },
+  { month: "may", desktop: 209 },
+]
+
+const labels = {
+  january: "January",
+  february: "February",
+  march: "March",
+  april: "April",
+  may: "May",
+}
+
+export function ChartPieInteractive() {
+  const [active, setActive] = useState(0)
+  const row = data[active] ?? data[0]
+  const chart = useMemo(
+    () =>
+      defineChart(
+        pieChart(data, {
+          value: "desktop",
+          name: "month",
+          labels,
+          innerRadius: 0.6,
+          outerRadius: 0.88,
+          activeIndex: active,
+        }),
+      ),
+    [active],
+  )
+
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <Select
+        aria-label="Month"
+        value={row?.month ?? null}
+        onChange={(key) => {
+          const index = data.findIndex((entry) => entry.month === key)
+          if (index !== -1) setActive(index)
+        }}
+        className="w-40 self-end"
+      >
+        <SelectTrigger />
+        <SelectContent>
+          {data.map((entry) => (
+            <SelectItem key={entry.month} id={entry.month}>
+              {labels[entry.month as keyof typeof labels]}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Chart
+        definition={chart}
+        ariaLabel="Desktop visitors by month, with one month highlighted"
+      >
+        <div className="flex h-full flex-col items-center justify-center">
+          <span className="text-3xl font-bold">
+            {row?.desktop.toLocaleString("en-US")}
+          </span>
+          <span className="text-sm text-fg-muted">Visitors</span>
+        </div>
+      </Chart>
+    </div>
+  )
+}
+```
+
+## Radar chart default
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18172,20 +18933,31 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+  }),
+)
+
+export function ChartRadarDefault() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Radar chart dots
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18198,21 +18970,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  points
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    points: true,
+  }),
+)
+
+export function ChartRadarDots() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart multiple Series
+## Radar chart multiple series
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18225,20 +19008,32 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  points
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    points: true,
+  }),
+)
+
+export function ChartRadarMultiple() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Radar chart legend
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18251,21 +19046,33 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    legend: true,
+  }),
+)
+
+export function ChartRadarLegend() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart icon Legend
+## Radar chart icon legend
 
 ```tsx
+import { defineChart } from "@tanstack/charts"
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
-import { RadarChart } from "@/components/ui/chart-radar"
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18280,35 +19087,40 @@ const data = [
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
-/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
-   draws color swatches. */
+const chart = defineChart(
+  radarChart(data, { x: "month", y: ["desktop", "mobile"], labels }),
+)
 
-<div>
-  <RadarChart
-    data={data}
-    x="month"
-    y={["desktop", "mobile"]}
-    labels={labels}
-    legend={false}
-    ariaLabel="Desktop and mobile visitors, January through June"
-  />
-  <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">
-    <span className="flex items-center gap-1.5">
-      <MonitorIcon className="size-4" />
-      {labels.desktop}
-    </span>
-    <span className="flex items-center gap-1.5">
-      <SmartphoneIcon className="size-4" />
-      {labels.mobile}
-    </span>
-  </div>
-</div>
+/* An icon legend is HTML beside the chart: the SVG legend draws color swatches. */
+export function ChartRadarIcons() {
+  return (
+    <div>
+      <Chart
+        definition={chart}
+        ariaLabel="Desktop and mobile visitors, January through June"
+      />
+      <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">
+        <span className="flex items-center gap-1.5">
+          <MonitorIcon className="size-4" />
+          {labels.desktop}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <SmartphoneIcon className="size-4" />
+          {labels.mobile}
+        </span>
+      </div>
+    </div>
+  )
+}
 ```
 
-## Radar chart lines Only
+## Radar chart lines only
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18321,21 +19133,33 @@ const data = [
   { month: "Jun", desktop: 174, mobile: 204 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y={["desktop", "mobile"]}
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  fill={0}
-  spokes={false}
-  ariaLabel="Desktop and mobile visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: ["desktop", "mobile"],
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    fill: 0,
+    spokes: false,
+  }),
+)
+
+export function ChartRadarLinesOnly() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart detailed Labels
+## Radar chart detailed labels
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18350,48 +19174,32 @@ const data = [
 
 const values = new Map(data.map((row) => [row.month, row.desktop]))
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  axisDetail={(month) => String(values.get(String(month)) ?? "")}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    axisDetail: (month) => String(values.get(String(month)) ?? ""),
+  }),
+)
+
+export function ChartRadarLabelCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart circular Grid
+## Radar chart circular grid
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
-```
+import { defineChart } from "@tanstack/charts"
 
-```tsx
-const data = [
-  { month: "Jan", desktop: 186 },
-  { month: "Feb", desktop: 305 },
-  { month: "Mar", desktop: 237 },
-  { month: "Apr", desktop: 273 },
-  { month: "May", desktop: 209 },
-  { month: "Jun", desktop: 214 },
-]
-
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  gridShape="circle"
-  ariaLabel="Desktop visitors, January through June"
-/>
-```
-
-## Radar chart filled Grid
-
-```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18404,22 +19212,71 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  gridFill={0.2}
-  fill={0.5}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+  }),
+)
+
+export function ChartRadarGridCircle() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart custom Grid
+## Radar chart filled grid
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridFill: 0.2,
+    fill: 0.5,
+  }),
+)
+
+export function ChartRadarGridFill() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
+```
+
+## Radar chart custom grid
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18432,23 +19289,34 @@ const data = [
   { month: "Jun", desktop: 264 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  gridShape="circle"
-  gridFill={0.2}
-  fill={1}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+    gridFill: 0.2,
+    fill: 1,
+  }),
+)
+
+export function ChartRadarGridCustom() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radar chart no Grid
+## Radar chart no grid
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18461,21 +19329,32 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  grid={false}
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    grid: false,
+  }),
+)
+
+export function ChartRadarGridNone() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
 ## Radar chart radius
 
 ```tsx
-import { RadarChart } from "@/components/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
@@ -18488,22 +19367,112 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-<RadarChart
-  data={data}
-  x="month"
-  y="desktop"
-  labels={{ desktop: "Desktop" }}
-  legend={false}
-  radiusRatio={0.62}
-  points
-  ariaLabel="Desktop visitors, January through June"
-/>
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    radiusRatio: 0.62,
+    points: true,
+  }),
+)
+
+export function ChartRadarRadius() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
 ```
 
-## Radial chart
+## Radar chart circular grid, filled
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+    gridFill: 0.2,
+    fill: 0.5,
+  }),
+)
+
+export function ChartRadarGridCircleFill() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
+```
+
+## Radar chart circular grid, no spokes
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const chart = defineChart(
+  radarChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    gridShape: "circle",
+    spokes: false,
+  }),
+)
+
+export function ChartRadarGridCircleNoLines() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop visitors, January through June"
+    />
+  )
+}
+```
+
+## Radial chart default
+
+```tsx
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
@@ -18515,31 +19484,36 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    innerRadius: 0.3,
+    radiusRatio: 0.95,
+    track: true,
+    legend: true,
+  }),
+)
 
-<RadialBarChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  innerRadius={0.3}
-  radiusRatio={0.95}
-  track
-  legend
-  ariaLabel="Visitors by browser"
-/>
+export function ChartRadialSimple() {
+  return <Chart definition={chart} ariaLabel="Visitors by browser" />
+}
 ```
 
 ## Radial chart grid
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
@@ -18551,30 +19525,40 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    innerRadius: 0.3,
+    radiusRatio: 0.95,
+    grid: true,
+  }),
+)
 
-<RadialBarChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  innerRadius={0.3}
-  radiusRatio={0.95}
-  grid
-  ariaLabel="Visitors by browser, over a circular grid"
-/>
+export function ChartRadialGrid() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, over a circular grid"
+    />
+  )
+}
 ```
 
 ## Radial chart labels
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
@@ -18586,34 +19570,41 @@ const data = [
   { browser: "other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: {
+      chrome: "Chrome",
+      safari: "Safari",
+      firefox: "Firefox",
+      edge: "Edge",
+      other: "Other",
+    },
+    innerRadius: 0.25,
+    radiusRatio: 0.95,
+    track: true,
+    barLabels: true,
+  }),
+)
 
-<RadialBarChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={labels}
-  // A full turn starting at nine o'clock, so labels sit on the left.
-  startAngle={-Math.PI / 2}
-  endAngle={Math.PI * 1.5}
-  innerRadius={0.25}
-  radiusRatio={0.95}
-  track
-  barLabels
-  ariaLabel="Visitors by browser, each ring labelled"
-/>
+export function ChartRadialLabel() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Visitors by browser, each ring labelled"
+    />
+  )
+}
 ```
 
-## Radial chart progress Ring
+## Radial chart progress ring
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
@@ -18621,31 +19612,40 @@ const data = [{ browser: "safari", visitors: 1260 }]
 
 const deg = (value: number) => (value * Math.PI) / 180
 
-<RadialBarChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={{ safari: "Safari" }}
-  endAngle={deg(250)}
-  innerRadius={0.78}
-  outerRadius={0.95}
-  radiusRatio={0.9}
-  cornerRadius={999}
-  track
-  max={1600}
-  ariaLabel="Safari visitors as a progress ring"
->
-  <div className="flex h-full flex-col items-center justify-center">
-    <span className="text-2xl font-bold">1,260</span>
-    <span className="text-sm text-fg-muted">Visitors</span>
-  </div>
-</RadialBarChart>
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: { safari: "Safari" },
+    endAngle: deg(250),
+    innerRadius: 0.78,
+    outerRadius: 0.95,
+    radiusRatio: 0.9,
+    cornerRadius: 999,
+    track: true,
+    max: 1600,
+  }),
+)
+
+export function ChartRadialText() {
+  return (
+    <Chart definition={chart} ariaLabel="Safari visitors as a progress ring">
+      <div className="flex h-full flex-col items-center justify-center">
+        <span className="text-2xl font-bold">1,260</span>
+        <span className="text-sm text-fg-muted">Visitors</span>
+      </div>
+    </Chart>
+  )
+}
 ```
 
 ## Radial chart shape
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
@@ -18653,64 +19653,88 @@ const data = [{ browser: "safari", visitors: 1260 }]
 
 const deg = (value: number) => (value * Math.PI) / 180
 
-<RadialBarChart
-  data={data}
-  value="visitors"
-  name="browser"
-  labels={{ safari: "Safari" }}
-  endAngle={deg(100)}
-  innerRadius={0.66}
-  outerRadius={0.95}
-  radiusRatio={0.9}
-  cornerRadius={999}
-  track
-  max={1600}
-  grid
-  ariaLabel="Safari visitors against a 1,600 target"
->
-  <div className="flex h-full flex-col items-center justify-center">
-    <span className="text-2xl font-bold">1,260</span>
-    <span className="text-sm text-fg-muted">Visitors</span>
-  </div>
-</RadialBarChart>
+const chart = defineChart(
+  radialChart(data, {
+    value: "visitors",
+    name: "browser",
+    labels: { safari: "Safari" },
+    endAngle: deg(100),
+    innerRadius: 0.66,
+    outerRadius: 0.95,
+    radiusRatio: 0.9,
+    cornerRadius: 999,
+    track: true,
+    max: 1600,
+    grid: true,
+  }),
+)
+
+export function ChartRadialShape() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Safari visitors against a 1,600 target"
+    >
+      <div className="flex h-full flex-col items-center justify-center">
+        <span className="text-2xl font-bold">1,260</span>
+        <span className="text-sm text-fg-muted">Visitors</span>
+      </div>
+    </Chart>
+  )
+}
 ```
 
 ## Radial chart stacked
 
 ```tsx
-import { RadialBarChart } from "@/components/ui/chart-radial"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { radialChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
 const data = [{ month: "january", desktop: 1260, mobile: 570 }]
 
-<RadialBarChart
-  data={data}
-  // An array of fields stacks one ring, cumulative from `startAngle`.
-  value={["desktop", "mobile"]}
-  name="month"
-  labels={{ desktop: "Desktop", mobile: "Mobile" }}
-  startAngle={-Math.PI / 2}
-  endAngle={Math.PI / 2}
-  innerRadius={0.7}
-  outerRadius={0.98}
-  radiusRatio={0.9}
-  barPadding={0.06}
-  cornerRadius={5}
-  max={2200}
-  ariaLabel="Desktop and mobile visitors in January, stacked"
->
-  <div className="flex h-full flex-col items-center justify-center pb-6">
-    <span className="text-2xl font-bold">1,830</span>
-    <span className="text-sm text-fg-muted">Visitors</span>
-  </div>
-</RadialBarChart>
+// An array of fields stacks one ring, cumulative from `startAngle`.
+const chart = defineChart(
+  radialChart(data, {
+    value: ["desktop", "mobile"],
+    name: "month",
+    labels: { desktop: "Desktop", mobile: "Mobile" },
+    startAngle: -Math.PI / 2,
+    endAngle: Math.PI / 2,
+    innerRadius: 0.7,
+    outerRadius: 0.98,
+    radiusRatio: 0.9,
+    barPadding: 0.06,
+    cornerRadius: 5,
+    max: 2200,
+  }),
+)
+
+export function ChartRadialStacked() {
+  return (
+    <Chart
+      definition={chart}
+      ariaLabel="Desktop and mobile visitors in January, stacked"
+    >
+      <div className="flex h-full flex-col items-center justify-center pb-6">
+        <span className="text-2xl font-bold">1,830</span>
+        <span className="text-sm text-fg-muted">Visitors</span>
+      </div>
+    </Chart>
+  )
+}
 ```
 
 ## Heatmap matrix
 
 ```tsx
-import { HeatmapChart } from "@/components/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { heatmapChart } from "@/components/ui/chart-heatmap"
 ```
 
 ```tsx
@@ -18746,22 +19770,29 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-<HeatmapChart
-  data={data}
-  x="hour"
-  y="day"
-  value="sessions"
-  label="Sessions"
-  labelX="Hour"
-  labelY="Day"
-  ariaLabel="Sessions by weekday and hour"
-/>
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "hour",
+    y: "day",
+    value: "sessions",
+    label: "Sessions",
+    labelX: "Hour",
+    labelY: "Day",
+  }),
+)
+
+export function ChartHeatmapMatrix() {
+  return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />
+}
 ```
 
-## Heatmap calendar Months
+## Heatmap calendar months
 
 ```tsx
-import { HeatmapChart } from "@/components/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { heatmapChart } from "@/components/ui/chart-heatmap"
 ```
 
 ```tsx
@@ -18796,30 +19827,42 @@ const data = years.flatMap(({ year, weight }) =>
   })),
 )
 
-<HeatmapChart
-  data={data}
-  x="month"
-  y="year"
-  value="rainfall"
-  formatValue={{
-    locale: "en-US",
-    number: { style: "unit", unit: "millimeter" },
-  }}
-  label="Rainfall"
-  ariaLabel="Monthly rainfall by year"
-  height={200}
-/>
+const millimeters = new Intl.NumberFormat("en-US", {
+  style: "unit",
+  unit: "millimeter",
+})
+
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "month",
+    y: "year",
+    value: "rainfall",
+    label: "Rainfall",
+    formatValue: (value) => millimeters.format(Number(value)),
+  }),
+)
+
+export function ChartHeatmapCalendarMonths() {
+  return (
+    <Chart
+      definition={chart}
+      height={200}
+      ariaLabel="Monthly rainfall by year"
+    />
+  )
+}
 ```
 
-## Heatmap discrete Scale
+## Heatmap discrete scale
 
 ```tsx
-import { heatmapColors, HeatmapChart } from "@/components/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { heatmapChart, heatmapColors } from "@/components/ui/chart-heatmap"
 ```
 
 ```tsx
-/* Incidents per service and week. The cuts are a policy, not an extent: one
-   incident is already worth seeing, ten is an outage week. */
 const services = [
   { service: "api", counts: [0, 1, 0, 3, 12, 4, 1, 0] },
   { service: "auth", counts: [1, 0, 0, 0, 2, 1, 0, 0] },
@@ -18836,23 +19879,37 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
-<HeatmapChart
-  data={data}
-  x="week"
-  y="service"
-  value="incidents"
-  colors={heatmapColors("var(--chart-4)", 4)}
-  thresholds={[1, 4, 10]}
-  label="Incidents"
-  ariaLabel="Incidents per service and week"
-  height={200}
-/>
+/* The cuts are a policy, not an extent: one incident is already worth
+   seeing, ten is an outage week. */
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "week",
+    y: "service",
+    value: "incidents",
+    label: "Incidents",
+    colors: heatmapColors("var(--chart-4)", 4),
+    thresholds: [1, 4, 10],
+  }),
+)
+
+export function ChartHeatmapDiscreteScale() {
+  return (
+    <Chart
+      definition={chart}
+      height={200}
+      ariaLabel="Incidents per service and week"
+    />
+  )
+}
 ```
 
-## Heatmap with Values
+## Heatmap with values
 
 ```tsx
-import { HeatmapChart } from "@/components/ui/chart-heatmap"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/components/ui/chart"
+import { heatmapChart } from "@/components/ui/chart-heatmap"
 ```
 
 ```tsx
@@ -18871,18 +19928,29 @@ const data = regions.flatMap(({ region, quarters }) =>
   })),
 )
 
-<HeatmapChart
-  data={data}
-  x="quarter"
-  y="region"
-  value="share"
-  values
-  formatValue={{
-    locale: "en-US",
-    number: { style: "percent", maximumFractionDigits: 0 },
-  }}
-  label="Adoption"
-  ariaLabel="Feature adoption by region and quarter"
-  height={180}
-/>
+const percent = new Intl.NumberFormat("en-US", {
+  style: "percent",
+  maximumFractionDigits: 0,
+})
+
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "quarter",
+    y: "region",
+    value: "share",
+    label: "Adoption",
+    values: true,
+    formatValue: (value) => percent.format(Number(value)),
+  }),
+)
+
+export function ChartHeatmapWithValues() {
+  return (
+    <Chart
+      definition={chart}
+      height={180}
+      ariaLabel="Feature adoption by region and quarter"
+    />
+  )
+}
 ```

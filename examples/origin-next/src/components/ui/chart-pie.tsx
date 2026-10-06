@@ -2,138 +2,136 @@
 
 import type {
   ChannelField,
-  ChartBuildContext,
   ChartKey,
+  ChartPoint,
+  ChartTooltipContentContext,
 } from "@tanstack/charts";
-import type { PieDatum } from "@tanstack/charts/polar";
+import type { PieDatum, PolarMark } from "@tanstack/charts/polar";
 import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear } from "@tanstack/charts/scales/linear";
+import { tooltip } from "@tanstack/charts/tooltip";
 
-import type {
-  ChartComponentProps,
-  ChartSpec,
-  ChartTooltipContentOf,
-  PolarMarkLayer,
-} from "@/components/ui/chart";
-import {
-  Chart,
-  CHART_THEME,
-  chartLegend,
-  decorative,
-  orderSeries,
-  polarMarksBindScales,
-  useChartDefinition,
-} from "@/components/ui/chart";
+import type { ChartField, ChartFormat } from "@/components/ui/chart";
+import { chartLegend, polarDecorative } from "@/components/ui/chart";
 
 const TAU = Math.PI * 2;
 
-// Radii are ratios of the resolved layout radius, never pixels.
-const pieDefaults = {
-  radiusRatio: 0.9,
-  innerRadius: 0,
-  outerRadius: 1,
-  activeOffset: 0.08,
-  stroke: "var(--surface-bg,var(--color-bg))",
-  strokeWidth: 2,
-  labelFontSize: 12,
-} as const;
+// oxlint-disable-next-line no-explicit-any
+type AnyPolarMark = PolarMark<any, any, any, any, any>;
 
-/** What the arcs are laid out from, and what a focus point's `datum` is. */
+/** A slice: your row plus its laid-out `value` and angles. */
 export type PieSlice<TDatum extends object> = PieDatum<TDatum>;
 
 export interface PieRingOptions<TDatum extends object> {
-  /** Scopes the ring's mark ids — unique per ring. */
-  id: string;
-  data: readonly TDatum[];
-  /** Field holding the slice magnitude. */
+  /** Field holding the slice size. */
   value: ChannelField<TDatum, number | null | undefined>;
-  /** Field holding the slice key. */
-  name: ChannelField<TDatum, ChartKey>;
+  /** Field naming each slice — its color and its legend entry. */
+  name: ChartField<TDatum, ChartKey>;
+  /** Display names for slice keys. */
   labels?: Readonly<Record<string, string>>;
+  /** Scopes the ring's mark ids when a chart draws several rings. @default "pie" */
+  id?: string;
+  /** Hole radius, as a share of the chart radius. @default 0 */
   innerRadius?: number;
+  /** @default 1 */
   outerRadius?: number;
+  /** Radians, clockwise from twelve o'clock. @default 0 */
   startAngle?: number;
+  /** @default 2π */
   endAngle?: number;
+  /** Gap between slices, in radians. */
   padAngle?: number;
   cornerRadius?: number;
-  /** Stroke painted between slices; the page background by default. */
+  /** The line between slices; the surface color by default. */
   stroke?: string;
+  /** @default 2 */
   strokeWidth?: number;
-  /** Index of the slice pushed out of the ring. */
+  /** A slice pushed out of the ring. */
   activeIndex?: number;
+  /** How far the active slice grows, as a share of the radius. @default 0.08 */
   activeOffset?: number;
-  sliceLabel?: "none" | "name" | "value";
+  /** Text drawn on each slice. */
+  sliceLabel?: "name" | "value";
+  /** Where slice labels sit, as a share of the radius. @default the ring's middle */
   sliceLabelRadius?: number;
   sliceLabelFill?: string;
+  /** @default 12 */
   sliceLabelFontSize?: number;
+  /** Formats slice values in labels and the tooltip. */
+  formatValue?: ChartFormat;
 }
 
-function sliceName(
-  name: string,
-  labels: Readonly<Record<string, string>> | undefined,
+function nameReader<TDatum extends object>(
+  options: Pick<PieRingOptions<TDatum>, "name" | "labels">,
 ) {
-  return (slice: object) => {
-    const key = String((slice as Record<string, unknown>)[name]);
+  const { name, labels } = options;
+  // Slices are rows plus their layout, so this reads either.
+  return (row: object) => {
+    const source = row as TDatum;
+    const key = String(
+      typeof name === "function" ? name(source) : source[name as keyof TDatum],
+    );
     return labels?.[key] ?? key;
   };
 }
 
-/** One concentric ring: its arcs, the pushed-out active slice, and its labels. */
+/** One ring of slices — its arcs, the active slice, and the slice labels. */
 export function pieRing<TDatum extends object>(
+  data: readonly TDatum[],
   options: PieRingOptions<TDatum>,
-): readonly PolarMarkLayer[] {
-  const slices = pie(options.data, {
+): AnyPolarMark[] {
+  const id = options.id ?? "pie";
+  const slices = pie(data, {
     value: options.value,
     startAngle: options.startAngle ?? 0,
     endAngle: options.endAngle ?? TAU,
     gapAngle: options.padAngle,
   });
-  const nameOf = sliceName(options.name, options.labels);
-  const inner = options.innerRadius ?? pieDefaults.innerRadius;
-  const outer = options.outerRadius ?? pieDefaults.outerRadius;
+  const nameOf = nameReader(options);
+  const inner = options.innerRadius ?? 0;
+  const outer = options.outerRadius ?? 1;
   const arc = {
     key: nameOf,
-    z: nameOf,
     color: nameOf,
     innerRadius: ({ radius }: { radius: number }) => radius * inner,
     cornerRadius: options.cornerRadius,
-    stroke: options.stroke ?? pieDefaults.stroke,
-    strokeWidth: options.strokeWidth ?? pieDefaults.strokeWidth,
+    stroke: options.stroke ?? "var(--surface-bg,var(--color-bg))",
+    strokeWidth: options.strokeWidth ?? 2,
   };
-  const marks: PolarMarkLayer[] = [
+  const marks: AnyPolarMark[] = [
     radialArc(slices, {
-      id: `${options.id}-arc`,
       ...arc,
+      id: `${id}-arc`,
       outerRadius: ({ radius }) => radius * outer,
     }),
   ];
   const active =
     options.activeIndex === undefined ? undefined : slices[options.activeIndex];
   if (active !== undefined) {
-    const grow = options.activeOffset ?? pieDefaults.activeOffset;
+    const grow = options.activeOffset ?? 0.08;
     marks.push(
-      decorative(
+      polarDecorative(
         radialArc([active], {
-          id: `${options.id}-active`,
           ...arc,
+          id: `${id}-active`,
           outerRadius: ({ radius }) => radius * (outer + grow),
         }),
       ),
     );
   }
-  const kind = options.sliceLabel ?? "none";
-  if (kind !== "none") {
+  if (options.sliceLabel !== undefined) {
+    const format = options.formatValue ?? ((value) => value.toLocaleString());
     const at = options.sliceLabelRadius ?? (inner + outer) / 2;
     marks.push(
-      decorative(
+      polarDecorative(
         radialText(slices, {
-          id: `${options.id}-label`,
+          id: `${id}-label`,
           angle: (slice) => slice.angle,
           radius: () => at,
           text: (slice) =>
-            kind === "name" ? nameOf(slice) : String(slice.value),
+            options.sliceLabel === "name" ? nameOf(slice) : format(slice.value),
           fill: options.sliceLabelFill ?? "var(--color-fg)",
-          fontSize: options.sliceLabelFontSize ?? pieDefaults.labelFontSize,
+          fontSize: options.sliceLabelFontSize ?? 12,
         }),
       ),
     );
@@ -141,50 +139,51 @@ export function pieRing<TDatum extends object>(
   return marks;
 }
 
-export interface PieChartSpecOptions<TDatum extends object> extends Omit<
-  PieRingOptions<TDatum>,
-  "id"
-> {
-  legend?: boolean;
-  /** Leading slice order — drives color-slot assignment and the legend. */
-  seriesOrder?: readonly string[];
-  /** Share of the available radius the ring may use. */
-  radiusRatio?: number;
-  /** Pixel inset applied before `radiusRatio`. */
-  inset?: number;
-  /** Extra polar mark layers painted over the ring. */
-  polarMarks?: readonly PolarMarkLayer[];
+/* A configured polar scale that no mark reads is rejected, so the identity
+   scales exist only when a layer maps through them — slice labels do, bare
+   arcs don't. */
+function bindsScales(marks: readonly AnyPolarMark[]) {
+  return marks.some((mark) => {
+    const probed = mark.initialize({ markIndex: 0, parentId: "probe" });
+    return Boolean(
+      probed.angleScale ??
+      probed.radiusScale ??
+      (probed.requiresAngleScale || probed.requiresRadiusScale),
+    );
+  });
 }
 
-export function pieChartSpec<TDatum extends object>(
-  options: PieChartSpecOptions<TDatum>,
-  _ctx: ChartBuildContext,
-): ChartSpec<PieSlice<TDatum>> {
-  const nameOf = sliceName(options.name, options.labels);
-  const order = orderSeries(
-    options.seriesOrder?.map((key) => options.labels?.[key] ?? key) ?? [],
-    options.data.map(nameOf),
-  );
+export interface PieChartOptions<
+  TDatum extends object,
+> extends PieRingOptions<TDatum> {
+  /** A color legend below the pie. */
+  legend?: boolean;
+  /** Share of the available radius the pie fills. @default 0.9 */
+  radiusRatio?: number;
+  /** Pixels kept clear around the pie. */
+  inset?: number;
+  /** More polar layers drawn over the ring — another ring, labels. */
+  marks?: readonly AnyPolarMark[];
+}
+
+/** A complete pie or donut chart — pass it to `defineChart`, or spread it and extend. */
+export function pieChart<TDatum extends object>(
+  data: readonly TDatum[],
+  options: PieChartOptions<TDatum>,
+) {
+  const nameOf = nameReader(options);
   const startAngle = options.startAngle ?? 0;
   const endAngle = options.endAngle ?? TAU;
-  const marks = [
-    ...pieRing({ ...options, id: "pie" }),
-    ...(options.polarMarks ?? []),
-  ];
-  // Slice labels map through the container scales; bare arcs bind none.
-  const bound =
-    (options.sliceLabel ?? "none") !== "none" ||
-    polarMarksBindScales(options.polarMarks);
+  const marks = [...pieRing(data, options), ...(options.marks ?? [])];
   return {
     scales: { x: null, y: null },
     color: {
-      domain: order,
+      domain: [...new Set(data.map(nameOf))],
       legend: options.legend ? chartLegend() : undefined,
     },
-    theme: CHART_THEME,
     marks: [
       polar({
-        scales: bound
+        scales: bindsScales(marks)
           ? {
               angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
               radius: { scale: scaleLinear().domain([0, 1]) },
@@ -193,50 +192,36 @@ export function pieChartSpec<TDatum extends object>(
         startAngle,
         endAngle,
         inset: options.inset ?? 0,
-        radiusRatio: options.radiusRatio ?? pieDefaults.radiusRatio,
+        radiusRatio: options.radiusRatio ?? 0.9,
         marks,
       }),
     ],
+    // A slice's x value is its angle: only nearest focus reads right.
+    focus: "nearest" as const,
+    tooltip: {
+      use: tooltip,
+      anchor: "point" as const,
+      content: (
+        points: readonly ChartPoint[],
+        context: ChartTooltipContentContext,
+      ) => ({
+        // Points from layers added through `marks` aren't slices.
+        rows: points.map((point) => {
+          if (!point.markId.endsWith("-arc")) {
+            return {
+              label: point.groupLabel,
+              value: context.formatY(point.yValue),
+              color: point.color,
+            };
+          }
+          const slice = point.datum as PieSlice<TDatum>;
+          return {
+            label: nameOf(slice),
+            value: (options.formatValue ?? context.formatY)(slice.value),
+            color: point.color,
+          };
+        }),
+      }),
+    },
   };
-}
-
-// oxlint-disable-next-line no-explicit-any
-const pieTooltip: ChartTooltipContentOf<PieChartSpecOptions<any>> = (
-  points,
-  _context,
-  options,
-) => {
-  const nameOf = sliceName(options.name, options.labels);
-  return {
-    rows: points.map((point) => {
-      const slice = point.datum as PieSlice<object>;
-      return {
-        label: nameOf(slice),
-        value: slice.value.toLocaleString(),
-        color: point.color,
-      };
-    }),
-  };
-};
-
-export type PieChartProps<TDatum extends object> = ChartComponentProps<
-  PieChartSpecOptions<TDatum>,
-  PieSlice<TDatum>
->;
-
-export function PieChart<TDatum extends object>(props: PieChartProps<TDatum>) {
-  const { definition, host, children } = useChartDefinition<
-    PieSlice<TDatum>,
-    PieChartSpecOptions<TDatum>
-  >(props, pieChartSpec, {
-    // A slice's x value is its mid-angle, so only nearest focus reads right.
-    focus: "nearest",
-    tooltipAnchor: "point",
-    tooltipContent: pieTooltip,
-  });
-  return (
-    <Chart definition={definition} {...host}>
-      {children}
-    </Chart>
-  );
 }

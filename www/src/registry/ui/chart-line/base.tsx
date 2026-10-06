@@ -1,70 +1,92 @@
 "use client"
 
-import type { ChartBuildContext } from "@tanstack/charts"
+import type { LineYOptions } from "@tanstack/charts"
 import { lineY } from "@tanstack/charts/line"
 
 import type {
-  ChartComponentProps,
-  ChartCurve,
-  ChartSpec,
-  XYChartSpecOptions,
+  ChartCurveName,
+  ChartFormat,
+  ChartSeries,
+  ChartSeriesOptions,
+  ChartSeriesRow,
 } from "@/registry/ui/chart"
 import {
-  Chart,
-  chartDefaults,
-  chartFrame,
-  CURVES,
-  planChart,
-  useChartDefinition,
+  chartCurves,
+  chartLegend,
+  chartScales,
+  chartSeries,
 } from "@/registry/ui/chart"
 
-export interface LineChartSpecOptions<
-  TDatum,
-> extends XYChartSpecOptions<TDatum> {
-  /** Path interpolation between points. */
-  curve?: ChartCurve
+export interface LineSeriesOptions<TDatum> extends ChartSeriesOptions<TDatum> {
+  /** @default "natural" */
+  curve?: ChartCurveName
+  /** @default 2 */
   strokeWidth?: number
-  /** Draw a dot at every point. */
+  strokeDasharray?: string
+  /** A dot at every point. */
   points?: boolean
+  /** Focus-driven restyling — dim the lines that aren't focused. */
+  states?: LineYOptions<ChartSeriesRow<TDatum>>["states"]
 }
 
-export function lineChartSpec<TDatum>(
-  options: LineChartSpecOptions<TDatum>,
-  ctx: ChartBuildContext,
-): ChartSpec<TDatum> {
-  const plan = planChart(options)
+function lineMark<TDatum>(
+  { rows }: ChartSeries<TDatum>,
+  options: LineSeriesOptions<TDatum>,
+) {
+  return lineY(rows, {
+    x: "x",
+    y: "y",
+    color: "series",
+    key: "key",
+    curve: chartCurves[options.curve ?? "natural"],
+    strokeWidth: options.strokeWidth ?? 2,
+    strokeDasharray: options.strokeDasharray,
+    points: options.points ?? false,
+    states: options.states,
+  })
+}
+
+/** The lines of one or more series, as one mark. */
+export function lineSeries<TDatum>(
+  data: readonly TDatum[],
+  options: LineSeriesOptions<TDatum>,
+) {
+  return lineMark(chartSeries(data, options), options)
+}
+
+export interface LineChartOptions<TDatum> extends LineSeriesOptions<TDatum> {
+  /** The axes to show. @default "x" */
+  axes?: boolean | "x" | "y"
+  /** Horizontal gridlines. @default true */
+  grid?: boolean
+  /** A color legend below the plot. */
+  legend?: boolean
+  /** Formats x ticks and tooltip titles. */
+  formatX?: ChartFormat
+  /** Formats y ticks and tooltip values. */
+  formatY?: ChartFormat
+}
+
+/** A complete line chart — pass it to `defineChart`, or spread it and extend. */
+export function lineChart<TDatum>(
+  data: readonly TDatum[],
+  options: LineChartOptions<TDatum>,
+) {
+  const series = chartSeries(data, options)
   return {
-    ...chartFrame(options, ctx, { order: plan.order }),
-    marks: [
-      ...(options.marksBefore ?? []),
-      lineY(plan.rows, {
-        x: plan.x,
-        y: plan.y,
-        z: plan.z,
-        color: plan.z,
-        key: plan.key,
-        strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
-        points: options.points ?? chartDefaults.points,
-        curve: CURVES[options.curve ?? chartDefaults.curve],
-      }),
-      ...(options.marks ?? []),
-    ],
+    scales: chartScales({
+      x: {
+        kind: series.rows[0]?.x instanceof Date ? "time" : "point",
+        format: options.formatX,
+      },
+      y: { format: options.formatY },
+      axes: options.axes,
+      grid: options.grid === false ? false : "y",
+    }),
+    color: {
+      domain: series.names,
+      legend: options.legend ? chartLegend() : undefined,
+    },
+    marks: [lineMark(series, options)],
   }
-}
-
-export type LineChartProps<TDatum> = ChartComponentProps<
-  LineChartSpecOptions<TDatum>,
-  TDatum
->
-
-export function LineChart<TDatum>(props: LineChartProps<TDatum>) {
-  const { definition, host, children } = useChartDefinition<
-    TDatum,
-    LineChartSpecOptions<TDatum>
-  >(props, lineChartSpec)
-  return (
-    <Chart definition={definition} {...host}>
-      {children}
-    </Chart>
-  )
 }

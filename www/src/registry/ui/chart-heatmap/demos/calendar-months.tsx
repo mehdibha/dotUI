@@ -1,8 +1,9 @@
 "use client"
 
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
 
-import { HeatmapChart } from "@/registry/ui/chart-heatmap"
+import { Chart } from "@/registry/ui/chart"
+import { heatmapChart } from "@/registry/ui/chart-heatmap"
 
 /* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
 const months = [
@@ -27,12 +28,6 @@ const years = [
   { year: "2025", weight: 1.05 },
 ]
 
-const millimeters = new Intl.NumberFormat("en-US", {
-  style: "unit",
-  unit: "millimeter",
-})
-const formatRainfall = (value: ChartValue) => millimeters.format(Number(value))
-
 const data = years.flatMap(({ year, weight }) =>
   months.map(({ month, normal }) => ({
     year,
@@ -41,17 +36,27 @@ const data = years.flatMap(({ year, weight }) =>
   })),
 )
 
+const millimeters = new Intl.NumberFormat("en-US", {
+  style: "unit",
+  unit: "millimeter",
+})
+
+const chart = defineChart(
+  heatmapChart(data, {
+    x: "month",
+    y: "year",
+    value: "rainfall",
+    label: "Rainfall",
+    formatValue: (value) => millimeters.format(Number(value)),
+  }),
+)
+
 export default function ChartHeatmapCalendarMonths() {
   return (
-    <HeatmapChart
-      data={data}
-      x="month"
-      y="year"
-      value="rainfall"
-      formatValue={formatRainfall}
-      label="Rainfall"
-      ariaLabel="Monthly rainfall by year"
+    <Chart
+      definition={chart}
       height={200}
+      ariaLabel="Monthly rainfall by year"
     />
   )
 }

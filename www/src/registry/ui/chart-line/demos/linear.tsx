@@ -1,6 +1,9 @@
 "use client"
 
-import { LineChart } from "@/registry/ui/chart-line"
+import { defineChart } from "@tanstack/charts"
+
+import { Chart } from "@/registry/ui/chart"
+import { lineChart } from "@/registry/ui/chart-line"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,14 +14,19 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const chart = defineChart(
+  lineChart(data, {
+    x: "month",
+    y: "desktop",
+    labels: { desktop: "Desktop" },
+    curve: "linear",
+  }),
+)
+
 export default function ChartLineLinear() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      curve="linear"
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

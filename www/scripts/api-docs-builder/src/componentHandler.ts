@@ -1095,12 +1095,13 @@ function removeUndefinedFromType(typeStr: string): string {
 }
 
 /**
- * Check if an export is a public Props type
+ * Check if an export is a public Props type, or the Options of a function
+ * (chart builders take options, not props)
  */
 export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
   const name = exportNode.name
 
-  if (!name.endsWith("Props")) {
+  if (!name.endsWith("Props") && !name.endsWith("Options")) {
     return false
   }
 
