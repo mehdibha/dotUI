@@ -20,6 +20,7 @@ export const supabase = definePreset({
     headingFont: "Manrope",
     bodyFont: "Inter",
     monoFont: "Source Code Pro",
+    sectionLabels: "caps",
 
     // Shape
     radiusPx: 10.5,
@@ -41,7 +42,6 @@ export const supabase = definePreset({
     inputHover: "border",
     sliderColor: "neutral",
     menuIndicator: "check-start",
-    menuLabels: "caps",
     menuSearch: "bar",
     menuScale: "large",
     dialogBackdrop: "blur",

@@ -2,7 +2,7 @@
    listboxes, and the Command palette are one synced family, so one axis
    writes all of them.
 
-   Engine: `indicator`, `highlight`, `inset` and `labels` are enum params on
+   Engine: `indicator`, `highlight` and `inset` are enum params on
    `menu` and `list-box` (highlight re-points the `--color-highlight` pair
    through the param's vars); `search` and `scale` are enum params on
    `command`, the search-led surface, which also takes `inset` so its list
@@ -17,7 +17,6 @@ export const MENU_DEFAULTS = {
   menuIndicator: "check-end",
   menuHighlight: "neutral",
   menuInset: "inset",
-  menuLabels: "sentence",
   menuSearch: "field",
   menuScale: "default",
 }
@@ -41,11 +40,6 @@ export const INSET_OPTIONS = [
   { value: "full-bleed", label: "Full bleed" },
 ]
 
-export const LABEL_OPTIONS = [
-  { value: "sentence", label: "Sentence" },
-  { value: "caps", label: "Caps" },
-]
-
 /* A boxed field floating in the padding (shadcn/cmdk, Spotlight), a
    full-bleed bar keeping the magnifier over a hairline, or a bare prompt
    (Linear, Raycast). */
@@ -64,7 +58,6 @@ export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
   menuIndicator: oneOf(INDICATOR_OPTIONS),
   menuHighlight: oneOf(HIGHLIGHT_OPTIONS),
   menuInset: oneOf(INSET_OPTIONS),
-  menuLabels: oneOf(LABEL_OPTIONS),
   menuSearch: oneOf(SEARCH_OPTIONS),
   menuScale: oneOf(SCALE_OPTIONS),
 }
@@ -74,7 +67,6 @@ export function resolveMenus(state: Effective): Resolved {
     indicator: state.menuIndicator,
     highlight: state.menuHighlight,
     inset: state.menuInset,
-    labels: state.menuLabels,
   }
   return {
     params: {

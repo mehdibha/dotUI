@@ -27,7 +27,7 @@ describe("menus axis", () => {
         menuIndicator: "check-start",
         menuHighlight: "accent",
         menuInset: "full-bleed",
-        menuLabels: "caps",
+        sectionLabels: "caps",
         menuSearch: "prompt",
         menuScale: "large",
       }),

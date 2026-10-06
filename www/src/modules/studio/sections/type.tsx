@@ -1,8 +1,9 @@
 "use client"
 
 /* Typography — the three font roles, each row set in its own face so the row
-   is the specimen (Heading is Same as body until pinned), and the case of
-   section labels in menus. */
+   is the specimen (Heading is Same as body until pinned), then the title
+   recipe, the UI text size, the weight of action labels and the case of
+   section labels. */
 
 import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
@@ -13,13 +14,20 @@ import { cn } from "@/registry/lib/utils"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
-import { LABEL_OPTIONS } from "../axes/menus"
+import {
+  LABEL_WEIGHT_OPTIONS,
+  SECTION_LABEL_OPTIONS,
+  TITLE_OPTIONS,
+  UI_TEXT_OPTIONS,
+} from "../axes/type"
 import {
   DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
+  DialGap,
   DialSegmented,
+  DialSelect,
 } from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Effective, Studio } from "../state"
@@ -104,6 +112,28 @@ export function TypePreview({ state }: { state: Effective }) {
 
 const SAME_AS_BODY = { id: "same", label: "Same as body" }
 
+const WEIGHTS: Record<string, number> = {
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+}
+
+/* Each title recipe's weight, tracking and case, for its specimen. */
+const TITLE_SPECIMEN: Record<string, React.CSSProperties> = {
+  quiet: { fontWeight: 500 },
+  compact: { fontWeight: 600, fontSize: 12 },
+  tight: { fontWeight: 600, letterSpacing: "-0.025em" },
+  bold: { fontWeight: 700 },
+  display: { fontWeight: 400, fontSize: 15 },
+  caps: {
+    fontWeight: 600,
+    letterSpacing: "0.05em",
+    textTransform: "uppercase",
+    fontSize: 11,
+  },
+}
+
 export function TypeSection({ studio }: { studio: Studio }) {
   const { state, effective, set } = studio
   return (
@@ -130,10 +160,49 @@ export function TypeSection({ studio }: { studio: Studio }) {
         categories={["mono"]}
         onChange={set("monoFont")}
       />
+      <DialSelect
+        axis="titleStyle"
+        label="Titles"
+        options={TITLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <span
+              className="text-[13px] text-fg/80"
+              style={{
+                fontFamily: fontStack(effective.headingFont),
+                ...TITLE_SPECIMEN[option.value],
+              }}
+            >
+              Aa
+            </span>
+          ),
+        }))}
+      />
+      <DialGap />
+      <DialSelect
+        axis="labelWeight"
+        label="Label weight"
+        options={LABEL_WEIGHT_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <span
+              className="text-[13px] text-fg/80"
+              style={{ fontWeight: WEIGHTS[option.value] }}
+            >
+              Aa
+            </span>
+          ),
+        }))}
+      />
       <DialSegmented
-        axis="menuLabels"
+        axis="uiTextSize"
+        label="UI text size"
+        options={UI_TEXT_OPTIONS}
+      />
+      <DialSegmented
+        axis="sectionLabels"
         label="Section labels"
-        options={LABEL_OPTIONS}
+        options={SECTION_LABEL_OPTIONS}
       />
     </>
   )

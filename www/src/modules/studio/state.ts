@@ -60,7 +60,8 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "typography",
     label: "Typography",
-    owners: ["type", "menuLabels"],
+    owners: ["type"],
+    aliases: ["Menu labels"],
     Body: TypeSection,
     Preview: TypePreview,
   },
