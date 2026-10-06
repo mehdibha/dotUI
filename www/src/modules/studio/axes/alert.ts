@@ -22,7 +22,7 @@ export const STYLE_OPTIONS = [
     label: "Soft + outline",
     description: "Primer, Ant Design, Fluent 2, Supabase",
   },
-  { value: "outline", label: "Outline", description: "Geist, Spectrum 2" },
+  { value: "outline", label: "Outline", description: "Geist" },
   { value: "inverse", label: "Inverse", description: "Carbon" },
 ]
 

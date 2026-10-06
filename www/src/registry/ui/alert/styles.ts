@@ -106,7 +106,7 @@ const { useStyles, styles } = createStyles(alertMeta, {
           },
         },
       },
-      // Geist (Note), Spectrum 2 (InlineAlert): no fill, the status edge
+      // Geist (Note): no fill, the status edge
       // and ink.
       outline: {
         slots: { root: "border" },
