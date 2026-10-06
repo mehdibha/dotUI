@@ -89,17 +89,17 @@ export const BUTTON_STYLES = {
       },
     },
   },
-  // Duolingo: a 4px lip under the button, the fill ramp's pressed step;
-  // press and disabled sink the face into it.
+  // Duolingo: a 4px lip a shade under the fill (the ramp's pressed step in
+  // light, which flips lighter in dark); press and disabled sink into it.
   ledge: {
     variants: {
       variant: {
         primary:
-          "bg-primary shadow-[0_4px_0_0_var(--color-primary-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 pressed:translate-y-1 pressed:shadow-none",
+          "bg-primary shadow-[0_4px_0_0_var(--color-primary-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
         warning:
-          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 pressed:translate-y-1 pressed:shadow-none",
+          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
         danger:
-          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 pressed:translate-y-1 pressed:shadow-none",
+          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
       },
     },
   },
@@ -206,8 +206,11 @@ export const BUTTON_PRESS = {
 }
 
 export const BUTTON_CASE = {
-  // Duolingo: 0.8px tracking on 15px labels.
-  uppercase: { base: "uppercase tracking-[0.05em]" },
+  // Duolingo: 0.8px tracking on 15px labels. A select trigger shows a value,
+  // not a label, so it keeps its case.
+  uppercase: {
+    base: "not-has-data-[slot=select-value]:tracking-[0.05em] not-has-data-[slot=select-value]:uppercase",
+  },
 }
 
 /* A selected toggle's look; a current pagination page can wear it too. */
