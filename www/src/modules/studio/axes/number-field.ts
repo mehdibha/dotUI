@@ -1,9 +1,6 @@
-/* Number field — where the steppers sit: an attached pair on the right (the
-   registry today, Carbon), one at each end (Polaris mobile, HeroUI), or a
-   stacked chevron column (Spectrum, Ant, classic desktop).
-
-   Engine: `number-field.steppers` swaps the shipped base file — the layouts
-   differ in structure, not classes. */
+/* Number field — where the steppers sit. They are parts of the field shell,
+   so they wear Inputs › Style. Engine: `number-field.steppers` swaps the
+   shipped base file (the layouts differ in structure, not classes). */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -11,13 +8,18 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const NUMBER_FIELD_DEFAULTS = {
-  numberLayout: "right",
+  numberLayout: "right-cells",
 }
 
 export const NUMBER_LAYOUT_OPTIONS = [
-  { value: "right", label: "Right" },
-  { value: "split", label: "Split" },
-  { value: "stacked", label: "Stacked" },
+  { value: "right-cells", label: "Right cells", credits: ["Carbon"] },
+  {
+    value: "stacked-cells",
+    label: "Stacked cells",
+    credits: ["Ant", "Mantine", "Untitled UI"],
+  },
+  { value: "stacked-inset", label: "Stacked inset", credits: ["Polaris"] },
+  { value: "split", label: "Split", credits: ["HeroUI", "Airbnb"] },
 ]
 
 export const NUMBER_FIELD_SCHEMA: ChapterSchema<typeof NUMBER_FIELD_DEFAULTS> =

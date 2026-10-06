@@ -29,11 +29,10 @@ import type { Explained, Follow, FollowId, Resolved, Rule } from "./core/types"
 import * as cursor from "./cursor"
 import * as dialogs from "./dialogs"
 import * as disabled from "./disabled"
+import * as field from "./field"
 import * as focus from "./focus"
 import * as icons from "./icons"
-import * as inputGroups from "./input-groups"
 import * as inputs from "./inputs"
-import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
 import * as menus from "./menus"
@@ -42,13 +41,13 @@ import * as motion from "./motion"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
-import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as radio from "./radio"
 import { checkAxisValue } from "./schema"
 import type { AxisSchema } from "./schema"
 import * as segmentedControl from "./segmented-control"
+import * as select from "./select"
 import * as selection from "./selection"
 import * as shape from "./shape"
 import * as skeleton from "./skeleton"
@@ -77,7 +76,6 @@ export const CHAPTERS = [
   cursor.chapter,
   selection.chapter,
   disabled.chapter,
-  invalid.chapter,
   mobile.chapter,
   motion.chapter,
   charts.chapter,
@@ -95,10 +93,10 @@ export const CHAPTERS = [
   radio.chapter,
   choiceCards.chapter,
   inputs.chapter,
-  inputGroups.chapter,
+  field.chapter,
   numberField.chapter,
   otpField.chapter,
-  pickers.chapter,
+  select.chapter,
   calendar.chapter,
   sliders.chapter,
   menus.chapter,

@@ -332,9 +332,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { motionEntrance: "fade" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
-  "input-groups/divider-only-boxed": [
-    { addonDivider: "none" },
-    { addonLayout: "boxed", addonDivider: "none" },
+  "otp-field/underline-separates-cells": [
+    { inputStyle: "underline" },
+    { inputStyle: "filled" },
   ],
 }
 

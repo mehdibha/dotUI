@@ -1,20 +1,26 @@
 "use client"
 
-/* Inputs — Style and Hover reach every field; focus lives in States. */
+/* Inputs — the field shell every text field, picker trigger and OTP cell
+   wears; members decide structure. Focus and invalid live in States. */
 
+import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import { useStyles } from "@/registry/ui/input/styles"
 
-import { HOVER_OPTIONS, STYLE_OPTIONS } from "../axes/inputs"
+import { STYLE_OPTIONS as BUTTON_STYLE_OPTIONS } from "../axes/buttons"
+import { ERROR_OPTIONS, LABEL_OPTIONS } from "../axes/field"
+import {
+  AUTO_STYLE,
+  HEIGHT_OPTIONS,
+  HOVER_OPTIONS,
+  STYLE_HOVER,
+  STYLE_OPTIONS,
+} from "../axes/inputs"
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
-import { CARET_OPTIONS } from "../axes/pickers"
-import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
+import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select"
+import { roleLabel } from "../axes/shape"
+import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import {
   FamilyHero,
   HeroMember,
@@ -22,59 +28,60 @@ import {
   More,
   UsesRow,
 } from "../family-page"
-import type { Effective, Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-const SHELL: Record<string, string> = {
-  outline: "rounded-md border border-border-control bg-field",
-  line: "border-b border-border-control",
-  "filled-line-bottom": "rounded-t-md border-b border-border-control bg-field",
-  filled: "rounded-md bg-field",
+const labelOf = (options: { value: string; label: string }[], value: string) =>
+  options.find((option) => option.value === value)?.label ?? value
+
+/* One stable context per shell × hover, so the registry's style cache hits. */
+const contexts = new Map<
+  string,
+  { params: { input: { style: string; hover: string } }; density: "default" }
+>()
+function shellContext(style: string, hover: string) {
+  const id = `${style}|${hover}`
+  let context = contexts.get(id)
+  if (!context)
+    contexts.set(
+      id,
+      (context = { params: { input: { style, hover } }, density: "default" }),
+    )
+  return context
 }
 
-/** A field wearing one shell, with a line of placeholder. */
-function FieldGlyph({ style, large }: { style: string; large?: boolean }) {
+function Shell({ className }: { className?: string }) {
+  const { input } = useStyles()()
   return (
-    <span
-      className={cn(
-        "flex shrink-0 items-center",
-        large ? "h-6 w-20 px-2" : "h-4 w-7 px-1",
-        SHELL[style],
-      )}
-    >
-      <span
-        className={cn("rounded-full bg-fg/25", large ? "h-1.5 w-8" : "h-1 w-3")}
-      />
+    <span className={input({ size: "sm", className })}>
+      <span className="h-1.5 w-8 rounded-full bg-fg/25" />
     </span>
   )
 }
 
-/* The group's two keys read as one pick; the divider only exists on a cell. */
-const ADDON_OPTIONS = [
-  { value: "inside", label: "Inside" },
-  { value: "boxed", label: "Boxed" },
-  { value: "boxed-flush", label: "Boxed, flush" },
-]
-
-function addonValue(state: StudioState) {
-  if (state.addonLayout !== "boxed") return "inside"
-  return state.addonDivider === "none" ? "boxed-flush" : "boxed"
+/** A field drawn by the registry's own recipe for one shell. */
+function ShellSpecimen({
+  style,
+  hover = "none",
+  className,
+}: {
+  style: string
+  hover?: string
+  className?: string
+}) {
+  return (
+    <DesignSystemContext.Provider value={shellContext(style, hover)}>
+      <Shell className={cn("pointer-events-none w-20", className)} />
+    </DesignSystemContext.Provider>
+  )
 }
 
-/** A field with its prefix: floating inside, or a cell on the edge. */
-function AddonGlyph({ addon }: { addon: string }) {
+/** The value an Auto or As-style row resolves from, as a plain tag. */
+function SourceTag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex h-4 w-8 shrink-0 overflow-hidden rounded-[4px] border border-fg/30">
-      <span
-        className={cn(
-          "flex w-3 items-center justify-center",
-          addon !== "inside" && "bg-fg/10",
-          addon === "boxed" && "border-r border-fg/30",
-        )}
-      >
-        <span className="size-1 rounded-full bg-fg/50" />
-      </span>
+    <span className="rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/60">
+      {children}
     </span>
   )
 }
@@ -92,29 +99,35 @@ function SteppersGlyph({ layout }: { layout: string }) {
       aria-hidden
     >
       <rect x="2.5" y="7" width="19" height="10" rx="2" />
-      {layout === "right" && (
+      {layout === "right-cells" && (
         <>
-          <path d="M11.5 7v10M16.5 7v10" opacity=".5" />
-          <path d="M13 12h2M18 12h2M19 11v2" />
+          <path d="M12.5 7v10M17 7v10" opacity=".5" />
+          <path d="M14 12h1.5M18.25 12h1.5M19 11.25v1.5" />
         </>
       )}
       {layout === "split" && (
         <>
-          <path d="M7.5 7v10M16.5 7v10" opacity=".5" />
-          <path d="M4 12h2M18 12h2M19 11v2" />
+          <path d="M7 7v10M17 7v10" opacity=".5" />
+          <path d="M4 12h1.5M18.5 12h1.5M19.25 11.25v1.5" />
         </>
       )}
-      {layout === "stacked" && (
+      {layout === "stacked-cells" && (
         <>
-          <path d="M15.5 7v10" opacity=".5" />
-          <path d="m16.75 10.75 1.75-1.5 1.75 1.5M16.75 13.25l1.75 1.5 1.75-1.5" />
+          <path d="M16 7v10M16 12h5.5" opacity=".5" />
+          <path d="m17.5 10.25 1.25-1 1.25 1M17.5 13.75l1.25 1 1.25-1" />
+        </>
+      )}
+      {layout === "stacked-inset" && (
+        <>
+          <rect x="16" y="8.5" width="4" height="3" rx="1" opacity=".5" />
+          <rect x="16" y="12.5" width="4" height="3" rx="1" opacity=".5" />
         </>
       )}
     </svg>
   )
 }
 
-/** Three digit cells: one group, separate boxes, or a dash each. */
+/** Three digit cells: one attached row, or separate cells. */
 function CellsGlyph({ cells }: { cells: string }) {
   return (
     <svg
@@ -125,42 +138,98 @@ function CellsGlyph({ cells }: { cells: string }) {
       strokeLinecap="round"
       aria-hidden
     >
-      {cells === "group" && (
+      {cells === "attached" ? (
         <>
           <rect x="2.5" y="7" width="19" height="10" rx="2" />
           <path d="M8.75 7v10M15.25 7v10" opacity=".5" />
         </>
-      )}
-      {cells === "boxes" && (
+      ) : (
         <>
           <rect x="2.5" y="7" width="5.5" height="10" rx="1.5" />
           <rect x="9.25" y="7" width="5.5" height="10" rx="1.5" />
           <rect x="16" y="7" width="5.5" height="10" rx="1.5" />
         </>
       )}
-      {cells === "underline" && (
-        <path d="M3 16h5M9.5 16h5M16 16h5" strokeWidth="2" />
-      )}
     </svg>
   )
 }
 
-function CaretGlyph({ caret }: { caret: string }) {
+/** A select trigger: the field's outline or a button's fill, with its caret. */
+function TriggerGlyph({ trigger, caret }: { trigger: string; caret: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
     >
-      {caret === "double" ? (
-        <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+      {trigger === "field" ? (
+        <rect x="2.5" y="7" width="19" height="10" rx="2" />
       ) : (
-        <path d="m6 9 6 6 6-6" />
+        <rect
+          x="2.5"
+          y="7"
+          width="19"
+          height="10"
+          rx="2"
+          fill="currentColor"
+          fillOpacity=".15"
+          stroke="none"
+        />
       )}
+      <path d="M5.5 12h6" opacity=".5" />
+      {caret === "double" ? (
+        <path d="m15.5 13.25 2 1.5 2-1.5M15.5 10.75l2-1.5 2 1.5" />
+      ) : (
+        <path d="m15.5 11 2 2 2-2" />
+      )}
+    </svg>
+  )
+}
+
+const WEIGHT: Record<string, string> = {
+  regular: "font-normal",
+  medium: "font-medium",
+  semibold: "font-semibold",
+}
+
+/** A field label at one weight. */
+function LabelGlyph({ weight }: { weight: string }) {
+  return (
+    <span className={cn("shrink-0 text-xs text-fg/80", WEIGHT[weight])}>
+      Label
+    </span>
+  )
+}
+
+/** A field with its error: plain, an icon on the message, or in the field. */
+function ErrorGlyph({ kind }: { kind: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className="text-fg-danger">
+      <rect
+        x="3.75"
+        y="4.5"
+        width="16.5"
+        height="8"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      {kind === "icon-field" && (
+        <circle cx="16.5" cy="8.5" r="1.75" fill="currentColor" />
+      )}
+      {kind === "icon-message" && (
+        <circle cx="5.5" cy="17.25" r="1.4" fill="currentColor" />
+      )}
+      <path
+        d={kind === "icon-message" ? "M9 17.25h7.5" : "M4.5 17.25h9"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
@@ -168,30 +237,21 @@ function CaretGlyph({ caret }: { caret: string }) {
 /* --------------------------------- Section --------------------------------- */
 
 export function InputsPreview({ state }: { state: Effective }) {
-  return <FieldGlyph style={state.inputStyle} />
+  return <ShellSpecimen style={state.inputStyle} className="h-5 w-10" />
 }
 
 export function InputsSection({ studio }: { studio: Studio }) {
-  const { state, effective, setState } = studio
-  const setAddon = (addon: string) =>
-    setState({
-      ...state,
-      addonLayout: addon === "inside" ? "inside" : "boxed",
-      addonDivider:
-        addon === "inside"
-          ? state.addonDivider
-          : addon === "boxed-flush"
-            ? "none"
-            : "hairline",
-    })
+  const { effective } = studio
+  const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
+  const styleHover = STYLE_HOVER[effective.inputStyle] ?? "none"
   return (
     <>
       <FamilyHero>
         <HeroMember name="Input">
-          <FieldGlyph style={effective.inputStyle} large />
-        </HeroMember>
-        <HeroMember name="Input group">
-          <AddonGlyph addon={addonValue(state)} />
+          <ShellSpecimen
+            style={effective.inputStyle}
+            hover={effective.inputHover}
+          />
         </HeroMember>
         <HeroMember name="Number field">
           <DialGlyph>
@@ -205,36 +265,63 @@ export function InputsSection({ studio }: { studio: Studio }) {
         </HeroMember>
         <HeroMember name="Select">
           <DialGlyph>
-            <CaretGlyph caret={effective.pickerCaret} />
+            <TriggerGlyph
+              trigger={effective.selectTrigger}
+              caret={effective.pickerCaret}
+            />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Field">
+          <LabelGlyph weight={effective.fieldLabel} />
+          <DialGlyph>
+            <ErrorGlyph kind={effective.inputError} />
           </DialGlyph>
         </HeroMember>
       </FamilyHero>
       <DialList
         axis="inputStyle"
         label="Style"
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <FieldGlyph style={option.value} large />,
-        }))}
+        options={[
+          {
+            value: "auto",
+            label: `Auto · ${labelOf(STYLE_OPTIONS, autoStyle)}`,
+            aside: (
+              <SourceTag>
+                {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
+              </SourceTag>
+            ),
+            preview: <ShellSpecimen style={autoStyle} className="w-12" />,
+          },
+          ...STYLE_OPTIONS.map((option) => ({
+            ...option,
+            preview: <ShellSpecimen style={option.value} className="w-12" />,
+          })),
+        ]}
       />
       <DialGap />
-      <UsesRow axis="controlStroke" label="Control stroke" />
+      <UsesRow axis="buttonStyle" label="Buttons" />
       <UsesRow axis="focusInputStyle" label="Field focus" />
-      <UsesRow axis="inputError" label="Invalid" />
-      <More keys={["inputHover", "addonLayout", "addonDivider"]}>
-        <DialSegmented
+      <UsesRow
+        axis="roleControl"
+        label="Control corners"
+        value={roleLabel(effective, "roleControl")}
+      />
+      <More keys={["inputHover", "inputHeight"]}>
+        <DialSelect
           axis="inputHover"
           label="Hover"
-          options={HOVER_OPTIONS}
+          options={[
+            {
+              value: "auto",
+              label: `As style · ${labelOf(HOVER_OPTIONS, styleHover)}`,
+            },
+            ...HOVER_OPTIONS,
+          ]}
         />
         <DialSelect
-          label="Addons"
-          value={addonValue(state)}
-          onChange={setAddon}
-          options={ADDON_OPTIONS.map((option) => ({
-            ...option,
-            preview: <AddonGlyph addon={option.value} />,
-          }))}
+          axis="inputHeight"
+          label="Height"
+          options={HEIGHT_OPTIONS}
         />
       </More>
       <MemberSection id="number-field" title="Number field">
@@ -266,7 +353,22 @@ export function InputsSection({ studio }: { studio: Studio }) {
         />
       </MemberSection>
       <MemberSection id="select" title="Select">
-        <More keys={["pickerCaret"]}>
+        <More keys={["selectTrigger", "pickerCaret"]}>
+          <DialSelect
+            axis="selectTrigger"
+            label="Trigger"
+            options={TRIGGER_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <TriggerGlyph
+                    trigger={option.value}
+                    caret={effective.pickerCaret}
+                  />
+                </DialGlyph>
+              ),
+            }))}
+          />
           <DialSelect
             axis="pickerCaret"
             label="Caret"
@@ -274,7 +376,34 @@ export function InputsSection({ studio }: { studio: Studio }) {
               ...option,
               preview: (
                 <DialGlyph>
-                  <CaretGlyph caret={option.value} />
+                  <TriggerGlyph
+                    trigger={effective.selectTrigger}
+                    caret={option.value}
+                  />
+                </DialGlyph>
+              ),
+            }))}
+          />
+        </More>
+      </MemberSection>
+      <MemberSection id="field" title="Field">
+        <More keys={["fieldLabel", "inputError"]}>
+          <DialSelect
+            axis="fieldLabel"
+            label="Label"
+            options={LABEL_OPTIONS.map((option) => ({
+              ...option,
+              preview: <LabelGlyph weight={option.value} />,
+            }))}
+          />
+          <DialSelect
+            axis="inputError"
+            label="Error message"
+            options={ERROR_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <ErrorGlyph kind={option.value} />
                 </DialGlyph>
               ),
             }))}

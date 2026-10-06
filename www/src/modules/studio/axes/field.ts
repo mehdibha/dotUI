@@ -1,39 +1,76 @@
-/* Invalid — how the system flags a failed value, everywhere at once. One
-   axis, treatment: the danger border with a plain message (dotUI today,
-   shadcn) vs the message line carrying an icon (Material, Spectrum, Carbon,
-   Polaris) vs GOV.UK's left bar with a bold message above the field.
-
-   Engine: the `error` enum param on `field`. Label and message reorder
-   through field's slots; the message build ships a second base file with the
-   icon; the bar is a field/styles.css rule on every `data-field` root, driven
-   by the value's vars. */
+/* Field — the frame around a field: the label's weight and how an error
+   reads. Engine: `field.label`, `field.error` (the icon-message build ships
+   a second base file); Icon in field draws on `input.errorIcon`. The field's
+   invalid edge is States'. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
-export const INVALID_DEFAULTS = {
-  inputError: "border",
+export const FIELD_DEFAULTS = {
+  fieldLabel: "regular",
+  inputError: "plain",
 }
 
-export const ERROR_OPTIONS = [
-  { value: "border", label: "Border" },
-  { value: "message", label: "Message" },
-  { value: "bar", label: "Bar" },
+export const LABEL_OPTIONS = [
+  {
+    value: "regular",
+    label: "Regular",
+    credits: ["Ant", "Polaris", "Geist", "Material 3", "Carbon", "Supabase"],
+  },
+  {
+    value: "medium",
+    label: "Medium",
+    credits: ["shadcn nova", "Untitled UI", "Claude", "Notion", "Duolingo"],
+  },
+  {
+    value: "semibold",
+    label: "Semibold",
+    credits: ["Primer", "Stripe"],
+  },
 ]
 
-export const INVALID_SCHEMA: ChapterSchema<typeof INVALID_DEFAULTS> = {
+export const ERROR_OPTIONS = [
+  {
+    value: "plain",
+    label: "Plain",
+    credits: ["shadcn", "Supabase", "Notion", "Duolingo"],
+  },
+  {
+    value: "icon-message",
+    label: "Icon in message",
+    credits: ["Polaris", "Primer", "Geist"],
+  },
+  {
+    value: "icon-field",
+    label: "Icon in field",
+    credits: ["Carbon", "Material 3"],
+  },
+]
+
+export const FIELD_SCHEMA: ChapterSchema<typeof FIELD_DEFAULTS> = {
+  fieldLabel: oneOf(LABEL_OPTIONS),
   inputError: oneOf(ERROR_OPTIONS),
 }
 
-export function resolveInvalid(state: Effective): Resolved {
-  return { params: { field: { error: state.inputError } } }
+export function resolveField(state: Effective): Resolved {
+  const iconMessage = state.inputError === "icon-message"
+  const iconField = state.inputError === "icon-field"
+  return {
+    params: {
+      field: {
+        label: state.fieldLabel,
+        error: iconMessage ? "icon-message" : "plain",
+      },
+      input: { errorIcon: iconField ? "inside" : "none" },
+    },
+  }
 }
 
 export const chapter = defineChapter({
-  id: "invalid",
-  defaults: INVALID_DEFAULTS,
-  schema: INVALID_SCHEMA,
-  resolve: resolveInvalid,
+  id: "field",
+  defaults: FIELD_DEFAULTS,
+  schema: FIELD_SCHEMA,
+  resolve: resolveField,
 })

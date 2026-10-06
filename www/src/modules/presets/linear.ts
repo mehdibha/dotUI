@@ -36,7 +36,7 @@ export const linear = definePreset({
     // Components
     // Every app button computes 9999px.
     buttonRadius: "pill",
-    inputHover: "border",
+    inputHover: "edge",
     menuSearch: "prompt",
     dialogPosition: "top",
     tooltipStyle: "surface",
