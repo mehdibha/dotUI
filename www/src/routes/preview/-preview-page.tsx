@@ -16,7 +16,7 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
-import { designSystemOf } from "@/modules/studio/resolve"
+import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
@@ -62,7 +62,10 @@ export function PreviewPage() {
   const navigate = route.useNavigate()
 
   useIframeMessageListener(
-    useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
+    useCallback(
+      (ds: DesignSystem) => setDesignSystem(internDesignSystem(ds)),
+      [],
+    ),
   )
 
   // The parent switches previews by navigating this document's own router — the

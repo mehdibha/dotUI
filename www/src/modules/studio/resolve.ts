@@ -26,6 +26,36 @@ for (const item of registryUi) {
   }
 }
 
+/* Equal selections are one frozen object, so `useStyles`' compose cache
+   (keyed by object identity) hits across edits and renders. Enum-only
+   params keep the set finite. */
+const interned = new Map<string, Readonly<Record<string, string>>>()
+
+export function intern(
+  component: string,
+  selections: Record<string, string>,
+): Readonly<Record<string, string>> {
+  const id = `${component}|${Object.keys(selections)
+    .sort()
+    .map((name) => `${name}=${selections[name]}`)
+    .join("&")}`
+  let hit = interned.get(id)
+  if (!hit) interned.set(id, (hit = Object.freeze({ ...selections })))
+  return hit
+}
+
+/** A design system that crossed a boundary (postMessage) with its
+ *  selections interned again. */
+export const internDesignSystem = (ds: DesignSystem): DesignSystem => ({
+  ...ds,
+  componentParams: Object.fromEntries(
+    Object.entries(ds.componentParams).map(([component, selections]) => [
+      component,
+      intern(component, selections),
+    ]),
+  ),
+})
+
 export function resolveDesignSystem(state: Effective): DesignSystem {
   const resolved = resolveAll(state)
   const componentParams: Record<string, Record<string, string>> = {}
@@ -50,6 +80,8 @@ export function resolveDesignSystem(state: Effective): DesignSystem {
       Object.assign(tokens, byParam[paramName]?.[value])
     }
   }
+  for (const [component, selections] of Object.entries(componentParams))
+    componentParams[component] = intern(component, selections)
   return {
     componentParams,
     tokens,
