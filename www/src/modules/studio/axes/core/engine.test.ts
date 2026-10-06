@@ -315,29 +315,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { iconWeight: "bold" },
     { iconLibrary: "phosphor", iconWeight: "bold" },
   ],
-  "focus/focusOffset-inert": [
-    { focusStyle: "duo", focusOffset: "inset" },
-    { focusStyle: "halo", focusOffset: "inset" },
-  ],
-  "focus/focusGap-inert": [
-    { focusOffset: "flush", focusGap: 4 },
-    { focusGap: 4 },
-  ],
-  "focus/focusHaloStrength-inert": [
-    { focusHaloStrength: 80 },
-    { focusStyle: "halo", focusHaloStrength: 80 },
-  ],
-  "focus/focusInputWidth-inert": [
-    { focusInputStyle: "ring", focusInputWidth: 4 },
-    { focusInputWidth: 4 },
-  ],
-  "focus/focusInputStrength-inert": [
-    { focusInputStyle: "border", focusInputStrength: 60 },
-    { focusInputStrength: 60 },
-  ],
-  "focus/focusInputBorderWidth-inert": [
-    { focusInputBorderWidth: 3 },
-    { focusInputStyle: "border", focusInputBorderWidth: 3 },
+  "states/ring-hides-field-weight": [
+    { focusInputStyle: "ring", focusInputWeight: "thick" },
+    { focusInputStyle: "border", focusInputWeight: "thick" },
   ],
   "motion/none-hides-entrance": [
     { motion: "none", motionEntrance: "fade" },

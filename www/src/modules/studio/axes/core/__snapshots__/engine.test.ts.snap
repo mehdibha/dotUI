@@ -239,75 +239,6 @@ exports[`rules > dialogs/frost-only-frosted: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > focus/focusGap-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {
-    "--focus-ring-offset": "0px",
-  },
-}
-`;
-
-exports[`rules > focus/focusHaloStrength-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > focus/focusInputBorderWidth-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > focus/focusInputStrength-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {
-    "--focus-input-color": "var(--color-border-focus)",
-    "--focus-input-inset": "inset",
-    "--focus-input-offset": "0px",
-    "--focus-input-width": "0px",
-  },
-}
-`;
-
-exports[`rules > focus/focusInputWidth-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {
-    "--focus-input-color": "var(--focus-ring-color)",
-    "--focus-input-inner": "var(--focus-ring-inner)",
-    "--focus-input-offset": "var(--focus-ring-offset)",
-    "--focus-input-width": "var(--focus-ring-width)",
-  },
-}
-`;
-
-exports[`rules > focus/focusOffset-inert: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {
-    "--focus-ring-inner": "1px",
-    "--focus-ring-offset": "0px",
-  },
-}
-`;
-
 exports[`rules > icons/stroke-only-line-sets: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -442,6 +373,19 @@ exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`]
     },
   },
   "tokens": {},
+}
+`;
+
+exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
 }
 `;
 

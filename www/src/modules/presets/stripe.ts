@@ -30,10 +30,9 @@ export const stripe = definePreset({
     surfaceShadow: "low",
 
     // States
-    // Stripe's flush halo fails on blurple fills; duo keeps the ring readable.
-    focusStyle: "duo",
-    focusInputWidth: 4,
-    focusInputStrength: 35,
+    // Stripe's flush halo fails on blurple fills; Inset's bg line reads.
+    focusStyle: "inset",
+    focusInputWeight: "thick",
 
     // Components
     pickerCaret: "double",

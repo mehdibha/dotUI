@@ -44,8 +44,8 @@ export const spotify = definePreset({
 
     // States
     focusColor: "neutral",
-    // An inset ring measured ~1.1:1 on the fills; duo stands in.
-    focusStyle: "duo",
+    // A bare inset ring measured ~1.1:1 on the fills; the bg line reads.
+    focusStyle: "inset",
     focusInputStyle: "ring",
     disabledTreatment: "fade",
 

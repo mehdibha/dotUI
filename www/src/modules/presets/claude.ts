@@ -35,7 +35,7 @@ export const claude = definePreset({
     surfaceShadow: "low",
 
     // States
-    focusStyle: "duo",
+    focusStyle: "inset",
     focusWidth: 1,
     focusInputStyle: "ring",
 

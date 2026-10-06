@@ -30,12 +30,11 @@ export const notion = definePreset({
     density: "compact",
 
     // Browser
-    cursorDragging: "grab",
     cursorDisabled: "default",
 
     // States
     focusInputStyle: "border",
-    focusInputBorderWidth: 2,
+    focusInputWeight: "thick",
     disabledTreatment: "fade",
 
     // Components

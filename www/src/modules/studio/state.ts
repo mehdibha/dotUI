@@ -86,7 +86,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "states",
     label: "States",
-    owners: ["focus", "disabled", "cursor", "selection"],
+    owners: ["states", "selection"],
     aliases: ["Interactivity"],
     Body: StatesSection,
     Preview: StatesPreview,
