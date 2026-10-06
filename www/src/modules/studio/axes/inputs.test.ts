@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs"
 import path from "node:path"
+import { compile } from "@tailwindcss/node"
 import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
@@ -146,6 +147,7 @@ describe("field shells", () => {
     )
     for (const [style, shell] of Object.entries(FIELD_SHELLS))
       expect(Object.keys(shell.slots).sort(), style).toEqual([
+        "chip",
         "divider",
         "input",
         "inputGroup",
@@ -244,6 +246,61 @@ describe("field shells", () => {
       expect(size("buttonTrigger"), height).toHaveLength(3)
       expect(content).toContain('h-(--input-h)",')
     }
+  })
+
+  /* Hover rules out-specify focus ones, so each must exclude the focus its
+     slot shows. RAC's focus-within only marks groups: on a bare input it
+     never matches, and hover beat the focus edge. */
+  it("hover yields to the focus each slot shows", async () => {
+    const tw = await compile(
+      `@import "tailwindcss/utilities"; @plugin "tailwindcss-react-aria-components";
+       @theme { --color-border-focus: #00f; --color-border-control-hover: #888; --color-neutral-hover: #eee; }`,
+      { base: path.resolve(__dirname, "../../.."), onDependency() {} },
+    )
+    // RAC attributes a compiled rule requires, and those it excludes.
+    const states = (css: string) => {
+      const required = new Set<string>()
+      const excluded = new Set<string>()
+      for (const m of css.matchAll(
+        /(:not\(\*:is\()?:where\(\[data-rac\]\)\[data-([a-z-]+)\]/g,
+      ))
+        (m[1] ? excluded : required).add(m[2]!)
+      // Focus on a descendant or an ancestor's (a group's control) marks
+      // the group focus-within.
+      if (/:has\(| \*/.test(css))
+        return { required: new Set(["focus-within"]), excluded }
+      return { required, excluded }
+    }
+    const rule = (cls: string) => {
+      const css = tw.build([cls])
+      const name = `.${cls.replace(/[^\w-]/g, (c) => `\\${c}`)} {`
+      const start = css.indexOf(name)
+      return css.slice(start, css.indexOf("\n}\n", start))
+    }
+    for (const style of Object.keys(SIGNATURE))
+      for (const hover of ["edge", "tint", "edge-tint"]) {
+        const content = await shipped("input", { input: { style, hover } })
+        for (const slot of ["input", "textArea", "inputGroup", "trigger"]) {
+          const classes = [
+            ...content.matchAll(new RegExp(`\\b${slot}: "([^"]*)"`, "g")),
+          ].flatMap((m) => m[1]!.split(" "))
+          const focus = classes.filter((c) => /border-border-focus$/.test(c))
+          const hovers = classes.filter((c) => c.startsWith("hover:"))
+          expect(focus.length, `${style} ${slot}`).toBeGreaterThan(0)
+          expect(hovers.length, `${style}/${hover} ${slot}`).toBeGreaterThan(0)
+          const shown = new Set(
+            focus.flatMap((c) => [...states(rule(c)).required]),
+          )
+          shown.delete("invalid")
+          expect(shown.size, `${style} ${slot} focus`).toBeGreaterThan(0)
+          for (const h of hovers)
+            for (const state of shown)
+              expect(
+                states(rule(h)).excluded.has(state),
+                `${style}/${hover} ${slot}: ${h} ignores ${state}`,
+              ).toBe(true)
+        }
+      }
   })
 
   it("a height ships one token set per size", async () => {

@@ -218,6 +218,11 @@ const triggerEnd = "pr-(--edge-to-visual)"
 const edgeDivider = "border-border-control"
 const noDivider = "border-transparent"
 
+// The fill of a segment inside the shell (stacked inset steppers): Polaris's
+// tertiary fill, or the page on shells already filled with the field well.
+const neutralChip = "bg-neutral"
+const pageChip = "bg-bg"
+
 // Boxed shells: the addon owns asymmetric inline padding.
 const addonBoxedShell =
   "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-var(--studio-control-stroke))] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-var(--studio-control-stroke))]"
@@ -237,10 +242,17 @@ const addonCell = [
 
 /* --------------------------------- Hover --------------------------------- */
 
-// The field's own pointer state: it yields to focus, invalid and disabled.
-const hoverEdge =
+// The field's own pointer state: it yields to invalid, disabled and the
+// focus its slot shows (RAC marks focus-within on groups only).
+const groupEdge =
   "hover:not-focus-within:not-invalid:not-disabled:border-border-control-hover"
-const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
+const selfEdge =
+  "hover:not-focus:not-invalid:not-disabled:border-border-control-hover"
+const triggerEdge =
+  "hover:not-focus-visible:not-invalid:not-disabled:border-border-control-hover"
+const groupTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
+const selfTint = "hover:not-focus:not-disabled:bg-neutral-hover"
+const triggerTint = "hover:not-focus-visible:not-disabled:bg-neutral-hover"
 
 /* An error icon drawn inside the control (Carbon, Material 3): a danger disc
    with an exclamation, painted as background layers so a bare <input> can
@@ -261,6 +273,7 @@ export const FIELD_SHELLS = {
       trigger: [outlineShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: edgeDivider,
+      chip: neutralChip,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -272,6 +285,7 @@ export const FIELD_SHELLS = {
       trigger: [raisedShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: edgeDivider,
+      chip: neutralChip,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -283,6 +297,7 @@ export const FIELD_SHELLS = {
       trigger: [insetShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: edgeDivider,
+      chip: neutralChip,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -294,6 +309,7 @@ export const FIELD_SHELLS = {
       trigger: [wellShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: edgeDivider,
+      chip: pageChip,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -305,6 +321,7 @@ export const FIELD_SHELLS = {
       trigger: [filledShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: noDivider,
+      chip: pageChip,
     },
   },
   indicator: {
@@ -315,6 +332,7 @@ export const FIELD_SHELLS = {
       trigger: [indicatorShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
       divider: noDivider,
+      chip: pageChip,
     },
   },
   underline: {
@@ -325,6 +343,7 @@ export const FIELD_SHELLS = {
       trigger: [underlineShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonUnderline,
       divider: noDivider,
+      chip: neutralChip,
     },
   },
 }
@@ -380,6 +399,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
       // A select trigger drawn by Button: it only borrows the field height.
       buttonTrigger: "",
       divider: "",
+      chip: "",
       dateInputSegment:
         "rounded-(--studio-radius-detail) px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
     },
@@ -431,26 +451,26 @@ const { useStyles, styles } = createStyles(inputMeta, {
       none: {},
       edge: {
         slots: {
-          inputGroup: hoverEdge,
-          input: hoverEdge,
-          textArea: hoverEdge,
-          trigger: hoverEdge,
+          inputGroup: groupEdge,
+          input: selfEdge,
+          textArea: selfEdge,
+          trigger: triggerEdge,
         },
       },
       tint: {
         slots: {
-          inputGroup: hoverTint,
-          input: hoverTint,
-          textArea: hoverTint,
-          trigger: hoverTint,
+          inputGroup: groupTint,
+          input: selfTint,
+          textArea: selfTint,
+          trigger: triggerTint,
         },
       },
       "edge-tint": {
         slots: {
-          inputGroup: [hoverEdge, hoverTint],
-          input: [hoverEdge, hoverTint],
-          textArea: [hoverEdge, hoverTint],
-          trigger: [hoverEdge, hoverTint],
+          inputGroup: [groupEdge, groupTint],
+          input: [selfEdge, selfTint],
+          textArea: [selfEdge, selfTint],
+          trigger: [triggerEdge, triggerTint],
         },
       },
     },
