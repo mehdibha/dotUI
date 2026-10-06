@@ -39,6 +39,7 @@ import * as links from "./links"
 import * as menus from "./menus"
 import * as mobile from "./mobile"
 import * as motion from "./motion"
+import * as navigation from "./navigation"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
@@ -57,7 +58,6 @@ import * as spinner from "./spinner"
 import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
-import * as tabs from "./tabs"
 import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
@@ -103,7 +103,7 @@ export const CHAPTERS = [
   menus.chapter,
   dialogs.chapter,
   tooltips.chapter,
-  tabs.chapter,
+  navigation.chapter,
   accordion.chapter,
   breadcrumbs.chapter,
   pagination.chapter,

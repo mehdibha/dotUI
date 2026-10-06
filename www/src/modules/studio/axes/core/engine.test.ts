@@ -368,6 +368,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { dialogSections: "divided", dialogActions: "bleed" },
     { dialogSections: "on-scroll", dialogActions: "bleed" },
   ],
+  "navigation/surface-needs-shell": [
+    { navMarker: "surface", shellTone: "page" },
+    { navMarker: "surface", shellTone: "recessed" },
+  ],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

@@ -1,9 +1,9 @@
-/* Breadcrumbs — the trail's two forks: the separator glyph (slash: Carbon,
-   Primer, Vercel · chevron: Spectrum, shadcn, Fluent) and the ancestor tone
-   (muted labels that sharpen on hover · accent links). The current crumb is
-   plain foreground in both camps.
+/* Breadcrumbs — the separator glyph and how ancestors read: muted labels
+   that sharpen on hover, or links in the link recipe. The current crumb is
+   plain foreground either way.
 
-   Engine: `separator` and `tone` are enum params on `breadcrumbs`. */
+   Engine: `separator` and `ancestors` enum params on `breadcrumbs`;
+   `ancestors` folds in the link color and underline. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -15,19 +15,32 @@ export const BREADCRUMB_DEFAULTS = {
   breadcrumbTone: "muted",
 }
 
+/* Descriptions credit the systems each option is copied from. */
 export const SEPARATOR_OPTIONS = [
-  { value: "slash", label: "Slash" },
-  { value: "chevron", label: "Chevron" },
+  {
+    value: "chevron",
+    label: "Chevron",
+    description: "shadcn, Geist, Spectrum 2, Fluent 2",
+  },
+  {
+    value: "slash",
+    label: "Slash",
+    description: "Primer, Carbon, Atlassian, Notion",
+  },
 ]
 
-export const TONE_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "muted", label: "Muted" },
+export const ANCESTOR_OPTIONS = [
+  { value: "muted", label: "Muted", description: "shadcn, Geist, Spectrum 2" },
+  {
+    value: "link",
+    label: "Same as links",
+    description: "Primer, Carbon, Stripe",
+  },
 ]
 
 export const BREADCRUMB_SCHEMA: ChapterSchema<typeof BREADCRUMB_DEFAULTS> = {
   breadcrumbSeparator: oneOf(SEPARATOR_OPTIONS),
-  breadcrumbTone: oneOf(TONE_OPTIONS),
+  breadcrumbTone: oneOf(ANCESTOR_OPTIONS),
 }
 
 export function resolveBreadcrumbs(state: Effective): Resolved {
@@ -35,7 +48,10 @@ export function resolveBreadcrumbs(state: Effective): Resolved {
     params: {
       breadcrumbs: {
         separator: state.breadcrumbSeparator,
-        tone: state.breadcrumbTone,
+        ancestors:
+          state.breadcrumbTone === "link"
+            ? `${state.linkColor}-${state.linkUnderline}`
+            : "muted",
       },
     },
   }
