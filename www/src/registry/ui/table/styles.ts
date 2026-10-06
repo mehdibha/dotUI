@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
+        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
       ],
       columnContent: "flex h-full min-w-0 items-center gap-1.5",
       columnLabel: "min-w-0 flex-1 truncate",
@@ -25,7 +25,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
+        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
       ],
       selectionColumn: "w-10 min-w-10 px-2.5",
       sortIndicator:
@@ -46,7 +46,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "bg-clip-padding px-2.5",
         "[div]:flex [div]:h-full [div]:w-full [div]:items-center",
         "[&.text-center]:justify-center [&.text-right]:justify-end",
-        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-(--studio-table-cell-radius) data-focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] data-focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] data-focus-visible:before:content-['']",
+        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-(--studio-table-cell-radius) data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-['']",
       ],
       selectionCell: [
         "w-10 min-w-10 px-2.5",
@@ -67,7 +67,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       ],
       expandButton: [
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset focus-visible:focus-ring",
-        "hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
+        "group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
       ],
       expandIcon:
         "size-3.5 transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",

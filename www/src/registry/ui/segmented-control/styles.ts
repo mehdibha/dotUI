@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       item: [
         "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring",
         "text-fg-muted hover:text-fg",
-        "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
       // The sliding pill. SelectionIndicator positions/sizes it over the selected

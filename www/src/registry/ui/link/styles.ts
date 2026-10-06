@@ -9,7 +9,7 @@ import linkMeta from "./meta"
 const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
-      "focus-reset focus-visible:focus-ring",
+      "focus-reset focus-visible:focus-ring-outside",
       "inline-flex items-center gap-1 transition-colors duration-(--studio-link-state-duration) ease-(--studio-link-state-ease)",
     ],
     variants: {

@@ -7,12 +7,12 @@ const { useStyles, styles } = createStyles(switchMeta, {
     slots: {
       root: "flex items-center has-data-description:items-start",
       control: [
-        "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-(--studio-switch-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius)",
+        "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-(--studio-switch-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring-outside disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius) focus-visible:has-data-label:focus-ring",
         "transition-colors duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease) has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
         "inline-flex shrink-0 cursor-pointer items-center rounded-(--studio-switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
-        "selected:bg-selection",
+        "invalid:border-border-danger invalid:invalid-ring selected:bg-selection",
         "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
       ],
       thumb: [
