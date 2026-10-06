@@ -1,7 +1,9 @@
 import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
+import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
 import type { Density } from "@/registry/types"
 import dialogMeta from "@/registry/ui/dialog/meta"
 import { flatten } from "@/publisher/flatten"
@@ -12,6 +14,8 @@ import { designSystemOf } from "../resolve"
 import {
   ACTIONS_OPTIONS,
   BACKDROP_OPTIONS,
+  ORIGIN_SCRIM,
+  ORIGIN_SCRIM_BLUR,
   SECTIONS_OPTIONS,
   STRENGTH_OPTIONS,
 } from "./dialogs"
@@ -44,6 +48,14 @@ describe("dialogs axes", () => {
     expect(designSystemOf(DEFAULT_STATE).tokens).toEqual({})
   })
 
+  it("base.css and roles.css declare the Origin scrim", () => {
+    expect(ORIGIN_SCRIM).toBe(
+      "color-mix(in oklab, var(--color-overlay) 40%, transparent)",
+    )
+    expect(baseRegistryCss.cssVars?.theme?.["--color-scrim"]).toBe(ORIGIN_SCRIM)
+    expect(STYLE_VAR_DEFAULTS["--studio-scrim-blur"]).toBe(ORIGIN_SCRIM_BLUR)
+  })
+
   it("one scrim token pair: the tint, the strength's alpha, the frost", () => {
     const tokens = (raw: Record<string, unknown>) =>
       designSystemOf(parseState(raw)).tokens
@@ -53,7 +65,8 @@ describe("dialogs axes", () => {
     expect(
       tokens({ dialogBackdrop: "wash", dialogBackdropStrength: "heavy" }),
     ).toEqual({
-      "--color-scrim": "color-mix(in oklab, var(--color-bg) 80%, transparent)",
+      "--color-scrim":
+        "color-mix(in oklab, color-mix(in oklab, var(--color-bg) 96%, var(--color-overlay)) 80%, transparent)",
       "--studio-scrim-blur": "0",
     })
     expect(
@@ -174,7 +187,15 @@ describe("dialogs axes", () => {
       "max-md:**:data-[slot=dialog-footer]:mt-auto",
     ])
       expect(code).toContain(cls)
-    expect(await content("modal")).not.toContain("max-md:*:flex-1")
+    expect(code).toContain("max-md:pb-[env(safe-area-inset-bottom)]")
+    expect(code).toContain('aria-label="Close"')
+    expect(code).toContain("md:hidden")
+    const item = await shipped("modal", {}, { modal: { mobile: "fullscreen" } })
+    expect(item.registryDependencies).toContain("button")
+    const origin = await shipped("modal")
+    expect(origin.files?.[0]?.content).not.toContain("max-md:*:flex-1")
+    expect(origin.files?.[0]?.content).not.toContain("Close")
+    expect(origin.registryDependencies ?? []).not.toContain("button")
   })
 
   it("Frost hides under Scrim and Wash; Bleed falls back to End under a footer edge", () => {

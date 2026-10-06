@@ -3,7 +3,7 @@
    and the command palette shell ride on them.
 
    Engine: one scrim for every modal layer — `--color-scrim` (the overlay, or
-   the page tone for Wash, at the strength's alpha) and `--studio-scrim-blur`,
+   the page a step darker for Wash, at the strength's alpha) and `--studio-scrim-blur`,
    both read by modal and drawer. Sections and Actions fold into one
    composite `dialog.footer` param, so no slot takes classes from two
    params. */
@@ -325,6 +325,23 @@ const FROST_BLUR: Record<string, string> = {
   subtle: "var(--blur-xs)",
   strong: "var(--blur-sm)",
 }
+// The page a step darker: Geist's gray-100 in light, near black in dark.
+const WASH = "color-mix(in oklab, var(--color-bg) 96%, var(--color-overlay))"
+
+type Backdrop = Pick<
+  typeof DIALOG_DEFAULTS,
+  "dialogBackdrop" | "dialogBackdropStrength" | "dialogFrost"
+>
+
+const scrimOf = (state: Backdrop) =>
+  `color-mix(in oklab, ${state.dialogBackdrop === "wash" ? WASH : "var(--color-overlay)"} ${SCRIM_ALPHA[state.dialogBackdropStrength]}%, transparent)`
+
+const blurOf = (state: Backdrop) =>
+  state.dialogBackdrop === "frosted" ? FROST_BLUR[state.dialogFrost] : "0"
+
+/** What base.css and roles.css declare, so Origin ships no token. */
+export const ORIGIN_SCRIM = scrimOf(DIALOG_DEFAULTS)
+export const ORIGIN_SCRIM_BLUR = blurOf(DIALOG_DEFAULTS)
 
 /** The footer's edge for a Sections pick: none, a rule, or a band. */
 const FOOTER_EDGE: Record<string, string> = {
@@ -335,14 +352,10 @@ const FOOTER_EDGE: Record<string, string> = {
 
 export function resolveDialogs(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
-  const alpha = SCRIM_ALPHA[state.dialogBackdropStrength] ?? 40
-  const tint = state.dialogBackdrop === "wash" ? "bg" : "overlay"
-  if (tint !== "overlay" || alpha !== 40)
-    tokens["--color-scrim"] =
-      `color-mix(in oklab, var(--color-${tint}) ${alpha}%, transparent)`
-  const blur =
-    state.dialogBackdrop === "frosted" ? FROST_BLUR[state.dialogFrost] : "0"
-  if (blur && blur !== FROST_BLUR.strong) tokens["--studio-scrim-blur"] = blur
+  const scrim = scrimOf(state)
+  if (scrim !== ORIGIN_SCRIM) tokens["--color-scrim"] = scrim
+  const blur = blurOf(state)
+  if (blur && blur !== ORIGIN_SCRIM_BLUR) tokens["--studio-scrim-blur"] = blur
 
   return {
     tokens,
