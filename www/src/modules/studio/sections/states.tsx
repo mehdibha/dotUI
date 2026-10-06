@@ -22,7 +22,6 @@ import {
   WIDTH_OPTIONS,
 } from "../axes/states"
 import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
-import type { DialOption } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"
 import { ArrowCursor, HandCursor, NotAllowedCursor } from "./cursors"
@@ -112,14 +111,22 @@ function DisabledSpecimen({
   treatment: string
   size: Size
 }) {
+  // A filled button with its label: one grey for Solid, itself at 50% for Fade.
   return (
     <span
       className={cn(
-        "block shrink-0",
+        "flex shrink-0 items-center justify-center",
         SIZE[size],
         treatment === "fade" ? "bg-primary opacity-50" : "bg-disabled",
       )}
-    />
+    >
+      <span
+        className={cn(
+          "h-[18%] w-1/2 rounded-full",
+          treatment === "fade" ? "bg-fg-on-primary" : "bg-fg-disabled",
+        )}
+      />
+    </span>
   )
 }
 
@@ -154,17 +161,10 @@ const CURSOR_GLYPHS: Record<string, React.ReactNode> = {
 }
 
 const cursorOptions = (options: { value: string; label: string }[]) =>
-  options.map(
-    (option): DialOption => ({
-      value: option.value,
-      label: (
-        <>
-          <Glyph>{CURSOR_GLYPHS[option.value]}</Glyph>
-          {option.label}
-        </>
-      ),
-    }),
-  )
+  options.map((option) => ({
+    ...option,
+    preview: <Glyph>{CURSOR_GLYPHS[option.value]}</Glyph>,
+  }))
 
 /* Painted words: the option is the highlight itself. The blue depicts the OS
    default, literal like the cursor drawings. */
@@ -274,6 +274,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
         <DialSelect
           axis="focusStrength"
           label="Ring strength"
+          rowPreview={false}
           options={[
             { value: "auto", label: "Auto" },
             ...STRENGTH_OPTIONS.map((option) => ({
@@ -290,6 +291,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
         <DialSelect
           axis="focusWidth"
           label="Ring width"
+          rowPreview={false}
           onChange={(value) =>
             studio.set("focusWidth")(value === "auto" ? "auto" : Number(value))
           }
@@ -320,32 +322,29 @@ export function StatesSection({ studio }: { studio: Studio }) {
             preview: <InvalidSpecimen invalid={option.value} size="row" />,
           }))}
         />
-        <DialSegmented
+        <DialSelect
           axis="cursorControls"
           label="Cursor on controls"
+          rowPreview={false}
           options={cursorOptions(CURSOR_CONTROL_OPTIONS)}
         />
-        <DialSegmented
+        <DialSelect
           axis="cursorDisabled"
           label="Cursor when disabled"
+          rowPreview={false}
           options={cursorOptions(CURSOR_DISABLED_OPTIONS)}
         />
-        <DialSegmented
+        <DialSelect
           axis="selectionUiText"
           label="Control text"
           options={CONTROL_TEXT_OPTIONS}
         />
-        <DialSegmented
+        <DialSelect
           axis="selectionHighlight"
           label="Text selection"
           options={HIGHLIGHT_OPTIONS.map((option) => ({
-            value: option.value,
-            label: (
-              <>
-                <HighlightChip value={option.value} />
-                {option.label}
-              </>
-            ),
+            ...option,
+            preview: <HighlightChip value={option.value} />,
           }))}
         />
       </More>
