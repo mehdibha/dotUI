@@ -28,7 +28,7 @@ import {
   DialTrigger,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 const px = (value: number) => `${Math.round(value * 10) / 10}px`
 
@@ -40,7 +40,7 @@ function rungLabel(label: string, ratio: number, base: number): string {
 
 /** A small app at `state`'s real radii: a panel holding a field and a button
  *  (controls), over a menu (surface) with its highlighted item. */
-function AppGlyph({ state }: { state: StudioState }) {
+function AppGlyph({ state }: { state: Effective }) {
   const radius = (key: ShapeRoleKey) => ({
     borderRadius: roleRadiusPx(state, key),
   })
@@ -69,7 +69,7 @@ function AppGlyph({ state }: { state: StudioState }) {
 }
 
 /** The chapter's specimen: the surface corner with a control nested inside. */
-export function ShapePreview({ state }: { state: StudioState }) {
+export function ShapePreview({ state }: { state: Effective }) {
   const arc = (key: ShapeRoleKey, size: number) =>
     Math.min(roleRadiusPx(state, key), size)
   return (
@@ -86,7 +86,7 @@ export function ShapePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function shapeSummary(state: StudioState): string {
+export function shapeSummary(state: Effective): string {
   const character =
     SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
     "Custom"
@@ -95,7 +95,7 @@ export function shapeSummary(state: StudioState): string {
 
 /** Mounted with the popover, so Roles opens on a custom vector each time. */
 function CharacterPanel({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
+  const { state, effective, set, setState } = studio
   const active = activeCharacter(state)
   const [open, setOpen] = useState(active === undefined)
   const options = (key: ShapeRoleKey) => [
@@ -103,7 +103,7 @@ function CharacterPanel({ studio }: { studio: Studio }) {
       ? [
           {
             value: "auto",
-            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, [key]: "auto" }, key))}`,
+            label: `Auto · ${px(state.radiusPx * roleRatio({ ...effective, [key]: "auto" }, key))}`,
           },
         ]
       : []),
@@ -126,7 +126,7 @@ function CharacterPanel({ studio }: { studio: Studio }) {
         options={SHAPE_CHARACTERS.map((character) => ({
           id: character.id,
           label: character.label,
-          children: <AppGlyph state={{ ...state, ...character.vector }} />,
+          children: <AppGlyph state={{ ...effective, ...character.vector }} />,
         }))}
       />
       <DialFolder

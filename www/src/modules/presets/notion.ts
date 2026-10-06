@@ -1,4 +1,4 @@
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const notion = definePreset({
   id: "notion",
@@ -6,141 +6,44 @@ export const notion = definePreset({
   description: "Warm ink, quiet blue.",
   swatch: "#8e8b86",
   inspiredBy: "Notion",
-  state: {
+  diff: {
     // Color
     // The app token; #0075de is the marketing blue.
     brand: "#2783de",
-    buttonColor: "accent",
-    selectionColor: "accent",
     neutralHue: 81,
-    successSeed: "",
-    warningSeed: "",
-    dangerSeed: "",
-    selectionSeed: "",
-    vividness: 1,
     neutralTint: 0.5,
-    preserveSeed: false,
     lightBg: 100,
     darkBg: 8.8,
 
     // Typography
-    headingFont: "",
     bodyFont: "Inter",
-    monoFont: "Geist Mono",
-
-    // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
 
     // Shape
     radiusPx: 8,
-    roleControl: "md",
-    roleItem: "auto",
-    roleSurface: "lg",
-    rolePanel: "xl",
     roleCard: "xl",
 
     // Space
-    density: "default",
     // 28px controls; density stays default.
     spacingUnit: 3.5,
 
-    // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    surfaceGlass: false,
-
     // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
     cursorDragging: "grab",
     cursorDisabled: "default",
-    selectionUiText: "none",
-    selectionHighlight: "accent",
 
     // States
-    focusColor: "accent",
-    focusStyle: "ring",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
     focusInputStyle: "border",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
     focusInputBorderWidth: 2,
     disabledTreatment: "fade",
-    inputError: "border",
-
-    // Motion
-    ...DEFAULT_MOTION,
-
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
 
     // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
     linkUnderline: "always",
     linkColor: "neutral",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "ring",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "flat",
-    segmentedTrack: "filled",
-    switchColor: "accent",
-    checkboxColor: "accent",
-    checkCorner: "rounded",
-    radioColor: "accent",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "none",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
-    pickerCaret: "chevron",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
-    sliderColor: "accent",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "sentence",
     menuSearch: "bar",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
     tabStyle: "pill",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
     accordionMarkerPosition: "leading",
     breadcrumbSeparator: "slash",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
     badgeStyle: "soft",
     badgeShape: "rounded",
     kbdTreatment: "text",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
   },
 })

@@ -6,7 +6,8 @@
    focus and invalid keep their own border); the focus transition rides the
    `--studio-input-state-*` vars, which the token field reads too. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -42,7 +43,7 @@ export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
   inputMotion: STATE_CHANGE,
 }
 
-export function resolveInputs(state: StudioState): Resolved {
+export function resolveInputs(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("input", state.inputMotion, MOTION),
     params: {
@@ -53,3 +54,10 @@ export function resolveInputs(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "inputs",
+  defaults: INPUT_DEFAULTS,
+  schema: INPUT_SCHEMA,
+  resolve: resolveInputs,
+})

@@ -10,7 +10,8 @@
 
 import type { ColorConfig } from "@/registry/theme"
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease } from "./motion"
 import type { Curve } from "./motion"
 import { oneOf } from "./schema"
@@ -74,7 +75,7 @@ export const CHART_SCHEMA: ChapterSchema<typeof CHART_DEFAULTS> = {
   chartMotion: oneOf(MOTION_OPTIONS),
 }
 
-export function resolveCharts(state: StudioState): Resolved {
+export function resolveCharts(state: Effective): Resolved {
   const chartPalette = chartPaletteOf(state.chartPalette)
   return {
     // A recipe slice, not a recipe: resolve.ts completes it against the default.
@@ -82,3 +83,10 @@ export function resolveCharts(state: StudioState): Resolved {
     params: { chart: { grid: state.chartGrid, motion: state.chartMotion } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "charts",
+  defaults: CHART_DEFAULTS,
+  schema: CHART_SCHEMA,
+  resolve: resolveCharts,
+})

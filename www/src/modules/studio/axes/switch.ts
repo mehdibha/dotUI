@@ -4,7 +4,8 @@
    flip (`--studio-switch-state-*`). */
 
 import { fillScope, SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -22,9 +23,16 @@ export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {
   switchMotion: STATE_CHANGE,
 }
 
-export function resolveSwitch(state: StudioState): Resolved {
+export function resolveSwitch(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("switch", state.switchMotion, MOTION),
     color: fillScope(state, "switch", state.switchColor),
   }
 }
+
+export const chapter = defineChapter({
+  id: "switch",
+  defaults: SWITCH_DEFAULTS,
+  schema: SWITCH_SCHEMA,
+  resolve: resolveSwitch,
+})

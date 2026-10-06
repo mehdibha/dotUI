@@ -8,7 +8,8 @@
    icon; the bar is a field/styles.css rule on every `data-field` root, driven
    by the value's vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -26,6 +27,13 @@ export const INVALID_SCHEMA: ChapterSchema<typeof INVALID_DEFAULTS> = {
   inputError: oneOf(ERROR_OPTIONS),
 }
 
-export function resolveInvalid(state: StudioState): Resolved {
+export function resolveInvalid(state: Effective): Resolved {
   return { params: { field: { error: state.inputError } } }
 }
+
+export const chapter = defineChapter({
+  id: "invalid",
+  defaults: INVALID_DEFAULTS,
+  schema: INVALID_SCHEMA,
+  resolve: resolveInvalid,
+})

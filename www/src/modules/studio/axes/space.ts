@@ -6,7 +6,8 @@
    publisher flattens into the shipped classes. The unit is Tailwind's
    `--spacing`, written on `:root` — live and in the exported theme alike. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -52,9 +53,16 @@ export const SPACE_SCHEMA: ChapterSchema<typeof SPACE_DEFAULTS> = {
   spacingUnit: range(UNIT_RANGE),
 }
 
-export function resolveSpace(state: StudioState): Resolved {
+export function resolveSpace(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.spacingUnit !== SPACE_DEFAULTS.spacingUnit)
     tokens["--spacing"] = `${state.spacingUnit / 16}rem`
   return { tokens, density: densityTier(state.density).id }
 }
+
+export const chapter = defineChapter({
+  id: "space",
+  defaults: SPACE_DEFAULTS,
+  schema: SPACE_SCHEMA,
+  resolve: resolveSpace,
+})

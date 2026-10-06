@@ -43,7 +43,7 @@ import TabsDemo from "@/registry/ui/tabs/demos/basic"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
-import { DEFAULT_STATE } from "@/modules/studio/axes"
+import { DEFAULT_EFFECTIVE } from "@/modules/studio/axes"
 import {
   resolveShape,
   ROLE_VARS,
@@ -547,7 +547,7 @@ function shapeCharacter(tokens: Record<string, string>): string {
   const actual = radiusVars(tokens)
   const match = SHAPE_CHARACTERS.find((character) => {
     const expected = radiusVars(
-      resolveShape({ ...DEFAULT_STATE, ...character.vector }).tokens ?? {},
+      resolveShape({ ...DEFAULT_EFFECTIVE, ...character.vector }).tokens ?? {},
     )
     const names = new Set([...Object.keys(expected), ...Object.keys(actual)])
     return [...names].every((name) => expected[name] === actual[name])
@@ -562,7 +562,7 @@ function ShapeSection({
   radiusPx: number
   tokens: Record<string, string>
 }) {
-  const defaults = shapeVars(DEFAULT_STATE)
+  const defaults = shapeVars(DEFAULT_EFFECTIVE)
   const roles = SHAPE_ROLES.map(({ key, label }) => {
     const name = ROLE_VARS[key]
     const rung = SHAPE_RUNGS.find(

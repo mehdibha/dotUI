@@ -1,6 +1,6 @@
 import { DEFAULTS } from "@/modules/studio/axes"
 
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const airbnb = definePreset({
   id: "airbnb",
@@ -8,40 +8,27 @@ export const airbnb = definePreset({
   description: "Rausch accents, ink actions.",
   swatch: "#ff385c",
   inspiredBy: "Airbnb",
-  state: {
+  diff: {
     // Color
     brand: "#ff385c",
     // Primary CTAs and selection are ink #222; Rausch stays the accent.
     buttonColor: "neutral",
     selectionColor: "neutral",
-    neutralHue: null,
     successSeed: "#038026",
     warningSeed: "#eb6100",
     dangerSeed: "#d7251c",
-    selectionSeed: "",
-    vividness: 1,
     neutralTint: 0,
     preserveSeed: true,
     lightBg: 100,
     darkBg: 5,
 
     // Typography
-    headingFont: "",
     // Cereal is proprietary; Plus Jakarta Sans is the closest free match.
     bodyFont: "Plus Jakarta Sans",
-    monoFont: "Geist Mono",
-
-    // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
 
     // Shape
     radiusPx: 16,
-    roleControl: "md",
-    roleItem: "auto",
     roleSurface: "md",
-    rolePanel: "xl",
     roleCard: "xl",
 
     // Space
@@ -49,58 +36,30 @@ export const airbnb = definePreset({
     spacingUnit: 4.5,
 
     // Surfaces
-    surfaceLayers: "same",
     surfaceEdge: "none",
     surfaceShadow: "low",
-    surfaceGlass: false,
 
     // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
     selectionHighlight: "browser",
 
     // States
     // Airbnb never rings in Rausch.
     focusColor: "neutral",
-    focusStyle: "ring",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
     focusInputStyle: "border",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
     focusInputBorderWidth: 2,
-    disabledTreatment: "solid",
-    inputError: "border",
 
     // Motion
-    ...DEFAULT_MOTION,
     popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
     tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
 
     // Mobile
-    mobilePickers: "drawer",
     mobileDialogs: "sheet",
 
     // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
     linkUnderline: "always",
     linkColor: "neutral",
-    skeletonAnimation: "shimmer",
     spinnerStyle: "dots",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
     segmentedSelected: "raised",
     segmentedTrack: "outline",
     switchColor: "neutral",
@@ -109,44 +68,16 @@ export const airbnb = definePreset({
     radioColor: "neutral",
     cardSelected: "outline-tint",
     cardControl: "hidden",
-    inputStyle: "outline",
     inputHover: "border",
-    addonLayout: "inside",
-    addonDivider: "hairline",
     numberLayout: "split",
-    otpStyle: "group",
-    pickerCaret: "chevron",
     calendarDayShape: "circle",
-    calendarToday: "none",
     calendarWeekdays: "double",
     sliderThumb: "outline",
-    sliderTrack: "thin",
     sliderColor: "neutral",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
     menuInset: "full-bleed",
-    menuLabels: "sentence",
-    menuSearch: "field",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
     tabStyle: "line",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
-    breadcrumbSeparator: "chevron",
-    breadcrumbTone: "muted",
     paginationCurrent: "filled",
     badgeStyle: "soft",
     badgeShape: "rounded",
-    kbdTreatment: "chip",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
   },
 })

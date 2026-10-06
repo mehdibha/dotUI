@@ -17,7 +17,7 @@ import {
   DialSegmented,
   DialSelect,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -142,7 +142,7 @@ function CellsGlyph({ cells }: { cells: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function InputsPreview({ state }: { state: StudioState }) {
+export function InputsPreview({ state }: { state: Effective }) {
   return <FieldGlyph style={state.inputStyle} />
 }
 

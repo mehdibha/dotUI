@@ -10,13 +10,18 @@ import {
 } from "@/registry/theme"
 import type { SemanticTarget } from "@/registry/theme"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { buildColorConfig } from "./color"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import { GROUPED_PAGE } from "./color"
+import {
+  DEFAULT_EFFECTIVE,
+  DEFAULT_STATE,
+  DEFAULTS,
+  effective,
+  parseState,
+} from "./index"
 import {
   EDGE_OPTIONS,
-  flatAllowed,
-  GROUPED_PAGE,
   LAYERS_OPTIONS,
   NO_SHADOW,
   SHADOW_OPTIONS,
@@ -26,7 +31,6 @@ import {
   SURFACE_STYLES,
   styleScore,
   surfaceStyle,
-  withSurface,
 } from "./surfaces"
 import type { Mode, PerMode, SurfaceColor } from "./surfaces"
 
@@ -54,7 +58,10 @@ const QUARTER = "color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100))"
 const WHITE = "oklch(1 0 0)"
 
 const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem(parseState({ ...overrides })).tokens
+  designSystemOf(parseState({ ...overrides })).tokens
+
+const resolved = (values: Partial<typeof DEFAULTS>) =>
+  effective(parseState({ ...values }))
 
 const PALETTE = {
   step: (s: string) => `var(--neutral-${s})`,
@@ -95,7 +102,7 @@ describe("surfaces", () => {
   test.each(["light", "dark"] as const)(
     "the default recipe is the registry's look in %s",
     (mode) => {
-      const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_STATE)
+      const { card, popover, modalShadow } = surfaceRecipe(DEFAULT_EFFECTIVE)
       const css = (pair: PerMode<SurfaceColor>) =>
         surfaceColorCss(pair[mode], PALETTE)
       expect(css(card.bg)).toBe(registryColor("color-card", mode))
@@ -116,7 +123,7 @@ describe("surfaces", () => {
     for (const s of SURFACE_STYLES) {
       const state = parseState(s.values)
       expect(surfaceStyle(state)).toEqual({ style: s, exact: true })
-      expect(flatAllowed(state) || s.values.surfaceShadow !== "flat").toBe(true)
+      expect(effective(state).values.surfaceShadow).toBe(s.values.surfaceShadow)
     }
   })
 
@@ -144,62 +151,44 @@ describe("surfaces", () => {
     )
   })
 
-  test("dropping the edge off flat cards on the page lifts them to Low", () => {
-    const { state } = withSurface(DEFAULT_STATE, { surfaceEdge: "none" })
-    expect(state.surfaceShadow).toBe("low")
-    expect(surfaceStyle(state)).toMatchObject({
-      style: { id: "elevated" },
-      exact: true,
+  test("flat cards with no edge on the page render Low, saved Flat kept", () => {
+    const { values, explain } = resolved({ surfaceEdge: "none" })
+    expect(values.surfaceShadow).toBe("low")
+    expect(explain.surfaceShadow).toMatchObject({
+      saved: "flat",
+      rule: "surfaces/flat-needs-separation",
     })
-    const tonal = parseState({ surfaceLayers: "tonal" })
     expect(
-      withSurface(tonal, { surfaceEdge: "none" }).state.surfaceShadow,
-    ).toBe("flat")
+      resolved({ surfaceEdge: "none", surfaceLayers: "tonal" }).values,
+    ).toMatchObject({ surfaceShadow: "flat" })
   })
 
-  test("Flat that would hide cards renders and edits as Low", () => {
-    const flat = withSurface(DEFAULT_STATE, {
+  test("Grouped's page is Auto: gray under Grouped, an explicit page kept", () => {
+    expect(DEFAULT_EFFECTIVE.lightBg).toBe(99)
+    expect(resolved({ surfaceLayers: "grouped" }).values.lightBg).toBe(
+      GROUPED_PAGE,
+    )
+    const white = { lightBg: 100 }
+    expect(
+      resolved({ ...white, surfaceLayers: "grouped" }).values.lightBg,
+    ).toBe(100)
+    expect(resolved(white).values.lightBg).toBe(100)
+  })
+
+  test("grouped, edgeless flat cards clamp a lighter page to gray", () => {
+    const flat = {
       surfaceLayers: "grouped",
       surfaceEdge: "none",
       surfaceShadow: "flat",
-    }).state
-    expect(flat).toMatchObject({ lightBg: GROUPED_PAGE, surfaceShadow: "flat" })
-    // The page slider goes through the same guard…
-    const white = withSurface({ ...flat, lightBg: 100 }, {}).state
-    expect(white.surfaceShadow).toBe("low")
-    // …and a state written elsewhere still renders a shadow.
-    const raw = parseState({ ...flat, lightBg: 100 })
-    expect(flatAllowed(raw)).toBe(false)
-    expect(surfaceRecipe(raw).card.shadow.length).toBeGreaterThan(0)
-  })
-
-  test("Grouped takes a light page down to gray and gives it back", () => {
-    const white = parseState({ lightBg: 100 })
-    const entered = withSurface(white, { surfaceLayers: "grouped" })
-    expect(entered).toEqual({
-      state: expect.objectContaining({ lightBg: GROUPED_PAGE }),
-      before: 100,
+    }
+    const { values, explain } = resolved({ ...flat, lightBg: 100 })
+    expect(values).toMatchObject({
+      lightBg: GROUPED_PAGE,
+      surfaceShadow: "flat",
     })
-    const left = withSurface(
-      entered.state,
-      { surfaceLayers: "same" },
-      entered.before,
-    )
-    expect(left.state.lightBg).toBe(100)
-    expect(left.before).toBeUndefined()
-
-    // A page moved while grouped stays; a gray page is kept on the way in.
-    const moved = { ...entered.state, lightBg: 94 }
-    expect(
-      withSurface(moved, { surfaceLayers: "same" }, entered.before).state
-        .lightBg,
-    ).toBe(94)
-    const gray = withSurface(parseState({ lightBg: 95 }), {
-      surfaceLayers: "grouped",
-    })
-    expect(gray).toEqual({
-      state: expect.objectContaining({ lightBg: 95 }),
-    })
+    expect(explain.lightBg?.rule).toBe("color/grouped-page")
+    expect(resolved({ ...flat, lightBg: 94 }).values.lightBg).toBe(94)
+    expect(surfaceRecipe(values).card.shadow).toEqual([])
   })
 
   test("shadow moves every role together", () => {
@@ -267,7 +256,9 @@ describe("surfaces stay legible", () => {
   ]
 
   const lstarFor = (page: (typeof pages)[number]) => {
-    const theme = resolveColorConfig(buildColorConfig(parseState(page)))
+    const theme = resolveColorConfig(
+      buildColorConfig(effective(parseState(page)).values),
+    )
     return (color: SurfaceColor, mode: EngineMode): number => {
       if (color.kind === "white") return 100
       const ramp: Partial<Record<StepName, string>> =
@@ -283,12 +274,18 @@ describe("surfaces stay legible", () => {
     }
   }
 
-  for (const page of pages) {
-    const lstar = lstarFor(page)
-    const PAGE: SurfaceColor = { kind: "step", step: "25" }
+  const lstarAt = new Map<string, ReturnType<typeof lstarFor>>()
+  const PAGE: SurfaceColor = { kind: "step", step: "25" }
 
+  for (const page of pages) {
     test.each(combos)(`page ${page.lightBg}/${page.darkBg}: %o`, (values) => {
-      const recipe = surfaceRecipe(parseState({ ...values, ...page }))
+      const state = resolved({ ...values, ...page }).values
+      // A rule may move the page (grouped, edgeless flat cards).
+      const at = { lightBg: state.lightBg, darkBg: state.darkBg }
+      const id = JSON.stringify(at)
+      const lstar = lstarAt.get(id) ?? lstarFor(at)
+      lstarAt.set(id, lstar)
+      const recipe = surfaceRecipe(state)
       const tones = (mode: EngineMode) => ({
         page: lstar(PAGE, mode),
         card: lstar(recipe.card.bg[mode], mode),
@@ -318,7 +315,7 @@ describe("surfaces stay legible", () => {
 
   test("in light, Same sits on the page and Tonal and Grouped read apart", () => {
     const at = (values: Partial<typeof DEFAULTS>) => {
-      const state = parseState(values)
+      const state = resolved(values).values
       const lstar = lstarFor({ lightBg: state.lightBg, darkBg: state.darkBg })
       const recipe = surfaceRecipe(state)
       return (
@@ -328,8 +325,6 @@ describe("surfaces stay legible", () => {
     }
     expect(at({})).toBe(0)
     expect(at({ surfaceLayers: "tonal" })).toBeLessThan(-2)
-    expect(
-      at(withSurface(DEFAULT_STATE, { surfaceLayers: "grouped" }).state),
-    ).toBeGreaterThan(3.5)
+    expect(at({ surfaceLayers: "grouped" })).toBeGreaterThan(3.5)
   })
 })

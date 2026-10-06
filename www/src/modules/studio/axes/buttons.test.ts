@@ -4,7 +4,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { parseState } from "./index"
 
 const shipped = async (
@@ -35,7 +35,7 @@ describe("button motion", () => {
   })
 
   test("one tweak times button and toggle alike", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ buttonMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     for (const name of ["button", "toggle-button"])

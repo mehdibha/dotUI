@@ -4,11 +4,11 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 import { DEFAULT_STATE, parseState } from "@/modules/studio/axes"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 describe("inputs chapter group", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
-    const system = resolveDesignSystem(DEFAULT_STATE)
+    const system = designSystemOf(DEFAULT_STATE)
     expect(system.componentParams.input).toEqual({
       style: "outline",
       hover: "none",
@@ -22,7 +22,7 @@ describe("inputs chapter group", () => {
   })
 
   it("maps the field style and hover onto input", () => {
-    const system = resolveDesignSystem(
+    const system = designSystemOf(
       parseState({ inputStyle: "filled", inputHover: "tint" }),
     )
     expect(system.componentParams.input).toMatchObject({
@@ -32,19 +32,19 @@ describe("inputs chapter group", () => {
   })
 
   it("folds addon layout and divider into one input param", () => {
-    const boxed = resolveDesignSystem(parseState({ addonLayout: "boxed" }))
+    const boxed = designSystemOf(parseState({ addonLayout: "boxed" }))
     expect(boxed.componentParams.input?.addon).toBe("boxed")
-    const flush = resolveDesignSystem(
+    const flush = designSystemOf(
       parseState({ addonLayout: "boxed", addonDivider: "none" }),
     )
     expect(flush.componentParams.input?.addon).toBe("boxed-flush")
     // The divider only exists on a boxed cell.
-    const inside = resolveDesignSystem(parseState({ addonDivider: "none" }))
+    const inside = designSystemOf(parseState({ addonDivider: "none" }))
     expect(inside.componentParams.input?.addon).toBe("inside")
   })
 
   it("maps steppers and cells onto their components", () => {
-    const system = resolveDesignSystem(
+    const system = designSystemOf(
       parseState({ numberLayout: "stacked", otpStyle: "underline" }),
     )
     expect(system.componentParams["number-field"]?.steppers).toBe("stacked")
@@ -74,7 +74,7 @@ describe("input motion", () => {
   })
 
   it("one tweak times every field shell", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ inputMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     for (const name of ["input", "token-field"])

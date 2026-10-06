@@ -10,7 +10,8 @@
    grid's `weekdayStyle` and header label (calendar/meta.ts `source`). The
    day's focus ring eases on the `--studio-calendar-state-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -51,7 +52,7 @@ export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
   calendarMotion: STATE_CHANGE,
 }
 
-export function resolveCalendar(state: StudioState): Resolved {
+export function resolveCalendar(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("calendar", state.calendarMotion, MOTION),
     params: {
@@ -63,3 +64,10 @@ export function resolveCalendar(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "calendar",
+  defaults: CALENDAR_DEFAULTS,
+  schema: CALENDAR_SCHEMA,
+  resolve: resolveCalendar,
+})

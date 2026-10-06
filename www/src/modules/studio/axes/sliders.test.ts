@@ -4,12 +4,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("sliders axis", () => {
   test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.slider).toEqual({
       thumb: "circle",
       track: "thin",
@@ -18,7 +18,7 @@ describe("sliders axis", () => {
   })
 
   test("thumb and track land as slider params", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({ sliderThumb: "bar", sliderTrack: "thick" }),
     )
     expect(ds.componentParams.slider).toEqual({ thumb: "bar", track: "thick" })
@@ -27,13 +27,13 @@ describe("sliders axis", () => {
 
   test("the fill leaves the buttons' source through the slider fill var", () => {
     expect(
-      resolveDesignSystem(parseState({ sliderColor: "neutral" })).tokens,
+      designSystemOf(parseState({ sliderColor: "neutral" })).tokens,
     ).toEqual({ "--studio-slider-fill-color": "var(--color-inverse)" })
     expect(
-      resolveDesignSystem(parseState({ buttonColor: "neutral" })).tokens,
+      designSystemOf(parseState({ buttonColor: "neutral" })).tokens,
     ).toEqual({ "--studio-slider-fill-color": "var(--color-accent)" })
     expect(
-      resolveDesignSystem(
+      designSystemOf(
         parseState({ buttonColor: "neutral", sliderColor: "neutral" }),
       ).tokens,
     ).toEqual({})
@@ -60,7 +60,7 @@ describe("slider motion", () => {
   })
 
   test("a tweak times the thumb's focus ring", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ sliderMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     expect(await shipped("slider", tokens)).toContain(

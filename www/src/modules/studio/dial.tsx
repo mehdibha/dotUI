@@ -49,6 +49,8 @@ import {
   useDraft,
   useMedia,
 } from "./rows"
+import { CauseChip, useAxisGate } from "./use-axis"
+import type { AxisKey } from "./use-axis"
 
 export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
@@ -105,6 +107,31 @@ export function DialRow({
   )
 }
 
+/** A row a rule holds: dimmed, its value set elsewhere, the cause beside it. */
+export function PinnedRow({
+  axis,
+  label,
+  cause,
+  children,
+}: {
+  axis?: string
+  label: string
+  cause: string
+  children: React.ReactNode
+}) {
+  return (
+    <div data-axis={axis} aria-disabled className={DIAL_ROW}>
+      <span className={cn(DIAL_LABEL, "opacity-50")}>{label}</span>
+      <span className="flex min-w-0 items-center gap-2">
+        <span className="truncate text-[13px] font-medium text-fg/50">
+          {children}
+        </span>
+        <CauseChip cause={cause} />
+      </span>
+    </div>
+  )
+}
+
 /** A break between row groups: rows sit 6px apart, groups 16px. */
 export function DialGap() {
   return <div className="h-1" />
@@ -115,11 +142,13 @@ export function DialGap() {
  *  values that end in a swatch: the swatch is the affordance, inset like
  *  DialColor's. */
 export function DialTrigger({
+  axis,
   label,
   value,
   chevron = true,
   children,
 }: {
+  axis?: string
   label: string
   value: React.ReactNode
   chevron?: boolean
@@ -127,7 +156,10 @@ export function DialTrigger({
 }) {
   return (
     <Dialog>
-      <RacButton className={cn(DIAL_ROW, DIAL_PRESS, !chevron && "pr-2.5")}>
+      <RacButton
+        data-axis={axis}
+        className={cn(DIAL_ROW, DIAL_PRESS, !chevron && "pr-2.5")}
+      >
         <span className={DIAL_LABEL}>{label}</span>
         <span className="flex min-w-0 items-center gap-2">
           <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
@@ -200,23 +232,37 @@ export interface DialSelectOption {
  *  choice is a comparison against the preview behind it. `children` are dial
  *  rows under the list, past a separator. */
 export function DialSelect({
+  axis: key,
   label,
-  value,
-  onChange,
+  value: valueProp,
+  onChange: onChangeProp,
   options,
   rowPreview = true,
   children,
 }: {
+  /** The key the row edits: value, change, hide and exclusions follow it. */
+  axis?: AxisKey
   label: string
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange?: (value: string) => void
   options: DialSelectOption[]
   rowPreview?: boolean
   children?: React.ReactNode
 }) {
+  const { axis, hidden, pinned, exclude } = useAxisGate(key)
+  if (hidden) return null
+  const value = valueProp ?? String(axis?.effective)
+  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
+  if (pinned)
+    return (
+      <PinnedRow axis={key} label={label} cause={pinned}>
+        {selected?.label ?? value}
+      </PinnedRow>
+    )
   return (
     <DialTrigger
+      axis={key}
       label={label}
       value={
         <>
@@ -232,6 +278,7 @@ export function DialSelect({
             selectionMode="single"
             disallowEmptySelection
             selectedKeys={[value]}
+            disabledKeys={exclude?.options}
             onSelectionChange={(keys) => {
               if (keys === "all") return
               const next = keys.values().next().value
@@ -289,9 +336,12 @@ const PICK_ITEM =
 function PickItem({
   option,
   modified,
+  aside,
 }: {
   option: DialPickOption
   modified?: boolean
+  /** Beside the label: an excluded option's cause chip. */
+  aside?: React.ReactNode
 }) {
   return (
     <RacListBoxItem
@@ -312,6 +362,7 @@ function PickItem({
                     {option.note}
                   </span>
                 )}
+                {aside}
               </span>
               {option.description && (
                 <span className="text-xs leading-snug text-fg/55">
@@ -370,29 +421,48 @@ export function DialPickList({
 /** A setting as a plain line, Linear's settings style: the label left, a
  *  compact picker right whose menu says what each option does. */
 export function DialPicker({
+  axis: key,
   label,
-  value,
-  onChange,
+  value: valueProp,
+  onChange: onChangeProp,
   options,
 }: {
+  /** The key the row edits: value, change, hide and exclusions follow it. */
+  axis?: AxisKey
   label: string
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange?: (value: string) => void
   options: DialPickOption[]
 }) {
+  const { axis, hidden, pinned, exclude } = useAxisGate(key)
+  if (hidden) return null
+  const value = valueProp ?? String(axis?.effective)
+  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
+  const excluded = new Set(exclude?.options)
+  // An excluded saved value reads as held by its cause.
+  const held =
+    pinned ?? (axis && excluded.has(String(axis.saved)) && exclude?.cause)
   return (
     <RacSelect
+      data-axis={key}
       selectedKey={value}
-      onSelectionChange={(key) => key !== null && onChange(String(key))}
-      disabledKeys={options.filter((o) => o.disabled).map((o) => o.value)}
-      className="flex h-9 w-full shrink-0 items-center justify-between gap-3 pr-1 pl-3"
+      onSelectionChange={(k) => k !== null && onChange(String(k))}
+      isDisabled={!!pinned}
+      disabledKeys={[
+        ...options.filter((o) => o.disabled).map((o) => o.value),
+        ...excluded,
+      ]}
+      className="flex h-9 w-full shrink-0 items-center justify-between gap-3 pr-1 pl-3 disabled:*:opacity-50"
     >
       <RacLabel className={DIAL_LABEL}>{label}</RacLabel>
-      <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
-        <span className="truncate">{selected?.label ?? value}</span>
-        <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
-      </RacButton>
+      <span className="flex min-w-0 items-center gap-1">
+        {held && <CauseChip cause={held} />}
+        <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
+          <span className="truncate">{selected?.label ?? value}</span>
+          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
+        </RacButton>
+      </span>
       <PanelPopoverBoundary.Provider value={null}>
         <PanelPopoverTitle.Provider value={label}>
           <PanelPopover
@@ -403,7 +473,14 @@ export function DialPicker({
           >
             <RacListBox className="flex flex-col gap-0.5 outline-hidden">
               {options.map((option) => (
-                <PickItem key={option.value} option={option} />
+                <PickItem
+                  key={option.value}
+                  option={option}
+                  aside={
+                    excluded.has(option.value) &&
+                    exclude && <CauseChip cause={exclude.cause} />
+                  }
+                />
               ))}
             </RacListBox>
           </PanelPopover>
@@ -508,8 +585,65 @@ function snapToDecile(raw: number, min: number, max: number) {
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
 }
 
-/** Drags through a draft and commits on release. */
-export function DialSlider({
+interface SliderProps {
+  label: string
+  minValue: number
+  maxValue: number
+  step: number
+  format: (value: number) => string
+}
+
+/** Drags through a draft and commits on release. With `axis`, the row edits
+ *  that key: hidden or held by a rule, an excluded range greyed, and a key
+ *  that follows another reads "Auto" until dragged (its chip goes back). */
+export function DialSlider(
+  row: SliderProps &
+    (
+      | { axis: AxisKey; value?: undefined; onChange?: undefined }
+      | { axis?: undefined; value: number; onChange: (value: number) => void }
+    ),
+) {
+  const { axis, hidden, pinned, exclude, following } = useAxisGate(row.axis)
+  if (hidden) return null
+  if (row.axis === undefined) return <SliderRow {...row} />
+  const { axis: _, value: __, onChange: ___, ...props } = row
+  if (!axis) return null
+  const current = Number(axis.effective)
+  if (pinned)
+    return (
+      <PinnedRow axis={axis.key} label={props.label} cause={pinned}>
+        {props.format(current)}
+      </PinnedRow>
+    )
+  const follow = axis.follows[0]
+  return (
+    <SliderRow
+      {...props}
+      axis={axis.key}
+      value={current}
+      onChange={axis.set}
+      following={following}
+      exclude={exclude}
+      aside={
+        <>
+          {exclude && <CauseChip cause={exclude.cause} />}
+          {follow && !following && (
+            <RacButton
+              onPress={() => axis.set(follow)}
+              onPointerDown={(e) => e.stopPropagation()}
+              className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/70 capitalize focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
+            >
+              {follow}
+            </RacButton>
+          )}
+        </>
+      }
+    />
+  )
+}
+
+function SliderRow({
+  axis,
   label,
   value,
   onChange,
@@ -517,14 +651,16 @@ export function DialSlider({
   maxValue,
   step,
   format,
-}: {
-  label: string
+  following,
+  exclude,
+  aside,
+}: SliderProps & {
+  axis?: string
   value: number
   onChange: (value: number) => void
-  minValue: number
-  maxValue: number
-  step: number
-  format: (value: number) => string
+  following?: string
+  exclude?: { above?: number; below?: number }
+  aside?: React.ReactNode
 }) {
   const [draft, setDraft] = useDraft(value)
   const reducedMotion = useMedia("(prefers-reduced-motion: reduce)")
@@ -796,8 +932,18 @@ export function DialSlider({
         )
       : Array.from({ length: 9 }, (_, i) => (i + 1) * 10)
 
+  const excluded = exclude && {
+    from: toPct(exclude.below ?? minValue),
+    to: toPct(exclude.above ?? maxValue),
+    above: exclude.above !== undefined,
+  }
+
   return (
-    <div ref={wrapperRef} className="relative h-9 w-full shrink-0">
+    <div
+      data-axis={axis}
+      ref={wrapperRef}
+      className="relative h-9 w-full shrink-0"
+    >
       <div
         ref={trackRef}
         role="slider"
@@ -818,6 +964,16 @@ export function DialSlider({
         onMouseLeave={() => setHovered(false)}
         onKeyDown={onKeyDown}
       >
+        {excluded && (
+          <div
+            className="pointer-events-none absolute inset-y-0 bg-[repeating-linear-gradient(135deg,transparent_0_4px,color-mix(in_oklab,var(--color-fg)_8%,transparent)_4px_5px)]"
+            style={
+              excluded.above
+                ? { left: `${excluded.to}%`, right: 0 }
+                : { left: 0, width: `${excluded.from}%` }
+            }
+          />
+        )}
         <div className="pointer-events-none absolute inset-0">
           {marks.map((left) => (
             <span
@@ -857,9 +1013,13 @@ export function DialSlider({
           ref={valueRef}
           className={cn(
             DIAL_VALUE,
-            "pointer-events-none absolute inset-y-0 right-3 flex items-center tabular-nums transition-colors duration-150 group-focus-visible:text-fg group-data-active:text-fg",
+            "pointer-events-none absolute inset-y-0 right-3 flex items-center gap-2 tabular-nums transition-colors duration-150 group-focus-visible:text-fg group-data-active:text-fg",
           )}
         >
+          {aside}
+          {following && !interacting && (
+            <span className="capitalize">{following} ·</span>
+          )}
           {format(draft)}
         </span>
       </div>
@@ -978,16 +1138,29 @@ export function SegmentedGroup({
 
 /** Label left, a segmented choice right. */
 export function DialSegmented({
+  axis: key,
   label,
-  value,
-  onChange,
+  value: valueProp,
+  onChange: onChangeProp,
   options,
 }: {
+  /** The key the row edits: value, change and hide follow it. */
+  axis?: AxisKey
   label: string
-  value: string | null
-  onChange: (value: string) => void
+  value?: string | null
+  onChange?: (value: string) => void
   options: DialOption[]
 }) {
+  const { axis, hidden, pinned } = useAxisGate(key)
+  if (hidden) return null
+  const value = valueProp !== undefined ? valueProp : String(axis?.effective)
+  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
+  if (pinned)
+    return (
+      <PinnedRow axis={key} label={label} cause={pinned}>
+        {options.find((o) => o.value === value)?.label ?? value}
+      </PinnedRow>
+    )
   // Two options sit beside the label; more stack under it, sharing the width.
   const stacked = options.length > 2
   const group = (
@@ -1002,6 +1175,7 @@ export function DialSegmented({
   if (stacked) {
     return (
       <div
+        data-axis={key}
         className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}
       >
         <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
@@ -1010,7 +1184,7 @@ export function DialSegmented({
     )
   }
   return (
-    <div className={cn(DIAL_ROW, "pr-1.5")}>
+    <div data-axis={key} className={cn(DIAL_ROW, "pr-1.5")}>
       <span className={DIAL_LABEL}>{label}</span>
       {group}
     </div>

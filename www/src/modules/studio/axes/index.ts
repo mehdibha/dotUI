@@ -1,12 +1,12 @@
 /* The studio's design-system state, and how it becomes a design system.
 
-   Each axis module owns one chapter's slice: its defaults (the state shape),
-   its option vocabularies, the schema raw values are validated against, and
-   `resolve` — the pure mapping from that slice
-   to what the engine consumes: global tokens (CSS vars), per-component
-   registry params, the density tier, the color recipe, the icon library. No
-   React here: the same resolver runs in the panel, the preview, the docs
-   demos, and the /r/* registry routes. */
+   One registry: every axis module exports a `chapter` — its keys' defaults
+   and schema, the follows (Same as / Auto) and rules on them, and `resolve`,
+   the pure mapping from the EFFECTIVE state to what the engine consumes
+   (tokens, registry params, density, the color recipe, the icon library).
+   DEFAULTS, SCHEMA, resolvers, follows and rules are all built from the list
+   below, so a key lives in its own module only. No React here: the same
+   code runs in the panel, the preview, the docs demos and /r/*. */
 
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
@@ -24,6 +24,8 @@ import * as charts from "./charts"
 import * as checkbox from "./checkbox"
 import * as choiceCards from "./choice-cards"
 import * as color from "./color"
+import { createEngine } from "./core/effective"
+import type { Explained, Follow, FollowId, Resolved, Rule } from "./core/types"
 import * as cursor from "./cursor"
 import * as dialogs from "./dialogs"
 import * as disabled from "./disabled"
@@ -64,134 +66,114 @@ import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
 
-/** One chapter's contribution to the resolved design system. */
-export interface Resolved {
-  /** Global CSS vars written on `:root` (and into the exported theme). */
-  tokens?: Record<string, string>
-  /** Registry param selections: component → param → value. */
-  params?: Record<string, Record<string, string>>
-  density?: Density
-  /** A slice of the recipe — Color contributes the full recipe; another
-   *  chapter adds token overrides, border targets or a control's fill scope
-   *  on top. */
-  color?: Partial<ColorConfig>
-  icons?: IconLibraryName
-}
+export type { Resolved }
 
-export const DEFAULTS = {
-  ...color.COLOR_DEFAULTS,
-  ...type.TYPE_DEFAULTS,
-  ...icons.ICON_DEFAULTS,
-  ...shape.SHAPE_DEFAULTS,
-  ...space.SPACE_DEFAULTS,
-  ...surfaces.SURFACE_DEFAULTS,
-  ...focus.FOCUS_DEFAULTS,
-  ...cursor.CURSOR_DEFAULTS,
-  ...selection.SELECTION_DEFAULTS,
-  ...disabled.DISABLED_DEFAULTS,
-  ...invalid.INVALID_DEFAULTS,
-  ...mobile.MOBILE_DEFAULTS,
-  ...charts.CHART_DEFAULTS,
-  ...links.LINK_DEFAULTS,
-  ...alert.ALERT_DEFAULTS,
-  ...toast.TOAST_DEFAULTS,
-  ...skeleton.SKELETON_DEFAULTS,
-  ...spinner.SPINNER_DEFAULTS,
-  ...progress.PROGRESS_DEFAULTS,
-  ...buttons.BUTTON_DEFAULTS,
-  ...buttonGroups.BUTTON_GROUP_DEFAULTS,
-  ...toggles.TOGGLE_DEFAULTS,
-  ...segmentedControl.SEGMENTED_DEFAULTS,
-  ...switchAxis.SWITCH_DEFAULTS,
-  ...checkbox.CHECKBOX_DEFAULTS,
-  ...radio.RADIO_DEFAULTS,
-  ...choiceCards.CHOICE_CARD_DEFAULTS,
-  ...inputs.INPUT_DEFAULTS,
-  ...inputGroups.INPUT_GROUP_DEFAULTS,
-  ...numberField.NUMBER_FIELD_DEFAULTS,
-  ...otpField.OTP_FIELD_DEFAULTS,
-  ...pickers.PICKER_DEFAULTS,
-  ...calendar.CALENDAR_DEFAULTS,
-  ...sliders.SLIDER_DEFAULTS,
-  ...menus.MENU_DEFAULTS,
-  ...dialogs.DIALOG_DEFAULTS,
-  ...popovers.POPOVER_DEFAULTS,
-  ...tooltips.TOOLTIP_DEFAULTS,
-  ...tabs.TAB_DEFAULTS,
-  ...accordion.ACCORDION_DEFAULTS,
-  ...sidebar.SIDEBAR_DEFAULTS,
-  ...breadcrumbs.BREADCRUMB_DEFAULTS,
-  ...pagination.PAGINATION_DEFAULTS,
-  ...badges.BADGE_DEFAULTS,
-  ...kbd.KBD_DEFAULTS,
-  ...avatars.AVATAR_DEFAULTS,
-  ...tables.TABLE_DEFAULTS,
-  ...questionnaire.QUESTIONNAIRE_DEFAULTS,
-  ...messageScroller.MESSAGE_SCROLLER_DEFAULTS,
-}
+/* Resolver order: a later chapter wins a token or param collision. */
+const CHAPTERS = [
+  color.chapter,
+  type.chapter,
+  icons.chapter,
+  shape.chapter,
+  space.chapter,
+  surfaces.chapter,
+  focus.chapter,
+  cursor.chapter,
+  selection.chapter,
+  disabled.chapter,
+  invalid.chapter,
+  mobile.chapter,
+  charts.chapter,
+  links.chapter,
+  alert.chapter,
+  toast.chapter,
+  skeleton.chapter,
+  spinner.chapter,
+  progress.chapter,
+  buttons.chapter,
+  buttonGroups.chapter,
+  toggles.chapter,
+  segmentedControl.chapter,
+  switchAxis.chapter,
+  checkbox.chapter,
+  radio.chapter,
+  choiceCards.chapter,
+  inputs.chapter,
+  inputGroups.chapter,
+  numberField.chapter,
+  otpField.chapter,
+  pickers.chapter,
+  calendar.chapter,
+  sliders.chapter,
+  menus.chapter,
+  dialogs.chapter,
+  popovers.chapter,
+  tooltips.chapter,
+  tabs.chapter,
+  accordion.chapter,
+  sidebar.chapter,
+  breadcrumbs.chapter,
+  pagination.chapter,
+  badges.chapter,
+  kbd.chapter,
+  avatars.chapter,
+  tables.chapter,
+  questionnaire.chapter,
+  messageScroller.chapter,
+] as const
 
-export type StudioStateInput = typeof DEFAULTS
+type UnionToIntersection<U> = (
+  U extends unknown ? (x: U) => void : never
+) extends (x: infer I) => void
+  ? I
+  : never
+type Merged = UnionToIntersection<(typeof CHAPTERS)[number]["defaults"]>
 
-export const SCHEMA = {
-  ...color.COLOR_SCHEMA,
-  ...type.TYPE_SCHEMA,
-  ...icons.ICON_SCHEMA,
-  ...shape.SHAPE_SCHEMA,
-  ...space.SPACE_SCHEMA,
-  ...surfaces.SURFACE_SCHEMA,
-  ...focus.FOCUS_SCHEMA,
-  ...cursor.CURSOR_SCHEMA,
-  ...selection.SELECTION_SCHEMA,
-  ...disabled.DISABLED_SCHEMA,
-  ...invalid.INVALID_SCHEMA,
-  ...mobile.MOBILE_SCHEMA,
-  ...charts.CHART_SCHEMA,
-  ...links.LINK_SCHEMA,
-  ...alert.ALERT_SCHEMA,
-  ...toast.TOAST_SCHEMA,
-  ...skeleton.SKELETON_SCHEMA,
-  ...spinner.SPINNER_SCHEMA,
-  ...progress.PROGRESS_SCHEMA,
-  ...buttons.BUTTON_SCHEMA,
-  ...buttonGroups.BUTTON_GROUP_SCHEMA,
-  ...toggles.TOGGLE_SCHEMA,
-  ...segmentedControl.SEGMENTED_SCHEMA,
-  ...switchAxis.SWITCH_SCHEMA,
-  ...checkbox.CHECKBOX_SCHEMA,
-  ...radio.RADIO_SCHEMA,
-  ...choiceCards.CHOICE_CARD_SCHEMA,
-  ...inputs.INPUT_SCHEMA,
-  ...inputGroups.INPUT_GROUP_SCHEMA,
-  ...numberField.NUMBER_FIELD_SCHEMA,
-  ...otpField.OTP_FIELD_SCHEMA,
-  ...pickers.PICKER_SCHEMA,
-  ...calendar.CALENDAR_SCHEMA,
-  ...sliders.SLIDER_SCHEMA,
-  ...menus.MENU_SCHEMA,
-  ...dialogs.DIALOG_SCHEMA,
-  ...popovers.POPOVER_SCHEMA,
-  ...tooltips.TOOLTIP_SCHEMA,
-  ...tabs.TAB_SCHEMA,
-  ...accordion.ACCORDION_SCHEMA,
-  ...sidebar.SIDEBAR_SCHEMA,
-  ...breadcrumbs.BREADCRUMB_SCHEMA,
-  ...pagination.PAGINATION_SCHEMA,
-  ...badges.BADGE_SCHEMA,
-  ...kbd.KBD_SCHEMA,
-  ...avatars.AVATAR_SCHEMA,
-  ...tables.TABLE_SCHEMA,
-  ...questionnaire.QUESTIONNAIRE_SCHEMA,
-  ...messageScroller.MESSAGE_SCROLLER_SCHEMA,
-} satisfies Record<keyof typeof DEFAULTS, AxisSchema>
+export type StudioStateInput = { [K in keyof Merged]: Merged[K] }
+type Key = keyof StudioStateInput & string
 
-// Every schema key is a state key; `satisfies` covers the reverse.
-type StateKey<K extends keyof StudioStateInput> = K
-type SchemaKey = StateKey<keyof typeof SCHEMA>
+export const DEFAULTS = Object.assign(
+  {},
+  ...CHAPTERS.map((chapter) => chapter.defaults),
+) as StudioStateInput
+
+export const SCHEMA = Object.assign(
+  {},
+  ...CHAPTERS.map((chapter) => chapter.schema),
+) as Record<Key, AxisSchema>
+
+export const FOLLOWS: Readonly<Record<string, readonly Follow[]>> =
+  Object.assign({}, ...CHAPTERS.map((chapter) => chapter.follows ?? {}))
+
+export const RULES: readonly Rule[] = CHAPTERS.flatMap(
+  (chapter): readonly Rule[] => chapter.rules ?? [],
+)
+
+/** Which chapter owns each key. */
+export const KEY_OWNER: Readonly<Record<string, string>> = Object.fromEntries(
+  CHAPTERS.flatMap((chapter) =>
+    Object.keys(chapter.defaults).map((key) => [key, chapter.id]),
+  ),
+)
+
+const FOLLOW_IDS = new Map(
+  Object.entries(FOLLOWS).map(([key, list]) => [
+    key,
+    new Set<unknown>(list.map((follow) => follow.id)),
+  ]),
+)
 
 declare const VALID: unique symbol
+declare const EFFECTIVE: unique symbol
 
-/** Axis values that passed `validate()` — the only way to mint one. */
+/** Saved axis values that passed `validate()` — the only way to mint one.
+ *  A key with follows may hold a follow id ("auto", "same"). */
 export type StudioState = StudioStateInput & { readonly [VALID]: true }
+
+/** What the user's picks resolve to: follows resolved, rules applied. The
+ *  only input a resolver accepts. */
+export type Effective = {
+  readonly [K in keyof StudioStateInput]: Exclude<StudioStateInput[K], FollowId>
+} & { readonly [EFFECTIVE]: true }
 
 export interface StateIssue {
   key: string
@@ -205,14 +187,20 @@ export type Validation =
 const isObject = (raw: unknown): raw is Record<string, unknown> =>
   typeof raw === "object" && raw !== null && !Array.isArray(raw)
 
+/** `undefined` when `value` fits the key, a follow id included. */
+export const checkKey = (key: string, value: unknown) =>
+  FOLLOW_IDS.get(key)?.has(value)
+    ? undefined
+    : checkAxisValue(SCHEMA[key as Key], value)
+
 // Every axis, with a missing or bad value taking the default.
 function checkAxes(input: Record<string, unknown>) {
   const issues: StateIssue[] = []
   const state: Record<string, unknown> = {}
-  for (const [key, schema] of Object.entries(SCHEMA)) {
-    const fallback = DEFAULTS[key as SchemaKey]
+  for (const key of Object.keys(SCHEMA)) {
+    const fallback = DEFAULTS[key as Key]
     const value = Object.hasOwn(input, key) ? input[key] : fallback
-    const problem = checkAxisValue(schema, value)
+    const problem = checkKey(key, value)
     if (problem) issues.push({ key, problem })
     state[key] = problem ? fallback : value
   }
@@ -252,59 +240,34 @@ export const DEFAULT_STATE = parseState({})
 /** Key-by-key equality; motion values compare by content. */
 export const sameState = (a: StudioState, b: StudioState) =>
   a === b ||
-  (Object.keys(SCHEMA) as SchemaKey[]).every((key) => sameValue(a[key], b[key]))
+  (Object.keys(SCHEMA) as Key[]).every((key) => sameValue(a[key], b[key]))
 
-const RESOLVERS: Array<(state: StudioState) => Resolved> = [
-  color.resolveColor,
-  type.resolveType,
-  icons.resolveIcons,
-  shape.resolveShape,
-  space.resolveSpace,
-  surfaces.resolveSurfaces,
-  focus.resolveFocus,
-  cursor.resolveCursor,
-  selection.resolveSelection,
-  disabled.resolveDisabled,
-  invalid.resolveInvalid,
-  mobile.resolveMobile,
-  charts.resolveCharts,
-  links.resolveLinks,
-  alert.resolveAlert,
-  toast.resolveToast,
-  skeleton.resolveSkeleton,
-  spinner.resolveSpinner,
-  progress.resolveProgress,
-  buttons.resolveButtons,
-  buttonGroups.resolveButtonGroups,
-  toggles.resolveToggles,
-  segmentedControl.resolveSegmentedControl,
-  switchAxis.resolveSwitch,
-  checkbox.resolveCheckbox,
-  radio.resolveRadio,
-  choiceCards.resolveChoiceCards,
-  inputs.resolveInputs,
-  inputGroups.resolveInputGroups,
-  numberField.resolveNumberField,
-  otpField.resolveOtpField,
-  pickers.resolvePickers,
-  calendar.resolveCalendar,
-  sliders.resolveSliders,
-  menus.resolveMenus,
-  dialogs.resolveDialogs,
-  popovers.resolvePopovers,
-  tooltips.resolveTooltips,
-  tabs.resolveTabs,
-  accordion.resolveAccordion,
-  sidebar.resolveSidebar,
-  breadcrumbs.resolveBreadcrumbs,
-  pagination.resolvePagination,
-  badges.resolveBadges,
-  kbd.resolveKbd,
-  avatars.resolveAvatars,
-  tables.resolveTables,
-  questionnaire.resolveQuestionnaire,
-  messageScroller.resolveMessageScroller,
-]
+const engine = createEngine({
+  defaults: DEFAULTS,
+  follows: FOLLOWS,
+  rules: RULES,
+})
+
+/** Saved → effective, memoized on the saved object. `explain` covers the keys
+ *  a follow or rule can touch. */
+export const effective = engine.effective as unknown as (
+  state: StudioState,
+) => {
+  values: Effective
+  explain: Readonly<Partial<Record<Key, Explained>>>
+}
+
+export const DEFAULT_EFFECTIVE = effective(DEFAULT_STATE).values
+
+/** Why a key holds its effective value. */
+export function explainKey(state: StudioState, key: Key): Explained {
+  const { values, explain } = effective(state)
+  return explain[key] ?? { saved: state[key], effective: values[key] }
+}
+
+const RESOLVERS = CHAPTERS.map(
+  (chapter) => chapter.resolve as (state: Effective) => Resolved,
+)
 
 /** The engine's view of the state: every chapter's resolution merged. Later
  *  chapters win on a token or param collision, so keep slices disjoint. */
@@ -327,7 +290,7 @@ function mergeColor(
   return merged
 }
 
-export function resolveAll(state: StudioState): ResolvedAll {
+export function resolveAll(state: Effective): ResolvedAll {
   const tokens: Record<string, string> = {}
   const params: Record<string, Record<string, string>> = {}
   let density: Density | undefined
@@ -341,8 +304,8 @@ export function resolveAll(state: StudioState): ResolvedAll {
     }
     if (part.density) density = part.density
     // Color merges deep on its per-token maps so a chapter other than Color
-    // (Surfaces: border targets, token overrides; a control: its fill scope)
-    // can contribute without owning the recipe.
+    // (a control's fill scope, focus overrides) can contribute without
+    // owning the recipe.
     if (part.color) color = color ? mergeColor(color, part.color) : part.color
     if (part.icons) icons = part.icons
   }

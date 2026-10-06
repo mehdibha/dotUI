@@ -10,7 +10,8 @@
    strip the chrome (`*:[kbd]:border-0 bg-transparent`), so list hints read
    as text in every treatment. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -28,10 +29,17 @@ export const KBD_SCHEMA: ChapterSchema<typeof KBD_DEFAULTS> = {
   kbdTreatment: oneOf(TREATMENT_OPTIONS),
 }
 
-export function resolveKbd(state: StudioState): Resolved {
+export function resolveKbd(state: Effective): Resolved {
   return {
     params: {
       kbd: { treatment: state.kbdTreatment },
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "kbd",
+  defaults: KBD_DEFAULTS,
+  schema: KBD_SCHEMA,
+  resolve: resolveKbd,
+})

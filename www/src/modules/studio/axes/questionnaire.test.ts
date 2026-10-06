@@ -4,7 +4,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
@@ -20,7 +20,7 @@ const shipped = async (tokens: Record<string, string> = {}) => {
 
 describe("questionnaire motion", () => {
   test("defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
+    expect(designSystemOf(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("ships Tailwind's default timing: no duration or ease class", async () => {
@@ -34,7 +34,7 @@ describe("questionnaire motion", () => {
   })
 
   test("a tweak times the choices and the text answer together", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         questionnaireMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
       }),

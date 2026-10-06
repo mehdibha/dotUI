@@ -4,7 +4,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
@@ -20,7 +20,7 @@ const shipped = async (tokens: Record<string, string> = {}) => {
 
 describe("message scroller motion", () => {
   test("defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
+    expect(designSystemOf(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("ships today's timing: a quick ease-out in, a slower ease-in out", async () => {
@@ -32,7 +32,7 @@ describe("message scroller motion", () => {
   })
 
   test("an exit equal to the enter ships no inactive timing", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         messageScrollerMotion: {
           pattern: "slide",
@@ -51,7 +51,7 @@ describe("message scroller motion", () => {
   })
 
   test("a spring enter ships linear() over its settle time", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         messageScrollerMotion: {
           ...DEFAULTS.messageScrollerMotion,

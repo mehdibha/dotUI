@@ -8,7 +8,8 @@
    `command`, the search-led surface, which also takes `inset` so its list
    gutter follows the rows. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -68,7 +69,7 @@ export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
   menuScale: oneOf(SCALE_OPTIONS),
 }
 
-export function resolveMenus(state: StudioState): Resolved {
+export function resolveMenus(state: Effective): Resolved {
   const list = {
     indicator: state.menuIndicator,
     highlight: state.menuHighlight,
@@ -87,3 +88,10 @@ export function resolveMenus(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "menus",
+  defaults: MENU_DEFAULTS,
+  schema: MENU_SCHEMA,
+  resolve: resolveMenus,
+})

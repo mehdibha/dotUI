@@ -10,7 +10,8 @@
    unsets them (`initial`) and dims through `--disabled-opacity`, while the
    recolor treatments re-point them. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -57,7 +58,14 @@ export const DISABLED_SCHEMA: ChapterSchema<typeof DISABLED_DEFAULTS> = {
   disabledTreatment: oneOf(TREATMENT_OPTIONS),
 }
 
-export function resolveDisabled(state: StudioState): Resolved {
+export function resolveDisabled(state: Effective): Resolved {
   const tokens = TREATMENT_TOKENS[state.disabledTreatment]
   return tokens ? { tokens: { ...tokens } } : {}
 }
+
+export const chapter = defineChapter({
+  id: "disabled",
+  defaults: DISABLED_DEFAULTS,
+  schema: DISABLED_SCHEMA,
+  resolve: resolveDisabled,
+})

@@ -8,7 +8,8 @@
    Engine: `animation` is an enum param on `skeleton`, plus its
    `--studio-skeleton-loop-*` timing vars (attachment reads them too). */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveLoop } from "./motion"
 import type { Loop } from "./motion"
 import { LOOP, oneOf } from "./schema"
@@ -33,9 +34,16 @@ export const SKELETON_SCHEMA: ChapterSchema<typeof SKELETON_DEFAULTS> = {
   skeletonMotion: LOOP,
 }
 
-export function resolveSkeleton(state: StudioState): Resolved {
+export function resolveSkeleton(state: Effective): Resolved {
   return {
     tokens: resolveLoop("skeleton", state.skeletonMotion, MOTION),
     params: { skeleton: { animation: state.skeletonAnimation } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "skeleton",
+  defaults: SKELETON_DEFAULTS,
+  schema: SKELETON_SCHEMA,
+  resolve: resolveSkeleton,
+})

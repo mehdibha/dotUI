@@ -5,12 +5,12 @@ import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("selection controls", () => {
   it("defaults resolve to no tokens and the registry's card params", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     for (const component of ["checkbox", "radio-group"]) {
       expect(ds.componentParams[component]).toEqual({
@@ -22,11 +22,11 @@ describe("selection controls", () => {
   })
 
   it("a control's fill forks it off the selection tokens as a recipe scope", () => {
-    const ds = resolveDesignSystem(parseState({ switchColor: "neutral" }))
+    const ds = designSystemOf(parseState({ switchColor: "neutral" }))
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toEqual({ switch: "neutral" })
     expect(
-      resolveDesignSystem(
+      designSystemOf(
         parseState({
           checkboxColor: "accent",
           radioColor: "neutral",
@@ -38,9 +38,9 @@ describe("selection controls", () => {
 
   it("a fill matching the selection source is no fork", () => {
     expect(
-      resolveDesignSystem(parseState({ checkboxColor: "accent" })).color,
+      designSystemOf(parseState({ checkboxColor: "accent" })).color,
     ).toEqual(DEFAULT_COLOR_CONFIG)
-    const neutralChecks = resolveDesignSystem(
+    const neutralChecks = designSystemOf(
       parseState({ selectionColor: "neutral", checkboxColor: "neutral" }),
     ).color
     expect(neutralChecks?.selection).toBe("neutral")
@@ -51,24 +51,23 @@ describe("selection controls", () => {
     // A selection seed paints the selection leaf; a control on that leaf
     // follows it, a control off it still forks to its own source.
     const seeded = parseState({ selectionSeed: "#0072f5" })
-    expect(resolveDesignSystem(seeded).color?.scopes).toBeUndefined()
+    expect(designSystemOf(seeded).color?.scopes).toBeUndefined()
     expect(
-      resolveDesignSystem({ ...seeded, checkboxColor: "neutral" }).color
-        ?.scopes,
+      designSystemOf({ ...seeded, checkboxColor: "neutral" }).color?.scopes,
     ).toEqual({ checkbox: "neutral" })
   })
 
   it("corner rides on the checkbox radius var", () => {
     expect(
-      resolveDesignSystem(parseState({ checkCorner: "square" })).tokens,
+      designSystemOf(parseState({ checkCorner: "square" })).tokens,
     ).toEqual({ "--studio-checkbox-radius": "var(--radius-xs)" })
     expect(
-      resolveDesignSystem(parseState({ checkCorner: "circle" })).tokens,
+      designSystemOf(parseState({ checkCorner: "circle" })).tokens,
     ).toEqual({ "--studio-checkbox-radius": "var(--radius-full)" })
   })
 
   it("choice cards write the synced card params on all three controls", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({ cardSelected: "outline", cardControl: "hidden" }),
     )
     for (const component of ["checkbox", "radio-group"]) {
@@ -104,7 +103,7 @@ describe("checkbox and radio motion", () => {
   })
 
   it("one tweak times checkbox and radio alike", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ checkboxMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     for (const name of ["checkbox", "radio-group"])

@@ -10,7 +10,8 @@
    per submenu (a combobox list keeps its anchor); `modal.mobile` is a class
    slice that docks the modal to the bottom edge. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -34,7 +35,7 @@ export const MOBILE_SCHEMA: ChapterSchema<typeof MOBILE_DEFAULTS> = {
   mobileDialogs: oneOf(DIALOG_OPTIONS),
 }
 
-export function resolveMobile(state: StudioState): Resolved {
+export function resolveMobile(state: Effective): Resolved {
   return {
     params: {
       popover: { mobile: state.mobilePickers },
@@ -42,3 +43,10 @@ export function resolveMobile(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "mobile",
+  defaults: MOBILE_DEFAULTS,
+  schema: MOBILE_SCHEMA,
+  resolve: resolveMobile,
+})

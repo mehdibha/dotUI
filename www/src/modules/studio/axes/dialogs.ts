@@ -12,7 +12,8 @@
    the motion timed by its `--studio-modal-*` vars; drawer motion is its
    `--studio-drawer-*` timing vars (the slide itself is the drawer). */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Bezier, Entrance } from "./motion"
 import { entrance, oneOf } from "./schema"
@@ -74,7 +75,7 @@ export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
   drawerMotion: entrance(DRAWER_PATTERNS),
 }
 
-export function resolveDialogs(state: StudioState): Resolved {
+export function resolveDialogs(state: Effective): Resolved {
   const backdrop = state.dialogBackdrop
   const modal = resolveEntrance("modal", state.modalMotion, MODAL_MOTION)
   return {
@@ -92,3 +93,10 @@ export function resolveDialogs(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "dialogs",
+  defaults: DIALOG_DEFAULTS,
+  schema: DIALOG_SCHEMA,
+  resolve: resolveDialogs,
+})

@@ -8,7 +8,7 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { DEFAULT_STATE, DEFAULTS, parseState, validate } from "."
 import type { StudioState, StudioStateInput } from "."
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import {
   bezierCss,
   curveName,
@@ -187,20 +187,20 @@ describe("component motion", () => {
       : isLoop(value)
         ? { ...value, cycle: value.cycle + 50 }
         : { ...value, duration: value.duration + 50 }
-    const ds = resolveDesignSystem(parseState({ [key]: retimed }))
+    const ds = designSystemOf(parseState({ [key]: retimed }))
     expect(Object.keys(ds.tokens).length).toBeGreaterThan(0)
     expect(Object.keys(varsOf(key, retimed))).toEqual(
       expect.arrayContaining(Object.keys(ds.tokens)),
     )
     expect(ds.componentParams).toEqual(
-      resolveDesignSystem(DEFAULT_STATE).componentParams,
+      designSystemOf(DEFAULT_STATE).componentParams,
     )
   })
 })
 
 /* What users install: every publishable item, shipped from a state. */
 async function shipAll(state: StudioState) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset: PublishPreset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -225,7 +225,7 @@ const THEME_MOTION =
 
 describe("shipped motion", () => {
   test("the defaults write no motion tokens", () => {
-    const { tokens } = resolveDesignSystem(DEFAULT_STATE)
+    const { tokens } = designSystemOf(DEFAULT_STATE)
     expect(
       Object.keys(tokens).filter((name) => /-(duration|ease)$/.test(name)),
     ).toEqual([])

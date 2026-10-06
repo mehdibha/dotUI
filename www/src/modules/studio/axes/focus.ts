@@ -6,7 +6,9 @@
 import type { TokenOverrides } from "@/registry/theme"
 
 import { SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Cond, Rule } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -79,10 +81,12 @@ const NEUTRAL_FOCUS: TokenOverrides = {
   "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 }
 
-export function resolveFocus(state: StudioState): Resolved {
+export function resolveFocus(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   const d = FOCUS_DEFAULTS
 
+  // Knobs a style doesn't read sit at their defaults (the rules below hide
+  // them), so each emits only when set.
   if (state.focusWidth !== d.focusWidth)
     tokens["--focus-ring-width"] = px(state.focusWidth)
   if (state.focusStyle === "halo")
@@ -93,14 +97,14 @@ export function resolveFocus(state: StudioState): Resolved {
   if (state.focusStyle === "duo") {
     tokens["--focus-ring-inner"] = "1px"
     tokens["--focus-ring-offset"] = "0px"
-  } else if (state.focusOffset === "inset") {
+  }
+  if (state.focusOffset === "inset") {
     tokens["--focus-ring-inset"] = "inset"
     tokens["--focus-ring-offset"] = "0px"
-  } else if (state.focusOffset === "flush") {
-    tokens["--focus-ring-offset"] = "0px"
-  } else if (state.focusGap !== d.focusGap) {
-    tokens["--focus-ring-offset"] = px(state.focusGap)
   }
+  if (state.focusOffset === "flush") tokens["--focus-ring-offset"] = "0px"
+  if (state.focusGap !== d.focusGap)
+    tokens["--focus-ring-offset"] = px(state.focusGap)
 
   switch (state.focusInputStyle) {
     case "halo":
@@ -133,3 +137,58 @@ export function resolveFocus(state: StudioState): Resolved {
     ? { tokens, color: { overrides: NEUTRAL_FOCUS } }
     : { tokens }
 }
+
+/** A knob the current style never reads: hidden, held at its default. */
+const inert = (
+  target: keyof typeof FOCUS_DEFAULTS,
+  when: Cond,
+  cause: keyof typeof FOCUS_DEFAULTS,
+): Rule<keyof typeof FOCUS_DEFAULTS> => ({
+  id: `focus/${target}-inert`,
+  target,
+  when,
+  effect: { kind: "hide" },
+  cause,
+})
+
+export const chapter = defineChapter({
+  id: "focus",
+  defaults: FOCUS_DEFAULTS,
+  schema: FOCUS_SCHEMA,
+  resolve: resolveFocus,
+  rules: [
+    // Duo draws its own flush pair.
+    inert("focusOffset", { key: "focusStyle", in: ["duo"] }, "focusStyle"),
+    inert(
+      "focusGap",
+      {
+        any: [
+          { key: "focusStyle", in: ["duo"] },
+          { key: "focusOffset", notIn: ["gap"] },
+        ],
+      },
+      "focusOffset",
+    ),
+    inert(
+      "focusHaloStrength",
+      { key: "focusStyle", notIn: ["halo"] },
+      "focusStyle",
+    ),
+    // A field on the control ring reuses every ring var.
+    inert(
+      "focusInputWidth",
+      { key: "focusInputStyle", notIn: ["halo"] },
+      "focusInputStyle",
+    ),
+    inert(
+      "focusInputStrength",
+      { key: "focusInputStyle", notIn: ["halo"] },
+      "focusInputStyle",
+    ),
+    inert(
+      "focusInputBorderWidth",
+      { key: "focusInputStyle", notIn: ["border"] },
+      "focusInputStyle",
+    ),
+  ],
+})

@@ -13,7 +13,7 @@ import {
   DialSegmented,
   DialSelect,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -77,7 +77,7 @@ function TooltipGlyph({ filled }: { filled: boolean }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function PopoversPreview({ state }: { state: StudioState }) {
+export function PopoversPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <TipGlyph tip={state.popoverTip === "tip"} />

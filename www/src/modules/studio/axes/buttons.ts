@@ -8,7 +8,8 @@
    `--studio-btn-radius` var, state timing on the `--studio-button-state-*`
    vars both read. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -58,7 +59,7 @@ export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
   buttonMotion: STATE_CHANGE,
 }
 
-export function resolveButtons(state: StudioState): Resolved {
+export function resolveButtons(state: Effective): Resolved {
   const selection = { style: state.buttonStyle }
   const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
   const radius = RADIUS_TOKENS[state.buttonRadius]
@@ -71,3 +72,10 @@ export function resolveButtons(state: StudioState): Resolved {
     params: { button: selection, "toggle-button": selection },
   }
 }
+
+export const chapter = defineChapter({
+  id: "buttons",
+  defaults: BUTTON_DEFAULTS,
+  schema: BUTTON_SCHEMA,
+  resolve: resolveButtons,
+})

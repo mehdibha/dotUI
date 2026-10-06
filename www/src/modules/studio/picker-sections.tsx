@@ -1,7 +1,7 @@
 import { PRESET_META, resolvePreset } from "@/modules/presets"
 import type { PresetPickerSection } from "@/modules/presets/preset-picker"
 
-import { resolveDesignSystem } from "./resolve"
+import { designSystemOf } from "./resolve"
 import { describe, selectionKey } from "./selection"
 import { listed } from "./workspace"
 import type { Workspace } from "./workspace"
@@ -27,7 +27,7 @@ export function pickerSections(workspace: Workspace): PresetPickerSection[] {
       name: shown.name,
       swatch: shown.swatch,
       hasMenu: true,
-      resolve: () => resolveDesignSystem(shown.state),
+      resolve: () => designSystemOf(shown.state),
     }
   })
   return [{ id: "mine", title: "My design systems", items }, presets]

@@ -8,7 +8,8 @@
    Engine: `selected` and `track` enum params on `segmented-control`, plus
    its `--studio-segmented-control-state-*` timing vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveStateChange } from "./motion"
 import type { StateChange } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
@@ -40,7 +41,7 @@ export const SEGMENTED_SCHEMA: ChapterSchema<typeof SEGMENTED_DEFAULTS> = {
   segmentedControlMotion: STATE_CHANGE,
 }
 
-export function resolveSegmentedControl(state: StudioState): Resolved {
+export function resolveSegmentedControl(state: Effective): Resolved {
   return {
     tokens: resolveStateChange(
       "segmented-control",
@@ -55,3 +56,10 @@ export function resolveSegmentedControl(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "segmented-control",
+  defaults: SEGMENTED_DEFAULTS,
+  schema: SEGMENTED_SCHEMA,
+  resolve: resolveSegmentedControl,
+})

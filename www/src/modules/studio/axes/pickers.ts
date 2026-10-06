@@ -7,7 +7,8 @@
    picker's hover/selected fill and the swatch picker's selection ring ease on
    their own `--studio-<c>-state-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -34,7 +35,7 @@ export const PICKER_SCHEMA: ChapterSchema<typeof PICKER_DEFAULTS> = {
   colorSwatchPickerMotion: STATE_CHANGE,
 }
 
-export function resolvePickers(state: StudioState): Resolved {
+export function resolvePickers(state: Effective): Resolved {
   return {
     tokens: {
       ...resolveStateChange(
@@ -51,3 +52,10 @@ export function resolvePickers(state: StudioState): Resolved {
     params: { select: { caret: state.pickerCaret } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "pickers",
+  defaults: PICKER_DEFAULTS,
+  schema: PICKER_SCHEMA,
+  resolve: resolvePickers,
+})

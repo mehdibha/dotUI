@@ -20,7 +20,7 @@ import {
   DialTrigger,
   optionLabel,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -192,7 +192,7 @@ function CurrentGlyph({ current }: { current: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function NavigationPreview({ state }: { state: StudioState }) {
+export function NavigationPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <TabGlyph style={state.tabStyle} />

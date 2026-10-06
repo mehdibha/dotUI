@@ -5,7 +5,8 @@
    Engine: `style` and `motion` are enum params on `tooltip`; motion's timing
    is its `--studio-tooltip-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
 import { entrance, oneOf } from "./schema"
@@ -43,7 +44,7 @@ export const TOOLTIP_SCHEMA: ChapterSchema<typeof TOOLTIP_DEFAULTS> = {
   tooltipMotion: entrance(MOTION_PATTERNS),
 }
 
-export function resolveTooltips(state: StudioState): Resolved {
+export function resolveTooltips(state: Effective): Resolved {
   const motion = resolveEntrance("tooltip", state.tooltipMotion, MOTION)
   return {
     tokens: motion.tokens,
@@ -55,3 +56,10 @@ export function resolveTooltips(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "tooltips",
+  defaults: TOOLTIP_DEFAULTS,
+  schema: TOOLTIP_SCHEMA,
+  resolve: resolveTooltips,
+})

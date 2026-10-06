@@ -6,7 +6,8 @@
    Engine: `separator` and `tone` are enum params on `breadcrumbs`; the link's
    hover color eases on the `--studio-breadcrumbs-state-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -36,7 +37,7 @@ export const BREADCRUMB_SCHEMA: ChapterSchema<typeof BREADCRUMB_DEFAULTS> = {
   breadcrumbsMotion: STATE_CHANGE,
 }
 
-export function resolveBreadcrumbs(state: StudioState): Resolved {
+export function resolveBreadcrumbs(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("breadcrumbs", state.breadcrumbsMotion, MOTION),
     params: {
@@ -47,3 +48,10 @@ export function resolveBreadcrumbs(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "breadcrumbs",
+  defaults: BREADCRUMB_DEFAULTS,
+  schema: BREADCRUMB_SCHEMA,
+  resolve: resolveBreadcrumbs,
+})

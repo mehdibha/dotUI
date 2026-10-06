@@ -3,7 +3,7 @@
 /* The panel's composition root: the chapter list, in page order. Each
    section in sections/ owns its body; its axes live in axes/. */
 
-import type { StudioState } from "./axes"
+import type { Effective } from "./axes"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
@@ -18,7 +18,7 @@ import { SpacePreview, SpaceSection } from "./sections/space"
 import { StatesPreview, StatesSection } from "./sections/states"
 import { TypePreview, TypeSection } from "./sections/type"
 
-export type { StudioState } from "./axes"
+export type { Effective, StudioState } from "./axes"
 import type { Studio } from "./use-studio"
 
 export type { Studio }
@@ -31,7 +31,7 @@ export interface Chapter {
   /** The rest of the chapter. */
   Body: React.ComponentType<{ studio: Studio }>
   /** A glyph-sized specimen of the chapter's state, beside its title. */
-  Preview?: React.ComponentType<{ state: StudioState }>
+  Preview?: React.ComponentType<{ state: Effective }>
   /** Pages the body's rows open in place of the panel page. */
   pages?: ChapterPage[]
 }
@@ -39,7 +39,7 @@ export interface Chapter {
 export interface ChapterPage {
   id: string
   label: string
-  Preview?: React.ComponentType<{ state: StudioState }>
+  Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
 

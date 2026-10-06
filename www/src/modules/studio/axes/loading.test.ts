@@ -6,12 +6,12 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { DEFAULT_STATE, parseState } from "."
 import type { StudioState } from "."
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { ease } from "./motion"
 
 /* One item as users install it from a studio state. */
 async function ship(name: string, state: Partial<StudioState> = {}) {
-  const ds = resolveDesignSystem(parseState({ ...state }))
+  const ds = designSystemOf(parseState({ ...state }))
   const preset: PublishPreset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -33,7 +33,7 @@ async function ship(name: string, state: Partial<StudioState> = {}) {
 
 describe("spinner motion", () => {
   test("the defaults write no tokens", () => {
-    expect(resolveDesignSystem(DEFAULT_STATE).tokens).toEqual({})
+    expect(designSystemOf(DEFAULT_STATE).tokens).toEqual({})
   })
 
   test("the ring ships shadcn's animate-spin", async () => {
@@ -81,7 +81,7 @@ describe("skeleton motion", () => {
   })
 
   test("a tweak retimes the skeleton's loop", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         skeletonMotion: { cycle: 1200, ease: ease("ease-in-out") },
       }),

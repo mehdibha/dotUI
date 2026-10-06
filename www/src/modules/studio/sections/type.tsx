@@ -1,7 +1,7 @@
 "use client"
 
 /* Typography — the three font roles, each row set in its own face so the row
-   is the specimen. Heading reads Auto on the body font until pinned. */
+   is the specimen. Heading is Same as body until pinned. */
 
 import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
@@ -20,31 +20,33 @@ import {
   DIAL_VALUE,
 } from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /** A font role as a dial row: label, the family in its own typeface, the
- *  searchable list under it. With `derived`, '' reads Auto on that family. */
+ *  searchable list under it. With `follow`, the row reads "Same as body"
+ *  while it follows, and offers the way back once pinned. */
 function FontRow({
   label,
   value,
-  derived,
+  resolved,
+  follow,
   categories,
   onChange,
 }: {
   label: string
   value: string
-  /** The family followed while `value` is ''. */
-  derived?: string
+  /** The family the row shows (the followed one while following). */
+  resolved: string
+  follow?: { id: string; label: string }
   categories: FontCategory[]
   onChange: (family: string) => void
 }) {
-  const auto = derived !== undefined && value === ""
-  const resolved = value || derived || ""
+  const following = follow?.id === value
   useLoadedFamilies([resolved])
   return (
     <Select
       className="w-full"
-      selectedKey={value || null}
+      selectedKey={following ? null : value}
       onSelectionChange={(key) => onChange(key as string)}
       aria-label={label}
     >
@@ -58,7 +60,15 @@ function FontRow({
           {label}
         </span>
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
-          {auto && <span className={DIAL_VALUE}>Auto ·</span>}
+          {follow && !following && (
+            <RacButton
+              onPress={() => onChange(follow.id)}
+              className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/70 focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
+            >
+              {follow.label}
+            </RacButton>
+          )}
+          {following && <span className={DIAL_VALUE}>{follow.label} ·</span>}
           <span
             className="truncate text-[13px] font-medium text-fg/70"
             style={{ fontFamily: fontStack(resolved) }}
@@ -76,39 +86,43 @@ function FontRow({
 }
 
 /** Beside the title: Aa in the heading face. */
-export function TypePreview({ state }: { state: StudioState }) {
-  const heading = state.headingFont || state.bodyFont
-  useLoadedFamilies([heading])
+export function TypePreview({ state }: { state: Effective }) {
+  useLoadedFamilies([state.headingFont])
   return (
     <span
       className="text-[15px]/none font-semibold"
-      style={{ fontFamily: fontStack(heading) }}
+      style={{ fontFamily: fontStack(state.headingFont) }}
     >
       Aa
     </span>
   )
 }
 
+const SAME_AS_BODY = { id: "same", label: "Same as body" }
+
 export function TypeSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { state, effective, set } = studio
   return (
     <>
       <FontRow
         label="Heading"
         value={state.headingFont}
-        derived={state.bodyFont}
+        resolved={effective.headingFont}
+        follow={SAME_AS_BODY}
         categories={["sans-serif", "serif", "display", "handwriting"]}
         onChange={set("headingFont")}
       />
       <FontRow
         label="Body"
         value={state.bodyFont}
+        resolved={state.bodyFont}
         categories={["sans-serif", "serif"]}
         onChange={set("bodyFont")}
       />
       <FontRow
         label="Mono"
         value={state.monoFont}
+        resolved={state.monoFont}
         categories={["mono"]}
         onChange={set("monoFont")}
       />

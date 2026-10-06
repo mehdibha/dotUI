@@ -13,7 +13,8 @@
    applies. */
 
 import { SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -52,7 +53,7 @@ export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
   sliderMotion: STATE_CHANGE,
 }
 
-export function resolveSliders(state: StudioState): Resolved {
+export function resolveSliders(state: Effective): Resolved {
   const tokens = resolveStateChange("slider", state.sliderMotion, MOTION)
   const fill = FILL_TOKENS[state.sliderColor]
   if (fill && state.sliderColor !== state.buttonColor)
@@ -67,3 +68,10 @@ export function resolveSliders(state: StudioState): Resolved {
     tokens,
   }
 }
+
+export const chapter = defineChapter({
+  id: "sliders",
+  defaults: SLIDER_DEFAULTS,
+  schema: SLIDER_SCHEMA,
+  resolve: resolveSliders,
+})

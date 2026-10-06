@@ -121,7 +121,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
 ]
 
 export function ComponentsSection({ studio }: { studio: Studio }) {
-  const { state } = studio
+  const { effective } = studio
   const open = useContext(PanelNav)
   return (
     <>
@@ -130,7 +130,7 @@ export function ComponentsSection({ studio }: { studio: Studio }) {
           key={id}
           label={label}
           onPress={() => open(id)}
-          value={Preview && <Preview state={state} />}
+          value={Preview && <Preview state={effective} />}
         />
       ))}
     </>

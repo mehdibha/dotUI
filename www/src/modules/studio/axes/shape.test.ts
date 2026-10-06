@@ -5,8 +5,8 @@ import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import { designSystemOf } from "../resolve"
+import { DEFAULT_EFFECTIVE, DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import {
   activeCharacter,
   SHAPE_CHARACTERS,
@@ -16,7 +16,7 @@ import {
 } from "./shape"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem(parseState({ ...overrides }))
+  designSystemOf(parseState({ ...overrides }))
 
 const vector = (id: string) =>
   SHAPE_CHARACTERS.find((character) => character.id === id)!.vector
@@ -33,7 +33,7 @@ describe("shape axis", () => {
         name.startsWith("--studio-radius-"),
       ),
     )
-    expect(declared).toEqual(shapeVars(DEFAULT_STATE))
+    expect(declared).toEqual(shapeVars(DEFAULT_EFFECTIVE))
   })
 
   test("the base lands on --radius in rem", () => {
@@ -99,7 +99,7 @@ describe("shape axis", () => {
             for (const roleItem of values("roleItem"))
               for (const roleCard of values("roleCard")) {
                 const vars = shapeVars({
-                  ...DEFAULT_STATE,
+                  ...DEFAULT_EFFECTIVE,
                   ...{
                     roleControl,
                     roleSurface,
@@ -152,7 +152,7 @@ describe("shipped shape", () => {
   test.each(SHAPE_CHARACTERS.map((c) => c.id))(
     "%s ships whole radius classes and no studio vars",
     async (id) => {
-      const ds = resolveDesignSystem(parseState(vector(id)))
+      const ds = designSystemOf(parseState(vector(id)))
       const preset: PublishPreset = {
         density: ds.density,
         componentParams: ds.componentParams,

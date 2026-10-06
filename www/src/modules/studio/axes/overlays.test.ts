@@ -4,11 +4,11 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 import { DEFAULT_STATE, DEFAULTS, parseState } from "@/modules/studio/axes"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 describe("overlays chapters", () => {
   test("the defaults yield the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.modal).toMatchObject({
       backdrop: "dim",
@@ -21,7 +21,7 @@ describe("overlays chapters", () => {
   })
 
   test("dialogs: backdrop writes modal and drawer together, position the modal", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({ dialogBackdrop: "blur", dialogPosition: "top" }),
     )
     expect(ds.componentParams.modal).toMatchObject({
@@ -32,7 +32,7 @@ describe("overlays chapters", () => {
   })
 
   test("popovers: tip on popover, header on dialog", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({ popoverTip: "tip", popoverHeader: "band" }),
     )
     expect(ds.componentParams.popover).toMatchObject({ tip: "tip" })
@@ -41,8 +41,8 @@ describe("overlays chapters", () => {
 
   test("tooltips: style on tooltip", () => {
     expect(
-      resolveDesignSystem(parseState({ tooltipStyle: "surface" }))
-        .componentParams.tooltip,
+      designSystemOf(parseState({ tooltipStyle: "surface" })).componentParams
+        .tooltip,
     ).toMatchObject({ style: "surface" })
   })
 })
@@ -71,7 +71,7 @@ describe("drawer motion", () => {
   })
 
   test("a spring slide ships linear(); the exit keeps its bezier", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         drawerMotion: {
           ...DEFAULTS.drawerMotion,
@@ -103,10 +103,10 @@ describe("tooltip, modal and toast motion", () => {
     return item.files?.[0]?.content ?? ""
   }
   const tokensFor = (state: Partial<typeof DEFAULTS>) =>
-    resolveDesignSystem(parseState({ ...state })).tokens
+    designSystemOf(parseState({ ...state })).tokens
 
   test("each writes its own pattern param", () => {
-    const { componentParams } = resolveDesignSystem(
+    const { componentParams } = designSystemOf(
       parseState({
         tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "fade" },
         modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },

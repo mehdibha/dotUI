@@ -13,7 +13,8 @@
    Only tags react to the pointer; their timing rides the
    `--studio-tag-state-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -51,7 +52,7 @@ export const BADGE_SCHEMA: ChapterSchema<typeof BADGE_DEFAULTS> = {
   tagMotion: STATE_CHANGE,
 }
 
-export function resolveBadges(state: StudioState): Resolved {
+export function resolveBadges(state: Effective): Resolved {
   const style = state.badgeStyle
   const tokens = resolveStateChange("tag", state.tagMotion, MOTION)
   const radius = SHAPE_TOKENS[state.badgeShape]
@@ -64,3 +65,10 @@ export function resolveBadges(state: StudioState): Resolved {
     params: { badge: { style }, "tag-group": { style } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "badges",
+  defaults: BADGE_DEFAULTS,
+  schema: BADGE_SCHEMA,
+  resolve: resolveBadges,
+})

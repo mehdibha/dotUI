@@ -4,12 +4,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("calendar + pickers axes", () => {
   test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.calendar).toEqual({
       dayShape: "rounded",
       today: "none",
@@ -20,7 +20,7 @@ describe("calendar + pickers axes", () => {
   })
 
   test("selections land on the calendar and select params", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({
         calendarDayShape: "circle",
         calendarToday: "ring",
@@ -59,7 +59,7 @@ describe("calendar motion", () => {
   })
 
   test("a tweak times the day's focus ring", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ calendarMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     expect(await shipped("calendar", tokens)).toContain(
@@ -84,7 +84,7 @@ describe("picker motion", () => {
   })
 
   test("a tweak times each picker on its own", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         timePickerMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
         colorSwatchPickerMotion: { duration: 150, ease: [0, 0, 0.2, 1] },

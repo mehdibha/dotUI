@@ -10,7 +10,8 @@
    `gap`) plus its `--studio-progress-state-*` timing vars; end caps ride the
    global Shape chapter. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { BOOLEAN, oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -42,7 +43,7 @@ export const PROGRESS_SCHEMA: ChapterSchema<typeof PROGRESS_DEFAULTS> = {
   progressMotion: STATE_CHANGE,
 }
 
-export function resolveProgress(state: StudioState): Resolved {
+export function resolveProgress(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("progress", state.progressMotion, MOTION),
     params: {
@@ -54,3 +55,10 @@ export function resolveProgress(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "progress",
+  defaults: PROGRESS_DEFAULTS,
+  schema: PROGRESS_SCHEMA,
+  resolve: resolveProgress,
+})

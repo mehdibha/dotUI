@@ -10,7 +10,7 @@ import { CURSOR_DEFAULTS } from "../axes/cursor"
 import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import { DialPopover, DialSegmented, DialToggle, DialTrigger } from "../dial"
 import type { DialOption } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio, StudioState } from "../state"
 import {
   ArrowCursor,
   HandCursor,
@@ -108,7 +108,7 @@ const optionLabel = (
 
 /* --------------------------------- Section --------------------------------- */
 
-export function InteractivityPreview({ state }: { state: StudioState }) {
+export function InteractivityPreview({ state }: { state: Effective }) {
   return (
     <Glyph>
       {state.cursorControls === "pointer" ? <HandCursor /> : <ArrowCursor />}

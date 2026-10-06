@@ -5,7 +5,8 @@
    `--studio-toast-*` vars; the swipe is its own `--studio-toast-swipe-*`
    state change. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveEntrance, resolveStateChange } from "./motion"
 import type { Entrance, StateChange } from "./motion"
 import { entrance, STATE_CHANGE } from "./schema"
@@ -38,7 +39,7 @@ export const TOAST_SCHEMA: ChapterSchema<typeof TOAST_DEFAULTS> = {
   toastSwipeMotion: STATE_CHANGE,
 }
 
-export function resolveToast(state: StudioState): Resolved {
+export function resolveToast(state: Effective): Resolved {
   const motion = resolveEntrance("toast", state.toastMotion, MOTION)
   return {
     tokens: {
@@ -48,3 +49,10 @@ export function resolveToast(state: StudioState): Resolved {
     params: { toast: { motion: motion.pattern } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "toast",
+  defaults: TOAST_DEFAULTS,
+  schema: TOAST_SCHEMA,
+  resolve: resolveToast,
+})

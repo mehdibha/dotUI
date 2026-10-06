@@ -5,10 +5,10 @@
 
 import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
 import { DialSelect, DialSlider } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /** The three tiers as bars, the current one lit. */
-export function SpacePreview({ state }: { state: StudioState }) {
+export function SpacePreview({ state }: { state: Effective }) {
   const tier = densityTier(state.density)
   return (
     <span className="flex h-4 items-end gap-0.5" aria-hidden>

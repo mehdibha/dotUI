@@ -11,7 +11,8 @@
    registry: accent, no underline. */
 
 import { SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -38,7 +39,7 @@ export const LINK_SCHEMA: ChapterSchema<typeof LINK_DEFAULTS> = {
   linkMotion: STATE_CHANGE,
 }
 
-export function resolveLinks(state: StudioState): Resolved {
+export function resolveLinks(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("link", state.linkMotion, MOTION),
     params: {
@@ -49,3 +50,10 @@ export function resolveLinks(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "links",
+  defaults: LINK_DEFAULTS,
+  schema: LINK_SCHEMA,
+  resolve: resolveLinks,
+})

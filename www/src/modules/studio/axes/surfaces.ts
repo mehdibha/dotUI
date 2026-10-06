@@ -1,6 +1,7 @@
 /* Surfaces — how the page, cards and floating layers separate. A style is a
    named starting point over three settings; Glass sits beside it, and each
-   mode's page L* is Color's (the engine re-anchors every ramp on it).
+   mode's page L* is Color's (the engine re-anchors every ramp on it; the
+   light page is Auto on Layers).
 
    - Layers, in light: cards on the page's tone (Same — shadcn, Primer), white
      cards on a gray page (Grouped — Apple, Polaris, HeroUI), or cards shaded
@@ -19,7 +20,8 @@
 
    Only what differs from the registry's defaults is emitted. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved, StudioStateInput } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -173,7 +175,10 @@ const SHADOWS = SHADOW_OPTIONS.map((o) => o.value)
 
 /** How close the state sits to a style, 9 on it: Layers outweighs Edge,
  *  which outweighs how far apart the shadows are. */
-export const styleScore = (state: StudioState, { values }: SurfaceStyle) =>
+export const styleScore = (
+  state: Pick<StudioStateInput, StyleKey>,
+  { values }: SurfaceStyle,
+) =>
   (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
   (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
   3 -
@@ -183,7 +188,7 @@ export const styleScore = (state: StudioState, { values }: SurfaceStyle) =>
   )
 
 /** The style the state sits on, or the closest one. */
-export function surfaceStyle(state: StudioState): {
+export function surfaceStyle(state: Pick<StudioStateInput, StyleKey>): {
   style: SurfaceStyle
   exact: boolean
 } {
@@ -191,42 +196,6 @@ export function surfaceStyle(state: StudioState): {
     styleScore(state, b) > styleScore(state, a) ? b : a,
   )
   return { style: best, exact: styleScore(state, best) === 9 }
-}
-
-/** Grouped's page: its cards are white, so the page's gray is its depth. The
- *  engine re-anchors every ramp on the page, so fills on those white cards
- *  read deeper too — contextual fills belong to the color rewrite. */
-export const GROUPED_PAGE = 96
-
-/** Flat cards need an edge or a tone apart from the page: Same has none, and
- *  Grouped's white cards none on a near-white page. */
-export const flatAllowed = (state: StudioState) =>
-  state.surfaceEdge !== "none" ||
-  state.surfaceLayers === "tonal" ||
-  (state.surfaceLayers === "grouped" && state.lightBg <= GROUPED_PAGE + 1)
-
-/** `patch` applied. Entering Grouped takes a light page down to gray, and
- *  leaving gives back `before`, the page it took, unless the page moved since;
- *  then Flat lifts to Low where it would hide cards. */
-export function withSurface(
-  state: StudioState,
-  patch: Partial<Record<StyleKey, string>>,
-  before?: number,
-): { state: StudioState; before?: number } {
-  const next = { ...state, ...patch }
-  const grouped = (s: StudioState) => s.surfaceLayers === "grouped"
-  let kept = before
-  if (grouped(next) && !grouped(state)) {
-    kept = state.lightBg > GROUPED_PAGE + 1 ? state.lightBg : undefined
-    if (kept !== undefined) next.lightBg = GROUPED_PAGE
-  } else if (grouped(state) && !grouped(next)) {
-    if (before !== undefined && state.lightBg === GROUPED_PAGE)
-      next.lightBg = before
-    kept = undefined
-  }
-  if (!flatAllowed(next) && next.surfaceShadow === "flat")
-    next.surfaceShadow = "low"
-  return { state: next, before: kept }
 }
 
 /* -------------------------------- Recipe --------------------------------- */
@@ -310,14 +279,11 @@ const LADDER = {
   high: [4, 5, 6],
 } satisfies Record<string, [number, number, number]>
 
-/** Flat where it would hide cards renders as Low, whatever wrote the state. */
-const ladder = (state: StudioState) =>
-  state.surfaceShadow === "flat" && !flatAllowed(state)
-    ? LADDER.low
-    : (LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat)
+const ladder = (state: Effective) =>
+  LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat
 
 /** The card's rung, for glyphs that hint at its shadow. */
-export const cardRung = (state: StudioState) => ladder(state)[0]
+export const cardRung = (state: Effective) => ladder(state)[0]
 
 /* The soft 0-offset outline shadow-led systems draw around every raised
    surface (Fluent's 0 0 2px). */
@@ -341,7 +307,7 @@ function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
 }
 
 /** Every setting resolved together, so no combination contradicts itself. */
-export function surfaceRecipe(state: StudioState): SurfaceRecipe {
+export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
@@ -424,7 +390,7 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
   return light === dark ? light : `light-dark(${light}, ${dark})`
 }
 
-function surfaceTokens(state: StudioState): Record<string, string> {
+function surfaceTokens(state: Effective): Record<string, string> {
   const { card, popover, modalShadow, glass } = surfaceRecipe(state)
   return {
     "--card-border": pairCss(card.edge),
@@ -439,12 +405,35 @@ function surfaceTokens(state: StudioState): Record<string, string> {
   }
 }
 
-const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as StudioState)
+const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as Effective)
 
-export function resolveSurfaces(state: StudioState): Resolved {
+export function resolveSurfaces(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   for (const [name, value] of Object.entries(surfaceTokens(state))) {
     if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
   }
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "surfaces",
+  defaults: SURFACE_DEFAULTS,
+  schema: SURFACE_SCHEMA,
+  resolve: resolveSurfaces,
+  rules: [
+    {
+      // Flat cards need an edge or a tone apart from the page; Grouped's
+      // white cards get theirs from the page clamp (color/grouped-page).
+      id: "surfaces/flat-needs-separation",
+      target: "surfaceShadow",
+      when: {
+        all: [
+          { key: "surfaceEdge", in: ["none"] },
+          { key: "surfaceLayers", in: ["same"] },
+        ],
+      },
+      effect: { kind: "exclude", options: ["flat"], fallback: "low" },
+      cause: "surfaceEdge",
+    },
+  ],
+})

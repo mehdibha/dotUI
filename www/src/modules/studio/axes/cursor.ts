@@ -2,7 +2,8 @@
    pending, disabled, draggable. Engine: four `--cursor-*` tokens in base.css
    that every registry component reads through the cursor-* utilities. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -42,7 +43,7 @@ export const CURSOR_SCHEMA: ChapterSchema<typeof CURSOR_DEFAULTS> = {
   cursorDisabled: oneOf(CURSOR_OPTIONS.cursorDisabled),
 }
 
-export function resolveCursor(state: StudioState): Resolved {
+export function resolveCursor(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.cursorControls !== CURSOR_DEFAULTS.cursorControls)
     tokens["--cursor-interactive"] = state.cursorControls
@@ -56,3 +57,10 @@ export function resolveCursor(state: StudioState): Resolved {
   }
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "cursor",
+  defaults: CURSOR_DEFAULTS,
+  schema: CURSOR_SCHEMA,
+  resolve: resolveCursor,
+})

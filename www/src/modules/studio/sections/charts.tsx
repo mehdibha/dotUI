@@ -6,7 +6,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
 import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -62,7 +62,7 @@ function GridGlyph({ grid }: { grid: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function ChartsPreview({ state }: { state: StudioState }) {
+export function ChartsPreview({ state }: { state: Effective }) {
   return <SeriesGlyph palette={state.chartPalette} />
 }
 

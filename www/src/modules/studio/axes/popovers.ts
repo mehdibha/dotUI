@@ -10,7 +10,8 @@
    styles the title inside a popover; motion is the `motion` param on
    `popover` plus its `--studio-popover-*` timing vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
 import { entrance, oneOf } from "./schema"
@@ -55,7 +56,7 @@ export const POPOVER_SCHEMA: ChapterSchema<typeof POPOVER_DEFAULTS> = {
   popoverMotion: entrance(MOTION_PATTERNS),
 }
 
-export function resolvePopovers(state: StudioState): Resolved {
+export function resolvePopovers(state: Effective): Resolved {
   const motion = resolveEntrance("popover", state.popoverMotion, MOTION)
   return {
     tokens: motion.tokens,
@@ -65,3 +66,10 @@ export function resolvePopovers(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "popovers",
+  defaults: POPOVER_DEFAULTS,
+  schema: POPOVER_SCHEMA,
+  resolve: resolvePopovers,
+})

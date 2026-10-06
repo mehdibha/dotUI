@@ -9,7 +9,8 @@
    its own base file — plus its `--studio-loader-loop-*` timing vars. Ring is
    the icon library's own loader glyph, so it follows the Icons chapter. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveLoop } from "./motion"
 import type { Loop } from "./motion"
 import { LOOP, oneOf } from "./schema"
@@ -34,9 +35,26 @@ export const SPINNER_SCHEMA: ChapterSchema<typeof SPINNER_DEFAULTS> = {
   loaderMotion: LOOP,
 }
 
-export function resolveSpinner(state: StudioState): Resolved {
+export function resolveSpinner(state: Effective): Resolved {
   return {
     tokens: resolveLoop("loader", state.loaderMotion, MOTION),
     params: { loader: { style: state.spinnerStyle } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "spinner",
+  defaults: SPINNER_DEFAULTS,
+  schema: SPINNER_SCHEMA,
+  resolve: resolveSpinner,
+  rules: [
+    {
+      // Blades tick in steps and dots keep their breath: only the ring bends.
+      id: "spinner/curve-only-ring",
+      target: "loaderMotion",
+      when: { key: "spinnerStyle", notIn: ["ring"] },
+      effect: { kind: "hide", part: "ease" },
+      cause: "spinnerStyle",
+    },
+  ],
+})

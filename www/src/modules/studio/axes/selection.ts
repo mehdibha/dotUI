@@ -5,7 +5,8 @@
    unselectable text), and `::selection` reads the `text-selection` semantic
    pair, re-pointed at the OS highlight when the system leaves it alone. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -26,7 +27,7 @@ export const SELECTION_SCHEMA: ChapterSchema<typeof SELECTION_DEFAULTS> = {
   selectionHighlight: oneOf(HIGHLIGHT_OPTIONS),
 }
 
-export function resolveSelection(state: StudioState): Resolved {
+export function resolveSelection(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.selectionUiText === "selectable")
     tokens["--user-select-ui"] = "auto"
@@ -36,3 +37,10 @@ export function resolveSelection(state: StudioState): Resolved {
   }
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "selection",
+  defaults: SELECTION_DEFAULTS,
+  schema: SELECTION_SCHEMA,
+  resolve: resolveSelection,
+})

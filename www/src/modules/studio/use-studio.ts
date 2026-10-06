@@ -1,19 +1,23 @@
 "use client"
 
 /* The studio's state hook: the current design system (a view or one of the
-   user's systems) and its resolved design system — what the panel, the
-   preview and export all read. Editing a view fills the unsaved slot. */
+   user's systems), what it resolves to and the design system the preview
+   renders and export ships. Editing a view fills the unsaved slot. */
 
 import { useMemo } from "react"
 
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import type { StudioState } from "./axes"
+import { effective } from "./axes"
+import type { Effective, StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"
 import { edit, useCurrent } from "./selection"
 
 export interface Studio {
+  /** What the user picked; follow ids ("auto", "same") included. */
   state: StudioState
+  /** What the picks resolve to; specimens and recipes read this. */
+  effective: Effective
   /** The engine's view: what the preview renders and the export ships. */
   designSystem: DesignSystem
   set: <K extends keyof StudioState>(key: K) => (value: StudioState[K]) => void
@@ -22,13 +26,18 @@ export interface Studio {
 
 export function useStudio(): Studio {
   const { state } = useCurrent()
-  const designSystem = useMemo(() => resolveDesignSystem(state), [state])
-
   return useMemo(() => {
+    const values = effective(state).values
     const set =
       <K extends keyof StudioState>(key: K) =>
       (value: StudioState[K]) =>
         edit({ ...state, [key]: value })
-    return { state, designSystem, set, setState: edit }
-  }, [state, designSystem])
+    return {
+      state,
+      effective: values,
+      designSystem: resolveDesignSystem(values),
+      set,
+      setState: edit,
+    }
+  }, [state])
 }

@@ -6,7 +6,8 @@
    timing vars. Collapsible has no look of its own but rides the accordion's
    motion: the same `motion` param and vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
 import { entrance, oneOf } from "./schema"
@@ -56,7 +57,7 @@ export const ACCORDION_SCHEMA: ChapterSchema<typeof ACCORDION_DEFAULTS> = {
   accordionMotion: entrance(MOTION_PATTERNS),
 }
 
-export function resolveAccordion(state: StudioState): Resolved {
+export function resolveAccordion(state: Effective): Resolved {
   const motion = resolveEntrance("accordion", state.accordionMotion, MOTION)
   return {
     tokens: motion.tokens,
@@ -71,3 +72,10 @@ export function resolveAccordion(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "accordion",
+  defaults: ACCORDION_DEFAULTS,
+  schema: ACCORDION_SCHEMA,
+  resolve: resolveAccordion,
+})

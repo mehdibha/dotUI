@@ -7,7 +7,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
 import { DialGap, DialList, DialSegmented } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 function AvatarGlyph({
   shape,
@@ -38,7 +38,7 @@ function AvatarGlyph({
   )
 }
 
-export function AvatarsPreview({ state }: { state: StudioState }) {
+export function AvatarsPreview({ state }: { state: Effective }) {
   return (
     <AvatarGlyph shape={state.avatarShape} fallback={state.avatarFallback} />
   )

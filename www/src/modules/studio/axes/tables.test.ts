@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest"
 import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 import type { StudioState } from "./index"
 
 /** What the table ships under the studio state. */
 async function shipped(state: StudioState = DEFAULT_STATE) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -26,7 +26,7 @@ async function shipped(state: StudioState = DEFAULT_STATE) {
 
 describe("tables axis", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
-    const system = resolveDesignSystem(DEFAULT_STATE)
+    const system = designSystemOf(DEFAULT_STATE)
     expect(system.componentParams.table).toEqual({
       separation: "lines",
       header: "plain",
@@ -35,7 +35,7 @@ describe("tables axis", () => {
   })
 
   it("maps separation and header onto table params", () => {
-    const system = resolveDesignSystem(
+    const system = designSystemOf(
       parseState({ tableSeparation: "striped", tableHeader: "filled" }),
     )
     expect(system.componentParams.table).toEqual({
@@ -59,7 +59,7 @@ describe("table motion", () => {
     const state: StudioState = parseState({
       tableMotion: { duration: 250, ease: [0, 0, 0.2, 1] },
     })
-    expect(resolveDesignSystem(state).tokens).toEqual({
+    expect(designSystemOf(state).tokens).toEqual({
       "--studio-table-state-duration": "250ms",
       "--studio-table-state-ease": "cubic-bezier(0, 0, 0.2, 1)",
     })

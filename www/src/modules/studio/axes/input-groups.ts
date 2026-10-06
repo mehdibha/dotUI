@@ -7,7 +7,8 @@
    Engine: one `input.addon` param — the divider only exists on a boxed cell,
    so the two rows fold into `inside | boxed | boxed-flush`. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -31,7 +32,7 @@ export const INPUT_GROUP_SCHEMA: ChapterSchema<typeof INPUT_GROUP_DEFAULTS> = {
   addonDivider: oneOf(ADDON_DIVIDER_OPTIONS),
 }
 
-export function resolveInputGroups(state: StudioState): Resolved {
+export function resolveInputGroups(state: Effective): Resolved {
   const layout = state.addonLayout
   const divider = state.addonDivider
   const addon =
@@ -42,3 +43,20 @@ export function resolveInputGroups(state: StudioState): Resolved {
       : "inside"
   return { params: { input: { addon } } }
 }
+
+export const chapter = defineChapter({
+  id: "input-groups",
+  defaults: INPUT_GROUP_DEFAULTS,
+  schema: INPUT_GROUP_SCHEMA,
+  resolve: resolveInputGroups,
+  rules: [
+    {
+      // The divider only exists on a boxed cell.
+      id: "input-groups/divider-only-boxed",
+      target: "addonDivider",
+      when: { key: "addonLayout", notIn: ["boxed"] },
+      effect: { kind: "hide" },
+      cause: "addonLayout",
+    },
+  ],
+})

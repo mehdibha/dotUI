@@ -1,5 +1,5 @@
 import type { DesignSystem } from "@/modules/studio/preset/types"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
 import { claude } from "./claude"
@@ -33,7 +33,7 @@ export const ORIGIN = origin
 
 /** What pickers list; a preview resolves its preset on demand. */
 export const PRESET_META: PresetMeta[] = PRESETS.map(
-  ({ state: _, ...meta }) => meta,
+  ({ state: _, diff: __, ...meta }) => meta,
 )
 
 export const getPreset = (id: string) => PRESETS.find((p) => p.id === id)
@@ -46,7 +46,7 @@ export function resolvePreset(id: string): DesignSystem {
   if (!designSystem) {
     const preset = getPreset(id)
     if (!preset) throw new Error(`Unknown preset "${id}"`)
-    designSystem = resolveDesignSystem(preset.state)
+    designSystem = designSystemOf(preset.state)
     resolved.set(id, designSystem)
   }
   return designSystem

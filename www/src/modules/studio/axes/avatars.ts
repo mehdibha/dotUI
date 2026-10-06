@@ -9,7 +9,8 @@
    plain `rounded-*` on export; `fallback` is an enum param on `avatar`,
    painting by the `data-tint` index the fallback hashes from its text. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -37,7 +38,7 @@ export const AVATAR_SCHEMA: ChapterSchema<typeof AVATAR_DEFAULTS> = {
   avatarFallback: oneOf(FALLBACK_OPTIONS),
 }
 
-export function resolveAvatars(state: StudioState): Resolved {
+export function resolveAvatars(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.avatarShape]
   if (radius) tokens["--studio-avatar-radius"] = radius
@@ -50,3 +51,10 @@ export function resolveAvatars(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "avatars",
+  defaults: AVATAR_DEFAULTS,
+  schema: AVATAR_SCHEMA,
+  resolve: resolveAvatars,
+})

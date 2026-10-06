@@ -11,7 +11,8 @@
    `--studio-checkbox-state-*` vars, which Radio reads too (a synced pair). */
 
 import { fillScope, SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -45,9 +46,16 @@ export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
   checkboxMotion: STATE_CHANGE,
 }
 
-export function resolveCheckbox(state: StudioState): Resolved {
+export function resolveCheckbox(state: Effective): Resolved {
   const tokens = resolveStateChange("checkbox", state.checkboxMotion, MOTION)
   const corner = CORNER_TOKENS[state.checkCorner]
   if (corner) tokens["--studio-checkbox-radius"] = corner
   return { tokens, color: fillScope(state, "checkbox", state.checkboxColor) }
 }
+
+export const chapter = defineChapter({
+  id: "checkbox",
+  defaults: CHECKBOX_DEFAULTS,
+  schema: CHECKBOX_SCHEMA,
+  resolve: resolveCheckbox,
+})

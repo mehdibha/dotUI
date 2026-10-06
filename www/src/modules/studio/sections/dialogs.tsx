@@ -5,7 +5,7 @@
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -53,7 +53,7 @@ function BackdropGlyph({ backdrop }: { backdrop: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function DialogsPreview({ state }: { state: StudioState }) {
+export function DialogsPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <BackdropGlyph backdrop={state.dialogBackdrop} />

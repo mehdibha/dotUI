@@ -61,7 +61,7 @@ function ChapterBlock({
         </span>
         {Preview && (
           <span className="flex shrink-0 items-center text-fg/60">
-            <Preview state={studio.state} />
+            <Preview state={studio.effective} />
           </span>
         )}
       </h2>
@@ -334,7 +334,7 @@ export function PanelPage({
                   </span>
                   {page.Preview && (
                     <span className="flex shrink-0 items-center pr-1 text-fg/60">
-                      <page.Preview state={studio.state} />
+                      <page.Preview state={studio.effective} />
                     </span>
                   )}
                 </>

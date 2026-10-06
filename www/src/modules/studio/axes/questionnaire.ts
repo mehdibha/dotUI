@@ -2,7 +2,8 @@
    choice's hover/checked fill and the input's focus ring, one timing for
    both on the `--studio-questionnaire-state-*` vars. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -21,7 +22,7 @@ export const QUESTIONNAIRE_SCHEMA: ChapterSchema<
   questionnaireMotion: STATE_CHANGE,
 }
 
-export function resolveQuestionnaire(state: StudioState): Resolved {
+export function resolveQuestionnaire(state: Effective): Resolved {
   return {
     tokens: resolveStateChange(
       "questionnaire",
@@ -30,3 +31,10 @@ export function resolveQuestionnaire(state: StudioState): Resolved {
     ),
   }
 }
+
+export const chapter = defineChapter({
+  id: "questionnaire",
+  defaults: QUESTIONNAIRE_DEFAULTS,
+  schema: QUESTIONNAIRE_SCHEMA,
+  resolve: resolveQuestionnaire,
+})

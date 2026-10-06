@@ -26,7 +26,7 @@ import {
 } from "../dial"
 import { CardGrid } from "../patterns"
 import { GroupTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -168,7 +168,7 @@ function SegmentedGlyph({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function ButtonsPreview({ state }: { state: StudioState }) {
+export function ButtonsPreview({ state }: { state: Effective }) {
   return <StyleSpecimen style={state.buttonStyle} tiny />
 }
 

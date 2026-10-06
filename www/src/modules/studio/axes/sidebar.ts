@@ -3,7 +3,8 @@
    Engine: the `--studio-sidebar-state-*` vars its gap, panel, group labels
    and rail read. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { ease, resolveStateChange } from "./motion"
 import type { StateChange } from "./motion"
 import { STATE_CHANGE } from "./schema"
@@ -18,8 +19,15 @@ export const SIDEBAR_SCHEMA: ChapterSchema<typeof SIDEBAR_DEFAULTS> = {
   sidebarMotion: STATE_CHANGE,
 }
 
-export function resolveSidebar(state: StudioState): Resolved {
+export function resolveSidebar(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("sidebar", state.sidebarMotion, MOTION),
   }
 }
+
+export const chapter = defineChapter({
+  id: "sidebar",
+  defaults: SIDEBAR_DEFAULTS,
+  schema: SIDEBAR_SCHEMA,
+  resolve: resolveSidebar,
+})

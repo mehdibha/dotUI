@@ -19,7 +19,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -92,7 +92,7 @@ function CardGlyph({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SelectionControlsPreview({ state }: { state: StudioState }) {
+export function SelectionControlsPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <CornerGlyph corner={state.checkCorner} />

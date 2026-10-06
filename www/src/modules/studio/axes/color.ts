@@ -5,7 +5,8 @@
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import type { ColorConfig, PrimaryColorSource } from "@/registry/theme"
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved, StudioStateInput } from "./index"
 import { auto, BOOLEAN, COLOR, oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -22,8 +23,9 @@ export const COLOR_DEFAULTS = {
   vividness: 1,
   neutralTint: 1,
   preserveSeed: false,
-  /** Page L* per mode; dark 2 is dotUI's (the engine would pick 6). */
-  lightBg: 99,
+  /** Page L* per mode; dark 2 is dotUI's (the engine would pick 6). Light
+   *  is Auto: Surfaces' Grouped takes it down to gray. */
+  lightBg: "auto" as number | "auto",
   darkBg: 2,
 }
 
@@ -41,6 +43,12 @@ export const NEUTRAL_TINT_RANGE = { min: 0, max: 2, step: 0.05 }
 /** The engine's accepted page range per mode; 0 on dark is OLED black. */
 export const LIGHT_BG_RANGE = { min: 90, max: 100, step: 0.5 }
 export const DARK_BG_RANGE = { min: 0, max: 20, step: 0.5 }
+
+/** The engine's own light page. */
+export const ORIGIN_PAGE = 99
+/** Grouped's page: its cards are white, so the page's gray is its depth
+ *  (Apple, Polaris, HeroUI). */
+export const GROUPED_PAGE = 96
 
 export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   brand: COLOR,
@@ -81,7 +89,9 @@ export const PRIMARY_LEAVES = [
 
 export type PrimaryLeaf = (typeof PRIMARY_LEAVES)[number]
 
-export function primaryValue(state: StudioState): PrimaryColorSource | "mixed" {
+export function primaryValue(
+  state: Pick<StudioStateInput, PrimaryLeaf>,
+): PrimaryColorSource | "mixed" {
   const first = state[PRIMARY_LEAVES[0]]
   return PRIMARY_LEAVES.every((leaf) => state[leaf] === first)
     ? (first as PrimaryColorSource)
@@ -103,7 +113,7 @@ export function withSource<K extends PrimaryLeaf>(
  *  leaf; on it, the control paints with the selection tokens (a `selection`
  *  seed included). */
 export function fillScope(
-  state: StudioState,
+  state: Effective,
   scope: string,
   fill: string,
 ): Partial<ColorConfig> | undefined {
@@ -118,7 +128,7 @@ function compact<T extends object>(value: T): T {
   ) as T
 }
 
-export function buildColorConfig(state: StudioState): ColorConfig {
+export function buildColorConfig(state: Effective): ColorConfig {
   return compact({
     v: 2,
     seeds: compact({
@@ -130,7 +140,7 @@ export function buildColorConfig(state: StudioState): ColorConfig {
     }),
     background: compact({
       // 99 is the engine's own light default.
-      light: state.lightBg === 99 ? undefined : state.lightBg,
+      light: state.lightBg === ORIGIN_PAGE ? undefined : state.lightBg,
       dark: state.darkBg === 0 ? ("oled" as const) : state.darkBg,
     }),
     vividness: state.vividness === 1 ? undefined : state.vividness,
@@ -145,6 +155,39 @@ export function buildColorConfig(state: StudioState): ColorConfig {
   })
 }
 
-export function resolveColor(state: StudioState): Resolved {
+export function resolveColor(state: Effective): Resolved {
   return { color: buildColorConfig(state) }
 }
+
+export const chapter = defineChapter({
+  id: "color",
+  defaults: COLOR_DEFAULTS,
+  schema: COLOR_SCHEMA,
+  resolve: resolveColor,
+  follows: {
+    lightBg: [
+      {
+        kind: "auto",
+        id: "auto",
+        from: "surfaceLayers",
+        table: { same: ORIGIN_PAGE, grouped: GROUPED_PAGE, tonal: ORIGIN_PAGE },
+      },
+    ],
+  },
+  rules: [
+    {
+      // Flat white cards with no edge vanish on a near-white page.
+      id: "color/grouped-page",
+      target: "lightBg",
+      when: {
+        all: [
+          { key: "surfaceLayers", in: ["grouped"] },
+          { key: "surfaceEdge", in: ["none"] },
+          { key: "surfaceShadow", in: ["flat"] },
+        ],
+      },
+      effect: { kind: "exclude", above: GROUPED_PAGE },
+      cause: "surfaceLayers",
+    },
+  ],
+})

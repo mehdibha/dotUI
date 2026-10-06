@@ -6,7 +6,8 @@
    icons' turn, the drag handle and drop line included
    (`--studio-table-state-*`). */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -42,7 +43,7 @@ export const TABLE_SCHEMA: ChapterSchema<typeof TABLE_DEFAULTS> = {
   tableMotion: STATE_CHANGE,
 }
 
-export function resolveTables(state: StudioState): Resolved {
+export function resolveTables(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("table", state.tableMotion, MOTION),
     params: {
@@ -53,3 +54,10 @@ export function resolveTables(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "tables",
+  defaults: TABLE_DEFAULTS,
+  schema: TABLE_SCHEMA,
+  resolve: resolveTables,
+})

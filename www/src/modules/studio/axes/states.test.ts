@@ -1,18 +1,16 @@
 import { describe, expect, test } from "vitest"
 
 import { DEFAULT_STATE, parseState } from "."
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 
 describe("disabled", () => {
   test("solid is the registry's own look: no tokens", () => {
-    const { tokens } = resolveDesignSystem(DEFAULT_STATE)
+    const { tokens } = designSystemOf(DEFAULT_STATE)
     expect(Object.keys(tokens).some((k) => k.includes("disabled"))).toBe(false)
   })
 
   test("fade unsets every recolor token and dims", () => {
-    const { tokens } = resolveDesignSystem(
-      parseState({ disabledTreatment: "fade" }),
-    )
+    const { tokens } = designSystemOf(parseState({ disabledTreatment: "fade" }))
     expect(tokens["--disabled-opacity"]).toBe("0.5")
     for (const name of [
       "--disabled-bg",
@@ -27,7 +25,7 @@ describe("disabled", () => {
   })
 
   test("alpha mixes ink at fixed alphas, no opacity", () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ disabledTreatment: "alpha" }),
     )
     expect(tokens["--disabled-opacity"]).toBeUndefined()
@@ -39,11 +37,11 @@ describe("disabled", () => {
 
 describe("invalid", () => {
   test("drives the field error param; the bar carries its vars", () => {
-    const plain = resolveDesignSystem(DEFAULT_STATE)
+    const plain = designSystemOf(DEFAULT_STATE)
     expect(plain.componentParams.field?.error).toBe("border")
     expect(plain.tokens["--studio-field-error-bar"]).toBeUndefined()
 
-    const bar = resolveDesignSystem(parseState({ inputError: "bar" }))
+    const bar = designSystemOf(parseState({ inputError: "bar" }))
     expect(bar.componentParams.field?.error).toBe("bar")
     expect(bar.tokens["--studio-field-error-bar"]).toBe("3px")
   })

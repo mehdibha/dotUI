@@ -4,12 +4,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("navigation chapters", () => {
   test("defaults land on the registry defaults and add no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.tabs).toEqual({
       style: "segmented",
       color: "neutral",
@@ -30,19 +30,18 @@ describe("navigation chapters", () => {
   })
 
   test("tabs: tabStyle sets the tabs style param", () => {
-    const ds = resolveDesignSystem(parseState({ tabStyle: "enclosed" }))
+    const ds = designSystemOf(parseState({ tabStyle: "enclosed" }))
     expect(ds.componentParams.tabs).toEqual({
       style: "enclosed",
       color: "neutral",
     })
     expect(
-      resolveDesignSystem(parseState({ tabsColor: "accent" })).componentParams
-        .tabs,
+      designSystemOf(parseState({ tabsColor: "accent" })).componentParams.tabs,
     ).toEqual({ style: "segmented", color: "accent" })
   })
 
   test("accordion: container and marker axes set the accordion params", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({
         accordionContainer: "cards",
         accordionMarker: "plus",
@@ -58,7 +57,7 @@ describe("navigation chapters", () => {
   })
 
   test("breadcrumbs and pagination params", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({
         breadcrumbSeparator: "slash",
         breadcrumbTone: "accent",
@@ -93,7 +92,7 @@ describe("breadcrumbs motion", () => {
   })
 
   test("a tweak times the link's hover color", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         breadcrumbsMotion: { duration: 200, ease: [0, 0, 0.2, 1] },
       }),

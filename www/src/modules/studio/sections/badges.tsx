@@ -16,7 +16,7 @@ import {
   DialSegmented,
   DialSelect,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -95,7 +95,7 @@ function KbdGlyph({ treatment }: { treatment: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function BadgesPreview({ state }: { state: StudioState }) {
+export function BadgesPreview({ state }: { state: Effective }) {
   return <ChipGlyph style={state.badgeStyle} shape={state.badgeShape} />
 }
 

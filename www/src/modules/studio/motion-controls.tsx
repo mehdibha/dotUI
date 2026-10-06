@@ -37,6 +37,7 @@ import {
   DialStateMotion,
 } from "./dial-motion"
 import type { Studio, StudioState } from "./state"
+import { useAxis } from "./use-axis"
 
 type Pattern = { value: string; label: string }
 
@@ -98,20 +99,18 @@ const stateChange = (key: KeyOf<StateChange>, label = "Transition"): Kind => ({
   },
 })
 
-/** A keyframe loop; `curve` says when the loop has one to bend. */
-const loop = (
-  key: KeyOf<Loop>,
-  curve?: (state: StudioState) => boolean,
-): Kind => ({
+/** A keyframe loop; its curve row goes when a rule hides that part. */
+const loop = (key: KeyOf<Loop>): Kind => ({
   kind: "loop",
   keys: [key],
   Control: function LoopMotion({ studio }) {
+    const lock = useAxis(key).explain.lock
     return (
       <DialLoop
         label="Cycle"
         value={studio.state[key]}
         onChange={studio.set(key)}
-        curve={curve?.(studio.state) ?? true}
+        curve={!(lock?.kind === "hide" && lock.part === "ease")}
       />
     )
   },
@@ -228,8 +227,7 @@ export const MOTION: MotionEntry[] = [
   {
     id: "loader",
     label: "Spinner",
-    // Only the ring's turn bends: blades tick in steps, dots keep their breath.
-    ...loop("loaderMotion", (state) => state.spinnerStyle === "ring"),
+    ...loop("loaderMotion"),
   },
   {
     id: "skeleton",

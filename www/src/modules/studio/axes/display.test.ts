@@ -5,11 +5,11 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
 import { DEFAULT_STATE, parseState } from "."
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 
 describe("display chapters (badges, kbd, avatars)", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.badge).toEqual({ style: "solid" })
     expect(ds.componentParams["tag-group"]).toEqual({ style: "solid" })
@@ -18,13 +18,13 @@ describe("display chapters (badges, kbd, avatars)", () => {
   })
 
   it("badge style writes badge and tag-group together", () => {
-    const ds = resolveDesignSystem(parseState({ badgeStyle: "soft-outline" }))
+    const ds = designSystemOf(parseState({ badgeStyle: "soft-outline" }))
     expect(ds.componentParams.badge?.style).toBe("soft-outline")
     expect(ds.componentParams["tag-group"]?.style).toBe("soft-outline")
   })
 
   it("badge shape re-points the badge and tag radius vars", () => {
-    const ds = resolveDesignSystem(parseState({ badgeShape: "rounded" }))
+    const ds = designSystemOf(parseState({ badgeShape: "rounded" }))
     expect(ds.tokens).toEqual({
       "--studio-badge-radius": "var(--radius-sm)",
       "--studio-tag-radius": "var(--radius-sm)",
@@ -32,12 +32,12 @@ describe("display chapters (badges, kbd, avatars)", () => {
   })
 
   it("kbd treatment lands on the kbd param", () => {
-    const ds = resolveDesignSystem(parseState({ kbdTreatment: "keycap" }))
+    const ds = designSystemOf(parseState({ kbdTreatment: "keycap" }))
     expect(ds.componentParams.kbd).toEqual({ treatment: "keycap" })
   })
 
   it("avatar shape and fallback land on the var and the param", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({ avatarShape: "rounded", avatarFallback: "tinted" }),
     )
     expect(ds.tokens).toEqual({ "--studio-avatar-radius": "var(--radius-lg)" })
@@ -65,7 +65,7 @@ describe("tag motion", () => {
   })
 
   it("a tweak times the tag's hover", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ tagMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     expect(await shipped("tag-group", tokens)).toContain(

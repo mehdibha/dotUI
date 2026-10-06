@@ -29,17 +29,17 @@ import {
 } from "../dial"
 import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 import { PrimaryRow } from "./primary"
 import { SurfacesRow } from "./surfaces"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
-const COLOR_KEYS = Object.keys(COLOR_DEFAULTS) as (keyof StudioState)[]
+const COLOR_KEYS = Object.keys(COLOR_DEFAULTS) as (keyof Effective)[]
 
 /** The state's recipe, reference-stable on its values so the engine runs
  *  once per color edit (never for edits in other sections). */
-function useColorConfig(state: StudioState): ColorConfig {
+function useColorConfig(state: Effective): ColorConfig {
   const key = JSON.stringify(COLOR_KEYS.map((k) => state[k]))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useMemo(() => buildColorConfig(state), [key])
@@ -47,7 +47,7 @@ function useColorConfig(state: StudioState): ColorConfig {
 
 /** The resolved theme in the panel's own mode, so what the rows show is what
  *  the page around them renders. */
-function usePanelMode(state: StudioState) {
+function usePanelMode(state: Effective) {
   const config = useColorConfig(state)
   const theme = resolveColorConfigCached(config)
   const { resolvedTheme } = useTheme()
@@ -70,7 +70,7 @@ const SEMANTIC_SEEDS = [
  *  and the surfaces they paint. */
 export function ColorPrimary({ studio }: { studio: Studio }) {
   const { state, set, setState } = studio
-  const { theme, m } = usePanelMode(state)
+  const { theme, m } = usePanelMode(studio.effective)
   const neutral = { hue: state.neutralHue, tint: state.neutralTint }
   const brandHue = toOklch(state.brand).h
   const ramp = STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)
@@ -124,7 +124,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
 }
 
 /** Beside the title: the brand over the neutral it sits on. */
-export function ColorPreview({ state }: { state: StudioState }) {
+export function ColorPreview({ state }: { state: Effective }) {
   const { m } = usePanelMode(state)
   const dots = [m.scales.neutral?.["900"], m.scales.accent?.["700"]]
   return (
@@ -143,7 +143,7 @@ export function ColorPreview({ state }: { state: StudioState }) {
 /** Semantics and primary. */
 export function ColorSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const { m } = usePanelMode(state)
+  const { m } = usePanelMode(studio.effective)
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const semantic = (palette: string) =>

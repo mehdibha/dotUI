@@ -31,7 +31,7 @@ import {
 } from "../dial"
 import { CardGrid } from "../patterns"
 import { GroupTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio, StudioState } from "../state"
 
 const px = (n: number) => `${n}px`
 
@@ -183,7 +183,7 @@ function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
 const label = (options: { value: string; label: string }[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value
 
-export function StatesPreview({ state }: { state: StudioState }) {
+export function StatesPreview({ state }: { state: Effective }) {
   return <ControlSpecimen style={state.focusStyle} />
 }
 
@@ -191,12 +191,11 @@ export function statesSummary(state: StudioState): string {
   return `${label(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${label(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
 }
 
-/** Mounted with the popover: each pick, then only the knobs its style reads,
- *  right under it. Labels drop the "Ring"/"Field" prefix — the group carries
- *  it. A field wearing the control ring has nothing of its own to set. */
+/** Mounted with the popover: each pick, then the knobs its style reads
+ *  (the rest are hidden by the focus rules). Labels drop the "Ring"/"Field"
+ *  prefix — the group carries it. */
 function FocusPanel({ studio }: { studio: Studio }) {
   const { state, set } = studio
-  const duo = state.focusStyle === "duo"
   return (
     <>
       <GroupTitle>Controls</GroupTitle>
@@ -212,44 +211,34 @@ function FocusPanel({ studio }: { studio: Studio }) {
         }))}
       />
       <DialSlider
+        axis="focusWidth"
         label="Width"
-        value={state.focusWidth}
-        onChange={set("focusWidth")}
         minValue={FOCUS_WIDTH_RANGE.min}
         maxValue={FOCUS_WIDTH_RANGE.max}
         step={FOCUS_WIDTH_RANGE.step}
         format={px}
       />
-      {state.focusStyle === "halo" && (
-        <DialSlider
-          label="Strength"
-          value={state.focusHaloStrength}
-          onChange={set("focusHaloStrength")}
-          minValue={FOCUS_STRENGTH_RANGE.min}
-          maxValue={FOCUS_STRENGTH_RANGE.max}
-          step={FOCUS_STRENGTH_RANGE.step}
-          format={(v) => `${v}%`}
-        />
-      )}
-      {!duo && (
-        <DialSegmented
-          label="Offset"
-          value={state.focusOffset}
-          onChange={set("focusOffset")}
-          options={FOCUS_OFFSET_OPTIONS}
-        />
-      )}
-      {!duo && state.focusOffset === "gap" && (
-        <DialSlider
-          label="Gap"
-          value={state.focusGap}
-          onChange={set("focusGap")}
-          minValue={FOCUS_GAP_RANGE.min}
-          maxValue={FOCUS_GAP_RANGE.max}
-          step={FOCUS_GAP_RANGE.step}
-          format={px}
-        />
-      )}
+      <DialSlider
+        axis="focusHaloStrength"
+        label="Strength"
+        minValue={FOCUS_STRENGTH_RANGE.min}
+        maxValue={FOCUS_STRENGTH_RANGE.max}
+        step={FOCUS_STRENGTH_RANGE.step}
+        format={(v) => `${v}%`}
+      />
+      <DialSegmented
+        axis="focusOffset"
+        label="Offset"
+        options={FOCUS_OFFSET_OPTIONS}
+      />
+      <DialSlider
+        axis="focusGap"
+        label="Gap"
+        minValue={FOCUS_GAP_RANGE.min}
+        maxValue={FOCUS_GAP_RANGE.max}
+        step={FOCUS_GAP_RANGE.step}
+        format={px}
+      />
       <DialGap />
       <GroupTitle>Fields</GroupTitle>
       <CardGrid
@@ -263,39 +252,30 @@ function FocusPanel({ studio }: { studio: Studio }) {
           children: <FieldSpecimen style={option.value} card />,
         }))}
       />
-      {state.focusInputStyle === "halo" && (
-        <>
-          <DialSlider
-            label="Width"
-            value={state.focusInputWidth}
-            onChange={set("focusInputWidth")}
-            minValue={FOCUS_INPUT_WIDTH_RANGE.min}
-            maxValue={FOCUS_INPUT_WIDTH_RANGE.max}
-            step={FOCUS_INPUT_WIDTH_RANGE.step}
-            format={px}
-          />
-          <DialSlider
-            label="Strength"
-            value={state.focusInputStrength}
-            onChange={set("focusInputStrength")}
-            minValue={FOCUS_STRENGTH_RANGE.min}
-            maxValue={FOCUS_STRENGTH_RANGE.max}
-            step={FOCUS_STRENGTH_RANGE.step}
-            format={(v) => `${v}%`}
-          />
-        </>
-      )}
-      {state.focusInputStyle === "border" && (
-        <DialSlider
-          label="Width"
-          value={state.focusInputBorderWidth}
-          onChange={set("focusInputBorderWidth")}
-          minValue={FOCUS_INPUT_BORDER_RANGE.min}
-          maxValue={FOCUS_INPUT_BORDER_RANGE.max}
-          step={FOCUS_INPUT_BORDER_RANGE.step}
-          format={px}
-        />
-      )}
+      <DialSlider
+        axis="focusInputWidth"
+        label="Width"
+        minValue={FOCUS_INPUT_WIDTH_RANGE.min}
+        maxValue={FOCUS_INPUT_WIDTH_RANGE.max}
+        step={FOCUS_INPUT_WIDTH_RANGE.step}
+        format={px}
+      />
+      <DialSlider
+        axis="focusInputStrength"
+        label="Strength"
+        minValue={FOCUS_STRENGTH_RANGE.min}
+        maxValue={FOCUS_STRENGTH_RANGE.max}
+        step={FOCUS_STRENGTH_RANGE.step}
+        format={(v) => `${v}%`}
+      />
+      <DialSlider
+        axis="focusInputBorderWidth"
+        label="Width"
+        minValue={FOCUS_INPUT_BORDER_RANGE.min}
+        maxValue={FOCUS_INPUT_BORDER_RANGE.max}
+        step={FOCUS_INPUT_BORDER_RANGE.step}
+        format={px}
+      />
     </>
   )
 }

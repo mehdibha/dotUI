@@ -23,7 +23,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -164,7 +164,7 @@ function PaletteGlyph({ search }: { search: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function MenusPreview({ state }: { state: StudioState }) {
+export function MenusPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <HighlightGlyph highlight={state.menuHighlight} />

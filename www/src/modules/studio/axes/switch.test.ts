@@ -4,7 +4,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
@@ -26,7 +26,7 @@ describe("switch motion", () => {
   })
 
   test("a tweak times the card, track and thumb together", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ switchMotion: { duration: 250, ease: [0, 0, 0.2, 1] } }),
     )
     const content = await shipped(tokens)

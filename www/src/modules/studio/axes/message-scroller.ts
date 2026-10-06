@@ -2,7 +2,8 @@
    while scaling up from 95% and fading, and leaves the same way, on the
    `--studio-message-scroller-*` vars (in when active, out when not). */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveEntrance } from "./motion"
 import type { Entrance } from "./motion"
 import { entrance } from "./schema"
@@ -31,7 +32,7 @@ export const MESSAGE_SCROLLER_SCHEMA: ChapterSchema<
   messageScrollerMotion: entrance(MOTION_PATTERNS),
 }
 
-export function resolveMessageScroller(state: StudioState): Resolved {
+export function resolveMessageScroller(state: Effective): Resolved {
   return {
     tokens: resolveEntrance(
       "message-scroller",
@@ -40,3 +41,10 @@ export function resolveMessageScroller(state: StudioState): Resolved {
     ).tokens,
   }
 }
+
+export const chapter = defineChapter({
+  id: "message-scroller",
+  defaults: MESSAGE_SCROLLER_DEFAULTS,
+  schema: MESSAGE_SCROLLER_SCHEMA,
+  resolve: resolveMessageScroller,
+})

@@ -10,32 +10,41 @@ import {
   fontStack,
 } from "@/lib/fonts"
 
-import type { Resolved, StudioState } from "./index"
-import { auto, FONT } from "./schema"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { FONT } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const TYPE_DEFAULTS = {
-  // heading mirrors --font-heading: '' = Auto, follows body.
-  headingFont: "",
+  // Same as body until pinned; --font-heading falls back to the body face.
+  headingFont: "same",
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
 }
 
 export const TYPE_SCHEMA: ChapterSchema<typeof TYPE_DEFAULTS> = {
-  headingFont: auto(FONT),
+  headingFont: FONT,
   bodyFont: FONT,
   monoFont: FONT,
 }
 
-export function resolveType(state: StudioState): Resolved {
+export function resolveType(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.bodyFont !== DEFAULT_BODY_FAMILY)
     tokens["--font-sans"] = fontStack(state.bodyFont)
-  // Auto ('') follows the body through the theme's own fallback; a heading
-  // pinned to the body family is the same thing and encodes as nothing.
-  if (state.headingFont && state.headingFont !== state.bodyFont)
+  // The theme's own fallback follows the body: a heading on the body family
+  // encodes as nothing.
+  if (state.headingFont !== state.bodyFont)
     tokens["--font-heading"] = fontStack(state.headingFont)
   if (state.monoFont !== DEFAULT_MONO_FAMILY)
     tokens["--font-mono"] = fontStack(state.monoFont)
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "type",
+  defaults: TYPE_DEFAULTS,
+  schema: TYPE_SCHEMA,
+  resolve: resolveType,
+  follows: { headingFont: [{ kind: "same", id: "same", from: "bodyFont" }] },
+})

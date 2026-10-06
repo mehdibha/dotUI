@@ -2,11 +2,11 @@ import { describe, expect, test } from "vitest"
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULTS, parseState } from "./index"
 
 const resolve = (overrides: Partial<typeof DEFAULTS>) =>
-  resolveDesignSystem(parseState({ ...overrides }))
+  designSystemOf(parseState({ ...overrides }))
 
 describe("focus axis", () => {
   test("defaults emit no tokens", () => {

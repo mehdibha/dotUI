@@ -4,7 +4,7 @@
 
 import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /** The grid: a header band or line, then three rows divided as chosen. */
 function TableGlyph({
@@ -63,7 +63,7 @@ function TableGlyph({
   )
 }
 
-export function TablesPreview({ state }: { state: StudioState }) {
+export function TablesPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <TableGlyph

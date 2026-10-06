@@ -15,7 +15,7 @@ import {
   DialSegmented,
   DialSelect,
 } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -92,7 +92,7 @@ function MarkerGlyph({ marker }: { marker: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function AccordionPreview({ state }: { state: StudioState }) {
+export function AccordionPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <ContainerGlyph container={state.accordionContainer} />

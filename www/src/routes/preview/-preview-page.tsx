@@ -16,7 +16,7 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 import { getCurrent } from "@/modules/studio/selection"
 
 // Non-route file so the examples barrel, workspace and overview stay in
@@ -56,7 +56,7 @@ export function PreviewPage() {
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    resolveDesignSystem(getCurrent().state),
+    designSystemOf(getCurrent().state),
   )
 
   const navigate = route.useNavigate()

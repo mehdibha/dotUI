@@ -5,10 +5,10 @@ import { publish, selectPublishable } from "@/publisher/publish"
 
 import { DEFAULT_STATE, parseState } from "."
 import type { StudioState } from "."
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 
 async function shipped(state: StudioState = DEFAULT_STATE) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset = {
     density: ds.density,
     componentParams: ds.componentParams,

@@ -8,7 +8,8 @@
    component — `rounded-md`, `rounded-xl` — and a role at None ships no
    rounded class at all. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved, StudioStateInput } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -111,7 +112,9 @@ export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
 
 /** The character whose vector matches the roles, or undefined when custom. */
-export function activeCharacter(state: StudioState): string | undefined {
+export function activeCharacter(
+  state: Pick<StudioStateInput, ShapeRoleKey>,
+): string | undefined {
   return SHAPE_CHARACTERS.find((character) =>
     SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
   )?.id
@@ -126,7 +129,7 @@ const atLeast = (id: string, floor: string) => rungIndex(id) >= rungIndex(floor)
 
 /** A role's rung id with 'auto' resolved: items sit one rung below the
  *  surface they nest in, cards one rung below panels. */
-export function roleRung(state: StudioState, key: ShapeRoleKey): string {
+export function roleRung(state: Effective, key: ShapeRoleKey): string {
   const id = state[key]
   if (id !== "auto") return id
   return rungBelow(key === "roleItem" ? state.roleSurface : state.rolePanel)
@@ -137,7 +140,7 @@ export function roleRung(state: StudioState, key: ShapeRoleKey): string {
    - detail: capped at sm and at control-sm.
    - pill: square with square controls.
    - field / container / inline-item: multi-line, so never a pill. */
-function derivedRungs(state: StudioState): Record<string, string> {
+function derivedRungs(state: Effective): Record<string, string> {
   const control = roleRung(state, "roleControl")
   const item = roleRung(state, "roleItem")
   const surface = roleRung(state, "roleSurface")
@@ -159,13 +162,13 @@ function derivedRungs(state: StudioState): Record<string, string> {
 }
 
 /** A role's ratio of the base. */
-export function roleRatio(state: StudioState, key: ShapeRoleKey): number {
+export function roleRatio(state: Effective, key: ShapeRoleKey): number {
   return SHAPE_RUNGS[rungIndex(roleRung(state, key))]?.ratio ?? 1
 }
 
 /** A role's resolved radius in px. Pill clamps to a value large enough to
  *  round any control we specimen. */
-export function roleRadiusPx(state: StudioState, key: ShapeRoleKey): number {
+export function roleRadiusPx(state: Effective, key: ShapeRoleKey): number {
   const ratio = roleRatio(state, key)
   return ratio === Infinity ? 999 : state.radiusPx * ratio
 }
@@ -179,7 +182,7 @@ export const ROLE_VARS: Record<ShapeRoleKey, string> = {
 }
 
 /** Every role var's token: the five picked roles, then the derived rungs. */
-export function shapeVars(state: StudioState): Record<string, string> {
+export function shapeVars(state: Effective): Record<string, string> {
   const rungs: Record<string, string> = {}
   for (const role of SHAPE_ROLES)
     rungs[ROLE_VARS[role.key]] = roleRung(state, role.key)
@@ -192,12 +195,19 @@ export function shapeVars(state: StudioState): Record<string, string> {
   )
 }
 
-export function resolveShape(state: StudioState): Resolved {
+export function resolveShape(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.radiusPx !== SHAPE_DEFAULTS.radiusPx)
     tokens["--radius"] = `${state.radiusPx / 16}rem`
-  const defaults = shapeVars(SHAPE_DEFAULTS as StudioState)
+  const defaults = shapeVars(SHAPE_DEFAULTS as Effective)
   for (const [name, token] of Object.entries(shapeVars(state)))
     if (token !== defaults[name]) tokens[name] = token
   return { tokens }
 }
+
+export const chapter = defineChapter({
+  id: "shape",
+  defaults: SHAPE_DEFAULTS,
+  schema: SHAPE_SCHEMA,
+  resolve: resolveShape,
+})

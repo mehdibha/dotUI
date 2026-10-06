@@ -4,12 +4,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("segmented control axis", () => {
   test("defaults ship the registry defaults", () => {
-    const { componentParams, tokens } = resolveDesignSystem(DEFAULT_STATE)
+    const { componentParams, tokens } = designSystemOf(DEFAULT_STATE)
     expect(componentParams["segmented-control"]).toEqual({
       selected: "flat",
       track: "filled",
@@ -18,7 +18,7 @@ describe("segmented control axis", () => {
   })
 
   test("selected and track become segmented-control params", () => {
-    const { componentParams } = resolveDesignSystem(
+    const { componentParams } = designSystemOf(
       parseState({ segmentedSelected: "raised", segmentedTrack: "outline" }),
     )
     expect(componentParams["segmented-control"]).toEqual({
@@ -50,7 +50,7 @@ describe("segmented control motion", () => {
   })
 
   test("a tweak ships plain classes", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         segmentedControlMotion: { duration: 200, ease: [0.4, 0, 0.2, 1] },
       }),

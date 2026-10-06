@@ -5,7 +5,8 @@
 
    Engine: `selected` enum param on `toggle-button`. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -23,6 +24,13 @@ export const TOGGLE_SCHEMA: ChapterSchema<typeof TOGGLE_DEFAULTS> = {
   toggleSelected: oneOf(SELECTED_OPTIONS),
 }
 
-export function resolveToggles(state: StudioState): Resolved {
+export function resolveToggles(state: Effective): Resolved {
   return { params: { "toggle-button": { selected: state.toggleSelected } } }
 }
+
+export const chapter = defineChapter({
+  id: "toggles",
+  defaults: TOGGLE_DEFAULTS,
+  schema: TOGGLE_SCHEMA,
+  resolve: resolveToggles,
+})

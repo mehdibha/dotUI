@@ -13,7 +13,7 @@
 import { DIALOG_OPTIONS, PICKER_OPTIONS } from "../axes/mobile"
 import { DialGlyph, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio, StudioState } from "../state"
 
 type Layer = "drawer" | "popover" | "center" | "sheet"
 
@@ -84,7 +84,7 @@ const withGlyphs = (
 const PICKERS = withGlyphs(PICKER_OPTIONS)
 const DIALOGS = withGlyphs(DIALOG_OPTIONS)
 
-export function MobilePreview({ state }: { state: StudioState }) {
+export function MobilePreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <PhoneGlyph layer={state.mobilePickers as Layer} />

@@ -1,6 +1,6 @@
 import { DEFAULTS } from "@/modules/studio/axes"
 
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const github = definePreset({
   id: "github",
@@ -8,145 +8,56 @@ export const github = definePreset({
   description: "Green actions, blue selection.",
   swatch: "#1f883d",
   inspiredBy: "GitHub",
-  state: {
+  diff: {
     // Color
     brand: "#1f883d",
-    buttonColor: "accent",
-    selectionColor: "accent",
     neutralHue: 251,
     successSeed: "#1f883d",
     warningSeed: "#9a6700",
     dangerSeed: "#cf222e",
     // Checked controls and focus stay Primer blue under the green actions.
     selectionSeed: "#0969da",
-    vividness: 1,
     neutralTint: 1.4,
     preserveSeed: true,
     lightBg: 100,
     darkBg: 5,
 
     // Typography
-    headingFont: "",
     bodyFont: "Mona Sans",
-    monoFont: "Geist Mono",
-
-    // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
 
     // Shape
     radiusPx: 8,
-    roleControl: "md",
     roleItem: "md",
     roleSurface: "xl",
-    rolePanel: "xl",
     roleCard: "xl",
 
-    // Space
-    density: "default",
-    spacingUnit: 4,
-
-    // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    surfaceGlass: false,
-
     // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
     selectionHighlight: "browser",
 
     // States
-    focusColor: "accent",
     // An inset ring measured ~1.1:1 on the green and red fills.
     focusStyle: "duo",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
     focusInputStyle: "border",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
     focusInputBorderWidth: 2,
-    disabledTreatment: "solid",
-    inputError: "border",
 
     // Motion
-    ...DEFAULT_MOTION,
     popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "fade" },
     tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "fade" },
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "fade" },
 
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
-
     // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
     // Underlined at rest so links don't rely on color alone (WCAG 1.4.1).
     linkUnderline: "always",
     linkColor: "neutral",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "ring",
     progressTrack: "thick",
-    progressIndeterminate: "slide",
-    progressGap: false,
     buttonStyle: "hairline",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
     segmentedSelected: "raised",
-    segmentedTrack: "filled",
-    switchColor: "accent",
-    checkboxColor: "accent",
-    checkCorner: "rounded",
-    radioColor: "accent",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "none",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
     pickerCaret: "double",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
-    sliderColor: "accent",
     menuIndicator: "check-start",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "sentence",
-    menuSearch: "field",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
     tabStyle: "line",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
     breadcrumbSeparator: "slash",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
     badgeStyle: "outline",
-    badgeShape: "pill",
     kbdTreatment: "keycap",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
     tableHeader: "filled",
   },
 })

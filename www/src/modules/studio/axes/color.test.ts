@@ -2,20 +2,24 @@ import { describe, expect, it } from "vitest"
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 
-import { DEFAULT_STATE, DEFAULTS, parseState } from "."
-import { resolveDesignSystem } from "../resolve"
+import {
+  DEFAULT_EFFECTIVE,
+  DEFAULT_STATE,
+  DEFAULTS,
+  effective,
+  parseState,
+} from "."
+import { designSystemOf } from "../resolve"
 import { buildColorConfig, SOLID_LEAVES, withSource } from "./color"
 
 describe("color axis", () => {
   it("the defaults are the shipped palette, resolved explicitly", () => {
-    expect(buildColorConfig(DEFAULT_STATE)).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(resolveDesignSystem(DEFAULT_STATE).color).toEqual(
-      DEFAULT_COLOR_CONFIG,
-    )
+    expect(buildColorConfig(DEFAULT_EFFECTIVE)).toEqual(DEFAULT_COLOR_CONFIG)
+    expect(designSystemOf(DEFAULT_STATE).color).toEqual(DEFAULT_COLOR_CONFIG)
   })
 
   it("maps seeds and engine axes onto ColorConfig, absent when default", () => {
-    const { color } = resolveDesignSystem(
+    const { color } = designSystemOf(
       parseState({
         brand: "#5e6ad2",
         ...withSource(SOLID_LEAVES, "accent"),
@@ -41,7 +45,7 @@ describe("color axis", () => {
 
   it("stores the selection source only when it leaves the primary's", () => {
     const source = (state: Partial<typeof DEFAULTS>) =>
-      buildColorConfig(parseState({ ...state })).selection
+      buildColorConfig(effective(parseState({ ...state })).values).selection
     expect(source({ selectionColor: "accent" })).toBeUndefined()
     expect(source({ selectionColor: "neutral" })).toBe("neutral")
     expect(source(withSource(SOLID_LEAVES, "neutral"))).toBeUndefined()
@@ -52,13 +56,12 @@ describe("color axis", () => {
 
   it("maps the backgrounds onto per-polarity backgrounds (0 dark = OLED)", () => {
     expect(
-      resolveDesignSystem(parseState({ lightBg: 97, darkBg: 0 })).color
-        ?.background,
+      designSystemOf(parseState({ lightBg: 97, darkBg: 0 })).color?.background,
     ).toEqual({ light: 97, dark: "oled" })
   })
 
   it("keeps a neutral primary off the accent default", () => {
-    const { color } = resolveDesignSystem(
+    const { color } = designSystemOf(
       parseState(withSource(SOLID_LEAVES, "neutral")),
     )
     expect(color).toBeDefined()

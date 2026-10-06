@@ -10,7 +10,8 @@
    included (`--studio-tabs-state-*`). */
 
 import { SOURCE_OPTIONS } from "./color"
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { resolveStateChange, TAILWIND_TIMING } from "./motion"
 import { oneOf, STATE_CHANGE } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -37,9 +38,16 @@ export const TAB_SCHEMA: ChapterSchema<typeof TAB_DEFAULTS> = {
   tabsMotion: STATE_CHANGE,
 }
 
-export function resolveTabs(state: StudioState): Resolved {
+export function resolveTabs(state: Effective): Resolved {
   return {
     tokens: resolveStateChange("tabs", state.tabsMotion, MOTION),
     params: { tabs: { style: state.tabStyle, color: state.tabsColor } },
   }
 }
+
+export const chapter = defineChapter({
+  id: "tabs",
+  defaults: TAB_DEFAULTS,
+  schema: TAB_SCHEMA,
+  resolve: resolveTabs,
+})

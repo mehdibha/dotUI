@@ -1,11 +1,11 @@
 import { describe, expect, test } from "vitest"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("feedback chapters (skeleton · spinner · progress)", () => {
   test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.skeleton).toEqual({ animation: "shimmer" })
     expect(ds.componentParams.loader).toEqual({ style: "ring" })
     expect(ds.componentParams["progress-bar"]).toEqual({
@@ -17,7 +17,7 @@ describe("feedback chapters (skeleton · spinner · progress)", () => {
   })
 
   test("each axis lands on its param", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({
         skeletonAnimation: "pulse",
         spinnerStyle: "blades",

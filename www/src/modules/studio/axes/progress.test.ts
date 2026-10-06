@@ -4,7 +4,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { parseState } from "./index"
 
 const shipped = async (tokens: Record<string, string> = {}) => {
@@ -27,7 +27,7 @@ describe("progress motion", () => {
   })
 
   test("a tweak times the fill", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({
         progressMotion: { duration: 500, ease: [0.05, 0.7, 0.1, 1] },
       }),

@@ -4,18 +4,16 @@
    drawn and described; under a hairline, the settings a style is made of and
    each mode's page. */
 
-import { useState } from "react"
-
 import type { StepName, Theme } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
 
+import { effective } from "../axes"
 import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
   EDGE_OPTIONS,
-  flatAllowed,
   GLASS_OPTIONS,
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
@@ -23,7 +21,6 @@ import {
   surfaceRecipe,
   SURFACE_STYLES,
   surfaceStyle,
-  withSurface,
 } from "../axes/surfaces"
 import type {
   Mode,
@@ -40,8 +37,7 @@ import {
   DialTrigger,
   ModifiedDot,
 } from "../dial"
-import { selectionKey, useCurrent } from "../selection"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio, StudioState } from "../state"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
    drawn heavier than life so it reads at this size. */
@@ -59,7 +55,7 @@ function SurfaceGlyph({
   theme,
   large,
 }: {
-  state: StudioState
+  state: Effective
   theme: Theme
   large?: boolean
 }) {
@@ -120,20 +116,10 @@ export function SurfacesRow({
   studio: Studio
   theme: Theme
 }) {
-  const { state, set, setState } = studio
-  // The light page Grouped took, given back when Layers leaves it — kept per
-  // design system; editing a view keeps its key.
-  const { doc, view } = useCurrent()
-  const key = doc ? `system:${doc.id}` : selectionKey(view)
-  const [memory, setMemory] = useState<{ key: string; page?: number }>()
-  const before = memory?.key === key ? memory.page : undefined
+  const { state, effective: values, set, setState } = studio
   const { style, exact } = surfaceStyle(state)
-  const commit = (next: ReturnType<typeof withSurface>) => {
-    setMemory({ key, page: next.before })
-    setState(next.state)
-  }
-  const edit = (patch: Parameters<typeof withSurface>[1]) =>
-    commit(withSurface(state, patch, before))
+  const edit = (patch: SurfaceStyle["values"] | Partial<StudioState>) =>
+    setState({ ...state, ...patch })
   return (
     <DialTrigger
       label="Surfaces"
@@ -142,43 +128,23 @@ export function SurfacesRow({
         <>
           {!exact && <ModifiedDot />}
           <span className="truncate">{style.label}</span>
-          <SurfaceGlyph state={state} theme={theme} />
+          <SurfaceGlyph state={values} theme={theme} />
         </>
       }
     >
       <DialPopover className="w-80">
-        <StyleList
-          state={state}
-          theme={theme}
-          before={before}
-          onChange={edit}
-        />
+        <StyleList state={state} theme={theme} onChange={edit} />
         <DialSeparator />
         <DialPicker
+          axis="surfaceLayers"
           label="Layers"
-          value={state.surfaceLayers}
-          onChange={(surfaceLayers) => edit({ surfaceLayers })}
           options={LAYERS_OPTIONS}
         />
+        <DialPicker axis="surfaceEdge" label="Edge" options={EDGE_OPTIONS} />
         <DialPicker
-          label="Edge"
-          value={state.surfaceEdge}
-          onChange={(surfaceEdge) => edit({ surfaceEdge })}
-          options={EDGE_OPTIONS}
-        />
-        <DialPicker
+          axis="surfaceShadow"
           label="Shadow"
-          value={state.surfaceShadow}
-          onChange={(surfaceShadow) => edit({ surfaceShadow })}
-          options={SHADOW_OPTIONS.map((o) =>
-            o.value === "flat" && !flatAllowed(state)
-              ? {
-                  ...o,
-                  disabled: true,
-                  description: "Needs an edge, a tone or a gray page",
-                }
-              : o,
-          )}
+          options={SHADOW_OPTIONS}
         />
         <DialPicker
           label="Overlays"
@@ -187,11 +153,8 @@ export function SurfacesRow({
           options={GLASS_OPTIONS}
         />
         <DialSlider
+          axis="lightBg"
           label="Light page"
-          value={state.lightBg}
-          onChange={(lightBg) =>
-            commit(withSurface({ ...state, lightBg }, {}, before))
-          }
           minValue={LIGHT_BG_RANGE.min}
           maxValue={LIGHT_BG_RANGE.max}
           step={LIGHT_BG_RANGE.step}
@@ -216,15 +179,14 @@ export function SurfacesRow({
 function StyleList({
   state,
   theme,
-  before,
   onChange,
 }: {
   state: StudioState
   theme: Theme
-  before: number | undefined
   onChange: (values: SurfaceStyle["values"]) => void
 }) {
   const { style, exact } = surfaceStyle(state)
+  const page = effective(state).values.lightBg
   return (
     <DialPickList
       label="Style"
@@ -235,7 +197,7 @@ function StyleList({
         if (next) onChange(next.values)
       }}
       options={SURFACE_STYLES.map((s) => {
-        const preview = withSurface(state, s.values, before).state
+        const preview = effective({ ...state, ...s.values }).values
         return {
           value: s.id,
           label: s.label,
@@ -246,7 +208,7 @@ function StyleList({
               large
               state={preview}
               theme={
-                preview.lightBg === state.lightBg
+                preview.lightBg === page
                   ? theme
                   : resolveColorConfigCached(buildColorConfig(preview))
               }

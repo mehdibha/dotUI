@@ -36,7 +36,6 @@ import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import {
   ICON_STROKE_WIDTH_VAR,
   LIBRARY_OPTIONS,
-  STROKE_DEFAULTS,
   STROKE_RANGE,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
@@ -48,7 +47,7 @@ import {
   DialSlider,
 } from "../dial"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 const SPECIMEN_ICONS = [
   SearchIcon,
@@ -113,7 +112,7 @@ function Glyphs(props: {
 }
 
 /** Beside the title: the strip as the library draws it. */
-export function IconsPreview({ state }: { state: StudioState }) {
+export function IconsPreview({ state }: { state: Effective }) {
   return (
     <Glyphs
       library={state.iconLibrary as IconLibraryName}
@@ -215,47 +214,38 @@ function IconLibraryRow({
 }
 
 export function IconsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
-  const library = state.iconLibrary as IconLibraryName
-  const weight = state.iconWeight as PhosphorWeight
-  const strokeDefault = STROKE_DEFAULTS[library]
+  const { effective, set } = studio
+  const weight = effective.iconWeight as PhosphorWeight
   return (
     <>
       <IconLibraryRow
         label="Icon Library"
-        value={library}
+        value={effective.iconLibrary as IconLibraryName}
         onChange={set("iconLibrary")}
         weight={weight}
-        stroke={state.iconStroke}
+        stroke={effective.iconStroke}
       />
-      {/* Stroke only exists on line sets; Phosphor swaps it for weight. */}
-      {strokeDefault !== undefined && (
-        <DialSlider
-          label="Stroke"
-          value={state.iconStroke}
-          onChange={set("iconStroke")}
-          minValue={STROKE_RANGE.min}
-          maxValue={STROKE_RANGE.max}
-          step={STROKE_RANGE.step}
-          format={(v) => v.toFixed(2)}
-        />
-      )}
-      {library === "phosphor" && (
-        <DialSelect
-          label="Weight"
-          value={state.iconWeight}
-          onChange={set("iconWeight")}
-          options={WEIGHT_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <Glyphs
-                library="phosphor"
-                weight={option.value as PhosphorWeight}
-              />
-            ),
-          }))}
-        />
-      )}
+      <DialSlider
+        axis="iconStroke"
+        label="Stroke"
+        minValue={STROKE_RANGE.min}
+        maxValue={STROKE_RANGE.max}
+        step={STROKE_RANGE.step}
+        format={(v) => v.toFixed(2)}
+      />
+      <DialSelect
+        axis="iconWeight"
+        label="Weight"
+        options={WEIGHT_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <Glyphs
+              library="phosphor"
+              weight={option.value as PhosphorWeight}
+            />
+          ),
+        }))}
+      />
     </>
   )
 }

@@ -6,7 +6,7 @@
 
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -61,7 +61,7 @@ function ThumbGlyph({ thumb, track }: { thumb: string; track: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SlidersPreview({ state }: { state: StudioState }) {
+export function SlidersPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <ThumbGlyph thumb={state.sliderThumb} track={state.sliderTrack} />

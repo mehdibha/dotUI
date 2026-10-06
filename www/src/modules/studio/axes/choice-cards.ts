@@ -10,7 +10,8 @@
    where the markup puts it, End and Hidden reorder or drop the indicator. A
    switch card always trails its control. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -39,7 +40,7 @@ export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
   cardControl: oneOf(CONTROL_OPTIONS),
 }
 
-export function resolveChoiceCards(state: StudioState): Resolved {
+export function resolveChoiceCards(state: Effective): Resolved {
   const selected = state.cardSelected
   const box = {
     "card-selected": selected,
@@ -53,3 +54,10 @@ export function resolveChoiceCards(state: StudioState): Resolved {
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "choice-cards",
+  defaults: CHOICE_CARD_DEFAULTS,
+  schema: CHOICE_CARD_SCHEMA,
+  resolve: resolveChoiceCards,
+})

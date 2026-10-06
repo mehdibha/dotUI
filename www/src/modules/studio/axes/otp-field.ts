@@ -4,7 +4,8 @@
 
    Engine: `otp-field.cells` styles the OTPFieldGroup that lays the inputs out. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -22,10 +23,17 @@ export const OTP_FIELD_SCHEMA: ChapterSchema<typeof OTP_FIELD_DEFAULTS> = {
   otpStyle: oneOf(OTP_STYLE_OPTIONS),
 }
 
-export function resolveOtpField(state: StudioState): Resolved {
+export function resolveOtpField(state: Effective): Resolved {
   return {
     params: {
       "otp-field": { cells: state.otpStyle },
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "otp-field",
+  defaults: OTP_FIELD_DEFAULTS,
+  schema: OTP_FIELD_SCHEMA,
+  resolve: resolveOtpField,
+})

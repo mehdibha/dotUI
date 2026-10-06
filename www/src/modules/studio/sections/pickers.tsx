@@ -22,7 +22,7 @@ import {
   optionLabel,
 } from "../dial"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -103,7 +103,7 @@ function TodayGlyph({ marker }: { marker: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-export function PickersPreview({ state }: { state: StudioState }) {
+export function PickersPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
       <CaretGlyph caret={state.pickerCaret} />

@@ -4,12 +4,12 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("links axis", () => {
   it("defaults to the registry's look: accent, no underline", () => {
-    const system = resolveDesignSystem(DEFAULT_STATE)
+    const system = designSystemOf(DEFAULT_STATE)
     expect(system.componentParams.link).toEqual({
       underline: "never",
       color: "accent",
@@ -18,7 +18,7 @@ describe("links axis", () => {
   })
 
   it("maps both axes onto the link params", () => {
-    const system = resolveDesignSystem(
+    const system = designSystemOf(
       parseState({ linkUnderline: "hover", linkColor: "neutral" }),
     )
     expect(system.componentParams.link).toEqual({
@@ -48,7 +48,7 @@ describe("link motion", () => {
   })
 
   it("a tweak times the hover color", async () => {
-    const { tokens } = resolveDesignSystem(
+    const { tokens } = designSystemOf(
       parseState({ linkMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
     )
     expect(await shipped("link", tokens)).toContain(

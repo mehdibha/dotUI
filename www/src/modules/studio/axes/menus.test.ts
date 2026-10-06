@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest"
 
-import { resolveDesignSystem } from "../resolve"
+import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 describe("menus axis", () => {
   it("defaults yield the registry defaults and no tokens", () => {
-    const ds = resolveDesignSystem(DEFAULT_STATE)
+    const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.menu).toEqual({
       indicator: "check-end",
@@ -22,7 +22,7 @@ describe("menus axis", () => {
   })
 
   it("one axis writes the whole family", () => {
-    const ds = resolveDesignSystem(
+    const ds = designSystemOf(
       parseState({
         menuIndicator: "check-start",
         menuHighlight: "accent",
