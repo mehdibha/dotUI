@@ -1,11 +1,17 @@
 import { createStyles } from "@/lib/styles"
 
+import {
+  CHIP_NEUTRAL,
+  CHIP_OUTLINE,
+  CHIP_SOFT,
+  CHIP_SOFT_OUTLINE,
+  CHIP_SOLID,
+  CHIPS,
+} from "../badge/styles"
 import tagGroupMeta from "./meta"
 
-/* The fill and its disabled recolor live in the `style` param so each value
-   ships only its own classes. Soft is a half-strength wash: the neutral fill
-   is already the wash tone, so a full `bg-muted` would equal solid.
-   Synced with badge — change both together. */
+/* Badge's chips recipe, imported: a tag is a neutral chip that can also be
+   selected, disabled and removed. */
 
 const { useStyles, styles } = createStyles(tagGroupMeta, {
   base: {
@@ -26,11 +32,26 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         "data-href:cursor-interactive",
         // disabled
         "data-selection-mode:disabled:cursor-disabled",
+        // palette, selected and disabled
+        CHIP_NEUTRAL,
+        "selected:bg-selected selected:text-fg-on-selected",
+        "disabled:[--chip-border:var(--disabled-border,var(--color-border))] disabled:[--chip-fg-tint:var(--disabled-fg,var(--color-fg))] disabled:[--chip-fg:var(--disabled-fg,var(--color-fg-on-neutral))] disabled:[--chip-fill:var(--disabled-bg,var(--color-neutral))] disabled:[--chip-tint:var(--disabled-bg,var(--color-muted))]",
 
         "text-xs/relaxed **:[svg]:not-with-[size]:size-3",
         // remove button
         "has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
       ],
+    },
+    variants: {
+      appearance: {
+        solid: { tag: CHIP_SOLID },
+        soft: { tag: CHIP_SOFT },
+        outline: { tag: CHIP_OUTLINE },
+        "soft-outline": { tag: CHIP_SOFT_OUTLINE },
+      },
+    },
+    defaultVariants: {
+      appearance: "solid",
     },
   },
 
@@ -64,28 +85,7 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
     },
   },
   params: {
-    style: {
-      solid: {
-        slots: {
-          tag: "bg-neutral text-fg-on-neutral disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) selected:bg-selected selected:text-fg-on-selected",
-        },
-      },
-      soft: {
-        slots: {
-          tag: "bg-muted/50 text-fg disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
-        },
-      },
-      outline: {
-        slots: {
-          tag: "border border-border text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
-        },
-      },
-      "soft-outline": {
-        slots: {
-          tag: "border border-border bg-muted/50 text-fg disabled:border-(--disabled-border,var(--color-border)) disabled:bg-(--disabled-bg,var(--color-muted)) disabled:text-(--disabled-fg,var(--color-fg)) selected:bg-selected selected:text-fg-on-selected",
-        },
-      },
-    },
+    style: CHIPS,
   },
 })
 
