@@ -1513,6 +1513,10 @@ export const DemosIndex: Record<
 		files: ["ui/input-group/demos/buttons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input-group/demos/buttons")),
 	},
+	"input-group/demos/cells": {
+		files: ["ui/input-group/demos/cells.tsx"],
+		component: React.lazy(() => import("@/registry/ui/input-group/demos/cells")),
+	},
 	"input-group/demos/date": {
 		files: ["ui/input-group/demos/date.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input-group/demos/date")),
@@ -1924,10 +1928,6 @@ export const DemosIndex: Record<
 	"number-field/demos/uncontrolled": {
 		files: ["ui/number-field/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/number-field/demos/uncontrolled")),
-	},
-	"number-field/demos/with-input-group": {
-		files: ["ui/number-field/demos/with-input-group.tsx"],
-		component: React.lazy(() => import("@/registry/ui/number-field/demos/with-input-group")),
 	},
 	"otp-field/demos/alphanumeric": {
 		files: ["ui/otp-field/demos/alphanumeric.tsx"],
