@@ -23,6 +23,20 @@ const segmentedControlMeta = {
       default: "filled",
       values: ["filled", "outline"] as const,
     },
+    weight: {
+      kind: "enum",
+      default: "medium",
+      values: [
+        "regular",
+        "regular-medium",
+        "regular-semibold",
+        "medium",
+        "medium-semibold",
+        "semibold",
+        "bold",
+      ] as const,
+      description: "Item weight at rest, then selected.",
+    },
   },
 } satisfies RegistryItem
 

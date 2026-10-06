@@ -6,6 +6,58 @@ import sidebarMeta from "./meta"
 const collapse =
   "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
 
+/* The current item's marker, on menu and sub-menu buttons alike. */
+const wash = "hover:bg-muted pressed:bg-muted"
+const fill = "data-active:bg-muted data-active:text-fg"
+const tint = "data-active:bg-accent-muted data-active:text-fg-accent"
+const bar =
+  "data-active:before:absolute data-active:before:inset-y-2 data-active:before:start-0 data-active:before:rounded-full"
+// shadcn, Material 3: a wash, neutral or brand-tinted.
+const FILL = [wash, fill]
+const FILL_ACCENT = [wash, tint]
+// Polaris: a page-toned chip on a recessed sidebar; hover sits between.
+const SURFACE = [
+  "hover:bg-bg/40 pressed:bg-bg data-active:bg-bg data-active:text-fg",
+]
+// Catalyst, Fluent 2: a bar at the start edge, no fill.
+const BAR = [
+  wash,
+  bar,
+  "data-active:text-fg data-active:before:w-0.5 data-active:before:bg-fg",
+]
+const BAR_ACCENT = [
+  wash,
+  bar,
+  "data-active:text-fg data-active:before:w-0.5 data-active:before:bg-accent",
+]
+// Primer, Carbon: a neutral wash and a wider bar.
+const FILL_BAR = [
+  wash,
+  fill,
+  bar,
+  "data-active:before:w-1 data-active:before:bg-fg",
+]
+const FILL_BAR_ACCENT = [
+  wash,
+  fill,
+  bar,
+  "data-active:before:w-1 data-active:before:bg-accent",
+]
+// Stripe: the label and icon alone.
+const INK = [wash, "data-active:text-fg"]
+const INK_ACCENT = [wash, "data-active:text-fg-accent"]
+// Duolingo: the wash inside a 2px ring.
+const OUTLINE = [
+  wash,
+  fill,
+  "data-active:inset-ring-2 data-active:inset-ring-border-control",
+]
+const OUTLINE_ACCENT = [
+  wash,
+  tint,
+  "data-active:inset-ring-2 data-active:inset-ring-border-accent",
+]
+
 const { useStyles, styles } = createStyles(sidebarMeta, {
   base: {
     slots: {
@@ -85,9 +137,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuItem: "group/menu-item relative",
       menuButton: [
         "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
-        "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
+        "hover:text-fg focus-visible:focus-ring",
         "disabled:pointer-events-none disabled:opacity-50",
-        "data-active:bg-muted data-active:font-medium data-active:text-fg",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
         "group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!",
@@ -116,10 +167,9 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       menuSubItem: "group/menu-sub-item relative",
       menuSubButton: [
-        "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
-        "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
+        "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
+        "hover:text-fg focus-visible:focus-ring",
         "disabled:pointer-events-none disabled:opacity-50",
-        "data-active:bg-muted data-active:font-medium data-active:text-fg",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
         "group-data-[collapsible=icon]:hidden",
         "[&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted",
@@ -147,6 +197,62 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
           inset:
             "md:peer-data-[variant=inset]:border md:peer-data-[variant=inset]:border-(--card-border) md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)",
         },
+      },
+    },
+    marker: {
+      fill: { slots: { menuButton: FILL, menuSubButton: FILL } },
+      "fill-accent": {
+        slots: { menuButton: FILL_ACCENT, menuSubButton: FILL_ACCENT },
+      },
+      surface: { slots: { menuButton: SURFACE, menuSubButton: SURFACE } },
+      bar: { slots: { menuButton: BAR, menuSubButton: BAR } },
+      "bar-accent": {
+        slots: { menuButton: BAR_ACCENT, menuSubButton: BAR_ACCENT },
+      },
+      "fill-bar": { slots: { menuButton: FILL_BAR, menuSubButton: FILL_BAR } },
+      "fill-bar-accent": {
+        slots: { menuButton: FILL_BAR_ACCENT, menuSubButton: FILL_BAR_ACCENT },
+      },
+      ink: { slots: { menuButton: INK, menuSubButton: INK } },
+      "ink-accent": {
+        slots: { menuButton: INK_ACCENT, menuSubButton: INK_ACCENT },
+      },
+      outline: { slots: { menuButton: OUTLINE, menuSubButton: OUTLINE } },
+      "outline-accent": {
+        slots: { menuButton: OUTLINE_ACCENT, menuSubButton: OUTLINE_ACCENT },
+      },
+    },
+    // Item weight at rest, then current.
+    weight: {
+      regular: {
+        slots: { menuButton: "font-normal", menuSubButton: "font-normal" },
+      },
+      "regular-medium": {
+        slots: {
+          menuButton: "font-normal data-active:font-medium",
+          menuSubButton: "font-normal data-active:font-medium",
+        },
+      },
+      "regular-semibold": {
+        slots: {
+          menuButton: "font-normal data-active:font-semibold",
+          menuSubButton: "font-normal data-active:font-semibold",
+        },
+      },
+      medium: {
+        slots: { menuButton: "font-medium", menuSubButton: "font-medium" },
+      },
+      "medium-semibold": {
+        slots: {
+          menuButton: "font-medium data-active:font-semibold",
+          menuSubButton: "font-medium data-active:font-semibold",
+        },
+      },
+      semibold: {
+        slots: { menuButton: "font-semibold", menuSubButton: "font-semibold" },
+      },
+      bold: {
+        slots: { menuButton: "font-bold", menuSubButton: "font-bold" },
       },
     },
   },

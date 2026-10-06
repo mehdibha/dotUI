@@ -2,12 +2,56 @@ import { createStyles } from "@/lib/styles"
 
 import segmentedControlMeta from "./meta"
 
+/* The selection bar, shared with tabs' segmented variant (tabs imports
+   these). The chip reads against its track: tone fills one neutral step
+   down (Geist, Linear), raised lifts a page-colored chip on shadow (shadcn,
+   iOS), ring draws the page chip on an edge alone (Radix surface, Primer,
+   Stripe), inverse snaps to full contrast (Carbon). */
+export const CHIP_TONE = {
+  item: "selected:text-fg-on-selected",
+  indicator: "bg-selected shadow-sm",
+}
+export const CHIP_RAISED = {
+  item: "selected:text-fg",
+  indicator:
+    "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-(length:--studio-control-stroke) ring-border-control",
+}
+export const CHIP_RING = {
+  item: "selected:text-fg",
+  indicator:
+    "bg-(--surface-bg,var(--color-bg)) ring-(length:--studio-control-stroke) ring-border-control",
+}
+export const CHIP_INVERSE = {
+  item: "selected:text-fg-inverse",
+  indicator: "bg-inverse",
+}
+
+export const TRACK_FILLED = "bg-muted p-[3px]"
+// Outline trades a padding pixel for the hairline so the box stays put.
+export const TRACK_OUTLINE =
+  "border-(length:--studio-control-stroke) border-border p-[calc(3px-var(--studio-control-stroke))]"
+
+/* Item weight at rest, then selected. */
+export const WEIGHT_REGULAR = { item: "font-normal" }
+export const WEIGHT_REGULAR_MEDIUM = {
+  item: "font-normal selected:font-medium",
+}
+export const WEIGHT_REGULAR_SEMIBOLD = {
+  item: "font-normal selected:font-semibold",
+}
+export const WEIGHT_MEDIUM = { item: "font-medium" }
+export const WEIGHT_MEDIUM_SEMIBOLD = {
+  item: "font-medium selected:font-semibold",
+}
+export const WEIGHT_SEMIBOLD = { item: "font-semibold" }
+export const WEIGHT_BOLD = { item: "font-bold" }
+
 const { useStyles, styles } = createStyles(segmentedControlMeta, {
   base: {
     slots: {
       root: "inline-flex w-fit items-center justify-center rounded-(--studio-segmented-control-radius) text-fg-muted",
       item: [
-        "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring",
+        "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring",
         "text-fg-muted hover:text-fg",
         "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
@@ -38,48 +82,24 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     },
   },
   params: {
-    // How the chip reads against the track: tone fills one neutral step
-    // down (Geist, Linear), raised lifts a page-colored chip on shadow
-    // (shadcn, iOS), ring draws the page chip on an edge alone (Radix
-    // surface, Primer, Stripe), inverse snaps to full contrast (Carbon).
     selected: {
-      tone: {
-        slots: {
-          item: "selected:text-fg-on-selected",
-          indicator: "bg-selected shadow-sm",
-        },
-      },
-      raised: {
-        slots: {
-          item: "selected:text-fg",
-          indicator:
-            "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-(length:--studio-control-stroke) ring-border-control",
-        },
-      },
-      ring: {
-        slots: {
-          item: "selected:text-fg",
-          indicator:
-            "bg-(--surface-bg,var(--color-bg)) ring-(length:--studio-control-stroke) ring-border-control",
-        },
-      },
-      inverse: {
-        slots: {
-          item: "selected:text-fg-inverse",
-          indicator: "bg-inverse",
-        },
-      },
+      tone: { slots: CHIP_TONE },
+      raised: { slots: CHIP_RAISED },
+      ring: { slots: CHIP_RING },
+      inverse: { slots: CHIP_INVERSE },
     },
-    // Outline trades a padding pixel for the hairline so the box stays put.
     track: {
-      filled: {
-        slots: { root: "bg-muted p-[3px]" },
-      },
-      outline: {
-        slots: {
-          root: "border-(length:--studio-control-stroke) border-border p-[calc(3px-var(--studio-control-stroke))]",
-        },
-      },
+      filled: { slots: { root: TRACK_FILLED } },
+      outline: { slots: { root: TRACK_OUTLINE } },
+    },
+    weight: {
+      regular: { slots: WEIGHT_REGULAR },
+      "regular-medium": { slots: WEIGHT_REGULAR_MEDIUM },
+      "regular-semibold": { slots: WEIGHT_REGULAR_SEMIBOLD },
+      medium: { slots: WEIGHT_MEDIUM },
+      "medium-semibold": { slots: WEIGHT_MEDIUM_SEMIBOLD },
+      semibold: { slots: WEIGHT_SEMIBOLD },
+      bold: { slots: WEIGHT_BOLD },
     },
   },
 })

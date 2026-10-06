@@ -33,6 +33,38 @@ const sidebarMeta = {
       values: ["subtle", "page", "recessed"] as const,
       description: "The sidebar and frame tone around an inset panel.",
     },
+    marker: {
+      kind: "enum",
+      default: "fill",
+      values: [
+        "fill",
+        "fill-accent",
+        "surface",
+        "bar",
+        "bar-accent",
+        "fill-bar",
+        "fill-bar-accent",
+        "ink",
+        "ink-accent",
+        "outline",
+        "outline-accent",
+      ] as const,
+      description: "The current item's marker, in the indicator color.",
+    },
+    weight: {
+      kind: "enum",
+      default: "medium",
+      values: [
+        "regular",
+        "regular-medium",
+        "regular-semibold",
+        "medium",
+        "medium-semibold",
+        "semibold",
+        "bold",
+      ] as const,
+      description: "Item weight at rest, then current.",
+    },
   },
 } satisfies RegistryItem
 

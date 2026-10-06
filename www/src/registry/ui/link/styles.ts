@@ -2,9 +2,14 @@ import { createStyles } from "@/lib/styles"
 
 import linkMeta from "./meta"
 
-/* `underline` and `color` shape the default variant only. Quiet is the
-   understated link that reads without color, so its underline is its
-   definition, not a policy. */
+/* The link recipe; breadcrumbs import it for ancestors drawn as links. The
+   params shape the default variant only: quiet is the understated link that
+   reads without color, so its underline is its definition, not a policy. */
+export const LINK_ALWAYS = "underline underline-offset-2"
+export const LINK_HOVER = "underline-offset-2 hover:underline"
+export const LINK_ACCENT = "text-fg-accent"
+// Weight is the only resting cue a neutral link gets (Supabase, Geist).
+export const LINK_NEUTRAL = "font-medium text-fg"
 
 const { useStyles, styles } = createStyles(linkMeta, {
   base: {
@@ -31,25 +36,13 @@ const { useStyles, styles } = createStyles(linkMeta, {
   },
   params: {
     underline: {
-      always: {
-        variants: { variant: { default: "underline underline-offset-2" } },
-      },
-      hover: {
-        variants: {
-          variant: { default: "underline-offset-2 hover:underline" },
-        },
-      },
+      always: { variants: { variant: { default: LINK_ALWAYS } } },
+      hover: { variants: { variant: { default: LINK_HOVER } } },
       never: {},
     },
     color: {
-      accent: {
-        variants: { variant: { default: "text-fg-accent" } },
-      },
-      /* Weight is the only resting cue a neutral link gets — the
-         Vercel/Linear pattern against a muted paragraph. */
-      neutral: {
-        variants: { variant: { default: "font-medium text-fg" } },
-      },
+      accent: { variants: { variant: { default: LINK_ACCENT } } },
+      neutral: { variants: { variant: { default: LINK_NEUTRAL } } },
     },
   },
 })
