@@ -81,8 +81,12 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
   if (node.isKind(SyntaxKind.NullKeyword)) return null
   if (node.isKind(SyntaxKind.Identifier)) {
     if (node.getText() === "undefined") return undefined
-    // Module-level `const x = <literal>` reference (e.g. input's `compactText`).
-    return exprToValue(resolveLocalConst(node.getText(), ctx), ctx)
+    const name = node.getText()
+    // Module-level `const x = <literal>` (input's `compactText`), or one
+    // imported by relative path (toggle-button's `BUTTON_STYLES`).
+    if (ctx.sourceFile.getVariableDeclaration(name))
+      return exprToValue(resolveLocalConst(name, ctx), ctx)
+    return resolveImportedConst(name, ctx)
   }
 
   if (node.isKind(SyntaxKind.CallExpression)) {
@@ -182,6 +186,47 @@ function resolveLocalConst(name: string, ctx: ExtractCtx): Expression {
     )
   }
   return init
+}
+
+/** An exported `const` of a sibling registry file, named-imported by a
+ *  relative path (a synced group's shared recipe table). */
+function resolveImportedConst(name: string, ctx: ExtractCtx): unknown {
+  const imp = ctx.sourceFile
+    .getImportDeclarations()
+    .find((decl) =>
+      decl
+        .getNamedImports()
+        .some((n) => (n.getAliasNode()?.getText() ?? n.getName()) === name),
+    )
+  const spec = imp?.getModuleSpecifierValue()
+  if (!imp || !spec?.startsWith(".")) {
+    throw new Error(
+      `[publisher/extract] cannot resolve identifier "${name}" — no local const or relative import in ${ctx.filePath}`,
+    )
+  }
+  const imported = imp
+    .getNamedImports()
+    .find((n) => (n.getAliasNode()?.getText() ?? n.getName()) === name)!
+    .getName()
+  const filePath = path.resolve(path.dirname(ctx.filePath), `${spec}.ts`)
+  const project = getProject()
+  const existing = project.getSourceFile(filePath)
+  const sourceFile = existing ?? project.addSourceFileAtPath(filePath)
+  try {
+    const decl = sourceFile.getVariableDeclaration(imported)
+    if (!decl?.isExported()) {
+      throw new Error(
+        `[publisher/extract] "${imported}" is not an exported const of ${filePath}`,
+      )
+    }
+    return exprToValue(decl.getInitializerOrThrow(), {
+      ...ctx,
+      sourceFile,
+      filePath,
+    })
+  } finally {
+    if (!existing) project.removeSourceFile(sourceFile)
+  }
 }
 
 /**
