@@ -81,8 +81,12 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
   if (node.isKind(SyntaxKind.NullKeyword)) return null
   if (node.isKind(SyntaxKind.Identifier)) {
     if (node.getText() === "undefined") return undefined
+    const name = node.getText()
+    // A recipe another item shares by relative import.
+    if (!ctx.sourceFile.getVariableDeclaration(name))
+      return resolveImportedConst(name, ctx)
     // Module-level `const x = <literal>` reference (e.g. input's `compactText`).
-    return exprToValue(resolveLocalConst(node.getText(), ctx), ctx)
+    return exprToValue(resolveLocalConst(name, ctx), ctx)
   }
 
   if (node.isKind(SyntaxKind.CallExpression)) {
@@ -182,6 +186,27 @@ function resolveLocalConst(name: string, ctx: ExtractCtx): Expression {
     )
   }
   return init
+}
+
+/** An exported `const` of a sibling registry module, by relative import. */
+function resolveImportedConst(name: string, ctx: ExtractCtx): unknown {
+  const spec = importSpecifierFor(name, ctx)
+  if (!spec.startsWith(".")) {
+    throw new Error(
+      `[publisher/extract] "${name}" imported from non-relative module "${spec}" in ${ctx.filePath}`,
+    )
+  }
+  const filePath = path.resolve(path.dirname(ctx.filePath), `${spec}.ts`)
+  const project = getProject()
+  const sourceFile =
+    project.getSourceFile(filePath) ?? project.addSourceFileAtPath(filePath)
+  const init = sourceFile.getVariableDeclaration(name)?.getInitializer()
+  if (!init) {
+    throw new Error(
+      `[publisher/extract] no exported const "${name}" in ${filePath}`,
+    )
+  }
+  return exprToValue(init, { ...ctx, sourceFile, filePath })
 }
 
 /**
@@ -411,7 +436,9 @@ export function extractStylesConfig(
   options: ExtractOptions = {},
 ): StylesConfig {
   const project = getProject()
-  const sourceFile = project.addSourceFileAtPath(stylesTsPath)
+  const sourceFile =
+    project.getSourceFile(stylesTsPath) ??
+    project.addSourceFileAtPath(stylesTsPath)
   try {
     return extractFromSourceFile(sourceFile, options)
   } finally {
