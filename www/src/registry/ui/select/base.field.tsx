@@ -1,12 +1,12 @@
 "use client"
 
+import { use } from "react"
+import * as ButtonPrimitive from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as SelectPrimitives from "react-aria-components/Select"
 
 import { ChevronDownIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
-import type { ButtonProps } from "@/registry/ui/button"
 import { useStyles } from "@/registry/ui/field/styles"
 import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 import {
@@ -51,13 +51,22 @@ const Select = <T extends object, M extends SelectSelectionMode = "single">({
 
 // MARK: Separator
 
-const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
-  const { buttonTrigger } = useInputStyles()()
+interface SelectTriggerProps extends ButtonPrimitive.ButtonProps {
+  size?: "sm" | "md" | "lg"
+}
+
+const SelectTrigger = ({ className, size, ...props }: SelectTriggerProps) => {
+  const { trigger } = useInputStyles()()
+  // React Aria marks the Select invalid, not its button.
+  const isInvalid = use(SelectPrimitives.SelectStateContext)?.displayValidation
+    .isInvalid
   return (
-    <Button
-      size={size}
+    <ButtonPrimitive.Button
+      data-select-trigger=""
+      data-size={size}
+      data-invalid={isInvalid || undefined}
       className={composeRenderProps(className, (className) =>
-        buttonTrigger({ className, size: size === "xs" ? "sm" : size }),
+        trigger({ className, size }),
       )}
       {...props}
     >
@@ -69,7 +78,7 @@ const SelectTrigger = ({ className, size, ...props }: ButtonProps) => {
           </>
         )
       })}
-    </Button>
+    </ButtonPrimitive.Button>
   )
 }
 
@@ -158,7 +167,12 @@ const SelectContent = <T extends object>({
   )
 }
 
-export type { SelectContentProps, SelectProps, SelectValueProps }
+export type {
+  SelectContentProps,
+  SelectProps,
+  SelectTriggerProps,
+  SelectValueProps,
+}
 export {
   ListBoxItem as SelectItem,
   ListBoxSection as SelectSection,

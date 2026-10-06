@@ -72,7 +72,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-progress-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
 	"--studio-questionnaire-choice-radius": "var(--studio-radius-field)",
 	"--studio-questionnaire-indicator-radius": "var(--studio-radius-detail)",
-	"--studio-questionnaire-input-radius": "var(--studio-radius-control)",
 	"--studio-questionnaire-state-duration": "150ms",
 	"--studio-questionnaire-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
 	"--studio-radio-card-radius": "var(--studio-radius-field)",

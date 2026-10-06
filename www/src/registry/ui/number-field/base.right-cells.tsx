@@ -32,8 +32,8 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
         (children) =>
           children ?? (
             <NumberFieldGroup>
-              <NumberFieldDecrement />
               <Input />
+              <NumberFieldDecrement />
               <NumberFieldIncrement />
             </NumberFieldGroup>
           ),
@@ -48,8 +48,8 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// HeroUI: minus at the start, plus at the end, each divided by the shell's
-// edge. Parts are placed by slot, so the authored order never matters.
+// Carbon: square stepper cells at the end of the shell, with a short rule
+// between them. Parts are placed by slot, so the authored order never matters.
 const NumberFieldGroup = ({
   className,
   size,
@@ -65,8 +65,8 @@ const NumberFieldGroup = ({
         inputGroup({
           size,
           className: cn(
-            "w-fit overflow-hidden px-0 *:data-input:text-center",
-            "*:[[slot=decrement]]:-order-1 *:[[slot=increment]]:order-1",
+            "w-fit overflow-hidden pr-0",
+            "*:[[slot=decrement]]:order-1 *:[[slot=increment]]:order-2",
             className,
           ),
         }),
@@ -88,18 +88,11 @@ const NumberFieldDecrement = ({
   children,
   ...props
 }: NumberFieldStepperProps) => {
-  const { divider } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
-        divider({
-          className: cn(
-            stepper,
-            "border-r-(length:--studio-control-stroke)",
-            className,
-          ),
-        }),
+        cn(stepper, className),
       )}
       {...props}
     >
@@ -113,18 +106,15 @@ const NumberFieldIncrement = ({
   children,
   ...props
 }: NumberFieldStepperProps) => {
-  const { divider } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
-        divider({
-          className: cn(
-            stepper,
-            "border-l-(length:--studio-control-stroke)",
-            className,
-          ),
-        }),
+        cn(
+          stepper,
+          "relative before:absolute before:top-1/2 before:left-0 before:h-(--icon-size) before:w-px before:-translate-y-1/2 before:bg-border",
+          className,
+        ),
       )}
       {...props}
     >

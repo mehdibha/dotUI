@@ -63,7 +63,7 @@ export const airbnb = definePreset({
     checkCorner: "sharp",
     radioColor: "neutral",
     cardSelected: "outline-tint",
-    inputHover: "border",
+    inputHover: "edge",
     numberLayout: "split",
     calendarDayShape: "circle",
     calendarWeekdays: "double",

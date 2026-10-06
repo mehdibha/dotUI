@@ -34,7 +34,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "inputs",
-    owners: ["inputs", "input-groups", "number-field", "otp-field", "pickers"],
+    owners: ["inputs", "field", "number-field", "otp-field", "select"],
     label: "Inputs",
     Preview: InputsPreview,
     Body: InputsSection,

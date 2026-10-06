@@ -12,6 +12,8 @@ import type {
   TokenProps as TokenPrimitiveProps,
 } from "react-aria-components/TokenField"
 
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
+
 import { useStyles } from "./styles"
 
 // MARK: tokenFieldStyles
@@ -64,11 +66,12 @@ function TokenInput({
   ...props
 }: TokenInputProps) {
   const { input } = useStyles()()
+  const { textArea } = useInputStyles()()
   return (
     <TokenInputPrimitive
       data-token-input=""
       data-placeholder={placeholder}
-      className={input({ className })}
+      className={textArea({ className: input({ className }) })}
       {...props}
     >
       {children ?? ((segment) => <Token>{segment.text}</Token>)}

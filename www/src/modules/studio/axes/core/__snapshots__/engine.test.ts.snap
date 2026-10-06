@@ -16,6 +16,12 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "segments": "gapped",
       "separator": "shared-edge",
     },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+    },
     "toggle-button": {
       "case": "sentence",
       "press": "as-style",
@@ -48,6 +54,12 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "segments": "gapped",
       "separator": "shared-edge",
     },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+    },
     "toggle-button": {
       "case": "sentence",
       "press": "as-style",
@@ -75,6 +87,12 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "press": "as-style",
       "secondary": "bevel",
       "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
     },
     "segmented-control": {
       "selected": "raised",
@@ -308,15 +326,6 @@ exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > input-groups/divider-only-boxed: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
 exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -414,6 +423,25 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     "--studio-tooltip-enter-duration": "0ms",
     "--studio-tooltip-exit-duration": "0ms",
   },
+}
+`;
+
+exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "underline",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+  },
+  "tokens": {},
 }
 `;
 

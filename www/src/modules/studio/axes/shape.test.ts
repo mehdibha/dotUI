@@ -218,12 +218,12 @@ describe("shipped shape", () => {
       otp: await shipped("otp-field", presetOf({ controlStroke })),
     })
     const regular = await at("regular")
-    expect(regular.input).toContain("border border-border-control bg-field")
+    expect(regular.input).toContain("border px-(--edge-to-text)")
     expect(regular.input).toContain("calc(var(--addon-button-inset)-1px)")
     expect(regular.otp).toContain("-space-x-px")
     expect(regular.input).not.toContain("length:")
     const bold = await at("bold")
-    expect(bold.input).toContain("border-2 border-border-control bg-field")
+    expect(bold.input).toContain("border-2 px-(--edge-to-text)")
     expect(bold.otp).toContain("-space-x-[2px]")
   })
 

@@ -10,9 +10,8 @@ const FieldError = createDynamicComponent({
   meta,
   paramName: "error",
   components: {
-    border: FieldErrorBase,
-    message: FieldErrorWithIcon,
-    bar: FieldErrorBase,
+    plain: FieldErrorBase,
+    "icon-message": FieldErrorWithIcon,
   },
   displayName: "FieldError",
 })

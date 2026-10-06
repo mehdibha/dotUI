@@ -256,6 +256,8 @@ export interface DialSelectOption {
   description?: string
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
+  /** Beside the label: a follow option's source chip. */
+  aside?: React.ReactNode
 }
 
 /** A pick from a short list: the row shows the choice (and its specimen,
@@ -335,7 +337,10 @@ export function DialSelect({
                 id={option.value}
                 textValue={option.label}
               >
-                <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
+                <ListBoxItemLabel>
+                  {option.label}
+                  {option.aside}
+                </ListBoxItemLabel>
                 {option.description && (
                   <ListBoxItemDescription>
                     {option.description}
@@ -557,9 +562,9 @@ export function DialList({
   onChange?: (value: string) => void
   options: DialSelectOption[]
 }) {
-  const { axis, hidden, exclude } = useAxisGate(key)
+  const { axis, hidden, exclude, following } = useAxisGate(key)
   if (hidden) return null
-  const value = valueProp ?? String(axis?.effective)
+  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   return (
     <div data-axis={key} className="flex flex-col">
@@ -589,8 +594,9 @@ export function DialList({
             <span className="flex min-w-0 items-center gap-2">
               <span className="size-3 shrink-0 rounded-full border border-fg/30 transition-[border-width] group-selected/option:border-4 group-selected/option:border-fg" />
               <span className="flex min-w-0 flex-col">
-                <span className="truncate text-[13px] font-medium text-fg/85">
-                  {option.label}
+                <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/85">
+                  <span className="truncate">{option.label}</span>
+                  {option.aside}
                 </span>
                 {option.description && (
                   <span className="truncate text-xs text-fg/50">
