@@ -101,7 +101,7 @@ function SteppersGlyph({ layout }: { layout: string }) {
       <rect x="2.5" y="7" width="19" height="10" rx="2" />
       {layout === "right-cells" && (
         <>
-          <path d="M12.5 7v10M17 7v10" opacity=".5" />
+          <path d="M17 10.75v2.5" opacity=".5" />
           <path d="M14 12h1.5M18.25 12h1.5M19 11.25v1.5" />
         </>
       )}

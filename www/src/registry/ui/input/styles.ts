@@ -180,6 +180,11 @@ const triggerEnd = "pr-(--edge-to-visual)"
 
 /* ----------------------------- Addon helpers ----------------------------- */
 
+// The color of a divider between shell parts (stepper cells): the shell's
+// edge, or nothing on shells without a side edge.
+const edgeDivider = "border-border-control"
+const noDivider = "border-transparent"
+
 // Boxed shells: the addon owns asymmetric inline padding.
 const addonBoxedShell =
   "group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-var(--studio-control-stroke))] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-var(--studio-control-stroke))]"
@@ -193,7 +198,8 @@ const addonUnderline =
    without a side edge (Underline, Filled) keep it inline. */
 const addonCell = [
   "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)",
-  "border-border-control group-has-data-input/input-group:first:border-r-(length:--studio-control-stroke) group-has-data-input/input-group:last:border-l-(length:--studio-control-stroke) group-has-data-textarea/input-group:first:border-b-(length:--studio-control-stroke) group-has-data-textarea/input-group:last:border-t-(length:--studio-control-stroke)",
+  edgeDivider,
+  "group-has-data-input/input-group:first:border-r-(length:--studio-control-stroke) group-has-data-input/input-group:last:border-l-(length:--studio-control-stroke) group-has-data-textarea/input-group:first:border-b-(length:--studio-control-stroke) group-has-data-textarea/input-group:last:border-t-(length:--studio-control-stroke)",
 ]
 
 /* --------------------------------- Hover --------------------------------- */
@@ -221,6 +227,7 @@ export const FIELD_SHELLS = {
       textArea: outlineShell({ focus: "self", radius: "multiline" }),
       trigger: [outlineShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: edgeDivider,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -231,6 +238,7 @@ export const FIELD_SHELLS = {
       textArea: raisedShell({ focus: "self", radius: "multiline" }),
       trigger: [raisedShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: edgeDivider,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -241,6 +249,7 @@ export const FIELD_SHELLS = {
       textArea: insetShell({ focus: "self", radius: "multiline" }),
       trigger: [insetShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: edgeDivider,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -251,6 +260,7 @@ export const FIELD_SHELLS = {
       textArea: wellShell({ focus: "self", radius: "multiline" }),
       trigger: [wellShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: edgeDivider,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -261,6 +271,7 @@ export const FIELD_SHELLS = {
       textArea: filledShell({ focus: "self", radius: "multiline" }),
       trigger: [filledShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: noDivider,
     },
   },
   indicator: {
@@ -270,6 +281,7 @@ export const FIELD_SHELLS = {
       textArea: indicatorShell({ focus: "self" }),
       trigger: [indicatorShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonBoxedShell,
+      divider: edgeDivider,
     },
     variants: { variant: { cell: { inputGroupAddon: addonCell } } },
   },
@@ -280,6 +292,7 @@ export const FIELD_SHELLS = {
       textArea: underlineShell({ focus: "self" }),
       trigger: [underlineShell({ focus: "trigger" }), triggerEnd],
       inputGroupAddon: addonUnderline,
+      divider: noDivider,
     },
   },
 }
@@ -291,7 +304,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
     slots: {
       inputGroup: [
         "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
-        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:shadow-none **:data-input-control:ring-0",
+        // The inner control sheds its shell; `!` outranks the shell's state
+        // and dark fills, which out-specify a plain descendant reset.
+        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:shadow-none! **:data-input-control:ring-0!",
         // Range compositions (start input, separator, end input): only the last
         // control keeps flex-1, so the slack sits before the trailing addon
         // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
@@ -330,6 +345,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "*:[svg]:pointer-events-none *:[svg]:size-(--icon-size) *:[svg]:shrink-0 *:[svg]:text-fg-muted",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
+      divider: "",
       dateInputSegment:
         "rounded-(--studio-radius-detail) px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
     },

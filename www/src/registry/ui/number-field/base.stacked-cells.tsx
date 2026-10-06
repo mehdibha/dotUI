@@ -82,18 +82,25 @@ interface NumberFieldStepperProps extends React.ComponentProps<
 > {}
 
 const stepper =
-  "flex shrink-0 cursor-interactive items-center justify-center self-stretch border-border-control text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-7 border-l-(length:--studio-control-stroke) *:[svg]:size-3"
+  "flex shrink-0 cursor-interactive items-center justify-center self-stretch text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-7 border-l-(length:--studio-control-stroke) *:[svg]:size-3"
 
 const NumberFieldDecrement = ({
   className,
   children,
   ...props
 }: NumberFieldStepperProps) => {
+  const { divider } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, "border-t-(length:--studio-control-stroke)", className),
+        divider({
+          className: cn(
+            stepper,
+            "border-t-(length:--studio-control-stroke)",
+            className,
+          ),
+        }),
       )}
       {...props}
     >
@@ -107,11 +114,12 @@ const NumberFieldIncrement = ({
   children,
   ...props
 }: NumberFieldStepperProps) => {
+  const { divider } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, className),
+        divider({ className: cn(stepper, className) }),
       )}
       {...props}
     >

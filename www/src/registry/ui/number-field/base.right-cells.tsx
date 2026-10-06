@@ -48,8 +48,8 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// Carbon: square stepper cells at the end of the shell, divided by its edge.
-// Parts are placed by slot, so the authored order never matters.
+// Carbon: square stepper cells at the end of the shell, with a short rule
+// between them. Parts are placed by slot, so the authored order never matters.
 const NumberFieldGroup = ({
   className,
   size,
@@ -81,7 +81,7 @@ interface NumberFieldStepperProps extends React.ComponentProps<
 > {}
 
 const stepper =
-  "flex shrink-0 cursor-interactive items-center justify-center self-stretch border-border-control text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-(--input-h) border-l-(length:--studio-control-stroke) *:[svg]:size-(--icon-size)"
+  "flex shrink-0 cursor-interactive items-center justify-center self-stretch text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-(--input-h) *:[svg]:size-(--icon-size)"
 
 const NumberFieldDecrement = ({
   className,
@@ -110,7 +110,11 @@ const NumberFieldIncrement = ({
     <ButtonPrimitive.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, className),
+        cn(
+          stepper,
+          "relative before:absolute before:top-1/2 before:left-0 before:h-(--icon-size) before:w-px before:-translate-y-1/2 before:bg-border",
+          className,
+        ),
       )}
       {...props}
     >
