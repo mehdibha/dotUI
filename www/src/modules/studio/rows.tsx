@@ -11,11 +11,13 @@ import {
   useSyncExternalStore,
 } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
+import { mergeProps } from "react-aria"
 import type { Color } from "react-aria-components"
 import {
   ColorFieldStateContext,
   composeRenderProps,
   OverlayTriggerStateContext,
+  parseColor,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -54,6 +56,13 @@ import {
   NEUTRAL_TINT_RANGE,
 } from "@/modules/studio/axes/color"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
+import { previewNow, showLive, warmPreview } from "@/modules/studio/live"
+import {
+  OptionPreviewScope,
+  useHighlightPreview,
+  useOptionPreview,
+  watchPopover,
+} from "@/modules/studio/option-preview"
 
 /** Where row-attached overlays open. */
 const ROW_OVERLAY_PLACEMENT = "right top" as const
@@ -155,15 +164,15 @@ export function PanelPopover({
           "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
       )}
       {...props}
+      ref={watchPopover}
+      onPointerLeave={() => showLive(null, { settle: true })}
     >
-      {docked && title
-        ? composeRenderProps(children, (children) => (
-            <>
-              <DockedTitle title={title} />
-              {children}
-            </>
-          ))
-        : children}
+      {composeRenderProps(children, (children) => (
+        <OptionPreviewScope.Provider value>
+          {docked && title && <DockedTitle title={title} />}
+          {children}
+        </OptionPreviewScope.Provider>
+      ))}
     </Popover>
   )
 }
@@ -189,7 +198,7 @@ export function GroupTitle({ children }: { children: React.ReactNode }) {
 
 /** A value the control owns while it's being dragged, reseeded whenever the
  *  committed prop changes from outside (preset switch, reset). Lets continuous
- *  controls commit once on release instead of on every frame. */
+ *  controls preview every frame and commit once, on release. */
 export function useDraft<T>(committed: T) {
   const [draft, setDraft] = useState(committed)
   const [seed, setSeed] = useState(committed)
@@ -215,7 +224,7 @@ const COLOR_PRESETS = [
   "#F43F5E",
 ]
 /** The seed picker's popover: presets, area, hue, hex. Discrete controls
- *  commit at once; the area and hue slider commit on release. */
+ *  commit at once; the area and hue slider preview and commit on release. */
 export function ColorPickerPopover({
   commit,
   placement = ROW_OVERLAY_PLACEMENT,
@@ -226,23 +235,17 @@ export function ColorPickerPopover({
   /** Rows under the hex field — settings that belong to this one color. */
   children?: React.ReactNode
 }) {
+  const preview = (color: Color) => previewNow(() => commit(color))
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
-        <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
-          {COLOR_PRESETS.map((preset) => (
-            <ColorSwatchPickerItem
-              key={preset}
-              color={preset}
-              className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden pointer-coarse:size-7 selected:ring-2 selected:ring-(--color)"
-            />
-          ))}
-        </ColorSwatchPicker>
+        <ColorPresets commit={commit} />
         <ColorArea
           aria-label="Saturation and brightness"
           colorSpace="hsb"
           xChannel="saturation"
           yChannel="brightness"
+          onChange={preview}
           onChangeEnd={commit}
           className="w-full rounded-xl max-lg:aspect-auto max-lg:h-28 max-lg:shrink-0"
         />
@@ -250,6 +253,7 @@ export function ColorPickerPopover({
           aria-label="Hue"
           colorSpace="hsb"
           channel="hue"
+          onChange={preview}
           onChangeEnd={commit}
           className="w-full"
         >
@@ -266,6 +270,22 @@ export function ColorPickerPopover({
         {children}
       </DialogContent>
     </PanelPopover>
+  )
+}
+
+function ColorPresets({ commit }: { commit: (color: Color) => void }) {
+  const previewProps = useOptionPreview()
+  return (
+    <ColorSwatchPicker className="justify-between gap-0" onChange={commit}>
+      {COLOR_PRESETS.map((preset) => (
+        <ColorSwatchPickerItem
+          key={preset}
+          color={preset}
+          {...previewProps(() => commit(parseColor(preset)))}
+          className="size-5 rounded-full ring-offset-2 ring-offset-card before:hidden pointer-coarse:size-7 selected:ring-2 selected:ring-(--color)"
+        />
+      ))}
+    </ColorSwatchPicker>
   )
 }
 
@@ -452,8 +472,6 @@ export function NeutralPickerPopover({
   // Seven dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
-  // Sliders drag through drafts and commit on release: the neutral scale is
-  // a full engine run, too slow to resolve per frame.
   const [hue, setHue] = useDraft(value.hue ?? brandHue)
   const [tint, setTint] = useDraft(value.tint)
   const family =
@@ -462,61 +480,15 @@ export function NeutralPickerPopover({
       : value.hue === null && hue === brandHue
         ? "Auto"
         : nearestFamilyName(hue)
-  const preset =
-    value.tint === 0
-      ? PURE_GRAY.id
-      : value.hue === null
-        ? "brand"
-        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
-        {/* Seeds, same as the brand picker: one tap to a known gray family,
-            then the sliders for anything between them. Tapping while flat
-            also restores the lean, or the tap would do nothing visible. */}
-        <RacToggleButtonGroup
-          aria-label="Neutral presets"
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={preset ? [preset] : []}
-          onSelectionChange={(keys) => {
-            const next = keys.values().next().value
-            if (!next) return
-            if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
-            const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
-            onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
-          }}
-          className="flex justify-between"
-        >
-          {/* Auto is named, not a dot: following the brand is the default
-              and a gray that quietly tracks another color has to say so. */}
-          <RacToggleButton
-            id="brand"
-            onHoverStart={() => setHovered("Auto")}
-            onHoverEnd={() => setHovered(null)}
-            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-          >
-            <span
-              className="size-4 rounded-full"
-              style={{ background: sample(brandHue) }}
-            />
-            Auto
-          </RacToggleButton>
-          {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
-            <RacToggleButton
-              key={option.id}
-              id={option.id}
-              aria-label={option.label}
-              onHoverStart={() => setHovered(option.label)}
-              onHoverEnd={() => setHovered(null)}
-              style={{
-                background:
-                  option.hue === null ? sample(0, 0) : sample(option.hue),
-              }}
-              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
-            />
-          ))}
-        </RacToggleButtonGroup>
+        <NeutralSeeds
+          value={value}
+          onChange={onChange}
+          brandHue={brandHue}
+          onPoint={setHovered}
+        />
 
         <NeutralSlider
           label="Hue"
@@ -525,7 +497,10 @@ export function NeutralPickerPopover({
           range={NEUTRAL_HUE_RANGE}
           track={HUE_TRACK}
           thumb={sample(hue)}
-          onChange={setHue}
+          onChange={(next) => {
+            setHue(next)
+            previewNow(() => onChange({ ...value, hue: next }))
+          }}
           onChangeEnd={(next) => onChange({ ...value, hue: next })}
         />
 
@@ -535,7 +510,10 @@ export function NeutralPickerPopover({
           range={NEUTRAL_TINT_RANGE}
           track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
           thumb={sample(hue, tint)}
-          onChange={setTint}
+          onChange={(next) => {
+            setTint(next)
+            previewNow(() => onChange({ ...value, tint: next }))
+          }}
           onChangeEnd={(next) => onChange({ ...value, tint: next })}
         />
 
@@ -549,6 +527,84 @@ export function NeutralPickerPopover({
   )
 }
 
+/** Seeds, same as the brand picker: one tap to a known gray family, then the
+ *  sliders for anything between them. Tapping while flat also restores the
+ *  lean, or the tap would do nothing visible. */
+function NeutralSeeds({
+  value,
+  onChange,
+  brandHue,
+  onPoint,
+}: {
+  value: NeutralValue
+  onChange: (value: NeutralValue) => void
+  brandHue: number
+  /** The seed under the pointer, by name. */
+  onPoint: (label: string | null) => void
+}) {
+  const previewProps = useOptionPreview()
+  const preset =
+    value.tint === 0
+      ? PURE_GRAY.id
+      : value.hue === null
+        ? "brand"
+        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
+  const pick = (id: string): NeutralValue =>
+    id === PURE_GRAY.id
+      ? { ...value, tint: 0 }
+      : {
+          hue: NEUTRAL_FAMILIES.find((option) => option.id === id)?.hue ?? null,
+          tint: value.tint || 1,
+        }
+  const seed = (id: string, label: string) =>
+    mergeProps(
+      previewProps(() => onChange(pick(id))),
+      {
+        onHoverStart: () => onPoint(label),
+        onHoverEnd: () => onPoint(null),
+      },
+    )
+  return (
+    <RacToggleButtonGroup
+      aria-label="Neutral presets"
+      selectionMode="single"
+      disallowEmptySelection
+      selectedKeys={preset ? [preset] : []}
+      onSelectionChange={(keys) => {
+        const next = keys.values().next().value
+        if (next) onChange(pick(next as string))
+      }}
+      className="flex justify-between"
+    >
+      {/* Auto is named, not a dot: following the brand is the default and a
+          gray that quietly tracks another color has to say so. */}
+      <RacToggleButton
+        id="brand"
+        {...seed("brand", "Auto")}
+        className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
+      >
+        <span
+          className="size-4 rounded-full"
+          style={{ background: sample(brandHue) }}
+        />
+        Auto
+      </RacToggleButton>
+      {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
+        <RacToggleButton
+          key={option.id}
+          id={option.id}
+          aria-label={option.label}
+          {...seed(option.id, option.label)}
+          style={{
+            background: option.hue === null ? sample(0, 0) : sample(option.hue),
+          }}
+          className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
+        />
+      ))}
+    </RacToggleButtonGroup>
+  )
+}
+
 /* ------------------------------- Font picker ------------------------------ */
 
 /** The searchable font list shared by every font trigger: search on top, the
@@ -556,8 +612,10 @@ export function NeutralPickerPopover({
  *  face. Must render inside a Select. */
 export function FontListPopover({
   categories,
+  onPreview,
 }: {
   categories: FontCategory[]
+  onPreview: (family: string) => void
 }) {
   const listRef = useLazyFontPreviews()
   // On touch, a focused field would raise the keyboard over the list.
@@ -591,19 +649,11 @@ export function FontListPopover({
                 </ListBoxSectionHeader>
                 {FONT_CATALOG.filter((font) => font.category === category).map(
                   (font) => (
-                    <ListBoxItem
+                    <FontItem
                       key={font.family}
-                      id={font.family}
-                      textValue={font.family}
-                      className="pointer-coarse:min-h-11"
-                    >
-                      <span
-                        data-preview-family={font.family}
-                        style={{ fontFamily: fontStack(font.family) }}
-                      >
-                        {font.family}
-                      </span>
-                    </ListBoxItem>
+                      family={font.family}
+                      onPreview={onPreview}
+                    />
                   ),
                 )}
               </ListBoxSection>
@@ -612,5 +662,53 @@ export function FontListPopover({
         </div>
       </Command>
     </PanelPopover>
+  )
+}
+
+function FontItem({
+  family,
+  onPreview,
+}: {
+  family: string
+  onPreview: (family: string) => void
+}) {
+  const previewProps = useOptionPreview()
+  // The face starts loading in the preview at once; the preview settles.
+  const run = () => {
+    warmPreview({ fonts: [family] })
+    onPreview(family)
+  }
+  return (
+    <ListBoxItem
+      id={family}
+      textValue={family}
+      className="pointer-coarse:min-h-11"
+      {...previewProps(run)}
+    >
+      {({ isFocusVisible }) => (
+        <FontLabel family={family} highlighted={isFocusVisible} run={run} />
+      )}
+    </ListBoxItem>
+  )
+}
+
+// The list's focus is virtual, so the keyboard highlight previews from here.
+function FontLabel({
+  family,
+  highlighted,
+  run,
+}: {
+  family: string
+  highlighted: boolean
+  run: () => void
+}) {
+  useHighlightPreview(highlighted, run)
+  return (
+    <span
+      data-preview-family={family}
+      style={{ fontFamily: fontStack(family) }}
+    >
+      {family}
+    </span>
   )
 }

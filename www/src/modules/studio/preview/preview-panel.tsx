@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import {
   ChevronDownIcon,
@@ -37,19 +37,22 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { onWarmPreview, useLive } from "@/modules/studio/live"
 import {
   pingIframe,
   sendInspectorMode,
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
+  sendPreviewWarm,
   sendToIframe,
   useInspectorExitMessages,
 } from "@/modules/studio/preset"
 import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
-import { useStudio } from "@/modules/studio/use-studio"
+import { useCurrent } from "@/modules/studio/selection"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
 
@@ -96,10 +99,57 @@ function PillTooltipContent({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** Posts the live preview, else the committed design, to the iframe. */
+function DesignSystemSync({
+  iframeRef,
+}: {
+  iframeRef: React.RefObject<HTMLIFrameElement | null>
+}) {
+  const { state } = useCurrent()
+  const live = useLive()
+  const message = useMemo(
+    () => ({ data: resolveDesignSystem(live ?? state), live: live !== null }),
+    [live, state],
+  )
+  const latest = useRef(message)
+  const sent = useRef("")
+
+  useEffect(() => {
+    latest.current = message
+    const json = JSON.stringify(message)
+    if (json === sent.current) return
+    sent.current = json
+    sendToIframe(iframeRef.current, message.data, message.live)
+  }, [message, iframeRef])
+
+  // Its message listener can mount after the load event, so ready resends too.
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () =>
+      sendToIframe(iframe, latest.current.data, latest.current.live)
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [iframeRef])
+
+  useEffect(
+    () => onWarmPreview((assets) => sendPreviewWarm(iframeRef.current, assets)),
+    [iframeRef],
+  )
+
+  return null
+}
+
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem } = useStudio()
   const { resolvedTheme } = useTheme()
 
   const panelRef = useRef<HTMLDivElement>(null)
@@ -238,27 +288,6 @@ export function PreviewPanel({ className }: { className?: string }) {
       window.removeEventListener("message", onReady)
     }
   }, [effectivePreview])
-
-  // Send the design system to the iframe on change, on load, and when the iframe signals it's
-  // ready — its message listener can mount after the load event, racing the load-fired send.
-  useEffect(() => {
-    const iframe = iframeRef.current
-    if (!iframe) return
-
-    const send = () => sendToIframe(iframe, designSystem)
-
-    if (iframe.contentWindow) send()
-
-    iframe.addEventListener("load", send)
-    const onReady = (event: MessageEvent) => {
-      if (event.data?.type === "preview-ready") send()
-    }
-    window.addEventListener("message", onReady)
-    return () => {
-      iframe.removeEventListener("load", send)
-      window.removeEventListener("message", onReady)
-    }
-  }, [designSystem])
 
   // Forward the previewed display mode (light / dark) to the iframe — on change,
   // on load, and when the iframe signals it's ready (its listener can mount after load).
@@ -524,6 +553,7 @@ export function PreviewPanel({ className }: { className?: string }) {
             from its left edge. `shrink-0` keeps the set device width — as a flex
             item the iframe would otherwise shrink to fit and preview a lie. */}
         <div className="flex h-full w-full">
+          <DesignSystemSync iframeRef={iframeRef} />
           <iframe
             ref={iframeRef}
             src={iframeSrc}

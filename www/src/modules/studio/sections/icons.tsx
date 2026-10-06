@@ -5,6 +5,8 @@
    drawn by the library under the pointer, so the pick is made by look. */
 
 import { useRef, useState } from "react"
+import { mergeProps } from "react-aria"
+import type { ListBoxItemProps } from "react-aria-components"
 import {
   Button as RacButton,
   Select as RacSelect,
@@ -47,6 +49,8 @@ import {
   DialSelect,
   DialSlider,
 } from "../dial"
+import { warmPreview } from "../live"
+import { useOptionPreview } from "../option-preview"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio, StudioState } from "../state"
 
@@ -125,7 +129,7 @@ export function IconsPreview({ state }: { state: StudioState }) {
 
 /** A select that stays open on pick: the libraries by name beside a wall of
  *  every specimen drawn by the one under the pointer or keyboard focus — the
- *  selected one at rest. */
+ *  selected one at rest. The preview follows too, its chunks warmed on open. */
 function IconLibraryRow({
   label,
   value,
@@ -148,7 +152,11 @@ function IconLibraryRow({
       value={value}
       onChange={(key) => key && onChange(key as IconLibraryName)}
       shouldCloseOnSelect={false}
-      onOpenChange={(isOpen) => !isOpen && setPeek(null)}
+      onOpenChange={(isOpen) => {
+        if (isOpen)
+          warmPreview({ icons: LIBRARY_OPTIONS.map((option) => option.value) })
+        else setPeek(null)
+      }}
     >
       <RacButton className={cn(DIAL_ROW, DIAL_PRESS)}>
         <span className={DIAL_LABEL}>{label}</span>
@@ -167,18 +175,17 @@ function IconLibraryRow({
               {LIBRARY_OPTIONS.map((option) => {
                 const library = option.value as IconLibraryName
                 return (
-                  <ListBoxItem
+                  <LibraryItem
                     key={library}
                     id={library}
-                    textValue={option.label}
+                    label={option.label}
+                    run={() => onChange(library)}
                     onHoverStart={() => setPeek(library)}
                     onFocusChange={(isFocused) => {
                       focused.current = isFocused ? library : null
                       setPeek(focused.current)
                     }}
-                  >
-                    {option.label}
-                  </ListBoxItem>
+                  />
                 )
               })}
             </ListBox>
@@ -211,6 +218,28 @@ function IconLibraryRow({
         </PanelPopover>
       </PanelPopoverTitle.Provider>
     </RacSelect>
+  )
+}
+
+function LibraryItem({
+  id,
+  label,
+  run,
+  ...props
+}: {
+  id: string
+  label: string
+  run: () => void
+} & Pick<ListBoxItemProps, "onHoverStart" | "onFocusChange">) {
+  const previewProps = useOptionPreview()
+  return (
+    <ListBoxItem
+      id={id}
+      textValue={label}
+      {...mergeProps(previewProps(run), props)}
+    >
+      {label}
+    </ListBoxItem>
   )
 }
 

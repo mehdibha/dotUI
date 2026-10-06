@@ -10,6 +10,8 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 
+import { useOptionPreview } from "./option-preview"
+
 /** A palette's color as a dot before an option label — an option that names a
  *  color should show it. */
 export function PaletteDot({ color }: { color: string }) {
@@ -46,6 +48,7 @@ export function CardGrid({
   options: CardOption[]
   columns?: 2 | 3
 }) {
+  const previewProps = useOptionPreview()
   return (
     <RacToggleButtonGroup
       aria-label={label}
@@ -67,6 +70,7 @@ export function CardGrid({
         <RacToggleButton
           key={option.id}
           id={option.id}
+          {...previewProps(() => onChange(option.id))}
           className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
         >
           <span className="flex items-center gap-2">

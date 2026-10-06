@@ -13,6 +13,7 @@ import { getPreset, ORIGIN } from "@/modules/presets"
 import { sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
+import { captureEdit, clearLive, showLive } from "./live"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc, Unsaved, View, Workspace } from "./workspace"
 
@@ -169,9 +170,12 @@ export function useCurrent(): Current {
 }
 
 /** Edits the design on screen: a system saves itself; a view fills the
- *  slot, which empties once the edit lands back on the view. */
+ *  slot, which empties once the edit lands back on the view. A preview
+ *  capturing the edit takes it instead; a commit clears the preview. */
 export function edit(next: StudioState): void {
   const current = getCurrent()
+  if (captureEdit(next, current.state)) return
+  clearLive()
   if (sameState(current.state, next)) return
   if (current.doc) {
     workspace.setState(current.doc.id, next)
@@ -187,10 +191,21 @@ export function edit(next: StudioState): void {
 /** Opens `sel`, dropping the slot: back on its view, it starts pristine.
  *  The slot goes after the selection: no tab is left on a missing slot. */
 export function select(sel: Selection): void {
+  clearLive()
   if (selectionKey(getSelection()) === selectionKey(sel)) return
   setSelection(sel)
   workspace.setUnsaved(undefined)
   workspace.flush()
+}
+
+/** Previews what a picker row opens, by key, once it settles; null drops
+ *  the preview. */
+export function previewSelection(key: string | null): void {
+  if (key === null) return showLive(null)
+  const { state } = describe(keySelection(key), workspace.getWorkspace())
+  showLive(sameState(state, getCurrent().state) ? null : state, {
+    settle: true,
+  })
 }
 
 /** Drops the slot for its untouched view. */

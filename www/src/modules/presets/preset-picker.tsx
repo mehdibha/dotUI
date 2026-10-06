@@ -72,6 +72,9 @@ interface PresetPickerProps {
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
+  /** Called with the row the pointer or keyboard highlight rests on (desktop),
+   *  then null once none does or the picker closes. */
+  onPreview?: (id: string | null) => void
   /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
    *  search never filters it. */
   renderItemMenu?: (item: PresetPickerItem) => ReactNode
@@ -161,6 +164,7 @@ function PresetPickerContent({
   withPreview,
   renderItemMenu,
   onCreate,
+  onPreview,
 }: Omit<PresetPickerProps, "children" | "isOpen" | "onOpenChange"> & {
   close: () => void
   surface: "popover" | "drawer"
@@ -218,10 +222,16 @@ function PresetPickerContent({
   // flyout if no successor has claimed it since (effect order between the two
   // rows isn't guaranteed).
   const activeRowRef = useRef<string | null>(null)
+  // The rows' handlers are stable, so they read the latest callback.
+  const onPreviewRef = useRef(onPreview)
+  useEffect(() => {
+    onPreviewRef.current = onPreview
+  }, [onPreview])
   useEffect(
     () => () => {
       if (openTimerRef.current != null) clearTimeout(openTimerRef.current)
       if (closeTimerRef.current != null) clearTimeout(closeTimerRef.current)
+      onPreviewRef.current?.(null)
     },
     [],
   )
@@ -229,6 +239,7 @@ function PresetPickerContent({
     if (via === "focus" && !navigatedRef.current) return
     activeRowRef.current = id
     setPreviewId(id)
+    onPreviewRef.current?.(id)
     if (closeTimerRef.current != null) {
       clearTimeout(closeTimerRef.current)
       closeTimerRef.current = null
@@ -249,6 +260,7 @@ function PresetPickerContent({
       }
       activeRowRef.current = null
       setEngaged(false)
+      onPreviewRef.current?.(null)
     }, 150)
   }, [])
 

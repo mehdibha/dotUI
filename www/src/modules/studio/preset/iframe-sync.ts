@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 
 import type { DesignSystem } from "./types"
 
@@ -8,13 +9,20 @@ import type { DesignSystem } from "./types"
 
 export type PreviewMode = "light" | "dark"
 
+/** Fonts and icon libraries a preview is about to show. */
+export interface PreviewAssets {
+  fonts?: string[]
+  icons?: string[]
+}
+
 type ParentToIframeMessage =
-  | { type: "design-system"; data: DesignSystem }
+  | { type: "design-system"; data: DesignSystem; live: boolean }
   | { type: "preview-mode"; mode: PreviewMode }
   | { type: "preview-ping" }
   | { type: "preview-navigate"; slug: string }
   | { type: "preview-prefetch"; slug: string }
   | { type: "inspector-mode"; enabled: boolean }
+  | ({ type: "preview-warm" } & PreviewAssets)
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
@@ -23,14 +31,28 @@ type IframeToParentMessage =
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
+/** `live`: a drag or hover preview, not the committed design. */
 export function sendToIframe(
   iframe: HTMLIFrameElement | null,
   data: DesignSystem,
+  live: boolean,
 ) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: "design-system", data } satisfies ParentToIframeMessage,
-    "*",
+    { type: "design-system", data, live } satisfies ParentToIframeMessage,
+    window.location.origin,
+  )
+}
+
+/** Fonts and icon libraries the preview should start loading now. */
+export function sendPreviewWarm(
+  iframe: HTMLIFrameElement | null,
+  assets: PreviewAssets,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "preview-warm", ...assets } satisfies ParentToIframeMessage,
+    window.location.origin,
   )
 }
 
@@ -108,24 +130,113 @@ function isInIframe(): boolean {
   }
 }
 
-export function useIframeMessageListener(
-  onMessage: (data: DesignSystem) => void,
-) {
-  const onMessageRef = React.useRef(onMessage)
+const FRAME_FALLBACK_MS = 100
+// An apply over budget waits as long as it took: at most half the thread.
+const APPLY_BUDGET_MS = 8
+const LIVE_ATTR = "data-studio-live"
+
+/** The next frame, or a timeout where rAF never fires (hidden tabs). */
+function onNextFrame(fn: () => void) {
+  let frame = 0
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const cancel = () => {
+    cancelAnimationFrame(frame)
+    clearTimeout(timer)
+  }
+  const run = () => {
+    cancel()
+    fn()
+  }
+  frame = requestAnimationFrame(run)
+  timer = setTimeout(run, FRAME_FALLBACK_MS)
+  return cancel
+}
+
+/** Inside the preview iframe: applies only the newest design system, painted
+ *  in the next frame. */
+export function useDesignSystemMessages(apply: (data: DesignSystem) => void) {
+  const applyRef = React.useRef(apply)
 
   React.useEffect(() => {
-    onMessageRef.current = onMessage
-  }, [onMessage])
+    applyRef.current = apply
+  }, [apply])
 
   React.useEffect(() => {
     if (!isInIframe()) return
+    const root = document.documentElement
+    let pending: { data: DesignSystem; live: boolean } | null = null
+    let readyAt = 0
+    let cancelApply: (() => void) | undefined
+    let cancelUnlive: (() => void) | undefined
 
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === "design-system") {
-        onMessageRef.current(event.data.data)
-      }
+    const flush = () => {
+      cancelApply = undefined
+      const message = pending
+      pending = null
+      if (!message) return
+      cancelUnlive?.()
+      if (message.live) root.setAttribute(LIVE_ATTR, "")
+      const start = performance.now()
+      flushSync(() => applyRef.current(message.data))
+      // Restyles now, so the measure includes it.
+      void root.offsetHeight
+      const end = performance.now()
+      readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
+      // A frame later, so the commit itself doesn't animate.
+      if (!message.live && root.hasAttribute(LIVE_ATTR))
+        cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
     }
 
+    const handleMessage = (event: MessageEvent) => {
+      if (
+        event.origin !== window.location.origin ||
+        event.data?.type !== "design-system"
+      )
+        return
+      pending = { data: event.data.data, live: event.data.live === true }
+      if (cancelApply) return
+      const wait = readyAt - performance.now()
+      if (wait <= 0) {
+        cancelApply = onNextFrame(flush)
+        return
+      }
+      const timer = setTimeout(() => {
+        cancelApply = onNextFrame(flush)
+      }, wait)
+      cancelApply = () => clearTimeout(timer)
+    }
+
+    window.addEventListener("message", handleMessage)
+    return () => {
+      window.removeEventListener("message", handleMessage)
+      cancelApply?.()
+      cancelUnlive?.()
+      root.removeAttribute(LIVE_ATTR)
+    }
+  }, [])
+}
+
+/** Inside the preview iframe: start loading what the parent is about to
+ *  preview. */
+export function usePreviewWarmMessages(
+  onWarm: (assets: PreviewAssets) => void,
+) {
+  const onWarmRef = React.useRef(onWarm)
+  React.useEffect(() => {
+    onWarmRef.current = onWarm
+  }, [onWarm])
+
+  React.useEffect(() => {
+    if (!isInIframe()) return
+    const handleMessage = (event: MessageEvent) => {
+      if (
+        event.origin !== window.location.origin ||
+        event.data?.type !== "preview-warm"
+      )
+        return
+      const { fonts, icons } = event.data as PreviewAssets
+      onWarmRef.current({ fonts, icons })
+    }
     window.addEventListener("message", handleMessage)
     return () => window.removeEventListener("message", handleMessage)
   }, [])

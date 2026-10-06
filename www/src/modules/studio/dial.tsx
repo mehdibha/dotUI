@@ -41,6 +41,8 @@ import {
 } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"
 
+import { clearLive, previewNow } from "./live"
+import { useOptionPreview } from "./option-preview"
 import {
   ColorPickerPopover,
   PanelPopover,
@@ -64,6 +66,15 @@ export const optionLabel = (
   options: { value: string; label: string }[],
   value: string,
 ) => options.find((o) => o.value === value)?.label ?? value
+
+/** A popover option's hover preview: onChange by default, a pure edit, or off. */
+export type OptionPreview = false | ((value: string) => void)
+
+const previewRun = (
+  preview: OptionPreview | undefined,
+  onChange: (value: string) => void,
+  value: string,
+) => (preview === false ? undefined : () => (preview ?? onChange)(value))
 
 /* ---------------------------------- Rows ---------------------------------- */
 
@@ -239,23 +250,11 @@ export function DialSelect({
             }}
           >
             {options.map((option) => (
-              <ListBoxItem
+              <SelectOption
                 key={option.value}
-                id={option.value}
-                textValue={option.label}
-              >
-                <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
-                {option.description && (
-                  <ListBoxItemDescription>
-                    {option.description}
-                  </ListBoxItemDescription>
-                )}
-                {option.preview && (
-                  <span className="ml-auto flex items-center gap-2">
-                    {option.preview}
-                  </span>
-                )}
-              </ListBoxItem>
+                option={option}
+                run={() => onChange(option.value)}
+              />
             ))}
           </ListBox>
           {children && (
@@ -267,6 +266,34 @@ export function DialSelect({
         </DialogContent>
       </PanelPopover>
     </DialTrigger>
+  )
+}
+
+/** One of DialSelect's options; its own component, inside the popover. */
+function SelectOption({
+  option,
+  run,
+}: {
+  option: DialSelectOption
+  run: () => void
+}) {
+  const previewProps = useOptionPreview()
+  return (
+    <ListBoxItem
+      id={option.value}
+      textValue={option.label}
+      {...previewProps(run)}
+    >
+      <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
+      {option.description && (
+        <ListBoxItemDescription>{option.description}</ListBoxItemDescription>
+      )}
+      {option.preview && (
+        <span className="ml-auto flex items-center gap-2">
+          {option.preview}
+        </span>
+      )}
+    </ListBoxItem>
   )
 }
 
@@ -289,15 +316,19 @@ const PICK_ITEM =
 function PickItem({
   option,
   modified,
+  run,
 }: {
   option: DialPickOption
   modified?: boolean
+  run?: () => void
 }) {
+  const previewProps = useOptionPreview()
   return (
     <RacListBoxItem
       id={option.value}
       textValue={option.label}
       className={PICK_ITEM}
+      {...previewProps(run)}
     >
       {({ isSelected }) => (
         <>
@@ -335,12 +366,14 @@ export function DialPickList({
   label,
   value,
   onChange,
+  preview,
   options,
   modified,
 }: {
   label: string
   value: string | undefined
   onChange: (value: string) => void
+  preview?: OptionPreview
   options: DialPickOption[]
   modified?: string
 }) {
@@ -361,6 +394,7 @@ export function DialPickList({
           key={option.value}
           option={option}
           modified={option.value === modified}
+          run={previewRun(preview, onChange, option.value)}
         />
       ))}
     </RacListBox>
@@ -373,11 +407,13 @@ export function DialPicker({
   label,
   value,
   onChange,
+  preview,
   options,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
+  preview?: OptionPreview
   options: DialPickOption[]
 }) {
   const selected = options.find((option) => option.value === value)
@@ -403,7 +439,11 @@ export function DialPicker({
           >
             <RacListBox className="flex flex-col gap-0.5 outline-hidden">
               {options.map((option) => (
-                <PickItem key={option.value} option={option} />
+                <PickItem
+                  key={option.value}
+                  option={option}
+                  run={previewRun(preview, onChange, option.value)}
+                />
               ))}
             </RacListBox>
           </PanelPopover>
@@ -431,6 +471,7 @@ export function DialList({
   onChange: (value: string) => void
   options: DialSelectOption[]
 }) {
+  const previewProps = useOptionPreview()
   return (
     <div className="flex flex-col">
       <span className="flex h-9 items-center px-1 text-xs font-medium text-fg/50">
@@ -452,6 +493,7 @@ export function DialList({
           <RacToggleButton
             key={option.value}
             id={option.value}
+            {...previewProps(() => onChange(option.value))}
             className="group/option flex min-h-10 w-full cursor-interactive items-center justify-between gap-3 rounded-lg tint-5 py-2 pr-2 pl-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
           >
             <span className="flex min-w-0 items-center gap-2">
@@ -508,7 +550,7 @@ function snapToDecile(raw: number, min: number, max: number) {
   return Math.abs(t - nearest) <= 0.03125 ? min + nearest * (max - min) : raw
 }
 
-/** Drags through a draft and commits on release. */
+/** Drags through a draft the preview follows, and commits on release. */
 export function DialSlider({
   label,
   value,
@@ -670,16 +712,12 @@ export function DialSlider({
       isClick.current = false
       setDragging(true)
     }
-    if (down.touch) {
-      const raw = touchValueAt(e.clientX)
-      paint(toPct(raw))
-      setDraft(round(raw))
-      return
-    }
-    stretchTo(stretchAt(e.clientX))
-    const raw = valueAt(e.clientX)
+    if (!down.touch) stretchTo(stretchAt(e.clientX))
+    const raw = down.touch ? touchValueAt(e.clientX) : valueAt(e.clientX)
     paint(toPct(raw))
-    setDraft(round(raw))
+    const next = round(raw)
+    setDraft(next)
+    previewNow(() => onChange(next))
   }
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -712,6 +750,7 @@ export function DialSlider({
 
   const onPointerCancel = () => {
     if (!interacting) return
+    clearLive()
     stretchTo(0)
     paint(toPct(value))
     setDraft(value)
@@ -939,15 +978,18 @@ export function SegmentedGroup({
   label,
   value,
   onChange,
+  preview,
   options,
   className,
 }: {
   label: string
   value: string | null
   onChange: (value: string) => void
+  preview?: OptionPreview
   options: DialOption[]
   className?: string
 }) {
+  const previewProps = useOptionPreview()
   return (
     <RacToggleButtonGroup
       aria-label={label}
@@ -964,6 +1006,7 @@ export function SegmentedGroup({
         <RacToggleButton
           key={option.value}
           id={option.value}
+          {...previewProps(previewRun(preview, onChange, option.value))}
           className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
@@ -981,11 +1024,13 @@ export function DialSegmented({
   label,
   value,
   onChange,
+  preview,
   options,
 }: {
   label: string
   value: string | null
   onChange: (value: string) => void
+  preview?: OptionPreview
   options: DialOption[]
 }) {
   // Two options sit beside the label; more stack under it, sharing the width.
@@ -995,6 +1040,7 @@ export function DialSegmented({
       label={label}
       value={value}
       onChange={onChange}
+      preview={preview}
       options={options}
       className={stacked ? "w-full" : undefined}
     />
@@ -1023,13 +1069,16 @@ export function DialChips({
   label,
   value,
   onChange,
+  preview,
   options,
 }: {
   label: string
   value: string | undefined
   onChange: (value: string) => void
+  preview?: OptionPreview
   options: DialOption[]
 }) {
+  const previewProps = useOptionPreview()
   return (
     <div className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}>
       <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
@@ -1047,6 +1096,7 @@ export function DialChips({
           <RacToggleButton
             key={option.value}
             id={option.value}
+            {...previewProps(previewRun(preview, onChange, option.value))}
             className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:tint-15 selected:text-fg"
           >
             {option.label}

@@ -69,7 +69,7 @@ function FontRow({
         </span>
       </div>
       <PanelPopoverTitle.Provider value={label}>
-        <FontListPopover categories={categories} />
+        <FontListPopover categories={categories} onPreview={onChange} />
       </PanelPopoverTitle.Provider>
     </Select>
   )
