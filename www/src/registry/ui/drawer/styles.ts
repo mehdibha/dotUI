@@ -77,21 +77,24 @@ const { useStyles, styles } = createStyles(drawerMeta, {
   },
   params: {
     edge: {
-      // Flush to the screen edge, bleeding past it for the overscroll.
+      // Flush to the screen edge, bleeding past it for the overscroll. The
+      // clip keeps a dialog's header band inside the rounded corners.
       docked: {
         slots: {
           overlay: "[--drawer-bleed:--spacing(40)]",
           popup:
-            "border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
+            "overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",
         },
       },
       // shadcn mira, luma: a card inset 8px inside a bare sheet, so the
-      // sheet's own slide still clears the screen.
+      // sheet's own slide still clears the screen. Content sits inside the
+      // card's border.
       detached: {
         slots: {
-          overlay: "[--drawer-bleed:0px] [--drawer-inset:--spacing(2)]",
+          overlay:
+            "[--drawer-bleed:0px] [--drawer-inset:calc(--spacing(2)+1px)]",
           popup:
-            "p-2 [--surface-radius:var(--studio-drawer-radius)] before:absolute before:inset-2 before:-z-10 before:rounded-(--studio-drawer-radius) before:border before:border-(--overlay-border) before:bg-popover before:shadow-(--shadow-modal,var(--shadow-lg))",
+            "p-(--drawer-inset) [--surface-radius:var(--studio-drawer-radius)] before:absolute before:inset-2 before:-z-10 before:rounded-(--studio-drawer-radius) before:border before:border-(--overlay-border) before:bg-popover before:shadow-(--shadow-modal,var(--shadow-lg))",
         },
       },
     },

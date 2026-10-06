@@ -1,12 +1,12 @@
 "use client"
 
-import type * as React from "react"
+import * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as ModalPrimitives from "react-aria-components/Modal"
 import { useIsHidden } from "react-aria/private/collections/Hidden"
 
 import { useIsMobile } from "@/registry/hooks/use-mobile"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { Drawer } from "@/registry/ui/drawer"
 
 import { useStyles } from "./styles"
 
@@ -24,8 +24,9 @@ const Modal = ({ children, className, ...props }: ModalProps) => {
     return <>{children}</>
   }
 
-  // Below the mobile line the dialog slides up in a bottom drawer.
-  if (isMobile && typeof children !== "function") {
+  // Below the mobile line the dialog slides up in a bottom drawer; an alert
+  // dialog stays centered, and only a dismissable one swipes away.
+  if (isMobile && typeof children !== "function" && !isAlertDialog(children)) {
     return (
       <Drawer
         isOpen={props.isOpen}
@@ -33,8 +34,9 @@ const Modal = ({ children, className, ...props }: ModalProps) => {
         onOpenChange={props.onOpenChange}
         isDismissable={props.isDismissable}
         isKeyboardDismissDisabled={props.isKeyboardDismissDisabled}
+        swipeToDismiss={props.isDismissable !== false}
+        className={typeof className === "string" ? className : undefined}
       >
-        <DrawerHandle />
         {children}
       </Drawer>
     )
@@ -49,6 +51,10 @@ const Modal = ({ children, className, ...props }: ModalProps) => {
     </ModalOverlay>
   )
 }
+
+const isAlertDialog = (children: React.ReactNode) =>
+  React.isValidElement<{ role?: string }>(children) &&
+  children.props.role === "alertdialog"
 
 // MARK: Separator
 

@@ -98,8 +98,13 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     },
     close: {
       quiet: {},
-      // shadcn luma, rhea, sera: the quiet button on a secondary chip.
-      filled: { slots: { closeButton: "bg-muted" } },
+      // shadcn luma, rhea, sera: the quiet button on the secondary fill.
+      filled: {
+        slots: {
+          closeButton:
+            "bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        },
+      },
       // Supabase: faint until hovered or focused.
       faint: {
         slots: {
