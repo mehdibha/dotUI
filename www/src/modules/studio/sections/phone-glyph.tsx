@@ -3,11 +3,9 @@
 import type { DialSelectOption } from "../dial"
 import { DialGlyph } from "../dial"
 
-type Layer = "drawer" | "popover" | "center" | "sheet"
-
 /** A phone with the layer drawn where it lands: anchored under a field,
- *  docked at the bottom, or floating mid-screen. */
-export function PhoneGlyph({ layer }: { layer: Layer }) {
+ *  docked at the bottom, floating mid-screen, or filling it. */
+export function PhoneGlyph({ layer }: { layer: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -48,6 +46,16 @@ export function PhoneGlyph({ layer }: { layer: Layer }) {
           fill="currentColor"
         />
       )}
+      {layer === "fullscreen" && (
+        <rect
+          x="6.75"
+          y="2.75"
+          width="10.5"
+          height="18.5"
+          rx="1.75"
+          fill="currentColor"
+        />
+      )}
       {layer === "center" && (
         <rect x="8.5" y="9.5" width="7" height="5" rx="1" fill="currentColor" />
       )}
@@ -62,7 +70,7 @@ export const withPhoneGlyphs = (
     ...o,
     preview: (
       <DialGlyph>
-        <PhoneGlyph layer={o.value as Layer} />
+        <PhoneGlyph layer={o.value} />
       </DialGlyph>
     ),
   }))

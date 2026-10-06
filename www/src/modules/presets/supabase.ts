@@ -44,7 +44,7 @@ export const supabase = definePreset({
     menuIndicator: "check-start",
     menuSearch: "bar",
     menuScale: "large",
-    dialogBackdrop: "blur",
+    dialogBackdropStrength: "light",
     tooltipStyle: "surface",
     tabStyle: "line",
     badgeStyle: "soft-outline",

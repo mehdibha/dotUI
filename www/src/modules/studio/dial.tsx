@@ -265,6 +265,7 @@ export interface DialSelectOption {
  *  rows under the list, past a separator. */
 export function DialSelect({
   axis: key,
+  holds,
   label,
   value: valueProp,
   onChange: onChangeProp,
@@ -274,6 +275,8 @@ export function DialSelect({
 }: {
   /** The key the row edits: value, change, hide and exclusions follow it. */
   axis?: AxisKey
+  /** Keys edited in the rows under the list, so a reveal lands here. */
+  holds?: readonly string[]
   label: string
   value?: string
   onChange?: (value: string) => void
@@ -295,6 +298,7 @@ export function DialSelect({
   return (
     <DialTrigger
       axis={key}
+      holds={holds}
       label={label}
       aside={held && <CauseChip cause={held} />}
       value={

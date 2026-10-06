@@ -8,24 +8,18 @@ describe("overlays chapters", () => {
     const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.componentParams.modal).toMatchObject({
-      backdrop: "dim",
       position: "center",
+      mobile: "center",
     })
-    expect(ds.componentParams.drawer).toMatchObject({ backdrop: "dim" })
+    expect(ds.componentParams.drawer).toMatchObject({ edge: "docked" })
     expect(ds.componentParams.popover).toMatchObject({ tip: "none" })
     expect(ds.componentParams.dialog).toMatchObject({ header: "title" })
     expect(ds.componentParams.tooltip).toMatchObject({ style: "inverted" })
   })
 
-  test("dialogs: backdrop writes modal and drawer together, position the modal", () => {
-    const ds = designSystemOf(
-      parseState({ dialogBackdrop: "blur", dialogPosition: "top" }),
-    )
-    expect(ds.componentParams.modal).toMatchObject({
-      backdrop: "blur",
-      position: "top",
-    })
-    expect(ds.componentParams.drawer).toMatchObject({ backdrop: "blur" })
+  test("dialogs: position on the modal", () => {
+    const ds = designSystemOf(parseState({ dialogPosition: "top" }))
+    expect(ds.componentParams.modal).toMatchObject({ position: "top" })
   })
 
   test("popovers: tip on popover, header on dialog", () => {
