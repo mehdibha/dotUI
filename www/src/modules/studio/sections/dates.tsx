@@ -1,7 +1,6 @@
 "use client"
 
-/* Date & time — the calendar's month grid: the day cell's shape, how today
-   is marked, the weekday labels. Its fields come from Inputs. */
+/* Date & time — the calendar grid; its fields come from Inputs. */
 
 import { cn } from "@/registry/lib/utils"
 

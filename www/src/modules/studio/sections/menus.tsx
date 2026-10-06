@@ -1,9 +1,6 @@
 "use client"
 
-/* Menus & popovers — one language for every floating list (Menu, Select and
-   ComboBox listboxes, the command palette) and the anchored layers they open
-   in: the popover's arrow, the tooltip's own surface, and how pickers present
-   on a phone. */
+/* Menus & popovers — every floating list and the layers it opens in. */
 
 import {
   HIGHLIGHT_OPTIONS,
@@ -14,6 +11,7 @@ import {
 } from "../axes/menus"
 import { PICKER_OPTIONS } from "../axes/mobile"
 import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
+import { roleLabel } from "../axes/shape"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import {
   DialGap,
@@ -139,20 +137,58 @@ function InsetGlyph({ inset }: { inset: string }) {
   )
 }
 
-/** A palette: the search chrome over two rows. */
+/** A palette: the search chrome over the highlighted row and one more. */
 function PaletteGlyph({ search }: { search: string }) {
   return (
-    <span className="flex w-9 shrink-0 flex-col overflow-hidden rounded-[4px] border border-fg/20 bg-bg">
-      {search === "field" && (
-        <span className="mx-1 mt-1 h-2 rounded-[2px] border border-fg/25" />
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity=".45"
+      />
+      {search === "field" ? (
+        <rect
+          x="6.5"
+          y="6.5"
+          width="11"
+          height="4"
+          rx="1"
+          stroke="currentColor"
+          strokeWidth="1.25"
+        />
+      ) : (
+        <path
+          d="M7 8.5h5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
       )}
-      {search === "bar" && <span className="h-2.5 border-b border-fg/20" />}
-      {search === "prompt" && <span className="h-2.5" />}
-      <span className="flex flex-col gap-0.5 p-1">
-        <span className="h-1.5 rounded-[2px] bg-fg/15" />
-        <span className="h-1.5 rounded-[2px]" />
-      </span>
-    </span>
+      {search === "bar" && (
+        <path d="M4.75 11.5h14.5" stroke="currentColor" strokeWidth="1.25" />
+      )}
+      <rect
+        x="6.5"
+        y="13"
+        width="11"
+        height="2.5"
+        rx="1"
+        fill="currentColor"
+        opacity=".9"
+      />
+      <path
+        d="M7 17.5h10"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+    </svg>
   )
 }
 
@@ -252,7 +288,9 @@ export function MenusSection({ studio }: { studio: Studio }) {
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Command">
-          <PaletteGlyph search={effective.menuSearch} />
+          <DialGlyph>
+            <PaletteGlyph search={effective.menuSearch} />
+          </DialGlyph>
         </HeroMember>
         <HeroMember name="Pickers on mobile">
           <DialGlyph>
@@ -302,7 +340,11 @@ export function MenusSection({ studio }: { studio: Studio }) {
         }))}
       />
       <UsesRow axis="surfaceGlass" label="Glass" />
-      <UsesRow axis="roleItem" label="Item corners" />
+      <UsesRow
+        axis="roleItem"
+        label="Item corners"
+        value={roleLabel(effective, "roleItem")}
+      />
       <More keys={["menuIndicator", "popoverHeader"]}>
         <DialSelect
           axis="menuIndicator"
@@ -343,7 +385,11 @@ export function MenusSection({ studio }: { studio: Studio }) {
             label="Search"
             options={SEARCH_OPTIONS.map((option) => ({
               ...option,
-              preview: <PaletteGlyph search={option.value} />,
+              preview: (
+                <DialGlyph>
+                  <PaletteGlyph search={option.value} />
+                </DialGlyph>
+              ),
             }))}
           />
           <DialSegmented

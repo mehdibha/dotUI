@@ -1,8 +1,6 @@
 "use client"
 
-/* Feedback — a bucket: the chip language badges and tags share (how much
-   intent color, which corners), and how the system waits: spinner, skeleton
-   and progress bar. The spinner options are the registry's own loaders. */
+/* Feedback — a bucket: badges and tags, spinner, skeleton, progress. */
 
 import { cn } from "@/registry/lib/utils"
 import { Loader as BladesLoader } from "@/registry/ui/loader/base.blades"
@@ -33,7 +31,15 @@ const CHIP: Record<string, string> = {
 }
 
 /** The accent chip in one style and shape. */
-function ChipGlyph({ style, shape }: { style: string; shape: string }) {
+function ChipGlyph({
+  style,
+  shape,
+  children = "New",
+}: {
+  style: string
+  shape: string
+  children?: string
+}) {
   return (
     <span
       className={cn(
@@ -42,8 +48,58 @@ function ChipGlyph({ style, shape }: { style: string; shape: string }) {
         CHIP[style],
       )}
     >
-      New
+      {children}
     </span>
+  )
+}
+
+/** An inline alert and a toast: members with no rows of their own yet. */
+function AlertGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="2.75"
+        y="6.75"
+        width="18.5"
+        height="10.5"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <circle cx="7" cy="12" r="1.75" fill="currentColor" />
+      <path
+        d="M10.5 10.5h7M10.5 13.5h4.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+    </svg>
+  )
+}
+
+function ToastGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="3.75"
+        y="3.75"
+        width="16.5"
+        height="16.5"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity=".45"
+      />
+      <rect
+        x="9"
+        y="13.5"
+        width="9"
+        height="4.5"
+        rx="1.25"
+        fill="currentColor"
+      />
+    </svg>
   )
 }
 
@@ -138,6 +194,21 @@ export function FeedbackSection({ studio }: { studio: Studio }) {
             style={effective.badgeStyle}
             shape={effective.badgeShape}
           />
+        </HeroMember>
+        <HeroMember name="Tag">
+          <ChipGlyph style={effective.badgeStyle} shape={effective.badgeShape}>
+            Tag
+          </ChipGlyph>
+        </HeroMember>
+        <HeroMember name="Alert">
+          <DialGlyph>
+            <AlertGlyph />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Toast">
+          <DialGlyph>
+            <ToastGlyph />
+          </DialGlyph>
         </HeroMember>
         <HeroMember name="Spinner">
           <Spinner className="size-5" />

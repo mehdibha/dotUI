@@ -1,7 +1,6 @@
 "use client"
 
-/* Buttons — Button's style, a real system's recipe copied whole, with the
-   toggles, groups, segmented control and pagination that share it. */
+/* Buttons — one recipe shared by toggles, groups, segmented, pagination. */
 
 import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
@@ -14,6 +13,7 @@ import {
   SELECTED_OPTIONS as SEGMENT_OPTIONS,
   TRACK_OPTIONS,
 } from "../axes/segmented-control"
+import { roleLabel } from "../axes/shape"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
 import {
   DialGap,
@@ -244,7 +244,11 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <UsesRow axis="buttonColor" label="Color" />
-      <UsesRow axis="roleControl" label="Control corners" />
+      <UsesRow
+        axis="roleControl"
+        label="Control corners"
+        value={roleLabel(effective, "roleControl")}
+      />
       <MemberSection id="toggle" title="Toggles">
         <DialSelect
           axis="toggleSelected"

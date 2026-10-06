@@ -1,7 +1,6 @@
 "use client"
 
-/* Components — one row per family, each opening the family's page in place
-   of the panel. The row carries the family's specimen. */
+/* Components — one row per family, opening its page. */
 
 import { useContext } from "react"
 

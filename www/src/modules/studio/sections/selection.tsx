@@ -1,8 +1,6 @@
 "use client"
 
-/* Selection — Checkbox, Radio, Switch, their card mode and the slider. A
-   radio is always a circle and a switch a pill, so Corner stops at the box;
-   each control's color is a leaf of Color's Primary. */
+/* Selection — check controls, choice cards, slider. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -43,6 +41,33 @@ function CornerGlyph({ corner }: { corner: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  )
+}
+
+/** A chosen radio and an on switch: members with no rows of their own yet. */
+function RadioGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="3" fill="currentColor" />
+    </svg>
+  )
+}
+
+function SwitchGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="2.75"
+        y="7.25"
+        width="18.5"
+        height="9.5"
+        rx="4.75"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <circle cx="16.5" cy="12" r="2.75" fill="currentColor" />
     </svg>
   )
 }
@@ -145,6 +170,16 @@ export function SelectionSection({ studio }: { studio: Studio }) {
         <HeroMember name="Checkbox">
           <DialGlyph>
             <CornerGlyph corner={effective.checkCorner} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Radio">
+          <DialGlyph>
+            <RadioGlyph />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Switch">
+          <DialGlyph>
+            <SwitchGlyph />
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Choice card">

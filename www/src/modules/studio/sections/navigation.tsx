@@ -1,8 +1,6 @@
 "use client"
 
-/* Navigation — the selected-tab signature, how a link announces itself and
-   the breadcrumb trail. Tab and link colors are leaves of Color's Primary;
-   pagination wears Buttons' look and lives there. */
+/* Navigation — tabs, links, breadcrumbs; their colors are Primary leaves. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -164,6 +162,31 @@ function SeparatorGlyph({ separator }: { separator: string }) {
   )
 }
 
+/** A page with its sidebar: a member with no rows of its own yet. */
+function SidebarGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="3.75"
+        y="4.75"
+        width="16.5"
+        height="14.5"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path d="M9.5 5v14" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M6 8.5h1.5M6 11.5h1.5M6 14.5h1.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+    </svg>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function NavigationPreview({ state }: { state: Effective }) {
@@ -190,6 +213,11 @@ export function NavigationSection({ studio }: { studio: Studio }) {
         <HeroMember name="Breadcrumbs">
           <DialGlyph>
             <SeparatorGlyph separator={effective.breadcrumbSeparator} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Sidebar">
+          <DialGlyph>
+            <SidebarGlyph />
           </DialGlyph>
         </HeroMember>
       </FamilyHero>

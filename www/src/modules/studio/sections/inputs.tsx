@@ -1,8 +1,6 @@
 "use client"
 
-/* Inputs — every field renders through Input / InputGroup, so Style (the
-   shell) and Hover reach them all; steppers, OTP cells and the select caret
-   are the members' own. Focus and invalid live in States. */
+/* Inputs — Style and Hover reach every field; focus lives in States. */
 
 import { cn } from "@/registry/lib/utils"
 

@@ -1,8 +1,6 @@
 "use client"
 
-/* Data display — a bucket of small units: the table's rows and header, the
-   accordion's container and marker, the avatar's shape and fallback, the
-   kbd chip. */
+/* Data display — a bucket: table, accordion, avatar, kbd. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -13,6 +11,7 @@ import {
 } from "../axes/accordion"
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
 import { TREATMENT_OPTIONS } from "../axes/kbd"
+import { roleLabel } from "../axes/shape"
 import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
 import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import {
@@ -283,7 +282,11 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
         label="Table header"
         options={HEADER_OPTIONS}
       />
-      <UsesRow axis="roleCard" label="Card corners" />
+      <UsesRow
+        axis="roleCard"
+        label="Card corners"
+        value={roleLabel(effective, "roleCard")}
+      />
       <More keys={["tableSeparation"]}>
         <DialSelect
           axis="tableSeparation"

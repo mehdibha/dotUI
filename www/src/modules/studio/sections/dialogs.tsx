@@ -1,11 +1,10 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page: the scrim under them (it writes
-   Dialog and Drawer together), where a modal rests, and how dialogs present
-   on a phone. */
+/* Dialogs — the scrim, where a modal rests, and dialogs on a phone. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { DIALOG_OPTIONS } from "../axes/mobile"
+import { roleLabel } from "../axes/shape"
 import {
   DialGap,
   DialGlyph,
@@ -110,7 +109,11 @@ export function DialogsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
-      <UsesRow axis="rolePanel" label="Panel corners" />
+      <UsesRow
+        axis="rolePanel"
+        label="Panel corners"
+        value={roleLabel(effective, "rolePanel")}
+      />
       <UsesRow axis="surfaceGlass" label="Glass" />
       <MemberSection id="modal" title="Modal">
         <More keys={["dialogPosition"]}>

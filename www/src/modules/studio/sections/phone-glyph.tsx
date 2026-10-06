@@ -1,5 +1,4 @@
-/* A phone with an overlay drawn where it lands on mobile: the On mobile
-   rows of Menus & popovers and Dialogs. */
+/* A phone with the overlay where it lands on mobile, for the On mobile rows. */
 
 import type { DialSelectOption } from "../dial"
 import { DialGlyph } from "../dial"
