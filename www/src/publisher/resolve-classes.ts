@@ -12,6 +12,7 @@
  *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
  *   duration-(--studio-popover-enter-duration) → duration-200
  *   ease-(--studio-popover-ease)               → ease-out · ease-[cubic-bezier(…)]
+ *   border-(length:--studio-control-stroke)    → border · border-2 · border-[0.5px]
  *
  * The var → value map follows chains through other studio vars (button →
  * radius role → ladder rung). Values that name a Tailwind theme token become
@@ -196,12 +197,34 @@ const HAS_TRANSITION =
   /(?:^|\s)transition(?:-(?!none\b|discrete\b|normal\b)\S+)?(?=\s|$)/
 const HAS_ANIMATION = /(?:^|[\s:])animate-(?:in|out)(?=\s|$)/
 
-/** The shipped form of one studio read: `duration-200`, `ease-[…]`. */
-function resolvedUtility(utility: string, value: string): string {
+/* Width utilities whose 1px form is the bare name (`border`, `border-b`). */
+const BARE_WIDTH = /^(?:border(?:-[xytrblse])?|divide-[xy])$/
+/* Width utilities spelled with a number at 1px (`ring-1`, `outline-1`). */
+const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline)$/
+/* Spacing utilities, whose 1px step is `px` (`-space-x-px`, `w-px`). */
+const SPACING =
+  /^(?:space-[xy]|gap(?:-[xy])?|[mp][xytrblse]?|w|h|size|inset(?:-[xy])?|top|right|bottom|left|start|end|translate-[xy])$/
+
+/** A px length on a width or spacing utility, as Tailwind spells it. */
+function lengthUtility(utility: string, value: string): string | undefined {
+  const n = /^(\d+(?:\.\d+)?)px$/.exec(value)?.[1]
+  if (n === undefined) return undefined
+  if (SPACING.test(utility)) return n === "1" ? `${utility}-px` : undefined
+  if (!BARE_WIDTH.test(utility) && !NUMBERED_WIDTH.test(utility))
+    return undefined
+  if (n === "1" && BARE_WIDTH.test(utility)) return utility
+  return Number.isInteger(Number(n)) ? `${utility}-${n}` : undefined
+}
+
+/** The shipped form of one studio read: `duration-200`, `ease-[…]`. A
+ *  `length:` hint survives only on a read left as a var. */
+function resolvedUtility(utility: string, value: string, hint = ""): string {
+  const length = lengthUtility(utility, value)
+  if (length !== undefined) return length
   const suffix = utilitySuffix(utility, value)
   if (suffix !== undefined) return `${utility}-${suffix}`
   const ref = /^var\((--[\w-]+)\)$/.exec(value)
-  if (ref) return `${utility}-(${ref[1]})`
+  if (ref) return `${utility}-(${hint}${ref[1]})`
   // Curves drop the spaces after commas; `linear()` stops keep theirs as `_`.
   const arbitrary =
     utility === "ease" || utility === "animate"
@@ -282,9 +305,9 @@ export function rewriteClassString(
   context = input,
 ): string {
   if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
-  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · var · trail
+  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · hint · var · trail
   const shorthand = new RegExp(
-    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)([a-z][a-z0-9-]*)-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
+    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)([a-z][a-z0-9-]*)-\\((length:)?(${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
     "g",
   )
   let dropped = false
@@ -303,7 +326,7 @@ export function rewriteClassString(
   )
   rewritten = rewritten.replace(
     shorthand,
-    (match, lead, variants, utility, name, trail) => {
+    (match, lead, variants, utility, hint = "", name, trail) => {
       const value = vars.get(name)
       if (value === undefined) return match
       if (
@@ -313,13 +336,18 @@ export function rewriteClassString(
         dropped = true
         return lead && trail ? " " : ""
       }
-      return `${lead}${variants}${resolvedUtility(utility, value)}${trail}`
+      return `${lead}${variants}${resolvedUtility(utility, value, hint)}${trail}`
     },
   )
   // A drop at either end of a class string leaves a stray space; file
   // content (markup around the tv config) keeps its whitespace.
   if (dropped && !/["'`\n]/.test(input)) rewritten = rewritten.trim()
-  return substituteVarReads(rewritten, (name) => vars.get(name)).text
+  // `p-[calc(3px-var(--studio-control-stroke))]` ships as `p-[2px]`.
+  return substituteVarReads(rewritten, (name) => vars.get(name)).text.replace(
+    /calc\((\d+(?:\.\d+)?)px([+-])(\d+(?:\.\d+)?)px\)/g,
+    (_, a: string, op: string, b: string) =>
+      `${Number(a) + (op === "-" ? -1 : 1) * Number(b)}px`,
+  )
 }
 
 /** Every class in a value, space-joined — the context a slot's reads share. */

@@ -248,6 +248,29 @@ describe("resolve-classes", () => {
     ).toBe("size-8 h-3 shadow-none rounded-[4px] rounded-(--surface-radius)")
   })
 
+  test("rewriteClassString spells stroke widths as Tailwind does", () => {
+    const at = (stroke: string) =>
+      rewriteClassString(
+        "border-(length:--studio-control-stroke) border-b-(length:--studio-control-stroke) selected:ring-(length:--studio-control-stroke) -space-x-(--studio-control-stroke) before:w-(--studio-control-stroke) p-[calc(3px-var(--studio-control-stroke))] pr-[calc(var(--inset)-var(--studio-control-stroke))]",
+        resolveStudioVars({ "--studio-control-stroke": stroke }),
+      )
+    expect(at("1px")).toBe(
+      "border border-b selected:ring-1 -space-x-px before:w-px p-[2px] pr-[calc(var(--inset)-1px)]",
+    )
+    expect(at("2px")).toBe(
+      "border-2 border-b-2 selected:ring-2 -space-x-[2px] before:w-[2px] p-[1px] pr-[calc(var(--inset)-2px)]",
+    )
+    expect(at("0.5px")).toBe(
+      "border-[0.5px] border-b-[0.5px] selected:ring-[0.5px] -space-x-[0.5px] before:w-[0.5px] p-[2.5px] pr-[calc(var(--inset)-0.5px)]",
+    )
+    expect(
+      rewriteClassString(
+        "border-(length:--studio-w)",
+        resolveStudioVars({ "--studio-w": "var(--line)" }),
+      ),
+    ).toBe("border-(length:--line)")
+  })
+
   test("rewriteClassString substitutes non-shorthand reads, honoring fallbacks", () => {
     const vars = resolveStudioVars({
       "--studio-card-radius": "var(--radius-xl)",
