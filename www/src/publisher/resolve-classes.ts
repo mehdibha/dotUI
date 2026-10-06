@@ -8,7 +8,6 @@
  *
  *   rounded-(--studio-btn-radius)              → rounded-md
  *   font-(--studio-font-weight-label)          → font-medium
- *   shadow-(--studio-slider-thumb-shadow)      → shadow-none
  *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
  *   duration-(--studio-popover-enter-duration) → duration-200
  *   ease-(--studio-popover-ease)               → ease-out · ease-[cubic-bezier(…)]
@@ -159,7 +158,7 @@ const animationKey = (value: string) =>
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
-    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.]+)\)$/.exec(
+    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.-]+)\)$/.exec(
       value,
     )
   if (token) return token[1]
@@ -495,6 +494,19 @@ export function resolveCssFields<
     return Object.keys(out).length > 0 ? out : undefined
   }
   return visit(css as CssObject) as T | undefined
+}
+
+/** A primitive ramp step (`--neutral-700`, `--on-accent-700`). Chart slots
+ *  ship; the ramps live only on the site. */
+const RAMP_VAR = /--(?!chart-)(?:on-)?[a-z]+-\d+(?![\w-])/g
+
+/** Shipped output must read semantic tokens, never a ramp the consumer lacks. */
+export function assertNoRampVars(text: string, where: string): void {
+  const hits = [...new Set(text.match(RAMP_VAR))]
+  if (hits.length === 0) return
+  throw new Error(
+    `${where}: palette ramp vars ${hits.join(", ")} never reach consumer CSS — read a semantic token`,
+  )
 }
 
 /** Shipped output must carry no studio var — the export owns its values. */

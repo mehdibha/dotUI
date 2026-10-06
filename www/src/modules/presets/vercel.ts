@@ -42,7 +42,6 @@ export const vercel = definePreset({
     checkboxColor: "neutral",
     radioColor: "neutral",
     cardSelected: "outline-tint",
-    cardControl: "end",
     inputHover: "edge",
     sliderColor: "neutral",
     menuSearch: "prompt",

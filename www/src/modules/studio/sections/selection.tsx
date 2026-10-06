@@ -1,13 +1,28 @@
 "use client"
 
-/* Selection — check controls, choice cards, slider. */
+/* Selection — checkbox, radio, switch, slider and choice cards, each drawn by
+   its registry recipe. */
 
-import { cn } from "@/registry/lib/utils"
+import { CheckIcon } from "lucide-react"
 
-import { CORNER_OPTIONS } from "../axes/checkbox"
-import { CONTROL_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards"
+import { DesignSystemContext } from "@/lib/styles"
+import { useStyles as useCheckboxStyles } from "@/registry/ui/checkbox/styles"
+import { useStyles as useRadioStyles } from "@/registry/ui/radio-group/styles"
+import { useStyles as useSliderStyles } from "@/registry/ui/slider/styles"
+import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
+
+import { effective as resolve } from "../axes"
+import {
+  CORNER_OPTIONS,
+  cornerTokens,
+  EDGE_OPTIONS,
+  edgeTokens,
+} from "../axes/checkbox"
+import { SELECTED_OPTIONS } from "../axes/choice-cards"
+import { MARK_OPTIONS } from "../axes/radio"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { STYLE_OPTIONS } from "../axes/switch"
+import { DialSelect } from "../dial"
 import {
   FamilyHero,
   HeroMember,
@@ -19,222 +34,243 @@ import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-const CORNER_RX: Record<string, number> = { rounded: 3.5, square: 1, circle: 7 }
+type Context = React.ContextType<typeof DesignSystemContext>
 
-/** A checked box at one corner geometry. */
-function CornerGlyph({ corner }: { corner: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="5"
-        y="5"
-        width="14"
-        height="14"
-        rx={CORNER_RX[corner] ?? 3.5}
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="m9 12.3 2.1 2.1 4-4.7"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
+/* One stable context per selection, so the registry's style cache hits. */
+const CONTEXTS = new Map<string, Context>()
+function paramContext(name: string, params: Record<string, string>) {
+  const key = `${name}:${JSON.stringify(params)}`
+  let context = CONTEXTS.get(key)
+  if (!context) {
+    context = { params: { [name]: params }, density: "default" }
+    CONTEXTS.set(key, context)
+  }
+  return context
 }
 
-/** A chosen radio and an on switch: members with no rows of their own yet. */
-function RadioGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="3" fill="currentColor" />
-    </svg>
-  )
-}
-
-function SwitchGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="2.75"
-        y="7.25"
-        width="18.5"
-        height="9.5"
-        rx="4.75"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <circle cx="16.5" cy="12" r="2.75" fill="currentColor" />
-    </svg>
-  )
-}
-
-const CARD_LOOK: Record<string, string> = {
-  outline: "border-primary shadow-[inset_0_0_0_1px_var(--color-primary)]",
-  tint: "border-fg/10 bg-primary/10",
-  "outline-tint":
-    "border-primary bg-primary/10 shadow-[inset_0_0_0_1px_var(--color-primary)]",
-}
-
-/** A chosen card: its selected treatment, the control where it sits. */
-function CardGlyph({
-  selected,
-  control,
+function Recipe({
+  name,
+  params,
+  children,
 }: {
-  selected: string
-  control: string
+  name: string
+  params: Record<string, string>
+  children: React.ReactNode
 }) {
   return (
+    <DesignSystemContext.Provider value={paramContext(name, params)}>
+      {children}
+    </DesignSystemContext.Provider>
+  )
+}
+
+const ON = { "data-selected": "true" }
+
+function CheckboxMark({ corner, edge }: { corner: string; edge?: string }) {
+  const { indicator } = useCheckboxStyles()()
+  return (
     <span
-      className={cn(
-        "flex h-4 w-8 shrink-0 items-center gap-1.5 rounded-md border px-1",
-        control === "end" && "flex-row-reverse",
-        CARD_LOOK[selected],
-      )}
+      {...(edge ? {} : ON)}
+      className={indicator()}
+      style={
+        {
+          ...cornerTokens(corner),
+          ...(edge && edgeTokens(edge)),
+        } as React.CSSProperties
+      }
     >
-      {control !== "hidden" && (
-        <span className="size-1.5 shrink-0 rounded-full bg-primary" />
-      )}
-      <span className="h-1 flex-1 rounded-full bg-fg/25" />
+      <CheckIcon />
     </span>
   )
 }
 
-function ThumbGlyph({ thumb, track }: { thumb: string; track: string }) {
-  const weight = track === "thick" ? 5 : 2
+function RadioMark() {
+  const { indicator } = useRadioStyles()()
+  return <span {...ON} className={indicator()} />
+}
+
+function SwitchTrack({ on }: { on?: boolean }) {
+  const { indicator, thumb } = useSwitchStyles()()
+  const state = on ? ON : {}
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {thumb === "bar" ? (
-        <>
-          <path
-            d="M3 12h5.5M15.5 12h5.5"
-            stroke="currentColor"
-            strokeWidth={weight}
-            strokeLinecap="round"
-            opacity=".4"
-          />
-          <rect
-            x="10.75"
-            y="6.5"
-            width="2.5"
-            height="11"
-            rx="1.25"
-            fill="currentColor"
-          />
-        </>
-      ) : (
-        <>
-          <path
-            d="M3 12h18"
-            stroke="currentColor"
-            strokeWidth={weight}
-            strokeLinecap="round"
-            opacity=".4"
-          />
-          {thumb === "outline" ? (
-            <circle
-              cx="13.5"
-              cy="12"
-              r="3.5"
-              fill="var(--color-bg)"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-          ) : (
-            <circle cx="13.5" cy="12" r="4" fill="currentColor" />
-          )}
-        </>
-      )}
-    </svg>
+    <span {...state} className={indicator({ size: "sm" })}>
+      <span {...state} className={thumb({ size: "sm" })} />
+    </span>
   )
 }
+
+function SliderBar() {
+  const { control, track, fill, thumb } = useSliderStyles()()
+  const orientation = "horizontal"
+  return (
+    <span
+      className={control({ orientation, className: "min-h-0 w-12 grow-0" })}
+    >
+      <span className={track({ orientation })}>
+        <span
+          className={fill()}
+          style={{ position: "absolute", insetBlock: 0, width: "60%" }}
+        />
+      </span>
+      <span
+        className={thumb({ orientation, className: "before:inset-y-[-5px]" })}
+        style={{
+          position: "absolute",
+          left: "60%",
+          transform: "translate(-50%, -50%)",
+        }}
+      />
+    </span>
+  )
+}
+
+function ChoiceCard() {
+  const { control, indicator } = useCheckboxStyles()()
+  return (
+    <span
+      {...ON}
+      className={control({
+        className: "gap-1 has-data-label:w-10 has-data-label:p-1",
+      })}
+    >
+      <span
+        {...ON}
+        className={indicator({ className: "size-2.5 *:[svg]:size-2" })}
+      >
+        <CheckIcon />
+      </span>
+      <span data-label className="h-1 flex-1 rounded-full bg-fg/25" />
+    </span>
+  )
+}
+
+const corner = (value: string) => (
+  <Recipe name="checkbox" params={{}}>
+    <CheckboxMark corner={value} />
+  </Recipe>
+)
+
+const edge = (value: string) => (
+  <Recipe name="checkbox" params={{}}>
+    <CheckboxMark corner="auto" edge={value} />
+  </Recipe>
+)
+
+const mark = (value: string) => (
+  <Recipe name="radio-group" params={{ mark: value }}>
+    <RadioMark />
+  </Recipe>
+)
+
+const switchStyle = (value: string) => (
+  <Recipe name="switch" params={{ style: value }}>
+    <span className="flex gap-1">
+      <SwitchTrack />
+      <SwitchTrack on />
+    </span>
+  </Recipe>
+)
+
+const slider = (thumb: string, track: string) => (
+  <Recipe name="slider" params={{ thumb, track }}>
+    <SliderBar />
+  </Recipe>
+)
+
+const card = (value: string) => (
+  <Recipe name="checkbox" params={{ "card-selected": value }}>
+    <ChoiceCard />
+  </Recipe>
+)
 
 /* --------------------------------- Section --------------------------------- */
 
 export function SelectionPreview({ state }: { state: Effective }) {
-  return (
-    <DialGlyph>
-      <CornerGlyph corner={state.checkCorner} />
-    </DialGlyph>
-  )
+  return mark(state.radioMark)
 }
 
 export function SelectionSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+  const { state, effective } = studio
+  // A thumb's specimen rides the track it would resolve to.
+  const trackFor = (thumb: string) =>
+    resolve({ ...state, sliderThumb: thumb }).values.sliderTrack
   return (
     <>
       <FamilyHero>
-        <HeroMember name="Checkbox">
-          <DialGlyph>
-            <CornerGlyph corner={effective.checkCorner} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Radio">
-          <DialGlyph>
-            <RadioGlyph />
-          </DialGlyph>
-        </HeroMember>
+        <HeroMember name="Checkbox">{corner(effective.checkCorner)}</HeroMember>
+        <HeroMember name="Radio">{mark(effective.radioMark)}</HeroMember>
         <HeroMember name="Switch">
-          <DialGlyph>
-            <SwitchGlyph />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Choice card">
-          <CardGlyph
-            selected={effective.cardSelected}
-            control={effective.cardControl}
-          />
+          {switchStyle(effective.switchStyle)}
         </HeroMember>
         <HeroMember name="Slider">
-          <DialGlyph>
-            <ThumbGlyph
-              thumb={effective.sliderThumb}
-              track={effective.sliderTrack}
-            />
-          </DialGlyph>
+          {slider(effective.sliderThumb, effective.sliderTrack)}
+        </HeroMember>
+        <HeroMember name="Choice card">
+          {card(effective.cardSelected)}
         </HeroMember>
       </FamilyHero>
       <UsesRow axis="checkboxColor" label="Checked color" />
+      <UsesRow axis="controlEdge" label="Control edge" />
       <UsesRow axis="controlStroke" label="Control stroke" />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["checkCorner"]}>
+      <More keys={["checkCorner", "checkEdge"]}>
         <DialSelect
           axis="checkCorner"
           label="Checkbox corner"
           options={CORNER_OPTIONS.map((option) => ({
             ...option,
-            preview: (
-              <DialGlyph>
-                <CornerGlyph corner={option.value} />
-              </DialGlyph>
-            ),
+            preview: corner(option.value),
+          }))}
+        />
+        <DialSelect
+          axis="checkEdge"
+          label="Check edge"
+          options={EDGE_OPTIONS.map((option) => ({
+            ...option,
+            preview: edge(option.value),
           }))}
         />
       </More>
+      <MemberSection id="radio" title="Radio">
+        <DialSelect
+          axis="radioMark"
+          label="Mark"
+          options={MARK_OPTIONS.map((option) => ({
+            ...option,
+            preview: mark(option.value),
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="switch" title="Switch">
+        <DialSelect
+          axis="switchStyle"
+          label="Style"
+          options={STYLE_OPTIONS.map((option) => ({
+            ...option,
+            preview: switchStyle(option.value),
+          }))}
+        />
+      </MemberSection>
       <MemberSection id="slider" title="Slider">
         <DialSelect
           axis="sliderThumb"
           label="Thumb"
           options={THUMB_OPTIONS.map((option) => ({
             ...option,
-            preview: (
-              <DialGlyph>
-                <ThumbGlyph
-                  thumb={option.value}
-                  track={effective.sliderTrack}
-                />
-              </DialGlyph>
-            ),
+            preview: slider(option.value, trackFor(option.value)),
           }))}
         />
         <More keys={["sliderTrack"]}>
-          <DialSegmented
+          <DialSelect
             axis="sliderTrack"
             label="Track"
-            options={TRACK_OPTIONS}
+            options={TRACK_OPTIONS.map((option) => ({
+              ...option,
+              preview:
+                option.value === "auto"
+                  ? undefined
+                  : slider(effective.sliderThumb, option.value),
+            }))}
           />
         </More>
       </MemberSection>
@@ -244,21 +280,9 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           label="Selected"
           options={SELECTED_OPTIONS.map((option) => ({
             ...option,
-            preview: (
-              <CardGlyph
-                selected={option.value}
-                control={effective.cardControl}
-              />
-            ),
+            preview: card(option.value),
           }))}
         />
-        <More keys={["cardControl"]}>
-          <DialSegmented
-            axis="cardControl"
-            label="Control"
-            options={CONTROL_OPTIONS}
-          />
-        </More>
       </MemberSection>
     </>
   )

@@ -445,6 +445,20 @@ exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`]
 }
 `;
 
+exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "slider": {
+      "thumb": "handle",
+      "track": "thin",
+    },
+  },
+  "tokens": {},
+}
+`;
+
 exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
 {
   "color": undefined,

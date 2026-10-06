@@ -28,6 +28,7 @@ import {
 } from "./code-options"
 import { flatten } from "./flatten"
 import {
+  assertNoRampVars,
   assertNoStudioVars,
   paramVars,
   resolveClasses,
@@ -294,8 +295,12 @@ export function publish({
   // ship. Nothing studio-prefixed may survive into the item.
   const css = resolveCssFields(meta.css, studioVars)
   const cssVars = resolveCssFields(meta.cssVars, studioVars)
-  for (const file of files) assertNoStudioVars(file.content ?? "", file.path)
+  for (const file of files) {
+    assertNoStudioVars(file.content ?? "", file.path)
+    assertNoRampVars(file.content ?? "", file.path)
+  }
   assertNoStudioVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
+  assertNoRampVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
 
   const registryDependencies = rewriteDeps(
     registryDepsFor(meta, paramSelections),

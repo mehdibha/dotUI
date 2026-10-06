@@ -221,14 +221,17 @@ describe("resolve-classes", () => {
       "--studio-alert-radius": "var(--radius-md)",
       "--studio-font-weight-label": "var(--font-weight-medium)",
       "--studio-modal-background": "var(--color-popover)",
-      "--studio-slider-cursor": "var(--cursor-drag)",
+      "--studio-drag-cursor": "var(--cursor-drag)",
+      "--studio-check-edge": "var(--color-border-control)",
     })
     expect(
       rewriteClassString(
-        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-slider-cursor) bg-card",
+        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-drag-cursor) border-(--studio-check-edge) bg-card",
         vars,
       ),
-    ).toBe("rounded-md font-medium bg-popover dragging:cursor-drag bg-card")
+    ).toBe(
+      "rounded-md font-medium bg-popover dragging:cursor-drag border-border-control bg-card",
+    )
   })
 
   test("rewriteClassString resolves spacing, the registry's literals, and arbitrary values", () => {
@@ -291,7 +294,7 @@ describe("resolve-classes", () => {
       "--studio-radius-control": "0",
       "--studio-btn-radius": "var(--studio-radius-control)",
       "--studio-modal-radius": "0",
-      "--studio-slider-thumb-shadow": "0 0 #0000",
+      "--studio-thumb-shadow": "0 0 #0000",
     })
     expect(
       rewriteClassString("px-4 rounded-(--studio-btn-radius) h-9", vars),
@@ -305,7 +308,7 @@ describe("resolve-classes", () => {
     // The variant chain goes with it; a var declaration stays a declaration.
     expect(
       rewriteClassString(
-        "flex max-md:rounded-t-(--studio-modal-radius) [--surface-radius:var(--studio-modal-radius)] *:[img]:first:rounded-t-(--studio-modal-radius) shadow-(--studio-slider-thumb-shadow)",
+        "flex max-md:rounded-t-(--studio-modal-radius) [--surface-radius:var(--studio-modal-radius)] *:[img]:first:rounded-t-(--studio-modal-radius) shadow-(--studio-thumb-shadow)",
         vars,
       ),
     ).toBe("flex [--surface-radius:0] shadow-none")

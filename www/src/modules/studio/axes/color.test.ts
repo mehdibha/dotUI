@@ -48,6 +48,8 @@ describe("color axis", () => {
       neutralHue: 250,
       preserveSeed: true,
       primary: "accent",
+      // The slider keeps its own source off the selection seed.
+      scopes: { slider: "accent" },
     })
   })
 

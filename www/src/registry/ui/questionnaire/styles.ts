@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choice: [
         "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) select-ui",
         "hover:bg-muted/50",
-        "data-checked:border-primary/40 data-checked:bg-muted",
+        "data-checked:border-selection/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
         "has-[>input:focus-visible]:focus-ring",
         "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50",
@@ -27,10 +27,10 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-questionnaire-indicator-radius) border-(length:--studio-control-stroke) border-border-control",
         "group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5",
         "group-data-[type=radio]/questionnaire-choice:rounded-full",
-        "group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
+        "group-data-checked/questionnaire-choice:border-selection group-data-checked/questionnaire-choice:bg-selection group-data-checked/questionnaire-choice:text-fg-on-selection",
       ],
       choiceIndicatorDot:
-        "hidden size-2 rounded-full bg-fg-on-primary group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
+        "hidden size-2 rounded-full bg-fg-on-selection group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
       choiceIndicatorCheck:
         "hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block",
       choiceContent: "flex min-w-0 flex-1 flex-col leading-snug",
