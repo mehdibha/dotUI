@@ -16,6 +16,8 @@ export const ICON_DEFAULTS = {
   iconWeight: "regular",
 }
 
+/* Lucide: shadcn, Supabase. The rest are shadcn create's libraries
+   (Hugeicons is shadcn mira's). */
 export const LIBRARY_OPTIONS = [
   { value: "lucide", label: "Lucide" },
   { value: "phosphor", label: "Phosphor" },
@@ -24,6 +26,7 @@ export const LIBRARY_OPTIONS = [
   { value: "hugeicons", label: "Hugeicons" },
 ]
 
+/* Phosphor's own weights; Regular is shadcn create's. */
 export const WEIGHT_OPTIONS = [
   { value: "thin", label: "Thin" },
   { value: "light", label: "Light" },
@@ -44,8 +47,9 @@ export const ICON_SCHEMA: ChapterSchema<typeof ICON_DEFAULTS> = {
 export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"
 export const ICON_WEIGHT_VAR = "--icon-weight"
 
-/** Each library's own stroke at 24px. Phosphor (regular: 16 on its 256 grid)
- *  and Remix (2px lines, outlined to fills) draw no variable stroke. */
+/** Each library's own stroke at 24px, total so Auto never falls through.
+ *  Phosphor (regular: 16 on its 256 grid) and Remix (2px lines, outlined to
+ *  fills) draw no variable stroke. */
 export const LIBRARY_STROKE: Record<IconLibraryName, number> = {
   lucide: 2,
   tabler: 2,
