@@ -158,7 +158,7 @@ const animationKey = (value: string) =>
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
-    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.]+)\)$/.exec(
+    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.-]+)\)$/.exec(
       value,
     )
   if (token) return token[1]

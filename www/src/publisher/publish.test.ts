@@ -222,13 +222,16 @@ describe("resolve-classes", () => {
       "--studio-font-weight-label": "var(--font-weight-medium)",
       "--studio-modal-background": "var(--color-popover)",
       "--studio-drag-cursor": "var(--cursor-drag)",
+      "--studio-check-edge": "var(--color-border-control)",
     })
     expect(
       rewriteClassString(
-        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-drag-cursor) bg-card",
+        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-drag-cursor) border-(--studio-check-edge) bg-card",
         vars,
       ),
-    ).toBe("rounded-md font-medium bg-popover dragging:cursor-drag bg-card")
+    ).toBe(
+      "rounded-md font-medium bg-popover dragging:cursor-drag border-border-control bg-card",
+    )
   })
 
   test("rewriteClassString resolves spacing, the registry's literals, and arbitrary values", () => {
