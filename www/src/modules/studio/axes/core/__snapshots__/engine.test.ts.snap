@@ -127,6 +127,7 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
     "tooltip": {
       "motion": "none",
       "style": "inverted",
+      "tip": "tip",
     },
   },
   "tokens": {
@@ -290,6 +291,30 @@ exports[`rules > input-groups/divider-only-boxed: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "selected": "tint",
+    },
+  },
+  "tokens": {},
+}
+`;
+
 exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -325,6 +350,7 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     "tooltip": {
       "motion": "none",
       "style": "inverted",
+      "tip": "tip",
     },
   },
   "tokens": {

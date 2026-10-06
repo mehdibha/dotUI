@@ -3,14 +3,15 @@
 /* Menus & popovers — every floating list and the layers it opens in. */
 
 import {
+  ARROWS_OPTIONS,
   HIGHLIGHT_OPTIONS,
   INDICATOR_OPTIONS,
   INSET_OPTIONS,
+  PICKER_OPTIONS,
   SCALE_OPTIONS,
   SEARCH_OPTIONS,
+  SELECTED_ROW_OPTIONS,
 } from "../axes/menus"
-import { PICKER_OPTIONS } from "../axes/mobile"
-import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
 import { roleLabel } from "../axes/shape"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import {
@@ -32,25 +33,32 @@ import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
 
 /* -------------------------------- Specimens -------------------------------- */
 
+function ListFrame() {
+  return (
+    <rect
+      x="4"
+      y="5"
+      width="16"
+      height="14"
+      rx="2"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      opacity=".45"
+    />
+  )
+}
+
 /** Three item lines; the dot is the check, the lines shift for the gutter. */
-function IndicatorGlyph({ indicator }: { indicator: string }) {
+function CheckGlyph({ indicator }: { indicator: string }) {
   const start = indicator === "check-start"
+  const end = indicator === "check-end"
   const rows = [9, 12.5, 16]
   const x = start ? 10 : 7
   // The trailing check shortens the first line to make room for the dot.
-  const width = (i: number) => (i === 0 && !start ? 14 : 17) - x
+  const width = (i: number) => (i === 0 && end ? 14 : 17) - x
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="4"
-        y="5"
-        width="16"
-        height="14"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity=".45"
-      />
+      <ListFrame />
       {rows.map((y, i) => (
         <path
           key={y}
@@ -61,11 +69,40 @@ function IndicatorGlyph({ indicator }: { indicator: string }) {
           opacity={i === 0 ? 1 : 0.45}
         />
       ))}
-      <circle
-        cx={start ? 7.5 : 16.5}
-        cy={rows[0]}
-        r="1.5"
-        fill="currentColor"
+      {(start || end) && (
+        <circle
+          cx={start ? 7.5 : 16.5}
+          cy={rows[0]}
+          r="1.5"
+          fill="currentColor"
+        />
+      )}
+    </svg>
+  )
+}
+
+/** The selected row at rest: washed, or only its line. */
+function SelectedRowGlyph({ selected }: { selected: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <ListFrame />
+      {selected === "tint" && (
+        <rect
+          x="6"
+          y="10"
+          width="12"
+          height="4.5"
+          rx="1.5"
+          fill="currentColor"
+          opacity=".3"
+        />
+      )}
+      <path
+        d="M7 7.5h10M7 12.25h10M7 17h10"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
       />
     </svg>
   )
@@ -75,16 +112,7 @@ function IndicatorGlyph({ indicator }: { indicator: string }) {
 function HighlightGlyph({ highlight }: { highlight: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="4"
-        y="5"
-        width="16"
-        height="14"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity=".45"
-      />
+      <ListFrame />
       <rect
         x="6"
         y="10"
@@ -111,16 +139,7 @@ function InsetGlyph({ inset }: { inset: string }) {
   const w = inset === "inset" ? 11 : 16
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="4"
-        y="5"
-        width="16"
-        height="14"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity=".45"
-      />
+      <ListFrame />
       {[7, 10.75, 14.5].map((y) => (
         <rect
           key={y}
@@ -193,7 +212,7 @@ function PaletteGlyph({ search }: { search: string }) {
 }
 
 /** The panel over the trigger it's anchored to, with or without the tip. */
-function TipGlyph({ tip }: { tip: boolean }) {
+function PopoverGlyph({ tip }: { tip: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -224,8 +243,8 @@ function TipGlyph({ tip }: { tip: boolean }) {
   )
 }
 
-/** The chip with its caret, over the thing it names. */
-function TooltipGlyph({ filled }: { filled: boolean }) {
+/** The chip, with or without its caret, over the thing it names. */
+function TooltipGlyph({ filled, tip }: { filled: boolean; tip: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -238,21 +257,54 @@ function TooltipGlyph({ filled }: { filled: boolean }) {
         stroke={filled ? "none" : "currentColor"}
         strokeWidth="1.5"
       />
-      <path
-        d="M10.3 12.5 12 15l1.7-2.5Z"
-        fill="currentColor"
-        stroke={filled ? "none" : "currentColor"}
-        strokeWidth={filled ? 0 : 1.5}
-        strokeLinejoin="round"
-      />
+      {tip && (
+        <path
+          d="M10.3 12.5 12 15l1.7-2.5Z"
+          fill="currentColor"
+          stroke={filled ? "none" : "currentColor"}
+          strokeWidth={filled ? 0 : 1.5}
+          strokeLinejoin="round"
+        />
+      )}
       <circle cx="12" cy="19" r="1.5" fill="currentColor" opacity=".45" />
     </svg>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
+/** A tooltip chip beside a popover panel, each with its tip or without. */
+function ArrowsGlyph({ arrows }: { arrows: string }) {
+  const tooltip = arrows === "tooltips" || arrows === "both"
+  const popover = arrows === "popovers" || arrows === "both"
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="2.5" y="4" width="8" height="5" rx="1.5" fill="currentColor" />
+      {tooltip && <path d="M5.2 9 6.5 11l1.3-2Z" fill="currentColor" />}
+      <rect
+        x="12.75"
+        y="9.75"
+        width="8.5"
+        height="9.5"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      {popover && <path d="M15.7 9 17 7l1.3 2Z" fill="currentColor" />}
+    </svg>
+  )
+}
+
+const glyphs = <T extends { value: string }>(
+  options: T[],
+  draw: (value: string) => React.ReactNode,
+) =>
+  options.map((option) => ({
+    ...option,
+    preview: <DialGlyph>{draw(option.value)}</DialGlyph>,
+  }))
 
 const PICKERS = withPhoneGlyphs(PICKER_OPTIONS)
+
+/* --------------------------------- Section --------------------------------- */
 
 export function MenusPreview({ state }: { state: Effective }) {
   return (
@@ -264,6 +316,7 @@ export function MenusPreview({ state }: { state: Effective }) {
 
 export function MenusSection({ studio }: { studio: Studio }) {
   const { effective } = studio
+  const arrows = effective.menuArrows
   return (
     <>
       <FamilyHero>
@@ -274,17 +327,20 @@ export function MenusSection({ studio }: { studio: Studio }) {
         </HeroMember>
         <HeroMember name="List box">
           <DialGlyph>
-            <InsetGlyph inset={effective.menuInset} />
+            <CheckGlyph indicator={effective.menuIndicator} />
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Popover">
           <DialGlyph>
-            <TipGlyph tip={effective.popoverTip === "tip"} />
+            <PopoverGlyph tip={arrows === "popovers" || arrows === "both"} />
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Tooltip">
           <DialGlyph>
-            <TooltipGlyph filled={effective.tooltipStyle === "inverted"} />
+            <TooltipGlyph
+              filled={effective.tooltipStyle === "inverted"}
+              tip={arrows === "tooltips" || arrows === "both"}
+            />
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Command">
@@ -296,7 +352,7 @@ export function MenusSection({ studio }: { studio: Studio }) {
           <DialGlyph>
             <PhoneGlyph
               layer={
-                effective.mobilePickers === "popover" ? "popover" : "drawer"
+                effective.mobilePickers === "anchored" ? "anchored" : "drawer"
               }
             />
           </DialGlyph>
@@ -305,39 +361,24 @@ export function MenusSection({ studio }: { studio: Studio }) {
       <DialList
         axis="menuHighlight"
         label="Highlight"
-        options={HIGHLIGHT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <HighlightGlyph highlight={option.value} />
-            </DialGlyph>
-          ),
-        }))}
+        options={glyphs(HIGHLIGHT_OPTIONS, (value) => (
+          <HighlightGlyph highlight={value} />
+        ))}
       />
       <DialGap />
       <DialSelect
         axis="menuInset"
         label="Items"
-        options={INSET_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <InsetGlyph inset={option.value} />
-            </DialGlyph>
-          ),
-        }))}
+        options={glyphs(INSET_OPTIONS, (value) => (
+          <InsetGlyph inset={value} />
+        ))}
       />
       <DialSelect
-        axis="popoverTip"
+        axis="menuArrows"
         label="Arrows"
-        options={TIP_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <TipGlyph tip={option.value === "tip"} />
-            </DialGlyph>
-          ),
-        }))}
+        options={glyphs(ARROWS_OPTIONS, (value) => (
+          <ArrowsGlyph arrows={value} />
+        ))}
       />
       <UsesRow axis="surfaceGlass" label="Glass" />
       <UsesRow
@@ -346,37 +387,33 @@ export function MenusSection({ studio }: { studio: Studio }) {
         value={roleLabel(effective, "roleItem")}
       />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["menuIndicator", "popoverHeader"]}>
+      <More keys={["menuIndicator", "menuSelectedRow", "mobilePickers"]}>
         <DialSelect
           axis="menuIndicator"
           label="Check"
-          options={INDICATOR_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <DialGlyph>
-                <IndicatorGlyph indicator={option.value} />
-              </DialGlyph>
-            ),
-          }))}
+          options={glyphs(INDICATOR_OPTIONS, (value) => (
+            <CheckGlyph indicator={value} />
+          ))}
         />
-        <DialSegmented
-          axis="popoverHeader"
-          label="Header"
-          options={HEADER_OPTIONS}
+        <DialSelect
+          axis="menuSelectedRow"
+          label="Selected row"
+          options={glyphs(SELECTED_ROW_OPTIONS, (value) => (
+            <SelectedRowGlyph selected={value} />
+          ))}
         />
+        <DialSelect axis="mobilePickers" label="On mobile" options={PICKERS} />
       </More>
       <MemberSection id="tooltip" title="Tooltip">
         <DialSelect
           axis="tooltipStyle"
           label="Style"
-          options={TOOLTIP_STYLE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <DialGlyph>
-                <TooltipGlyph filled={option.value === "inverted"} />
-              </DialGlyph>
-            ),
-          }))}
+          options={glyphs(TOOLTIP_STYLE_OPTIONS, (value) => (
+            <TooltipGlyph
+              filled={value === "inverted"}
+              tip={arrows === "tooltips" || arrows === "both"}
+            />
+          ))}
         />
       </MemberSection>
       <MemberSection id="command" title="Command">
@@ -384,25 +421,15 @@ export function MenusSection({ studio }: { studio: Studio }) {
           <DialSelect
             axis="menuSearch"
             label="Search"
-            options={SEARCH_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <PaletteGlyph search={option.value} />
-                </DialGlyph>
-              ),
-            }))}
+            options={glyphs(SEARCH_OPTIONS, (value) => (
+              <PaletteGlyph search={value} />
+            ))}
           />
           <DialSegmented
             axis="menuScale"
             label="Palette scale"
             options={SCALE_OPTIONS}
           />
-        </More>
-      </MemberSection>
-      <MemberSection id="mobile" title="On mobile">
-        <More keys={["mobilePickers"]}>
-          <DialSelect axis="mobilePickers" label="Pickers" options={PICKERS} />
         </More>
       </MemberSection>
     </>

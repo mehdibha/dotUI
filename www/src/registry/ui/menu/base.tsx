@@ -79,9 +79,7 @@ const MenuItem = <T extends object>({
           <>
             {selectionMode !== "none" && (
               <span data-menu-item-indicator="" className={indicator()}>
-                {isSelected && (
-                  <CheckIcon aria-hidden className="size-4 text-fg-accent" />
-                )}
+                {isSelected && <CheckIcon aria-hidden />}
               </span>
             )}
             {typeof children === "string" ? (

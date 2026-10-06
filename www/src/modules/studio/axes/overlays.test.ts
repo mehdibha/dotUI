@@ -12,8 +12,6 @@ describe("overlays chapters", () => {
       position: "center",
     })
     expect(ds.componentParams.drawer).toMatchObject({ backdrop: "dim" })
-    expect(ds.componentParams.popover).toMatchObject({ tip: "none" })
-    expect(ds.componentParams.dialog).toMatchObject({ header: "title" })
     expect(ds.componentParams.tooltip).toMatchObject({ style: "inverted" })
   })
 
@@ -26,14 +24,6 @@ describe("overlays chapters", () => {
       position: "top",
     })
     expect(ds.componentParams.drawer).toMatchObject({ backdrop: "blur" })
-  })
-
-  test("popovers: tip on popover, header on dialog", () => {
-    const ds = designSystemOf(
-      parseState({ popoverTip: "tip", popoverHeader: "band" }),
-    )
-    expect(ds.componentParams.popover).toMatchObject({ tip: "tip" })
-    expect(ds.componentParams.dialog).toMatchObject({ header: "band" })
   })
 
   test("tooltips: style on tooltip", () => {

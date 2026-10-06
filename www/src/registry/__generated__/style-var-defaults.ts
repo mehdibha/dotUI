@@ -53,7 +53,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-link-state-duration": "150ms",
 	"--studio-link-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
 	"--studio-list-box-item-radius": "var(--studio-radius-item)",
-	"--studio-menu-item-radius": "var(--studio-radius-item)",
 	"--studio-message-scroller-ease": "cubic-bezier(0.25, 0.1, 0.25, 1)",
 	"--studio-message-scroller-enter-duration": "400ms",
 	"--studio-message-scroller-exit-duration": "400ms",

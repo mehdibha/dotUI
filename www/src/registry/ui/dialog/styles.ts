@@ -44,17 +44,6 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     },
   },
   params: {
-    header: {
-      title: {},
-      band: {
-        slots: {
-          content:
-            "in-data-popover:has-data-[slot=dialog-heading]:[&~[data-slot=popover-arrow][data-placement=bottom]>svg]:fill-muted",
-          title:
-            "in-data-popover:-mx-(--dialog-padding) in-data-popover:-mt-(--dialog-padding) in-data-popover:mb-1 in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] in-data-popover:border-b in-data-popover:bg-muted in-data-popover:px-(--dialog-padding) in-data-popover:py-2",
-        },
-      },
-    },
     titles: {
       quiet: {
         density: {

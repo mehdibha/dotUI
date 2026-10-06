@@ -18,7 +18,7 @@ const { useStyles, styles } = createStyles(popoverMeta, {
         "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
       ],
       arrow: [
-        "block [&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
+        "[&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
         "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
