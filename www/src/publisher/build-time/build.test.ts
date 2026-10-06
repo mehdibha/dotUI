@@ -7,6 +7,8 @@
  * `publish.test.ts`.
  */
 
+import fs from "node:fs"
+import os from "node:os"
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
@@ -78,6 +80,34 @@ describe("extractStylesConfig", () => {
     expect(cfg.density?.compact?.slots?.inputGroup).toBe(
       "text-base sm:text-xs/relaxed",
     )
+  })
+
+  test("toggle-button: resolves recipe tables imported by relative path", () => {
+    const button = extractStylesConfig(
+      path.join(REGISTRY_UI, "button/styles.ts"),
+    )
+    const toggle = extractStylesConfig(
+      path.join(REGISTRY_UI, "toggle-button/styles.ts"),
+    )
+    expect(toggle.base.variants?.variant).toEqual(button.base.variants?.variant)
+    expect(toggle.density).toEqual(button.density)
+    for (const param of ["style", "secondary", "press", "case"])
+      expect(toggle.params?.[param], param).toEqual(button.params?.[param])
+    expect(toggle.params?.selected).toEqual(button.params?.current)
+    expect(toggle.params?.style?.ledge).toBeDefined()
+  })
+
+  test("a relative import must name an exported const", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "extract-"))
+    fs.writeFileSync(path.join(dir, "table.ts"), "const HIDDEN = {}\n")
+    fs.writeFileSync(
+      path.join(dir, "styles.ts"),
+      'import { HIDDEN } from "./table"\nconst { styles } = createStyles(meta, { base: {}, params: { a: HIDDEN } })\n',
+    )
+    expect(() => extractStylesConfig(path.join(dir, "styles.ts"))).toThrow(
+      /not an exported const/,
+    )
+    fs.rmSync(dir, { recursive: true })
   })
 
   test("input: resolves local tv() factory calls (tokens, outlineField)", () => {
@@ -378,13 +408,13 @@ describe("createParamValue folds", () => {
   })
 
   test("pagination: the current-page variant folds to its name", () => {
-    const outline = transformBase({
+    const selected = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "pagination/base.tsx"),
       componentName: "pagination",
-      paramSelection: { current: "outline" },
+      paramSelection: { current: "selected" },
     }).template
-    expect(outline).toContain('const activeVariant = "secondary"')
-    expect(outline).not.toContain("createParamValue")
+    expect(selected).toContain('const activeVariant = "quiet"')
+    expect(selected).not.toContain("createParamValue")
   })
 
   test("hooks stay in place without a selection", () => {

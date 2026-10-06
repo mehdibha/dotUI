@@ -15,8 +15,8 @@ const { useStyles, styles } = createStyles(tokenFieldMeta, {
         "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
       ],
       token: [
-        "rounded-(--studio-tag-radius) bg-accent-muted px-0.5 text-fg-accent",
-        "data-selected:bg-accent data-selected:text-fg-on-accent",
+        "rounded-(--studio-tag-radius) bg-selected px-0.5 text-fg-on-selected",
+        "data-selected:bg-selection data-selected:text-fg-on-selection",
       ],
     },
   },

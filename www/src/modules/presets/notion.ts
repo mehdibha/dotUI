@@ -14,6 +14,8 @@ export const notion = definePreset({
     neutralTint: 0.5,
     lightBg: 100,
     darkBg: 8.8,
+    // Selected blocks and rows wash in blue; nav and tabs stay neutral.
+    selectedWash: "brand",
 
     // Typography
     bodyFont: "Inter",

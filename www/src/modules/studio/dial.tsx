@@ -283,13 +283,13 @@ export function DialSelect({
 }) {
   const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
   if (hidden) return null
-  // While a follow resolves it, the list marks Auto and the row reads "Auto · x".
+  // A key read through a follow keeps its follow option picked ("Auto · Tone").
   const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
-  const shown = following
+  const resolved = following
     ? options.find((option) => option.value === String(axis?.effective))
-    : selected
+    : undefined
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -304,10 +304,10 @@ export function DialSelect({
       value={
         <>
           <span className="truncate">
-            {following && `${selected?.label ?? value} · `}
-            {shown?.label ?? value}
+            {selected?.label ?? value}
+            {resolved && ` · ${resolved.label}`}
           </span>
-          {rowPreview && shown?.preview}
+          {rowPreview && (resolved ?? selected)?.preview}
         </>
       }
     >

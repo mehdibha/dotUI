@@ -401,7 +401,7 @@ const currency = new Intl.NumberFormat("en-US", {
 
 function AppSidebar() {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

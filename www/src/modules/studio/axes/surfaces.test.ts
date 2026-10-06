@@ -3,12 +3,17 @@ import { describe, expect, test } from "vitest"
 import { lstarOf, mixOklab, toOklch } from "@dotui/colors"
 import type { Mode as EngineMode, Oklch, StepName } from "@dotui/colors"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
+import { publishables } from "@/registry/__generated__/publishables"
 import {
   DEFAULT_COLOR_CONFIG,
   resolveColorConfig,
   semanticsFor,
 } from "@/registry/theme"
 import type { SemanticTarget } from "@/registry/theme"
+import { emitInitItem } from "@/publisher/emit-theme"
+import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { buildColorConfig } from "./color"
@@ -26,6 +31,7 @@ import {
   NO_SHADOW,
   SHADOW_OPTIONS,
   shadowCss,
+  SHELL_OPTIONS,
   surfaceColorCss,
   surfaceRecipe,
   SURFACE_STYLES,
@@ -327,4 +333,78 @@ describe("surfaces stay legible", () => {
     expect(at({ surfaceLayers: "tonal" })).toBeLessThan(-2)
     expect(at({ surfaceLayers: "grouped" })).toBeGreaterThan(3.5)
   })
+})
+
+describe("app shell", () => {
+  const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
+    const ds = designSystemOf(parseState(state))
+    return {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+  }
+  const shippedSidebar = async (state: Partial<typeof DEFAULTS>) => {
+    const preset = presetOf(state)
+    const { item } = publish({
+      publishable: selectPublishable(await publishables.sidebar!(), preset),
+      preset,
+    })
+    return (item.files ?? []).map((f) => f.content).join("\n")
+  }
+  const shipped = (state: Partial<typeof DEFAULTS>, mode: "light" | "dark") => {
+    const vars = emitInitItem({
+      baseRegistryCss,
+      preset: presetOf(state),
+      itemUrl: (name) => name,
+    }).cssVars![mode]!
+    return (name: string) => toOklch(vars[name]!).l
+  }
+
+  test("Subtle is Origin: no sidebar token, the default param", () => {
+    expect(DEFAULTS.shellTone).toBe("subtle")
+    expect(Object.keys(tokensFor({}))).not.toContain("--color-sidebar")
+    expect(designSystemOf(DEFAULT_STATE).componentParams.sidebar).toMatchObject(
+      { shell: "subtle" },
+    )
+  })
+
+  test("Page puts the sidebar on the page tone", () => {
+    expect(tokensFor({ shellTone: "page" })["--color-sidebar"]).toBe(
+      "var(--color-bg)",
+    )
+  })
+
+  test.each(["light", "dark"] as const)(
+    "Recessed sits below the page in %s at any page tone",
+    (mode) => {
+      for (const state of [{}, { lightBg: 96 }, { darkBg: 8 }]) {
+        const l = shipped({ ...state, shellTone: "recessed" }, mode)
+        expect(l("sidebar"), JSON.stringify(state)).toBeLessThan(
+          l("background") - 0.015,
+        )
+      }
+    },
+  )
+
+  test.each(SHELL_OPTIONS.map((o) => o.value))(
+    "%s ships one inset shadow and whole classes",
+    async (shellTone) => {
+      const code = await shippedSidebar({ shellTone })
+      const inset = /inset: "([^"]*)"/.exec(code)?.[1] ?? ""
+      const shadows = inset
+        .split(/\s+/)
+        .filter((c) => c.startsWith("md:peer-data-[variant=inset]:shadow-"))
+      const recessed = shellTone === "recessed"
+      expect(shadows).toEqual([
+        recessed
+          ? "md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)"
+          : "md:peer-data-[variant=inset]:shadow-sm",
+      ])
+      expect(inset.includes("border-(--card-border)")).toBe(recessed)
+      expect(code).not.toContain("--studio-")
+    },
+  )
 })

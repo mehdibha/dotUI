@@ -1,5 +1,97 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "segmented-control": {
+      "selected": "raised",
+      "track": "filled",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {},
+}
+`;
+
 exports[`rules > charts/motion-off: fires, then holds back 1`] = `
 {
   "color": undefined,

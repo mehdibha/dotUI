@@ -70,7 +70,7 @@ export const airbnb = definePreset({
     sliderColor: "neutral",
     menuInset: "full-bleed",
     tabStyle: "line",
-    paginationCurrent: "filled",
+    paginationCurrent: "primary",
     badgeStyle: "soft",
     badgeShape: "rounded",
   },

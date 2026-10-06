@@ -336,6 +336,18 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { sliderThumb: "handle", sliderTrack: "hairline" },
     { sliderTrack: "hairline" },
   ],
+  "buttons/closed-style-owns-secondary": [
+    { buttonStyle: "bevel", buttonSecondary: "outline" },
+    { buttonStyle: "hairline", buttonSecondary: "outline" },
+  ],
+  "buttons/closed-style-owns-press": [
+    { buttonStyle: "ledge", buttonPress: "nudge" },
+    { buttonPress: "nudge" },
+  ],
+  "button-groups/ledge-gaps-groups": [
+    { buttonStyle: "ledge", groupSeparator: "divider" },
+    { groupSeparator: "divider" },
+  ],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

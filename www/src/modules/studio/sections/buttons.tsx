@@ -2,18 +2,30 @@
 
 /* Buttons — one recipe shared by toggles, groups, segmented, pagination. */
 
+import { useMemo } from "react"
+
 import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { useStyles } from "@/registry/ui/button/styles"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { useStyles as useGroupStyles } from "@/registry/ui/group/styles"
+import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
+import { parseState } from "../axes"
+import type { StudioState } from "../axes"
 import { SEPARATOR_OPTIONS } from "../axes/button-groups"
-import { RADIUS_OPTIONS, STYLE_OPTIONS } from "../axes/buttons"
+import {
+  CASE_OPTIONS,
+  PRESS_OPTIONS,
+  RADIUS_OPTIONS,
+  SECONDARY_OPTIONS,
+  STYLE_OPTIONS,
+} from "../axes/buttons"
 import { CURRENT_OPTIONS } from "../axes/pagination"
 import {
-  SELECTED_OPTIONS as SEGMENT_OPTIONS,
+  SELECTED_OPTIONS as CHIP_OPTIONS,
   TRACK_OPTIONS,
 } from "../axes/segmented-control"
-import { roleLabel } from "../axes/shape"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
 import {
   DialGap,
@@ -29,120 +41,145 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* One stable context per style, so the registry's style cache hits. */
-const STYLE_CONTEXT = Object.fromEntries(
-  STYLE_OPTIONS.map(({ value }) => [
-    value,
-    { params: { button: { style: value } }, density: "default" as const },
-  ]),
-)
+/* The button vars a pick writes (Pill corners), set where specimens render. */
+const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
 
-function Specimen({ tiny }: { tiny?: boolean }) {
-  const styles = useStyles()
-  if (tiny)
-    return (
-      <span
-        className={styles({
-          variant: "primary",
-          size: "xs",
-          className: "h-4 px-1.5 text-[9px]",
-        })}
-      >
-        Save
-      </span>
-    )
-  return (
-    <>
-      <span className={styles({ variant: "primary", size: "xs" })}>Save</span>
-      <span className={styles({ variant: "secondary", size: "xs" })}>
-        Cancel
-      </span>
-    </>
+/** Specimens drawn by the registry's own recipes in one design system. */
+function System({
+  ds,
+  children,
+}: {
+  ds: DesignSystem
+  children: React.ReactNode
+}) {
+  const value = useMemo(
+    () => ({ params: ds.componentParams, density: "default" as const }),
+    [ds],
   )
-}
-
-/** Buttons drawn by the registry's own recipe for one style. */
-function StyleSpecimen({ style, tiny }: { style: string; tiny?: boolean }) {
+  const style = Object.fromEntries(
+    LOCAL_VARS.flatMap((name) =>
+      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
+    ),
+  ) as React.CSSProperties
   return (
-    <DesignSystemContext.Provider
-      value={STYLE_CONTEXT[style] ?? STYLE_CONTEXT.flat!}
-    >
-      <Specimen tiny={tiny} />
+    <DesignSystemContext.Provider value={value}>
+      <span className="flex items-center gap-1.5" style={style}>
+        {children}
+      </span>
     </DesignSystemContext.Provider>
   )
 }
 
-const CORNER: Record<string, string> = {
-  auto: "rounded-[4px] border-dashed",
-  sharp: "rounded-none",
-  round: "rounded-[5px]",
-  pill: "rounded-full",
-}
-
-/** A button's outline at one corner; Auto is dashed, it follows Shape. */
-function RadiusGlyph({ radius }: { radius: string }) {
-  return (
-    <span
-      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[radius])}
-    />
+/** One design system per option of `key`, over the current picks. */
+function useSystems(
+  state: StudioState,
+  key: keyof StudioState,
+  options: readonly { value: string }[],
+) {
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        options.map(({ value }) => [
+          value,
+          designSystemOf({ ...state, [key]: value } as StudioState),
+        ]),
+      ),
+    [state, key, options],
   )
 }
 
-const TOGGLE_LOOK: Record<string, string> = {
-  fill: "bg-selected text-fg-on-selected",
-  chip: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  inverse: "bg-inverse text-fg-inverse",
-}
-
-/** A selected toggle wearing one look. */
-function ToggleGlyph({ look }: { look: string }) {
+function ButtonSpecimen({
+  variant,
+  label,
+}: {
+  variant: "primary" | "secondary"
+  label: string
+}) {
+  const styles = useButtonStyles()
   return (
-    <span
-      className={cn(
-        "flex h-4 shrink-0 items-center rounded-[4px] px-1.5 text-[9px] font-semibold",
-        TOGGLE_LOOK[look],
-      )}
-    >
-      Aa
+    <span data-button="" className={styles({ variant, size: "xs" })}>
+      {label}
     </span>
   )
 }
 
-/** Three attached segments, divided as the separator says. */
-function GroupGlyph({ separator }: { separator: string }) {
-  const divider =
-    separator === "divider"
-      ? "border-l border-fg/30"
-      : separator === "auto"
-        ? "border-l border-fg/12"
-        : ""
+function Buttons({ secondaryOnly }: { secondaryOnly?: boolean }) {
   return (
-    <span className="flex h-4 shrink-0 overflow-hidden rounded-[4px] border border-fg/30">
-      {[0, 1, 2].map((i) => (
-        <span key={i} className={cn("w-2.5", i > 0 && divider)} />
+    <>
+      {!secondaryOnly && <ButtonSpecimen variant="primary" label="Save" />}
+      <ButtonSpecimen variant="secondary" label="Cancel" />
+    </>
+  )
+}
+
+/** A toggle off and on; `on` alone for an option's specimen. */
+function Toggles({ on }: { on?: boolean }) {
+  const styles = useToggleStyles()
+  const toggle = (selected: boolean) => (
+    <span
+      key={String(selected)}
+      data-button=""
+      data-icon-only=""
+      data-selected={selected || undefined}
+      className={styles({ variant: "secondary", size: "xs", isIconOnly: true })}
+    >
+      B
+    </span>
+  )
+  return on ? toggle(true) : [toggle(false), toggle(true)]
+}
+
+/** Three attached buttons as the group draws their seams. */
+function GroupSpecimen() {
+  const { root } = useGroupStyles()()
+  const styles = useButtonStyles()
+  return (
+    <span className={root({ orientation: "horizontal" })}>
+      {["L", "C", "R"].map((letter) => (
+        <span
+          key={letter}
+          data-button=""
+          data-icon-only=""
+          className={styles({
+            variant: "secondary",
+            size: "xs",
+            isIconOnly: true,
+          })}
+        >
+          {letter}
+        </span>
       ))}
     </span>
   )
 }
 
+const CORNER: Record<string, string> = {
+  same: "rounded-[4px]",
+  pill: "rounded-full",
+}
+
+function CornerGlyph({ corners }: { corners: string }) {
+  return (
+    <span
+      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[corners])}
+    />
+  )
+}
+
 const CHIP: Record<string, string> = {
+  tone: "bg-selected text-fg-on-selected",
   raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  flat: "bg-selected text-fg-on-selected",
+  ring: "bg-bg text-fg ring-1 ring-border-control",
   inverse: "bg-inverse text-fg-inverse",
 }
 
 /** A three-segment control: the chip against its track. */
-function SegmentedGlyph({
-  selected,
-  track,
-}: {
-  selected: string
-  track: string
-}) {
+function SegmentedGlyph({ chip, track }: { chip: string; track: string }) {
   return (
     <span
       className={cn(
@@ -155,7 +192,7 @@ function SegmentedGlyph({
           key={letter}
           className={cn(
             "flex h-3 items-center rounded-[3px] px-1 text-[8px] font-medium text-fg-muted",
-            i === 0 && CHIP[selected],
+            i === 0 && CHIP[chip],
           )}
         >
           {letter}
@@ -165,12 +202,13 @@ function SegmentedGlyph({
   )
 }
 
+/** The current page among quiet ones. */
 function CurrentGlyph({ current }: { current: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
       <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      {current === "filled" ? (
+      {current === "primary" ? (
         <rect
           x="7.5"
           y="7.5"
@@ -178,6 +216,16 @@ function CurrentGlyph({ current }: { current: string }) {
           height="9"
           rx="2.5"
           fill="currentColor"
+        />
+      ) : current === "selected" ? (
+        <rect
+          x="7.5"
+          y="7.5"
+          width="9"
+          height="9"
+          rx="2.5"
+          fill="currentColor"
+          opacity=".25"
         />
       ) : (
         <rect
@@ -197,26 +245,44 @@ function CurrentGlyph({ current }: { current: string }) {
 /* --------------------------------- Section --------------------------------- */
 
 export function ButtonsPreview({ state }: { state: Effective }) {
-  return <StyleSpecimen style={state.buttonStyle} tiny />
+  const ds = useMemo(
+    () => designSystemOf(parseState({ buttonStyle: state.buttonStyle })),
+    [state.buttonStyle],
+  )
+  return (
+    <System ds={ds}>
+      <ButtonSpecimen variant="primary" label="Save" />
+    </System>
+  )
 }
 
 export function ButtonsSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+  const { state, effective, designSystem } = studio
+  const styles = useSystems(state, "buttonStyle", STYLE_OPTIONS)
+  const secondaries = useSystems(state, "buttonSecondary", SECONDARY_OPTIONS)
+  const toggles = useSystems(state, "toggleSelected", TOGGLE_OPTIONS)
+  const seams = useSystems(state, "groupSeparator", SEPARATOR_OPTIONS)
   return (
     <>
       <FamilyHero>
         <HeroMember name="Button">
-          <StyleSpecimen style={effective.buttonStyle} />
+          <System ds={designSystem}>
+            <Buttons />
+          </System>
         </HeroMember>
         <HeroMember name="Toggle button">
-          <ToggleGlyph look={effective.toggleSelected} />
+          <System ds={designSystem}>
+            <Toggles />
+          </System>
         </HeroMember>
         <HeroMember name="Group">
-          <GroupGlyph separator={effective.groupSeparator} />
+          <System ds={designSystem}>
+            <GroupSpecimen />
+          </System>
         </HeroMember>
         <HeroMember name="Segmented control">
           <SegmentedGlyph
-            selected={effective.segmentedSelected}
+            chip={effective.segmentedSelected}
             track={effective.segmentedTrack}
           />
         </HeroMember>
@@ -231,32 +297,58 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         label="Style"
         options={STYLE_OPTIONS.map((option) => ({
           ...option,
-          preview: <StyleSpecimen style={option.value} />,
+          preview: (
+            <System ds={styles[option.value]!}>
+              <Buttons />
+            </System>
+          ),
         }))}
       />
       <DialGap />
       <DialSelect
-        axis="buttonRadius"
-        label="Radius"
-        options={RADIUS_OPTIONS.map((option) => ({
+        axis="buttonSecondary"
+        label="Secondary"
+        rowPreview={false}
+        options={SECONDARY_OPTIONS.map((option) => ({
           ...option,
-          preview: <RadiusGlyph radius={option.value} />,
+          preview: (
+            <System ds={secondaries[option.value]!}>
+              <Buttons secondaryOnly />
+            </System>
+          ),
         }))}
       />
-      <UsesRow axis="buttonColor" label="Color" />
-      <UsesRow
-        axis="roleControl"
-        label="Control corners"
-        value={roleLabel(effective, "roleControl")}
+      <DialSelect
+        axis="buttonRadius"
+        label="Corners"
+        rowPreview={false}
+        options={RADIUS_OPTIONS.map((option) => ({
+          ...option,
+          preview: <CornerGlyph corners={option.value} />,
+        }))}
       />
+      <UsesRow axis="buttonColor" label="Primary" />
+      <UsesRow axis="labelWeight" label="Label" />
       <UsesRow axis="motion" label="Motion" />
+      <More keys={["buttonPress", "buttonCase"]}>
+        <DialSegmented
+          axis="buttonPress"
+          label="Press"
+          options={PRESS_OPTIONS}
+        />
+        <DialSegmented axis="buttonCase" label="Case" options={CASE_OPTIONS} />
+      </More>
       <MemberSection id="toggle" title="Toggles">
         <DialSelect
           axis="toggleSelected"
           label="Selected"
           options={TOGGLE_OPTIONS.map((option) => ({
             ...option,
-            preview: <ToggleGlyph look={option.value} />,
+            preview: (
+              <System ds={toggles[option.value]!}>
+                <Toggles on />
+              </System>
+            ),
           }))}
         />
       </MemberSection>
@@ -267,26 +359,34 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
             label="Seam"
             options={SEPARATOR_OPTIONS.map((option) => ({
               ...option,
-              preview: <GroupGlyph separator={option.value} />,
+              preview: (
+                <System ds={seams[option.value]!}>
+                  <GroupSpecimen />
+                </System>
+              ),
             }))}
           />
         </More>
       </MemberSection>
       <MemberSection id="segmented" title="Segmented">
-        <More keys={["segmentedSelected", "segmentedTrack"]}>
-          <DialSelect
-            axis="segmentedSelected"
-            label="Chip"
-            options={SEGMENT_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <SegmentedGlyph
-                  selected={option.value}
-                  track={effective.segmentedTrack}
-                />
-              ),
-            }))}
-          />
+        <DialSelect
+          axis="segmentedSelected"
+          label="Chip"
+          options={CHIP_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <SegmentedGlyph
+                chip={
+                  option.value === "auto"
+                    ? effective.segmentedSelected
+                    : option.value
+                }
+                track={effective.segmentedTrack}
+              />
+            ),
+          }))}
+        />
+        <More keys={["segmentedTrack"]}>
           <DialSegmented
             axis="segmentedTrack"
             label="Track"

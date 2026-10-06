@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
         "focus-visible:outline-(length:--focus-ring-width) focus-visible:-outline-offset-(--focus-ring-width) focus-visible:outline-(--focus-ring-color) focus-visible:outline-solid",
         "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",
-        "drop-target:bg-accent-muted drop-target:text-fg",
+        "drop-target:bg-selected/70 drop-target:text-fg",
         "dragging:opacity-60",
         "disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
       ],

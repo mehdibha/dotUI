@@ -7,7 +7,7 @@ describe("segmented control axis", () => {
   test("defaults ship the registry defaults", () => {
     const { componentParams, tokens } = designSystemOf(DEFAULT_STATE)
     expect(componentParams["segmented-control"]).toEqual({
-      selected: "flat",
+      selected: "tone",
       track: "filled",
     })
     expect(tokens).toEqual({})
@@ -15,10 +15,10 @@ describe("segmented control axis", () => {
 
   test("selected and track become segmented-control params", () => {
     const { componentParams } = designSystemOf(
-      parseState({ segmentedSelected: "raised", segmentedTrack: "outline" }),
+      parseState({ segmentedSelected: "ring", segmentedTrack: "outline" }),
     )
     expect(componentParams["segmented-control"]).toEqual({
-      selected: "raised",
+      selected: "ring",
       track: "outline",
     })
   })

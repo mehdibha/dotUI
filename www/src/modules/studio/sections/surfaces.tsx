@@ -17,6 +17,7 @@ import {
   GLASS_OPTIONS,
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
+  SHELL_OPTIONS,
   surfaceColorCss,
   surfaceRecipe,
   SURFACE_STYLES,
@@ -114,6 +115,7 @@ const SURFACE_KEYS = [
   "surfaceEdge",
   "surfaceShadow",
   "surfaceGlass",
+  "shellTone",
   "lightBg",
   "darkBg",
 ]
@@ -161,6 +163,11 @@ export function SurfacesRow({
           value={state.surfaceGlass ? "glass" : "solid"}
           onChange={(value) => set("surfaceGlass")(value === "glass")}
           options={GLASS_OPTIONS}
+        />
+        <DialPicker
+          axis="shellTone"
+          label="App shell"
+          options={SHELL_OPTIONS}
         />
         <DialSlider
           axis="lightBg"
