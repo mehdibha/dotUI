@@ -1,11 +1,27 @@
 "use client"
 
-/* Dialogs — how modal layers meet the page: the scrim under them, where
-   a dialog rests. Backdrop writes Dialog and Drawer together. */
+/* Dialogs — how modal layers meet the page: the scrim under them (it writes
+   Dialog and Drawer together), where a modal rests, and how dialogs present
+   on a phone. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
-import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
+import { DIALOG_OPTIONS } from "../axes/mobile"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
+import {
+  FamilyHero,
+  HeroMember,
+  MemberSection,
+  More,
+  UsesRow,
+} from "../family-page"
 import type { Effective, Studio } from "../state"
+import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -53,6 +69,8 @@ function BackdropGlyph({ backdrop }: { backdrop: string }) {
 
 /* --------------------------------- Section --------------------------------- */
 
+const DIALOGS = withPhoneGlyphs(DIALOG_OPTIONS)
+
 export function DialogsPreview({ state }: { state: Effective }) {
   return (
     <DialGlyph>
@@ -62,13 +80,26 @@ export function DialogsPreview({ state }: { state: Effective }) {
 }
 
 export function DialogsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { effective } = studio
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Dialog">
+          <DialGlyph>
+            <BackdropGlyph backdrop={effective.dialogBackdrop} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Dialog on mobile">
+          <DialGlyph>
+            <PhoneGlyph
+              layer={effective.mobileDialogs === "sheet" ? "sheet" : "center"}
+            />
+          </DialGlyph>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="dialogBackdrop"
         label="Backdrop"
-        value={state.dialogBackdrop}
-        onChange={set("dialogBackdrop")}
         options={BACKDROP_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -79,12 +110,20 @@ export function DialogsSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
-      <DialSegmented
-        label="Position"
-        value={state.dialogPosition}
-        onChange={set("dialogPosition")}
-        options={POSITION_OPTIONS}
-      />
+      <UsesRow axis="rolePanel" label="Panel corners" />
+      <UsesRow axis="surfaceGlass" label="Glass" />
+      <MemberSection id="modal" title="Modal">
+        <More keys={["dialogPosition"]}>
+          <DialSegmented
+            axis="dialogPosition"
+            label="Position"
+            options={POSITION_OPTIONS}
+          />
+        </More>
+      </MemberSection>
+      <MemberSection id="mobile" title="On mobile">
+        <DialSelect axis="mobileDialogs" label="Dialogs" options={DIALOGS} />
+      </MemberSection>
     </>
   )
 }

@@ -1,15 +1,8 @@
 "use client"
 
-/* The panel's one page (Sept 2026): every chapter in full, a quiet title with
-   the chapter's specimen beside it, then its primary rows and the rest of
-   its body. Nothing folds — search scrolls to a chapter, it never opens one.
-
-   Below `lg` the same page is a dock under the preview (beside it on short
-   screens): one chapter's rows, hugged, over a chapter strip that scrolls
-   sideways. The header's toggle tucks it to its strip.
-
-   A chapter's row can open a page (a component family) in place of the
-   whole page: a back button and the page's title pin over its body, and
+/* The panel's one page: every chapter under a quiet title. Below `lg` it
+   docks under the preview (beside it on short screens), one chapter over a
+   strip. A Components row opens its family page in place of the whole page;
    going back lands where the page was left. */
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
@@ -33,7 +26,19 @@ import type { PanelSystem } from "./panel"
 import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, ChapterPage, Studio } from "./state"
-import { flashAxis, RevealAxis } from "./use-axis"
+import { flashAxis, revealRow, RevealAxis } from "./use-axis"
+
+/** Runs `attempt` each frame until it succeeds: a page's rows mount a frame
+ *  or more after it opens. */
+function untilMounted(attempt: () => boolean, frames = 30) {
+  requestAnimationFrame(() => {
+    if (!attempt() && frames > 0) untilMounted(attempt, frames - 1)
+  })
+}
+
+type Place = { id: string; owners?: string[] }
+const lists = (place: Place, owner: string) =>
+  (place.owners ?? [place.id]).includes(owner)
 
 function ChapterBlock({
   chapter,
@@ -213,20 +218,12 @@ export function PanelPage({
   // A search hit lands on its row (a sub-axis on the row that holds it).
   const flash = (container: Element | null | undefined, label: string) => {
     const row = [...(container?.querySelectorAll("span") ?? [])].find(
-      (span) => span.textContent === label,
+      (span) => span.textContent === label && !span.closest("[data-hero]"),
     )
     const target = row?.closest(".rounded-lg") ?? row
-    if (!target) return
-    target.scrollIntoView({ block: "start" })
-    target.animate(
-      {
-        boxShadow: [
-          "inset 0 0 0 1.5px var(--color-accent)",
-          "inset 0 0 0 1.5px transparent",
-        ],
-      },
-      { duration: 1200, easing: "ease-in" },
-    )
+    if (!target) return false
+    revealRow(target)
+    return true
   }
 
   const dock = (id: string, axis?: string) => {
@@ -267,7 +264,7 @@ export function PanelPage({
       setTucked(false)
       openPage(target.id)
       if (label)
-        requestAnimationFrame(() =>
+        untilMounted(() =>
           flash(layer?.querySelector(`[data-page="${target.id}"]`), label),
         )
       return
@@ -282,19 +279,42 @@ export function PanelPage({
     )
   }
 
-  // A cause chip lands on its row: in view already, else on its page first.
+  // A cause chip or Uses link lands on its row: in view already, else on its
+  // page or chapter first.
   const revealAxis = (key: string) => {
     if (flashAxis(key)) return
+    // A place that lists the key itself wins over its module's.
     const owner = KEY_OWNER[key] ?? ""
-    const hosts = (place: { id: string; owners?: string[] }) =>
-      (place.owners ?? [place.id]).includes(owner)
-    const target = pages.find(hosts)
-    const chapter = chapters.find(hosts)
+    const named = [...pages, ...chapters].find((place) => lists(place, key))
+    const target = named
+      ? pages.find((page) => page === named)
+      : pages.find((page) => lists(page, owner))
+    const chapter = named ?? chapters.find((place) => lists(place, owner))
     if (target) openPage(target.id)
     else if (chapter) dock(chapter.id)
     else return
-    requestAnimationFrame(() => flashAxis(key))
+    untilMounted(() => flashAxis(key))
   }
+
+  // `/studio#<page>[/<member>]` opens a family page at a member's section.
+  useEffect(() => {
+    const follow = () => {
+      const [id, member] = decodeURIComponent(location.hash.slice(1)).split("/")
+      if (!id || !pages.some((p) => p.id === id)) return
+      setTucked(false)
+      openPage(id)
+      if (member)
+        untilMounted(() => {
+          const section = document.querySelector(`[data-member="${member}"]`)
+          section?.scrollIntoView({ block: "start" })
+          return !!section
+        })
+    }
+    follow()
+    window.addEventListener("hashchange", follow)
+    return () => window.removeEventListener("hashchange", follow)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <RevealAxis.Provider value={revealAxis}>
@@ -349,11 +369,6 @@ export function PanelPage({
                     <span className="min-w-0 flex-1 truncate text-[13px] font-medium">
                       {page.label}
                     </span>
-                    {page.Preview && (
-                      <span className="flex shrink-0 items-center pr-1 text-fg/60">
-                        <page.Preview state={studio.effective} />
-                      </span>
-                    )}
                   </>
                 )
               }

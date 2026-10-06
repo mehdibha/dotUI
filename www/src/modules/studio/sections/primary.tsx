@@ -381,6 +381,7 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   return (
     <DialTrigger
       label="Primary"
+      holds={PRIMARY_LEAVES}
       chevron={false}
       value={
         <>

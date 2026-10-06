@@ -109,6 +109,15 @@ const PAGE_NAMES: Record<Mode, Record<number, string>> = {
 const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
+const SURFACE_KEYS = [
+  "surfaceLayers",
+  "surfaceEdge",
+  "surfaceShadow",
+  "surfaceGlass",
+  "lightBg",
+  "darkBg",
+]
+
 export function SurfacesRow({
   studio,
   theme,
@@ -123,6 +132,7 @@ export function SurfacesRow({
   return (
     <DialTrigger
       label="Surfaces"
+      holds={SURFACE_KEYS}
       chevron={false}
       value={
         <>

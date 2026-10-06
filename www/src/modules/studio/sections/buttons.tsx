@@ -1,8 +1,7 @@
 "use client"
 
-/* Buttons — the family's page: Button sets the look, a real system's recipe
-   copied whole, and the toggles, groups and segmented control below stay
-   coherent with it. Color is a leaf of Color's Primary. */
+/* Buttons — Button's style, a real system's recipe copied whole, with the
+   toggles, groups, segmented control and pagination that share it. */
 
 import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
@@ -10,6 +9,7 @@ import { useStyles } from "@/registry/ui/button/styles"
 
 import { SEPARATOR_OPTIONS } from "../axes/button-groups"
 import { RADIUS_OPTIONS, STYLE_OPTIONS } from "../axes/buttons"
+import { CURRENT_OPTIONS } from "../axes/pagination"
 import {
   SELECTED_OPTIONS as SEGMENT_OPTIONS,
   TRACK_OPTIONS,
@@ -17,15 +17,18 @@ import {
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
 import {
   DialGap,
+  DialGlyph,
   DialList,
-  DialPopover,
   DialSegmented,
   DialSelect,
-  DialTrigger,
-  optionLabel,
 } from "../dial"
-import { CardGrid } from "../patterns"
-import { GroupTitle } from "../rows"
+import {
+  FamilyHero,
+  HeroMember,
+  MemberSection,
+  More,
+  UsesRow,
+} from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -136,26 +139,22 @@ const CHIP: Record<string, string> = {
 function SegmentedGlyph({
   selected,
   track,
-  card,
 }: {
   selected: string
   track: string
-  card?: boolean
 }) {
   return (
     <span
       className={cn(
         "flex shrink-0 rounded-[5px] p-[2px]",
         track === "outline" ? "border border-border" : "bg-muted",
-        card && "mx-auto my-1.5",
       )}
     >
       {["A", "B", "C"].map((letter, i) => (
         <span
           key={letter}
           className={cn(
-            "flex items-center rounded-[3px] font-medium text-fg-muted",
-            card ? "h-5 px-2 text-[11px]" : "h-3 px-1 text-[8px]",
+            "flex h-3 items-center rounded-[3px] px-1 text-[8px] font-medium text-fg-muted",
             i === 0 && CHIP[selected],
           )}
         >
@@ -166,6 +165,35 @@ function SegmentedGlyph({
   )
 }
 
+function CurrentGlyph({ current }: { current: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
+      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
+      {current === "filled" ? (
+        <rect
+          x="7.5"
+          y="7.5"
+          width="9"
+          height="9"
+          rx="2.5"
+          fill="currentColor"
+        />
+      ) : (
+        <rect
+          x="8.25"
+          y="8.25"
+          width="7.5"
+          height="7.5"
+          rx="2.25"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      )}
+    </svg>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function ButtonsPreview({ state }: { state: Effective }) {
@@ -173,13 +201,34 @@ export function ButtonsPreview({ state }: { state: Effective }) {
 }
 
 export function ButtonsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { effective } = studio
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Button">
+          <StyleSpecimen style={effective.buttonStyle} />
+        </HeroMember>
+        <HeroMember name="Toggle button">
+          <ToggleGlyph look={effective.toggleSelected} />
+        </HeroMember>
+        <HeroMember name="Group">
+          <GroupGlyph separator={effective.groupSeparator} />
+        </HeroMember>
+        <HeroMember name="Segmented control">
+          <SegmentedGlyph
+            selected={effective.segmentedSelected}
+            track={effective.segmentedTrack}
+          />
+        </HeroMember>
+        <HeroMember name="Pagination">
+          <DialGlyph>
+            <CurrentGlyph current={effective.paginationCurrent} />
+          </DialGlyph>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="buttonStyle"
         label="Style"
-        value={state.buttonStyle}
-        onChange={set("buttonStyle")}
         options={STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: <StyleSpecimen style={option.value} />,
@@ -187,73 +236,75 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
       />
       <DialGap />
       <DialSelect
+        axis="buttonRadius"
         label="Radius"
-        value={state.buttonRadius}
-        onChange={set("buttonRadius")}
         options={RADIUS_OPTIONS.map((option) => ({
           ...option,
           preview: <RadiusGlyph radius={option.value} />,
         }))}
       />
-      <GroupTitle>Toggles & groups</GroupTitle>
-      <DialSelect
-        label="Toggles"
-        value={state.toggleSelected}
-        onChange={set("toggleSelected")}
-        options={TOGGLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <ToggleGlyph look={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Groups"
-        value={state.groupSeparator}
-        onChange={set("groupSeparator")}
-        options={SEPARATOR_OPTIONS.map((option) => ({
-          ...option,
-          preview: <GroupGlyph separator={option.value} />,
-        }))}
-      />
-      <DialTrigger
-        label="Segmented"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(SEGMENT_OPTIONS, state.segmentedSelected)}
-            </span>
-            <SegmentedGlyph
-              selected={state.segmentedSelected}
-              track={state.segmentedTrack}
-            />
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Selected"
-            columns={3}
-            value={state.segmentedSelected}
-            onChange={set("segmentedSelected")}
+      <UsesRow axis="buttonColor" label="Color" />
+      <UsesRow axis="roleControl" label="Control corners" />
+      <MemberSection id="toggle" title="Toggles">
+        <DialSelect
+          axis="toggleSelected"
+          label="Selected"
+          options={TOGGLE_OPTIONS.map((option) => ({
+            ...option,
+            preview: <ToggleGlyph look={option.value} />,
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="group" title="Groups">
+        <More keys={["groupSeparator"]}>
+          <DialSelect
+            axis="groupSeparator"
+            label="Seam"
+            options={SEPARATOR_OPTIONS.map((option) => ({
+              ...option,
+              preview: <GroupGlyph separator={option.value} />,
+            }))}
+          />
+        </More>
+      </MemberSection>
+      <MemberSection id="segmented" title="Segmented">
+        <More keys={["segmentedSelected", "segmentedTrack"]}>
+          <DialSelect
+            axis="segmentedSelected"
+            label="Chip"
             options={SEGMENT_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: (
+              ...option,
+              preview: (
                 <SegmentedGlyph
                   selected={option.value}
-                  track={state.segmentedTrack}
-                  card
+                  track={effective.segmentedTrack}
                 />
               ),
             }))}
           />
           <DialSegmented
+            axis="segmentedTrack"
             label="Track"
-            value={state.segmentedTrack}
-            onChange={set("segmentedTrack")}
             options={TRACK_OPTIONS}
           />
-        </DialPopover>
-      </DialTrigger>
+        </More>
+      </MemberSection>
+      <MemberSection id="pagination" title="Pagination">
+        <More keys={["paginationCurrent"]}>
+          <DialSelect
+            axis="paginationCurrent"
+            label="Current page"
+            options={CURRENT_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <CurrentGlyph current={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+        </More>
+      </MemberSection>
     </>
   )
 }

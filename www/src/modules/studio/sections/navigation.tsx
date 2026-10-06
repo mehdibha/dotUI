@@ -1,25 +1,28 @@
 "use client"
 
-/* Navigation — how a link announces itself, the selected-tab signature, the
-   breadcrumb trail and the current page. Link and tab colors are leaves of
-   Color's Primary; pagination's cells wear Buttons' look. */
+/* Navigation — the selected-tab signature, how a link announces itself and
+   the breadcrumb trail. Tab and link colors are leaves of Color's Primary;
+   pagination wears Buttons' look and lives there. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { SEPARATOR_OPTIONS, TONE_OPTIONS } from "../axes/breadcrumbs"
 import { UNDERLINE_OPTIONS } from "../axes/links"
-import { CURRENT_OPTIONS } from "../axes/pagination"
 import { TAB_STYLE_OPTIONS } from "../axes/tabs"
 import {
   DialGap,
   DialGlyph,
   DialList,
-  DialPopover,
   DialSegmented,
   DialSelect,
-  DialTrigger,
-  optionLabel,
 } from "../dial"
+import {
+  FamilyHero,
+  HeroMember,
+  MemberSection,
+  More,
+  UsesRow,
+} from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -161,35 +164,6 @@ function SeparatorGlyph({ separator }: { separator: string }) {
   )
 }
 
-function CurrentGlyph({ current }: { current: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      {current === "filled" ? (
-        <rect
-          x="7.5"
-          y="7.5"
-          width="9"
-          height="9"
-          rx="2.5"
-          fill="currentColor"
-        />
-      ) : (
-        <rect
-          x="8.25"
-          y="8.25"
-          width="7.5"
-          height="7.5"
-          rx="2.25"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      )}
-    </svg>
-  )
-}
-
 /* --------------------------------- Section --------------------------------- */
 
 export function NavigationPreview({ state }: { state: Effective }) {
@@ -201,13 +175,27 @@ export function NavigationPreview({ state }: { state: Effective }) {
 }
 
 export function NavigationSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { effective } = studio
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Tabs">
+          <DialGlyph>
+            <TabGlyph style={effective.tabStyle} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Link">
+          <LinkGlyph underline={effective.linkUnderline} />
+        </HeroMember>
+        <HeroMember name="Breadcrumbs">
+          <DialGlyph>
+            <SeparatorGlyph separator={effective.breadcrumbSeparator} />
+          </DialGlyph>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="tabStyle"
         label="Tabs"
-        value={state.tabStyle}
-        onChange={set("tabStyle")}
         options={TAB_STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -218,56 +206,32 @@ export function NavigationSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
-      <DialSelect
-        label="Links"
-        value={state.linkUnderline}
-        onChange={set("linkUnderline")}
-        options={UNDERLINE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <LinkGlyph underline={option.value} />,
-        }))}
-      />
-      <DialTrigger
-        label="Breadcrumbs"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(SEPARATOR_OPTIONS, state.breadcrumbSeparator)}
-            </span>
-            <DialGlyph>
-              <SeparatorGlyph separator={state.breadcrumbSeparator} />
-            </DialGlyph>
-          </>
-        }
-      >
-        <DialPopover>
+      <UsesRow axis="tabsColor" label="Indicator color" />
+      <UsesRow axis="linkColor" label="Link color" />
+      <MemberSection id="link" title="Links">
+        <DialSelect
+          axis="linkUnderline"
+          label="Underline"
+          options={UNDERLINE_OPTIONS.map((option) => ({
+            ...option,
+            preview: <LinkGlyph underline={option.value} />,
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="breadcrumbs" title="Breadcrumbs">
+        <More keys={["breadcrumbSeparator", "breadcrumbTone"]}>
           <DialSegmented
+            axis="breadcrumbSeparator"
             label="Separator"
-            value={state.breadcrumbSeparator}
-            onChange={set("breadcrumbSeparator")}
             options={SEPARATOR_OPTIONS}
           />
           <DialSegmented
-            label="Crumbs"
-            value={state.breadcrumbTone}
-            onChange={set("breadcrumbTone")}
+            axis="breadcrumbTone"
+            label="Ancestors"
             options={TONE_OPTIONS}
           />
-        </DialPopover>
-      </DialTrigger>
-      <DialSelect
-        label="Pagination"
-        value={state.paginationCurrent}
-        onChange={set("paginationCurrent")}
-        options={CURRENT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CurrentGlyph current={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+        </More>
+      </MemberSection>
     </>
   )
 }

@@ -77,6 +77,7 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
   return (
     <>
       <DialColor
+        axis="brand"
         label="Brand"
         value={state.brand}
         onChange={set("brand")}

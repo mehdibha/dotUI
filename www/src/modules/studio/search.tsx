@@ -36,6 +36,8 @@ interface Entry {
   category: string
   /** A settings row inside it; absent for the chapter itself. */
   axis?: string
+  /** Former names the chapter answers to. */
+  aliases?: string[]
 }
 
 function categories(chapters: Chapter[]): Entry[] {
@@ -43,6 +45,7 @@ function categories(chapters: Chapter[]): Entry[] {
     id: chapter.id,
     chapterId: chapter.id,
     category: chapter.label,
+    aliases: chapter.aliases,
   }))
 }
 
@@ -98,7 +101,7 @@ export function PanelSearch({
     const needle = query.trim()
     if (!needle) return []
     const cats = categories(chapters).filter((c) =>
-      contains(c.category, needle),
+      [c.category, ...(c.aliases ?? [])].some((name) => contains(name, needle)),
     )
     return cats.length > 0
       ? cats
@@ -135,7 +138,9 @@ export function PanelSearch({
     <ListBoxItem
       key={entry.id}
       id={entry.id}
-      textValue={entry.axis ?? entry.category}
+      textValue={[entry.axis ?? entry.category, ...(entry.aliases ?? [])].join(
+        " ",
+      )}
       onAction={() => jump(entry)}
       className="flex-col items-start justify-center gap-0 pointer-coarse:min-h-11"
     >

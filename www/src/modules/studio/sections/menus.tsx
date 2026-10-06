@@ -1,29 +1,36 @@
 "use client"
 
-/* Menus — one language for every floating list: Menu, Select and ComboBox
-   listboxes, and the command palette. Indicator, highlight, items and labels
-   write all of them; the palette's search chrome and scale are its own. */
+/* Menus & popovers — one language for every floating list (Menu, Select and
+   ComboBox listboxes, the command palette) and the anchored layers they open
+   in: the popover's arrow, the tooltip's own surface, and how pickers present
+   on a phone. */
 
 import {
   HIGHLIGHT_OPTIONS,
   INDICATOR_OPTIONS,
   INSET_OPTIONS,
-  LABEL_OPTIONS,
   SCALE_OPTIONS,
   SEARCH_OPTIONS,
 } from "../axes/menus"
+import { PICKER_OPTIONS } from "../axes/mobile"
+import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
+import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import {
   DialGap,
   DialGlyph,
   DialList,
-  DialPopover,
   DialSegmented,
   DialSelect,
-  DialTrigger,
-  optionLabel,
 } from "../dial"
-import { CardGrid } from "../patterns"
+import {
+  FamilyHero,
+  HeroMember,
+  MemberSection,
+  More,
+  UsesRow,
+} from "../family-page"
 import type { Effective, Studio } from "../state"
+import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -135,34 +142,81 @@ function InsetGlyph({ inset }: { inset: string }) {
 /** A palette: the search chrome over two rows. */
 function PaletteGlyph({ search }: { search: string }) {
   return (
-    <span className="my-1 flex w-full flex-col overflow-hidden rounded-md border border-fg/15 bg-bg">
+    <span className="flex w-9 shrink-0 flex-col overflow-hidden rounded-[4px] border border-fg/20 bg-bg">
       {search === "field" && (
-        <span className="px-1.5 pt-1.5">
-          <span className="flex h-4 items-center rounded-[4px] border border-fg/20 px-1">
-            <span className="h-1 w-1/2 rounded-full bg-fg/25" />
-          </span>
-        </span>
+        <span className="mx-1 mt-1 h-2 rounded-[2px] border border-fg/25" />
       )}
-      {search === "bar" && (
-        <span className="flex h-6 items-center gap-1 border-b border-fg/15 px-2">
-          <span className="size-1.5 rounded-full border border-fg/40" />
-          <span className="h-1 w-1/2 rounded-full bg-fg/25" />
-        </span>
-      )}
-      {search === "prompt" && (
-        <span className="flex h-6 items-center px-2">
-          <span className="h-1 w-1/2 rounded-full bg-fg/25" />
-        </span>
-      )}
-      <span className="flex flex-col gap-1 p-1.5">
-        <span className="h-3 rounded-[3px] bg-fg/10" />
-        <span className="h-3 rounded-[3px]" />
+      {search === "bar" && <span className="h-2.5 border-b border-fg/20" />}
+      {search === "prompt" && <span className="h-2.5" />}
+      <span className="flex flex-col gap-0.5 p-1">
+        <span className="h-1.5 rounded-[2px] bg-fg/15" />
+        <span className="h-1.5 rounded-[2px]" />
       </span>
     </span>
   )
 }
 
+/** The panel over the trigger it's anchored to, with or without the tip. */
+function TipGlyph({ tip }: { tip: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="11"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M7 8h10M7 11h6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+      {tip && <path d="M10.3 14.7 12 17.2l1.7-2.5Z" fill="currentColor" />}
+      <path
+        d="M9 20.5h6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+    </svg>
+  )
+}
+
+/** The chip with its caret, over the thing it names. */
+function TooltipGlyph({ filled }: { filled: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="5"
+        y="5.5"
+        width="14"
+        height="7"
+        rx="2"
+        fill={filled ? "currentColor" : "none"}
+        stroke={filled ? "none" : "currentColor"}
+        strokeWidth="1.5"
+      />
+      <path
+        d="M10.3 12.5 12 15l1.7-2.5Z"
+        fill="currentColor"
+        stroke={filled ? "none" : "currentColor"}
+        strokeWidth={filled ? 0 : 1.5}
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="19" r="1.5" fill="currentColor" opacity=".45" />
+    </svg>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
+
+const PICKERS = withPhoneGlyphs(PICKER_OPTIONS)
 
 export function MenusPreview({ state }: { state: Effective }) {
   return (
@@ -173,13 +227,46 @@ export function MenusPreview({ state }: { state: Effective }) {
 }
 
 export function MenusSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { effective } = studio
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Menu">
+          <DialGlyph>
+            <HighlightGlyph highlight={effective.menuHighlight} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="List box">
+          <DialGlyph>
+            <InsetGlyph inset={effective.menuInset} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Popover">
+          <DialGlyph>
+            <TipGlyph tip={effective.popoverTip === "tip"} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Tooltip">
+          <DialGlyph>
+            <TooltipGlyph filled={effective.tooltipStyle === "inverted"} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Command">
+          <PaletteGlyph search={effective.menuSearch} />
+        </HeroMember>
+        <HeroMember name="Pickers on mobile">
+          <DialGlyph>
+            <PhoneGlyph
+              layer={
+                effective.mobilePickers === "popover" ? "popover" : "drawer"
+              }
+            />
+          </DialGlyph>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="menuHighlight"
         label="Highlight"
-        value={state.menuHighlight}
-        onChange={set("menuHighlight")}
         options={HIGHLIGHT_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -191,22 +278,8 @@ export function MenusSection({ studio }: { studio: Studio }) {
       />
       <DialGap />
       <DialSelect
-        label="Indicator"
-        value={state.menuIndicator}
-        onChange={set("menuIndicator")}
-        options={INDICATOR_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <IndicatorGlyph indicator={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
+        axis="menuInset"
         label="Items"
-        value={state.menuInset}
-        onChange={set("menuInset")}
         options={INSET_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -216,41 +289,75 @@ export function MenusSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
-      <DialSegmented
-        label="Labels"
-        value={state.menuLabels}
-        onChange={set("menuLabels")}
-        options={LABEL_OPTIONS}
+      <DialSelect
+        axis="popoverTip"
+        label="Arrows"
+        options={TIP_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <DialGlyph>
+              <TipGlyph tip={option.value === "tip"} />
+            </DialGlyph>
+          ),
+        }))}
       />
-      <DialTrigger
-        label="Command palette"
-        value={
-          <span className="truncate">
-            {optionLabel(SEARCH_OPTIONS, state.menuSearch)} ·{" "}
-            {optionLabel(SCALE_OPTIONS, state.menuScale)}
-          </span>
-        }
-      >
-        <DialPopover className="w-80">
-          <CardGrid
+      <UsesRow axis="surfaceGlass" label="Glass" />
+      <UsesRow axis="roleItem" label="Item corners" />
+      <More keys={["menuIndicator", "popoverHeader"]}>
+        <DialSelect
+          axis="menuIndicator"
+          label="Check"
+          options={INDICATOR_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <DialGlyph>
+                <IndicatorGlyph indicator={option.value} />
+              </DialGlyph>
+            ),
+          }))}
+        />
+        <DialSegmented
+          axis="popoverHeader"
+          label="Header"
+          options={HEADER_OPTIONS}
+        />
+      </More>
+      <MemberSection id="tooltip" title="Tooltip">
+        <DialSelect
+          axis="tooltipStyle"
+          label="Style"
+          options={TOOLTIP_STYLE_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <DialGlyph>
+                <TooltipGlyph filled={option.value === "inverted"} />
+              </DialGlyph>
+            ),
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="command" title="Command">
+        <More keys={["menuSearch", "menuScale"]}>
+          <DialSelect
+            axis="menuSearch"
             label="Search"
-            columns={3}
-            value={state.menuSearch}
-            onChange={set("menuSearch")}
             options={SEARCH_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: <PaletteGlyph search={option.value} />,
+              ...option,
+              preview: <PaletteGlyph search={option.value} />,
             }))}
           />
           <DialSegmented
-            label="Scale"
-            value={state.menuScale}
-            onChange={set("menuScale")}
+            axis="menuScale"
+            label="Palette scale"
             options={SCALE_OPTIONS}
           />
-        </DialPopover>
-      </DialTrigger>
+        </More>
+      </MemberSection>
+      <MemberSection id="mobile" title="On mobile">
+        <More keys={["mobilePickers"]}>
+          <DialSelect axis="mobilePickers" label="Pickers" options={PICKERS} />
+        </More>
+      </MemberSection>
     </>
   )
 }

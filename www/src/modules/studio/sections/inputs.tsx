@@ -1,15 +1,15 @@
 "use client"
 
-/* Inputs — the field family's page: every field renders through Input /
-   InputGroup, so Style (the shell) and Hover reach them all. Addons fold the
-   group's layout and divider into one pick; steppers and OTP cells are the
-   two fields with a layout of their own. Focus and invalid live in States. */
+/* Inputs — every field renders through Input / InputGroup, so Style (the
+   shell) and Hover reach them all; steppers, OTP cells and the select caret
+   are the members' own. Focus and invalid live in States. */
 
 import { cn } from "@/registry/lib/utils"
 
 import { HOVER_OPTIONS, STYLE_OPTIONS } from "../axes/inputs"
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
+import { CARET_OPTIONS } from "../axes/pickers"
 import {
   DialGap,
   DialGlyph,
@@ -17,6 +17,13 @@ import {
   DialSegmented,
   DialSelect,
 } from "../dial"
+import {
+  FamilyHero,
+  HeroMember,
+  MemberSection,
+  More,
+  UsesRow,
+} from "../family-page"
 import type { Effective, Studio, StudioState } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -140,6 +147,26 @@ function CellsGlyph({ cells }: { cells: string }) {
   )
 }
 
+function CaretGlyph({ caret }: { caret: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {caret === "double" ? (
+        <path d="m7 15 5 5 5-5M7 9l5-5 5 5" />
+      ) : (
+        <path d="m6 9 6 6 6-6" />
+      )}
+    </svg>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function InputsPreview({ state }: { state: Effective }) {
@@ -147,7 +174,7 @@ export function InputsPreview({ state }: { state: Effective }) {
 }
 
 export function InputsSection({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
+  const { state, effective, setState } = studio
   const setAddon = (addon: string) =>
     setState({
       ...state,
@@ -161,57 +188,100 @@ export function InputsSection({ studio }: { studio: Studio }) {
     })
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Input">
+          <FieldGlyph style={effective.inputStyle} large />
+        </HeroMember>
+        <HeroMember name="Input group">
+          <AddonGlyph addon={addonValue(state)} />
+        </HeroMember>
+        <HeroMember name="Number field">
+          <DialGlyph>
+            <SteppersGlyph layout={effective.numberLayout} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="OTP field">
+          <DialGlyph>
+            <CellsGlyph cells={effective.otpStyle} />
+          </DialGlyph>
+        </HeroMember>
+        <HeroMember name="Select">
+          <DialGlyph>
+            <CaretGlyph caret={effective.pickerCaret} />
+          </DialGlyph>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="inputStyle"
         label="Style"
-        value={state.inputStyle}
-        onChange={set("inputStyle")}
         options={STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: <FieldGlyph style={option.value} large />,
         }))}
       />
       <DialGap />
-      <DialSegmented
-        label="Hover"
-        value={state.inputHover}
-        onChange={set("inputHover")}
-        options={HOVER_OPTIONS}
-      />
-      <DialSelect
-        label="Addons"
-        value={addonValue(state)}
-        onChange={setAddon}
-        options={ADDON_OPTIONS.map((option) => ({
-          ...option,
-          preview: <AddonGlyph addon={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Number field"
-        value={state.numberLayout}
-        onChange={set("numberLayout")}
-        options={NUMBER_LAYOUT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <SteppersGlyph layout={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSelect
-        label="OTP field"
-        value={state.otpStyle}
-        onChange={set("otpStyle")}
-        options={OTP_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CellsGlyph cells={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+      <UsesRow axis="focusInputStyle" label="Field focus" />
+      <UsesRow axis="inputError" label="Invalid" />
+      <More keys={["inputHover", "addonLayout", "addonDivider"]}>
+        <DialSegmented
+          axis="inputHover"
+          label="Hover"
+          options={HOVER_OPTIONS}
+        />
+        <DialSelect
+          label="Addons"
+          value={addonValue(state)}
+          onChange={setAddon}
+          options={ADDON_OPTIONS.map((option) => ({
+            ...option,
+            preview: <AddonGlyph addon={option.value} />,
+          }))}
+        />
+      </More>
+      <MemberSection id="number-field" title="Number field">
+        <DialSelect
+          axis="numberLayout"
+          label="Steppers"
+          options={NUMBER_LAYOUT_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <DialGlyph>
+                <SteppersGlyph layout={option.value} />
+              </DialGlyph>
+            ),
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="otp" title="OTP field">
+        <DialSelect
+          axis="otpStyle"
+          label="Cells"
+          options={OTP_STYLE_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <DialGlyph>
+                <CellsGlyph cells={option.value} />
+              </DialGlyph>
+            ),
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="select" title="Select">
+        <More keys={["pickerCaret"]}>
+          <DialSelect
+            axis="pickerCaret"
+            label="Caret"
+            options={CARET_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <DialGlyph>
+                  <CaretGlyph caret={option.value} />
+                </DialGlyph>
+              ),
+            }))}
+          />
+        </More>
+      </MemberSection>
     </>
   )
 }

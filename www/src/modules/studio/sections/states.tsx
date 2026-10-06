@@ -1,15 +1,16 @@
 "use client"
 
 /* States — the treatments every control wears at once: focus, disabled,
-   invalid. Focus is one recipe in one popover: the ring controls wear, the
-   layer fields wear, each pick followed by only the knobs that style reads.
-   The ring's ink is a leaf of Color's Primary, so it is not repeated here.
-   Menu items highlight, no ring. */
+   invalid, the cursor over each kind of control and text selection. Focus
+   is one popover: each pick, then only the knobs its style reads. The ring's
+   ink is a leaf of Color's Primary. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { CURSOR_DEFAULTS } from "../axes/cursor"
 import { TREATMENT_OPTIONS } from "../axes/disabled"
 import {
+  FOCUS_DEFAULTS,
   FOCUS_GAP_RANGE,
   FOCUS_INPUT_BORDER_RANGE,
   FOCUS_INPUT_STYLE_OPTIONS,
@@ -20,6 +21,7 @@ import {
   FOCUS_WIDTH_RANGE,
 } from "../axes/focus"
 import { ERROR_OPTIONS } from "../axes/invalid"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection"
 import {
   DialGap,
   DialGlyph,
@@ -27,11 +29,22 @@ import {
   DialSegmented,
   DialSelect,
   DialSlider,
+  DialToggle,
   DialTrigger,
+  optionLabel,
 } from "../dial"
+import type { DialOption } from "../dial"
 import { CardGrid } from "../patterns"
 import { GroupTitle } from "../rows"
 import type { Effective, Studio, StudioState } from "../state"
+import {
+  ArrowCursor,
+  HandCursor,
+  NotAllowedCursor,
+  OpenHandCursor,
+  ProgressCursor,
+  WaitCursor,
+} from "./cursors"
 
 const px = (n: number) => `${n}px`
 
@@ -178,17 +191,99 @@ function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
   )
 }
 
+/* --------------------------------- Cursors -------------------------------- */
+
+function Glyph({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <span className={cn("size-4 shrink-0 *:size-full", className)}>
+      {children}
+    </span>
+  )
+}
+
+const cursor = (
+  value: string,
+  label: string,
+  glyph: React.ReactNode,
+): DialOption => ({
+  value,
+  label: (
+    <>
+      <Glyph>{glyph}</Glyph>
+      {label}
+    </>
+  ),
+})
+
+const CURSOR_ROWS = [
+  {
+    key: "cursorControls",
+    label: "Controls",
+    options: [
+      cursor("default", "Arrow", <ArrowCursor />),
+      cursor("pointer", "Hand", <HandCursor />),
+    ],
+  },
+  {
+    key: "cursorPending",
+    label: "Pending",
+    options: [
+      cursor("default", "Arrow", <ArrowCursor />),
+      cursor("progress", "Progress", <ProgressCursor />),
+      cursor("wait", "Wait", <WaitCursor />),
+    ],
+  },
+  {
+    key: "cursorDragging",
+    label: "Dragging",
+    options: [
+      cursor("inherit", "Arrow", <ArrowCursor />),
+      cursor("grab", "Grab", <OpenHandCursor />),
+    ],
+  },
+  {
+    key: "cursorDisabled",
+    label: "Disabled",
+    options: [
+      cursor("default", "Arrow", <ArrowCursor />),
+      cursor("not-allowed", "Blocked", <NotAllowedCursor />),
+    ],
+  },
+] as const
+
+/* ----------------------------- Text selection ----------------------------- */
+
+/* Painted words, not cursors: the option is the highlight itself. The blue
+   depicts the OS default, which is literal like the cursor drawings. */
+const HIGHLIGHT_CHIPS: Record<string, string> = {
+  accent: "bg-text-selection text-fg-on-text-selection",
+  browser: "bg-[#B3D7FF] text-[#1B1B1F]",
+}
+
+function HighlightChip({ value }: { value: string }) {
+  return (
+    <span className={cn("rounded-xs px-1 text-[11px]", HIGHLIGHT_CHIPS[value])}>
+      Aa
+    </span>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
 
-const label = (options: { value: string; label: string }[], value: string) =>
-  options.find((o) => o.value === value)?.label ?? value
+const FOCUS_KEYS = Object.keys(FOCUS_DEFAULTS)
 
 export function StatesPreview({ state }: { state: Effective }) {
   return <ControlSpecimen style={state.focusStyle} />
 }
 
-export function statesSummary(state: StudioState): string {
-  return `${label(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${label(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
+function statesSummary(state: StudioState): string {
+  return `${optionLabel(FOCUS_STYLE_OPTIONS, state.focusStyle)} · ${optionLabel(FOCUS_INPUT_STYLE_OPTIONS, state.focusInputStyle)}`
 }
 
 /** Mounted with the popover: each pick, then the knobs its style reads
@@ -280,12 +375,20 @@ function FocusPanel({ studio }: { studio: Studio }) {
   )
 }
 
+function cursorSummary(state: StudioState): string {
+  return state.cursorControls === "pointer" ? "Hand" : "Arrow"
+}
+
 export function StatesSection({ studio }: { studio: Studio }) {
   const { state, set } = studio
+  const changed = CURSOR_ROWS.filter(
+    (row) => state[row.key] !== CURSOR_DEFAULTS[row.key],
+  ).length
   return (
     <>
       <DialTrigger
         label="Focus"
+        holds={FOCUS_KEYS}
         value={
           <>
             <span className="truncate">{statesSummary(state)}</span>
@@ -299,18 +402,16 @@ export function StatesSection({ studio }: { studio: Studio }) {
         </DialPopover>
       </DialTrigger>
       <DialSelect
+        axis="disabledTreatment"
         label="Disabled"
-        value={state.disabledTreatment}
-        onChange={set("disabledTreatment")}
         options={TREATMENT_OPTIONS.map((option) => ({
           ...option,
           preview: <DisabledSpecimen treatment={option.value} />,
         }))}
       />
       <DialSelect
+        axis="inputError"
         label="Invalid"
-        value={state.inputError}
-        onChange={set("inputError")}
         options={ERROR_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -320,6 +421,66 @@ export function StatesSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialTrigger
+        label="Cursor"
+        holds={CURSOR_ROWS.map((row) => row.key)}
+        value={
+          <span className="truncate">
+            {cursorSummary(state)}
+            {changed > (state.cursorControls === "pointer" ? 0 : 1) &&
+              ` · ${changed}`}
+          </span>
+        }
+      >
+        <DialPopover className="w-80">
+          {CURSOR_ROWS.map((row) => (
+            <DialSegmented
+              key={row.key}
+              label={row.label}
+              value={state[row.key]}
+              onChange={set(row.key)}
+              options={[...row.options]}
+            />
+          ))}
+        </DialPopover>
+      </DialTrigger>
+      <DialTrigger
+        label="Text selection"
+        holds={["selectionHighlight", "selectionUiText"]}
+        value={
+          <>
+            <span className="truncate">
+              {optionLabel(HIGHLIGHT_OPTIONS, state.selectionHighlight)}
+              {state.selectionUiText === "selectable" && " · Selectable"}
+            </span>
+            <HighlightChip value={state.selectionHighlight} />
+          </>
+        }
+      >
+        <DialPopover className="w-80">
+          <DialSegmented
+            label="Highlight"
+            value={state.selectionHighlight}
+            onChange={set("selectionHighlight")}
+            options={HIGHLIGHT_OPTIONS.map((option) => ({
+              value: option.value,
+              label: (
+                <>
+                  <HighlightChip value={option.value} />
+                  {option.label}
+                </>
+              ),
+            }))}
+          />
+          <DialToggle
+            label="Selectable UI text"
+            value={state.selectionUiText === "selectable"}
+            onChange={(on) =>
+              set("selectionUiText")(on ? "selectable" : "none")
+            }
+          />
+        </DialPopover>
+      </DialTrigger>
     </>
   )
 }

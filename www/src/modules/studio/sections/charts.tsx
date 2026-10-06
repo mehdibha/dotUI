@@ -6,6 +6,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
 import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
+import { FamilyHero, HeroMember, UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -67,13 +68,22 @@ export function ChartsPreview({ state }: { state: Effective }) {
 }
 
 export function ChartsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { effective } = studio
   return (
     <>
+      <FamilyHero>
+        <HeroMember name="Chart">
+          <span className="flex items-center gap-3">
+            <SeriesGlyph palette={effective.chartPalette} />
+            <DialGlyph>
+              <GridGlyph grid={effective.chartGrid} />
+            </DialGlyph>
+          </span>
+        </HeroMember>
+      </FamilyHero>
       <DialList
+        axis="chartPalette"
         label="Palette"
-        value={state.chartPalette}
-        onChange={set("chartPalette")}
         options={PALETTE_OPTIONS.map((option) => ({
           ...option,
           preview: <SeriesGlyph palette={option.value} />,
@@ -81,9 +91,8 @@ export function ChartsSection({ studio }: { studio: Studio }) {
       />
       <DialGap />
       <DialSelect
-        label="Grid"
-        value={state.chartGrid}
-        onChange={set("chartGrid")}
+        axis="chartGrid"
+        label="Gridlines"
         options={GRID_OPTIONS.map((option) => ({
           ...option,
           preview: (
@@ -93,6 +102,7 @@ export function ChartsSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <UsesRow axis="brand" label="Brand" />
     </>
   )
 }

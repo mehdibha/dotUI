@@ -336,11 +336,10 @@ ${groupEntries.join("\n")}
   )
 }
 
-/** Studio panel search index: every settings row label and group title in
- *  each chapter's section, keyed by chapter id — so search reaches nested
- *  axes, not just chapter names. Read off the section JSX, plus the motion
- *  registry's entries and presets (their rows are data-driven); other data-driven
- *  labels (color roles, shape roles) are out of scope. */
+/** Studio panel search index: every settings row label and section title in
+ *  each chapter, keyed by chapter id, family pages as "Page › Row". Read off
+ *  the section JSX, plus the motion registry's entries and presets (their
+ *  rows are data-driven). */
 async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
   const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
@@ -374,7 +373,7 @@ async function buildStudioSearchIndex() {
       // A row's own label (a folded row's title) — the tag must not contain
       // another "<" before it.
       for (const [, label = ""] of source.matchAll(
-        /<(?:\w+Row|Dial\w+|\w+Motion|CardGrid)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
+        /<(?!UsesRow\b)(?:\w+Row|Dial\w+|\w+Motion|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push(label)
       for (const [, title = ""] of source.matchAll(
@@ -385,14 +384,24 @@ async function buildStudioSearchIndex() {
     }
     const source = await read(file)
     const labels = new Set<string>(rowLabels(source))
-    // A section that composes sibling sections (Components) indexes their
-    // rows too, under the sibling's name.
-    for (const [, sibling = ""] of source.matchAll(/from "\.\/([\w-]+)"/g)) {
+    // A chapter of pages (Components) indexes each page's rows under its
+    // label; a row a sibling file renders (Color's Primary) under the file's.
+    const pages = new Map<string, string>()
+    for (const [, label = "", page = ""] of source.matchAll(
+      /label: "([^"]+)",[\s\S]*?Body: (\w+),/g,
+    ))
+      pages.set(page, label)
+    for (const [, names = "", sibling = ""] of source.matchAll(
+      /import \{([^}]+)\} from "\.\/([\w-]+)"/g,
+    )) {
+      const page = names.split(",").find((name) => pages.has(name.trim()))
       const title = sibling.replace(/-/g, " ")
-      const prefix = title[0]!.toUpperCase() + title.slice(1)
-      labels.add(prefix)
-      for (const label of rowLabels(await read(sibling)))
-        labels.add(`${prefix} › ${label}`)
+      const prefix = page
+        ? pages.get(page.trim())!
+        : title[0]!.toUpperCase() + title.slice(1)
+      const rows = rowLabels(await read(sibling))
+      if (rows.length > 0 || page) labels.add(prefix)
+      for (const row of rows) labels.add(`${prefix} › ${row}`)
     }
     if (id === "motion") {
       for (const [, label = ""] of presets.matchAll(

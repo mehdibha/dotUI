@@ -86,13 +86,6 @@ export function ShapePreview({ state }: { state: Effective }) {
   )
 }
 
-export function shapeSummary(state: Effective): string {
-  const character =
-    SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
-    "Custom"
-  return `${character} · ${px(state.radiusPx)}`
-}
-
 /** Mounted with the popover, so Roles opens on a custom vector each time. */
 function CharacterPanel({ studio }: { studio: Studio }) {
   const { state, effective, set, setState } = studio
@@ -167,6 +160,7 @@ export function ShapeSection({ studio }: { studio: Studio }) {
       />
       <DialTrigger
         label="Character"
+        holds={SHAPE_ROLES.map((role) => role.key)}
         value={
           <>
             <span className={cn("truncate", !character && "text-fg/50")}>

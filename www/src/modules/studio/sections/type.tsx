@@ -1,7 +1,8 @@
 "use client"
 
 /* Typography — the three font roles, each row set in its own face so the row
-   is the specimen. Heading is Same as body until pinned. */
+   is the specimen (Heading is Same as body until pinned), and the case of
+   section labels in menus. */
 
 import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
@@ -12,7 +13,14 @@ import { cn } from "@/registry/lib/utils"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
-import { DIAL_CHEVRON, DIAL_LABEL, DIAL_PRESS, DIAL_ROW } from "../dial"
+import { LABEL_OPTIONS } from "../axes/menus"
+import {
+  DIAL_CHEVRON,
+  DIAL_LABEL,
+  DIAL_PRESS,
+  DIAL_ROW,
+  DialSegmented,
+} from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Effective, Studio } from "../state"
 import { ChipButton } from "../use-axis"
@@ -121,6 +129,11 @@ export function TypeSection({ studio }: { studio: Studio }) {
         resolved={state.monoFont}
         categories={["mono"]}
         onChange={set("monoFont")}
+      />
+      <DialSegmented
+        axis="menuLabels"
+        label="Section labels"
+        options={LABEL_OPTIONS}
       />
     </>
   )

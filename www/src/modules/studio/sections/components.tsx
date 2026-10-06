@@ -1,124 +1,93 @@
 "use client"
 
 /* Components — one row per family, each opening the family's page in place
-   of the panel. The row carries the family's specimen; the page holds every
-   option, so a new one never adds a row here. */
+   of the panel. The row carries the family's specimen. */
 
 import { useContext } from "react"
 
 import { DialLink } from "../dial"
 import { PanelNav } from "../rows"
 import type { ChapterPage, Studio } from "../state"
-import { AccordionPreview, AccordionSection } from "./accordion"
-import { AvatarsPreview, AvatarsSection } from "./avatars"
-import { BadgesPreview, BadgesSection } from "./badges"
 import { ButtonsPreview, ButtonsSection } from "./buttons"
 import { ChartsPreview, ChartsSection } from "./charts"
+import { DataDisplayPreview, DataDisplaySection } from "./data-display"
+import { DatesPreview, DatesSection } from "./dates"
 import { DialogsPreview, DialogsSection } from "./dialogs"
+import { FeedbackPreview, FeedbackSection } from "./feedback"
 import { InputsPreview, InputsSection } from "./inputs"
-import { LoadingSection } from "./loading"
 import { MenusPreview, MenusSection } from "./menus"
 import { NavigationPreview, NavigationSection } from "./navigation"
-import { PickersPreview, PickersSection } from "./pickers"
-import { PopoversPreview, PopoversSection } from "./popovers"
-import {
-  SelectionControlsPreview,
-  SelectionControlsSection,
-} from "./selection-controls"
-import { SlidersPreview, SlidersSection } from "./sliders"
-import { TablesPreview, TablesSection } from "./tables"
+import { SelectionPreview, SelectionSection } from "./selection"
 
 export const COMPONENT_PAGES: ChapterPage[] = [
   {
     id: "buttons",
-    owners: ["buttons", "button-groups", "toggles", "segmented-control"],
+    owners: [
+      "buttons",
+      "button-groups",
+      "toggles",
+      "segmented-control",
+      "pagination",
+    ],
     label: "Buttons",
     Preview: ButtonsPreview,
     Body: ButtonsSection,
   },
   {
     id: "inputs",
-    owners: ["inputs", "input-groups", "number-field", "otp-field"],
+    owners: ["inputs", "input-groups", "number-field", "otp-field", "pickers"],
     label: "Inputs",
     Preview: InputsPreview,
     Body: InputsSection,
   },
   {
-    id: "selection-controls",
-    owners: ["checkbox", "radio", "switch", "choice-cards"],
-    label: "Selection controls",
-    Preview: SelectionControlsPreview,
-    Body: SelectionControlsSection,
-  },
-  {
-    id: "pickers",
-    owners: ["pickers", "calendar"],
-    label: "Pickers",
-    Preview: PickersPreview,
-    Body: PickersSection,
-  },
-  {
-    id: "sliders",
-    label: "Sliders",
-    Preview: SlidersPreview,
-    Body: SlidersSection,
+    id: "selection",
+    owners: ["checkbox", "radio", "switch", "choice-cards", "sliders"],
+    label: "Selection",
+    Preview: SelectionPreview,
+    Body: SelectionSection,
   },
   {
     id: "menus",
-    label: "Menus",
+    owners: ["menus", "popovers", "tooltips", "mobilePickers"],
+    label: "Menus & popovers",
     Preview: MenusPreview,
     Body: MenusSection,
   },
   {
     id: "dialogs",
+    owners: ["dialogs", "mobileDialogs"],
     label: "Dialogs",
     Preview: DialogsPreview,
     Body: DialogsSection,
   },
   {
-    id: "popovers",
-    owners: ["popovers", "tooltips"],
-    label: "Popovers",
-    Preview: PopoversPreview,
-    Body: PopoversSection,
-  },
-  {
-    id: "navigation",
-    owners: ["tabs", "links", "breadcrumbs", "pagination", "sidebar"],
+    id: "nav",
+    owners: ["tabs", "links", "breadcrumbs", "sidebar"],
     label: "Navigation",
     Preview: NavigationPreview,
     Body: NavigationSection,
   },
   {
-    id: "loading",
-    owners: ["spinner", "skeleton", "progress"],
-    label: "Loading",
-    Body: LoadingSection,
+    id: "dates",
+    owners: ["calendar"],
+    label: "Date & time",
+    Preview: DatesPreview,
+    Body: DatesSection,
   },
   {
-    id: "badges",
-    owners: ["badges", "kbd"],
-    label: "Badges",
-    Preview: BadgesPreview,
-    Body: BadgesSection,
+    id: "display",
+    owners: ["tables", "accordion", "avatars", "kbd"],
+    label: "Data display",
+    Preview: DataDisplayPreview,
+    Body: DataDisplaySection,
   },
   {
-    id: "avatars",
-    label: "Avatars",
-    Preview: AvatarsPreview,
-    Body: AvatarsSection,
-  },
-  {
-    id: "tables",
-    label: "Tables",
-    Preview: TablesPreview,
-    Body: TablesSection,
-  },
-  {
-    id: "accordion",
-    label: "Accordion",
-    Preview: AccordionPreview,
-    Body: AccordionSection,
+    id: "feedback",
+    owners: ["badges", "spinner", "skeleton", "progress", "alert", "toast"],
+    label: "Feedback",
+    Preview: FeedbackPreview,
+    Body: FeedbackSection,
   },
   {
     id: "charts",
