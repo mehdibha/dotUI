@@ -55,7 +55,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "dialogs",
-    owners: ["dialogs", "mobileDialogs"],
+    owners: ["dialogs"],
     label: "Dialogs",
     Preview: DialogsPreview,
     Body: DialogsSection,

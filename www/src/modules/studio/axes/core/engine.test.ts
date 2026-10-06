@@ -360,6 +360,14 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { menuIndicator: "none" },
     { menuIndicator: "check-start" },
   ],
+  "dialogs/frost-only-frosted": [
+    { dialogBackdrop: "scrim", dialogFrost: "subtle" },
+    { dialogFrost: "subtle" },
+  ],
+  "dialogs/bleed-needs-open-footer": [
+    { dialogSections: "divided", dialogActions: "bleed" },
+    { dialogSections: "on-scroll", dialogActions: "bleed" },
+  ],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

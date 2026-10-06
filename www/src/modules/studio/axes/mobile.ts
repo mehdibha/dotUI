@@ -1,30 +1,16 @@
-/* Mobile — how dialogs adapt below the mobile line (the `use-mobile` hook's
-   768px viewport breakpoint; Tailwind's `md`): the classic modal stays
-   centered, iOS-style systems drop it to a sheet. Pickers are Menus'.
-
-   Engine: `modal.mobile` is a class slice that docks the modal to the bottom
-   edge. */
+/* Mobile — no axes of its own: pickers on mobile are Menus', dialogs on
+   mobile are Dialogs'. */
 
 import { defineChapter } from "./core/types"
-import type { Effective, Resolved } from "./index"
-import { oneOf } from "./schema"
+import type { Resolved } from "./index"
 import type { ChapterSchema } from "./schema"
 
-export const MOBILE_DEFAULTS = {
-  mobileDialogs: "center",
-}
+export const MOBILE_DEFAULTS = {}
 
-export const DIALOG_OPTIONS = [
-  { value: "center", label: "Center" },
-  { value: "sheet", label: "Sheet" },
-]
+export const MOBILE_SCHEMA: ChapterSchema<typeof MOBILE_DEFAULTS> = {}
 
-export const MOBILE_SCHEMA: ChapterSchema<typeof MOBILE_DEFAULTS> = {
-  mobileDialogs: oneOf(DIALOG_OPTIONS),
-}
-
-export function resolveMobile(state: Effective): Resolved {
-  return { params: { modal: { mobile: state.mobileDialogs } } }
+export function resolveMobile(): Resolved {
+  return {}
 }
 
 export const chapter = defineChapter({
