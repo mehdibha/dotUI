@@ -82,18 +82,19 @@ interface NumberFieldStepperProps extends React.ComponentProps<
 > {}
 
 const stepper =
-  "flex w-5 shrink-0 cursor-interactive items-center justify-center rounded-(--studio-radius-detail) bg-neutral text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,currentColor) *:[svg]:size-3"
+  "flex w-5 shrink-0 cursor-interactive items-center justify-center rounded-(--studio-radius-detail) text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,currentColor) *:[svg]:size-3"
 
 const NumberFieldDecrement = ({
   className,
   children,
   ...props
 }: NumberFieldStepperProps) => {
+  const { chip } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, className),
+        chip({ className: cn(stepper, className) }),
       )}
       {...props}
     >
@@ -107,11 +108,12 @@ const NumberFieldIncrement = ({
   children,
   ...props
 }: NumberFieldStepperProps) => {
+  const { chip } = useInputStyles()()
   return (
     <ButtonPrimitive.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, className),
+        chip({ className: cn(stepper, className) }),
       )}
       {...props}
     >
