@@ -56,7 +56,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       knob: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-(length:--studio-control-stroke) border-(--neutral-700) bg-thumb ring-(--neutral-700)/50 transition-shadow hover:ring-3 focus-visible:focus-ring disabled:border-(--disabled-border,var(--color-border-control)) dragging:ring-3",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-(length:--studio-control-stroke) border-fg-muted bg-thumb ring-fg-muted/50 transition-shadow hover:ring-3 focus-visible:focus-ring disabled:border-(--disabled-border,var(--color-border-control)) dragging:ring-3",
         },
       },
       ring: {
