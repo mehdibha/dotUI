@@ -93,7 +93,9 @@ function SliderBar() {
   const { control, track, fill, thumb } = useSliderStyles()()
   const orientation = "horizontal"
   return (
-    <span className={control({ orientation, className: "w-12 grow-0" })}>
+    <span
+      className={control({ orientation, className: "min-h-0 w-12 grow-0" })}
+    >
       <span className={track({ orientation })}>
         <span
           className={fill()}

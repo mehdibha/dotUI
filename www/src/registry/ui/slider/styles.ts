@@ -62,16 +62,17 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       ring: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-2 border-selection bg-thumb shadow-sm ring-border-control/50 transition-shadow hover:ring-4 focus-visible:focus-ring dragging:ring-4",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-2 border-selection bg-thumb shadow-sm ring-border-control/50 transition-shadow hover:ring-4 focus-visible:focus-ring disabled:border-(--disabled-selected-bg,var(--color-selection)) dragging:ring-4",
         },
       },
       solid: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) bg-selection ring-border-control/30 transition-shadow hover:ring-2 focus-visible:focus-ring dragging:ring-2",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) bg-selection ring-border-control/30 transition-shadow hover:ring-2 focus-visible:focus-ring disabled:bg-(--disabled-selected-bg,var(--color-selection)) dragging:ring-2",
         },
       },
-      // A bar in the fill color, a gap cut from the track, a stop dot.
+      // A bar in the fill color, a gap cut from the track, a stop dot; the
+      // control reserves the bar's 44px reach (Material 3's container).
       handle: {
         slots: {
           thumb: [
@@ -84,12 +85,14 @@ const { useStyles, styles } = createStyles(sliderMeta, {
         variants: {
           orientation: {
             horizontal: {
+              control: "min-h-[calc(var(--slider-size)+44px)]",
               thumb:
                 "h-(--slider-size) w-4 before:inset-y-[-14px] before:left-1/2 before:w-1 before:-translate-x-1/2 focus-visible:before:w-0.5 dragging:before:w-0.5",
               track:
                 "after:end-[calc(var(--slider-size)/2-2px)] after:top-1/2 after:-translate-y-1/2",
             },
             vertical: {
+              control: "min-w-[calc(var(--slider-size)+44px)]",
               thumb:
                 "h-4 w-(--slider-size) before:inset-x-[-14px] before:top-1/2 before:h-1 before:-translate-y-1/2 focus-visible:before:h-0.5 dragging:before:h-0.5",
               track:
