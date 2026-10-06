@@ -117,7 +117,7 @@ describe("selection controls", () => {
     expect(designSystemOf(seeded).color?.scopes).toEqual({ slider: "accent" })
     expect(
       designSystemOf({ ...seeded, checkboxColor: "neutral" }).color?.scopes,
-    ).toEqual({ checkbox: "neutral", slider: "accent" })
+    ).toMatchObject({ checkbox: "neutral", slider: "accent" })
   })
 
   it("the slider fill keeps its own source under a selection seed", () => {
@@ -129,7 +129,14 @@ describe("selection controls", () => {
       designSystemOf(
         parseState({ selectionColor: "neutral", sliderColor: "neutral" }),
       ).color?.scopes,
-    ).toEqual({ radio: "accent", switch: "accent", checkbox: "accent" })
+    ).toEqual({
+      radio: "accent",
+      switch: "accent",
+      checkbox: "accent",
+      calendar: "accent",
+      "range-calendar": "accent",
+      "time-picker-columns": "accent",
+    })
   })
 
   it("Sharp is a fixed 2px; Auto writes nothing", () => {

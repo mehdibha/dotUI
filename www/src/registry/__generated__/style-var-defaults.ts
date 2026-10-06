@@ -18,7 +18,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-bubble-radius": "var(--studio-radius-card)",
 	"--studio-button-state-duration": "150ms",
 	"--studio-button-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
-	"--studio-calendar-cell-radius": "var(--studio-radius-control)",
 	"--studio-calendar-state-duration": "150ms",
 	"--studio-calendar-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
 	"--studio-card-radius": "var(--studio-radius-card)",

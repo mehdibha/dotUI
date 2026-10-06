@@ -80,6 +80,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Date & time",
 		"Date & time › Day shape",
 		"Date & time › Today",
+		"Date & time › Today color",
 		"Date & time › Weekday labels",
 		"Dialogs",
 		"Dialogs › Sections",
