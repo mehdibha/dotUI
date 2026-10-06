@@ -25,6 +25,8 @@ export interface RegistryRequest {
   codeOptions: CodeOptions
   /** Where a sibling item is served: same design system, same code style. */
   itemUrl: (name: string) => string
+  /** Where /studio opens the design system. */
+  studioUrl: string
 }
 
 export type Result<T> =
@@ -78,6 +80,7 @@ export function parseRegistryRequest(url: URL): Result<RegistryRequest> {
       source,
       codeOptions,
       itemUrl: (item) => `${base}/${item}.json${query}`,
+      studioUrl: `${url.origin}/studio?${source.kind === "preset" ? "preset" : "s"}=${source.id}`,
     },
   }
 }
@@ -86,8 +89,18 @@ export function parseRegistryRequest(url: URL): Result<RegistryRequest> {
 export async function resolveSource(
   source: RegistrySource,
   store: SnapshotStore,
-): Promise<DesignSystem | undefined> {
-  if (source.kind === "preset") return resolvePreset(source.id)
+): Promise<{ name: string; designSystem: DesignSystem } | undefined> {
+  if (source.kind === "preset") {
+    const preset = getPreset(source.id)
+    return (
+      preset && { name: preset.name, designSystem: resolvePreset(preset.id) }
+    )
+  }
   const snapshot = await loadSnapshot(source.id, store)
-  return snapshot ? resolveDesignSystem(snapshot.state) : undefined
+  return snapshot
+    ? {
+        name: snapshot.name,
+        designSystem: resolveDesignSystem(snapshot.state),
+      }
+    : undefined
 }
