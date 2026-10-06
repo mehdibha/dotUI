@@ -1,14 +1,8 @@
-/* Choice cards — the card variant of the whole selection-control family
-   (checkbox card, radio card, switch card), one treatment across all three.
-   The control keeps the family Fill; the axes here are card-only.
-
-   Engine: `card-selected` is an enum param on `checkbox`, `radio-group` and
-   `switch` (a synced group — one axis writes all three); every value paints
-   with the selection tokens, so the card follows the family Fill. Tint is the
-   registry's default — the muted surface + soft edge today's cards ship.
-   `card-control` reaches the box and the dot only: Start leaves the control
-   where the markup puts it, End and Hidden reorder or drop the indicator. A
-   switch card always trails its control. */
+/* Choice cards — the card mode of checkbox, radio-group and switch, one
+   `card-selected` param written to all three (the recipe's single source is
+   CHOICE_CARD in the checkbox styles). Every value paints with the selection
+   tokens, so the card follows the family fill. Where the control sits is
+   markup, not an axis. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -17,42 +11,24 @@ import type { ChapterSchema } from "./schema"
 
 export const CHOICE_CARD_DEFAULTS = {
   cardSelected: "tint",
-  cardControl: "start",
 }
 
-/* An accent border, a tinted surface, or both; systems split roughly evenly. */
+/* Tint: a soft edge on a tinted surface (shadcn). Outline + tint: Geist,
+   Duolingo, Airbnb, Claude. Outline: a 2px edge, no tint (Radix Themes,
+   Stripe, Untitled UI). */
 export const SELECTED_OPTIONS = [
-  { value: "outline", label: "Outline" },
   { value: "tint", label: "Tint" },
-  { value: "outline-tint", label: "Both" },
-]
-
-/* Where the real check/radio sits — or hidden, so the card treatment alone
-   carries the state (the Ant selectable-card school). */
-export const CONTROL_OPTIONS = [
-  { value: "start", label: "Start" },
-  { value: "end", label: "End" },
-  { value: "hidden", label: "Hidden" },
+  { value: "outline-tint", label: "Outline + tint" },
+  { value: "outline", label: "Outline" },
 ]
 
 export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
   cardSelected: oneOf(SELECTED_OPTIONS),
-  cardControl: oneOf(CONTROL_OPTIONS),
 }
 
 export function resolveChoiceCards(state: Effective): Resolved {
-  const selected = state.cardSelected
-  const box = {
-    "card-selected": selected,
-    "card-control": state.cardControl,
-  }
-  return {
-    params: {
-      checkbox: box,
-      "radio-group": box,
-      switch: { "card-selected": selected },
-    },
-  }
+  const card = { "card-selected": state.cardSelected }
+  return { params: { checkbox: card, "radio-group": card, switch: card } }
 }
 
 export const chapter = defineChapter({

@@ -1,13 +1,7 @@
-/* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch
-   ⇄ Choice cards). Fill is per control, a leaf of Color's Primary: on the
-   selection tokens' source it paints with them, off it it forks — Geist runs
-   near-black checkboxes beside a blue toggle. Corner is checkbox-only
-   geometry.
-
-   Engine: a fork re-declares the selection tokens under `[data-checkbox]`
-   (the recipe's `scopes`), so the component's classes never change. Corner
-   rides on the `--studio-checkbox-radius` surface var, resolved to a plain
-   `rounded-*` utility on export. */
+/* Checkbox — leader of Selection (checkbox, radio, switch, slider, choice
+   cards). Fill is a leaf of Color's Primary: off the selection leaf it
+   re-declares the selection tokens under `[data-checkbox]` (a recipe scope),
+   so the classes never change. Corner rides on `--studio-checkbox-radius`. */
 
 import { fillScope, SOURCE_OPTIONS } from "./color"
 import { defineChapter } from "./core/types"
@@ -17,21 +11,15 @@ import type { ChapterSchema } from "./schema"
 
 export const CHECKBOX_DEFAULTS = {
   checkboxColor: "accent",
-  checkCorner: "rounded",
+  checkCorner: "auto",
 }
 
-/* Rounded ≈ shadcn's 4px, Square ≈ Material/Carbon's 2px, Circle ≈ iOS-style
-   list checks and Ant's circle checkbox. */
+/* Auto is Shape's detail rung (shadcn, Primer, Polaris, Untitled UI). Sharp
+   is a fixed 2px whatever the radius (Material 3, Carbon, Fluent 2). */
 export const CORNER_OPTIONS = [
-  { value: "rounded", label: "Rounded" },
-  { value: "square", label: "Square" },
-  { value: "circle", label: "Circle" },
+  { value: "auto", label: "Auto" },
+  { value: "sharp", label: "Sharp" },
 ]
-
-const CORNER_TOKENS: Record<string, string> = {
-  square: "var(--radius-xs)",
-  circle: "var(--radius-full)",
-}
 
 export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
   checkboxColor: oneOf(SOURCE_OPTIONS),
@@ -39,10 +27,13 @@ export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
 }
 
 export function resolveCheckbox(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  const corner = CORNER_TOKENS[state.checkCorner]
-  if (corner) tokens["--studio-checkbox-radius"] = corner
-  return { tokens, color: fillScope(state, "checkbox", state.checkboxColor) }
+  return {
+    tokens:
+      state.checkCorner === "sharp"
+        ? { "--studio-checkbox-radius": "2px" }
+        : undefined,
+    color: fillScope(state, "checkbox", state.checkboxColor),
+  }
 }
 
 export const chapter = defineChapter({

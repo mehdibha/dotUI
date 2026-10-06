@@ -8,13 +8,12 @@ const { useStyles, styles } = createStyles(sliderMeta, {
     slots: {
       root: fieldStyles().field(),
       control:
-        "relative flex grow cursor-(--studio-slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
+        "relative flex grow cursor-drag touch-none items-center select-none disabled:cursor-disabled",
       track:
         "pointer-events-none relative grow overflow-hidden rounded-(--studio-slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
-      fill: "pointer-events-none bg-(--studio-slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--studio-slider-fill-color))",
-      thumb: [
-        "top-1/2 left-1/2 grid cursor-(--studio-slider-cursor) place-items-center rounded-(--studio-slider-thumb-radius) focus-reset transition-shadow duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--studio-slider-dragging-cursor)",
-      ],
+      fill: "pointer-events-none bg-selection disabled:bg-(--disabled-selected-bg,var(--color-selection))",
+      thumb:
+        "top-1/2 left-1/2 grid cursor-drag place-items-center focus-reset duration-(--studio-slider-state-duration) ease-(--studio-slider-state-ease) focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-dragging",
       output:
         "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
     },
@@ -54,47 +53,75 @@ const { useStyles, styles } = createStyles(sliderMeta, {
   },
   params: {
     thumb: {
-      circle: {
+      knob: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) bg-fg shadow-(--studio-slider-thumb-shadow)",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-(length:--studio-control-stroke) border-border-control bg-thumb transition-shadow hover:outline-3 hover:outline-border-control/50 hover:outline-solid dragging:outline-3 dragging:outline-border-control/50 dragging:outline-solid",
         },
       },
-      outline: {
+      ring: {
         slots: {
           thumb:
-            "size-(--slider-thumb-size) border-2 border-border-control bg-(--surface-bg,var(--color-bg)) shadow-(--studio-slider-thumb-shadow)",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) border-2 border-selection bg-thumb shadow-sm transition-shadow hover:outline-4 hover:outline-border-control/50 hover:outline-solid dragging:outline-4 dragging:outline-border-control/50 dragging:outline-solid",
         },
       },
-      // M3's handle: the fill color, with the track cut away around it.
-      bar: {
+      solid: {
         slots: {
           thumb:
-            "bg-(--studio-slider-fill-color) shadow-[0_0_0_3px_var(--surface-bg,var(--color-bg))]",
+            "size-(--slider-thumb-size) rounded-(--studio-slider-thumb-radius) bg-selection transition-shadow hover:outline-2 hover:outline-border-control/30 hover:outline-solid dragging:outline-2 dragging:outline-border-control/30 dragging:outline-solid",
+        },
+      },
+      // A bar in the fill color, a gap cut from the track, a stop dot.
+      handle: {
+        slots: {
+          thumb: [
+            "bg-(--surface-bg,var(--color-bg)) before:absolute before:rounded-(--studio-slider-thumb-radius) before:bg-selection before:transition-[width,height] before:content-['']",
+            "disabled:before:bg-(--disabled-selected-bg,var(--color-selection))",
+          ],
+          track:
+            "after:absolute after:size-1 after:rounded-full after:bg-selection after:content-['']",
         },
         variants: {
           orientation: {
             horizontal: {
-              thumb: "h-[calc(var(--slider-thumb-size)*2)] w-1",
+              thumb:
+                "h-(--slider-size) w-4 before:inset-y-[-14px] before:left-1/2 before:w-1 before:-translate-x-1/2 focus-visible:before:w-0.5 dragging:before:w-0.5",
+              track:
+                "after:end-[calc(var(--slider-size)/2-2px)] after:top-1/2 after:-translate-y-1/2",
             },
             vertical: {
-              thumb: "h-1 w-[calc(var(--slider-thumb-size)*2)]",
+              thumb:
+                "h-4 w-(--slider-size) before:inset-x-[-14px] before:top-1/2 before:h-1 before:-translate-y-1/2 focus-visible:before:h-0.5 dragging:before:h-0.5",
+              track:
+                "after:start-1/2 after:top-[calc(var(--slider-size)/2-2px)] after:-translate-x-1/2",
             },
           },
         },
       },
     },
     track: {
+      hairline: {
+        slots: {
+          control:
+            "[--slider-size:--spacing(0.5)] [--slider-thumb-size:--spacing(3)]",
+        },
+      },
       thin: {
         slots: {
           control:
             "[--slider-size:--spacing(1)] [--slider-thumb-size:--spacing(3)]",
         },
       },
+      medium: {
+        slots: {
+          control:
+            "[--slider-size:--spacing(2)] [--slider-thumb-size:--spacing(4)]",
+        },
+      },
       thick: {
         slots: {
           control:
-            "[--slider-size:--spacing(3)] [--slider-thumb-size:--spacing(5)]",
+            "[--slider-size:--spacing(4)] [--slider-thumb-size:--spacing(5)]",
         },
       },
     },

@@ -2,6 +2,29 @@ import { createStyles } from "@/lib/styles"
 
 import checkboxMeta from "./meta"
 
+/* The selected choice card — one source for checkbox, radio-group and switch
+   cards. Every value paints with the selection tokens. */
+export const CHOICE_CARD = {
+  tint: {
+    slots: {
+      control:
+        "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
+    },
+  },
+  "outline-tint": {
+    slots: {
+      control:
+        "has-data-label:selected:border-selection has-data-label:selected:bg-selection-muted",
+    },
+  },
+  outline: {
+    slots: {
+      control:
+        "has-data-label:selected:border-selection has-data-label:selected:inset-ring-1 has-data-label:selected:inset-ring-selection",
+    },
+  },
+}
+
 const { useStyles, styles } = createStyles(checkboxMeta, {
   base: {
     slots: {
@@ -36,42 +59,8 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
       },
     },
   },
-  /* The card treatment — synced with radio-group and switch, change all three
-     together. Every value paints with the selection tokens, so the card
-     follows the family fill. Start keeps the control where the markup puts
-     it. */
   params: {
-    "card-selected": {
-      outline: {
-        slots: { control: "has-data-label:selected:border-selection" },
-      },
-      tint: {
-        slots: {
-          control:
-            "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
-        },
-      },
-      "outline-tint": {
-        slots: {
-          control:
-            "has-data-label:selected:border-selection has-data-label:selected:bg-selection-muted",
-        },
-      },
-    },
-    "card-control": {
-      start: {},
-      end: {
-        slots: {
-          control:
-            "has-data-label:justify-between has-data-label:*:data-checkbox-indicator:order-last",
-        },
-      },
-      hidden: {
-        slots: {
-          control: "has-data-label:*:data-checkbox-indicator:hidden",
-        },
-      },
-    },
+    "card-selected": CHOICE_CARD,
   },
 })
 

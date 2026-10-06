@@ -332,6 +332,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { motionEntrance: "fade" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
+  "sliders/handle-needs-track": [
+    { sliderThumb: "handle", sliderTrack: "hairline" },
+    { sliderTrack: "hairline" },
+  ],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

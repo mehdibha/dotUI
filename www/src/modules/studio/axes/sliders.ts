@@ -1,15 +1,10 @@
-/* Sliders — the two decisions real systems fork on. Thumb: a solid disc
-   (dotUI, Material 2), a bordered white disc (iOS, shadcn, Radix), or
-   Material 3's tall handle. Track: a hairline the thumb rides (iOS, Radix,
-   shadcn) or a chunky level bar (M3's 16dp track, media UIs).
+/* Slider — thumb and track are enum params on `slider`; the track sets the
+   thumb's size through the control's own vars. The fill paints with the
+   selection tokens, re-declared under `[data-slider]` when the slider's leaf
+   differs from them. The color-slider stays out: its track is a gradient
+   swatch and its thumb the shared color-thumb. */
 
-   Engine: `thumb` and `track` are enum params on `slider`; the thick track
-   scales the thumb with it through the component's own size vars. Color is
-   a leaf of Color's Primary: the fill rides `--studio-slider-fill-color`,
-   the primary tokens by default, re-pointed only when the slider leaves the
-   buttons' source. The color-slider stays out: its track is
-   a gradient swatch and its thumb the shared color-thumb, so no axis
-   applies. */
+import type { PrimaryColorSource } from "@/registry/theme"
 
 import { SOURCE_OPTIONS } from "./color"
 import { defineChapter } from "./core/types"
@@ -18,26 +13,40 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const SLIDER_DEFAULTS = {
-  sliderThumb: "circle",
-  sliderTrack: "thin",
+  sliderThumb: "knob",
+  sliderTrack: "auto",
   sliderColor: "accent",
 }
 
-const FILL_TOKENS: Record<string, string> = {
-  neutral: "var(--color-inverse)",
-  accent: "var(--color-accent)",
-}
-
+/* Knob: a light disc with a neutral edge (shadcn nova/rhea/luma, Radix,
+   Spectrum 2). Ring: a light disc ringed in the fill (shadcn vega/maia,
+   Untitled UI, Ant Design). Solid: a disc in the fill (shadcn sera, Carbon,
+   Supabase, Polaris). Handle: Material 3's bar with a cut-away gap and a stop
+   dot. */
 export const THUMB_OPTIONS = [
-  { value: "circle", label: "Circle" },
-  { value: "outline", label: "Outline" },
-  { value: "bar", label: "Bar" },
+  { value: "knob", label: "Knob" },
+  { value: "ring", label: "Ring" },
+  { value: "solid", label: "Solid" },
+  { value: "handle", label: "Handle" },
 ]
 
+/* 2, 4, 8 or 16px. Hairline: Carbon, shadcn sera. Thin: shadcn nova,
+   Supabase, Polaris. Medium: Radix, Untitled UI, Geist. Thick: Material 3. */
 export const TRACK_OPTIONS = [
+  { value: "auto", label: "Auto" },
+  { value: "hairline", label: "Hairline" },
   { value: "thin", label: "Thin" },
+  { value: "medium", label: "Medium" },
   { value: "thick", label: "Thick" },
 ]
+
+/** Each thumb's own track: Material 3's handle rides a 16px track. */
+export const THUMB_TRACK: Record<string, string> = {
+  knob: "thin",
+  ring: "thin",
+  solid: "thin",
+  handle: "thick",
+}
 
 export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
   sliderThumb: oneOf(THUMB_OPTIONS),
@@ -46,18 +55,14 @@ export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
 }
 
 export function resolveSliders(state: Effective): Resolved {
-  const tokens: Record<string, string> = {}
-  const fill = FILL_TOKENS[state.sliderColor]
-  if (fill && state.sliderColor !== state.buttonColor)
-    tokens["--studio-slider-fill-color"] = fill
+  // A selection seed repaints the selection tokens, so any leaf scopes.
+  const scoped =
+    state.sliderColor !== state.selectionColor || state.selectionSeed !== ""
   return {
-    params: {
-      slider: {
-        thumb: state.sliderThumb,
-        track: state.sliderTrack,
-      },
-    },
-    tokens,
+    params: { slider: { thumb: state.sliderThumb, track: state.sliderTrack } },
+    color: scoped
+      ? { scopes: { slider: state.sliderColor as PrimaryColorSource } }
+      : undefined,
   }
 }
 
@@ -66,4 +71,19 @@ export const chapter = defineChapter({
   defaults: SLIDER_DEFAULTS,
   schema: SLIDER_SCHEMA,
   resolve: resolveSliders,
+  follows: {
+    sliderTrack: [
+      { kind: "auto", id: "auto", from: "sliderThumb", table: THUMB_TRACK },
+    ],
+  },
+  rules: [
+    {
+      // The stop dot and the gap clip inside a 2px track.
+      id: "sliders/handle-needs-track",
+      target: "sliderTrack",
+      when: { key: "sliderThumb", in: ["handle"] },
+      effect: { kind: "exclude", options: ["hairline"], fallback: "thin" },
+      cause: "sliderThumb",
+    },
+  ],
 })
