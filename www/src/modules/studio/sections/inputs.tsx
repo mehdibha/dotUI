@@ -13,7 +13,6 @@ import {
   AUTO_STYLE,
   HEIGHT_OPTIONS,
   HOVER_OPTIONS,
-  STYLE_HOVER,
   STYLE_OPTIONS,
 } from "../axes/inputs"
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
@@ -243,7 +242,6 @@ export function InputsPreview({ state }: { state: Effective }) {
 export function InputsSection({ studio }: { studio: Studio }) {
   const { effective } = studio
   const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
-  const styleHover = STYLE_HOVER[effective.inputStyle] ?? "none"
   return (
     <>
       <FamilyHero>
@@ -310,13 +308,7 @@ export function InputsSection({ studio }: { studio: Studio }) {
         <DialSelect
           axis="inputHover"
           label="Hover"
-          options={[
-            {
-              value: "auto",
-              label: `As style · ${labelOf(HOVER_OPTIONS, styleHover)}`,
-            },
-            ...HOVER_OPTIONS,
-          ]}
+          options={[{ value: "auto", label: "As style" }, ...HOVER_OPTIONS]}
         />
         <DialSelect
           axis="inputHeight"

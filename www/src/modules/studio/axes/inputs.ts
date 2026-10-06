@@ -49,13 +49,17 @@ export const AUTO_STYLE: Record<string, string> = {
 }
 
 export const HOVER_OPTIONS = [
-  { value: "none", label: "None", credits: ["shadcn", "Primer", "Radix"] },
+  {
+    value: "none",
+    label: "None",
+    credits: ["shadcn", "Primer", "Radix", "Carbon"],
+  },
   {
     value: "edge",
     label: "Edge",
     credits: ["Geist", "Linear", "Stripe", "Spotify", "Claude"],
   },
-  { value: "tint", label: "Tint", credits: ["Material 3 filled", "Carbon"] },
+  { value: "tint", label: "Tint", credits: ["Material 3 filled"] },
   { value: "edge-tint", label: "Edge + tint", credits: ["Polaris"] },
 ]
 

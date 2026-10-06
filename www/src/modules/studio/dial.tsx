@@ -267,6 +267,7 @@ export interface DialSelectOption {
  *  rows under the list, past a separator. */
 export function DialSelect({
   axis: key,
+  holds,
   label,
   value: valueProp,
   onChange: onChangeProp,
@@ -276,6 +277,8 @@ export function DialSelect({
 }: {
   /** The key the row edits: value, change, hide and exclusions follow it. */
   axis?: AxisKey
+  /** Keys edited in the rows under the list, so a reveal lands here. */
+  holds?: readonly string[]
   label: string
   value?: string
   onChange?: (value: string) => void
@@ -285,9 +288,13 @@ export function DialSelect({
 }) {
   const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
   if (hidden) return null
-  const value = valueProp ?? following ?? String(axis?.effective)
+  // A key read through a follow keeps its follow option picked ("Auto · Tone").
+  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   const selected = options.find((option) => option.value === value)
+  const resolved = following
+    ? options.find((option) => option.value === String(axis?.effective))
+    : undefined
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -297,12 +304,16 @@ export function DialSelect({
   return (
     <DialTrigger
       axis={key}
+      holds={holds}
       label={label}
       aside={held && <CauseChip cause={held} />}
       value={
         <>
-          <span className="truncate">{selected?.label ?? value}</span>
-          {rowPreview && selected?.preview}
+          <span className="truncate">
+            {selected?.label ?? value}
+            {resolved && ` · ${resolved.label}`}
+          </span>
+          {rowPreview && (resolved ?? selected)?.preview}
         </>
       }
     >
@@ -553,7 +564,7 @@ export function DialList({
 }) {
   const { axis, hidden, exclude, following } = useAxisGate(key)
   if (hidden) return null
-  const value = valueProp ?? following ?? String(axis?.effective)
+  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
   return (
     <div data-axis={key} className="flex flex-col">
