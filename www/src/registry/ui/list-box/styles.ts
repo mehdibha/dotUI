@@ -2,9 +2,9 @@ import { createStyles } from "@/lib/styles"
 
 import listBoxMeta from "./meta"
 
-/* List rows: one recipe for list-box, menu (imports it) and command. A row
-   lights up on hover outside pickers, on focus inside them (keyboard and
-   pointer move one focus there), and on keyboard focus anywhere. */
+/* List rows: one recipe for list-box, menu (imports it) and command. One row
+   lights up at a time: the focused row where focus follows the pointer (menus,
+   pickers), else the keyboard row, else the hovered one. */
 export const LIST_ROWS = {
   base: {
     slots: {
@@ -25,7 +25,7 @@ export const LIST_ROWS = {
         "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
       ],
       indicator: [
-        "pointer-events-none absolute flex items-center justify-center group-has-[[slot=description]]/list-item:top-2",
+        "pointer-events-none absolute group-has-[[slot=description]]/list-item:top-2",
       ],
       submenuIndicator: [
         "pointer-events-none absolute right-2 flex items-center justify-center",
@@ -65,13 +65,13 @@ export const LIST_ROWS = {
       "check-start": {
         slots: {
           item: "data-selection-mode:pl-8 data-selection-mode:has-[[slot=description]]:has-[>svg]:pl-14 data-selection-mode:has-[[slot=description]]:*:[svg]:left-8",
-          indicator: "left-2",
+          indicator: "left-2 flex items-center justify-center",
         },
       },
       "check-end": {
         slots: {
           item: "data-selection-mode:pr-8",
-          indicator: "right-2",
+          indicator: "right-2 flex items-center justify-center",
         },
       },
       none: {
@@ -85,12 +85,12 @@ export const LIST_ROWS = {
       neutral: {
         slots: {
           item: [
-            "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
-            "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
+            "focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
             "focus-visible:bg-highlight focus-visible:text-fg-on-highlight",
-            "data-[variant=danger]:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-danger-muted data-[variant=danger]:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-danger",
-            "data-[variant=danger]:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-danger-muted data-[variant=danger]:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-danger",
+            "hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-highlight hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-highlight",
+            "data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-danger-muted data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-danger",
             "data-[variant=danger]:focus-visible:bg-danger-muted data-[variant=danger]:focus-visible:text-fg-danger",
+            "data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-danger-muted data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-danger",
           ],
         },
       },
@@ -98,12 +98,12 @@ export const LIST_ROWS = {
       accent: {
         slots: {
           item: [
-            "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-accent hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-accent hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:**:text-current",
-            "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-accent focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-accent focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
+            "focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-accent focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-accent focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
             "focus-visible:bg-accent focus-visible:text-fg-on-accent focus-visible:**:text-current",
-            "data-[variant=danger]:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-danger data-[variant=danger]:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-danger",
-            "data-[variant=danger]:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-danger data-[variant=danger]:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-danger",
+            "hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-accent hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-accent hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:**:text-current",
+            "data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-danger data-[variant=danger]:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-danger",
             "data-[variant=danger]:focus-visible:bg-danger data-[variant=danger]:focus-visible:text-fg-on-danger",
+            "data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-danger data-[variant=danger]:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-danger",
           ],
         },
       },
@@ -132,16 +132,17 @@ export const LIST_ROWS = {
         },
       },
     },
-    // Material 3, Carbon, Polaris: the selected row keeps the selected wash.
+    // Material 3, Carbon, Polaris: the selected row keeps the selected wash,
+    // hovered or focused too, under either highlight.
     selected: {
       none: {},
       tint: {
         slots: {
           item: [
             "selected:bg-selected selected:text-fg-on-selected",
-            "selected:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-selected-hover selected:hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-selected",
-            "selected:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-selected-hover selected:focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-selected",
+            "selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-selected-hover selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-selected",
             "selected:focus-visible:bg-selected-hover selected:focus-visible:text-fg-on-selected",
+            "selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-selected-hover selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-selected",
           ],
         },
       },
