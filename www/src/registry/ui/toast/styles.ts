@@ -53,6 +53,12 @@ const { useStyles, styles } = createStyles(toastMeta, {
       action: "max-w-32 empty:hidden **:[span]:truncate",
     },
     variants: {
+      // On a solid fill the action is the quiet button in the toast's ink.
+      onFill: {
+        true: {
+          action: "text-current hover:bg-current/10 pressed:bg-current/20",
+        },
+      },
       position: {
         "top-left": {},
         "top-center": {},
@@ -127,14 +133,12 @@ const { useStyles, styles } = createStyles(toastMeta, {
         },
         variants: { variant: { loading: { icon: "text-fg-muted" } } },
       },
-      // Material 3 (snackbar), Polaris, Spectrum 2, Carbon: opaque inverse;
-      // status icons take the solid status color to read on it.
+      // Material 3 (snackbar), Polaris, Spectrum 2, Carbon: opaque inverse.
       inverse: {
         slots: {
           toast: "border-transparent bg-inverse text-fg-inverse",
           content: "[--surface-bg:var(--color-inverse)]",
           description: "text-fg-inverse",
-          icon: "[--color-fg-danger:var(--color-danger)] [--color-fg-info:var(--color-info)] [--color-fg-success:var(--color-success)] [--color-fg-warning:var(--color-warning)]",
         },
       },
     },
@@ -149,6 +153,19 @@ const { useStyles, styles } = createStyles(toastMeta, {
             danger: { icon: "text-fg-danger" },
             error: { icon: "text-fg-danger" },
             info: { icon: "text-fg-info" },
+          },
+        },
+      },
+      // Carbon (inverse): the solid status color, to read on an inverse
+      // surface.
+      "solid-icon": {
+        variants: {
+          variant: {
+            success: { icon: "text-success" },
+            warning: { icon: "text-warning" },
+            danger: { icon: "text-danger" },
+            error: { icon: "text-danger" },
+            info: { icon: "text-info" },
           },
         },
       },

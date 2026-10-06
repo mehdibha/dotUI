@@ -29,7 +29,7 @@ const toastMeta = {
     status: {
       kind: "enum",
       default: "icon",
-      values: ["icon", "bold", "soft"] as const,
+      values: ["icon", "solid-icon", "bold", "soft"] as const,
       description: "How a status toast shows its status.",
     },
   },

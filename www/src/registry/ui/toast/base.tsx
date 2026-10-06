@@ -2,6 +2,7 @@
 
 import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 
+import { createParamValue } from "@/lib/styles"
 import {
   CircleAlertIcon,
   CircleCheckIcon,
@@ -52,6 +53,26 @@ const toastIcons = {
 } as const
 
 const defaultToastManager = ToastPrimitive.createToastManager<ToastData>()
+
+const useInverseSurface = createParamValue({
+  componentName: "toast",
+  paramName: "surface",
+  defaultValue: "surface",
+  values: { surface: false, inverse: true },
+})
+
+// Whether a status toast's own fill is solid; undefined sits on the surface.
+const useSolidStatus = createParamValue<boolean | undefined>({
+  componentName: "toast",
+  paramName: "status",
+  defaultValue: "icon",
+  values: {
+    icon: undefined,
+    "solid-icon": undefined,
+    bold: true,
+    soft: false,
+  },
+})
 
 function getToastVariant(type: string | undefined): ToastVariant {
   return type && type in toastIcons ? (type as ToastVariant) : "neutral"
@@ -149,6 +170,12 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
     toast: toastStyle,
   } = useStyles()()
   const buttonStyles = useButtonStyles()
+  const inverseSurface = useInverseSurface()
+  const solidStatus = useSolidStatus()
+  const onFill =
+    (variant === "neutral" || variant === "loading"
+      ? undefined
+      : solidStatus) ?? inverseSurface
 
   return (
     <ToastPrimitive.Root
@@ -182,9 +209,9 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
             <ToastPrimitive.Action
               data-slot="toast-action"
               className={buttonStyles({
-                variant: "secondary",
+                variant: onFill ? "quiet" : "secondary",
                 size: "sm",
-                className: action(),
+                className: action({ onFill }),
               })}
             />
           </div>

@@ -44,10 +44,13 @@ export const TOAST_SCHEMA: ChapterSchema<typeof TOAST_DEFAULTS> = {
 }
 
 export function resolveToast(state: Effective): Resolved {
+  // On Inverse, the status icon takes the solid color to read.
+  const status =
+    state.toastStatus === "icon" && state.toastStyle === "inverse"
+      ? "solid-icon"
+      : state.toastStatus
   return {
-    params: {
-      toast: { surface: state.toastStyle, status: state.toastStatus },
-    },
+    params: { toast: { surface: state.toastStyle, status } },
   }
 }
 

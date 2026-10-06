@@ -5,6 +5,7 @@ import { publishables } from "@/registry/__generated__/publishables"
 import type { Density } from "@/registry/types"
 import badgeMeta from "@/registry/ui/badge/meta"
 import tagGroupMeta from "@/registry/ui/tag-group/meta"
+import toastMeta from "@/registry/ui/toast/meta"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue, PublishPreset } from "@/publisher/types"
@@ -15,7 +16,6 @@ import { CASE_OPTIONS, SHAPE_OPTIONS, STYLE_OPTIONS } from "./badges"
 import { DEFAULT_STATE, effective, parseState } from "./index"
 import { TRACK_OPTIONS, TRACK_STYLE_OPTIONS } from "./progress"
 import { STYLE_OPTIONS as SPINNER_OPTIONS } from "./spinner"
-import { STATUS_OPTIONS, STYLE_OPTIONS as TOAST_OPTIONS } from "./toast"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 
@@ -101,6 +101,10 @@ describe("feedback axes", () => {
     })
     expect(ds.componentParams.loader).toEqual({ style: "ring-track" })
     expect(ds.componentParams.skeleton).toEqual({ animation: "pulse" })
+    expect(
+      designSystemOf(parseState({ toastStyle: "inverse" })).componentParams
+        .toast,
+    ).toMatchObject({ surface: "inverse", status: "solid-icon" })
     expect(ds.componentParams["progress-bar"]).toEqual({
       track: "x-heavy",
       trackStyle: "gap",
@@ -191,8 +195,8 @@ describe("shipped classes", () => {
     ),
     "tag-group": STYLE_OPTIONS.map(({ value }) => ({ style: value })),
     alert: ALERT_OPTIONS.map(({ value }) => ({ style: value })),
-    toast: TOAST_OPTIONS.flatMap(({ value: surface }) =>
-      STATUS_OPTIONS.map(({ value }) => ({ surface, status: value })),
+    toast: toastMeta.params.surface.values.flatMap((surface) =>
+      toastMeta.params.status.values.map((status) => ({ surface, status })),
     ),
     "progress-bar": TRACK_OPTIONS.flatMap(({ value: track }) =>
       TRACK_STYLE_OPTIONS.map(({ value }) => ({ track, trackStyle: value })),
@@ -230,27 +234,35 @@ describe("shipped classes", () => {
   it("a status toast's fill and edge replace the surface's", async () => {
     const { stylesConfig, meta } = await config("toast")
     for (const surface of ["surface", "inverse"])
-      for (const status of ["bold", "soft"]) {
-        const layer = flatten({
-          stylesConfig,
-          meta,
-          density: "default",
-          paramSelections: { surface, status },
-        })
-        const slice = layer.variants?.variant?.danger as Record<
-          string,
-          ClassValue
-        >
-        const merged = cn(
-          [...classes(layer.slots?.toast), ...classes(slice.toast)].join(" "),
-        )!.split(" ")
-        expect(merged, `${surface} ${status}`).not.toContain(
-          "bg-popover/(--popover-alpha)",
-        )
-        expect(merged).not.toContain("bg-inverse")
-        expect(merged).not.toContain("border-(--overlay-border)")
-        expect(merged).not.toContain("text-fg")
-      }
+      for (const status of ["bold", "soft"])
+        for (const variant of [
+          "success",
+          "warning",
+          "danger",
+          "error",
+          "info",
+        ]) {
+          const layer = flatten({
+            stylesConfig,
+            meta,
+            density: "default",
+            paramSelections: { surface, status },
+          })
+          const slice = layer.variants?.variant?.[variant] as Record<
+            string,
+            ClassValue
+          >
+          const where = `${surface} ${status} ${variant}`
+          const merged = cn(
+            [...classes(layer.slots?.toast), ...classes(slice.toast)].join(" "),
+          )!.split(" ")
+          expect(merged, where).not.toContain("bg-popover/(--popover-alpha)")
+          expect(merged, where).not.toContain("bg-inverse")
+          expect(merged, where).not.toContain("border-(--overlay-border)")
+          expect(merged, where).not.toContain("text-fg")
+          expect(merged, where).not.toContain("text-fg-inverse")
+          expect(slice.icon, where).toBeUndefined()
+        }
   })
 })
 
@@ -261,6 +273,29 @@ describe("shipped code", () => {
     expect(code).toContain('icon: "text-fg-success"')
     expect(code).toContain("buttonStyles({")
     expect(code).toContain('from "@/components/ui/button"')
+  })
+
+  it("inverse toasts ship solid status icons and a quiet action", async () => {
+    const code = await ship("toast", { toastStyle: "inverse" })
+    for (const status of ["success", "warning", "danger", "info"])
+      expect(code).toContain(`icon: "text-${status}"`)
+    expect(code).not.toContain("text-fg-danger")
+    expect(code).not.toContain("[--color-")
+    expect(code).toContain("const inverseSurface = true")
+    expect(code).toContain('variant: onFill ? "quiet" : "secondary"')
+    expect(code).toContain(
+      'action: "text-current hover:bg-current/10 pressed:bg-current/20"',
+    )
+  })
+
+  it("bold status toasts act with the quiet button; soft ones do not", async () => {
+    expect(await ship("toast", { toastStatus: "bold" })).toContain(
+      "const solidStatus = true",
+    )
+    expect(
+      await ship("toast", { toastStyle: "inverse", toastStatus: "soft" }),
+    ).toContain("const solidStatus = false")
+    expect(await ship("toast")).toContain("const inverseSurface = false")
   })
 
   it("the ring draws its own arc; each spinner ships its own file", async () => {
