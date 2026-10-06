@@ -8,7 +8,6 @@
  *
  *   rounded-(--studio-btn-radius)              → rounded-md
  *   font-(--studio-font-weight-label)          → font-medium
- *   shadow-(--studio-slider-thumb-shadow)      → shadow-none
  *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
  *   duration-(--studio-popover-enter-duration) → duration-200
  *   ease-(--studio-popover-ease)               → ease-out · ease-[cubic-bezier(…)]

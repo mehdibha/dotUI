@@ -26,12 +26,13 @@ export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
   checkCorner: oneOf(CORNER_OPTIONS),
 }
 
+export function cornerTokens(corner: string) {
+  return corner === "sharp" ? { "--studio-checkbox-radius": "2px" } : undefined
+}
+
 export function resolveCheckbox(state: Effective): Resolved {
   return {
-    tokens:
-      state.checkCorner === "sharp"
-        ? { "--studio-checkbox-radius": "2px" }
-        : undefined,
+    tokens: cornerTokens(state.checkCorner),
     color: fillScope(state, "checkbox", state.checkboxColor),
   }
 }

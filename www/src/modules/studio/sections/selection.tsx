@@ -12,7 +12,7 @@ import { useStyles as useSliderStyles } from "@/registry/ui/slider/styles"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 
 import { effective as resolve } from "../axes"
-import { CORNER_OPTIONS } from "../axes/checkbox"
+import { CORNER_OPTIONS, cornerTokens } from "../axes/checkbox"
 import { SELECTED_OPTIONS } from "../axes/choice-cards"
 import { MARK_OPTIONS } from "../axes/radio"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
@@ -67,11 +67,7 @@ function CheckboxMark({ corner }: { corner: string }) {
     <span
       {...ON}
       className={indicator()}
-      style={
-        corner === "sharp"
-          ? ({ "--studio-checkbox-radius": "2px" } as React.CSSProperties)
-          : undefined
-      }
+      style={cornerTokens(corner) as React.CSSProperties | undefined}
     >
       <CheckIcon />
     </span>
