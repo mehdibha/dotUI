@@ -12,15 +12,10 @@ import { cn } from "@/registry/lib/utils"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
-import {
-  DIAL_CHEVRON,
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
-  DIAL_VALUE,
-} from "../dial"
+import { DIAL_CHEVRON, DIAL_LABEL, DIAL_PRESS, DIAL_ROW } from "../dial"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Effective, Studio } from "../state"
+import { ChipButton } from "../use-axis"
 
 /** A font role as a dial row: label, the family in its own typeface, the
  *  searchable list under it. With `follow`, the row reads "Same as body"
@@ -61,14 +56,15 @@ function FontRow({
         </span>
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
           {follow && !following && (
-            <RacButton
-              onPress={() => onChange(follow.id)}
-              className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/70 focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
-            >
+            <ChipButton onPress={() => onChange(follow.id)}>
               {follow.label}
-            </RacButton>
+            </ChipButton>
           )}
-          {following && <span className={DIAL_VALUE}>{follow.label} ·</span>}
+          {following && (
+            <span className="shrink-0 text-[13px] font-medium text-fg/50">
+              {follow.label} ·
+            </span>
+          )}
           <span
             className="truncate text-[13px] font-medium text-fg/70"
             style={{ fontFamily: fontStack(resolved) }}

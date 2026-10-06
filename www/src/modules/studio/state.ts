@@ -26,6 +26,8 @@ export type { Studio }
 export interface Chapter {
   id: string
   label: string
+  /** Axis modules whose rows sit here, when not the chapter's own id. */
+  owners?: string[]
   /** The rows on the page: the chapter's two or three decisions that matter. */
   Primary?: React.ComponentType<{ studio: Studio }>
   /** The rest of the chapter. */
@@ -39,6 +41,8 @@ export interface Chapter {
 export interface ChapterPage {
   id: string
   label: string
+  /** Axis modules whose rows sit here, when not the page's own id. */
+  owners?: string[]
   Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
@@ -50,6 +54,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "color",
     label: "Color",
+    owners: ["color", "surfaces"],
     Primary: ColorPrimary,
     Body: ColorSection,
     Preview: ColorPreview,
@@ -57,6 +62,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "typography",
     label: "Typography",
+    owners: ["type"],
     Body: TypeSection,
     Preview: TypePreview,
   },
@@ -81,12 +87,14 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "interactivity",
     label: "Interactivity",
+    owners: ["cursor", "selection"],
     Body: InteractivitySection,
     Preview: InteractivityPreview,
   },
   {
     id: "states",
     label: "States",
+    owners: ["focus", "disabled", "invalid"],
     Body: StatesSection,
     Preview: StatesPreview,
   },

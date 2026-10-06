@@ -49,7 +49,7 @@ import {
   useDraft,
   useMedia,
 } from "./rows"
-import { CauseChip, useAxisGate } from "./use-axis"
+import { CauseChip, ChipButton, useAxisGate } from "./use-axis"
 import type { AxisKey } from "./use-axis"
 
 export const DIAL_ROW =
@@ -628,13 +628,9 @@ export function DialSlider(
         <>
           {exclude && <CauseChip cause={exclude.cause} />}
           {follow && !following && (
-            <RacButton
-              onPress={() => axis.set(follow)}
-              onPointerDown={(e) => e.stopPropagation()}
-              className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/70 capitalize focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
-            >
-              {follow}
-            </RacButton>
+            <ChipButton onPress={() => axis.set(follow)}>
+              <span className="capitalize">{follow}</span>
+            </ChipButton>
           )}
         </>
       }

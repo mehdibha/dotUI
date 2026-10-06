@@ -31,24 +31,28 @@ import { TablesPreview, TablesSection } from "./tables"
 export const COMPONENT_PAGES: ChapterPage[] = [
   {
     id: "buttons",
+    owners: ["buttons", "button-groups", "toggles", "segmented-control"],
     label: "Buttons",
     Preview: ButtonsPreview,
     Body: ButtonsSection,
   },
   {
     id: "inputs",
+    owners: ["inputs", "input-groups", "number-field", "otp-field"],
     label: "Inputs",
     Preview: InputsPreview,
     Body: InputsSection,
   },
   {
     id: "selection-controls",
+    owners: ["checkbox", "radio", "switch", "choice-cards"],
     label: "Selection controls",
     Preview: SelectionControlsPreview,
     Body: SelectionControlsSection,
   },
   {
     id: "pickers",
+    owners: ["pickers", "calendar"],
     label: "Pickers",
     Preview: PickersPreview,
     Body: PickersSection,
@@ -73,23 +77,27 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "popovers",
+    owners: ["popovers", "tooltips"],
     label: "Popovers",
     Preview: PopoversPreview,
     Body: PopoversSection,
   },
   {
     id: "navigation",
+    owners: ["tabs", "links", "breadcrumbs", "pagination", "sidebar"],
     label: "Navigation",
     Preview: NavigationPreview,
     Body: NavigationSection,
   },
   {
     id: "loading",
+    owners: ["spinner", "skeleton", "progress"],
     label: "Loading",
     Body: LoadingSection,
   },
   {
     id: "badges",
+    owners: ["badges", "kbd"],
     label: "Badges",
     Preview: BadgesPreview,
     Body: BadgesSection,

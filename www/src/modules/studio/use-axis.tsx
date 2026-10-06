@@ -6,7 +6,6 @@
    excluded options disable with one. */
 
 import { createContext, useContext } from "react"
-import { Button as RacButton } from "react-aria-components"
 
 import { effective, FOLLOWS, SCHEMA } from "./axes"
 import type { StudioState } from "./axes"
@@ -74,18 +73,40 @@ export function flashAxis(key: string): boolean {
   return true
 }
 
+/** A small action inside a row. A plain button on purpose: inside a Select
+ *  or ListBox a RAC Button would pick up the trigger's context; it also
+ *  keeps a slider row from starting a drag. */
+export function ChipButton({
+  onPress,
+  children,
+}: {
+  onPress: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation()
+        onPress()
+      }}
+      onPointerDown={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+      className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 font-sans text-xs font-medium text-fg/70 focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
+    >
+      {children}
+    </button>
+  )
+}
+
 /** The value of the row that set this one, as a link to that row. */
 export function CauseChip({ cause }: { cause: string }) {
   const reveal = useContext(RevealAxis)
   const axis = useAxis(cause as AxisKey)
   return (
-    <RacButton
-      onPress={() => reveal(axis.key)}
-      onPointerDown={(e) => e.stopPropagation()}
-      className="pointer-events-auto flex h-5 shrink-0 cursor-interactive items-center rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/70 focus-reset transition-colors hover:bg-fg/12 focus-visible:focus-ring"
-    >
+    <ChipButton onPress={() => reveal(axis.key)}>
       {valueLabel(axis.key, axis.effective)}
-    </RacButton>
+    </ChipButton>
   )
 }
 
