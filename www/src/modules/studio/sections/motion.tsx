@@ -1,7 +1,6 @@
 "use client"
 
-/* Motion — the timing table and the anchored entrance, then every family
-   motion pattern as a link to its row. */
+/* Motion: the timing table, the anchored entrance, then links to family patterns. */
 
 import {
   ENTRANCE_OPTIONS,

@@ -1,24 +1,14 @@
-/* Motion — how the whole system moves: one timing table copied from a real
-   system, or None, keyed by role (what moves), never by component. Anchored
-   layers share one entrance pattern. Patterns systems disagree on beyond that
-   stay with their families (Dialogs › Entrance, Skeleton, Spinner, Charts ›
-   Motion).
-
-   Engine: every animated component reads builder-only `--studio-<id>-*`
-   vars (its styles.css `:root` holds Standard), which the publisher resolves
-   to plain `duration-*` / `ease-*` classes; springs ship as `linear()`. The
-   entrance is the `motion` param on popover and tooltip. */
+/* Motion: one role table copied from a real system, written into each member's `--studio-<id>-*` vars. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
-export type Bezier = [number, number, number, number]
+type Bezier = [number, number, number, number]
 
-export type Curve =
+type Curve =
   | { type: "easing"; ease: Bezier }
-  /** A physical spring: it runs for however long it takes to settle. */
   | { type: "physics"; stiffness: number; damping: number; mass: number }
 
 /* --------------------------------- Springs -------------------------------- */
@@ -56,8 +46,7 @@ export function springSettleMs(spring: Spring): number {
   return Math.ceil((last + 5) / 10) * 10
 }
 
-/** The samples between `from` and `to` a straight line between them
- *  wouldn't draw (Ramer–Douglas–Peucker). */
+/** Ramer–Douglas–Peucker: the samples a straight line would miss. */
 function keep(
   ys: number[],
   from: number,
@@ -105,44 +94,34 @@ export function legTiming({ ms, curve }: Leg) {
 
 /* ---------------------------------- Roles ---------------------------------- */
 
-export interface Leg {
+interface Leg {
   ms: number
   curve: Curve
 }
 
-/** A role's timing; `exit` (never a spring) where the role has a leaving leg. */
-export interface RoleTiming {
+interface RoleTiming {
   enter: Leg
   exit?: { ms: number; ease: Bezier }
 }
 
-export type Role =
-  /** Hover, press, focus and selection fills. */
-  | "micro"
-  /** Something glides: a switch thumb, a segmented chip, a tab indicator,
-   *  a progress fill. */
-  | "travel"
-  /** A panel edge: the sidebar collapsing. */
-  | "layout"
-  /** Layers anchored to a trigger: popover (menu, select, combobox), tooltip. */
-  | "anchored"
+type Role =
+  | "micro" // fills: hover, press, focus, selection, colors
+  | "travel" // something glides: thumb, indicator, progress fill
+  | "layout" // the sidebar edge
+  | "anchored" // popover, menu, select, combobox
+  | "hint" // tooltip
   | "modal"
-  /** The drawer sliding from its edge. */
-  | "sheet"
-  /** A height reveal: accordion, collapsible. */
-  | "disclosure"
-  /** Toasts and the jump-to-latest button. */
-  | "notification"
-  /** A swiped toast finishing its throw. */
-  | "swipe"
+  | "sheet" // the drawer
+  | "disclosure" // accordion, collapsible
+  | "notification" // toast, jump-to-latest
+  | "swipe" // a swiped toast finishing its throw
 
-export type MotionTable = Record<Role, RoleTiming>
+type MotionTable = Record<Role, RoleTiming>
 
 const easing = (ms: number, ease: Bezier): Leg => ({
   ms,
   curve: { type: "easing", ease },
 })
-/** A spring by its stiffness and damping ratio (mass 1). */
 const spring = (stiffness: number, ratio: number): Leg => ({
   ms: 0,
   curve: {
@@ -161,14 +140,13 @@ const TAILWIND_OUT: Bezier = [0, 0, 0.2, 1]
 const LINEAR: Bezier = [0, 0, 1, 1]
 const EXPO_OUT: Bezier = [0.16, 1, 0.3, 1]
 
-/* shadcn's: Tailwind's 150ms default on controls, tw-animate on CSS `ease`
-   for layers (style-nova's 100ms), the sidebar's 200ms linear, Base UI's
-   drawer, tw-animate's accordion and Sonner. */
+// shadcn (style-nova, Base UI drawer, Sonner).
 const STANDARD: MotionTable = {
   micro: { enter: easing(150, TAILWIND) },
   travel: { enter: easing(150, TAILWIND) },
   layout: { enter: easing(200, LINEAR) },
   anchored: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
+  hint: { enter: easing(150, CSS_EASE), exit: { ms: 150, ease: CSS_EASE } },
   modal: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
   sheet: {
     enter: easing(450, [0.22, 1, 0.36, 1]),
@@ -182,14 +160,13 @@ const STANDARD: MotionTable = {
   swipe: { enter: easing(200, TAILWIND_OUT) },
 }
 
-/* Radix Themes: expo-out layers with shorter exits (popper 160/100, dialog
-   200/100), the switch thumb's 140ms, 120ms state shadows. Where Themes has
-   no such part, Radix Primitives' docs (accordion, toast) and Vaul's sheet. */
+// Radix Themes; accordion and toast from Radix Primitives' docs, the sheet from Vaul.
 const SMOOTH: MotionTable = {
   micro: { enter: easing(120, CSS_EASE) },
   travel: { enter: easing(140, [0.45, 0.05, 0.55, 0.95]) },
   layout: { enter: easing(200, EXPO_OUT) },
   anchored: { enter: easing(160, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
+  hint: { enter: easing(140, EXPO_OUT), exit: { ms: 0, ease: EXPO_OUT } },
   modal: { enter: easing(200, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
   sheet: {
     enter: easing(500, [0.32, 0.72, 0, 1]),
@@ -203,15 +180,14 @@ const SMOOTH: MotionTable = {
   swipe: { enter: easing(100, CSS_EASE_OUT) },
 }
 
-/* Material 3 Expressive: spatial springs where things move (fast 800/.6,
-   default 380/.8, slow 200/.8), critically damped effects springs on fills
-   and heights (fast 3800, default 1600), exits on emphasized accelerate. */
+// Material 3 Expressive: spatial springs move, effects springs fill, exits on emphasized accelerate.
 const M3_EXIT = { ms: 200, ease: [0.3, 0, 0.8, 0.15] as Bezier }
 const EXPRESSIVE: MotionTable = {
   micro: { enter: spring(3800, 1) },
   travel: { enter: spring(800, 0.6) },
   layout: { enter: spring(380, 0.8) },
   anchored: { enter: spring(380, 0.8), exit: M3_EXIT },
+  hint: { enter: spring(380, 0.8), exit: M3_EXIT },
   modal: { enter: spring(380, 0.8), exit: M3_EXIT },
   sheet: { enter: spring(200, 0.8), exit: M3_EXIT },
   disclosure: { enter: spring(1600, 1) },
@@ -219,7 +195,6 @@ const EXPRESSIVE: MotionTable = {
   swipe: { enter: easing(200, [0.05, 0.7, 0.1, 1]) },
 }
 
-/* Instant everywhere: Standard's curves, nothing to run them over. */
 const NONE = Object.fromEntries(
   Object.entries(STANDARD).map(([role, { enter, exit }]) => [
     role,
@@ -237,14 +212,12 @@ const TABLES: Record<string, MotionTable> = {
   expressive: EXPRESSIVE,
 }
 
-/** A `motion` option's table. */
 export const tableOf = (motion: string) => TABLES[motion] ?? STANDARD
 
 /* ---------------------------------- Members -------------------------------- */
 
-/* Var id → role. A state member reads `--studio-<id>-state-*`. Radio rides
-   checkbox's vars, toggle-button button's, token-field input's. */
-export const STATE_MEMBERS: Record<string, Role> = {
+// `--studio-<id>-state-*`; radio rides checkbox's, toggle-button button's, token-field input's.
+const STATE_MEMBERS: Record<string, Role> = {
   button: "micro",
   input: "micro",
   checkbox: "micro",
@@ -265,12 +238,13 @@ export const STATE_MEMBERS: Record<string, Role> = {
   "toast-swipe": "swipe",
 }
 
-/* A layer reads `--studio-<id>-enter-duration` / `-ease`, plus the exit pair
-   where it leaves on its own leg. Menu, select and combobox ride popover's;
-   collapsible accordion's. */
-export const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
+// Colors on a gliding member: `--studio-<id>-color-*`, so a spatial spring never overshoots a fill.
+const COLOR_MEMBERS = ["switch", "segmented-control", "tabs"]
+
+// `--studio-<id>-enter-duration` / `-ease`, plus the exit pair; menu, select and combobox ride popover's.
+const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   popover: { role: "anchored", exit: true },
-  tooltip: { role: "anchored", exit: true },
+  tooltip: { role: "hint", exit: true },
   modal: { role: "modal", exit: true },
   drawer: { role: "sheet", exit: true },
   accordion: { role: "disclosure", exit: false },
@@ -278,13 +252,17 @@ export const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   "message-scroller": { role: "notification", exit: true },
 }
 
-/** Every member's vars under a table. */
 export function motionVars(table: MotionTable): Record<string, string> {
   const vars: Record<string, string> = {}
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
     const { ms, ease } = legTiming(table[role].enter)
     vars[`--studio-${id}-state-duration`] = `${ms}ms`
     vars[`--studio-${id}-state-ease`] = ease
+  }
+  const color = legTiming(table.micro.enter)
+  for (const id of COLOR_MEMBERS) {
+    vars[`--studio-${id}-color-duration`] = `${color.ms}ms`
+    vars[`--studio-${id}-color-ease`] = color.ease
   }
   for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
     const { enter, exit } = table[member.role]
@@ -308,16 +286,12 @@ export const MOTION_OPTIONS = [
   { value: "expressive", label: "Expressive", description: "Material 3" },
 ]
 
-/* Zoom: fade, 95% and a short slide toward the trigger (shadcn, Radix
-   Themes, Carbon, Geist); Slide: the slide alone (Polaris, Fluent 2); Fade
-   (Primer, Mantine). */
 export const ENTRANCE_OPTIONS = [
   { value: "zoom", label: "Zoom", description: "shadcn" },
   { value: "slide", label: "Slide", description: "Polaris" },
   { value: "fade", label: "Fade", description: "Primer" },
 ]
 
-/* The popover and tooltip `motion` param each entrance writes. */
 const ENTRANCE_PARAM: Record<string, string> = {
   zoom: "scale",
   slide: "slide",
@@ -364,7 +338,6 @@ export const chapter = defineChapter({
   resolve: resolveMotion,
   rules: [
     {
-      // Nothing enters under None: the pattern would do nothing.
       id: "motion/none-hides-entrance",
       target: "motionEntrance",
       when: { key: "motion", in: ["none"] },

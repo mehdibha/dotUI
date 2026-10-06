@@ -46,7 +46,7 @@ import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as radio from "./radio"
-import { checkAxisValue, sameValue } from "./schema"
+import { checkAxisValue } from "./schema"
 import type { AxisSchema } from "./schema"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
@@ -233,8 +233,7 @@ export const DEFAULT_STATE = parseState({})
 
 /** Key-by-key equality. */
 export const sameState = (a: StudioState, b: StudioState) =>
-  a === b ||
-  (Object.keys(SCHEMA) as Key[]).every((key) => sameValue(a[key], b[key]))
+  a === b || (Object.keys(SCHEMA) as Key[]).every((key) => a[key] === b[key])
 
 const engine = createEngine({
   defaults: DEFAULTS,

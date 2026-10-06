@@ -6,7 +6,6 @@ import {
   effective,
   validate,
 } from "@/modules/studio/axes"
-import { sameValue } from "@/modules/studio/axes/schema"
 
 import { ORIGIN, PRESETS } from "./index"
 
@@ -33,10 +32,9 @@ describe("built-in presets", () => {
   it("hold only what differs from Origin", () => {
     for (const preset of PRESETS)
       for (const [key, value] of Object.entries(preset.diff))
-        expect(
-          sameValue(value, DEFAULTS[key as keyof typeof DEFAULTS]),
-          `${preset.id}.${key}`,
-        ).toBe(false)
+        expect(value, `${preset.id}.${key}`).not.toBe(
+          DEFAULTS[key as keyof typeof DEFAULTS],
+        )
   })
 
   it("fire no rule: every value they write is the one that ships", () => {

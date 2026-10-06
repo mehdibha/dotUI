@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       root: "flex gap-2",
       list: "inline-flex w-fit items-center justify-center text-fg-muted",
       tab: [
-        "relative isolate inline-flex flex-1 cursor-default items-center justify-center font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] duration-(--studio-tabs-state-duration) ease-(--studio-tabs-state-ease) select-ui focus-visible:focus-ring",
+        "relative isolate inline-flex flex-1 cursor-default items-center justify-center font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] duration-(--studio-tabs-color-duration) ease-(--studio-tabs-color-ease) select-ui focus-visible:focus-ring",
         "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],

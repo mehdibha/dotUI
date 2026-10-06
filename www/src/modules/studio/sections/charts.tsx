@@ -1,7 +1,6 @@
 "use client"
 
-/* Charts — the categorical series palette, the gridline treatment and how
-   marks animate. */
+/* Charts: palette, grid and transition. */
 
 import { cn } from "@/registry/lib/utils"
 

@@ -1,7 +1,6 @@
 "use client"
 
-/* Dialogs — the scrim, where a modal rests and how it arrives, and dialogs on
-   a phone. */
+/* Dialogs: scrim, position, entrance, and dialogs on a phone. */
 
 import {
   BACKDROP_OPTIONS,

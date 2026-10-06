@@ -78,20 +78,3 @@ export function checkAxisValue(
         : "expected a family from the font catalog"
   }
 }
-
-/** Deep equality over axis values. */
-export function sameValue(a: unknown, b: unknown): boolean {
-  if (a === b) return true
-  if (typeof a !== "object" || typeof b !== "object" || !a || !b) return false
-  const ka = Object.keys(a)
-  const kb = Object.keys(b)
-  return (
-    ka.length === kb.length &&
-    ka.every((k) =>
-      sameValue(
-        (a as Record<string, unknown>)[k],
-        (b as Record<string, unknown>)[k],
-      ),
-    )
-  )
-}

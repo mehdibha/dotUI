@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from "node:util"
 import { describe, expect, it } from "vitest"
 
 import { FONT_CATALOG } from "@/lib/fonts"
@@ -18,7 +19,6 @@ import {
   SCHEMA,
 } from "../index"
 import type { StudioState } from "../index"
-import { sameValue } from "../schema"
 import { condKeys, createEngine, findCycle, holds, keyGraph } from "./effective"
 import type { Cond } from "./types"
 
@@ -228,7 +228,7 @@ describe("effective", () => {
       const copy = structuredClone(state)
       const { values } = effective(state)
       const again = effective(values as unknown as StudioState).values
-      expect(sameValue(again, values), `state ${i}`).toBe(true)
+      expect(again, `state ${i}`).toEqual(values)
       expect(state).toEqual(copy)
       // Only concrete values reach a resolver.
       for (const [key, value] of Object.entries(values))
@@ -349,7 +349,7 @@ function shipped(raw: Raw) {
         ([c, s]) => s !== origin.componentParams[c],
       ),
     ),
-    color: sameValue(ds.color, origin.color) ? undefined : ds.color,
+    color: isDeepStrictEqual(ds.color, origin.color) ? undefined : ds.color,
     icons: ds.icons,
   }
 }

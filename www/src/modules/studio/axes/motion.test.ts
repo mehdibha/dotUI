@@ -20,7 +20,7 @@ import {
 } from "./motion"
 
 const MOTION_VAR =
-  /^--studio-.+-(state-duration|state-ease|enter-duration|exit-duration|exit-ease|ease)$/
+  /^--studio-.+-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
 
 describe("timing", () => {
   test("beziers print as CSS, the linear one by keyword", () => {
@@ -179,9 +179,11 @@ describe("shipped motion", () => {
     expect(shipped["segmented-control"]).toContain(
       "transition-[translate,width,height] motion-reduce:transition-none",
     )
+    // shadcn's tooltip sets no duration: tw-animate's 150ms on `ease`.
     expect(shipped.tooltip).toContain(
-      "transition-[transform,opacity,scale] duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
+      "transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change",
     )
+    expect(shipped.popover).toContain("duration-100")
     expect(shipped.modal).toContain(
       "transition-opacity duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none",
     )
@@ -230,12 +232,27 @@ describe("shipped motion", () => {
     )
   })
 
+  test("Expressive overshoots what glides, never a color", async () => {
+    const vars = motionVars(tableOf("expressive"))
+    const peak = (ease = "") =>
+      Math.max(...(ease.match(/\d\.\d+(?= )/g) ?? ["0"]).map(Number))
+    for (const id of ["switch", "segmented-control", "tabs"]) {
+      expect(peak(vars[`--studio-${id}-state-ease`]), id).toBeGreaterThan(1)
+      expect(peak(vars[`--studio-${id}-color-ease`]), id).toBeLessThanOrEqual(1)
+    }
+  })
+
   test("Smooth exits shorter than it enters", async () => {
     const shipped = await shipAll(parseState({ motion: "smooth" }))
     expect(shipped.popover).toContain(
       "duration-160 ease-[cubic-bezier(0.16,1,0.3,1)]",
     )
     expect(shipped.popover).toContain("exiting:duration-100")
+    // Radix Themes' tooltip: 140ms in, no exit animation.
+    expect(shipped.tooltip).toContain(
+      "duration-140 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    )
+    expect(shipped.tooltip).toContain("exiting:duration-0")
   })
 })
 

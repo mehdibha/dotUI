@@ -1,12 +1,4 @@
-/* Charts — the data-viz look: the categorical series strategy and the
-   gridline treatment.
-
-   Engine: the color engine generates `--chart-1..8` per mode from the brand
-   accent, so the palette rides on the color recipe as `chartPalette` (absent
-   = tonal shades, the shadcn-parity default); the grid is an enum param on
-   the `chart` container every chart renders through. Motion is the `motion`
-   enum param on `chart`: a JS transition (the marks animate their geometry,
-   not CSS), folded to its literal on publish; Motion None pins it off. */
+/* Charts: series palette (a color-recipe slice), grid and motion (`chart` params). */
 
 import type { ColorConfig } from "@/registry/theme"
 
@@ -36,10 +28,9 @@ export const GRID_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-/* Spring: react-spring's default config (dotUI); Ease: recharts' 400ms
-   tween on CSS `ease` (shadcn's charts); None: static marks. */
+// Spring is dotUI's own (react-spring's default config); Ease is recharts' 400ms tween.
 export const MOTION_OPTIONS = [
-  { value: "spring", label: "Spring", description: "react-spring" },
+  { value: "spring", label: "Spring", description: "Origin" },
   { value: "ease", label: "Ease", description: "shadcn" },
   { value: "none", label: "None" },
 ]

@@ -7,7 +7,6 @@ import { ArrowUpRightIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { DEFAULTS } from "./axes"
-import { sameValue } from "./axes/schema"
 import { DialFolder } from "./dial"
 import { useCurrent } from "./selection"
 import { RevealAxis, useAxis, valueLabel } from "./use-axis"
@@ -96,7 +95,7 @@ export function More({
   children: React.ReactNode
 }) {
   const { state } = useCurrent()
-  const edited = keys.filter((key) => !sameValue(state[key], DEFAULTS[key]))
+  const edited = keys.filter((key) => state[key] !== DEFAULTS[key])
   return (
     <DialFolder title="More" defaultOpen={false} badge={edited.length}>
       {children}

@@ -1,7 +1,6 @@
 /* Saved → effective: follows resolve, then at most one rule per key, in an
    order computed once from the key graph. Saved state is never mutated. */
 
-import { sameValue } from "../schema"
 import type { Cond, Effect, Explained, Follow, Rule } from "./types"
 
 type State = Readonly<Record<string, unknown>>
@@ -168,7 +167,7 @@ export function createEngine(input: EngineInput) {
           entry.lock = { rule: rule.id, kind: effect.kind, cause: rule.cause }
         }
         const next = apply(effect, key, value, values)
-        if (!sameValue(next, value)) {
+        if (next !== value) {
           value = next
           entry.rule = rule.id
           break

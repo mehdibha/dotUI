@@ -1,12 +1,4 @@
-/* Dialogs — how modal layers meet the page. Backdrop: a plain scrim
-   (shadcn/Radix, Vaul), a lighter scrim that frosts the page behind (Apple
-   sheets, Arc), or nothing but the panel's shadow (Linear). Position: the
-   classic centered modal, or docked in the upper third (Linear, Raycast) so the
-   top edge stays put as content grows. Entrance: how the panel arrives —
-   Motion times it, and under Motion None nothing moves.
-
-   Engine: `backdrop` is an enum param on both `modal` and `drawer` (a synced
-   group — one axis writes both); `position` and `motion` are `modal` params. */
+/* Dialogs: backdrop (`modal` + `drawer` params), position and entrance (`modal` params). */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -19,20 +11,20 @@ export const DIALOG_DEFAULTS = {
   dialogEntrance: "scale",
 }
 
+// Dim: shadcn, Radix, Vaul; Blur: Apple sheets, Arc; None: Linear.
 export const BACKDROP_OPTIONS = [
   { value: "dim", label: "Dim" },
   { value: "blur", label: "Blur" },
   { value: "none", label: "None" },
 ]
 
+// Top: Linear, Raycast.
 export const POSITION_OPTIONS = [
   { value: "center", label: "Center" },
   { value: "top", label: "Top" },
 ]
 
-/* Scale: fade and zoom from 95% (shadcn, Geist, Primer, Fluent 2); Rise: up
-   from below (Spectrum 2, Polaris, Atlassian, Radix Themes' nearest); Drop:
-   down from above (Carbon, Mantine). */
+// Scale: shadcn, Geist, Primer, Fluent 2; Rise: Spectrum 2, Polaris, Atlassian; Drop: Carbon, Mantine.
 export const ENTRANCE_OPTIONS = [
   { value: "scale", label: "Scale", description: "shadcn" },
   { value: "rise", label: "Rise", description: "Polaris" },

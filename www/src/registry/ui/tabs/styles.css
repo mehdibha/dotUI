@@ -4,4 +4,6 @@
   --studio-tabs-tab-radius: var(--studio-radius-inline-item);
   --studio-tabs-state-duration: 150ms;
   --studio-tabs-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --studio-tabs-color-duration: 150ms;
+  --studio-tabs-color-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
