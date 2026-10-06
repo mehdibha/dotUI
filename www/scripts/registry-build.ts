@@ -368,19 +368,33 @@ async function buildStudioSearchIndex() {
     if (!file) continue
     const read = (name: string) =>
       fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
+    // Row labels in source order; a row inside a family page's member section
+    // reads "Section › Row".
     const rowLabels = (source: string) => {
-      const found: string[] = []
+      const found: Array<[number, string]> = []
       // A row's own label (a folded row's title) — the tag must not contain
       // another "<" before it.
-      for (const [, label = ""] of source.matchAll(
+      for (const match of source.matchAll(
         /<(?!UsesRow\b)(?:\w+Row|Dial\w+|\w+Motion|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
-        found.push(label)
-      for (const [, title = ""] of source.matchAll(
+        found.push([match.index, match[1] ?? ""])
+      for (const match of source.matchAll(
         /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
       ))
-        found.push(title.trim())
+        found.push([match.index, (match[1] ?? "").trim()])
+      const members = [
+        ...source.matchAll(/<MemberSection[^>]*?title="([^"]+)"/g),
+      ].map((match) => ({
+        title: match[1] ?? "",
+        start: match.index,
+        end: source.indexOf("</MemberSection>", match.index),
+      }))
       return found
+        .sort(([a], [b]) => a - b)
+        .map(([at, label]) => {
+          const member = members.find((m) => at > m.start && at < m.end)
+          return member ? `${member.title} › ${label}` : label
+        })
     }
     const source = await read(file)
     const labels = new Set<string>(rowLabels(source))

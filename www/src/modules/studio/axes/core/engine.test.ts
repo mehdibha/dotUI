@@ -20,6 +20,7 @@ import {
 import type { StudioState } from "../index"
 import { sameValue } from "../schema"
 import { condKeys, createEngine, findCycle, holds, keyGraph } from "./effective"
+import type { Cond } from "./types"
 
 type Raw = Record<string, unknown>
 
@@ -35,15 +36,26 @@ const enumValues = (key: string) => {
     : undefined
 }
 
-/** A key's domain, numbers at min, default and max. */
-function sample(key: string): unknown[] {
+/** A key's domain: numbers at min, default, max and every value `named`. */
+function sample(key: string, named: unknown[] = []): unknown[] {
   const kind = SCHEMA[key as keyof typeof SCHEMA]?.value
   const fallback = DEFAULTS[key as keyof typeof DEFAULTS]
   if (kind?.type === "enum") return kind.options.map((o) => o.value)
-  if (kind?.type === "number") return [kind.min, fallback, kind.max]
+  if (kind?.type === "number")
+    return [...new Set([kind.min, fallback, kind.max, ...named])]
   if (kind?.type === "boolean") return [false, true]
   return [fallback]
 }
+
+/** The values a condition names for `key`. */
+const literals = (cond: Cond, key: string): unknown[] =>
+  "all" in cond
+    ? cond.all.flatMap((c) => literals(c, key))
+    : "any" in cond
+      ? cond.any.flatMap((c) => literals(c, key))
+      : cond.key === key
+        ? [...("in" in cond ? cond.in : cond.notIn)]
+        : []
 
 describe("catalog", () => {
   it("every key has one owner and a default its schema accepts", () => {
@@ -119,7 +131,10 @@ describe("catalog", () => {
       let states: Raw[] = [{}]
       for (const key of keys)
         states = states.flatMap((s) =>
-          sample(key).map((v) => ({ ...s, [key]: v })),
+          sample(
+            key,
+            rules.flatMap((rule) => literals(rule.when, key)),
+          ).map((v) => ({ ...s, [key]: v })),
         )
       for (const values of states) {
         const active = rules.filter((rule) => holds(rule.when, values))

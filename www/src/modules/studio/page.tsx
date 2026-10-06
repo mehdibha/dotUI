@@ -1,9 +1,6 @@
 "use client"
 
-/* The panel's one page: every chapter under a quiet title. Below `lg` it
-   docks under the preview (beside it on short screens), one chapter over a
-   strip. A Components row opens its family page in place of the whole page;
-   going back lands where the page was left. */
+/* Every chapter on one page, docked under the preview below `lg`. */
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import {
@@ -20,25 +17,35 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
-import { KEY_OWNER } from "./axes"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
+import { placeOf } from "./state"
 import type { Chapter, ChapterPage, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 
-/** Runs `attempt` each frame until it succeeds: a page's rows mount a frame
- *  or more after it opens. */
+/** Retries each frame: a page's rows mount a frame or more after it opens. */
 function untilMounted(attempt: () => boolean, frames = 30) {
   requestAnimationFrame(() => {
     if (!attempt() && frames > 0) untilMounted(attempt, frames - 1)
   })
 }
 
-type Place = { id: string; owners?: string[] }
-const lists = (place: Place, owner: string) =>
-  (place.owners ?? [place.id]).includes(owner)
+/** A member section in view; its More opens when every row is folded in it. */
+function showMember(section: Element) {
+  section.scrollIntoView({ block: "start" })
+  if (section.querySelector(":scope > :not(span, [data-folder])")) return
+  for (const trigger of section.querySelectorAll<HTMLElement>(
+    ":scope > [data-folder]:not([data-expanded]) > [data-folder-trigger]",
+  ))
+    trigger.click()
+}
+
+const memberOf = (scope: Element | null | undefined, title: string) =>
+  [...(scope?.querySelectorAll("[data-member]") ?? [])].find(
+    (section) => section.getAttribute("aria-label") === title,
+  )
 
 function ChapterBlock({
   chapter,
@@ -257,16 +264,19 @@ export function PanelPage({
   }
 
   const reveal = (id: string, axis?: string) => {
-    // "Buttons › Style" names a page and a row on it.
-    const [first, label] = axis?.split(" › ") ?? []
+    // "Buttons › Toggles › Selected" names a page, a member and a row.
+    const [first, ...path] = axis?.split(" › ") ?? []
     const target = pages.find((p) => p.chapter.id === id && p.label === first)
     if (target) {
       setTucked(false)
       openPage(target.id)
-      if (label)
-        untilMounted(() =>
-          flash(layer?.querySelector(`[data-page="${target.id}"]`), label),
-        )
+      if (path.length > 0)
+        untilMounted(() => {
+          const scope = layer?.querySelector(`[data-page="${target.id}"]`)
+          const member = memberOf(scope, path[0] ?? "")
+          if (member && path.length === 1) showMember(member)
+          return flash(path.length > 1 ? member : scope, path.at(-1) ?? "")
+        })
       return
     }
     if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
@@ -283,16 +293,10 @@ export function PanelPage({
   // page or chapter first.
   const revealAxis = (key: string) => {
     if (flashAxis(key)) return
-    // A place that lists the key itself wins over its module's.
-    const owner = KEY_OWNER[key] ?? ""
-    const named = [...pages, ...chapters].find((place) => lists(place, key))
-    const target = named
-      ? pages.find((page) => page === named)
-      : pages.find((page) => lists(page, owner))
-    const chapter = named ?? chapters.find((place) => lists(place, owner))
-    if (target) openPage(target.id)
-    else if (chapter) dock(chapter.id)
-    else return
+    const place = placeOf(key)
+    if (!place) return
+    if (place.page) openPage(place.page.id)
+    else dock(place.chapter.id)
     untilMounted(() => flashAxis(key))
   }
 
@@ -306,7 +310,7 @@ export function PanelPage({
       if (member)
         untilMounted(() => {
           const section = document.querySelector(`[data-member="${member}"]`)
-          section?.scrollIntoView({ block: "start" })
+          if (section) showMember(section)
           return !!section
         })
     }

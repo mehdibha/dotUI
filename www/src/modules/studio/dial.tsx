@@ -1064,7 +1064,12 @@ function SliderRow({
           )}
           {format(draft)}
           {reset && (
-            <span className="hidden group-focus-visible:flex group-data-active:flex pointer-coarse:flex">
+            // Visually hidden, not display:none, so Tab can still land on it;
+            // it unmounts on reset, so focus goes back to the slider first.
+            <span
+              onClickCapture={() => trackRef.current?.focus()}
+              className="sr-only flex group-focus-visible:not-sr-only group-has-focus-visible:not-sr-only group-data-active:not-sr-only pointer-coarse:not-sr-only"
+            >
               {reset}
             </span>
           )}
@@ -1325,8 +1330,9 @@ export function DialToggle({
 
 /* --------------------------------- Folder --------------------------------- */
 
-/** A titled group that folds in place. `open` makes it controlled; `value`
- *  summarizes the contents beside the chevron while folded. */
+/** A titled group that folds in place, instantly: chrome, not content.
+ *  `open` makes it controlled; `value` summarizes the contents; `badge`
+ *  counts what was edited inside. */
 export function DialFolder({
   title,
   value,
@@ -1334,7 +1340,7 @@ export function DialFolder({
   open,
   onOpenChange,
   modified,
-  id,
+  badge = 0,
   children,
 }: {
   title: string
@@ -1343,12 +1349,12 @@ export function DialFolder({
   open?: boolean
   onOpenChange?: (open: boolean) => void
   modified?: boolean
-  id?: string
+  badge?: number
   children: React.ReactNode
 }) {
   return (
     <Disclosure
-      data-folder={id}
+      data-folder
       defaultExpanded={defaultOpen}
       isExpanded={open}
       onExpandedChange={onOpenChange}
@@ -1358,13 +1364,18 @@ export function DialFolder({
         <>
           <RacButton
             slot="trigger"
-            className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-md px-1 text-left focus-reset focus-visible:focus-ring"
+            data-folder-trigger
+            className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-lg px-3 text-left focus-reset transition-colors hover:tint-5 focus-visible:focus-ring"
           >
-            <span className="flex min-w-0 items-center gap-1.5">
-              <span className="truncate text-[13px] font-semibold text-fg/70">
-                {title}
-              </span>
+            <span className="flex min-w-0 items-center gap-2">
+              <span className={DIAL_LABEL}>{title}</span>
               {modified && <ModifiedDot />}
+              {badge > 0 && (
+                <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-semibold text-fg-on-accent tabular-nums">
+                  {badge}
+                  <span className="sr-only"> edited</span>
+                </span>
+              )}
             </span>
             <span className="flex min-w-0 items-center gap-2">
               {value && (
@@ -1373,22 +1384,12 @@ export function DialFolder({
                 </span>
               )}
               <ChevronDownIcon
-                className={cn(
-                  DIAL_CHEVRON,
-                  "transition-transform duration-200",
-                  isExpanded && "rotate-180",
-                )}
+                className={cn(DIAL_CHEVRON, isExpanded && "rotate-180")}
               />
             </span>
           </RacButton>
-          {/* Folders nest, so the state comes from the render prop, not a group. */}
-          <DisclosurePanel
-            className={cn(
-              "h-(--disclosure-panel-height) overflow-clip duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:transition-[height,opacity]",
-              isExpanded ? "opacity-100" : "opacity-0",
-            )}
-          >
-            <div className="flex flex-col gap-1.5 pb-2.5">{children}</div>
+          <DisclosurePanel>
+            <div className="flex flex-col gap-1.5 pt-1.5">{children}</div>
           </DisclosurePanel>
         </>
       )}

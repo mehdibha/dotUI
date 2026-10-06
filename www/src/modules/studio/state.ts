@@ -1,9 +1,11 @@
 "use client"
 
-/* The panel's composition root: the chapter list, in page order. Each
-   section in sections/ owns its body; its axes live in axes/. */
+/* The panel's chapters, in page order. */
 
+import { KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
+import { PRIMARY_LEAVES } from "./axes/color"
+import { MOTION_KEYS } from "./axes/motion-presets"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
@@ -51,7 +53,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "color",
     label: "Color",
-    owners: ["color", "surfaces"],
+    owners: ["color", "surfaces", ...PRIMARY_LEAVES],
     Primary: ColorPrimary,
     Body: ColorSection,
     Preview: ColorPreview,
@@ -92,6 +94,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "motion",
     label: "Motion",
+    owners: ["motion", ...MOTION_KEYS],
     Body: MotionSection,
   },
   {
@@ -101,3 +104,21 @@ export const CHAPTERS: Chapter[] = [
     pages: COMPONENT_PAGES,
   },
 ]
+
+const lists = (place: { id: string; owners?: string[] }, name: string) =>
+  (place.owners ?? [place.id]).includes(name)
+
+/** Where a key's row sits: a place that lists the key itself wins over the
+ *  one that lists its module. */
+export function placeOf(
+  key: string,
+): { chapter: Chapter; page?: ChapterPage } | undefined {
+  for (const name of [key, KEY_OWNER[key]]) {
+    if (!name) continue
+    for (const chapter of CHAPTERS) {
+      if (lists(chapter, name)) return { chapter }
+      const page = chapter.pages?.find((p) => lists(p, name))
+      if (page) return { chapter, page }
+    }
+  }
+}
