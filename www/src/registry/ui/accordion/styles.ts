@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     slots: {
       root: "flex w-full flex-col",
       item: "group/accordion-item w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor)",
-      heading: "flex",
+      heading: "flex font-sans tracking-normal",
       trigger: [
         "focus-reset focus-visible:focus-ring",
         "flex flex-1 cursor-interactive items-start gap-4 rounded-(--studio-accordion-trigger-radius) py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none",

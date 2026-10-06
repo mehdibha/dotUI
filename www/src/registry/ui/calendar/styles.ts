@@ -14,7 +14,8 @@ const { useStyles, styles } = createStyles(calendarMeta, {
     slots: {
       root: "flex w-fit max-w-full flex-col gap-4 [--cell-radius:var(--studio-calendar-cell-radius)] [--cell-size:--spacing(8)]",
       header: "flex items-center gap-2",
-      heading: "flex-1 text-center text-sm font-medium",
+      heading:
+        "flex-1 text-center font-sans text-sm font-medium tracking-normal",
       grid: "grid grid-cols-7 gap-y-2",
       gridHeader: "contents *:[tr]:contents",
       gridHeaderCell: "text-xs font-normal text-fg-muted",

@@ -74,26 +74,7 @@ const { useStyles, styles } = createStyles(dialogMeta, {
         },
       },
       compact: {
-        density: {
-          compact: {
-            slots: {
-              title:
-                "text-xs font-semibold in-data-popover:text-sm in-data-popover:font-medium",
-            },
-          },
-          default: {
-            slots: {
-              title:
-                "text-sm font-semibold in-data-popover:text-sm in-data-popover:font-medium",
-            },
-          },
-          comfortable: {
-            slots: {
-              title:
-                "text-sm font-semibold in-data-popover:text-sm in-data-popover:font-medium",
-            },
-          },
-        },
+        slots: { title: "text-sm font-semibold in-data-popover:font-medium" },
       },
       tight: {
         density: {
