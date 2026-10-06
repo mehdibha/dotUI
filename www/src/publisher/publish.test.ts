@@ -219,13 +219,13 @@ describe("resolve-classes", () => {
   test("rewriteClassString maps theme tokens to utility suffixes", () => {
     const vars = resolveStudioVars({
       "--studio-alert-radius": "var(--radius-md)",
-      "--studio-btn-font-weight": "var(--font-weight-medium)",
+      "--studio-font-weight-label": "var(--font-weight-medium)",
       "--studio-modal-background": "var(--color-popover)",
       "--studio-slider-cursor": "var(--cursor-drag)",
     })
     expect(
       rewriteClassString(
-        "rounded-(--studio-alert-radius) font-(--studio-btn-font-weight) bg-(--studio-modal-background) dragging:cursor-(--studio-slider-cursor) bg-card",
+        "rounded-(--studio-alert-radius) font-(--studio-font-weight-label) bg-(--studio-modal-background) dragging:cursor-(--studio-slider-cursor) bg-card",
         vars,
       ),
     ).toBe("rounded-md font-medium bg-popover dragging:cursor-drag bg-card")

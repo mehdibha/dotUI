@@ -20,6 +20,14 @@ const sidebarMeta = {
     "tooltip",
     "use-mobile",
   ],
+  params: {
+    labels: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "caps"] as const,
+      description: "Group label casing.",
+    },
+  },
 } satisfies RegistryItem
 
 export default sidebarMeta

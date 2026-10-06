@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "min-h-lh w-fit min-w-[14ch] font-medium text-fg-muted tabular-nums",
       item: "flex min-w-0 flex-col border-0 p-0 focus-reset",
       title:
-        "font-medium text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
+        "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)",
       description: "text-pretty text-fg-muted",
       choices: "group/questionnaire-choices grid min-w-0",
       choice: [
@@ -56,7 +56,6 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         root: "gap-4 [--questionnaire-title-gap:--spacing(3)]",
         progress: "text-[0.625rem]",
         item: "gap-3",
-        title: "text-sm font-semibold",
         description: "text-xs/relaxed",
         choices: "gap-1.5",
         choice: "gap-2.5 px-3 py-2.5 text-xs/relaxed",
@@ -72,7 +71,6 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         root: "gap-4 [--questionnaire-title-gap:--spacing(4)]",
         progress: "text-xs",
         item: "gap-4",
-        title: "text-base leading-snug",
         description: "text-sm",
         choices: "gap-2",
         choice: "gap-2.5 px-3 py-2.5 text-sm",
@@ -88,7 +86,6 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         root: "gap-6 [--questionnaire-title-gap:--spacing(5)]",
         progress: "text-xs",
         item: "gap-5",
-        title: "text-base leading-snug",
         description: "text-sm",
         choices: "gap-3",
         choice: "gap-3 px-4 py-3.5 text-sm",
@@ -97,6 +94,68 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         input: "h-9 px-2.5 py-1 text-base md:text-sm",
         error: "text-sm",
         actions: "gap-2 sm:min-h-9",
+      },
+    },
+  },
+  params: {
+    titles: {
+      quiet: {
+        density: {
+          compact: { slots: { title: "text-sm font-semibold" } },
+          default: { slots: { title: "text-base leading-snug font-medium" } },
+          comfortable: {
+            slots: { title: "text-base leading-snug font-medium" },
+          },
+        },
+      },
+      compact: {
+        density: {
+          compact: { slots: { title: "text-xs font-semibold" } },
+          default: { slots: { title: "text-sm font-semibold" } },
+          comfortable: { slots: { title: "text-sm font-semibold" } },
+        },
+      },
+      tight: {
+        density: {
+          compact: { slots: { title: "text-sm font-semibold tracking-tight" } },
+          default: {
+            slots: {
+              title: "text-base leading-snug font-semibold tracking-tight",
+            },
+          },
+          comfortable: {
+            slots: {
+              title: "text-base leading-snug font-semibold tracking-tight",
+            },
+          },
+        },
+      },
+      bold: {
+        density: {
+          compact: { slots: { title: "text-base font-bold" } },
+          default: { slots: { title: "text-lg font-bold" } },
+          comfortable: { slots: { title: "text-xl font-bold" } },
+        },
+      },
+      display: {
+        density: {
+          compact: { slots: { title: "text-lg font-normal" } },
+          default: { slots: { title: "text-xl font-normal" } },
+          comfortable: { slots: { title: "text-2xl font-normal" } },
+        },
+      },
+      caps: {
+        density: {
+          compact: {
+            slots: { title: "text-xs font-semibold tracking-wide uppercase" },
+          },
+          default: {
+            slots: { title: "text-xs font-semibold tracking-wide uppercase" },
+          },
+          comfortable: {
+            slots: { title: "text-xs font-semibold tracking-wide uppercase" },
+          },
+        },
       },
     },
   },

@@ -20,6 +20,12 @@ const dialogMeta = {
       description:
         "How a popover titles itself: a plain title, or a tinted divided band.",
     },
+    titles: {
+      kind: "enum",
+      default: "quiet",
+      values: ["quiet", "compact", "tight", "bold", "display", "caps"] as const,
+      description: "The title recipe: size, weight, tracking and case.",
+    },
   },
 } satisfies RegistryItem
 

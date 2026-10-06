@@ -21,7 +21,6 @@ const { useStyles, styles } = createStyles(cardMeta, {
         root: "gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
         header:
           "gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
-        title: "text-sm font-medium",
         description: "text-xs/relaxed",
         content: "px-4 group-data-[size=sm]/card:px-3",
         footer:
@@ -33,7 +32,6 @@ const { useStyles, styles } = createStyles(cardMeta, {
         root: "gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
         header:
           "gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
-        title: "text-base leading-snug font-medium",
         description: "text-sm",
         content: "px-4 group-data-[size=sm]/card:px-3",
         footer:
@@ -45,8 +43,6 @@ const { useStyles, styles } = createStyles(cardMeta, {
         root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
         header:
           "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-        title:
-          "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
         description: "text-sm",
         content: "px-6 group-data-[size=sm]/card:px-4",
         footer:
@@ -76,6 +72,70 @@ const { useStyles, styles } = createStyles(cardMeta, {
           action: "",
           content: "",
           footer: "border-t bg-inverse/5",
+        },
+      },
+    },
+    titles: {
+      quiet: {
+        density: {
+          compact: { slots: { title: "text-sm font-medium" } },
+          default: { slots: { title: "text-base leading-snug font-medium" } },
+          comfortable: {
+            slots: {
+              title:
+                "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+            },
+          },
+        },
+      },
+      compact: {
+        density: {
+          compact: { slots: { title: "text-xs/relaxed font-semibold" } },
+          default: { slots: { title: "text-sm font-semibold" } },
+          comfortable: { slots: { title: "text-sm font-semibold" } },
+        },
+      },
+      tight: {
+        density: {
+          compact: { slots: { title: "text-sm font-semibold tracking-tight" } },
+          default: {
+            slots: {
+              title: "text-base leading-snug font-semibold tracking-tight",
+            },
+          },
+          comfortable: {
+            slots: {
+              title:
+                "text-base leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
+            },
+          },
+        },
+      },
+      bold: {
+        density: {
+          compact: { slots: { title: "text-base font-bold" } },
+          default: { slots: { title: "text-lg font-bold" } },
+          comfortable: { slots: { title: "text-xl font-bold" } },
+        },
+      },
+      display: {
+        density: {
+          compact: { slots: { title: "text-lg font-normal" } },
+          default: { slots: { title: "text-xl font-normal" } },
+          comfortable: { slots: { title: "text-2xl font-normal" } },
+        },
+      },
+      caps: {
+        density: {
+          compact: {
+            slots: { title: "text-sm font-semibold tracking-wider uppercase" },
+          },
+          default: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
+          comfortable: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
         },
       },
     },

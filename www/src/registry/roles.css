@@ -15,3 +15,9 @@
   --studio-radius-container: var(--radius-lg);
   --studio-radius-inline-item: var(--radius-md);
 }
+
+/* The weight of action labels (Button, ToggleButton, GroupText); Typography
+   retargets it. */
+:root {
+  --studio-font-weight-label: var(--font-weight-medium);
+}

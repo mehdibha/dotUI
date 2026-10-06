@@ -18,6 +18,12 @@ const cardMeta = {
       default: "default",
       values: ["default", "tasnim"] as const,
     },
+    titles: {
+      kind: "enum",
+      default: "quiet",
+      values: ["quiet", "compact", "tight", "bold", "display", "caps"] as const,
+      description: "The title recipe: size, weight, tracking and case.",
+    },
   },
 } satisfies RegistryItem
 
