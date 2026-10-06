@@ -10,10 +10,10 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-4">
       <NumberField aria-label="small (sm)" defaultValue={1024}>
-        <NumberFieldGroup>
-          <NumberFieldDecrement size="sm" />
-          <Input placeholder="small (sm)" size="sm" />
-          <NumberFieldIncrement size="sm" />
+        <NumberFieldGroup size="sm">
+          <NumberFieldDecrement />
+          <Input placeholder="small (sm)" />
+          <NumberFieldIncrement />
         </NumberFieldGroup>
       </NumberField>
       <NumberField aria-label="medium (md)" defaultValue={1024}>
@@ -24,10 +24,10 @@ export default function Demo() {
         </NumberFieldGroup>
       </NumberField>
       <NumberField aria-label="large (lg)" defaultValue={1024}>
-        <NumberFieldGroup>
-          <NumberFieldDecrement size="lg" />
-          <Input placeholder="large (lg)" size="lg" />
-          <NumberFieldIncrement size="lg" />
+        <NumberFieldGroup size="lg">
+          <NumberFieldDecrement />
+          <Input placeholder="large (lg)" />
+          <NumberFieldIncrement />
         </NumberFieldGroup>
       </NumberField>
     </div>

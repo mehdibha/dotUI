@@ -32,8 +32,8 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
         (children) =>
           children ?? (
             <NumberFieldGroup>
-              <NumberFieldDecrement />
               <Input />
+              <NumberFieldDecrement />
               <NumberFieldIncrement />
             </NumberFieldGroup>
           ),
@@ -48,8 +48,8 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// HeroUI: minus at the start, plus at the end, each divided by the shell's
-// edge. Parts are placed by slot, so the authored order never matters.
+// Carbon: square stepper cells at the end of the shell, divided by its edge.
+// Parts are placed by slot, so the authored order never matters.
 const NumberFieldGroup = ({
   className,
   size,
@@ -65,8 +65,8 @@ const NumberFieldGroup = ({
         inputGroup({
           size,
           className: cn(
-            "w-fit overflow-hidden px-0 *:data-input:text-center",
-            "*:[[slot=decrement]]:-order-1 *:[[slot=increment]]:order-1",
+            "w-fit overflow-hidden pr-0",
+            "*:[[slot=decrement]]:order-1 *:[[slot=increment]]:order-2",
             className,
           ),
         }),
@@ -81,7 +81,7 @@ interface NumberFieldStepperProps extends React.ComponentProps<
 > {}
 
 const stepper =
-  "flex shrink-0 cursor-interactive items-center justify-center self-stretch border-border-control text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-(--input-h) *:[svg]:size-(--icon-size)"
+  "flex shrink-0 cursor-interactive items-center justify-center self-stretch border-border-control text-fg-muted outline-none transition-colors hover:bg-neutral-hover hover:text-fg pressed:bg-neutral-active disabled:cursor-disabled disabled:bg-transparent disabled:text-(--disabled-fg,currentColor) w-(--input-h) border-l-(length:--studio-control-stroke) *:[svg]:size-(--icon-size)"
 
 const NumberFieldDecrement = ({
   className,
@@ -92,7 +92,7 @@ const NumberFieldDecrement = ({
     <ButtonPrimitive.Button
       slot="decrement"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, "border-r-(length:--studio-control-stroke)", className),
+        cn(stepper, className),
       )}
       {...props}
     >
@@ -110,7 +110,7 @@ const NumberFieldIncrement = ({
     <ButtonPrimitive.Button
       slot="increment"
       className={composeRenderProps(className, (className) =>
-        cn(stepper, "border-l-(length:--studio-control-stroke)", className),
+        cn(stepper, className),
       )}
       {...props}
     >

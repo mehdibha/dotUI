@@ -12,7 +12,7 @@ const questionnaireMeta = {
     },
   ],
   dependencies: ["@shadcn/react"],
-  registryDependencies: ["button"],
+  registryDependencies: ["button", "input"],
   params: {
     titles: {
       kind: "enum",

@@ -8,15 +8,14 @@ export * from "./base"
 
 const FieldError = createDynamicComponent<
   FieldErrorProps,
-  "border" | "message" | "bar"
+  "plain" | "icon-message"
 >({
   componentName: "field",
   paramName: "error",
-  defaultValue: "border",
+  defaultValue: "plain",
   components: {
-    border: FieldErrorBase,
-    message: FieldErrorWithIcon,
-    bar: FieldErrorBase,
+    plain: FieldErrorBase,
+    "icon-message": FieldErrorWithIcon,
   },
   displayName: "FieldError",
 })
