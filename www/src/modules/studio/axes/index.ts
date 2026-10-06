@@ -37,22 +37,20 @@ import * as invalid from "./invalid"
 import * as kbd from "./kbd"
 import * as links from "./links"
 import * as menus from "./menus"
-import * as messageScroller from "./message-scroller"
 import * as mobile from "./mobile"
+import * as motion from "./motion"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
 import * as pickers from "./pickers"
 import * as popovers from "./popovers"
 import * as progress from "./progress"
-import * as questionnaire from "./questionnaire"
 import * as radio from "./radio"
 import { checkAxisValue, sameValue } from "./schema"
 import type { AxisSchema } from "./schema"
 import * as segmentedControl from "./segmented-control"
 import * as selection from "./selection"
 import * as shape from "./shape"
-import * as sidebar from "./sidebar"
 import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
@@ -61,7 +59,6 @@ import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
 import * as tabs from "./tabs"
-import * as toast from "./toast"
 import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
@@ -82,10 +79,10 @@ export const CHAPTERS = [
   disabled.chapter,
   invalid.chapter,
   mobile.chapter,
+  motion.chapter,
   charts.chapter,
   links.chapter,
   alert.chapter,
-  toast.chapter,
   skeleton.chapter,
   spinner.chapter,
   progress.chapter,
@@ -110,15 +107,12 @@ export const CHAPTERS = [
   tooltips.chapter,
   tabs.chapter,
   accordion.chapter,
-  sidebar.chapter,
   breadcrumbs.chapter,
   pagination.chapter,
   badges.chapter,
   kbd.chapter,
   avatars.chapter,
   tables.chapter,
-  questionnaire.chapter,
-  messageScroller.chapter,
 ] as const
 
 type UnionToIntersection<U> = (
@@ -237,7 +231,7 @@ export function parseState(raw: unknown): StudioState {
 
 export const DEFAULT_STATE = parseState({})
 
-/** Key-by-key equality; motion values compare by content. */
+/** Key-by-key equality. */
 export const sameState = (a: StudioState, b: StudioState) =>
   a === b ||
   (Object.keys(SCHEMA) as Key[]).every((key) => sameValue(a[key], b[key]))

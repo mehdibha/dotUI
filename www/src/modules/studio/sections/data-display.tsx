@@ -287,6 +287,7 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
         label="Card corners"
         value={roleLabel(effective, "roleCard")}
       />
+      <UsesRow axis="motion" label="Motion" />
       <More keys={["tableSeparation"]}>
         <DialSelect
           axis="tableSeparation"

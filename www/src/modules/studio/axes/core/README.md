@@ -43,7 +43,7 @@ Author it in the TARGET's module (`rules: [...]`, id `<module>/<name>`):
   `below`) unavailable; a saved value inside it resolves to the fallback/bound.
   Options show disabled with the chip; a slider greys the range.
 - `hide` — the row is not rendered; the value resolves to `value`, else the
-  key's default. `part` hides one field of a composite value (motion).
+  key's default.
 
 "Fires" means the value changed. A pin/hide whose `when` holds always sets
 `lock`, changed or not. At most one rule acts per key. Presets and Origin

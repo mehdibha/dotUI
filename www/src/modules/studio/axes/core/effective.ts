@@ -127,15 +127,8 @@ export function createEngine(input: EngineInput) {
     switch (effect.kind) {
       case "pin":
         return effect.value
-      case "hide": {
-        const base =
-          "value" in effect ? effect.value : resolvedDefault(key, values)
-        if (!effect.part) return base
-        return {
-          ...(value as object),
-          [effect.part]: (base as Record<string, unknown>)[effect.part],
-        }
-      }
+      case "hide":
+        return "value" in effect ? effect.value : resolvedDefault(key, values)
       case "exclude":
         if ("options" in effect)
           return effect.options.includes(value as string)
@@ -172,14 +165,7 @@ export function createEngine(input: EngineInput) {
           const { kind: _, ...limits } = effect
           entry.exclude ??= { rule: rule.id, cause: rule.cause, ...limits }
         } else {
-          entry.lock = {
-            rule: rule.id,
-            kind: effect.kind,
-            cause: rule.cause,
-            ...(effect.kind === "hide" && effect.part
-              ? { part: effect.part }
-              : {}),
-          }
+          entry.lock = { rule: rule.id, kind: effect.kind, cause: rule.cause }
         }
         const next = apply(effect, key, value, values)
         if (!sameValue(next, value)) {

@@ -27,7 +27,7 @@ const modalMeta = {
     motion: {
       kind: "enum",
       default: "scale",
-      values: ["scale", "fade", "slide", "none"] as const,
+      values: ["scale", "rise", "drop", "none"] as const,
       description: "How the dialog enters and leaves.",
     },
     mobile: {

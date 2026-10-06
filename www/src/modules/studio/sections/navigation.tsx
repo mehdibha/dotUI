@@ -236,6 +236,7 @@ export function NavigationSection({ studio }: { studio: Studio }) {
       <DialGap />
       <UsesRow axis="tabsColor" label="Indicator color" />
       <UsesRow axis="linkColor" label="Link color" />
+      <UsesRow axis="motion" label="Motion" />
       <MemberSection id="link" title="Links">
         <DialSelect
           axis="linkUnderline"

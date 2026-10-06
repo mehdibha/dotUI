@@ -6,8 +6,6 @@ import { toOklch } from "@dotui/colors"
 
 import { FONT_CATALOG } from "@/lib/fonts"
 
-import { isMotionValue } from "./motion"
-
 export type AxisValue =
   | { type: "enum"; options: readonly { value: string }[] }
   | { type: "number"; min: number; max: number; step?: number }
@@ -16,12 +14,6 @@ export type AxisValue =
   | { type: "color" }
   /** A family from the font catalog. */
   | { type: "font" }
-  /** A component's motion (motion.ts); an entrance also names its pattern. */
-  | {
-      type: "motion"
-      kind: "entrance" | "state-change" | "loop"
-      patterns?: readonly { value: string }[]
-    }
 
 export interface AxisSchema {
   value: AxisValue
@@ -44,14 +36,6 @@ export const range = (bounds: {
 export const BOOLEAN: AxisSchema = { value: { type: "boolean" } }
 export const COLOR: AxisSchema = { value: { type: "color" } }
 export const FONT: AxisSchema = { value: { type: "font" } }
-
-export const entrance = (
-  patterns: readonly { value: string }[],
-): AxisSchema => ({ value: { type: "motion", kind: "entrance", patterns } })
-export const STATE_CHANGE: AxisSchema = {
-  value: { type: "motion", kind: "state-change" },
-}
-export const LOOP: AxisSchema = { value: { type: "motion", kind: "loop" } }
 
 export const auto = (schema: AxisSchema): AxisSchema => ({
   ...schema,
@@ -92,14 +76,10 @@ export function checkAxisValue(
       return typeof value === "string" && FONT_FAMILIES.has(value)
         ? undefined
         : "expected a family from the font catalog"
-    case "motion":
-      return isMotionValue(kind.kind, value, kind.patterns)
-        ? undefined
-        : `expected a motion ${kind.kind}`
   }
 }
 
-/** Deep equality over axis values; motion values are plain objects. */
+/** Deep equality over axis values. */
 export function sameValue(a: unknown, b: unknown): boolean {
   if (a === b) return true
   if (typeof a !== "object" || typeof b !== "object" || !a || !b) return false

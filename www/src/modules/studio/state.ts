@@ -5,11 +5,10 @@
 import { KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
-import { MOTION_KEYS } from "./axes/motion-presets"
 import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
 import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
-import { MotionSection } from "./sections/motion"
+import { MotionPreview, MotionSection } from "./sections/motion"
 import { ShapePreview, ShapeSection } from "./sections/shape"
 import { SpacePreview, SpaceSection } from "./sections/space"
 import { StatesPreview, StatesSection } from "./sections/states"
@@ -94,8 +93,8 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "motion",
     label: "Motion",
-    owners: ["motion", ...MOTION_KEYS],
     Body: MotionSection,
+    Preview: MotionPreview,
   },
   {
     id: "components",

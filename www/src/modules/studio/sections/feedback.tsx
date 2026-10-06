@@ -243,6 +243,7 @@ export function FeedbackSection({ studio }: { studio: Studio }) {
         options={SHAPE_OPTIONS}
       />
       <UsesRow axis="brand" label="Brand" />
+      <UsesRow axis="motion" label="Motion" />
       <MemberSection id="loading" title="Loading">
         <DialSelect
           axis="spinnerStyle"

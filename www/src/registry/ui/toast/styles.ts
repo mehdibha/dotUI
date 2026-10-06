@@ -123,12 +123,6 @@ const { useStyles, styles } = createStyles(toastMeta, {
           content: contentTransition,
         },
       },
-      fade: {
-        slots: {
-          toast: [toastTransition, "data-starting-style:opacity-0"],
-          content: contentTransition,
-        },
-      },
       none: {},
     },
   },

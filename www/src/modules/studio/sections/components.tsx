@@ -62,7 +62,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "nav",
-    owners: ["tabs", "links", "breadcrumbs", "sidebar"],
+    owners: ["tabs", "links", "breadcrumbs"],
     label: "Navigation",
     Preview: NavigationPreview,
     Body: NavigationSection,
@@ -83,7 +83,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "feedback",
-    owners: ["badges", "spinner", "skeleton", "progress", "alert", "toast"],
+    owners: ["badges", "spinner", "skeleton", "progress", "alert"],
     label: "Feedback",
     Preview: FeedbackPreview,
     Body: FeedbackSection,

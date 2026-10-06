@@ -9,23 +9,16 @@
    tag it is the fill. Shape rides on the `--studio-badge-radius` / `--studio-tag-radius`
    surface vars (token-field tokens sit on `--studio-tag-radius` too), resolved to
    plain `rounded-*` on export. Pill is the registry default and emits
-   nothing: badges are full-round, tags keep their `radius-control-sm` corners.
-   Only tags react to the pointer; their timing rides the
-   `--studio-tag-state-*` vars. */
+   nothing: badges are full-round, tags keep their `radius-control-sm` corners. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn has no tag; its badge rides Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
 
 export const BADGE_DEFAULTS = {
   badgeStyle: "solid",
   badgeShape: "pill",
-  tagMotion: MOTION,
 }
 
 /* Solid is the Bootstrap/Material filled chip; soft the Linear/Radix Themes
@@ -49,12 +42,11 @@ const SHAPE_TOKENS: Record<string, string> = {
 export const BADGE_SCHEMA: ChapterSchema<typeof BADGE_DEFAULTS> = {
   badgeStyle: oneOf(STYLE_OPTIONS),
   badgeShape: oneOf(SHAPE_OPTIONS),
-  tagMotion: STATE_CHANGE,
 }
 
 export function resolveBadges(state: Effective): Resolved {
   const style = state.badgeStyle
-  const tokens = resolveStateChange("tag", state.tagMotion, MOTION)
+  const tokens: Record<string, string> = {}
   const radius = SHAPE_TOKENS[state.badgeShape]
   if (radius) {
     tokens["--studio-badge-radius"] = radius

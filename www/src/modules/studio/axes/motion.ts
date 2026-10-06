@@ -1,124 +1,34 @@
-/* Motion — the studio's shared vocabulary; nothing here ships. Each animated
-   component owns its motion: builder-only `--studio-<id>-*` vars declared in
-   its styles.css `:root`, read by `duration-(…)` / `ease-(…)` classes that
-   the publisher resolves to plain utilities (`duration-200`, `ease-out`,
-   `ease-[cubic-bezier(…)]`, `ease-[linear(…)]`).
+/* Motion — how the whole system moves: one timing table copied from a real
+   system, or None, keyed by role (what moves), never by component. Anchored
+   layers share one entrance pattern. Patterns systems disagree on beyond that
+   stay with their families (Dialogs › Entrance, Skeleton, Spinner, Charts ›
+   Motion).
 
-   A component axis keeps one `<name>Motion` state key — an Entrance (a
-   floating layer: its pattern param plus in/out timing), a StateChange
-   (hover, press, selection) or a Loop (a keyframe animation repeating while
-   something loads) — and resolves it with `resolveEntrance` /
-   `resolveStateChange` / `resolveLoop`, which write only the vars that
-   leave the defaults.
-   Curves follow DialKit's transition modes: a cubic bezier, a spring timed
-   by its visual duration and bounce, or a spring by its physics. Springs
-   ship as `linear()` over their settle time; exits never spring. */
+   Engine: every animated component reads builder-only `--studio-<id>-*`
+   vars (its styles.css `:root` holds Standard), which the publisher resolves
+   to plain `duration-*` / `ease-*` classes; springs ship as `linear()`. The
+   entrance is the `motion` param on popover and tooltip. */
+
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
+import type { ChapterSchema } from "./schema"
 
 export type Bezier = [number, number, number, number]
 
 export type Curve =
   | { type: "easing"; ease: Bezier }
-  /** Motion's time spring: settles around the duration it's given. */
-  | { type: "spring"; bounce: number }
-  /** A physical spring: its duration is however long it takes to settle. */
+  /** A physical spring: it runs for however long it takes to settle. */
   | { type: "physics"; stiffness: number; damping: number; mass: number }
-
-/** A floating layer's entrance: the pattern param, then in/out timing in ms.
- *  `exit` / `exitEase` are absent where the component has no exit leg. */
-export interface Entrance {
-  pattern: string
-  enter: number
-  curve: Curve
-  exit?: number
-  exitEase?: Bezier
-}
-
-/** A control's state change: hover, press, selection. */
-export interface StateChange {
-  duration: number
-  ease: Bezier
-}
-
-/** A keyframe loop — a spinner's turn, a skeleton's pulse: one cycle's
- *  length in ms and its curve. */
-export interface Loop {
-  cycle: number
-  ease: Bezier
-}
-
-export const DURATION_RANGE = { min: 0, max: 1000, step: 10 }
-export const CYCLE_RANGE = { min: 200, max: 4000, step: 50 }
-
-const easing = (ease: Bezier): Curve => ({ type: "easing", ease })
-
-/* Named curves. `ease` is CSS's keyword (shadcn's tw-animate default);
-   ease-out / ease-in / ease-in-out / linear are Tailwind's (the publisher
-   ships them by name); emphasized is Material 3's; fluid is the iOS sheet. */
-export const CURVES: { value: string; label: string; curve: Curve }[] = [
-  { value: "ease", label: "Ease", curve: easing([0.25, 0.1, 0.25, 1]) },
-  { value: "ease-out", label: "Ease out", curve: easing([0, 0, 0.2, 1]) },
-  {
-    value: "ease-in-out",
-    label: "Ease in out",
-    curve: easing([0.4, 0, 0.2, 1]),
-  },
-  { value: "ease-in", label: "Ease in", curve: easing([0.4, 0, 1, 1]) },
-  { value: "linear", label: "Linear", curve: easing([0, 0, 1, 1]) },
-  {
-    value: "emphasized",
-    label: "Emphasized",
-    curve: easing([0.05, 0.7, 0.1, 1]),
-  },
-  { value: "snappy", label: "Snappy", curve: easing([0.23, 1, 0.32, 1]) },
-  { value: "fluid", label: "Fluid", curve: easing([0.32, 0.72, 0, 1]) },
-  { value: "spring", label: "Spring", curve: { type: "spring", bounce: 0.15 } },
-  { value: "bouncy", label: "Bouncy", curve: { type: "spring", bounce: 0.35 } },
-]
-
-/** A named bezier's control points. */
-export function ease(name: string): Bezier {
-  const named = CURVES.find((c) => c.value === name)?.curve
-  if (named?.type !== "easing") throw new Error(`No bezier named ${name}`)
-  return named.ease
-}
-
-/** The named curve a value matches, or undefined for a custom one. */
-export function curveName(value: Curve): string | undefined {
-  const key = JSON.stringify(value)
-  return CURVES.find((c) => JSON.stringify(c.curve) === key)?.value
-}
-
-/** Tailwind's own transition timing: ships no duration or ease class. */
-export const TAILWIND_TIMING: StateChange = {
-  duration: 150,
-  ease: ease("ease-in-out"),
-}
 
 /* --------------------------------- Springs -------------------------------- */
 
-export interface SpringParams {
-  stiffness: number
-  damping: number
-  mass: number
-}
+type Spring = Extract<Curve, { type: "physics" }>
 
-/** A spring's physics; a time spring maps the way Motion's generator does. */
-export function springParams(
-  value: Exclude<Curve, { type: "easing" }>,
-  visualMs: number,
-): SpringParams {
-  if (value.type === "physics") return value
-  const root = (2 * Math.PI) / ((Math.max(50, visualMs) / 1000) * 1.2)
-  const stiffness = root * root
-  const damping =
-    2 * Math.min(1, Math.max(0.05, 1 - value.bounce)) * Math.sqrt(stiffness)
-  return { stiffness, damping, mass: 1 }
-}
-
-/** Normalized position `t` seconds from rest; overshoots when bouncy. */
+/** Normalized position `t` seconds from rest; overshoots when underdamped. */
 export function springProgress(
   t: number,
-  { stiffness, damping, mass }: SpringParams,
+  { stiffness, damping, mass }: Spring,
 ): number {
   if (t <= 0) return 0
   const w0 = Math.sqrt(stiffness / mass)
@@ -139,10 +49,10 @@ export function springProgress(
 }
 
 /** Milliseconds until the spring stays within 0.1% of rest, to 10ms. */
-export function springSettleMs(params: SpringParams): number {
+export function springSettleMs(spring: Spring): number {
   let last = 0
   for (let ms = 0; ms <= 5000; ms += 5)
-    if (Math.abs(1 - springProgress(ms / 1000, params)) > 0.001) last = ms
+    if (Math.abs(1 - springProgress(ms / 1000, spring)) > 0.001) last = ms
   return Math.ceil((last + 5) / 10) * 10
 }
 
@@ -168,9 +78,9 @@ function keep(
 }
 
 /** The spring over `ms` as CSS `linear()`, sampled at every percent. */
-export function springLinear(params: SpringParams, ms: number): string {
+function springLinear(spring: Spring, ms: number): string {
   const ys = Array.from({ length: 101 }, (_, i) =>
-    springProgress((i / 100) * (ms / 1000), params),
+    springProgress((i / 100) * (ms / 1000), spring),
   )
   const stops = keep(ys, 0, 100, 0.005).map(
     (i) => `${Number((ys[i] ?? 0).toFixed(3))} ${i}%`,
@@ -180,120 +90,286 @@ export function springLinear(params: SpringParams, ms: number): string {
 
 /* ---------------------------------- CSS ----------------------------------- */
 
-export const formatMs = (ms: number) => `${Math.round(ms)}ms`
-
 export function bezierCss([x1, y1, x2, y2]: Bezier): string {
   return x1 === 0 && y1 === 0 && x2 === 1 && y2 === 1
     ? "linear"
     : `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`
 }
 
-/** A curve over `ms` in CSS terms; a spring runs for its settle time. */
-export function curveTiming(value: Curve, ms: number) {
-  if (value.type === "easing") return { ease: bezierCss(value.ease), ms }
-  const params = springParams(value, ms)
-  const settle = springSettleMs(params)
-  return { ease: springLinear(params, settle), ms: settle }
+/** A leg in CSS terms; a spring runs for its settle time. */
+export function legTiming({ ms, curve }: Leg) {
+  if (curve.type === "easing") return { ease: bezierCss(curve.ease), ms }
+  const settle = springSettleMs(curve)
+  return { ease: springLinear(curve, settle), ms: settle }
 }
 
-/** Every var an entrance writes, under `--studio-<id>-`. */
-export function entranceVars(id: string, value: Entrance) {
-  const enter = curveTiming(value.curve, value.enter)
-  const vars: Record<string, string> = {
-    [`--studio-${id}-enter-duration`]: `${enter.ms}ms`,
-    [`--studio-${id}-ease`]: enter.ease,
+/* ---------------------------------- Roles ---------------------------------- */
+
+export interface Leg {
+  ms: number
+  curve: Curve
+}
+
+/** A role's timing; `exit` (never a spring) where the role has a leaving leg. */
+export interface RoleTiming {
+  enter: Leg
+  exit?: { ms: number; ease: Bezier }
+}
+
+export type Role =
+  /** Hover, press, focus and selection fills. */
+  | "micro"
+  /** Something glides: a switch thumb, a segmented chip, a tab indicator,
+   *  a progress fill. */
+  | "travel"
+  /** A panel edge: the sidebar collapsing. */
+  | "layout"
+  /** Layers anchored to a trigger: popover (menu, select, combobox), tooltip. */
+  | "anchored"
+  | "modal"
+  /** The drawer sliding from its edge. */
+  | "sheet"
+  /** A height reveal: accordion, collapsible. */
+  | "disclosure"
+  /** Toasts and the jump-to-latest button. */
+  | "notification"
+  /** A swiped toast finishing its throw. */
+  | "swipe"
+
+export type MotionTable = Record<Role, RoleTiming>
+
+const easing = (ms: number, ease: Bezier): Leg => ({
+  ms,
+  curve: { type: "easing", ease },
+})
+/** A spring by its stiffness and damping ratio (mass 1). */
+const spring = (stiffness: number, ratio: number): Leg => ({
+  ms: 0,
+  curve: {
+    type: "physics",
+    stiffness,
+    damping: Number((ratio * 2 * Math.sqrt(stiffness)).toFixed(2)),
+    mass: 1,
+  },
+})
+
+const TAILWIND: Bezier = [0.4, 0, 0.2, 1]
+const CSS_EASE: Bezier = [0.25, 0.1, 0.25, 1]
+const CSS_EASE_OUT: Bezier = [0, 0, 0.58, 1]
+const CSS_EASE_IN: Bezier = [0.42, 0, 1, 1]
+const TAILWIND_OUT: Bezier = [0, 0, 0.2, 1]
+const LINEAR: Bezier = [0, 0, 1, 1]
+const EXPO_OUT: Bezier = [0.16, 1, 0.3, 1]
+
+/* shadcn's: Tailwind's 150ms default on controls, tw-animate on CSS `ease`
+   for layers (style-nova's 100ms), the sidebar's 200ms linear, Base UI's
+   drawer, tw-animate's accordion and Sonner. */
+const STANDARD: MotionTable = {
+  micro: { enter: easing(150, TAILWIND) },
+  travel: { enter: easing(150, TAILWIND) },
+  layout: { enter: easing(200, LINEAR) },
+  anchored: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
+  modal: { enter: easing(100, CSS_EASE), exit: { ms: 100, ease: CSS_EASE } },
+  sheet: {
+    enter: easing(450, [0.22, 1, 0.36, 1]),
+    exit: { ms: 400, ease: [0.22, 1, 0.36, 1] },
+  },
+  disclosure: { enter: easing(200, CSS_EASE_OUT) },
+  notification: {
+    enter: easing(400, CSS_EASE),
+    exit: { ms: 400, ease: CSS_EASE },
+  },
+  swipe: { enter: easing(200, TAILWIND_OUT) },
+}
+
+/* Radix Themes: expo-out layers with shorter exits (popper 160/100, dialog
+   200/100), the switch thumb's 140ms, 120ms state shadows. Where Themes has
+   no such part, Radix Primitives' docs (accordion, toast) and Vaul's sheet. */
+const SMOOTH: MotionTable = {
+  micro: { enter: easing(120, CSS_EASE) },
+  travel: { enter: easing(140, [0.45, 0.05, 0.55, 0.95]) },
+  layout: { enter: easing(200, EXPO_OUT) },
+  anchored: { enter: easing(160, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
+  modal: { enter: easing(200, EXPO_OUT), exit: { ms: 100, ease: EXPO_OUT } },
+  sheet: {
+    enter: easing(500, [0.32, 0.72, 0, 1]),
+    exit: { ms: 500, ease: [0.32, 0.72, 0, 1] },
+  },
+  disclosure: { enter: easing(300, [0.87, 0, 0.13, 1]) },
+  notification: {
+    enter: easing(150, EXPO_OUT),
+    exit: { ms: 100, ease: CSS_EASE_IN },
+  },
+  swipe: { enter: easing(100, CSS_EASE_OUT) },
+}
+
+/* Material 3 Expressive: spatial springs where things move (fast 800/.6,
+   default 380/.8, slow 200/.8), critically damped effects springs on fills
+   and heights (fast 3800, default 1600), exits on emphasized accelerate. */
+const M3_EXIT = { ms: 200, ease: [0.3, 0, 0.8, 0.15] as Bezier }
+const EXPRESSIVE: MotionTable = {
+  micro: { enter: spring(3800, 1) },
+  travel: { enter: spring(800, 0.6) },
+  layout: { enter: spring(380, 0.8) },
+  anchored: { enter: spring(380, 0.8), exit: M3_EXIT },
+  modal: { enter: spring(380, 0.8), exit: M3_EXIT },
+  sheet: { enter: spring(200, 0.8), exit: M3_EXIT },
+  disclosure: { enter: spring(1600, 1) },
+  notification: { enter: spring(380, 0.8), exit: M3_EXIT },
+  swipe: { enter: easing(200, [0.05, 0.7, 0.1, 1]) },
+}
+
+/* Instant everywhere: Standard's curves, nothing to run them over. */
+const NONE = Object.fromEntries(
+  Object.entries(STANDARD).map(([role, { enter, exit }]) => [
+    role,
+    {
+      enter: { ...enter, ms: 0 },
+      ...(exit ? { exit: { ...exit, ms: 0 } } : {}),
+    },
+  ]),
+) as MotionTable
+
+const TABLES: Record<string, MotionTable> = {
+  none: NONE,
+  standard: STANDARD,
+  smooth: SMOOTH,
+  expressive: EXPRESSIVE,
+}
+
+/** A `motion` option's table. */
+export const tableOf = (motion: string) => TABLES[motion] ?? STANDARD
+
+/* ---------------------------------- Members -------------------------------- */
+
+/* Var id → role. A state member reads `--studio-<id>-state-*`. Radio rides
+   checkbox's vars, toggle-button button's, token-field input's. */
+export const STATE_MEMBERS: Record<string, Role> = {
+  button: "micro",
+  input: "micro",
+  checkbox: "micro",
+  slider: "micro",
+  link: "micro",
+  breadcrumbs: "micro",
+  tag: "micro",
+  table: "micro",
+  calendar: "micro",
+  "time-picker": "micro",
+  "color-swatch-picker": "micro",
+  questionnaire: "micro",
+  switch: "travel",
+  "segmented-control": "travel",
+  tabs: "travel",
+  progress: "travel",
+  sidebar: "layout",
+  "toast-swipe": "swipe",
+}
+
+/* A layer reads `--studio-<id>-enter-duration` / `-ease`, plus the exit pair
+   where it leaves on its own leg. Menu, select and combobox ride popover's;
+   collapsible accordion's. */
+export const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
+  popover: { role: "anchored", exit: true },
+  tooltip: { role: "anchored", exit: true },
+  modal: { role: "modal", exit: true },
+  drawer: { role: "sheet", exit: true },
+  accordion: { role: "disclosure", exit: false },
+  toast: { role: "notification", exit: true },
+  "message-scroller": { role: "notification", exit: true },
+}
+
+/** Every member's vars under a table. */
+export function motionVars(table: MotionTable): Record<string, string> {
+  const vars: Record<string, string> = {}
+  for (const [id, role] of Object.entries(STATE_MEMBERS)) {
+    const { ms, ease } = legTiming(table[role].enter)
+    vars[`--studio-${id}-state-duration`] = `${ms}ms`
+    vars[`--studio-${id}-state-ease`] = ease
   }
-  if (value.exit !== undefined)
-    vars[`--studio-${id}-exit-duration`] = `${value.exit}ms`
-  if (value.exitEase)
-    vars[`--studio-${id}-exit-ease`] = bezierCss(value.exitEase)
+  for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
+    const { enter, exit } = table[member.role]
+    const { ms, ease } = legTiming(enter)
+    vars[`--studio-${id}-enter-duration`] = `${ms}ms`
+    vars[`--studio-${id}-ease`] = ease
+    if (member.exit && exit) {
+      vars[`--studio-${id}-exit-duration`] = `${exit.ms}ms`
+      vars[`--studio-${id}-exit-ease`] = bezierCss(exit.ease)
+    }
+  }
   return vars
 }
 
-export function stateChangeVars(id: string, value: StateChange) {
+/* ---------------------------------- Chapter -------------------------------- */
+
+export const MOTION_OPTIONS = [
+  { value: "none", label: "None", description: "Ant Design" },
+  { value: "standard", label: "Standard", description: "shadcn" },
+  { value: "smooth", label: "Smooth", description: "Radix Themes" },
+  { value: "expressive", label: "Expressive", description: "Material 3" },
+]
+
+/* Zoom: fade, 95% and a short slide toward the trigger (shadcn, Radix
+   Themes, Carbon, Geist); Slide: the slide alone (Polaris, Fluent 2); Fade
+   (Primer, Mantine). */
+export const ENTRANCE_OPTIONS = [
+  { value: "zoom", label: "Zoom", description: "shadcn" },
+  { value: "slide", label: "Slide", description: "Polaris" },
+  { value: "fade", label: "Fade", description: "Primer" },
+]
+
+/* The popover and tooltip `motion` param each entrance writes. */
+const ENTRANCE_PARAM: Record<string, string> = {
+  zoom: "scale",
+  slide: "slide",
+  fade: "fade",
+}
+
+export const MOTION_DEFAULTS = {
+  motion: "standard",
+  motionEntrance: "zoom",
+}
+
+export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
+  motion: oneOf(MOTION_OPTIONS),
+  motionEntrance: oneOf(ENTRANCE_OPTIONS),
+}
+
+const STANDARD_VARS = motionVars(STANDARD)
+
+export function resolveMotion(state: Effective): Resolved {
+  const vars = motionVars(tableOf(state.motion))
+  const off = state.motion === "none"
+  const entrance = off
+    ? "none"
+    : (ENTRANCE_PARAM[state.motionEntrance] ?? "scale")
   return {
-    [`--studio-${id}-state-duration`]: `${value.duration}ms`,
-    [`--studio-${id}-state-ease`]: bezierCss(value.ease),
+    // Only what leaves Standard: Origin writes nothing.
+    tokens: Object.fromEntries(
+      Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
+    ),
+    params: {
+      popover: { motion: entrance },
+      tooltip: { motion: entrance },
+      toast: { motion: off ? "none" : "slide" },
+      accordion: { motion: off ? "none" : "expand" },
+      collapsible: { motion: off ? "none" : "expand" },
+    },
   }
 }
 
-export function loopVars(id: string, value: Loop) {
-  return {
-    [`--studio-${id}-loop-duration`]: `${value.cycle}ms`,
-    [`--studio-${id}-loop-ease`]: bezierCss(value.ease),
-  }
-}
-
-/* --------------------------------- Resolve -------------------------------- */
-
-/** The vars that leave the defaults: an untouched system writes none. */
-function changed(vars: Record<string, string>, base: Record<string, string>) {
-  return Object.fromEntries(
-    Object.entries(vars).filter(([name, value]) => base[name] !== value),
-  )
-}
-
-const isDuration = (v: unknown): v is number =>
-  typeof v === "number" && Number.isFinite(v) && v >= 0
-const isBezier = (v: unknown): v is Bezier =>
-  Array.isArray(v) &&
-  v.length === 4 &&
-  v.every((n) => typeof n === "number" && Number.isFinite(n))
-
-function isCurve(v: unknown): v is Curve {
-  const c = v as Record<string, unknown> | null
-  if (c?.type === "easing") return isBezier(c.ease)
-  if (c?.type === "spring")
-    return typeof c.bounce === "number" && Number.isFinite(c.bounce)
-  return (
-    c?.type === "physics" &&
-    [c.stiffness, c.damping, c.mass].every((n) => isDuration(n) && n > 0)
-  )
-}
-
-const isRecord = (v: unknown): v is Record<string, unknown> =>
-  typeof v === "object" && v !== null && !Array.isArray(v)
-
-/** Whether `v` has the shape of a motion value of `kind`. */
-export function isMotionValue(
-  kind: "entrance" | "state-change" | "loop",
-  v: unknown,
-  patterns: readonly { value: string }[] = [],
-): boolean {
-  if (!isRecord(v)) return false
-  if (kind === "state-change") return isDuration(v.duration) && isBezier(v.ease)
-  if (kind === "loop") return isDuration(v.cycle) && isBezier(v.ease)
-  return (
-    patterns.some((p) => p.value === v.pattern) &&
-    isDuration(v.enter) &&
-    isCurve(v.curve) &&
-    (v.exit === undefined || isDuration(v.exit)) &&
-    (v.exitEase === undefined || isBezier(v.exitEase))
-  )
-}
-
-/** An entrance's `--studio-<id>-*` tokens and its pattern param. */
-export function resolveEntrance(
-  id: string,
-  value: Entrance,
-  defaults: Entrance,
-) {
-  return {
-    tokens: changed(entranceVars(id, value), entranceVars(id, defaults)),
-    pattern: value.pattern,
-  }
-}
-
-/** A state change's `--studio-<id>-state-*` tokens. */
-export function resolveStateChange(
-  id: string,
-  value: StateChange,
-  defaults: StateChange,
-) {
-  return changed(stateChangeVars(id, value), stateChangeVars(id, defaults))
-}
-
-/** A keyframe loop's `--studio-<id>-loop-*` tokens. */
-export function resolveLoop(id: string, value: Loop, defaults: Loop) {
-  return changed(loopVars(id, value), loopVars(id, defaults))
-}
+export const chapter = defineChapter({
+  id: "motion",
+  defaults: MOTION_DEFAULTS,
+  schema: MOTION_SCHEMA,
+  resolve: resolveMotion,
+  rules: [
+    {
+      // Nothing enters under None: the pattern would do nothing.
+      id: "motion/none-hides-entrance",
+      target: "motionEntrance",
+      when: { key: "motion", in: ["none"] },
+      effect: { kind: "hide", value: "zoom" },
+      cause: "motion",
+    },
+  ],
+})

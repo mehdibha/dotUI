@@ -5,22 +5,16 @@
 
    Engine: `style` is an enum param on both `button` and `toggle-button` (a
    synced group — one axis writes both); radius rides on the shared
-   `--studio-btn-radius` var, state timing on the `--studio-button-state-*`
-   vars both read. */
+   `--studio-btn-radius` var. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's button and toggle: `transition-all` on Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
   buttonRadius: "auto",
-  buttonMotion: MOTION,
 }
 
 /* Source-verified in Oct 2026: flat to deep, then Duolingo's slab. */
@@ -56,12 +50,11 @@ const XS_RADIUS_TOKENS: Record<string, string> = {
 export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
   buttonStyle: oneOf(STYLE_OPTIONS),
   buttonRadius: oneOf(RADIUS_OPTIONS),
-  buttonMotion: STATE_CHANGE,
 }
 
 export function resolveButtons(state: Effective): Resolved {
   const selection = { style: state.buttonStyle }
-  const tokens = resolveStateChange("button", state.buttonMotion, MOTION)
+  const tokens: Record<string, string> = {}
   const radius = RADIUS_TOKENS[state.buttonRadius]
   if (radius) {
     tokens["--studio-btn-radius"] = radius

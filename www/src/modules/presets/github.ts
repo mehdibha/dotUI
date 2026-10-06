@@ -1,5 +1,3 @@
-import { DEFAULTS } from "@/modules/studio/axes"
-
 import { definePreset } from "./preset"
 
 export const github = definePreset({
@@ -41,9 +39,8 @@ export const github = definePreset({
     focusInputBorderWidth: 2,
 
     // Motion
-    popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "fade" },
-    tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "fade" },
-    modalMotion: { ...DEFAULTS.modalMotion, pattern: "fade" },
+    // Primer's overlays fade in; its dialogs scale.
+    motionEntrance: "fade",
 
     // Components
     // Underlined at rest so links don't rely on color alone (WCAG 1.4.1).

@@ -2,49 +2,21 @@
    (shadcn/Radix, Vaul), a lighter scrim that frosts the page behind (Apple
    sheets, Arc), or nothing but the panel's shadow (Linear). Position: the
    classic centered modal, or docked in the upper third (Linear, Raycast) so the
-   top edge stays put as content grows.
-
-   Modal motion: how the panel and its backdrop enter and leave. Drawer
-   motion: how the sheet slides in and out.
+   top edge stays put as content grows. Entrance: how the panel arrives —
+   Motion times it, and under Motion None nothing moves.
 
    Engine: `backdrop` is an enum param on both `modal` and `drawer` (a synced
-   group — one axis writes both); `position` and `motion` are `modal` params,
-   the motion timed by its `--studio-modal-*` vars; drawer motion is its
-   `--studio-drawer-*` timing vars (the slide itself is the drawer). */
+   group — one axis writes both); `position` and `motion` are `modal` params. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { ease, resolveEntrance } from "./motion"
-import type { Bezier, Entrance } from "./motion"
-import { entrance, oneOf } from "./schema"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's (style-nova + tw-animate): the panel fades and zooms from 95%,
-   the overlay fades, 100ms both ways on CSS `ease`. */
-const MODAL_MOTION: Entrance = {
-  pattern: "scale",
-  enter: 100,
-  curve: { type: "easing", ease: ease("ease") },
-  exit: 100,
-  exitEase: ease("ease"),
-}
-
-/* shadcn's Base UI drawer: 450ms in, 400ms out (scaled by the fling's
-   strength), both on an ease-out-quint. */
-const DRAWER_EASE: Bezier = [0.22, 1, 0.36, 1]
-const DRAWER_MOTION: Entrance = {
-  pattern: "slide",
-  enter: 450,
-  curve: { type: "easing", ease: DRAWER_EASE },
-  exit: 400,
-  exitEase: DRAWER_EASE,
-}
 
 export const DIALOG_DEFAULTS = {
   dialogBackdrop: "dim",
   dialogPosition: "center",
-  modalMotion: MODAL_MOTION,
-  drawerMotion: DRAWER_MOTION,
+  dialogEntrance: "scale",
 }
 
 export const BACKDROP_OPTIONS = [
@@ -58,36 +30,29 @@ export const POSITION_OPTIONS = [
   { value: "top", label: "Top" },
 ]
 
-export const MODAL_PATTERNS = [
-  { value: "scale", label: "Scale" },
-  { value: "fade", label: "Fade" },
-  { value: "slide", label: "Slide" },
-  { value: "none", label: "None" },
+/* Scale: fade and zoom from 95% (shadcn, Geist, Primer, Fluent 2); Rise: up
+   from below (Spectrum 2, Polaris, Atlassian, Radix Themes' nearest); Drop:
+   down from above (Carbon, Mantine). */
+export const ENTRANCE_OPTIONS = [
+  { value: "scale", label: "Scale", description: "shadcn" },
+  { value: "rise", label: "Rise", description: "Polaris" },
+  { value: "drop", label: "Drop", description: "Carbon" },
 ]
-
-/** The drawer always slides; there's no pattern to pick. */
-export const DRAWER_PATTERNS = [{ value: "slide", label: "Slide" }]
 
 export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
   dialogBackdrop: oneOf(BACKDROP_OPTIONS),
   dialogPosition: oneOf(POSITION_OPTIONS),
-  modalMotion: entrance(MODAL_PATTERNS),
-  drawerMotion: entrance(DRAWER_PATTERNS),
+  dialogEntrance: oneOf(ENTRANCE_OPTIONS),
 }
 
 export function resolveDialogs(state: Effective): Resolved {
   const backdrop = state.dialogBackdrop
-  const modal = resolveEntrance("modal", state.modalMotion, MODAL_MOTION)
   return {
-    tokens: {
-      ...modal.tokens,
-      ...resolveEntrance("drawer", state.drawerMotion, DRAWER_MOTION).tokens,
-    },
     params: {
       modal: {
         backdrop,
         position: state.dialogPosition,
-        motion: modal.pattern,
+        motion: state.motion === "none" ? "none" : state.dialogEntrance,
       },
       drawer: { backdrop },
     },

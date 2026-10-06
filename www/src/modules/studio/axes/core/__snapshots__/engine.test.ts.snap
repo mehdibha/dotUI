@@ -1,5 +1,78 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`rules > charts/motion-off: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "accordion": {
+      "container": "divided",
+      "marker": "chevron",
+      "markerPosition": "trailing",
+      "motion": "none",
+    },
+    "chart": {
+      "grid": "solid",
+      "motion": "none",
+    },
+    "collapsible": {
+      "motion": "none",
+    },
+    "modal": {
+      "backdrop": "dim",
+      "mobile": "center",
+      "motion": "none",
+      "position": "center",
+    },
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "toast": {
+      "motion": "none",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+    },
+  },
+  "tokens": {
+    "--studio-accordion-enter-duration": "0ms",
+    "--studio-breadcrumbs-state-duration": "0ms",
+    "--studio-button-state-duration": "0ms",
+    "--studio-calendar-state-duration": "0ms",
+    "--studio-checkbox-state-duration": "0ms",
+    "--studio-color-swatch-picker-state-duration": "0ms",
+    "--studio-drawer-enter-duration": "0ms",
+    "--studio-drawer-exit-duration": "0ms",
+    "--studio-input-state-duration": "0ms",
+    "--studio-link-state-duration": "0ms",
+    "--studio-message-scroller-enter-duration": "0ms",
+    "--studio-message-scroller-exit-duration": "0ms",
+    "--studio-modal-enter-duration": "0ms",
+    "--studio-modal-exit-duration": "0ms",
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+    "--studio-progress-state-duration": "0ms",
+    "--studio-questionnaire-state-duration": "0ms",
+    "--studio-segmented-control-state-duration": "0ms",
+    "--studio-sidebar-state-duration": "0ms",
+    "--studio-slider-state-duration": "0ms",
+    "--studio-switch-state-duration": "0ms",
+    "--studio-table-state-duration": "0ms",
+    "--studio-tabs-state-duration": "0ms",
+    "--studio-tag-state-duration": "0ms",
+    "--studio-time-picker-state-duration": "0ms",
+    "--studio-toast-enter-duration": "0ms",
+    "--studio-toast-exit-duration": "0ms",
+    "--studio-toast-swipe-state-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
 exports[`rules > color/grouped-page: fires, then holds back 1`] = `
 {
   "color": {
@@ -122,16 +195,76 @@ exports[`rules > input-groups/divider-only-boxed: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > spinner/curve-only-ring: fires, then holds back 1`] = `
+exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
   "params": {
-    "loader": {
-      "style": "dots",
+    "accordion": {
+      "container": "divided",
+      "marker": "chevron",
+      "markerPosition": "trailing",
+      "motion": "none",
+    },
+    "chart": {
+      "grid": "solid",
+      "motion": "none",
+    },
+    "collapsible": {
+      "motion": "none",
+    },
+    "modal": {
+      "backdrop": "dim",
+      "mobile": "center",
+      "motion": "none",
+      "position": "center",
+    },
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "toast": {
+      "motion": "none",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--studio-accordion-enter-duration": "0ms",
+    "--studio-breadcrumbs-state-duration": "0ms",
+    "--studio-button-state-duration": "0ms",
+    "--studio-calendar-state-duration": "0ms",
+    "--studio-checkbox-state-duration": "0ms",
+    "--studio-color-swatch-picker-state-duration": "0ms",
+    "--studio-drawer-enter-duration": "0ms",
+    "--studio-drawer-exit-duration": "0ms",
+    "--studio-input-state-duration": "0ms",
+    "--studio-link-state-duration": "0ms",
+    "--studio-message-scroller-enter-duration": "0ms",
+    "--studio-message-scroller-exit-duration": "0ms",
+    "--studio-modal-enter-duration": "0ms",
+    "--studio-modal-exit-duration": "0ms",
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+    "--studio-progress-state-duration": "0ms",
+    "--studio-questionnaire-state-duration": "0ms",
+    "--studio-segmented-control-state-duration": "0ms",
+    "--studio-sidebar-state-duration": "0ms",
+    "--studio-slider-state-duration": "0ms",
+    "--studio-switch-state-duration": "0ms",
+    "--studio-table-state-duration": "0ms",
+    "--studio-tabs-state-duration": "0ms",
+    "--studio-tag-state-duration": "0ms",
+    "--studio-time-picker-state-duration": "0ms",
+    "--studio-toast-enter-duration": "0ms",
+    "--studio-toast-exit-duration": "0ms",
+    "--studio-toast-swipe-state-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
 }
 `;
 

@@ -1,9 +1,5 @@
 import { describe, expect, test } from "vitest"
 
-import { publishables } from "@/registry/__generated__/publishables"
-import { publish, selectPublishable } from "@/publisher/publish"
-import type { PublishPreset } from "@/publisher/types"
-
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
@@ -37,34 +33,5 @@ describe("sliders axis", () => {
         parseState({ buttonColor: "neutral", sliderColor: "neutral" }),
       ).tokens,
     ).toEqual({})
-  })
-})
-
-const shipped = async (name: string, tokens: Record<string, string> = {}) => {
-  const preset: PublishPreset = { density: "default", componentParams: {} }
-  const mod = await publishables[name]?.()
-  if (!mod) throw new Error(`${name} is not publishable`)
-  const { item } = publish({
-    publishable: selectPublishable(mod, preset),
-    preset: { ...preset, tokens: { ...preset.tokens, ...tokens } },
-  })
-  return item.files?.[0]?.content ?? ""
-}
-
-describe("slider motion", () => {
-  test("ships shadcn's default timing: no duration or ease class", async () => {
-    const content = await shipped("slider")
-    expect(content).toContain("transition-shadow focus-visible:focus-ring")
-    expect(content).not.toMatch(/ (duration|ease)-/)
-    expect(content).not.toContain("--studio-")
-  })
-
-  test("a tweak times the thumb's focus ring", async () => {
-    const { tokens } = designSystemOf(
-      parseState({ sliderMotion: { duration: 200, ease: [0, 0, 0.2, 1] } }),
-    )
-    expect(await shipped("slider", tokens)).toContain(
-      "transition-shadow duration-200 ease-out focus-visible:focus-ring",
-    )
   })
 })

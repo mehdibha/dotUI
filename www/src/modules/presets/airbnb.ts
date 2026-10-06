@@ -1,5 +1,3 @@
-import { DEFAULTS } from "@/modules/studio/axes"
-
 import { definePreset } from "./preset"
 
 export const airbnb = definePreset({
@@ -49,9 +47,8 @@ export const airbnb = definePreset({
     focusInputBorderWidth: 2,
 
     // Motion
-    popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
-    tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
-    modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
+    motionEntrance: "slide",
+    dialogEntrance: "rise",
 
     // Mobile
     mobileDialogs: "sheet",

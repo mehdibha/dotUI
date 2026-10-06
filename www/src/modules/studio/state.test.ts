@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest"
 
 import { KEY_OWNER } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
-import { MOTION_KEYS } from "./axes/motion-presets"
 import { placeOf } from "./state"
 
 const SECTIONS = path.join(__dirname, "sections")
@@ -18,11 +17,13 @@ describe("placeOf", () => {
       expect(placeOf(key), key).toBeDefined()
   })
 
-  it("sends the Primary leaves to Color and motion keys to Motion", () => {
+  it("sends the Primary leaves to Color and motion to Motion", () => {
     for (const key of PRIMARY_LEAVES)
       expect(placeOf(key)?.chapter.id, key).toBe("color")
-    for (const key of MOTION_KEYS)
+    for (const key of ["motion", "motionEntrance"])
       expect(placeOf(key)?.chapter.id, key).toBe("motion")
+    expect(placeOf("dialogEntrance")?.page?.id).toBe("dialogs")
+    expect(placeOf("chartMotion")?.page?.id).toBe("charts")
   })
 
   // A Uses link names an upstream row: landing on its own page flashes nothing.

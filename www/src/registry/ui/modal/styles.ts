@@ -64,23 +64,25 @@ const { useStyles, styles } = createStyles(modalMeta, {
           ],
         },
       },
-      fade: {
-        slots: {
-          backdrop: backdropFade,
-          modal: [
-            "transition-opacity",
-            entrance,
-            "entering:opacity-0 exiting:opacity-0",
-          ],
-        },
-      },
-      slide: {
+      // Up from below (Spectrum 2, Polaris, Atlassian).
+      rise: {
         slots: {
           backdrop: backdropFade,
           modal: [
             "transition-[opacity,translate]",
             entrance,
             "entering:translate-y-2 entering:opacity-0 exiting:translate-y-2 exiting:opacity-0",
+          ],
+        },
+      },
+      // Down from above (Carbon, Mantine).
+      drop: {
+        slots: {
+          backdrop: backdropFade,
+          modal: [
+            "transition-[opacity,translate]",
+            entrance,
+            "entering:-translate-y-2 entering:opacity-0 exiting:-translate-y-2 exiting:opacity-0",
           ],
         },
       },

@@ -38,15 +38,6 @@ const { useStyles, styles } = createStyles(accordionMeta, {
           panel: [expand, "motion-safe:transition-[height]"],
         },
       },
-      fade: {
-        slots: {
-          marker: [expand, "transition-transform"],
-          panel: [
-            expand,
-            "opacity-0 group-expanded/accordion-item:opacity-100 motion-safe:transition-[height,opacity]",
-          ],
-        },
-      },
       none: {},
     },
     container: {

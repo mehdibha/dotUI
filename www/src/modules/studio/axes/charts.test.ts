@@ -64,16 +64,14 @@ describe("charts axes", () => {
 })
 
 /* The transition each option ships, as `ui/chart/base.tsx` writes it. */
-function transitionSource(option: (typeof MOTION_OPTIONS)[number]): string {
-  const { curve } = option
-  if (!curve) return "false"
-  if (curve.type === "physics")
-    return `{ type: "spring", stiffness: ${curve.stiffness}, damping: ${curve.damping} }`
-  return `{ type: "tween", duration: 400, easing: "ease" }`
+const TRANSITIONS: Record<string, string> = {
+  spring: `{ type: "spring", stiffness: 170, damping: 26 }`,
+  ease: `{ type: "tween", duration: 400, easing: "ease" }`,
+  none: "false",
 }
 
 describe("chart motion", () => {
-  it("the options are the chart's motion param, specimens included", () => {
+  it("the options are the chart's motion param", () => {
     expect(MOTION_OPTIONS.map((o) => o.value)).toEqual([
       ...chartMeta.params.motion.values,
     ])
@@ -83,23 +81,25 @@ describe("chart motion", () => {
       "utf8",
     )
     for (const option of MOTION_OPTIONS)
-      expect(base).toContain(`${option.value}: ${transitionSource(option)},`)
+      expect(base).toContain(`${option.value}: ${TRANSITIONS[option.value]},`)
   })
 
   it("a pick is a chart param, never a token", () => {
-    const ds = designSystemOf(parseState({ chartMotion: "wobbly" }))
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "wobbly",
-    })
+    const ds = designSystemOf(parseState({ chartMotion: "ease" }))
+    expect(ds.componentParams.chart).toEqual({ grid: "solid", motion: "ease" })
     expect(ds.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
+  })
+
+  it("Motion None pins it off", () => {
+    const ds = designSystemOf(parseState({ motion: "none" }))
+    expect(ds.componentParams.chart).toEqual({ grid: "solid", motion: "none" })
   })
 
   it("ships the selected transition as a literal", async () => {
     for (const option of MOTION_OPTIONS) {
       const content = await shipped(parseState({ chartMotion: option.value }))
       expect(content).toContain(
-        `const systemMotion: Exclude<ChartAnimate, true> = ${transitionSource(option)}`,
+        `const systemMotion: Exclude<ChartAnimate, true> = ${TRANSITIONS[option.value]}`,
       )
       expect(content).not.toContain("createParamValue")
       expect(content).not.toContain("--studio-")

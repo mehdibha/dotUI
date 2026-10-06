@@ -1,5 +1,3 @@
-import { DEFAULTS } from "@/modules/studio/axes"
-
 import { definePreset } from "./preset"
 
 export const spotify = definePreset({
@@ -48,9 +46,8 @@ export const spotify = definePreset({
     disabledTreatment: "fade",
 
     // Motion
-    popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
-    tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
-    modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
+    motionEntrance: "slide",
+    dialogEntrance: "rise",
 
     // Components
     linkUnderline: "hover",

@@ -17,7 +17,7 @@ const toastMeta = {
     motion: {
       kind: "enum",
       default: "slide",
-      values: ["slide", "fade", "none"] as const,
+      values: ["slide", "none"] as const,
       description: "How a toast enters and leaves.",
     },
   },

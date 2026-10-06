@@ -344,14 +344,6 @@ async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
   const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
   const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
-  const motion = await fs.readFile(
-    path.join(studioDir, "motion-controls.tsx"),
-    "utf8",
-  )
-  const presets = await fs.readFile(
-    path.join(studioDir, "axes", "motion-presets.ts"),
-    "utf8",
-  )
 
   const sectionOf = new Map<string, string>()
   for (const [, names = "", file = ""] of state.matchAll(
@@ -375,7 +367,7 @@ async function buildStudioSearchIndex() {
       // A row's own label (a folded row's title) — the tag must not contain
       // another "<" before it.
       for (const match of source.matchAll(
-        /<(?!UsesRow\b)(?:\w+Row|Dial\w+|\w+Motion|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
+        /<(?!UsesRow\b)(?:\w+Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push([match.index, match[1] ?? ""])
       for (const match of source.matchAll(
@@ -416,19 +408,6 @@ async function buildStudioSearchIndex() {
       const rows = rowLabels(await read(sibling))
       if (rows.length > 0 || page) labels.add(prefix)
       for (const row of rows) labels.add(`${prefix} › ${row}`)
-    }
-    if (id === "motion") {
-      for (const [, label = ""] of presets.matchAll(
-        /preset\("[^"]+", "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, label = ""] of motion.matchAll(
-        /id: "[^"]+",\s*label: "([^"]+)"/g,
-      ))
-        labels.add(label)
-      for (const [, list = ""] of motion.matchAll(/followers: \[([^\]]+)\]/g))
-        for (const [, label = ""] of list.matchAll(/"([^"]+)"/g))
-          labels.add(label)
     }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,

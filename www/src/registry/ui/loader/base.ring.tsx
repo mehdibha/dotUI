@@ -22,7 +22,7 @@ function Loader({ className, ...props }: LoaderProps) {
       <Loader2Icon
         role="status"
         aria-label="Loading"
-        className="size-full animate-(--studio-loader-spin)"
+        className="size-full animate-spin"
       />
     </ProgressBarPrimitives.ProgressBar>
   )

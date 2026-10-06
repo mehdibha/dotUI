@@ -345,6 +345,7 @@ export function MenusSection({ studio }: { studio: Studio }) {
         label="Item corners"
         value={roleLabel(effective, "roleItem")}
       />
+      <UsesRow axis="motion" label="Motion" />
       <More keys={["menuIndicator", "popoverHeader"]}>
         <DialSelect
           axis="menuIndicator"

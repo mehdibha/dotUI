@@ -6,14 +6,12 @@
    = tonal shades, the shadcn-parity default); the grid is an enum param on
    the `chart` container every chart renders through. Motion is the `motion`
    enum param on `chart`: a JS transition (the marks animate their geometry,
-   not CSS), folded to its literal on publish. */
+   not CSS), folded to its literal on publish; Motion None pins it off. */
 
 import type { ColorConfig } from "@/registry/theme"
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { ease } from "./motion"
-import type { Curve } from "./motion"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -38,30 +36,13 @@ export const GRID_OPTIONS = [
   { value: "none", label: "None" },
 ]
 
-const physics = (stiffness: number, damping: number): Curve => ({
-  type: "physics",
-  stiffness,
-  damping,
-  mass: 1,
-})
-
-/* shadcn's charts ride recharts' tween (CSS `ease`, 400ms on bars); dotUI's
-   default is react-spring's default config, and the other springs are its
-   named ones. `curve` is each value's specimen, mirroring the transitions in
-   `ui/chart/base.tsx`; none has nothing to draw. */
-export const MOTION_OPTIONS: { value: string; label: string; curve?: Curve }[] =
-  [
-    { value: "spring", label: "Spring", curve: physics(170, 26) },
-    { value: "stiff", label: "Stiff", curve: physics(210, 20) },
-    { value: "wobbly", label: "Wobbly", curve: physics(180, 12) },
-    { value: "slow", label: "Slow", curve: physics(280, 60) },
-    {
-      value: "ease",
-      label: "Ease",
-      curve: { type: "easing", ease: ease("ease") },
-    },
-    { value: "none", label: "None" },
-  ]
+/* Spring: react-spring's default config (dotUI); Ease: recharts' 400ms
+   tween on CSS `ease` (shadcn's charts); None: static marks. */
+export const MOTION_OPTIONS = [
+  { value: "spring", label: "Spring", description: "react-spring" },
+  { value: "ease", label: "Ease", description: "shadcn" },
+  { value: "none", label: "None" },
+]
 
 /** The recipe's series strategy for a palette option; `undefined` is the
  *  engine's tonal default. */
@@ -89,4 +70,14 @@ export const chapter = defineChapter({
   defaults: CHART_DEFAULTS,
   schema: CHART_SCHEMA,
   resolve: resolveCharts,
+  rules: [
+    {
+      // A chart would otherwise animate in a system where nothing moves.
+      id: "charts/motion-off",
+      target: "chartMotion",
+      when: { key: "motion", in: ["none"] },
+      effect: { kind: "pin", value: "none" },
+      cause: "motion",
+    },
+  ],
 })

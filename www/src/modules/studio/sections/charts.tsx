@@ -1,11 +1,18 @@
 "use client"
 
-/* Charts — the categorical series palette and the gridline treatment. */
+/* Charts — the categorical series palette, the gridline treatment and how
+   marks animate. */
 
 import { cn } from "@/registry/lib/utils"
 
-import { GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
-import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
+import { GRID_OPTIONS, MOTION_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
 import { FamilyHero, HeroMember, UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"
 
@@ -102,7 +109,13 @@ export function ChartsSection({ studio }: { studio: Studio }) {
           ),
         }))}
       />
+      <DialSegmented
+        axis="chartMotion"
+        label="Transition"
+        options={MOTION_OPTIONS}
+      />
       <UsesRow axis="brand" label="Brand" />
+      <UsesRow axis="motion" label="Motion" />
     </>
   )
 }

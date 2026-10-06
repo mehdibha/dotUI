@@ -327,13 +327,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusInputBorderWidth: 3 },
     { focusInputStyle: "border", focusInputBorderWidth: 3 },
   ],
-  "spinner/curve-only-ring": [
-    {
-      spinnerStyle: "dots",
-      loaderMotion: { ...DEFAULTS.loaderMotion, ease: [0.4, 0, 0.2, 1] },
-    },
-    { loaderMotion: { ...DEFAULTS.loaderMotion, ease: [0.4, 0, 0.2, 1] } },
+  "motion/none-hides-entrance": [
+    { motion: "none", motionEntrance: "fade" },
+    { motionEntrance: "fade" },
   ],
+  "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
   "input-groups/divider-only-boxed": [
     { addonDivider: "none" },
     { addonLayout: "boxed", addonDivider: "none" },

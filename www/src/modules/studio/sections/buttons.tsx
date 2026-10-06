@@ -249,6 +249,7 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
         label="Control corners"
         value={roleLabel(effective, "roleControl")}
       />
+      <UsesRow axis="motion" label="Motion" />
       <MemberSection id="toggle" title="Toggles">
         <DialSelect
           axis="toggleSelected"

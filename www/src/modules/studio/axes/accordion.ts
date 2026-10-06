@@ -1,31 +1,18 @@
 /* Accordion — the container groups the items (hairline rows · one bordered
    surface · a card each), the marker says a trigger opens (chevron ·
-   plus/minus) and sits trailing or leading; motion is how a panel opens.
+   plus/minus) and sits trailing or leading. How a panel opens is Motion's.
 
-   Engine: four enum params on `accordion` plus its `--studio-accordion-*`
-   timing vars. Collapsible has no look of its own but rides the accordion's
-   motion: the same `motion` param and vars. */
+   Engine: three enum params on `accordion`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { resolveEntrance } from "./motion"
-import type { Entrance } from "./motion"
-import { entrance, oneOf } from "./schema"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's (tw-animate's accordion-down/up): the height alone, 200ms on CSS
-   `ease-out` both ways. */
-const MOTION: Entrance = {
-  pattern: "expand",
-  enter: 200,
-  curve: { type: "easing", ease: [0, 0, 0.58, 1] },
-}
 
 export const ACCORDION_DEFAULTS = {
   accordionContainer: "divided",
   accordionMarker: "chevron",
   accordionMarkerPosition: "trailing",
-  accordionMotion: MOTION,
 }
 
 export const CONTAINER_OPTIONS = [
@@ -44,31 +31,20 @@ export const POSITION_OPTIONS = [
   { value: "trailing", label: "Trailing" },
 ]
 
-export const MOTION_PATTERNS = [
-  { value: "expand", label: "Expand" },
-  { value: "fade", label: "Expand + fade" },
-  { value: "none", label: "None" },
-]
-
 export const ACCORDION_SCHEMA: ChapterSchema<typeof ACCORDION_DEFAULTS> = {
   accordionContainer: oneOf(CONTAINER_OPTIONS),
   accordionMarker: oneOf(MARKER_OPTIONS),
   accordionMarkerPosition: oneOf(POSITION_OPTIONS),
-  accordionMotion: entrance(MOTION_PATTERNS),
 }
 
 export function resolveAccordion(state: Effective): Resolved {
-  const motion = resolveEntrance("accordion", state.accordionMotion, MOTION)
   return {
-    tokens: motion.tokens,
     params: {
       accordion: {
         container: state.accordionContainer,
         marker: state.accordionMarker,
         markerPosition: state.accordionMarkerPosition,
-        motion: motion.pattern,
       },
-      collapsible: { motion: motion.pattern },
     },
   }
 }

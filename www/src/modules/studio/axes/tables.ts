@@ -1,24 +1,16 @@
 /* Tables — how a data grid separates its rows, and how loud its header row
    is. Two axes because real systems mix them freely.
 
-   Engine: `separation` and `header` are enum params on `table`. Motion:
-   how long a row's hover and selection take to settle, the sort and expand
-   icons' turn, the drag handle and drop line included
-   (`--studio-table-state-*`). */
+   Engine: `separation` and `header` are enum params on `table`. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { resolveStateChange, TAILWIND_TIMING } from "./motion"
-import { oneOf, STATE_CHANGE } from "./schema"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's TableRow is a bare `transition-colors`: Tailwind's default timing. */
-const MOTION = TAILWIND_TIMING
 
 export const TABLE_DEFAULTS = {
   tableSeparation: "lines",
   tableHeader: "plain",
-  tableMotion: MOTION,
 }
 
 /* Hairlines under every row is the modern default (shadcn, GitHub, Radix
@@ -40,12 +32,10 @@ export const HEADER_OPTIONS = [
 export const TABLE_SCHEMA: ChapterSchema<typeof TABLE_DEFAULTS> = {
   tableSeparation: oneOf(SEPARATION_OPTIONS),
   tableHeader: oneOf(HEADER_OPTIONS),
-  tableMotion: STATE_CHANGE,
 }
 
 export function resolveTables(state: Effective): Resolved {
   return {
-    tokens: resolveStateChange("table", state.tableMotion, MOTION),
     params: {
       table: {
         separation: state.tableSeparation,

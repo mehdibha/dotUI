@@ -134,7 +134,7 @@ export function useAxisGate(key: AxisKey | undefined) {
   const lock = axis?.explain.lock
   return {
     axis,
-    hidden: lock?.kind === "hide" && !lock.part,
+    hidden: lock?.kind === "hide",
     pinned: lock?.kind === "pin" ? lock.cause : undefined,
     exclude: axis?.explain.exclude,
     /** The cause of an exclusion the saved value falls in. */

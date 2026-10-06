@@ -1,8 +1,13 @@
 "use client"
 
-/* Dialogs — the scrim, where a modal rests, and dialogs on a phone. */
+/* Dialogs — the scrim, where a modal rests and how it arrives, and dialogs on
+   a phone. */
 
-import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
+import {
+  BACKDROP_OPTIONS,
+  ENTRANCE_OPTIONS,
+  POSITION_OPTIONS,
+} from "../axes/dialogs"
 import { DIALOG_OPTIONS } from "../axes/mobile"
 import { roleLabel } from "../axes/shape"
 import {
@@ -115,12 +120,18 @@ export function DialogsSection({ studio }: { studio: Studio }) {
         value={roleLabel(effective, "rolePanel")}
       />
       <UsesRow axis="surfaceGlass" label="Glass" />
+      <UsesRow axis="motion" label="Motion" />
       <MemberSection id="modal" title="Modal">
-        <More keys={["dialogPosition"]}>
+        <More keys={["dialogPosition", "dialogEntrance"]}>
           <DialSegmented
             axis="dialogPosition"
             label="Position"
             options={POSITION_OPTIONS}
+          />
+          <DialSegmented
+            axis="dialogEntrance"
+            label="Entrance"
+            options={ENTRANCE_OPTIONS}
           />
         </More>
       </MemberSection>

@@ -55,9 +55,8 @@ export type Effect =
   | { kind: "exclude"; options: readonly string[]; fallback: string }
   /** A numeric range unavailable; a value inside it clamps to the bound. */
   | { kind: "exclude"; above?: number; below?: number }
-  /** Row (or one `part` of a composite value) hidden; effective = `value`,
-   *  else the key's default. */
-  | { kind: "hide"; value?: unknown; part?: string }
+  /** Row hidden; effective = `value`, else the key's default. */
+  | { kind: "hide"; value?: unknown }
 
 export interface Rule<K extends string = string> {
   /** `<chapter>/<name>`. */
@@ -77,7 +76,7 @@ export interface Explained {
   /** A rule that changed the value. */
   rule?: string
   /** A pin/hide whose `when` holds, changed or not. */
-  lock?: { rule: string; kind: "pin" | "hide"; cause: string; part?: string }
+  lock?: { rule: string; kind: "pin" | "hide"; cause: string }
   /** An exclude whose `when` holds: what is unavailable right now. */
   exclude?: {
     rule: string

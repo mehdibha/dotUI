@@ -198,6 +198,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
         </HeroMember>
       </FamilyHero>
       <UsesRow axis="checkboxColor" label="Checked color" />
+      <UsesRow axis="motion" label="Motion" />
       <More keys={["checkCorner"]}>
         <DialSelect
           axis="checkCorner"
