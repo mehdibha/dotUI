@@ -13,13 +13,13 @@ export const CHOICE_CARD_DEFAULTS = {
   cardSelected: "tint",
 }
 
-/* Tint: a soft edge on a tinted surface (shadcn). Outline + tint: a 1px
+/* Tint: a soft edge on a tinted surface (shadcn). Edged tint: a 1px
    edge on the tint (Geist, Claude; nearest for Duolingo and Airbnb, whose
    edge is 2px). Outline: a 2px edge, no tint (Radix Themes, Stripe,
    Untitled UI; nearest for Carbon and Notion, whose edge is 1px). */
 export const SELECTED_OPTIONS = [
   { value: "tint", label: "Tint" },
-  { value: "outline-tint", label: "Outline + tint" },
+  { value: "outline-tint", label: "Edged tint" },
   { value: "outline", label: "Outline" },
 ]
 
