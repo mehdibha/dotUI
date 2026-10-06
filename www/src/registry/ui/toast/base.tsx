@@ -6,9 +6,10 @@ import {
   CircleAlertIcon,
   CircleCheckIcon,
   InfoIcon,
-  LoaderCircleIcon,
   TriangleAlertIcon,
 } from "@/registry/icons"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { Loader } from "@/registry/ui/loader"
 
 import { useStyles } from "./styles"
 
@@ -45,7 +46,7 @@ const toastIcons = {
   danger: CircleAlertIcon,
   error: CircleAlertIcon,
   info: InfoIcon,
-  loading: LoaderCircleIcon,
+  loading: Loader,
   success: CircleCheckIcon,
   warning: TriangleAlertIcon,
 } as const
@@ -147,6 +148,7 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
     title,
     toast: toastStyle,
   } = useStyles()()
+  const buttonStyles = useButtonStyles()
 
   return (
     <ToastPrimitive.Root
@@ -179,7 +181,11 @@ function ToastItem({ position, toast: toastItem }: ToastItemProps) {
           <div data-slot="toast-actions" className={actions()}>
             <ToastPrimitive.Action
               data-slot="toast-action"
-              className={action()}
+              className={buttonStyles({
+                variant: "secondary",
+                size: "sm",
+                className: action(),
+              })}
             />
           </div>
         ) : null}

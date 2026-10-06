@@ -58,6 +58,7 @@ import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
 import * as tabs from "./tabs"
+import * as toast from "./toast"
 import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
@@ -85,6 +86,7 @@ export const CHAPTERS = [
   skeleton.chapter,
   spinner.chapter,
   progress.chapter,
+  toast.chapter,
   buttons.chapter,
   buttonGroups.chapter,
   toggles.chapter,

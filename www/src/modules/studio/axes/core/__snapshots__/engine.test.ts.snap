@@ -122,6 +122,8 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
     },
     "toast": {
       "motion": "none",
+      "status": "icon",
+      "surface": "surface",
     },
     "tooltip": {
       "motion": "none",
@@ -371,6 +373,8 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     },
     "toast": {
       "motion": "none",
+      "status": "icon",
+      "surface": "surface",
     },
     "tooltip": {
       "motion": "none",

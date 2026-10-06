@@ -80,7 +80,7 @@ describe("resolve", () => {
     expect(ds.componentParams.popover).toMatchObject({ motion: "scale" })
     expect(ds.componentParams.tooltip).toMatchObject({ motion: "scale" })
     expect(ds.componentParams.modal).toMatchObject({ motion: "scale" })
-    expect(ds.componentParams.toast).toEqual({ motion: "slide" })
+    expect(ds.componentParams.toast).toMatchObject({ motion: "slide" })
     expect(ds.componentParams.accordion).toMatchObject({ motion: "expand" })
     expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
   })
