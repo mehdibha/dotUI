@@ -309,6 +309,13 @@ describe("resolve-classes", () => {
         vars,
       ),
     ).toBe("flex [--surface-radius:0] shadow-none")
+    // An unfrosted scrim ships no blur.
+    expect(
+      rewriteClassString(
+        "bg-scrim backdrop-blur-(--studio-scrim-blur)",
+        resolveStudioVars({ "--studio-scrim-blur": "0" }),
+      ),
+    ).toBe("bg-scrim")
     // So does an arbitrary radius derived from it.
     expect(
       rewriteClassString(

@@ -4,7 +4,7 @@
  * Manifest-driven: each entry names a live design-system doc page + a selector for its
  * primary component showcase. Every entry is captured in light AND dark and written to
  *   src/modules/preset-lab/refs/<system>/<component>-<light|dark>.png
- * That filename convention is load-bearing — the fidelity harness resolves images by it.
+ * `scripts/compose-refs.mts` pairs these with specimen captures (see preset-lab/README.md).
  *
  * Usage:  tsx scripts/capture-refs.mts [system] [component]   (run from www/; args filter)
  */

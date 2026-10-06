@@ -100,6 +100,18 @@ describe("catalog", () => {
     }
   })
 
+  it("param vars write only their item's own --studio-<item>-* vars", () => {
+    for (const item of registryUi)
+      for (const [param, def] of Object.entries(item.params ?? {}))
+        for (const vars of Object.values(
+          ("vars" in def && def.vars) || {},
+        ) as Record<string, string>[])
+          for (const name of Object.keys(vars))
+            expect(name, `${item.name}.${param}`).toMatch(
+              new RegExp(`^--studio-${item.name}-`),
+            )
+  })
+
   it("rules are well formed and authored by their target's owner", () => {
     const ids = RULES.map((rule) => rule.id)
     expect(new Set(ids).size).toBe(ids.length)
@@ -332,6 +344,30 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { motionEntrance: "fade" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
+  "buttons/closed-style-owns-secondary": [
+    { buttonStyle: "bevel", buttonSecondary: "outline" },
+    { buttonStyle: "hairline", buttonSecondary: "outline" },
+  ],
+  "buttons/closed-style-owns-press": [
+    { buttonStyle: "ledge", buttonPress: "nudge" },
+    { buttonPress: "nudge" },
+  ],
+  "button-groups/ledge-gaps-groups": [
+    { buttonStyle: "ledge", groupSeparator: "divider" },
+    { groupSeparator: "divider" },
+  ],
+  "menus/check-or-fill": [
+    { menuIndicator: "none" },
+    { menuIndicator: "check-start" },
+  ],
+  "dialogs/frost-only-frosted": [
+    { dialogBackdrop: "scrim", dialogFrost: "subtle" },
+    { dialogFrost: "subtle" },
+  ],
+  "dialogs/bleed-needs-open-footer": [
+    { dialogSections: "divided", dialogActions: "bleed" },
+    { dialogSections: "on-scroll", dialogActions: "bleed" },
+  ],
   "otp-field/underline-separates-cells": [
     { inputStyle: "underline" },
     { inputStyle: "filled" },

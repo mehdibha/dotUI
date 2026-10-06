@@ -70,6 +70,7 @@ export const baseRegistryCss = {
 			"--cursor-disabled": "not-allowed",
 			"--cursor-drag": "var(--cursor-interactive)",
 			"--cursor-dragging": "var(--cursor-interactive)",
+			"--color-scrim": "color-mix(in oklab, var(--color-overlay) 40%, transparent)",
 			"--focus-ring-color": "var(--color-border-focus)",
 			"--focus-ring-width": "2px",
 			"--focus-ring-offset": "2px",

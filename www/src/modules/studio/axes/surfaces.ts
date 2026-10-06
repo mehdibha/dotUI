@@ -17,6 +17,7 @@
      modal lg); Low is shadcn New York, Medium shadcn Luma.
    - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
      dialogs and drawers sit on a scrim and stay solid.
+   - App shell: the sidebar and the frame around an inset content panel.
 
    Only what differs from the registry's defaults is emitted. */
 
@@ -30,6 +31,7 @@ export const SURFACE_DEFAULTS = {
   surfaceEdge: "line",
   surfaceShadow: "flat",
   surfaceGlass: false,
+  shellTone: "subtle",
 }
 
 export const LAYERS_OPTIONS = [
@@ -87,11 +89,38 @@ export const GLASS_OPTIONS = [
   },
 ]
 
+export const SHELL_OPTIONS = [
+  {
+    value: "subtle",
+    label: "Subtle",
+    description: "One step off the page — shadcn",
+  },
+  {
+    value: "page",
+    label: "Page",
+    description: "The page's own tone — Supabase, Carbon",
+  },
+  {
+    value: "recessed",
+    label: "Recessed",
+    description: "Below the page; panels wear the card edge — Linear, Polaris",
+  },
+]
+
+/* Light: halfway between the 50 and 100 rungs (Linear's #efeff0 frame on a
+   #f9f9fa panel). Dark: the page shaded toward black (#09090a on #121213). */
+const SHELL_SIDEBAR: Record<string, string> = {
+  page: "var(--color-bg)",
+  recessed:
+    "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) 70%, oklch(0 0 0)))",
+}
+
 export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
   surfaceLayers: oneOf(LAYERS_OPTIONS),
   surfaceEdge: oneOf(EDGE_OPTIONS),
   surfaceShadow: oneOf(SHADOW_OPTIONS),
   surfaceGlass: BOOLEAN,
+  shellTone: oneOf(SHELL_OPTIONS),
 }
 
 /* --------------------------------- Styles --------------------------------- */
@@ -412,7 +441,9 @@ export function resolveSurfaces(state: Effective): Resolved {
   for (const [name, value] of Object.entries(surfaceTokens(state))) {
     if (value !== DEFAULT_TOKENS[name]) tokens[name] = value
   }
-  return { tokens }
+  const sidebar = SHELL_SIDEBAR[state.shellTone]
+  if (sidebar) tokens["--color-sidebar"] = sidebar
+  return { tokens, params: { sidebar: { shell: state.shellTone } } }
 }
 
 export const chapter = defineChapter({

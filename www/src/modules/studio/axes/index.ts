@@ -41,7 +41,6 @@ import * as motion from "./motion"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
 import * as pagination from "./pagination"
-import * as popovers from "./popovers"
 import * as progress from "./progress"
 import * as radio from "./radio"
 import { checkAxisValue } from "./schema"
@@ -101,7 +100,6 @@ export const CHAPTERS = [
   sliders.chapter,
   menus.chapter,
   dialogs.chapter,
-  popovers.chapter,
   tooltips.chapter,
   tabs.chapter,
   accordion.chapter,

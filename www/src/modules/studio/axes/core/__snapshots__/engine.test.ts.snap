@@ -1,5 +1,115 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+    },
+    "segmented-control": {
+      "selected": "raised",
+      "track": "filled",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {},
+}
+`;
+
 exports[`rules > charts/motion-off: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -19,7 +129,6 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
       "motion": "none",
     },
     "modal": {
-      "backdrop": "dim",
       "mobile": "center",
       "motion": "none",
       "position": "center",
@@ -35,6 +144,7 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
     "tooltip": {
       "motion": "none",
       "style": "inverted",
+      "tip": "tip",
     },
   },
   "tokens": {
@@ -98,6 +208,33 @@ exports[`rules > color/grouped-page: fires, then holds back 1`] = `
     "--overlay-border": "light-dark(transparent, var(--color-border))",
     "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
     "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > dialogs/bleed-needs-open-footer: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "dialog": {
+      "close": "quiet",
+      "footer": "end-rule",
+      "sections": "divided",
+      "titles": "quiet",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > dialogs/frost-only-frosted: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--studio-scrim-blur": "0",
   },
 }
 `;
@@ -189,6 +326,30 @@ exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "selected": "tint",
+    },
+  },
+  "tokens": {},
+}
+`;
+
 exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
 {
   "color": undefined,
@@ -208,7 +369,6 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
       "motion": "none",
     },
     "modal": {
-      "backdrop": "dim",
       "mobile": "center",
       "motion": "none",
       "position": "center",
@@ -224,6 +384,7 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     "tooltip": {
       "motion": "none",
       "style": "inverted",
+      "tip": "tip",
     },
   },
   "tokens": {

@@ -128,6 +128,12 @@
   --cursor-dragging: var(--cursor-interactive);
 }
 
+/* Scrim axis: what every modal layer (modal, drawer, sheets) lays over the
+   page — the overlay or the page tone at the backdrop's strength. */
+@theme {
+  --color-scrim: color-mix(in oklab, var(--color-overlay) 40%, transparent);
+}
+
 /* Focus axes: the ring controls wear (color, width, offset in bg, duo inner
    stroke) and the layer fields wear (a muted halo by default). */
 @theme {

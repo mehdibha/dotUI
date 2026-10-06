@@ -12,6 +12,8 @@ export const linear = definePreset({
     neutralHue: 262,
     successSeed: "#27a644",
     dangerSeed: "#eb5757",
+    // bgSelected is the accent mixed into the base (#e7e8f3).
+    selectedWash: "brand",
 
     // Typography
     bodyFont: "Inter",
@@ -22,6 +24,8 @@ export const linear = definePreset({
 
     // Surfaces
     surfaceShadow: "low",
+    // The 2026 refresh: an #efeff0 frame around a bordered #f9f9fa panel.
+    shellTone: "recessed",
 
     // Browser
     // The app's --pointer is default.

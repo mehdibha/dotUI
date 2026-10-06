@@ -16,6 +16,8 @@ export const spotify = definePreset({
     preserveSeed: true,
     lightBg: 100,
     darkBg: 5.5,
+    // Field, checkbox and radio edges are #7c7c7c, far above the dividers.
+    controlEdge: "strong",
 
     // Typography
     // Circular is proprietary; Figtree is the closest free geometric.
@@ -34,6 +36,8 @@ export const spotify = definePreset({
     // Surfaces
     surfaceLayers: "tonal",
     surfaceEdge: "none",
+    // A #000 frame around 8px-rounded #121212 panels.
+    shellTone: "recessed",
 
     // Browser
     selectionHighlight: "browser",

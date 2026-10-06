@@ -52,7 +52,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       // The main content area beside the sidebar.
       inset: [
         "relative flex w-full flex-1 flex-col bg-bg [--surface-bg:var(--color-bg)]",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius) md:peer-data-[variant=inset]:shadow-sm",
+        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:overflow-hidden md:peer-data-[variant=inset]:rounded-(--studio-sidebar-inset-radius)",
         "md:peer-data-[variant=inset]:peer-data-[side=left]:ml-0 md:peer-data-[variant=inset]:peer-data-[side=left]:peer-data-[state=collapsed]:ml-2",
         "md:peer-data-[variant=inset]:peer-data-[side=right]:mr-0 md:peer-data-[variant=inset]:peer-data-[side=right]:peer-data-[state=collapsed]:mr-2",
       ],
@@ -136,6 +136,17 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       sentence: { slots: { groupLabel: "text-xs tracking-normal" } },
       caps: {
         slots: { groupLabel: "text-[0.6875rem] tracking-wider uppercase" },
+      },
+    },
+    shell: {
+      subtle: { slots: { inset: "md:peer-data-[variant=inset]:shadow-sm" } },
+      page: { slots: { inset: "md:peer-data-[variant=inset]:shadow-sm" } },
+      // The inset panel wears the card's edge and shadow (Linear's hairline).
+      recessed: {
+        slots: {
+          inset:
+            "md:peer-data-[variant=inset]:border md:peer-data-[variant=inset]:border-(--card-border) md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)",
+        },
       },
     },
   },

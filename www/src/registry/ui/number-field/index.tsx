@@ -9,21 +9,21 @@ import type {
 import * as split from "./base.split"
 import * as stackedCells from "./base.stacked-cells"
 import * as stackedInset from "./base.stacked-inset"
+import meta from "./meta"
 
-type Steppers = "right-cells" | "stacked-cells" | "stacked-inset" | "split"
+type Steppers = (typeof meta.params.steppers.values)[number]
 type Part = keyof typeof rightCells
 
 const dynamic = <Props extends object>(part: Part) =>
-  createDynamicComponent<Props, Steppers>({
-    componentName: "number-field",
+  createDynamicComponent({
+    meta,
     paramName: "steppers",
-    defaultValue: "right-cells",
     components: {
-      "right-cells": rightCells[part] as React.ComponentType<Props>,
-      "stacked-cells": stackedCells[part] as React.ComponentType<Props>,
-      "stacked-inset": stackedInset[part] as React.ComponentType<Props>,
-      split: split[part] as React.ComponentType<Props>,
-    },
+      "right-cells": rightCells[part],
+      "stacked-cells": stackedCells[part],
+      "stacked-inset": stackedInset[part],
+      split: split[part],
+    } as Record<Steppers, React.ComponentType<Props>>,
     displayName: part,
   })
 

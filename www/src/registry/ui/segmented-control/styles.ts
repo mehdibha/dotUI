@@ -38,10 +38,17 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     },
   },
   params: {
-    // How the chip reads against the track: raised lifts a page-colored chip
-    // on shadow (the hairline ring keeps it on dark wells), flat fills
-    // tone-on-tone, inverse snaps to full contrast.
+    // How the chip reads against the track: tone fills one neutral step
+    // down (Geist, Linear), raised lifts a page-colored chip on shadow
+    // (shadcn, iOS), ring draws the page chip on an edge alone (Radix
+    // surface, Primer, Stripe), inverse snaps to full contrast (Carbon).
     selected: {
+      tone: {
+        slots: {
+          item: "selected:text-fg-on-selected",
+          indicator: "bg-selected shadow-sm",
+        },
+      },
       raised: {
         slots: {
           item: "selected:text-fg",
@@ -49,10 +56,11 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
             "bg-(--surface-bg,var(--color-bg)) shadow-sm ring-(length:--studio-control-stroke) ring-border-control",
         },
       },
-      flat: {
+      ring: {
         slots: {
-          item: "selected:text-fg-on-selected",
-          indicator: "bg-selected shadow-sm",
+          item: "selected:text-fg",
+          indicator:
+            "bg-(--surface-bg,var(--color-bg)) ring-(length:--studio-control-stroke) ring-border-control",
         },
       },
       inverse: {
