@@ -41,7 +41,7 @@ export const CONTAINER_OPTIONS = [
   {
     value: "separated",
     label: "Separated",
-    credits: ["Mantine (separated)", "HeroUI (splitted)"],
+    credits: ["HeroUI (splitted)"],
   },
   {
     value: "plain",

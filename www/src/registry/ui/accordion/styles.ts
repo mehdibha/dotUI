@@ -46,23 +46,25 @@ const { useStyles, styles } = createStyles(accordionMeta, {
         slots: { item: "not-last:border-b" },
       },
       // shadcn mira, maia, luma, rhea: one box, the open item filled.
+      // The trigger spans the box, so its ring is drawn inside.
       contained: {
         slots: {
           root: [
             CONTAINER_SURFACE,
             "overflow-clip rounded-(--studio-accordion-radius)",
           ],
-          item: "px-4 not-last:border-b expanded:bg-muted/50",
+          item: "not-last:border-b expanded:bg-muted/50",
+          trigger: "px-4 [--focus-ring-inset:inset]",
+          panelContent: "px-4",
         },
       },
-      // The fill paints over the item's own surface, as an image.
+      // HeroUI splitted: a box per item, no open fill.
       separated: {
         slots: {
           root: "gap-2",
-          item: [
-            CONTAINER_SURFACE,
-            "rounded-(--studio-accordion-radius) px-4 expanded:bg-linear-to-b expanded:from-muted/50 expanded:to-muted/50",
-          ],
+          item: [CONTAINER_SURFACE, "rounded-(--studio-accordion-radius)"],
+          trigger: "px-4 [--focus-ring-inset:inset]",
+          panelContent: "px-4",
         },
       },
       plain: {},

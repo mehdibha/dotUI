@@ -132,8 +132,6 @@ function AccordionGlyph({
             width="16.5"
             height="7.75"
             rx="1.5"
-            fill="currentColor"
-            fillOpacity=".12"
             stroke="currentColor"
             strokeWidth="1.25"
             strokeOpacity=".55"
