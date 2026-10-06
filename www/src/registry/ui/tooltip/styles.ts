@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
         "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--studio-tooltip-radius) px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none",
       ],
       arrow: [
-        "block [&>svg]:size-2.5",
+        "[&>svg]:size-2.5",
         "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
@@ -46,7 +46,14 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
     },
     tip: {
       tip: {},
-      none: { slots: { arrow: "hidden" } },
+      // The 10px offset clears a tip; without one the gap closes to 4px.
+      none: {
+        slots: {
+          content:
+            "placement-left:translate-x-1.5 placement-right:-translate-x-1.5 placement-top:translate-y-1.5 placement-bottom:-translate-y-1.5",
+          arrow: "hidden",
+        },
+      },
     },
     motion: {
       // shadcn's: in from 8px off, toward the trigger; out in place.
