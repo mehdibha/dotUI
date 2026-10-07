@@ -33,9 +33,8 @@ export const material3 = definePreset({
     iconLibrary: "material-symbols",
 
     // Shape
-    // 4.5px fields and menus, 13.5px cards, 27px dialogs (4 / 12 / 28), pill buttons.
+    // 4.5px fields, field tops and menus, 13.5px cards, 27px dialogs (4 / 12 / 28), pill buttons.
     radiusPx: 9,
-    roleControl: "sm",
     roleItem: "none",
     roleSurface: "sm",
     rolePanel: "3xl",
@@ -47,6 +46,8 @@ export const material3 = definePreset({
     surfaceLayers: "tonal",
     surfaceEdge: "none",
     surfaceShadow: "low",
+    // The nav rail sits a tone below borderless content panels.
+    shellTone: "recessed",
 
     // States
     // 3px ring; M3's is secondary #625b71, but Neutral would grey field focus too.
