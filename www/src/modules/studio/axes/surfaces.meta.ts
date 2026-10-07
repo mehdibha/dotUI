@@ -22,24 +22,14 @@ export const LAYERS_OPTIONS = options(LAYERS_VALUES, {
 export const EDGE_OPTIONS = options(EDGE_VALUES, {
   line: {
     label: "Line",
-    description: "A hairline around every surface",
-    credits: ["Geist", "shadcn", "Primer", "Radix Themes"],
+    credits: ["Geist", "shadcn Nova", "Primer", "Radix Themes"],
   },
   none: {
     label: "None",
-    description: "Shadows and tone do the separating",
-    credits: ["Atlassian", "Fluent 2", "HeroUI", "Spectrum 2"],
+    credits: ["Atlassian", "Fluent 2", "HeroUI v3", "Spectrum 2"],
   },
-  bevel: {
-    label: "Bevel",
-    description: "An inset rim, darker at the bottom",
-    credits: ["Polaris"],
-  },
-  ledge: {
-    label: "Ledge",
-    description: "The control stroke with a lip under cards",
-    credits: ["Duolingo"],
-  },
+  bevel: { label: "Bevel", credits: ["Polaris"] },
+  ledge: { label: "Ledge", credits: ["Duolingo"] },
 })
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
