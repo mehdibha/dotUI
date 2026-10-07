@@ -398,6 +398,9 @@ export function PrimaryRow() {
   )
 }
 
+// Hosted on family pages only, so kept out of the Color chapter's search.
+const LEAF_ROW_LABEL = "Color"
+
 /** One leaf on its own source; family pages host it. */
 const leafRow = (leaf: PrimaryLeaf) =>
   function LeafRow() {
@@ -406,12 +409,15 @@ const leafRow = (leaf: PrimaryLeaf) =>
     return (
       <DialSelect
         axis={leaf}
-        label="Color"
-        options={CHOICES.map(({ id, label }) => ({
-          value: id,
-          label,
-          preview: <Glyph ink={ink[id]} />,
-        }))}
+        label={LEAF_ROW_LABEL}
+        options={SOURCE_OPTIONS.map((option) => {
+          const id = option.value as PrimaryColorSource
+          return {
+            ...option,
+            preview: <Glyph ink={ink[id]} />,
+            glyph: <SourceSwatch value={id} ink={ink} />,
+          }
+        })}
       />
     )
   }

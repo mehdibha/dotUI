@@ -76,6 +76,19 @@ const subline = (option: {
 
 /* ---------------------------------- Rows ---------------------------------- */
 
+const SCOPED = new Set(Object.values(SCOPES).flat())
+
+/** A cause chip; a family's own copy names its page ("Menus · None"). */
+function Cause({ cause }: { cause: string }) {
+  const place = useContext(PlaceLabel)(cause as AxisKey)
+  return (
+    <CauseChip
+      cause={cause}
+      place={SCOPED.has(cause) ? place?.split(" & ")[0] : undefined}
+    />
+  )
+}
+
 /** A 16px SVG specimen beside a row's value or an option's label. */
 export function DialGlyph({ children }: { children: React.ReactNode }) {
   return (
@@ -115,7 +128,7 @@ export function PinnedRow({
         <span className="truncate text-[13px] font-medium text-fg/50">
           {children}
         </span>
-        <CauseChip cause={cause} />
+        <Cause cause={cause} />
       </span>
     </div>
   )
@@ -256,6 +269,8 @@ export interface DialSelectOption {
   credits?: readonly string[]
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
+  /** The row's specimen, in place of `preview`. */
+  glyph?: React.ReactNode
   /** Beside the label: a follow option's source chip. */
   aside?: React.ReactNode
 }
@@ -288,7 +303,6 @@ export function DialSelect({
   children?: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
-  const placeLabel = useContext(PlaceLabel)
   const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
   if (hidden) return null
   // A key read through a follow keeps its follow option picked ("Auto · Tone").
@@ -298,8 +312,8 @@ export function DialSelect({
   const resolved = following
     ? options.find((option) => option.value === String(axis?.effective))
     : undefined
-  const overriders = axis?.overriders ?? []
-  const custom = overriders.length > 0
+  const shown = resolved ?? selected
+  const custom = (axis?.overriders ?? []).length > 0
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -311,7 +325,7 @@ export function DialSelect({
       axis={key}
       holds={holds}
       label={label}
-      aside={held && <CauseChip cause={held} />}
+      aside={held && <Cause cause={held} />}
       value={
         custom ? (
           <>
@@ -321,39 +335,73 @@ export function DialSelect({
         ) : (
           <>
             <span className="truncate">
-              {selected?.label ?? value}
-              {resolved && ` · ${resolved.label}`}
+              {resolved ? (
+                <>
+                  <span className="capitalize">{following} · </span>
+                  {resolved.label}
+                </>
+              ) : (
+                (selected?.label ?? value)
+              )}
             </span>
-            {rowPreview && (resolved ?? selected)?.preview}
+            {rowPreview && (shown?.glyph ?? shown?.preview)}
           </>
         )
       }
     >
       <PanelPopover className="w-64 min-w-0">
-        <DialogContent className="flex min-h-0 flex-col gap-0 overflow-y-auto overscroll-contain p-0">
-          <SelectOptions
-            axis={axis}
-            label={label}
-            value={custom ? CUSTOM : value}
-            onChange={onChange}
-            options={options}
-            exclude={exclude}
-            custom={custom}
-          />
-          {(children || custom) && (
-            <>
-              <Separator />
-              <div className="flex flex-col gap-1.5 p-2">
-                {children}
-                {overriders.map((k) => (
-                  <Row key={k} axis={k} label={placeLabel(k)} />
-                ))}
-              </div>
-            </>
-          )}
-        </DialogContent>
+        <SelectBody
+          axis={axis}
+          label={label}
+          value={value}
+          onChange={onChange}
+          options={options}
+          exclude={exclude}
+        >
+          {children}
+        </SelectBody>
       </PanelPopover>
     </DialTrigger>
+  )
+}
+
+/** The options, then `children` and the rows overriding the key. A row
+ *  that stops overriding stays until the popover closes, so focus stays put. */
+function SelectBody({
+  axis,
+  value,
+  children,
+  ...list
+}: Omit<React.ComponentProps<typeof SelectOptions>, "custom"> & {
+  children?: React.ReactNode
+}) {
+  const placeLabel = useContext(PlaceLabel)
+  const overriders = axis?.overriders ?? []
+  const [kept, setKept] = useState(overriders)
+  const added = overriders.filter((k) => !kept.includes(k))
+  const rows = [...kept, ...added]
+  if (added.length > 0) setKept(rows)
+  const custom = overriders.length > 0
+  return (
+    <DialogContent className="flex min-h-0 flex-col gap-0 overflow-y-auto overscroll-contain p-0">
+      <SelectOptions
+        {...list}
+        axis={axis}
+        value={custom ? CUSTOM : value}
+        custom={custom}
+      />
+      {(children || rows.length > 0) && (
+        <>
+          <Separator />
+          <div className="flex flex-col gap-1.5 p-2">
+            {children}
+            {rows.map((k) => (
+              <Row key={k} axis={k} label={placeLabel(k)} />
+            ))}
+          </div>
+        </>
+      )}
+    </DialogContent>
   )
 }
 
@@ -424,7 +472,7 @@ function SelectOptions({
             </span>
             {(preview || excluded) && (
               <span className="ml-auto flex shrink-0 items-center gap-2">
-                {excluded && exclude && <CauseChip cause={exclude.cause} />}
+                {excluded && exclude && <Cause cause={exclude.cause} />}
                 {preview}
               </span>
             )}
@@ -580,7 +628,7 @@ export function DialPicker({
     >
       <RacLabel className={DIAL_LABEL}>{label}</RacLabel>
       <span className="flex min-w-0 items-center gap-1">
-        {cause && <CauseChip cause={cause} />}
+        {cause && <Cause cause={cause} />}
         <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
           <span className="truncate">{selected?.label ?? value}</span>
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
@@ -601,7 +649,7 @@ export function DialPicker({
                   option={option}
                   aside={
                     excluded.has(option.value) &&
-                    exclude && <CauseChip cause={exclude.cause} />
+                    exclude && <Cause cause={exclude.cause} />
                   }
                 />
               ))}
@@ -642,7 +690,7 @@ export function DialList({
     <div data-axis={key} className="flex flex-col">
       <span className="flex h-9 items-center gap-2 px-1 text-xs font-medium text-fg/50">
         {label}
-        {exclude && <CauseChip cause={exclude.cause} />}
+        {exclude && <Cause cause={exclude.cause} />}
       </span>
       <RacToggleButtonGroup
         aria-label={label}
@@ -760,7 +808,7 @@ export function DialSlider(
       onChange={axis.set}
       following={following}
       exclude={exclude}
-      aside={exclude && <CauseChip cause={exclude.cause} />}
+      aside={exclude && <Cause cause={exclude.cause} />}
       reset={
         follow &&
         !following && (
@@ -1332,7 +1380,7 @@ export function DialSegmented({
   const title = (
     <span className="flex min-w-0 items-center gap-2">
       <span className={DIAL_LABEL}>{label}</span>
-      {exclude && <CauseChip cause={exclude.cause} />}
+      {exclude && <Cause cause={exclude.cause} />}
     </span>
   )
   if (stacked) {

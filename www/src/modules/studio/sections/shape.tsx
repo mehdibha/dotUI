@@ -3,10 +3,8 @@
 /* Shape — the base radius, and a character: which rung each role of component
    wears. The character opens a grid of cards, each a small app drawn at that
    character's real radii on the current base, so the pick is made by feel.
-   Roles fold under the cards for the system that needs one role off the
+   Role rows sit under the cards for the system that needs one role off the
    curated path; a hand-set vector reads Custom. */
-
-import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
@@ -22,10 +20,10 @@ import {
 import type { ShapeRoleKey } from "../axes/shape"
 import { STROKE_OPTIONS, TRACK_OPTIONS } from "../axes/shape.meta"
 import {
-  DialFolder,
   DialPopover,
   DialSegmented,
   DialSelect,
+  DialSeparator,
   DialSlider,
   DialTrigger,
 } from "../dial"
@@ -130,16 +128,13 @@ const roleRow = (key: ShapeRoleKey) =>
     )
   }
 
-/** Mounted with the popover, so Roles opens on a custom vector each time. */
 function CharacterPanel() {
   const { state, effective, setState } = useStudio()
-  const active = activeCharacter(state)
-  const [open, setOpen] = useState(active === undefined)
   return (
     <>
       <CardGrid
         label="Character"
-        value={active}
+        value={activeCharacter(state)}
         onChange={(id) => {
           const character = SHAPE_CHARACTERS.find((c) => c.id === id)
           if (character) setState({ ...state, ...character.vector })
@@ -150,16 +145,10 @@ function CharacterPanel() {
           children: <AppGlyph state={{ ...effective, ...character.vector }} />,
         }))}
       />
-      <DialFolder
-        title="Roles"
-        open={open}
-        onOpenChange={setOpen}
-        modified={active === undefined}
-      >
-        {SHAPE_ROLES.map(({ key, label }) => (
-          <Row key={key} axis={key} label={label} />
-        ))}
-      </DialFolder>
+      <DialSeparator />
+      {SHAPE_ROLES.map(({ key, label }) => (
+        <Row key={key} axis={key} label={label} />
+      ))}
     </>
   )
 }

@@ -209,19 +209,18 @@ export function StatesPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} size="row" />
 }
 
-const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => ({
-  ...option,
-  preview: (
-    <ControlSpecimen
-      ring={{
-        style: option.value,
-        strength: AUTO_STRENGTH[option.value]!,
-        width: AUTO_WIDTH[option.value]!,
-      }}
-      size="card"
-    />
-  ),
-}))
+const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
+  const ring = {
+    style: option.value,
+    strength: AUTO_STRENGTH[option.value]!,
+    width: AUTO_WIDTH[option.value]!,
+  }
+  return {
+    ...option,
+    preview: <ControlSpecimen ring={ring} size="card" />,
+    glyph: <ControlSpecimen ring={ring} size="row" />,
+  }
+})
 
 const FocusStyleRow = () => (
   <DialSelect
@@ -363,7 +362,7 @@ const InvalidRow = () => (
 const CursorControlsRow = () => (
   <DialSelect
     axis="cursorControls"
-    label="Cursor on controls"
+    label="Control cursor"
     rowPreview={false}
     options={cursorOptions(CURSOR_CONTROL_OPTIONS)}
   />
@@ -372,7 +371,7 @@ const CursorControlsRow = () => (
 const CursorDisabledRow = () => (
   <DialSelect
     axis="cursorDisabled"
-    label="Cursor when disabled"
+    label="Disabled cursor"
     rowPreview={false}
     options={cursorOptions(CURSOR_DISABLED_OPTIONS)}
   />
