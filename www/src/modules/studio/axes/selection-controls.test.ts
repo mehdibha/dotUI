@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import { DENSITIES } from "@/registry/types"
 import type { Density } from "@/registry/types"
 import { mergePresetCssFields } from "@/publisher/emit-theme"
 import { flatten } from "@/publisher/flatten"
@@ -16,7 +17,6 @@ import { DEFAULT_STATE, parseState } from "./index"
 import { MARK_OPTIONS } from "./radio.meta"
 import { STYLE_OPTIONS } from "./switch.meta"
 
-const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 const CARDS = ["checkbox", "radio-group", "switch"]
 
 const classes = (value: ClassValue | undefined): string =>

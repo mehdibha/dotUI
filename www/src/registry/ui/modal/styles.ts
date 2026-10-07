@@ -32,6 +32,8 @@ const { useStyles, styles } = createStyles(modalMeta, {
     compact: { slots: { modal: "sm:max-w-sm" } },
     default: { slots: { modal: "sm:max-w-sm" } },
     comfortable: { slots: { modal: "sm:max-w-md" } },
+    spacious: { slots: { modal: "sm:max-w-md" } },
+    touch: { slots: { modal: "sm:max-w-md" } },
   },
   params: {
     position: {

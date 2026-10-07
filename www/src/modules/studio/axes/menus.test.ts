@@ -2,7 +2,7 @@ import path from "node:path"
 import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
-import type { Density } from "@/registry/types"
+import { DENSITIES } from "@/registry/types"
 import listBoxMeta from "@/registry/ui/list-box/meta"
 import menuMeta from "@/registry/ui/menu/meta"
 import { extractStylesConfig } from "@/publisher/build-time/extract-config"
@@ -12,7 +12,6 @@ import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 const UI = path.resolve(__dirname, "../../../registry/ui")
-const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 
 describe("menus axis", () => {
   it("defaults yield the registry defaults and no tokens", () => {
@@ -97,10 +96,10 @@ describe("menus axis", () => {
 
 describe("list rows", () => {
   it.each([
-    // [rows, compact, default, comfortable]: the row height in Tailwind units.
-    ["auto", "min-h-7", undefined, undefined],
-    ["match", "min-h-7", "min-h-8", "min-h-9"],
-    ["step", "min-h-8", "min-h-9", "min-h-10"],
+    // [rows, ...DENSITIES]: the row height in Tailwind units.
+    ["auto", "min-h-7", undefined, undefined, undefined, undefined],
+    ["match", "min-h-7", "min-h-8", "min-h-9", "min-h-10", "min-h-12"],
+    ["step", "min-h-8", "min-h-9", "min-h-10", "min-h-12", "min-h-14"],
   ] as const)("%s rows ship one height per density", async (rows, ...want) => {
     const { publishable } = await publishables["list-box"]!()
     for (const [i, density] of DENSITIES.entries()) {

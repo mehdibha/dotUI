@@ -50,6 +50,16 @@ const { useStyles, styles } = createStyles(sliderMeta, {
         output: "text-sm",
       },
     },
+    spacious: {
+      slots: {
+        output: "text-sm",
+      },
+    },
+    touch: {
+      slots: {
+        output: "text-sm",
+      },
+    },
   },
   params: {
     thumb: {

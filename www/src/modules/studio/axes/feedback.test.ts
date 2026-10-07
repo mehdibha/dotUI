@@ -2,7 +2,7 @@ import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
-import type { Density } from "@/registry/types"
+import { DENSITIES } from "@/registry/types"
 import badgeMeta from "@/registry/ui/badge/meta"
 import tagGroupMeta from "@/registry/ui/tag-group/meta"
 import toastMeta from "@/registry/ui/toast/meta"
@@ -16,8 +16,6 @@ import { CASE_OPTIONS, SHAPE_OPTIONS, STYLE_OPTIONS } from "./badges.meta"
 import { DEFAULT_STATE, effective, parseState } from "./index"
 import { TRACK_OPTIONS, TRACK_STYLE_OPTIONS } from "./progress.meta"
 import { STYLE_OPTIONS as SPINNER_OPTIONS } from "./spinner.meta"
-
-const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 
 const classes = (value: ClassValue | undefined): string[] =>
   [value]

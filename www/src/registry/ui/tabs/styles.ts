@@ -106,6 +106,20 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         panel: "text-sm",
       },
     },
+    spacious: {
+      slots: {
+        root: "[--tabs-list-height:2.5rem]",
+        item: "gap-2 px-3 py-1.5 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 **:[svg]:not-with-[size]:size-4",
+        panel: "text-sm",
+      },
+    },
+    touch: {
+      slots: {
+        root: "[--tabs-list-height:3rem]",
+        item: "gap-2 px-4 py-2 text-base has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 **:[svg]:not-with-[size]:size-5",
+        panel: "text-sm",
+      },
+    },
   },
   params: {
     style: {
@@ -154,6 +168,20 @@ const { useStyles, styles } = createStyles(tabsMeta, {
             variants: {
               variant: {
                 line: { indicator: "orientation-horizontal:inset-x-2" },
+              },
+            },
+          },
+          spacious: {
+            variants: {
+              variant: {
+                line: { indicator: "orientation-horizontal:inset-x-3" },
+              },
+            },
+          },
+          touch: {
+            variants: {
+              variant: {
+                line: { indicator: "orientation-horizontal:inset-x-4" },
               },
             },
           },

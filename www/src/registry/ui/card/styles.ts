@@ -58,6 +58,28 @@ const { useStyles, styles } = createStyles(cardMeta, {
           "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
+        header:
+          "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+        description: "text-sm",
+        content: "px-6 group-data-[size=sm]/card:px-4",
+        footer:
+          "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
+        header:
+          "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+        description: "text-sm",
+        content: "px-6 group-data-[size=sm]/card:px-4",
+        footer:
+          "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
+      },
+    },
   },
   params: {
     // The band runs to the card's top edge, so the card drops its top inset
@@ -80,6 +102,12 @@ const { useStyles, styles } = createStyles(cardMeta, {
           comfortable: {
             slots: { header: "pt-6 group-data-[size=sm]/card:pt-4" },
           },
+          spacious: {
+            slots: { header: "pt-6 group-data-[size=sm]/card:pt-4" },
+          },
+          touch: {
+            slots: { header: "pt-6 group-data-[size=sm]/card:pt-4" },
+          },
         },
       },
     },
@@ -99,6 +127,18 @@ const { useStyles, styles } = createStyles(cardMeta, {
                 "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
             },
           },
+          spacious: {
+            slots: {
+              title:
+                "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+            },
+          },
         },
       },
       compact: {
@@ -106,6 +146,8 @@ const { useStyles, styles } = createStyles(cardMeta, {
           compact: { slots: { title: "text-xs/relaxed font-semibold" } },
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
+          spacious: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-sm font-semibold" } },
         },
       },
       tight: {
@@ -122,6 +164,18 @@ const { useStyles, styles } = createStyles(cardMeta, {
                 "text-base leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
             },
           },
+          spacious: {
+            slots: {
+              title:
+                "text-base leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-base leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
+            },
+          },
         },
       },
       bold: {
@@ -129,6 +183,8 @@ const { useStyles, styles } = createStyles(cardMeta, {
           compact: { slots: { title: "text-base font-bold" } },
           default: { slots: { title: "text-lg font-bold" } },
           comfortable: { slots: { title: "text-xl font-bold" } },
+          spacious: { slots: { title: "text-xl font-bold" } },
+          touch: { slots: { title: "text-xl font-bold" } },
         },
       },
       display: {
@@ -136,6 +192,8 @@ const { useStyles, styles } = createStyles(cardMeta, {
           compact: { slots: { title: "text-lg font-normal" } },
           default: { slots: { title: "text-xl font-normal" } },
           comfortable: { slots: { title: "text-2xl font-normal" } },
+          spacious: { slots: { title: "text-2xl font-normal" } },
+          touch: { slots: { title: "text-2xl font-normal" } },
         },
       },
       caps: {
@@ -147,6 +205,12 @@ const { useStyles, styles } = createStyles(cardMeta, {
             slots: { title: "text-lg font-semibold tracking-wider uppercase" },
           },
           comfortable: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
+          spacious: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
+          touch: {
             slots: { title: "text-lg font-semibold tracking-wider uppercase" },
           },
         },

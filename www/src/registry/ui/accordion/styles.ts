@@ -29,6 +29,8 @@ const { useStyles, styles } = createStyles(accordionMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     motion: {

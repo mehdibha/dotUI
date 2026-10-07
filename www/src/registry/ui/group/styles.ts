@@ -54,6 +54,8 @@ const { useStyles, styles } = createStyles(groupMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     // Gapped: Duolingo never attaches; its slab would be drawn twice.

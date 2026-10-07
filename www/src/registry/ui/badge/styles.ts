@@ -76,6 +76,8 @@ const { useStyles, styles } = createStyles(badgeMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     style: CHIPS,

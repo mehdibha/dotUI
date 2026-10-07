@@ -36,6 +36,8 @@ const { useStyles, styles } = createStyles(alertMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     style: {

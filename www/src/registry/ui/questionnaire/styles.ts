@@ -90,6 +90,34 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         actions: "gap-2 sm:min-h-9",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-6 [--questionnaire-title-gap:--spacing(5)]",
+        progress: "text-xs",
+        item: "gap-5",
+        description: "text-sm",
+        choices: "gap-3",
+        choice: "gap-3 px-4 py-3.5 text-sm",
+        choiceContent: "gap-1",
+        shortcut: "size-5 text-[0.625rem]",
+        error: "text-sm",
+        actions: "gap-2 sm:min-h-10",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-6 [--questionnaire-title-gap:--spacing(5)]",
+        progress: "text-xs",
+        item: "gap-5",
+        description: "text-sm",
+        choices: "gap-3",
+        choice: "gap-3 px-4 py-3.5 text-sm",
+        choiceContent: "gap-1",
+        shortcut: "size-5 text-[0.625rem]",
+        error: "text-sm",
+        actions: "gap-2 sm:min-h-12",
+      },
+    },
   },
   params: {
     titles: {
@@ -100,6 +128,12 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           comfortable: {
             slots: { title: "text-base leading-snug font-medium" },
           },
+          spacious: {
+            slots: { title: "text-base leading-snug font-medium" },
+          },
+          touch: {
+            slots: { title: "text-base leading-snug font-medium" },
+          },
         },
       },
       compact: {
@@ -107,6 +141,8 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           compact: { slots: { title: "text-xs font-semibold" } },
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
+          spacious: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-sm font-semibold" } },
         },
       },
       tight: {
@@ -122,6 +158,16 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
               title: "text-base leading-snug font-semibold tracking-tight",
             },
           },
+          spacious: {
+            slots: {
+              title: "text-base leading-snug font-semibold tracking-tight",
+            },
+          },
+          touch: {
+            slots: {
+              title: "text-base leading-snug font-semibold tracking-tight",
+            },
+          },
         },
       },
       bold: {
@@ -129,6 +175,8 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           compact: { slots: { title: "text-base font-bold" } },
           default: { slots: { title: "text-lg font-bold" } },
           comfortable: { slots: { title: "text-xl font-bold" } },
+          spacious: { slots: { title: "text-xl font-bold" } },
+          touch: { slots: { title: "text-xl font-bold" } },
         },
       },
       display: {
@@ -136,6 +184,8 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           compact: { slots: { title: "text-lg font-normal" } },
           default: { slots: { title: "text-xl font-normal" } },
           comfortable: { slots: { title: "text-2xl font-normal" } },
+          spacious: { slots: { title: "text-2xl font-normal" } },
+          touch: { slots: { title: "text-2xl font-normal" } },
         },
       },
       caps: {
@@ -147,6 +197,12 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
             slots: { title: "text-xs font-semibold tracking-wide uppercase" },
           },
           comfortable: {
+            slots: { title: "text-xs font-semibold tracking-wide uppercase" },
+          },
+          spacious: {
+            slots: { title: "text-xs font-semibold tracking-wide uppercase" },
+          },
+          touch: {
             slots: { title: "text-xs font-semibold tracking-wide uppercase" },
           },
         },

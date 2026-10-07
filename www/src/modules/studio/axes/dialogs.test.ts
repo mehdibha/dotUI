@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest"
 import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
-import type { Density } from "@/registry/types"
+import { DENSITIES } from "@/registry/types"
 import dialogMeta from "@/registry/ui/dialog/meta"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
@@ -19,8 +19,6 @@ import {
   STRENGTH_OPTIONS,
 } from "./dialogs.meta"
 import { DEFAULT_STATE, effective, parseState } from "./index"
-
-const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 
 async function shipped(
   name: string,

@@ -37,6 +37,22 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
         fieldGroup: "gap-2.5",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-2.5",
+        area: "gap-2.5",
+        fields: "gap-2.5",
+        fieldGroup: "gap-2.5",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-2.5",
+        area: "gap-2.5",
+        fields: "gap-2.5",
+        fieldGroup: "gap-2.5",
+      },
+    },
   },
   params: {
     style: {

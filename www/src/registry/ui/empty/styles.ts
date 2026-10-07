@@ -80,6 +80,36 @@ const { useStyles, styles } = createStyles(emptyMeta, {
         },
       },
     },
+    spacious: {
+      slots: {
+        base: "gap-4 rounded-(--studio-empty-radius) p-12",
+        description: "text-sm/relaxed",
+        content: "text-sm",
+        media: "mb-2",
+      },
+      variants: {
+        variant: {
+          icon: {
+            media: "size-10 **:[svg]:not-with-[size]:size-6",
+          },
+        },
+      },
+    },
+    touch: {
+      slots: {
+        base: "gap-4 rounded-(--studio-empty-radius) p-12",
+        description: "text-sm/relaxed",
+        content: "text-sm",
+        media: "mb-2",
+      },
+      variants: {
+        variant: {
+          icon: {
+            media: "size-10 **:[svg]:not-with-[size]:size-6",
+          },
+        },
+      },
+    },
   },
   params: {
     titles: {
@@ -90,6 +120,12 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           comfortable: {
             slots: { title: "text-lg font-medium tracking-tight" },
           },
+          spacious: {
+            slots: { title: "text-lg font-medium tracking-tight" },
+          },
+          touch: {
+            slots: { title: "text-lg font-medium tracking-tight" },
+          },
         },
       },
       compact: {
@@ -97,6 +133,8 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           compact: { slots: { title: "text-xs font-semibold" } },
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
+          spacious: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-sm font-semibold" } },
         },
       },
       tight: {
@@ -108,6 +146,12 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           comfortable: {
             slots: { title: "text-lg font-semibold tracking-tight" },
           },
+          spacious: {
+            slots: { title: "text-lg font-semibold tracking-tight" },
+          },
+          touch: {
+            slots: { title: "text-lg font-semibold tracking-tight" },
+          },
         },
       },
       bold: {
@@ -115,6 +159,8 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           compact: { slots: { title: "text-base font-bold" } },
           default: { slots: { title: "text-lg font-bold" } },
           comfortable: { slots: { title: "text-xl font-bold" } },
+          spacious: { slots: { title: "text-xl font-bold" } },
+          touch: { slots: { title: "text-xl font-bold" } },
         },
       },
       display: {
@@ -122,6 +168,8 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           compact: { slots: { title: "text-lg font-normal" } },
           default: { slots: { title: "text-xl font-normal" } },
           comfortable: { slots: { title: "text-2xl font-normal" } },
+          spacious: { slots: { title: "text-2xl font-normal" } },
+          touch: { slots: { title: "text-2xl font-normal" } },
         },
       },
       caps: {
@@ -133,6 +181,12 @@ const { useStyles, styles } = createStyles(emptyMeta, {
             slots: { title: "text-lg font-semibold tracking-wider uppercase" },
           },
           comfortable: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
+          spacious: {
+            slots: { title: "text-lg font-semibold tracking-wider uppercase" },
+          },
+          touch: {
             slots: { title: "text-lg font-semibold tracking-wider uppercase" },
           },
         },

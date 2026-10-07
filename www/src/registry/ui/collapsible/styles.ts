@@ -18,6 +18,8 @@ const { useStyles, styles } = createStyles(collapsibleMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     motion: {

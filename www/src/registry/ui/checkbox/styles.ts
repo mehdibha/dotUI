@@ -74,6 +74,16 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
         root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-3 has-data-description:**:data-checkbox-indicator:mt-0.5",
+      },
+    },
   },
   params: {
     "card-selected": CHOICE_CARD,

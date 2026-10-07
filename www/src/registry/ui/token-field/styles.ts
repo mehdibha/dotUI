@@ -19,6 +19,8 @@ const { useStyles, styles } = createStyles(tokenFieldMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

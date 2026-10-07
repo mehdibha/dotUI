@@ -104,6 +104,20 @@ const { useStyles, styles } = createStyles(toastMeta, {
         description: "text-sm leading-snug",
       },
     },
+    spacious: {
+      slots: {
+        content: "min-h-16 px-4 py-3.5",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
+      },
+    },
+    touch: {
+      slots: {
+        content: "min-h-16 px-4 py-3.5",
+        title: "text-sm leading-snug",
+        description: "text-sm leading-snug",
+      },
+    },
   },
   params: {
     motion: {

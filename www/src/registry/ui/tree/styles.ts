@@ -62,6 +62,18 @@ const { useStyles, styles } = createStyles(treeMeta, {
         item: "min-h-9 px-2 py-1.5 text-sm **:[svg]:not-with-[size]:size-4",
       },
     },
+    spacious: {
+      slots: {
+        root: "text-sm [--tree-indent:--spacing(6)]",
+        item: "min-h-10 px-2.5 py-2 text-sm **:[svg]:not-with-[size]:size-4",
+      },
+    },
+    touch: {
+      slots: {
+        root: "text-base [--tree-indent:--spacing(6)]",
+        item: "min-h-12 px-3 py-2 text-base **:[svg]:not-with-[size]:size-5",
+      },
+    },
   },
 })
 

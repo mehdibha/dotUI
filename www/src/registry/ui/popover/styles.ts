@@ -27,6 +27,8 @@ const { useStyles, styles } = createStyles(popoverMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     motion: {

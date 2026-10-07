@@ -14,6 +14,8 @@ const { useStyles, styles } = createStyles(colorThumbMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

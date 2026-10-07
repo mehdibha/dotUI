@@ -85,6 +85,24 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         ],
       },
     },
+    spacious: {
+      slots: {
+        tag: [
+          "group-data-[size=sm]/tag-group:h-4.75",
+          "h-5.5 px-1.5",
+          "group-data-[size=lg]/tag-group:h-6.5 group-data-[size=lg]/tag-group:px-2 group-data-[size=lg]/tag-group:text-sm",
+        ],
+      },
+    },
+    touch: {
+      slots: {
+        tag: [
+          "group-data-[size=sm]/tag-group:h-4.75",
+          "h-5.5 px-1.5",
+          "group-data-[size=lg]/tag-group:h-6.5 group-data-[size=lg]/tag-group:px-2 group-data-[size=lg]/tag-group:text-sm",
+        ],
+      },
+    },
   },
   params: {
     style: CHIPS,

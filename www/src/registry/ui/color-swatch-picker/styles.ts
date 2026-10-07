@@ -33,6 +33,18 @@ const { useStyles, styles } = createStyles(colorSwatchPickerMeta, {
         item: "size-10",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-1.5",
+        item: "size-10",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-2",
+        item: "size-12",
+      },
+    },
   },
 })
 

@@ -3,6 +3,7 @@ import { cn } from "tailwind-variants"
 import { describe, expect, test } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
+import { DENSITIES } from "@/registry/types"
 import type { Density } from "@/registry/types"
 import breadcrumbsMeta from "@/registry/ui/breadcrumbs/meta"
 import { UPPERCASE } from "@/registry/ui/button/styles"
@@ -20,7 +21,14 @@ import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, effective, parseState } from "./index"
 
 const UI = path.resolve(__dirname, "../../../registry/ui")
-const DENSITIES: Density[] = ["compact", "default", "comfortable"]
+// The label indicator insets by the tab's own padding.
+const LABEL_INSET: Record<Density, string> = {
+  compact: "1.5",
+  default: "1.5",
+  comfortable: "2",
+  spacious: "3",
+  touch: "4",
+}
 const config = (name: string) =>
   extractStylesConfig(path.join(UI, `${name}/styles.ts`)) as {
     params: Record<string, any>
@@ -339,9 +347,7 @@ describe("navigation case, pill marker and line indicator", () => {
         )
         if (indicator === "label")
           expect(value).toContain(
-            density === "comfortable"
-              ? "orientation-horizontal:inset-x-2"
-              : "orientation-horizontal:inset-x-1.5",
+            `orientation-horizontal:inset-x-${LABEL_INSET[density]}`,
           )
       }
     },

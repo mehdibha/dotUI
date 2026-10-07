@@ -12,6 +12,8 @@ const { useStyles, styles } = createStyles(chartMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     grid: {
