@@ -1,6 +1,7 @@
 import {
   CONTROL_EDGE_VALUES,
   SELECTED_WASH_VALUES,
+  SOLID_INK_VALUES,
   SOURCE_VALUES,
 } from "./color"
 import { options } from "./core/meta"
@@ -24,9 +25,15 @@ export const SELECTED_WASH_OPTIONS = options(SELECTED_WASH_VALUES, {
   brand: { label: "Brand", description: "Material 3, Atlassian, Ant, Linear" },
 })
 
+export const SOLID_INK_OPTIONS = options(SOLID_INK_VALUES, {
+  auto: { label: "Auto" },
+  white: { label: "White", credits: ["Duolingo"] },
+})
+
 export const OPTIONS = {
   buttonColor: SOURCE_OPTIONS,
   selectionColor: SOURCE_OPTIONS,
   controlEdge: CONTROL_EDGE_OPTIONS,
   selectedWash: SELECTED_WASH_OPTIONS,
+  solidInk: SOLID_INK_OPTIONS,
 }

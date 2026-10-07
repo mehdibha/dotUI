@@ -202,7 +202,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       recessed: {
         slots: {
           inset:
-            "md:peer-data-[variant=inset]:border md:peer-data-[variant=inset]:border-(--card-border) md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)",
+            "md:peer-data-[variant=inset]:border-(length:--studio-card-stroke) md:peer-data-[variant=inset]:border-(--card-border) md:peer-data-[variant=inset]:shadow-(--shadow-card,0_0_#0000)",
         },
       },
     },

@@ -34,6 +34,9 @@ export const themeOptionsSchema = z.object({
     .catchall(colorString),
   /** D7 — pin the accent verbatim at the solid step; the report prices it. */
   preserveSeed: z.boolean().optional(),
+  /** With preserveSeed: white labels on the pinned light solid, whatever
+   *  their contrast (Duolingo); dark keeps the solved label. Priced. */
+  solidInk: z.enum(["auto", "white"]).optional(),
   /** D5 — scales the fitted chroma curve (1 ≈ Radix, ~1.33 ≈ Tailwind). */
   vividness: z.number().min(0).max(2).optional(),
   /** D6 — scalar on the hue-band bend table (1.6 ≈ Tailwind warm bends). */

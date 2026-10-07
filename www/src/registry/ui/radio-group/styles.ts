@@ -1,6 +1,10 @@
 import { createStyles } from "@/lib/styles"
 
-import { CHOICE_CARD } from "../checkbox/styles"
+import {
+  CHOICE_CARD,
+  CHOICE_CARD_PRESS,
+  CHOICE_CARD_SHELL,
+} from "../checkbox/styles"
 import radioGroupMeta from "./meta"
 
 const { useStyles, styles } = createStyles(radioGroupMeta, {
@@ -10,7 +14,8 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       root: ["flex items-center has-data-description:items-start"],
       control: [
         "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-(--studio-radio-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring-outside disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-radio-card-radius) focus-visible:has-data-label:focus-ring",
-        "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease) has-data-label:w-full has-data-label:border has-data-label:p-2.5",
+        "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease)",
+        CHOICE_CARD_SHELL,
       ],
       indicator: [
         "grid size-4 shrink-0 place-content-center rounded-full border-(length:--studio-control-stroke) border-(--studio-check-edge) bg-transparent text-transparent before:rounded-full before:bg-current before:content-['']",
@@ -59,6 +64,7 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       },
     },
     "card-selected": CHOICE_CARD,
+    "card-press": CHOICE_CARD_PRESS,
   },
 })
 

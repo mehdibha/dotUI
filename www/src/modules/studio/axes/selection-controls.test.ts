@@ -71,14 +71,19 @@ describe("selection controls", () => {
     const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toBeUndefined()
-    expect(ds.componentParams.checkbox).toEqual({ "card-selected": "tint" })
+    expect(ds.componentParams.checkbox).toEqual({
+      "card-selected": "tint",
+      "card-press": "none",
+    })
     expect(ds.componentParams["radio-group"]).toEqual({
       mark: "dot",
       "card-selected": "tint",
+      "card-press": "none",
     })
     expect(ds.componentParams.switch).toEqual({
       style: "inset",
       "card-selected": "tint",
+      "card-press": "none",
     })
     expect(ds.componentParams.slider).toEqual({ thumb: "knob", track: "thin" })
   })

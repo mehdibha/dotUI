@@ -27,8 +27,8 @@ export const SHAPE_DEFAULTS = {
   tracks: "round",
 }
 
-/* Control edges only: surfaces keep their hairline, since Duolingo's 2px
-   cards and Spectrum 2's 1px ones disagree. No sub-pixel option: Chromium
+/* Control edges; surfaces keep a 1px hairline unless their edge is Ledge
+   (Duolingo's 2px cards). No sub-pixel option: Chromium
    draws a 0.5px border at 1px, so seams and insets would subtract the wrong
    width. */
 const STROKE_PX = { regular: 1, bold: 2 }

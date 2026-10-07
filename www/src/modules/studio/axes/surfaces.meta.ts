@@ -20,8 +20,16 @@ export const LAYERS_OPTIONS = options(LAYERS_VALUES, {
 })
 
 export const EDGE_OPTIONS = options(EDGE_VALUES, {
-  line: { label: "Line", description: "A hairline around every surface" },
-  none: { label: "None", description: "Shadows and tone do the separating" },
+  line: {
+    label: "Line",
+    credits: ["Geist", "shadcn Nova", "Primer", "Radix Themes"],
+  },
+  none: {
+    label: "None",
+    credits: ["Atlassian", "Fluent 2", "HeroUI v3", "Spectrum 2"],
+  },
+  bevel: { label: "Bevel", credits: ["Polaris"] },
+  ledge: { label: "Ledge", credits: ["Duolingo"] },
 })
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
@@ -145,6 +153,9 @@ export const SURFACE_STYLES: SurfaceStyle[] = [
   ),
 ]
 
+/* Edges no style is built on, read as the drawn line they replace. */
+const DRAWN_EDGES = new Set(["bevel", "ledge"])
+
 /** How close the state sits to a style, 9 on it: Layers outweighs Edge,
  *  which outweighs how far apart the shadows are. */
 export const styleScore = (
@@ -152,7 +163,11 @@ export const styleScore = (
   { values }: SurfaceStyle,
 ) =>
   (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
-  (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
+  (state.surfaceEdge === values.surfaceEdge
+    ? 2
+    : DRAWN_EDGES.has(state.surfaceEdge) && values.surfaceEdge === "line"
+      ? 1
+      : 0) +
   3 -
   Math.abs(
     SHADOWS.indexOf(state.surfaceShadow) -

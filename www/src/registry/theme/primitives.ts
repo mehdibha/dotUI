@@ -44,6 +44,7 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.neutralHue !== undefined) options.neutralHue = config.neutralHue
   if (config.preserveSeed !== undefined)
     options.preserveSeed = config.preserveSeed
+  if (config.solidInk) options.solidInk = config.solidInk
   if (config.chartPalette !== undefined)
     options.chartPalette = config.chartPalette
   return options

@@ -41,9 +41,9 @@ export const polaris = definePreset({
     density: "compact",
 
     // Surfaces
-    // Borderless white cards lifted off a #f1f1f1 page.
+    // White cards on a #f1f1f1 page, rimmed by ShadowBevel instead of a border.
     surfaceLayers: "grouped",
-    surfaceEdge: "none",
+    surfaceEdge: "bevel",
     surfaceShadow: "low",
     // The #ebebeb sidebar around the admin's white page.
     shellTone: "recessed",

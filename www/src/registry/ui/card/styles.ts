@@ -5,7 +5,7 @@ import cardMeta from "./meta"
 /** The container surface: cards, accordion boxes, attachments. Each reader
  *  keeps its own corner rung. */
 export const CONTAINER_SURFACE =
-  "border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]"
+  "border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)]"
 
 const { useStyles, styles } = createStyles(cardMeta, {
   base: {

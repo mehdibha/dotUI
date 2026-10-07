@@ -234,6 +234,15 @@ exports[`rules > color/grouped-page: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > color/white-ink-needs-exact: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
 exports[`rules > dialogs/bleed-needs-open-footer: fires, then holds back 1`] = `
 {
   "color": undefined,

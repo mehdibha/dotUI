@@ -301,6 +301,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
       lightBg: 100,
     },
   ],
+  "color/white-ink-needs-exact": [
+    { solidInk: "white" },
+    { preserveSeed: true, solidInk: "white" },
+  ],
   "surfaces/flat-needs-separation": [
     { surfaceEdge: "none" },
     { surfaceEdge: "none", surfaceLayers: "tonal" },

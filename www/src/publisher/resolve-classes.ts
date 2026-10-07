@@ -198,8 +198,8 @@ const HAS_ANIMATION = /(?:^|[\s:])animate-(?:in|out)(?=\s|$)/
 
 /* Width utilities whose 1px form is the bare name (`border`, `border-b`). */
 const BARE_WIDTH = /^(?:border(?:-[xytrblse])?|divide-[xy])$/
-/* Width utilities spelled with a number at 1px (`ring-1`, `outline-1`). */
-const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline)$/
+/* Width utilities spelled with a number at 1px (`ring-1`, `stroke-1`). */
+const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline|stroke)$/
 /* Spacing utilities, whose 1px step is `px` (`-space-x-px`, `w-px`). */
 const SPACING =
   /^(?:space-[xy]|gap(?:-[xy])?|[mp][xytrblse]?|w|h|size|inset(?:-[xy])?|top|right|bottom|left|start|end|translate-[xy])$/
