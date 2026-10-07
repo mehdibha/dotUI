@@ -1834,7 +1834,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				empty: { titles: "bold" },
 				field: { error: "plain", label: "semibold" },
 				group: { segments: "attached", separator: "divider" },
-				input: { style: "outline", hover: "none", height: "controls", text: "same", errorIcon: "none" },
+				input: { style: "inset", hover: "none", height: "controls", text: "same", errorIcon: "none" },
 				kbd: { style: "keycap" },
 				link: { underline: "hover", color: "accent" },
 				"list-box": {
@@ -1864,7 +1864,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				questionnaire: { titles: "bold" },
 				"radio-group": { mark: "dot", "card-selected": "outline", "card-press": "none" },
 				"segmented-control": { selected: "ring", track: "filled", weight: "regular-medium", case: "sentence" },
-				select: { trigger: "button", caret: "chevron" },
+				select: { trigger: "field", caret: "chevron" },
 				sidebar: {
 					labels: "sentence",
 					shell: "subtle",
@@ -1903,6 +1903,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			tokens: {
 				"--font-sans":
 					"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
+				"--font-mono": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace",
 				"--font-weight-heading": "var(--font-weight-bold)",
 				"--icon-stroke-width": "1.5",
 				"--radius": "0.5rem",
