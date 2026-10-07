@@ -27,23 +27,12 @@ import {
   TRACK_OPTIONS,
 } from "../axes/segmented-control.meta"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
-import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -76,22 +65,25 @@ function System({
   )
 }
 
-/** One design system per option of `key`, over the current picks. */
-function useSystems(
-  state: StudioState,
+/** `options`, each previewed by `specimen` drawn in its own design system. */
+function useSpecimens<T extends { value: string }>(
   key: keyof StudioState,
-  options: readonly { value: string }[],
+  options: readonly T[],
+  specimen: React.ReactNode,
 ) {
-  return useMemo(
+  const { state } = useStudio()
+  const systems = useMemo(
     () =>
-      Object.fromEntries(
-        options.map(({ value }) => [
-          value,
-          designSystemOf({ ...state, [key]: value } as StudioState),
-        ]),
-      ),
+      options.map((option) => ({
+        option,
+        ds: designSystemOf({ ...state, [key]: option.value } as StudioState),
+      })),
     [state, key, options],
   )
+  return systems.map(({ option, ds }) => ({
+    ...option,
+    preview: <System ds={ds}>{specimen}</System>,
+  }))
 }
 
 function ButtonSpecimen({
@@ -109,30 +101,19 @@ function ButtonSpecimen({
   )
 }
 
-function Buttons({ secondaryOnly }: { secondaryOnly?: boolean }) {
-  return (
-    <>
-      {!secondaryOnly && <ButtonSpecimen variant="primary" label="Save" />}
-      <ButtonSpecimen variant="secondary" label="Cancel" />
-    </>
-  )
-}
-
-/** A toggle off and on; `on` alone for an option's specimen. */
-function Toggles({ on }: { on?: boolean }) {
+/** A selected toggle. */
+function SelectedToggle() {
   const styles = useToggleStyles()
-  const toggle = (selected: boolean) => (
+  return (
     <span
-      key={String(selected)}
       data-button=""
       data-icon-only=""
-      data-selected={selected || undefined}
+      data-selected
       className={styles({ variant: "secondary", size: "xs", isIconOnly: true })}
     >
       B
     </span>
   )
-  return on ? toggle(true) : [toggle(false), toggle(true)]
 }
 
 /** Three attached buttons as the group draws their seams. */
@@ -243,6 +224,152 @@ function CurrentGlyph({ current }: { current: string }) {
   )
 }
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+function ButtonStyleRow() {
+  const options = useSpecimens(
+    "buttonStyle",
+    STYLE_OPTIONS,
+    <ButtonSpecimen variant="primary" label="Save" />,
+  )
+  return (
+    <DialSelect axis="buttonStyle" label="Button style" options={options} />
+  )
+}
+
+function ButtonSecondaryRow() {
+  const options = useSpecimens(
+    "buttonSecondary",
+    SECONDARY_OPTIONS,
+    <ButtonSpecimen variant="secondary" label="Cancel" />,
+  )
+  return (
+    <DialSelect
+      axis="buttonSecondary"
+      label="Secondary"
+      rowPreview={false}
+      options={options}
+    />
+  )
+}
+
+const CORNER_ROW = RADIUS_OPTIONS.map((option) => ({
+  ...option,
+  preview: <CornerGlyph corners={option.value} />,
+}))
+
+function ButtonRadiusRow() {
+  return (
+    <DialSelect
+      axis="buttonRadius"
+      label="Corners"
+      rowPreview={false}
+      options={CORNER_ROW}
+    />
+  )
+}
+
+function ButtonPressRow() {
+  return (
+    <DialSegmented axis="buttonPress" label="Press" options={PRESS_OPTIONS} />
+  )
+}
+
+function ButtonCaseRow() {
+  return <DialSegmented axis="buttonCase" label="Case" options={CASE_OPTIONS} />
+}
+
+function ToggleSelectedRow() {
+  const options = useSpecimens(
+    "toggleSelected",
+    TOGGLE_OPTIONS,
+    <SelectedToggle />,
+  )
+  return <DialSelect axis="toggleSelected" label="Selected" options={options} />
+}
+
+function GroupSeparatorRow() {
+  const options = useSpecimens(
+    "groupSeparator",
+    SEPARATOR_OPTIONS,
+    <GroupSpecimen />,
+  )
+  return (
+    <DialSelect
+      axis="groupSeparator"
+      rowPreview={false}
+      label="Seam"
+      options={options}
+    />
+  )
+}
+
+function SegmentedSelectedRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="segmentedSelected"
+      rowPreview={false}
+      label="Segmented chip"
+      options={CHIP_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <SegmentedGlyph
+            chip={
+              option.value === "auto"
+                ? effective.segmentedSelected
+                : option.value
+            }
+            track={effective.segmentedTrack}
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+function SegmentedTrackRow() {
+  return (
+    <DialSegmented
+      axis="segmentedTrack"
+      label="Track"
+      options={TRACK_OPTIONS}
+    />
+  )
+}
+
+const CURRENT_ROW = CURRENT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <CurrentGlyph current={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function PaginationCurrentRow() {
+  return (
+    <DialSelect
+      axis="paginationCurrent"
+      label="Current page"
+      options={CURRENT_ROW}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  buttonStyle: ButtonStyleRow,
+  buttonSecondary: ButtonSecondaryRow,
+  buttonRadius: ButtonRadiusRow,
+  buttonPress: ButtonPressRow,
+  buttonCase: ButtonCaseRow,
+  toggleSelected: ToggleSelectedRow,
+  groupSeparator: GroupSeparatorRow,
+  segmentedSelected: SegmentedSelectedRow,
+  segmentedTrack: SegmentedTrackRow,
+  paginationCurrent: PaginationCurrentRow,
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function ButtonsPreview({ state }: { state: Effective }) {
@@ -257,162 +384,31 @@ export function ButtonsPreview({ state }: { state: Effective }) {
   )
 }
 
-export function ButtonsSection({ studio }: { studio: Studio }) {
-  const { state, effective, designSystem } = studio
-  const styles = useSystems(state, "buttonStyle", STYLE_OPTIONS)
-  const secondaries = useSystems(state, "buttonSecondary", SECONDARY_OPTIONS)
-  const toggles = useSystems(state, "toggleSelected", TOGGLE_OPTIONS)
-  const seams = useSystems(state, "groupSeparator", SEPARATOR_OPTIONS)
+export function ButtonsSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Button">
-          <System ds={designSystem}>
-            <Buttons />
-          </System>
-        </HeroMember>
-        <HeroMember name="Toggle button">
-          <System ds={designSystem}>
-            <Toggles />
-          </System>
-        </HeroMember>
-        <HeroMember name="Group">
-          <System ds={designSystem}>
-            <GroupSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Segmented control">
-          <SegmentedGlyph
-            chip={effective.segmentedSelected}
-            track={effective.segmentedTrack}
-          />
-        </HeroMember>
-        <HeroMember name="Pagination">
-          <DialGlyph>
-            <CurrentGlyph current={effective.paginationCurrent} />
-          </DialGlyph>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="buttonStyle"
-        label="Style"
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={styles[option.value]!}>
-              <Buttons />
-            </System>
-          ),
-        }))}
-      />
+      <Row axis="buttonStyle" />
       <DialGap />
-      <DialSelect
-        axis="buttonSecondary"
-        label="Secondary"
-        rowPreview={false}
-        options={SECONDARY_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={secondaries[option.value]!}>
-              <Buttons secondaryOnly />
-            </System>
-          ),
-        }))}
-      />
-      <DialSelect
-        axis="buttonRadius"
-        label="Corners"
-        rowPreview={false}
-        options={RADIUS_OPTIONS.map((option) => ({
-          ...option,
-          preview: <CornerGlyph corners={option.value} />,
-        }))}
-      />
-      <UsesRow axis="buttonColor" label="Primary" />
-      <UsesRow axis="labelWeight" label="Label" />
-      <UsesRow axis="motion" label="Motion" />
-      <More keys={["buttonPress", "buttonCase"]}>
-        <DialSegmented
-          axis="buttonPress"
-          label="Press"
-          options={PRESS_OPTIONS}
-        />
-        <DialSegmented axis="buttonCase" label="Case" options={CASE_OPTIONS} />
-      </More>
+      <Row axis="buttonSecondary" />
+      <Row axis="buttonRadius" />
+      <Row axis="buttonColor" />
+      <Row axis="labelWeight" />
+      <Row axis="buttonMotion" />
+      <Row axis="buttonPress" />
+      <Row axis="buttonCase" />
       <MemberSection id="toggle" title="Toggles">
-        <DialSelect
-          axis="toggleSelected"
-          label="Selected"
-          options={TOGGLE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={toggles[option.value]!}>
-                <Toggles on />
-              </System>
-            ),
-          }))}
-        />
+        <Row axis="toggleSelected" />
       </MemberSection>
       <MemberSection id="group" title="Groups">
-        <More keys={["groupSeparator"]}>
-          <DialSelect
-            axis="groupSeparator"
-            label="Seam"
-            options={SEPARATOR_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <System ds={seams[option.value]!}>
-                  <GroupSpecimen />
-                </System>
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="groupSeparator" />
       </MemberSection>
       <MemberSection id="segmented" title="Segmented">
-        <DialSelect
-          axis="segmentedSelected"
-          label="Chip"
-          options={CHIP_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <SegmentedGlyph
-                chip={
-                  option.value === "auto"
-                    ? effective.segmentedSelected
-                    : option.value
-                }
-                track={effective.segmentedTrack}
-              />
-            ),
-          }))}
-        />
-        <More keys={["segmentedTrack"]}>
-          <DialSegmented
-            axis="segmentedTrack"
-            label="Track"
-            options={TRACK_OPTIONS}
-          />
-        </More>
+        <Row axis="segmentedSelected" />
+        <Row axis="segmentedTrack" />
       </MemberSection>
       <MemberSection id="pagination" title="Pagination">
-        <More keys={["paginationCurrent"]}>
-          <DialSelect
-            axis="paginationCurrent"
-            label="Current page"
-            options={CURRENT_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <CurrentGlyph current={option.value} />
-                </DialGlyph>
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="paginationCurrent" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}

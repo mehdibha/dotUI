@@ -19,15 +19,10 @@ import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
 import { DialSelect } from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -197,120 +192,162 @@ const card = (value: string, accent: boolean) => (
   </Recipe>
 )
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+const CORNER_ROW = CORNER_OPTIONS.map((option) => ({
+  ...option,
+  preview: corner(option.value),
+}))
+
+function CheckCornerRow() {
+  return (
+    <DialSelect
+      axis="checkCorner"
+      label="Checkbox corner"
+      options={CORNER_ROW}
+    />
+  )
+}
+
+function CheckEdgeRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="checkEdge"
+      label="Check edge"
+      options={EDGE_OPTIONS.map((option) => ({
+        ...option,
+        preview: edge(option.value, effective.controlEdge),
+      }))}
+    />
+  )
+}
+
+const MARK_ROW = MARK_OPTIONS.map((option) => ({
+  ...option,
+  preview: mark(option.value),
+}))
+
+function RadioMarkRow() {
+  return <DialSelect axis="radioMark" label="Mark" options={MARK_ROW} />
+}
+
+const SWITCH_ROW = STYLE_OPTIONS.map((option) => ({
+  ...option,
+  preview: switchStyle(option.value),
+}))
+
+function SwitchStyleRow() {
+  return <DialSelect axis="switchStyle" label="Style" options={SWITCH_ROW} />
+}
+
+function SliderThumbRow() {
+  const { state } = useStudio()
+  return (
+    <DialSelect
+      axis="sliderThumb"
+      label="Thumb"
+      options={THUMB_OPTIONS.map((option) => ({
+        ...option,
+        // A thumb's specimen rides the track it would resolve to.
+        preview: slider(
+          option.value,
+          resolve({ ...state, sliderThumb: option.value }).values.sliderTrack,
+        ),
+      }))}
+    />
+  )
+}
+
+function SliderTrackRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="sliderTrack"
+      label="Track"
+      options={TRACK_OPTIONS.map((option) => ({
+        ...option,
+        preview:
+          option.value === "auto"
+            ? undefined
+            : slider(effective.sliderThumb, option.value),
+      }))}
+    />
+  )
+}
+
+function CardSelectedRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="cardSelected"
+      label="Selected"
+      options={SELECTED_OPTIONS.map((option) => ({
+        ...option,
+        preview: card(option.value, effective.cardColor === "accent"),
+      }))}
+    />
+  )
+}
+
+function CardColorRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="cardColor"
+      label="Color"
+      rowPreview={false}
+      options={CARD_COLOR_ROW.map((option) => ({
+        ...option,
+        preview: card(effective.cardSelected, option.value === "accent"),
+      }))}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  checkCorner: CheckCornerRow,
+  checkEdge: CheckEdgeRow,
+  radioMark: RadioMarkRow,
+  switchStyle: SwitchStyleRow,
+  sliderThumb: SliderThumbRow,
+  sliderTrack: SliderTrackRow,
+  cardSelected: CardSelectedRow,
+  cardColor: CardColorRow,
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function SelectionPreview({ state }: { state: Effective }) {
   return mark(state.radioMark)
 }
 
-export function SelectionSection({ studio }: { studio: Studio }) {
-  const { state, effective } = studio
-  // A thumb's specimen rides the track it would resolve to.
-  const trackFor = (thumb: string) =>
-    resolve({ ...state, sliderThumb: thumb }).values.sliderTrack
-  const accentCards = effective.cardColor === "accent"
+export function SelectionSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Checkbox">{corner(effective.checkCorner)}</HeroMember>
-        <HeroMember name="Radio">{mark(effective.radioMark)}</HeroMember>
-        <HeroMember name="Switch">
-          {switchStyle(effective.switchStyle)}
-        </HeroMember>
-        <HeroMember name="Slider">
-          {slider(effective.sliderThumb, effective.sliderTrack)}
-        </HeroMember>
-        <HeroMember name="Choice card">
-          {card(effective.cardSelected, accentCards)}
-        </HeroMember>
-      </FamilyHero>
-      <UsesRow axis="checkboxColor" label="Checked color" />
-      <UsesRow axis="controlEdge" label="Control edge" />
-      <UsesRow axis="controlStroke" label="Control stroke" />
-      <UsesRow axis="motion" label="Motion" />
-      <More keys={["checkCorner", "checkEdge"]}>
-        <DialSelect
-          axis="checkCorner"
-          label="Checkbox corner"
-          options={CORNER_OPTIONS.map((option) => ({
-            ...option,
-            preview: corner(option.value),
-          }))}
-        />
-        <DialSelect
-          axis="checkEdge"
-          label="Check edge"
-          options={EDGE_OPTIONS.map((option) => ({
-            ...option,
-            preview: edge(option.value, effective.controlEdge),
-          }))}
-        />
-      </More>
+      <Row axis="checkboxColor" />
+      <Row axis="controlEdge" />
+      <Row axis="controlStroke" />
+      <Row axis="selectionMotion" />
+      <Row axis="checkCorner" />
+      <Row axis="checkEdge" />
       <MemberSection id="radio" title="Radio">
-        <DialSelect
-          axis="radioMark"
-          label="Mark"
-          options={MARK_OPTIONS.map((option) => ({
-            ...option,
-            preview: mark(option.value),
-          }))}
-        />
+        <Row axis="radioMark" />
+        <Row axis="radioColor" />
       </MemberSection>
       <MemberSection id="switch" title="Switch">
-        <DialSelect
-          axis="switchStyle"
-          label="Style"
-          options={STYLE_OPTIONS.map((option) => ({
-            ...option,
-            preview: switchStyle(option.value),
-          }))}
-        />
+        <Row axis="switchStyle" />
+        <Row axis="switchColor" />
       </MemberSection>
       <MemberSection id="slider" title="Slider">
-        <DialSelect
-          axis="sliderThumb"
-          label="Thumb"
-          options={THUMB_OPTIONS.map((option) => ({
-            ...option,
-            preview: slider(option.value, trackFor(option.value)),
-          }))}
-        />
-        <More keys={["sliderTrack"]}>
-          <DialSelect
-            axis="sliderTrack"
-            label="Track"
-            options={TRACK_OPTIONS.map((option) => ({
-              ...option,
-              preview:
-                option.value === "auto"
-                  ? undefined
-                  : slider(effective.sliderThumb, option.value),
-            }))}
-          />
-        </More>
+        <Row axis="sliderThumb" />
+        <Row axis="sliderTrack" />
+        <Row axis="sliderColor" />
       </MemberSection>
       <MemberSection id="choice-card" title="Choice cards">
-        <DialSelect
-          axis="cardSelected"
-          label="Selected"
-          options={SELECTED_OPTIONS.map((option) => ({
-            ...option,
-            preview: card(option.value, accentCards),
-          }))}
-        />
-        <More keys={["cardColor"]}>
-          <DialSelect
-            axis="cardColor"
-            label="Color"
-            options={CARD_COLOR_ROW.map((option) => ({
-              ...option,
-              preview: card(effective.cardSelected, option.value === "accent"),
-            }))}
-          />
-        </More>
+        <Row axis="cardSelected" />
+        <Row axis="cardColor" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
