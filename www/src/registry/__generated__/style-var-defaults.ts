@@ -92,7 +92,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-scrim-blur": "var(--blur-sm)",
 	"--studio-segmented-control-color-duration": "150ms",
 	"--studio-segmented-control-color-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
-	"--studio-segmented-control-item-radius": "var(--studio-radius-inline-item)",
 	"--studio-segmented-control-radius": "var(--studio-radius-container)",
 	"--studio-segmented-control-state-duration": "150ms",
 	"--studio-segmented-control-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",

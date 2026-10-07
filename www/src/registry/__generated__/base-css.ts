@@ -79,7 +79,7 @@ export const baseRegistryCss = {
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
 			},
-			':is([data-disabled], :disabled, [aria-disabled="true"]):not(\n    :is([data-disabled], :disabled, [aria-disabled="true"]) *\n  )':
+			':is([data-disabled], :disabled, [aria-disabled="true"]):not(\n    [data-pending],\n    :is([data-disabled], :disabled, [aria-disabled="true"]) *\n  )':
 				{
 					opacity: "var(--disabled-opacity, 1)",
 				},
