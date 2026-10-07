@@ -45,12 +45,16 @@ export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
 export const SHELL_VALUES = ["subtle", "page", "recessed"] as const
 
+/** The recessed dark shell: the page at this share over black, so it sinks
+ *  no deeper than light's half-rung (about 0.02 L) on any page tone. */
+export const RECESSED_DARK_PAGE = 93
+
 /* Light: halfway between the 50 and 100 rungs (Linear's #efeff0 frame on a
-   #f9f9fa panel). Dark: the page shaded toward black (#09090a on #121213). */
+   #f9f9fa panel). Dark: the page shaded toward black, never below the page
+   by more than light's step (Material 3 rails sit at the surface tone). */
 const SHELL_SIDEBAR: Record<string, string> = {
   page: "var(--color-bg)",
-  recessed:
-    "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) 70%, oklch(0 0 0)))",
+  recessed: `light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) ${RECESSED_DARK_PAGE}%, oklch(0 0 0)))`,
 }
 
 export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {

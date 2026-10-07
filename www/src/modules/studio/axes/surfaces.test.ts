@@ -379,17 +379,17 @@ describe("app shell", () => {
     )
   })
 
-  test.each(["light", "dark"] as const)(
-    "Recessed sits below the page in %s at any page tone",
-    (mode) => {
-      for (const state of [{}, { lightBg: 96 }, { darkBg: 8 }]) {
-        const l = shipped({ ...state, shellTone: "recessed" }, mode)
-        expect(l("sidebar"), JSON.stringify(state)).toBeLessThan(
-          l("background") - 0.015,
-        )
-      }
-    },
-  )
+  test("Recessed sits below the page at any page tone, dark no deeper than light", () => {
+    for (const state of [{}, { lightBg: 96 }, { darkBg: 8 }]) {
+      const light = shipped({ ...state, shellTone: "recessed" }, "light")
+      const dark = shipped({ ...state, shellTone: "recessed" }, "dark")
+      const lightDepth = light("background") - light("sidebar")
+      const darkDepth = dark("background") - dark("sidebar")
+      expect(lightDepth, JSON.stringify(state)).toBeGreaterThan(0.015)
+      expect(darkDepth, JSON.stringify(state)).toBeGreaterThan(0.005)
+      expect(darkDepth, JSON.stringify(state)).toBeLessThanOrEqual(lightDepth)
+    }
+  })
 
   test.each(SHELL_OPTIONS.map((o) => o.value))(
     "%s ships one inset shadow and whole classes",
