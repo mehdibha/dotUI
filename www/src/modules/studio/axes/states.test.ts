@@ -203,7 +203,7 @@ describe("disabled, cursors, control text", () => {
     const rule = /([^{}]+)\{\s*opacity: var\(--disabled-opacity, 1\)/.exec(
       css,
     )?.[1]
-    expect(rule).toMatch(/:not\(\s*\[data-current\],/)
+    expect(rule).toMatch(/:not\((\s*\[[\w-]+\],)*\s*\[data-current\],/)
   })
 
   test("each writes its one token", () => {
