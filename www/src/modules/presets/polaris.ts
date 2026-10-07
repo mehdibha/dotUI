@@ -21,6 +21,8 @@ export const polaris = definePreset({
     warningSeed: "#ffb800",
     dangerSeed: "#c70a24",
     neutralTint: 0,
+    // Polaris status tints are pastels: Paid #cdfed4, Pending #ffd6a4, critical #fee8eb.
+    vividness: 1.2,
     // The #f1f1f1 page is L* 95.
     lightBg: 95,
     // The dark-experimental #1a1a1a page; Shopify ships no production dark.
@@ -99,7 +101,8 @@ export const polaris = definePreset({
     // Navigation
     tabStyle: "pill",
     navMarker: "surface",
-    navWeight: "medium-semibold",
+    // Tabs stay 550; sidebar items step 550 → 650 when current.
+    navItemWeight: "medium-semibold",
     linkUnderline: "always",
 
     // Feedback
@@ -107,6 +110,7 @@ export const polaris = definePreset({
     alertStyle: "soft",
     badgeStyle: "soft",
     badgeShape: "rounded",
+    // Black toasts; only the error toast turns solid red, so status stays an icon.
     toastStyle: "inverse",
     progressTrack: "x-heavy",
     // ProgressBar is info-blue by default, not charcoal.
