@@ -2,7 +2,11 @@ import { describe, expect, test } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import buttonMeta from "@/registry/ui/button/meta"
-import { BUTTON_SECONDARY, BUTTON_STYLES } from "@/registry/ui/button/styles"
+import {
+  BUTTON_SECONDARY,
+  BUTTON_STYLES,
+  BUTTON_VARIANTS,
+} from "@/registry/ui/button/styles"
 import toggleButtonMeta from "@/registry/ui/toggle-button/meta"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
@@ -301,6 +305,47 @@ describe("shipped buttons", () => {
       expect(ledge, name).not.toContain("rounded-l-none")
       expect(ledge, name).not.toContain("shadow-none")
       expect(await shipped(name), name).toContain("rounded-l-none")
+    }
+  })
+})
+
+describe("button states", () => {
+  test("pending keeps the face and inks the spinner", async () => {
+    for (const buttonStyle of ["flat", "ledge"]) {
+      const content = await shipped("button", { buttonStyle })
+      expect(content).toContain("pending:[-webkit-text-fill-color:transparent]")
+      expect(content).not.toMatch(/pending:(?:bg|border|text)-/)
+    }
+  })
+
+  test("quiet and link stay transparent when disabled", () => {
+    expect(BUTTON_VARIANTS.quiet).not.toContain("disabled:bg-")
+    expect(BUTTON_VARIANTS.link).not.toContain("disabled:bg-")
+  })
+
+  // A `dark:bg-*` outranks `selected:bg-*` and `disabled:bg-*`.
+  test("a secondary's dark fill rides a local var", () => {
+    for (const [name, recipe] of Object.entries(BUTTON_SECONDARY))
+      expect(recipe.variants.variant.secondary, name).not.toMatch(
+        /(?:^|\s)dark:(?:[\w-]+:)*bg-/,
+      )
+  })
+
+  test("Bevel's secondary is a card plate, white on a grouped page", () => {
+    const bevel = BUTTON_SECONDARY.bevel.variants.variant.secondary
+    expect(bevel).toContain("[--secondary-plate:var(--color-card)]")
+    expect(bevel).not.toMatch(/(?:^|\s)bg-bg/)
+  })
+})
+
+describe("segmented chip", () => {
+  test("concentric with the track, whatever the item radius", async () => {
+    for (const roleItem of ["auto", "none"]) {
+      const content = await shipped("segmented-control", { roleItem })
+      expect(content, roleItem).toContain(
+        "rounded-[calc(var(--radius-lg)-3px)]",
+      )
+      expect(content, roleItem).not.toContain("--studio-")
     }
   })
 })
