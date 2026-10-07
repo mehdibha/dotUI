@@ -17,8 +17,11 @@ export const duolingo = definePreset({
     successSeed: "#58cc02",
     warningSeed: "#ffc800",
     dangerSeed: "#ff4b4b",
+    // Pure grays (swan #e5e5e5); a slate tint for dark #131f24 would blue the light grays too.
     neutralTint: 0,
     lightBg: 100,
+    // #131f24 is L* 11.
+    darkBg: 11,
     // Swan #e5e5e5 strokes every control and surface alike.
     controlEdge: "soft",
 
@@ -30,12 +33,14 @@ export const duolingo = definePreset({
     sectionLabels: "caps",
 
     // Icons
-    iconStroke: 2.5,
+    // The close X is stroke 3 on a 16px box.
+    iconStroke: 3,
 
     // Shape
-    // Buttons 16px, fields and tiles 12px, menu rows 7px.
+    // Fields, tiles and web-ui buttons 12px; popovers, cards and modals 16px; menu rows 7px.
     radiusPx: 16,
-    roleItem: "xs",
+    roleItem: "sm",
+    rolePanel: "lg",
     controlStroke: "bold",
     // Buttons 50px, fields 48px, small 32px.
     density: "touch",
@@ -48,6 +53,10 @@ export const duolingo = definePreset({
     focusInputStyle: "border",
     cursorDisabled: "default",
 
+    // Selection
+    // No ::selection rule; the browser default shows.
+    selectionHighlight: "browser",
+
     // Buttons
     buttonStyle: "ledge",
     buttonCase: "uppercase",
@@ -55,9 +64,10 @@ export const duolingo = definePreset({
 
     // Inputs: Ledge's Auto field is the polar well; no hover.
     inputHover: "none",
+    fieldLabel: "medium",
 
-    // Selection
-    // Checks stay square-ish (8px web-ui box); the 16px base would round them to circles.
+    // Selection controls
+    // A 5px corner on the 20px box; the detail rung (8px) would round it to a circle.
     checkCorner: "sharp",
     cardSelected: "outline-tint",
     switchStyle: "slab",
@@ -72,6 +82,7 @@ export const duolingo = definePreset({
     dialogBackdrop: "scrim",
     dialogActions: "stack",
     dialogClose: "filled",
+    // Below 700px the modal goes full-bleed.
     mobileDialogs: "fullscreen",
 
     // Navigation
@@ -85,10 +96,14 @@ export const duolingo = definePreset({
     badgeShape: "rounded",
     badgeCase: "uppercase",
     spinnerStyle: "dots",
+    // 16px track.
     progressTrack: "x-heavy",
 
     // Data display
     kbdTreatment: "outline",
+    avatarFallback: "accent",
     calendarDayShape: "circle",
+    // Today carries no marker by default.
+    calendarToday: "numeral",
   },
 })
