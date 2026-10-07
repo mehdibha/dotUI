@@ -91,7 +91,7 @@ export const linear = definePreset({
     accordionMarker: "leading-caret",
 
     // Feedback
-    alertStyle: "soft-outline",
+    alertStyle: "outline",
     spinnerStyle: "dots",
 
     // Data display
