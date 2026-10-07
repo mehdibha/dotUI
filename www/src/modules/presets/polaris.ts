@@ -12,6 +12,7 @@ export const polaris = definePreset({
     brand: "#005bd3",
     preserveSeed: true,
     buttonColor: "neutral",
+    selectionColor: "neutral",
     checkboxColor: "neutral",
     radioColor: "neutral",
     switchColor: "neutral",
@@ -20,6 +21,10 @@ export const polaris = definePreset({
     warningSeed: "#ffb800",
     dangerSeed: "#c70a24",
     neutralTint: 0,
+    // The #f1f1f1 page is L* 95.
+    lightBg: 95,
+    // The dark-experimental #1a1a1a page; Shopify ships no production dark.
+    darkBg: 9.5,
     // Fields and checks sit on a #8a8a8a edge.
     controlEdge: "strong",
 
@@ -30,6 +35,7 @@ export const polaris = definePreset({
     titleStyle: "compact",
 
     // Icons
+    // Polaris Icons are Shopify-only; Lucide stands in.
     iconStroke: 1.75,
 
     // Shape
@@ -41,23 +47,29 @@ export const polaris = definePreset({
     density: "compact",
 
     // Surfaces
-    // White cards on a #f1f1f1 page, rimmed by ShadowBevel instead of a border.
+    // White cards on the gray page, rimmed by ShadowBevel instead of a border.
     surfaceLayers: "grouped",
     surfaceEdge: "bevel",
     surfaceShadow: "low",
-    // The #ebebeb sidebar around the admin's white page.
+    // The #ebebeb sidebar around the admin's page.
     shellTone: "recessed",
+
+    // Browser
+    selectionHighlight: "browser",
+    cursorDisabled: "default",
 
     // States
     focusInputStyle: "ring",
     invalidStyle: "tint",
-    cursorDisabled: "default",
 
     // Motion
     motionEntrance: "slide",
 
     // Buttons
     buttonStyle: "bevel",
+    // ButtonGroup segmented: attached outlined buttons, #ccc pressed segment.
+    segmentedSelected: "tone",
+    segmentedTrack: "outline",
 
     // Inputs: a flat #fdfdfd field, 32px beside 28px buttons.
     inputStyle: "outline",
@@ -70,13 +82,13 @@ export const polaris = definePreset({
 
     // Selection
     sliderThumb: "solid",
-    sliderTrack: "thin",
     switchStyle: "outlined",
 
     // Menus & popovers
     tooltipStyle: "surface",
     menuSelectedRow: "tint",
     menuRows: "step",
+    mobilePickers: "anchored",
 
     // Dialogs
     dialogSections: "header-band",
@@ -91,11 +103,14 @@ export const polaris = definePreset({
     linkUnderline: "always",
 
     // Feedback
+    // The in-card banner; the page banner's solid header strip has no option.
+    alertStyle: "soft",
     badgeStyle: "soft",
     badgeShape: "rounded",
     toastStyle: "inverse",
-    toastStatus: "bold",
     progressTrack: "x-heavy",
+    // ProgressBar is info-blue by default, not charcoal.
+    progressColor: "accent",
     skeletonAnimation: "none",
 
     // Data display
