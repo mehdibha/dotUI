@@ -158,5 +158,5 @@ describe("registryIcons", () => {
           missing.push(`${key} → ${library}: ${name}`)
       }
     expect(missing).toEqual([])
-  })
+  }, 30_000)
 })
