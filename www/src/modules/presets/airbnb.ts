@@ -95,7 +95,7 @@ export const airbnb = definePreset({
     // Menus & popovers
     menuInset: "full-bleed",
     menuArrows: "none",
-    // The current sort option is bold, no check.
+    // No check: the current sort option is bold; the tint stands in for the weight.
     menuIndicator: "none",
     menuSelectedRow: "tint",
 
