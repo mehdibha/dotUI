@@ -9,10 +9,10 @@ const { useStyles, styles } = createStyles(messageMeta, {
       root: "group/message relative flex w-full min-w-0 data-[align=end]:flex-row-reverse",
       avatar:
         "flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full group-has-data-message-footer/message:-translate-y-8",
-      // Incoming messages read in the reading face; your own stay in the body.
+      // Incoming prose reads in the reading face; controls stay in the body.
       content: [
         "flex w-full min-w-0 flex-col wrap-break-word",
-        "group-data-[align=start]/message:font-reading",
+        "group-data-[align=start]/message:[&_:is(p,li,blockquote,h1,h2,h3,h4,h5,h6)]:font-reading",
         "group-data-[align=end]/message:*:self-end",
       ],
       header: [

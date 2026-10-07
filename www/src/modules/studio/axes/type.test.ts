@@ -1,3 +1,5 @@
+import path from "node:path"
+import { compile } from "@tailwindcss/node"
 import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
@@ -9,6 +11,8 @@ import {
 } from "@/lib/fonts"
 import { publishables } from "@/registry/__generated__/publishables"
 import type { Density } from "@/registry/types"
+import { CAPS } from "@/registry/ui/badge/styles"
+import { MONO_CAPS } from "@/registry/ui/list-box/styles"
 import {
   fontItemNamesForTokens,
   parseFontItemName,
@@ -190,11 +194,11 @@ describe("typography axis", () => {
       "--text-xs": "0.875rem",
       "--text-xs--line-height": "calc(16 / 14)",
     })
-    for (const density of ["default", "comfortable"])
-      expect(
-        designSystemOf(parseState({ uiTextSize: "14", density })).tokens,
-        `${density}`,
-      ).toEqual({})
+    for (const density of ["default", "comfortable"]) {
+      const state = parseState({ uiTextSize: "14", density })
+      expect(effective(state).values.uiTextSize, `${density}`).toBe("auto")
+      expect(designSystemOf(state).tokens, `${density}`).toEqual({})
+    }
   })
 
   it("section labels set the case and face of every section header", async () => {
@@ -221,12 +225,30 @@ describe("typography axis", () => {
     }
   })
 
-  it("menu and list-box share one section-label recipe", async () => {
-    for (const { value: labels } of SECTION_LABEL_OPTIONS)
-      for (const density of DENSITIES)
-        expect(await slot("menu", "sectionTitle", density, { labels })).toBe(
-          await slot("list-box", "sectionTitle", density, { labels }),
+  it("list-box, menu and sidebar share one section-label recipe", async () => {
+    const recipe = (value: string) =>
+      value
+        .split(" ")
+        .filter((c) =>
+          /^(uppercase|font-mono|tracking-|text-(xs|sm|\[))/.test(c),
         )
+        .filter((c) => c !== "tracking-normal")
+        .sort()
+    for (const { value: labels } of SECTION_LABEL_OPTIONS) {
+      const expected = recipe(
+        { sentence: "text-xs", caps: CAPS, "mono-caps": MONO_CAPS }[labels],
+      )
+      for (const density of DENSITIES)
+        for (const [name, slotName] of [
+          ["list-box", "sectionTitle"],
+          ["menu", "sectionTitle"],
+          ["sidebar", "groupLabel"],
+        ] as const)
+          expect(
+            recipe(await slot(name, slotName, density, { labels })),
+            `${name}/${labels}/${density}`,
+          ).toEqual(expected)
+    }
   })
 })
 
@@ -254,16 +276,31 @@ describe("reading font", () => {
     })
   })
 
-  it("incoming message text reads it; your own and the metadata stay body", async () => {
+  it("incoming prose reads it; controls, your own and the metadata stay body", async () => {
+    const tw = await compile(
+      `@import "tailwindcss/utilities"; @theme { --font-reading: serif; }`,
+      { base: path.resolve(__dirname, "../../.."), onDependency() {} },
+    )
     for (const density of DENSITIES) {
-      expect(await slot("message", "content", density, {})).toContain(
-        "group-data-[align=start]/message:font-reading",
+      const content = await slot("message", "content", density, {})
+      const css = tw.build(content.split(" "))
+      const rules = css
+        .split(/\n(?=\.)/)
+        .filter((r) => r.includes("--font-reading)"))
+      expect(rules, `${density}`).toHaveLength(1)
+      // Only prose elements of a start-aligned message: a button or badge
+      // never takes the reading face.
+      expect(rules[0], `${density}`).toContain('[data-align="start"]')
+      expect(rules[0], `${density}`).toMatch(
+        /& :is\(p,li,blockquote,h1,h2,h3,h4,h5,h6\) \{/,
       )
       for (const meta of ["header", "footer"])
         expect(await slot("message", meta, density, {})).toMatch(
           /\bfont-sans\b/,
         )
     }
+    for (const name of ["button", "badge"])
+      expect(await shipped(name), `${name}`).not.toContain("font-reading")
   })
 })
 
@@ -292,7 +329,7 @@ describe("field text size", () => {
           expect(value, `${where}`).toContain(sizes[density])
           expect(
             value.match(/(?:^|\s)text-(?:xs|sm|base)\b/g),
-            where,
+            `${where}`,
           ).toHaveLength(1)
           expectNoConflicts(value, `${where}`)
         }

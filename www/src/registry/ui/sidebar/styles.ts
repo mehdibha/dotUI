@@ -1,5 +1,7 @@
 import { createStyles } from "@/lib/styles"
 
+import { CAPS } from "../badge/styles"
+import { MONO_CAPS } from "../list-box/styles"
 import sidebarMeta from "./meta"
 
 /* Collapse and expand timing is the studio's (styles.css). */
@@ -191,14 +193,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
   params: {
     labels: {
       sentence: { slots: { groupLabel: "font-sans text-xs tracking-normal" } },
-      caps: {
-        slots: {
-          groupLabel: "font-sans text-[0.6875rem] tracking-wider uppercase",
-        },
-      },
-      "mono-caps": {
-        slots: { groupLabel: "font-mono text-xs tracking-wider uppercase" },
-      },
+      caps: { slots: { groupLabel: ["font-sans", CAPS] } },
+      "mono-caps": { slots: { groupLabel: MONO_CAPS } },
     },
     shell: {
       subtle: { slots: { inset: "md:peer-data-[variant=inset]:shadow-sm" } },
