@@ -120,9 +120,12 @@
 }
 
 /* Invalid fill: a danger wash laid over whatever the field paints,
-   transparent unless the system tints invalid fields. */
+   transparent unless the system tints invalid fields. An in-field error
+   icon rides `--invalid-icon` on top of it. */
 @utility invalid-fill {
-  background-image: linear-gradient(var(--invalid-fill), var(--invalid-fill));
+  background-image:
+    var(--invalid-icon, none),
+    linear-gradient(var(--invalid-fill), var(--invalid-fill));
 }
 
 @utility no-highlight {

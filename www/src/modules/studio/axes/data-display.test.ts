@@ -219,6 +219,31 @@ describe("shipped data display", () => {
     expect(rounded).toContain('root: "size-10 rounded-md"')
   })
 
+  test("a pill badge stays full under square controls", async () => {
+    for (const roleControl of ["md", "none"]) {
+      const badge = await shipped("badge", { roleControl })
+      expect(badge, roleControl).toContain("gap-1 rounded-full font-medium")
+    }
+    expect(
+      await shipped("badge", { roleControl: "none", badgeShape: "rounded" }),
+    ).toContain("gap-1 font-medium")
+  })
+
+  test("a keycap sets ⌘ and ⇧ in the sans face", async () => {
+    const keycap = await shipped("kbd", { kbdTreatment: "keycap" })
+    expect(keycap).toContain("font-sans text-xs")
+    expect(keycap).not.toContain("font-mono")
+  })
+
+  test("grouped initials center on what the next avatar leaves visible", async () => {
+    const group = await shipped("avatar")
+    for (const pad of ["pe-1.5", "pe-2", "pe-2.5"])
+      expect(group).toContain(
+        `*:data-avatar:not-last:*:data-avatar-fallback:${pad}`,
+      )
+    expect(group).toContain("*:data-avatar:ring-2")
+  })
+
   test("header label ink ships one class", async () => {
     const muted = await shipped("table")
     const strong = await shipped("table", { tableHeaderLabel: "strong" })

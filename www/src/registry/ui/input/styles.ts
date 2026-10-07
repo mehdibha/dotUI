@@ -318,10 +318,10 @@ const selfTint = "hover:not-focus:not-disabled:bg-neutral-hover"
 const triggerTint = "hover:not-focus-visible:not-disabled:bg-neutral-hover"
 
 /* An error icon drawn inside the control (Carbon, Material 3): a danger disc
-   with an exclamation, painted as background layers so a bare <input> can
-   carry it. */
+   with an exclamation, painted as background layers over the invalid fill
+   (base.css invalid-fill) so a bare <input> can carry it. */
 const errorIconInside =
-  "invalid:bg-[linear-gradient(var(--color-fg-on-danger),var(--color-fg-on-danger)),linear-gradient(var(--color-fg-on-danger),var(--color-fg-on-danger)),radial-gradient(circle_closest-side,var(--color-danger)_calc(100%-0.5px),transparent)] invalid:bg-size-[calc(var(--icon-size)/8)_calc(var(--icon-size)*3/8),calc(var(--icon-size)/8)_calc(var(--icon-size)/8),var(--icon-size)_var(--icon-size)] invalid:bg-position-[right_calc(var(--edge-to-text)+var(--icon-size)*7/16)_top_calc(50%-var(--icon-size)/16),right_calc(var(--edge-to-text)+var(--icon-size)*7/16)_top_calc(50%+var(--icon-size)/4),right_var(--edge-to-text)_center] invalid:bg-no-repeat invalid:pr-[calc(var(--edge-to-text)+var(--icon-size)+var(--text-to-visual))]"
+  "invalid:[--invalid-icon:linear-gradient(var(--color-fg-on-danger),var(--color-fg-on-danger)),linear-gradient(var(--color-fg-on-danger),var(--color-fg-on-danger)),radial-gradient(circle_closest-side,var(--color-danger)_calc(100%-0.5px),transparent)] invalid:bg-size-[calc(var(--icon-size)/8)_calc(var(--icon-size)*3/8),calc(var(--icon-size)/8)_calc(var(--icon-size)/8),var(--icon-size)_var(--icon-size),100%_100%] invalid:bg-position-[right_calc(var(--edge-to-text)+var(--icon-size)*7/16)_top_calc(50%-var(--icon-size)/16),right_calc(var(--edge-to-text)+var(--icon-size)*7/16)_top_calc(50%+var(--icon-size)/4),right_var(--edge-to-text)_center,0_0] invalid:bg-no-repeat invalid:pr-[calc(var(--edge-to-text)+var(--icon-size)+var(--text-to-visual))]"
 
 /* ----------------------------- Recipe table ----------------------------- */
 

@@ -26,11 +26,25 @@ const { useStyles, styles } = createStyles(avatarMeta, {
         "group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5",
       ],
     },
+    // In a group the next avatar and its ring cover each one's end, so its
+    // initials center on what stays visible (overlap + 2px ring).
     variants: {
       size: {
-        sm: { group: "-space-x-1 *:data-avatar:size-6", root: "size-6" },
-        md: { group: "-space-x-1.5 *:data-avatar:size-8", root: "size-8" },
-        lg: { group: "*:data-avatar:size-10", root: "size-10" },
+        sm: {
+          group:
+            "-space-x-1 *:data-avatar:size-6 *:data-avatar:not-last:*:data-avatar-fallback:pe-1.5",
+          root: "size-6",
+        },
+        md: {
+          group:
+            "-space-x-1.5 *:data-avatar:size-8 *:data-avatar:not-last:*:data-avatar-fallback:pe-2",
+          root: "size-8",
+        },
+        lg: {
+          group:
+            "*:data-avatar:size-10 *:data-avatar:not-last:*:data-avatar-fallback:pe-2.5",
+          root: "size-10",
+        },
       },
     },
   },

@@ -515,6 +515,13 @@ describe("drawn edges", () => {
     expect(tokensFor({ surfaceEdge: "ledge" })["--studio-tile-lip"]).toBe("2px")
   })
 
+  test("under Ledge, popovers and dialogs drop their shadow", () => {
+    const tokens = tokensFor({ surfaceEdge: "ledge", surfaceShadow: "high" })
+    expect(tokens["--shadow-popover"]).toBe(NO_SHADOW)
+    expect(tokens["--shadow-modal"]).toBe(NO_SHADOW)
+    expect(tokens["--shadow-card"]).not.toBe(NO_SHADOW)
+  })
+
   test("the overlay arrow follows the overlay stroke", async () => {
     const origin = await shippedItem("popover", {})
     expect(origin).toContain("[&>svg]:stroke-1")
