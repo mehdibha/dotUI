@@ -1276,7 +1276,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				empty: { titles: "compact" },
 				field: { error: "plain", label: "medium" },
 				group: { segments: "attached", separator: "shared-edge" },
-				input: { style: "well", hover: "none", height: "controls", text: "same", errorIcon: "none" },
+				input: { style: "outline", hover: "none", height: "controls", text: "same", errorIcon: "none" },
 				kbd: { style: "chip" },
 				link: { underline: "always", color: "neutral" },
 				"list-box": {
