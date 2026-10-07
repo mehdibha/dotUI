@@ -366,6 +366,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { navMarker: "surface", shellTone: "subtle" },
     { navMarker: "surface", shellTone: "recessed" },
   ],
+  "type/14-is-native": [
+    { uiTextSize: "14" },
+    { uiTextSize: "14", density: "compact" },
+  ],
   "otp-field/underline-separates-cells": [
     { inputStyle: "underline" },
     { inputStyle: "filled" },

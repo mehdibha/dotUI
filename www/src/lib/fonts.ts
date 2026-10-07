@@ -9,6 +9,7 @@
  *   --font-sans     body font (Tailwind's `font-sans`, applied on <body>)
  *   --font-heading  heading font (defaults to var(--font-sans) in the theme)
  *   --font-mono     monospace font (`font-mono`)
+ *   --font-reading  incoming chat messages (defaults to var(--font-sans))
  *
  * Pure JS — no React. Safe to import from the publisher.
  */
@@ -16,11 +17,13 @@
 export const FONT_SANS_VAR = "--font-sans"
 export const FONT_HEADING_VAR = "--font-heading"
 export const FONT_MONO_VAR = "--font-mono"
+export const FONT_READING_VAR = "--font-reading"
 
 export const FONT_TOKEN_VARS = [
   FONT_SANS_VAR,
   FONT_HEADING_VAR,
   FONT_MONO_VAR,
+  FONT_READING_VAR,
 ] as const
 
 /** Families the app self-hosts (fontsource) — the no-token defaults. */

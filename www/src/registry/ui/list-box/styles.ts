@@ -1,6 +1,10 @@
 import { createStyles } from "@/lib/styles"
 
+import { CAPS } from "../badge/styles"
 import listBoxMeta from "./meta"
+
+/* Supabase's heading-meta; sidebar group labels share it. */
+export const MONO_CAPS = "font-mono text-xs tracking-wider uppercase"
 
 /* List rows: one recipe for list-box, menu (imports it) and command. One row
    lights up at a time: the focused row where focus follows the pointer (menus,
@@ -148,16 +152,9 @@ export const LIST_ROWS = {
       },
     },
     labels: {
-      sentence: {
-        slots: {
-          sectionTitle: "text-xs",
-        },
-      },
-      caps: {
-        slots: {
-          sectionTitle: "text-[0.6875rem] font-medium tracking-wider uppercase",
-        },
-      },
+      sentence: { slots: { sectionTitle: "text-xs" } },
+      caps: { slots: { sectionTitle: CAPS } },
+      "mono-caps": { slots: { sectionTitle: MONO_CAPS } },
     },
   },
 }

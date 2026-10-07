@@ -12,8 +12,9 @@
  *
  * Names follow shadcn's own registry: `font-<slug>` for the body face
  * (`--font-sans`), `font-heading-<slug>` for `--font-heading`, plus
- * `font-mono-<slug>` for `--font-mono`. Slugs double as the fontsource
- * package names (`Source Sans 3` → `source-sans-3`).
+ * `font-mono-<slug>` for `--font-mono` and `font-reading-<slug>` for
+ * `--font-reading`. Slugs double as the fontsource package names
+ * (`Source Sans 3` → `source-sans-3`).
  */
 
 import {
@@ -23,6 +24,7 @@ import {
   FONT_CATALOG,
   FONT_HEADING_VAR,
   FONT_MONO_VAR,
+  FONT_READING_VAR,
   FONT_SANS_VAR,
   FONT_TOKEN_VARS,
   fontStack,
@@ -36,6 +38,13 @@ const NAME_PREFIX: Record<FontTokenVar, string> = {
   [FONT_SANS_VAR]: "font-",
   [FONT_HEADING_VAR]: "font-heading-",
   [FONT_MONO_VAR]: "font-mono-",
+  [FONT_READING_VAR]: "font-reading-",
+}
+
+const ROLE: Partial<Record<FontTokenVar, string>> = {
+  [FONT_HEADING_VAR]: " (Heading)",
+  [FONT_MONO_VAR]: " (Mono)",
+  [FONT_READING_VAR]: " (Reading)",
 }
 
 // Longest prefix first so `font-heading-x` never parses as the body face
@@ -43,6 +52,7 @@ const NAME_PREFIX: Record<FontTokenVar, string> = {
 const PARSE_ORDER: FontTokenVar[] = [
   FONT_HEADING_VAR,
   FONT_MONO_VAR,
+  FONT_READING_VAR,
   FONT_SANS_VAR,
 ]
 
@@ -103,16 +113,10 @@ export function emitFontItem(name: string): RegistryItem | undefined {
   if (!parsed) return undefined
   const { family } = parsed
   const variable = DEFAULT_FACE_VARS[name] ?? parsed.variable
-  const role =
-    parsed.variable === FONT_HEADING_VAR
-      ? " (Heading)"
-      : parsed.variable === FONT_MONO_VAR
-        ? " (Mono)"
-        : ""
   const item = {
     name,
     type: "registry:font",
-    title: `${family}${role}`,
+    title: `${family}${ROLE[parsed.variable] ?? ""}`,
     font: {
       // fontsource registers variable faces as "<Family> Variable"; next/font
       // ignores `family` and sets the variable itself.

@@ -1,3 +1,5 @@
+import path from "node:path"
+import { compile } from "@tailwindcss/node"
 import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
@@ -9,14 +11,19 @@ import {
 } from "@/lib/fonts"
 import { publishables } from "@/registry/__generated__/publishables"
 import type { Density } from "@/registry/types"
-import { fontItemNamesForTokens } from "@/publisher/emit-font"
+import { CAPS } from "@/registry/ui/badge/styles"
+import { MONO_CAPS } from "@/registry/ui/list-box/styles"
+import {
+  fontItemNamesForTokens,
+  parseFontItemName,
+} from "@/publisher/emit-font"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue, PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
-import { DEFAULT_STATE, parseState } from "./index"
-import { TITLE_OPTIONS } from "./type.meta"
+import { DEFAULT_STATE, effective, parseState } from "./index"
+import { SECTION_LABEL_OPTIONS, TITLE_OPTIONS } from "./type.meta"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 const TITLE_SLOTS = ["card", "dialog", "empty", "questionnaire"]
@@ -113,14 +120,17 @@ describe("typography axis", () => {
       ["calendar", "heading", {}],
       ["sidebar", "groupLabel", { labels: "sentence" }],
       ["sidebar", "groupLabel", { labels: "caps" }],
+      ["sidebar", "groupLabel", { labels: "mono-caps" }],
     ]
     for (const [name, slotName, params] of headings)
       for (const density of DENSITIES) {
         const value = await slot(name, slotName, density, params)
         const where = `${name}.${slotName}/${density}/${params.labels}`
-        expect(value, `${where}`).toMatch(/\bfont-sans\b/)
+        expect(value, `${where}`).toMatch(
+          params.labels === "mono-caps" ? /\bfont-mono\b/ : /\bfont-sans\b/,
+        )
         expect(value, `${where}`).toMatch(/\btracking-(normal|wider)\b/)
-        expectNoConflicts(value, where)
+        expectNoConflicts(value, `${where}`)
       }
   })
 
@@ -176,15 +186,163 @@ describe("typography axis", () => {
     })
   })
 
-  it("section labels set the case of every section header", async () => {
-    const ds = designSystemOf(parseState({ sectionLabels: "caps" }))
-    for (const name of ["menu", "list-box", "sidebar"])
-      expect(ds.componentParams[name]?.labels, `${name}`).toBe("caps")
-    for (const labels of ["sentence", "caps"]) {
-      const label = await slot("sidebar", "groupLabel", "default", { labels })
-      expectNoConflicts(label, labels)
-      expect(label.includes("uppercase"), `${labels}`).toBe(labels === "caps")
+  it("14px re-points the compact rung and is Auto elsewhere", () => {
+    expect(
+      designSystemOf(parseState({ uiTextSize: "14", density: "compact" }))
+        .tokens,
+    ).toEqual({
+      "--text-xs": "0.875rem",
+      "--text-xs--line-height": "calc(16 / 14)",
+    })
+    for (const density of ["default", "comfortable"]) {
+      const state = parseState({ uiTextSize: "14", density })
+      expect(effective(state).values.uiTextSize, `${density}`).toBe("auto")
+      expect(designSystemOf(state).tokens, `${density}`).toEqual({})
     }
+  })
+
+  it("section labels set the case and face of every section header", async () => {
+    for (const labels of SECTION_LABEL_OPTIONS.map((o) => o.value)) {
+      const ds = designSystemOf(parseState({ sectionLabels: labels }))
+      for (const name of ["menu", "list-box", "sidebar"])
+        expect(ds.componentParams[name]?.labels, `${name}`).toBe(labels)
+      for (const [name, slotName] of [
+        ["sidebar", "groupLabel"],
+        ["list-box", "sectionTitle"],
+        ["menu", "sectionTitle"],
+      ] as const)
+        for (const density of DENSITIES) {
+          const label = await slot(name, slotName, density, { labels })
+          const where = `${name}/${labels}/${density}`
+          expectNoConflicts(label, `${where}`)
+          expect(label.includes("uppercase"), `${where}`).toBe(
+            labels !== "sentence",
+          )
+          expect(label.includes("font-mono"), `${where}`).toBe(
+            labels === "mono-caps",
+          )
+        }
+    }
+  })
+
+  it("list-box, menu and sidebar share one section-label recipe", async () => {
+    const recipe = (value: string) =>
+      value
+        .split(" ")
+        .filter((c) =>
+          /^(uppercase|font-mono|tracking-|text-(xs|sm|\[))/.test(c),
+        )
+        .filter((c) => c !== "tracking-normal")
+        .sort()
+    for (const { value: labels } of SECTION_LABEL_OPTIONS) {
+      const expected = recipe(
+        { sentence: "text-xs", caps: CAPS, "mono-caps": MONO_CAPS }[labels],
+      )
+      for (const density of DENSITIES)
+        for (const [name, slotName] of [
+          ["list-box", "sectionTitle"],
+          ["menu", "sectionTitle"],
+          ["sidebar", "groupLabel"],
+        ] as const)
+          expect(
+            recipe(await slot(name, slotName, density, { labels })),
+            `${name}/${labels}/${density}`,
+          ).toEqual(expected)
+    }
+  })
+})
+
+describe("reading font", () => {
+  it("follows the body and writes nothing until pinned", () => {
+    for (const bodyFont of ["Geist", "Inter"]) {
+      const state = parseState({ bodyFont })
+      expect(effective(state).values.readingFont).toBe(bodyFont)
+      expect(designSystemOf(state).tokens["--font-reading"]).toBeUndefined()
+    }
+  })
+
+  it("a pinned face writes --font-reading and ships its font item", () => {
+    const { tokens } = designSystemOf(
+      parseState({ bodyFont: "Inter", readingFont: "Source Serif 4" }),
+    )
+    expect(tokens["--font-reading"]).toBe(fontStack("Source Serif 4"))
+    expect(fontFamiliesFromTokens(tokens)).toContain("Source Serif 4")
+    expect(fontItemNamesForTokens(tokens)).toContain(
+      "font-reading-source-serif-4",
+    )
+    expect(parseFontItemName("font-reading-source-serif-4")).toEqual({
+      variable: "--font-reading",
+      family: "Source Serif 4",
+    })
+  })
+
+  it("incoming prose reads it; controls, your own and the metadata stay body", async () => {
+    const tw = await compile(
+      `@import "tailwindcss/utilities"; @theme { --font-reading: serif; }`,
+      { base: path.resolve(__dirname, "../../.."), onDependency() {} },
+    )
+    for (const density of DENSITIES) {
+      const content = await slot("message", "content", density, {})
+      const css = tw.build(content.split(" "))
+      const rules = css
+        .split(/\n(?=\.)/)
+        .filter((r) => r.includes("--font-reading)"))
+      expect(rules, `${density}`).toHaveLength(1)
+      // Only prose elements of a start-aligned message: a button or badge
+      // never takes the reading face.
+      expect(rules[0], `${density}`).toContain('[data-align="start"]')
+      expect(rules[0], `${density}`).toMatch(
+        /& :is\(p,li,blockquote,h1,h2,h3,h4,h5,h6\) \{/,
+      )
+      for (const meta of ["header", "footer"])
+        expect(await slot("message", meta, density, {})).toMatch(
+          /\bfont-sans\b/,
+        )
+    }
+    for (const name of ["button", "badge"])
+      expect(await shipped(name), `${name}`).not.toContain("font-reading")
+  })
+})
+
+describe("field text size", () => {
+  const FIELD_SLOTS = ["inputGroup", "input", "textArea", "trigger"]
+  const SAME: Record<Density, string> = {
+    compact: "text-base sm:text-xs/relaxed",
+    default: "text-base sm:text-sm",
+    comfortable: "text-base sm:text-sm",
+  }
+  const LARGE: Record<Density, string> = {
+    compact: "text-base sm:text-sm",
+    default: "text-base",
+    comfortable: "text-base",
+  }
+
+  it("Same keeps the density's control text; Large is one rung up", async () => {
+    for (const [text, sizes] of [
+      ["same", SAME],
+      ["large", LARGE],
+    ] as const)
+      for (const density of DENSITIES)
+        for (const slotName of FIELD_SLOTS) {
+          const value = await slot("input", slotName, density, { text })
+          const where = `${slotName}/${text}/${density}`
+          expect(value, `${where}`).toContain(sizes[density])
+          expect(
+            value.match(/(?:^|\s)text-(?:xs|sm|base)\b/g),
+            `${where}`,
+          ).toHaveLength(1)
+          expectNoConflicts(value, `${where}`)
+        }
+  })
+
+  it("Origin writes the default; Large reaches the input param", () => {
+    expect(designSystemOf(DEFAULT_STATE).componentParams.input?.text).toBe(
+      "same",
+    )
+    expect(
+      designSystemOf(parseState({ fieldTextSize: "large" })).componentParams
+        .input?.text,
+    ).toBe("large")
   })
 })
 

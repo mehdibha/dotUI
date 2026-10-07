@@ -134,6 +134,7 @@ export const baseRegistryCss = {
 			"--font-sans": "var(--font-geist-sans)",
 			"--font-heading": "var(--font-sans)",
 			"--font-mono": "var(--font-geist-mono)",
+			"--font-reading": "var(--font-sans)",
 		},
 	},
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">;

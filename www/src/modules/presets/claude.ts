@@ -22,6 +22,8 @@ export const claude = definePreset({
     // Free stand-ins for Anthropic Serif and Sans.
     headingFont: "Source Serif 4",
     bodyFont: "Inter",
+    // Replies read in the serif; chrome and your own messages stay sans.
+    readingFont: "Source Serif 4",
 
     // Icons
     // platform.claude.com draws on Phosphor's 256 grid.

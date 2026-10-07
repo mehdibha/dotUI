@@ -21,6 +21,8 @@ export const untitled = definePreset({
     bodyFont: "Inter",
     labelWeight: "semibold",
     titleStyle: "tight",
+    // 16px field values beside 14px controls.
+    fieldTextSize: "large",
 
     // Shape: 8px controls, 12px cards, 16px modals.
     radiusPx: 8,

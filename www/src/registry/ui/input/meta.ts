@@ -43,6 +43,12 @@ const inputMeta = {
       description:
         "Field height against the control ladder: equal, one rung taller, or four.",
     },
+    text: {
+      kind: "enum",
+      default: "same",
+      values: ["same", "large"] as const,
+      description: "Field value text: the control text, or one rung above it.",
+    },
     errorIcon: {
       kind: "enum",
       default: "none",
