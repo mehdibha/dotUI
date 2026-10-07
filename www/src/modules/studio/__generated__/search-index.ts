@@ -6,6 +6,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	color: [
 		"Brand",
 		"Keep exact",
+		"Ink",
 		"Vividness",
 		"Neutral",
 		"Semantics",
