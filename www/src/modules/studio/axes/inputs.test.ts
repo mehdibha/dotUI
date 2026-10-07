@@ -13,6 +13,7 @@ import type { PublishPreset } from "@/publisher/types"
 import { DEFAULT_STATE, effective, parseState } from "."
 import { designSystemOf } from "../resolve"
 import { STYLE_OPTIONS as BUTTON_STYLES } from "./buttons.meta"
+import { STRONG_EDGE } from "./color"
 import { AUTO_STYLE, STYLE_HOVER } from "./inputs"
 import { STYLE_OPTIONS } from "./inputs.meta"
 
@@ -426,5 +427,42 @@ describe("shell consumers", () => {
     const select = await shipped("select", { select: { trigger: "field" } })
     expect(select).toContain("trigger(")
     expect(select).not.toContain('from "@/components/ui/button"')
+  })
+})
+
+describe("indicator edge", () => {
+  it("takes Color's Strong edge unless the control edge is already Strong", () => {
+    for (const controlEdge of ["soft", "firm"])
+      expect(
+        designSystemOf(parseState({ inputStyle: "indicator", controlEdge }))
+          .tokens,
+        controlEdge,
+      ).toMatchObject({
+        "--indicator-edge": STRONG_EDGE,
+        "--studio-indicator-edge": "var(--indicator-edge)",
+      })
+    const strong = designSystemOf(
+      parseState({ inputStyle: "indicator", controlEdge: "strong" }),
+    ).tokens
+    expect(strong).not.toHaveProperty("--indicator-edge")
+    expect(designSystemOf(parseState({})).tokens).toEqual({})
+  })
+
+  it("ships the control edge at Strong and the floor token otherwise", async () => {
+    const at = async (raw: Record<string, unknown>) => {
+      const preset = designSystemOf(parseState(raw))
+      const mod = await publishables.input!()
+      const { item } = publish({
+        publishable: selectPublishable(mod, preset),
+        preset,
+      })
+      return item.files?.[0]?.content ?? ""
+    }
+    const firm = await at({ inputStyle: "indicator" })
+    expect(firm).toMatch(/ border-\(--indicator-edge\) /)
+    expect(firm).not.toMatch(/--studio-|--neutral-/)
+    const strong = await at({ inputStyle: "indicator", controlEdge: "strong" })
+    expect(strong).toMatch(/ border-border-control /)
+    expect(strong).not.toMatch(/--indicator-edge/)
   })
 })

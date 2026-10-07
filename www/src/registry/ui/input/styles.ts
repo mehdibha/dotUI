@@ -242,9 +242,10 @@ const filledShell = tv({
 
 // Material 3 filled, Carbon: the well over a bottom indicator. It ends in a
 // straight rule, so only its top corners round, and small. A ring or halo
-// goes around the box (Carbon); a border focus thickens the rule (M3).
+// goes around the box (Carbon); a border focus thickens the rule (M3). The
+// rule is the field's only edge, so it never draws weaker than Strong.
 const indicatorShell = tv({
-  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-(--studio-indicator-edge) bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "invalid:not-focus:invalid-ring focus:focus-input-indicator focus:not-invalid:border-(--focus-input-border)",
