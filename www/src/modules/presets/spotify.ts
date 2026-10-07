@@ -22,6 +22,8 @@ export const spotify = definePreset({
     // Typography
     // Circular is proprietary; Figtree is the closest free geometric.
     bodyFont: "Figtree",
+    // Fields set 16px values.
+    fieldTextSize: "large",
 
     // Shape
     radiusPx: 8,

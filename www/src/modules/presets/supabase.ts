@@ -20,7 +20,7 @@ export const supabase = definePreset({
     headingFont: "Manrope",
     bodyFont: "Inter",
     monoFont: "Source Code Pro",
-    sectionLabels: "caps",
+    sectionLabels: "mono-caps",
 
     // Shape
     radiusPx: 10.5,

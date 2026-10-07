@@ -22,6 +22,8 @@ export const material3 = definePreset({
     bodyFont: "Roboto",
     monoFont: "Roboto Mono",
     titleStyle: "display",
+    // Field values are body-large 16px beside 14px labels.
+    fieldTextSize: "large",
 
     // Icons: Material Symbols is a separate set; Remix is the closest line set.
     iconLibrary: "remix",

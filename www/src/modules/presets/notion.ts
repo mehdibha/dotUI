@@ -19,14 +19,14 @@ export const notion = definePreset({
 
     // Typography
     bodyFont: "Inter",
-    uiTextSize: "13",
+    uiTextSize: "14",
 
     // Shape
     radiusPx: 8,
     roleCard: "xl",
 
     // Space
-    // 28px controls with 13px text; Notion pairs 28px with 14px.
+    // 28px controls with 14px text.
     density: "compact",
 
     // Browser
