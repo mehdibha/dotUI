@@ -18,13 +18,9 @@ export interface Preset {
 
 export type PresetMeta = Omit<Preset, "state" | "diff">
 
-/** The diff over Origin's defaults; a bad or unknown key throws. */
-export const stateFromDiff = (diff: Partial<StudioStateInput>) =>
-  parseState(diff)
-
 export function definePreset({
   diff,
   ...meta
 }: PresetMeta & { diff: Partial<StudioStateInput> }): Preset {
-  return { ...meta, diff, state: stateFromDiff(diff) }
+  return { ...meta, diff, state: parseState(diff) }
 }

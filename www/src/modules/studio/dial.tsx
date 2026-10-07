@@ -61,11 +61,14 @@ export const DIAL_VALUE =
   "truncate font-mono text-[13px] font-medium text-fg/70"
 export const DIAL_CHEVRON = "size-4 shrink-0 text-fg/60"
 
-/** The option's label, or the raw value when it is off the list. */
-export const optionLabel = (
-  options: { value: string; label: string }[],
-  value: string,
-) => options.find((o) => o.value === value)?.label ?? value
+/** The line under an option's label: its description, then its credits. */
+const subline = (option: {
+  description?: string
+  credits?: readonly string[]
+}) =>
+  [option.description, option.credits?.join(", ")]
+    .filter(Boolean)
+    .join(" — ") || undefined
 
 /* ---------------------------------- Rows ---------------------------------- */
 
@@ -86,24 +89,6 @@ export function ModifiedDot() {
       aria-label="Modified"
       className="size-1 shrink-0 rounded-full bg-accent"
     />
-  )
-}
-
-/** Label left, control right. */
-export function DialRow({
-  label,
-  children,
-  className,
-}: {
-  label: string
-  children: React.ReactNode
-  className?: string
-}) {
-  return (
-    <div className={cn(DIAL_ROW, className)}>
-      <span className={DIAL_LABEL}>{label}</span>
-      {children}
-    </div>
   )
 }
 
@@ -252,8 +237,9 @@ export function DialLink({
 export interface DialSelectOption {
   value: string
   label: string
-  /** A line under the label, in the popover. */
+  /** A line under the label, in the popover, before the credits. */
   description?: string
+  credits?: readonly string[]
   /** A specimen beside the label — glyphs, a swatch. */
   preview?: React.ReactNode
   /** Beside the label: a follow option's source chip. */
@@ -341,9 +327,9 @@ export function DialSelect({
                   {option.label}
                   {option.aside}
                 </ListBoxItemLabel>
-                {option.description && (
+                {subline(option) && (
                   <ListBoxItemDescription>
-                    {option.description}
+                    {subline(option)}
                   </ListBoxItemDescription>
                 )}
                 {(option.preview ||
@@ -376,6 +362,7 @@ export interface DialPickOption {
   value: string
   label: string
   description?: string
+  credits?: readonly string[]
   disabled?: boolean
   /** A muted aside on the label's line. */
   note?: string
@@ -417,9 +404,9 @@ function PickItem({
                 )}
                 {aside}
               </span>
-              {option.description && (
+              {subline(option) && (
                 <span className="text-xs leading-snug text-fg/55">
-                  {option.description}
+                  {subline(option)}
                 </span>
               )}
             </span>
@@ -598,9 +585,9 @@ export function DialList({
                   <span className="truncate">{option.label}</span>
                   {option.aside}
                 </span>
-                {option.description && (
+                {subline(option) && (
                   <span className="truncate text-xs text-fg/50">
-                    {option.description}
+                    {subline(option)}
                   </span>
                 )}
               </span>
@@ -1270,46 +1257,6 @@ export function DialSegmented({
     <div data-axis={key} className={cn(DIAL_ROW, "pr-1.5")}>
       {title}
       {group}
-    </div>
-  )
-}
-
-/** A pick from short chips, three across under the label. Pressing the
- *  selected chip keeps it. */
-export function DialChips({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  value: string | undefined
-  onChange: (value: string) => void
-  options: DialOption[]
-}) {
-  return (
-    <div className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}>
-      <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
-      <RacToggleButtonGroup
-        aria-label={label}
-        selectionMode="single"
-        selectedKeys={value ? [value] : []}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="grid grid-cols-3 gap-1"
-      >
-        {options.map((option) => (
-          <RacToggleButton
-            key={option.value}
-            id={option.value}
-            className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:tint-15 selected:text-fg"
-          >
-            {option.label}
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
     </div>
   )
 }

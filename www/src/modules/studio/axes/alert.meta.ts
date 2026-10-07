@@ -2,17 +2,17 @@ import { STYLE_VALUES } from "./alert"
 import { options } from "./core/meta"
 
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
-  neutral: { label: "Neutral", description: "shadcn, HeroUI" },
+  neutral: { label: "Neutral", credits: ["shadcn", "HeroUI"] },
   soft: {
     label: "Soft",
-    description: "Radix Themes, Atlassian, Mantine, Chakra, Polaris",
+    credits: ["Radix Themes", "Atlassian", "Mantine", "Chakra", "Polaris"],
   },
   "soft-outline": {
     label: "Soft + outline",
-    description: "Primer, Ant Design, Fluent 2, Supabase",
+    credits: ["Primer", "Ant Design", "Fluent 2", "Supabase"],
   },
-  outline: { label: "Outline", description: "Geist" },
-  inverse: { label: "Inverse", description: "Carbon" },
+  outline: { label: "Outline", credits: ["Geist"] },
+  inverse: { label: "Inverse", credits: ["Carbon"] },
 })
 
 export const OPTIONS = {

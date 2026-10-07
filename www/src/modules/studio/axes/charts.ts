@@ -13,9 +13,8 @@ export const CHART_DEFAULTS = {
   chartMotion: "spring",
 }
 
-/* Mono = tonal shades of the brand (shadcn, Vercel); vivid / muted = hues
-   spread around the brand at high (Material, Carbon) or low (Linear, Stripe
-   dashboards) chroma. */
+/* Mono = tonal shades of the brand; vivid / muted = hues spread around the
+   brand at high or low chroma. */
 export const PALETTE_VALUES = ["mono", "vivid", "muted"] as const
 
 export const GRID_VALUES = ["solid", "dashed", "none"] as const

@@ -18,12 +18,11 @@ export const CHECKBOX_DEFAULTS = {
   checkEdge: "fields",
 }
 
-/* Auto is Shape's detail rung (shadcn, Primer, Polaris, Untitled UI). Sharp
-   is a fixed 2px whatever the radius (Material 3, Carbon, Fluent 2). */
+/* Auto is Shape's detail rung; Sharp a fixed 2px whatever the radius. */
 export const CORNER_VALUES = ["auto", "sharp"] as const
 
-/* Same as fields: Color's control edge (shadcn, Polaris). Strong: Color's
-   Strong edge on checks and radios only, fields unchanged (Linear, Primer). */
+/* Same as fields: Color's control edge. Strong: Color's Strong edge on checks
+   and radios only, fields unchanged. */
 export const EDGE_VALUES = ["fields", "strong"] as const
 
 export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {

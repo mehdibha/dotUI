@@ -2,10 +2,10 @@ import { options } from "./core/meta"
 import { TOOLTIP_STYLE_VALUES } from "./tooltips"
 
 export const TOOLTIP_STYLE_OPTIONS = options(TOOLTIP_STYLE_VALUES, {
-  inverted: { label: "Inverted", description: "shadcn, Geist, Duolingo" },
+  inverted: { label: "Inverted", credits: ["shadcn", "Geist", "Duolingo"] },
   surface: {
     label: "Same as popovers",
-    description: "Linear, Polaris, Supabase",
+    credits: ["Linear", "Polaris", "Supabase"],
   },
 })
 

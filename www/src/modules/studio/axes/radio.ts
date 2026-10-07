@@ -12,9 +12,8 @@ export const RADIO_DEFAULTS = {
   radioMark: "dot",
 }
 
-/* Dot: a filled disc with an on-fill dot (shadcn, Primer, Polaris, Linear).
-   Ring: a colored ring around a colored dot (Material 3, Carbon, Geist,
-   Supabase). */
+/* Dot: a filled disc with an on-fill dot. Ring: a colored ring around a
+   colored dot. */
 export const MARK_VALUES = ["dot", "ring"] as const
 
 export const RADIO_SCHEMA: ChapterSchema<typeof RADIO_DEFAULTS> = {

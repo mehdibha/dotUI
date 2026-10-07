@@ -117,7 +117,7 @@ export const spotify = definePreset({
     tabsColor: "accent",
     // The bar sits under the label, inset 12px.
     tabIndicator: "label",
-    // Current sidebar items read in ink, no slab (green, not white, until A8 splits nav color).
+    // Current sidebar items read in ink, no slab (green: the marker shares the tabs color key).
     navMarker: "ink",
     navWeight: "bold",
 

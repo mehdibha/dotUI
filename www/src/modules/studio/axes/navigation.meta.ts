@@ -10,71 +10,71 @@ import {
 } from "./navigation"
 
 export const TAB_STYLE_OPTIONS = options(TAB_STYLE_VALUES, {
-  segmented: { label: "Segmented", description: "shadcn, HeroUI, Apple HIG" },
+  segmented: { label: "Segmented", credits: ["shadcn", "HeroUI", "Apple HIG"] },
   line: {
     label: "Line",
-    description: "Material 3, Geist, Primer, Carbon, Radix Themes",
+    credits: ["Material 3", "Geist", "Primer", "Carbon", "Radix Themes"],
   },
-  pill: { label: "Pill", description: "Polaris, Linear, Notion" },
+  pill: { label: "Pill", credits: ["Polaris", "Linear", "Notion"] },
 })
 
 export const MARKER_OPTIONS = options(MARKER_VALUES, {
-  fill: { label: "Fill", description: "shadcn, Untitled UI" },
-  surface: { label: "Surface", description: "Polaris" },
-  bar: { label: "Bar", description: "Fluent 2, Catalyst" },
-  "fill-bar": { label: "Fill + bar", description: "Primer, Carbon" },
-  ink: { label: "Ink only", description: "Stripe" },
-  outline: { label: "Outline", description: "Duolingo" },
-  pill: { label: "Pill", description: "Material 3" },
+  fill: { label: "Fill", credits: ["shadcn", "Untitled UI"] },
+  surface: { label: "Surface", credits: ["Polaris"] },
+  bar: { label: "Bar", credits: ["Fluent 2", "Catalyst"] },
+  "fill-bar": { label: "Fill + bar", credits: ["Primer", "Carbon"] },
+  ink: { label: "Ink only", credits: ["Stripe"] },
+  outline: { label: "Outline", credits: ["Duolingo"] },
+  pill: { label: "Pill", credits: ["Material 3"] },
 })
 
 export const INDICATOR_OPTIONS = options(INDICATOR_VALUES, {
-  full: { label: "Full", description: "Carbon, Geist, Primer" },
-  label: { label: "Label", description: "Material 3" },
+  full: { label: "Full", credits: ["Carbon", "Geist", "Primer"] },
+  label: { label: "Label", credits: ["Material 3"] },
 })
 
 export const CASE_OPTIONS = [
-  { value: "same", label: "Same as buttons", description: "Duolingo" },
+  { value: "same", label: "Same as buttons", credits: ["Duolingo"] },
   ...BUTTON_CASES,
 ]
 
 export const WEIGHT_OPTIONS = options(WEIGHT_VALUES, {
-  regular: { label: "Regular", description: "Geist, Airbnb" },
+  regular: { label: "Regular", credits: ["Geist", "Airbnb"] },
   "regular-medium": {
     label: "Regular → Medium",
-    description: "Radix Themes, shadcn sidebar",
+    credits: ["Radix Themes", "shadcn sidebar"],
   },
   "regular-semibold": {
     label: "Regular → Semibold",
-    description: "Primer, Carbon",
+    credits: ["Primer", "Carbon"],
   },
   medium: {
     label: "Medium",
-    description: "shadcn tabs, Linear, Material 3, Notion, Supabase",
+    credits: ["shadcn tabs", "Linear", "Material 3", "Notion", "Supabase"],
   },
-  "medium-semibold": { label: "Medium → Semibold", description: "Polaris" },
-  semibold: { label: "Semibold", description: "Untitled UI, Stripe" },
-  bold: { label: "Bold", description: "Duolingo, Spotify" },
+  "medium-semibold": { label: "Medium → Semibold", credits: ["Polaris"] },
+  semibold: { label: "Semibold", credits: ["Untitled UI", "Stripe"] },
+  bold: { label: "Bold", credits: ["Duolingo", "Spotify"] },
 })
 
 export const ITEM_WEIGHT_OPTIONS = [
-  { value: "auto", label: "Auto", description: "shadcn" },
+  { value: "auto", label: "Auto", credits: ["shadcn"] },
   ...WEIGHT_OPTIONS,
 ]
 
 const PILLS = options(PILL_VALUES, {
-  tone: { label: "Tone", description: "Claude" },
-  solid: { label: "Solid", description: "Mantine" },
-  tint: { label: "Tint", description: "Fluent 2" },
+  tone: { label: "Tone", credits: ["Claude"] },
+  solid: { label: "Solid", credits: ["Mantine"] },
+  tint: { label: "Tint", credits: ["Fluent 2"] },
   // Only Same as toggles reaches it: Spotify's filter chips, not its tabs.
-  inverse: { label: "Inverse", description: "Spotify chips" },
+  inverse: { label: "Inverse", credits: ["Spotify chips"] },
 })
 
 export const PILL_OPTIONS = [
   {
     value: "same",
     label: "Same as toggles",
-    description: "Polaris, Linear, Notion",
+    credits: ["Polaris", "Linear", "Notion"],
   },
   ...PILLS,
 ]

@@ -12,17 +12,32 @@ export const SOURCE_OPTIONS = options(SOURCE_VALUES, {
 })
 
 export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {
-  soft: { label: "Soft", description: "The hairline — shadcn, Primer, Geist" },
-  firm: { label: "Firm", description: "A step firmer — Radix Themes, Linear" },
+  soft: {
+    label: "Soft",
+    description: "The hairline",
+    credits: ["shadcn", "Primer", "Geist"],
+  },
+  firm: {
+    label: "Firm",
+    description: "A step firmer",
+    credits: ["Radix Themes", "Linear"],
+  },
   strong: {
     label: "Strong",
-    description: "A dark gray — Polaris, Atlassian, Material 3",
+    description: "A dark gray",
+    credits: ["Polaris", "Atlassian", "Material 3"],
   },
 })
 
 export const SELECTED_WASH_OPTIONS = options(SELECTED_WASH_VALUES, {
-  neutral: { label: "Neutral", description: "shadcn, Primer, Polaris, Carbon" },
-  brand: { label: "Brand", description: "Material 3, Atlassian, Ant, Linear" },
+  neutral: {
+    label: "Neutral",
+    credits: ["shadcn", "Primer", "Polaris", "Carbon"],
+  },
+  brand: {
+    label: "Brand",
+    credits: ["Material 3", "Atlassian", "Ant", "Linear"],
+  },
 })
 
 export const SOLID_INK_OPTIONS = options(SOLID_INK_VALUES, {

@@ -12,62 +12,62 @@ import {
 } from "./menus"
 
 export const HIGHLIGHT_OPTIONS = options(HIGHLIGHT_VALUES, {
-  neutral: { label: "Neutral", description: "shadcn, Geist, Linear" },
-  accent: { label: "Accent", description: "Radix Themes, macOS" },
+  neutral: { label: "Neutral", credits: ["shadcn", "Geist", "Linear"] },
+  accent: { label: "Accent", credits: ["Radix Themes", "macOS"] },
 })
 
 export const INSET_OPTIONS = options(INSET_VALUES, {
-  inset: { label: "Inset", description: "shadcn, Geist, Linear" },
+  inset: { label: "Inset", credits: ["shadcn", "Geist", "Linear"] },
   "full-bleed": {
     label: "Full bleed",
-    description: "Material 3, Carbon, Airbnb",
+    credits: ["Material 3", "Carbon", "Airbnb"],
   },
 })
 
 export const ARROWS_OPTIONS = options(ARROWS_VALUES, {
-  tooltips: { label: "Tooltips", description: "shadcn, Geist, Polaris" },
-  none: { label: "None", description: "Linear, Primer, Material 3" },
-  popovers: { label: "Popovers", description: "Spotify" },
-  both: { label: "Both", description: "Carbon, Duolingo" },
+  tooltips: { label: "Tooltips", credits: ["shadcn", "Geist", "Polaris"] },
+  none: { label: "None", credits: ["Linear", "Primer", "Material 3"] },
+  popovers: { label: "Popovers", credits: ["Spotify"] },
+  both: { label: "Both", credits: ["Carbon", "Duolingo"] },
 })
 
 export const INDICATOR_OPTIONS = options(INDICATOR_VALUES, {
-  "check-end": { label: "End", description: "shadcn, Geist, Linear" },
-  "check-start": { label: "Start", description: "Radix Themes, Primer" },
-  none: { label: "None", description: "Material 3, Airbnb" },
+  "check-end": { label: "End", credits: ["shadcn", "Geist", "Linear"] },
+  "check-start": { label: "Start", credits: ["Radix Themes", "Primer"] },
+  none: { label: "None", credits: ["Material 3", "Airbnb"] },
 })
 
 export const SELECTED_ROW_OPTIONS = options(SELECTED_ROW_VALUES, {
-  none: { label: "None", description: "shadcn, Radix Themes" },
-  tint: { label: "Tint", description: "Material 3, Polaris, Carbon" },
+  none: { label: "None", credits: ["shadcn", "Radix Themes"] },
+  tint: { label: "Tint", credits: ["Material 3", "Polaris", "Carbon"] },
 })
 
 export const ROWS_OPTIONS = options(ROWS_VALUES, {
-  auto: { label: "Auto", description: "shadcn, Notion, Supabase, Carbon" },
+  auto: { label: "Auto", credits: ["shadcn", "Notion", "Supabase", "Carbon"] },
   match: {
     label: "Match",
-    description: "Radix Themes, Linear, Geist, Primer, Claude",
+    credits: ["Radix Themes", "Linear", "Geist", "Primer", "Claude"],
   },
   step: {
     label: "Step up",
-    description: "Polaris, Stripe, Material 3",
+    credits: ["Polaris", "Stripe", "Material 3"],
   },
 })
 
 export const PICKER_OPTIONS = options(PICKER_VALUES, {
-  drawer: { label: "Drawer", description: "Geist, Notion, Stripe" },
-  anchored: { label: "Anchored", description: "Primer, Radix Themes" },
+  drawer: { label: "Drawer", credits: ["Geist", "Notion", "Stripe"] },
+  anchored: { label: "Anchored", credits: ["Primer", "Radix Themes"] },
 })
 
 export const SEARCH_OPTIONS = options(SEARCH_VALUES, {
-  field: { label: "Field", description: "shadcn" },
-  bar: { label: "Bar", description: "Supabase, Geist" },
-  prompt: { label: "Prompt", description: "Linear, Raycast" },
+  field: { label: "Field", credits: ["shadcn"] },
+  bar: { label: "Bar", credits: ["Supabase", "Geist"] },
+  prompt: { label: "Prompt", credits: ["Linear", "Raycast"] },
 })
 
 export const SCALE_OPTIONS = options(SCALE_VALUES, {
-  default: { label: "Default", description: "shadcn" },
-  large: { label: "Large", description: "Linear, Raycast" },
+  default: { label: "Default", credits: ["shadcn"] },
+  large: { label: "Large", credits: ["Linear", "Raycast"] },
 })
 
 export const OPTIONS = {

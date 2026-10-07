@@ -8,37 +8,40 @@ import {
 import { options } from "./core/meta"
 
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
-  flat: { label: "Flat", description: "shadcn, Geist, Carbon" },
-  hairline: { label: "Hairline", description: "Primer, Supabase, Stripe" },
-  "rim-light": { label: "Rim light", description: "Untitled UI" },
-  gloss: { label: "Gloss", description: "Clerk" },
-  bevel: { label: "Bevel", description: "Polaris, Radix classic" },
-  ledge: { label: "Ledge", description: "Duolingo" },
+  flat: { label: "Flat", credits: ["shadcn", "Geist", "Carbon"] },
+  hairline: { label: "Hairline", credits: ["Primer", "Supabase", "Stripe"] },
+  "rim-light": { label: "Rim light", credits: ["Untitled UI"] },
+  gloss: { label: "Gloss", credits: ["Clerk"] },
+  bevel: { label: "Bevel", credits: ["Polaris", "Radix classic"] },
+  ledge: { label: "Ledge", credits: ["Duolingo"] },
 })
 
 export const SECONDARY_OPTIONS = options(SECONDARY_VALUES, {
-  "as-style": { label: "As style", description: "Primer, Polaris" },
-  outline: { label: "Outline", description: "shadcn, Geist, Notion, Stripe" },
-  raised: { label: "Raised", description: "Supabase, Claude" },
-  soft: { label: "Soft", description: "Radix, Airbnb, Spectrum 2" },
-  tonal: { label: "Tonal", description: "Material 3" },
-  solid: { label: "Solid", description: "Carbon" },
+  "as-style": { label: "As style", credits: ["Primer", "Polaris"] },
+  outline: {
+    label: "Outline",
+    credits: ["shadcn", "Geist", "Notion", "Stripe"],
+  },
+  raised: { label: "Raised", credits: ["Supabase", "Claude"] },
+  soft: { label: "Soft", credits: ["Radix", "Airbnb", "Spectrum 2"] },
+  tonal: { label: "Tonal", credits: ["Material 3"] },
+  solid: { label: "Solid", credits: ["Carbon"] },
 })
 
 export const RADIUS_OPTIONS = options(RADIUS_VALUES, {
-  same: { label: "Same as controls", description: "Primer, shadcn" },
-  pill: { label: "Pill", description: "Material 3, Spectrum 2, Spotify" },
+  same: { label: "Same as controls", credits: ["Primer", "shadcn"] },
+  pill: { label: "Pill", credits: ["Material 3", "Spectrum 2", "Spotify"] },
 })
 
 export const PRESS_OPTIONS = options(PRESS_VALUES, {
-  "as-style": { label: "As style", description: "Primer, Carbon" },
-  nudge: { label: "Nudge", description: "shadcn, Mantine" },
-  scale: { label: "Scale", description: "Supabase, Claude" },
+  "as-style": { label: "As style", credits: ["Primer", "Carbon"] },
+  nudge: { label: "Nudge", credits: ["shadcn", "Mantine"] },
+  scale: { label: "Scale", credits: ["Supabase", "Claude"] },
 })
 
 export const CASE_OPTIONS = options(CASE_VALUES, {
-  sentence: { label: "Sentence", description: "shadcn, Primer" },
-  uppercase: { label: "Uppercase", description: "Duolingo" },
+  sentence: { label: "Sentence", credits: ["shadcn", "Primer"] },
+  uppercase: { label: "Uppercase", credits: ["Duolingo"] },
 })
 
 export const OPTIONS = {

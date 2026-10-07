@@ -18,15 +18,12 @@ export const SLIDER_DEFAULTS = {
   sliderColor: "accent",
 }
 
-/* Knob: a light disc with a neutral edge (shadcn nova/rhea/luma, Radix,
-   Spectrum 2). Ring: a light disc ringed in the fill (shadcn vega/maia,
-   Untitled UI, Ant Design). Solid: a disc in the fill (shadcn sera, Carbon,
-   Supabase, Polaris). Handle: Material 3's bar with a cut-away gap and a stop
-   dot. */
+/* Knob: a light disc with a neutral edge. Ring: a light disc ringed in the
+   fill. Solid: a disc in the fill. Handle: a bar with a cut-away gap and a
+   stop dot. */
 export const THUMB_VALUES = ["knob", "ring", "solid", "handle"] as const
 
-/* 2, 4, 8 or 16px. Hairline: Carbon, shadcn sera. Thin: shadcn nova,
-   Supabase, Polaris. Medium: Radix, Untitled UI, Geist. Thick: Material 3. */
+/* 2, 4, 8 or 16px. */
 export const TRACK_VALUES = [
   "auto",
   "hairline",

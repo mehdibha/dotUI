@@ -2,16 +2,16 @@ import { options } from "./core/meta"
 import { ENTRANCE_VALUES, MOTION_VALUES } from "./motion"
 
 export const MOTION_OPTIONS = options(MOTION_VALUES, {
-  none: { label: "None", description: "Ant Design" },
-  standard: { label: "Standard", description: "shadcn" },
-  smooth: { label: "Smooth", description: "Radix Themes" },
-  expressive: { label: "Expressive", description: "Material 3" },
+  none: { label: "None", credits: ["Ant Design"] },
+  standard: { label: "Standard", credits: ["shadcn"] },
+  smooth: { label: "Smooth", credits: ["Radix Themes"] },
+  expressive: { label: "Expressive", credits: ["Material 3"] },
 })
 
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
-  zoom: { label: "Zoom", description: "shadcn" },
-  slide: { label: "Slide", description: "Polaris" },
-  fade: { label: "Fade", description: "Primer" },
+  zoom: { label: "Zoom", credits: ["shadcn"] },
+  slide: { label: "Slide", credits: ["Polaris"] },
+  fade: { label: "Fade", credits: ["Primer"] },
 })
 
 export const OPTIONS = {

@@ -1,7 +1,7 @@
 /* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
    here writes both). Style picks a real system's recipe, copied whole; an
    open style (Flat, Hairline) lets Secondary and Press swap in, a closed one
-   draws its own. Under Ledge, groups sit apart (decision 14). */
+   draws its own. Under Ledge, groups always sit apart. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"

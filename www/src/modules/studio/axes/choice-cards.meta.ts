@@ -3,9 +3,12 @@ import { SOURCE_VALUES } from "./color"
 import { options } from "./core/meta"
 
 export const SELECTED_OPTIONS = options(SELECTED_VALUES, {
-  tint: { label: "Tint" },
-  "outline-tint": { label: "Edged tint" },
-  outline: { label: "Outline" },
+  tint: { label: "Tint", credits: ["shadcn"] },
+  "outline-tint": { label: "Edged tint", credits: ["Geist", "Claude"] },
+  outline: {
+    label: "Outline",
+    credits: ["Radix Themes", "Stripe", "Untitled UI"],
+  },
 })
 
 export const CARD_COLOR_OPTIONS = options(SOURCE_VALUES, {

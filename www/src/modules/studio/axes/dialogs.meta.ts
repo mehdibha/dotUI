@@ -89,7 +89,6 @@ export const FROST_OPTIONS = options(FROST_VALUES, {
 export const SECTIONS_OPTIONS = options(SECTIONS_VALUES, {
   open: {
     label: "Open",
-    description: "Radix",
     credits: [
       "Radix Themes",
       "shadcn",
@@ -105,22 +104,18 @@ export const SECTIONS_OPTIONS = options(SECTIONS_VALUES, {
   },
   "on-scroll": {
     label: "On scroll",
-    description: "Material 3",
     credits: ["Material 3", "Atlassian", "Stripe"],
   },
   divided: {
     label: "Divided",
-    description: "Supabase",
     credits: ["Supabase", "Spectrum 1", "Ant Design 4"],
   },
   "footer-band": {
     label: "Footer band",
-    description: "Geist",
     credits: ["shadcn nova", "Geist"],
   },
   "header-band": {
     label: "Header band",
-    description: "Polaris",
     credits: ["Polaris"],
   },
 })
@@ -191,7 +186,6 @@ export const POSITION_OPTIONS = options(POSITION_VALUES, {
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   scale: {
     label: "Scale",
-    description: "shadcn",
     credits: [
       "shadcn",
       "Geist",
@@ -205,12 +199,10 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   },
   rise: {
     label: "Rise",
-    description: "Polaris",
     credits: ["Radix Themes (nearest)", "Spectrum 2", "Polaris", "Atlassian"],
   },
   drop: {
     label: "Drop",
-    description: "Carbon",
     credits: ["Carbon", "Mantine"],
   },
 })

@@ -8,14 +8,20 @@ import {
 } from "./surfaces"
 
 export const LAYERS_OPTIONS = options(LAYERS_VALUES, {
-  same: { label: "Same", description: "In light, cards share the page's tone" },
+  same: {
+    label: "Same",
+    description: "In light, cards share the page's tone",
+    credits: ["shadcn", "Primer"],
+  },
   grouped: {
     label: "Grouped",
     description: "In light, white cards on a gray page",
+    credits: ["Apple", "Polaris", "HeroUI"],
   },
   tonal: {
     label: "Tonal",
     description: "In light, cards a shade below the page",
+    credits: ["Material 3"],
   },
 })
 
@@ -37,8 +43,16 @@ export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
     label: "Flat",
     description: "No card shadows; menus and dialogs cast",
   },
-  low: { label: "Low", description: "A small shadow under cards" },
-  medium: { label: "Medium", description: "Cards lift off the page" },
+  low: {
+    label: "Low",
+    description: "A small shadow under cards",
+    credits: ["shadcn new-york"],
+  },
+  medium: {
+    label: "Medium",
+    description: "Cards lift off the page",
+    credits: ["shadcn luma"],
+  },
   high: { label: "High", description: "Deep, soft shadows" },
 })
 
@@ -56,14 +70,20 @@ export const GLASS_OPTIONS = [
 ]
 
 export const SHELL_OPTIONS = options(SHELL_VALUES, {
-  subtle: { label: "Subtle", description: "One step off the page — shadcn" },
+  subtle: {
+    label: "Subtle",
+    description: "One step off the page",
+    credits: ["shadcn"],
+  },
   page: {
     label: "Page",
-    description: "The page's own tone — Supabase, Carbon",
+    description: "The page's own tone",
+    credits: ["Supabase", "Carbon"],
   },
   recessed: {
     label: "Recessed",
-    description: "Below the page; panels wear the card edge — Linear, Polaris",
+    description: "Below the page; panels wear the card edge",
+    credits: ["Linear", "Polaris"],
   },
 })
 

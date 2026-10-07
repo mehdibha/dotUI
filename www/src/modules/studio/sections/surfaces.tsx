@@ -168,7 +168,6 @@ export function SurfacesRow({
           label="Edge"
           options={EDGE_OPTIONS.map((option) => ({
             ...option,
-            note: option.credits?.join(", "),
             visual: (
               <SurfaceGlyph
                 large

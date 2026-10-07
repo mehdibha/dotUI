@@ -3,9 +3,8 @@
    mode's page L* is Color's (the engine re-anchors every ramp on it; the
    light page is Auto on Layers).
 
-   - Layers, in light: cards on the page's tone (Same — shadcn, Primer), white
-     cards on a gray page (Grouped — Apple, Polaris, HeroUI), or cards shaded
-     below the page (Tonal — Material 3). The page is always the page slider's
+   - Layers, in light: cards on the page's tone (Same), white cards on a gray
+     page (Grouped), or cards shaded below the page (Tonal). The page is always the page slider's
      tone, so Grouped's depth is the page's gray. Dark always steps up page →
      card → overlay, under the field/muted rung so content inside still reads.
    - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
@@ -18,7 +17,7 @@
      on popovers or dialogs (Duolingo).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
-     modal lg); Low is shadcn New York, Medium shadcn Luma.
+     modal lg).
    - Glass: popovers, tooltips and toasts at 70% over a blurred backdrop;
      dialogs and drawers sit on a scrim and stay solid.
    - App shell: the sidebar and the frame around an inset content panel.
