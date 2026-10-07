@@ -6,6 +6,7 @@ import { claude } from "./claude"
 import { duolingo } from "./duolingo"
 import { github } from "./github"
 import { linear } from "./linear"
+import { material3 } from "./material3"
 import { notion } from "./notion"
 import { origin } from "./origin"
 import { polaris } from "./polaris"
@@ -30,6 +31,7 @@ export const PRESETS: Preset[] = [
   spotify,
   duolingo,
   polaris,
+  material3,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
