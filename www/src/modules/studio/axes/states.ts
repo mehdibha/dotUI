@@ -29,8 +29,8 @@ export const STATES_DEFAULTS = {
 }
 
 /** Ring: a gap, then the ring. Halo: flush and translucent. Inset: inside
- *  the edge over a 1px bg line (outside on checks, radios, switches and
- *  links, whose own parts would cover it). */
+ *  the edge over a 1px bg line (outside where the control's own part would
+ *  cover it: checks, thumbs, tabs, links). */
 export const FOCUS_STYLE_OPTIONS = [
   {
     value: "ring",

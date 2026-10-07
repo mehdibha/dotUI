@@ -32,7 +32,8 @@
 }
 
 /* The ring outside a control whose own part covers its box (a checkbox's
-   box, a link's text), whatever the recipe draws elsewhere. */
+   box, a thumb, a tab's selected pill, a link's text), whatever the recipe
+   draws elsewhere. */
 @utility focus-ring-outside {
   --tw-ring-shadow:
     0 0 0 var(--focus-ring-outside-offset) var(--surface-bg, var(--color-bg)),
