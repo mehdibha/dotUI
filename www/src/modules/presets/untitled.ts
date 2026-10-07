@@ -7,7 +7,7 @@ export const untitled = definePreset({
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
-    // Color
+    // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
     preserveSeed: true,
     successSeed: "#00a63e",
@@ -15,12 +15,16 @@ export const untitled = definePreset({
     dangerSeed: "#e7000b",
     neutralTint: 0,
     lightBg: 100,
+    // #0a0a0a, L* 2.7.
+    darkBg: 2.5,
     selectionHighlight: "browser",
 
     // Typography: 600 labels on buttons, tabs, rows and nav items.
     bodyFont: "Inter",
+    monoFont: "System Mono",
     labelWeight: "semibold",
-    titleStyle: "tight",
+    // 600 titles; the -2% tracking starts only at 36px.
+    titleStyle: "compact",
     // 16px field values beside 14px controls.
     fieldTextSize: "large",
 
@@ -32,20 +36,25 @@ export const untitled = definePreset({
     roleCard: "xl",
     density: "comfortable",
 
-    // Surfaces
+    // Surfaces: a white sidebar beside the white page, split by a hairline.
     surfaceShadow: "low",
+    shellTone: "page",
 
     // States: focus thickens the edge to 2px brand, no halo.
     focusInputStyle: "border",
     focusInputWeight: "thick",
     disabledTreatment: "fade",
 
-    // Motion
+    // Motion: menus fade with a 2px nudge.
     motionEntrance: "fade",
+    chartMotion: "ease",
+    linkUnderline: "hover",
 
     // Buttons: Rim light's Auto field is the raised field.
     buttonStyle: "rim-light",
     segmentedSelected: "raised",
+    // A neutral-50 track drawn by its hairline: nearer Outline than Filled.
+    segmentedTrack: "outline",
     paginationCurrent: "selected",
 
     // Inputs: 36px buttons beside 40px fields.
@@ -56,7 +65,7 @@ export const untitled = definePreset({
     numberLayout: "stacked-cells",
     otpStyle: "separate",
 
-    // Selection
+    // Selection: 24px ringed thumb on an 8px track.
     sliderThumb: "ring",
     sliderTrack: "medium",
     cardSelected: "outline",
@@ -64,9 +73,28 @@ export const untitled = definePreset({
     // Menus & popovers
     menuArrows: "none",
     menuSelectedRow: "tint",
+    menuSearch: "bar",
     mobilePickers: "anchored",
 
     // Dialogs: neutral-950 at 70% with a 6px blur.
     dialogBackdropStrength: "heavy",
+    mobileDialogs: "sheet",
+
+    // Navigation: the pill tab is brand-50 with brand-700 ink.
+    navWeight: "semibold",
+    tabsPill: "tint",
+
+    // Feedback: 50 fill, 700 label, 200 ring.
+    badgeStyle: "soft-outline",
+    spinnerStyle: "ring-track",
+    progressTrack: "thick",
+    skeletonAnimation: "pulse",
+
+    // Data display
+    tableHeader: "filled",
+    kbdTreatment: "outline",
+    cardFooter: "rule",
+    calendarDayShape: "circle",
+    calendarWeekdays: "double",
   },
 })
