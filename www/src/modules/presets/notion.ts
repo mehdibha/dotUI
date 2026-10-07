@@ -62,11 +62,20 @@ export const notion = definePreset({
     // Settings switches: a white chip on a gray track.
     segmentedSelected: "raised",
 
+    // Inputs
+    // rgba(66,35,3,.03) well; NDS inputs have no hover.
+    inputStyle: "well",
+    inputHover: "none",
+
     // Selection
+    // Unchecked box: a 1px rgba(27,21,0,.19) edge.
+    checkEdge: "strong",
     cardSelected: "outline",
 
     // Menus and overlays
     menuArrows: "none",
+    // 28px rows, the control height.
+    menuRows: "match",
     menuSearch: "bar",
     menuScale: "large",
     dialogBackdrop: "scrim",
