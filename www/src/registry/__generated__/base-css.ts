@@ -57,6 +57,9 @@ export const baseRegistryCss = {
 			"box-shadow":
 				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
+		"@utility invalid-fill": {
+			"background-image": "linear-gradient(var(--invalid-fill), var(--invalid-fill))",
+		},
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
 		},
@@ -86,6 +89,9 @@ export const baseRegistryCss = {
 			"--overlay-border": "var(--color-border)",
 			"--popover-alpha": "100%",
 			"--popover-backdrop-filter": "none",
+			"--focus-input-border": "var(--color-border-focus)",
+			"--focus-input-color": "var(--color-border-focus-muted)",
+			"--invalid-fill": "transparent",
 		},
 		"::selection": {
 			"@apply bg-text-selection text-fg-on-text-selection": {},
@@ -110,7 +116,6 @@ export const baseRegistryCss = {
 			"--focus-ring-offset": "2px",
 			"--focus-ring-outside-offset": "2px",
 			"--focus-ring-inner": "0px",
-			"--focus-input-color": "var(--color-border-focus-muted)",
 			"--focus-input-width": "2px",
 			"--focus-input-offset": "0px",
 			"--focus-input-edge": "0px",
