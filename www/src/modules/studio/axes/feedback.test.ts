@@ -127,20 +127,35 @@ describe("feedback axes", () => {
     }
     expect(fill({})).toEqual(["accent", undefined])
     expect(fill({ progressColor: "same-checks" })).toEqual([
-      "accent",
+      "checks",
       undefined,
     ])
+    // Off the selection leaf the checks paint their own source.
     expect(
       fill({ progressColor: "same-checks", checkboxColor: "neutral" }),
-    ).toEqual(["neutral", "var(--color-inverse)"])
+    ).toEqual(["checks", "var(--color-inverse)"])
+    // On it they paint the selection tokens.
     expect(
       fill({
         progressColor: "same-checks",
         buttonColor: "neutral",
-        checkboxColor: "accent",
+        selectionColor: "accent",
       }),
-    ).toEqual(["accent", "var(--color-accent)"])
+    ).toEqual(["checks", "var(--color-selection)"])
     expect(fill({ buttonColor: "neutral" })).toEqual(["neutral", undefined])
+  })
+
+  it("Same as checks paints the selection seed, not the brand (Claude)", () => {
+    const state = parseState({
+      progressColor: "same-checks",
+      selectionSeed: "#2a78d6",
+    })
+    expect(designSystemOf(state).tokens["--studio-progress-fill-color"]).toBe(
+      "var(--color-selection)",
+    )
+    expect(
+      designSystemOf(parseState({ selectionSeed: "#2a78d6" })).tokens,
+    ).not.toHaveProperty("--studio-progress-fill-color")
   })
 })
 

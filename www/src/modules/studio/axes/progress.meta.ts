@@ -1,6 +1,10 @@
-import { SOURCE_OPTIONS } from "./color.meta"
 import { options } from "./core/meta"
-import { COLOR_VALUES, TRACK_STYLE_VALUES, TRACK_VALUES } from "./progress"
+import {
+  COLOR_VALUES,
+  FILL_VALUES,
+  TRACK_STYLE_VALUES,
+  TRACK_VALUES,
+} from "./progress"
 
 export const TRACK_OPTIONS = options(TRACK_VALUES, {
   thin: { label: "Thin", description: "Material 3, shadcn" },
@@ -32,8 +36,14 @@ export const COLOR_OPTIONS = options(COLOR_VALUES, {
   },
 })
 
+export const FILL_OPTIONS = options(FILL_VALUES, {
+  neutral: { label: "Neutral" },
+  accent: { label: "Accent" },
+  checks: { label: "Checks" },
+})
+
 export const OPTIONS = {
   progressTrack: TRACK_OPTIONS,
   progressTrackStyle: TRACK_STYLE_OPTIONS,
-  progressColor: SOURCE_OPTIONS,
+  progressColor: FILL_OPTIONS,
 }
