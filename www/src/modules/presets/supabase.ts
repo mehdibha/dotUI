@@ -84,7 +84,6 @@ export const supabase = definePreset({
     menuScale: "large",
     dialogFrost: "subtle",
     dialogSections: "divided",
-    dialogClose: "faint",
     tooltipStyle: "surface",
     tabStyle: "line",
     // Tabs keep their weight; the product menu's current row goes semibold.
