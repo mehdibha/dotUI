@@ -16,4 +16,20 @@ describe("icons axis", () => {
       ).toEqual({})
     }
   })
+
+  it("hides stroke and weight on the outlined sets; their own stroke ships no token", () => {
+    for (const iconLibrary of ["material-symbols", "octicons"]) {
+      const state = parseState({
+        iconLibrary,
+        iconStroke: 2.5,
+        iconWeight: "bold",
+      })
+      const { explain } = effective(state)
+      expect(explain.iconStroke?.lock?.kind, iconLibrary).toBe("hide")
+      expect(explain.iconWeight?.lock?.kind, iconLibrary).toBe("hide")
+      const { icons, tokens } = designSystemOf(state)
+      expect(icons, iconLibrary).toBe(iconLibrary)
+      expect(tokens, iconLibrary).toEqual({})
+    }
+  })
 })

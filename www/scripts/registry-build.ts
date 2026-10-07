@@ -131,53 +131,24 @@ export const DemosIndex: Record<
   console.log("  ✓ __generated__/demos.tsx")
 }
 
-// Get the package import for each library
-function getLibraryPackage(library: string): string {
-  switch (library) {
-    case "tabler":
-      return "@tabler/icons-react"
-    case "hugeicons":
-      return "@hugeicons/core-free-icons"
-    case "remix":
-      return "@remixicon/react"
-    case "phosphor":
-      return "@phosphor-icons/react"
-    default:
-      return ""
-  }
-}
-
-// Generate __libraryName__.ts files with only the icons we use
+// Generate __libraryName__.ts files exporting each library's glyph under the
+// registry name, so the runtime loader looks icons up by registry name alone.
 async function buildIconLibraryExports() {
-  const iconsDir = GENERATED_DIR
-
-  // Collect unique icon names per library
-  const libraryIcons: Record<string, Set<string>> = {
-    tabler: new Set(),
-    hugeicons: new Set(),
-    remix: new Set(),
-    phosphor: new Set(),
-  }
-
-  for (const iconMapping of Object.values(registryIcons)) {
-    if (iconMapping.tabler) libraryIcons.tabler?.add(iconMapping.tabler)
-    if (iconMapping.hugeicons)
-      libraryIcons.hugeicons?.add(iconMapping.hugeicons)
-    if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix)
-    if (iconMapping.phosphor) libraryIcons.phosphor?.add(iconMapping.phosphor)
-  }
-
-  // Generate a file for each library. Remix/tabler export plain components;
-  // hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
-  // wraps each one into a component — the runtime loader stays uniform.
-  for (const [library, icons] of Object.entries(libraryIcons)) {
-    const packageName = getLibraryPackage(library)
-    const sortedIcons = [...icons].sort((a, b) => a.localeCompare(b))
-
-    const isHugeicons = library === "hugeicons"
+  const keys = Object.keys(registryIcons).sort((a, b) => a.localeCompare(b))
+  for (const { name: library, import: packageName } of iconLibraries) {
+    if (library === "lucide") continue
+    const pairs = keys.map((key) => {
+      const name = registryIcons[key]?.[library]
+      if (!name)
+        throw new Error(`Icon "${key}" not found for library "${library}"`)
+      return [key, name] as const
+    })
     const header = `// AUTO-GENERATED - DO NOT EDIT
-// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)`
+// Only exports the ${pairs.length} icons the registry uses (not the entire library)`
 
+    // Hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
+    // wraps each one into a component — the runtime loader stays uniform.
+    const isHugeicons = library === "hugeicons"
     const content = isHugeicons
       ? `${header}
 "use client";
@@ -185,8 +156,8 @@ async function buildIconLibraryExports() {
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { HugeiconsIconProps } from "@hugeicons/react";
 import {
-${sortedIcons.map((name) => `\t${name} as ${name}Data,`).join("\n")}
-} from "${packageName}";
+${[...new Set(pairs.map(([, name]) => name))].map((name) => `\t${name} as ${name}Data,`).join("\n")}
+} from "@hugeicons/core-free-icons";
 
 // The \`hugeicon\` marker class lets the stroke-width axis target the paths
 // (see base.css) — hugeicons paths carry their own stroke-width attribute.
@@ -196,65 +167,44 @@ function wrap(icon: HugeiconsIconProps["icon"]) {
 \t};
 }
 
-${sortedIcons.map((name) => `export const ${name} = wrap(${name}Data);`).join("\n")}
+${pairs.map(([key, name]) => `export const ${key} = wrap(${name}Data);`).join("\n")}
 `
       : `${header}
-${sortedIcons.length > 0 ? `export { ${sortedIcons.join(", ")} } from "${packageName}";` : ""}
+export { ${pairs.map(([key, name]) => (key === name ? key : `${name} as ${key}`)).join(", ")} } from "${packageName}";
 `
 
     const ext = isHugeicons ? "tsx" : "ts"
-    const targetPath = path.join(iconsDir, `__${library}__.${ext}`)
+    const targetPath = path.join(GENERATED_DIR, `__${library}__.${ext}`)
     await writeGeneratedFile(targetPath, content)
     console.log(
-      `  ✓ __generated__/__${library}__.${ext} (${sortedIcons.length} icons)`,
+      `  ✓ __generated__/__${library}__.${ext} (${pairs.length} icons)`,
     )
   }
 }
 
 async function buildInternalIcons() {
   const targetPath = path.join(GENERATED_DIR, "icons.tsx")
-
   const iconKeys = Object.keys(registryIcons)
 
-  // Collect all unique lucide icon names for individual imports
-  const lucideIconNames = new Set<string>()
-  for (const iconKey of iconKeys) {
-    const iconMapping = registryIcons[iconKey]
-    if (iconMapping?.lucide) {
-      lucideIconNames.add(iconMapping.lucide)
-    }
-  }
-
-  // Generate individual imports with aliases to avoid naming collisions (tree-shakeable)
+  // Individual lucide imports, aliased to avoid collisions (tree-shakeable)
+  const lucideIconNames = new Set(
+    iconKeys.map((key) => {
+      const name = registryIcons[key]?.lucide
+      if (!name) throw new Error(`Icon "${key}" not found for library "lucide"`)
+      return name
+    }),
+  )
   const lucideImports = Array.from(lucideIconNames)
     .sort((a, b) => a.localeCompare(b))
     .map((name) => `  ${name} as Lucide${name},`)
     .join("\n")
 
   const iconExports = iconKeys
-    .map((iconKey) => {
-      const iconMapping = registryIcons[iconKey]
-      if (!iconMapping) {
-        throw new Error(`Icon mapping not found for: ${iconKey}`)
-      }
-
-      const names = iconLibraries
-        .map((library) => {
-          const iconName = iconMapping[library.name]
-          if (!iconName) {
-            throw new Error(
-              `Icon "${iconKey}" not found for library "${library.name}"`,
-            )
-          }
-          return `  ${library.name}: "${iconName}",`
-        })
-        .join("\n")
-
-      return `export const ${iconKey} = createIcon(Lucide${iconMapping.lucide}, {
-${names}
-});`
-    })
-    .join("\n\n")
+    .map(
+      (key) =>
+        `export const ${key} = createIcon(Lucide${registryIcons[key]?.lucide}, "${key}");`,
+    )
+    .join("\n")
 
   const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate

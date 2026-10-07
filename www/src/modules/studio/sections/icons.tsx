@@ -152,13 +152,13 @@ function IconLibraryRow({
         </SelectValue>
       </RacButton>
       <PanelPopoverTitle.Provider value={label}>
-        <PanelPopover className="w-104 min-w-0">
+        <PanelPopover className="w-112 min-w-0">
           {/* Crossing to the wall keeps the peek; leaving falls back to the focused row. */}
           <div
             className="flex min-h-0 gap-1.5 overflow-y-auto overscroll-contain p-2"
             onPointerLeave={() => setPeek(focused.current)}
           >
-            <ListBox className="w-36 shrink-0 p-0">
+            <ListBox className="w-44 shrink-0 p-0">
               {LIBRARY_OPTIONS.map((option) => {
                 const library = option.value as IconLibraryName
                 return (

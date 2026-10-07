@@ -88,6 +88,8 @@ const FILE_IMPORT_NPM_DEPS = [
   "@hugeicons/react",
   "@hugeicons/core-free-icons",
   "@phosphor-icons/react",
+  "@nine-thirty-five/material-symbols-react",
+  "@primer/octicons-react",
   "@internationalized/date",
 ]
 

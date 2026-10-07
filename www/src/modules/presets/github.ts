@@ -23,6 +23,9 @@ export const github = definePreset({
     // Typography
     bodyFont: "Mona Sans",
 
+    // Icons
+    iconLibrary: "octicons",
+
     // Shape
     radiusPx: 8,
     roleItem: "md",
