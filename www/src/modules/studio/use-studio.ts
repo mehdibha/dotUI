@@ -8,7 +8,7 @@ import { useMemo } from "react"
 
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { effective } from "./axes"
+import { effective, setKey } from "./axes"
 import type { Effective, StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"
 import { edit, useCurrent } from "./selection"
@@ -31,7 +31,7 @@ export function useStudio(): Studio {
     const set =
       <K extends keyof StudioState>(key: K) =>
       (value: StudioState[K]) =>
-        edit({ ...state, [key]: value })
+        edit(setKey(state, key, value))
     return {
       state,
       effective: values,

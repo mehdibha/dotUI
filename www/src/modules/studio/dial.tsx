@@ -241,7 +241,7 @@ const CUSTOM = "__custom"
 
 /** Only DialSelect reads Custom: a global with scoped copies renders there. */
 function assertUnscoped(key: string | undefined) {
-  if (key && SCOPES[key])
+  if (import.meta.env.DEV && key && SCOPES[key])
     throw new Error(`${key} has scoped copies: render it with DialSelect`)
 }
 
