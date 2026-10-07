@@ -185,9 +185,15 @@ function checkFieldShape(origin: string, item: unknown): Failure[] {
     [...slotsBlock[1]!.matchAll(/^\s*([A-Za-z][\w]*)\s*:/gm)].map((m) => m[1]!),
   )
 
+  // Keys only: `a: b` renames and `a = x` defaults resolve to `a`; rest elements drop out.
   const destructured = [
-    ...content.matchAll(/const\s*\{\s*([\w]+)\s*\}\s*=\s*fieldVariants\(/g),
-  ].map((m) => m[1]!)
+    ...content.matchAll(/const\s*\{([^}]*)\}\s*=\s*fieldVariants\(/g),
+  ].flatMap((m) =>
+    m[1]!
+      .split(",")
+      .map((part) => part.trim().match(/^[A-Za-z_$][\w$]*/)?.[0])
+      .filter((s): s is string => s !== undefined),
+  )
 
   if (destructured.length === 0) {
     return [

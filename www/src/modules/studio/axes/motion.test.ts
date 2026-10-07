@@ -257,8 +257,12 @@ describe("shipped motion", () => {
 })
 
 describe("presets", () => {
-  test("every preset rides Standard: none retimes anything", () => {
-    for (const preset of PRESETS)
-      expect(preset.state.motion, preset.id).toBe("standard")
+  test("Origin rides Standard; Material 3 and Radix take their own tables", () => {
+    const motion = Object.fromEntries(
+      PRESETS.map((p) => [p.id, p.state.motion]),
+    )
+    expect(motion.origin).toBe("standard")
+    expect(motion.material3).toBe("expressive")
+    expect(motion.radix).toBe("smooth")
   })
 })
