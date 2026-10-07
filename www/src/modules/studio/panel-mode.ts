@@ -1,7 +1,6 @@
 "use client"
 
-/* The resolved color theme in the panel's own mode, so swatches and derived
-   "Auto" values are what the page around them renders. */
+/* The resolved color theme in the panel's own mode. */
 
 import { useMemo } from "react"
 import { useTheme } from "starter-themes"
@@ -17,8 +16,7 @@ import { useCurrent } from "./selection"
 
 const COLOR_KEYS = Object.keys(COLOR_DEFAULTS) as (keyof Effective)[]
 
-/** Reference-stable on the color keys, so the engine runs once per color
- *  edit (never for edits elsewhere). */
+/** Re-solves only when a color key changes. */
 export function usePanelMode(state?: Effective) {
   const { state: saved } = useCurrent()
   const values = state ?? effective(saved).values

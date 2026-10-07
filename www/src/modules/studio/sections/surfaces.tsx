@@ -2,7 +2,7 @@
 
 /* Surfaces — one row under Color. Its popover leads with the styles, each
    drawn and described; under a hairline, the settings a style is made of and
-   each mode's page. Overlays and the app shell also have rows of their own. */
+   each mode's page. */
 
 import type { StepName, Theme } from "@dotui/colors"
 
@@ -29,7 +29,6 @@ import {
 } from "../axes/surfaces.meta"
 import type { SurfaceStyle } from "../axes/surfaces.meta"
 import {
-  DialPicker,
   DialPickList,
   DialPopover,
   DialSelect,
@@ -38,6 +37,7 @@ import {
   DialTrigger,
   ModifiedDot,
 } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
 import type { Effective, StudioState } from "../state"
@@ -157,43 +157,33 @@ export function SurfacesRow() {
       <DialPopover className="w-80">
         <StyleList state={state} theme={theme} onChange={edit} />
         <DialSeparator />
-        <DialPicker
+        <DialSelect
           axis="surfaceLayers"
           label="Layers"
           options={LAYERS_OPTIONS}
         />
-        <DialPicker
+        <DialSelect
           axis="surfaceEdge"
           label="Edge"
-          options={EDGE_OPTIONS.map((option) => ({
-            ...option,
-            visual: (
-              <SurfaceGlyph
-                large
-                state={
-                  effective({ ...state, surfaceEdge: option.value }).values
-                }
-                theme={theme}
-              />
-            ),
-          }))}
+          options={EDGE_OPTIONS.map((option) => {
+            const values = effective({
+              ...state,
+              surfaceEdge: option.value,
+            }).values
+            return {
+              ...option,
+              preview: <SurfaceGlyph large state={values} theme={theme} />,
+              glyph: <SurfaceGlyph state={values} theme={theme} />,
+            }
+          })}
         />
-        <DialPicker
+        <DialSelect
           axis="surfaceShadow"
           label="Shadow"
           options={SHADOW_OPTIONS}
         />
-        <DialPicker
-          label="Overlays"
-          value={state.surfaceGlass ? "glass" : "solid"}
-          onChange={(value) => set("surfaceGlass")(value === "glass")}
-          options={GLASS_OPTIONS}
-        />
-        <DialPicker
-          axis="shellTone"
-          label="App shell"
-          options={SHELL_OPTIONS}
-        />
+        <Row axis="surfaceGlass" />
+        <Row axis="shellTone" />
         <DialSlider
           axis="lightBg"
           label="Light page"

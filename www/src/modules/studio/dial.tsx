@@ -66,7 +66,7 @@ export const DIAL_VALUE =
 export const DIAL_CHEVRON = "size-4 shrink-0 text-fg/60"
 
 /** The line under an option's label: its description, then its credits. */
-const subline = (option: {
+export const subline = (option: {
   description?: string
   credits?: readonly string[]
 }) =>
@@ -82,10 +82,7 @@ const SCOPED = new Set(Object.values(SCOPES).flat())
 function Cause({ cause }: { cause: string }) {
   const place = useContext(PlaceLabel)(cause as AxisKey)
   return (
-    <CauseChip
-      cause={cause}
-      place={SCOPED.has(cause) ? place?.split(" & ")[0] : undefined}
-    />
+    <CauseChip cause={cause} place={SCOPED.has(cause) ? place : undefined} />
   )
 }
 
@@ -349,7 +346,10 @@ export function DialSelect({
         )
       }
     >
-      <PanelPopover className="w-64 min-w-0">
+      {/* A global's popover hosts its scoped copies' rows: room for their values. */}
+      <PanelPopover
+        className={cn("min-w-0", key && SCOPES[key] ? "w-72" : "w-64")}
+      >
         <SelectBody
           axis={axis}
           label={label}
@@ -365,8 +365,7 @@ export function DialSelect({
   )
 }
 
-/** The options, then `children` and the rows overriding the key. A row
- *  that stops overriding stays until the popover closes, so focus stays put. */
+/** The options, then `children` and the overriding rows, kept until close. */
 function SelectBody({
   axis,
   value,
@@ -405,8 +404,7 @@ function SelectBody({
   )
 }
 
-/** The popover's list. A follow option names what it resolves to ("Same as
- *  Motion · Standard") and wears that option's specimen. */
+/** The list; a follow option names and draws its target ("Same as Motion · Standard"). */
 function SelectOptions({
   axis,
   label,

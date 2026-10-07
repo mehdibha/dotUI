@@ -377,11 +377,33 @@ const CursorDisabledRow = () => (
   />
 )
 
+/** A button label; a selectable one wears the highlight. */
+function ControlTextChip({ value }: { value: string }) {
+  return (
+    <span className="rounded-xs border border-fg/20 px-1 text-[11px]">
+      <span
+        className={cn(
+          value === "selectable" &&
+            "bg-text-selection text-fg-on-text-selection",
+        )}
+      >
+        Save
+      </span>
+    </span>
+  )
+}
+
+const CONTROL_TEXT_ROW_OPTIONS = CONTROL_TEXT_OPTIONS.map((option) => ({
+  ...option,
+  preview: <ControlTextChip value={option.value} />,
+}))
+
 const ControlTextRow = () => (
   <DialSelect
     axis="selectionUiText"
     label="Control text"
-    options={CONTROL_TEXT_OPTIONS}
+    rowPreview={false}
+    options={CONTROL_TEXT_ROW_OPTIONS}
   />
 )
 

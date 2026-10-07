@@ -51,9 +51,24 @@ export function SpacePreview({ state }: { state: Effective }) {
   )
 }
 
+/** A tier's md control and its text, at 60% scale. */
+function ControlSpecimen({ density }: { density: string }) {
+  const { ladder, text } = densityTier(density)
+  return (
+    <span
+      className="flex w-12 items-center justify-center rounded-[4px] border border-current"
+      style={{ height: ladder[2] * 0.6, fontSize: text * 0.6 }}
+      aria-hidden
+    >
+      Aa
+    </span>
+  )
+}
+
 const DENSITY_ROW_OPTIONS = DENSITY_OPTIONS.map((option) => ({
   ...option,
-  preview: (
+  preview: <ControlSpecimen density={option.value} />,
+  glyph: (
     <DialGlyph>
       <ControlGlyph density={option.value} />
     </DialGlyph>

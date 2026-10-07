@@ -117,8 +117,7 @@ export function ChipButton({
   )
 }
 
-/** The value of the row that set this one, as a link to that row; `place`
- *  names where that row sits. */
+/** The cause row's value, linking to it; `place` names its page. */
 export function CauseChip({ cause, place }: { cause: string; place?: string }) {
   const reveal = useContext(RevealAxis)
   const axis = useAxis(cause as AxisKey)

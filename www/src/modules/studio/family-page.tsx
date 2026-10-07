@@ -15,11 +15,10 @@ import type { AxisKey } from "./use-axis"
 /** Each key's one row, exported by the section that owns it. */
 export type RowMap = Partial<Record<AxisKey, React.ComponentType>>
 
-/** Every section's rows (`ALL_ROWS`), provided by the panel so sections
- *  never import each other. */
+/** `ALL_ROWS`, provided by the panel so sections never import each other. */
 export const RowsContext = createContext<RowMap>({})
 
-/** Where a key's row lives, as a host names it (the page's label). */
+/** A key's page, by its short label. */
 export const PlaceLabel = createContext<(key: AxisKey) => string | undefined>(
   () => undefined,
 )

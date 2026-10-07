@@ -31,7 +31,12 @@ import {
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxItemDescription,
+  ListBoxItemLabel,
+} from "@/registry/ui/list-box"
 
 import { ICON_STROKE_WIDTH_VAR, STROKE_RANGE } from "../axes/icons"
 import { LIBRARY_OPTIONS, WEIGHT_OPTIONS } from "../axes/icons.meta"
@@ -169,7 +174,10 @@ function IconLibraryRow({ label: labelProp }: { label: string }) {
                       setPeek(focused.current)
                     }}
                   >
-                    {option.label}
+                    <ListBoxItemLabel>{option.label}</ListBoxItemLabel>
+                    <ListBoxItemDescription>
+                      {option.credits?.join(", ")}
+                    </ListBoxItemDescription>
                   </ListBoxItem>
                 )
               })}

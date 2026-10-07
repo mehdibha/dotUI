@@ -3,10 +3,22 @@ import type { Option } from "./core/meta"
 import { ENTRANCE_VALUES, FAMILY_MOTION_KEYS, MOTION_VALUES } from "./motion"
 
 export const MOTION_OPTIONS = options(MOTION_VALUES, {
-  none: { label: "None", credits: ["Ant Design"] },
-  standard: { label: "Standard", credits: ["shadcn"] },
-  smooth: { label: "Smooth", credits: ["Radix Themes"] },
-  expressive: { label: "Expressive", credits: ["Material 3"] },
+  none: { label: "None", description: "Instant", credits: ["Ant Design"] },
+  standard: {
+    label: "Standard",
+    description: "Quick eased fades",
+    credits: ["shadcn"],
+  },
+  smooth: {
+    label: "Smooth",
+    description: "Longer expo-out glides",
+    credits: ["Radix Themes"],
+  },
+  expressive: {
+    label: "Expressive",
+    description: "Springs that overshoot",
+    credits: ["Material 3"],
+  },
 })
 
 export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {

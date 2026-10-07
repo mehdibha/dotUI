@@ -45,10 +45,10 @@ import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
-/** A hosted row's name in a Custom list: its page's label. */
+/** A key's page, short: "Menus & popovers" reads "Menus". */
 const placeLabel = (key: string) => {
   const place = placeOf(key)
-  return place?.page?.label ?? place?.chapter.label
+  return (place?.page?.label ?? place?.chapter.label)?.split(" & ")[0]
 }
 
 // Touch-sized rows on phones.

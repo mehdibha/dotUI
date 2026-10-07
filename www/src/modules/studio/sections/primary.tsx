@@ -30,25 +30,14 @@ import {
   DialPopover,
   DialSelect,
   DialTrigger,
-  SegmentedGroup,
+  subline,
 } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
 import { useStudio } from "../use-studio"
-
-const LEAF_LABELS: Record<PrimaryLeaf, string> = {
-  buttonColor: "Buttons",
-  checkboxColor: "Checkbox",
-  radioColor: "Radio",
-  switchColor: "Switch",
-  selectionColor: "Selection",
-  sliderColor: "Slider",
-  tabsColor: "Tabs",
-  linkColor: "Links",
-  focusColor: "Focus ring",
-}
 
 /* --------------------------------- Inks ---------------------------------- */
 
@@ -245,10 +234,9 @@ function SourceSwatch({
 
 /* ---------------------------------- Row ----------------------------------- */
 
-const CHOICES: { id: PrimaryColorSource; label: string }[] = [
-  { id: "accent", label: "Accent" },
-  { id: "neutral", label: "Neutral" },
-]
+const CHOICES = ["accent", "neutral"].flatMap((id) =>
+  SOURCE_OPTIONS.filter((option) => option.value === id),
+)
 
 function ChoiceStrip({ ink }: { ink: Ink }) {
   return (
@@ -265,38 +253,20 @@ function leavesSummary(state: Studio["state"]) {
   return `${neutral} neutral · ${PRIMARY_LEAVES.length - neutral} accent`
 }
 
-/** A row per leaf, each on its own source. */
-function CustomPanel({
-  studio,
-  ink,
-}: {
-  studio: Studio
-  ink: Record<PrimaryColorSource, Ink>
-}) {
-  const { state, set } = studio
+/** Each leaf's own row. */
+function CustomPanel() {
   return (
-    <PanelPopover className="w-[352px] min-w-0">
+    <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
-        {PRIMARY_LEAVES.map((leaf) => {
-          const Glyph = GLYPHS[leaf]
-          const source = state[leaf] as PrimaryColorSource
-          return (
-            <div key={leaf} className={cn(DIAL_ROW, "gap-2 pr-1.5")}>
-              <span className={cn(DIAL_LABEL, "w-[72px]")}>
-                {LEAF_LABELS[leaf]}
-              </span>
-              <span className="flex min-w-0 flex-1 items-center">
-                <Glyph ink={ink[source]} />
-              </span>
-              <SegmentedGroup
-                label={`${LEAF_LABELS[leaf]} color`}
-                value={source}
-                onChange={set(leaf)}
-                options={SOURCE_OPTIONS}
-              />
-            </div>
-          )
-        })}
+        <Row axis="buttonColor" label="Buttons" />
+        <Row axis="checkboxColor" label="Checkbox" />
+        <Row axis="radioColor" label="Radio" />
+        <Row axis="switchColor" label="Switch" />
+        <Row axis="selectionColor" label="Selection" />
+        <Row axis="sliderColor" label="Slider" />
+        <Row axis="tabsColor" label="Tabs" />
+        <Row axis="linkColor" label="Links" />
+        <Row axis="focusColor" label="Focus ring" />
       </DialogContent>
     </PanelPopover>
   )
@@ -330,15 +300,24 @@ function PrimaryPanel({
       >
         {CHOICES.map((choice) => (
           <RacToggleButton
-            key={choice.id}
-            id={choice.id}
-            className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
+            key={choice.value}
+            id={choice.value}
+            className={cn(
+              DIAL_ROW,
+              DIAL_PRESS,
+              "h-auto min-h-9 py-2 selected:tint-10",
+            )}
           >
             {({ isSelected }) => (
               <>
-                <span className={DIAL_LABEL}>{choice.label}</span>
-                <span className="flex items-center gap-2">
-                  <ChoiceStrip ink={ink[choice.id]} />
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span className={DIAL_LABEL}>{choice.label}</span>
+                  <span className="text-xs leading-snug text-fg/55">
+                    {subline(choice)}
+                  </span>
+                </span>
+                <span className="flex shrink-0 items-center gap-2">
+                  <ChoiceStrip ink={ink[choice.value as PrimaryColorSource]} />
                   <CheckIcon
                     className={cn(
                       "size-4 shrink-0 text-fg",
@@ -366,7 +345,7 @@ function PrimaryPanel({
           </span>
         </RacButton>
         <PanelPopoverTitle.Provider value="Custom">
-          <CustomPanel studio={studio} ink={ink} />
+          <CustomPanel />
         </PanelPopoverTitle.Provider>
       </Dialog>
     </>
@@ -398,9 +377,6 @@ export function PrimaryRow() {
   )
 }
 
-// Hosted on family pages only, so kept out of the Color chapter's search.
-const LEAF_ROW_LABEL = "Color"
-
 /** One leaf on its own source; family pages host it. */
 const leafRow = (leaf: PrimaryLeaf) =>
   function LeafRow() {
@@ -409,7 +385,7 @@ const leafRow = (leaf: PrimaryLeaf) =>
     return (
       <DialSelect
         axis={leaf}
-        label={LEAF_ROW_LABEL}
+        label="Color"
         options={SOURCE_OPTIONS.map((option) => {
           const id = option.value as PrimaryColorSource
           return {
