@@ -67,6 +67,9 @@ export const polaris = definePreset({
 
     // Buttons
     buttonStyle: "bevel",
+    // ButtonGroup segmented: attached outlined buttons, #ccc pressed segment.
+    segmentedSelected: "tone",
+    segmentedTrack: "outline",
 
     // Inputs: a flat #fdfdfd field, 32px beside 28px buttons.
     inputStyle: "outline",
@@ -105,8 +108,9 @@ export const polaris = definePreset({
     badgeStyle: "soft",
     badgeShape: "rounded",
     toastStyle: "inverse",
-    toastStatus: "bold",
     progressTrack: "x-heavy",
+    // ProgressBar is info-blue by default, not charcoal.
+    progressColor: "accent",
     skeletonAnimation: "none",
 
     // Data display
