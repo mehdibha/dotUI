@@ -52,6 +52,7 @@ export const radix = definePreset({
     // Menus & popovers: a solid indigo highlight, checks in a leading column.
     menuHighlight: "accent",
     menuIndicator: "check-start",
+    menuRows: "match",
     mobilePickers: "anchored",
 
     // Dialogs: a plain 40% scrim, no blur.

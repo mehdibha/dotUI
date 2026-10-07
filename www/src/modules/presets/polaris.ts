@@ -50,6 +50,7 @@ export const polaris = definePreset({
 
     // States
     focusInputStyle: "ring",
+    invalidStyle: "tint",
     cursorDisabled: "default",
 
     // Motion
@@ -75,6 +76,7 @@ export const polaris = definePreset({
     // Menus & popovers
     tooltipStyle: "surface",
     menuSelectedRow: "tint",
+    menuRows: "step",
 
     // Dialogs
     dialogSections: "header-band",

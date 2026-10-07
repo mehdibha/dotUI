@@ -78,6 +78,7 @@ export const material3 = definePreset({
     menuArrows: "none",
     menuIndicator: "none",
     menuSelectedRow: "tint",
+    menuRows: "step",
     mobilePickers: "anchored",
 
     // Dialogs: a 32% scrim; dividers only while scrolling.

@@ -44,6 +44,7 @@ export const airbnb = definePreset({
     focusColor: "neutral",
     focusInputStyle: "border",
     focusInputWeight: "thick",
+    invalidStyle: "tint",
 
     // Motion
     motionEntrance: "slide",
@@ -69,6 +70,7 @@ export const airbnb = definePreset({
     calendarWeekdays: "double",
     sliderColor: "neutral",
     menuInset: "full-bleed",
+    menuRows: "match",
     tabStyle: "line",
     paginationCurrent: "primary",
     badgeStyle: "soft",

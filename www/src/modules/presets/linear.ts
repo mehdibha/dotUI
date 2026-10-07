@@ -42,9 +42,10 @@ export const linear = definePreset({
     buttonRadius: "pill",
     inputHover: "edge",
     menuSearch: "prompt",
+    menuRows: "match",
     dialogPosition: "top",
     tooltipStyle: "surface",
     tabStyle: "pill",
-    badgeStyle: "outline",
+    badgeStyle: "dot",
   },
 })

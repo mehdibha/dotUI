@@ -35,6 +35,8 @@ export const vercel = definePreset({
 
     // States
     focusInputWeight: "thick",
+    // Fields focus with a neutral edge and halo under the blue ring.
+    focusInputColor: "neutral",
 
     // Components
     spinnerStyle: "blades",
@@ -42,9 +44,12 @@ export const vercel = definePreset({
     checkboxColor: "neutral",
     radioColor: "neutral",
     cardSelected: "outline-tint",
+    // Blue choice cards beside black checks.
+    cardColor: "accent",
     inputHover: "edge",
     sliderColor: "neutral",
     menuSearch: "prompt",
+    menuRows: "match",
     tabStyle: "line",
   },
 })

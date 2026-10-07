@@ -49,5 +49,6 @@ export const claude = definePreset({
     tabStyle: "line",
     tabsColor: "accent",
     badgeStyle: "soft",
+    menuRows: "match",
   },
 })

@@ -31,6 +31,7 @@ export const supabase = definePreset({
 
     // States
     focusInputStyle: "ring",
+    invalidStyle: "tint",
     disabledTreatment: "fade",
 
     // Components
@@ -49,6 +50,7 @@ export const supabase = definePreset({
     tooltipStyle: "surface",
     tabStyle: "line",
     badgeStyle: "soft-outline",
+    cardHeader: "rule",
     tableHeader: "filled",
   },
 })
