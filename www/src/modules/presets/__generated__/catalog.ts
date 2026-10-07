@@ -841,6 +841,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				primary: "accent",
 				scopes: { slider: "accent" },
 			},
+			icons: "octicons",
 		},
 	},
 	{
@@ -1547,7 +1548,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				preserveSeed: true,
 				primary: "accent",
 			},
-			icons: "remix",
+			icons: "material-symbols",
 		},
 	},
 	{
