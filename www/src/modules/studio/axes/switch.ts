@@ -2,6 +2,7 @@
    of Color's Primary (Geist's blue toggle beside near-black checkboxes; see
    checkbox.ts). */
 
+import { EDGE_FLOOR } from "./checkbox"
 import { fillScope, SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -25,8 +26,20 @@ export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {
   switchStyle: oneOf(STYLE_VALUES),
 }
 
+/* The off track (Inset's fill, Outlined's and Slab's edges) is the control
+   edge, floored like the check edge. */
+export function trackTokens(controlEdge: string) {
+  return controlEdge === "soft"
+    ? {
+        "--switch-track": EDGE_FLOOR,
+        "--studio-switch-track": "var(--switch-track)",
+      }
+    : undefined
+}
+
 export function resolveSwitch(state: Effective): Resolved {
   return {
+    tokens: trackTokens(state.controlEdge),
     params: { switch: { style: state.switchStyle } },
     color: fillScope(state, "switch", state.switchColor),
   }

@@ -63,7 +63,15 @@ function Recipe({
 
 const ON = { "data-selected": "true" }
 
-function CheckboxMark({ corner, edge }: { corner: string; edge?: string }) {
+function CheckboxMark({
+  corner,
+  edge,
+  controlEdge = "firm",
+}: {
+  corner: string
+  edge?: string
+  controlEdge?: string
+}) {
   const { indicator } = useCheckboxStyles()()
   return (
     <span
@@ -72,7 +80,7 @@ function CheckboxMark({ corner, edge }: { corner: string; edge?: string }) {
       style={
         {
           ...cornerTokens(corner),
-          ...(edge && edgeTokens(edge)),
+          ...(edge && edgeTokens(edge, controlEdge)),
         } as React.CSSProperties
       }
     >
@@ -156,9 +164,9 @@ const corner = (value: string) => (
   </Recipe>
 )
 
-const edge = (value: string) => (
+const edge = (value: string, controlEdge: string) => (
   <Recipe name="checkbox" params={{}}>
-    <CheckboxMark corner="auto" edge={value} />
+    <CheckboxMark corner="auto" edge={value} controlEdge={controlEdge} />
   </Recipe>
 )
 
@@ -234,7 +242,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           label="Check edge"
           options={EDGE_OPTIONS.map((option) => ({
             ...option,
-            preview: edge(option.value),
+            preview: edge(option.value, effective.controlEdge),
           }))}
         />
       </More>

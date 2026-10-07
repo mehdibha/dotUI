@@ -76,8 +76,8 @@ const { useStyles, styles } = createStyles(switchMeta, {
         slots: {
           control: "not-has-data-label:rounded-(--studio-switch-radius)",
           indicator: [
-            "rounded-(--studio-switch-radius) border border-transparent bg-neutral p-0.5 selected:bg-selection",
-            "disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+            "rounded-(--studio-switch-radius) border border-transparent bg-(--studio-switch-track) p-0.5 selected:bg-selection",
+            "disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--studio-switch-track)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
             "rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] dark:not-disabled:selected:bg-fg-on-selection",
@@ -102,12 +102,12 @@ const { useStyles, styles } = createStyles(switchMeta, {
         slots: {
           control: "not-has-data-label:rounded-(--studio-switch-radius)",
           indicator: [
-            "rounded-(--studio-switch-radius) border-(length:--studio-control-stroke) border-border-control bg-transparent p-0.5 selected:border-transparent selected:bg-selection",
-            "disabled:border-(--disabled-border,var(--color-border-control)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+            "rounded-(--studio-switch-radius) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-transparent p-0.5 selected:border-transparent selected:bg-selection",
+            "disabled:border-(--disabled-border,var(--studio-switch-track)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
-            "scale-60 rounded-(--studio-switch-radius) bg-border-control transition-[background-color,margin,scale] pressed:scale-105 selected:scale-90 selected:bg-fg-on-selection selected:pressed:scale-105",
-            "disabled:bg-(--disabled-fg,var(--color-border-control)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
+            "scale-60 rounded-(--studio-switch-radius) bg-(--studio-switch-track) transition-[background-color,margin,scale] pressed:scale-105 selected:scale-90 selected:bg-fg-on-selection selected:pressed:scale-105",
+            "disabled:bg-(--disabled-fg,var(--studio-switch-track)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
           ],
         },
         variants: {
@@ -122,12 +122,12 @@ const { useStyles, styles } = createStyles(switchMeta, {
         slots: {
           control: "not-has-data-label:rounded-(--studio-radius-control)",
           indicator: [
-            "rounded-(--studio-radius-control) border-(length:--studio-control-stroke) border-border-control bg-neutral selected:border-selection selected:bg-selection",
-            "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+            "rounded-(--studio-radius-control) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-neutral selected:border-selection selected:bg-selection",
+            "disabled:border-(--disabled-border,var(--studio-switch-track)) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
           ],
           thumb: [
-            "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-border-control bg-bg transition-[background-color,border-color,margin] dark:not-disabled:bg-highlight selected:ml-[50%] selected:border-selection",
-            "disabled:bg-(--disabled-fg,var(--color-bg)) disabled:selected:border-(--disabled-border,var(--color-border-control))",
+            "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-bg transition-[background-color,border-color,margin] dark:not-disabled:bg-highlight selected:ml-[50%] selected:border-selection",
+            "disabled:bg-(--disabled-fg,var(--color-bg)) disabled:selected:border-(--disabled-border,var(--studio-switch-track))",
           ],
         },
       },

@@ -3,7 +3,8 @@
    re-declares the selection tokens under `[data-checkbox]` (a recipe scope),
    so the classes never change. Corner rides on `--studio-checkbox-radius`,
    the unchecked edge of checkbox and radio on `--studio-check-edge`, which
-   Strong points at a `--check-edge` token so the export flattens it. */
+   Strong or the floor points at a `--check-edge` token so the export
+   flattens it. */
 
 import { fillScope, SOURCE_VALUES, STRONG_EDGE } from "./color"
 import { defineChapter } from "./core/types"
@@ -35,12 +36,19 @@ export function cornerTokens(corner: string) {
   return corner === "sharp" ? { "--studio-checkbox-radius": "2px" } : undefined
 }
 
-export function edgeTokens(edge: string) {
-  return edge === "strong"
-    ? {
-        "--check-edge": STRONG_EDGE,
-        "--studio-check-edge": "var(--check-edge)",
-      }
+/** Color's Firm edge: the weakest edge an unchecked mark or a switch track
+ *  draws, so Soft fields never leave them invisible. */
+export const EDGE_FLOOR = "var(--neutral-400)"
+
+export function edgeTokens(edge: string, controlEdge: string) {
+  const value =
+    edge === "strong"
+      ? STRONG_EDGE
+      : controlEdge === "soft"
+        ? EDGE_FLOOR
+        : undefined
+  return value
+    ? { "--check-edge": value, "--studio-check-edge": "var(--check-edge)" }
     : undefined
 }
 
@@ -48,7 +56,7 @@ export function resolveCheckbox(state: Effective): Resolved {
   return {
     tokens: {
       ...cornerTokens(state.checkCorner),
-      ...edgeTokens(state.checkEdge),
+      ...edgeTokens(state.checkEdge, state.controlEdge),
     },
     color: fillScope(state, "checkbox", state.checkboxColor),
   }
