@@ -20,6 +20,7 @@ import * as breadcrumbs from "./breadcrumbs"
 import * as buttonGroups from "./button-groups"
 import * as buttons from "./buttons"
 import * as calendar from "./calendar"
+import * as card from "./card"
 import * as charts from "./charts"
 import * as checkbox from "./checkbox"
 import * as choiceCards from "./choice-cards"
@@ -111,6 +112,7 @@ export const CHAPTERS = [
   kbd.chapter,
   avatars.chapter,
   tables.chapter,
+  card.chapter,
 ] as const
 
 type UnionToIntersection<U> = (

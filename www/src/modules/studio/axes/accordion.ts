@@ -1,8 +1,9 @@
-/* Accordion — the container groups the items (hairline rows · one bordered
-   surface · a card each), the marker says a trigger opens (chevron ·
-   plus/minus) and sits trailing or leading. How a panel opens is Motion's.
+/* Accordion — how the items are grouped (hairline rows, one container, a
+   container each, nothing) and what marks a trigger. The collapsible and
+   the timing ride on Motion.
 
-   Engine: three enum params on `accordion`. */
+   Engine: two enum params on `accordion`; the boxes wear the container
+   surface (card/styles.ts). */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -11,39 +12,76 @@ import type { ChapterSchema } from "./schema"
 
 export const ACCORDION_DEFAULTS = {
   accordionContainer: "divided",
-  accordionMarker: "chevron",
-  accordionMarkerPosition: "trailing",
+  accordionMarker: "trailing-chevron",
 }
 
 export const CONTAINER_OPTIONS = [
-  { value: "divided", label: "Divided" },
-  { value: "boxed", label: "Boxed" },
-  { value: "cards", label: "Cards" },
+  {
+    value: "divided",
+    label: "Divided",
+    credits: [
+      "shadcn nova, vega, lyra, sera",
+      "Geist",
+      "Carbon",
+      "Chakra (outline)",
+      "Mantine",
+      "Spectrum 2",
+    ],
+  },
+  {
+    value: "contained",
+    label: "Contained",
+    credits: [
+      "shadcn mira, rhea, luma, maia",
+      "Ant Design",
+      "Chakra (enclosed)",
+      "Mantine (contained)",
+    ],
+  },
+  {
+    value: "separated",
+    label: "Separated",
+    credits: ["HeroUI (splitted)"],
+  },
+  {
+    value: "plain",
+    label: "Plain",
+    credits: ["Notion", "Fluent 2", "Chakra (plain)"],
+  },
 ]
 
 export const MARKER_OPTIONS = [
-  { value: "chevron", label: "Chevron" },
-  { value: "plus", label: "Plus" },
-]
-
-export const POSITION_OPTIONS = [
-  { value: "leading", label: "Leading" },
-  { value: "trailing", label: "Trailing" },
+  {
+    value: "trailing-chevron",
+    label: "Trailing chevron",
+    credits: ["shadcn", "Mantine", "Chakra", "MUI", "Carbon"],
+  },
+  {
+    value: "leading-caret",
+    label: "Leading caret",
+    credits: [
+      "Notion",
+      "Linear",
+      "Stripe",
+      "Fluent 2",
+      "Spectrum 2",
+      "Ant Design",
+      "Apple HIG",
+    ],
+  },
 ]
 
 export const ACCORDION_SCHEMA: ChapterSchema<typeof ACCORDION_DEFAULTS> = {
   accordionContainer: oneOf(CONTAINER_OPTIONS),
   accordionMarker: oneOf(MARKER_OPTIONS),
-  accordionMarkerPosition: oneOf(POSITION_OPTIONS),
 }
 
 export function resolveAccordion(state: Effective): Resolved {
   return {
     params: {
       accordion: {
-        container: state.accordionContainer,
+        layout: state.accordionContainer,
         marker: state.accordionMarker,
-        markerPosition: state.accordionMarkerPosition,
       },
     },
   }

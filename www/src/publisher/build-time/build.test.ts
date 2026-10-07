@@ -390,22 +390,21 @@ describe("createParamValue folds", () => {
     const chevron = transformBase({
       baseTsxPath: accordion,
       componentName: "accordion",
-      paramSelection: { marker: "chevron" },
+      paramSelection: { marker: "trailing-chevron" },
     }).template
     expect(chevron).toContain("const glyph = <ChevronDownIcon />")
-    expect(chevron).not.toContain("PlusIcon")
+    expect(chevron).not.toContain("ChevronRightIcon")
     expect(chevron).not.toContain("createParamValue")
     expect(chevron).not.toContain("@/lib/styles")
 
-    const plus = transformBase({
+    const caret = transformBase({
       baseTsxPath: accordion,
       componentName: "accordion",
-      paramSelection: { marker: "plus" },
+      paramSelection: { marker: "leading-caret" },
     }).template
-    expect(plus).toContain("<PlusIcon")
-    expect(plus).toContain("<MinusIcon")
-    expect(plus).not.toContain("ChevronDownIcon")
-    expect(plus).not.toContain("useMarker")
+    expect(caret).toContain("const glyph = <ChevronRightIcon />")
+    expect(caret).not.toContain("ChevronDownIcon")
+    expect(caret).not.toContain("useMarker")
   })
 
   test("breadcrumbs: a string value folds to the literal", () => {

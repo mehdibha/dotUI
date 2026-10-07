@@ -116,9 +116,8 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
   "icons": undefined,
   "params": {
     "accordion": {
-      "container": "divided",
-      "marker": "chevron",
-      "markerPosition": "trailing",
+      "layout": "divided",
+      "marker": "trailing-chevron",
       "motion": "none",
     },
     "chart": {
@@ -358,9 +357,8 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
   "icons": undefined,
   "params": {
     "accordion": {
-      "container": "divided",
-      "marker": "chevron",
-      "markerPosition": "trailing",
+      "layout": "divided",
+      "marker": "trailing-chevron",
       "motion": "none",
     },
     "chart": {

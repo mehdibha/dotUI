@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       // container's inner radius and the thead must stay filter-free.
       header: "sticky top-0 z-10",
       column: [
-        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden",
+        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
         "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
@@ -37,7 +37,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) [div]:h-full",
+        "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-selected data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/70 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/70",
         "focus-visible:bg-selected/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
@@ -118,15 +118,6 @@ const { useStyles, styles } = createStyles(tableMeta, {
     },
   },
   params: {
-    separation: {
-      lines: {
-        slots: { row: "border-b last:border-b-0" },
-      },
-      striped: {
-        slots: { row: "odd:bg-muted/40" },
-      },
-      plain: {},
-    },
     /* The plain header blurs the rows scrolling under it; filled is opaque,
        so it needs no blur. */
     header: {
@@ -147,6 +138,10 @@ const { useStyles, styles } = createStyles(tableMeta, {
           chromeColumn: "bg-muted",
         },
       },
+    },
+    headerLabel: {
+      strong: { slots: { column: "text-fg" } },
+      muted: { slots: { column: "text-fg-muted" } },
     },
   },
 })
