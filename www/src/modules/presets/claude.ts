@@ -8,11 +8,10 @@ export const claude = definePreset({
   inspiredBy: "Claude",
   diff: {
     // Color
-    // Clay is the identity; actions are #0b0b0b ink.
-    brand: "#d97757",
+    // CDS role-accent #2a78d6 paints checks, links, focus and accent badges;
+    // clay lives only in the logo, so in the swatch. Actions are #0b0b0b ink.
+    brand: "#2a78d6",
     buttonColor: "neutral",
-    // CDS role-accent is blue #2a78d6: checks, radios, switches, focus.
-    selectionSeed: "#2a78d6",
     successSeed: "#009300",
     warningSeed: "#fab219",
     dangerSeed: "#d03b3b",
@@ -86,7 +85,6 @@ export const claude = definePreset({
     menuArrows: "none",
     // The 672px palette: a borderless 56px search bar over 36px rows.
     menuSearch: "bar",
-    menuScale: "large",
 
     // Dialogs
     dialogBackdrop: "scrim",
@@ -98,8 +96,6 @@ export const claude = definePreset({
     tabsPill: "tone",
     navItemWeight: "regular",
     linkUnderline: "always",
-    // Links are blue #184f95; accent would paint them clay.
-    linkColor: "neutral",
 
     // Feedback
     badgeStyle: "soft",
