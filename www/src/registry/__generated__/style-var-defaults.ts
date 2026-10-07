@@ -45,6 +45,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-empty-radius": "var(--studio-radius-card)",
 	"--studio-font-weight-label": "var(--font-weight-medium)",
 	"--studio-group-radius": "var(--studio-radius-control)",
+	"--studio-indicator-edge": "var(--color-border-control)",
 	"--studio-input-multiline-radius": "var(--studio-radius-field)",
 	"--studio-input-radius": "var(--studio-radius-control)",
 	"--studio-input-state-duration": "150ms",

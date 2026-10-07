@@ -458,6 +458,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				chartPalette: "vivid",
 				scopes: {
 					checkbox: "neutral",
+					"choice-card": "neutral",
 					calendar: "neutral",
 					"range-calendar": "neutral",
 					"time-picker-columns": "neutral",
@@ -1096,7 +1097,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				primary: "accent",
 				selection: "neutral",
 				overrides: {
-					"color-border-focus": { palette: "neutral", job: "solid" },
+					"color-border-focus": { palette: "neutral", job: "text" },
 					"color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 				},
 			},
@@ -1500,7 +1501,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-detail": "var(--radius-xs)",
 				"--studio-radius-field": "var(--radius-sm)",
 				"--card-border": "transparent",
-				"--overlay-border": "light-dark(transparent, var(--color-border))",
+				"--overlay-border": "transparent",
 				"--shadow-card":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-popover":
@@ -1547,7 +1548,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				preserveSeed: true,
 				primary: "accent",
 				overrides: {
-					"color-border-focus": { palette: "neutral", job: "solid" },
+					"color-border-focus": { palette: "neutral", job: "text" },
 					"color-border-focus-muted": { palette: "neutral", job: "ui-active" },
 				},
 				scopes: { slider: "neutral" },
@@ -1973,7 +1974,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-container": "var(--radius-md)",
 				"--studio-radius-inline-item": "0",
 				"--card-border": "transparent",
-				"--overlay-border": "light-dark(transparent, var(--color-border))",
+				"--overlay-border": "transparent",
 				"--shadow-card":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-popover":
@@ -2544,7 +2545,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-container": "0",
 				"--studio-radius-inline-item": "0",
 				"--card-border": "transparent",
-				"--overlay-border": "light-dark(transparent, var(--color-border))",
+				"--overlay-border": "transparent",
 				"--shadow-popover":
 					"0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
 				"--shadow-modal":
@@ -2581,6 +2582,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				scopes: {
 					checkbox: "neutral",
 					radio: "neutral",
+					"choice-card": "neutral",
 					calendar: "neutral",
 					"range-calendar": "neutral",
 					"time-picker-columns": "neutral",
