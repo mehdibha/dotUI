@@ -1,5 +1,4 @@
 import path from "node:path"
-import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
@@ -111,9 +110,10 @@ describe("list rows", () => {
         density,
         paramSelections: { rows },
       })
-      const item = [flat.slots?.item].flat(Infinity as 1).join(" ")
-      const heights = cn(item)!
-        .split(" ")
+      const heights = [flat.slots?.item]
+        .flat(Infinity as 1)
+        .join(" ")
+        .split(/\s+/)
         .filter((c) => c.startsWith("min-h-"))
       expect(heights, `${rows} ${density}`).toEqual(want[i] ? [want[i]] : [])
     }
