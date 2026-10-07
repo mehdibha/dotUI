@@ -12,7 +12,15 @@
    whole page: a back button and the page's title pin over its body, and
    going back lands where the page was left. */
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -31,9 +39,10 @@ import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import type { Chapter, ChapterPage, Studio } from "./state"
+import type { Chapter, Studio } from "./state"
 
-function ChapterBlock({
+// Re-renders with the state or its dock, never with the panel's own updates.
+const ChapterBlock = memo(function ChapterBlock({
   chapter,
   studio,
   docked,
@@ -71,12 +80,12 @@ function ChapterBlock({
       </div>
     </section>
   )
-}
+})
 
 /* Room kept past the selected chip, so the next one always peeks. */
 const STRIP_MARGIN = 32
 
-function ChapterStrip({
+const ChapterStrip = memo(function ChapterStrip({
   chapters,
   active,
   open,
@@ -158,6 +167,25 @@ function ChapterStrip({
       )}
     </div>
   )
+})
+
+// A search hit lands on its row (a sub-axis on the row that holds it).
+function flash(container: Element | null | undefined, label: string) {
+  const row = [...(container?.querySelectorAll("span") ?? [])].find(
+    (span) => span.textContent === label,
+  )
+  const target = row?.closest(".rounded-lg") ?? row
+  if (!target) return
+  target.scrollIntoView({ block: "start" })
+  target.animate(
+    {
+      boxShadow: [
+        "inset 0 0 0 1.5px var(--color-accent)",
+        "inset 0 0 0 1.5px transparent",
+      ],
+    },
+    { duration: 1200, easing: "ease-in" },
+  )
 }
 
 export function PanelPage({
@@ -175,8 +203,12 @@ export function PanelPage({
   const [pageId, setPageId] = useState<string | null>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const scrolled = useRef(0)
-  const pages: (ChapterPage & { chapter: Chapter })[] = chapters.flatMap(
-    (chapter) => (chapter.pages ?? []).map((page) => ({ ...page, chapter })),
+  const pages = useMemo(
+    () =>
+      chapters.flatMap((chapter) =>
+        (chapter.pages ?? []).map((page) => ({ ...page, chapter })),
+      ),
+    [chapters],
   )
   const page = pages.find((p) => p.id === pageId)
   // Beside the preview, tucking would only empty the column.
@@ -200,43 +232,30 @@ export function PanelPage({
       scroller.current.scrollTop = pageId ? 0 : scrolled.current
   }, [pageId])
 
-  const openPage = (id: string) => {
-    const target = pages.find((p) => p.id === id)
-    if (!target) return
-    if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
-    setActive(target.chapter.id)
-    setPageId(id)
-  }
+  const openPage = useCallback(
+    (id: string) => {
+      const target = pages.find((p) => p.id === id)
+      if (!target) return
+      if (!pageId) scrolled.current = scroller.current?.scrollTop ?? 0
+      setActive(target.chapter.id)
+      setPageId(id)
+    },
+    [pages, pageId],
+  )
 
-  // A search hit lands on its row (a sub-axis on the row that holds it).
-  const flash = (container: Element | null | undefined, label: string) => {
-    const row = [...(container?.querySelectorAll("span") ?? [])].find(
-      (span) => span.textContent === label,
-    )
-    const target = row?.closest(".rounded-lg") ?? row
-    if (!target) return
-    target.scrollIntoView({ block: "start" })
-    target.animate(
-      {
-        boxShadow: [
-          "inset 0 0 0 1.5px var(--color-accent)",
-          "inset 0 0 0 1.5px transparent",
-        ],
-      },
-      { duration: 1200, easing: "ease-in" },
-    )
-  }
-
-  const dock = (id: string, axis?: string) => {
-    setActive(id)
-    setTucked(false)
-    setPageId(null)
-    requestAnimationFrame(() => {
-      const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
-      chapter?.scrollIntoView({ block: "start" })
-      if (axis) flash(chapter, axis.split(" › ")[0]!)
-    })
-  }
+  const dock = useCallback(
+    (id: string, axis?: string) => {
+      setActive(id)
+      setTucked(false)
+      setPageId(null)
+      requestAnimationFrame(() => {
+        const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
+        chapter?.scrollIntoView({ block: "start" })
+        if (axis) flash(chapter, axis.split(" › ")[0]!)
+      })
+    },
+    [layer],
+  )
 
   // An open docked picker leaves the chrome in view but inert: a tap there
   // lands on this layer and only closes the picker. Once it has closed (not
@@ -257,28 +276,31 @@ export function PanelPage({
     })
   }
 
-  const reveal = (id: string, axis?: string) => {
-    // "Buttons › Style" names a page and a row on it.
-    const [first, label] = axis?.split(" › ") ?? []
-    const target = pages.find((p) => p.chapter.id === id && p.label === first)
-    if (target) {
-      setTucked(false)
-      openPage(target.id)
-      if (label)
-        requestAnimationFrame(() =>
-          flash(layer?.querySelector(`[data-page="${target.id}"]`), label),
-        )
-      return
-    }
-    if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
-    setPageId(null)
-    // After an open page has given way to the chapters.
-    requestAnimationFrame(() =>
-      layer
-        ?.querySelector(`[data-chapter="${id}"]`)
-        ?.scrollIntoView({ block: "start" }),
-    )
-  }
+  const reveal = useCallback(
+    (id: string, axis?: string) => {
+      // "Buttons › Style" names a page and a row on it.
+      const [first, label] = axis?.split(" › ") ?? []
+      const target = pages.find((p) => p.chapter.id === id && p.label === first)
+      if (target) {
+        setTucked(false)
+        openPage(target.id)
+        if (label)
+          requestAnimationFrame(() =>
+            flash(layer?.querySelector(`[data-page="${target.id}"]`), label),
+          )
+        return
+      }
+      if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
+      setPageId(null)
+      // After an open page has given way to the chapters.
+      requestAnimationFrame(() =>
+        layer
+          ?.querySelector(`[data-chapter="${id}"]`)
+          ?.scrollIntoView({ block: "start" }),
+      )
+    },
+    [pages, openPage, layer, dock],
+  )
 
   return (
     <PanelNav.Provider value={openPage}>

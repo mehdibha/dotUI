@@ -40,7 +40,7 @@ import {
   DialTrigger,
   ModifiedDot,
 } from "../dial"
-import { selectionKey, useCurrent } from "../selection"
+import { useSystemKey } from "../selection"
 import type { Studio, StudioState } from "../state"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
@@ -125,8 +125,7 @@ export function SurfacesRow({
   const { state, set, setState } = studio
   // The light page Grouped took, given back when Layers leaves it — kept per
   // design system; editing a view keeps its key.
-  const { doc, view } = useCurrent()
-  const key = doc ? `system:${doc.id}` : selectionKey(view)
+  const key = useSystemKey()
   const [memory, setMemory] = useState<{ key: string; page?: number }>()
   const before = memory?.key === key ? memory.page : undefined
   const { style, exact } = surfaceStyle(state)

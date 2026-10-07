@@ -9,16 +9,24 @@ import type { StudioState } from "./axes"
 import type { PreviewAssets } from "./preset/iframe-sync"
 
 const SETTLE_MS = 50
-const LIFT = ["pointerup", "pointercancel"] as const
+const LIFT = ["pointerup", "pointercancel", "lostpointercapture"] as const
+// Where a release can go missing: a context menu takes it, or the page loses
+// focus or visibility mid-press.
+const LOSE = ["blur", "contextmenu", "visibilitychange"] as const
 
 let live: StudioState | null = null
 let settleTimer: ReturnType<typeof setTimeout> | undefined
 let capture: ((next: StudioState | null) => void) | undefined
 // Hovers fire mid-drag (RAC sliders don't capture the pointer): drags win.
 let dragging = false
+// The preview shows a drag's tick, or the commit or drop that ends it.
+let fromDrag = false
 // Pointers down: a drag needs one; keys and assistive tech step and commit.
 const held = new Set<number>()
 const listeners = new Set<() => void>()
+
+// After the release's own handlers: a drag that didn't commit drops.
+const released = () => setTimeout(() => dragging && !held.size && clearLive())
 
 if (typeof window !== "undefined") {
   window.addEventListener("pointerdown", (e) => held.add(e.pointerId), true)
@@ -27,11 +35,16 @@ if (typeof window !== "undefined") {
       type,
       (e) => {
         held.delete(e.pointerId)
-        // After the release's own handlers: a drag that didn't commit drops.
-        setTimeout(() => dragging && !held.size && clearLive())
+        released()
       },
       true,
     )
+  // Not capturing: an element's blur would reach a capturing listener.
+  for (const type of LOSE)
+    window.addEventListener(type, () => {
+      held.clear()
+      released()
+    })
 }
 
 function show(next: StudioState | null) {
@@ -42,6 +55,10 @@ function show(next: StudioState | null) {
 }
 
 export const getLive = () => live
+
+/** Whether the preview shows a drag's tick, or the commit or drop that
+ *  ends it: those paint at once. */
+export const isDragPreview = () => fromDrag
 
 export function subscribeLive(listener: () => void) {
   listeners.add(listener)
@@ -55,6 +72,7 @@ export const useLive = () =>
 
 /** Drops the overlay, and any preview about to show, at once. */
 export function clearLive() {
+  fromDrag = dragging
   dragging = false
   show(null)
 }
@@ -67,10 +85,16 @@ export function clearSettled() {
 /** Shows `next` over the committed design (null: the committed design);
  *  with `settle`, once nothing replaces it for SETTLE_MS. */
 export function showLive(next: StudioState | null, { settle = false } = {}) {
-  if (!settle) return show(next)
+  if (!settle) {
+    fromDrag = false
+    return show(next)
+  }
   if (dragging) return
   clearTimeout(settleTimer)
-  settleTimer = setTimeout(() => show(next), SETTLE_MS)
+  settleTimer = setTimeout(() => {
+    fromDrag = false
+    show(next)
+  }, SETTLE_MS)
 }
 
 /** What `run` commits through edit(): undefined if it doesn't edit, null if
@@ -95,7 +119,7 @@ export function previewNow(run: () => void) {
   if (!held.size) return run()
   const next = captured(run)
   if (next === undefined) return
-  dragging = true
+  dragging = fromDrag = true
   show(next)
 }
 

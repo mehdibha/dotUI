@@ -68,6 +68,12 @@ async function load() {
   const other = element(popover)
   const stop = preview.watchPopover(popover as unknown as HTMLElement)
   const props = (px: number) => preview.optionPreviewProps(true, run(px))
+  /** `props` from a render that committed on `target`. */
+  const rendered = (target: FakeElement, px: number) => {
+    const next = props(px)
+    next.ref?.(target as unknown as Element)
+    return next
+  }
   const on = (target: FakeElement) =>
     ({ target, currentTarget: target }) as never
   const move = (pointerType = "mouse") =>
@@ -83,6 +89,7 @@ async function load() {
     other,
     stop,
     props,
+    rendered,
     on,
     move,
   }
@@ -114,13 +121,21 @@ describe("hover", () => {
   })
 
   it("waits for the pointer to move: a popover opens under a still one", async () => {
-    const { shown, option, props, on, move } = await load()
-    props(7).onHoverStart?.(on(option))
+    const { shown, option, rendered, on, move } = await load()
+    rendered(option, 7).onHoverStart?.(on(option))
     expect(shown()).toBeNull()
     move("touch")
     expect(shown()).toBeNull()
     move()
     expect(shown()).toBe(7)
+  })
+
+  it("replays what the option commits now, not what it did when hovered", async () => {
+    const { shown, option, rendered, on, move } = await load()
+    rendered(option, 7).onHoverStart?.(on(option))
+    rendered(option, 9)
+    move()
+    expect(shown()).toBe(9)
   })
 
   it("forgets the option the pointer left before moving", async () => {

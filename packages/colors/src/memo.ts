@@ -38,14 +38,17 @@ export function memoize<A extends unknown[], T>(
   }
 }
 
-/** Every leaf of `value`, object keys sorted so field order never matters. */
+/** Every leaf of `value`, object keys sorted so field order never matters;
+ *  strings quoted, so no value spells another. */
 function keyOf(value: unknown): string {
-  if (typeof value !== "object" || value === null) return String(value)
+  if (typeof value === "string") return JSON.stringify(value)
+  if (typeof value !== "object" || value === null)
+    return Object.is(value, -0) ? "-0" : String(value)
   if (Array.isArray(value)) return `[${value.map(keyOf).join()}]`
   const record = value as Record<string, unknown>
   const fields = Object.keys(record)
     .sort()
-    .map((k) => `${k}:${keyOf(record[k])}`)
+    .map((k) => `${JSON.stringify(k)}:${keyOf(record[k])}`)
   return `{${fields.join()}}`
 }
 

@@ -341,3 +341,26 @@ test("memoize keys on argument values, evicts the oldest, freezes", () => {
   get(1, [2])
   expect(computed).toBe(5)
 })
+
+test("memoize keys never collide across types or separators", () => {
+  const memo = memoize(64, (value: unknown) => ({ value }))
+  const distinct: unknown[] = [
+    1,
+    "1",
+    null,
+    "null",
+    undefined,
+    "undefined",
+    true,
+    "true",
+    0,
+    -0,
+    { a: "1,b:2" },
+    { a: "1", b: "2" },
+    { "a:1,b": 2 },
+    { a: 1, b: 2 },
+    ["1,2"],
+    ["1", "2"],
+  ]
+  for (const value of distinct) expect(memo(value).value).toBe(value)
+})

@@ -30,10 +30,15 @@ class FakeWorker extends EventTarget {
 }
 
 const color = (accent: string): ColorConfig => ({ v: 2, seeds: { accent } })
+const done = () => vi.fn<(css: string) => void>()
 
 async function load() {
   vi.resetModules()
-  return import("./theme-css-worker")
+  const module = await import("./theme-css-worker")
+  /** A live preview's request. */
+  const later = (c: ColorConfig, done: (css: string) => void) =>
+    module.requestThemeCss(c, true, done)
+  return { ...module, later }
 }
 
 beforeEach(() => {
@@ -44,18 +49,18 @@ beforeEach(() => {
 
 afterEach(() => vi.unstubAllGlobals())
 
-describe("themeCssLater", () => {
+describe("requestThemeCss", () => {
   it("computes in a worker, once, and caches the result", async () => {
-    const { themeCssLater, themeCssNow } = await load()
+    const { later, themeCssNow } = await load()
     const done = vi.fn()
-    themeCssLater(color("#111111"), done)
+    later(color("#111111"), done)
     expect(done).not.toHaveBeenCalled()
     const [worker] = FakeWorker.instances
     worker!.reply()
     expect(done).toHaveBeenCalledWith("worker:#111111")
 
     const again = vi.fn()
-    themeCssLater(color("#111111"), again)
+    later(color("#111111"), again)
     expect(again).toHaveBeenCalledWith("worker:#111111")
     expect(themeCssNow(color("#111111"))).toBe("worker:#111111")
     expect(worker!.posted).toHaveLength(1)
@@ -64,11 +69,11 @@ describe("themeCssLater", () => {
   })
 
   it("computes one at a time, the newest waiting request next", async () => {
-    const { themeCssLater } = await load()
+    const { later } = await load()
     const [a, b, c] = [vi.fn(), vi.fn(), vi.fn()]
-    themeCssLater(color("#aaaaaa"), a)
-    themeCssLater(color("#bbbbbb"), b)
-    themeCssLater(color("#cccccc"), c)
+    later(color("#aaaaaa"), a)
+    later(color("#bbbbbb"), b)
+    later(color("#cccccc"), c)
     const [worker] = FakeWorker.instances
     expect(worker!.posted.map((x) => x.seeds.accent)).toEqual(["#aaaaaa"])
 
@@ -84,12 +89,12 @@ describe("themeCssLater", () => {
   })
 
   it("shares a computation already on its way", async () => {
-    const { themeCssLater } = await load()
+    const { later } = await load()
     const [first, second, third] = [vi.fn(), vi.fn(), vi.fn()]
-    themeCssLater(color("#aaaaaa"), first)
-    themeCssLater(color("#bbbbbb"), vi.fn())
-    themeCssLater(color("#aaaaaa"), second)
-    themeCssLater(color("#bbbbbb"), third)
+    later(color("#aaaaaa"), first)
+    later(color("#bbbbbb"), vi.fn())
+    later(color("#aaaaaa"), second)
+    later(color("#bbbbbb"), third)
     const [worker] = FakeWorker.instances
     worker!.reply()
     worker!.reply()
@@ -100,26 +105,55 @@ describe("themeCssLater", () => {
   })
 
   it("computes on the main thread once the worker fails", async () => {
-    const { themeCssLater } = await load()
+    const { later } = await load()
     const [a, b, c] = [vi.fn(), vi.fn(), vi.fn()]
-    themeCssLater(color("#aaaaaa"), a)
-    themeCssLater(color("#bbbbbb"), b)
+    later(color("#aaaaaa"), a)
+    later(color("#bbbbbb"), b)
     const [worker] = FakeWorker.instances
     worker!.fail()
     expect(worker!.terminate).toHaveBeenCalled()
     expect(a).toHaveBeenCalledWith("css:#aaaaaa")
     expect(b).toHaveBeenCalledWith("css:#bbbbbb")
 
-    themeCssLater(color("#cccccc"), c)
+    later(color("#cccccc"), c)
     expect(c).toHaveBeenCalledWith("css:#cccccc")
     expect(FakeWorker.instances).toHaveLength(1)
   })
 
+  it("has a commit wait for the worker job computing its color", async () => {
+    const { requestThemeCss } = await load()
+    const [running, queued] = [done(), done()]
+    requestThemeCss(color("#aaaaaa"), true, done())
+    requestThemeCss(color("#bbbbbb"), true, done())
+    requestThemeCss(color("#aaaaaa"), false, running)
+    requestThemeCss(color("#bbbbbb"), false, queued)
+    expect(themeCss).not.toHaveBeenCalled()
+    const [worker] = FakeWorker.instances
+    worker?.reply()
+    expect(running).toHaveBeenCalledWith("worker:#aaaaaa")
+    expect(queued).not.toHaveBeenCalled()
+    worker?.reply()
+    expect(queued).toHaveBeenCalledWith("worker:#bbbbbb")
+    expect(themeCss).not.toHaveBeenCalled()
+  })
+
+  it("computes a commit at once when no job has its color", async () => {
+    const { requestThemeCss } = await load()
+    const [busy, commit] = [done(), done()]
+    requestThemeCss(color("#aaaaaa"), true, busy)
+    requestThemeCss(color("#cccccc"), false, commit)
+    expect(commit).toHaveBeenCalledWith("css:#cccccc")
+    const [worker] = FakeWorker.instances
+    expect(worker?.posted).toHaveLength(1)
+    worker?.reply()
+    expect(busy).toHaveBeenCalledWith("worker:#aaaaaa")
+  })
+
   it("computes at once where workers don't exist", async () => {
     vi.stubGlobal("Worker", undefined)
-    const { themeCssLater } = await load()
+    const { later } = await load()
     const done = vi.fn()
-    themeCssLater(color("#aaaaaa"), done)
+    later(color("#aaaaaa"), done)
     expect(done).toHaveBeenCalledWith("css:#aaaaaa")
   })
 })

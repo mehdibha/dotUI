@@ -72,8 +72,8 @@ interface PresetPickerProps {
   previewMode?: "light" | "dark"
   /** Show the hover flyout beside the popover on desktop. Off by default. */
   withPreview?: boolean
-  /** Called with the row the pointer or keyboard highlight rests on (desktop),
-   *  then null once none does or the picker closes. */
+  /** Called with the row the pointer or an arrow-moved highlight rests on
+   *  (desktop), then null once none does or the picker closes. */
   onPreview?: (id: string | null) => void
   /** A row's ⋯ menu, as a MenuContent. It renders outside the list, so the
    *  search never filters it. */
@@ -209,6 +209,9 @@ function PresetPickerContent({
   // collection may highlight a row on open, and until then the flyout should
   // show the current selection, not the first row.
   const navigatedRef = useRef(false)
+  // The design preview follows the highlight only once up/down arrows move
+  // it: typing moves it too, onto a first match the user never pointed at.
+  const arrowedRef = useRef(false)
   const [previewId, setPreviewId] = useState<string | null>(selectedId ?? null)
   // The flyout lives and dies with the hover: it opens on a tooltip-style
   // delay — passing over a row on the way to a click shouldn't flash a panel —
@@ -239,7 +242,7 @@ function PresetPickerContent({
     if (via === "focus" && !navigatedRef.current) return
     activeRowRef.current = id
     setPreviewId(id)
-    onPreviewRef.current?.(id)
+    onPreviewRef.current?.(via === "hover" || arrowedRef.current ? id : null)
     if (closeTimerRef.current != null) {
       clearTimeout(closeTimerRef.current)
       closeTimerRef.current = null
@@ -335,6 +338,7 @@ function PresetPickerContent({
                 // Typing moves the highlight to the first match, so from here on
                 // the pane follows it.
                 navigatedRef.current = true
+                arrowedRef.current = false
               }}
             />
           </InputGroup>
@@ -444,6 +448,11 @@ function PresetPickerContent({
         className="max-h-[inherit] w-65 overflow-hidden"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
+          if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return
+          // The arrow takes over the typed highlight, even where it can't move.
+          if (!arrowedRef.current && activeRowRef.current)
+            onPreviewRef.current?.(activeRowRef.current)
+          arrowedRef.current = true
         }}
       >
         {list}

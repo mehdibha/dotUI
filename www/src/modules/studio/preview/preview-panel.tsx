@@ -37,7 +37,12 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { clearSettled, onWarmPreview, useLive } from "@/modules/studio/live"
+import {
+  clearSettled,
+  isDragPreview,
+  onWarmPreview,
+  useLive,
+} from "@/modules/studio/live"
 import {
   pingIframe,
   sendInspectorMode,
@@ -48,7 +53,7 @@ import {
   sendToIframe,
   useInspectorExitMessages,
 } from "@/modules/studio/preset"
-import type { PreviewMode } from "@/modules/studio/preset"
+import type { DesignSystemMessage, PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
 import { useDocked } from "@/modules/studio/rows"
@@ -108,12 +113,12 @@ function DesignSystemSync({
   const { state } = useCurrent()
   const live = useLive()
   const committed = useMemo(() => resolveDesignSystem(state), [state])
-  const message = useMemo(() => {
+  const message = useMemo((): DesignSystemMessage => {
     const data = live && resolveDesignSystem(live)
     // A preview that resolves to the committed design isn't one.
     return data && JSON.stringify(data) !== JSON.stringify(committed)
-      ? { data, live: true }
-      : { data: committed, live: false }
+      ? { data, live: true, drag: isDragPreview() }
+      : { data: committed, live: false, drag: isDragPreview() }
   }, [live, committed])
   const latest = useRef(message)
   const sent = useRef("")
@@ -126,15 +131,14 @@ function DesignSystemSync({
     const json = JSON.stringify(message)
     if (json === sent.current) return
     sent.current = json
-    sendToIframe(iframeRef.current, message.data, message.live)
+    sendToIframe(iframeRef.current, message)
   }, [message, iframeRef])
 
   // Its message listener can mount after the load event, so ready resends too.
   useEffect(() => {
     const iframe = iframeRef.current
     if (!iframe) return
-    const send = () =>
-      sendToIframe(iframe, latest.current.data, latest.current.live)
+    const send = () => sendToIframe(iframe, latest.current)
     iframe.addEventListener("load", send)
     const onReady = (event: MessageEvent) => {
       if (event.data?.type === "preview-ready") send()

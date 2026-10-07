@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
@@ -28,7 +28,7 @@ import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import {
-  themeCssLater,
+  requestThemeCss,
   themeCssNow,
 } from "@/modules/studio/preview/theme-css-worker"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
@@ -83,14 +83,14 @@ function warmFonts(families: string[]) {
   fontTimer = setTimeout(() => loadFontFaces(document, families), FONT_DWELL_MS)
 }
 
-// Live color changes compute their CSS off the main thread.
+// Live color changes compute their CSS off the main thread; the release
+// waits for the job already computing its color.
 const prepareThemeCss: PrepareDesignSystem<string | undefined> = (
   { data: { color }, live },
   ready,
 ) => {
-  if (!color) ready(undefined)
-  else if (live) themeCssLater(color, ready)
-  else ready(themeCssNow(color))
+  if (color) requestThemeCss(color, live, ready)
+  else ready(undefined)
 }
 
 // One hidden icon per library loads its chunk before a preview needs it.
@@ -110,13 +110,21 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
-  const [{ designSystem, themeCss }, setApplied] = useState(() => {
+  const [applied, setApplied] = useState(() => {
     const initial = resolveDesignSystem(getCurrent().state)
     return {
       designSystem: initial,
       themeCss: initial.color && themeCssNow(initial.color),
     }
   })
+  const { designSystem, themeCss } = applied
+  // What the latest apply renders toward, and its commit callback.
+  const target = useRef(applied)
+  const onCommit = useRef<() => void>(undefined)
+  useLayoutEffect(() => {
+    onCommit.current?.()
+    onCommit.current = undefined
+  }, [applied])
 
   const navigate = route.useNavigate()
 
@@ -137,13 +145,15 @@ export function PreviewPage() {
   useDesignSystemMessages(
     prepareThemeCss,
     useCallback(
-      (next: DesignSystem, css: string | undefined) =>
-        setApplied((prev) => {
-          const shared = shareDesignSystem(prev.designSystem, next)
-          return shared === prev.designSystem && css === prev.themeCss
-            ? prev
-            : { designSystem: shared, themeCss: css }
-        }),
+      (next: DesignSystem, css: string | undefined, committed: () => void) => {
+        const prev = target.current
+        const shared = shareDesignSystem(prev.designSystem, next)
+        if (shared === prev.designSystem && css === prev.themeCss)
+          return committed()
+        target.current = { designSystem: shared, themeCss: css }
+        onCommit.current = committed
+        setApplied(target.current)
+      },
       [],
     ),
   )

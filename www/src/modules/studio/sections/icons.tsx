@@ -4,7 +4,7 @@
    line sets, weight on Phosphor. The library picker shows a wall of glyphs
    drawn by the library under the pointer, so the pick is made by look. */
 
-import { useRef, useState } from "react"
+import { memo, useRef, useState } from "react"
 import { mergeProps } from "react-aria"
 import type { ListBoxItemProps } from "react-aria-components"
 import {
@@ -130,7 +130,7 @@ export function IconsPreview({ state }: { state: StudioState }) {
 /** A select that stays open on pick: the libraries by name beside a wall of
  *  every specimen drawn by the one under the pointer or keyboard focus — the
  *  selected one at rest. The preview follows too, its chunks warmed on open. */
-function IconLibraryRow({
+const IconLibraryRow = memo(function IconLibraryRow({
   label,
   value,
   onChange,
@@ -219,7 +219,7 @@ function IconLibraryRow({
       </PanelPopoverTitle.Provider>
     </RacSelect>
   )
-}
+})
 
 function LibraryItem({
   id,

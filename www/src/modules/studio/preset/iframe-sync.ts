@@ -15,8 +15,18 @@ export interface PreviewAssets {
   icons?: string[]
 }
 
+/** The design system the preview shows. */
+export interface DesignSystemMessage {
+  data: DesignSystem
+  /** A drag or hover preview, not the committed design. */
+  live: boolean
+  /** A drag's tick, or the commit or drop that ends it: painted at once.
+   *  Anything else renders interruptibly. */
+  drag: boolean
+}
+
 type ParentToIframeMessage =
-  | { type: "design-system"; data: DesignSystem; live: boolean }
+  | ({ type: "design-system" } & DesignSystemMessage)
   | { type: "preview-mode"; mode: PreviewMode }
   | { type: "preview-ping" }
   | { type: "preview-navigate"; slug: string }
@@ -31,15 +41,13 @@ type IframeToParentMessage =
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
-/** `live`: a drag or hover preview, not the committed design. */
 export function sendToIframe(
   iframe: HTMLIFrameElement | null,
-  data: DesignSystem,
-  live: boolean,
+  message: DesignSystemMessage,
 ) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: "design-system", data, live } satisfies ParentToIframeMessage,
+    { type: "design-system", ...message } satisfies ParentToIframeMessage,
     window.location.origin,
   )
 }
@@ -152,28 +160,33 @@ function onNextFrame(fn: () => void) {
   return cancel
 }
 
-export interface DesignSystemMessage {
-  data: DesignSystem
-  live: boolean
-}
-
 /** Hands `ready` what applying `message` needs, now or later. */
 export type PrepareDesignSystem<T> = (
   message: DesignSystemMessage,
   ready: (prepared: T) => void,
 ) => void
 
-/** Applies only the newest prepared design system, painted in the next frame.
- *  Returns the cleanup. */
+/** Renders `data`, then calls `committed` from the commit (at once if
+ *  nothing changes). */
+export type ApplyDesignSystem<T> = (
+  data: DesignSystem,
+  prepared: T,
+  committed: () => void,
+) => void
+
+/** Applies only the newest prepared design system, one at a time, from the
+ *  next frame. Returns the cleanup. */
 export function listenDesignSystemMessages<T>(
   prepare: PrepareDesignSystem<T>,
-  apply: (data: DesignSystem, prepared: T) => void,
+  apply: ApplyDesignSystem<T>,
 ) {
   const root = document.documentElement
   let pending: { message: DesignSystemMessage; prepared: T } | null = null
   let received = 0
   // The newest message prepared: a slower, older one never replaces it.
   let accepted = 0
+  // Until the apply in flight commits, newer messages wait in `pending`.
+  let applying = false
   let readyAt = 0
   let cancelApply: (() => void) | undefined
   let cancelUnlive: (() => void) | undefined
@@ -186,19 +199,27 @@ export function listenDesignSystemMessages<T>(
     const { message, prepared } = next
     cancelUnlive?.()
     if (message.live) root.setAttribute(LIVE_ATTR, "")
+    applying = true
     const start = performance.now()
-    flushSync(() => apply(message.data, prepared))
-    // Restyles now, so the measure includes it.
-    void root.offsetHeight
-    const end = performance.now()
-    readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
-    // A frame later, so the commit itself doesn't animate.
-    if (!message.live && root.hasAttribute(LIVE_ATTR))
-      cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
+    const committed = () => {
+      // Restyles now, so the measure includes it.
+      void root.offsetHeight
+      const end = performance.now()
+      readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
+      applying = false
+      // A frame later, so the commit itself doesn't animate.
+      if (!message.live && root.hasAttribute(LIVE_ATTR))
+        cancelUnlive = onNextFrame(() => root.removeAttribute(LIVE_ATTR))
+      schedule()
+    }
+    const run = () => apply(message.data, prepared, committed)
+    // A transition yields to the panel; under a drag's stream it would starve.
+    if (message.drag) flushSync(run)
+    else React.startTransition(run)
   }
 
   const schedule = () => {
-    if (cancelApply) return
+    if (cancelApply || applying) return
     const wait = readyAt - performance.now()
     if (wait <= 0) {
       cancelApply = onNextFrame(flush)
@@ -216,8 +237,17 @@ export function listenDesignSystemMessages<T>(
       event.data?.type !== "design-system"
     )
       return
-    const message = { data: event.data.data, live: event.data.live === true }
+    const message = {
+      data: event.data.data,
+      live: event.data.live === true,
+      drag: event.data.drag === true,
+    }
     const id = ++received
+    // A commit is final: older previews still on their way aren't worth a paint.
+    if (!message.live) {
+      accepted = id - 1
+      pending = null
+    }
     prepare(message, (prepared) => {
       if (id <= accepted) return
       accepted = id
@@ -239,7 +269,7 @@ export function listenDesignSystemMessages<T>(
 /** Inside the preview iframe: see `listenDesignSystemMessages`. */
 export function useDesignSystemMessages<T>(
   prepare: PrepareDesignSystem<T>,
-  apply: (data: DesignSystem, prepared: T) => void,
+  apply: ApplyDesignSystem<T>,
 ) {
   const handlers = React.useRef({ prepare, apply })
 
@@ -251,7 +281,8 @@ export function useDesignSystemMessages<T>(
     if (!isInIframe()) return
     return listenDesignSystemMessages<T>(
       (message, ready) => handlers.current.prepare(message, ready),
-      (data, prepared) => handlers.current.apply(data, prepared),
+      (data, prepared, committed) =>
+        handlers.current.apply(data, prepared, committed),
     )
   }, [])
 }

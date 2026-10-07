@@ -16,9 +16,11 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-/** A pointer going down or up, as the window's capture phase sees it. */
-const pointer = (type: "pointerdown" | "pointerup", pointerId = 1) =>
-  window.dispatchEvent(Object.assign(new Event(type), { pointerId }))
+/** A pointer event, as the window's capture phase sees it. */
+const pointer = (
+  type: "pointerdown" | "pointerup" | "lostpointercapture",
+  pointerId = 1,
+) => window.dispatchEvent(Object.assign(new Event(type), { pointerId }))
 
 async function load() {
   const live = await import("./live")
@@ -172,6 +174,46 @@ describe("drag", () => {
     live.previewSettled(onChange(5))
     vi.runAllTimers()
     expect(shown()).toBe(5)
+  })
+
+  it.each(["contextmenu", "blur", "visibilitychange"])(
+    "forgets the pressed pointers on %s, whose release can go missing",
+    async (type) => {
+      const { live, selection, onChange, shown } = await load()
+      live.previewNow(onChange(7))
+      window.dispatchEvent(new Event(type))
+      vi.runAllTimers()
+      expect(shown()).toBeNull()
+      live.previewNow(onChange(5))
+      expect(shown()).toBeNull()
+      expect(selection.getCurrent().state.radiusPx).toBe(5)
+    },
+  )
+
+  it("forgets a pointer whose capture is lost", async () => {
+    const { live, selection, onChange } = await load()
+    pointer("lostpointercapture")
+    live.previewNow(onChange(5))
+    expect(selection.getCurrent().state.radiusPx).toBe(5)
+  })
+
+  it("tells a drag's preview, and the commit ending it, from the rest", async () => {
+    const { live, onChange } = await load()
+    live.previewNow(onChange(7))
+    expect(live.isDragPreview()).toBe(true)
+    onChange(7)()
+    expect(live.isDragPreview()).toBe(true)
+    live.previewSettled(onChange(5))
+    vi.runAllTimers()
+    expect(live.getLive()?.radiusPx).toBe(5)
+    expect(live.isDragPreview()).toBe(false)
+    live.previewNow(onChange(6))
+    pointer("pointerup")
+    vi.runAllTimers()
+    expect(live.getLive()).toBeNull()
+    expect(live.isDragPreview()).toBe(true)
+    onChange(4)()
+    expect(live.isDragPreview()).toBe(false)
   })
 
   it("keeps its preview when the committed design changes elsewhere", async () => {

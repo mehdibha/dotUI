@@ -34,15 +34,16 @@ function remember(key: string, css: string) {
   if (cache.size > MAX_ENTRIES && oldest !== undefined) cache.delete(oldest)
 }
 
+function compute(key: string, color: ColorConfig) {
+  const css = themeCss(color)
+  remember(key, css)
+  return css
+}
+
 /** `themeCss(color)`, from the cache or computed now. */
 export function themeCssNow(color: ColorConfig): string {
   const key = colorKey(color)
-  let css = cached(key)
-  if (css === undefined) {
-    css = themeCss(color)
-    remember(key, css)
-  }
-  return css
+  return cached(key) ?? compute(key, color)
 }
 
 function finish(job: Job, css: string) {
@@ -86,14 +87,21 @@ function runNext() {
   }
 }
 
-/** `themeCss(color)` off the main thread; `done` gets it unless a newer
- *  request takes its turn first. One computes at a time, the newest next. */
-export function themeCssLater(color: ColorConfig, done: (css: string) => void) {
+/** `themeCss(color)` for `done`: cached, or shared with the worker job
+ *  computing it. Otherwise a live request goes to the worker, one computing
+ *  at a time and the newest waiting next (a replaced `done` never runs), and
+ *  a commit computes now. */
+export function requestThemeCss(
+  color: ColorConfig,
+  live: boolean,
+  done: (css: string) => void,
+) {
   const key = colorKey(color)
   const css = cached(key)
   if (css !== undefined) return done(css)
   const pending = [running, queued].find((job) => job?.key === key)
   if (pending) return void pending.done.push(done)
+  if (!live) return done(compute(key, color))
   queued = { key, color, done: [done] }
   if (!running) runNext()
 }

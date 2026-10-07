@@ -6,7 +6,7 @@
    fills the slot, which lasts while it differs from its view: Reset, Save,
    or opening anything else, in any tab, drops it silently. */
 
-import { useMemo } from "react"
+import { useMemo, useSyncExternalStore } from "react"
 
 import { createPersistedStore } from "@/lib/persisted-store"
 import { getPreset, ORIGIN } from "@/modules/presets"
@@ -168,6 +168,27 @@ export function useCurrent(): Current {
   const ws = workspace.useWorkspace()
   return useMemo(() => describe(sel, ws), [sel, ws])
 }
+
+function subscribeCurrent(onChange: () => void) {
+  const offSelection = store.subscribe(onChange)
+  const offWorkspace = workspace.subscribe(onChange)
+  return () => {
+    offSelection()
+    offWorkspace()
+  }
+}
+
+const systemKey = ({ doc, view }: Current) =>
+  doc ? `system:${doc.id}` : selectionKey(view)
+
+/** The key of the design system on screen, the slot's being its view's;
+ *  re-renders only when it changes. */
+export const useSystemKey = () =>
+  useSyncExternalStore(
+    subscribeCurrent,
+    () => systemKey(getCurrent()),
+    () => selectionKey(ORIGIN_VIEW),
+  )
 
 /** Edits the design on screen: a system saves itself; a view fills the
  *  slot, which empties once the edit lands back on the view. A preview

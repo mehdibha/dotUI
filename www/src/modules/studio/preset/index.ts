@@ -1,5 +1,6 @@
 export { DEFAULTS } from "./defaults"
 export {
+  type DesignSystemMessage,
   pingIframe,
   type PreviewAssets,
   type PreviewMode,

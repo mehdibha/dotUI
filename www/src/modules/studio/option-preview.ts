@@ -19,8 +19,9 @@ const moved = new WeakSet<Element>()
 // Focus that Tab moves previews nothing.
 let lastKey = ""
 // The option a still pointer rests on as its popover opens: it previews once
-// the pointer moves.
-let resting: { option: Element; run: () => void } | null = null
+// the pointer moves, with the run its latest render gave it.
+let resting: Element | null = null
+const runs = new WeakMap<Element, () => void>()
 // The option whose keyboard focus previews: leaving it withdraws the preview.
 let focused: Element | null = null
 
@@ -63,7 +64,8 @@ export function watchPopover(popover: HTMLElement | null) {
     if (e.pointerType !== "mouse" && e.pointerType !== "pen") return
     moved.add(popover)
     popover.removeEventListener("pointermove", onPointerMove)
-    if (resting && popover.contains(resting.option)) hover(resting.run)
+    const run = resting && popover.contains(resting) && runs.get(resting)
+    if (run) hover(run)
   }
   window.addEventListener("keydown", onKeyDown, true)
   popover.addEventListener("pointermove", onPointerMove)
@@ -72,12 +74,13 @@ export function watchPopover(popover: HTMLElement | null) {
     popover.removeEventListener("pointermove", onPointerMove)
     keyed.delete(popover)
     moved.delete(popover)
-    if (resting && popover.contains(resting.option)) resting = null
+    if (resting && popover.contains(resting)) resting = null
     clearLive()
   }
 }
 
 export interface OptionPreviewProps {
+  ref?: (option: Element | null) => void
   onHoverStart?: (e: HoverEvent) => void
   onHoverEnd?: (e: HoverEvent) => void
   onFocus?: (e: FocusEvent<Element>) => void
@@ -92,12 +95,15 @@ export function optionPreviewProps(
 ): OptionPreviewProps {
   if (!enabled || !run) return {}
   return {
+    ref: (option) => {
+      if (option) runs.set(option, run)
+    },
     onHoverStart: (e) => {
       if (within(moved, e.target)) hover(run)
-      else resting = { option: e.target, run }
+      else resting = e.target
     },
     onHoverEnd: (e) => {
-      if (resting?.option === e.target) resting = null
+      if (resting === e.target) resting = null
     },
     onFocus: (e) => {
       if (
