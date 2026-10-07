@@ -287,6 +287,21 @@ describe("seed intake (D7)", () => {
     ).toBe(true)
   })
 
+  test("solidInk white leaves every other solid's label to the solver", () => {
+    const owl = {
+      seeds: { accent: "#58cc02", warning: "#fab219" },
+      preserveSeed: true,
+    }
+    const auto = createTheme(owl)
+    const white = createTheme({ ...owl, solidInk: "white" })
+    for (const name of ["neutral", "success", "warning", "danger", "info"]) {
+      expect(white.light.on[name]).toEqual(auto.light.on[name])
+      expect(white.light.scales[name]).toEqual(auto.light.scales[name])
+    }
+    // Amber keeps its dark label.
+    expect(toOklch(white.light.on.warning!["700"]).l).toBeLessThan(0.5)
+  })
+
   test("solidInk white needs a pinned seed", () => {
     const fitted = createTheme({ seeds: { accent: "#58cc02" } })
     expect(
