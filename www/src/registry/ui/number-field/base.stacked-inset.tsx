@@ -48,9 +48,7 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// Polaris: two inset segments stacked at the end, no divider. The input
-// spans both rows; parts are placed by slot, so the authored order never
-// matters.
+// Two inset segments stacked at the end; parts are placed by slot.
 const NumberFieldGroup = ({
   className,
   size,

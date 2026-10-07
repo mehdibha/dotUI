@@ -48,8 +48,7 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// Carbon: square stepper cells at the end of the shell, with a short rule
-// between them. Parts are placed by slot, so the authored order never matters.
+// Stepper cells at the end of the shell; parts are placed by slot.
 const NumberFieldGroup = ({
   className,
   size,

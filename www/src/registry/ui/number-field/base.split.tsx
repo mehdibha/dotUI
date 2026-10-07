@@ -48,8 +48,7 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// HeroUI: minus at the start, plus at the end, each divided by the shell's
-// edge. Parts are placed by slot, so the authored order never matters.
+// Minus at the start, plus at the end; parts are placed by slot.
 const NumberFieldGroup = ({
   className,
   size,

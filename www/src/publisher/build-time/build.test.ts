@@ -244,6 +244,17 @@ describe("transformBase", () => {
     expect(template).toContain("fieldStyles().field({")
   })
 
+  test("number-field: a component and its styles import merge into one", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "number-field/base.right-cells.tsx"),
+      componentName: "number-field",
+    })
+    expect(template.match(/from "@\/components\/ui\/input"/g)).toHaveLength(1)
+    expect(template).toContain(
+      'import { Input, inputStyles } from "@/components/ui/input"',
+    )
+  })
+
   test("toast: aliased slot bindings hoist under their alias", () => {
     const { template } = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "toast/base.tsx"),

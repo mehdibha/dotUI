@@ -48,9 +48,7 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg"
 }
 
-// Ant, Mantine, Untitled UI: a chevron column at the end, divided from the
-// input by the shell's edge. The input spans both rows; parts are placed by
-// slot, so the authored order never matters.
+// A chevron column at the end; parts are placed by slot.
 const NumberFieldGroup = ({
   className,
   size,
