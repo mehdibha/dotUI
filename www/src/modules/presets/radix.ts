@@ -13,14 +13,16 @@ export const radix = definePreset({
     successSeed: "#30a46c",
     warningSeed: "#ffc53d",
     dangerSeed: "#e5484d",
+    // Pages: #ffffff and slate-1 #111113.
     lightBg: 100,
     darkBg: 5,
 
-    // Typography: Themes ships the platform stack.
+    // Typography: Themes ships the platform stacks (Menlo/Consolas for code).
     bodyFont: "System",
+    monoFont: "System Mono",
     titleStyle: "bold",
 
-    // Icons
+    // Icons: Radix Icons aren't in the catalog; a lighter Lucide nears their 1px line.
     iconStroke: 1.5,
 
     // Shape: radius medium is 4px controls inside 8px menus and 12px dialogs.
@@ -41,9 +43,11 @@ export const radix = definePreset({
     buttonSecondary: "soft",
     segmentedSelected: "ring",
 
-    // Inputs
-    inputHover: "none",
+    // Inputs: page-colored fields, recessed in dark panels (#121314 in #18191b);
+    // the select trigger wears the same shell.
+    inputStyle: "inset",
     fieldLabel: "semibold",
+    selectTrigger: "field",
 
     // Selection
     cardSelected: "outline",
