@@ -22,6 +22,10 @@ export const stripe = definePreset({
     // Dark page #14171d.
     darkBg: 7.5,
 
+    // Surfaces
+    // The sidebar sits on the white page; only hover paints primary-25.
+    shellTone: "page",
+
     // Typography
     // Sail's base stack is the OS face at 14px.
     bodyFont: "System",
