@@ -73,10 +73,13 @@ export function resolveMenus(state: Effective): Resolved {
     rows: state.menuRows,
   }
   const [popoverTip, tooltipTip] = TIPS[state.menuArrows]!
-  // Beside a tinted selected row the neutral highlight steps back, so hover
-  // and selection never share a tone (Carbon, Polaris: hover is the lighter).
+  // Beside a neutral tinted selected row the neutral highlight steps back, so
+  // hover and selection never share a tone (Carbon, Polaris: hover is the
+  // lighter). A brand wash already sets the selection apart.
   const tokens: Record<string, string> =
-    state.menuSelectedRow === "tint" && state.menuHighlight === "neutral"
+    state.menuSelectedRow === "tint" &&
+    state.menuHighlight === "neutral" &&
+    state.selectedWash === "neutral"
       ? {
           "--studio-list-box-highlight":
             "color-mix(in oklab, var(--color-highlight) 60%, transparent)",

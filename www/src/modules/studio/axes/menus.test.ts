@@ -102,6 +102,11 @@ describe("menus axis", () => {
     expect(
       designSystemOf(parseState({ menuHighlight: "accent" })).tokens,
     ).toEqual({})
+    expect(
+      designSystemOf(
+        parseState({ menuSelectedRow: "tint", selectedWash: "brand" }),
+      ).tokens,
+    ).not.toHaveProperty("--studio-list-box-highlight")
   })
 
   it("check None pins a tinted selected row", () => {
