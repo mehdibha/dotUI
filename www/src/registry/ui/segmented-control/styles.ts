@@ -52,16 +52,16 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     slots: {
       root: "inline-flex w-fit items-center justify-center rounded-(--studio-segmented-control-radius) text-fg-muted",
       item: [
-        "relative isolate inline-flex cursor-default items-center justify-center rounded-(--studio-segmented-control-item-radius) border border-transparent whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring-outside",
+        "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--studio-segmented-control-radius)-3px)] border border-transparent whitespace-nowrap focus-reset transition-[color] duration-(--studio-segmented-control-color-duration) ease-(--studio-segmented-control-color-ease) select-ui focus-visible:focus-ring-outside",
         "text-fg-muted hover:text-fg",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor)",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
-      // The sliding pill. SelectionIndicator positions/sizes it over the selected
-      // item; the transition makes it glide. `inset-0` + `isolate` on the item sit
-      // it behind the content (which is `z-10`).
+      // The sliding pill, concentric with the track's 3px inset.
+      // SelectionIndicator positions/sizes it over the selected item; `inset-0`
+      // + `isolate` on the item sit it behind the content (which is `z-10`).
       indicator:
-        "pointer-events-none absolute inset-0 rounded-(--studio-segmented-control-item-radius) transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
+        "pointer-events-none absolute inset-0 rounded-[calc(var(--studio-segmented-control-radius)-3px)] transition-[translate,width,height] duration-(--studio-segmented-control-state-duration) ease-(--studio-segmented-control-state-ease) motion-reduce:transition-none",
       itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
     },
   },

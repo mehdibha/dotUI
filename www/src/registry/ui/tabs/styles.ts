@@ -57,8 +57,9 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       variant: {
         segmented: {
           list: "rounded-(--studio-tabs-list-radius)",
-          item: "rounded-(--studio-tabs-tab-radius) border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
-          indicator: "inset-0 rounded-(--studio-tabs-tab-radius)",
+          item: "rounded-[calc(var(--studio-tabs-list-radius)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)]",
+          indicator:
+            "inset-0 rounded-[calc(var(--studio-tabs-list-radius)-3px)]",
         },
         line: {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
