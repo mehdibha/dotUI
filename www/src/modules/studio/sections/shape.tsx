@@ -18,10 +18,9 @@ import {
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
-  STROKE_OPTIONS,
-  TRACK_OPTIONS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
+import { STROKE_OPTIONS, TRACK_OPTIONS } from "../axes/shape.meta"
 import {
   DialFolder,
   DialPopover,

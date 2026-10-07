@@ -8,7 +8,7 @@
    (folded with the color) and `weight` on `sidebar`; `weight` on
    `segmented-control`. */
 
-import { SOURCE_OPTIONS } from "./color"
+import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -31,91 +31,42 @@ export const NAVIGATION_DEFAULTS = {
   tabsPill: "same" as "same" | "tone" | "solid" | "tint" | "inverse",
 }
 
-/* Descriptions credit the systems each option is copied from. */
-export const TAB_STYLE_OPTIONS = [
-  {
-    value: "segmented",
-    label: "Segmented",
-    description: "shadcn, HeroUI, Apple HIG",
-  },
-  {
-    value: "line",
-    label: "Line",
-    description: "Material 3, Geist, Primer, Carbon, Radix Themes",
-  },
-  { value: "pill", label: "Pill", description: "Polaris, Linear, Notion" },
-]
+export const TAB_STYLE_VALUES = ["segmented", "line", "pill"] as const
 
-export const MARKER_OPTIONS = [
-  {
-    value: "fill",
-    label: "Fill",
-    description: "shadcn, Material 3, Untitled UI",
-  },
-  { value: "surface", label: "Surface", description: "Polaris" },
-  { value: "bar", label: "Bar", description: "Fluent 2, Catalyst" },
-  { value: "fill-bar", label: "Fill + bar", description: "Primer, Carbon" },
-  { value: "ink", label: "Ink only", description: "Stripe" },
-  { value: "outline", label: "Outline", description: "Duolingo" },
-]
+export const MARKER_VALUES = [
+  "fill",
+  "surface",
+  "bar",
+  "fill-bar",
+  "ink",
+  "outline",
+] as const
 
-export const WEIGHT_OPTIONS = [
-  { value: "regular", label: "Regular", description: "Geist, Airbnb" },
-  {
-    value: "regular-medium",
-    label: "Regular → Medium",
-    description: "Radix Themes, shadcn sidebar",
-  },
-  {
-    value: "regular-semibold",
-    label: "Regular → Semibold",
-    description: "Primer, Carbon",
-  },
-  {
-    value: "medium",
-    label: "Medium",
-    description: "shadcn tabs, Linear, Material 3, Notion, Supabase",
-  },
-  {
-    value: "medium-semibold",
-    label: "Medium → Semibold",
-    description: "Polaris",
-  },
-  { value: "semibold", label: "Semibold", description: "Untitled UI, Stripe" },
-  { value: "bold", label: "Bold", description: "Duolingo, Spotify" },
-]
+export const WEIGHT_VALUES = [
+  "regular",
+  "regular-medium",
+  "regular-semibold",
+  "medium",
+  "medium-semibold",
+  "semibold",
+  "bold",
+] as const
 
 // Auto: shadcn's sidebar rests a step under its medium tabs.
-export const ITEM_WEIGHT_OPTIONS = [
-  { value: "auto", label: "Auto", description: "shadcn" },
-  ...WEIGHT_OPTIONS,
-]
-
 const ITEM_WEIGHT_AUTO: Record<string, string> = {
-  ...Object.fromEntries(WEIGHT_OPTIONS.map(({ value }) => [value, value])),
+  ...Object.fromEntries(WEIGHT_VALUES.map((value) => [value, value])),
   medium: "regular-medium",
 }
 
-export const PILL_OPTIONS = [
-  {
-    value: "same",
-    label: "Same as toggles",
-    description: "Polaris, Linear, Notion",
-  },
-  { value: "tone", label: "Tone", description: "Claude" },
-  { value: "solid", label: "Solid", description: "Mantine" },
-  { value: "tint", label: "Tint", description: "Fluent 2" },
-  // Only Same as toggles reaches it: Spotify's filter chips, not its tabs.
-  { value: "inverse", label: "Inverse", description: "Spotify chips" },
-]
+export const PILL_VALUES = ["tone", "solid", "tint", "inverse"] as const
 
 export const NAVIGATION_SCHEMA: ChapterSchema<typeof NAVIGATION_DEFAULTS> = {
-  tabStyle: oneOf(TAB_STYLE_OPTIONS),
-  tabsColor: oneOf(SOURCE_OPTIONS),
-  navMarker: oneOf(MARKER_OPTIONS),
-  navWeight: oneOf(WEIGHT_OPTIONS),
-  navItemWeight: oneOf(WEIGHT_OPTIONS),
-  tabsPill: oneOf(PILL_OPTIONS.slice(1)),
+  tabStyle: oneOf(TAB_STYLE_VALUES),
+  tabsColor: oneOf(SOURCE_VALUES),
+  navMarker: oneOf(MARKER_VALUES),
+  navWeight: oneOf(WEIGHT_VALUES),
+  navItemWeight: oneOf(WEIGHT_VALUES),
+  tabsPill: oneOf(PILL_VALUES),
 }
 
 export function resolveNavigation(state: Effective): Resolved {

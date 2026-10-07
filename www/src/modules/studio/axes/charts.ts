@@ -16,24 +16,12 @@ export const CHART_DEFAULTS = {
 /* Mono = tonal shades of the brand (shadcn, Vercel); vivid / muted = hues
    spread around the brand at high (Material, Carbon) or low (Linear, Stripe
    dashboards) chroma. */
-export const PALETTE_OPTIONS = [
-  { value: "mono", label: "Mono" },
-  { value: "vivid", label: "Vivid" },
-  { value: "muted", label: "Muted" },
-]
+export const PALETTE_VALUES = ["mono", "vivid", "muted"] as const
 
-export const GRID_OPTIONS = [
-  { value: "solid", label: "Solid" },
-  { value: "dashed", label: "Dashed" },
-  { value: "none", label: "None" },
-]
+export const GRID_VALUES = ["solid", "dashed", "none"] as const
 
 // Spring is dotUI's own (react-spring's default config); Ease is recharts' 400ms tween.
-export const MOTION_OPTIONS = [
-  { value: "spring", label: "Spring", description: "Origin" },
-  { value: "ease", label: "Ease", description: "shadcn" },
-  { value: "none", label: "None" },
-]
+export const MOTION_VALUES = ["spring", "ease", "none"] as const
 
 /** The recipe's series strategy for a palette option; `undefined` is the
  *  engine's tonal default. */
@@ -42,9 +30,9 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
 }
 
 export const CHART_SCHEMA: ChapterSchema<typeof CHART_DEFAULTS> = {
-  chartPalette: oneOf(PALETTE_OPTIONS),
-  chartGrid: oneOf(GRID_OPTIONS),
-  chartMotion: oneOf(MOTION_OPTIONS),
+  chartPalette: oneOf(PALETTE_VALUES),
+  chartGrid: oneOf(GRID_VALUES),
+  chartMotion: oneOf(MOTION_VALUES),
 }
 
 export function resolveCharts(state: Effective): Resolved {

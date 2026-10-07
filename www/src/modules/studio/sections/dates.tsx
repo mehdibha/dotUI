@@ -12,7 +12,7 @@ import {
   TODAY_COLOR_OPTIONS,
   TODAY_OPTIONS,
   WEEKDAY_OPTIONS,
-} from "../axes/calendar"
+} from "../axes/calendar.meta"
 import { DialGap, DialList, DialSelect } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"

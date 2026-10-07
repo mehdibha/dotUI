@@ -17,14 +17,10 @@ export const CHOICE_CARD_DEFAULTS = {
    edge on the tint (Geist, Claude; nearest for Duolingo and Airbnb, whose
    edge is 2px). Outline: a 2px edge, no tint (Radix Themes, Stripe,
    Untitled UI; nearest for Carbon and Notion, whose edge is 1px). */
-export const SELECTED_OPTIONS = [
-  { value: "tint", label: "Tint" },
-  { value: "outline-tint", label: "Edged tint" },
-  { value: "outline", label: "Outline" },
-]
+export const SELECTED_VALUES = ["tint", "outline-tint", "outline"] as const
 
 export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
-  cardSelected: oneOf(SELECTED_OPTIONS),
+  cardSelected: oneOf(SELECTED_VALUES),
 }
 
 export function resolveChoiceCards(state: Effective): Resolved {

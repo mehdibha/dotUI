@@ -15,65 +15,18 @@ export const ACCORDION_DEFAULTS = {
   accordionMarker: "trailing-chevron",
 }
 
-export const CONTAINER_OPTIONS = [
-  {
-    value: "divided",
-    label: "Divided",
-    credits: [
-      "shadcn nova, vega, lyra, sera",
-      "Geist",
-      "Carbon",
-      "Chakra (outline)",
-      "Mantine",
-      "Spectrum 2",
-    ],
-  },
-  {
-    value: "contained",
-    label: "Contained",
-    credits: [
-      "shadcn mira, rhea, luma, maia",
-      "Ant Design",
-      "Chakra (enclosed)",
-      "Mantine (contained)",
-    ],
-  },
-  {
-    value: "separated",
-    label: "Separated",
-    credits: ["HeroUI (splitted)"],
-  },
-  {
-    value: "plain",
-    label: "Plain",
-    credits: ["Notion", "Fluent 2", "Chakra (plain)"],
-  },
-]
+export const CONTAINER_VALUES = [
+  "divided",
+  "contained",
+  "separated",
+  "plain",
+] as const
 
-export const MARKER_OPTIONS = [
-  {
-    value: "trailing-chevron",
-    label: "Trailing chevron",
-    credits: ["shadcn", "Mantine", "Chakra", "MUI", "Carbon"],
-  },
-  {
-    value: "leading-caret",
-    label: "Leading caret",
-    credits: [
-      "Notion",
-      "Linear",
-      "Stripe",
-      "Fluent 2",
-      "Spectrum 2",
-      "Ant Design",
-      "Apple HIG",
-    ],
-  },
-]
+export const MARKER_VALUES = ["trailing-chevron", "leading-caret"] as const
 
 export const ACCORDION_SCHEMA: ChapterSchema<typeof ACCORDION_DEFAULTS> = {
-  accordionContainer: oneOf(CONTAINER_OPTIONS),
-  accordionMarker: oneOf(MARKER_OPTIONS),
+  accordionContainer: oneOf(CONTAINER_VALUES),
+  accordionMarker: oneOf(MARKER_VALUES),
 }
 
 export function resolveAccordion(state: Effective): Resolved {

@@ -12,35 +12,13 @@ export const SELECT_DEFAULTS = {
   pickerCaret: "chevron",
 }
 
-export const TRIGGER_OPTIONS = [
-  {
-    value: "field",
-    label: "Field",
-    credits: ["shadcn", "Geist", "Polaris", "Carbon", "Material 3", "Primer"],
-  },
-  {
-    value: "button",
-    label: "Button",
-    credits: ["Linear", "Supabase", "Stripe", "Notion", "Duolingo"],
-  },
-]
+export const TRIGGER_VALUES = ["field", "button"] as const
 
-export const CARET_OPTIONS = [
-  {
-    value: "chevron",
-    label: "Chevron",
-    credits: ["shadcn", "Geist", "Carbon", "Radix Themes", "Untitled UI"],
-  },
-  {
-    value: "double",
-    label: "Double",
-    credits: ["Polaris", "Primer", "Stripe"],
-  },
-]
+export const CARET_VALUES = ["chevron", "double"] as const
 
 export const SELECT_SCHEMA: ChapterSchema<typeof SELECT_DEFAULTS> = {
-  selectTrigger: oneOf(TRIGGER_OPTIONS),
-  pickerCaret: oneOf(CARET_OPTIONS),
+  selectTrigger: oneOf(TRIGGER_VALUES),
+  pickerCaret: oneOf(CARET_VALUES),
 }
 
 export function resolveSelect(state: Effective): Resolved {

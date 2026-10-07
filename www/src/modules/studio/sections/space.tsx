@@ -2,7 +2,7 @@
 
 /* Density — one row: the tier. */
 
-import { DENSITY_TIERS, densityTier } from "../axes/space"
+import { DENSITY_TIERS, densityTier } from "../axes/space.meta"
 import { DialSelect } from "../dial"
 import type { Effective, Studio } from "../state"
 

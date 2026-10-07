@@ -7,17 +7,17 @@ import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/input/styles"
 
-import { STYLE_OPTIONS as BUTTON_STYLE_OPTIONS } from "../axes/buttons"
-import { ERROR_OPTIONS, LABEL_OPTIONS } from "../axes/field"
+import { STYLE_OPTIONS as BUTTON_STYLE_OPTIONS } from "../axes/buttons.meta"
+import { ERROR_OPTIONS, LABEL_OPTIONS } from "../axes/field.meta"
+import { AUTO_STYLE } from "../axes/inputs"
 import {
-  AUTO_STYLE,
   HEIGHT_OPTIONS,
   HOVER_OPTIONS,
   STYLE_OPTIONS,
-} from "../axes/inputs"
-import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
-import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
-import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select"
+} from "../axes/inputs.meta"
+import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
+import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
+import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
 import { roleLabel } from "../axes/shape"
 import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import {

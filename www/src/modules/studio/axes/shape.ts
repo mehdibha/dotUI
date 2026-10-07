@@ -31,27 +31,16 @@ export const SHAPE_DEFAULTS = {
    cards and Spectrum 2's 1px ones disagree. No sub-pixel option: Chromium
    draws a 0.5px border at 1px, so seams and insets would subtract the wrong
    width. */
-export const STROKE_OPTIONS = [
-  {
-    value: "regular",
-    label: "Regular",
-    description: "shadcn, Geist, Primer",
-    px: 1,
-  },
-  { value: "bold", label: "Bold", description: "Spectrum 2, Duolingo", px: 2 },
-]
+const STROKE_PX = { regular: 1, bold: 2 }
+
+export const STROKE_VALUES = Object.keys(STROKE_PX) as Array<
+  keyof typeof STROKE_PX
+>
 
 export const strokePx = (id: string) =>
-  STROKE_OPTIONS.find((option) => option.value === id)?.px ?? 1
+  STROKE_PX[id as keyof typeof STROKE_PX] ?? 1
 
-export const TRACK_OPTIONS = [
-  { value: "round", label: "Round", description: "Carbon" },
-  {
-    value: "follow",
-    label: "Follow",
-    description: "Radix Themes, shadcn sera",
-  },
-]
+export const TRACK_VALUES = ["round", "follow"] as const
 
 /** Where the base slider runs. Square is a character, not a base of 0: at 0
  *  the exported code would still carry rounded classes reading a dead token. */
@@ -71,19 +60,19 @@ export const SHAPE_RUNGS = [
   { id: "full", label: "Pill", ratio: Infinity, token: "var(--radius-full)" },
 ]
 
-const RUNG_OPTIONS = SHAPE_RUNGS.map((rung) => ({ value: rung.id }))
+const RUNGS = SHAPE_RUNGS.map((rung) => rung.id)
 /* Panels and cards hold multi-line content, which is never a pill. */
-const BLOCK_RUNG_OPTIONS = RUNG_OPTIONS.filter((rung) => rung.value !== "full")
+const BLOCK_RUNGS = RUNGS.filter((rung) => rung !== "full")
 
 export const SHAPE_SCHEMA: ChapterSchema<typeof SHAPE_DEFAULTS> = {
   radiusPx: range(RADIUS_RANGE),
-  roleControl: oneOf(RUNG_OPTIONS),
-  roleItem: oneOf([{ value: "auto" }, ...RUNG_OPTIONS]),
-  roleSurface: oneOf(RUNG_OPTIONS),
-  rolePanel: oneOf(BLOCK_RUNG_OPTIONS),
-  roleCard: oneOf([{ value: "auto" }, ...BLOCK_RUNG_OPTIONS]),
-  controlStroke: oneOf(STROKE_OPTIONS),
-  tracks: oneOf(TRACK_OPTIONS),
+  roleControl: oneOf(RUNGS),
+  roleItem: oneOf(["auto", ...RUNGS]),
+  roleSurface: oneOf(RUNGS),
+  rolePanel: oneOf(BLOCK_RUNGS),
+  roleCard: oneOf(["auto", ...BLOCK_RUNGS]),
+  controlStroke: oneOf(STROKE_VALUES),
+  tracks: oneOf(TRACK_VALUES),
 }
 
 export const SHAPE_ROLES = [

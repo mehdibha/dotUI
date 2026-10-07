@@ -7,7 +7,7 @@
 
 import type { TokenOverrides } from "@/registry/theme"
 
-import { SOURCE_OPTIONS } from "./color"
+import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
@@ -31,163 +31,36 @@ export const STATES_DEFAULTS = {
 /** Ring: a gap, then the ring. Halo: flush and translucent. Inset: inside
  *  the edge over a 1px bg line (outside where the control's own part would
  *  cover it: checks, thumbs, tabs, links). */
-export const FOCUS_STYLE_OPTIONS = [
-  {
-    value: "ring",
-    label: "Ring",
-    credits: [
-      "Spectrum 2",
-      "Geist",
-      "Material 3",
-      "Polaris",
-      "Untitled UI",
-      "Supabase",
-      "Linear",
-      "Notion",
-      "Airbnb",
-    ],
-  },
-  { value: "halo", label: "Halo", credits: ["shadcn", "Bootstrap", "Stripe"] },
-  {
-    value: "inset",
-    label: "Inset",
-    credits: ["Primer", "Carbon", "Fluent 2", "Spotify", "Claude"],
-  },
-]
+export const FOCUS_STYLE_VALUES = ["ring", "halo", "inset"] as const
 
-export const STRENGTH_OPTIONS = [
-  {
-    value: "solid",
-    label: "Solid",
-    credits: ["Spectrum 2", "Primer", "Carbon", "Geist", "Polaris"],
-  },
-  {
-    value: "soft",
-    label: "Soft",
-    credits: ["shadcn nova", "Supabase", "Radix Themes"],
-  },
-  { value: "faint", label: "Faint", credits: ["Bootstrap", "Ant", "Stripe"] },
-]
+export const STRENGTH_VALUES = ["solid", "soft", "faint"] as const
 
 const STRENGTH_PCT: Record<string, number> = { soft: 50, faint: 30 }
-
-export const WIDTH_OPTIONS = [
-  { value: 1, label: "1px", credits: ["Linear", "Claude"] },
-  { value: 2, label: "2px", credits: ["Geist", "Primer", "Polaris", "Radix"] },
-  { value: 3, label: "3px", credits: ["shadcn nova", "Material 3"] },
-  { value: 4, label: "4px", credits: ["Bootstrap", "Stripe"] },
-]
 
 /** How a field shows focus: Ring reuses every ring token; Halo swaps the
  *  edge and adds a muted halo; Border swaps the edge alone. Underline and
  *  Indicator draw each in their own shape. */
-export const FOCUS_INPUT_STYLE_OPTIONS = [
-  {
-    value: "ring",
-    label: "Ring",
-    credits: [
-      "shadcn",
-      "Polaris",
-      "Supabase",
-      "Carbon",
-      "Spectrum 2",
-      "Stripe",
-    ],
-  },
-  { value: "halo", label: "Halo", credits: ["Geist", "Ant", "Clerk"] },
-  {
-    value: "border",
-    label: "Border",
-    credits: [
-      "Material 3",
-      "Untitled UI",
-      "Primer",
-      "Radix Themes",
-      "Duolingo",
-      "Linear",
-      "Notion",
-      "Airbnb",
-    ],
-  },
-]
+export const FOCUS_INPUT_STYLE_VALUES = ["ring", "halo", "border"] as const
 
 /** Thin: a 2px halo or the edge recolored. Thick: a 4px halo or a 2px edge. */
-export const FOCUS_INPUT_WEIGHT_OPTIONS = [
-  {
-    value: "thin",
-    label: "Thin",
-    credits: ["Ant", "Mantine", "Linear", "Claude"],
-  },
-  {
-    value: "thick",
-    label: "Thick",
-    credits: ["Geist", "Untitled UI", "Material 3", "Radix Themes", "Primer"],
-  },
-]
+export const FOCUS_INPUT_WEIGHT_VALUES = ["thin", "thick"] as const
 
 const HALO_PX: Record<string, number> = { thin: 2, thick: 4 }
 const BORDER_PX: Record<string, number> = { thin: 1, thick: 2 }
 
 /** Edge: the edge turns danger. Halo: a danger halo at rest too. */
-export const INVALID_OPTIONS = [
-  {
-    value: "edge",
-    label: "Edge",
-    credits: ["Primer", "Material 3", "Carbon", "Atlassian", "Stripe"],
-  },
-  { value: "halo", label: "Halo", credits: ["shadcn", "Geist"] },
-]
+export const INVALID_VALUES = ["edge", "halo"] as const
 
 /** Solid: one grey for every variant. Fade: the control at 50%. */
-export const DISABLED_OPTIONS = [
-  {
-    value: "solid",
-    label: "Solid",
-    credits: ["Spectrum 2", "Geist", "Carbon", "Material 3", "Polaris"],
-  },
-  {
-    value: "fade",
-    label: "Fade",
-    credits: ["shadcn", "Untitled UI", "Supabase", "Linear", "Notion"],
-  },
-]
+export const DISABLED_VALUES = ["solid", "fade"] as const
 
 /* Keyword values only: a cursor token is written straight into CSS. */
-export const CURSOR_CONTROL_OPTIONS = [
-  {
-    value: "pointer",
-    label: "Hand",
-    credits: ["Primer", "Polaris", "Carbon", "Geist", "Material 3"],
-  },
-  {
-    value: "default",
-    label: "Arrow",
-    credits: ["shadcn", "Radix Themes", "Spectrum 2", "Linear"],
-  },
-]
+export const CURSOR_CONTROL_VALUES = ["pointer", "default"] as const
 
-export const CURSOR_DISABLED_OPTIONS = [
-  {
-    value: "not-allowed",
-    label: "Blocked",
-    credits: ["Radix Themes", "Carbon", "Primer", "Untitled UI", "Geist"],
-  },
-  {
-    value: "default",
-    label: "Arrow",
-    credits: ["shadcn", "Polaris", "Material 3", "Linear", "Notion"],
-  },
-]
+export const CURSOR_DISABLED_VALUES = ["not-allowed", "default"] as const
 
 /** Whether text on controls and their labels selects. Content always does. */
-export const CONTROL_TEXT_OPTIONS = [
-  {
-    value: "none",
-    label: "Unselectable",
-    credits: ["Primer", "Material 3", "Notion", "Spotify"],
-  },
-  { value: "selectable", label: "Selectable", credits: ["shadcn"] },
-]
+export const CONTROL_TEXT_VALUES = ["none", "selectable"] as const
 
 /** Auto pairs strength and width with the ring recipe (shadcn nova: a 3px
  *  halo at 50%). */
@@ -199,17 +72,17 @@ export const AUTO_STRENGTH: Record<string, string> = {
 export const AUTO_WIDTH: Record<string, number> = { ring: 2, halo: 3, inset: 2 }
 
 export const STATES_SCHEMA: ChapterSchema<typeof STATES_DEFAULTS> = {
-  focusColor: oneOf(SOURCE_OPTIONS),
-  focusStyle: oneOf(FOCUS_STYLE_OPTIONS),
-  focusStrength: oneOf(STRENGTH_OPTIONS),
+  focusColor: oneOf(SOURCE_VALUES),
+  focusStyle: oneOf(FOCUS_STYLE_VALUES),
+  focusStrength: oneOf(STRENGTH_VALUES),
   focusWidth: range({ min: 1, max: 4, step: 1 }),
-  focusInputStyle: oneOf(FOCUS_INPUT_STYLE_OPTIONS),
-  focusInputWeight: oneOf(FOCUS_INPUT_WEIGHT_OPTIONS),
-  invalidStyle: oneOf(INVALID_OPTIONS),
-  disabledTreatment: oneOf(DISABLED_OPTIONS),
-  cursorControls: oneOf(CURSOR_CONTROL_OPTIONS),
-  cursorDisabled: oneOf(CURSOR_DISABLED_OPTIONS),
-  selectionUiText: oneOf(CONTROL_TEXT_OPTIONS),
+  focusInputStyle: oneOf(FOCUS_INPUT_STYLE_VALUES),
+  focusInputWeight: oneOf(FOCUS_INPUT_WEIGHT_VALUES),
+  invalidStyle: oneOf(INVALID_VALUES),
+  disabledTreatment: oneOf(DISABLED_VALUES),
+  cursorControls: oneOf(CURSOR_CONTROL_VALUES),
+  cursorDisabled: oneOf(CURSOR_DISABLED_VALUES),
+  selectionUiText: oneOf(CONTROL_TEXT_VALUES),
 }
 
 const px = (n: number) => `${n}px`

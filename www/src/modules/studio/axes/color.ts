@@ -33,30 +33,11 @@ export const COLOR_DEFAULTS = {
 
 /* What a role draws from: the neutral's text end (the shadcn school,
    black/white) or the brand ramp (Material, Linear, Radix Themes). */
-export const SOURCE_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "accent", label: "Accent" },
-]
+export const SOURCE_VALUES = ["neutral", "accent"] as const
 
 /* How far a control's edge (fields, unchecked checks, outline buttons) sits
    from the surface hairline. */
-export const CONTROL_EDGE_OPTIONS = [
-  {
-    value: "soft",
-    label: "Soft",
-    description: "The hairline — shadcn, Primer, Geist",
-  },
-  {
-    value: "firm",
-    label: "Firm",
-    description: "A step firmer — Radix Themes, Linear",
-  },
-  {
-    value: "strong",
-    label: "Strong",
-    description: "A dark gray — Polaris, Atlassian, Material 3",
-  },
-]
+export const CONTROL_EDGE_VALUES = ["soft", "firm", "strong"] as const
 
 /** The Strong edge, also Selection's check edge. */
 export const STRONG_EDGE = "var(--neutral-700)"
@@ -68,18 +49,7 @@ const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
 
 /* The wash on a persistent selected item: table and tree rows, tags,
    token-field tokens, toggles. */
-export const SELECTED_WASH_OPTIONS = [
-  {
-    value: "neutral",
-    label: "Neutral",
-    description: "shadcn, Primer, Polaris, Carbon",
-  },
-  {
-    value: "brand",
-    label: "Brand",
-    description: "Material 3, Atlassian, Ant, Linear",
-  },
-]
+export const SELECTED_WASH_VALUES = ["neutral", "brand"] as const
 
 const BRAND_WASH = {
   "--color-selected": "var(--accent-100)",
@@ -104,8 +74,8 @@ export const GROUPED_PAGE = 96
 
 export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   brand: COLOR,
-  buttonColor: oneOf(SOURCE_OPTIONS),
-  selectionColor: oneOf(SOURCE_OPTIONS),
+  buttonColor: oneOf(SOURCE_VALUES),
+  selectionColor: oneOf(SOURCE_VALUES),
   neutralHue: auto(range(NEUTRAL_HUE_RANGE)),
   successSeed: auto(COLOR),
   warningSeed: auto(COLOR),
@@ -116,8 +86,8 @@ export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   preserveSeed: BOOLEAN,
   lightBg: range(LIGHT_BG_RANGE),
   darkBg: range(DARK_BG_RANGE),
-  controlEdge: oneOf(CONTROL_EDGE_OPTIONS),
-  selectedWash: oneOf(SELECTED_WASH_OPTIONS),
+  controlEdge: oneOf(CONTROL_EDGE_VALUES),
+  selectedWash: oneOf(SELECTED_WASH_VALUES),
 }
 
 /* The roles that paint with a source. Leaves hold state; Primary is a view

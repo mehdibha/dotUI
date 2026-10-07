@@ -11,24 +11,18 @@ import { cn } from "@/registry/lib/utils"
 
 import { effective } from "../axes"
 import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
+import { cardRung, surfaceColorCss, surfaceRecipe } from "../axes/surfaces"
+import type { Mode, PerMode, SurfaceColor } from "../axes/surfaces"
 import {
-  cardRung,
   EDGE_OPTIONS,
   GLASS_OPTIONS,
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
-  surfaceColorCss,
-  surfaceRecipe,
   SURFACE_STYLES,
   surfaceStyle,
-} from "../axes/surfaces"
-import type {
-  Mode,
-  PerMode,
-  SurfaceColor,
-  SurfaceStyle,
-} from "../axes/surfaces"
+} from "../axes/surfaces.meta"
+import type { SurfaceStyle } from "../axes/surfaces.meta"
 import {
   DialPicker,
   DialPickList,

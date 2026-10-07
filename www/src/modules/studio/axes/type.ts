@@ -23,42 +23,36 @@ export const TYPE_DEFAULTS = {
 }
 
 /* Size, weight, tracking and case move together; each is a copied recipe. */
-export const TITLE_OPTIONS = [
-  { value: "quiet", label: "Quiet", description: "shadcn" },
-  { value: "compact", label: "Compact", description: "Primer, Polaris" },
-  { value: "tight", label: "Tight", description: "Geist, Linear" },
-  { value: "bold", label: "Bold", description: "Radix Themes, Atlassian" },
-  { value: "display", label: "Display", description: "Material 3, Carbon" },
-  { value: "caps", label: "Caps", description: "shadcn sera" },
-]
+export const TITLE_VALUES = [
+  "quiet",
+  "compact",
+  "tight",
+  "bold",
+  "display",
+  "caps",
+] as const
 
 /* Auto is density's text step (shadcn nova/vega 14px, mira 12px). */
-export const UI_TEXT_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "13", label: "13px", description: "Linear, Polaris" },
-]
+export const UI_TEXT_VALUES = ["auto", "13"] as const
 
-export const LABEL_WEIGHT_OPTIONS = [
-  { value: "normal", label: "Normal", description: "Carbon, Ant Design" },
-  { value: "medium", label: "Medium", description: "shadcn, Geist, Primer" },
-  { value: "semibold", label: "Semibold", description: "Untitled UI, Fluent" },
-  { value: "bold", label: "Bold", description: "Duolingo" },
-]
+export const LABEL_WEIGHT_VALUES = [
+  "normal",
+  "medium",
+  "semibold",
+  "bold",
+] as const
 
 /* Sentence: Spectrum 2, Atlassian. Caps: shadcn sera. */
-export const SECTION_LABEL_OPTIONS = [
-  { value: "sentence", label: "Sentence" },
-  { value: "caps", label: "Caps" },
-]
+export const SECTION_LABEL_VALUES = ["sentence", "caps"] as const
 
 export const TYPE_SCHEMA: ChapterSchema<typeof TYPE_DEFAULTS> = {
   headingFont: FONT,
   bodyFont: FONT,
   monoFont: FONT,
-  titleStyle: oneOf(TITLE_OPTIONS),
-  uiTextSize: oneOf(UI_TEXT_OPTIONS),
-  labelWeight: oneOf(LABEL_WEIGHT_OPTIONS),
-  sectionLabels: oneOf(SECTION_LABEL_OPTIONS),
+  titleStyle: oneOf(TITLE_VALUES),
+  uiTextSize: oneOf(UI_TEXT_VALUES),
+  labelWeight: oneOf(LABEL_WEIGHT_VALUES),
+  sectionLabels: oneOf(SECTION_LABEL_VALUES),
 }
 
 /** What a non-Quiet title recipe hands base h1–h6. */

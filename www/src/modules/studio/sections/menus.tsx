@@ -11,9 +11,9 @@ import {
   SCALE_OPTIONS,
   SEARCH_OPTIONS,
   SELECTED_ROW_OPTIONS,
-} from "../axes/menus"
+} from "../axes/menus.meta"
 import { roleLabel } from "../axes/shape"
-import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
+import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
 import {
   DialGap,
   DialGlyph,

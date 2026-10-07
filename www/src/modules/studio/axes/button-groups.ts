@@ -5,7 +5,7 @@
 
    Engine: `separator` enum param on `group` and `toggle-button-group`. */
 
-import { SECONDARY_OPTIONS, STYLE_OPTIONS } from "./buttons"
+import { SECONDARY_VALUES, STYLE_VALUES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -15,27 +15,19 @@ export const BUTTON_GROUP_DEFAULTS = {
   groupSeparator: "auto" as "auto" | "shared-edge" | "divider",
 }
 
-export const SEPARATOR_OPTIONS = [
-  { value: "auto", label: "Auto", description: "Spectrum 2" },
-  {
-    value: "shared-edge",
-    label: "Shared edge",
-    description: "Primer, Polaris, Untitled UI",
-  },
-  { value: "divider", label: "Divider", description: "Carbon, Supabase" },
-]
+export const SEPARATOR_VALUES = ["shared-edge", "divider"] as const
 
 export const BUTTON_GROUP_SCHEMA: ChapterSchema<typeof BUTTON_GROUP_DEFAULTS> =
   {
-    groupSeparator: oneOf(SEPARATOR_OPTIONS.slice(1)),
+    groupSeparator: oneOf(SEPARATOR_VALUES),
   }
 
 const EDGELESS = ["soft", "tonal"]
 
 /* Every style's own secondary is edged; Soft and Tonal are not. */
 const SEAM_AUTO = Object.fromEntries(
-  STYLE_OPTIONS.flatMap(({ value: style }) =>
-    SECONDARY_OPTIONS.map(({ value: secondary }) => [
+  STYLE_VALUES.flatMap((style) =>
+    SECONDARY_VALUES.map((secondary) => [
       `${style}|${secondary}`,
       EDGELESS.includes(secondary) ? "divider" : "shared-edge",
     ]),

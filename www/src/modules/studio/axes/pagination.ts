@@ -14,18 +14,10 @@ export const PAGINATION_DEFAULTS = {
   paginationCurrent: "secondary",
 }
 
-export const CURRENT_OPTIONS = [
-  { value: "secondary", label: "Secondary", description: "shadcn, Ant" },
-  { value: "primary", label: "Primary", description: "Primer, GOV.UK" },
-  {
-    value: "selected",
-    label: "Selected",
-    description: "Untitled UI, Atlassian",
-  },
-]
+export const CURRENT_VALUES = ["secondary", "primary", "selected"] as const
 
 export const PAGINATION_SCHEMA: ChapterSchema<typeof PAGINATION_DEFAULTS> = {
-  paginationCurrent: oneOf(CURRENT_OPTIONS),
+  paginationCurrent: oneOf(CURRENT_VALUES),
 }
 
 export function resolvePagination(state: Effective): Resolved {

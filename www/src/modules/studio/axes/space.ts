@@ -5,6 +5,8 @@
    Engine: `density` selects the tier layer `useStyles` composes live and the
    publisher flattens into the shipped classes. */
 
+import type { Density } from "@/registry/types"
+
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -14,40 +16,14 @@ export const SPACE_DEFAULTS = {
   density: "default",
 }
 
-/** The tiers as the registry ships them; `control` is the md control height
- *  in spacing units. */
-export const DENSITY_TIERS = [
-  {
-    id: "compact",
-    label: "Compact",
-    description: "Tight, for data-dense tools",
-    control: 7,
-  },
-  {
-    id: "default",
-    label: "Default",
-    description: "Balanced, for most products",
-    control: 8,
-  },
-  {
-    id: "comfortable",
-    label: "Comfortable",
-    description: "Roomy, for touch and content",
-    control: 9,
-  },
-] as const
-
-export type DensityTier = (typeof DENSITY_TIERS)[number]
-
-export const densityTier = (id: string): DensityTier =>
-  DENSITY_TIERS.find((tier) => tier.id === id) ?? DENSITY_TIERS[1]
+export const DENSITY_VALUES = ["compact", "default", "comfortable"] as const
 
 export const SPACE_SCHEMA: ChapterSchema<typeof SPACE_DEFAULTS> = {
-  density: oneOf(DENSITY_TIERS.map((tier) => ({ value: tier.id }))),
+  density: oneOf(DENSITY_VALUES),
 }
 
 export function resolveSpace(state: Effective): Resolved {
-  return { density: densityTier(state.density).id }
+  return { density: state.density as Density }
 }
 
 export const chapter = defineChapter({

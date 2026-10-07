@@ -12,27 +12,10 @@ export const SPINNER_DEFAULTS = {
   spinnerStyle: "ring",
 }
 
-export const STYLE_OPTIONS = [
-  {
-    value: "ring",
-    label: "Ring",
-    description: "shadcn, Polaris, HeroUI, Chakra, Material 3",
-  },
-  {
-    value: "ring-track",
-    label: "Ring + track",
-    description: "Primer, Spectrum 2, Fluent 2, Mantine",
-  },
-  {
-    value: "blades",
-    label: "Blades",
-    description: "Radix Themes, Geist, Apple",
-  },
-  { value: "dots", label: "Dots", description: "Ant Design" },
-]
+export const STYLE_VALUES = ["ring", "ring-track", "blades", "dots"] as const
 
 export const SPINNER_SCHEMA: ChapterSchema<typeof SPINNER_DEFAULTS> = {
-  spinnerStyle: oneOf(STYLE_OPTIONS),
+  spinnerStyle: oneOf(STYLE_VALUES),
 }
 
 export function resolveSpinner(state: Effective): Resolved {

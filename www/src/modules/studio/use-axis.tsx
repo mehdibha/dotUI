@@ -7,9 +7,10 @@
 
 import { createContext, useContext } from "react"
 
-import { effective, FOLLOWS, SCHEMA } from "./axes"
+import { effective, FOLLOWS } from "./axes"
 import type { StudioState } from "./axes"
 import type { Explained } from "./axes/core/types"
+import { OPTIONS } from "./axes/meta"
 import { edit, useCurrent } from "./selection"
 
 export type AxisKey = keyof StudioState & string
@@ -42,13 +43,8 @@ export function useAxis(key: AxisKey | undefined): Axis | undefined {
 
 /** A value as its row names it: the option label, else the value. */
 export function valueLabel(key: AxisKey, value: unknown): string {
-  const schema = SCHEMA[key]?.value
-  if (schema?.type === "enum") {
-    const option = schema.options.find((o) => o.value === value) as
-      | { label?: string }
-      | undefined
-    if (option?.label) return option.label
-  }
+  const option = OPTIONS[key]?.find((o) => o.value === value)
+  if (option) return option.label
   if (typeof value === "boolean") return value ? "On" : "Off"
   return String(value)
 }

@@ -26,298 +26,43 @@ export const DIALOG_DEFAULTS = {
   mobileDialogs: "center",
 }
 
-export const BACKDROP_OPTIONS = [
-  {
-    value: "scrim",
-    label: "Scrim",
-    credits: [
-      "Radix Themes",
-      "Material 3",
-      "Polaris",
-      "Ant Design",
-      "Mantine",
-      "Chakra",
-      "Fluent 2",
-      "Carbon",
-      "Atlassian",
-      "Spectrum 2",
-      "Catalyst",
-      "HeroUI",
-    ],
-  },
-  {
-    value: "frosted",
-    label: "Frosted",
-    credits: ["shadcn", "Supabase", "Untitled UI", "HeroUI (blur)"],
-  },
-  {
-    value: "wash",
-    label: "Wash",
-    credits: ["Geist", "Primer", "Linear (side panel)", "Stripe"],
-  },
-]
+export const BACKDROP_VALUES = ["scrim", "frosted", "wash"] as const
 
-export const STRENGTH_OPTIONS = [
-  {
-    value: "light",
-    label: "Light",
-    credits: [
-      "shadcn nova, vega, lyra (10%)",
-      "shadcn sera (20%)",
-      "Catalyst (25%)",
-    ],
-  },
-  {
-    value: "medium",
-    label: "Medium",
-    credits: [
-      "shadcn luma, rhea (30%)",
-      "Material 3 (32%)",
-      "Radix Themes (40%)",
-      "Supabase (40%)",
-      "Primer (40%)",
-      "Polaris (50%)",
-      "Ant Design (45%)",
-      "Atlassian",
-    ],
-  },
-  {
-    value: "heavy",
-    label: "Heavy",
-    credits: [
-      "shadcn mira, maia (80%)",
-      "Geist (80%)",
-      "Untitled UI (70%)",
-      "Stripe (70%)",
-      "Mantine (60%)",
-      "Notion (60%)",
-    ],
-  },
-]
+export const STRENGTH_VALUES = ["light", "medium", "heavy"] as const
 
-export const FROST_OPTIONS = [
-  {
-    value: "subtle",
-    label: "Subtle",
-    credits: ["shadcn nova, vega, lyra, mira, maia (4px)", "Supabase (4px)"],
-  },
-  {
-    value: "strong",
-    label: "Strong",
-    credits: ["shadcn sera, luma, rhea (8px)", "Untitled UI (6px)"],
-  },
-]
+export const FROST_VALUES = ["subtle", "strong"] as const
 
-export const SECTIONS_OPTIONS = [
-  {
-    value: "open",
-    label: "Open",
-    description: "Radix",
-    credits: [
-      "Radix Themes",
-      "shadcn",
-      "Fluent 2",
-      "Ant Design 5",
-      "Chakra",
-      "HeroUI",
-      "Catalyst",
-      "Mantine",
-      "Spectrum 2",
-      "Apple",
-    ],
-  },
-  {
-    value: "on-scroll",
-    label: "On scroll",
-    description: "Material 3",
-    credits: ["Material 3", "Atlassian", "Stripe"],
-  },
-  {
-    value: "divided",
-    label: "Divided",
-    description: "Supabase",
-    credits: ["Supabase", "Spectrum 1", "Ant Design 4"],
-  },
-  {
-    value: "footer-band",
-    label: "Footer band",
-    description: "Geist",
-    credits: ["shadcn nova", "Geist"],
-  },
-  {
-    value: "header-band",
-    label: "Header band",
-    description: "Polaris",
-    credits: ["Polaris"],
-  },
-]
+export const SECTIONS_VALUES = [
+  "open",
+  "on-scroll",
+  "divided",
+  "footer-band",
+  "header-band",
+] as const
 
-export const ACTIONS_OPTIONS = [
-  {
-    value: "end",
-    label: "End",
-    credits: [
-      "shadcn",
-      "Primer",
-      "Material 3",
-      "Fluent 2",
-      "Ant Design",
-      "Chakra",
-      "HeroUI",
-      "Atlassian",
-      "Spectrum 2",
-      "Catalyst",
-      "Supabase",
-      "Radix Themes",
-      "Polaris",
-    ],
-  },
-  { value: "spread", label: "Spread", credits: ["Geist"] },
-  {
-    value: "stack",
-    label: "Stack",
-    credits: ["Duolingo", "Notion", "Apple (3+ alert actions)"],
-  },
-  { value: "bleed", label: "Bleed", credits: ["Carbon"] },
-]
+export const ACTIONS_VALUES = ["end", "spread", "stack", "bleed"] as const
 
-export const CLOSE_OPTIONS = [
-  {
-    value: "quiet",
-    label: "Quiet",
-    credits: ["shadcn nova, vega, mira, lyra, maia", "Primer", "Polaris"],
-  },
-  { value: "filled", label: "Filled", credits: ["shadcn luma, rhea, sera"] },
-  { value: "faint", label: "Faint", credits: ["Supabase"] },
-]
+export const CLOSE_VALUES = ["quiet", "filled", "faint"] as const
 
-export const POSITION_OPTIONS = [
-  {
-    value: "center",
-    label: "Center",
-    credits: [
-      "shadcn",
-      "Radix Themes",
-      "Material 3",
-      "Primer",
-      "Polaris",
-      "Fluent 2",
-      "Spectrum 2",
-      "Carbon",
-      "HeroUI",
-    ],
-  },
-  {
-    value: "top",
-    label: "Top",
-    credits: [
-      "Ant Design",
-      "Chakra",
-      "Mantine",
-      "Catalyst",
-      "Linear (upper third)",
-    ],
-  },
-]
+export const POSITION_VALUES = ["center", "top"] as const
 
-export const ENTRANCE_OPTIONS = [
-  {
-    value: "scale",
-    label: "Scale",
-    description: "shadcn",
-    credits: [
-      "shadcn",
-      "Geist",
-      "Linear",
-      "Fluent 2",
-      "Primer",
-      "Untitled UI",
-      "Chakra",
-      "Ant Design",
-    ],
-  },
-  {
-    value: "rise",
-    label: "Rise",
-    description: "Polaris",
-    credits: ["Radix Themes (nearest)", "Spectrum 2", "Polaris", "Atlassian"],
-  },
-  {
-    value: "drop",
-    label: "Drop",
-    description: "Carbon",
-    credits: ["Carbon", "Mantine"],
-  },
-]
+export const ENTRANCE_VALUES = ["scale", "rise", "drop"] as const
 
-export const EDGE_OPTIONS = [
-  {
-    value: "docked",
-    label: "Docked",
-    credits: [
-      "shadcn Drawer nova, vega, lyra, sera",
-      "shadcn Sheet",
-      "Vaul",
-      "Material 3",
-      "Primer",
-      "HeroUI",
-      "Fluent 2",
-      "Untitled UI",
-      "Geist (mobile)",
-      "Polaris (mobile)",
-    ],
-  },
-  {
-    value: "detached",
-    label: "Detached",
-    credits: [
-      "shadcn Drawer mira, luma, maia, rhea",
-      "Linear (side panel)",
-      "Material 3 (detached side sheet)",
-      "Apple (iOS 26 sheets)",
-    ],
-  },
-]
+export const EDGE_VALUES = ["docked", "detached"] as const
 
-export const MOBILE_OPTIONS = [
-  {
-    value: "center",
-    label: "Center",
-    credits: [
-      "shadcn",
-      "Radix Themes",
-      "Material 3",
-      "Fluent 2",
-      "Ant Design",
-      "Mantine",
-      "Chakra",
-      "Spectrum 2",
-      "Primer",
-    ],
-  },
-  {
-    value: "sheet",
-    label: "Sheet",
-    credits: ["Geist", "Polaris", "Catalyst", "Apple", "Stripe", "Untitled UI"],
-  },
-  {
-    value: "fullscreen",
-    label: "Fullscreen",
-    credits: ["Carbon", "Atlassian"],
-  },
-]
+export const MOBILE_VALUES = ["center", "sheet", "fullscreen"] as const
 
 export const DIALOG_SCHEMA: ChapterSchema<typeof DIALOG_DEFAULTS> = {
-  dialogBackdrop: oneOf(BACKDROP_OPTIONS),
-  dialogBackdropStrength: oneOf(STRENGTH_OPTIONS),
-  dialogFrost: oneOf(FROST_OPTIONS),
-  dialogSections: oneOf(SECTIONS_OPTIONS),
-  dialogActions: oneOf(ACTIONS_OPTIONS),
-  dialogClose: oneOf(CLOSE_OPTIONS),
-  dialogPosition: oneOf(POSITION_OPTIONS),
-  dialogEntrance: oneOf(ENTRANCE_OPTIONS),
-  drawerEdge: oneOf(EDGE_OPTIONS),
-  mobileDialogs: oneOf(MOBILE_OPTIONS),
+  dialogBackdrop: oneOf(BACKDROP_VALUES),
+  dialogBackdropStrength: oneOf(STRENGTH_VALUES),
+  dialogFrost: oneOf(FROST_VALUES),
+  dialogSections: oneOf(SECTIONS_VALUES),
+  dialogActions: oneOf(ACTIONS_VALUES),
+  dialogClose: oneOf(CLOSE_VALUES),
+  dialogPosition: oneOf(POSITION_VALUES),
+  dialogEntrance: oneOf(ENTRANCE_VALUES),
+  drawerEdge: oneOf(EDGE_VALUES),
+  mobileDialogs: oneOf(MOBILE_VALUES),
 }
 
 const SCRIM_ALPHA: Record<string, number> = { light: 10, medium: 40, heavy: 80 }

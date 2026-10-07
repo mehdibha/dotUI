@@ -4,12 +4,12 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { CONTAINER_OPTIONS, MARKER_OPTIONS } from "../axes/accordion"
-import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
-import { FOOTER_OPTIONS } from "../axes/card"
-import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { surfaceStyle } from "../axes/surfaces"
-import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables"
+import { CONTAINER_OPTIONS, MARKER_OPTIONS } from "../axes/accordion.meta"
+import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars.meta"
+import { FOOTER_OPTIONS } from "../axes/card.meta"
+import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
+import { surfaceStyle } from "../axes/surfaces.meta"
+import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
 import {
   DialGap,
   DialGlyph,

@@ -20,59 +20,19 @@ export const CALENDAR_DEFAULTS = {
   calendarWeekdays: "single",
 }
 
-/* Descriptions credit the systems each option is copied from. */
-export const DAY_SHAPE_OPTIONS = [
-  {
-    value: "same",
-    label: "Same as buttons",
-    description: "shadcn, Material 3, Polaris, Carbon",
-  },
-  {
-    value: "circle",
-    label: "Circle",
-    description: "Untitled UI, Airbnb, Linear, Stripe",
-  },
-]
+export const DAY_SHAPE_VALUES = ["same", "circle"] as const
 
-export const TODAY_OPTIONS = [
-  { value: "fill", label: "Fill", description: "shadcn, Untitled UI, Geist" },
-  { value: "ring", label: "Ring", description: "Material 3, Ant, Linear" },
-  { value: "numeral", label: "Numeral", description: "Polaris, Stripe" },
-  { value: "dot", label: "Dot", description: "Carbon, Spectrum 2" },
-]
+export const TODAY_VALUES = ["fill", "ring", "numeral", "dot"] as const
 
-export const TODAY_COLOR_OPTIONS = [
-  {
-    value: "neutral",
-    label: "Neutral",
-    description: "shadcn, Polaris, Linear, Stripe",
-  },
-  {
-    value: "selection",
-    label: "Selection",
-    description: "Material 3, Carbon, Ant",
-  },
-]
+export const TODAY_COLOR_VALUES = ["neutral", "selection"] as const
 
-export const WEEKDAY_OPTIONS = [
-  {
-    value: "single",
-    label: "Single",
-    description: "Material 3, Carbon, Geist",
-  },
-  {
-    value: "double",
-    label: "Double",
-    description: "shadcn, Polaris, Stripe, Untitled UI",
-  },
-  { value: "triple", label: "Triple", description: "Notion, Atlassian" },
-]
+export const WEEKDAY_VALUES = ["single", "double", "triple"] as const
 
 export const CALENDAR_SCHEMA: ChapterSchema<typeof CALENDAR_DEFAULTS> = {
-  calendarDayShape: oneOf(DAY_SHAPE_OPTIONS),
-  calendarToday: oneOf(TODAY_OPTIONS),
-  calendarTodayColor: oneOf(TODAY_COLOR_OPTIONS),
-  calendarWeekdays: oneOf(WEEKDAY_OPTIONS),
+  calendarDayShape: oneOf(DAY_SHAPE_VALUES),
+  calendarToday: oneOf(TODAY_VALUES),
+  calendarTodayColor: oneOf(TODAY_COLOR_VALUES),
+  calendarWeekdays: oneOf(WEEKDAY_VALUES),
 }
 
 /** The checks fill's scopes: every element that hosts date cells. */

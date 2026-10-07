@@ -11,14 +11,13 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue, PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
+import { ORIGIN_SCRIM, ORIGIN_SCRIM_BLUR } from "./dialogs"
 import {
   ACTIONS_OPTIONS,
   BACKDROP_OPTIONS,
-  ORIGIN_SCRIM,
-  ORIGIN_SCRIM_BLUR,
   SECTIONS_OPTIONS,
   STRENGTH_OPTIONS,
-} from "./dialogs"
+} from "./dialogs.meta"
 import { DEFAULT_STATE, effective, parseState } from "./index"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]

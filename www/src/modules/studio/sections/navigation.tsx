@@ -25,16 +25,16 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { parseState } from "../axes"
 import type { StudioState } from "../axes"
-import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs"
-import { SOURCE_OPTIONS } from "../axes/color"
-import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
+import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
+import { SOURCE_OPTIONS } from "../axes/color.meta"
+import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links.meta"
 import {
   ITEM_WEIGHT_OPTIONS,
   MARKER_OPTIONS,
   PILL_OPTIONS,
   TAB_STYLE_OPTIONS,
   WEIGHT_OPTIONS,
-} from "../axes/navigation"
+} from "../axes/navigation.meta"
 import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
 import {
   FamilyHero,

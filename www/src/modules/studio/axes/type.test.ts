@@ -16,7 +16,7 @@ import type { ClassValue, PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
-import { TITLE_OPTIONS } from "./type"
+import { TITLE_OPTIONS } from "./type.meta"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 const TITLE_SLOTS = ["card", "dialog", "empty", "questionnaire"]

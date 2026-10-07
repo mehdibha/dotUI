@@ -1,13 +1,14 @@
 /* What each state key accepts. Every axis module exports a `<CHAPTER>_SCHEMA`
-   keyed by its defaults, built from the same option lists and ranges its
-   panel rows use; `validate()` (index.ts) checks raw state against them. */
+   keyed by its defaults, built from the same value lists and ranges its
+   panel rows use (labels live in `<chapter>.meta.ts`, panel-only);
+   `validate()` (index.ts) checks raw state against them. */
 
 import { toOklch } from "@dotui/colors"
 
 import { FONT_CATALOG } from "@/lib/fonts"
 
 export type AxisValue =
-  | { type: "enum"; options: readonly { value: string }[] }
+  | { type: "enum"; values: readonly string[] }
   | { type: "number"; min: number; max: number; step?: number }
   | { type: "boolean" }
   /** Any CSS color the engine parses (hex, oklch(), rgb(), named…). */
@@ -23,8 +24,8 @@ export interface AxisSchema {
 
 export type ChapterSchema<Defaults> = { [K in keyof Defaults]: AxisSchema }
 
-export const oneOf = (options: readonly { value: string }[]): AxisSchema => ({
-  value: { type: "enum", options },
+export const oneOf = (values: readonly string[]): AxisSchema => ({
+  value: { type: "enum", values },
 })
 
 export const range = (bounds: {
@@ -53,9 +54,9 @@ export function checkAxisValue(
   if (schema.auto && value === (kind.type === "number" ? null : "")) return
   switch (kind.type) {
     case "enum":
-      return kind.options.some((option) => option.value === value)
+      return kind.values.includes(value as string)
         ? undefined
-        : `expected one of ${kind.options.map((o) => o.value).join(", ")}`
+        : `expected one of ${kind.values.join(", ")}`
     case "number":
       if (typeof value !== "number" || !Number.isFinite(value))
         return "expected a number"

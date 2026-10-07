@@ -11,36 +11,13 @@ export const TOAST_DEFAULTS = {
   toastStatus: "icon",
 }
 
-export const STYLE_OPTIONS = [
-  {
-    value: "surface",
-    label: "Surface",
-    description: "Sonner, Atlassian, Fluent 2, Ant Design, HeroUI, Chakra",
-  },
-  {
-    value: "inverse",
-    label: "Inverse",
-    description: "Material 3, Polaris, Spectrum 2, Carbon",
-  },
-]
+export const STYLE_VALUES = ["surface", "inverse"] as const
 
-export const STATUS_OPTIONS = [
-  {
-    value: "icon",
-    label: "Icon",
-    description: "Sonner, Fluent 2, Ant Design, HeroUI, Mantine, Carbon",
-  },
-  {
-    value: "bold",
-    label: "Bold",
-    description: "Spectrum 2, Polaris, Chakra, Atlassian",
-  },
-  { value: "soft", label: "Soft", description: "Sonner (rich), Carbon (low)" },
-]
+export const STATUS_VALUES = ["icon", "bold", "soft"] as const
 
 export const TOAST_SCHEMA: ChapterSchema<typeof TOAST_DEFAULTS> = {
-  toastStyle: oneOf(STYLE_OPTIONS),
-  toastStatus: oneOf(STATUS_OPTIONS),
+  toastStyle: oneOf(STYLE_VALUES),
+  toastStatus: oneOf(STATUS_VALUES),
 }
 
 export function resolveToast(state: Effective): Resolved {

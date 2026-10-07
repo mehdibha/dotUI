@@ -2,7 +2,7 @@
    of Color's Primary (Geist's blue toggle beside near-black checkboxes; see
    checkbox.ts). */
 
-import { fillScope, SOURCE_OPTIONS } from "./color"
+import { fillScope, SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -18,15 +18,11 @@ export const SWITCH_DEFAULTS = {
    small knob that grows and turns light when on (Material 3, Fluent 2,
    Spectrum 2, Polaris). Slab: a rounded-rect track on the controls corner
    with a half-width knob (Primer). */
-export const STYLE_OPTIONS = [
-  { value: "inset", label: "Inset" },
-  { value: "outlined", label: "Outlined" },
-  { value: "slab", label: "Slab" },
-]
+export const STYLE_VALUES = ["inset", "outlined", "slab"] as const
 
 export const SWITCH_SCHEMA: ChapterSchema<typeof SWITCH_DEFAULTS> = {
-  switchColor: oneOf(SOURCE_OPTIONS),
-  switchStyle: oneOf(STYLE_OPTIONS),
+  switchColor: oneOf(SOURCE_VALUES),
+  switchStyle: oneOf(STYLE_VALUES),
 }
 
 export function resolveSwitch(state: Effective): Resolved {

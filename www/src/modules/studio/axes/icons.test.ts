@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
 import { designSystemOf } from "../resolve"
-import { LIBRARY_OPTIONS } from "./icons"
+import { LIBRARY_OPTIONS } from "./icons.meta"
 import { effective, parseState } from "./index"
 
 describe("icons axis", () => {

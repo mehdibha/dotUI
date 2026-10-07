@@ -15,32 +15,13 @@ export const BREADCRUMB_DEFAULTS = {
   breadcrumbTone: "muted",
 }
 
-/* Descriptions credit the systems each option is copied from. */
-export const SEPARATOR_OPTIONS = [
-  {
-    value: "chevron",
-    label: "Chevron",
-    description: "shadcn, Geist, Spectrum 2, Fluent 2",
-  },
-  {
-    value: "slash",
-    label: "Slash",
-    description: "Primer, Carbon, Atlassian, Notion",
-  },
-]
+export const SEPARATOR_VALUES = ["chevron", "slash"] as const
 
-export const ANCESTOR_OPTIONS = [
-  { value: "muted", label: "Muted", description: "shadcn, Geist, Spectrum 2" },
-  {
-    value: "link",
-    label: "Same as links",
-    description: "Primer, Carbon, Stripe",
-  },
-]
+export const ANCESTOR_VALUES = ["muted", "link"] as const
 
 export const BREADCRUMB_SCHEMA: ChapterSchema<typeof BREADCRUMB_DEFAULTS> = {
-  breadcrumbSeparator: oneOf(SEPARATOR_OPTIONS),
-  breadcrumbTone: oneOf(ANCESTOR_OPTIONS),
+  breadcrumbSeparator: oneOf(SEPARATOR_VALUES),
+  breadcrumbTone: oneOf(ANCESTOR_VALUES),
 }
 
 export function resolveBreadcrumbs(state: Effective): Resolved {

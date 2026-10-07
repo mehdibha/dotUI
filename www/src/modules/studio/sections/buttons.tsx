@@ -13,20 +13,20 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { parseState } from "../axes"
 import type { StudioState } from "../axes"
-import { SEPARATOR_OPTIONS } from "../axes/button-groups"
+import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
 import {
   CASE_OPTIONS,
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
   SECONDARY_OPTIONS,
   STYLE_OPTIONS,
-} from "../axes/buttons"
-import { CURRENT_OPTIONS } from "../axes/pagination"
+} from "../axes/buttons.meta"
+import { CURRENT_OPTIONS } from "../axes/pagination.meta"
 import {
   SELECTED_OPTIONS as CHIP_OPTIONS,
   TRACK_OPTIONS,
-} from "../axes/segmented-control"
-import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
+} from "../axes/segmented-control.meta"
+import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import {
   DialGap,
   DialGlyph,

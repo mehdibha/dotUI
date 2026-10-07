@@ -6,7 +6,7 @@
 
 import type { PrimaryColorSource } from "@/registry/theme"
 
-import { SOURCE_OPTIONS } from "./color"
+import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -23,22 +23,17 @@ export const SLIDER_DEFAULTS = {
    Untitled UI, Ant Design). Solid: a disc in the fill (shadcn sera, Carbon,
    Supabase, Polaris). Handle: Material 3's bar with a cut-away gap and a stop
    dot. */
-export const THUMB_OPTIONS = [
-  { value: "knob", label: "Knob" },
-  { value: "ring", label: "Ring" },
-  { value: "solid", label: "Solid" },
-  { value: "handle", label: "Handle" },
-]
+export const THUMB_VALUES = ["knob", "ring", "solid", "handle"] as const
 
 /* 2, 4, 8 or 16px. Hairline: Carbon, shadcn sera. Thin: shadcn nova,
    Supabase, Polaris. Medium: Radix, Untitled UI, Geist. Thick: Material 3. */
-export const TRACK_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "hairline", label: "Hairline" },
-  { value: "thin", label: "Thin" },
-  { value: "medium", label: "Medium" },
-  { value: "thick", label: "Thick" },
-]
+export const TRACK_VALUES = [
+  "auto",
+  "hairline",
+  "thin",
+  "medium",
+  "thick",
+] as const
 
 /** Each thumb's own track: Material 3's handle rides a 16px track. */
 export const THUMB_TRACK: Record<string, string> = {
@@ -49,9 +44,9 @@ export const THUMB_TRACK: Record<string, string> = {
 }
 
 export const SLIDER_SCHEMA: ChapterSchema<typeof SLIDER_DEFAULTS> = {
-  sliderThumb: oneOf(THUMB_OPTIONS),
-  sliderTrack: oneOf(TRACK_OPTIONS),
-  sliderColor: oneOf(SOURCE_OPTIONS),
+  sliderThumb: oneOf(THUMB_VALUES),
+  sliderTrack: oneOf(TRACK_VALUES),
+  sliderColor: oneOf(SOURCE_VALUES),
 }
 
 export function resolveSliders(state: Effective): Resolved {

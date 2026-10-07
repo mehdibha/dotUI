@@ -23,30 +23,11 @@ export const MENU_DEFAULTS = {
   menuScale: "default",
 }
 
-export const HIGHLIGHT_OPTIONS = [
-  { value: "neutral", label: "Neutral", description: "shadcn, Geist, Linear" },
-  { value: "accent", label: "Accent", description: "Radix Themes, macOS" },
-]
+export const HIGHLIGHT_VALUES = ["neutral", "accent"] as const
 
-export const INSET_OPTIONS = [
-  { value: "inset", label: "Inset", description: "shadcn, Geist, Linear" },
-  {
-    value: "full-bleed",
-    label: "Full bleed",
-    description: "Material 3, Carbon, Airbnb",
-  },
-]
+export const INSET_VALUES = ["inset", "full-bleed"] as const
 
-export const ARROWS_OPTIONS = [
-  {
-    value: "tooltips",
-    label: "Tooltips",
-    description: "shadcn, Geist, Polaris",
-  },
-  { value: "none", label: "None", description: "Linear, Primer, Material 3" },
-  { value: "popovers", label: "Popovers", description: "Spotify" },
-  { value: "both", label: "Both", description: "Carbon, Duolingo" },
-]
+export const ARROWS_VALUES = ["tooltips", "none", "popovers", "both"] as const
 
 /* Which layers draw a tip: [popover, tooltip]. */
 const TIPS: Record<string, [popover: string, tooltip: string]> = {
@@ -56,42 +37,25 @@ const TIPS: Record<string, [popover: string, tooltip: string]> = {
   both: ["tip", "tip"],
 }
 
-export const INDICATOR_OPTIONS = [
-  { value: "check-end", label: "End", description: "shadcn, Geist, Linear" },
-  { value: "check-start", label: "Start", description: "Radix Themes, Primer" },
-  { value: "none", label: "None", description: "Material 3, Airbnb" },
-]
+export const INDICATOR_VALUES = ["check-end", "check-start", "none"] as const
 
-export const SELECTED_ROW_OPTIONS = [
-  { value: "none", label: "None", description: "shadcn, Radix Themes" },
-  { value: "tint", label: "Tint", description: "Material 3, Polaris, Carbon" },
-]
+export const SELECTED_ROW_VALUES = ["none", "tint"] as const
 
-export const PICKER_OPTIONS = [
-  { value: "drawer", label: "Drawer", description: "Geist, Notion, Stripe" },
-  { value: "anchored", label: "Anchored", description: "Primer, Radix Themes" },
-]
+export const PICKER_VALUES = ["drawer", "anchored"] as const
 
-export const SEARCH_OPTIONS = [
-  { value: "field", label: "Field", description: "shadcn" },
-  { value: "bar", label: "Bar", description: "Supabase, Geist" },
-  { value: "prompt", label: "Prompt", description: "Linear, Raycast" },
-]
+export const SEARCH_VALUES = ["field", "bar", "prompt"] as const
 
-export const SCALE_OPTIONS = [
-  { value: "default", label: "Default", description: "shadcn" },
-  { value: "large", label: "Large", description: "Linear, Raycast" },
-]
+export const SCALE_VALUES = ["default", "large"] as const
 
 export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
-  menuHighlight: oneOf(HIGHLIGHT_OPTIONS),
-  menuInset: oneOf(INSET_OPTIONS),
-  menuArrows: oneOf(ARROWS_OPTIONS),
-  menuIndicator: oneOf(INDICATOR_OPTIONS),
-  menuSelectedRow: oneOf(SELECTED_ROW_OPTIONS),
-  mobilePickers: oneOf(PICKER_OPTIONS),
-  menuSearch: oneOf(SEARCH_OPTIONS),
-  menuScale: oneOf(SCALE_OPTIONS),
+  menuHighlight: oneOf(HIGHLIGHT_VALUES),
+  menuInset: oneOf(INSET_VALUES),
+  menuArrows: oneOf(ARROWS_VALUES),
+  menuIndicator: oneOf(INDICATOR_VALUES),
+  menuSelectedRow: oneOf(SELECTED_ROW_VALUES),
+  mobilePickers: oneOf(PICKER_VALUES),
+  menuSearch: oneOf(SEARCH_VALUES),
+  menuScale: oneOf(SCALE_VALUES),
 }
 
 export function resolveMenus(state: Effective): Resolved {

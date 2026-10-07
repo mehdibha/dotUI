@@ -10,24 +10,16 @@ export const ALERT_DEFAULTS = {
   alertStyle: "neutral",
 }
 
-export const STYLE_OPTIONS = [
-  { value: "neutral", label: "Neutral", description: "shadcn, HeroUI" },
-  {
-    value: "soft",
-    label: "Soft",
-    description: "Radix Themes, Atlassian, Mantine, Chakra, Polaris",
-  },
-  {
-    value: "soft-outline",
-    label: "Soft + outline",
-    description: "Primer, Ant Design, Fluent 2, Supabase",
-  },
-  { value: "outline", label: "Outline", description: "Geist" },
-  { value: "inverse", label: "Inverse", description: "Carbon" },
-]
+export const STYLE_VALUES = [
+  "neutral",
+  "soft",
+  "soft-outline",
+  "outline",
+  "inverse",
+] as const
 
 export const ALERT_SCHEMA: ChapterSchema<typeof ALERT_DEFAULTS> = {
-  alertStyle: oneOf(STYLE_OPTIONS),
+  alertStyle: oneOf(STYLE_VALUES),
 }
 
 export function resolveAlert(state: Effective): Resolved {

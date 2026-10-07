@@ -12,22 +12,10 @@ export const SKELETON_DEFAULTS = {
   skeletonAnimation: "shimmer",
 }
 
-export const ANIMATION_OPTIONS = [
-  {
-    value: "shimmer",
-    label: "Shimmer",
-    description: "Spectrum 2, Geist, Primer, Carbon, Fluent 2, HeroUI",
-  },
-  {
-    value: "pulse",
-    label: "Pulse",
-    description: "shadcn, Radix Themes, Mantine, Chakra",
-  },
-  { value: "none", label: "None", description: "Polaris, Ant Design" },
-]
+export const ANIMATION_VALUES = ["shimmer", "pulse", "none"] as const
 
 export const SKELETON_SCHEMA: ChapterSchema<typeof SKELETON_DEFAULTS> = {
-  skeletonAnimation: oneOf(ANIMATION_OPTIONS),
+  skeletonAnimation: oneOf(ANIMATION_VALUES),
 }
 
 export function resolveSkeleton(state: Effective): Resolved {

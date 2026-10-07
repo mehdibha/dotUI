@@ -12,21 +12,10 @@ export const TOOLTIP_DEFAULTS = {
   tooltipStyle: "inverted",
 }
 
-export const TOOLTIP_STYLE_OPTIONS = [
-  {
-    value: "inverted",
-    label: "Inverted",
-    description: "shadcn, Geist, Duolingo",
-  },
-  {
-    value: "surface",
-    label: "Same as popovers",
-    description: "Linear, Polaris, Supabase",
-  },
-]
+export const TOOLTIP_STYLE_VALUES = ["inverted", "surface"] as const
 
 export const TOOLTIP_SCHEMA: ChapterSchema<typeof TOOLTIP_DEFAULTS> = {
-  tooltipStyle: oneOf(TOOLTIP_STYLE_OPTIONS),
+  tooltipStyle: oneOf(TOOLTIP_STYLE_VALUES),
 }
 
 export function resolveTooltips(state: Effective): Resolved {

@@ -10,11 +10,11 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
-import { SELECTED_OPTIONS } from "./choice-cards"
+import { SELECTED_OPTIONS } from "./choice-cards.meta"
 import { STRONG_EDGE } from "./color"
 import { DEFAULT_STATE, parseState } from "./index"
-import { MARK_OPTIONS } from "./radio"
-import { STYLE_OPTIONS } from "./switch"
+import { MARK_OPTIONS } from "./radio.meta"
+import { STYLE_OPTIONS } from "./switch.meta"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 const CARDS = ["checkbox", "radio-group", "switch"]

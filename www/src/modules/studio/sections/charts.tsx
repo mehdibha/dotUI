@@ -4,7 +4,11 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { GRID_OPTIONS, MOTION_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
+import {
+  GRID_OPTIONS,
+  MOTION_OPTIONS,
+  PALETTE_OPTIONS,
+} from "../axes/charts.meta"
 import {
   DialGap,
   DialGlyph,

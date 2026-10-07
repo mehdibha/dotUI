@@ -33,12 +33,8 @@ import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import {
-  ICON_STROKE_WIDTH_VAR,
-  LIBRARY_OPTIONS,
-  STROKE_RANGE,
-  WEIGHT_OPTIONS,
-} from "../axes/icons"
+import { ICON_STROKE_WIDTH_VAR, STROKE_RANGE } from "../axes/icons"
+import { LIBRARY_OPTIONS, WEIGHT_OPTIONS } from "../axes/icons.meta"
 import {
   DIAL_LABEL,
   DIAL_PRESS,

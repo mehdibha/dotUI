@@ -7,7 +7,7 @@ import chartMeta from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { designSystemOf } from "../resolve"
-import { MOTION_OPTIONS } from "./charts"
+import { MOTION_OPTIONS } from "./charts.meta"
 import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import type { StudioState } from "./index"
 

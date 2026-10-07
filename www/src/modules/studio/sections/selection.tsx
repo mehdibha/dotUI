@@ -12,16 +12,12 @@ import { useStyles as useSliderStyles } from "@/registry/ui/slider/styles"
 import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 
 import { effective as resolve } from "../axes"
-import {
-  CORNER_OPTIONS,
-  cornerTokens,
-  EDGE_OPTIONS,
-  edgeTokens,
-} from "../axes/checkbox"
-import { SELECTED_OPTIONS } from "../axes/choice-cards"
-import { MARK_OPTIONS } from "../axes/radio"
-import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
-import { STYLE_OPTIONS } from "../axes/switch"
+import { cornerTokens, edgeTokens } from "../axes/checkbox"
+import { CORNER_OPTIONS, EDGE_OPTIONS } from "../axes/checkbox.meta"
+import { SELECTED_OPTIONS } from "../axes/choice-cards.meta"
+import { MARK_OPTIONS } from "../axes/radio.meta"
+import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
+import { STYLE_OPTIONS } from "../axes/switch.meta"
 import { DialSelect } from "../dial"
 import {
   FamilyHero,

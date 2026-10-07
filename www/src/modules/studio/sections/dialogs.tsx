@@ -15,7 +15,7 @@ import {
   POSITION_OPTIONS,
   SECTIONS_OPTIONS,
   STRENGTH_OPTIONS,
-} from "../axes/dialogs"
+} from "../axes/dialogs.meta"
 import { roleLabel } from "../axes/shape"
 import {
   DialGap,

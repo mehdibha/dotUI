@@ -2,13 +2,8 @@
 
 /* Motion: the timing table, the anchored entrance, then links to family patterns. */
 
-import {
-  ENTRANCE_OPTIONS,
-  MOTION_OPTIONS,
-  springProgress,
-  springSettleMs,
-  tableOf,
-} from "../axes/motion"
+import { springProgress, springSettleMs, tableOf } from "../axes/motion"
+import { ENTRANCE_OPTIONS, MOTION_OPTIONS } from "../axes/motion.meta"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
 import { UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"

@@ -13,56 +13,21 @@ export const BADGE_DEFAULTS = {
   badgeCase: "sentence",
 }
 
-export const STYLE_OPTIONS = [
-  {
-    value: "solid",
-    label: "Solid",
-    description: "shadcn, Geist, Spectrum 2, Mantine, Fluent 2",
-  },
-  {
-    value: "soft",
-    label: "Soft",
-    description: "Radix Themes, Polaris, Chakra, Carbon, Atlassian, HeroUI",
-  },
-  { value: "outline", label: "Outline", description: "Primer" },
-  {
-    value: "soft-outline",
-    label: "Soft + outline",
-    description: "Ant Design, Untitled UI, Supabase",
-  },
-]
+export const STYLE_VALUES = [
+  "solid",
+  "soft",
+  "outline",
+  "soft-outline",
+] as const
 
-export const SHAPE_OPTIONS = [
-  {
-    value: "pill",
-    label: "Pill",
-    description: "Geist, Primer, Carbon, Mantine, Supabase, Fluent 2, HeroUI",
-  },
-  {
-    value: "rounded",
-    label: "Rounded",
-    description:
-      "Atlassian, Ant Design, Chakra, Spectrum 2, Radix Themes, Untitled UI, Polaris (approx.)",
-  },
-]
+export const SHAPE_VALUES = ["pill", "rounded"] as const
 
-export const CASE_OPTIONS = [
-  {
-    value: "sentence",
-    label: "Sentence",
-    description: "shadcn, Radix Themes, Primer, Polaris, Geist",
-  },
-  {
-    value: "uppercase",
-    label: "Uppercase",
-    description: "Supabase, Mantine, Atlassian (v15), Chakra v2",
-  },
-]
+export const CASE_VALUES = ["sentence", "uppercase"] as const
 
 export const BADGE_SCHEMA: ChapterSchema<typeof BADGE_DEFAULTS> = {
-  badgeStyle: oneOf(STYLE_OPTIONS),
-  badgeShape: oneOf(SHAPE_OPTIONS),
-  badgeCase: oneOf(CASE_OPTIONS),
+  badgeStyle: oneOf(STYLE_VALUES),
+  badgeShape: oneOf(SHAPE_VALUES),
+  badgeCase: oneOf(CASE_VALUES),
 }
 
 export function resolveBadges(state: Effective): Resolved {

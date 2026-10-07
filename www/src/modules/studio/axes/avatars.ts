@@ -13,48 +13,13 @@ export const AVATAR_DEFAULTS = {
   avatarFallback: "neutral",
 }
 
-export const SHAPE_OPTIONS = [
-  {
-    value: "circle",
-    label: "Circle",
-    credits: [
-      "shadcn",
-      "Geist",
-      "Primer",
-      "Fluent 2",
-      "Chakra",
-      "Mantine",
-      "HeroUI",
-      "Spectrum 2",
-      "Ant Design",
-      "Atlassian",
-      "Untitled UI",
-      "Material 3",
-    ],
-  },
-  {
-    value: "rounded",
-    label: "Rounded",
-    credits: ["Polaris", "Radix Themes", "Stripe"],
-  },
-]
+export const SHAPE_VALUES = ["circle", "rounded"] as const
 
-export const FALLBACK_OPTIONS = [
-  {
-    value: "neutral",
-    label: "Neutral",
-    credits: ["shadcn", "Primer", "Atlassian", "Untitled UI", "Fluent 2"],
-  },
-  {
-    value: "accent",
-    label: "Accent",
-    credits: ["Radix Themes (soft)", "Material 3 (list)"],
-  },
-]
+export const FALLBACK_VALUES = ["neutral", "accent"] as const
 
 export const AVATAR_SCHEMA: ChapterSchema<typeof AVATAR_DEFAULTS> = {
-  avatarShape: oneOf(SHAPE_OPTIONS),
-  avatarFallback: oneOf(FALLBACK_OPTIONS),
+  avatarShape: oneOf(SHAPE_VALUES),
+  avatarFallback: oneOf(FALLBACK_VALUES),
 }
 
 export function resolveAvatars(state: Effective): Resolved {

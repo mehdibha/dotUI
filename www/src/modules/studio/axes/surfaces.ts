@@ -22,7 +22,7 @@
    Only what differs from the registry's defaults is emitted. */
 
 import { defineChapter } from "./core/types"
-import type { Effective, Resolved, StudioStateInput } from "./index"
+import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -34,78 +34,13 @@ export const SURFACE_DEFAULTS = {
   shellTone: "subtle",
 }
 
-export const LAYERS_OPTIONS = [
-  {
-    value: "same",
-    label: "Same",
-    description: "In light, cards share the page's tone",
-  },
-  {
-    value: "grouped",
-    label: "Grouped",
-    description: "In light, white cards on a gray page",
-  },
-  {
-    value: "tonal",
-    label: "Tonal",
-    description: "In light, cards a shade below the page",
-  },
-]
+export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
-export const EDGE_OPTIONS = [
-  {
-    value: "line",
-    label: "Line",
-    description: "A hairline around every surface",
-  },
-  {
-    value: "none",
-    label: "None",
-    description: "Shadows and tone do the separating",
-  },
-]
+export const EDGE_VALUES = ["line", "none"] as const
 
-export const SHADOW_OPTIONS = [
-  {
-    value: "flat",
-    label: "Flat",
-    description: "No card shadows; menus and dialogs cast",
-  },
-  { value: "low", label: "Low", description: "A small shadow under cards" },
-  { value: "medium", label: "Medium", description: "Cards lift off the page" },
-  { value: "high", label: "High", description: "Deep, soft shadows" },
-]
+export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
-export const GLASS_OPTIONS = [
-  {
-    value: "solid",
-    label: "Solid",
-    description: "Opaque menus, popovers and toasts",
-  },
-  {
-    value: "glass",
-    label: "Glass",
-    description: "Translucent over a blur; dialogs stay solid",
-  },
-]
-
-export const SHELL_OPTIONS = [
-  {
-    value: "subtle",
-    label: "Subtle",
-    description: "One step off the page — shadcn",
-  },
-  {
-    value: "page",
-    label: "Page",
-    description: "The page's own tone — Supabase, Carbon",
-  },
-  {
-    value: "recessed",
-    label: "Recessed",
-    description: "Below the page; panels wear the card edge — Linear, Polaris",
-  },
-]
+export const SHELL_VALUES = ["subtle", "page", "recessed"] as const
 
 /* Light: halfway between the 50 and 100 rungs (Linear's #efeff0 frame on a
    #f9f9fa panel). Dark: the page shaded toward black (#09090a on #121213). */
@@ -116,115 +51,11 @@ const SHELL_SIDEBAR: Record<string, string> = {
 }
 
 export const SURFACE_SCHEMA: ChapterSchema<typeof SURFACE_DEFAULTS> = {
-  surfaceLayers: oneOf(LAYERS_OPTIONS),
-  surfaceEdge: oneOf(EDGE_OPTIONS),
-  surfaceShadow: oneOf(SHADOW_OPTIONS),
+  surfaceLayers: oneOf(LAYERS_VALUES),
+  surfaceEdge: oneOf(EDGE_VALUES),
+  surfaceShadow: oneOf(SHADOW_VALUES),
   surfaceGlass: BOOLEAN,
-  shellTone: oneOf(SHELL_OPTIONS),
-}
-
-/* --------------------------------- Styles --------------------------------- */
-
-type StyleKey = "surfaceLayers" | "surfaceEdge" | "surfaceShadow"
-
-export interface SurfaceStyle {
-  id: string
-  label: string
-  /** Who draws their surfaces this way. */
-  credits: string
-  description: string
-  values: Record<StyleKey, string>
-}
-
-const style = (
-  id: string,
-  label: string,
-  credits: string,
-  description: string,
-  surfaceLayers: string,
-  surfaceEdge: string,
-  surfaceShadow: string,
-): SurfaceStyle => ({
-  id,
-  label,
-  credits,
-  description,
-  values: { surfaceLayers, surfaceEdge, surfaceShadow },
-})
-
-export const SURFACE_STYLES: SurfaceStyle[] = [
-  style(
-    "outlined",
-    "Outlined",
-    "shadcn, GitHub",
-    "Hairlines, flat cards",
-    "same",
-    "line",
-    "flat",
-  ),
-  style(
-    "soft",
-    "Soft",
-    "shadcn New York, Radix",
-    "Hairlines and a small shadow",
-    "same",
-    "line",
-    "low",
-  ),
-  style(
-    "elevated",
-    "Elevated",
-    "Fluent, Atlassian",
-    "Shadows instead of lines",
-    "same",
-    "none",
-    "low",
-  ),
-  style(
-    "grouped",
-    "Grouped",
-    "HeroUI, Polaris",
-    "White cards on a gray page",
-    "grouped",
-    "none",
-    "low",
-  ),
-  style(
-    "tonal",
-    "Tonal",
-    "Material",
-    "Cards toned off the page",
-    "tonal",
-    "none",
-    "flat",
-  ),
-]
-
-const SHADOWS = SHADOW_OPTIONS.map((o) => o.value)
-
-/** How close the state sits to a style, 9 on it: Layers outweighs Edge,
- *  which outweighs how far apart the shadows are. */
-export const styleScore = (
-  state: Pick<StudioStateInput, StyleKey>,
-  { values }: SurfaceStyle,
-) =>
-  (state.surfaceLayers === values.surfaceLayers ? 4 : 0) +
-  (state.surfaceEdge === values.surfaceEdge ? 2 : 0) +
-  3 -
-  Math.abs(
-    SHADOWS.indexOf(state.surfaceShadow) -
-      SHADOWS.indexOf(values.surfaceShadow),
-  )
-
-/** The style the state sits on, or the closest one. */
-export function surfaceStyle(state: Pick<StudioStateInput, StyleKey>): {
-  style: SurfaceStyle
-  exact: boolean
-} {
-  const best = SURFACE_STYLES.reduce((a, b) =>
-    styleScore(state, b) > styleScore(state, a) ? b : a,
-  )
-  return { style: best, exact: styleScore(state, best) === 9 }
+  shellTone: oneOf(SHELL_VALUES),
 }
 
 /* -------------------------------- Recipe --------------------------------- */

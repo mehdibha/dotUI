@@ -11,20 +11,16 @@ export const NUMBER_FIELD_DEFAULTS = {
   numberLayout: "right-cells",
 }
 
-export const NUMBER_LAYOUT_OPTIONS = [
-  { value: "right-cells", label: "Right cells", credits: ["Carbon"] },
-  {
-    value: "stacked-cells",
-    label: "Stacked cells",
-    credits: ["Ant", "Mantine", "Untitled UI"],
-  },
-  { value: "stacked-inset", label: "Stacked inset", credits: ["Polaris"] },
-  { value: "split", label: "Split", credits: ["HeroUI", "Airbnb"] },
-]
+export const NUMBER_LAYOUT_VALUES = [
+  "right-cells",
+  "stacked-cells",
+  "stacked-inset",
+  "split",
+] as const
 
 export const NUMBER_FIELD_SCHEMA: ChapterSchema<typeof NUMBER_FIELD_DEFAULTS> =
   {
-    numberLayout: oneOf(NUMBER_LAYOUT_OPTIONS),
+    numberLayout: oneOf(NUMBER_LAYOUT_VALUES),
   }
 
 export function resolveNumberField(state: Effective): Resolved {

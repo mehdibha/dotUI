@@ -14,15 +14,10 @@ export const TOGGLE_DEFAULTS = {
   toggleSelected: "tone",
 }
 
-export const SELECTED_OPTIONS = [
-  { value: "tone", label: "Tone", description: "shadcn, Polaris, Untitled UI" },
-  { value: "solid", label: "Solid", description: "Material 3, Spectrum 2" },
-  { value: "tint", label: "Tint", description: "Atlassian, Ant, Duolingo" },
-  { value: "inverse", label: "Inverse", description: "Spectrum 2, Spotify" },
-]
+export const SELECTED_VALUES = ["tone", "solid", "tint", "inverse"] as const
 
 export const TOGGLE_SCHEMA: ChapterSchema<typeof TOGGLE_DEFAULTS> = {
-  toggleSelected: oneOf(SELECTED_OPTIONS),
+  toggleSelected: oneOf(SELECTED_VALUES),
 }
 
 export function resolveToggles(state: Effective): Resolved {

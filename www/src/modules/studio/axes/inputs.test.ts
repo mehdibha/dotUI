@@ -11,8 +11,9 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { DEFAULT_STATE, effective, parseState } from "."
 import { designSystemOf } from "../resolve"
-import { STYLE_OPTIONS as BUTTON_STYLES } from "./buttons"
-import { AUTO_STYLE, STYLE_HOVER, STYLE_OPTIONS } from "./inputs"
+import { STYLE_OPTIONS as BUTTON_STYLES } from "./buttons.meta"
+import { AUTO_STYLE, STYLE_HOVER } from "./inputs"
+import { STYLE_OPTIONS } from "./inputs.meta"
 
 const shipped = async (
   name: string,

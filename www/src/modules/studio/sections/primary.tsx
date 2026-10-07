@@ -19,13 +19,9 @@ import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
-import {
-  PRIMARY_LEAVES,
-  primaryValue,
-  SOURCE_OPTIONS,
-  withSource,
-} from "../axes/color"
+import { PRIMARY_LEAVES, primaryValue, withSource } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
+import { SOURCE_OPTIONS } from "../axes/color.meta"
 import {
   DIAL_CHEVRON,
   DIAL_LABEL,

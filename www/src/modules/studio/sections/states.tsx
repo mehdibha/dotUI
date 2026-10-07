@@ -6,10 +6,9 @@
 
 import { cn } from "@/registry/lib/utils"
 
-import { HIGHLIGHT_OPTIONS } from "../axes/selection"
+import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
+import { AUTO_STRENGTH, AUTO_WIDTH } from "../axes/states"
 import {
-  AUTO_STRENGTH,
-  AUTO_WIDTH,
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
@@ -20,7 +19,7 @@ import {
   INVALID_OPTIONS,
   STRENGTH_OPTIONS,
   WIDTH_OPTIONS,
-} from "../axes/states"
+} from "../axes/states.meta"
 import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
 import type { Effective, Studio } from "../state"

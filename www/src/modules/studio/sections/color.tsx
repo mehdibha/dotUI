@@ -18,10 +18,9 @@ import type { ColorConfig } from "@/registry/theme"
 import {
   buildColorConfig,
   COLOR_DEFAULTS,
-  CONTROL_EDGE_OPTIONS,
-  SELECTED_WASH_OPTIONS,
   VIVIDNESS_RANGE,
 } from "../axes/color"
+import { CONTROL_EDGE_OPTIONS, SELECTED_WASH_OPTIONS } from "../axes/color.meta"
 import {
   DialColor,
   DialGap,

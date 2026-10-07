@@ -12,51 +12,13 @@ export const TABLE_DEFAULTS = {
   tableHeaderLabel: "muted",
 }
 
-export const HEADER_OPTIONS = [
-  {
-    value: "plain",
-    label: "Plain",
-    credits: [
-      "shadcn",
-      "Geist",
-      "Atlassian",
-      "Fluent 2",
-      "Catalyst",
-      "Chakra (line)",
-      "Mantine",
-      "Radix Themes (ghost)",
-    ],
-  },
-  {
-    value: "filled",
-    label: "Filled",
-    credits: [
-      "Polaris",
-      "Primer",
-      "Carbon",
-      "Ant Design",
-      "Untitled UI",
-      "HeroUI",
-    ],
-  },
-]
+export const HEADER_VALUES = ["plain", "filled"] as const
 
-export const HEADER_LABEL_OPTIONS = [
-  {
-    value: "strong",
-    label: "Strong",
-    credits: ["shadcn", "Carbon", "Ant Design", "Radix Themes", "Stripe"],
-  },
-  {
-    value: "muted",
-    label: "Muted",
-    credits: ["Primer", "Polaris", "shadcn sera", "Material 3", "Notion"],
-  },
-]
+export const HEADER_LABEL_VALUES = ["strong", "muted"] as const
 
 export const TABLE_SCHEMA: ChapterSchema<typeof TABLE_DEFAULTS> = {
-  tableHeader: oneOf(HEADER_OPTIONS),
-  tableHeaderLabel: oneOf(HEADER_LABEL_OPTIONS),
+  tableHeader: oneOf(HEADER_VALUES),
+  tableHeaderLabel: oneOf(HEADER_LABEL_VALUES),
 }
 
 export function resolveTables(state: Effective): Resolved {

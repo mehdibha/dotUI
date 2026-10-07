@@ -13,11 +13,11 @@ import { designSystemOf } from "../resolve"
 import {
   bezierCss,
   legTiming,
-  MOTION_OPTIONS,
   motionVars,
   springProgress,
   tableOf,
 } from "./motion"
+import { MOTION_OPTIONS } from "./motion.meta"
 
 const MOTION_VAR =
   /^--studio-.+-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/

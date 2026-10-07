@@ -18,30 +18,30 @@ export const ICON_DEFAULTS = {
 
 /* Lucide: shadcn, Supabase. The rest are shadcn create's libraries
    (Hugeicons is shadcn mira's). */
-export const LIBRARY_OPTIONS = [
-  { value: "lucide", label: "Lucide" },
-  { value: "phosphor", label: "Phosphor" },
-  { value: "tabler", label: "Tabler" },
-  { value: "remix", label: "Remix" },
-  { value: "hugeicons", label: "Hugeicons" },
-]
+export const LIBRARY_VALUES = [
+  "lucide",
+  "phosphor",
+  "tabler",
+  "remix",
+  "hugeicons",
+] as const
 
 /* Phosphor's own weights; Regular is shadcn create's. */
-export const WEIGHT_OPTIONS = [
-  { value: "thin", label: "Thin" },
-  { value: "light", label: "Light" },
-  { value: "regular", label: "Regular" },
-  { value: "bold", label: "Bold" },
-  { value: "fill", label: "Fill" },
-  { value: "duotone", label: "Duotone" },
-]
+export const WEIGHT_VALUES = [
+  "thin",
+  "light",
+  "regular",
+  "bold",
+  "fill",
+  "duotone",
+] as const
 
 export const STROKE_RANGE = { min: 1, max: 3, step: 0.25 }
 
 export const ICON_SCHEMA: ChapterSchema<typeof ICON_DEFAULTS> = {
-  iconLibrary: oneOf(LIBRARY_OPTIONS),
+  iconLibrary: oneOf(LIBRARY_VALUES),
   iconStroke: range(STROKE_RANGE),
-  iconWeight: oneOf(WEIGHT_OPTIONS),
+  iconWeight: oneOf(WEIGHT_VALUES),
 }
 
 export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"

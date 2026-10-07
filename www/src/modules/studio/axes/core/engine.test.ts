@@ -31,16 +31,14 @@ const fired = (state: StudioState) =>
 
 const enumValues = (key: string) => {
   const schema = SCHEMA[key as keyof typeof SCHEMA]?.value
-  return schema?.type === "enum"
-    ? schema.options.map((o) => o.value)
-    : undefined
+  return schema?.type === "enum" ? schema.values : undefined
 }
 
 /** A key's domain: numbers at min, default, max and every value `named`. */
 function sample(key: string, named: unknown[] = []): unknown[] {
   const kind = SCHEMA[key as keyof typeof SCHEMA]?.value
   const fallback = DEFAULTS[key as keyof typeof DEFAULTS]
-  if (kind?.type === "enum") return kind.options.map((o) => o.value)
+  if (kind?.type === "enum") return [...kind.values]
   if (kind?.type === "number")
     return [...new Set([kind.min, fallback, kind.max, ...named])]
   if (kind?.type === "boolean") return [false, true]
@@ -218,7 +216,7 @@ function randomState(r: () => number): StudioState {
       continue
     }
     if (kind.type === "enum")
-      raw[key] = kind.options[Math.floor(r() * kind.options.length)]!.value
+      raw[key] = kind.values[Math.floor(r() * kind.values.length)]
     else if (kind.type === "number") {
       const step = kind.step ?? 1
       const n = Math.round((kind.max - kind.min) / step)

@@ -16,57 +16,38 @@ export const BUTTON_DEFAULTS = {
   buttonCase: "sentence",
 }
 
-/* Descriptions credit the systems each option is copied from. */
-export const STYLE_OPTIONS = [
-  { value: "flat", label: "Flat", description: "shadcn, Geist, Carbon" },
-  { value: "hairline", label: "Hairline", description: "Primer, Supabase" },
-  { value: "rim-light", label: "Rim light", description: "Untitled UI" },
-  { value: "gloss", label: "Gloss", description: "Clerk" },
-  { value: "bevel", label: "Bevel", description: "Polaris, Radix classic" },
-  { value: "ledge", label: "Ledge", description: "Duolingo" },
-]
+export const STYLE_VALUES = [
+  "flat",
+  "hairline",
+  "rim-light",
+  "gloss",
+  "bevel",
+  "ledge",
+] as const
 
 /** Styles that draw their own secondary and press. */
 export const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
 
-export const SECONDARY_OPTIONS = [
-  { value: "as-style", label: "As style", description: "Primer, Polaris" },
-  {
-    value: "outline",
-    label: "Outline",
-    description: "shadcn, Geist, Notion, Stripe",
-  },
-  { value: "raised", label: "Raised", description: "Supabase, Claude" },
-  { value: "soft", label: "Soft", description: "Radix, Airbnb, Spectrum 2" },
-  { value: "tonal", label: "Tonal", description: "Material 3" },
-]
+export const SECONDARY_VALUES = [
+  "as-style",
+  "outline",
+  "raised",
+  "soft",
+  "tonal",
+] as const
 
-export const RADIUS_OPTIONS = [
-  { value: "same", label: "Same as controls", description: "Primer, shadcn" },
-  {
-    value: "pill",
-    label: "Pill",
-    description: "Material 3, Spectrum 2, Spotify",
-  },
-]
+export const RADIUS_VALUES = ["same", "pill"] as const
 
-export const PRESS_OPTIONS = [
-  { value: "as-style", label: "As style", description: "Primer, Carbon" },
-  { value: "nudge", label: "Nudge", description: "shadcn, Mantine" },
-  { value: "scale", label: "Scale", description: "Supabase, Claude" },
-]
+export const PRESS_VALUES = ["as-style", "nudge", "scale"] as const
 
-export const CASE_OPTIONS = [
-  { value: "sentence", label: "Sentence", description: "shadcn, Primer" },
-  { value: "uppercase", label: "Uppercase", description: "Duolingo" },
-]
+export const CASE_VALUES = ["sentence", "uppercase"] as const
 
 export const BUTTON_SCHEMA: ChapterSchema<typeof BUTTON_DEFAULTS> = {
-  buttonStyle: oneOf(STYLE_OPTIONS),
-  buttonSecondary: oneOf(SECONDARY_OPTIONS),
-  buttonRadius: oneOf(RADIUS_OPTIONS),
-  buttonPress: oneOf(PRESS_OPTIONS),
-  buttonCase: oneOf(CASE_OPTIONS),
+  buttonStyle: oneOf(STYLE_VALUES),
+  buttonSecondary: oneOf(SECONDARY_VALUES),
+  buttonRadius: oneOf(RADIUS_VALUES),
+  buttonPress: oneOf(PRESS_VALUES),
+  buttonCase: oneOf(CASE_VALUES),
 }
 
 export function resolveButtons(state: Effective): Resolved {

@@ -5,7 +5,7 @@
    the unchecked edge of checkbox and radio on `--studio-check-edge`, which
    Strong points at a `--check-edge` token so the export flattens it. */
 
-import { fillScope, SOURCE_OPTIONS, STRONG_EDGE } from "./color"
+import { fillScope, SOURCE_VALUES, STRONG_EDGE } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -19,22 +19,16 @@ export const CHECKBOX_DEFAULTS = {
 
 /* Auto is Shape's detail rung (shadcn, Primer, Polaris, Untitled UI). Sharp
    is a fixed 2px whatever the radius (Material 3, Carbon, Fluent 2). */
-export const CORNER_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "sharp", label: "Sharp" },
-]
+export const CORNER_VALUES = ["auto", "sharp"] as const
 
 /* Same as fields: Color's control edge (shadcn, Polaris). Strong: Color's
    Strong edge on checks and radios only, fields unchanged (Linear, Primer). */
-export const EDGE_OPTIONS = [
-  { value: "fields", label: "Fields" },
-  { value: "strong", label: "Strong" },
-]
+export const EDGE_VALUES = ["fields", "strong"] as const
 
 export const CHECKBOX_SCHEMA: ChapterSchema<typeof CHECKBOX_DEFAULTS> = {
-  checkboxColor: oneOf(SOURCE_OPTIONS),
-  checkCorner: oneOf(CORNER_OPTIONS),
-  checkEdge: oneOf(EDGE_OPTIONS),
+  checkboxColor: oneOf(SOURCE_VALUES),
+  checkCorner: oneOf(CORNER_VALUES),
+  checkEdge: oneOf(EDGE_VALUES),
 }
 
 export function cornerTokens(corner: string) {

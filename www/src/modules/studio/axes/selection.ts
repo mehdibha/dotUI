@@ -11,13 +11,10 @@ export const SELECTION_DEFAULTS = {
   selectionHighlight: "accent",
 }
 
-export const HIGHLIGHT_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "browser", label: "Browser" },
-]
+export const HIGHLIGHT_VALUES = ["accent", "browser"] as const
 
 export const SELECTION_SCHEMA: ChapterSchema<typeof SELECTION_DEFAULTS> = {
-  selectionHighlight: oneOf(HIGHLIGHT_OPTIONS),
+  selectionHighlight: oneOf(HIGHLIGHT_VALUES),
 }
 
 export function resolveSelection(state: Effective): Resolved {

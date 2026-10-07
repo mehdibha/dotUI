@@ -26,19 +26,21 @@ import {
   parseState,
 } from "./index"
 import {
-  EDGE_OPTIONS,
-  LAYERS_OPTIONS,
   NO_SHADOW,
-  SHADOW_OPTIONS,
   shadowCss,
-  SHELL_OPTIONS,
   surfaceColorCss,
   surfaceRecipe,
+} from "./surfaces"
+import type { Mode, PerMode, SurfaceColor } from "./surfaces"
+import {
+  EDGE_OPTIONS,
+  LAYERS_OPTIONS,
+  SHADOW_OPTIONS,
+  SHELL_OPTIONS,
   SURFACE_STYLES,
   styleScore,
   surfaceStyle,
-} from "./surfaces"
-import type { Mode, PerMode, SurfaceColor } from "./surfaces"
+} from "./surfaces.meta"
 
 const SURFACE_TOKENS = [
   "--card-border",

@@ -12,27 +12,10 @@ export const CARD_DEFAULTS = {
   cardFooter: "none",
 }
 
-export const FOOTER_OPTIONS = [
-  {
-    value: "none",
-    label: "None",
-    credits: [
-      "shadcn mira, vega, maia, luma, sera, rhea",
-      "Radix Themes",
-      "Polaris",
-      "Fluent 2",
-    ],
-  },
-  {
-    value: "rule",
-    label: "Rule",
-    credits: ["shadcn lyra", "Primer", "Supabase", "Untitled UI"],
-  },
-  { value: "band", label: "Band", credits: ["shadcn nova", "Geist"] },
-]
+export const FOOTER_VALUES = ["none", "rule", "band"] as const
 
 export const CARD_SCHEMA: ChapterSchema<typeof CARD_DEFAULTS> = {
-  cardFooter: oneOf(FOOTER_OPTIONS),
+  cardFooter: oneOf(FOOTER_VALUES),
 }
 
 export function resolveCard(state: Effective): Resolved {

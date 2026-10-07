@@ -19,20 +19,23 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { parseState } from "../axes"
 import type { StudioState } from "../axes"
-import { STYLE_OPTIONS as ALERT_OPTIONS } from "../axes/alert"
+import { STYLE_OPTIONS as ALERT_OPTIONS } from "../axes/alert.meta"
 import {
   CASE_OPTIONS,
   SHAPE_OPTIONS,
   STYLE_OPTIONS as BADGE_OPTIONS,
-} from "../axes/badges"
+} from "../axes/badges.meta"
 import {
   COLOR_OPTIONS,
   TRACK_OPTIONS,
   TRACK_STYLE_OPTIONS,
-} from "../axes/progress"
-import { ANIMATION_OPTIONS } from "../axes/skeleton"
-import { STYLE_OPTIONS as SPINNER_OPTIONS } from "../axes/spinner"
-import { STATUS_OPTIONS, STYLE_OPTIONS as TOAST_OPTIONS } from "../axes/toast"
+} from "../axes/progress.meta"
+import { ANIMATION_OPTIONS } from "../axes/skeleton.meta"
+import { STYLE_OPTIONS as SPINNER_OPTIONS } from "../axes/spinner.meta"
+import {
+  STATUS_OPTIONS,
+  STYLE_OPTIONS as TOAST_OPTIONS,
+} from "../axes/toast.meta"
 import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import {
   FamilyHero,

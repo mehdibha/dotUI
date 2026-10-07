@@ -11,17 +11,10 @@ export const OTP_FIELD_DEFAULTS = {
   otpStyle: "attached",
 }
 
-export const OTP_STYLE_OPTIONS = [
-  { value: "attached", label: "Attached", credits: ["shadcn", "Supabase"] },
-  {
-    value: "separate",
-    label: "Separate",
-    credits: ["Ant", "Mantine", "Clerk", "Untitled UI", "shadcn sera"],
-  },
-]
+export const OTP_STYLE_VALUES = ["attached", "separate"] as const
 
 export const OTP_FIELD_SCHEMA: ChapterSchema<typeof OTP_FIELD_DEFAULTS> = {
-  otpStyle: oneOf(OTP_STYLE_OPTIONS),
+  otpStyle: oneOf(OTP_STYLE_VALUES),
 }
 
 export function resolveOtpField(state: Effective): Resolved {

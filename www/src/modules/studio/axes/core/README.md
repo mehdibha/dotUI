@@ -13,6 +13,10 @@ saved ──effective()──▶ Effective ──resolveDesignSystem()──▶ 
 ## Add an axis
 
 1. Add the key to its module's `*_DEFAULTS` and `*_SCHEMA` (default = Origin's look).
+   An enum's values are a `*_VALUES` tuple there; its labels, descriptions and
+   credits go in `<module>.meta.ts` (`options()` from `core/meta.ts`, plus the
+   key in its `OPTIONS`). Runtime modules ride every docs page; meta modules
+   only the panel.
 2. Read it in that module's `resolve(state: Effective)` (index.ts fails to
    compile on a resolver typed over anything else); emit only what differs
    from the registry defaults (Origin stays token-free).

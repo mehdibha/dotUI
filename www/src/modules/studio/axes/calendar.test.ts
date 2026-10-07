@@ -8,7 +8,11 @@ import { flatten } from "@/publisher/flatten"
 import type { ClassValue } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
-import { TODAY_COLOR_OPTIONS, TODAY_OPTIONS, WEEKDAY_OPTIONS } from "./calendar"
+import {
+  TODAY_COLOR_OPTIONS,
+  TODAY_OPTIONS,
+  WEEKDAY_OPTIONS,
+} from "./calendar.meta"
 import { DEFAULT_STATE, parseState } from "./index"
 
 const classes = (value: string) => new Set(value.split(/\s+/))

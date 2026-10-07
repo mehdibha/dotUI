@@ -11,11 +11,11 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue, PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
-import { STYLE_OPTIONS as ALERT_OPTIONS } from "./alert"
-import { CASE_OPTIONS, SHAPE_OPTIONS, STYLE_OPTIONS } from "./badges"
+import { STYLE_OPTIONS as ALERT_OPTIONS } from "./alert.meta"
+import { CASE_OPTIONS, SHAPE_OPTIONS, STYLE_OPTIONS } from "./badges.meta"
 import { DEFAULT_STATE, effective, parseState } from "./index"
-import { TRACK_OPTIONS, TRACK_STYLE_OPTIONS } from "./progress"
-import { STYLE_OPTIONS as SPINNER_OPTIONS } from "./spinner"
+import { TRACK_OPTIONS, TRACK_STYLE_OPTIONS } from "./progress.meta"
+import { STYLE_OPTIONS as SPINNER_OPTIONS } from "./spinner.meta"
 
 const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 

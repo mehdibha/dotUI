@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest"
 
 import { designSystemOf } from "../resolve"
 import { effective, parseState } from "./index"
-import { THUMB_OPTIONS } from "./sliders"
+import { THUMB_OPTIONS } from "./sliders.meta"
 
 describe("sliders axis", () => {
   test("thumb and track land as slider params", () => {

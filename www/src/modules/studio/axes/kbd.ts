@@ -13,32 +13,10 @@ export const KBD_DEFAULTS = {
   kbdTreatment: "chip",
 }
 
-export const TREATMENT_OPTIONS = [
-  {
-    value: "chip",
-    label: "Chip",
-    credits: ["shadcn", "Polaris", "HeroUI", "Notion", "Airbnb"],
-  },
-  {
-    value: "outline",
-    label: "Outline",
-    credits: ["Claude", "Linear", "Untitled UI", "Duolingo", "Geist"],
-  },
-  {
-    value: "keycap",
-    label: "Keycap",
-    credits: [
-      "Primer",
-      "Radix Themes (classic)",
-      "Chakra (raised)",
-      "Mantine",
-      "Ant Design",
-    ],
-  },
-]
+export const TREATMENT_VALUES = ["chip", "outline", "keycap"] as const
 
 export const KBD_SCHEMA: ChapterSchema<typeof KBD_DEFAULTS> = {
-  kbdTreatment: oneOf(TREATMENT_OPTIONS),
+  kbdTreatment: oneOf(TREATMENT_VALUES),
 }
 
 export function resolveKbd(state: Effective): Resolved {

@@ -90,7 +90,7 @@ describe("shape axis", () => {
         SHAPE_RUNGS.findIndex((rung) => rung.token === token)
       const values = (key: keyof typeof SHAPE_SCHEMA) => {
         const axis = SHAPE_SCHEMA[key].value
-        return axis.type === "enum" ? axis.options.map((o) => o.value) : []
+        return axis.type === "enum" ? axis.values : []
       }
       const pill = "var(--radius-full)"
       for (const roleControl of values("roleControl"))

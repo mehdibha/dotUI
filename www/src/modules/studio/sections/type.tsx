@@ -14,13 +14,13 @@ import { cn } from "@/registry/lib/utils"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
+import { TITLE_VOICE } from "../axes/type"
 import {
   LABEL_WEIGHT_OPTIONS,
   SECTION_LABEL_OPTIONS,
   TITLE_OPTIONS,
-  TITLE_VOICE,
   UI_TEXT_OPTIONS,
-} from "../axes/type"
+} from "../axes/type.meta"
 import {
   DIAL_CHEVRON,
   DIAL_LABEL,

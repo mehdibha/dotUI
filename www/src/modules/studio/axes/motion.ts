@@ -279,18 +279,14 @@ export function motionVars(table: MotionTable): Record<string, string> {
 
 /* ---------------------------------- Chapter -------------------------------- */
 
-export const MOTION_OPTIONS = [
-  { value: "none", label: "None", description: "Ant Design" },
-  { value: "standard", label: "Standard", description: "shadcn" },
-  { value: "smooth", label: "Smooth", description: "Radix Themes" },
-  { value: "expressive", label: "Expressive", description: "Material 3" },
-]
+export const MOTION_VALUES = [
+  "none",
+  "standard",
+  "smooth",
+  "expressive",
+] as const
 
-export const ENTRANCE_OPTIONS = [
-  { value: "zoom", label: "Zoom", description: "shadcn" },
-  { value: "slide", label: "Slide", description: "Polaris" },
-  { value: "fade", label: "Fade", description: "Primer" },
-]
+export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
 const ENTRANCE_PARAM: Record<string, string> = {
   zoom: "scale",
@@ -304,8 +300,8 @@ export const MOTION_DEFAULTS = {
 }
 
 export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
-  motion: oneOf(MOTION_OPTIONS),
-  motionEntrance: oneOf(ENTRANCE_OPTIONS),
+  motion: oneOf(MOTION_VALUES),
+  motionEntrance: oneOf(ENTRANCE_VALUES),
 }
 
 const STANDARD_VARS = motionVars(STANDARD)

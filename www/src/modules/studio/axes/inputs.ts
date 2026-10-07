@@ -14,27 +14,15 @@ export const INPUT_DEFAULTS = {
 }
 
 /* Each shell is one system's field, copied whole (input/styles.ts). */
-export const STYLE_OPTIONS = [
-  {
-    value: "outline",
-    label: "Outline",
-    credits: ["shadcn nova", "Geist", "Linear", "Stripe", "Spotify", "Polaris"],
-  },
-  { value: "raised", label: "Raised", credits: ["Untitled UI", "shadcn vega"] },
-  { value: "inset", label: "Inset", credits: ["Primer"] },
-  {
-    value: "well",
-    label: "Well",
-    credits: ["shadcn mira", "Supabase", "Notion", "Duolingo"],
-  },
-  { value: "filled", label: "Filled", credits: ["shadcn luma", "Ant filled"] },
-  {
-    value: "indicator",
-    label: "Indicator",
-    credits: ["Material 3 filled", "Carbon"],
-  },
-  { value: "underline", label: "Underline", credits: ["shadcn sera"] },
-]
+export const STYLE_VALUES = [
+  "outline",
+  "raised",
+  "inset",
+  "well",
+  "filled",
+  "indicator",
+  "underline",
+] as const
 
 /* Auto pairs the shell with the button style's source system: Hairline →
    Inset is Primer's alone (Linear draws Outline, Supabase a Well). */
@@ -48,20 +36,7 @@ export const AUTO_STYLE: Record<string, string> = {
   ledge: "well",
 }
 
-export const HOVER_OPTIONS = [
-  {
-    value: "none",
-    label: "None",
-    credits: ["shadcn", "Primer", "Radix", "Carbon"],
-  },
-  {
-    value: "edge",
-    label: "Edge",
-    credits: ["Geist", "Linear", "Stripe", "Spotify", "Claude"],
-  },
-  { value: "tint", label: "Tint", credits: ["Material 3 filled"] },
-  { value: "edge-tint", label: "Edge + tint", credits: ["Polaris"] },
-]
+export const HOVER_VALUES = ["none", "edge", "tint", "edge-tint"] as const
 
 /** As style (the follow): each shell's own hover, from the system it is
  *  copied from. */
@@ -75,24 +50,12 @@ export const STYLE_HOVER: Record<string, string> = {
   underline: "edge", // Fluent
 }
 
-export const HEIGHT_OPTIONS = [
-  {
-    value: "controls",
-    label: "Controls",
-    credits: ["shadcn", "Geist", "Linear", "Stripe", "Primer"],
-  },
-  {
-    value: "step",
-    label: "One step taller",
-    credits: ["Polaris", "Untitled UI", "Supabase"],
-  },
-  { value: "tall", label: "Tall", credits: ["Material 3", "Airbnb"] },
-]
+export const HEIGHT_VALUES = ["controls", "step", "tall"] as const
 
 export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
-  inputStyle: oneOf(STYLE_OPTIONS),
-  inputHover: oneOf(HOVER_OPTIONS),
-  inputHeight: oneOf(HEIGHT_OPTIONS),
+  inputStyle: oneOf(STYLE_VALUES),
+  inputHover: oneOf(HOVER_VALUES),
+  inputHeight: oneOf(HEIGHT_VALUES),
 }
 
 export function resolveInputs(state: Effective): Resolved {

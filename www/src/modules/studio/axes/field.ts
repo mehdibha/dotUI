@@ -13,45 +13,13 @@ export const FIELD_DEFAULTS = {
   inputError: "plain",
 }
 
-export const LABEL_OPTIONS = [
-  {
-    value: "regular",
-    label: "Regular",
-    credits: ["Ant", "Polaris", "Geist", "Material 3", "Carbon", "Supabase"],
-  },
-  {
-    value: "medium",
-    label: "Medium",
-    credits: ["shadcn nova", "Untitled UI", "Claude", "Notion", "Duolingo"],
-  },
-  {
-    value: "semibold",
-    label: "Semibold",
-    credits: ["Primer", "Stripe"],
-  },
-]
+export const LABEL_VALUES = ["regular", "medium", "semibold"] as const
 
-export const ERROR_OPTIONS = [
-  {
-    value: "plain",
-    label: "Plain",
-    credits: ["shadcn", "Supabase", "Notion", "Duolingo"],
-  },
-  {
-    value: "icon-message",
-    label: "Icon in message",
-    credits: ["Polaris", "Primer", "Geist"],
-  },
-  {
-    value: "icon-field",
-    label: "Icon in field",
-    credits: ["Carbon", "Material 3", "Untitled UI"],
-  },
-]
+export const ERROR_VALUES = ["plain", "icon-message", "icon-field"] as const
 
 export const FIELD_SCHEMA: ChapterSchema<typeof FIELD_DEFAULTS> = {
-  fieldLabel: oneOf(LABEL_OPTIONS),
-  inputError: oneOf(ERROR_OPTIONS),
+  fieldLabel: oneOf(LABEL_VALUES),
+  inputError: oneOf(ERROR_VALUES),
 }
 
 export function resolveField(state: Effective): Resolved {
