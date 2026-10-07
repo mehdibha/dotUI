@@ -1,28 +1,21 @@
 {
-  "comment": "Client-bundle budget for the production build, checked by scripts/perf-budget.mjs. Every prerendered page is measured: the first rule whose glob matches sets its caps, and a page matching none falls to `default` \u2014 so a new route is covered the day it lands. First-load JS counts every chunk the page's HTML references plus their transitive static imports. Thresholds sit ~15 KB gz above main \u2014 roughly one dependency \u2014 so silent regressions fail CI. Raise one only with a reviewed reason.",
+  "comment": "Client-bundle budget for the production build, checked by scripts/perf-budget.mjs. Every prerendered page is measured: the first rule whose glob matches sets its caps, and a page matching none falls to `default` — so a new route is covered the day it lands. First-load JS counts every chunk the page's HTML references plus their transitive static imports. Thresholds sit ~15 KB gz above main — roughly one dependency — so silent regressions fail CI. Raise one only with a reviewed reason.",
   "entryChunkGzKB": 105,
   "exclude": ["/internal/**"],
   "rules": [
-    {
-      "match": "/",
-      "firstLoadGzKB": 645,
-      "preloads": 40
-    },
+    { "match": "/", "firstLoadGzKB": 645, "preloads": 40 },
     {
       "match": "/docs/**",
-      "firstLoadGzKB": 546,
+      "firstLoadGzKB": 560,
       "preloads": 32,
-      "reason": "Axis engine rebuild (#889): the family modules, rules and 15 presets ride the docs closure (option labels and credits stay panel-only in axes/*.meta.ts)."
+      "reason": "Axis engine rebuild (#889), +13 KB gz on /docs and / (532.5 → 545.7): the family modules, rules and 16 presets ride the docs closure; option labels and credits stay panel-only in axes/*.meta.ts."
     },
     {
       "match": "/studio",
-      "firstLoadGzKB": 583,
+      "firstLoadGzKB": 600,
       "preloads": 87,
-      "reason": "Axis engine rebuild (#889): the panel sections import registry styles.ts and meta.ts modules for their glyphs, each its own chunk."
+      "reason": "Axis engine rebuild (#889), +29 KB gz (555.9 → 585.2): the panel sections import registry styles.ts and meta.ts modules for their glyphs, each its own chunk."
     }
   ],
-  "default": {
-    "firstLoadGzKB": 250,
-    "preloads": 16
-  }
+  "default": { "firstLoadGzKB": 250, "preloads": 16 }
 }
