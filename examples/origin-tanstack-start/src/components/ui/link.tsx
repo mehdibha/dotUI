@@ -5,7 +5,7 @@ import * as LinkPrimitives from "react-aria-components/Link";
 import { type VariantProps, tv } from "tailwind-variants";
 
 const linkVariants = tv({
-  base: "focus-reset focus-visible:focus-ring inline-flex items-center gap-1 transition-colors",
+  base: "focus-reset focus-visible:focus-ring-outside inline-flex items-center gap-1 transition-colors",
   variants: {
     variant: {
       default: "disabled:text-(--disabled-fg,currentColor) text-fg-accent",

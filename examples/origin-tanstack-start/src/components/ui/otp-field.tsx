@@ -17,7 +17,7 @@ const otpFieldVariants = tv({
   slots: {
     root: "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2 group/otp-field **:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
     group:
-      "flex w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1",
+      "flex w-fit items-stretch -space-x-px *:not-first:rounded-l-none *:not-last:rounded-r-none *:focus:z-1 **:data-input:border **:data-input:not-invalid:not-focus:border-border-control",
     separator: "",
   },
 });

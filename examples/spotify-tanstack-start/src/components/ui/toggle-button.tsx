@@ -12,11 +12,16 @@ const toggleButtonVariants = tv({
   variants: {
     variant: {
       primary:
-        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected)) bg-primary hover:bg-primary-hover pressed:bg-primary-active selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
+        "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
       secondary:
-        "text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20 selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20 selected:bg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80 selected:text-fg-inverse",
+      link: "disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) underline-offset-2 hover:underline text-fg",
+      warning:
+        "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
+      danger:
+        "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger)) bg-danger hover:bg-danger-hover pressed:bg-danger-active",
     },
     size: {
       xs: "rounded-full h-7 gap-1 px-2.5 text-[0.8125rem] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 data-icon-only:size-7 **:[svg]:not-with-[size]:size-3.5",
@@ -32,6 +37,13 @@ const toggleButtonVariants = tv({
     variant: "secondary",
     size: "md",
   },
+  compoundVariants: [
+    {
+      variant: "primary",
+      class:
+        "disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
+    },
+  ],
 });
 
 export { toggleButtonVariants as toggleButtonStyles };
