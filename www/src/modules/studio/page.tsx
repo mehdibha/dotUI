@@ -17,6 +17,7 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 
+import { setPageFocus } from "./focus"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
@@ -207,6 +208,11 @@ export function PanelPage({
     observer.observe(header)
     return () => observer.disconnect()
   }, [layer])
+
+  useEffect(() => {
+    setPageFocus(page?.id ?? null)
+    return () => setPageFocus(null)
+  }, [page?.id])
 
   // Going back lands where the page was left; a new page opens at its top.
   useLayoutEffect(() => {

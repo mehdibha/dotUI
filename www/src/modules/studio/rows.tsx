@@ -53,6 +53,7 @@ import {
   NEUTRAL_HUE_RANGE,
   NEUTRAL_TINT_RANGE,
 } from "@/modules/studio/axes/color"
+import { usePopoverFocus } from "@/modules/studio/focus"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
 
 /** Where row-attached overlays open. */
@@ -137,6 +138,7 @@ export function PanelPopover({
   const layer = useContext(DockLayer)
   const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
+  usePopoverFocus()
   return (
     <Popover
       placement={placement}
