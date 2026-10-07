@@ -234,6 +234,23 @@ describe("resolve-classes", () => {
     )
   })
 
+  test("rewriteClassString spells a faded token as an opacity modifier", () => {
+    const vars = resolveStudioVars({
+      "--studio-row-wash":
+        "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+      "--studio-row-tint":
+        "color-mix(in srgb, var(--color-highlight) 60%, red)",
+    })
+    expect(
+      rewriteClassString(
+        "hover:bg-(--studio-row-wash) bg-(--studio-row-tint)",
+        vars,
+      ),
+    ).toBe(
+      "hover:bg-highlight/60 bg-[color-mix(in_srgb,_var(--color-highlight)_60%,_red)]",
+    )
+  })
+
   test("rewriteClassString resolves spacing, the registry's literals, and arbitrary values", () => {
     const vars = resolveStudioVars({
       "--studio-cell-size": "--spacing(8)",

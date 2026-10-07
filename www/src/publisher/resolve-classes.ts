@@ -162,6 +162,12 @@ function utilitySuffix(utility: string, value: string): string | undefined {
       value,
     )
   if (token) return token[1]
+  // Tailwind's own spelling of an opacity modifier: `bg-highlight/60`.
+  const faded =
+    /^color-mix\(in oklab,\s*var\(--color-([\w.-]+)\)\s+([\d.]+)%,\s*transparent\)$/.exec(
+      value,
+    )
+  if (faded) return `${faded[1]}/${faded[2]}`
   const spacing =
     /^--spacing\(([\d.]+)\)$/.exec(value) ??
     /^calc\(var\(--spacing\)\s*\*\s*([\d.]+)\)$/.exec(value)
