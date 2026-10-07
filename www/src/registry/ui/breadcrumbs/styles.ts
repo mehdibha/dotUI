@@ -1,6 +1,16 @@
 import { createStyles } from "@/lib/styles"
 
+import {
+  LINK_ACCENT,
+  LINK_ALWAYS,
+  LINK_HOVER,
+  LINK_NEUTRAL,
+  LINK_NEUTRAL_WEIGHT,
+} from "../link/styles"
 import breadcrumbsMeta from "./meta"
+
+/* Ancestors are muted labels that sharpen on hover, or the link recipe in
+   its color and underline. The current crumb stays plain foreground. */
 
 const { useStyles, styles } = createStyles(breadcrumbsMeta, {
   base: {
@@ -20,15 +30,37 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
     comfortable: {},
   },
   params: {
-    tone: {
-      muted: {
+    ancestors: {
+      muted: { slots: { link: "hover:[a]:text-fg" } },
+      "accent-always": {
+        slots: { link: [LINK_ACCENT, LINK_ALWAYS, "current:no-underline"] },
+      },
+      "accent-hover": { slots: { link: [LINK_ACCENT, LINK_HOVER] } },
+      "accent-never": { slots: { link: LINK_ACCENT } },
+      // The current crumb drops the weight too, or it reads as an ancestor.
+      "neutral-always": {
         slots: {
-          link: "hover:[a]:text-fg",
+          link: [
+            LINK_NEUTRAL_WEIGHT,
+            LINK_NEUTRAL,
+            LINK_ALWAYS,
+            "current:font-normal current:no-underline",
+          ],
         },
       },
-      accent: {
+      "neutral-hover": {
         slots: {
-          link: "[a]:text-accent hover:[a]:underline hover:[a]:underline-offset-2",
+          link: [
+            LINK_NEUTRAL_WEIGHT,
+            LINK_NEUTRAL,
+            LINK_HOVER,
+            "current:font-normal",
+          ],
+        },
+      },
+      "neutral-never": {
+        slots: {
+          link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL, "current:font-normal"],
         },
       },
     },

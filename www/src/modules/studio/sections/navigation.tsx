@@ -1,19 +1,41 @@
 "use client"
 
-/* Navigation — tabs, links, breadcrumbs; their colors are Primary leaves. */
+/* Navigation — how the current location is marked: tabs, the sidebar's
+   current item, links and breadcrumbs. */
 
+import { useMemo } from "react"
+
+import { DesignSystemContext } from "@/lib/styles"
+import { ChevronRightIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-
-import { SEPARATOR_OPTIONS, TONE_OPTIONS } from "../axes/breadcrumbs"
-import { UNDERLINE_OPTIONS } from "../axes/links"
-import { TAB_STYLE_OPTIONS } from "../axes/tabs"
+import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
+import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
 import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
+  WEIGHT_BOLD,
+  WEIGHT_MEDIUM,
+  WEIGHT_MEDIUM_SEMIBOLD,
+  WEIGHT_REGULAR,
+  WEIGHT_REGULAR_MEDIUM,
+  WEIGHT_REGULAR_SEMIBOLD,
+  WEIGHT_SEMIBOLD,
+} from "@/registry/ui/segmented-control/styles"
+import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
+import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+
+import { parseState } from "../axes"
+import type { StudioState } from "../axes"
+import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs"
+import { SOURCE_OPTIONS } from "../axes/color"
+import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
+import {
+  ITEM_WEIGHT_OPTIONS,
+  MARKER_OPTIONS,
+  PILL_OPTIONS,
+  TAB_STYLE_OPTIONS,
+  WEIGHT_OPTIONS,
+} from "../axes/navigation"
+import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
 import {
   FamilyHero,
   HeroMember,
@@ -21,204 +43,206 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-function LinkGlyph({ underline }: { underline: string }) {
+/* The tokens a pick writes that a specimen draws with (the shell tone). */
+const LOCAL_VARS = ["--color-sidebar"]
+
+/** Specimens drawn by the registry's own recipes in one design system. */
+function System({
+  ds,
+  children,
+}: {
+  ds: DesignSystem
+  children: React.ReactNode
+}) {
+  const value = useMemo(
+    () => ({ params: ds.componentParams, density: "compact" as const }),
+    [ds],
+  )
+  const style = Object.fromEntries(
+    LOCAL_VARS.flatMap((name) =>
+      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
+    ),
+  ) as React.CSSProperties
   return (
-    <span
-      className={cn(
-        "shrink-0 text-[11px] font-medium text-fg/80 underline-offset-2",
-        underline === "always" && "underline",
-        underline === "hover" && "underline decoration-fg/30",
-      )}
-    >
-      Link
+    <DesignSystemContext.Provider value={value}>
+      <span className="flex items-center gap-1.5 text-fg" style={style}>
+        {children}
+      </span>
+    </DesignSystemContext.Provider>
+  )
+}
+
+/** One design system per option of `key`, over the current picks. */
+function useSystems(
+  state: StudioState,
+  key: keyof StudioState,
+  options: readonly { value: string }[],
+) {
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        options.map(({ value }) => [
+          value,
+          designSystemOf({ ...state, [key]: value } as StudioState),
+        ]),
+      ),
+    [state, key, options],
+  )
+}
+
+const TABS = ["Code", "Docs"]
+
+/** A tab list, the first tab selected, in the system's default variant. */
+function TabsSpecimen() {
+  const { root, list, item, indicator } = useTabsStyles()()
+  const horizontal = { orientation: "horizontal" } as const
+  return (
+    <span className={root(horizontal)}>
+      <span data-orientation="horizontal" className={list(horizontal)}>
+        {TABS.map((label, i) => (
+          <span
+            key={label}
+            data-orientation="horizontal"
+            data-selected={i === 0 || undefined}
+            className={item(horizontal)}
+          >
+            {i === 0 && (
+              <span
+                data-orientation="horizontal"
+                className={indicator(horizontal)}
+              />
+            )}
+            <span className="relative z-10">{label}</span>
+          </span>
+        ))}
+      </span>
     </span>
   )
 }
 
-function TabGlyph({ style }: { style: string }) {
-  if (style === "segmented")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="3"
-          y="7.5"
-          width="18"
-          height="9"
-          rx="3"
-          fill="currentColor"
-          opacity=".2"
-        />
-        <rect
-          x="4.5"
-          y="9"
-          width="7.5"
-          height="6"
-          rx="2"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
-  if (style === "line")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="7.5"
-          y="8.5"
-          width="9"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".5"
-        />
-        <path
-          d="M3 16h18"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity=".3"
-        />
-        <path
-          d="M6.5 16h11"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    )
-  if (style === "pill")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="4.5"
-          y="7.5"
-          width="15"
-          height="9"
-          rx="4.5"
-          fill="currentColor"
-          opacity=".25"
-        />
-        <rect
-          x="8"
-          y="10.75"
-          width="8"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
+/** Sidebar items on the sidebar's tone, the first current. */
+function SidebarSpecimen() {
+  const { menuButton } = useSidebarStyles()()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M3 16.5h3.5v-5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5H21"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <rect
-        x="9.5"
-        y="11.5"
-        width="5"
-        height="2.5"
-        rx="1.25"
-        fill="currentColor"
-        opacity=".5"
-      />
-    </svg>
+    <span className="flex w-20 flex-col gap-0.5 rounded-md bg-sidebar p-1">
+      {["Inbox", "Drafts"].map((label, i) => (
+        <span
+          key={label}
+          data-size="sm"
+          data-active={i === 0 || undefined}
+          className={menuButton()}
+        >
+          {label}
+        </span>
+      ))}
+    </span>
   )
 }
 
-function SeparatorGlyph({ separator }: { separator: string }) {
+function LinkSpecimen() {
+  const link = useLinkStyles()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M2.5 12h4M17.5 12h4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity=".35"
-      />
-      {separator === "slash" ? (
-        <path
-          d="M13.75 6.5 10.25 17.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      ) : (
-        <path
-          d="m10.5 7.5 4.5 4.5-4.5 4.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-    </svg>
+    <span data-rac="" className={cn(link(), "text-sm")}>
+      Pricing
+    </span>
   )
 }
 
-/** A page with its sidebar: a member with no rows of its own yet. */
-function SidebarGlyph() {
+function BreadcrumbsSpecimen({ separator }: { separator: string }) {
+  const { root, link, separator: glyph } = useBreadcrumbsStyles()()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="3.75"
-        y="4.75"
-        width="16.5"
-        height="14.5"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path d="M9.5 5v14" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M6 8.5h1.5M6 11.5h1.5M6 14.5h1.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity=".45"
-      />
-    </svg>
+    <span className={cn(root(), "flex-nowrap")}>
+      <span className={link()}>Docs</span>
+      <span aria-hidden className={glyph()}>
+        {separator === "slash" ? "/" : <ChevronRightIcon />}
+      </span>
+      <span data-current="" className={link()}>
+        Tabs
+      </span>
+    </span>
   )
 }
+
+const WEIGHTS: Record<string, { item: string }> = {
+  regular: WEIGHT_REGULAR,
+  "regular-medium": WEIGHT_REGULAR_MEDIUM,
+  "regular-semibold": WEIGHT_REGULAR_SEMIBOLD,
+  medium: WEIGHT_MEDIUM,
+  "medium-semibold": WEIGHT_MEDIUM_SEMIBOLD,
+  semibold: WEIGHT_SEMIBOLD,
+  bold: WEIGHT_BOLD,
+}
+
+/** A label at rest, then current, in the registry's weight classes. */
+function WeightGlyph({ weight }: { weight: string }) {
+  const { item } = WEIGHTS[weight]!
+  return (
+    <span className="flex items-center gap-1 text-[13px]">
+      <span className={cn(item, "text-fg/50")}>Aa</span>
+      <span data-selected="" className={cn(item, "text-fg")}>
+        Aa
+      </span>
+    </span>
+  )
+}
+
+const weightOptions = (options: typeof ITEM_WEIGHT_OPTIONS) =>
+  options.map((option) => ({
+    ...option,
+    preview: WEIGHTS[option.value] && <WeightGlyph weight={option.value} />,
+  }))
 
 /* --------------------------------- Section --------------------------------- */
 
 export function NavigationPreview({ state }: { state: Effective }) {
+  const ds = useMemo(
+    () => designSystemOf(parseState({ tabStyle: state.tabStyle })),
+    [state.tabStyle],
+  )
   return (
-    <DialGlyph>
-      <TabGlyph style={state.tabStyle} />
-    </DialGlyph>
+    <System ds={ds}>
+      <TabsSpecimen />
+    </System>
   )
 }
 
 export function NavigationSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+  const { state, effective, designSystem } = studio
+  const styles = useSystems(state, "tabStyle", TAB_STYLE_OPTIONS)
+  const markers = useSystems(state, "navMarker", MARKER_OPTIONS)
+  const pills = useSystems(
+    { ...state, tabStyle: "pill" } as StudioState,
+    "tabsPill",
+    PILL_OPTIONS,
+  )
+  const underlines = useSystems(state, "linkUnderline", UNDERLINE_OPTIONS)
   return (
     <>
       <FamilyHero>
         <HeroMember name="Tabs">
-          <DialGlyph>
-            <TabGlyph style={effective.tabStyle} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Link">
-          <LinkGlyph underline={effective.linkUnderline} />
-        </HeroMember>
-        <HeroMember name="Breadcrumbs">
-          <DialGlyph>
-            <SeparatorGlyph separator={effective.breadcrumbSeparator} />
-          </DialGlyph>
+          <System ds={designSystem}>
+            <TabsSpecimen />
+          </System>
         </HeroMember>
         <HeroMember name="Sidebar">
-          <DialGlyph>
-            <SidebarGlyph />
-          </DialGlyph>
+          <System ds={designSystem}>
+            <SidebarSpecimen />
+          </System>
+        </HeroMember>
+        <HeroMember name="Link">
+          <System ds={designSystem}>
+            <LinkSpecimen />
+          </System>
+        </HeroMember>
+        <HeroMember name="Breadcrumbs">
+          <System ds={designSystem}>
+            <BreadcrumbsSpecimen separator={effective.breadcrumbSeparator} />
+          </System>
         </HeroMember>
       </FamilyHero>
       <DialList
@@ -227,25 +251,79 @@ export function NavigationSection({ studio }: { studio: Studio }) {
         options={TAB_STYLE_OPTIONS.map((option) => ({
           ...option,
           preview: (
-            <DialGlyph>
-              <TabGlyph style={option.value} />
-            </DialGlyph>
+            <System ds={styles[option.value]!}>
+              <TabsSpecimen />
+            </System>
           ),
         }))}
       />
       <DialGap />
-      <UsesRow axis="tabsColor" label="Indicator color" />
-      <UsesRow axis="linkColor" label="Link color" />
-      <UsesRow axis="motion" label="Motion" />
+      <DialSelect
+        axis="navMarker"
+        label="Current item"
+        rowPreview={false}
+        options={MARKER_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <System ds={markers[option.value]!}>
+              <SidebarSpecimen />
+            </System>
+          ),
+        }))}
+      />
+      <DialSegmented
+        axis="tabsColor"
+        label="Indicator color"
+        options={SOURCE_OPTIONS}
+      />
+      <UsesRow axis="segmentedSelected" label="Segmented chip" />
+      <UsesRow axis="shellTone" label="App shell" />
+      <UsesRow axis="paginationCurrent" label="Pagination" />
+      <More keys={["navWeight", "navItemWeight", "tabsPill"]}>
+        <DialSelect
+          axis="navWeight"
+          label="Weight"
+          options={weightOptions(WEIGHT_OPTIONS)}
+        />
+        <DialSelect
+          axis="navItemWeight"
+          label="Sidebar weight"
+          options={weightOptions(ITEM_WEIGHT_OPTIONS)}
+        />
+        <DialSelect
+          axis="tabsPill"
+          label="Pill fill"
+          rowPreview={false}
+          options={PILL_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <System ds={pills[option.value]!}>
+                <TabsSpecimen />
+              </System>
+            ),
+          }))}
+        />
+      </More>
       <MemberSection id="link" title="Links">
         <DialSelect
           axis="linkUnderline"
           label="Underline"
           options={UNDERLINE_OPTIONS.map((option) => ({
             ...option,
-            preview: <LinkGlyph underline={option.value} />,
+            preview: (
+              <System ds={underlines[option.value]!}>
+                <LinkSpecimen />
+              </System>
+            ),
           }))}
         />
+        <More keys={["linkColor"]}>
+          <DialSegmented
+            axis="linkColor"
+            label="Color"
+            options={LINK_COLOR_OPTIONS}
+          />
+        </More>
       </MemberSection>
       <MemberSection id="breadcrumbs" title="Breadcrumbs">
         <More keys={["breadcrumbSeparator", "breadcrumbTone"]}>
@@ -257,7 +335,7 @@ export function NavigationSection({ studio }: { studio: Studio }) {
           <DialSegmented
             axis="breadcrumbTone"
             label="Ancestors"
-            options={TONE_OPTIONS}
+            options={ANCESTOR_OPTIONS}
           />
         </More>
       </MemberSection>

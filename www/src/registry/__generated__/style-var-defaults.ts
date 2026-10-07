@@ -118,6 +118,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-tabs-color-duration": "150ms",
 	"--studio-tabs-color-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
 	"--studio-tabs-list-radius": "var(--studio-radius-container)",
+	"--studio-tabs-pill-radius": "var(--studio-radius-control)",
 	"--studio-tabs-radius": "var(--studio-radius-surface)",
 	"--studio-tabs-state-duration": "150ms",
 	"--studio-tabs-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",

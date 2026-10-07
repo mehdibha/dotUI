@@ -62,7 +62,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "nav",
-    owners: ["tabs", "links", "breadcrumbs"],
+    owners: ["navigation", "links", "breadcrumbs"],
     label: "Navigation",
     Preview: NavigationPreview,
     Body: NavigationSection,

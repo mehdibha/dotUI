@@ -8,6 +8,8 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "style": "ledge",
@@ -24,6 +26,8 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -46,6 +50,8 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "style": "ledge",
@@ -62,6 +68,8 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "ledge",
       "selected": "tone",
@@ -84,6 +92,8 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
     "button": {
       "case": "sentence",
       "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "style": "bevel",
@@ -97,9 +107,20 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
     "segmented-control": {
       "selected": "raised",
       "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "chip": "raised",
+      "color": "neutral",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
     },
     "toggle-button": {
       "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
       "press": "as-style",
       "secondary": "bevel",
       "selected": "tone",
@@ -356,6 +377,15 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     "--studio-tooltip-enter-duration": "0ms",
     "--studio-tooltip-exit-duration": "0ms",
   },
+}
+`;
+
+exports[`rules > navigation/surface-needs-shell: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
 }
 `;
 

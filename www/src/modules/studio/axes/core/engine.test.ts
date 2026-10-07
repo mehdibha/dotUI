@@ -352,6 +352,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { dialogSections: "divided", dialogActions: "bleed" },
     { dialogSections: "on-scroll", dialogActions: "bleed" },
   ],
+  "navigation/surface-needs-shell": [
+    { navMarker: "surface", shellTone: "subtle" },
+    { navMarker: "surface", shellTone: "recessed" },
+  ],
   "otp-field/underline-separates-cells": [
     { inputStyle: "underline" },
     { inputStyle: "filled" },

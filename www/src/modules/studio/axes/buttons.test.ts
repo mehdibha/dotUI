@@ -76,22 +76,26 @@ describe("button ⇄ toggle-button parity", () => {
     flatten({ stylesConfig, meta, density: "default", paramSelections })
       .variants
 
-  test.each(["style", "secondary", "press", "case"] as const)(
-    "%s flattens to the same variants on both",
-    async (param) => {
-      const { button, toggle } = await configs()
-      for (const value of buttonMeta.params[param].values) {
-        const selection = { [param]: value }
-        expect(
-          variantsOf(toggle, toggleButtonMeta, selection),
-          `${param}=${value}`,
-        ).toEqual(variantsOf(button, buttonMeta, selection))
-        expect(toggle.params?.[param]?.[value], `${param}=${value}`).toEqual(
-          button.params?.[param]?.[value],
-        )
-      }
-    },
-  )
+  test.each([
+    "style",
+    "secondary",
+    "press",
+    "case",
+    "linkUnderline",
+    "linkColor",
+  ] as const)("%s flattens to the same variants on both", async (param) => {
+    const { button, toggle } = await configs()
+    for (const value of buttonMeta.params[param].values) {
+      const selection = { [param]: value }
+      expect(
+        variantsOf(toggle, toggleButtonMeta, selection),
+        `${param}=${value}`,
+      ).toEqual(variantsOf(button, buttonMeta, selection))
+      expect(toggle.params?.[param]?.[value], `${param}=${value}`).toEqual(
+        button.params?.[param]?.[value],
+      )
+    }
+  })
 
   test("the toggle's selected looks are the current page's", async () => {
     const { button, toggle } = await configs()

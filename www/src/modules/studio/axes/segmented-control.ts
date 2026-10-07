@@ -2,7 +2,8 @@
    the button style (Primer's Hairline rings it, Polaris-style Bevel raises
    it). Track: a filled well (iOS, shadcn) or an outline (Geist, Carbon).
 
-   Engine: `selected` and `track` enum params on `segmented-control`. */
+   Engine: `selected` and `track` enum params on `segmented-control`, and
+   `chip` and `track` on `tabs` (one recipe, segmented-control's). */
 
 import { STYLE_OPTIONS } from "./buttons"
 import { defineChapter } from "./core/types"
@@ -46,6 +47,8 @@ export function resolveSegmentedControl(state: Effective): Resolved {
         selected: state.segmentedSelected,
         track: state.segmentedTrack,
       },
+      // Segmented tabs are the same bar.
+      tabs: { chip: state.segmentedSelected, track: state.segmentedTrack },
     },
   }
 }

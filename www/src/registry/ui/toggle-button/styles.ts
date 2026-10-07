@@ -3,6 +3,8 @@ import { createStyles } from "@/lib/styles"
 import {
   BUTTON_CASE,
   BUTTON_DENSITY,
+  BUTTON_LINK_COLOR,
+  BUTTON_LINK_UNDERLINE,
   BUTTON_PRESS,
   BUTTON_SECONDARY,
   BUTTON_STYLES,
@@ -52,6 +54,8 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     press: BUTTON_PRESS,
     case: BUTTON_CASE,
     selected: SELECTED_LOOKS,
+    linkUnderline: BUTTON_LINK_UNDERLINE,
+    linkColor: BUTTON_LINK_COLOR,
   },
 })
 

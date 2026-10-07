@@ -9,6 +9,7 @@ describe("segmented control axis", () => {
     expect(componentParams["segmented-control"]).toEqual({
       selected: "tone",
       track: "filled",
+      weight: "medium",
     })
     expect(tokens).toEqual({})
   })
@@ -20,6 +21,7 @@ describe("segmented control axis", () => {
     expect(componentParams["segmented-control"]).toEqual({
       selected: "ring",
       track: "outline",
+      weight: "medium",
     })
   })
 })
