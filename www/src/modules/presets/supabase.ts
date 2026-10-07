@@ -66,7 +66,8 @@ export const supabase = definePreset({
     checkboxColor: "neutral",
     radioMark: "ring",
     cardSelected: "outline",
-    inputStyle: "well",
+    // Fields take Hairline's Auto (Inset); hover darkens the edge to 29.8%.
+    inputHover: "edge",
     sliderThumb: "solid",
     sliderColor: "neutral",
     progressColor: "same-checks",
