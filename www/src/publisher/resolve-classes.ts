@@ -300,8 +300,8 @@ function isNoopRead(
 /**
  * Rewrite one class string (or any text carrying class names). A rounded or
  * backdrop-blur utility whose var resolves to `0` is dropped with its variant
- * prefix — a square system ships no rounded class, not `rounded-none` — and so is a
- * no-op read (see isNoopRead). `context` is every class the element wears (the whole
+ * prefix — a square system ships no rounded class, not `rounded-none` — and so are a
+ * zero negative offset and a no-op read (see isNoopRead). `context` is every class the element wears (the whole
  * slot), which those motion drops are judged against.
  */
 export function rewriteClassString(
@@ -310,9 +310,9 @@ export function rewriteClassString(
   context = input,
 ): string {
   if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
-  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · hint · var · trail
+  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · sign · utility · hint · var · trail
   const shorthand = new RegExp(
-    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)([a-z][a-z0-9-]*)-\\((length:)?(${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
+    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)(-?)([a-z][a-z0-9-]*)-\\((length:)?(${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
     "g",
   )
   let dropped = false
@@ -331,18 +331,20 @@ export function rewriteClassString(
   )
   rewritten = rewritten.replace(
     shorthand,
-    (match, lead, variants, utility, hint = "", name, trail) => {
+    (match, lead, variants, sign, utility, hint = "", name, trail) => {
       const value = vars.get(name)
       if (value === undefined) return match
       if (
         (value === "0" &&
           (utility.startsWith("rounded") || utility === "backdrop-blur")) ||
+        // A zero offset (`-mt-[0px]` under a zero stroke) moves nothing.
+        (sign === "-" && /^0(?:px)?$/.test(value) && SPACING.test(utility)) ||
         isNoopRead(variants, utility, value, context, vars)
       ) {
         dropped = true
         return lead && trail ? " " : ""
       }
-      return `${lead}${variants}${resolvedUtility(utility, value, hint)}${trail}`
+      return `${lead}${variants}${sign}${resolvedUtility(utility, value, hint)}${trail}`
     },
   )
   // A drop at either end of a class string leaves a stray space; file

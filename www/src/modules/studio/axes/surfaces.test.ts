@@ -549,5 +549,10 @@ describe("drawn edges", () => {
         tooltipStyle: "surface",
       }),
     ).toContain("placement-bottom:-mb-[2px]")
+    const bevel = await shippedItem("tooltip", {
+      surfaceEdge: "bevel",
+      tooltipStyle: "surface",
+    })
+    expect(bevel).not.toMatch(/-m[tblr]-\[0px\]/)
   })
 })

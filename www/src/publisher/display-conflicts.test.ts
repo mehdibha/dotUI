@@ -1,3 +1,4 @@
+import { cn } from "tailwind-variants"
 import { expect, test } from "vitest"
 
 import {
@@ -6,8 +7,10 @@ import {
 } from "@/registry/__generated__/publishables"
 import { DENSITIES } from "@/registry/types"
 import type { EnumParamDef } from "@/registry/types"
+import { PRESETS, resolvePreset } from "@/modules/presets"
 
 import { flatten } from "./flatten"
+import { publish, selectPublishable } from "./publish"
 import type { ClassValue, TvLayer } from "./types"
 
 const DISPLAY = new Set([
@@ -100,4 +103,54 @@ test("no published selection ships two display utilities for one state", async (
     }
   }
   expect([...new Set(failures)]).toEqual([])
+})
+
+/** Class strings in a shipped file that tv's merge would shorten. */
+function mergeConflicts(content: string): string[] {
+  const out: string[] = []
+  for (const [, text = ""] of content.matchAll(/"([^"\\\n]+)"/g)) {
+    const classes = text.split(/\s+/).filter(Boolean)
+    // SVG viewBoxes and paths.
+    if (classes.length < 2 || /^[\d\s]+$|^M\d/.test(text)) continue
+    const kept = new Set((cn(text) ?? "").split(" "))
+    const dropped = classes.filter(
+      (c, i) => !kept.has(c) || classes.indexOf(c) !== i,
+    )
+    if (dropped.length > 0) out.push(`${dropped.join(" ")} in "${text}"`)
+  }
+  return out
+}
+
+test.each(PRESETS.map((p) => p.id))(
+  "%s: no shipped class string carries a class a later one overrides",
+  async (id) => {
+    const preset = resolvePreset(id)
+    const failures: string[] = []
+    for (const name of PUBLISHABLE_NAMES) {
+      const mod = await publishables[name]?.()
+      if (!mod) continue
+      const { item } = publish({
+        publishable: selectPublishable(mod, preset),
+        preset,
+      })
+      for (const file of item.files ?? [])
+        for (const c of mergeConflicts(file.content ?? ""))
+          failures.push(`${name}: ${c}`)
+    }
+    expect(failures).toEqual([])
+  },
+)
+
+test("a shared recipe ships only the slots each file reads", async () => {
+  const preset = resolvePreset("origin")
+  const shipped = async (name: string) => {
+    const mod = await publishables[name]!()
+    const { item } = publish({
+      publishable: selectPublishable(mod, preset),
+      preset,
+    })
+    return item.files?.[0]?.content ?? ""
+  }
+  expect(await shipped("list-box")).not.toContain("submenuIndicator")
+  expect(await shipped("menu")).not.toContain("loadMore")
 })
