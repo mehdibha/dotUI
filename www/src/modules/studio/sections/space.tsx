@@ -99,7 +99,7 @@ export function SpaceSection({ studio }: { studio: Studio }) {
       </FamilyHero>
       <DialList
         axis="density"
-        label="Density"
+        label="Scale"
         options={DENSITY_OPTIONS.map((option) => ({
           ...option,
           preview: (

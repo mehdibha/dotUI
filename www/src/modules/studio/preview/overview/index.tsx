@@ -78,9 +78,8 @@ const DENSITY_DESCRIPTION: Record<string, string> = {
   default: "Balanced spacing — the everyday baseline.",
   comfortable:
     "Generous padding and breathing room for a relaxed, spacious feel.",
-  spacious:
-    "40px controls and 48px large ones, the enterprise and Material scale.",
-  touch: "Chunky 48px controls with 16px text, sized for fingers.",
+  spacious: "40px controls, 48px large.",
+  touch: "48px controls, 16px text.",
 }
 
 /** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */
