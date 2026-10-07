@@ -454,3 +454,12 @@ exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
   },
 }
 `;
+
+exports[`rules > type/14-is-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;

@@ -102,12 +102,10 @@ export function resolveType(state: Effective): Resolved {
   // A px size replaces the density's own text rung, keeping its line box.
   if (state.uiTextSize !== "auto") {
     const px = Number(state.uiTextSize)
-    const [rung, native, lineBox] =
-      state.density === "compact" ? ["xs", 12, 16] : ["sm", 14, 20]
-    if (px !== native) {
-      tokens[`--text-${rung}`] = `${px / 16}rem`
-      tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / ${px})`
-    }
+    const [rung, lineBox] =
+      state.density === "compact" ? ["xs", 16] : ["sm", 20]
+    tokens[`--text-${rung}`] = `${px / 16}rem`
+    tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / ${px})`
   }
 
   const titles = { titles: state.titleStyle }
@@ -136,4 +134,14 @@ export const chapter = defineChapter({
     headingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
     readingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
   },
+  rules: [
+    {
+      // 14px is already the text above compact.
+      id: "type/14-is-native",
+      target: "uiTextSize",
+      when: { key: "density", notIn: ["compact"] },
+      effect: { kind: "exclude", options: ["14"], fallback: "auto" },
+      cause: "density",
+    },
+  ],
 })

@@ -1,8 +1,6 @@
 "use client"
 
-/* Typography — the hero sets every role in its own face and size; the font
-   rows are their own specimens (Heading and Reading are Same as body until
-   pinned), then the title recipe; the rest folds under More. */
+/* Typography: the hero sets every role in its own face and size. */
 
 import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
@@ -37,9 +35,7 @@ import type { Effective, Studio } from "../state"
 import { ChipButton } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 
-/** A font role as a dial row: label, the family in its own typeface, the
- *  searchable list under it. With `follow`, the row reads "Same as body"
- *  while it follows, and offers the way back once pinned. */
+/** A font role as a dial row, its family set in its own face. */
 function FontRow({
   axis,
   label,
@@ -52,7 +48,7 @@ function FontRow({
   axis: AxisKey
   label: string
   value: string
-  /** The family the row shows (the followed one while following). */
+  /** The face the row is set in (the followed one while following). */
   resolved: string
   follow?: { id: string; label: string }
   categories: FontCategory[]
@@ -78,19 +74,14 @@ function FontRow({
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
           {follow && !following && (
             <ChipButton onPress={() => onChange(follow.id)}>
-              {follow.label}
+              <span className="capitalize">{follow.id}</span>
             </ChipButton>
-          )}
-          {following && (
-            <span className="shrink-0 text-[13px] font-medium text-fg/50">
-              {follow.label} ·
-            </span>
           )}
           <span
             className="truncate text-[13px] font-medium text-fg/70"
             style={{ fontFamily: fontStack(resolved) }}
           >
-            {resolved}
+            {following ? follow.label : resolved}
           </span>
           <ChevronDownIcon className={DIAL_CHEVRON} />
         </span>
