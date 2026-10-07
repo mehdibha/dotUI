@@ -11,7 +11,8 @@ export const spotify = definePreset({
     // Bright-accent #1ed760 under black ink, verbatim in both themes.
     brand: "#1ed760",
     preserveSeed: true,
-    successSeed: "#1ed760",
+    // Encore's light positive; #1ed760 sat at 1.6:1 as an icon on the white dark-mode toast.
+    successSeed: "#159542",
     warningSeed: "#ffa42b",
     dangerSeed: "#e91429",
     // Every Encore neutral is R=G=B.
@@ -28,6 +29,10 @@ export const spotify = definePreset({
     titleStyle: "bold",
     // Buttons, chips and tabs are 700.
     labelWeight: "bold",
+
+    // Icons
+    // Encore's outline glyphs are lighter than Lucide's 2px.
+    iconStroke: 1.5,
 
     // Shape
     // Base 8 reproduces Encore's 2 / 4 / 6 / 8 ladder: fields 4, rows and cards 6.
