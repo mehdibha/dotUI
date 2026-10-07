@@ -46,7 +46,7 @@ export const notion = definePreset({
     rolePanel: "2xl",
 
     // Space
-    // md buttons, inputs and menu rows are 28px.
+    // md buttons and inputs are 28px.
     density: "compact",
 
     // Surfaces
@@ -63,11 +63,6 @@ export const notion = definePreset({
     // Settings switches: a white chip on a gray track.
     segmentedSelected: "raised",
 
-    // Inputs
-    // rgba(66,35,3,.03) well; NDS inputs have no hover.
-    inputStyle: "well",
-    inputHover: "none",
-
     // Selection
     // Unchecked box: a 1px rgba(27,21,0,.19) edge.
     checkEdge: "strong",
@@ -75,6 +70,8 @@ export const notion = definePreset({
 
     // Menus and overlays
     menuArrows: "none",
+    // Rows are the control height (28px).
+    menuRows: "match",
     menuSearch: "bar",
     menuScale: "large",
     dialogBackdrop: "scrim",
