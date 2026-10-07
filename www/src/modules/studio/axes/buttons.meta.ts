@@ -9,7 +9,7 @@ import { options } from "./core/meta"
 
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
   flat: { label: "Flat", description: "shadcn, Geist, Carbon" },
-  hairline: { label: "Hairline", description: "Primer, Supabase" },
+  hairline: { label: "Hairline", description: "Primer, Supabase, Stripe" },
   "rim-light": { label: "Rim light", description: "Untitled UI" },
   gloss: { label: "Gloss", description: "Clerk" },
   bevel: { label: "Bevel", description: "Polaris, Radix classic" },
@@ -22,6 +22,7 @@ export const SECONDARY_OPTIONS = options(SECONDARY_VALUES, {
   raised: { label: "Raised", description: "Supabase, Claude" },
   soft: { label: "Soft", description: "Radix, Airbnb, Spectrum 2" },
   tonal: { label: "Tonal", description: "Material 3" },
+  solid: { label: "Solid", description: "Carbon" },
 })
 
 export const RADIUS_OPTIONS = options(RADIUS_VALUES, {

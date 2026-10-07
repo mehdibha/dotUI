@@ -34,6 +34,7 @@ export const SECONDARY_VALUES = [
   "raised",
   "soft",
   "tonal",
+  "solid",
 ] as const
 
 export const RADIUS_VALUES = ["same", "pill"] as const
@@ -85,6 +86,19 @@ export const chapter = defineChapter({
   schema: BUTTON_SCHEMA,
   resolve: resolveButtons,
   rules: [
+    {
+      // Under a neutral primary the two read as one button.
+      id: "buttons/solid-needs-brand-primary",
+      target: "buttonSecondary",
+      when: {
+        all: [
+          { key: "buttonColor", in: ["neutral"] },
+          { key: "buttonStyle", notIn: CLOSED_STYLES },
+        ],
+      },
+      effect: { kind: "exclude", options: ["solid"], fallback: "as-style" },
+      cause: "buttonColor",
+    },
     {
       // Two background recipes would ship.
       id: "buttons/closed-style-owns-secondary",

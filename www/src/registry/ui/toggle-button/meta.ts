@@ -40,6 +40,7 @@ const toggleButtonMeta = {
         "raised",
         "soft",
         "tonal",
+        "solid",
       ] as const,
     },
     press: {

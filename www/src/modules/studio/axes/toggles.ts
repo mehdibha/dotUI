@@ -29,4 +29,18 @@ export const chapter = defineChapter({
   defaults: TOGGLE_DEFAULTS,
   schema: TOGGLE_SCHEMA,
   resolve: resolveToggles,
+  rules: [
+    {
+      // Tone and Tint are lighter than a Solid rest fill: selection reads off.
+      id: "toggles/solid-secondary-needs-strong-selected",
+      target: "toggleSelected",
+      when: { key: "buttonSecondary", in: ["solid"] },
+      effect: {
+        kind: "exclude",
+        options: ["tone", "tint"],
+        fallback: "inverse",
+      },
+      cause: "buttonSecondary",
+    },
+  ],
 })

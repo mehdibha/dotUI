@@ -105,13 +105,16 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "style": "inset",
     },
     "segmented-control": {
+      "case": "sentence",
       "selected": "raised",
       "track": "filled",
       "weight": "medium",
     },
     "tabs": {
+      "case": "sentence",
       "chip": "raised",
       "color": "neutral",
+      "indicator": "full",
       "pill": "tone",
       "style": "segmented",
       "track": "filled",
@@ -127,6 +130,24 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "style": "bevel",
     },
   },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "selection": "accent",
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
   "tokens": {},
 }
 `;
@@ -457,5 +478,51 @@ exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
     "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
     "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
   },
+}
+`;
+
+exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "tone",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "inverse",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "selected": "inverse",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {},
 }
 `;

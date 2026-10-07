@@ -26,6 +26,12 @@ const tabsMeta = {
       values: ["neutral", "accent"] as const,
       description: "The line indicator: the text color, or the brand.",
     },
+    indicator: {
+      kind: "enum",
+      default: "full",
+      values: ["full", "label"] as const,
+      description: "The line indicator: across the tab, or hugging its label.",
+    },
     chip: {
       kind: "enum",
       default: "tone",
@@ -57,6 +63,12 @@ const tabsMeta = {
         "bold",
       ] as const,
       description: "Tab weight at rest, then selected.",
+    },
+    case: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+      description: "Tab label case.",
     },
   },
 } satisfies RegistryItem

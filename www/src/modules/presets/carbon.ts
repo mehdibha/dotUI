@@ -47,7 +47,9 @@ export const carbon = definePreset({
     focusInputStyle: "ring",
 
     // Buttons
-    buttonSecondary: "soft",
+    buttonSecondary: "solid",
+    // The content switcher's #161616 chip; a gray wash would sit under Solid.
+    toggleSelected: "inverse",
     groupSeparator: "divider",
     segmentedSelected: "inverse",
     segmentedTrack: "outline",

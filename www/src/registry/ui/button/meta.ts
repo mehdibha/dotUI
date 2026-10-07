@@ -42,6 +42,7 @@ const buttonMeta = {
         "raised",
         "soft",
         "tonal",
+        "solid",
       ] as const,
       description: "The secondary button: a style's own, or one swapped in.",
     },

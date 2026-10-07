@@ -86,9 +86,11 @@ export const material3 = definePreset({
     dialogSections: "on-scroll",
     dialogEntrance: "drop",
 
-    // Navigation
+    // Navigation: primary tabs' label indicator; the drawer's stadium marker.
     tabStyle: "line",
     tabsColor: "accent",
+    tabIndicator: "label",
+    navMarker: "pill",
 
     // Feedback
     badgeStyle: "outline",

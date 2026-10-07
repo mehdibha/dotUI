@@ -9,6 +9,7 @@ import { DesignSystemContext } from "@/lib/styles"
 import { ChevronRightIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
+import { UPPERCASE } from "@/registry/ui/button/styles"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
 import {
   WEIGHT_BOLD,
@@ -29,6 +30,8 @@ import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
 import { SOURCE_OPTIONS } from "../axes/color.meta"
 import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links.meta"
 import {
+  CASE_OPTIONS,
+  INDICATOR_OPTIONS,
   ITEM_WEIGHT_OPTIONS,
   MARKER_OPTIONS,
   PILL_OPTIONS,
@@ -48,8 +51,9 @@ import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* The tokens a pick writes that a specimen draws with (the shell tone). */
-const LOCAL_VARS = ["--color-sidebar"]
+/* The tokens a pick writes that a specimen draws with (the shell tone, the
+   pill marker's corners). */
+const LOCAL_VARS = ["--color-sidebar", "--studio-sidebar-button-radius"]
 
 /** Specimens drawn by the registry's own recipes in one design system. */
 function System({
@@ -191,6 +195,15 @@ function WeightGlyph({ weight }: { weight: string }) {
   )
 }
 
+/** A tab label in the registry's case classes. */
+function CaseGlyph({ upper }: { upper: boolean }) {
+  return (
+    <span className={cn("text-[13px] font-medium", upper && UPPERCASE)}>
+      Tabs
+    </span>
+  )
+}
+
 const weightOptions = (options: typeof ITEM_WEIGHT_OPTIONS) =>
   options.map((option) => ({
     ...option,
@@ -219,6 +232,11 @@ export function NavigationSection({ studio }: { studio: Studio }) {
     { ...state, tabStyle: "pill" } as StudioState,
     "tabsPill",
     PILL_OPTIONS,
+  )
+  const indicators = useSystems(
+    { ...state, tabStyle: "line" } as StudioState,
+    "tabIndicator",
+    INDICATOR_OPTIONS,
   )
   const underlines = useSystems(state, "linkUnderline", UNDERLINE_OPTIONS)
   return (
@@ -279,7 +297,28 @@ export function NavigationSection({ studio }: { studio: Studio }) {
       <UsesRow axis="segmentedSelected" label="Segmented chip" />
       <UsesRow axis="shellTone" label="App shell" />
       <UsesRow axis="paginationCurrent" label="Pagination" />
-      <More keys={["navWeight", "navItemWeight", "tabsPill"]}>
+      <More
+        keys={[
+          "tabIndicator",
+          "navWeight",
+          "navItemWeight",
+          "navCase",
+          "tabsPill",
+        ]}
+      >
+        <DialSelect
+          axis="tabIndicator"
+          label="Line indicator"
+          rowPreview={false}
+          options={INDICATOR_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <System ds={indicators[option.value]!}>
+                <TabsSpecimen />
+              </System>
+            ),
+          }))}
+        />
         <DialSelect
           axis="navWeight"
           label="Weight"
@@ -289,6 +328,22 @@ export function NavigationSection({ studio }: { studio: Studio }) {
           axis="navItemWeight"
           label="Sidebar weight"
           options={weightOptions(ITEM_WEIGHT_OPTIONS)}
+        />
+        <DialSelect
+          axis="navCase"
+          label="Case"
+          options={CASE_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <CaseGlyph
+                upper={
+                  (option.value === "same"
+                    ? effective.buttonCase
+                    : option.value) === "uppercase"
+                }
+              />
+            ),
+          }))}
         />
         <DialSelect
           axis="tabsPill"

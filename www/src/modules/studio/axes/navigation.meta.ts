@@ -1,6 +1,8 @@
+import { CASE_OPTIONS as BUTTON_CASES } from "./buttons.meta"
 import { SOURCE_OPTIONS } from "./color.meta"
 import { options } from "./core/meta"
 import {
+  INDICATOR_VALUES,
   MARKER_VALUES,
   PILL_VALUES,
   TAB_STYLE_VALUES,
@@ -17,13 +19,24 @@ export const TAB_STYLE_OPTIONS = options(TAB_STYLE_VALUES, {
 })
 
 export const MARKER_OPTIONS = options(MARKER_VALUES, {
-  fill: { label: "Fill", description: "shadcn, Material 3, Untitled UI" },
+  fill: { label: "Fill", description: "shadcn, Untitled UI" },
   surface: { label: "Surface", description: "Polaris" },
   bar: { label: "Bar", description: "Fluent 2, Catalyst" },
   "fill-bar": { label: "Fill + bar", description: "Primer, Carbon" },
   ink: { label: "Ink only", description: "Stripe" },
   outline: { label: "Outline", description: "Duolingo" },
+  pill: { label: "Pill", description: "Material 3" },
 })
+
+export const INDICATOR_OPTIONS = options(INDICATOR_VALUES, {
+  full: { label: "Full", description: "Carbon, Geist, Primer" },
+  label: { label: "Label", description: "Material 3" },
+})
+
+export const CASE_OPTIONS = [
+  { value: "same", label: "Same as buttons", description: "Duolingo" },
+  ...BUTTON_CASES,
+]
 
 export const WEIGHT_OPTIONS = options(WEIGHT_VALUES, {
   regular: { label: "Regular", description: "Geist, Airbnb" },
@@ -73,4 +86,6 @@ export const OPTIONS = {
   navWeight: WEIGHT_OPTIONS,
   navItemWeight: WEIGHT_OPTIONS,
   tabsPill: PILLS,
+  tabIndicator: INDICATOR_OPTIONS,
+  navCase: BUTTON_CASES,
 }

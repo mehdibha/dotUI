@@ -48,8 +48,16 @@ const sidebarMeta = {
         "ink-accent",
         "outline",
         "outline-accent",
+        "pill",
+        "pill-accent",
       ] as const,
       description: "The current item's marker, in the indicator color.",
+      vars: {
+        pill: { "--studio-sidebar-button-radius": "var(--radius-full)" },
+        "pill-accent": {
+          "--studio-sidebar-button-radius": "var(--radius-full)",
+        },
+      },
     },
     weight: {
       kind: "enum",
@@ -64,6 +72,12 @@ const sidebarMeta = {
         "bold",
       ] as const,
       description: "Item weight at rest, then current.",
+    },
+    case: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+      description: "Item label case.",
     },
   },
 } satisfies RegistryItem
