@@ -4,11 +4,15 @@
   "extendsElement": "span",
   "props": {
     "appearance": {
-      "type": "\"outline\" | \"soft\" | \"soft-outline\" | \"solid\"",
-      "detailedType": "| 'outline'\n| 'soft'\n| 'soft-outline'\n| 'solid'\n| undefined",
+      "type": "\"dot\" | \"outline\" | \"soft\" | \"soft-outline\" | \"solid\"",
+      "detailedType": "| 'dot'\n| 'outline'\n| 'soft'\n| 'soft-outline'\n| 'solid'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "dot"
+          },
           {
             "type": "stringLiteral",
             "value": "outline"
