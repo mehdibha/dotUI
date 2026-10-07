@@ -45,7 +45,7 @@ import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { useStyles as useTokenStyles } from "@/registry/ui/token-field/styles"
 
-import { Board, BoardSection, StateRow, stateProps } from "./board"
+import { Board, BoardSection, stateProps } from "./board"
 
 /* ------------------------------- Specimens -------------------------------- */
 
@@ -148,63 +148,65 @@ function PrimarySection() {
         "linkColor",
         "focusColor",
       ]}
-      className="grid grid-cols-2 place-items-center gap-x-6 gap-y-10 sm:grid-cols-3"
+      className="@container flex-col flex-nowrap items-stretch"
     >
-      <Specimen label="Buttons">
-        <Button variant="primary">Save changes</Button>
-      </Specimen>
-      <Specimen label="Checkbox">
-        <Checkbox defaultSelected>
-          <CheckboxControl />
-          <Label>Email me</Label>
-        </Checkbox>
-      </Specimen>
-      <Specimen label="Radio">
-        <RadioGroup
-          aria-label="Plan"
-          defaultValue="pro"
-          orientation="horizontal"
-          className="flex-row gap-4"
-        >
-          <Radio value="pro">
-            <RadioControl />
-            <Label>Pro</Label>
-          </Radio>
-          <Radio value="team">
-            <RadioControl />
-            <Label>Team</Label>
-          </Radio>
-        </RadioGroup>
-      </Specimen>
-      <Specimen label="Switch">
-        <Switch defaultSelected>
-          <SwitchControl />
-          <Label>Sync</Label>
-        </Switch>
-      </Specimen>
-      <Specimen label="Selection" className="gap-2">
-        <Token selected>Design</Token>
-        <Token>Research</Token>
-      </Specimen>
-      <Specimen label="Slider" className="w-40">
-        <Slider aria-label="Volume" defaultValue={60} className="w-full">
-          <SliderControl />
-        </Slider>
-      </Specimen>
-      <Specimen label="Tabs">
-        <Tabs defaultSelectedKey="activity">
-          <TabList aria-label="Project" variant="line">
-            <Tab id="activity">Activity</Tab>
-            <Tab id="files">Files</Tab>
-          </TabList>
-        </Tabs>
-      </Specimen>
-      <Specimen label="Links">
-        <Link href="#">View invoice</Link>
-      </Specimen>
-      <Specimen label="Focus ring">
-        <FocusedButton />
-      </Specimen>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-10 @lg:grid-cols-3">
+        <Specimen label="Buttons">
+          <Button variant="primary">Save changes</Button>
+        </Specimen>
+        <Specimen label="Checkbox">
+          <Checkbox defaultSelected>
+            <CheckboxControl />
+            <Label>Email me</Label>
+          </Checkbox>
+        </Specimen>
+        <Specimen label="Radio">
+          <RadioGroup
+            aria-label="Plan"
+            defaultValue="pro"
+            orientation="horizontal"
+            className="flex-row gap-3"
+          >
+            <Radio value="pro">
+              <RadioControl />
+              <Label>Pro</Label>
+            </Radio>
+            <Radio value="team">
+              <RadioControl />
+              <Label>Team</Label>
+            </Radio>
+          </RadioGroup>
+        </Specimen>
+        <Specimen label="Switch">
+          <Switch defaultSelected>
+            <SwitchControl />
+            <Label>Sync</Label>
+          </Switch>
+        </Specimen>
+        <Specimen label="Selection" className="flex-wrap gap-2">
+          <Token selected>Design</Token>
+          <Token>Research</Token>
+        </Specimen>
+        <Specimen label="Slider" className="w-full max-w-40">
+          <Slider aria-label="Volume" defaultValue={60} className="w-full">
+            <SliderControl />
+          </Slider>
+        </Specimen>
+        <Specimen label="Tabs">
+          <Tabs defaultSelectedKey="activity">
+            <TabList aria-label="Project" variant="line">
+              <Tab id="activity">Activity</Tab>
+              <Tab id="files">Files</Tab>
+            </TabList>
+          </Tabs>
+        </Specimen>
+        <Specimen label="Links">
+          <Link href="#">View invoice</Link>
+        </Specimen>
+        <Specimen label="Focus ring">
+          <FocusedButton />
+        </Specimen>
+      </div>
     </BoardSection>
   )
 }
@@ -232,9 +234,9 @@ function NeutralsSection() {
       member="neutrals"
       title="Neutrals"
       axes={["neutralHue", "neutralTint", "controlEdge"]}
-      className="flex-col items-stretch gap-10"
+      className="@container flex-col flex-nowrap items-stretch gap-10"
     >
-      <div className="grid gap-x-10 gap-y-8 md:grid-cols-2">
+      <div className="grid gap-x-10 gap-y-8 @2xl:grid-cols-2">
         <dl className="flex flex-col gap-3">
           {TEXT_LADDER.map(({ label, className, text }) => (
             <div key={label} className="flex items-baseline gap-4">
@@ -245,7 +247,7 @@ function NeutralsSection() {
             </div>
           ))}
         </dl>
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-6 md:grid-cols-3">
+        <div className="grid grid-cols-3 gap-3 @md:grid-cols-6 @2xl:grid-cols-3">
           {SURFACE_SWATCHES.map(({ label, className }) => (
             <figure key={label} className="flex flex-col gap-1.5">
               <div className={cn("h-10 rounded-md border", className)} />
@@ -258,13 +260,11 @@ function NeutralsSection() {
       </div>
       <div className="flex flex-wrap items-end justify-center gap-x-10 gap-y-6">
         <Specimen label="Hairline">
-          <div className="flex h-9 w-40 items-center rounded-md border px-3 text-sm text-fg-muted">
-            Divider
-          </div>
+          <div className="w-36 border-t" />
         </Specimen>
-        <StateRow states={["rest", "hover"]}>
-          {(props) => <FrozenInput state={props} value="hello@acme.co" />}
-        </StateRow>
+        <Specimen label="Control edge">
+          <FrozenInput state={stateProps("rest")} value="hello@acme.co" />
+        </Specimen>
         <Specimen label="Unchecked">
           <Checkbox>
             <CheckboxControl />
@@ -287,6 +287,13 @@ const useRecessedShell = createParamValue({
 
 const NAV = ["Inbox", "Projects", "Reports", "Settings"]
 
+const ACTIVITY = [
+  "Maya renamed Q3 roadmap",
+  "Leo commented on Pricing page",
+  "Ana uploaded brand-guidelines.pdf",
+  "Sam archived Old onboarding",
+]
+
 function SurfacesSection() {
   const { inner, inset } = useSidebarStyles()()
   const { popover } = usePopoverStyles()()
@@ -306,9 +313,9 @@ function SurfacesSection() {
         "lightBg",
         "darkBg",
       ]}
-      className="flex-col items-stretch gap-0 overflow-hidden p-0 max-sm:p-0"
+      className="flex-col flex-nowrap items-stretch gap-0 overflow-hidden p-0 max-sm:p-0"
     >
-      <div inert className="flex min-h-72 bg-sidebar">
+      <div inert className="flex bg-sidebar">
         <div
           data-variant="inset"
           data-side="left"
@@ -332,65 +339,78 @@ function SurfacesSection() {
         <div
           className={inset({
             className: cn(
-              "relative min-w-0 gap-6 p-6 max-sm:p-4",
+              "@container min-w-0 p-6 max-sm:p-4",
               recessed && "md:my-2 md:mr-2",
             ),
           })}
         >
-          <Card className="w-full max-w-72">
-            <CardHeader>
-              <CardTitle>Revenue</CardTitle>
-              <CardDescription>Last 30 days</CardDescription>
-            </CardHeader>
-            <CardContent className="flex h-20 items-end gap-1.5">
-              {[40, 64, 52, 80, 58, 92, 70].map((h, i) => (
-                <span
-                  key={i}
-                  className="flex-1 rounded-sm bg-accent"
-                  style={{ height: `${h}%` }}
-                />
-              ))}
-            </CardContent>
-          </Card>
-          <div
-            data-popover=""
-            className={popover({
-              className:
-                "absolute top-32 left-60 w-56 max-sm:top-auto max-sm:right-4 max-sm:bottom-4 max-sm:left-auto",
-            })}
-          >
-            <div className={content()}>
-              <div className={header()}>
-                <span className={title({ className: "font-medium" })}>
-                  Share report
-                </span>
-                <span className={description()}>
-                  Anyone with the link can view.
-                </span>
+          <div className="flex w-full max-w-72 flex-col">
+            <Card>
+              <CardHeader>
+                <CardTitle>Revenue</CardTitle>
+                <CardDescription>Last 30 days</CardDescription>
+              </CardHeader>
+              <CardContent className="flex h-20 items-end gap-1.5">
+                {[40, 64, 52, 80, 58, 92, 70].map((h, i) => (
+                  <span
+                    key={i}
+                    className="flex-1 rounded-sm bg-accent"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+            {/* Over the card's bars, so glass has something to blur. */}
+            <div
+              data-popover=""
+              className={popover({
+                className:
+                  "relative z-10 -mt-14 ml-auto w-56 max-w-full @md:-mr-24",
+              })}
+            >
+              <div className={content()}>
+                <div className={header()}>
+                  <span className={title({ className: "font-medium" })}>
+                    Share report
+                  </span>
+                  <span className={description()}>
+                    Anyone with the link can view.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div inert className="relative flex justify-center border-t px-6 py-8">
-        <div className={backdrop()} />
-        <div data-modal="" className={modal({ className: "max-w-sm" })}>
-          <div className={content()}>
-            <div className={header()}>
-              <span className={title({ className: "text-base font-medium" })}>
-                Delete project?
-              </span>
-              <span className={description()}>
-                Its files and history will be removed for everyone.
-              </span>
-            </div>
-            <div className={footer()}>
-              <Button variant="secondary" size="sm">
-                Cancel
-              </Button>
-              <Button variant="danger" size="sm">
-                Delete
-              </Button>
+      <div inert className="border-t bg-bg p-6 max-sm:p-4">
+        <div className="relative mx-auto flex max-w-md justify-center overflow-hidden rounded-lg border px-4 py-8">
+          <ul className="absolute inset-0 flex flex-col gap-3 p-4">
+            {ACTIVITY.map((line) => (
+              <li key={line} className="flex items-center gap-3 text-sm">
+                <span className="size-6 shrink-0 rounded-full bg-muted" />
+                <span className="truncate text-fg-muted">{line}</span>
+              </li>
+            ))}
+          </ul>
+          <div className={backdrop()} />
+          <div data-modal="" className={modal({ className: "max-w-sm" })}>
+            <div className={content()}>
+              <div className={header()}>
+                <span className={title({ className: "text-base font-medium" })}>
+                  Delete project?
+                </span>
+                <span className={description()}>
+                  Its files and history will be removed for everyone.
+                </span>
+              </div>
+              <div className={footer()}>
+                <Button variant="secondary" size="sm">
+                  Cancel
+                </Button>
+                <Button variant="danger" size="sm">
+                  Delete
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -472,9 +492,9 @@ function SemanticsSection() {
       member="semantics"
       title="Semantics"
       axes={["successSeed", "warningSeed", "dangerSeed", "selectionSeed"]}
-      className="flex-col items-stretch gap-8"
+      className="@container flex-col flex-nowrap items-stretch gap-8"
     >
-      <div className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+      <div className="grid gap-x-6 gap-y-3 @xl:grid-cols-2">
         {STATUSES.map(({ variant, label, Icon, inline, ink }) => (
           <div key={variant} className="flex items-center gap-3">
             <Badge variant={variant}>{label}</Badge>
@@ -485,7 +505,7 @@ function SemanticsSection() {
           </div>
         ))}
       </div>
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 @xl:grid-cols-2">
         {STATUSES.map(({ variant, Icon, title }) => (
           <Alert key={variant} variant={variant}>
             <Icon />
@@ -493,7 +513,7 @@ function SemanticsSection() {
           </Alert>
         ))}
       </div>
-      <div inert className="grid gap-3 sm:grid-cols-2">
+      <div inert className="grid gap-3 @xl:grid-cols-2">
         {STATUSES.map(({ variant, Icon, title }) => (
           <StaticToast key={variant} variant={variant} Icon={Icon}>
             {title}
@@ -526,7 +546,7 @@ function SelectedWashSection() {
       member="selected-wash"
       title="Selected wash"
       axes={["selectedWash"]}
-      className="flex-col items-stretch gap-8"
+      className="flex-col flex-nowrap items-stretch gap-8"
     >
       <TableContainer className="w-full">
         <Table
@@ -601,7 +621,7 @@ function PalettesSection() {
       member="palettes"
       title="Palettes"
       axes={["vividness", "brand", "neutralHue", "neutralTint"]}
-      className="flex-col items-stretch gap-2.5"
+      className="flex-col flex-nowrap items-stretch gap-2.5"
     >
       {PALETTES.map(({ id, label }) => (
         <div key={id} className="flex items-center gap-4">
