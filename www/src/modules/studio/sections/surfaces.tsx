@@ -2,7 +2,7 @@
 
 /* Surfaces — one row under Color. Its popover leads with the styles, each
    drawn and described; under a hairline, the settings a style is made of and
-   each mode's page. */
+   each mode's page. Overlays and the app shell also have rows of their own. */
 
 import type { StepName, Theme } from "@dotui/colors"
 
@@ -32,13 +32,16 @@ import {
   DialPicker,
   DialPickList,
   DialPopover,
+  DialSelect,
   DialSeparator,
   DialSlider,
   DialTrigger,
   ModifiedDot,
 } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio, StudioState } from "../state"
+import { usePanelMode } from "../panel-mode"
+import type { Effective, StudioState } from "../state"
+import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
    drawn heavier than life so it reads at this size. */
@@ -132,14 +135,9 @@ const SURFACE_KEYS = [
   "darkBg",
 ]
 
-export function SurfacesRow({
-  studio,
-  theme,
-}: {
-  studio: Studio
-  theme: Theme
-}) {
-  const { state, effective: values, set, setState } = studio
+export function SurfacesRow() {
+  const { state, effective: values, set, setState } = useStudio()
+  const { theme } = usePanelMode()
   const { style, exact } = surfaceStyle(state)
   const edit = (patch: SurfaceStyle["values"] | Partial<StudioState>) =>
     setState({ ...state, ...patch })
@@ -264,4 +262,31 @@ function StyleList({
   )
 }
 
-export const ROWS: RowMap = {}
+function GlassRow() {
+  const { state, set } = useStudio()
+  return (
+    <DialSelect
+      axis="surfaceGlass"
+      label="Overlays"
+      value={state.surfaceGlass ? "glass" : "solid"}
+      onChange={(value) => set("surfaceGlass")(value === "glass")}
+      options={GLASS_OPTIONS}
+    />
+  )
+}
+
+function ShellRow() {
+  return (
+    <DialSelect axis="shellTone" label="App shell" options={SHELL_OPTIONS} />
+  )
+}
+
+export const ROWS: RowMap = {
+  surfaceLayers: SurfacesRow,
+  surfaceEdge: SurfacesRow,
+  surfaceShadow: SurfacesRow,
+  lightBg: SurfacesRow,
+  darkBg: SurfacesRow,
+  surfaceGlass: GlassRow,
+  shellTone: ShellRow,
+}

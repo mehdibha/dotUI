@@ -42,9 +42,11 @@ import {
   DialSelect,
   DialSlider,
 } from "../dial"
+import { Row, useRowLabel } from "../family-page"
 import type { RowMap } from "../family-page"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
-import type { Effective, Studio } from "../state"
+import type { Effective } from "../state"
+import { useStudio } from "../use-studio"
 
 const SPECIMEN_ICONS = [
   SearchIcon,
@@ -122,19 +124,13 @@ export function IconsPreview({ state }: { state: Effective }) {
 /** A select that stays open on pick: the libraries by name beside a wall of
  *  every specimen drawn by the one under the pointer or keyboard focus — the
  *  selected one at rest. */
-function IconLibraryRow({
-  label,
-  value,
-  onChange,
-  weight,
-  stroke,
-}: {
-  label: string
-  value: IconLibraryName
-  onChange: (value: IconLibraryName) => void
-  weight: PhosphorWeight
-  stroke: number
-}) {
+function IconLibraryRow({ label: labelProp }: { label: string }) {
+  const { effective, set } = useStudio()
+  const label = useRowLabel(labelProp)
+  const value = effective.iconLibrary as IconLibraryName
+  const onChange = set("iconLibrary")
+  const weight = effective.iconWeight as PhosphorWeight
+  const stroke = effective.iconStroke
   const [peek, setPeek] = useState<IconLibraryName | null>(null)
   const focused = useRef<IconLibraryName | null>(null)
   const shown = peek ?? value
@@ -146,7 +142,7 @@ function IconLibraryRow({
       shouldCloseOnSelect={false}
       onOpenChange={(isOpen) => !isOpen && setPeek(null)}
     >
-      <RacButton className={cn(DIAL_ROW, DIAL_PRESS)}>
+      <RacButton data-axis="iconLibrary" className={cn(DIAL_ROW, DIAL_PRESS)}>
         <span className={DIAL_LABEL}>{label}</span>
         <SelectValue className="truncate text-[13px] font-medium text-fg/70">
           {({ selectedText }) => selectedText}
@@ -210,41 +206,42 @@ function IconLibraryRow({
   )
 }
 
-export function IconsSection({ studio }: { studio: Studio }) {
-  const { effective, set } = studio
-  const weight = effective.iconWeight as PhosphorWeight
+const LibraryRow = () => <IconLibraryRow label="Icon Library" />
+
+const StrokeRow = () => (
+  <DialSlider
+    axis="iconStroke"
+    label="Stroke"
+    minValue={STROKE_RANGE.min}
+    maxValue={STROKE_RANGE.max}
+    step={STROKE_RANGE.step}
+    format={(v) => v.toFixed(2)}
+  />
+)
+
+const WEIGHT_ROW_OPTIONS = WEIGHT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <Glyphs library="phosphor" weight={option.value as PhosphorWeight} />
+  ),
+}))
+
+const WeightRow = () => (
+  <DialSelect axis="iconWeight" label="Weight" options={WEIGHT_ROW_OPTIONS} />
+)
+
+export function IconsSection() {
   return (
     <>
-      <IconLibraryRow
-        label="Icon Library"
-        value={effective.iconLibrary as IconLibraryName}
-        onChange={set("iconLibrary")}
-        weight={weight}
-        stroke={effective.iconStroke}
-      />
-      <DialSlider
-        axis="iconStroke"
-        label="Stroke"
-        minValue={STROKE_RANGE.min}
-        maxValue={STROKE_RANGE.max}
-        step={STROKE_RANGE.step}
-        format={(v) => v.toFixed(2)}
-      />
-      <DialSelect
-        axis="iconWeight"
-        label="Weight"
-        options={WEIGHT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <Glyphs
-              library="phosphor"
-              weight={option.value as PhosphorWeight}
-            />
-          ),
-        }))}
-      />
+      <Row axis="iconLibrary" />
+      <Row axis="iconStroke" />
+      <Row axis="iconWeight" />
     </>
   )
 }
 
-export const ROWS: RowMap = {}
+export const ROWS: RowMap = {
+  iconLibrary: LibraryRow,
+  iconStroke: StrokeRow,
+  iconWeight: WeightRow,
+}

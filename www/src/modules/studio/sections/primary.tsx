@@ -2,9 +2,9 @@
 
 /* Primary — the Color chapter's view over every role that paints with a
    source (axes/color.ts PRIMARY_LEAVES). Accent and Neutral write all of
-   them; Custom opens a panel with a row per leaf, and is the selection while
-   the leaves disagree. Each preview is the role at glyph scale in the
-   engine's own colors, so a choice reads before it lands. */
+   them; Custom sets each leaf, and is the selection while they disagree.
+   Each leaf also has its own row, which family pages host. Previews draw the
+   role at glyph scale in the engine's own colors. */
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import {
@@ -28,12 +28,15 @@ import {
   DIAL_PRESS,
   DIAL_ROW,
   DialPopover,
+  DialSelect,
   DialTrigger,
   SegmentedGroup,
 } from "../dial"
 import type { RowMap } from "../family-page"
+import { usePanelMode } from "../panel-mode"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 const LEAF_LABELS: Record<PrimaryLeaf, string> = {
   buttonColor: "Buttons",
@@ -370,8 +373,9 @@ function PrimaryPanel({
   )
 }
 
-export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
-  const ink = inks(m)
+export function PrimaryRow() {
+  const studio = useStudio()
+  const ink = inks(usePanelMode().m)
   const primary = primaryValue(studio.state)
   const label =
     primary === "mixed" ? "Custom" : primary === "accent" ? "Accent" : "Neutral"
@@ -394,4 +398,24 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
   )
 }
 
-export const ROWS: RowMap = {}
+/** One leaf on its own source; family pages host it. */
+const leafRow = (leaf: PrimaryLeaf) =>
+  function LeafRow() {
+    const ink = inks(usePanelMode().m)
+    const Glyph = GLYPHS[leaf]
+    return (
+      <DialSelect
+        axis={leaf}
+        label="Color"
+        options={CHOICES.map(({ id, label }) => ({
+          value: id,
+          label,
+          preview: <Glyph ink={ink[id]} />,
+        }))}
+      />
+    )
+  }
+
+export const ROWS: RowMap = Object.fromEntries(
+  PRIMARY_LEAVES.map((leaf) => [leaf, leafRow(leaf)]),
+)

@@ -4,10 +4,10 @@
 
 import { DENSITY_VALUES } from "../axes/space"
 import { DENSITY_OPTIONS, densityTier } from "../axes/space.meta"
-import { DialGap, DialGlyph, DialList } from "../dial"
-import { FamilyHero, HeroMember, UsesRow } from "../family-page"
+import { DialGap, DialGlyph, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
+import type { Effective } from "../state"
 
 const TOUCH = densityTier("touch").ladder
 
@@ -51,71 +51,31 @@ export function SpacePreview({ state }: { state: Effective }) {
   )
 }
 
-/* Fields and menu rows above the control md, per their own rows. */
-const FIELD_STEP: Record<string, number> = { controls: 0, step: 4, tall: 16 }
-const ROW_STEP: Record<string, number> = { match: 0, step: 4 }
+const DENSITY_ROW_OPTIONS = DENSITY_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <ControlGlyph density={option.value} />
+    </DialGlyph>
+  ),
+}))
 
-const SCALE = 0.75
+function DensityRow() {
+  return (
+    <DialSelect axis="density" label="Scale" options={DENSITY_ROW_OPTIONS} />
+  )
+}
 
-export function SpaceSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
-  const tier = densityTier(effective.density)
-  const md = tier.ladder[2]
-  const field = md + (FIELD_STEP[effective.inputHeight] ?? 0)
-  const step = ROW_STEP[effective.menuRows]
-  const row = step === undefined ? tier.row : md + step
-  const px = (n: number) => `${n * SCALE}px`
+export function SpaceSection() {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Button">
-          <span
-            className="flex items-center rounded-md bg-fg/75"
-            style={{ height: px(md), paddingInline: px(md / 2.5) }}
-          >
-            <span className="h-1 w-5 rounded-full bg-bg/80" />
-          </span>
-        </HeroMember>
-        <HeroMember name="Field">
-          <span
-            className="flex w-16 items-center rounded-md border border-fg/25 px-2"
-            style={{ height: px(field) }}
-          >
-            <span className="h-1 w-6 rounded-full bg-fg/30" />
-          </span>
-        </HeroMember>
-        <HeroMember name="Menu row">
-          <span
-            className="flex w-16 items-center rounded-sm bg-fg/10 px-2"
-            style={{ height: px(row) }}
-          >
-            <span className="h-1 w-8 rounded-full bg-fg/40" />
-          </span>
-        </HeroMember>
-        <HeroMember name="Text">
-          <span className="leading-none" style={{ fontSize: tier.text }}>
-            Aa
-          </span>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="density"
-        label="Scale"
-        options={DENSITY_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <ControlGlyph density={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+      <Row axis="density" />
       <DialGap />
-      <UsesRow axis="inputHeight" label="Field height" />
-      <UsesRow axis="menuRows" label="Menu rows" />
-      <UsesRow axis="uiTextSize" label="UI text size" />
+      <Row axis="inputHeight" />
+      <Row axis="menuRows" />
+      <Row axis="uiTextSize" />
     </>
   )
 }
 
-export const ROWS: RowMap = {}
+export const ROWS: RowMap = { density: DensityRow }
