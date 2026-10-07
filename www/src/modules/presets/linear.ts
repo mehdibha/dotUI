@@ -91,7 +91,8 @@ export const linear = definePreset({
     accordionMarker: "leading-caret",
 
     // Feedback
-    alertStyle: "outline",
+    // The error callout: red 10% fill, 20% border, red text.
+    alertStyle: "soft-outline",
     spinnerStyle: "dots",
 
     // Data display
