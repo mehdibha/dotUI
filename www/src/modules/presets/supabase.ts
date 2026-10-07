@@ -18,6 +18,8 @@ export const supabase = definePreset({
     dangerSeed: "#ab413e",
     neutralTint: 0,
     darkBg: 6,
+    // chart-1..8: brand, blue, pink, violet, tomato, indigo, green, purple.
+    chartPalette: "vivid",
 
     // Typography
     headingFont: "Manrope",
@@ -61,12 +63,16 @@ export const supabase = definePreset({
     buttonStyle: "hairline",
     buttonSecondary: "raised",
     buttonPress: "scale",
+    // ButtonGroup is one bordered box split by dividers.
+    groupSeparator: "divider",
+    // A sliding accent-alpha chip; the default tone has no track at all.
     segmentedSelected: "tone",
     segmentedTrack: "outline",
     checkboxColor: "neutral",
     radioMark: "ring",
     cardSelected: "outline",
-    // Fields take Hairline's Auto (Inset); hover darkens the edge to 29.8%.
+    // Hairline's Auto (Inset) beats Well: Supabase's well is 1.5% black in
+    // light and darker than the page in dark; hover darkens the edge.
     inputHover: "edge",
     sliderThumb: "solid",
     sliderColor: "neutral",
