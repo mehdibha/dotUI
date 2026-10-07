@@ -25,7 +25,6 @@ import {
 } from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {
-  DialogBody,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -181,24 +180,25 @@ function Specimen({
 }
 
 /** A frozen row: menu and list rows only light up under the pointer. */
-function Row({
+function FrozenRow({
+  className,
   state,
   selected,
   danger,
   children,
 }: {
+  className: string
   state?: "hover" | "focus"
   selected?: boolean
   danger?: boolean
   children: React.ReactNode
 }) {
-  const { item } = useListStyles()()
   return (
     <div
       {...stateProps(...(state ? [state] : []))}
       data-selected={selected || undefined}
       data-variant={danger ? "danger" : undefined}
-      className={item()}
+      className={className}
     >
       {children}
     </div>
@@ -207,36 +207,36 @@ function Row({
 
 function MenuSpecimen() {
   const { popover } = usePopoverStyles()()
-  const { root, itemLabel } = useMenuStyles()()
+  const { root, item, itemLabel } = useMenuStyles()()
   return (
     <div inert data-popover="" className={popover({ className: "w-52" })}>
       <div className={root()}>
-        <Row>
+        <FrozenRow className={item()}>
           <PencilIcon />
           <span className={itemLabel()}>Rename</span>
           <Kbd>⌘R</Kbd>
-        </Row>
-        <Row state="focus">
+        </FrozenRow>
+        <FrozenRow className={item()} state="focus">
           <CopyIcon />
           <span className={itemLabel()}>Duplicate</span>
           <Kbd>⌘D</Kbd>
-        </Row>
-        <Row>
+        </FrozenRow>
+        <FrozenRow className={item()}>
           <ShareIcon />
           <span className={itemLabel()}>Share</span>
-        </Row>
+        </FrozenRow>
         <Separator />
-        <Row danger>
+        <FrozenRow className={item()} danger>
           <TrashIcon />
           <span className={itemLabel()}>Delete</span>
-        </Row>
+        </FrozenRow>
       </div>
     </div>
   )
 }
 
 function ListSpecimen() {
-  const { root, indicator, itemLabel } = useListStyles()()
+  const { root, item, indicator, itemLabel } = useListStyles()()
   const rows = [
     { label: "Inbox", selected: true },
     { label: "Drafts", state: "hover" as const },
@@ -246,12 +246,17 @@ function ListSpecimen() {
   return (
     <div inert className={root({ className: "w-44 p-1" })}>
       {rows.map((row) => (
-        <Row key={row.label} state={row.state} selected={row.selected}>
+        <FrozenRow
+          key={row.label}
+          className={item()}
+          state={row.state}
+          selected={row.selected}
+        >
           <span data-selection-mode="single" className={indicator()}>
             {row.selected && <CheckIcon />}
           </span>
           <span className={itemLabel()}>{row.label}</span>
-        </Row>
+        </FrozenRow>
       ))}
     </div>
   )
@@ -259,7 +264,7 @@ function ListSpecimen() {
 
 function SelectOpenSpecimen() {
   const { popover } = usePopoverStyles()()
-  const { root, indicator, itemLabel } = useListStyles()()
+  const { root, item, indicator, itemLabel } = useListStyles()()
   const rows = ["Last 24 hours", "Last 7 days", "Last 30 days"]
   return (
     <div className="flex w-52 flex-col gap-1">
@@ -274,8 +279,9 @@ function SelectOpenSpecimen() {
       <div inert data-popover="" className={popover()}>
         <div className={root()}>
           {rows.map((label, index) => (
-            <Row
+            <FrozenRow
               key={label}
+              className={item()}
               state={index === 2 ? "focus" : undefined}
               selected={index === 1}
             >
@@ -283,7 +289,7 @@ function SelectOpenSpecimen() {
                 {index === 1 && <CheckIcon />}
               </span>
               <span className={itemLabel()}>{label}</span>
-            </Row>
+            </FrozenRow>
           ))}
         </div>
       </div>
@@ -345,14 +351,15 @@ function DialogSpecimen() {
   )
 }
 
-/** A bottom drawer's top edge, fading out where the screen would end. */
+/** A bottom drawer's top edge; its empty body fades where the screen would end. */
 function DrawerSpecimen() {
   const { popup, handle } = useDrawerStyles()({ placement: "bottom" })
   const { content } = useDialogStyles()()
   return (
     <div
       inert
-      className="h-44 w-full max-w-sm overflow-hidden mask-b-from-60% pt-4"
+      // Padded so the mask keeps the drawer's shadow.
+      className="-mx-5 w-[calc(100%+2.5rem)] mask-[linear-gradient(to_bottom,black_calc(100%-3rem),transparent)] px-5 pt-6"
     >
       <div
         data-drawer=""
@@ -364,12 +371,7 @@ function DrawerSpecimen() {
             <DialogTitle>Filters</DialogTitle>
             <DialogDescription>Narrow results by status.</DialogDescription>
           </DialogHeader>
-          <DialogBody>
-            <div className="flex gap-2">
-              <Button>Reset</Button>
-              <Button variant="primary">Apply</Button>
-            </div>
-          </DialogBody>
+          <div className="h-12" />
         </div>
       </div>
     </div>
@@ -390,18 +392,22 @@ export default function ShapeBoard() {
         className="flex-col gap-6"
       >
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <Button variant="primary">Publish</Button>
-          <Button variant="secondary">Preview</Button>
-          <ToggleButton defaultSelected>
-            <BoldIcon data-icon="inline-start" />
-            Bold
-          </ToggleButton>
-          <Button variant="secondary" isIconOnly aria-label="Add">
-            <PlusIcon />
-          </Button>
-          <Button variant="secondary" size="xs">
-            Edit
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="primary">Publish</Button>
+            <Button variant="secondary">Preview</Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <ToggleButton defaultSelected>
+              <BoldIcon data-icon="inline-start" />
+              Bold
+            </ToggleButton>
+            <Button variant="secondary" isIconOnly aria-label="Add">
+              <PlusIcon />
+            </Button>
+            <Button variant="secondary" size="xs">
+              Edit
+            </Button>
+          </div>
         </div>
         <div className="flex w-full flex-wrap items-center justify-center gap-3">
           <TextField aria-label="Search" className="w-full max-w-60">
@@ -452,24 +458,27 @@ export default function ShapeBoard() {
         member="surfaces"
         title="Surfaces"
         axes={["roleSurface"]}
-        className="items-start gap-x-12 gap-y-8"
+        className="@container"
       >
-        <Specimen label="Popover">
-          <PopoverSpecimen />
-        </Specimen>
-        <Specimen label="Select">
-          <SelectOpenSpecimen />
-        </Specimen>
-        <Specimen label="Tooltip">
-          <TooltipSpecimen />
-        </Specimen>
+        {/* Two columns keep the tooltip under the select, not alone on a row. */}
+        <div className="grid w-full grid-cols-1 items-start justify-items-center gap-x-12 gap-y-8 @xl:grid-cols-2 @3xl:grid-cols-3">
+          <Specimen label="Popover" className="@xl:row-span-2 @3xl:row-span-1">
+            <PopoverSpecimen />
+          </Specimen>
+          <Specimen label="Select">
+            <SelectOpenSpecimen />
+          </Specimen>
+          <Specimen label="Tooltip">
+            <TooltipSpecimen />
+          </Specimen>
+        </div>
       </BoardSection>
 
       <BoardSection
         member="panels"
         title="Panels"
         axes={["rolePanel"]}
-        className="items-start gap-x-10 gap-y-8"
+        className="items-end gap-x-10 gap-y-8"
       >
         <Specimen label="Dialog" className="w-full max-w-sm">
           <DialogSpecimen />
