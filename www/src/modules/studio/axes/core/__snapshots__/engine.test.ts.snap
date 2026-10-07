@@ -343,7 +343,9 @@ exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
       "selected": "tint",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--studio-list-box-highlight": "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+  },
 }
 `;
 

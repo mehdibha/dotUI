@@ -85,6 +85,24 @@ describe("menus axis", () => {
     expect(ds.componentParams.tooltip?.tip).toBe(tooltip)
   })
 
+  it("a tinted selected row steps the neutral highlight back", () => {
+    const faded = {
+      "--studio-list-box-highlight":
+        "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+    }
+    expect(
+      designSystemOf(parseState({ menuSelectedRow: "tint" })).tokens,
+    ).toEqual(faded)
+    expect(
+      designSystemOf(
+        parseState({ menuSelectedRow: "tint", menuHighlight: "accent" }),
+      ).tokens,
+    ).toEqual({})
+    expect(
+      designSystemOf(parseState({ menuHighlight: "accent" })).tokens,
+    ).toEqual({})
+  })
+
   it("check None pins a tinted selected row", () => {
     const ds = designSystemOf(parseState({ menuIndicator: "none" }))
     expect(ds.componentParams.menu).toMatchObject({

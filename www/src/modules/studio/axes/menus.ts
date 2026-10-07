@@ -5,7 +5,7 @@
    Engine: `indicator`, `highlight`, `inset`, `selected` and `rows` are enum params on
    `menu` and `list-box`, one recipe (list-box LIST_ROWS); `search`, `scale`
    and `inset` on `command`; `tip` on `popover` and `tooltip`; `mobile` swaps
-   the shipped popover file. */
+   the shipped popover file; `--studio-list-box-highlight` is the row wash. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -73,7 +73,17 @@ export function resolveMenus(state: Effective): Resolved {
     rows: state.menuRows,
   }
   const [popoverTip, tooltipTip] = TIPS[state.menuArrows]!
+  // Beside a tinted selected row the neutral highlight steps back, so hover
+  // and selection never share a tone (Carbon, Polaris: hover is the lighter).
+  const tokens: Record<string, string> =
+    state.menuSelectedRow === "tint" && state.menuHighlight === "neutral"
+      ? {
+          "--studio-list-box-highlight":
+            "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+        }
+      : {}
   return {
+    tokens,
     params: {
       menu: rows,
       "list-box": rows,
