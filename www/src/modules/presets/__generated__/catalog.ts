@@ -1551,7 +1551,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 		designSystem: {
 			componentParams: {
 				accordion: { motion: "expand", layout: "divided", marker: "trailing-chevron" },
-				alert: { style: "neutral" },
+				alert: { style: "soft" },
 				avatar: { shape: "circle", fallback: "accent" },
 				badge: { style: "soft", case: "uppercase" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
@@ -1615,7 +1615,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				tabs: {
 					style: "line",
 					color: "accent",
-					indicator: "full",
+					indicator: "label",
 					chip: "tone",
 					track: "filled",
 					pill: "tint",
