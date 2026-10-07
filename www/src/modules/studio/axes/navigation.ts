@@ -105,8 +105,8 @@ export const PILL_OPTIONS = [
   { value: "tone", label: "Tone", description: "Claude" },
   { value: "solid", label: "Solid", description: "Mantine" },
   { value: "tint", label: "Tint", description: "Fluent 2" },
-  // Reached through Same as toggles (Spotify's inverse chips).
-  { value: "inverse", label: "Inverse", description: "Spotify" },
+  // Only Same as toggles reaches it: Spotify's filter chips, not its tabs.
+  { value: "inverse", label: "Inverse", description: "Spotify chips" },
 ]
 
 export const NAVIGATION_SCHEMA: ChapterSchema<typeof NAVIGATION_DEFAULTS> = {

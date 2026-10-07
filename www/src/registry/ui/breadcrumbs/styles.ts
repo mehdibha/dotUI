@@ -37,21 +37,31 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
       },
       "accent-hover": { slots: { link: [LINK_ACCENT, LINK_HOVER] } },
       "accent-never": { slots: { link: LINK_ACCENT } },
+      // The current crumb drops the weight too, or it reads as an ancestor.
       "neutral-always": {
         slots: {
           link: [
             LINK_NEUTRAL_WEIGHT,
             LINK_NEUTRAL,
             LINK_ALWAYS,
-            "current:no-underline",
+            "current:font-normal current:no-underline",
           ],
         },
       },
       "neutral-hover": {
-        slots: { link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL, LINK_HOVER] },
+        slots: {
+          link: [
+            LINK_NEUTRAL_WEIGHT,
+            LINK_NEUTRAL,
+            LINK_HOVER,
+            "current:font-normal",
+          ],
+        },
       },
       "neutral-never": {
-        slots: { link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL] },
+        slots: {
+          link: [LINK_NEUTRAL_WEIGHT, LINK_NEUTRAL, "current:font-normal"],
+        },
       },
     },
   },

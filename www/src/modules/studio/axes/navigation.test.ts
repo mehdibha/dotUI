@@ -171,6 +171,26 @@ describe("navigation recipes", () => {
     }
   })
 
+  test("every marker keeps its current fill and ink under the pointer", () => {
+    const sidebar = config("sidebar") as any
+    for (const value of sidebarMeta.params.marker.values)
+      for (const slot of ["menuButton", "menuSubButton"]) {
+        const list = classes([
+          sidebar.base.slots[slot],
+          sidebar.params.marker[value].slots[slot],
+        ]).split(" ")
+        for (const c of list) {
+          const hit = /^(?:hover|pressed):(bg|text)-/.exec(c)
+          const active =
+            hit && list.find((a) => a.startsWith(`data-active:${hit[1]}-`))
+          if (active)
+            expect(c.replace(/^(hover|pressed):/, "data-active:"), value).toBe(
+              active,
+            )
+        }
+      }
+  })
+
   test("link buttons and link ancestors are the link recipe", () => {
     const link = config("link").params
     const crumbs = config("breadcrumbs").params.ancestors
@@ -185,11 +205,10 @@ describe("navigation recipes", () => {
     for (const value of breadcrumbsMeta.params.ancestors.values) {
       if (value === "muted") continue
       const [color, underline] = value.split("-") as [string, string]
-      // The current crumb drops the underline it would inherit.
-      const own = classes(crumbs[value].slots.link).replace(
-        " current:no-underline",
-        "",
-      )
+      // The current crumb drops the weight and underline it would inherit.
+      const own = classes(crumbs[value].slots.link)
+        .replace(" current:font-normal", "")
+        .replace(" current:no-underline", "")
       expect(own, value).toBe(recipe(color, underline))
     }
     for (const name of ["button", "toggle-button"]) {

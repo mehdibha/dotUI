@@ -278,7 +278,7 @@ export function NavigationSection({ studio }: { studio: Studio }) {
       />
       <UsesRow axis="segmentedSelected" label="Segmented chip" />
       <UsesRow axis="shellTone" label="App shell" />
-      <UsesRow axis="motion" label="Motion" />
+      <UsesRow axis="paginationCurrent" label="Pagination" />
       <More keys={["navWeight", "navItemWeight", "tabsPill"]}>
         <DialSelect
           axis="navWeight"

@@ -6,18 +6,21 @@ import sidebarMeta from "./meta"
 const collapse =
   "duration-(--studio-sidebar-state-duration) ease-(--studio-sidebar-state-ease)"
 
-/* The current item's marker, on menu and sub-menu buttons alike. */
-const wash = "hover:bg-muted pressed:bg-muted"
+/* The current item's marker, on menu and sub-menu buttons alike. Each marker
+   owns its hover; a marker with its own fill or ink keeps it under the pointer. */
+const wash = "hover:bg-muted hover:text-fg pressed:bg-muted"
+const restWash =
+  "not-data-active:hover:bg-muted not-data-active:hover:text-fg not-data-active:pressed:bg-muted"
 const fill = "data-active:bg-muted data-active:text-fg"
 const tint = "data-active:bg-accent-muted data-active:text-fg-accent"
 const bar =
   "data-active:before:absolute data-active:before:inset-y-2 data-active:before:start-0 data-active:before:rounded-full"
 // shadcn, Material 3: a wash, neutral or brand-tinted.
 const FILL = [wash, fill]
-const FILL_ACCENT = [wash, tint]
+const FILL_ACCENT = [restWash, tint]
 // Polaris: a page-toned chip on a recessed sidebar; hover sits between.
 const SURFACE = [
-  "hover:bg-bg/40 pressed:bg-bg data-active:bg-bg data-active:text-fg",
+  "not-data-active:hover:bg-bg/40 hover:text-fg pressed:bg-bg data-active:bg-bg data-active:text-fg",
 ]
 // Catalyst, Fluent 2: a bar at the start edge, no fill.
 const BAR = [
@@ -47,7 +50,7 @@ const FILL_BAR_ACCENT = [
 // rest muted, so the current one takes the ink.
 const INK = [wash, "data-active:text-fg"]
 const INK_ACCENT = [
-  "hover:bg-accent-muted pressed:bg-accent-muted data-active:text-fg-accent",
+  "hover:bg-accent-muted not-data-active:hover:text-fg pressed:bg-accent-muted data-active:text-fg-accent",
 ]
 const INK_ICON = "data-active:[&>svg]:text-current"
 // Duolingo: the wash inside a 2px ring.
@@ -57,7 +60,7 @@ const OUTLINE = [
   "data-active:inset-ring-2 data-active:inset-ring-border-control",
 ]
 const OUTLINE_ACCENT = [
-  wash,
+  restWash,
   tint,
   "data-active:inset-ring-2 data-active:inset-ring-border-accent",
 ]
@@ -141,7 +144,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuItem: "group/menu-item relative",
       menuButton: [
         "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
-        "hover:text-fg focus-visible:focus-ring",
+        "focus-visible:focus-ring",
         "disabled:pointer-events-none disabled:opacity-50",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
@@ -172,7 +175,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuSubItem: "group/menu-sub-item relative",
       menuSubButton: [
         "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
-        "hover:text-fg focus-visible:focus-ring",
+        "focus-visible:focus-ring",
         "disabled:pointer-events-none disabled:opacity-50",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
         "group-data-[collapsible=icon]:hidden",
