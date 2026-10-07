@@ -17,7 +17,8 @@ export const duolingo = definePreset({
     successSeed: "#58cc02",
     warningSeed: "#ffc800",
     dangerSeed: "#ff4b4b",
-    // Pure grays (swan #e5e5e5); a slate tint for dark #131f24 would blue the light grays too.
+    // Pure grays (swan #e5e5e5). A slate tint barely reaches the dark page
+    // (chroma .006 of #131f24's .02) yet blues the light ink.
     neutralTint: 0,
     lightBg: 100,
     // #131f24 is L* 11.
@@ -67,7 +68,7 @@ export const duolingo = definePreset({
     fieldLabel: "medium",
 
     // Selection controls
-    // A 5px corner on the 20px box; the detail rung (8px) would round it to a circle.
+    // A quarter of the box (8px on 32, 5px on 20): 4px on our 16px check, nearer Sharp than the 8px detail rung.
     checkCorner: "sharp",
     cardSelected: "outline-tint",
     switchStyle: "slab",
@@ -92,6 +93,8 @@ export const duolingo = definePreset({
     navWeight: "bold",
 
     // Feedback
+    // The lesson feedback sheet: sea-sponge #d7ffb8 under tree-frog ink.
+    alertStyle: "soft",
     badgeStyle: "soft",
     badgeShape: "rounded",
     badgeCase: "uppercase",
