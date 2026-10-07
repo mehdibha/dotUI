@@ -29,8 +29,8 @@ export const LIST_PARAMS = {
   labels: {
     kind: "enum",
     default: "sentence",
-    values: ["sentence", "caps"] as const,
-    description: "Section header casing.",
+    values: ["sentence", "caps", "mono-caps"] as const,
+    description: "Section header casing and face.",
   },
 } satisfies RegistryItem["params"]
 

@@ -130,7 +130,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
         "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
       group: "relative flex w-full min-w-0 flex-col p-2",
       groupLabel: [
-        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 font-sans font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex h-8 shrink-0 items-center rounded-(--studio-sidebar-item-radius) px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0",
         collapse,
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
       ],
@@ -190,9 +190,14 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
   },
   params: {
     labels: {
-      sentence: { slots: { groupLabel: "text-xs tracking-normal" } },
+      sentence: { slots: { groupLabel: "font-sans text-xs tracking-normal" } },
       caps: {
-        slots: { groupLabel: "text-[0.6875rem] tracking-wider uppercase" },
+        slots: {
+          groupLabel: "font-sans text-[0.6875rem] tracking-wider uppercase",
+        },
+      },
+      "mono-caps": {
+        slots: { groupLabel: "font-mono text-xs tracking-wider uppercase" },
       },
     },
     shell: {

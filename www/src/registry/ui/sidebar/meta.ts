@@ -24,8 +24,8 @@ const sidebarMeta = {
     labels: {
       kind: "enum",
       default: "sentence",
-      values: ["sentence", "caps"] as const,
-      description: "Group label casing.",
+      values: ["sentence", "caps", "mono-caps"] as const,
+      description: "Group label casing and face.",
     },
     shell: {
       kind: "enum",

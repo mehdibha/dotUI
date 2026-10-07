@@ -113,8 +113,30 @@ const taller14 = {
   buttonTrigger: [tokens({ h: 14 }), "h-(--input-h)"],
 }
 
+// 16px below sm, so iOS never zooms a focused field.
 const compactText = "text-base sm:text-xs/relaxed"
 const defaultText = "text-base sm:text-sm"
+const largeText = "text-base"
+
+// One text step on every slot that starts a field.
+const compactFields = {
+  inputGroup: compactText,
+  input: compactText,
+  textArea: compactText,
+  trigger: compactText,
+}
+const defaultFields = {
+  inputGroup: defaultText,
+  input: defaultText,
+  textArea: defaultText,
+  trigger: defaultText,
+}
+const largeFields = {
+  inputGroup: largeText,
+  input: largeText,
+  textArea: largeText,
+  trigger: largeText,
+}
 
 /* ----------------------------- Field shells ----------------------------- */
 
@@ -423,34 +445,26 @@ const { useStyles, styles } = createStyles(inputMeta, {
       variant: "inline",
     },
   },
-  density: {
-    compact: {
-      slots: {
-        inputGroup: compactText,
-        input: compactText,
-        textArea: compactText,
-        trigger: compactText,
-      },
-    },
-    default: {
-      slots: {
-        inputGroup: defaultText,
-        input: defaultText,
-        textArea: defaultText,
-        trigger: defaultText,
-      },
-    },
-    comfortable: {
-      slots: {
-        inputGroup: defaultText,
-        input: defaultText,
-        textArea: defaultText,
-        trigger: defaultText,
-      },
-    },
-  },
   params: {
     style: FIELD_SHELLS,
+    // The value text: the density's control rung, or one above it (Untitled
+    // UI, Material 3: 16px fields beside 14px controls).
+    text: {
+      same: {
+        density: {
+          compact: { slots: compactFields },
+          default: { slots: defaultFields },
+          comfortable: { slots: defaultFields },
+        },
+      },
+      large: {
+        density: {
+          compact: { slots: defaultFields },
+          default: { slots: largeFields },
+          comfortable: { slots: largeFields },
+        },
+      },
+    },
     hover: {
       none: {},
       edge: {

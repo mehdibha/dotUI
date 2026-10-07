@@ -155,7 +155,13 @@ export const LIST_ROWS = {
       },
       caps: {
         slots: {
-          sectionTitle: "text-[0.6875rem] font-medium tracking-wider uppercase",
+          sectionTitle: "text-[0.6875rem] tracking-wider uppercase",
+        },
+      },
+      // Supabase's heading-meta: 12px mono caps.
+      "mono-caps": {
+        slots: {
+          sectionTitle: "font-mono text-xs tracking-wider uppercase",
         },
       },
     },

@@ -83,7 +83,7 @@ describe("extractStylesConfig", () => {
   test("input: resolves module-level const string refs (compactText)", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "input/styles.ts"))
     // `inputGroup: compactText` — the identifier resolves to its const literal.
-    expect(cfg.density?.compact?.slots?.inputGroup).toBe(
+    expect(cfg.params?.text?.same?.density?.compact?.slots?.inputGroup).toBe(
       "text-base sm:text-xs/relaxed",
     )
   })
