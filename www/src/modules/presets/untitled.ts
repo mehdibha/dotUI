@@ -19,9 +19,11 @@ export const untitled = definePreset({
     darkBg: 2.5,
     selectionHighlight: "browser",
 
-    // Typography: 600 labels on buttons, tabs, rows and nav items.
+    // Typography
     bodyFont: "Inter",
+    // ui-monospace first.
     monoFont: "System Mono",
+    // 600 on buttons and toggles.
     labelWeight: "semibold",
     // 600 titles; the -2% tracking starts only at 36px.
     titleStyle: "compact",
@@ -48,12 +50,11 @@ export const untitled = definePreset({
     // Motion: menus fade with a 2px nudge.
     motionEntrance: "fade",
     chartMotion: "ease",
-    linkUnderline: "hover",
 
     // Buttons: Rim light's Auto field is the raised field.
     buttonStyle: "rim-light",
     segmentedSelected: "raised",
-    // A neutral-50 track drawn by its hairline: nearer Outline than Filled.
+    // A #fafafa track read by its hairline: nearer Outline than Filled.
     segmentedTrack: "outline",
     paginationCurrent: "selected",
 
@@ -73,6 +74,8 @@ export const untitled = definePreset({
     // Menus & popovers
     menuArrows: "none",
     menuSelectedRow: "tint",
+    // Dropdown rows 38px, select and palette rows 40px.
+    menuRows: "step",
     menuSearch: "bar",
     mobilePickers: "anchored",
 
@@ -80,17 +83,19 @@ export const untitled = definePreset({
     dialogBackdropStrength: "heavy",
     mobileDialogs: "sheet",
 
-    // Navigation: the pill tab is brand-50 with brand-700 ink.
+    // Navigation: tabs and nav items 600; the pill tab is brand-50 / brand-700.
     navWeight: "semibold",
     tabsPill: "tint",
+    linkUnderline: "hover",
 
-    // Feedback: 50 fill, 700 label, 200 ring.
-    badgeStyle: "soft-outline",
+    // Feedback
     spinnerStyle: "ring-track",
     progressTrack: "thick",
     skeletonAnimation: "pulse",
 
     // Data display
+    // 50 fill, 700 label, 200 ring.
+    badgeStyle: "soft-outline",
     tableHeader: "filled",
     kbdTreatment: "outline",
     cardFooter: "rule",
