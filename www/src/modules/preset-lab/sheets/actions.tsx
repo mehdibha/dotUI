@@ -197,6 +197,12 @@ export function ActionsSheet() {
             <SegmentedControlItem id="year">Year</SegmentedControlItem>
           </SegmentedControl>
         </Cell>
+        <Cell label="focus · keyboard">
+          <Button variant="primary" data-specimen-focus="">
+            Primary
+          </Button>
+          <Button variant="secondary">Secondary</Button>
+        </Cell>
       </div>
     </Sheet>
   )

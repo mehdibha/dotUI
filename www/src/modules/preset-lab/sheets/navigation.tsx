@@ -91,7 +91,7 @@ export function NavigationSheet() {
       </div>
 
       <Cell label="app shell · inset sidebar">
-        <SidebarProvider className="h-[520px] min-h-0 w-full overflow-hidden rounded-lg border">
+        <SidebarProvider className="h-[520px] min-h-0 w-full overflow-hidden rounded-(--studio-radius-container) border">
           <Sidebar variant="inset">
             <SidebarContent>
               <SidebarGroup>
@@ -118,9 +118,9 @@ export function NavigationSheet() {
               </Badge>
             </header>
             <div className="grid flex-1 grid-cols-2 gap-3 p-3">
-              <div className="rounded-lg bg-muted" />
-              <div className="rounded-lg bg-muted" />
-              <div className="col-span-2 rounded-lg bg-muted" />
+              <div className="rounded-(--studio-radius-card) bg-muted" />
+              <div className="rounded-(--studio-radius-card) bg-muted" />
+              <div className="col-span-2 rounded-(--studio-radius-card) bg-muted" />
             </div>
           </SidebarInset>
         </SidebarProvider>

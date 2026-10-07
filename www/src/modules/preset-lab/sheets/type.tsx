@@ -53,7 +53,7 @@ export function TypeSheet() {
           </p>
         </Cell>
         <Cell label="code block · font-mono">
-          <pre className="w-full overflow-hidden rounded-lg bg-muted p-4 font-mono text-[13px] leading-relaxed">
+          <pre className="w-full overflow-hidden rounded-(--studio-radius-container) bg-muted p-4 font-mono text-[13px] leading-relaxed">
             {`import { Button } from "@/components/ui/button"
 
 export function Save() {
