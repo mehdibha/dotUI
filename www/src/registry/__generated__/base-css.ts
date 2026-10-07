@@ -14,13 +14,46 @@ export const baseRegistryCss = {
 		},
 		"@utility focus-ring": {
 			"--tw-ring-shadow":
-				"inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color)",
+				"var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--surface-bg, var(--color-bg)), var(--focus-ring-inset,) 0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color), inset 0 0 0 var(--focus-ring-inner) var(--surface-bg, var(--color-bg))",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility focus-ring-outside": {
+			"--tw-ring-shadow":
+				"0 0 0 var(--focus-ring-outside-offset) var(--surface-bg, var(--color-bg)), 0 0 0 calc(var(--focus-ring-outside-offset) + var(--focus-ring-width)) var(--focus-ring-color)",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility focus-ring-inside": {
+			"--tw-ring-shadow": "inset 0 0 0 var(--focus-ring-width) var(--focus-ring-color)",
 			"box-shadow":
 				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility focus-input": {
 			"--tw-ring-shadow":
-				"inset 0 0 0 var(--focus-input-inner) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
+				"inset 0 0 0 var(--focus-input-edge) var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility focus-input-indicator": {
+			"--tw-ring-shadow":
+				"inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--surface-bg, var(--color-bg)), var(--focus-input-inset,) 0 0 0 calc(var(--focus-input-offset) + var(--focus-input-width)) var(--tw-ring-color, var(--focus-input-color))",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility focus-input-underline": {
+			"--tw-ring-shadow":
+				"inset 0 calc(var(--focus-input-edge) * -1) 0 0 var(--tw-ring-color, var(--focus-input-color)), 0 var(--focus-input-offset) 0 0 var(--surface-bg, var(--color-bg)), 0 calc(var(--focus-input-offset) + var(--focus-input-width)) 0 0 var(--tw-ring-color, var(--focus-input-color))",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility invalid-ring": {
+			"--tw-ring-shadow": "0 0 0 var(--invalid-ring-width) var(--color-danger-muted)",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
+		},
+		"@utility invalid-ring-underline": {
+			"--tw-ring-shadow": "0 var(--invalid-ring-width) 0 0 var(--color-danger-muted)",
 			"box-shadow":
 				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
@@ -43,9 +76,10 @@ export const baseRegistryCss = {
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
 			},
-			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
-				opacity: "var(--disabled-opacity, 1)",
-			},
+			':is([data-disabled], :disabled, [aria-disabled="true"]):not(\n    :is([data-disabled], :disabled, [aria-disabled="true"]) *\n  )':
+				{
+					opacity: "var(--disabled-opacity, 1)",
+				},
 		},
 		":root": {
 			"--card-border": "var(--color-border)",
@@ -74,11 +108,14 @@ export const baseRegistryCss = {
 			"--focus-ring-color": "var(--color-border-focus)",
 			"--focus-ring-width": "2px",
 			"--focus-ring-offset": "2px",
+			"--focus-ring-outside-offset": "2px",
 			"--focus-ring-inner": "0px",
 			"--focus-input-color": "var(--color-border-focus-muted)",
 			"--focus-input-width": "2px",
 			"--focus-input-offset": "0px",
-			"--focus-input-inner": "0px",
+			"--focus-input-edge": "0px",
+			"--focus-invalid-color": "var(--color-danger-muted)",
+			"--invalid-ring-width": "0px",
 			"--disabled-bg": "var(--color-disabled)",
 			"--disabled-fg": "var(--color-fg-disabled)",
 			"--disabled-border": "var(--color-border)",
