@@ -317,6 +317,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusInputStyle: "ring", focusInputWeight: "thick" },
     { focusInputStyle: "border", focusInputWeight: "thick" },
   ],
+  "states/ring-hides-field-ink": [
+    { focusInputStyle: "ring", focusInputColor: "neutral" },
+    { focusInputStyle: "border", focusInputColor: "neutral" },
+  ],
   "motion/none-hides-entrance": [
     { motion: "none", motionEntrance: "fade" },
     { motionEntrance: "fade" },

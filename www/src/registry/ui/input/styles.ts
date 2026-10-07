@@ -122,11 +122,11 @@ const defaultText = "text-base sm:text-sm"
 // control, a trigger (a button) to keyboard focus only. Unfocused, an
 // invalid field wears the invalid halo instead.
 const shellFocus = {
-  self: "focus:focus-input focus:not-invalid:border-border-focus invalid:not-focus:invalid-ring",
+  self: "focus:focus-input focus:not-invalid:border-(--focus-input-border) invalid:not-focus:invalid-ring",
   group:
-    "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus invalid:not-focus-within:invalid-ring",
+    "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-(--focus-input-border) has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring",
   trigger:
-    "focus-visible:focus-input focus-visible:not-invalid:border-border-focus invalid:not-focus-visible:invalid-ring",
+    "focus-visible:focus-input focus-visible:not-invalid:border-(--focus-input-border) invalid:not-focus-visible:invalid-ring",
 }
 
 const shellRadius = {
@@ -137,7 +137,7 @@ const shellRadius = {
 }
 
 const boxed =
-  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
+  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
 
 // shadcn nova: a clear box on the control edge, tinted in dark.
 const outlineShell = tv({
@@ -185,14 +185,14 @@ const filledShell = tv({
 // straight rule, so only its top corners round, and small. A ring or halo
 // goes around the box (Carbon); a border focus thickens the rule (M3).
 const indicatorShell = tv({
-  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
-      self: "invalid:not-focus:invalid-ring focus:focus-input-indicator focus:not-invalid:border-border-focus",
+      self: "invalid:not-focus:invalid-ring focus:focus-input-indicator focus:not-invalid:border-(--focus-input-border)",
       group:
-        "group-focus/combobox:focus-input-indicator group-focus/combobox:not-invalid:border-border-focus invalid:not-focus-within:invalid-ring has-[[data-input-control][data-focused]]:focus-input-indicator has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
+        "group-focus/combobox:focus-input-indicator group-focus/combobox:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring has-[[data-input-control][data-focused]]:focus-input-indicator has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border)",
       trigger:
-        "invalid:not-focus-visible:invalid-ring focus-visible:focus-input-indicator focus-visible:not-invalid:border-border-focus",
+        "invalid:not-focus-visible:invalid-ring focus-visible:focus-input-indicator focus-visible:not-invalid:border-(--focus-input-border)",
     },
   },
 })
@@ -200,14 +200,14 @@ const indicatorShell = tv({
 // shadcn sera: a bottom rule only, no fill, no inline padding, no corners.
 // Every focus and invalid layer draws under the rule.
 const underlineShell = tv({
-  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control))",
+  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
-      self: "invalid:not-focus:invalid-ring-underline focus:focus-input-underline focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
+      self: "invalid:not-focus:invalid-ring-underline focus:focus-input-underline focus:not-invalid:border-(--focus-input-border) invalid:focus:border-fg-danger",
       group:
-        "group-focus/combobox:focus-input-underline group-focus/combobox:not-invalid:border-border-focus invalid:not-focus-within:invalid-ring-underline invalid:group-focus/combobox:border-fg-danger has-[[data-input-control][data-focused]]:focus-input-underline has-[[data-input-control][data-focused]]:not-invalid:border-border-focus invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
+        "group-focus/combobox:focus-input-underline group-focus/combobox:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring-underline invalid:group-focus/combobox:border-fg-danger has-[[data-input-control][data-focused]]:focus-input-underline has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
       trigger:
-        "invalid:not-focus-visible:invalid-ring-underline focus-visible:focus-input-underline focus-visible:not-invalid:border-border-focus invalid:focus-visible:border-fg-danger",
+        "invalid:not-focus-visible:invalid-ring-underline focus-visible:focus-input-underline focus-visible:not-invalid:border-(--focus-input-border) invalid:focus-visible:border-fg-danger",
     },
   },
 })

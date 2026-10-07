@@ -119,6 +119,12 @@
     var(--tw-shadow, 0 0 #0000);
 }
 
+/* Invalid fill: a danger wash laid over whatever the field paints,
+   transparent unless the system tints invalid fields. */
+@utility invalid-fill {
+  background-image: linear-gradient(var(--invalid-fill), var(--invalid-fill));
+}
+
 @utility no-highlight {
   -webkit-tap-highlight-color: transparent;
 }
@@ -170,6 +176,10 @@
   --overlay-border: var(--color-border);
   --popover-alpha: 100%;
   --popover-backdrop-filter: none;
+  /* The field focus inks and invalid fill: per-mode, so on :root. */
+  --focus-input-border: var(--color-border-focus);
+  --focus-input-color: var(--color-border-focus-muted);
+  --invalid-fill: transparent;
 }
 
 ::selection {
@@ -208,14 +218,14 @@
 
 /* Focus axes: the ring controls wear (color, width, the gap in bg, an inner
    bg stroke under an inset ring), the layer fields wear (a muted halo by
-   default) and the invalid halo (none by default). */
+   default; its inks sit on :root above) and the invalid halo (none by
+   default). */
 @theme {
   --focus-ring-color: var(--color-border-focus);
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
   --focus-ring-outside-offset: 2px;
   --focus-ring-inner: 0px;
-  --focus-input-color: var(--color-border-focus-muted);
   --focus-input-width: 2px;
   --focus-input-offset: 0px;
   --focus-input-edge: 0px;

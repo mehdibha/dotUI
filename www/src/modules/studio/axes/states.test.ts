@@ -5,6 +5,7 @@ import { describe, expect, test } from "vitest"
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { FIELD_SHELLS } from "@/registry/ui/input/styles"
+import { mergePresetCssFields } from "@/publisher/emit-theme"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULTS, parseState } from "./index"
@@ -94,7 +95,60 @@ describe("field focus", () => {
   })
 })
 
+describe("field focus ink", () => {
+  test("Same as focus ink writes nothing; Neutral re-points the field pair", () => {
+    expect(resolve({ focusInputColor: "same" }).tokens).toEqual({})
+    expect(resolve({ focusInputColor: "neutral" }).tokens).toEqual({
+      "--focus-input-border": "var(--neutral-700)",
+      "--focus-input-color": "var(--neutral-300)",
+    })
+  })
+
+  test("Border paints its layer with the field's edge", () => {
+    expect(
+      resolve({ focusInputColor: "neutral", focusInputStyle: "border" }).tokens,
+    ).toMatchObject({
+      "--focus-input-border": "var(--neutral-700)",
+      "--focus-input-color": "var(--focus-input-border)",
+    })
+  })
+
+  test("a neutral ring already paints fields neutral", () => {
+    expect(
+      resolve({ focusColor: "neutral", focusInputColor: "neutral" }).tokens,
+    ).toEqual({})
+  })
+
+  test("under Ring the field wears the ring's ink", () => {
+    expect(
+      resolve({ focusInputStyle: "ring", focusInputColor: "neutral" }).tokens,
+    ).not.toHaveProperty("--focus-input-border")
+  })
+})
+
+describe("per-mode inks ship as literals", () => {
+  test.each([
+    ["--focus-input-border", { focusInputColor: "neutral" }],
+    ["--invalid-fill", { invalidStyle: "tint" }],
+  ] as const)("%s", (name, state) => {
+    const { css } = mergePresetCssFields({}, resolve(state))
+    const light = css?.[":root"]?.[name]
+    const dark = css?.[".dark"]?.[name]
+    expect(light).toMatch(/oklch\(/)
+    // The dark literal ships only where it differs.
+    if (dark !== undefined) expect(dark).toMatch(/oklch\(/)
+    expect(`${light} ${dark}`).not.toMatch(/var\(|light-dark/)
+  })
+})
+
 describe("invalid", () => {
+  test("Tint lays a danger wash over the fill", () => {
+    expect(resolve({ invalidStyle: "tint" }).tokens).toEqual({
+      "--invalid-fill":
+        "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))",
+    })
+  })
+
   test("Edge is Origin; Halo is as wide as the field halo", () => {
     expect(resolve({ invalidStyle: "halo" }).tokens).toEqual({
       "--invalid-ring-width": "2px",
@@ -151,7 +205,7 @@ describe("field focus under every shell", () => {
     "utf8",
   )
   const theme: Record<string, string> = {}
-  for (const block of css.matchAll(/@theme \{([^}]*)\}/g))
+  for (const block of css.matchAll(/(?:@theme|^:root) \{([^}]*)\}/gm))
     for (const [, name, value] of block[1]!.matchAll(/(--[\w-]+):\s*([^;]+);/g))
       theme[name!] = value!.trim()
 
@@ -219,7 +273,10 @@ describe("field focus under every shell", () => {
       }
 
       const classes = [shell.slots.input].flat(Infinity).join(" ")
-      expect(classes).toContain("focus:not-invalid:border-border-focus")
+      expect(classes).toContain(
+        "focus:not-invalid:border-(--focus-input-border)",
+      )
+      expect(classes).toContain("invalid:invalid-fill")
       const drawn = VALUES.map((value) =>
         substitute(layer(focus), { ...theme, ...resolve(value).tokens }),
       )

@@ -1,3 +1,4 @@
+import { SOURCE_VALUES } from "./color"
 import { SOURCE_OPTIONS } from "./color.meta"
 import { options } from "./core/meta"
 import {
@@ -92,6 +93,13 @@ export const INVALID_OPTIONS = options(INVALID_VALUES, {
     credits: ["Primer", "Material 3", "Carbon", "Atlassian", "Stripe"],
   },
   halo: { label: "Halo", credits: ["shadcn", "Geist"] },
+  tint: { label: "Tint", credits: ["Polaris", "Supabase", "Airbnb"] },
+})
+
+/* The panel offers Neutral beside Same as focus ink. */
+export const FIELD_INK_OPTIONS = options(SOURCE_VALUES, {
+  neutral: { label: "Neutral", credits: ["Geist"] },
+  accent: { label: "Accent" },
 })
 
 export const DISABLED_OPTIONS = options(DISABLED_VALUES, {
@@ -141,6 +149,7 @@ export const OPTIONS = {
   focusStrength: STRENGTH_OPTIONS,
   focusInputStyle: FOCUS_INPUT_STYLE_OPTIONS,
   focusInputWeight: FOCUS_INPUT_WEIGHT_OPTIONS,
+  focusInputColor: FIELD_INK_OPTIONS,
   invalidStyle: INVALID_OPTIONS,
   disabledTreatment: DISABLED_OPTIONS,
   cursorControls: CURSOR_CONTROL_OPTIONS,

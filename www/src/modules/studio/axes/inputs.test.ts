@@ -285,7 +285,9 @@ describe("field shells", () => {
           const classes = [
             ...content.matchAll(new RegExp(`\\b${slot}: "([^"]*)"`, "g")),
           ].flatMap((m) => m[1]!.split(" "))
-          const focus = classes.filter((c) => /border-border-focus$/.test(c))
+          const focus = classes.filter((c) =>
+            /border-\(--focus-input-border\)$/.test(c),
+          )
           const hovers = classes.filter((c) => c.startsWith("hover:"))
           expect(focus.length, `${style} ${slot}`).toBeGreaterThan(0)
           expect(hovers.length, `${style}/${hover} ${slot}`).toBeGreaterThan(0)

@@ -7,12 +7,13 @@
 import { cn } from "@/registry/lib/utils"
 
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
-import { AUTO_STRENGTH, AUTO_WIDTH } from "../axes/states"
+import { AUTO_STRENGTH, AUTO_WIDTH, INVALID_FILL } from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   DISABLED_OPTIONS,
+  FIELD_INK_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
@@ -68,16 +69,26 @@ function ControlSpecimen({ ring, size }: { ring: Ring; size: Size }) {
   )
 }
 
-function fieldFocus(focus: string, weight: string, ring: Ring) {
+/** The field's pair: the focus pair, or the neutral steps under Neutral. */
+const fieldInks = (neutral?: boolean) =>
+  neutral ? ["var(--neutral-700)", "var(--neutral-300)"] : [INK, MUTED]
+
+function fieldFocus(
+  focus: string,
+  weight: string,
+  ring: Ring,
+  neutral?: boolean,
+) {
   if (focus === "ring") return { boxShadow: ringShadow(ring) }
+  const [ink, muted] = fieldInks(neutral)
   if (focus === "border")
     return {
-      borderColor: INK,
-      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${INK}` : undefined,
+      borderColor: ink,
+      boxShadow: weight === "thick" ? `inset 0 0 0 1px ${ink}` : undefined,
     }
   return {
-    borderColor: INK,
-    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${MUTED}`,
+    borderColor: ink,
+    boxShadow: `0 0 0 ${weight === "thick" ? 4 : 2}px ${muted}`,
   }
 }
 
@@ -85,11 +96,13 @@ function FieldSpecimen({
   focus,
   weight,
   ring,
+  neutral,
   size,
 }: {
   focus: string
   weight: string
   ring: Ring
+  neutral?: boolean
   size: Size
 }) {
   return (
@@ -98,7 +111,7 @@ function FieldSpecimen({
         "mx-1 block shrink-0 border border-fg/30 bg-bg",
         SIZE[size],
       )}
-      style={fieldFocus(focus, weight, ring)}
+      style={fieldFocus(focus, weight, ring, neutral)}
     />
   )
 }
@@ -136,6 +149,10 @@ function InvalidSpecimen({ invalid, size }: { invalid: string; size: Size }) {
       style={{
         borderColor: DANGER,
         boxShadow: invalid === "halo" ? `0 0 0 3px ${DANGER_MUTED}` : undefined,
+        backgroundImage:
+          invalid === "tint"
+            ? `linear-gradient(${INVALID_FILL}, ${INVALID_FILL})`
+            : undefined,
       }}
     />
   )
@@ -190,6 +207,7 @@ const MORE_KEYS = [
   "focusStrength",
   "focusWidth",
   "focusInputWeight",
+  "focusInputColor",
   "invalidStyle",
   "cursorControls",
   "cursorDisabled",
@@ -201,6 +219,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
   const { effective } = studio
   const ring = ringOf(effective)
   const weight = effective.focusInputWeight
+  const neutral = effective.focusInputColor === "neutral"
   return (
     <>
       <FamilyHero>
@@ -212,6 +231,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
             focus={effective.focusInputStyle}
             weight={weight}
             ring={ring}
+            neutral={neutral}
             size="hero"
           />
         </HeroMember>
@@ -253,6 +273,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
               focus={option.value}
               weight={weight}
               ring={ring}
+              neutral={neutral}
               size="row"
             />
           ),
@@ -312,6 +333,25 @@ export function StatesSection({ studio }: { studio: Studio }) {
           axis="focusInputWeight"
           label="Field focus weight"
           options={FOCUS_INPUT_WEIGHT_OPTIONS}
+        />
+        <DialSelect
+          axis="focusInputColor"
+          label="Field ink"
+          options={[
+            { value: "same", label: "Same as ring" },
+            ...FIELD_INK_OPTIONS.filter((o) => o.value === "neutral"),
+          ].map((option) => ({
+            ...option,
+            preview: (
+              <FieldSpecimen
+                focus={effective.focusInputStyle}
+                weight={weight}
+                ring={ring}
+                neutral={option.value === "neutral"}
+                size="row"
+              />
+            ),
+          }))}
         />
         <DialSelect
           axis="invalidStyle"

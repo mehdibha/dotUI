@@ -1,8 +1,8 @@
 /* States — how every control shows keyboard focus, field focus, disabled and
    invalid, the cursor over it, and whether its text selects. Engine: the
-   `--focus-*`, `--invalid-ring-width`, `--disabled-*`, `--cursor-*` and
+   `--focus-*`, `--invalid-*`, `--disabled-*`, `--cursor-*` and
    `--user-select-ui` tokens in base.css that the focus-ring, focus-input,
-   invalid-ring, cursor-* and select-ui utilities read. The focus ink is a
+   invalid-ring, invalid-fill, cursor-* and select-ui utilities read. The focus ink is a
    leaf of Color's Primary. */
 
 import type { TokenOverrides } from "@/registry/theme"
@@ -21,6 +21,7 @@ export const STATES_DEFAULTS = {
   focusWidth: "auto" as number | "auto",
   focusInputStyle: "halo",
   focusInputWeight: "thin",
+  focusInputColor: "same" as "same" | "neutral" | "accent",
   invalidStyle: "edge",
   disabledTreatment: "solid",
   cursorControls: "pointer",
@@ -48,8 +49,13 @@ export const FOCUS_INPUT_WEIGHT_VALUES = ["thin", "thick"] as const
 const HALO_PX: Record<string, number> = { thin: 2, thick: 4 }
 const BORDER_PX: Record<string, number> = { thin: 1, thick: 2 }
 
-/** Edge: the edge turns danger. Halo: a danger halo at rest too. */
-export const INVALID_VALUES = ["edge", "halo"] as const
+/** Edge: the edge turns danger. Halo: a danger halo at rest too. Tint: a
+ *  danger wash over the fill too. */
+export const INVALID_VALUES = ["edge", "halo", "tint"] as const
+
+/* Light 6% (Airbnb ~5, Polaris ~9), dark 10% (Supabase). */
+export const INVALID_FILL =
+  "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
 
 /** Solid: one grey for every variant. Fade: the control at 50%. */
 export const DISABLED_VALUES = ["solid", "fade"] as const
@@ -78,6 +84,7 @@ export const STATES_SCHEMA: ChapterSchema<typeof STATES_DEFAULTS> = {
   focusWidth: range({ min: 1, max: 4, step: 1 }),
   focusInputStyle: oneOf(FOCUS_INPUT_STYLE_VALUES),
   focusInputWeight: oneOf(FOCUS_INPUT_WEIGHT_VALUES),
+  focusInputColor: oneOf(SOURCE_VALUES),
   invalidStyle: oneOf(INVALID_VALUES),
   disabledTreatment: oneOf(DISABLED_VALUES),
   cursorControls: oneOf(CURSOR_CONTROL_VALUES),
@@ -142,7 +149,7 @@ export function resolveStates(state: Effective): Resolved {
     case "border":
       // The edge recolors; Thick adds what the stroke doesn't draw, inside.
       tokens["--focus-input-width"] = "0px"
-      tokens["--focus-input-color"] = "var(--color-border-focus)"
+      tokens["--focus-input-color"] = "var(--focus-input-border)"
       tokens["--focus-invalid-color"] = "var(--color-border-danger)"
       tokens["--focus-input-edge"] = px(
         Math.max(0, BORDER_PX[weight]! - strokePx(state.controlStroke)),
@@ -150,10 +157,19 @@ export function resolveStates(state: Effective): Resolved {
       break
   }
 
+  // A neutral field ink under an accent ring (Geist), on the steps the
+  // neutral ring pair uses.
+  if (state.focusInputColor === "neutral" && state.focusColor !== "neutral") {
+    tokens["--focus-input-border"] = "var(--neutral-700)"
+    if (state.focusInputStyle === "halo")
+      tokens["--focus-input-color"] = "var(--neutral-300)"
+  }
+
   // Invalid: the halo is as wide as the field's own focus halo.
   if (state.invalidStyle === "halo")
     tokens["--invalid-ring-width"] =
       state.focusInputStyle === "halo" ? px(HALO_PX[weight]!) : px(width)
+  if (state.invalidStyle === "tint") tokens["--invalid-fill"] = INVALID_FILL
 
   if (state.disabledTreatment === "fade") {
     for (const name of DISABLED_TOKENS) tokens[name] = "initial"
@@ -184,6 +200,7 @@ export const chapter = defineChapter({
     focusWidth: [
       { kind: "auto", id: "auto", from: "focusStyle", table: AUTO_WIDTH },
     ],
+    focusInputColor: [{ kind: "same", id: "same", from: "focusColor" }],
   },
   rules: [
     // A field on the ring reuses the ring's width.
@@ -192,6 +209,14 @@ export const chapter = defineChapter({
       target: "focusInputWeight",
       when: { key: "focusInputStyle", in: ["ring"] },
       effect: { kind: "hide", value: "thin" },
+      cause: "focusInputStyle",
+    },
+    // ...and its ink.
+    {
+      id: "states/ring-hides-field-ink",
+      target: "focusInputColor",
+      when: { key: "focusInputStyle", in: ["ring"] },
+      effect: { kind: "hide" },
       cause: "focusInputStyle",
     },
   ],
