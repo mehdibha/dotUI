@@ -62,6 +62,8 @@ export const airbnb = definePreset({
     invalidStyle: "tint",
 
     // Motion
+    // Popovers fade in with no visible zoom.
+    motionEntrance: "fade",
     dialogEntrance: "rise",
 
     // Buttons
@@ -104,7 +106,8 @@ export const airbnb = definePreset({
     dialogSections: "divided",
     // "Clear all" left, the confirm right.
     dialogActions: "spread",
-    mobileDialogs: "sheet",
+    // Login opens as a full page at 390px.
+    mobileDialogs: "fullscreen",
 
     // Navigation
     tabStyle: "line",
