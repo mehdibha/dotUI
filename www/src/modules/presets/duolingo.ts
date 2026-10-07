@@ -17,7 +17,7 @@ export const duolingo = definePreset({
     successSeed: "#58cc02",
     warningSeed: "#ffc800",
     dangerSeed: "#ff4b4b",
-    // Light neutrals are pure grays (swan #e5e5e5, polar #f7f7f7).
+    // Pure grays (swan #e5e5e5); a slate tint for dark #131f24 would blue the light grays too.
     neutralTint: 0,
     lightBg: 100,
     // #131f24 is L* 11.
@@ -33,7 +33,8 @@ export const duolingo = definePreset({
     sectionLabels: "caps",
 
     // Icons
-    iconStroke: 2.5,
+    // The close X is stroke 3 on a 16px box.
+    iconStroke: 3,
 
     // Shape
     // Fields, tiles and web-ui buttons 12px; popovers, cards and modals 16px; menu rows 7px.
