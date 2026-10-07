@@ -203,10 +203,10 @@ describe("listenDesignSystemMessages", () => {
     ])
   })
 
-  it("rests as long as a render over budget took, measured to its commit", () => {
+  it("rests as long as a drag's render over budget took, measured to its commit", () => {
     const { apply, commit } = rendering()
     listenDesignSystemMessages((_, ready) => ready(null), apply)
-    post("1px")
+    post("1px", { drag: true })
     vi.advanceTimersByTime(16)
     vi.advanceTimersByTime(40)
     commit()
@@ -215,6 +215,55 @@ describe("listenDesignSystemMessages", () => {
     expect(apply).toHaveBeenCalledTimes(1)
     vi.advanceTimersByTime(1 + 16)
     expect(apply).toHaveBeenCalledTimes(2)
+  })
+
+  it("doesn't rest for the time a transition yielded before its commit", () => {
+    const { apply, commit } = rendering()
+    listenDesignSystemMessages((_, ready) => ready(null), apply)
+    post("1px")
+    vi.advanceTimersByTime(16)
+    vi.advanceTimersByTime(40)
+    commit()
+    post("2px")
+    vi.advanceTimersByTime(16)
+    expect(apply).toHaveBeenCalledTimes(2)
+  })
+
+  it("stops holding newer messages behind a render that stalls", () => {
+    const { apply, commit } = rendering()
+    listenDesignSystemMessages((_, ready) => ready(null), apply)
+    post("1px")
+    vi.advanceTimersByTime(16)
+    post("2px", { drag: true })
+    vi.advanceTimersByTime(199)
+    expect(applied(apply)).toEqual([["1px", null]])
+    vi.advanceTimersByTime(1 + 16)
+    expect(applied(apply)).toEqual([
+      ["1px", null],
+      ["2px", null],
+    ])
+    // The stalled render's late commit doesn't release the newer one's hold.
+    commit()
+    post("3px")
+    vi.advanceTimersByTime(100)
+    expect(apply).toHaveBeenCalledTimes(2)
+    commit()
+    vi.advanceTimersByTime(1000)
+    expect(applied(apply).at(-1)).toEqual(["3px", null])
+  })
+
+  it("still turns transitions back on when a stalled commit lands last", () => {
+    const { apply, commit } = rendering()
+    listenDesignSystemMessages((_, ready) => ready(null), apply)
+    post("1px")
+    vi.advanceTimersByTime(16)
+    commit()
+    post("1px", { live: false })
+    vi.advanceTimersByTime(16 + 500)
+    expect(attributes.has("data-studio-live")).toBe(true)
+    commit()
+    vi.advanceTimersByTime(16)
+    expect(attributes.has("data-studio-live")).toBe(false)
   })
 
   it("ignores preparations that finish after the listener stops", () => {

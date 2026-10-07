@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { parseState } from "@/modules/studio/axes"
+import type { PreviewAssets } from "@/modules/studio/preset/iframe-sync"
 
 let win: ReturnType<typeof installFakeWindow>
 
@@ -18,9 +19,16 @@ afterEach(() => {
 
 /** A pointer event, as the window's capture phase sees it. */
 const pointer = (
-  type: "pointerdown" | "pointerup" | "lostpointercapture",
+  type:
+    | "pointerdown"
+    | "pointermove"
+    | "pointerup"
+    | "lostpointercapture"
+    | "contextmenu",
   pointerId = 1,
-) => window.dispatchEvent(Object.assign(new Event(type), { pointerId }))
+  init: { buttons?: number; pointerType?: string } = {},
+) =>
+  window.dispatchEvent(Object.assign(new Event(type), { pointerId, ...init }))
 
 async function load() {
   const live = await import("./live")
@@ -190,6 +198,37 @@ describe("drag", () => {
     },
   )
 
+  it("keeps a long-press's drag through its context menu", async () => {
+    const { live, selection, committed, onChange, shown } = await load()
+    live.previewNow(onChange(7))
+    pointer("contextmenu", 1, { pointerType: "touch" })
+    vi.runAllTimers()
+    expect(shown()).toBe(7)
+    pointer("pointermove", 1, { buttons: 1 })
+    live.previewNow(onChange(5))
+    expect(shown()).toBe(5)
+    expect(selection.getCurrent().state).toEqual(committed)
+  })
+
+  it("holds a pointer that moves still pressed after a blur", async () => {
+    const { live, selection, committed, onChange, shown } = await load()
+    window.dispatchEvent(new Event("blur"))
+    pointer("pointermove", 1, { buttons: 1 })
+    live.previewNow(onChange(5))
+    expect(shown()).toBe(5)
+    expect(selection.getCurrent().state).toEqual(committed)
+  })
+
+  it("forgets a pointer that moves with no button down", async () => {
+    const { live, selection, onChange, shown } = await load()
+    live.previewNow(onChange(7))
+    pointer("pointermove", 1, { buttons: 0 })
+    vi.runAllTimers()
+    expect(shown()).toBeNull()
+    live.previewNow(onChange(5))
+    expect(selection.getCurrent().state.radiusPx).toBe(5)
+  })
+
   it("forgets a pointer whose capture is lost", async () => {
     const { live, selection, onChange } = await load()
     pointer("lostpointercapture")
@@ -244,6 +283,14 @@ describe("picker", () => {
     expect(selection.getCurrent().key).toBe("preset:stripe")
     selection.previewSelection(null)
     expect(live.getLive()).toBeNull()
+  })
+
+  it("starts loading the row's icons before its preview settles", async () => {
+    const { live, selection } = await load()
+    const warm = vi.fn<(assets: PreviewAssets) => void>()
+    live.onWarmPreview(warm)
+    selection.previewSelection("preset:claude")
+    expect(warm).toHaveBeenCalledWith({ icons: ["phosphor"] })
   })
 
   it("previews nothing for the design already on screen", async () => {

@@ -13,7 +13,7 @@ import { getPreset, ORIGIN } from "@/modules/presets"
 import { sameState } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 
-import { captureEdit, clearLive, showLive } from "./live"
+import { captureEdit, clearLive, showLive, warmPreview } from "./live"
 import * as workspace from "./workspace"
 import type { DesignSystemDoc, Unsaved, View, Workspace } from "./workspace"
 
@@ -224,6 +224,8 @@ export function select(sel: Selection): void {
 export function previewSelection(key: string | null): void {
   if (key === null) return showLive(null)
   const { state } = describe(keySelection(key), workspace.getWorkspace())
+  // Its icons load while the hover settles: a render waiting on them stalls.
+  warmPreview({ icons: [state.iconLibrary] })
   showLive(sameState(state, getCurrent().state) ? null : state, {
     settle: true,
   })

@@ -141,6 +141,9 @@ function isInIframe(): boolean {
 const FRAME_FALLBACK_MS = 100
 // An apply over budget waits as long as it took: at most half the thread.
 const APPLY_BUDGET_MS = 8
+// A render still uncommitted by then (suspended on a chunk, say) stops
+// holding newer messages.
+const STALL_MS = 200
 const LIVE_ATTR = "data-studio-live"
 
 /** The next frame, or a timeout where rAF never fires (hidden tabs). */
@@ -185,11 +188,14 @@ export function listenDesignSystemMessages<T>(
   let received = 0
   // The newest message prepared: a slower, older one never replaces it.
   let accepted = 0
-  // Until the apply in flight commits, newer messages wait in `pending`.
+  let flushed = 0
+  // Until the apply in flight commits or stalls, newer messages wait in
+  // `pending`.
   let applying = false
   let readyAt = 0
   let cancelApply: (() => void) | undefined
   let cancelUnlive: (() => void) | undefined
+  let stall: ReturnType<typeof setTimeout> | undefined
 
   const flush = () => {
     cancelApply = undefined
@@ -197,15 +203,25 @@ export function listenDesignSystemMessages<T>(
     pending = null
     if (!next) return
     const { message, prepared } = next
+    const id = ++flushed
     cancelUnlive?.()
     if (message.live) root.setAttribute(LIVE_ATTR, "")
     applying = true
+    stall = setTimeout(() => {
+      applying = false
+      schedule()
+    }, STALL_MS)
     const start = performance.now()
     const committed = () => {
+      // A newer apply took over.
+      if (id !== flushed) return
+      clearTimeout(stall)
+      // A transition yields while it renders: only its commit holds the thread.
+      const from = message.drag ? start : performance.now()
       // Restyles now, so the measure includes it.
       void root.offsetHeight
       const end = performance.now()
-      readyAt = end - start > APPLY_BUDGET_MS ? end + (end - start) : 0
+      readyAt = end - from > APPLY_BUDGET_MS ? end + (end - from) : 0
       applying = false
       // A frame later, so the commit itself doesn't animate.
       if (!message.live && root.hasAttribute(LIVE_ATTR))
@@ -219,7 +235,7 @@ export function listenDesignSystemMessages<T>(
   }
 
   const schedule = () => {
-    if (cancelApply || applying) return
+    if (!pending || cancelApply || applying) return
     const wait = readyAt - performance.now()
     if (wait <= 0) {
       cancelApply = onNextFrame(flush)
@@ -262,6 +278,7 @@ export function listenDesignSystemMessages<T>(
     accepted = Infinity
     cancelApply?.()
     cancelUnlive?.()
+    clearTimeout(stall)
     root.removeAttribute(LIVE_ATTR)
   }
 }

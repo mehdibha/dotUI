@@ -115,16 +115,13 @@ export function PreviewPage() {
     return {
       designSystem: initial,
       themeCss: initial.color && themeCssNow(initial.color),
+      committed: undefined as (() => void) | undefined,
     }
   })
   const { designSystem, themeCss } = applied
-  // What the latest apply renders toward, and its commit callback.
+  // What the latest apply renders toward.
   const target = useRef(applied)
-  const onCommit = useRef<() => void>(undefined)
-  useLayoutEffect(() => {
-    onCommit.current?.()
-    onCommit.current = undefined
-  }, [applied])
+  useLayoutEffect(() => applied.committed?.(), [applied])
 
   const navigate = route.useNavigate()
 
@@ -150,8 +147,7 @@ export function PreviewPage() {
         const shared = shareDesignSystem(prev.designSystem, next)
         if (shared === prev.designSystem && css === prev.themeCss)
           return committed()
-        target.current = { designSystem: shared, themeCss: css }
-        onCommit.current = committed
+        target.current = { designSystem: shared, themeCss: css, committed }
         setApplied(target.current)
       },
       [],

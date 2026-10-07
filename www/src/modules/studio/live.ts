@@ -10,9 +10,6 @@ import type { PreviewAssets } from "./preset/iframe-sync"
 
 const SETTLE_MS = 50
 const LIFT = ["pointerup", "pointercancel", "lostpointercapture"] as const
-// Where a release can go missing: a context menu takes it, or the page loses
-// focus or visibility mid-press.
-const LOSE = ["blur", "contextmenu", "visibilitychange"] as const
 
 let live: StudioState | null = null
 let settleTimer: ReturnType<typeof setTimeout> | undefined
@@ -27,9 +24,23 @@ const listeners = new Set<() => void>()
 
 // After the release's own handlers: a drag that didn't commit drops.
 const released = () => setTimeout(() => dragging && !held.size && clearLive())
+// Where a release can go missing; a move holds a pointer still down again.
+const lose = () => {
+  held.clear()
+  released()
+}
 
 if (typeof window !== "undefined") {
   window.addEventListener("pointerdown", (e) => held.add(e.pointerId), true)
+  // A move tells whether its pointer is pressed, healing a lost release.
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      if (e.buttons) held.add(e.pointerId)
+      else if (held.delete(e.pointerId)) released()
+    },
+    true,
+  )
   for (const type of LIFT)
     window.addEventListener(
       type,
@@ -40,11 +51,12 @@ if (typeof window !== "undefined") {
       true,
     )
   // Not capturing: an element's blur would reach a capturing listener.
-  for (const type of LOSE)
-    window.addEventListener(type, () => {
-      held.clear()
-      released()
-    })
+  window.addEventListener("blur", lose)
+  window.addEventListener("visibilitychange", lose)
+  // A long-press's menu leaves the touch pressing; a mouse's takes its release.
+  window.addEventListener("contextmenu", (e) => {
+    if ((e as PointerEvent).pointerType !== "touch") lose()
+  })
 }
 
 function show(next: StudioState | null) {
