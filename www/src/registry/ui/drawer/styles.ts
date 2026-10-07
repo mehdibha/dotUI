@@ -74,6 +74,8 @@ const { useStyles, styles } = createStyles(drawerMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     edge: {

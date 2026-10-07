@@ -57,6 +57,24 @@ const { useStyles, styles } = createStyles(dialogMeta, {
         closeButton: "top-4 right-4",
       },
     },
+    spacious: {
+      slots: {
+        content:
+          "text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
+        header: "gap-2 in-data-popover:gap-1",
+        description: "",
+        closeButton: "top-4 right-4",
+      },
+    },
+    touch: {
+      slots: {
+        content:
+          "text-sm [--dialog-padding:--spacing(6)] in-data-popover:[--dialog-padding:--spacing(4)]",
+        header: "gap-2 in-data-popover:gap-1",
+        description: "",
+        closeButton: "top-4 right-4",
+      },
+    },
   },
   params: {
     /* Popover-hosted dialogs keep their own header. */
@@ -128,10 +146,48 @@ const { useStyles, styles } = createStyles(dialogMeta, {
                 "text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
             },
           },
+          spacious: {
+            slots: {
+              title:
+                "text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-lg font-semibold in-data-modal:leading-none in-data-popover:text-base in-data-popover:font-medium",
+            },
+          },
         },
       },
       compact: {
-        slots: { title: "text-sm font-semibold in-data-popover:font-medium" },
+        density: {
+          compact: {
+            slots: {
+              title: "text-sm font-semibold in-data-popover:font-medium",
+            },
+          },
+          default: {
+            slots: {
+              title: "text-sm font-semibold in-data-popover:font-medium",
+            },
+          },
+          comfortable: {
+            slots: {
+              title: "text-sm font-semibold in-data-popover:font-medium",
+            },
+          },
+          spacious: {
+            slots: {
+              title: "text-sm font-semibold in-data-popover:font-medium",
+            },
+          },
+          touch: {
+            slots: {
+              title: "text-base font-semibold in-data-popover:font-medium",
+            },
+          },
+        },
       },
       tight: {
         density: {
@@ -151,6 +207,18 @@ const { useStyles, styles } = createStyles(dialogMeta, {
             slots: {
               title:
                 "text-lg font-semibold tracking-tight in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium in-data-popover:tracking-normal",
+            },
+          },
+          spacious: {
+            slots: {
+              title:
+                "text-lg font-semibold tracking-tight in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium in-data-popover:tracking-normal",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-lg font-semibold tracking-tight in-data-modal:leading-none in-data-popover:text-base in-data-popover:font-medium in-data-popover:tracking-normal",
             },
           },
         },
@@ -175,6 +243,18 @@ const { useStyles, styles } = createStyles(dialogMeta, {
                 "text-xl font-bold in-data-popover:text-sm in-data-popover:font-medium",
             },
           },
+          spacious: {
+            slots: {
+              title:
+                "text-xl font-bold in-data-popover:text-sm in-data-popover:font-medium",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-xl font-bold in-data-popover:text-base in-data-popover:font-medium",
+            },
+          },
         },
       },
       display: {
@@ -197,6 +277,18 @@ const { useStyles, styles } = createStyles(dialogMeta, {
                 "text-2xl font-normal in-data-popover:text-sm in-data-popover:font-medium",
             },
           },
+          spacious: {
+            slots: {
+              title:
+                "text-2xl font-normal in-data-popover:text-sm in-data-popover:font-medium",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-2xl font-normal in-data-popover:text-base in-data-popover:font-medium",
+            },
+          },
         },
       },
       caps: {
@@ -217,6 +309,18 @@ const { useStyles, styles } = createStyles(dialogMeta, {
             slots: {
               title:
                 "text-lg font-semibold tracking-wider uppercase in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium in-data-popover:tracking-normal in-data-popover:normal-case",
+            },
+          },
+          spacious: {
+            slots: {
+              title:
+                "text-lg font-semibold tracking-wider uppercase in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium in-data-popover:tracking-normal in-data-popover:normal-case",
+            },
+          },
+          touch: {
+            slots: {
+              title:
+                "text-lg font-semibold tracking-wider uppercase in-data-modal:leading-none in-data-popover:text-base in-data-popover:font-medium in-data-popover:tracking-normal in-data-popover:normal-case",
             },
           },
         },

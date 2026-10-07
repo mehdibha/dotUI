@@ -116,6 +116,30 @@ const { useStyles, styles } = createStyles(tableMeta, {
         dragCell: "px-1.5",
       },
     },
+    spacious: {
+      slots: {
+        table: "text-sm",
+        container: "scroll-pt-12",
+        column: "h-12 px-4",
+        chromeColumn: "h-12",
+        selectionColumn: "px-4",
+        cell: "h-12 px-4 leading-5",
+        selectionCell: "px-4",
+        dragCell: "px-2",
+      },
+    },
+    touch: {
+      slots: {
+        table: "text-sm",
+        container: "scroll-pt-14",
+        column: "h-14 px-4",
+        chromeColumn: "h-14",
+        selectionColumn: "px-4",
+        cell: "h-14 px-4 leading-5",
+        selectionCell: "px-4",
+        dragCell: "px-2",
+      },
+    },
   },
   params: {
     /* The plain header blurs the rows scrolling under it; filled is opaque,

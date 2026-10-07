@@ -59,6 +59,16 @@ const { useStyles, styles } = createStyles(switchMeta, {
         root: "gap-3",
       },
     },
+    spacious: {
+      slots: {
+        root: "gap-3",
+      },
+    },
+    touch: {
+      slots: {
+        root: "gap-3",
+      },
+    },
   },
   params: {
     style: {

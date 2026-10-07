@@ -63,6 +63,20 @@ export const LIST_ROWS = {
         sectionTitle: "py-1.5",
       },
     },
+    spacious: {
+      slots: {
+        root: "text-sm",
+        item: "gap-2 py-2 text-sm **:[svg]:not-with-[size]:size-4",
+        sectionTitle: "py-2",
+      },
+    },
+    touch: {
+      slots: {
+        root: "text-base",
+        item: "gap-3 py-2 text-base **:[svg]:not-with-[size]:size-5",
+        sectionTitle: "py-2",
+      },
+    },
   },
   params: {
     indicator: {
@@ -122,6 +136,8 @@ export const LIST_ROWS = {
           compact: { slots: { item: "px-2", sectionTitle: "px-2" } },
           default: { slots: { item: "px-1.5", sectionTitle: "px-1.5" } },
           comfortable: { slots: { item: "px-2", sectionTitle: "px-2" } },
+          spacious: { slots: { item: "px-2.5", sectionTitle: "px-2.5" } },
+          touch: { slots: { item: "px-3", sectionTitle: "px-3" } },
         },
       },
       // Square rows; the block padding clears half the surface's corner.
@@ -133,6 +149,8 @@ export const LIST_ROWS = {
           compact: { slots: { item: "px-2.5", sectionTitle: "px-2.5" } },
           default: { slots: { item: "px-3", sectionTitle: "px-3" } },
           comfortable: { slots: { item: "px-3.5", sectionTitle: "px-3.5" } },
+          spacious: { slots: { item: "px-4", sectionTitle: "px-4" } },
+          touch: { slots: { item: "px-4", sectionTitle: "px-4" } },
         },
       },
     },
@@ -160,6 +178,8 @@ export const LIST_ROWS = {
           compact: { slots: { item: "min-h-7" } },
           default: { slots: { item: "min-h-8" } },
           comfortable: { slots: { item: "min-h-9" } },
+          spacious: { slots: { item: "min-h-10" } },
+          touch: { slots: { item: "min-h-12" } },
         },
       },
       step: {
@@ -167,6 +187,8 @@ export const LIST_ROWS = {
           compact: { slots: { item: "min-h-8" } },
           default: { slots: { item: "min-h-9" } },
           comfortable: { slots: { item: "min-h-10" } },
+          spacious: { slots: { item: "min-h-12" } },
+          touch: { slots: { item: "min-h-14" } },
         },
       },
     },

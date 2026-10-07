@@ -4,7 +4,8 @@ import {
   publishables,
   PUBLISHABLE_NAMES,
 } from "@/registry/__generated__/publishables"
-import type { Density, EnumParamDef } from "@/registry/types"
+import { DENSITIES } from "@/registry/types"
+import type { EnumParamDef } from "@/registry/types"
 
 import { flatten } from "./flatten"
 import type { ClassValue, TvLayer } from "./types"
@@ -74,7 +75,6 @@ function layerConflicts(layer: TvLayer): string[] {
 }
 
 test("no published selection ships two display utilities for one state", async () => {
-  const densities: Density[] = ["compact", "default", "comfortable"]
   const failures: string[] = []
   for (const name of PUBLISHABLE_NAMES) {
     const load = publishables[name]
@@ -86,7 +86,7 @@ test("no published selection ships two display utilities for one state", async (
     const selections: Record<string, string>[] = [{}]
     for (const [param, def] of params)
       for (const value of def.values) selections.push({ [param]: value })
-    for (const density of densities) {
+    for (const density of DENSITIES) {
       for (const paramSelections of selections) {
         const layer = flatten({
           stylesConfig: publishable.stylesConfig,

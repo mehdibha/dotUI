@@ -28,6 +28,8 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     ancestors: {

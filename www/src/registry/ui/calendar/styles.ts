@@ -54,6 +54,8 @@ const { useStyles, styles } = createStyles(calendarMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     dayShape: {

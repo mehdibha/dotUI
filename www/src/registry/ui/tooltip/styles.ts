@@ -26,6 +26,8 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     style: {

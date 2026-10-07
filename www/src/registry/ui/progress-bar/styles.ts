@@ -31,6 +31,16 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
         output: "text-sm",
       },
     },
+    spacious: {
+      slots: {
+        output: "text-sm",
+      },
+    },
+    touch: {
+      slots: {
+        output: "text-sm",
+      },
+    },
   },
   params: {
     track: {

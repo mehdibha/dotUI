@@ -35,6 +35,8 @@ const { useStyles, styles } = createStyles(linkMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     underline: {

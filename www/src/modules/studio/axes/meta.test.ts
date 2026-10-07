@@ -5,7 +5,6 @@ import { OPTIONS } from "./meta"
 
 // Enum keys the panel names by their raw value.
 const UNLABELLED = [
-  "density",
   "roleControl",
   "roleItem",
   "roleSurface",

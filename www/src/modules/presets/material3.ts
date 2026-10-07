@@ -36,7 +36,8 @@ export const material3 = definePreset({
     roleSurface: "sm",
     rolePanel: "3xl",
     roleCard: "xl",
-    density: "comfortable",
+    // 40dp buttons, 56dp fields, 48dp menu rows.
+    density: "spacious",
 
     // Surfaces: tone separates layers, not hairlines; menus keep a level-2 shadow.
     surfaceLayers: "tonal",

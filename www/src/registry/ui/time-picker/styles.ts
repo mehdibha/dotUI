@@ -24,6 +24,8 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

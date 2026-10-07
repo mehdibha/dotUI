@@ -54,6 +54,24 @@ const { useStyles, styles } = createStyles(messageMeta, {
         footer: "px-4 text-xs",
       },
     },
+    spacious: {
+      slots: {
+        group: "gap-2.5",
+        root: "gap-2.5 text-sm",
+        content: "gap-2.5",
+        header: "px-4 text-xs",
+        footer: "px-4 text-xs",
+      },
+    },
+    touch: {
+      slots: {
+        group: "gap-2.5",
+        root: "gap-2.5 text-sm",
+        content: "gap-2.5",
+        header: "px-4 text-xs",
+        footer: "px-4 text-xs",
+      },
+    },
   },
 })
 

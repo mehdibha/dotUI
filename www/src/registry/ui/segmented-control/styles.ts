@@ -81,6 +81,16 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
         item: "gap-2 px-3 py-1.5 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 **:[svg]:not-with-[size]:size-4",
       },
     },
+    spacious: {
+      slots: {
+        item: "gap-2 px-3.5 py-2 text-sm has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 **:[svg]:not-with-[size]:size-4",
+      },
+    },
+    touch: {
+      slots: {
+        item: "gap-2 px-4 py-2.5 text-base has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5 **:[svg]:not-with-[size]:size-5",
+      },
+    },
   },
   params: {
     selected: {

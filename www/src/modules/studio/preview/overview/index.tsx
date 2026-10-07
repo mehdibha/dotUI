@@ -69,6 +69,8 @@ const DENSITY_LABEL: Record<string, string> = {
   compact: "Compact",
   default: "Default",
   comfortable: "Comfortable",
+  spacious: "Spacious",
+  touch: "Touch",
 }
 
 const DENSITY_DESCRIPTION: Record<string, string> = {
@@ -76,6 +78,8 @@ const DENSITY_DESCRIPTION: Record<string, string> = {
   default: "Balanced spacing — the everyday baseline.",
   comfortable:
     "Generous padding and breathing room for a relaxed, spacious feel.",
+  spacious: "40px controls, 48px large.",
+  touch: "48px controls, 16px text.",
 }
 
 /** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */

@@ -38,6 +38,7 @@ import {
   SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
+import { DENSITIES } from "@/registry/types"
 import type {
   Density,
   EnumParamDef,
@@ -775,9 +776,8 @@ function createStyles<const M extends RegistryItem, const Base>(
   type AnyTv = ReturnType<typeof tv>
   const baseTv = tv(base as Parameters<typeof tv>[0]) as unknown as AnyTv
 
-  const densities: Density[] = ["compact", "default", "comfortable"]
   const densityTvs: Record<string, AnyTv> = {}
-  for (const d of densities) {
+  for (const d of DENSITIES) {
     const densityConfig = density?.[d]
     densityTvs[d] = densityConfig
       ? (tv({

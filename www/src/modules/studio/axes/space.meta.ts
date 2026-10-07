@@ -1,31 +1,46 @@
+import type { Density } from "@/registry/types"
+
+import { options } from "./core/meta"
 import { DENSITY_VALUES } from "./space"
 
-const TIERS = {
+export const DENSITY_OPTIONS = options(DENSITY_VALUES, {
   compact: {
     label: "Compact",
-    description: "Tight, for data-dense tools",
-    control: 7,
+    credits: ["shadcn mira", "Ant Design (compact)"],
   },
   default: {
     label: "Default",
-    description: "Balanced, for most products",
-    control: 8,
+    credits: ["shadcn nova", "Primer", "Radix Themes", "Fluent 2"],
   },
   comfortable: {
     label: "Comfortable",
-    description: "Roomy, for touch and content",
-    control: 9,
+    credits: ["shadcn vega", "Geist", "Mantine", "Catalyst"],
   },
+  spacious: {
+    label: "Spacious",
+    credits: ["Carbon", "Material 3", "Airbnb"],
+  },
+  touch: { label: "Touch", credits: ["Duolingo", "Spotify"] },
+})
+
+/** Each tier as the registry ships it, in px: the button ladder (xs, sm,
+ *  md, lg), the list row and the control text. */
+export const DENSITY_TIERS: Record<
+  Density,
+  {
+    ladder: readonly [number, number, number, number]
+    row: number
+    text: number
+  }
+> = {
+  compact: { ladder: [20, 24, 28, 32], row: 28, text: 12 },
+  default: { ladder: [24, 28, 32, 36], row: 28, text: 14 },
+  comfortable: { ladder: [28, 32, 36, 40], row: 32, text: 14 },
+  spacious: { ladder: [28, 32, 40, 48], row: 36, text: 14 },
+  touch: { ladder: [28, 32, 48, 56], row: 40, text: 16 },
 }
 
-/** The tiers as the registry ships them; `control` is the md control height
- *  in spacing units. */
-export const DENSITY_TIERS = DENSITY_VALUES.map((id) => ({ id, ...TIERS[id] }))
+export const densityTier = (id: string) =>
+  DENSITY_TIERS[id as Density] ?? DENSITY_TIERS.default
 
-export type DensityTier = (typeof DENSITY_TIERS)[number]
-
-export const densityTier = (id: string): DensityTier =>
-  DENSITY_TIERS.find((tier) => tier.id === id) ?? {
-    id: "default",
-    ...TIERS.default,
-  }
+export const OPTIONS = { density: DENSITY_OPTIONS }

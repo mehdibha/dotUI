@@ -25,6 +25,8 @@ const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     segments: {

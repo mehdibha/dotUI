@@ -191,6 +191,8 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     labels: {

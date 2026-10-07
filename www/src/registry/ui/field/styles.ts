@@ -65,6 +65,24 @@ const { useStyles, styles } = createStyles(fieldMeta, {
           "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
       },
     },
+    spacious: {
+      slots: {
+        label: "text-sm",
+        description: "text-sm",
+        fieldError: "text-sm",
+        fieldGroup:
+          "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      },
+    },
+    touch: {
+      slots: {
+        label: "text-sm",
+        description: "text-sm",
+        fieldError: "text-sm",
+        fieldGroup:
+          "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      },
+    },
   },
   params: {
     // The error line: plain danger text (shadcn), or led by an icon (Polaris,

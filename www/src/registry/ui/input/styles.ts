@@ -20,6 +20,9 @@ const tokens = tv({
       12: "[--addon-button-inset:--spacing(2)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(12)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3)]",
       13: "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3.5)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(5)] [--input-h:--spacing(13)] [--text-to-visual:--spacing(2)] [--top-to-text:--spacing(3.5)]",
       14: "[--addon-button-inset:--spacing(2.5)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(14)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4)]",
+      15: "[--addon-button-inset:--spacing(3)] [--addon-gap:--spacing(2.5)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3)] [--icon-size:--spacing(6)] [--input-h:--spacing(15)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(4.5)]",
+      16: "[--addon-button-inset:--spacing(3)] [--addon-gap:--spacing(3)] [--edge-to-text:--spacing(4)] [--edge-to-visual:--spacing(3.5)] [--icon-size:--spacing(6)] [--input-h:--spacing(16)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(5)]",
+      18: "[--addon-button-inset:--spacing(3.5)] [--addon-gap:--spacing(3)] [--edge-to-text:--spacing(4.5)] [--edge-to-visual:--spacing(4)] [--icon-size:--spacing(6)] [--input-h:--spacing(18)] [--text-to-visual:--spacing(3)] [--top-to-text:--spacing(6)]",
     },
   },
 })
@@ -54,6 +57,18 @@ const h10 = {
   input: tokens({ h: 10 }),
   textArea: tokens({ h: 10 }),
   trigger: tokens({ h: 10 }),
+}
+const h12 = {
+  inputGroup: tokens({ h: 12 }),
+  input: tokens({ h: 12 }),
+  textArea: tokens({ h: 12 }),
+  trigger: tokens({ h: 12 }),
+}
+const h14 = {
+  inputGroup: tokens({ h: 14 }),
+  input: tokens({ h: 14 }),
+  textArea: tokens({ h: 14 }),
+  trigger: tokens({ h: 14 }),
 }
 // Past the control ladder, a Button select trigger takes the field height.
 const taller7 = {
@@ -111,6 +126,28 @@ const taller14 = {
   textArea: tokens({ h: 14 }),
   trigger: tokens({ h: 14 }),
   buttonTrigger: [tokens({ h: 14 }), "h-(--input-h)"],
+}
+
+const taller15 = {
+  inputGroup: tokens({ h: 15 }),
+  input: tokens({ h: 15 }),
+  textArea: tokens({ h: 15 }),
+  trigger: tokens({ h: 15 }),
+  buttonTrigger: [tokens({ h: 15 }), "h-(--input-h)"],
+}
+const taller16 = {
+  inputGroup: tokens({ h: 16 }),
+  input: tokens({ h: 16 }),
+  textArea: tokens({ h: 16 }),
+  trigger: tokens({ h: 16 }),
+  buttonTrigger: [tokens({ h: 16 }), "h-(--input-h)"],
+}
+const taller18 = {
+  inputGroup: tokens({ h: 18 }),
+  input: tokens({ h: 18 }),
+  textArea: tokens({ h: 18 }),
+  trigger: tokens({ h: 18 }),
+  buttonTrigger: [tokens({ h: 18 }), "h-(--input-h)"],
 }
 
 // 16px below sm, so iOS never zooms a focused field.
@@ -455,6 +492,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
           compact: { slots: compactFields },
           default: { slots: defaultFields },
           comfortable: { slots: defaultFields },
+          spacious: { slots: defaultFields },
+          touch: { slots: largeFields },
         },
       },
       large: {
@@ -462,6 +501,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
           compact: { slots: defaultFields },
           default: { slots: largeFields },
           comfortable: { slots: largeFields },
+          spacious: { slots: largeFields },
+          touch: { slots: largeFields },
         },
       },
     },
@@ -500,6 +541,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
           compact: { variants: { size: { sm: h6, md: h7, lg: h8 } } },
           default: { variants: { size: { sm: h7, md: h8, lg: h9 } } },
           comfortable: { variants: { size: { sm: h8, md: h9, lg: h10 } } },
+          spacious: { variants: { size: { sm: h8, md: h10, lg: h12 } } },
+          touch: { variants: { size: { sm: h8, md: h12, lg: h14 } } },
         },
       },
       step: {
@@ -513,6 +556,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
           comfortable: {
             variants: { size: { sm: taller9, md: taller10, lg: taller11 } },
           },
+          spacious: {
+            variants: { size: { sm: taller9, md: taller11, lg: taller13 } },
+          },
+          touch: {
+            variants: { size: { sm: taller9, md: taller13, lg: taller15 } },
+          },
         },
       },
       tall: {
@@ -525,6 +574,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
           },
           comfortable: {
             variants: { size: { sm: taller12, md: taller13, lg: taller14 } },
+          },
+          spacious: {
+            variants: { size: { sm: taller12, md: taller14, lg: taller16 } },
+          },
+          touch: {
+            variants: { size: { sm: taller12, md: taller16, lg: taller18 } },
           },
         },
       },
