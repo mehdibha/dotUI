@@ -57,6 +57,12 @@ export const INVALID_VALUES = ["edge", "halo", "tint"] as const
 export const INVALID_FILL =
   "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
 
+/* Neutral field ink (Geist): the neutral ring pair's steps. */
+export const NEUTRAL_FIELD_INK = {
+  edge: "var(--neutral-700)",
+  halo: "var(--neutral-300)",
+}
+
 /** Solid: one grey for every variant. Fade: the control at 50%. */
 export const DISABLED_VALUES = ["solid", "fade"] as const
 
@@ -160,9 +166,9 @@ export function resolveStates(state: Effective): Resolved {
   // A neutral field ink under an accent ring (Geist), on the steps the
   // neutral ring pair uses.
   if (state.focusInputColor === "neutral" && state.focusColor !== "neutral") {
-    tokens["--focus-input-border"] = "var(--neutral-700)"
+    tokens["--focus-input-border"] = NEUTRAL_FIELD_INK.edge
     if (state.focusInputStyle === "halo")
-      tokens["--focus-input-color"] = "var(--neutral-300)"
+      tokens["--focus-input-color"] = NEUTRAL_FIELD_INK.halo
   }
 
   // Invalid: the halo is as wide as the field's own focus halo.
@@ -215,9 +221,22 @@ export const chapter = defineChapter({
     {
       id: "states/ring-hides-field-ink",
       target: "focusInputColor",
-      when: { key: "focusInputStyle", in: ["ring"] },
+      when: {
+        all: [
+          { key: "focusInputStyle", in: ["ring"] },
+          { key: "focusColor", notIn: ["neutral"] },
+        ],
+      },
       effect: { kind: "hide" },
       cause: "focusInputStyle",
+    },
+    // A neutral ring already paints fields neutral.
+    {
+      id: "states/neutral-ring-hides-field-ink",
+      target: "focusInputColor",
+      when: { key: "focusColor", in: ["neutral"] },
+      effect: { kind: "hide" },
+      cause: "focusColor",
     },
   ],
 })

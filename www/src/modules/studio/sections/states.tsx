@@ -7,7 +7,12 @@
 import { cn } from "@/registry/lib/utils"
 
 import { HIGHLIGHT_OPTIONS } from "../axes/selection.meta"
-import { AUTO_STRENGTH, AUTO_WIDTH, INVALID_FILL } from "../axes/states"
+import {
+  AUTO_STRENGTH,
+  AUTO_WIDTH,
+  INVALID_FILL,
+  NEUTRAL_FIELD_INK,
+} from "../axes/states"
 import {
   CONTROL_TEXT_OPTIONS,
   CURSOR_CONTROL_OPTIONS,
@@ -71,7 +76,7 @@ function ControlSpecimen({ ring, size }: { ring: Ring; size: Size }) {
 
 /** The field's pair: the focus pair, or the neutral steps under Neutral. */
 const fieldInks = (neutral?: boolean) =>
-  neutral ? ["var(--neutral-700)", "var(--neutral-300)"] : [INK, MUTED]
+  neutral ? [NEUTRAL_FIELD_INK.edge, NEUTRAL_FIELD_INK.halo] : [INK, MUTED]
 
 function fieldFocus(
   focus: string,

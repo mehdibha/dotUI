@@ -46,7 +46,7 @@ export const ROWS_OPTIONS = options(ROWS_VALUES, {
   auto: { label: "Auto", description: "shadcn, Notion, Supabase, Carbon" },
   match: {
     label: "Match",
-    description: "Radix Themes, Linear, Geist, Primer, Claude, Airbnb",
+    description: "Radix Themes, Linear, Geist, Primer, Claude",
   },
   step: {
     label: "Step up",

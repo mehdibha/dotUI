@@ -47,4 +47,14 @@ export const chapter = defineChapter({
   follows: {
     cardColor: [{ kind: "same", id: "same", from: "checkboxColor" }],
   },
+  rules: [
+    // Accent checks already paint the cards accent.
+    {
+      id: "choice-cards/accent-checks-hide-card-color",
+      target: "cardColor",
+      when: { key: "checkboxColor", in: ["accent"] },
+      effect: { kind: "hide" },
+      cause: "checkboxColor",
+    },
+  ],
 })
