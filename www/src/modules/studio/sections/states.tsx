@@ -13,7 +13,7 @@ import {
   CURSOR_CONTROL_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   DISABLED_OPTIONS,
-  FIELD_INK_OPTIONS,
+  FIELD_INK_ROW,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_INPUT_WEIGHT_OPTIONS,
   FOCUS_STYLE_OPTIONS,
@@ -337,10 +337,7 @@ export function StatesSection({ studio }: { studio: Studio }) {
         <DialSelect
           axis="focusInputColor"
           label="Field ink"
-          options={[
-            { value: "same", label: "Same as ring" },
-            ...FIELD_INK_OPTIONS.filter((o) => o.value === "neutral"),
-          ].map((option) => ({
+          options={FIELD_INK_ROW.map((option) => ({
             ...option,
             preview: (
               <FieldSpecimen

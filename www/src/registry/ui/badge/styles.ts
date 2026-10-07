@@ -12,9 +12,9 @@ export const CHIP_OUTLINE =
   "border border-(--chip-border) text-(--chip-fg-tint)"
 export const CHIP_SOFT_OUTLINE =
   "border border-(--chip-border) bg-(--chip-tint) text-(--chip-fg-tint)"
-// Neutral hairline pill and ink; the status rides a leading dot.
+// Neutral hairline pill; the status rides a leading dot (Linear labels).
 export const CHIP_DOT =
-  "border border-border text-fg-muted before:size-1.5 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']"
+  "border border-border text-fg before:size-2 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']"
 
 // Half-strength wash: the neutral fill is already the wash tone; its dot
 // takes the muted ink, the fill being too light to read.
