@@ -1867,7 +1867,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				checkbox: { "card-selected": "tint", "card-press": "none" },
 				collapsible: { motion: "expand" },
 				"color-editor": { style: "default" },
-				command: { search: "field", inset: "full-bleed", scale: "default" },
+				command: { search: "bar", inset: "full-bleed", scale: "default" },
 				dialog: { sections: "on-scroll", footer: "end", close: "quiet", titles: "display" },
 				drawer: { edge: "docked" },
 				empty: { titles: "display" },
@@ -1977,6 +1977,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--focus-invalid-color": "var(--color-fg-danger)",
 				"--focus-input-edge": "1px",
 				"--cursor-disabled": "default",
+				"--color-text-selection": "Highlight",
+				"--color-fg-on-text-selection": "HighlightText",
 				"--studio-button-state-ease":
 					"linear(0, 0.015 2%, 0.079 5%, 0.17 8%, 0.466 17%, 0.578 21%, 0.65 24%, 0.712 27%, 0.78 31%, 0.866 38%, 0.931 47%, 0.972 59%, 0.992 75%, 1)",
 				"--studio-input-state-ease":
