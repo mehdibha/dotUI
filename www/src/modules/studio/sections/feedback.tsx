@@ -1,7 +1,6 @@
 "use client"
 
-/* Feedback — a bucket: chips (badge and tag), alert, toast, and the loading
-   indicators. */
+/* Feedback: badges, alert, toast and the loading indicators. */
 
 import { useMemo } from "react"
 
@@ -14,7 +13,6 @@ import { Loader as DotsLoader } from "@/registry/ui/loader/base.dots"
 import { Loader as RingLoader } from "@/registry/ui/loader/base.ring"
 import { Loader as RingTrackLoader } from "@/registry/ui/loader/base.ring-track"
 import { useStyles as useProgressStyles } from "@/registry/ui/progress-bar/styles"
-import { useStyles as useTagStyles } from "@/registry/ui/tag-group/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import { parseState } from "../axes"
@@ -36,17 +34,13 @@ import {
   STATUS_OPTIONS,
   STYLE_OPTIONS as TOAST_OPTIONS,
 } from "../axes/toast.meta"
-import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSelect } from "../dial"
+import type { DialSelectOption } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -97,26 +91,15 @@ function useSystems(
   )
 }
 
-type Tone = "neutral" | "success" | "danger"
-
-const CHIP_LABELS: Record<Tone, string> = {
-  neutral: "New",
-  success: "Live",
-  danger: "Error",
-}
-
-function Badges({ tones = ["neutral"] }: { tones?: Tone[] }) {
+function Badge({ danger }: { danger?: boolean }) {
   const styles = useBadgeStyles()
-  return tones.map((tone) => (
-    <span key={tone} className={styles({ variant: tone, size: "sm" })}>
-      {CHIP_LABELS[tone]}
+  return (
+    <span
+      className={styles({ variant: danger ? "danger" : "neutral", size: "sm" })}
+    >
+      {danger ? "Error" : "New"}
     </span>
-  ))
-}
-
-function TagSpecimen() {
-  const { tag } = useTagStyles()()
-  return <span className={tag()}>Tag</span>
+  )
 }
 
 /** A danger alert shrunk to its fill, edge and inks. */
@@ -175,15 +158,6 @@ function ToastGlyph({ surface, status }: { surface: string; status?: string }) {
     >
       {status && <span className={cn("size-1.5 rounded-full", dot)} />}
       <span className={cn("h-0.5 w-4 rounded-full opacity-60", ink)} />
-    </span>
-  )
-}
-
-function ToastStack({ surface, status }: { surface: string; status: string }) {
-  return (
-    <span className="flex flex-col gap-0.5">
-      <ToastGlyph surface={surface} />
-      <ToastGlyph surface={surface} status={status} />
     </span>
   )
 }
@@ -250,6 +224,207 @@ function ProgressSpecimen() {
   )
 }
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+function BadgeStyleRow() {
+  const { state } = useStudio()
+  const styles = useSystems(state, "badgeStyle", BADGE_OPTIONS)
+  return (
+    <DialSelect
+      axis="badgeStyle"
+      label="Badge style"
+      options={BADGE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={styles[option.value]!}>
+            <Badge danger />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function BadgeShapeRow() {
+  const { state } = useStudio()
+  const shapes = useSystems(state, "badgeShape", SHAPE_OPTIONS)
+  return (
+    <DialSelect
+      axis="badgeShape"
+      label="Badge shape"
+      options={SHAPE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={shapes[option.value]!}>
+            <Badge />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function BadgeCaseRow() {
+  const { state } = useStudio()
+  const cases = useSystems(state, "badgeCase", CASE_OPTIONS)
+  return (
+    <DialSelect
+      axis="badgeCase"
+      label="Badge case"
+      options={CASE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={cases[option.value]!}>
+            <Badge />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function AlertStyleRow() {
+  const { state } = useStudio()
+  const alerts = useSystems(state, "alertStyle", ALERT_OPTIONS)
+  return (
+    <DialSelect
+      axis="alertStyle"
+      label="Alert style"
+      options={ALERT_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={alerts[option.value]!}>
+            <AlertSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function ToastStyleRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="toastStyle"
+      label="Toast style"
+      options={TOAST_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <ToastGlyph surface={option.value} status={effective.toastStatus} />
+        ),
+      }))}
+    />
+  )
+}
+
+function ToastStatusRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="toastStatus"
+      label="Status toasts"
+      options={STATUS_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <ToastGlyph surface={effective.toastStyle} status={option.value} />
+        ),
+      }))}
+    />
+  )
+}
+
+function SpinnerStyleRow() {
+  return (
+    <DialSelect
+      axis="spinnerStyle"
+      label="Spinner"
+      options={SPINNER_OPTIONS.map((option) => {
+        const Loader = LOADERS[option.value] ?? RingLoader
+        return { ...option, preview: <Loader className="size-4" /> }
+      })}
+    />
+  )
+}
+
+function SkeletonAnimationRow() {
+  return (
+    <DialSelect
+      axis="skeletonAnimation"
+      label="Skeleton"
+      options={ANIMATION_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <SkeletonGlyph animation={option.value} />
+          </DialGlyph>
+        ),
+      }))}
+    />
+  )
+}
+
+/** A progress key's row: each option's bar in its own system. */
+function ProgressRow({
+  axis,
+  label,
+  options,
+}: {
+  axis: "progressTrack" | "progressTrackStyle" | "progressColor"
+  label: string
+  options: readonly DialSelectOption[]
+}) {
+  const { state } = useStudio()
+  const systems = useSystems(state, axis, options)
+  return (
+    <DialSelect
+      axis={axis}
+      label={label}
+      rowPreview={false}
+      options={options.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={systems[option.value]!}>
+            <ProgressSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  badgeStyle: BadgeStyleRow,
+  badgeShape: BadgeShapeRow,
+  badgeCase: BadgeCaseRow,
+  alertStyle: AlertStyleRow,
+  toastStyle: ToastStyleRow,
+  toastStatus: ToastStatusRow,
+  spinnerStyle: SpinnerStyleRow,
+  skeletonAnimation: SkeletonAnimationRow,
+  progressTrack: () => (
+    <ProgressRow
+      axis="progressTrack"
+      label="Progress thickness"
+      options={TRACK_OPTIONS}
+    />
+  ),
+  progressTrackStyle: () => (
+    <ProgressRow
+      axis="progressTrackStyle"
+      label="Progress track"
+      options={TRACK_STYLE_OPTIONS}
+    />
+  ),
+  progressColor: () => (
+    <ProgressRow
+      axis="progressColor"
+      label="Progress fill"
+      options={COLOR_OPTIONS}
+    />
+  ),
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function FeedbackPreview({ state }: { state: Effective }) {
@@ -265,230 +440,35 @@ export function FeedbackPreview({ state }: { state: Effective }) {
   )
   return (
     <System ds={ds}>
-      <Badges />
+      <Badge />
     </System>
   )
 }
 
-export function FeedbackSection({ studio }: { studio: Studio }) {
-  const { state, effective, designSystem } = studio
-  const styles = useSystems(state, "badgeStyle", BADGE_OPTIONS)
-  const shapes = useSystems(state, "badgeShape", SHAPE_OPTIONS)
-  const cases = useSystems(state, "badgeCase", CASE_OPTIONS)
-  const alerts = useSystems(state, "alertStyle", ALERT_OPTIONS)
-  const tracks = useSystems(state, "progressTrack", TRACK_OPTIONS)
-  const trackStyles = useSystems(
-    state,
-    "progressTrackStyle",
-    TRACK_STYLE_OPTIONS,
-  )
-  const fills = useSystems(state, "progressColor", COLOR_OPTIONS)
-  const Spinner = LOADERS[effective.spinnerStyle] ?? RingLoader
-  const semantics = [
-    state.successSeed,
-    state.warningSeed,
-    state.dangerSeed,
-  ].some(Boolean)
+export function FeedbackSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Badge">
-          <System ds={designSystem}>
-            <Badges tones={["neutral", "success"]} />
-          </System>
-        </HeroMember>
-        <HeroMember name="Tag">
-          <System ds={designSystem}>
-            <TagSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Alert">
-          <System ds={designSystem}>
-            <AlertSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Toast">
-          <ToastStack
-            surface={effective.toastStyle}
-            status={effective.toastStatus}
-          />
-        </HeroMember>
-        <HeroMember name="Spinner">
-          <Spinner className="size-5" />
-        </HeroMember>
-        <HeroMember name="Skeleton">
-          <DialGlyph>
-            <SkeletonGlyph animation={effective.skeletonAnimation} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Progress bar">
-          <System ds={designSystem}>
-            <ProgressSpecimen />
-          </System>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="badgeStyle"
-        label="Badge style"
-        options={BADGE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={styles[option.value]!}>
-              <Badges tones={["neutral", "danger"]} />
-            </System>
-          ),
-        }))}
-      />
+      <Row axis="badgeStyle" />
+      <Row axis="badgeShape" />
+      <Row axis="badgeCase" />
       <DialGap />
-      <DialSelect
-        axis="badgeShape"
-        label="Badge shape"
-        options={SHAPE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={shapes[option.value]!}>
-              <Badges />
-            </System>
-          ),
-        }))}
-      />
-      <UsesRow
-        axis="dangerSeed"
-        label="Semantics"
-        value={semantics ? "Custom" : "Auto"}
-      />
-      <UsesRow axis="surfaceGlass" label="Glass" />
-      <UsesRow axis="motion" label="Motion" />
-      <More keys={["badgeCase"]}>
-        <DialSelect
-          axis="badgeCase"
-          label="Badge case"
-          options={CASE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={cases[option.value]!}>
-                <Badges />
-              </System>
-            ),
-          }))}
-        />
-      </More>
+      <Row axis="dangerSeed" />
+      <Row axis="surfaceGlass" />
+      <Row axis="feedbackMotion" />
       <MemberSection id="alert" title="Alert">
-        <DialSelect
-          axis="alertStyle"
-          label="Alert style"
-          options={ALERT_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={alerts[option.value]!}>
-                <AlertSpecimen />
-              </System>
-            ),
-          }))}
-        />
+        <Row axis="alertStyle" />
       </MemberSection>
       <MemberSection id="toast" title="Toast">
-        <DialSelect
-          axis="toastStyle"
-          label="Toast style"
-          options={TOAST_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <ToastGlyph
-                surface={option.value}
-                status={effective.toastStatus}
-              />
-            ),
-          }))}
-        />
-        <More keys={["toastStatus"]}>
-          <DialSelect
-            axis="toastStatus"
-            label="Status toasts"
-            options={STATUS_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <ToastGlyph
-                  surface={effective.toastStyle}
-                  status={option.value}
-                />
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="toastStyle" />
+        <Row axis="toastStatus" />
       </MemberSection>
       <MemberSection id="loading" title="Loading">
-        <DialSelect
-          axis="spinnerStyle"
-          label="Spinner"
-          options={SPINNER_OPTIONS.map((option) => {
-            const Loader = LOADERS[option.value] ?? RingLoader
-            return { ...option, preview: <Loader className="size-4" /> }
-          })}
-        />
-        <More
-          keys={[
-            "skeletonAnimation",
-            "progressTrack",
-            "progressTrackStyle",
-            "progressColor",
-          ]}
-        >
-          <DialSelect
-            axis="skeletonAnimation"
-            label="Skeleton"
-            options={ANIMATION_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <SkeletonGlyph animation={option.value} />
-                </DialGlyph>
-              ),
-            }))}
-          />
-          <DialSelect
-            axis="progressTrack"
-            label="Progress thickness"
-            rowPreview={false}
-            options={TRACK_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <System ds={tracks[option.value]!}>
-                  <ProgressSpecimen />
-                </System>
-              ),
-            }))}
-          />
-          <DialSelect
-            axis="progressTrackStyle"
-            label="Progress track"
-            rowPreview={false}
-            options={TRACK_STYLE_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <System ds={trackStyles[option.value]!}>
-                  <ProgressSpecimen />
-                </System>
-              ),
-            }))}
-          />
-          <DialSelect
-            axis="progressColor"
-            label="Progress fill"
-            rowPreview={false}
-            options={COLOR_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <System ds={fills[option.value]!}>
-                  <ProgressSpecimen />
-                </System>
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="spinnerStyle" />
+        <Row axis="skeletonAnimation" />
+        <Row axis="progressTrack" />
+        <Row axis="progressTrackStyle" />
+        <Row axis="progressColor" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
