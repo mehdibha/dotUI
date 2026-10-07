@@ -38,7 +38,7 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 	],
 	icons: ["Icon Library", "Stroke", "Weight"],
 	shape: ["Character", "Roles", "Radius", "Control stroke", "Tracks"],
-	space: ["Density"],
+	space: ["Scale"],
 	states: [
 		"Focus ring",
 		"Field focus",

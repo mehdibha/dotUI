@@ -777,7 +777,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					highlight: "neutral",
 					inset: "full-bleed",
 					selected: "none",
-					rows: "match",
+					rows: "auto",
 					labels: "sentence",
 				},
 				loader: { style: "dots" },
@@ -786,7 +786,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					highlight: "neutral",
 					inset: "full-bleed",
 					selected: "none",
-					rows: "match",
+					rows: "auto",
 					labels: "sentence",
 				},
 				modal: { position: "center", motion: "rise", mobile: "sheet" },
@@ -855,7 +855,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-checkbox-radius": "2px",
 				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
-			density: "comfortable",
+			density: "spacious",
 			color: {
 				v: 2,
 				seeds: { accent: "#ff385c", success: "#038026", warning: "#eb6100", danger: "#d7251c" },
@@ -1157,7 +1157,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				empty: { titles: "quiet" },
 				field: { error: "plain", label: "regular" },
 				group: { segments: "attached", separator: "shared-edge" },
-				input: { style: "filled", hover: "tint", height: "controls", text: "large", errorIcon: "none" },
+				input: { style: "filled", hover: "tint", height: "controls", text: "same", errorIcon: "none" },
 				kbd: { style: "chip" },
 				link: { underline: "hover", color: "neutral" },
 				"list-box": {
@@ -1259,7 +1259,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-btn-xs-radius": "var(--radius-full)",
 				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
-			density: "comfortable",
+			density: "touch",
 			color: {
 				v: 2,
 				seeds: { accent: "#1ed760", success: "#1ed760", warning: "#ffa42b", danger: "#e91429" },
@@ -1394,7 +1394,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-scrim-blur": "0",
 				"--studio-badge-radius": "var(--studio-radius-detail)",
 			},
-			density: "comfortable",
+			density: "touch",
 			color: {
 				v: 2,
 				seeds: { accent: "#58cc02", success: "#58cc02", warning: "#ffc800", danger: "#ff4b4b", selection: "#1cb0f6" },
@@ -1791,7 +1791,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-badge-radius": "var(--studio-radius-detail)",
 				"--studio-sidebar-button-radius": "var(--radius-full)",
 			},
-			density: "comfortable",
+			density: "spacious",
 			color: {
 				v: 2,
 				seeds: { accent: "#6750a4", danger: "#b3261e" },
@@ -2271,7 +2271,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--color-scrim": "color-mix(in oklab, var(--color-overlay) 80%, transparent)",
 				"--studio-scrim-blur": "0",
 			},
-			density: "comfortable",
+			density: "spacious",
 			color: {
 				v: 2,
 				seeds: { accent: "#0f62fe", success: "#24a148", warning: "#f1c21b", danger: "#da1e28" },
