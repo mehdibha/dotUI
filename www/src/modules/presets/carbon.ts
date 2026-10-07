@@ -14,55 +14,63 @@ export const carbon = definePreset({
     warningSeed: "#f1c21b",
     dangerSeed: "#da1e28",
     neutralTint: 0,
+    // White page, G100 #161616 (L* 7.25).
     lightBg: 100,
     darkBg: 7,
+    // Field bottom lines are #8d8d8d.
+    controlEdge: "strong",
     selectionHighlight: "browser",
     // Checks, radios and the slider are #161616.
     checkboxColor: "neutral",
     radioColor: "neutral",
     sliderColor: "neutral",
+    chartPalette: "vivid",
 
     // Typography
     bodyFont: "IBM Plex Sans",
+    // IBM Plex Mono is not in the catalog.
+    monoFont: "Source Code Pro",
     titleStyle: "display",
     labelWeight: "normal",
 
     // Icons
     iconStroke: 1.5,
 
-    // Shape: zero radius everywhere; tags, toggles and thumbs stay round.
+    // Shape: Square; the checkbox keeps its 2px corner.
     roleControl: "none",
     roleItem: "none",
     roleSurface: "none",
     rolePanel: "none",
-    roleCard: "none",
+    checkCorner: "sharp",
     // Fields md 40, buttons lg 48.
     density: "spacious",
 
-    // Surfaces: flat tonal layers, no edges.
+    // Surfaces: #f4f4f4 layers on white, no edges.
     surfaceLayers: "tonal",
     surfaceEdge: "none",
+    shellTone: "page",
 
-    // States: an inset 2px blue focus.
+    // States: a 2px inset focus, white inner stroke on filled buttons.
     focusStyle: "inset",
     focusInputStyle: "ring",
 
-    // Buttons
+    // Motion: menus and popovers appear with no transform.
+    motionEntrance: "fade",
+
+    // Buttons: #393939 secondary.
     buttonSecondary: "solid",
-    // The content switcher's #161616 chip; a gray wash would sit under Solid.
     toggleSelected: "inverse",
-    groupSeparator: "divider",
     segmentedSelected: "inverse",
     segmentedTrack: "outline",
 
-    // Inputs: #f4f4f4 fields with a single bottom line.
+    // Inputs: a #f4f4f4 field with one bottom line; TextInput has no hover.
     inputStyle: "indicator",
+    inputHover: "none",
     inputError: "icon-field",
     selectTrigger: "field",
     otpStyle: "separate",
 
     // Selection
-    checkCorner: "sharp",
     radioMark: "ring",
     sliderThumb: "solid",
     sliderTrack: "hairline",
@@ -75,9 +83,8 @@ export const carbon = definePreset({
     menuSelectedRow: "tint",
     mobilePickers: "anchored",
 
-    // Dialogs: full-bleed action bar under a heavy scrim.
+    // Dialogs: a 60% scrim (Medium reads closer than Heavy 80%), a 64px bleed bar.
     dialogBackdrop: "scrim",
-    dialogBackdropStrength: "heavy",
     dialogActions: "bleed",
     dialogEntrance: "drop",
     mobileDialogs: "fullscreen",
@@ -88,5 +95,19 @@ export const carbon = definePreset({
     navMarker: "fill-bar",
     navWeight: "regular-semibold",
     linkUnderline: "hover",
+    breadcrumbSeparator: "slash",
+    breadcrumbTone: "link",
+
+    // Feedback: inverse notifications and toasts.
+    alertStyle: "inverse",
+    toastStyle: "inverse",
+    badgeStyle: "soft",
+    progressTrack: "thick",
+
+    // Data display
+    tableHeader: "filled",
+    tableHeaderLabel: "strong",
+    calendarToday: "dot",
+    calendarTodayColor: "selection",
   },
 })
