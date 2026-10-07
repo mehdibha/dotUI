@@ -232,4 +232,18 @@ describe("dialogs axes", () => {
       effective(parseState({ dialogActions: "bleed" })).values.dialogActions,
     ).toBe("bleed")
   })
+
+  it("bands step off the surface toward the ink in both modes", async () => {
+    const band = async (dialogSections: string) => {
+      const { componentParams } = designSystemOf(parseState({ dialogSections }))
+      return content("dialog", {}, componentParams)
+    }
+    // The header gets the full step, the footer half; dark doubles both.
+    const header = await band("header-band")
+    expect(header).toContain("not-in-data-popover:bg-fg/5")
+    expect(header).toContain("dark:not-in-data-popover:bg-fg/8")
+    const footer = await band("footer-band")
+    expect(footer).toMatch(/ bg-fg\/2 .* dark:bg-fg\/4/)
+    for (const code of [header, footer]) expect(code).not.toMatch(/bg-muted/)
+  })
 })

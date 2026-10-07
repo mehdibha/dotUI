@@ -12,10 +12,13 @@ const bleed =
   "-mx-(--dialog-padding) -mb-(--dialog-padding) grid auto-cols-fr grid-flow-col overflow-hidden rounded-b-[calc(var(--surface-radius)-1px)] *:h-16 *:items-start *:justify-start *:rounded-none *:px-4 *:pt-3.5 *:pb-8"
 
 /* The footer's edge: a full-bleed rule above it (Supabase, Polaris), or a
-   tinted band (shadcn nova, Geist). */
+   tinted band (shadcn nova, Geist). A band is the surface a step toward the
+   ink, so it reads on any surface in both modes: Geist's #fafafa footer,
+   Polaris's #f3f3f3 header, twice that in dark (shadcn nova's muted over its
+   popover). */
 const rule = "-mx-(--dialog-padding) border-t px-(--dialog-padding) pt-4"
 const band =
-  "-mx-(--dialog-padding) -mb-(--dialog-padding) rounded-b-[calc(var(--surface-radius)-1px)] border-t bg-muted/50 p-(--dialog-padding)"
+  "-mx-(--dialog-padding) -mb-(--dialog-padding) rounded-b-[calc(var(--surface-radius)-1px)] border-t bg-fg/2 p-(--dialog-padding) dark:bg-fg/4"
 
 const { useStyles, styles } = createStyles(dialogMeta, {
   base: {
@@ -100,7 +103,7 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       "header-band": {
         slots: {
           header:
-            "not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:-mt-(--dialog-padding) not-in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] not-in-data-popover:border-b not-in-data-popover:bg-muted not-in-data-popover:px-(--dialog-padding) not-in-data-popover:py-4",
+            "not-in-data-popover:-mx-(--dialog-padding) not-in-data-popover:-mt-(--dialog-padding) not-in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] not-in-data-popover:border-b not-in-data-popover:bg-fg/5 not-in-data-popover:px-(--dialog-padding) not-in-data-popover:py-4 dark:not-in-data-popover:bg-fg/8",
         },
       },
     },
