@@ -8,6 +8,21 @@ import type { DesignSystem } from "./types"
 
 export type PreviewMode = "light" | "dark"
 
+/** A board's preview slug is this prefix and its panel page or chapter id. */
+export const BOARD_SLUG_PREFIX = "board-"
+
+/** What the panel is editing, for the board on screen. */
+export interface PreviewFocusMessage {
+  member?: string
+  axis?: string
+  /** A panel popover is open. */
+  popover: boolean
+  /** Preview px the open popovers cover, from the left (beside the panel) or the bottom (docked). */
+  inset: { left: number; bottom: number }
+}
+
+export const NO_INSET = { left: 0, bottom: 0 }
+
 type ParentToIframeMessage =
   | { type: "design-system"; data: DesignSystem }
   | { type: "preview-mode"; mode: PreviewMode }
@@ -15,6 +30,7 @@ type ParentToIframeMessage =
   | { type: "preview-navigate"; slug: string }
   | { type: "preview-prefetch"; slug: string }
   | { type: "inspector-mode"; enabled: boolean }
+  | ({ type: "preview-focus" } & PreviewFocusMessage)
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
@@ -80,6 +96,17 @@ export function sendInspectorMode(
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
     { type: "inspector-mode", enabled } satisfies ParentToIframeMessage,
+    "*",
+  )
+}
+
+export function sendPreviewFocus(
+  iframe: HTMLIFrameElement | null,
+  focus: PreviewFocusMessage,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "preview-focus", ...focus } satisfies ParentToIframeMessage,
     "*",
   )
 }
@@ -155,6 +182,33 @@ export function usePreviewNavigationMessages(handlers: {
     window.addEventListener("message", handleMessage)
     return () => window.removeEventListener("message", handleMessage)
   }, [])
+}
+
+/** Inside the preview iframe: the panel's latest focus. */
+export function usePreviewFocusMessages(): PreviewFocusMessage {
+  const [focus, setFocus] = React.useState<PreviewFocusMessage>({
+    popover: false,
+    inset: NO_INSET,
+  })
+  React.useEffect(() => {
+    if (!isInIframe()) return
+    const handleMessage = (event: MessageEvent) => {
+      const data = event.data
+      if (data?.type !== "preview-focus") return
+      const next: PreviewFocusMessage = {
+        member: data.member,
+        axis: data.axis,
+        popover: !!data.popover,
+        inset: data.inset ?? NO_INSET,
+      }
+      setFocus((prev) =>
+        JSON.stringify(prev) === JSON.stringify(next) ? prev : next,
+      )
+    }
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
+  }, [])
+  return focus
 }
 
 /**

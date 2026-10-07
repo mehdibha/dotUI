@@ -14,6 +14,8 @@ import {
 } from "@/modules/studio/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
+import { boardOf } from "@/modules/studio/preview/boards"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
@@ -33,7 +35,10 @@ export function getExamplesPromise(slug: string) {
     // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
     const load =
-      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+      boardOf(slug)?.load ??
+      BlocksIndex[slug] ??
+      GroupExamplesIndex[slug] ??
+      ExamplesIndex[slug]
     if (!load) return null
     promise = load()
     promiseCache.set(slug, promise)
@@ -127,7 +132,7 @@ export function PreviewPage() {
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}
       <ToastProvider />
-      {content}
+      <BoardFocusProvider>{content}</BoardFocusProvider>
     </DesignSystemProvider>
   )
 }
