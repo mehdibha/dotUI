@@ -20,7 +20,6 @@
     --focus-ring-offset: 2px;
     --focus-ring-outside-offset: 2px;
     --focus-ring-inner: 0px;
-    --focus-input-color: var(--border-focus-muted);
     --focus-input-width: 2px;
     --focus-input-offset: 0px;
     --focus-input-edge: 0px;
@@ -44,6 +43,7 @@
     --font-sans: var(--font-geist-sans);
     --font-heading: var(--font-sans);
     --font-mono: var(--font-geist-mono);
+    --font-reading: var(--font-sans);
     --color-bg: var(--bg);
     --color-muted: var(--muted);
     --color-inverse: var(--inverse);
@@ -323,6 +323,9 @@
     --overlay-border: var(--color-border);
     --popover-alpha: 100%;
     --popover-backdrop-filter: none;
+    --focus-input-border: var(--color-border-focus);
+    --focus-input-color: var(--color-border-focus-muted);
+    --invalid-fill: transparent;
 }
 
 .dark {
@@ -401,7 +404,7 @@
     --fg-inverse: oklch(0.1311 0.0037 258.05);
     --fg-disabled: oklch(0.5243 0.0128 258.05);
     --fg-on-neutral: oklch(0.9562 0.0029 258.05);
-    --border: oklch(0.249 0.0051 258.05);
+    --border: oklch(0.2906 0.0064 258.05);
     --border-control: oklch(0.3608 0.0082 258.05);
     --border-control-hover: oklch(0.4318 0.0096 258.05);
     --border-focus: oklch(0.5715 0.2087 258.05);
@@ -432,7 +435,7 @@
     --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.2699 0.0059 258.05);
     --sidebar-accent-foreground: oklch(0.9562 0.0029 258.05);
-    --sidebar-border: oklch(0.249 0.0051 258.05);
+    --sidebar-border: oklch(0.2906 0.0064 258.05);
     --sidebar-ring: oklch(0.5715 0.2087 258.05);
     --chart-1: oklch(0.8161 0.1 243.61);
     --chart-2: oklch(0.7559 0.1324 247.17);
@@ -488,6 +491,10 @@
     box-shadow: var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
+@utility invalid-fill {
+    background-image: var(--invalid-icon, none), linear-gradient(var(--invalid-fill), var(--invalid-fill));
+}
+
 @utility no-highlight {
     -webkit-tap-highlight-color: transparent;
 }
@@ -515,6 +522,8 @@
     @apply bg-bg font-sans text-fg;
     }
   :is([data-disabled], :disabled, [aria-disabled="true"]):not(
+    [data-pending],
+    [data-current],
     :is([data-disabled], :disabled, [aria-disabled="true"]) *
   ) {
     opacity: var(--disabled-opacity, 1);

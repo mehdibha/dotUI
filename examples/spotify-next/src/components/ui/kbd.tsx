@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 const kbdVariants = tv({
   slots: {
     group: "inline-flex items-center gap-1",
-    kbd: "pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-full text-fg-muted select-ui **:[svg]:not-with-[size]:size-3 bg-muted px-1 font-sans text-xs font-medium",
+    kbd: "pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-xs text-fg-muted select-ui **:[svg]:not-with-[size]:size-3 bg-muted px-1 font-sans text-xs font-medium",
   },
 });
 

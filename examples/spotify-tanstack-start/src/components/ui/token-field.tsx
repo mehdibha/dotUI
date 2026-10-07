@@ -21,7 +21,7 @@ const tokenFieldVariants = tv({
     input:
       "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
     token:
-      "rounded-full bg-selected px-0.5 text-fg-on-selected data-selected:bg-selection data-selected:text-fg-on-selection",
+      "rounded-xs bg-selected px-0.5 text-fg-on-selected data-selected:bg-selection data-selected:text-fg-on-selection",
   },
 });
 

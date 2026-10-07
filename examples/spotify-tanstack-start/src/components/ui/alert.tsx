@@ -3,7 +3,7 @@ import { type VariantProps, tv } from "tailwind-variants";
 
 const alertVariants = tv({
   slots: {
-    root: "relative grid w-full items-start px-4 py-3 text-sm rounded-lg has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto] *:[svg]:size-4 *:[svg]:translate-y-0.5 border bg-card [--surface-bg:var(--color-card)]",
+    root: "relative grid w-full items-start px-4 py-3 text-sm rounded-lg has-data-alert-action:grid-cols-[1fr_auto] has-data-alert-action:pr-3 has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[--spacing(4)_1fr] has-[>svg]:gap-x-3 has-[>svg]:has-data-alert-action:grid-cols-[--spacing(4)_1fr_auto] *:[svg]:size-4 *:[svg]:translate-y-0.5",
     title: "font-medium tracking-tight [svg~&]:col-start-2",
     description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
     action:
@@ -12,19 +12,19 @@ const alertVariants = tv({
   variants: {
     variant: {
       neutral: {
-        root: "text-fg",
+        root: "bg-muted text-fg [--surface-bg:var(--color-muted)]",
       },
       danger: {
-        root: "text-fg-danger *:data-alert-description:text-fg-danger/90",
+        root: "bg-danger-muted text-fg-danger [--surface-bg:var(--color-danger-muted)] *:data-alert-description:text-fg-danger/90",
       },
       warning: {
-        root: "text-fg-warning *:data-alert-description:text-fg-warning/90",
+        root: "bg-warning-muted text-fg-warning [--surface-bg:var(--color-warning-muted)] *:data-alert-description:text-fg-warning/90",
       },
       info: {
-        root: "text-fg-info *:data-alert-description:text-fg-info/90",
+        root: "bg-info-muted text-fg-info [--surface-bg:var(--color-info-muted)] *:data-alert-description:text-fg-info/90",
       },
       success: {
-        root: "text-fg-success *:data-alert-description:text-fg-success/90",
+        root: "bg-success-muted text-fg-success [--surface-bg:var(--color-success-muted)] *:data-alert-description:text-fg-success/90",
       },
     },
   },

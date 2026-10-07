@@ -10,10 +10,11 @@ const badgeVariants = tv({
       outline: "border border-(--chip-border) text-(--chip-fg-tint)",
       "soft-outline":
         "border border-(--chip-border) bg-(--chip-tint) text-(--chip-fg-tint)",
+      dot: "border border-border text-fg before:size-2 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']",
     },
     variant: {
       neutral:
-        "[--chip-border:var(--color-border)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+        "[--chip-border:var(--color-border)] [--chip-dot:var(--color-fg-muted)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
       accent:
         "[--chip-border:var(--color-border-accent)] [--chip-fg-tint:var(--color-fg-accent)] [--chip-fg:var(--color-fg-on-accent)] [--chip-fill:var(--color-accent)] [--chip-tint:var(--color-accent-muted)]",
       danger:

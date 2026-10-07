@@ -32,14 +32,15 @@ const tabsVariants = tv({
     variant: {
       segmented: {
         list: "rounded-lg bg-muted p-[3px]",
-        item: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
-        indicator: "inset-0 rounded-md bg-selected shadow-sm",
+        item: "rounded-[calc(var(--radius-lg)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
+        indicator:
+          "inset-0 rounded-[calc(var(--radius-lg)-3px)] bg-selected shadow-sm",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
         item: "rounded-md orientation-horizontal:h-full selected:text-fg",
         indicator:
-          "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 bg-fg",
+          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-fg orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-horizontal:rounded-full",
       },
       pill: {
         list: "gap-1",

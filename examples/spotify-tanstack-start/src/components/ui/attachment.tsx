@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 
 const attachmentVariants = tv({
   slots: {
-    root: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-lg border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] text-fg transition-colors has-[>a,>button]:hover:bg-muted/50 has-[[data-attachment-trigger]:focus-visible]:focus-ring data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
+    root: "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-md border border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000) [--surface-bg:var(--color-card)] text-fg transition-colors has-[>a,>button]:hover:bg-muted/50 has-[[data-attachment-trigger]:focus-visible]:focus-ring data-[state=error]:border-border-danger data-[state=idle]:border-dashed",
     media:
       "relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted text-fg **:[svg]:pointer-events-none group-data-[state=error]/attachment:bg-danger-muted group-data-[state=error]/attachment:text-fg-danger group-orientation-vertical/attachment:w-full",
     content:

@@ -10,9 +10,9 @@ import { tv } from "tailwind-variants";
 
 const tabsVariants = tv({
   slots: {
-    root: "flex gap-2 [--tabs-list-height:2.25rem]",
+    root: "flex gap-2 [--tabs-list-height:3rem]",
     list: "inline-flex w-fit items-center justify-center text-fg-muted",
-    item: "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-1.5 px-2 py-1 text-sm has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 **:[svg]:not-with-[size]:size-4 font-medium",
+    item: "relative isolate inline-flex flex-1 cursor-default items-center justify-center whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-2 px-4 py-2 text-base has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 **:[svg]:not-with-[size]:size-5 font-bold",
     indicator:
       "pointer-events-none absolute transition-[translate,width,height] motion-reduce:transition-none",
     panel: "flex-1 outline-none data-[inert=true]:hidden text-sm",
@@ -32,20 +32,20 @@ const tabsVariants = tv({
     variant: {
       segmented: {
         list: "rounded-lg bg-muted p-[3px]",
-        item: "rounded-md border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
-        indicator: "inset-0 rounded-md bg-selected shadow-sm",
+        item: "rounded-[calc(var(--radius-lg)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-inverse",
+        indicator: "inset-0 rounded-[calc(var(--radius-lg)-3px)] bg-inverse",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
         item: "rounded-md orientation-horizontal:h-full selected:text-fg",
         indicator:
-          "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 bg-fg",
+          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-accent orientation-horizontal:h-[3px] orientation-horizontal:rounded-t-[3px] orientation-horizontal:inset-x-4",
       },
       pill: {
         list: "gap-1",
-        item: "group/tab rounded-full orientation-horizontal:h-full selected:text-fg-inverse",
+        item: "group/tab rounded-sm orientation-horizontal:h-full selected:text-fg-inverse",
         indicator:
-          "inset-0 rounded-full bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
+          "inset-0 rounded-sm bg-inverse group-hover/tab:bg-inverse/90 group-pressed/tab:bg-inverse/80",
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",

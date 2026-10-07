@@ -10,9 +10,9 @@ import { tv } from "tailwind-variants";
 const segmentedControlVariants = tv({
   slots: {
     root: "inline-flex w-fit items-center justify-center rounded-lg text-fg-muted bg-muted p-[3px]",
-    item: "relative isolate inline-flex cursor-default items-center justify-center rounded-md border border-transparent whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-2 px-3 py-1.5 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 **:[svg]:not-with-[size]:size-4 selected:text-fg-on-selected font-medium",
+    item: "relative isolate inline-flex cursor-default items-center justify-center rounded-[calc(var(--radius-lg)-3px)] border border-transparent whitespace-nowrap focus-reset transition-[color] select-ui focus-visible:focus-ring-outside text-fg-muted hover:text-fg disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) aria-disabled:cursor-disabled aria-disabled:text-(--disabled-fg,currentColor) **:[svg]:pointer-events-none **:[svg]:shrink-0 gap-2 px-4 py-2.5 text-base has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5 **:[svg]:not-with-[size]:size-5 selected:text-fg-inverse font-bold",
     indicator:
-      "pointer-events-none absolute inset-0 rounded-md transition-[translate,width,height] motion-reduce:transition-none bg-selected shadow-sm",
+      "pointer-events-none absolute inset-0 rounded-[calc(var(--radius-lg)-3px)] transition-[translate,width,height] motion-reduce:transition-none bg-inverse",
     itemContent: "relative z-10 inline-flex items-center gap-[inherit]",
   },
 });

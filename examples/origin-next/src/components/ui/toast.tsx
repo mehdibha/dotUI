@@ -22,7 +22,8 @@ const toastVariants = tv({
     body: "flex min-w-0 items-center gap-2",
     icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
     message: "flex min-w-0 flex-1 flex-col gap-0.5",
-    title: "font-medium empty:hidden text-sm leading-snug",
+    title:
+      "font-sans font-medium tracking-normal empty:hidden text-sm leading-snug",
     description: "empty:hidden text-sm leading-snug text-fg-muted",
     actions: "ml-2 flex shrink-0 items-center gap-1",
     action: "max-w-32 empty:hidden **:[span]:truncate",

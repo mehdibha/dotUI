@@ -44,7 +44,7 @@ const sidebarVariants = tv({
       "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
     group: "relative flex w-full min-w-0 flex-col p-2",
     groupLabel:
-      "flex h-8 shrink-0 items-center rounded-md px-2 font-sans font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 text-xs tracking-normal",
+      "flex h-8 shrink-0 items-center rounded-md px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 font-sans text-xs tracking-normal",
     groupAction:
       "absolute top-3.5 right-3 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0 after:absolute after:-inset-2 md:after:hidden group-data-[collapsible=icon]:hidden",
     groupContent: "w-full text-sm",

@@ -20,27 +20,27 @@ const tableVariants = tv({
   slots: {
     container:
       "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-md border bg-(--surface-bg,var(--color-bg))",
-    table: "min-w-full text-sm text-fg outline-hidden select-ui text-sm",
+    table: "min-w-full text-fg outline-hidden select-ui text-sm",
     header:
       "sticky top-0 z-10 bg-(--surface-bg,var(--color-bg))/95 supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
     column:
-      "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-10 px-2.5 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg)) text-fg-muted",
+      "box-border cursor-default text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-10 px-2.5 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg)) text-fg-muted",
     columnContent: "flex h-full min-w-0 items-center gap-1.5",
     columnLabel: "min-w-0 flex-1 truncate",
     chromeColumn:
-      "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-10 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
-    selectionColumn: "w-10 min-w-10 px-2.5 px-2.5",
+      "box-border px-0 text-left align-middle focus-reset outline-hidden first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)] [div]:flex [div]:h-full [div]:items-center relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] h-10 border-b bg-(--surface-bg,var(--color-bg))/95 backdrop-blur supports-[-moz-appearance:none]:bg-(--surface-bg,var(--color-bg))",
+    selectionColumn: "w-10 min-w-10 px-2.5",
     sortIndicator: "size-3.5 shrink-0 text-fg-muted transition-transform",
     resizer:
       "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
     body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
     footer: "border-t bg-muted/50 font-medium",
-    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 data-[state=selected]:bg-selected data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/70 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/70 focus-visible:bg-selected/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
-    cell: "relative box-border h-10 align-middle leading-5 whitespace-nowrap focus-reset outline-hidden bg-clip-padding px-2.5 [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-md data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-[''] h-10 px-2.5 leading-5",
+    row: "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full hover:bg-muted/50 data-[state=selected]:bg-selected/50 data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30 focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+    cell: "relative box-border align-middle whitespace-nowrap focus-reset outline-hidden bg-clip-padding [div]:flex [div]:h-full [div]:w-full [div]:items-center [&.text-center]:justify-center [&.text-right]:justify-end focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-md data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-[''] h-10 px-2.5 leading-5",
     selectionCell:
-      "w-10 min-w-10 px-2.5 [div]:h-[calc(100%-1px)] [div]:justify-start px-2.5",
+      "w-10 min-w-10 [div]:h-[calc(100%-1px)] [div]:justify-start px-2.5",
     dragCell:
-      "w-8 min-w-8 cursor-drag px-1 text-fg-muted group-dragging/row:cursor-dragging [div]:justify-center px-1",
+      "w-8 min-w-8 cursor-drag text-fg-muted group-dragging/row:cursor-dragging [div]:justify-center px-1",
     dragButton:
       "inline-flex size-6 cursor-drag items-center justify-center rounded-sm text-fg-muted focus-reset transition-colors focus-visible:focus-ring group-hover/row:text-fg group-dragging/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
     dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
@@ -443,7 +443,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                "bg-selected/70 hover:bg-selected/70 selected:bg-selected",
+                "bg-selected/30 hover:bg-selected/30 selected:bg-selected/70",
             ),
           }),
       )}

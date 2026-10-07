@@ -44,14 +44,14 @@ const sidebarVariants = tv({
       "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
     group: "relative flex w-full min-w-0 flex-col p-2",
     groupLabel:
-      "flex h-8 shrink-0 items-center rounded-md px-2 font-sans font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 text-xs tracking-normal",
+      "flex h-8 shrink-0 items-center rounded-md px-2 font-medium whitespace-nowrap text-fg-muted outline-hidden transition-[margin,opacity] [&>svg]:size-4 [&>svg]:shrink-0 duration-200 ease-linear group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 font-sans text-xs tracking-normal",
     groupAction:
       "absolute top-3.5 right-3 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0 after:absolute after:-inset-2 md:after:hidden group-data-[collapsible=icon]:hidden",
     groupContent: "w-full text-sm",
     menu: "flex w-full min-w-0 flex-col gap-1",
     menuItem: "group/menu-item relative",
     menuButton:
-      "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color] focus-visible:focus-ring disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-muted hover:text-fg pressed:bg-muted data-active:bg-muted data-active:text-fg font-normal data-active:font-medium",
+      "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color] focus-visible:focus-ring disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-accent-muted not-data-active:hover:text-fg pressed:bg-accent-muted data-active:text-fg-accent font-bold",
     menuAction:
       "absolute top-1.5 right-1 flex aspect-square w-5 cursor-interactive items-center justify-center rounded-md p-0 text-fg-muted outline-hidden transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring [&>svg]:size-4 [&>svg]:shrink-0 after:absolute after:-inset-2 md:after:hidden peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=md]/menu-button:top-1.5 peer-data-[size=sm]/menu-button:top-1 group-data-[collapsible=icon]:hidden data-show-on-hover:group-focus-within/menu-item:opacity-100 data-show-on-hover:group-hover/menu-item:opacity-100 data-show-on-hover:focus-within:opacity-100 data-show-on-hover:md:opacity-0",
     menuBadge:
@@ -63,7 +63,7 @@ const sidebarVariants = tv({
       "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5 group-data-[collapsible=icon]:hidden",
     menuSubItem: "group/menu-sub-item relative",
     menuSubButton:
-      "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden focus-visible:focus-ring disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) data-[size=md]:text-sm data-[size=sm]:text-xs group-data-[collapsible=icon]:hidden [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted hover:bg-muted hover:text-fg pressed:bg-muted data-active:bg-muted data-active:text-fg font-normal data-active:font-medium",
+      "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden focus-visible:focus-ring disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor) data-[size=md]:text-sm data-[size=sm]:text-xs group-data-[collapsible=icon]:hidden [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-fg-muted hover:bg-accent-muted not-data-active:hover:text-fg pressed:bg-accent-muted data-active:text-fg-accent data-active:[&>svg]:text-current font-bold",
   },
 });
 

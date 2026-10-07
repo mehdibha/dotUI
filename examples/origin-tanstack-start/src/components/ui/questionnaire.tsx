@@ -20,7 +20,7 @@ const questionnaireVariants = tv({
     description: "text-pretty text-fg-muted text-sm",
     choices: "group/questionnaire-choices grid min-w-0 gap-2",
     choice:
-      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-md border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-selection/40 data-checked:bg-muted data-invalid:border-border-danger has-[>input:focus-visible]:focus-ring data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent gap-2.5 px-3 py-2.5 text-sm",
+      "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-md border border-border-control bg-transparent text-start transition-colors select-ui hover:bg-muted/50 data-checked:border-selection/40 data-checked:bg-muted data-invalid:border-fg-danger has-[>input:focus-visible]:focus-ring data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent gap-2.5 px-3 py-2.5 text-sm",
     choiceInput:
       "absolute inset-0 z-10 size-full cursor-interactive opacity-0 disabled:cursor-disabled",
     choiceIndicator:
@@ -32,10 +32,10 @@ const questionnaireVariants = tv({
     choiceContent: "flex min-w-0 flex-1 flex-col leading-snug gap-0.5",
     choiceDescription: "text-fg-muted",
     shortcut:
-      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono leading-none font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
+      "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-sm border border-border-control bg-(--surface-bg,var(--color-bg)) font-mono font-medium text-fg-muted group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex size-5 text-[0.625rem]",
     inputWrapper: "group/questionnaire-input relative w-full min-w-0",
     input:
-      "aria-invalid:border-border-danger aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-border-danger",
+      "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
     error: "mt-2 text-fg-danger text-sm",
     actions:
       "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 sm:min-h-8",

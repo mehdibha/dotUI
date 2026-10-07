@@ -14,7 +14,7 @@ const accordionVariants = tv({
     item: "group/accordion-item w-full disabled:text-(--disabled-fg,currentColor) disabled:**:[svg]:text-(--disabled-fg,currentColor) not-last:border-b",
     heading: "flex font-sans tracking-normal",
     trigger:
-      "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start rounded-lg py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between gap-4",
+      "focus-reset focus-visible:focus-ring flex flex-1 cursor-interactive items-start rounded-sm py-3 text-left text-sm font-medium transition-shadow disabled:pointer-events-none justify-between gap-4",
     marker:
       "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4 duration-200 ease-[cubic-bezier(0,0,0.58,1)] transition-transform group-expanded/accordion-item:rotate-180",
     panel:

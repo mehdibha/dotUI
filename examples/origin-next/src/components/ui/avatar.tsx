@@ -23,15 +23,18 @@ const avatarVariants = tv({
   variants: {
     size: {
       sm: {
-        group: "-space-x-1 *:data-avatar:size-6",
+        group:
+          "-space-x-1 *:data-avatar:size-6 *:data-avatar:not-last:*:data-avatar-fallback:pe-1.5",
         root: "size-6",
       },
       md: {
-        group: "-space-x-1.5 *:data-avatar:size-8",
+        group:
+          "-space-x-1.5 *:data-avatar:size-8 *:data-avatar:not-last:*:data-avatar-fallback:pe-2",
         root: "size-8",
       },
       lg: {
-        group: "*:data-avatar:size-10",
+        group:
+          "*:data-avatar:size-10 *:data-avatar:not-last:*:data-avatar-fallback:pe-2.5",
         root: "size-10",
       },
     },

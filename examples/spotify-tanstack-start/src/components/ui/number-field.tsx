@@ -9,8 +9,7 @@ import * as NumberFieldPrimitives from "react-aria-components/NumberField";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { fieldStyles } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { inputStyles } from "@/components/ui/input";
+import { Input, inputStyles } from "@/components/ui/input";
 
 interface NumberFieldProps extends React.ComponentProps<
   typeof NumberFieldPrimitives.NumberField
@@ -47,8 +46,7 @@ interface NumberFieldGroupProps extends React.ComponentProps<
   size?: "sm" | "md" | "lg";
 }
 
-// Carbon: square stepper cells at the end of the shell, with a short rule
-// between them. Parts are placed by slot, so the authored order never matters.
+// Stepper cells at the end of the shell; parts are placed by slot.
 const NumberFieldGroup = ({
   className,
   size,

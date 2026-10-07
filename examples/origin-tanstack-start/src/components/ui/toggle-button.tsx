@@ -14,10 +14,10 @@ const toggleButtonVariants = tv({
       primary:
         "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active",
       secondary:
-        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
-      link: "disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) text-fg-accent",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+      link: "disabled:text-(--disabled-fg,var(--color-fg)) text-fg-accent",
       warning:
         "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
       danger:
