@@ -21,8 +21,6 @@ export const stripe = definePreset({
     lightBg: 100,
     // Dark page #14171d.
     darkBg: 7.5,
-    // Fields and secondaries share the card keyline; hover #95A4BA.
-    controlEdge: "soft",
 
     // Typography
     // Sail's base stack is the OS face at 14px.
