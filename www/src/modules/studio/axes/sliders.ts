@@ -14,7 +14,7 @@ import type { ChapterSchema } from "./schema"
 
 export const SLIDER_DEFAULTS = {
   sliderThumb: "knob",
-  sliderTrack: "auto",
+  sliderTrack: "auto" as "auto" | (typeof TRACK_VALUES)[number],
   sliderColor: "accent",
 }
 
@@ -24,13 +24,7 @@ export const SLIDER_DEFAULTS = {
 export const THUMB_VALUES = ["knob", "ring", "solid", "handle"] as const
 
 /* 2, 4, 8 or 16px. */
-export const TRACK_VALUES = [
-  "auto",
-  "hairline",
-  "thin",
-  "medium",
-  "thick",
-] as const
+export const TRACK_VALUES = ["hairline", "thin", "medium", "thick"] as const
 
 /** Each thumb's own track: Material 3's handle rides a 16px track. */
 export const THUMB_TRACK: Record<string, string> = {

@@ -18,16 +18,17 @@ export const THUMB_OPTIONS = options(THUMB_VALUES, {
   handle: { label: "Handle", credits: ["Material 3"] },
 })
 
-export const TRACK_OPTIONS = options(TRACK_VALUES, {
-  auto: { label: "Auto" },
+const TRACKS = options(TRACK_VALUES, {
   hairline: { label: "Hairline", credits: ["Carbon", "shadcn sera"] },
   thin: { label: "Thin", credits: ["shadcn nova", "Supabase", "Polaris"] },
   medium: { label: "Medium", credits: ["Radix", "Untitled UI", "Geist"] },
   thick: { label: "Thick", credits: ["Material 3"] },
 })
 
+export const TRACK_OPTIONS = [{ value: "auto", label: "Auto" }, ...TRACKS]
+
 export const OPTIONS = {
   sliderThumb: THUMB_OPTIONS,
-  sliderTrack: TRACK_OPTIONS,
+  sliderTrack: TRACKS,
   sliderColor: SOURCE_OPTIONS,
 }
