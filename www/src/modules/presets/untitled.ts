@@ -73,7 +73,6 @@ export const untitled = definePreset({
 
     // Menus & popovers
     menuArrows: "none",
-    menuSelectedRow: "tint",
     // Dropdown rows 38px, select and palette rows 40px.
     menuRows: "step",
     menuSearch: "bar",
@@ -81,6 +80,8 @@ export const untitled = definePreset({
 
     // Dialogs: neutral-950 at 70% with a 6px blur.
     dialogBackdropStrength: "heavy",
+    // The X is neutral-400, not full ink.
+    dialogClose: "faint",
     mobileDialogs: "sheet",
 
     // Navigation: tabs and nav items 600; the pill tab is brand-50 / brand-700.
