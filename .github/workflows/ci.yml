@@ -70,8 +70,11 @@ jobs:
             www/src/registry/__generated__/registry-items.ts \
             www/src/registry/base/colors.css \
             www/src/registry/__generated__/__tabler__.ts \
-            www/src/registry/__generated__/__hugeicons__.ts \
+            www/src/registry/__generated__/__hugeicons__.tsx \
             www/src/registry/__generated__/__remix__.ts \
+            www/src/registry/__generated__/__phosphor__.ts \
+            www/src/registry/__generated__/__material-symbols__.ts \
+            www/src/registry/__generated__/__octicons__.ts \
           || { echo '::error::Committed generated registry artifacts are out of date. Run `pnpm build:registry` and commit the result.'; exit 1; }
 
   references-drift:

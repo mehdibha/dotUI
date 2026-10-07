@@ -16,14 +16,17 @@ export const ICON_DEFAULTS = {
   iconWeight: "regular",
 }
 
-/* Lucide: shadcn, Supabase. The rest are shadcn create's libraries
-   (Hugeicons is shadcn mira's). */
+/* Lucide: shadcn, Supabase. Phosphor to Hugeicons are shadcn create's
+   libraries (Hugeicons is shadcn mira's). Material Symbols: Material 3;
+   Octicons: GitHub (Primer). */
 export const LIBRARY_VALUES = [
   "lucide",
   "phosphor",
   "tabler",
   "remix",
   "hugeicons",
+  "material-symbols",
+  "octicons",
 ] as const
 
 /* Phosphor's own weights; Regular is shadcn create's. */
@@ -48,14 +51,17 @@ export const ICON_STROKE_WIDTH_VAR = "--icon-stroke-width"
 export const ICON_WEIGHT_VAR = "--icon-weight"
 
 /** Each library's own stroke at 24px, total so Auto never falls through.
- *  Phosphor (regular: 16 on its 256 grid) and Remix (2px lines, outlined to
- *  fills) draw no variable stroke. */
+ *  Phosphor (regular: 16 on its 256 grid), Remix (2px lines), Material
+ *  Symbols (weight 400 at opsz 24) and Octicons (1.5px at 16 and 24) are
+ *  outlined to fills and draw no variable stroke. */
 export const LIBRARY_STROKE: Record<IconLibraryName, number> = {
   lucide: 2,
   tabler: 2,
   hugeicons: 1.5,
   phosphor: 1.5,
   remix: 2,
+  "material-symbols": 2,
+  octicons: 1.5,
 }
 
 /** Line sets: the libraries whose stroke the axis can move. */
