@@ -1,5 +1,6 @@
 import { createStyles } from "@/lib/styles"
 
+import { STROKED_TIP } from "../popover/styles"
 import tooltipMeta from "./meta"
 
 /* The entrance's timing is the studio's (styles.css). */
@@ -17,7 +18,6 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
         "w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--studio-tooltip-radius) px-3 py-1.5 text-center text-xs forced-color-adjust-none outline-none",
       ],
       arrow: [
-        "[&>svg]:size-2.5",
         "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
@@ -34,15 +34,14 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       inverted: {
         slots: {
           content: "bg-tooltip text-fg-on-tooltip",
-          arrow: "[&>svg]:fill-tooltip",
+          arrow: "[&>svg]:size-2.5 [&>svg]:fill-tooltip",
         },
       },
       surface: {
         slots: {
           content:
             "border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover/(--popover-alpha) text-fg shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] [--surface-bg:var(--color-popover)]",
-          arrow:
-            "placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke)",
+          arrow: STROKED_TIP,
         },
       },
     },

@@ -11,6 +11,11 @@ const entrance =
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
+/* A stroked tip (popover, surface tooltip): sized with the overlay stroke
+   (styles.css), and the stroke drawn at its true width. */
+export const STROKED_TIP =
+  "[&>svg]:size-(--studio-popover-tip-size) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke) [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke)"
+
 const { useStyles, styles } = createStyles(popoverMeta, {
   base: {
     slots: {
@@ -21,8 +26,8 @@ const { useStyles, styles } = createStyles(popoverMeta, {
         "has-[[role=menu],[role=listbox]]:min-w-min",
       ],
       arrow: [
-        "[&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke)",
-        "placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke) placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+        STROKED_TIP,
+        "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
   },

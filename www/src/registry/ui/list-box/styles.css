@@ -1,4 +1,6 @@
 :root {
   --studio-list-box-item-radius: var(--studio-radius-item);
   --studio-list-box-highlight: var(--color-highlight);
+  --studio-list-box-selected: var(--color-selected);
+  --studio-list-box-selected-highlight: var(--color-selected-hover);
 }

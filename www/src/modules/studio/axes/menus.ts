@@ -5,12 +5,13 @@
    Engine: `indicator`, `highlight`, `inset`, `selected` and `rows` are enum params on
    `menu` and `list-box`, one recipe (list-box LIST_ROWS); `search`, `scale`
    and `inset` on `command`; `tip` on `popover` and `tooltip`; `mobile` swaps
-   the shipped popover file; `--studio-list-box-highlight` is the row wash. */
+   the shipped popover file; `--studio-list-box-*` are the row washes. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
+import { surfaceRecipe } from "./surfaces"
 
 export const MENU_DEFAULTS = {
   menuHighlight: "neutral",
@@ -73,18 +74,23 @@ export function resolveMenus(state: Effective): Resolved {
     rows: state.menuRows,
   }
   const [popoverTip, tooltipTip] = TIPS[state.menuArrows]!
-  // Beside a neutral tinted selected row the neutral highlight steps back, so
-  // hover and selection never share a tone (Carbon, Polaris: hover is the
-  // lighter). A brand wash already sets the selection apart.
+  // A neutral tint sits a step under the neutral highlight, so the focused
+  // row is always the strongest; a brand wash already parts by hue.
   const tokens: Record<string, string> =
     state.menuSelectedRow === "tint" &&
     state.menuHighlight === "neutral" &&
     state.selectedWash === "neutral"
       ? {
-          "--studio-list-box-highlight":
-            "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+          "--studio-list-box-selected":
+            "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+          "--studio-list-box-selected-highlight": "var(--color-selected)",
         }
       : {}
+  // The tip grows with a heavier overlay stroke: 10px at 1px, 14px at 2px.
+  const stroke = parseFloat(surfaceRecipe(state).stroke.overlay)
+  if (stroke > 1)
+    tokens["--studio-popover-tip-size"] =
+      `calc(var(--spacing) * ${Math.max(2.5, stroke * 1.75)})`
   return {
     tokens,
     params: {
