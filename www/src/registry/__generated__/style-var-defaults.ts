@@ -113,6 +113,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-switch-radius": "var(--studio-radius-track)",
 	"--studio-switch-state-duration": "150ms",
 	"--studio-switch-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+	"--studio-switch-track": "var(--color-border-control)",
 	"--studio-table-cell-radius": "var(--studio-radius-item)",
 	"--studio-table-radius": "var(--studio-radius-field)",
 	"--studio-table-state-duration": "150ms",
