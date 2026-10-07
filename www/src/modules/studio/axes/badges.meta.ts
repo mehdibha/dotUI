@@ -15,6 +15,7 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     label: "Soft + outline",
     description: "Ant Design, Untitled UI, Supabase",
   },
+  dot: { label: "Dot", description: "Linear" },
 })
 
 export const SHAPE_OPTIONS = options(SHAPE_VALUES, {

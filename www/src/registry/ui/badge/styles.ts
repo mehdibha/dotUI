@@ -12,10 +12,14 @@ export const CHIP_OUTLINE =
   "border border-(--chip-border) text-(--chip-fg-tint)"
 export const CHIP_SOFT_OUTLINE =
   "border border-(--chip-border) bg-(--chip-tint) text-(--chip-fg-tint)"
+// Neutral hairline pill and ink; the status rides a leading dot.
+export const CHIP_DOT =
+  "border border-border text-fg-muted before:size-1.5 before:shrink-0 before:rounded-full before:bg-(--chip-dot,var(--chip-fill)) before:content-['']"
 
-// Half-strength wash: the neutral fill is already the wash tone.
+// Half-strength wash: the neutral fill is already the wash tone; its dot
+// takes the muted ink, the fill being too light to read.
 export const CHIP_NEUTRAL =
-  "[--chip-border:var(--color-border)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]"
+  "[--chip-border:var(--color-border)] [--chip-dot:var(--color-fg-muted)] [--chip-fg-tint:var(--color-fg)] [--chip-fg:var(--color-fg-on-neutral)] [--chip-fill:var(--color-neutral)] [--chip-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]"
 
 export const CHIPS = {
   // shadcn, Geist, Spectrum 2 (bold), Mantine (filled), Fluent 2.
@@ -26,6 +30,8 @@ export const CHIPS = {
   outline: { defaultVariants: { appearance: "outline" } },
   // Ant Design (Tag), Untitled UI, Supabase.
   "soft-outline": { defaultVariants: { appearance: "soft-outline" } },
+  // Linear (labels).
+  dot: { defaultVariants: { appearance: "dot" } },
 } as const
 
 /* Caps, one size down, tracked: Supabase, Mantine, Atlassian (v15). */
@@ -40,6 +46,7 @@ const { useStyles, styles } = createStyles(badgeMeta, {
         soft: CHIP_SOFT,
         outline: CHIP_OUTLINE,
         "soft-outline": CHIP_SOFT_OUTLINE,
+        dot: CHIP_DOT,
       },
       variant: {
         neutral: CHIP_NEUTRAL,
