@@ -43,8 +43,9 @@ export const radix = definePreset({
     buttonSecondary: "soft",
     segmentedSelected: "ring",
 
-    // Inputs: the select trigger wears the text-field shell.
-    inputHover: "none",
+    // Inputs: page-colored fields, recessed in dark panels (#121314 in #18191b);
+    // the select trigger wears the same shell.
+    inputStyle: "inset",
     fieldLabel: "semibold",
     selectTrigger: "field",
 
