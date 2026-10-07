@@ -59,7 +59,8 @@ export const carbon = definePreset({
 
     // Buttons: #393939 secondary.
     buttonSecondary: "solid",
-    toggleSelected: "inverse",
+    // Tone is excluded under a solid secondary; Inverse #1f1f1f barely parts from #393939.
+    toggleSelected: "solid",
     segmentedSelected: "inverse",
     segmentedTrack: "outline",
 
@@ -83,7 +84,7 @@ export const carbon = definePreset({
     menuSelectedRow: "tint",
     mobilePickers: "anchored",
 
-    // Dialogs: a 60% scrim (Medium reads closer than Heavy 80%), a 64px bleed bar.
+    // Dialogs: a 64px bleed action bar.
     dialogBackdrop: "scrim",
     dialogActions: "bleed",
     dialogEntrance: "drop",
