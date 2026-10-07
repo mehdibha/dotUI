@@ -1,7 +1,6 @@
 "use client"
 
-/* What the panel is working on, for the preview to show: the open page, or
-   the row whose popover is open. */
+// What the panel is editing, for the preview to show: the open page or popover row.
 
 import { useContext, useEffect, useSyncExternalStore } from "react"
 import {
@@ -45,8 +44,7 @@ export function setPageFocus(id: string | null) {
   update()
 }
 
-/** A popover's focus, read off its trigger. A trigger outside any page or
- *  chapter sits in another popover: it keeps that popover's board. */
+/** A trigger outside any page or chapter sits in another popover: it keeps that one's board. */
 export function focusOf(
   trigger: Trigger,
   outer: PreviewFocus | null,

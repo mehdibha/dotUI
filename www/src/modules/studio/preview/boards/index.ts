@@ -4,8 +4,7 @@ import { BOARD_SLUG_PREFIX } from "@/modules/studio/preset/iframe-sync"
 
 type Load = () => Promise<{ default: ComponentType }>
 
-/* One board per panel chapter and family page, under the same id and label.
-   Iframe-only: each loader carries its chunk's whole dependency map. */
+// Iframe-only: each loader carries its chunk's whole dependency map.
 export const BoardsIndex: Record<string, { title: string; load: Load }> = {
   color: { title: "Color", load: () => import("./color") },
   typography: { title: "Typography", load: () => import("./typography") },
