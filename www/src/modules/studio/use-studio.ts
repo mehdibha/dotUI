@@ -20,7 +20,9 @@ export interface Studio {
   effective: Effective
   /** The engine's view: what the preview renders and the export ships. */
   designSystem: DesignSystem
-  set: <K extends keyof StudioState & string>(key: K) => (value: StudioState[K]) => void
+  set: <K extends keyof StudioState & string>(
+    key: K,
+  ) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
 }
 
