@@ -63,7 +63,8 @@ export const spotify = definePreset({
     motionEntrance: "slide",
 
     // Links
-    linkUnderline: "hover",
+    // Inline text links are always underlined.
+    linkUnderline: "always",
     linkColor: "neutral",
 
     // Buttons
@@ -75,7 +76,7 @@ export const spotify = definePreset({
     segmentedSelected: "inverse",
 
     // Inputs
-    // A page-colored box on the edge; Outline would tint it gray in dark.
+    // A page-colored box on the edge; Outline tints it #333 in dark.
     inputStyle: "inset",
     // Hover turns the #7c7c7c edge to text-base.
     inputHover: "edge",
@@ -84,12 +85,17 @@ export const spotify = definePreset({
     selectTrigger: "field",
 
     // Selection
-    // The playback bar fills white; green only on hover.
+    // The playback bar is a 4px track filled white; green only on hover.
+    sliderTrack: "medium",
     sliderColor: "neutral",
+    // Off is a #7c7c7c track; Inset is a near-page track that vanishes on white.
+    switchStyle: "outlined",
+    // No Encore choice card; an edge over a green wash Spotify never paints.
+    cardSelected: "outline",
 
     // Menus & popovers
-    // Tooltips carry no arrow; onboarding popovers point with an 8px one.
-    menuArrows: "popovers",
+    // Menus, selects and tooltips never point (only the rare onboarding popover).
+    menuArrows: "none",
     tooltipStyle: "surface",
 
     // Dialogs
@@ -105,6 +111,10 @@ export const spotify = definePreset({
     // Subdued 14/700 tab labels; a 2px green bar under the current one.
     tabStyle: "line",
     tabsColor: "accent",
+    // The bar sits under the label, inset 12px.
+    tabIndicator: "label",
+    // Current sidebar items read in bright ink, no colored slab.
+    navMarker: "ink",
     navWeight: "bold",
 
     // Feedback
@@ -115,7 +125,8 @@ export const spotify = definePreset({
     // ProgressBar is 6px in essential-bright-accent, the check color.
     progressTrack: "medium",
     progressColor: "same-checks",
-    badgeStyle: "soft",
+    // New and Beta tags are solid fills with dark ink.
+    badgeStyle: "solid",
     badgeShape: "rounded",
   },
 })
