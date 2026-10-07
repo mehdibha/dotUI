@@ -1,6 +1,11 @@
 import { useEffect, useRef, useSyncExternalStore } from "react"
 
-import { CheckIcon, ChevronDownIcon } from "@/registry/icons"
+import { useComponentParams } from "@/lib/styles"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronsUpDownIcon,
+} from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { Checkbox } from "@/registry/ui/checkbox"
@@ -91,13 +96,40 @@ const CURSORS: Record<string, () => React.ReactNode> = {
 function Cursor({ token }: { token: string }) {
   const Glyph = CURSORS[useRootToken(token)] ?? ArrowCursor
   return (
-    <span className="pointer-events-none absolute top-[55%] left-[85%] size-6 *:size-full">
+    <span className="pointer-events-none absolute top-[55%] left-[85%] size-6 *:size-full!">
       <Glyph />
     </span>
   )
 }
 
 /* ---------------------------------- Focus ---------------------------------- */
+
+/** The focused select trigger the `select` params build: a button trigger takes
+ *  the control ring, a field trigger the field focus. */
+function SelectSpecimen({ as }: { as: "button" | "field" }) {
+  const { trigger, caret } = useComponentParams("select")
+  const button = useButtonStyles()
+  const field = useInputStyles()()
+  if ((trigger === "field" ? "field" : "button") !== as) return null
+  const Caret = caret === "double" ? ChevronsUpDownIcon : ChevronDownIcon
+  return (
+    <Specimen label="Select">
+      <span
+        {...FOCUSED}
+        className={
+          as === "field"
+            ? field.trigger({ className: "w-56" })
+            : button({ className: [field.buttonTrigger(), "w-56"] })
+        }
+      >
+        <span className="flex-1 truncate text-left font-normal">
+          Annual billing
+        </span>
+        <Caret className="ml-auto" />
+      </span>
+    </Specimen>
+  )
+}
 
 function FocusSpecimens() {
   const button = useButtonStyles()
@@ -183,6 +215,7 @@ function FocusSpecimens() {
           </div>
         </div>
       </Specimen>
+      <SelectSpecimen as="button" />
     </div>
   )
 }
@@ -190,7 +223,6 @@ function FocusSpecimens() {
 /* ------------------------------- Field focus ------------------------------- */
 
 function FieldFocusSpecimens() {
-  const button = useButtonStyles()
   const field = useInputStyles()()
   return (
     <>
@@ -210,17 +242,7 @@ function FieldFocusSpecimens() {
         inert
         className="flex flex-wrap items-start justify-center gap-x-6 gap-y-6"
       >
-        <Specimen label="Select">
-          <span
-            {...FOCUSED}
-            className={button({ className: [field.buttonTrigger(), "w-56"] })}
-          >
-            <span className="flex-1 truncate text-left font-normal">
-              Annual billing
-            </span>
-            <ChevronDownIcon className="ml-auto" />
-          </span>
-        </Specimen>
+        <SelectSpecimen as="field" />
         <Specimen label="Text area">
           <textarea
             {...FOCUSED}
@@ -318,7 +340,6 @@ function HoverPressSpecimens() {
                 key={name}
                 role="option"
                 data-rac=""
-                {...(name === "Inbox" && { "data-selected": "true" })}
                 {...(name === "Drafts" && { "data-hovered": "true" })}
                 className={list.item({ className: "relative" })}
               >
