@@ -680,7 +680,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 		designSystem: {
 			componentParams: {
 				accordion: { motion: "expand", layout: "divided", marker: "leading-caret" },
-				alert: { style: "outline" },
+				alert: { style: "soft-outline" },
 				avatar: { shape: "circle", fallback: "accent" },
 				badge: { style: "dot", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
