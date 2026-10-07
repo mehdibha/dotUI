@@ -21,6 +21,8 @@
   --studio-card-stroke: 1px;
   --studio-tile-stroke: 1px;
   --studio-overlay-stroke: 1px;
+  /* The ledge lip a pressed or disabled choice card sinks into. */
+  --studio-tile-lip: 0px;
   /* Every scrim's frost (modal, drawer). */
   --studio-scrim-blur: var(--blur-sm);
   /* Action labels only (Button, ToggleButton, GroupText). */

@@ -498,4 +498,39 @@ describe("drawn edges", () => {
       "has-data-label:w-full has-data-label:border has-data-label:p-2.5",
     )
   })
+
+  test("a pressed or disabled ledge tile sinks into its lip", async () => {
+    const sink =
+      "has-data-label:pressed:mt-[2px] has-data-label:pressed:border-b-2 has-data-label:disabled:mt-[2px] has-data-label:disabled:border-b-2"
+    const state = { surfaceEdge: "ledge", controlStroke: "bold" }
+    for (const name of ["checkbox", "radio-group", "switch"]) {
+      expect(
+        designSystemOf(parseState(state)).componentParams[name],
+      ).toMatchObject({ "card-press": "sink" })
+      expect(await shippedItem(name, state), name).toContain(sink)
+      const origin = await shippedItem(name, {})
+      expect(origin, name).not.toContain("pressed:mt-")
+      expect(origin, name).not.toContain("disabled:border-b")
+    }
+    expect(tokensFor({ surfaceEdge: "ledge" })["--studio-tile-lip"]).toBe("2px")
+  })
+
+  test("the overlay arrow follows the overlay stroke", async () => {
+    const origin = await shippedItem("popover", {})
+    expect(origin).toContain("[&>svg]:stroke-1")
+    expect(origin).toContain("placement-top:-mt-px")
+    const ledge = await shippedItem("popover", {
+      surfaceEdge: "ledge",
+      controlStroke: "bold",
+    })
+    expect(ledge).toContain("[&>svg]:stroke-2")
+    expect(ledge).toContain("placement-top:-mt-[2px]")
+    expect(
+      await shippedItem("tooltip", {
+        surfaceEdge: "ledge",
+        controlStroke: "bold",
+        tooltipStyle: "surface",
+      }),
+    ).toContain("placement-bottom:-mb-[2px]")
+  })
 })

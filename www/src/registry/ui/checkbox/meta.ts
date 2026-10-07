@@ -19,6 +19,12 @@ const checkboxMeta = {
       values: ["tint", "outline-tint", "outline"] as const,
       description: "What marks the selected card.",
     },
+    "card-press": {
+      kind: "enum",
+      default: "none",
+      values: ["none", "sink"] as const,
+      description: "Whether a pressed or disabled card sinks into its lip.",
+    },
   },
 } satisfies RegistryItem
 

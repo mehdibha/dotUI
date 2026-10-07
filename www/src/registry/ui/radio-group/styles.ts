@@ -1,6 +1,10 @@
 import { createStyles } from "@/lib/styles"
 
-import { CHOICE_CARD, CHOICE_CARD_SHELL } from "../checkbox/styles"
+import {
+  CHOICE_CARD,
+  CHOICE_CARD_PRESS,
+  CHOICE_CARD_SHELL,
+} from "../checkbox/styles"
 import radioGroupMeta from "./meta"
 
 const { useStyles, styles } = createStyles(radioGroupMeta, {
@@ -60,6 +64,7 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       },
     },
     "card-selected": CHOICE_CARD,
+    "card-press": CHOICE_CARD_PRESS,
   },
 })
 

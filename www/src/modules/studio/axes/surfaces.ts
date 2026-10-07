@@ -13,7 +13,7 @@
      double, cards lift a quarter rung and overlays take the hairline
      (Atlassian, Spectrum, HeroUI). Bevel draws Polaris's inset rim instead
      of a border; Ledge draws the control stroke with a bottom lip on cards
-     and tiles (Duolingo).
+     and tiles, which a pressed or disabled tile sinks into (Duolingo).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg); Low is shadcn New York, Medium shadcn Luma.
@@ -100,8 +100,9 @@ export interface SurfaceRecipe {
   popover: SurfaceLook
   modalShadow: ShadowLayer[]
   glass: boolean
-  /** Border widths: cards, choice tiles, popovers and tooltips. */
-  stroke: { card: string; tile: string; overlay: string }
+  /** Border widths: cards, choice tiles, popovers and tooltips; the lip a
+   *  pressed or disabled tile sinks into. */
+  stroke: { card: string; tile: string; overlay: string; lip: string }
 }
 
 const NONE: SurfaceColor = { kind: "none" }
@@ -228,12 +229,12 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
 
 function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
   if (state.surfaceEdge === "bevel")
-    return { card: "0px", tile: "1px", overlay: "0px" }
+    return { card: "0px", tile: "1px", overlay: "0px", lip: "0px" }
   if (state.surfaceEdge !== "ledge")
-    return { card: "1px", tile: "1px", overlay: "1px" }
+    return { card: "1px", tile: "1px", overlay: "1px", lip: "0px" }
   const px = strokePx(state.controlStroke)
   const ledge = `${px}px ${px}px ${px + LEDGE_LIP}px`
-  return { card: ledge, tile: ledge, overlay: `${px}px` }
+  return { card: ledge, tile: ledge, overlay: `${px}px`, lip: `${LEDGE_LIP}px` }
 }
 
 /* ----------------------------- Serialization ----------------------------- */
@@ -303,6 +304,7 @@ function surfaceTokens(state: Effective): Record<string, string> {
     "--studio-card-stroke": stroke.card,
     "--studio-tile-stroke": stroke.tile,
     "--studio-overlay-stroke": stroke.overlay,
+    "--studio-tile-lip": stroke.lip,
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
     "--shadow-card": shadowCss(card.shadow, pairCss),
@@ -324,7 +326,16 @@ export function resolveSurfaces(state: Effective): Resolved {
   }
   const sidebar = SHELL_SIDEBAR[state.shellTone]
   if (sidebar) tokens["--color-sidebar"] = sidebar
-  return { tokens, params: { sidebar: { shell: state.shellTone } } }
+  const tile = { "card-press": state.surfaceEdge === "ledge" ? "sink" : "none" }
+  return {
+    tokens,
+    params: {
+      sidebar: { shell: state.shellTone },
+      checkbox: tile,
+      "radio-group": tile,
+      switch: tile,
+    },
+  }
 }
 
 export const chapter = defineChapter({

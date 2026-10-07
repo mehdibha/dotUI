@@ -1,6 +1,10 @@
 import { createStyles } from "@/lib/styles"
 
-import { CHOICE_CARD, CHOICE_CARD_SHELL } from "../checkbox/styles"
+import {
+  CHOICE_CARD,
+  CHOICE_CARD_PRESS,
+  CHOICE_CARD_SHELL,
+} from "../checkbox/styles"
 import switchMeta from "./meta"
 
 const { useStyles, styles } = createStyles(switchMeta, {
@@ -119,6 +123,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
       },
     },
     "card-selected": CHOICE_CARD,
+    "card-press": CHOICE_CARD_PRESS,
   },
 })
 

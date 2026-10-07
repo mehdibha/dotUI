@@ -40,7 +40,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
           content:
             "border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover/(--popover-alpha) text-fg shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] [--surface-bg:var(--color-popover)]",
           arrow:
-            "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
+            "placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke)",
         },
       },
     },

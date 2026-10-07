@@ -29,6 +29,17 @@ export const CHOICE_CARD = {
   },
 }
 
+/* Duolingo's ledge: a pressed or disabled card sinks into its lip. */
+export const CHOICE_CARD_PRESS = {
+  none: {},
+  sink: {
+    slots: {
+      control:
+        "has-data-label:pressed:mt-(--studio-tile-lip) has-data-label:pressed:border-b-(length:--studio-control-stroke) has-data-label:disabled:mt-(--studio-tile-lip) has-data-label:disabled:border-b-(length:--studio-control-stroke)",
+    },
+  },
+}
+
 const { useStyles, styles } = createStyles(checkboxMeta, {
   base: {
     slots: {
@@ -66,6 +77,7 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
   },
   params: {
     "card-selected": CHOICE_CARD,
+    "card-press": CHOICE_CARD_PRESS,
   },
 })
 
