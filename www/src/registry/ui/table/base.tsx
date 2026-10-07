@@ -456,14 +456,12 @@ const TableCell = ({
     >
       {composeRenderProps(
         children,
-        (children, { hasChildItems, isDisabled, isExpanded, isTreeColumn }) => (
+        (children, { hasChildItems, isExpanded, isTreeColumn }) => (
           <>
             {hasChildItems && isTreeColumn && (
               <ButtonPrimitives.Button
                 slot="chevron"
-                className={expandButton({
-                  className: isDisabled ? "opacity-50" : undefined,
-                })}
+                className={expandButton()}
               >
                 <ChevronRightIcon
                   aria-hidden

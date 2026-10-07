@@ -127,12 +127,10 @@ describe("shape axis", () => {
   })
 
   test("a border focus adds only what the stroke doesn't draw", () => {
-    const focus = { focusInputStyle: "border", focusInputBorderWidth: 2 }
-    expect(resolve(focus).tokens["--focus-input-width"]).toBe("1px")
+    const focus = { focusInputStyle: "border", focusInputWeight: "thick" }
+    expect(resolve(focus).tokens["--focus-input-edge"]).toBe("1px")
     expect(
-      resolve({ ...focus, controlStroke: "bold" }).tokens[
-        "--focus-input-width"
-      ],
+      resolve({ ...focus, controlStroke: "bold" }).tokens["--focus-input-edge"],
     ).toBe("0px")
   })
 

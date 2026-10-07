@@ -19,10 +19,10 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "data-checked:border-selection/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
         "has-[>input:focus-visible]:focus-ring",
-        "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50",
+        "data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent",
       ],
       choiceInput:
-        "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
+        "absolute inset-0 z-10 size-full cursor-interactive opacity-0 disabled:cursor-disabled",
       choiceIndicator: [
         "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--studio-questionnaire-indicator-radius) border-(length:--studio-control-stroke) border-border-control",
         "group-has-data-questionnaire-choice-description/questionnaire-choice:translate-y-0.5",
@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       // The shell is input's; this adds the questionnaire's own invalid
       // state, which it marks with aria-invalid.
       input:
-        "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted aria-invalid:focus:border-border-danger",
+        "aria-invalid:border-border-danger aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-border-danger",
       error: "mt-2 text-fg-danger",
       actions:
         "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center",

@@ -34,9 +34,9 @@ export const github = definePreset({
 
     // States
     // An inset ring measured ~1.1:1 on the green and red fills.
-    focusStyle: "duo",
+    focusStyle: "inset",
     focusInputStyle: "border",
-    focusInputBorderWidth: 2,
+    focusInputWeight: "thick",
 
     // Motion
     // Primer's overlays fade in; its dialogs scale.

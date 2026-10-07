@@ -27,11 +27,8 @@ import * as choiceCards from "./choice-cards"
 import * as color from "./color"
 import { createEngine } from "./core/effective"
 import type { Explained, Follow, FollowId, Resolved, Rule } from "./core/types"
-import * as cursor from "./cursor"
 import * as dialogs from "./dialogs"
-import * as disabled from "./disabled"
 import * as field from "./field"
-import * as focus from "./focus"
 import * as icons from "./icons"
 import * as inputs from "./inputs"
 import * as kbd from "./kbd"
@@ -54,6 +51,7 @@ import * as skeleton from "./skeleton"
 import * as sliders from "./sliders"
 import * as space from "./space"
 import * as spinner from "./spinner"
+import * as states from "./states"
 import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
@@ -73,10 +71,8 @@ export const CHAPTERS = [
   shape.chapter,
   space.chapter,
   surfaces.chapter,
-  focus.chapter,
-  cursor.chapter,
+  states.chapter,
   selection.chapter,
-  disabled.chapter,
   mobile.chapter,
   motion.chapter,
   charts.chapter,

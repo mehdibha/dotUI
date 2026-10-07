@@ -34,7 +34,7 @@ export const vercel = definePreset({
     density: "comfortable",
 
     // States
-    focusInputWidth: 3,
+    focusInputWeight: "thick",
 
     // Components
     spinnerStyle: "blades",

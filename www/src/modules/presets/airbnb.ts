@@ -43,7 +43,7 @@ export const airbnb = definePreset({
     // Airbnb never rings in Rausch.
     focusColor: "neutral",
     focusInputStyle: "border",
-    focusInputBorderWidth: 2,
+    focusInputWeight: "thick",
 
     // Motion
     motionEntrance: "slide",
