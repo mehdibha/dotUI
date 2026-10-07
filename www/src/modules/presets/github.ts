@@ -65,8 +65,9 @@ export const github = definePreset({
     linkColor: "neutral",
     breadcrumbSeparator: "slash",
     breadcrumbTone: "link",
-    // Primer's current page is blue #0969da; Primary paints it green.
-    paginationCurrent: "primary",
+    // Primer's current page is blue #0969da: Solid reads the selection seed.
+    paginationCurrent: "selected",
+    toggleSelected: "solid",
     buttonStyle: "hairline",
     switchStyle: "slab",
     // Checks wear #818b98, a step past the field edge.
