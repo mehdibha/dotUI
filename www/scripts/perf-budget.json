@@ -10,15 +10,15 @@
     },
     {
       "match": "/docs/**",
-      "firstLoadGzKB": 550,
+      "firstLoadGzKB": 546,
       "preloads": 32,
-      "reason": "Axis engine rebuild (#889): the 11 family modules, rules and 15 presets ride the docs closure. Follow-up: move option labels/credits into panel-only meta files."
+      "reason": "Axis engine rebuild (#889): the family modules, rules and 15 presets ride the docs closure (option labels and credits stay panel-only in axes/*.meta.ts)."
     },
     {
       "match": "/studio",
-      "firstLoadGzKB": 585,
-      "preloads": 90,
-      "reason": "Axis engine rebuild (#889): family pages split into more chunks."
+      "firstLoadGzKB": 583,
+      "preloads": 87,
+      "reason": "Axis engine rebuild (#889): the panel sections import registry styles.ts and meta.ts modules for their glyphs, each its own chunk."
     }
   ],
   "default": {
