@@ -95,19 +95,40 @@ export const BUTTON_STYLES = {
       },
     },
   },
-  // Duolingo: a 4px lip a shade under the fill (the ramp's pressed step in
-  // light, which flips lighter in dark); press and disabled sink into it.
+  // Duolingo: a 4px lip a shade under the fill (2px on the xs pill): the
+  // ramp's pressed step in light, which flips lighter in dark. Press and
+  // disabled sink into it; hover is a brightness filter; nothing eases.
   ledge: {
     variants: {
       variant: {
         primary:
-          "bg-primary shadow-[0_4px_0_0_var(--color-primary-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
+          "bg-primary shadow-[0_4px_0_0_var(--color-primary-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
         warning:
-          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
+          "bg-warning shadow-[0_4px_0_0_var(--color-warning-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
         danger:
-          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
+          "bg-danger shadow-[0_4px_0_0_var(--color-danger-active)] duration-0 hover:brightness-110 disabled:translate-y-1 disabled:shadow-none disabled:brightness-100 dark:shadow-[0_4px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-1 pressed:shadow-none dark:disabled:shadow-none dark:pressed:shadow-none",
       },
     },
+    compoundVariants: [
+      {
+        variant: "primary" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[0_2px_0_0_var(--color-primary-active)] disabled:translate-y-0.5 dark:shadow-[0_2px_0_0_color-mix(in_oklab,var(--color-primary),black_20%)] pressed:translate-y-0.5",
+      },
+      {
+        variant: "warning" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[0_2px_0_0_var(--color-warning-active)] disabled:translate-y-0.5 dark:shadow-[0_2px_0_0_color-mix(in_oklab,var(--color-warning),black_20%)] pressed:translate-y-0.5",
+      },
+      {
+        variant: "danger" as const,
+        size: "xs" as const,
+        class:
+          "shadow-[0_2px_0_0_var(--color-danger-active)] disabled:translate-y-0.5 dark:shadow-[0_2px_0_0_color-mix(in_oklab,var(--color-danger),black_20%)] pressed:translate-y-0.5",
+      },
+    ],
   },
 }
 
@@ -154,12 +175,13 @@ export const BUTTON_SECONDARY = {
       },
     },
   },
-  // Duolingo's stroke button: a 2px lip in the edge color under eel ink.
+  // Duolingo's stroke button: a 2px edge and a 2px lip in the edge color
+  // under eel ink.
   ledge: {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-muted shadow-[0_2px_0_0_var(--color-border-control)] hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
+          "border-2 border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
       },
     },
   },
@@ -200,6 +222,17 @@ export const BUTTON_SECONDARY = {
       },
     },
   },
+  // Carbon: a dark gray under white ink that lightens on hover and press
+  // (#393939 → #474747 → #6f6f6f); dark lifts it to #6f6f6f and darkens.
+  // The mode swap rides local vars so disabled and selected still win.
+  solid: {
+    variants: {
+      variant: {
+        secondary:
+          "bg-(--secondary-solid) text-(--secondary-solid-fg) [--secondary-solid-fg:var(--color-fg-inverse)] [--secondary-solid:color-mix(in_oklab,var(--color-fg)_86%,var(--color-bg))] hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_79%,var(--color-bg))] dark:[--secondary-solid-fg:var(--color-fg)] dark:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_45%,var(--color-bg))] dark:hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_37%,var(--color-bg))] pressed:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_60%,var(--color-bg))] dark:pressed:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_19%,var(--color-bg))]",
+      },
+    },
+  },
 }
 
 /* Press on the open styles; the closed ones draw their own. Menu triggers
@@ -211,9 +244,12 @@ export const BUTTON_PRESS = {
   scale: { base: "motion-safe:pressed:not-aria-[haspopup]:scale-[0.97]" },
 }
 
+/* Duolingo: 0.8px tracking on 15px labels. Navigation puts the same case
+   on tabs, sidebar items and segmented items. */
+export const UPPERCASE = "tracking-[0.05em] uppercase"
+
 export const BUTTON_CASE = {
-  // Duolingo: 0.8px tracking on 15px labels. A select trigger shows a value,
-  // not a label, so it keeps its case.
+  // A select trigger shows a value, not a label, so it keeps its case.
   uppercase: {
     base: "not-has-data-[slot=select-value]:tracking-[0.05em] not-has-data-[slot=select-value]:uppercase",
   },

@@ -22,9 +22,9 @@ export const BUTTON_GROUP_SCHEMA: ChapterSchema<typeof BUTTON_GROUP_DEFAULTS> =
     groupSeparator: oneOf(SEPARATOR_VALUES),
   }
 
-const EDGELESS = ["soft", "tonal"]
+const EDGELESS = ["soft", "tonal", "solid"]
 
-/* Every style's own secondary is edged; Soft and Tonal are not. */
+/* Every style's own secondary is edged; Soft, Tonal and Solid are not. */
 const SEAM_AUTO = Object.fromEntries(
   STYLE_VALUES.flatMap((style) =>
     SECONDARY_VALUES.map((secondary) => [

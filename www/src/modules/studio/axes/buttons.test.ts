@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import buttonMeta from "@/registry/ui/button/meta"
+import { BUTTON_SECONDARY, BUTTON_STYLES } from "@/registry/ui/button/styles"
 import toggleButtonMeta from "@/registry/ui/toggle-button/meta"
 import { flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
@@ -59,6 +60,31 @@ describe("button styles", () => {
     expect(content).not.toContain(
       "color-mix(in_srgb,var(--color-primary),black",
     )
+  })
+
+  // Duolingo's CSS (E27): 2px lip on the pill size, a 2px stroke under eel
+  // ink, instant press.
+  test("Ledge: the xs pill sinks 2px; the stroke is 2px whatever the stroke axis", async () => {
+    const ledge = BUTTON_STYLES.ledge
+    for (const { variant, size, class: cls } of ledge.compoundVariants) {
+      expect(size).toBe("xs")
+      expect(cls).toContain("shadow-[0_2px_0_0_")
+      expect(cls).toContain("pressed:translate-y-0.5")
+      expect(ledge.variants.variant[variant as "primary"]).toContain(
+        "shadow-[0_4px_0_0_",
+      )
+    }
+    expect(ledge.variants.variant.primary).toContain("duration-0")
+    const secondary = BUTTON_SECONDARY.ledge.variants.variant.secondary
+    expect(secondary).toContain("border-2")
+    expect(secondary).toContain("text-fg-on-neutral")
+    expect(secondary).toContain("duration-0")
+    const content = await shipped("button", {
+      buttonStyle: "ledge",
+      controlStroke: "regular",
+    })
+    expect(content).toContain("border-2 border-border-control")
+    expect(content).toContain("shadow-[0_2px_0_0_var(--color-primary-active)]")
   })
 })
 
@@ -147,6 +173,24 @@ describe("buttons axes", () => {
     expect(effective(state).explain.groupSeparator?.lock?.kind).toBe("hide")
   })
 
+  test("Solid needs a brand primary: under a neutral one it falls back to As style", () => {
+    const state = parseState({
+      buttonColor: "neutral",
+      buttonSecondary: "solid",
+    })
+    expect(designSystemOf(state).componentParams.button?.secondary).toBe("flat")
+    expect(effective(state).explain.buttonSecondary?.exclude).toMatchObject({
+      cause: "buttonColor",
+      options: ["solid"],
+    })
+    expect(state.buttonSecondary).toBe("solid")
+    expect(
+      designSystemOf(parseState({ buttonSecondary: "solid" })).componentParams[
+        "toggle-button"
+      ]?.secondary,
+    ).toBe("solid")
+  })
+
   test("Auto seam: edged secondaries share the edge, edgeless ones divide", () => {
     const seam = (state: Partial<typeof DEFAULTS>) =>
       effective(parseState(state)).values.groupSeparator
@@ -154,6 +198,7 @@ describe("buttons axes", () => {
     expect(seam({ buttonSecondary: "outline" })).toBe("shared-edge")
     expect(seam({ buttonSecondary: "soft" })).toBe("divider")
     expect(seam({ buttonSecondary: "tonal" })).toBe("divider")
+    expect(seam({ buttonSecondary: "solid" })).toBe("divider")
     // Under a closed style the hidden secondary reads As style.
     expect(seam({ buttonStyle: "bevel", buttonSecondary: "soft" })).toBe(
       "shared-edge",
@@ -197,15 +242,17 @@ describe("shipped buttons", () => {
     ["raised", "shadow-xs"],
     ["soft", "bg-neutral text-fg-on-neutral hover:bg-neutral-hover"],
     ["tonal", "bg-accent-muted text-fg-accent"],
+    ["solid", "bg-(--secondary-solid) text-(--secondary-solid-fg)"],
   ])("secondary %s ships one text color", async (buttonSecondary, sig) => {
     for (const name of ["button", "toggle-button"]) {
       const content = await shipped(name, { buttonSecondary })
       expect(content, name).toContain(sig)
       const secondary = content.match(/secondary:\s*"([^"]*)"/g) ?? []
       for (const line of secondary)
-        expect(line.match(/(?<![:\w-])text-fg[\w-]*/g)?.length ?? 0, line).toBe(
-          1,
-        )
+        expect(
+          line.match(/(?<![:\w-])text-(?:fg[\w-]*|\(--[\w-]+\))/g)?.length ?? 0,
+          line,
+        ).toBe(1)
     }
   })
 

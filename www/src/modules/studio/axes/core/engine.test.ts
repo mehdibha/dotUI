@@ -326,6 +326,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { sliderThumb: "handle", sliderTrack: "hairline" },
     { sliderTrack: "hairline" },
   ],
+  "buttons/solid-needs-brand-primary": [
+    { buttonColor: "neutral", buttonSecondary: "solid" },
+    { buttonSecondary: "solid" },
+  ],
   "buttons/closed-style-owns-secondary": [
     { buttonStyle: "bevel", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },

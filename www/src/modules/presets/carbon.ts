@@ -47,7 +47,7 @@ export const carbon = definePreset({
     focusInputStyle: "ring",
 
     // Buttons
-    buttonSecondary: "soft",
+    buttonSecondary: "solid",
     groupSeparator: "divider",
     segmentedSelected: "inverse",
     segmentedTrack: "outline",
