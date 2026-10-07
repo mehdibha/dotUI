@@ -36,7 +36,7 @@ interface Entry {
   category: string
   /** A settings row inside it; absent for the chapter itself. */
   axis?: string
-  /** Former names the chapter answers to. */
+  /** Other names the chapter or page answers to. */
   aliases?: string[]
 }
 
@@ -49,7 +49,7 @@ function categories(chapters: Chapter[]): Entry[] {
   }))
 }
 
-/** Every settings row, under its chapter. */
+/** Every settings row, under its chapter; a page's row carries its aliases. */
 function axes(chapters: Chapter[]): Entry[] {
   return chapters.flatMap((chapter) =>
     (SEARCH_INDEX[chapter.id] ?? []).map((axis) => ({
@@ -57,8 +57,22 @@ function axes(chapters: Chapter[]): Entry[] {
       chapterId: chapter.id,
       category: chapter.label,
       axis,
+      aliases: chapter.pages?.find((page) => page.label === axis)?.aliases,
     })),
   )
+}
+
+/** Matching chapters first, then matching rows. */
+export function searchEntries(
+  chapters: Chapter[],
+  needle: string,
+  contains: (text: string, needle: string) => boolean,
+): Entry[] {
+  const matches = (entry: Entry) =>
+    [entry.axis ?? entry.category, ...(entry.aliases ?? [])].some((name) =>
+      contains(name, needle),
+    )
+  return [...categories(chapters), ...axes(chapters)].filter(matches)
 }
 
 /** The label with the query's characters picked out in accent. */
@@ -93,19 +107,11 @@ export function PanelSearch({
     sensitivity: "base",
     ignorePunctuation: true,
   })
-  // Chapters first: a query that names one lists chapters only. Rows surface
-  // only when no chapter matches — searching "color" means the Color chapter,
-  // not every row called Color. Filtered here, not
-  // left to the Autocomplete, so the list is right even if the field remounts.
+  // Filtered here, not left to the Autocomplete, so the list is right even if
+  // the field remounts.
   const items = useMemo(() => {
     const needle = query.trim()
-    if (!needle) return []
-    const cats = categories(chapters).filter((c) =>
-      [c.category, ...(c.aliases ?? [])].some((name) => contains(name, needle)),
-    )
-    return cats.length > 0
-      ? cats
-      : axes(chapters).filter((a) => contains(a.axis ?? "", needle))
+    return needle ? searchEntries(chapters, needle, contains) : []
   }, [chapters, query, contains])
   const index = docked && !query.trim()
 

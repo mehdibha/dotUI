@@ -43,6 +43,8 @@ export interface ChapterPage {
   label: string
   /** Axis modules (or single keys) whose rows sit here. */
   owners?: string[]
+  /** Component names search answers to. */
+  aliases?: string[]
   Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
@@ -80,6 +82,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: "space",
     label: "Density",
+    aliases: ["Spacing"],
     Body: SpaceSection,
     Preview: SpacePreview,
   },
