@@ -13,6 +13,12 @@ const cardMeta = {
   ],
   registryDependencies: ["focus-styles"],
   params: {
+    header: {
+      kind: "enum",
+      default: "none",
+      values: ["none", "rule", "band"] as const,
+      description: "What sets the header apart: nothing, a rule, or a band.",
+    },
     footer: {
       kind: "enum",
       default: "none",

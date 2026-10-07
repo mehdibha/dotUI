@@ -88,6 +88,7 @@ describe("shipped data display", () => {
     ["avatar", { avatarShape: "rounded", avatarFallback: "accent" }],
     ["kbd", { kbdTreatment: "outline" }],
     ["card", { cardFooter: "rule" }],
+    ["card", { cardHeader: "band" }],
   ]
 
   test.each(cases)("%s %o ships no builder var", async (name, state) => {
@@ -104,6 +105,16 @@ describe("shipped data display", () => {
     const content = await shipped(name, state)
     for (const cls of CONTAINER_SURFACE.split(" "))
       expect(content, cls).toContain(cls)
+  })
+
+  test("the header mirrors the footer: a rule, or a band to the top edge", async () => {
+    expect(await shipped("card")).not.toMatch(/header: "[^"]*border-b /)
+    expect(await shipped("card", { cardHeader: "rule" })).toMatch(
+      /header: "[^"]*\bborder-b\b/,
+    )
+    const band = await shipped("card", { cardHeader: "band" })
+    expect(band).toMatch(/header: "[^"]*\bbg-inverse\/5\b/)
+    expect(band).toContain("has-data-card-header:pt-0")
   })
 
   test("the boxed color editor wears the container surface", async () => {

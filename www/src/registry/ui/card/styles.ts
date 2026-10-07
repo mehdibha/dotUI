@@ -60,6 +60,29 @@ const { useStyles, styles } = createStyles(cardMeta, {
     },
   },
   params: {
+    // The band runs to the card's top edge, so the card drops its top inset
+    // and the header carries it.
+    header: {
+      none: {},
+      rule: { slots: { header: "border-b" } },
+      band: {
+        slots: {
+          root: "has-data-card-header:pt-0 data-[size=sm]:has-data-card-header:pt-0",
+          header: "border-b bg-inverse/5",
+        },
+        density: {
+          compact: {
+            slots: { header: "pt-4 group-data-[size=sm]/card:pt-3" },
+          },
+          default: {
+            slots: { header: "pt-4 group-data-[size=sm]/card:pt-3" },
+          },
+          comfortable: {
+            slots: { header: "pt-6 group-data-[size=sm]/card:pt-4" },
+          },
+        },
+      },
+    },
     footer: {
       none: {},
       rule: { slots: { footer: "border-t" } },
