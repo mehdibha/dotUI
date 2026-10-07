@@ -1,7 +1,30 @@
 {
   "name": "NumberFieldGroupProps",
-  "description": "A group lays out the input and its stepper buttons as the design system's steppers.",
+  "description": "A group wears the field shell and lays out the input with its steppers where the design system puts them.",
   "props": {
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\"",
+      "detailedType": "'lg' | 'md' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of the field.",
+      "default": "\"md\""
+    },
     "onHoverStart": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",
