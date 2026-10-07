@@ -149,6 +149,19 @@ describe("invalid", () => {
     })
   })
 
+  test("a grouped field paints the wash once", async () => {
+    const { stylesConfig } = (await publishables.input!()).publishable
+    expect(JSON.stringify(stylesConfig.base.slots?.inputGroup)).toContain(
+      "**:data-input-control:bg-none!",
+    )
+    for (const [style, shell] of Object.entries(FIELD_SHELLS))
+      for (const slot of ["inputGroup", "input"] as const)
+        expect(
+          [shell.slots[slot]].flat(Infinity).join(" "),
+          `${style} ${slot}`,
+        ).toContain("invalid:invalid-fill")
+  })
+
   test("Edge is Origin; Halo is as wide as the field halo", () => {
     expect(resolve({ invalidStyle: "halo" }).tokens).toEqual({
       "--invalid-ring-width": "2px",

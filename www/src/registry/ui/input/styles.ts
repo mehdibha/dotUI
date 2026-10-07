@@ -361,7 +361,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
         // The inner control sheds its shell; `!` outranks the shell's state
         // and dark fills, which out-specify a plain descendant reset.
-        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:shadow-none! **:data-input-control:ring-0!",
+        "**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent! **:data-input-control:bg-none! **:data-input-control:shadow-none! **:data-input-control:ring-0!",
         // Range compositions (start input, separator, end input): only the last
         // control keeps flex-1, so the slack sits before the trailing addon
         // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
