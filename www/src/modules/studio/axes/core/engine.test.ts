@@ -29,6 +29,12 @@ const fired = (state: StudioState) =>
     .filter(([, e]) => e?.rule)
     .map(([key, e]) => `${key}: ${e?.rule}`)
 
+/** `undefined` when `value` is one a resolver may see: valid, never a follow id. */
+const checkConcrete = (key: string, value: unknown) =>
+  FOLLOWS[key]?.some((follow) => follow.id === value)
+    ? `follow id ${String(value)}`
+    : checkKey(key, value)
+
 const enumValues = (key: string) => {
   const schema = SCHEMA[key as keyof typeof SCHEMA]?.value
   return schema?.type === "enum" ? schema.values : undefined
@@ -120,12 +126,22 @@ describe("catalog", () => {
       expect(keys, rule.id).toContain(rule.cause)
       expect(keys, rule.id).not.toContain(rule.target)
       const { effect } = rule
-      if (effect.kind === "pin")
-        expect(checkKey(rule.target, effect.value), rule.id).toBeUndefined()
+      if (
+        effect.kind === "pin" ||
+        (effect.kind === "hide" && "value" in effect)
+      )
+        expect(
+          checkConcrete(rule.target, effect.value),
+          rule.id,
+        ).toBeUndefined()
       if (effect.kind === "exclude" && "options" in effect) {
         const domain = enumValues(rule.target)
         for (const option of [...effect.options, effect.fallback])
           expect(domain, rule.id).toContain(option)
+        expect(
+          checkConcrete(rule.target, effect.fallback),
+          rule.id,
+        ).toBeUndefined()
         expect(effect.options, rule.id).not.toContain(effect.fallback)
       }
     }
@@ -242,7 +258,7 @@ describe("effective", () => {
       expect(state).toEqual(copy)
       // Only concrete values reach a resolver.
       for (const [key, value] of Object.entries(values))
-        expect([key, checkKey(key, value)]).toEqual([key, undefined])
+        expect([key, checkConcrete(key, value)]).toEqual([key, undefined])
     }
   })
 
@@ -325,13 +341,9 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusInputStyle: "ring", focusInputColor: "neutral" },
     { focusInputStyle: "border", focusInputColor: "neutral" },
   ],
-  "states/neutral-ring-hides-field-ink": [
+  "states/neutral-ring-owns-field-ink": [
     { focusColor: "neutral", focusInputColor: "accent" },
     { focusInputColor: "accent" },
-  ],
-  "choice-cards/accent-checks-hide-card-color": [
-    { cardColor: "neutral" },
-    { checkboxColor: "neutral", cardColor: "neutral" },
   ],
   "motion/none-hides-entrance": [
     { motion: "none", motionEntrance: "fade" },

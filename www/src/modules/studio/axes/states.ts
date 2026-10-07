@@ -242,10 +242,10 @@ export const chapter = defineChapter({
     },
     // A neutral ring already paints fields neutral.
     {
-      id: "states/neutral-ring-hides-field-ink",
+      id: "states/neutral-ring-owns-field-ink",
       target: "focusInputColor",
       when: { key: "focusColor", in: ["neutral"] },
-      effect: { kind: "hide" },
+      effect: { kind: "pin", value: "neutral" },
       cause: "focusColor",
     },
   ],

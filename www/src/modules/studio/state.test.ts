@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { describe, expect, it } from "vitest"
 
-import { KEY_OWNER } from "./axes"
+import { KEY_OWNER, RULES } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
 import { placeOf } from "./state"
 
@@ -40,5 +40,15 @@ describe("placeOf", () => {
       expect(place, key).toBeDefined()
       expect(place?.page?.Body.name, key).not.toBe(body)
     }
+  })
+
+  // A hidden row vanishes without a chip: only its own page may explain it.
+  it("hides a row only for a cause on its page", () => {
+    const where = (key: string) => {
+      const place = placeOf(key)
+      return `${place?.chapter.id}/${place?.page?.id ?? ""}`
+    }
+    for (const rule of RULES.filter((r) => r.effect.kind === "hide"))
+      expect(where(rule.target), rule.id).toBe(where(rule.cause))
   })
 })

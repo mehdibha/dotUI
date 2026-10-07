@@ -1,6 +1,6 @@
 "use client"
 
-/* A family page's parts (architecture §7.3). */
+/* A family page's parts. */
 
 import { useContext } from "react"
 import { ArrowUpRightIcon } from "lucide-react"
@@ -97,7 +97,10 @@ export function More({
   const { state } = useCurrent()
   const { explain } = effective(state)
   if (keys.every((key) => explain[key]?.lock?.kind === "hide")) return null
-  const edited = keys.filter((key) => state[key] !== DEFAULTS[key])
+  const edited = keys.filter(
+    (key) =>
+      explain[key]?.lock?.kind !== "hide" && state[key] !== DEFAULTS[key],
+  )
   return (
     <DialFolder title="More" defaultOpen={false} badge={edited.length}>
       {children}

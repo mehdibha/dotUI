@@ -232,15 +232,6 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > choice-cards/accent-checks-hide-card-color: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
 exports[`rules > color/grouped-page: fires, then holds back 1`] = `
 {
   "color": {
@@ -470,7 +461,7 @@ exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > states/neutral-ring-hides-field-ink: fires, then holds back 1`] = `
+exports[`rules > states/neutral-ring-owns-field-ink: fires, then holds back 1`] = `
 {
   "color": {
     "background": {

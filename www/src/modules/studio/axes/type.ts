@@ -153,7 +153,7 @@ export const chapter = defineChapter({
       id: "type/field-text-native",
       target: "fieldTextSize",
       when: { key: "density", in: ["touch"] },
-      effect: { kind: "hide" },
+      effect: { kind: "pin", value: "same" },
       cause: "density",
     },
   ],

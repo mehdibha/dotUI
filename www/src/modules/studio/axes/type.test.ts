@@ -400,10 +400,10 @@ describe("field text size", () => {
     ).toBe("large")
   })
 
-  it("Touch hides Large: its controls already set 16px", () => {
+  it("Touch pins Same: its controls already set 16px", () => {
     const state = parseState({ fieldTextSize: "large", density: "touch" })
     expect(effective(state).values.fieldTextSize).toBe("same")
-    expect(effective(state).explain.fieldTextSize?.lock?.kind).toBe("hide")
+    expect(effective(state).explain.fieldTextSize?.lock?.kind).toBe("pin")
   })
 })
 

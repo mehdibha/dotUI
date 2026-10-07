@@ -19,10 +19,9 @@ export const CHOICE_CARD_DEFAULTS = {
   cardColor: "same" as "same" | PrimaryColorSource,
 }
 
-/* Tint: a soft edge on a tinted surface (shadcn). Edged tint: a 1px
-   edge on the tint (Geist, Claude; nearest for Duolingo and Airbnb, whose
-   edge is 2px). Outline: a 2px edge, no tint (Radix Themes, Stripe,
-   Untitled UI; nearest for Carbon and Notion, whose edge is 1px). */
+/* Tint: a soft edge on a tinted surface. Edged tint: a 1px edge on the tint
+   (nearest for Duolingo and Airbnb, whose edge is 2px). Outline: a 2px edge,
+   no tint (nearest for Carbon and Notion, whose edge is 1px). */
 export const SELECTED_VALUES = ["tint", "outline-tint", "outline"] as const
 
 export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
@@ -50,14 +49,4 @@ export const chapter = defineChapter({
   follows: {
     cardColor: [{ kind: "same", id: "same", from: "checkboxColor" }],
   },
-  rules: [
-    // Accent checks already paint the cards accent.
-    {
-      id: "choice-cards/accent-checks-hide-card-color",
-      target: "cardColor",
-      when: { key: "checkboxColor", in: ["accent"] },
-      effect: { kind: "hide" },
-      cause: "checkboxColor",
-    },
-  ],
 })
