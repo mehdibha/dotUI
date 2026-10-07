@@ -41,6 +41,8 @@ import {
 } from "@/registry/ui/list-box"
 import { Separator } from "@/registry/ui/separator"
 
+import { SCOPES } from "./axes"
+import { Row } from "./family-page"
 import {
   ColorPickerPopover,
   PanelPopover,
@@ -234,6 +236,15 @@ export function DialLink({
 
 /* --------------------------------- Select --------------------------------- */
 
+/** The checked, unpickable item while a scoped copy overrides the key. */
+const CUSTOM = "__custom"
+
+/** Only DialSelect reads Custom: a global with scoped copies renders there. */
+function assertUnscoped(key: string | undefined) {
+  if (key && SCOPES[key])
+    throw new Error(`${key} has scoped copies: render it with DialSelect`)
+}
+
 export interface DialSelectOption {
   value: string
   label: string
@@ -250,7 +261,8 @@ export interface DialSelectOption {
  *  unless the chapter title already carries it), the popover lists every
  *  option in the registry's own ListBox. Picking keeps the popover up — the
  *  choice is a comparison against the preview behind it. `children` are dial
- *  rows under the list, past a separator. */
+ *  rows under the list, past a separator. While a family's scoped copy
+ *  overrides the key the row reads Custom, and the overriding rows follow. */
 export function DialSelect({
   axis: key,
   holds,
@@ -281,6 +293,8 @@ export function DialSelect({
   const resolved = following
     ? options.find((option) => option.value === String(axis?.effective))
     : undefined
+  const overriders = axis?.overriders ?? []
+  const custom = overriders.length > 0
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -294,13 +308,20 @@ export function DialSelect({
       label={label}
       aside={held && <CauseChip cause={held} />}
       value={
-        <>
-          <span className="truncate">
-            {selected?.label ?? value}
-            {resolved && ` · ${resolved.label}`}
-          </span>
-          {rowPreview && (resolved ?? selected)?.preview}
-        </>
+        custom ? (
+          <>
+            <span className="truncate">Custom</span>
+            <ModifiedDot />
+          </>
+        ) : (
+          <>
+            <span className="truncate">
+              {selected?.label ?? value}
+              {resolved && ` · ${resolved.label}`}
+            </span>
+            {rowPreview && (resolved ?? selected)?.preview}
+          </>
+        )
       }
     >
       <PanelPopover className="w-64 min-w-0">
@@ -309,8 +330,8 @@ export function DialSelect({
             aria-label={label}
             selectionMode="single"
             disallowEmptySelection
-            selectedKeys={[value]}
-            disabledKeys={exclude?.options}
+            selectedKeys={[custom ? CUSTOM : value]}
+            disabledKeys={[...(exclude?.options ?? []), CUSTOM]}
             onSelectionChange={(keys) => {
               if (keys === "all") return
               const next = keys.values().next().value
@@ -343,11 +364,21 @@ export function DialSelect({
                 )}
               </ListBoxItem>
             ))}
+            {custom && (
+              <ListBoxItem id={CUSTOM} textValue="Custom">
+                <ListBoxItemLabel>Custom</ListBoxItemLabel>
+              </ListBoxItem>
+            )}
           </ListBox>
-          {children && (
+          {(children || custom) && (
             <>
               <Separator />
-              <div className="flex flex-col gap-1.5 p-2">{children}</div>
+              <div className="flex flex-col gap-1.5 p-2">
+                {children}
+                {overriders.map((k) => (
+                  <Row key={k} axis={k} />
+                ))}
+              </div>
             </>
           )}
         </DialogContent>
@@ -651,6 +682,7 @@ export function DialSlider(
       | { axis?: undefined; value: number; onChange: (value: number) => void }
     ),
 ) {
+  assertUnscoped(row.axis)
   const { axis, hidden, pinned, exclude, following } = useAxisGate(row.axis)
   if (hidden) return null
   if (row.axis === undefined) return <SliderRow {...row} />
@@ -1213,6 +1245,7 @@ export function DialSegmented({
   onChange?: (value: string) => void
   options: DialOption[]
 }) {
+  assertUnscoped(key)
   const { axis, hidden, pinned, exclude } = useAxisGate(key)
   if (hidden) return null
   const value = valueProp !== undefined ? valueProp : String(axis?.effective)

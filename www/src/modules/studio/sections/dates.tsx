@@ -15,6 +15,7 @@ import {
 } from "../axes/calendar.meta"
 import { DialGap, DialList, DialSelect } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -258,3 +259,5 @@ export function DatesSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

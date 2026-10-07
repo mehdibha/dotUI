@@ -5,19 +5,81 @@
 import { KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
-import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
-import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
-import { IconsPreview, IconsSection } from "./sections/icons"
-import { MotionPreview, MotionSection } from "./sections/motion"
-import { ShapePreview, ShapeSection } from "./sections/shape"
-import { SpacePreview, SpaceSection } from "./sections/space"
-import { StatesPreview, StatesSection } from "./sections/states"
-import { TypePreview, TypeSection } from "./sections/type"
+import { ROWS as buttonsRows } from "./sections/buttons"
+import { ROWS as chartsRows } from "./sections/charts"
+import {
+  ColorPreview,
+  ColorPrimary,
+  ROWS as colorRows,
+  ColorSection,
+} from "./sections/color"
+import {
+  COMPONENT_PAGES,
+  ComponentsSection,
+  ROWS as componentsRows,
+} from "./sections/components"
+import { ROWS as cursorsRows } from "./sections/cursors"
+import { ROWS as dataDisplayRows } from "./sections/data-display"
+import { ROWS as datesRows } from "./sections/dates"
+import { ROWS as dialogsRows } from "./sections/dialogs"
+import { ROWS as feedbackRows } from "./sections/feedback"
+import { IconsPreview, ROWS as iconsRows, IconsSection } from "./sections/icons"
+import { ROWS as inputsRows } from "./sections/inputs"
+import { ROWS as menusRows } from "./sections/menus"
+import {
+  MotionPreview,
+  ROWS as motionRows,
+  MotionSection,
+} from "./sections/motion"
+import { ROWS as navigationRows } from "./sections/navigation"
+import { ROWS as primaryRows } from "./sections/primary"
+import { ROWS as selectionRows } from "./sections/selection"
+import { ROWS as shapeRows, ShapePreview, ShapeSection } from "./sections/shape"
+import { ROWS as spaceRows, SpacePreview, SpaceSection } from "./sections/space"
+import {
+  ROWS as statesRows,
+  StatesPreview,
+  StatesSection,
+} from "./sections/states"
+import { ROWS as surfacesRows } from "./sections/surfaces"
+import { ROWS as typeRows, TypePreview, TypeSection } from "./sections/type"
 
 export type { Effective, StudioState } from "./axes"
+import type { RowMap } from "./family-page"
 import type { Studio } from "./use-studio"
 
 export type { Studio }
+
+/** Each section's rows. */
+export const SECTION_ROWS: Record<string, RowMap> = {
+  buttons: buttonsRows,
+  charts: chartsRows,
+  color: colorRows,
+  components: componentsRows,
+  cursors: cursorsRows,
+  dataDisplay: dataDisplayRows,
+  dates: datesRows,
+  dialogs: dialogsRows,
+  feedback: feedbackRows,
+  icons: iconsRows,
+  inputs: inputsRows,
+  menus: menusRows,
+  motion: motionRows,
+  navigation: navigationRows,
+  primary: primaryRows,
+  selection: selectionRows,
+  shape: shapeRows,
+  space: spaceRows,
+  states: statesRows,
+  surfaces: surfacesRows,
+  type: typeRows,
+}
+
+/** Every key's row, for `<Row>` (a key in two sections fails a test). */
+export const ALL_ROWS: RowMap = Object.assign(
+  {},
+  ...Object.values(SECTION_ROWS),
+)
 
 export interface Chapter {
   id: string

@@ -1,6 +1,7 @@
-/* Motion: one role table copied from a real system, written into each member's `--studio-<id>-*` vars. */
+/* Motion: role tables copied from real systems, each member timed by its family's own Motion (else the global one) into its `--studio-<id>-*` vars. */
 
 import { defineChapter } from "./core/types"
+import type { Follow } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
@@ -252,20 +253,23 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   "message-scroller": { role: "notification", exit: true },
 }
 
-export function motionVars(table: MotionTable): Record<string, string> {
+/** Each member's vars, timed by its own table. */
+export function motionVars(
+  tableFor: (member: string) => MotionTable,
+): Record<string, string> {
   const vars: Record<string, string> = {}
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
-    const { ms, ease } = legTiming(table[role].enter)
+    const { ms, ease } = legTiming(tableFor(id)[role].enter)
     vars[`--studio-${id}-state-duration`] = `${ms}ms`
     vars[`--studio-${id}-state-ease`] = ease
   }
-  const color = legTiming(table.micro.enter)
   for (const id of COLOR_MEMBERS) {
+    const color = legTiming(tableFor(id).micro.enter)
     vars[`--studio-${id}-color-duration`] = `${color.ms}ms`
     vars[`--studio-${id}-color-ease`] = color.ease
   }
   for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
-    const { enter, exit } = table[member.role]
+    const { enter, exit } = tableFor(id)[member.role]
     const { ms, ease } = legTiming(enter)
     vars[`--studio-${id}-enter-duration`] = `${ms}ms`
     vars[`--studio-${id}-ease`] = ease
@@ -297,19 +301,65 @@ const ENTRANCE_PARAM: Record<string, string> = {
 export const MOTION_DEFAULTS = {
   motion: "standard",
   motionEntrance: "zoom",
+  buttonMotion: "same",
+  inputMotion: "same",
+  selectionMotion: "same",
+  menuMotion: "same",
+  dialogMotion: "same",
+  navMotion: "same",
+  displayMotion: "same",
+  dateMotion: "same",
+  feedbackMotion: "same",
 }
+
+/** Each family's own Motion and the members it times; the rest ride `motion`. */
+const FAMILIES = {
+  buttonMotion: ["button", "toggle-button", "segmented-control"],
+  inputMotion: ["input", "token-field"],
+  selectionMotion: ["checkbox", "radio", "switch", "slider"],
+  menuMotion: ["popover", "tooltip"],
+  dialogMotion: ["modal", "drawer"],
+  navMotion: ["tabs", "sidebar", "link", "breadcrumbs"],
+  displayMotion: ["table", "accordion", "collapsible"],
+  dateMotion: ["calendar", "time-picker"],
+  feedbackMotion: ["toast", "toast-swipe", "progress", "tag"],
+} satisfies Partial<Record<keyof typeof MOTION_DEFAULTS, string[]>>
+
+type FamilyKey = keyof typeof FAMILIES
+
+export const FAMILY_MOTION_KEYS = Object.keys(FAMILIES) as FamilyKey[]
+
+const FAMILY_OF: Record<string, FamilyKey> = Object.fromEntries(
+  FAMILY_MOTION_KEYS.flatMap((key) => FAMILIES[key].map((id) => [id, key])),
+)
+
+const FAMILY_SCHEMA = oneOf(MOTION_VALUES)
 
 export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
   motion: oneOf(MOTION_VALUES),
   motionEntrance: oneOf(ENTRANCE_VALUES),
+  buttonMotion: FAMILY_SCHEMA,
+  inputMotion: FAMILY_SCHEMA,
+  selectionMotion: FAMILY_SCHEMA,
+  menuMotion: FAMILY_SCHEMA,
+  dialogMotion: FAMILY_SCHEMA,
+  navMotion: FAMILY_SCHEMA,
+  displayMotion: FAMILY_SCHEMA,
+  dateMotion: FAMILY_SCHEMA,
+  feedbackMotion: FAMILY_SCHEMA,
 }
 
-const STANDARD_VARS = motionVars(STANDARD)
+const SAME_AS_MOTION: readonly Follow[] = [
+  { kind: "same", id: "same", from: "motion", scoped: true },
+]
+
+const STANDARD_VARS = motionVars(() => STANDARD)
 
 export function resolveMotion(state: Effective): Resolved {
-  const vars = motionVars(tableOf(state.motion))
-  const off = state.motion === "none"
-  const entrance = off
+  const motionOf = (member: string) => state[FAMILY_OF[member] ?? "motion"]
+  const vars = motionVars((member) => tableOf(motionOf(member)))
+  const off = (member: string) => motionOf(member) === "none"
+  const entrance = off("popover")
     ? "none"
     : (ENTRANCE_PARAM[state.motionEntrance] ?? "scale")
   return {
@@ -320,9 +370,9 @@ export function resolveMotion(state: Effective): Resolved {
     params: {
       popover: { motion: entrance },
       tooltip: { motion: entrance },
-      toast: { motion: off ? "none" : "slide" },
-      accordion: { motion: off ? "none" : "expand" },
-      collapsible: { motion: off ? "none" : "expand" },
+      toast: { motion: off("toast") ? "none" : "slide" },
+      accordion: { motion: off("accordion") ? "none" : "expand" },
+      collapsible: { motion: off("collapsible") ? "none" : "expand" },
     },
   }
 }
@@ -332,13 +382,17 @@ export const chapter = defineChapter({
   defaults: MOTION_DEFAULTS,
   schema: MOTION_SCHEMA,
   resolve: resolveMotion,
+  follows: Object.fromEntries(
+    FAMILY_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
+  ),
   rules: [
     {
-      id: "motion/none-hides-entrance",
+      // The entrance row sits on Motion, its cause on Menus: a pin, not a hide.
+      id: "motion/menus-none-pins-entrance",
       target: "motionEntrance",
-      when: { key: "motion", in: ["none"] },
-      effect: { kind: "hide", value: "zoom" },
-      cause: "motion",
+      when: { key: "menuMotion", in: ["none"] },
+      effect: { kind: "pin", value: "zoom" },
+      cause: "menuMotion",
     },
   ],
 })

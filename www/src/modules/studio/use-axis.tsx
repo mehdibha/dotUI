@@ -7,7 +7,7 @@
 
 import { createContext, useContext } from "react"
 
-import { effective, FOLLOWS } from "./axes"
+import { effective, FOLLOWS, overridersOf, setKey } from "./axes"
 import type { StudioState } from "./axes"
 import type { Explained } from "./axes/core/types"
 import { OPTIONS } from "./axes/meta"
@@ -22,6 +22,9 @@ export interface Axis {
   explain: Explained
   /** The follow ids the key accepts ("auto", "same"). */
   follows: string[]
+  /** Scoped copies edited away from this key: its row reads Custom. */
+  overriders: AxisKey[]
+  /** Setting a global resets its scoped copies. */
   set: (value: unknown) => void
 }
 
@@ -37,7 +40,8 @@ export function useAxis(key: AxisKey | undefined): Axis | undefined {
     effective: values[key],
     explain: explain[key] ?? { saved: state[key], effective: values[key] },
     follows: (FOLLOWS[key] ?? []).map((follow) => follow.id),
-    set: (value) => edit({ ...state, [key]: value }),
+    overriders: overridersOf(state, key),
+    set: (value) => edit(setKey(state, key, value)),
   }
 }
 

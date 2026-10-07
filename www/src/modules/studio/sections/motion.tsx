@@ -6,6 +6,7 @@ import { springProgress, springSettleMs, tableOf } from "../axes/motion"
 import { ENTRANCE_OPTIONS, MOTION_OPTIONS } from "../axes/motion.meta"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
 import { UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /** The anchored layers' entrance curve under a table; None is a step. */
@@ -74,3 +75,5 @@ export function MotionSection(_: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

@@ -30,6 +30,7 @@ import {
   DialTrigger,
 } from "../dial"
 import { More } from "../family-page"
+import type { RowMap } from "../family-page"
 import { CardGrid } from "../patterns"
 import type { Effective, Studio } from "../state"
 
@@ -187,3 +188,5 @@ export function ShapeSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

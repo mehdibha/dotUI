@@ -294,54 +294,7 @@ exports[`rules > dialogs/frost-only-frosted: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > icons/stroke-only-line-sets: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": "phosphor",
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "list-box": {
-      "highlight": "neutral",
-      "indicator": "none",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
-    },
-    "menu": {
-      "highlight": "neutral",
-      "indicator": "none",
-      "inset": "inset",
-      "labels": "sentence",
-      "rows": "auto",
-      "selected": "tint",
-    },
-  },
-  "tokens": {
-    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
-    "--studio-list-box-selected-highlight": "var(--color-selected)",
-  },
-}
-`;
-
-exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
+exports[`rules > dialogs/none-pins-entrance: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -412,6 +365,78 @@ exports[`rules > motion/none-hides-entrance: fires, then holds back 1`] = `
     "--studio-toast-enter-duration": "0ms",
     "--studio-toast-exit-duration": "0ms",
     "--studio-toast-swipe-state-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > icons/stroke-only-line-sets: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": "phosphor",
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+  },
+  "tokens": {
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+  },
+}
+`;
+
+exports[`rules > motion/menus-none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+      "tip": "tip",
+    },
+  },
+  "tokens": {
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
     "--studio-tooltip-enter-duration": "0ms",
     "--studio-tooltip-exit-duration": "0ms",
   },

@@ -1,3 +1,4 @@
+import type { RowMap } from "../family-page"
 /* macOS cursor drawings — literal black/white like the real cursors, which
    never theme; the white casing keeps them readable on dark cards. Hand and
    not-allowed geometry is extracted verbatim from the system cursor PDFs
@@ -113,3 +114,5 @@ export function NotAllowedCursor() {
     </svg>
   )
 }
+
+export const ROWS: RowMap = {}

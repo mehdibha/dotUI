@@ -31,6 +31,7 @@ import {
   DialTrigger,
   SegmentedGroup,
 } from "../dial"
+import type { RowMap } from "../family-page"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
 
@@ -392,3 +393,5 @@ export function PrimaryRow({ studio, m }: { studio: Studio; m: ModeOutput }) {
     </DialTrigger>
   )
 }
+
+export const ROWS: RowMap = {}

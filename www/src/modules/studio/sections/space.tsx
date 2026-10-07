@@ -6,6 +6,7 @@ import { DENSITY_VALUES } from "../axes/space"
 import { DENSITY_OPTIONS, densityTier } from "../axes/space.meta"
 import { DialGap, DialGlyph, DialList } from "../dial"
 import { FamilyHero, HeroMember, UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 const TOUCH = densityTier("touch").ladder
@@ -116,3 +117,5 @@ export function SpaceSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

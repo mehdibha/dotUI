@@ -36,6 +36,14 @@ to the follow id (`"auto"`, `"same"`), typed `number | "auto"` etc.
 
 Validation accepts the follow ids; resolvers only ever see the resolved value.
 
+## Scoped copies
+
+A `same` follow with `scoped: true` makes the follower a family's own copy of
+a global key (`buttonMotion` of `motion`): same vocabulary, default = the
+follow id. `SCOPES[global]` lists them. While a copy differs from its follow
+id, the global's row reads Custom and lists the overriding rows; setting the
+global (`setKey`) resets every copy.
+
 ## Add a rule
 
 Only for mechanical breakage or an inert row; taste is an Auto pairing.

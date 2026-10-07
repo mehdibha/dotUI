@@ -4,12 +4,26 @@ import { describe, expect, it } from "vitest"
 
 import { KEY_OWNER, RULES } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
-import { placeOf } from "./state"
+import { FAMILY_MOTION_KEYS } from "./axes/motion"
+import { placeOf, SECTION_ROWS } from "./state"
 
 const SECTIONS = path.join(__dirname, "sections")
 const sources = readdirSync(SECTIONS)
   .filter((file) => file.endsWith(".tsx"))
   .map((file) => readFileSync(path.join(SECTIONS, file), "utf8"))
+
+describe("rows", () => {
+  it("merges every section's ROWS, and a key has one row", () => {
+    const exporting = sources.filter((s) => s.includes("export const ROWS"))
+    expect(Object.keys(SECTION_ROWS)).toHaveLength(exporting.length)
+    const owner = new Map<string, string>()
+    for (const [section, rows] of Object.entries(SECTION_ROWS))
+      for (const key of Object.keys(rows)) {
+        expect(owner.get(key), `${key} in ${section}`).toBeUndefined()
+        owner.set(key, section)
+      }
+  })
+})
 
 describe("placeOf", () => {
   it("places every key", () => {
@@ -24,6 +38,21 @@ describe("placeOf", () => {
       expect(placeOf(key)?.chapter.id, key).toBe("motion")
     expect(placeOf("dialogEntrance")?.page?.id).toBe("dialogs")
     expect(placeOf("chartMotion")?.page?.id).toBe("charts")
+  })
+
+  it("sends each family's own Motion to its family page", () => {
+    const pages = FAMILY_MOTION_KEYS.map((key) => placeOf(key)?.page?.id)
+    expect(pages).toEqual([
+      "buttons",
+      "inputs",
+      "selection",
+      "menus",
+      "dialogs",
+      "nav",
+      "display",
+      "dates",
+      "feedback",
+    ])
   })
 
   // A Uses link names an upstream row: landing on its own page flashes nothing.

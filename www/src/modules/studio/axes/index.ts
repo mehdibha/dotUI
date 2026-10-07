@@ -138,6 +138,18 @@ export const RULES: readonly Rule[] = CHAPTERS.flatMap(
   (chapter): readonly Rule[] => chapter.rules ?? [],
 )
 
+/** A global key → its scoped copies (`scoped` same follows). */
+export const SCOPES: Readonly<Record<string, readonly string[]>> =
+  Object.entries(FOLLOWS).reduce<Record<string, string[]>>(
+    (scopes, [key, list]) => {
+      for (const follow of list)
+        if (follow.kind === "same" && follow.scoped)
+          (scopes[follow.from] ??= []).push(key)
+      return scopes
+    },
+    {},
+  )
+
 /** Which chapter owns each key. */
 export const KEY_OWNER: Readonly<Record<string, string>> = Object.fromEntries(
   CHAPTERS.flatMap((chapter) =>
@@ -226,6 +238,18 @@ export function parseState(raw: unknown): StudioState {
 }
 
 export const DEFAULT_STATE = parseState({})
+
+/** `key`'s scoped copies edited away from it (its row reads Custom). A
+ *  scoped copy defaults to its follow id (tested). */
+export const overridersOf = (state: StudioState, key: string): Key[] =>
+  ((SCOPES[key] ?? []) as Key[]).filter((k) => state[k] !== DEFAULTS[k])
+
+/** `state` with `key` set; setting a global resets its scoped copies. */
+export function setKey(state: StudioState, key: Key, value: unknown) {
+  const next: Record<string, unknown> = { ...state, [key]: value }
+  for (const k of SCOPES[key] ?? []) next[k] = DEFAULTS[k as Key]
+  return next as StudioState
+}
 
 /** Key-by-key equality. */
 export const sameState = (a: StudioState, b: StudioState) =>

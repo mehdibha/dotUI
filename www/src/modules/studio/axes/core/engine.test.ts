@@ -14,9 +14,12 @@ import {
   effective,
   FOLLOWS,
   KEY_OWNER,
+  overridersOf,
   parseState,
   RULES,
   SCHEMA,
+  SCOPES,
+  setKey,
 } from "../index"
 import type { StudioState } from "../index"
 import { condKeys, createEngine, findCycle, holds, keyGraph } from "./effective"
@@ -102,6 +105,25 @@ describe("catalog", () => {
         )
       }
     }
+  })
+
+  it("scoped copies are plain `same` follows over the source's vocabulary", () => {
+    const scoped = Object.entries(FOLLOWS).flatMap(([key, list]) =>
+      list
+        .filter((f) => "scoped" in f && f.scoped)
+        .map((f) => [key, f] as const),
+    )
+    expect(scoped.length).toBeGreaterThan(0)
+    for (const [key, follow] of scoped) {
+      expect(follow.kind, key).toBe("same")
+      if (follow.kind !== "same") continue
+      expect(follow.map, key).toBeUndefined()
+      expect(DEFAULTS[key as keyof typeof DEFAULTS], key).toBe(follow.id)
+      expect(enumValues(key), key).toEqual(enumValues(follow.from))
+      expect(SCOPES[follow.from], key).toContain(key)
+    }
+    const copies = Object.values(SCOPES).flat()
+    expect(copies.sort()).toEqual(scoped.map(([key]) => key).sort())
   })
 
   it("param vars write only their item's own --studio-<item>-* vars", () => {
@@ -301,6 +323,41 @@ describe("effective", () => {
   })
 })
 
+describe("scoped copies", () => {
+  it("a copy edited away makes its global Custom", () => {
+    expect(overridersOf(DEFAULT_STATE, "motion")).toEqual([])
+    const state = parseState({ buttonMotion: "expressive", menuMotion: "same" })
+    expect(overridersOf(state, "motion")).toEqual(["buttonMotion"])
+    // A copy picking the global's value explicitly still overrides it.
+    expect(
+      overridersOf(parseState({ dialogMotion: "standard" }), "motion"),
+    ).toEqual(["dialogMotion"])
+    expect(overridersOf(state, "buttonMotion")).toEqual([])
+  })
+
+  it("setting the global resets every copy in one edit", () => {
+    const state = parseState({
+      buttonMotion: "expressive",
+      feedbackMotion: "none",
+      motionEntrance: "fade",
+    })
+    const next = setKey(state, "motion", "smooth")
+    expect(overridersOf(next, "motion")).toEqual([])
+    expect(next).toMatchObject({
+      motion: "smooth",
+      buttonMotion: "same",
+      feedbackMotion: "same",
+      motionEntrance: "fade",
+    })
+    // A copy's own edit leaves the global and its siblings alone.
+    expect(setKey(state, "buttonMotion", "none")).toMatchObject({
+      motion: "standard",
+      buttonMotion: "none",
+      feedbackMotion: "none",
+    })
+  })
+})
+
 /* One fire and one no-fire per rule: [rule, fires, holds back]. */
 const FIXTURES: Record<string, [Raw, Raw]> = {
   "color/grouped-page": [
@@ -345,9 +402,13 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusColor: "neutral", focusInputColor: "accent" },
     { focusInputColor: "accent" },
   ],
-  "motion/none-hides-entrance": [
-    { motion: "none", motionEntrance: "fade" },
-    { motionEntrance: "fade" },
+  "motion/menus-none-pins-entrance": [
+    { menuMotion: "none", motionEntrance: "fade" },
+    { motion: "none", menuMotion: "standard", motionEntrance: "fade" },
+  ],
+  "dialogs/none-pins-entrance": [
+    { motion: "none", dialogEntrance: "drop" },
+    { dialogMotion: "smooth", dialogEntrance: "drop" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
   "sliders/handle-needs-track": [
