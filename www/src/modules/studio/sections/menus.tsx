@@ -13,25 +13,13 @@ import {
   SEARCH_OPTIONS,
   SELECTED_ROW_OPTIONS,
 } from "../axes/menus.meta"
-import { roleLabel } from "../axes/shape"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
-import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
-import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
+import { useStudio } from "../use-studio"
+import { withPhoneGlyphs } from "./phone-glyph"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -251,38 +239,6 @@ function PaletteGlyph({ search }: { search: string }) {
   )
 }
 
-/** The panel over the trigger it's anchored to, with or without the tip. */
-function PopoverGlyph({ tip }: { tip: boolean }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="4"
-        y="4"
-        width="16"
-        height="11"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M7 8h10M7 11h6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity=".45"
-      />
-      {tip && <path d="M10.3 14.7 12 17.2l1.7-2.5Z" fill="currentColor" />}
-      <path
-        d="M9 20.5h6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity=".45"
-      />
-    </svg>
-  )
-}
-
 /** The chip, with or without its caret, over the thing it names. */
 function TooltipGlyph({ filled, tip }: { filled: boolean; tip: boolean }) {
   return (
@@ -342,7 +298,121 @@ const glyphs = <T extends { value: string }>(
     preview: <DialGlyph>{draw(option.value)}</DialGlyph>,
   }))
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+const HIGHLIGHT_ROW = glyphs(HIGHLIGHT_OPTIONS, (value) => (
+  <HighlightGlyph highlight={value} />
+))
+
+function MenuHighlightRow() {
+  return (
+    <DialSelect
+      axis="menuHighlight"
+      label="Highlight"
+      options={HIGHLIGHT_ROW}
+    />
+  )
+}
+
+const INSET_ROW = glyphs(INSET_OPTIONS, (value) => <InsetGlyph inset={value} />)
+
+function MenuInsetRow() {
+  return <DialSelect axis="menuInset" label="Items" options={INSET_ROW} />
+}
+
+const ARROWS_ROW = glyphs(ARROWS_OPTIONS, (value) => (
+  <ArrowsGlyph arrows={value} />
+))
+
+function MenuArrowsRow() {
+  return <DialSelect axis="menuArrows" label="Arrows" options={ARROWS_ROW} />
+}
+
+const CHECK_ROW = glyphs(INDICATOR_OPTIONS, (value) => (
+  <CheckGlyph indicator={value} />
+))
+
+function MenuIndicatorRow() {
+  return <DialSelect axis="menuIndicator" label="Check" options={CHECK_ROW} />
+}
+
+const SELECTED_ROW = glyphs(SELECTED_ROW_OPTIONS, (value) => (
+  <SelectedRowGlyph selected={value} />
+))
+
+function MenuSelectedRowRow() {
+  return (
+    <DialSelect
+      axis="menuSelectedRow"
+      label="Selected row"
+      options={SELECTED_ROW}
+    />
+  )
+}
+
+const ROWS_ROW = glyphs(ROWS_OPTIONS, (value) => <RowsGlyph rows={value} />)
+
+function MenuRowsRow() {
+  return <DialSelect axis="menuRows" label="Menu rows" options={ROWS_ROW} />
+}
+
 const PICKERS = withPhoneGlyphs(PICKER_OPTIONS)
+
+function MobilePickersRow() {
+  return (
+    <DialSelect
+      axis="mobilePickers"
+      label="Pickers on mobile"
+      options={PICKERS}
+    />
+  )
+}
+
+function TooltipStyleRow() {
+  const { effective } = useStudio()
+  const tip =
+    effective.menuArrows === "tooltips" || effective.menuArrows === "both"
+  return (
+    <DialSelect
+      axis="tooltipStyle"
+      label="Style"
+      options={glyphs(TOOLTIP_STYLE_OPTIONS, (value) => (
+        <TooltipGlyph filled={value === "inverted"} tip={tip} />
+      ))}
+    />
+  )
+}
+
+const SEARCH_ROW = glyphs(SEARCH_OPTIONS, (value) => (
+  <PaletteGlyph search={value} />
+))
+
+function MenuSearchRow() {
+  return <DialSelect axis="menuSearch" label="Search" options={SEARCH_ROW} />
+}
+
+function MenuScaleRow() {
+  return (
+    <DialSegmented
+      axis="menuScale"
+      label="Palette scale"
+      options={SCALE_OPTIONS}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  menuHighlight: MenuHighlightRow,
+  menuInset: MenuInsetRow,
+  menuArrows: MenuArrowsRow,
+  menuIndicator: MenuIndicatorRow,
+  menuSelectedRow: MenuSelectedRowRow,
+  menuRows: MenuRowsRow,
+  mobilePickers: MobilePickersRow,
+  tooltipStyle: TooltipStyleRow,
+  menuSearch: MenuSearchRow,
+  menuScale: MenuScaleRow,
+}
 
 /* --------------------------------- Section --------------------------------- */
 
@@ -354,135 +424,27 @@ export function MenusPreview({ state }: { state: Effective }) {
   )
 }
 
-export function MenusSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
-  const arrows = effective.menuArrows
+export function MenusSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Menu">
-          <DialGlyph>
-            <HighlightGlyph highlight={effective.menuHighlight} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="List box">
-          <DialGlyph>
-            <CheckGlyph indicator={effective.menuIndicator} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Popover">
-          <DialGlyph>
-            <PopoverGlyph tip={arrows === "popovers" || arrows === "both"} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Tooltip">
-          <DialGlyph>
-            <TooltipGlyph
-              filled={effective.tooltipStyle === "inverted"}
-              tip={arrows === "tooltips" || arrows === "both"}
-            />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Command">
-          <DialGlyph>
-            <PaletteGlyph search={effective.menuSearch} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Pickers on mobile">
-          <DialGlyph>
-            <PhoneGlyph
-              layer={
-                effective.mobilePickers === "anchored" ? "anchored" : "drawer"
-              }
-            />
-          </DialGlyph>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="menuHighlight"
-        label="Highlight"
-        options={glyphs(HIGHLIGHT_OPTIONS, (value) => (
-          <HighlightGlyph highlight={value} />
-        ))}
-      />
+      <Row axis="menuHighlight" />
       <DialGap />
-      <DialSelect
-        axis="menuInset"
-        label="Items"
-        options={glyphs(INSET_OPTIONS, (value) => (
-          <InsetGlyph inset={value} />
-        ))}
-      />
-      <DialSelect
-        axis="menuArrows"
-        label="Arrows"
-        options={glyphs(ARROWS_OPTIONS, (value) => (
-          <ArrowsGlyph arrows={value} />
-        ))}
-      />
-      <UsesRow axis="surfaceGlass" label="Glass" />
-      <UsesRow
-        axis="roleItem"
-        label="Item corners"
-        value={roleLabel(effective, "roleItem")}
-      />
-      <UsesRow axis="motion" label="Motion" />
-      <More
-        keys={["menuIndicator", "menuSelectedRow", "menuRows", "mobilePickers"]}
-      >
-        <DialSelect
-          axis="menuIndicator"
-          label="Check"
-          options={glyphs(INDICATOR_OPTIONS, (value) => (
-            <CheckGlyph indicator={value} />
-          ))}
-        />
-        <DialSelect
-          axis="menuSelectedRow"
-          label="Selected row"
-          options={glyphs(SELECTED_ROW_OPTIONS, (value) => (
-            <SelectedRowGlyph selected={value} />
-          ))}
-        />
-        <DialSelect
-          axis="menuRows"
-          label="Row height"
-          options={glyphs(ROWS_OPTIONS, (value) => (
-            <RowsGlyph rows={value} />
-          ))}
-        />
-        <DialSelect axis="mobilePickers" label="On mobile" options={PICKERS} />
-      </More>
+      <Row axis="menuInset" />
+      <Row axis="menuArrows" />
+      <Row axis="surfaceGlass" />
+      <Row axis="roleItem" />
+      <Row axis="menuMotion" />
+      <Row axis="menuIndicator" />
+      <Row axis="menuSelectedRow" />
+      <Row axis="menuRows" />
+      <Row axis="mobilePickers" />
       <MemberSection id="tooltip" title="Tooltip">
-        <DialSelect
-          axis="tooltipStyle"
-          label="Style"
-          options={glyphs(TOOLTIP_STYLE_OPTIONS, (value) => (
-            <TooltipGlyph
-              filled={value === "inverted"}
-              tip={arrows === "tooltips" || arrows === "both"}
-            />
-          ))}
-        />
+        <Row axis="tooltipStyle" />
       </MemberSection>
       <MemberSection id="command" title="Command">
-        <More keys={["menuSearch", "menuScale"]}>
-          <DialSelect
-            axis="menuSearch"
-            label="Search"
-            options={glyphs(SEARCH_OPTIONS, (value) => (
-              <PaletteGlyph search={value} />
-            ))}
-          />
-          <DialSegmented
-            axis="menuScale"
-            label="Palette scale"
-            options={SCALE_OPTIONS}
-          />
-        </More>
+        <Row axis="menuSearch" />
+        <Row axis="menuScale" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
