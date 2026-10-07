@@ -14,8 +14,12 @@ export const material3 = definePreset({
     // Neutrals carry the brand hue (chroma ~.015 at 298–315).
     neutralHue: 305,
     neutralTint: 2,
+    // surface #fef7ff (tone 98) and #141218 (tone 6).
     lightBg: 98,
     darkBg: 6,
+    // outline #79747e on fields and buttons, #49454f on checks.
+    controlEdge: "strong",
+    // secondary-container #e8def8 behind selected rows and chips.
     selectedWash: "brand",
 
     // Typography
@@ -29,9 +33,8 @@ export const material3 = definePreset({
     iconLibrary: "material-symbols",
 
     // Shape
-    // 4px fields and menus, 12px cards, 28px dialogs, pill buttons.
-    radiusPx: 8,
-    roleControl: "sm",
+    // 4.5px fields, field tops and menus, 13.5px cards, 27px dialogs (4 / 12 / 28), pill buttons.
+    radiusPx: 9,
     roleItem: "none",
     roleSurface: "sm",
     rolePanel: "3xl",
@@ -43,8 +46,11 @@ export const material3 = definePreset({
     surfaceLayers: "tonal",
     surfaceEdge: "none",
     surfaceShadow: "low",
+    // The nav rail sits a tone below borderless content panels.
+    shellTone: "recessed",
 
     // States
+    // 3px ring; M3's is secondary #625b71, but Neutral would grey field focus too.
     focusWidth: 3,
     focusInputStyle: "border",
     focusInputWeight: "thick",
@@ -58,7 +64,6 @@ export const material3 = definePreset({
     buttonSecondary: "tonal",
     buttonRadius: "pill",
     toggleSelected: "solid",
-    segmentedSelected: "tone",
     segmentedTrack: "outline",
 
     // Inputs: the 56dp filled field with a bottom indicator.
@@ -74,7 +79,6 @@ export const material3 = definePreset({
     radioMark: "ring",
     switchStyle: "outlined",
     sliderThumb: "handle",
-    sliderTrack: "thick",
 
     // Menus & popovers: full-bleed rows, no check, a tinted selected row.
     menuInset: "full-bleed",
@@ -84,9 +88,8 @@ export const material3 = definePreset({
     menuRows: "step",
     mobilePickers: "anchored",
 
-    // Dialogs: a 32% scrim; dividers only while scrolling.
+    // Dialogs: a 32% black scrim; dividers only while scrolling.
     dialogBackdrop: "scrim",
-    dialogBackdropStrength: "light",
     dialogSections: "on-scroll",
     dialogEntrance: "drop",
 
@@ -97,10 +100,15 @@ export const material3 = definePreset({
     navMarker: "pill",
 
     // Feedback
+    // Chips: 1px #79747e outline, 8px corners.
     badgeStyle: "outline",
     badgeShape: "rounded",
     toastStyle: "inverse",
     progressTrackStyle: "gap",
+
+    // Display
+    // Avatars sit on primary-container.
+    avatarFallback: "accent",
 
     // Date & time
     calendarDayShape: "circle",
