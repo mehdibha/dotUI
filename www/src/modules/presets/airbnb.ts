@@ -67,6 +67,8 @@ export const airbnb = definePreset({
     // Buttons
     // #f2f2f2, no border.
     buttonSecondary: "soft",
+    // Buttons and icon buttons shrink on press.
+    buttonPress: "scale",
 
     // Selection
     switchColor: "neutral",
@@ -77,8 +79,8 @@ export const airbnb = definePreset({
     sliderColor: "neutral",
     // 2px #dddddd price track.
     sliderTrack: "hairline",
-    // #f7f7f7 plus a 2px #222 outline.
-    cardSelected: "outline-tint",
+    // A 2px #222 outline on white ("Any" in Type of place); the #f7f7f7 wash has no option.
+    cardSelected: "outline",
     // The Dates | Flexible pill: a white chip on an #ebebeb track.
     segmentedSelected: "raised",
 
@@ -93,6 +95,9 @@ export const airbnb = definePreset({
     // Menus & popovers
     menuInset: "full-bleed",
     menuArrows: "none",
+    // The current sort option is bold, no check.
+    menuIndicator: "none",
+    menuSelectedRow: "tint",
 
     // Dialogs
     dialogBackdrop: "scrim",
