@@ -89,6 +89,8 @@ export const duolingo = definePreset({
     // Navigation
     tabStyle: "line",
     tabsColor: "accent",
+    // The COURSES bar spans the label, not the padded tab.
+    tabIndicator: "label",
     navMarker: "outline",
     navWeight: "bold",
 
