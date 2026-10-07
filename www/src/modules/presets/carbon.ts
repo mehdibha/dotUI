@@ -82,10 +82,13 @@ export const carbon = definePreset({
     menuArrows: "both",
     menuIndicator: "check-start",
     menuSelectedRow: "tint",
+    // Dropdown options are 40px, the field height.
+    menuRows: "match",
     mobilePickers: "anchored",
 
-    // Dialogs: a 64px bleed action bar.
+    // Dialogs: a 64px bleed action bar; 60% black scrim files under Heavy.
     dialogBackdrop: "scrim",
+    dialogBackdropStrength: "heavy",
     dialogActions: "bleed",
     dialogEntrance: "drop",
     mobileDialogs: "fullscreen",
