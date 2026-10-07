@@ -8,6 +8,7 @@ import { github } from "./github"
 import { linear } from "./linear"
 import { notion } from "./notion"
 import { origin } from "./origin"
+import { polaris } from "./polaris"
 import type { Preset, PresetMeta } from "./preset"
 import { spotify } from "./spotify"
 import { stripe } from "./stripe"
@@ -28,6 +29,7 @@ export const PRESETS: Preset[] = [
   notion,
   spotify,
   duolingo,
+  polaris,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
