@@ -23,6 +23,7 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "height": "controls",
       "hover": "edge",
       "style": "well",
+      "text": "same",
     },
     "toggle-button": {
       "case": "sentence",
@@ -65,6 +66,7 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "height": "controls",
       "hover": "edge",
       "style": "well",
+      "text": "same",
     },
     "toggle-button": {
       "case": "sentence",
@@ -103,6 +105,7 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "height": "controls",
       "hover": "none",
       "style": "inset",
+      "text": "same",
     },
     "segmented-control": {
       "selected": "raised",
@@ -399,6 +402,7 @@ exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`]
       "height": "controls",
       "hover": "edge",
       "style": "underline",
+      "text": "same",
     },
     "otp-field": {
       "cells": "separate",

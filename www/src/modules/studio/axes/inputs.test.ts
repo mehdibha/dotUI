@@ -55,6 +55,7 @@ describe("inputs", () => {
       style: "outline",
       hover: "none",
       height: "controls",
+      text: "same",
       errorIcon: "none",
     })
     expect(system.componentParams.field).toEqual({

@@ -1,4 +1,4 @@
-/* Typography: fonts, titles, UI text size, label weight, section labels. */
+/* Typography: fonts, titles, text sizes, label weight, section labels. */
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -16,8 +16,11 @@ export const TYPE_DEFAULTS = {
   headingFont: "same",
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
+  // Same as body until pinned; incoming chat messages read in it.
+  readingFont: "same",
   titleStyle: "quiet",
   uiTextSize: "auto",
+  fieldTextSize: "same",
   labelWeight: "medium",
   sectionLabels: "sentence",
 }
@@ -33,7 +36,10 @@ export const TITLE_VALUES = [
 ] as const
 
 /* Auto is density's text step (shadcn nova/vega 14px, mira 12px). */
-export const UI_TEXT_VALUES = ["auto", "13"] as const
+export const UI_TEXT_VALUES = ["auto", "13", "14"] as const
+
+/* Large: field values one rung above control text. */
+export const FIELD_TEXT_VALUES = ["same", "large"] as const
 
 export const LABEL_WEIGHT_VALUES = [
   "normal",
@@ -42,15 +48,16 @@ export const LABEL_WEIGHT_VALUES = [
   "bold",
 ] as const
 
-/* Sentence: Spectrum 2, Atlassian. Caps: shadcn sera. */
-export const SECTION_LABEL_VALUES = ["sentence", "caps"] as const
+export const SECTION_LABEL_VALUES = ["sentence", "caps", "mono-caps"] as const
 
 export const TYPE_SCHEMA: ChapterSchema<typeof TYPE_DEFAULTS> = {
   headingFont: FONT,
   bodyFont: FONT,
   monoFont: FONT,
+  readingFont: FONT,
   titleStyle: oneOf(TITLE_VALUES),
   uiTextSize: oneOf(UI_TEXT_VALUES),
+  fieldTextSize: oneOf(FIELD_TEXT_VALUES),
   labelWeight: oneOf(LABEL_WEIGHT_VALUES),
   sectionLabels: oneOf(SECTION_LABEL_VALUES),
 }
@@ -73,10 +80,12 @@ export function resolveType(state: Effective): Resolved {
   const tokens: Record<string, string> = {}
   if (state.bodyFont !== DEFAULT_BODY_FAMILY)
     tokens["--font-sans"] = fontStack(state.bodyFont)
-  // The theme's own fallback follows the body: a heading on the body family
-  // encodes as nothing.
+  // The theme's own fallbacks follow the body: a heading or reading face on
+  // the body family encodes as nothing.
   if (state.headingFont !== state.bodyFont)
     tokens["--font-heading"] = fontStack(state.headingFont)
+  if (state.readingFont !== state.bodyFont)
+    tokens["--font-reading"] = fontStack(state.readingFont)
   if (state.monoFont !== DEFAULT_MONO_FAMILY)
     tokens["--font-mono"] = fontStack(state.monoFont)
 
@@ -90,12 +99,15 @@ export function resolveType(state: Effective): Resolved {
   if (state.labelWeight !== TYPE_DEFAULTS.labelWeight)
     tokens[LABEL_WEIGHT_VAR] = `var(--font-weight-${state.labelWeight})`
 
-  // 13px replaces the density's own text rung, keeping its line box.
-  if (state.uiTextSize === "13") {
-    const [rung, lineBox] =
-      state.density === "compact" ? ["xs", 16] : ["sm", 20]
-    tokens[`--text-${rung}`] = "0.8125rem"
-    tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / 13)`
+  // A px size replaces the density's own text rung, keeping its line box.
+  if (state.uiTextSize !== "auto") {
+    const px = Number(state.uiTextSize)
+    const [rung, native, lineBox] =
+      state.density === "compact" ? ["xs", 12, 16] : ["sm", 14, 20]
+    if (px !== native) {
+      tokens[`--text-${rung}`] = `${px / 16}rem`
+      tokens[`--text-${rung}--line-height`] = `calc(${lineBox} / ${px})`
+    }
   }
 
   const titles = { titles: state.titleStyle }
@@ -110,6 +122,7 @@ export function resolveType(state: Effective): Resolved {
       menu: labels,
       "list-box": labels,
       sidebar: labels,
+      input: { text: state.fieldTextSize },
     },
   }
 }
@@ -119,5 +132,8 @@ export const chapter = defineChapter({
   defaults: TYPE_DEFAULTS,
   schema: TYPE_SCHEMA,
   resolve: resolveType,
-  follows: { headingFont: [{ kind: "same", id: "same", from: "bodyFont" }] },
+  follows: {
+    headingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
+    readingFont: [{ kind: "same", id: "same", from: "bodyFont" }],
+  },
 })
