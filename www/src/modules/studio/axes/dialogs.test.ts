@@ -195,6 +195,27 @@ describe("dialogs axes", () => {
     expect(origin.registryDependencies ?? []).not.toContain("button")
   })
 
+  it("a dialog fills its drawer, so the footer docks to the bottom edge", async () => {
+    expect(await content("dialog")).toContain("in-data-drawer:flex-1")
+  })
+
+  it("On scroll covers overshoot the inset rules, so nothing draws at rest", async () => {
+    const code = await content(
+      "dialog",
+      {},
+      { dialog: { sections: "on-scroll" } },
+    )
+    const layers =
+      /\[background:([^\]]+)\]/.exec(code)?.[1]?.split(",linear") ?? []
+    const covers = layers.filter((l) => l.endsWith("_local"))
+    const rules = layers.filter((l) => l.includes("--color-border"))
+    expect(covers).toHaveLength(2)
+    expect(rules).toHaveLength(2)
+    for (const cover of covers) expect(cover).toContain("/100%_3px_")
+    expect(rules[0]).toContain("_0_1px/100%_1px_")
+    expect(rules[1]).toContain("_bottom_1px/100%_1px_")
+  })
+
   it("Frost hides under Scrim and Wash; Bleed falls back to End under a footer edge", () => {
     const frost = effective(
       parseState({ dialogBackdrop: "wash", dialogFrost: "subtle" }),

@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(dialogMeta, {
   base: {
     slots: {
       content:
-        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
+        "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none in-data-drawer:flex-1 has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
       header: "flex flex-col",
       title: "font-heading",
       description: "text-fg-muted",
@@ -81,10 +81,12 @@ const { useStyles, styles } = createStyles(dialogMeta, {
     sections: {
       open: {},
       // Material 3, Stripe: rules at the body's edges only while it scrolls
-      // past them, drawn by background-attachment so nothing listens.
+      // past them, drawn by background-attachment so nothing listens. Local
+      // layers snap up to a device pixel inward, so the rules sit 1px in and
+      // the covers overshoot them.
       "on-scroll": {
         slots: {
-          body: "not-in-data-popover:overflow-y-auto not-in-data-popover:[background:linear-gradient(var(--surface-bg),var(--surface-bg))_top/100%_1px_no-repeat_local,linear-gradient(var(--surface-bg),var(--surface-bg))_bottom/100%_1px_no-repeat_local,linear-gradient(var(--color-border),var(--color-border))_top/100%_1px_no-repeat,linear-gradient(var(--color-border),var(--color-border))_bottom/100%_1px_no-repeat]",
+          body: "not-in-data-popover:overflow-y-auto not-in-data-popover:[background:linear-gradient(var(--surface-bg),var(--surface-bg))_top/100%_3px_no-repeat_local,linear-gradient(var(--surface-bg),var(--surface-bg))_bottom/100%_3px_no-repeat_local,linear-gradient(var(--color-border),var(--color-border))_0_1px/100%_1px_no-repeat,linear-gradient(var(--color-border),var(--color-border))_left_0_bottom_1px/100%_1px_no-repeat]",
         },
       },
       // Supabase: a full-bleed rule under the header.
