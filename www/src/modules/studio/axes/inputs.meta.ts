@@ -7,7 +7,7 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     credits: ["shadcn nova", "Geist", "Linear", "Stripe", "Spotify", "Polaris"],
   },
   raised: { label: "Raised", credits: ["Untitled UI", "shadcn vega"] },
-  inset: { label: "Inset", credits: ["Primer"] },
+  inset: { label: "Inset", credits: ["Primer", "Radix Themes"] },
   well: {
     label: "Well",
     credits: ["shadcn mira", "Supabase", "Notion", "Duolingo"],
