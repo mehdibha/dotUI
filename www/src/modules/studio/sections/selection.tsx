@@ -14,7 +14,8 @@ import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import { effective as resolve } from "../axes"
 import { cornerTokens, edgeTokens } from "../axes/checkbox"
 import { CORNER_OPTIONS, EDGE_OPTIONS } from "../axes/checkbox.meta"
-import { CARD_COLOR_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards.meta"
+import { resolveChoiceCards } from "../axes/choice-cards"
+import { CARD_COLOR_ROW, SELECTED_OPTIONS } from "../axes/choice-cards.meta"
 import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
@@ -120,11 +121,20 @@ function SliderBar() {
   )
 }
 
-function ChoiceCard() {
+/* What the `choice-card` scope re-declares, on the specimen. */
+const ACCENT_CARD = {
+  "--color-selection": "var(--color-accent)",
+  "--color-selection-hover": "var(--color-accent-hover)",
+  "--color-selection-muted": "var(--color-accent-muted)",
+  "--color-fg-on-selection": "var(--color-fg-on-accent)",
+} as React.CSSProperties
+
+function ChoiceCard({ accent }: { accent: boolean }) {
   const { control, indicator } = useCheckboxStyles()()
   return (
     <span
       {...ON}
+      style={accent ? ACCENT_CARD : undefined}
       className={control({
         className: "gap-1 has-data-label:w-10 has-data-label:p-1",
       })}
@@ -173,12 +183,9 @@ const slider = (thumb: string, track: string) => (
   </Recipe>
 )
 
-const card = (value: string, color = "control") => (
-  <Recipe
-    name="checkbox"
-    params={{ "card-selected": value, "card-color": color }}
-  >
-    <ChoiceCard />
+const card = (value: string, accent: boolean) => (
+  <Recipe name="checkbox" params={{ "card-selected": value }}>
+    <ChoiceCard accent={accent} />
   </Recipe>
 )
 
@@ -193,10 +200,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
   // A thumb's specimen rides the track it would resolve to.
   const trackFor = (thumb: string) =>
     resolve({ ...state, sliderThumb: thumb }).values.sliderTrack
-  const cardInk =
-    effective.cardColor === "accent" && effective.checkboxColor !== "accent"
-      ? "accent"
-      : "control"
+  const accentCards = Boolean(resolveChoiceCards(effective).color)
   return (
     <>
       <FamilyHero>
@@ -209,7 +213,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           {slider(effective.sliderThumb, effective.sliderTrack)}
         </HeroMember>
         <HeroMember name="Choice card">
-          {card(effective.cardSelected, cardInk)}
+          {card(effective.cardSelected, accentCards)}
         </HeroMember>
       </FamilyHero>
       <UsesRow axis="checkboxColor" label="Checked color" />
@@ -283,22 +287,16 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           label="Selected"
           options={SELECTED_OPTIONS.map((option) => ({
             ...option,
-            preview: card(option.value, cardInk),
+            preview: card(option.value, accentCards),
           }))}
         />
         <More keys={["cardColor"]}>
           <DialSelect
             axis="cardColor"
             label="Color"
-            options={[
-              { value: "same", label: "Same as checks" },
-              ...CARD_COLOR_OPTIONS.filter((o) => o.value === "accent"),
-            ].map((option) => ({
+            options={CARD_COLOR_ROW.map((option) => ({
               ...option,
-              preview: card(
-                effective.cardSelected,
-                option.value === "accent" ? "accent" : "control",
-              ),
+              preview: card(effective.cardSelected, option.value === "accent"),
             }))}
           />
         </More>

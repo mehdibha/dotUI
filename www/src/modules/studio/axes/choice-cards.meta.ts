@@ -8,11 +8,16 @@ export const SELECTED_OPTIONS = options(SELECTED_VALUES, {
   outline: { label: "Outline" },
 })
 
-/* The panel offers Accent beside Same as checks. */
 export const CARD_COLOR_OPTIONS = options(SOURCE_VALUES, {
   neutral: { label: "Neutral" },
   accent: { label: "Accent", credits: ["Geist"] },
 })
+
+/* The row: the follow, then the credited option. */
+export const CARD_COLOR_ROW = [
+  { value: "same", label: "Same as checks" },
+  ...CARD_COLOR_OPTIONS.filter((option) => option.value === "accent"),
+]
 
 export const OPTIONS = {
   cardSelected: SELECTED_OPTIONS,

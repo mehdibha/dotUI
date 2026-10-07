@@ -71,19 +71,14 @@ describe("selection controls", () => {
     const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.tokens).toEqual({})
     expect(ds.color?.scopes).toBeUndefined()
-    expect(ds.componentParams.checkbox).toEqual({
-      "card-selected": "tint",
-      "card-color": "control",
-    })
+    expect(ds.componentParams.checkbox).toEqual({ "card-selected": "tint" })
     expect(ds.componentParams["radio-group"]).toEqual({
       mark: "dot",
       "card-selected": "tint",
-      "card-color": "control",
     })
     expect(ds.componentParams.switch).toEqual({
       style: "inset",
       "card-selected": "tint",
-      "card-color": "control",
     })
     expect(ds.componentParams.slider).toEqual({ thumb: "knob", track: "thin" })
   })
@@ -206,57 +201,59 @@ describe("selection controls", () => {
   })
 
   it("the three cards ship one recipe", async () => {
-    for (const param of ["card-selected", "card-color"]) {
-      const recipes = await Promise.all(
-        CARDS.map(async (name) => {
-          const mod = await publishables[name]?.()
-          return mod?.publishable.stylesConfig.params?.[param]
-        }),
-      )
-      for (const recipe of recipes) expect(recipe, param).toEqual(recipes[0])
-    }
-    const mod = await publishables.checkbox!()
-    expect(
-      Object.keys(mod.publishable.stylesConfig.params?.["card-selected"] ?? {}),
-    ).toEqual(SELECTED_OPTIONS.map((option) => option.value))
+    const recipes = await Promise.all(
+      CARDS.map(async (name) => {
+        const mod = await publishables[name]?.()
+        return mod?.publishable.stylesConfig.params?.["card-selected"]
+      }),
+    )
+    for (const recipe of recipes) expect(recipe).toEqual(recipes[0])
+    expect(Object.keys(recipes[0] ?? {})).toEqual(
+      SELECTED_OPTIONS.map((option) => option.value),
+    )
   })
 
   it("Accent cards fork off neutral checks only", () => {
-    const accent = (raw: Record<string, unknown>) =>
-      CARDS.map(
-        (name) =>
-          designSystemOf(parseState(raw)).componentParams[name]?.["card-color"],
-      )
-    expect(accent({ checkboxColor: "neutral", cardColor: "accent" })).toEqual([
+    const scope = (raw: Record<string, unknown>) =>
+      designSystemOf(parseState(raw)).color?.scopes?.["choice-card"]
+    expect(scope({ checkboxColor: "neutral", cardColor: "accent" })).toBe(
       "accent",
-      "accent",
-      "accent",
-    ])
-    expect(accent({ cardColor: "accent" })).toEqual([
-      "control",
-      "control",
-      "control",
-    ])
-    expect(accent({ checkboxColor: "neutral" })).toEqual([
-      "control",
-      "control",
-      "control",
-    ])
+    )
+    expect(scope({ cardColor: "accent" })).toBeUndefined()
+    expect(scope({ checkboxColor: "neutral" })).toBeUndefined()
   })
 
-  it("Accent cards ship the accent over the selection tokens", async () => {
+  // `@theme inline` bakes `--color-selection` to `var(--selection)`, so the
+  // card must re-declare the `:root` names the export carries.
+  it("Accent cards ship the accent cluster on the card's root names", () => {
     const preset = designSystemOf(
       parseState({ checkboxColor: "neutral", cardColor: "accent" }),
     )
-    const { item } = publish({
-      publishable: selectPublishable(await publishables.checkbox!(), preset),
-      preset,
-    })
-    const code = (item.files ?? []).map((f) => f.content).join("\n")
-    expect(code).toContain(
-      "has-data-label:[--color-selection:var(--color-accent)]",
+    const { css, cssVars } = mergePresetCssFields({}, preset)
+    const card = Object.keys(css ?? {}).find(
+      (selector) =>
+        selector.includes("[data-checkbox-control]") &&
+        !selector.startsWith(".dark"),
     )
-    expect(code).not.toMatch(/--studio-/)
+    expect(card).toContain(":has([data-label])")
+    for (const selector of [card!, `.dark ${card}`]) {
+      const vars = css?.[selector] as Record<string, string>
+      expect(Object.keys(vars).sort(), selector).toEqual([
+        "--fg-on-selection",
+        "--selection",
+        "--selection-hover",
+        "--selection-muted",
+      ])
+      for (const [name, value] of Object.entries(vars)) {
+        expect(cssVars?.theme?.[`--color-${name.slice(2)}`]).toBe(
+          `var(${name})`,
+        )
+        expect(value, `${selector} ${name}`).toMatch(/^oklch\(/)
+      }
+    }
+    expect((css?.[card!] as Record<string, string>)["--selection"]).toBe(
+      cssVars?.light?.accent,
+    )
   })
 
   // `dark:` outranks `disabled:` in the cascade, so a dark paint must opt out
