@@ -49,8 +49,7 @@ export const claude = definePreset({
     roleCard: "xl",
 
     // States
-    // A 1px blue ring over a 1px page line.
-    focusStyle: "inset",
+    // A 1px blue ring outside a page gap.
     focusWidth: 1,
     disabledTreatment: "fade",
     cursorDisabled: "default",
@@ -111,6 +110,8 @@ export const claude = definePreset({
     // Data display
     tableHeaderLabel: "strong",
     kbdTreatment: "outline",
+    // A leading chevron-right that turns open.
+    accordionMarker: "leading-caret",
     chartPalette: "vivid",
   },
 })
