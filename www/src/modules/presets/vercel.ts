@@ -13,11 +13,9 @@ export const vercel = definePreset({
     preserveSeed: true,
     buttonColor: "neutral",
     selectionColor: "neutral",
-    checkboxColor: "neutral",
-    radioColor: "neutral",
     // Success is blue in Geist (Note, Toast); green is palette only.
     successSeed: "#0072f5",
-    // amber-700: the 800 fill (#ff990a) loses its black label in the engine.
+    // amber-700: the 800 fill (#ff990a) darkens and loses its black label in the engine.
     warningSeed: "#ffb224",
     // red-800, the fill Geist paints error buttons and toasts with.
     dangerSeed: "#da2f35",
@@ -61,34 +59,52 @@ export const vercel = definePreset({
     // Menus fade in without zooming.
     motionEntrance: "fade",
 
-    // Components
+    // Buttons
     buttonSecondary: "outline",
     segmentedTrack: "outline",
+
+    // Selection
+    checkboxColor: "neutral",
     // Checks wear gray-700 (#8f8f8f), stronger than the field edge.
     checkEdge: "strong",
+    radioColor: "neutral",
     radioMark: "ring",
-    cardSelected: "outline-tint",
     // Blue choice cards beside black checks.
+    cardSelected: "outline-tint",
     cardColor: "accent",
+    sliderTrack: "medium",
+
+    // Inputs
     inputHover: "edge",
     inputError: "icon-message",
     selectTrigger: "field",
-    sliderTrack: "medium",
+
+    // Menus & popovers
     menuRows: "match",
     // The command input is bare text over a hairline, no magnifier.
     menuSearch: "prompt",
+
+    // Dialogs
+    // #f2f2f2 at 80%, no blur.
     dialogBackdrop: "wash",
     dialogBackdropStrength: "heavy",
     dialogSections: "footer-band",
     dialogActions: "spread",
     mobileDialogs: "sheet",
+
+    // Navigation
     tabStyle: "line",
+    // Tabs and sidebar items stay 400 at rest and when current.
     navWeight: "regular",
     linkUnderline: "hover",
+
+    // Feedback
     alertStyle: "outline",
     toastStatus: "bold",
     spinnerStyle: "blades",
     progressTrack: "thick",
+
+    // Data display
     kbdTreatment: "outline",
     cardFooter: "band",
   },
