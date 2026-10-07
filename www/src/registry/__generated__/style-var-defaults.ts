@@ -96,6 +96,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--studio-segmented-control-radius": "var(--studio-radius-container)",
 	"--studio-segmented-control-state-duration": "150ms",
 	"--studio-segmented-control-state-ease": "cubic-bezier(0.4, 0, 0.2, 1)",
+	"--studio-sidebar-button-radius": "var(--studio-sidebar-item-radius)",
 	"--studio-sidebar-inset-radius": "var(--studio-radius-panel)",
 	"--studio-sidebar-item-radius": "var(--studio-radius-inline-item)",
 	"--studio-sidebar-radius": "var(--studio-radius-container)",
