@@ -3,6 +3,7 @@ import path from "node:path"
 import { compile } from "@tailwindcss/node"
 import { describe, expect, it } from "vitest"
 
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
 import { publishables } from "@/registry/__generated__/publishables"
 import inputMeta from "@/registry/ui/input/meta"
 import { FIELD_SHELLS, inputStyles } from "@/registry/ui/input/styles"
@@ -230,6 +231,21 @@ describe("field shells", () => {
       const trigger = /\btrigger: "([^"]*)"/.exec(content)?.[1]
       expect(trigger, style).toContain("invalid:border-border-danger")
     }
+  })
+
+  /* Carbon, Material 3, Untitled UI: the icon rides the invalid fill's own
+     background-image, so no second background class fights it. */
+  it("an in-field error icon layers over the invalid fill", async () => {
+    for (const style of Object.keys(SIGNATURE)) {
+      const content = await shipped("input", {
+        input: { style, errorIcon: "inside" },
+      })
+      expect(content, style).toContain("invalid:[--invalid-icon:")
+      expect(content, style).not.toContain("invalid:bg-[")
+    }
+    expect(JSON.stringify(baseRegistryCss)).toContain(
+      "var(--invalid-icon, none)",
+    )
   })
 
   /* Supabase: 34px select buttons beside 34px fields. */
