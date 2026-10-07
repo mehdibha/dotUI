@@ -20,7 +20,7 @@ export interface Studio {
   effective: Effective
   /** The engine's view: what the preview renders and the export ships. */
   designSystem: DesignSystem
-  set: <K extends keyof StudioState>(key: K) => (value: StudioState[K]) => void
+  set: <K extends keyof StudioState & string>(key: K) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
 }
 
@@ -29,7 +29,7 @@ export function useStudio(): Studio {
   return useMemo(() => {
     const values = effective(state).values
     const set =
-      <K extends keyof StudioState>(key: K) =>
+      <K extends keyof StudioState & string>(key: K) =>
       (value: StudioState[K]) =>
         edit(setKey(state, key, value))
     return {
