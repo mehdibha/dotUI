@@ -37,9 +37,12 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { usePreviewFocus } from "@/modules/studio/focus"
 import {
+  BOARD_SLUG_PREFIX,
   pingIframe,
   sendInspectorMode,
+  sendPreviewFocus,
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
@@ -49,6 +52,7 @@ import {
 import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { useDocked } from "@/modules/studio/rows"
+import { CHAPTERS } from "@/modules/studio/state"
 import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -76,6 +80,24 @@ const ALL_COMPONENTS = componentsData
 
 // Composed, real-world previews: the landing cards grid plus the page blocks.
 const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
+
+const previewName = (slug: string) =>
+  [...PREVIEW_ITEMS, ...ALL_COMPONENTS].find((item) => item.slug === slug)
+    ?.name ?? slug
+
+/** Boards share their panel chapter's or page's id and label. */
+const BOARD_TITLES = new Map(
+  CHAPTERS.flatMap((chapter) => [
+    [chapter.id, chapter.label] as const,
+    ...(chapter.pages ?? []).map((page) => [page.id, page.label] as const),
+  ]),
+)
+
+/** The picker's first item: the preview shows what the panel is editing. */
+const FOLLOW = "follow-panel"
+/** How long a released focus keeps its board, so moving between popovers
+ *  never flashes the user's preview. */
+const FOCUS_RELEASE_MS = 200
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -162,7 +184,18 @@ export function PreviewPanel({ className }: { className?: string }) {
   }, [docked])
   const isMobile = useIsMobile()
 
-  const effectivePreview = preview
+  // While following, the panel's focus takes the preview over with its board.
+  const focus = usePreviewFocus()
+  const [following, setFollowing] = useState(true)
+  const target = following ? (focus?.board ?? null) : null
+  const [board, setBoard] = useState<string | null>(null)
+  useEffect(() => {
+    if (target || !following) return setBoard(target)
+    const timer = setTimeout(() => setBoard(null), FOCUS_RELEASE_MS)
+    return () => clearTimeout(timer)
+  }, [target, following])
+
+  const effectivePreview = board ? BOARD_SLUG_PREFIX + board : preview
   const constrained = size !== "desktop"
   // Always found: `size` is a DeviceSize and SIZE_OPTIONS covers all three.
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
@@ -278,6 +311,29 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
+  // Docked, panel popovers cover the dock, never the preview.
+  const sentFocus = following ? focus : null
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () =>
+      sendPreviewFocus(iframe, {
+        member: sentFocus?.member,
+        axis: sentFocus?.axis,
+        popover: !!sentFocus?.popover && !docked,
+      })
+    if (iframe.contentWindow) send()
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [sentFocus, docked])
+
   // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
   // display mode, so it survives preview switches (the iframe remounts per preview).
   useEffect(() => {
@@ -330,6 +386,11 @@ export function PreviewPanel({ className }: { className?: string }) {
         <Input placeholder="Search previews…" />
       </SearchField>
       <ListBox className={listClassName}>
+        <ListBoxSection>
+          <ListBoxItem id={FOLLOW} textValue="Follow the panel">
+            <span className="truncate">Follow the panel</span>
+          </ListBoxItem>
+        </ListBoxSection>
         {/* Real-world previews — the whole system composed into full screens. */}
         <ListBoxSection>
           <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
@@ -368,8 +429,10 @@ export function PreviewPanel({ className }: { className?: string }) {
      controlled so the drawer can be driven by the same Select. */
   const previewPicker = (
     <Select
-      value={effectivePreview}
+      value={following ? FOLLOW : preview}
       onChange={(v) => {
+        setFollowing(v === FOLLOW)
+        if (v === FOLLOW) return
         navigate({
           search: (prev) => ({ ...prev, preview: v as string }),
         })
@@ -390,7 +453,9 @@ export function PreviewPanel({ className }: { className?: string }) {
         {/* flex-initial overrides the base flex-1 (basis-0), which has no
             space to grow into inside the pill's shrink-to-fit box and
             collapses the value to a sliver. */}
-        <SelectValue className="min-w-0 flex-initial max-sm:sr-only" />
+        <SelectValue className="min-w-0 flex-initial max-sm:sr-only">
+          {board ? BOARD_TITLES.get(board) : previewName(preview)}
+        </SelectValue>
         <ChevronsUpDownIcon data-icon="inline-end" className="max-sm:hidden" />
         <PanelsTopLeftIcon className="sm:hidden" />
       </Button>
