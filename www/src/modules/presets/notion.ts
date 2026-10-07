@@ -30,7 +30,7 @@ export const notion = definePreset({
     bodyFont: "System",
     monoFont: "System Mono",
     titleStyle: "compact",
-    // 28px controls with 14px labels.
+    // 14/20 UI text on Compact's 28px controls.
     uiTextSize: "14",
     fieldLabel: "medium",
 
@@ -46,6 +46,7 @@ export const notion = definePreset({
     rolePanel: "2xl",
 
     // Space
+    // md buttons, inputs and menu rows are 28px.
     density: "compact",
 
     // Surfaces
@@ -74,8 +75,6 @@ export const notion = definePreset({
 
     // Menus and overlays
     menuArrows: "none",
-    // 28px rows, the control height.
-    menuRows: "match",
     menuSearch: "bar",
     menuScale: "large",
     dialogBackdrop: "scrim",
