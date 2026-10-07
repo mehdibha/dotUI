@@ -471,3 +471,49 @@ exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
   },
 }
 `;
+
+exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "tone",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "inverse",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "selected": "inverse",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {},
+}
+`;

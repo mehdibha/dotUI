@@ -62,9 +62,9 @@ describe("button styles", () => {
     )
   })
 
-  // Duolingo's CSS (E27): 2px lip on the pill size, a 2px stroke under eel
-  // ink, instant press.
-  test("Ledge: the xs pill sinks 2px; the stroke is 2px whatever the stroke axis", async () => {
+  // Duolingo's CSS (E27): 2px lip on the pill size, the control stroke
+  // under eel ink, instant press.
+  test("Ledge: the xs pill sinks 2px; the secondary takes the control stroke", async () => {
     const ledge = BUTTON_STYLES.ledge
     for (const { variant, size, class: cls } of ledge.compoundVariants) {
       expect(size).toBe("xs")
@@ -76,15 +76,15 @@ describe("button styles", () => {
     }
     expect(ledge.variants.variant.primary).toContain("duration-0")
     const secondary = BUTTON_SECONDARY.ledge.variants.variant.secondary
-    expect(secondary).toContain("border-2")
+    expect(secondary).toContain("border-(length:--studio-control-stroke)")
     expect(secondary).toContain("text-fg-on-neutral")
     expect(secondary).toContain("duration-0")
-    const content = await shipped("button", {
-      buttonStyle: "ledge",
-      controlStroke: "regular",
-    })
-    expect(content).toContain("border-2 border-border-control")
-    expect(content).toContain("shadow-[0_2px_0_0_var(--color-primary-active)]")
+    const at = (controlStroke: string) =>
+      shipped("button", { buttonStyle: "ledge", controlStroke })
+    expect(await at("regular")).toContain("border border-border-control")
+    const bold = await at("bold")
+    expect(bold).toContain("border-2 border-border-control")
+    expect(bold).toContain("shadow-[0_2px_0_0_var(--color-primary-active)]")
   })
 })
 
@@ -121,6 +121,20 @@ describe("button ⇄ toggle-button parity", () => {
         button.params?.[param]?.[value],
       )
     }
+  })
+
+  test("both list the same values", () => {
+    for (const param of [
+      "style",
+      "secondary",
+      "press",
+      "case",
+      "linkUnderline",
+      "linkColor",
+    ] as const)
+      expect(toggleButtonMeta.params[param].values, param).toEqual(
+        buttonMeta.params[param].values,
+      )
   })
 
   test("the toggle's selected looks are the current page's", async () => {

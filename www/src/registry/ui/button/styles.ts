@@ -95,7 +95,8 @@ export const BUTTON_STYLES = {
       },
     },
   },
-  // Duolingo: a 4px lip a shade under the fill (2px on the xs pill): the
+  // Duolingo: a 4px lip a shade under the fill (2px on xs, standing in for
+  // its 26px pill size): the
   // ramp's pressed step in light, which flips lighter in dark. Press and
   // disabled sink into it; hover is a brightness filter; nothing eases.
   ledge: {
@@ -175,13 +176,13 @@ export const BUTTON_SECONDARY = {
       },
     },
   },
-  // Duolingo's stroke button: a 2px edge and a 2px lip in the edge color
-  // under eel ink.
+  // Duolingo's stroke button: the control stroke (Duolingo sets 2px) and a
+  // 2px lip in the edge color under eel ink.
   ledge: {
     variants: {
       variant: {
         secondary:
-          "border-2 border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
       },
     },
   },
@@ -249,7 +250,8 @@ export const BUTTON_PRESS = {
 export const UPPERCASE = "tracking-[0.05em] uppercase"
 
 export const BUTTON_CASE = {
-  // A select trigger shows a value, not a label, so it keeps its case.
+  // UPPERCASE behind a guard (static for Tailwind; parity-tested): a select
+  // trigger shows a value, not a label, so it keeps its case.
   uppercase: {
     base: "not-has-data-[slot=select-value]:tracking-[0.05em] not-has-data-[slot=select-value]:uppercase",
   },

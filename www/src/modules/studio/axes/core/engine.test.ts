@@ -330,6 +330,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonColor: "neutral", buttonSecondary: "solid" },
     { buttonSecondary: "solid" },
   ],
+  "toggles/solid-secondary-needs-strong-selected": [
+    { buttonSecondary: "solid" },
+    { buttonColor: "neutral", buttonSecondary: "solid" },
+  ],
   "buttons/closed-style-owns-secondary": [
     { buttonStyle: "bevel", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
