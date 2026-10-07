@@ -13,7 +13,8 @@
      double, cards lift a quarter rung and overlays take the hairline
      (Atlassian, Spectrum, HeroUI). Bevel draws Polaris's inset rim instead
      of a border; Ledge draws the control stroke with a bottom lip on cards
-     and tiles, which a pressed or disabled tile sinks into (Duolingo).
+     and tiles, which a pressed or disabled tile sinks into, and no shadow
+     on popovers or dialogs (Duolingo).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg); Low is shadcn New York, Medium shadcn Luma.
@@ -199,7 +200,10 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const bevel = state.surfaceEdge === "bevel"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
-  const [card, popover, modal] = ladder(state)
+  const [card, ...floating] = ladder(state)
+  // Ledge's depth is the lip; floating layers draw the plain stroke only
+  // (Duolingo: no shadow on popovers or dialogs).
+  const [popover, modal] = state.surfaceEdge === "ledge" ? [0, 0] : floating
   const rimmed = (layers: ShadowLayer[]) =>
     bevel ? [...BEVEL, ...layers] : layers
   return {

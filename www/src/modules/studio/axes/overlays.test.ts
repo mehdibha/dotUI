@@ -21,6 +21,17 @@ describe("overlays chapters", () => {
     expect(ds.componentParams.modal).toMatchObject({ position: "top" })
   })
 
+  test("tooltips keep the detail rung when only items go square", () => {
+    const detail = { "--studio-tooltip-radius": "var(--studio-radius-detail)" }
+    expect(
+      designSystemOf(parseState({ roleItem: "none" })).tokens,
+    ).toMatchObject(detail)
+    for (const state of [{}, { roleItem: "none", roleControl: "none" }])
+      expect(designSystemOf(parseState(state)).tokens).not.toHaveProperty(
+        "--studio-tooltip-radius",
+      )
+  })
+
   test("tooltips: style on tooltip", () => {
     expect(
       designSystemOf(parseState({ tooltipStyle: "surface" })).componentParams
