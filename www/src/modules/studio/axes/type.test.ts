@@ -27,13 +27,13 @@ import { DEFAULT_STATE, effective, parseState } from "./index"
 import { SECTION_LABEL_OPTIONS, TITLE_OPTIONS } from "./type.meta"
 
 const TITLE_SLOTS = ["card", "dialog", "empty", "questionnaire"]
-// The roomier tiers keep Comfortable's titles.
+// Spacious keeps Comfortable's titles; Touch steps up with its 16px text.
 const TITLE_TIER: Record<Density, string> = {
   compact: "compact",
   default: "default",
   comfortable: "comfortable",
   spacious: "comfortable",
-  touch: "comfortable",
+  touch: "touch",
 }
 
 const classes = (value: ClassValue | undefined): string =>
@@ -86,7 +86,7 @@ describe("typography axis", () => {
       expect(ds.componentParams[name]?.labels, `${name}`).toBe("sentence")
   })
 
-  it("Quiet titles flatten to the classes they shipped before", async () => {
+  it("Quiet titles flatten to each tier's classes", async () => {
     const gap =
       "text-pretty [&:not(:has(~[data-questionnaire-description]))]:mb-(--questionnaire-title-gap)"
     const before: Record<string, Record<string, string>> = {
@@ -95,6 +95,8 @@ describe("typography axis", () => {
         default: "font-heading text-base leading-snug font-medium",
         comfortable:
           "font-heading text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+        touch:
+          "font-heading text-lg leading-normal font-medium group-data-[size=sm]/card:text-base",
       },
       dialog: {
         compact: "font-heading text-sm font-medium",
@@ -102,16 +104,20 @@ describe("typography axis", () => {
           "font-heading font-medium in-data-modal:text-base in-data-modal:leading-none",
         comfortable:
           "font-heading text-lg font-semibold in-data-modal:leading-none in-data-popover:text-sm in-data-popover:font-medium",
+        touch:
+          "font-heading text-lg font-semibold in-data-modal:leading-none in-data-popover:text-base in-data-popover:font-medium",
       },
       empty: {
         compact: "font-heading text-sm font-medium tracking-tight",
         default: "font-heading text-base font-medium tracking-tight",
         comfortable: "font-heading text-lg font-medium tracking-tight",
+        touch: "font-heading text-lg font-medium tracking-tight",
       },
       questionnaire: {
         compact: `${gap} text-sm font-semibold`,
         default: `${gap} text-base leading-snug font-medium`,
         comfortable: `${gap} text-base leading-snug font-medium`,
+        touch: `${gap} text-lg leading-snug font-medium`,
       },
     }
     for (const name of TITLE_SLOTS)
@@ -120,6 +126,33 @@ describe("typography axis", () => {
           await slot(name, "title", density, { titles: "quiet" }),
           `${name}/${density}`,
         ).toBe(before[name]?.[TITLE_TIER[density]])
+  })
+
+  it("Compact titles sit on the tier's text rung; Quiet and Tight above it", async () => {
+    const rung: Record<Density, string> = {
+      compact: "text-xs",
+      default: "text-sm",
+      comfortable: "text-sm",
+      spacious: "text-sm",
+      touch: "text-base",
+    }
+    const size = /\btext-(xs|sm|base|lg|xl|\dxl)\b/
+    const steps = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl"]
+    for (const name of ["card", "empty", "questionnaire"])
+      for (const density of DENSITIES) {
+        const where = `${name}/${density}`
+        const compact = await slot(name, "title", density, {
+          titles: "compact",
+        })
+        expect(compact.match(size)?.[0], `${where}`).toBe(rung[density])
+        for (const titles of ["quiet", "tight"]) {
+          const title = await slot(name, "title", density, { titles })
+          const step = steps.indexOf(title.match(size)?.[0] ?? "")
+          expect(step, `${where}/${titles}`).toBeGreaterThan(
+            steps.indexOf(rung[density]),
+          )
+        }
+      }
   })
 
   it("non-title headings opt out of the heading face and tracking", async () => {

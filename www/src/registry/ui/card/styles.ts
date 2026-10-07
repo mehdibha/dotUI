@@ -136,7 +136,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
           touch: {
             slots: {
               title:
-                "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+                "text-lg leading-normal font-medium group-data-[size=sm]/card:text-base",
             },
           },
         },
@@ -147,7 +147,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
           spacious: { slots: { title: "text-sm font-semibold" } },
-          touch: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-base font-semibold" } },
         },
       },
       tight: {
@@ -173,7 +173,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
           touch: {
             slots: {
               title:
-                "text-base leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-sm",
+                "text-lg leading-normal font-semibold tracking-tight group-data-[size=sm]/card:text-base",
             },
           },
         },

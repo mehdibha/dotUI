@@ -134,7 +134,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
           spacious: { slots: { title: "text-sm font-semibold" } },
-          touch: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-base font-semibold" } },
         },
       },
       tight: {

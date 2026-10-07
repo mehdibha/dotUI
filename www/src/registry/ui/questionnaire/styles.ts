@@ -132,7 +132,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
             slots: { title: "text-base leading-snug font-medium" },
           },
           touch: {
-            slots: { title: "text-base leading-snug font-medium" },
+            slots: { title: "text-lg leading-snug font-medium" },
           },
         },
       },
@@ -142,7 +142,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           default: { slots: { title: "text-sm font-semibold" } },
           comfortable: { slots: { title: "text-sm font-semibold" } },
           spacious: { slots: { title: "text-sm font-semibold" } },
-          touch: { slots: { title: "text-sm font-semibold" } },
+          touch: { slots: { title: "text-base font-semibold" } },
         },
       },
       tight: {
@@ -165,7 +165,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
           },
           touch: {
             slots: {
-              title: "text-base leading-snug font-semibold tracking-tight",
+              title: "text-lg leading-snug font-semibold tracking-tight",
             },
           },
         },
