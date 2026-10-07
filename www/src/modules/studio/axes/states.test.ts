@@ -60,6 +60,16 @@ describe("focus ring", () => {
       "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
     })
   })
+
+  test("on a Strong edge a neutral ring takes the text ink", () => {
+    // The 700 step is the Strong edge itself (Airbnb #222, Spotify).
+    const system = resolve({ focusColor: "neutral", controlEdge: "strong" })
+    expect(system.color?.overrides).toEqual({
+      "color-border-focus": { palette: "neutral", job: "text" },
+      "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
+    })
+    expect(resolve({ controlEdge: "strong" }).color?.overrides).toBeUndefined()
+  })
 })
 
 describe("field focus", () => {

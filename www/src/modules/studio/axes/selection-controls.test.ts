@@ -92,7 +92,11 @@ describe("selection controls", () => {
   it("a control's fill forks it off the selection tokens as a recipe scope", () => {
     const ds = designSystemOf(parseState({ switchColor: "neutral" }))
     expect(ds.tokens).toEqual({})
-    expect(ds.color?.scopes).toEqual({ switch: "neutral" })
+    // Its cards follow the checks.
+    expect(ds.color?.scopes).toEqual({
+      switch: "neutral",
+      "choice-card": "accent",
+    })
     expect(
       designSystemOf(
         parseState({
@@ -101,7 +105,7 @@ describe("selection controls", () => {
           switchColor: "neutral",
         }),
       ).color?.scopes,
-    ).toEqual({ radio: "neutral", switch: "neutral" })
+    ).toEqual({ radio: "neutral", switch: "neutral", "choice-card": "accent" })
   })
 
   it("a fill matching the selection source is no fork", () => {
@@ -116,6 +120,7 @@ describe("selection controls", () => {
       radio: "accent",
       switch: "accent",
       slider: "accent",
+      "choice-card": "neutral",
     })
     // A selection seed paints the selection leaf; a check on that leaf
     // follows it, a check off it still forks to its own source.
@@ -266,14 +271,24 @@ describe("selection controls", () => {
     )
   })
 
-  it("Accent cards fork off neutral checks only", () => {
+  it("cards fork only where a control's own fill differs", () => {
     const scope = (raw: Record<string, unknown>) =>
       designSystemOf(parseState(raw)).color?.scopes?.["choice-card"]
     expect(scope({ checkboxColor: "neutral", cardColor: "accent" })).toBe(
       "accent",
     )
     expect(scope({ cardColor: "accent" })).toBeUndefined()
-    expect(scope({ checkboxColor: "neutral" })).toBeUndefined()
+    // Same as checks paints the radio and switch cards neutral too.
+    expect(scope({ checkboxColor: "neutral" })).toBe("neutral")
+    expect(
+      scope({
+        checkboxColor: "neutral",
+        radioColor: "neutral",
+        switchColor: "neutral",
+      }),
+    ).toBeUndefined()
+    // Accent checks paint every card accent, a neutral radio's included.
+    expect(scope({ radioColor: "neutral" })).toBe("accent")
   })
 
   // `@theme inline` bakes `--color-selection` to `var(--selection)`, so the

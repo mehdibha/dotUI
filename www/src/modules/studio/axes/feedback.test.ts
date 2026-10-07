@@ -288,6 +288,13 @@ describe("shipped code", () => {
     expect(code).toContain('from "@/components/ui/button"')
   })
 
+  it("the toast title keeps the body face over the global heading rule", async () => {
+    // Base UI renders it as an <h2>.
+    expect(await ship("toast")).toMatch(
+      /title: "font-sans font-medium tracking-normal/,
+    )
+  })
+
   it("inverse toasts ship solid status icons and a quiet action", async () => {
     const code = await ship("toast", { toastStyle: "inverse" })
     for (const status of ["success", "warning", "danger", "info"])

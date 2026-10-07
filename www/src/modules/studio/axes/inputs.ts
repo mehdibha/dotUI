@@ -2,6 +2,7 @@
    wears, its pointer state and its height. Engine: `input.style`,
    `input.hover`, `input.height`. */
 
+import { STRONG_EDGE } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -58,8 +59,21 @@ export const INPUT_SCHEMA: ChapterSchema<typeof INPUT_DEFAULTS> = {
   inputHeight: oneOf(HEIGHT_VALUES),
 }
 
+/* The indicator's rule is the field's only edge: on a Soft or Firm control
+   edge it takes Color's Strong edge (Material 3 on-surface-variant, Carbon
+   border-strong), which clears 3:1 on the well. */
+export function indicatorTokens(inputStyle: string, controlEdge: string) {
+  return inputStyle === "indicator" && controlEdge !== "strong"
+    ? {
+        "--indicator-edge": STRONG_EDGE,
+        "--studio-indicator-edge": "var(--indicator-edge)",
+      }
+    : undefined
+}
+
 export function resolveInputs(state: Effective): Resolved {
   return {
+    tokens: indicatorTokens(state.inputStyle, state.controlEdge),
     params: {
       input: {
         style: state.inputStyle,

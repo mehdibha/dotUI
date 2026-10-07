@@ -47,7 +47,8 @@ const { useStyles, styles } = createStyles(toastMeta, {
       body: "flex min-w-0 items-center gap-2",
       icon: "flex size-4 shrink-0 items-center justify-center **:[svg]:size-4 **:[svg]:shrink-0",
       message: "flex min-w-0 flex-1 flex-col gap-0.5",
-      title: "font-medium empty:hidden",
+      // Base UI's title is an <h2>; keep the body face, not the heading's.
+      title: "font-sans font-medium tracking-normal empty:hidden",
       description: "empty:hidden",
       actions: "ml-2 flex shrink-0 items-center gap-1",
       action: "max-w-32 empty:hidden **:[span]:truncate",

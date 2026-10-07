@@ -107,10 +107,15 @@ const mix = (color: string, pct: number) =>
   `color-mix(in oklab, ${color} ${pct}%, transparent)`
 
 /* The neutral ink re-points the focus pair to the neutral ramp at the steps
-   the accent pair sits on (solid = 700, ui-active = 300). */
+   the accent pair sits on (solid = 700, ui-active = 300). On a Strong edge,
+   that same 700 step, the ring takes the text ink like the field does. */
 const NEUTRAL_FOCUS: TokenOverrides = {
   "color-border-focus": { palette: "neutral", job: "solid" },
   "color-border-focus-muted": { palette: "neutral", job: "ui-active" },
+}
+const INK_FOCUS: TokenOverrides = {
+  ...NEUTRAL_FOCUS,
+  "color-border-focus": { palette: "neutral", job: "text" },
 }
 
 const DISABLED_TOKENS = [
@@ -194,9 +199,9 @@ export function resolveStates(state: Effective): Resolved {
   if (state.selectionUiText === "selectable")
     tokens["--user-select-ui"] = "auto"
 
-  return state.focusColor === "neutral"
-    ? { tokens, color: { overrides: NEUTRAL_FOCUS } }
-    : { tokens }
+  if (state.focusColor !== "neutral") return { tokens }
+  const overrides = state.controlEdge === "strong" ? INK_FOCUS : NEUTRAL_FOCUS
+  return { tokens, color: { overrides } }
 }
 
 export const chapter = defineChapter({

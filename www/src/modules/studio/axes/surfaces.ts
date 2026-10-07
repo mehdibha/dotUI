@@ -11,7 +11,8 @@
    - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
      edgeless system's dark is derived: shadows die on near-black, so they
      double, cards lift a quarter rung and overlays take the hairline
-     (Atlassian, Spectrum, HeroUI). Bevel draws Polaris's inset rim instead
+     (Atlassian, Spectrum, HeroUI), unless Tonal's steps already part them
+     (Material 3's dark menus and dialogs draw no edge). Bevel draws Polaris's inset rim instead
      of a border; Ledge draws the control stroke with a bottom lip on cards
      and tiles, which a pressed or disabled tile sinks into, and no shadow
      on popovers or dialogs (Duolingo).
@@ -222,7 +223,10 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
     popover: {
       edge: bevel
         ? both(NONE)
-        : { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
+        : {
+            light: edgeless ? NONE : HAIRLINE,
+            dark: edgeless && tonal ? NONE : HAIRLINE,
+          },
       bg: {
         light: grouped ? WHITE : tonal ? step("50") : step("25"),
         dark: HALF,

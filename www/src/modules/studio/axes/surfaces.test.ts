@@ -222,6 +222,16 @@ describe("surfaces", () => {
     )
   })
 
+  test("an edgeless tonal system keeps its dark overlays edgeless", () => {
+    const tokens = tokensFor({
+      surfaceEdge: "none",
+      surfaceLayers: "tonal",
+      surfaceShadow: "low",
+    })
+    expect(tokens["--overlay-border"]).toBe("transparent")
+    expect(tokens["--card-border"]).toBe("transparent")
+  })
+
   test("grouped puts white cards and overlays on the page in light", () => {
     const tokens = tokensFor({ surfaceLayers: "grouped" })
     expect(tokens["--color-card"]).toBe(

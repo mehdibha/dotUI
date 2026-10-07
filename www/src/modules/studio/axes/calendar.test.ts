@@ -91,6 +91,7 @@ describe("date & time axes", () => {
       calendar: "neutral",
       "range-calendar": "neutral",
       "time-picker-columns": "neutral",
+      "choice-card": "neutral",
     })
   })
 
