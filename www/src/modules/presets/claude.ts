@@ -49,8 +49,11 @@ export const claude = definePreset({
     roleCard: "xl",
 
     // States
-    // A 1px blue ring outside a page gap.
+    // A 1px #2a78d6 ring hugging the edge, a page-colored line inside fills.
+    focusStyle: "inset",
     focusWidth: 1,
+    // Fields: the 10% ring turns blue.
+    focusInputStyle: "border",
     disabledTreatment: "fade",
     cursorDisabled: "default",
     // No ::selection rule.
@@ -106,12 +109,12 @@ export const claude = definePreset({
     spinnerStyle: "ring-track",
     progressTrack: "medium",
     progressTrackStyle: "bordered",
+    // A 6px #2a78d6 fill.
+    progressColor: "same-checks",
 
     // Data display
     tableHeaderLabel: "strong",
     kbdTreatment: "outline",
-    // A leading chevron-right that turns open.
-    accordionMarker: "leading-caret",
     chartPalette: "vivid",
   },
 })
