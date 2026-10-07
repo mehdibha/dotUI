@@ -58,7 +58,7 @@ export const baseRegistryCss = {
 				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility invalid-fill": {
-			"background-image": "linear-gradient(var(--invalid-fill), var(--invalid-fill))",
+			"background-image": "var(--invalid-icon, none), linear-gradient(var(--invalid-fill), var(--invalid-fill))",
 		},
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
