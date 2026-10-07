@@ -24,6 +24,7 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -518,3 +519,5 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

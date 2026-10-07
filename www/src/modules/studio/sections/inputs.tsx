@@ -27,6 +27,7 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -405,3 +406,5 @@ export function InputsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

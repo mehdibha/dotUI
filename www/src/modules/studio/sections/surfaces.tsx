@@ -37,6 +37,7 @@ import {
   DialTrigger,
   ModifiedDot,
 } from "../dial"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio, StudioState } from "../state"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
@@ -262,3 +263,5 @@ function StyleList({
     />
   )
 }
+
+export const ROWS: RowMap = {}

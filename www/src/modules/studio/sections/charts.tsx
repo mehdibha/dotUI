@@ -17,6 +17,7 @@ import {
   DialSelect,
 } from "../dial"
 import { FamilyHero, HeroMember, UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -122,3 +123,5 @@ export function ChartsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

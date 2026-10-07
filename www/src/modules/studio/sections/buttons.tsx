@@ -41,6 +41,7 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
 
@@ -413,3 +414,5 @@ export function ButtonsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

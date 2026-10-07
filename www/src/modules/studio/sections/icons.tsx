@@ -42,6 +42,7 @@ import {
   DialSelect,
   DialSlider,
 } from "../dial"
+import type { RowMap } from "../family-page"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Effective, Studio } from "../state"
 
@@ -245,3 +246,5 @@ export function IconsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

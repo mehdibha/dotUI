@@ -30,6 +30,7 @@ import {
   DialSelect,
 } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Effective, Studio } from "../state"
 import { ChipButton } from "../use-axis"
@@ -326,3 +327,5 @@ export function TypeSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

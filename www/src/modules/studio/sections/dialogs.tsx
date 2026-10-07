@@ -31,6 +31,7 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
 
@@ -428,3 +429,5 @@ export function DialogsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

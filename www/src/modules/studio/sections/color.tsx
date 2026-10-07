@@ -36,6 +36,7 @@ import {
   DialTrigger,
 } from "../dial"
 import { More } from "../family-page"
+import type { RowMap } from "../family-page"
 import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Effective, Studio } from "../state"
@@ -252,3 +253,5 @@ export function ColorSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

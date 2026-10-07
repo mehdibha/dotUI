@@ -5,6 +5,7 @@
 import { useContext } from "react"
 
 import { DialLink } from "../dial"
+import type { RowMap } from "../family-page"
 import { PanelNav } from "../rows"
 import type { ChapterPage, Studio } from "../state"
 import { ButtonsPreview, ButtonsSection } from "./buttons"
@@ -27,6 +28,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
       "toggles",
       "segmented-control",
       "pagination",
+      "buttonMotion",
     ],
     label: "Buttons",
     aliases: [
@@ -43,7 +45,14 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "inputs",
-    owners: ["inputs", "field", "number-field", "otp-field", "select"],
+    owners: [
+      "inputs",
+      "field",
+      "number-field",
+      "otp-field",
+      "select",
+      "inputMotion",
+    ],
     label: "Inputs",
     aliases: [
       "Input",
@@ -65,7 +74,14 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "selection",
-    owners: ["checkbox", "radio", "switch", "choice-cards", "sliders"],
+    owners: [
+      "checkbox",
+      "radio",
+      "switch",
+      "choice-cards",
+      "sliders",
+      "selectionMotion",
+    ],
     label: "Selection",
     aliases: [
       "Checkbox",
@@ -80,7 +96,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "menus",
-    owners: ["menus", "tooltips"],
+    owners: ["menus", "tooltips", "menuMotion"],
     label: "Menus & popovers",
     aliases: [
       "Menu",
@@ -96,7 +112,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "dialogs",
-    owners: ["dialogs"],
+    owners: ["dialogs", "dialogMotion"],
     label: "Dialogs",
     aliases: ["Dialog", "Modal", "Alert dialog", "Drawer", "Sheet"],
     Preview: DialogsPreview,
@@ -104,7 +120,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "nav",
-    owners: ["navigation", "links", "breadcrumbs"],
+    owners: ["navigation", "links", "breadcrumbs", "navMotion"],
     label: "Navigation",
     aliases: ["Tabs", "Sidebar", "Link", "Breadcrumbs"],
     Preview: NavigationPreview,
@@ -112,7 +128,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "dates",
-    owners: ["calendar"],
+    owners: ["calendar", "dateMotion"],
     label: "Date & time",
     aliases: [
       "Calendar",
@@ -127,7 +143,7 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "display",
-    owners: ["tables", "accordion", "avatars", "kbd", "card"],
+    owners: ["tables", "accordion", "avatars", "kbd", "card", "displayMotion"],
     label: "Data display",
     aliases: [
       "Table",
@@ -144,7 +160,15 @@ export const COMPONENT_PAGES: ChapterPage[] = [
   },
   {
     id: "feedback",
-    owners: ["badges", "alert", "toast", "spinner", "skeleton", "progress"],
+    owners: [
+      "badges",
+      "alert",
+      "toast",
+      "spinner",
+      "skeleton",
+      "progress",
+      "feedbackMotion",
+    ],
     label: "Feedback",
     aliases: [
       "Badge",
@@ -184,3 +208,5 @@ export function ComponentsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}

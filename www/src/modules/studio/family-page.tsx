@@ -2,7 +2,7 @@
 
 /* A family page's parts. */
 
-import { useContext } from "react"
+import { createContext, useContext } from "react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
@@ -11,6 +11,19 @@ import { DialFolder } from "./dial"
 import { useCurrent } from "./selection"
 import { RevealAxis, useAxis, valueLabel } from "./use-axis"
 import type { AxisKey } from "./use-axis"
+
+/** Each key's one row, exported by the section that owns it. */
+export type RowMap = Partial<Record<AxisKey, React.ComponentType>>
+
+/** Every section's rows (`ALL_ROWS`), provided by the panel so sections
+ *  never import each other. */
+export const RowsContext = createContext<RowMap>({})
+
+/** A key's row, hosted anywhere: it edits that key everywhere. */
+export function Row({ axis }: { axis: AxisKey }) {
+  const Component = useContext(RowsContext)[axis]
+  return Component ? <Component /> : null
+}
 
 /** Every member's specimen in the current system, fill-only. */
 export function FamilyHero({ children }: { children: React.ReactNode }) {

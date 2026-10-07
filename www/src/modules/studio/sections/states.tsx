@@ -28,6 +28,7 @@ import {
 } from "../axes/states.meta"
 import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
 import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
+import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
 import { ArrowCursor, HandCursor, NotAllowedCursor } from "./cursors"
 
@@ -392,3 +393,5 @@ export function StatesSection({ studio }: { studio: Studio }) {
     </>
   )
 }
+
+export const ROWS: RowMap = {}
