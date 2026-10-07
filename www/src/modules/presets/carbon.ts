@@ -77,9 +77,8 @@ export const carbon = definePreset({
     sliderTrack: "hairline",
     cardSelected: "outline",
 
-    // Menus & popovers
+    // Menus & popovers: a tip on tooltips only; Menu and Dropdown draw none.
     menuInset: "full-bleed",
-    menuArrows: "both",
     menuIndicator: "check-start",
     menuSelectedRow: "tint",
     // Dropdown options are 40px, the field height.
