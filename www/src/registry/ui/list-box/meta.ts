@@ -26,6 +26,13 @@ export const LIST_PARAMS = {
     values: ["none", "tint"] as const,
     description: "Whether the selected item keeps a tinted row.",
   },
+  rows: {
+    kind: "enum",
+    default: "auto",
+    values: ["auto", "match", "step"] as const,
+    description:
+      "Item height: the density's own, the control height, or a step above.",
+  },
   labels: {
     kind: "enum",
     default: "sentence",

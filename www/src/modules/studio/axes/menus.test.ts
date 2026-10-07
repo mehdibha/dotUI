@@ -1,14 +1,19 @@
 import path from "node:path"
+import { cn } from "tailwind-variants"
 import { describe, expect, it } from "vitest"
 
+import { publishables } from "@/registry/__generated__/publishables"
+import type { Density } from "@/registry/types"
 import listBoxMeta from "@/registry/ui/list-box/meta"
 import menuMeta from "@/registry/ui/menu/meta"
 import { extractStylesConfig } from "@/publisher/build-time/extract-config"
+import { flatten } from "@/publisher/flatten"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
 
 const UI = path.resolve(__dirname, "../../../registry/ui")
+const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 
 describe("menus axis", () => {
   it("defaults yield the registry defaults and no tokens", () => {
@@ -19,6 +24,7 @@ describe("menus axis", () => {
       highlight: "neutral",
       inset: "inset",
       selected: "none",
+      rows: "auto",
       labels: "sentence",
     })
     expect(ds.componentParams["list-box"]).toEqual(ds.componentParams.menu)
@@ -44,6 +50,7 @@ describe("menus axis", () => {
         menuHighlight: "accent",
         menuInset: "full-bleed",
         menuSelectedRow: "tint",
+        menuRows: "step",
         sectionLabels: "caps",
         menuSearch: "prompt",
         menuScale: "large",
@@ -55,6 +62,7 @@ describe("menus axis", () => {
       highlight: "accent",
       inset: "full-bleed",
       selected: "tint",
+      rows: "step",
       labels: "caps",
     }
     expect(ds.componentParams.menu).toEqual(rows)
@@ -89,6 +97,28 @@ describe("menus axis", () => {
 })
 
 describe("list rows", () => {
+  it.each([
+    // [rows, compact, default, comfortable]: the row height in Tailwind units.
+    ["auto", "min-h-7", undefined, undefined],
+    ["match", "min-h-7", "min-h-8", "min-h-9"],
+    ["step", "min-h-8", "min-h-9", "min-h-10"],
+  ] as const)("%s rows ship one height per density", async (rows, ...want) => {
+    const { publishable } = await publishables["list-box"]!()
+    for (const [i, density] of DENSITIES.entries()) {
+      const flat = flatten({
+        stylesConfig: publishable.stylesConfig,
+        meta: publishable.meta,
+        density,
+        paramSelections: { rows },
+      })
+      const item = [flat.slots?.item].flat(Infinity as 1).join(" ")
+      const heights = cn(item)!
+        .split(" ")
+        .filter((c) => c.startsWith("min-h-"))
+      expect(heights, `${rows} ${density}`).toEqual(want[i] ? [want[i]] : [])
+    }
+  })
+
   it("menu ships list-box's recipe and params, unchanged", () => {
     expect(menuMeta.params).toBe(listBoxMeta.params)
     const menu = extractStylesConfig(path.join(UI, "menu/styles.ts"))

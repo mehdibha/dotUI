@@ -147,6 +147,25 @@ export const LIST_ROWS = {
         },
       },
     },
+    // Row height: the density's own rows (shadcn), the control height
+    // (Radix Themes, Linear), or one step above it (Polaris, Stripe).
+    rows: {
+      auto: {},
+      match: {
+        density: {
+          compact: {},
+          default: { slots: { item: "min-h-8" } },
+          comfortable: { slots: { item: "min-h-9" } },
+        },
+      },
+      step: {
+        density: {
+          compact: { slots: { item: "min-h-8" } },
+          default: { slots: { item: "min-h-9" } },
+          comfortable: { slots: { item: "min-h-10" } },
+        },
+      },
+    },
     labels: {
       sentence: {
         slots: {
