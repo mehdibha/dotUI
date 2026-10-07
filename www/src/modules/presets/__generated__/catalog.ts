@@ -1158,7 +1158,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				questionnaire: { titles: "compact" },
 				"radio-group": { mark: "dot", "card-selected": "tint", "card-press": "none" },
 				"segmented-control": { selected: "ring", track: "filled", weight: "regular-semibold", case: "sentence" },
-				select: { trigger: "field", caret: "double" },
+				select: { trigger: "field", caret: "chevron" },
 				sidebar: {
 					labels: "sentence",
 					shell: "page",
@@ -1224,7 +1224,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				v: 2,
 				seeds: { accent: "#1f883d", success: "#1f883d", warning: "#9a6700", danger: "#cf222e", selection: "#0969da" },
 				background: { light: 100, dark: 5 },
-				neutralTint: 1.4,
+				neutralTint: 1.8,
 				neutralHue: 253,
 				preserveSeed: true,
 				primary: "accent",
