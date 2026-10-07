@@ -23,8 +23,8 @@ export const material3 = definePreset({
     monoFont: "Roboto Mono",
     titleStyle: "display",
 
-    // Icons: Material Symbols is a separate set; Remix is the closest line set.
-    iconLibrary: "remix",
+    // Icons
+    iconLibrary: "material-symbols",
 
     // Shape
     // 4px fields and menus, 12px cards, 28px dialogs, pill buttons.
