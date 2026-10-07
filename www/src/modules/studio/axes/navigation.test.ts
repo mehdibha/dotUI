@@ -1,18 +1,26 @@
 import path from "node:path"
+import { cn } from "tailwind-variants"
 import { describe, expect, test } from "vitest"
 
+import { publishables } from "@/registry/__generated__/publishables"
+import type { Density } from "@/registry/types"
 import breadcrumbsMeta from "@/registry/ui/breadcrumbs/meta"
+import { UPPERCASE } from "@/registry/ui/button/styles"
 import linkMeta from "@/registry/ui/link/meta"
 import segmentedControlMeta from "@/registry/ui/segmented-control/meta"
 import sidebarMeta from "@/registry/ui/sidebar/meta"
 import tabsMeta from "@/registry/ui/tabs/meta"
 import toggleButtonMeta from "@/registry/ui/toggle-button/meta"
 import { extractStylesConfig } from "@/publisher/build-time/extract-config"
+import { flatten } from "@/publisher/flatten"
+import { publish, selectPublishable } from "@/publisher/publish"
+import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, effective, parseState } from "./index"
 
 const UI = path.resolve(__dirname, "../../../registry/ui")
+const DENSITIES: Density[] = ["compact", "default", "comfortable"]
 const config = (name: string) =>
   extractStylesConfig(path.join(UI, `${name}/styles.ts`)) as {
     params: Record<string, any>
@@ -20,14 +28,32 @@ const config = (name: string) =>
 const params = (state: Record<string, unknown>) =>
   designSystemOf(parseState(state)).componentParams
 
+const shipped = async (name: string, state: Record<string, unknown> = {}) => {
+  const ds = designSystemOf(parseState(state))
+  const preset: PublishPreset = {
+    density: ds.density,
+    componentParams: ds.componentParams,
+    tokens: ds.tokens,
+    color: ds.color,
+    icons: ds.icons,
+  }
+  const { item } = publish({
+    publishable: selectPublishable(await publishables[name]!(), preset),
+    preset,
+  })
+  return item.files?.[0]?.content ?? ""
+}
+
 describe("navigation axes", () => {
   test("Origin lands on every registry default", () => {
     const ds = designSystemOf(DEFAULT_STATE)
     expect(ds.componentParams.tabs).toEqual({
       style: "segmented",
       color: "neutral",
+      indicator: "full",
       pill: "tone",
       weight: "medium",
+      case: "sentence",
       chip: "tone",
       track: "filled",
     })
@@ -35,6 +61,7 @@ describe("navigation axes", () => {
     expect(ds.componentParams.sidebar).toMatchObject({
       marker: "fill",
       weight: "regular-medium",
+      case: "sentence",
     })
     expect(ds.componentParams["segmented-control"]?.weight).toBe("medium")
     expect(ds.componentParams.breadcrumbs).toEqual({
@@ -79,11 +106,36 @@ describe("navigation axes", () => {
     ["fill-bar", "accent", "fill-bar-accent"],
     ["ink", "accent", "ink-accent"],
     ["outline", "accent", "outline-accent"],
+    ["pill", "neutral", "pill"],
+    ["pill", "accent", "pill-accent"],
     ["surface", "accent", "surface"],
   ])("marker %s in %s folds to %s", (navMarker, tabsColor, marker) => {
     const at = params({ navMarker, tabsColor, shellTone: "recessed" })
     expect(at.sidebar?.marker).toBe(marker)
     expect(at.tabs?.color).toBe(tabsColor)
+  })
+
+  test("Pill rounds the sidebar items alone, whatever the item radius", () => {
+    for (const tabsColor of ["neutral", "accent"])
+      expect(
+        designSystemOf(parseState({ navMarker: "pill", tabsColor })).tokens,
+      ).toEqual({ "--studio-sidebar-button-radius": "var(--radius-full)" })
+    expect(designSystemOf(parseState({ navMarker: "fill" })).tokens).toEqual({})
+  })
+
+  test("labels take the buttons' case until overridden", () => {
+    const at = params({ buttonCase: "uppercase" })
+    expect(at.tabs?.case).toBe("uppercase")
+    expect(at.sidebar?.case).toBe("uppercase")
+    expect(at["segmented-control"]?.case).toBe("uppercase")
+    expect(
+      params({ buttonCase: "uppercase", navCase: "sentence" }).tabs?.case,
+    ).toBe("sentence")
+    expect(params({ navCase: "uppercase" }).sidebar?.case).toBe("uppercase")
+  })
+
+  test("the line indicator hugs the label on Label", () => {
+    expect(params({ tabIndicator: "label" }).tabs?.indicator).toBe("label")
   })
 
   test.each(["page", "subtle"])(
@@ -232,4 +284,66 @@ describe("navigation recipes", () => {
         )
     }
   })
+})
+
+describe("navigation case, pill marker and line indicator", () => {
+  const classes = (value: unknown) => [value].flat(Infinity).join(" ")
+
+  test("uppercase labels are the buttons' case, off the select guard", () => {
+    const button = config("button").params.case.uppercase.base
+    expect(
+      classes(button).replaceAll("not-has-data-[slot=select-value]:", ""),
+    ).toBe(UPPERCASE)
+    expect(config("tabs").params.case.uppercase.slots.item).toBe(UPPERCASE)
+    expect(config("segmented-control").params.case.uppercase.slots.item).toBe(
+      UPPERCASE,
+    )
+    expect(config("sidebar").params.case.uppercase.slots).toEqual({
+      menuButton: UPPERCASE,
+      menuSubButton: UPPERCASE,
+    })
+  })
+
+  test("the pill marker is the fill marker on a stadium item", () => {
+    const marker = config("sidebar").params.marker
+    expect(marker.pill).toEqual(marker.fill)
+    expect(marker["pill-accent"]).toEqual(marker["fill-accent"])
+  })
+
+  test("shipped Pill rounds the menu buttons alone", async () => {
+    const pill = await shipped("sidebar", { navMarker: "pill" })
+    const origin = await shipped("sidebar")
+    const count = (content: string) => content.match(/rounded-full/g)?.length
+    // Menu and sub-menu buttons; labels, actions and badges keep the rung.
+    expect(count(pill)).toBe((count(origin) ?? 0) + 2)
+    expect(/peer\/menu-button[^"]*rounded-full/.test(pill)).toBe(true)
+    expect(pill).not.toContain("--studio-")
+  })
+
+  test.each(DENSITIES)(
+    "the line indicator ships one position and size (%s)",
+    (density) => {
+      for (const indicator of tabsMeta.params.indicator.values) {
+        const flat = flatten({
+          stylesConfig: config("tabs") as never,
+          meta: tabsMeta,
+          density,
+          paramSelections: { indicator, style: "line" },
+        }) as { slots: Record<string, unknown>; variants: any }
+        const value = classes([
+          flat.slots.indicator,
+          flat.variants.variant.line.indicator,
+        ])
+        expect(cn(value)?.split(" ").sort(), indicator).toEqual(
+          value.split(" ").sort(),
+        )
+        if (indicator === "label")
+          expect(value).toContain(
+            density === "comfortable"
+              ? "orientation-horizontal:inset-x-2"
+              : "orientation-horizontal:inset-x-1.5",
+          )
+      }
+    },
+  )
 })

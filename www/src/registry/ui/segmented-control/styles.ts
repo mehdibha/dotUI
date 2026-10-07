@@ -1,5 +1,6 @@
 import { createStyles } from "@/lib/styles"
 
+import { UPPERCASE } from "../button/styles"
 import segmentedControlMeta from "./meta"
 
 /* The selection bar, shared with tabs' segmented variant (tabs imports
@@ -100,6 +101,9 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       "medium-semibold": { slots: WEIGHT_MEDIUM_SEMIBOLD },
       semibold: { slots: WEIGHT_SEMIBOLD },
       bold: { slots: WEIGHT_BOLD },
+    },
+    case: {
+      uppercase: { slots: { item: UPPERCASE } },
     },
   },
 })

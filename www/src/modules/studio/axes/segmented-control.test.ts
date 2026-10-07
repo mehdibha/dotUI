@@ -10,6 +10,7 @@ describe("segmented control axis", () => {
       selected: "tone",
       track: "filled",
       weight: "medium",
+      case: "sentence",
     })
     expect(tokens).toEqual({})
   })
@@ -22,6 +23,7 @@ describe("segmented control axis", () => {
       selected: "ring",
       track: "outline",
       weight: "medium",
+      case: "sentence",
     })
   })
 })

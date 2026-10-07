@@ -5,6 +5,7 @@ import {
   SELECTED_SOLID_INK,
   SELECTED_TINT_INK,
   SELECTED_TONE_INK,
+  UPPERCASE,
 } from "../button/styles"
 import {
   CHIP_INVERSE,
@@ -63,7 +64,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
           list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
           item: "rounded-(--studio-tabs-tab-radius) orientation-horizontal:h-full selected:text-fg",
           indicator:
-            "rounded-full orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
+            "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full",
         },
         pill: {
           list: "gap-1",
@@ -112,7 +113,53 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       line: { defaultVariants: { variant: "line" } },
       pill: { defaultVariants: { variant: "pill" } },
     },
-    // The line indicator.
+    // The line indicator across the tab, or hugging its label: 3px with a
+    // rounded top (Material 3), inset by the tab's padding.
+    indicator: {
+      full: {
+        variants: {
+          variant: {
+            line: {
+              indicator:
+                "orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-horizontal:rounded-full",
+            },
+          },
+        },
+      },
+      label: {
+        variants: {
+          variant: {
+            line: {
+              indicator:
+                "orientation-horizontal:h-[3px] orientation-horizontal:rounded-t-[3px]",
+            },
+          },
+        },
+        density: {
+          compact: {
+            variants: {
+              variant: {
+                line: { indicator: "orientation-horizontal:inset-x-1.5" },
+              },
+            },
+          },
+          default: {
+            variants: {
+              variant: {
+                line: { indicator: "orientation-horizontal:inset-x-1.5" },
+              },
+            },
+          },
+          comfortable: {
+            variants: {
+              variant: {
+                line: { indicator: "orientation-horizontal:inset-x-2" },
+              },
+            },
+          },
+        },
+      },
+    },
     color: {
       neutral: {
         variants: { variant: { line: { indicator: "bg-fg" } } },
@@ -185,6 +232,9 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       "medium-semibold": { slots: WEIGHT_MEDIUM_SEMIBOLD },
       semibold: { slots: WEIGHT_SEMIBOLD },
       bold: { slots: WEIGHT_BOLD },
+    },
+    case: {
+      uppercase: { slots: { item: UPPERCASE } },
     },
   },
 })

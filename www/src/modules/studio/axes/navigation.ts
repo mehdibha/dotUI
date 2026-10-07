@@ -1,13 +1,15 @@
 /* Navigation — how the current location is marked: the default tab look,
    the sidebar's current item, the indicator color both share, and the
-   weights tabs, segmented items and sidebar items rest and step to (the
-   sidebar's follows the tabs'). Segmented tabs wear the segmented control's
-   chip (segmented-control.ts writes it), pill tabs a toggle's selected look.
+   weights and case of tabs, segmented items and sidebar items (the sidebar's
+   weight follows the tabs', the case the buttons'). Segmented tabs wear the
+   segmented control's chip (segmented-control.ts writes it), pill tabs a
+   toggle's selected look.
 
-   Engine: `style`, `color`, `pill` and `weight` params on `tabs`; `marker`
-   (folded with the color) and `weight` on `sidebar`; `weight` on
-   `segmented-control`. */
+   Engine: `style`, `color`, `indicator`, `pill`, `weight` and `case` params
+   on `tabs`; `marker` (folded with the color), `weight` and `case` on
+   `sidebar`; `weight` and `case` on `segmented-control`. */
 
+import { CASE_VALUES } from "./buttons"
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -29,6 +31,8 @@ export const NAVIGATION_DEFAULTS = {
     | "semibold"
     | "bold",
   tabsPill: "same" as "same" | "tone" | "solid" | "tint" | "inverse",
+  tabIndicator: "full",
+  navCase: "same" as "same" | "sentence" | "uppercase",
 }
 
 export const TAB_STYLE_VALUES = ["segmented", "line", "pill"] as const
@@ -40,6 +44,7 @@ export const MARKER_VALUES = [
   "fill-bar",
   "ink",
   "outline",
+  "pill",
 ] as const
 
 export const WEIGHT_VALUES = [
@@ -60,6 +65,8 @@ const ITEM_WEIGHT_AUTO: Record<string, string> = {
 
 export const PILL_VALUES = ["tone", "solid", "tint", "inverse"] as const
 
+export const INDICATOR_VALUES = ["full", "label"] as const
+
 export const NAVIGATION_SCHEMA: ChapterSchema<typeof NAVIGATION_DEFAULTS> = {
   tabStyle: oneOf(TAB_STYLE_VALUES),
   tabsColor: oneOf(SOURCE_VALUES),
@@ -67,6 +74,8 @@ export const NAVIGATION_SCHEMA: ChapterSchema<typeof NAVIGATION_DEFAULTS> = {
   navWeight: oneOf(WEIGHT_VALUES),
   navItemWeight: oneOf(WEIGHT_VALUES),
   tabsPill: oneOf(PILL_VALUES),
+  tabIndicator: oneOf(INDICATOR_VALUES),
+  navCase: oneOf(CASE_VALUES),
 }
 
 export function resolveNavigation(state: Effective): Resolved {
@@ -79,11 +88,13 @@ export function resolveNavigation(state: Effective): Resolved {
       tabs: {
         style: state.tabStyle,
         color: state.tabsColor,
+        indicator: state.tabIndicator,
         pill: state.tabsPill,
         weight: state.navWeight,
+        case: state.navCase,
       },
-      sidebar: { marker, weight: state.navItemWeight },
-      "segmented-control": { weight: state.navWeight },
+      sidebar: { marker, weight: state.navItemWeight, case: state.navCase },
+      "segmented-control": { weight: state.navWeight, case: state.navCase },
     },
   }
 }
@@ -98,6 +109,7 @@ export const chapter = defineChapter({
       { kind: "auto", id: "auto", from: "navWeight", table: ITEM_WEIGHT_AUTO },
     ],
     tabsPill: [{ kind: "same", id: "same", from: "toggleSelected" }],
+    navCase: [{ kind: "same", id: "same", from: "buttonCase" }],
   },
   rules: [
     {

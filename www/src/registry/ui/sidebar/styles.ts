@@ -1,5 +1,6 @@
 import { createStyles } from "@/lib/styles"
 
+import { UPPERCASE } from "../button/styles"
 import sidebarMeta from "./meta"
 
 /* Collapse and expand timing is the studio's (styles.css). */
@@ -15,7 +16,8 @@ const fill = "data-active:bg-muted data-active:text-fg"
 const tint = "data-active:bg-accent-muted data-active:text-fg-accent"
 const bar =
   "data-active:before:absolute data-active:before:inset-y-2 data-active:before:start-0 data-active:before:rounded-full"
-// shadcn, Material 3: a wash, neutral or brand-tinted.
+// shadcn: a wash, neutral or brand-tinted. Material 3's pill is the same wash
+// on a stadium item (meta.ts rounds it through the item var).
 const FILL = [wash, fill]
 const FILL_ACCENT = [restWash, tint]
 // Polaris: a page-toned chip on a recessed sidebar; hover sits between.
@@ -143,7 +145,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menu: "flex w-full min-w-0 flex-col gap-1",
       menuItem: "group/menu-item relative",
       menuButton: [
-        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
+        "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-button-radius) p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
         "focus-visible:focus-ring",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
@@ -174,7 +176,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       ],
       menuSubItem: "group/menu-sub-item relative",
       menuSubButton: [
-        "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-item-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
+        "relative flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-(--studio-sidebar-button-radius) px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
         "focus-visible:focus-ring",
         "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
@@ -231,6 +233,10 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       "outline-accent": {
         slots: { menuButton: OUTLINE_ACCENT, menuSubButton: OUTLINE_ACCENT },
       },
+      pill: { slots: { menuButton: FILL, menuSubButton: FILL } },
+      "pill-accent": {
+        slots: { menuButton: FILL_ACCENT, menuSubButton: FILL_ACCENT },
+      },
     },
     // Item weight at rest, then current.
     weight: {
@@ -264,6 +270,9 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       bold: {
         slots: { menuButton: "font-bold", menuSubButton: "font-bold" },
       },
+    },
+    case: {
+      uppercase: { slots: { menuButton: UPPERCASE, menuSubButton: UPPERCASE } },
     },
   },
 })

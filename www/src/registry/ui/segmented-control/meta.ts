@@ -37,6 +37,12 @@ const segmentedControlMeta = {
       ] as const,
       description: "Item weight at rest, then selected.",
     },
+    case: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+      description: "Item label case.",
+    },
   },
 } satisfies RegistryItem
 

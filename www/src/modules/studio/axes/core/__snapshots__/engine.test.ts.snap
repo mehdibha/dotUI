@@ -105,13 +105,16 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "style": "inset",
     },
     "segmented-control": {
+      "case": "sentence",
       "selected": "raised",
       "track": "filled",
       "weight": "medium",
     },
     "tabs": {
+      "case": "sentence",
       "chip": "raised",
       "color": "neutral",
+      "indicator": "full",
       "pill": "tone",
       "style": "segmented",
       "track": "filled",
@@ -127,6 +130,24 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "style": "bevel",
     },
   },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "selection": "accent",
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
   "tokens": {},
 }
 `;
