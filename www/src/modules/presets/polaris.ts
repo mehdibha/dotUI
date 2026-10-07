@@ -21,6 +21,8 @@ export const polaris = definePreset({
     warningSeed: "#ffb800",
     dangerSeed: "#c70a24",
     neutralTint: 0,
+    // Polaris status tints are pastels: Paid #cdfed4, Pending #ffd6a4, critical #fee8eb.
+    vividness: 1.2,
     // The #f1f1f1 page is L* 95.
     lightBg: 95,
     // The dark-experimental #1a1a1a page; Shopify ships no production dark.
