@@ -1573,7 +1573,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			componentParams: {
 				accordion: { motion: "expand", layout: "divided", marker: "trailing-chevron" },
 				alert: { style: "neutral" },
-				avatar: { shape: "circle", fallback: "neutral" },
+				avatar: { shape: "circle", fallback: "accent" },
 				badge: { style: "outline", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
@@ -1630,7 +1630,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				select: { trigger: "field", caret: "chevron" },
 				sidebar: {
 					labels: "sentence",
-					shell: "subtle",
+					shell: "recessed",
 					marker: "pill-accent",
 					weight: "regular-medium",
 					case: "sentence",
@@ -1664,6 +1664,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				tooltip: { style: "inverted", tip: "none", motion: "slide" },
 			},
 			tokens: {
+				"--color-border-control": "var(--neutral-700)",
+				"--color-border-control-hover": "var(--neutral-800)",
 				"--color-selected": "var(--accent-100)",
 				"--color-selected-hover": "var(--accent-200)",
 				"--color-selected-active": "var(--accent-300)",
@@ -1671,14 +1673,11 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--font-sans": "'Roboto', ui-sans-serif, system-ui, sans-serif",
 				"--font-mono": "'Roboto Mono', ui-monospace, 'SF Mono', monospace",
 				"--font-weight-heading": "var(--font-weight-normal)",
-				"--radius": "0.5rem",
+				"--radius": "0.5625rem",
 				"--studio-radius-panel": "var(--radius-3xl)",
 				"--studio-radius-card": "var(--radius-xl)",
 				"--studio-radius-surface": "var(--radius-sm)",
-				"--studio-radius-control": "var(--radius-sm)",
 				"--studio-radius-item": "0",
-				"--studio-radius-control-sm": "var(--radius-xs)",
-				"--studio-radius-detail": "var(--radius-xs)",
 				"--studio-radius-field": "var(--radius-sm)",
 				"--studio-radius-container": "var(--radius-md)",
 				"--studio-radius-inline-item": "0",
@@ -1694,6 +1693,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 					"light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
 				"--color-popover":
 					"light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+				"--color-sidebar":
+					"light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) 70%, oklch(0 0 0)))",
 				"--focus-ring-width": "3px",
 				"--focus-input-width": "0px",
 				"--focus-input-color": "var(--focus-input-border)",
@@ -1782,7 +1783,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-btn-radius": "var(--radius-full)",
 				"--studio-btn-xs-radius": "var(--radius-full)",
 				"--studio-checkbox-radius": "2px",
-				"--color-scrim": "color-mix(in oklab, var(--color-overlay) 10%, transparent)",
 				"--studio-scrim-blur": "0",
 				"--studio-badge-radius": "var(--studio-radius-detail)",
 				"--studio-sidebar-button-radius": "var(--radius-full)",
