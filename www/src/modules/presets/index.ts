@@ -3,6 +3,7 @@ import { designSystemOf } from "@/modules/studio/resolve"
 
 import { airbnb } from "./airbnb"
 import { claude } from "./claude"
+import { duolingo } from "./duolingo"
 import { github } from "./github"
 import { linear } from "./linear"
 import { notion } from "./notion"
@@ -26,6 +27,7 @@ export const PRESETS: Preset[] = [
   github,
   notion,
   spotify,
+  duolingo,
 ]
 
 /** The default preset — what /studio starts on for first-time users. */
