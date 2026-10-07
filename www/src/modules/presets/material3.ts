@@ -56,6 +56,9 @@ export const material3 = definePreset({
     focusInputWeight: "thick",
     cursorDisabled: "default",
 
+    // Selection: M3 leaves ::selection to the browser.
+    selectionHighlight: "browser",
+
     // Motion
     motion: "expressive",
     motionEntrance: "slide",
@@ -87,6 +90,8 @@ export const material3 = definePreset({
     menuSelectedRow: "tint",
     menuRows: "step",
     mobilePickers: "anchored",
+    // The docked search view: a bare input over a divider.
+    menuSearch: "bar",
 
     // Dialogs: a 32% black scrim; dividers only while scrolling.
     dialogBackdrop: "scrim",
