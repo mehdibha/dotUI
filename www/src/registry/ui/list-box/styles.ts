@@ -32,7 +32,7 @@ export const LIST_ROWS = {
         "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
       ],
       indicator: [
-        "pointer-events-none absolute group-has-[[slot=description]]/list-item:top-2",
+        "pointer-events-none group-has-[[slot=description]]/list-item:absolute group-has-[[slot=description]]/list-item:top-2",
       ],
       submenuIndicator: [
         "pointer-events-none absolute right-2 flex items-center justify-center",
@@ -86,16 +86,25 @@ export const LIST_ROWS = {
   },
   params: {
     indicator: {
+      // The check takes the icon column, so check and icon rows share one
+      // label edge.
       "check-start": {
         slots: {
-          item: "data-selection-mode:pl-8 data-selection-mode:has-[[slot=description]]:has-[>svg]:pl-14 data-selection-mode:has-[[slot=description]]:*:[svg]:left-8",
-          indicator: "left-2 flex items-center justify-center",
+          item: "data-selection-mode:has-[[slot=description]]:pl-8 data-selection-mode:has-[[slot=description]]:has-[>svg]:pl-14 data-selection-mode:has-[[slot=description]]:*:[svg]:left-8",
+          indicator: "left-2 flex shrink-0 items-center justify-center",
+        },
+        density: {
+          compact: { slots: { indicator: "w-3.5" } },
+          default: { slots: { indicator: "w-4" } },
+          comfortable: { slots: { indicator: "w-4" } },
+          spacious: { slots: { indicator: "w-4" } },
+          touch: { slots: { indicator: "w-5" } },
         },
       },
       "check-end": {
         slots: {
           item: "data-selection-mode:pr-8",
-          indicator: "right-2 flex items-center justify-center",
+          indicator: "absolute right-2 flex items-center justify-center",
         },
       },
       none: {
@@ -167,19 +176,21 @@ export const LIST_ROWS = {
       tint: {
         slots: {
           item: [
-            "selected:bg-selected selected:text-fg-on-selected",
-            "selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-selected-hover selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-selected",
-            "selected:focus-visible:bg-selected-hover selected:focus-visible:text-fg-on-selected",
-            "selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-selected-hover selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-selected",
+            "selected:bg-(--studio-list-box-selected) selected:text-fg-on-selected",
+            "selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:bg-(--studio-list-box-selected-highlight) selected:focus:in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-selected",
+            "selected:focus-visible:bg-(--studio-list-box-selected-highlight) selected:focus-visible:text-fg-on-selected",
+            "selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-(--studio-list-box-selected-highlight) selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-selected",
           ],
         },
       },
     },
     // Row height: the density's own rows (shadcn), the control height
-    // (Radix Themes, Linear), or one step above it (Polaris, Stripe).
+    // (Radix Themes, Linear), or one step above it (Polaris, Stripe). Those
+    // hold under any text size; a row with a description still grows.
     rows: {
       auto: { density: { compact: { slots: { item: "min-h-7" } } } },
       match: {
+        slots: { item: "not-has-[[slot=description]]:py-0" },
         density: {
           compact: { slots: { item: "min-h-7" } },
           default: { slots: { item: "min-h-8" } },
@@ -189,6 +200,7 @@ export const LIST_ROWS = {
         },
       },
       step: {
+        slots: { item: "not-has-[[slot=description]]:py-0" },
         density: {
           compact: { slots: { item: "min-h-8" } },
           default: { slots: { item: "min-h-9" } },

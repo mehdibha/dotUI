@@ -88,7 +88,7 @@ const SelectValue = <T extends object>({
       data-slot="select-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          "flex-1 truncate text-left placeholder-shown:text-fg-muted",
+          "flex-1 truncate text-left font-normal placeholder-shown:text-fg-muted",
           className,
         ),
       )}

@@ -344,7 +344,8 @@ exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
     },
   },
   "tokens": {
-    "--studio-list-box-highlight": "color-mix(in oklab, var(--color-highlight) 60%, transparent)",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
   },
 }
 `;
