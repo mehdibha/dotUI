@@ -11,7 +11,12 @@ import { cn } from "@/registry/lib/utils"
 
 import { effective } from "../axes"
 import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
-import { cardRung, surfaceColorCss, surfaceRecipe } from "../axes/surfaces"
+import {
+  cardRung,
+  shadowCss,
+  surfaceColorCss,
+  surfaceRecipe,
+} from "../axes/surfaces"
 import type { Mode, PerMode, SurfaceColor } from "../axes/surfaces"
 import {
   EDGE_OPTIONS,
@@ -44,6 +49,13 @@ const GLYPH_SHADOWS = [
   "0 2px 4px rgb(0 0 0 / 0.32)",
 ]
 
+/* The card's edge at glyph scale: Bevel's rim is a shadow, Ledge's lip a
+   heavier bottom. */
+const GLYPH_STROKE: Record<string, string> = {
+  bevel: "0",
+  ledge: "1px 1px 2px",
+}
+
 /** A card on the page, light beside dark, in the system's own neutral. */
 function SurfaceGlyph({
   state,
@@ -70,6 +82,8 @@ function SurfaceGlyph({
         const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
         const color = (pair: PerMode<SurfaceColor>) =>
           surfaceColorCss(pair[mode], { step, hairline })
+        const rim = recipe.card.shadow.filter((layer) => layer.inset)
+        const drop = GLYPH_SHADOWS[Math.min(cardRung(state), 4)]
         return (
           <span
             key={mode}
@@ -86,7 +100,10 @@ function SurfaceGlyph({
               style={{
                 background: color(recipe.card.bg),
                 borderColor: color(recipe.card.edge),
-                boxShadow: GLYPH_SHADOWS[Math.min(cardRung(state), 4)],
+                borderWidth: GLYPH_STROKE[state.surfaceEdge],
+                boxShadow: rim.length
+                  ? `${shadowCss(rim, color)}, ${drop}`
+                  : drop,
               }}
             />
           </span>
@@ -146,7 +163,23 @@ export function SurfacesRow({
           label="Layers"
           options={LAYERS_OPTIONS}
         />
-        <DialPicker axis="surfaceEdge" label="Edge" options={EDGE_OPTIONS} />
+        <DialPicker
+          axis="surfaceEdge"
+          label="Edge"
+          options={EDGE_OPTIONS.map((option) => ({
+            ...option,
+            note: option.credits?.join(", "),
+            visual: (
+              <SurfaceGlyph
+                large
+                state={
+                  effective({ ...state, surfaceEdge: option.value }).values
+                }
+                theme={theme}
+              />
+            ),
+          }))}
+        />
         <DialPicker
           axis="surfaceShadow"
           label="Shadow"

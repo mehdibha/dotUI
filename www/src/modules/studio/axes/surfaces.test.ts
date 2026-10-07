@@ -410,3 +410,92 @@ describe("app shell", () => {
     },
   )
 })
+
+describe("drawn edges", () => {
+  const shippedItem = async (name: string, state: Partial<typeof DEFAULTS>) => {
+    const ds = designSystemOf(parseState(state))
+    const preset: PublishPreset = {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      tokens: ds.tokens,
+      color: ds.color,
+      icons: ds.icons,
+    }
+    const { item } = publish({
+      publishable: selectPublishable(await publishables[name]!(), preset),
+      preset,
+    })
+    const code = (item.files ?? []).map((f) => f.content).join("\n")
+    expect(code, name).not.toContain("--studio-")
+    return code
+  }
+
+  test("Bevel trades the border for Polaris's inset rim, light and dark", () => {
+    const tokens = tokensFor({ surfaceEdge: "bevel" })
+    const rim =
+      "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))"
+    expect(tokens).toMatchObject({
+      "--card-border": "transparent",
+      "--overlay-border": "transparent",
+      "--shadow-card": rim,
+      "--shadow-popover": `${rim}, ${SHADOW_MD}`,
+      "--studio-card-stroke": "0px",
+      "--studio-overlay-stroke": "0px",
+    })
+    expect(tokens).not.toHaveProperty("--studio-tile-stroke")
+    expect(tokens).not.toHaveProperty("--shadow-modal")
+  })
+
+  test("Ledge draws the control stroke with a 2px lip under cards and tiles", () => {
+    const regular = tokensFor({ surfaceEdge: "ledge" })
+    expect(regular).toMatchObject({
+      "--studio-card-stroke": "1px 1px 3px",
+      "--studio-tile-stroke": "1px 1px 3px",
+    })
+    expect(regular).not.toHaveProperty("--studio-overlay-stroke")
+    expect(regular).not.toHaveProperty("--card-border")
+    expect(
+      tokensFor({ surfaceEdge: "ledge", controlStroke: "bold" }),
+    ).toMatchObject({
+      "--studio-card-stroke": "2px 2px 4px",
+      "--studio-tile-stroke": "2px 2px 4px",
+      "--studio-overlay-stroke": "2px",
+    })
+  })
+
+  test("Origin ships its 1px borders unchanged", async () => {
+    expect(await shippedItem("card", {})).toContain(
+      "border border-(--card-border)",
+    )
+    expect(await shippedItem("popover", {})).toContain(
+      "border border-(--overlay-border)",
+    )
+  })
+
+  test.each([
+    ["ledge", "border-[2px_2px_4px]", "border-2"],
+    ["bevel", "border-0", "border-0"],
+  ])("%s ships whole border classes", async (surfaceEdge, card, overlay) => {
+    const state = { surfaceEdge, controlStroke: "bold" }
+    expect(await shippedItem("card", state)).toContain(
+      `${card} border-(--card-border)`,
+    )
+    expect(await shippedItem("popover", state)).toContain(
+      `${overlay} border-(--overlay-border)`,
+    )
+    expect(
+      await shippedItem("tooltip", { ...state, tooltipStyle: "surface" }),
+    ).toContain(`${overlay} border-(--overlay-border)`)
+  })
+
+  test("checkbox, radio and switch cards share one tile edge", async () => {
+    const state = { surfaceEdge: "ledge", controlStroke: "bold" }
+    const shell =
+      "has-data-label:w-full has-data-label:border-[2px_2px_4px] has-data-label:p-2.5"
+    for (const name of ["checkbox", "radio-group", "switch"])
+      expect(await shippedItem(name, state), name).toContain(shell)
+    expect(await shippedItem("checkbox", { surfaceEdge: "bevel" })).toContain(
+      "has-data-label:w-full has-data-label:border has-data-label:p-2.5",
+    )
+  })
+})

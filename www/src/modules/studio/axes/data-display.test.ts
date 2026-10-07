@@ -8,6 +8,12 @@ import type { PublishPreset } from "@/publisher/types"
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 
+/* The surface as Origin ships it: the 1px card stroke is `border`. */
+const SHIPPED_SURFACE = CONTAINER_SURFACE.replace(
+  "border-(length:--studio-card-stroke)",
+  "border",
+)
+
 const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
   const ds = designSystemOf(parseState(state))
   return {
@@ -102,7 +108,7 @@ describe("shipped data display", () => {
     ["attachment", {}],
   ] as const)("%s %o wears the container surface", async (name, state) => {
     const content = await shipped(name, state)
-    for (const cls of CONTAINER_SURFACE.split(" "))
+    for (const cls of SHIPPED_SURFACE.split(" "))
       expect(content, cls).toContain(cls)
   })
 
@@ -123,7 +129,7 @@ describe("shipped data display", () => {
       preset,
     })
     const content = item.files?.[0]?.content ?? ""
-    for (const cls of CONTAINER_SURFACE.split(" "))
+    for (const cls of SHIPPED_SURFACE.split(" "))
       expect(content, cls).toContain(cls)
   })
 

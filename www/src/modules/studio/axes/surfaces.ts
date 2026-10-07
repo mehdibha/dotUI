@@ -11,7 +11,9 @@
    - Edge: a hairline (Geist, shadcn, Primer) or none (Fluent, Atlassian). An
      edgeless system's dark is derived: shadows die on near-black, so they
      double, cards lift a quarter rung and overlays take the hairline
-     (Atlassian, Spectrum, HeroUI).
+     (Atlassian, Spectrum, HeroUI). Bevel draws Polaris's inset rim instead
+     of a border; Ledge draws the control stroke with a bottom lip on cards
+     and tiles (Duolingo).
    - Shadow: one ladder for cards, popovers and dialogs together, on
      Tailwind's rungs. Flat is the registry's look (card none · popover md ·
      modal lg); Low is shadcn New York, Medium shadcn Luma.
@@ -25,6 +27,7 @@ import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
+import { strokePx } from "./shape"
 
 export const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
@@ -36,7 +39,7 @@ export const SURFACE_DEFAULTS = {
 
 export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
-export const EDGE_VALUES = ["line", "none"] as const
+export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
 
 export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
@@ -67,8 +70,8 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, white, the system's hairline, black at an alpha, or
- *  nothing. */
+ *  of two rungs, white, the system's hairline, black at an alpha, Polaris's
+ *  #ccc highlight at an alpha, or nothing. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "white" }
@@ -76,10 +79,12 @@ export type SurfaceColor =
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
   | { kind: "shade"; alpha: number }
+  | { kind: "glint"; alpha: number }
 
 export interface ShadowLayer {
   offset: string
   color: PerMode<SurfaceColor>
+  inset?: boolean
 }
 
 export interface SurfaceLook {
@@ -95,6 +100,8 @@ export interface SurfaceRecipe {
   popover: SurfaceLook
   modalShadow: ShadowLayer[]
   glass: boolean
+  /** Border widths: cards, choice tiles, popovers and tooltips. */
+  stroke: { card: string; tile: string; overlay: string }
 }
 
 const NONE: SurfaceColor = { kind: "none" }
@@ -149,6 +156,25 @@ export const cardRung = (state: Effective) => ladder(state)[0]
    surface (Fluent's 0 0 2px). */
 const PERIMETER: [string, number] = ["0 0 2px 0", 0.12]
 
+/* Polaris's ShadowBevel (shadow-bevel-100, light and dark-experimental): a
+   1px inset rim, darker at the bottom, with a highlight on top. */
+const rim = (offset: string, light: SurfaceColor, dark: SurfaceColor) => ({
+  offset,
+  inset: true,
+  color: { light, dark },
+})
+const shade = (alpha: number): SurfaceColor => ({ kind: "shade", alpha })
+const glint = (alpha: number): SurfaceColor => ({ kind: "glint", alpha })
+const BEVEL: ShadowLayer[] = [
+  rim("1px 0 0 0", shade(0.13), glint(0.08)),
+  rim("-1px 0 0 0", shade(0.13), glint(0.08)),
+  rim("0 -1px 0 0", shade(0.17), glint(0.08)),
+  rim("0 1px 0 0", glint(0.5), glint(0.16)),
+]
+
+/** Duolingo's lip under cards and tiles. */
+const LEDGE_LIP = 2
+
 function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
   if (layers.length === 0) return []
@@ -169,29 +195,45 @@ function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
 /** Every setting resolved together, so no combination contradicts itself. */
 export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const edgeless = state.surfaceEdge === "none"
+  const bevel = state.surfaceEdge === "bevel"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
   const [card, popover, modal] = ladder(state)
+  const rimmed = (layers: ShadowLayer[]) =>
+    bevel ? [...BEVEL, ...layers] : layers
   return {
     card: {
-      edge: both(edgeless ? NONE : HAIRLINE),
+      edge: both(edgeless || bevel ? NONE : HAIRLINE),
       bg: {
         light: grouped ? WHITE : tonal ? HALF : step("25"),
         dark: edgeless || tonal ? QUARTER : step("50"),
       },
-      shadow: shadowLayers(card, edgeless),
+      shadow: rimmed(shadowLayers(card, edgeless)),
     },
     popover: {
-      edge: { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
+      edge: bevel
+        ? both(NONE)
+        : { light: edgeless ? NONE : HAIRLINE, dark: HAIRLINE },
       bg: {
         light: grouped ? WHITE : tonal ? step("50") : step("25"),
         dark: HALF,
       },
-      shadow: shadowLayers(popover, edgeless),
+      shadow: rimmed(shadowLayers(popover, edgeless)),
     },
     modalShadow: shadowLayers(modal, edgeless),
     glass: state.surfaceGlass,
+    stroke: surfaceStroke(state),
   }
+}
+
+function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
+  if (state.surfaceEdge === "bevel")
+    return { card: "0px", tile: "1px", overlay: "0px" }
+  if (state.surfaceEdge !== "ledge")
+    return { card: "1px", tile: "1px", overlay: "1px" }
+  const px = strokePx(state.controlStroke)
+  const ledge = `${px}px ${px}px ${px + LEDGE_LIP}px`
+  return { card: ledge, tile: ledge, overlay: `${px}px` }
 }
 
 /* ----------------------------- Serialization ----------------------------- */
@@ -222,6 +264,8 @@ export function surfaceColorCss(
       return `color-mix(in oklab, ${palette.step(color.a)} ${color.weight}%, ${palette.step(color.b)})`
     case "shade":
       return `rgb(0 0 0 / ${alpha(color.alpha)})`
+    case "glint":
+      return `rgb(204 204 204 / ${alpha(color.alpha)})`
   }
 }
 
@@ -235,7 +279,10 @@ export function shadowCss(
 ): string {
   if (layers.length === 0) return NO_SHADOW
   return layers
-    .map((layer) => `${layer.offset} ${color(layer.color)}`)
+    .map(
+      (layer) =>
+        `${layer.inset ? "inset " : ""}${layer.offset} ${color(layer.color)}`,
+    )
     .join(", ")
 }
 
@@ -251,8 +298,11 @@ function pairCss(pair: PerMode<SurfaceColor>): string {
 }
 
 function surfaceTokens(state: Effective): Record<string, string> {
-  const { card, popover, modalShadow, glass } = surfaceRecipe(state)
+  const { card, popover, modalShadow, glass, stroke } = surfaceRecipe(state)
   return {
+    "--studio-card-stroke": stroke.card,
+    "--studio-tile-stroke": stroke.tile,
+    "--studio-overlay-stroke": stroke.overlay,
     "--card-border": pairCss(card.edge),
     "--overlay-border": pairCss(popover.edge),
     "--shadow-card": shadowCss(card.shadow, pairCss),

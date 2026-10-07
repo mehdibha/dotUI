@@ -17,6 +17,10 @@
   --studio-radius-inline-item: var(--radius-md);
   /* Every control edge: field shells, checks, secondary buttons, seams. */
   --studio-control-stroke: 1px;
+  /* Surface edges (studio Surfaces › Edge): cards, choice tiles, popovers. */
+  --studio-card-stroke: 1px;
+  --studio-tile-stroke: 1px;
+  --studio-overlay-stroke: 1px;
   /* Every scrim's frost (modal, drawer). */
   --studio-scrim-blur: var(--blur-sm);
   /* Action labels only (Button, ToggleButton, GroupText). */

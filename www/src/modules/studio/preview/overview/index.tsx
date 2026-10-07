@@ -690,17 +690,17 @@ const SURFACE_LAYERS: { token: string; label: string }[] = [
 const SHADOWS: { className: string; label: string }[] = [
   {
     className:
-      "rounded-(--studio-radius-card) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
+      "rounded-(--studio-radius-card) border-(length:--studio-card-stroke) border-(--card-border) bg-card shadow-(--shadow-card,0_0_#0000)",
     label: "Card",
   },
   {
     className:
-      "rounded-(--studio-radius-surface) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
+      "rounded-(--studio-radius-surface) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover shadow-(--shadow-popover,var(--shadow-md))",
     label: "Popover",
   },
   {
     className:
-      "rounded-(--studio-radius-panel) border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
+      "rounded-(--studio-radius-panel) border border-(--overlay-border) bg-popover shadow-(--shadow-modal,var(--shadow-lg))",
     label: "Dialog",
   },
 ]
@@ -738,7 +738,7 @@ function ElevationSection() {
           {SHADOWS.map((s) => (
             <div
               key={s.label}
-              className={cn("flex h-24 items-end border p-3", s.className)}
+              className={cn("flex h-24 items-end p-3", s.className)}
             >
               <span className="text-xs font-medium text-fg-muted">
                 {s.label}
