@@ -18,62 +18,53 @@ import {
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
 import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
-import { roleLabel } from "../axes/shape"
-import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
 const labelOf = (options: { value: string; label: string }[], value: string) =>
   options.find((option) => option.value === value)?.label ?? value
 
-/* One stable context per shell × hover, so the registry's style cache hits. */
+/* One stable context per shell, so the registry's style cache hits. */
 const contexts = new Map<
   string,
-  { params: { input: { style: string; hover: string } }; density: "default" }
+  { params: { input: { style: string } }; density: "default" }
 >()
-function shellContext(style: string, hover: string) {
-  const id = `${style}|${hover}`
-  let context = contexts.get(id)
+function shellContext(style: string) {
+  let context = contexts.get(style)
   if (!context)
     contexts.set(
-      id,
-      (context = { params: { input: { style, hover } }, density: "default" }),
+      style,
+      (context = { params: { input: { style } }, density: "default" }),
     )
   return context
+}
+
+/** A field drawn by the registry's own recipe for one shell. */
+function ShellSpecimen({
+  style,
+  className = "h-4.5 w-7",
+}: {
+  style: string
+  className?: string
+}) {
+  return (
+    <DesignSystemContext.Provider value={shellContext(style)}>
+      <Shell className={cn("pointer-events-none", className)} />
+    </DesignSystemContext.Provider>
+  )
 }
 
 function Shell({ className }: { className?: string }) {
   const { input } = useStyles()()
   return (
     <span className={input({ size: "sm", className })}>
-      <span className="h-1.5 w-8 rounded-full bg-fg/25" />
+      <span className="h-1 w-3 rounded-full bg-fg/25" />
     </span>
-  )
-}
-
-/** A field drawn by the registry's own recipe for one shell. */
-function ShellSpecimen({
-  style,
-  hover = "none",
-  className,
-}: {
-  style: string
-  hover?: string
-  className?: string
-}) {
-  return (
-    <DesignSystemContext.Provider value={shellContext(style, hover)}>
-      <Shell className={cn("pointer-events-none w-20", className)} />
-    </DesignSystemContext.Provider>
   )
 }
 
@@ -234,177 +225,188 @@ function ErrorGlyph({ kind }: { kind: string }) {
   )
 }
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+function InputStyleRow() {
+  const { effective } = useStudio()
+  const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
+  return (
+    <DialSelect
+      axis="inputStyle"
+      label="Fields"
+      options={[
+        {
+          value: "auto",
+          label: "Auto",
+          aside: (
+            <SourceTag>
+              {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
+            </SourceTag>
+          ),
+          preview: <ShellSpecimen style={autoStyle} />,
+        },
+        ...STYLE_OPTIONS.map((option) => ({
+          ...option,
+          preview: <ShellSpecimen style={option.value} />,
+        })),
+      ]}
+    />
+  )
+}
+
+const HOVER_ROW = [{ value: "auto", label: "As style" }, ...HOVER_OPTIONS]
+
+function InputHoverRow() {
+  return <DialSelect axis="inputHover" label="Hover" options={HOVER_ROW} />
+}
+
+function InputHeightRow() {
+  return (
+    <DialSelect
+      axis="inputHeight"
+      label="Field height"
+      options={HEIGHT_OPTIONS}
+    />
+  )
+}
+
+const STEPPERS_ROW = NUMBER_LAYOUT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <SteppersGlyph layout={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function NumberLayoutRow() {
+  return (
+    <DialSelect axis="numberLayout" label="Steppers" options={STEPPERS_ROW} />
+  )
+}
+
+const CELLS_ROW = OTP_STYLE_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <CellsGlyph cells={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function OtpStyleRow() {
+  return <DialSelect axis="otpStyle" label="Cells" options={CELLS_ROW} />
+}
+
+function SelectTriggerRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="selectTrigger"
+      label="Trigger"
+      options={TRIGGER_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <TriggerGlyph
+              trigger={option.value}
+              caret={effective.pickerCaret}
+            />
+          </DialGlyph>
+        ),
+      }))}
+    />
+  )
+}
+
+function PickerCaretRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="pickerCaret"
+      label="Caret"
+      options={CARET_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <DialGlyph>
+            <TriggerGlyph
+              trigger={effective.selectTrigger}
+              caret={option.value}
+            />
+          </DialGlyph>
+        ),
+      }))}
+    />
+  )
+}
+
+const LABEL_ROW = LABEL_OPTIONS.map((option) => ({
+  ...option,
+  preview: <LabelGlyph weight={option.value} />,
+}))
+
+function FieldLabelRow() {
+  return <DialSelect axis="fieldLabel" label="Label" options={LABEL_ROW} />
+}
+
+const ERROR_ROW = ERROR_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <ErrorGlyph kind={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function InputErrorRow() {
+  return (
+    <DialSelect axis="inputError" label="Error message" options={ERROR_ROW} />
+  )
+}
+
+export const ROWS: RowMap = {
+  inputStyle: InputStyleRow,
+  inputHover: InputHoverRow,
+  inputHeight: InputHeightRow,
+  numberLayout: NumberLayoutRow,
+  otpStyle: OtpStyleRow,
+  selectTrigger: SelectTriggerRow,
+  pickerCaret: PickerCaretRow,
+  fieldLabel: FieldLabelRow,
+  inputError: InputErrorRow,
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function InputsPreview({ state }: { state: Effective }) {
   return <ShellSpecimen style={state.inputStyle} className="h-5 w-10" />
 }
 
-export function InputsSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
-  const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
+export function InputsSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Input">
-          <ShellSpecimen
-            style={effective.inputStyle}
-            hover={effective.inputHover}
-          />
-        </HeroMember>
-        <HeroMember name="Number field">
-          <DialGlyph>
-            <SteppersGlyph layout={effective.numberLayout} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="OTP field">
-          <DialGlyph>
-            <CellsGlyph cells={effective.otpStyle} />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Select">
-          <DialGlyph>
-            <TriggerGlyph
-              trigger={effective.selectTrigger}
-              caret={effective.pickerCaret}
-            />
-          </DialGlyph>
-        </HeroMember>
-        <HeroMember name="Field">
-          <LabelGlyph weight={effective.fieldLabel} />
-          <DialGlyph>
-            <ErrorGlyph kind={effective.inputError} />
-          </DialGlyph>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="inputStyle"
-        label="Style"
-        options={[
-          {
-            value: "auto",
-            label: `Auto · ${labelOf(STYLE_OPTIONS, autoStyle)}`,
-            aside: (
-              <SourceTag>
-                {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
-              </SourceTag>
-            ),
-            preview: <ShellSpecimen style={autoStyle} className="w-12" />,
-          },
-          ...STYLE_OPTIONS.map((option) => ({
-            ...option,
-            preview: <ShellSpecimen style={option.value} className="w-12" />,
-          })),
-        ]}
-      />
+      <Row axis="inputStyle" />
       <DialGap />
-      <UsesRow axis="buttonStyle" label="Buttons" />
-      <UsesRow axis="focusInputStyle" label="Field focus" />
-      <UsesRow
-        axis="roleControl"
-        label="Control corners"
-        value={roleLabel(effective, "roleControl")}
-      />
-      <More keys={["inputHover", "inputHeight"]}>
-        <DialSelect
-          axis="inputHover"
-          label="Hover"
-          options={[{ value: "auto", label: "As style" }, ...HOVER_OPTIONS]}
-        />
-        <DialSelect
-          axis="inputHeight"
-          label="Height"
-          options={HEIGHT_OPTIONS}
-        />
-      </More>
+      <Row axis="buttonStyle" />
+      <Row axis="focusInputStyle" />
+      <Row axis="roleControl" />
+      <Row axis="inputMotion" />
+      <Row axis="inputHover" />
+      <Row axis="inputHeight" />
       <MemberSection id="number-field" title="Number field">
-        <DialSelect
-          axis="numberLayout"
-          label="Steppers"
-          options={NUMBER_LAYOUT_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <DialGlyph>
-                <SteppersGlyph layout={option.value} />
-              </DialGlyph>
-            ),
-          }))}
-        />
+        <Row axis="numberLayout" />
       </MemberSection>
       <MemberSection id="otp" title="OTP field">
-        <DialSelect
-          axis="otpStyle"
-          label="Cells"
-          options={OTP_STYLE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <DialGlyph>
-                <CellsGlyph cells={option.value} />
-              </DialGlyph>
-            ),
-          }))}
-        />
+        <Row axis="otpStyle" />
       </MemberSection>
       <MemberSection id="select" title="Select">
-        <More keys={["selectTrigger", "pickerCaret"]}>
-          <DialSelect
-            axis="selectTrigger"
-            label="Trigger"
-            options={TRIGGER_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <TriggerGlyph
-                    trigger={option.value}
-                    caret={effective.pickerCaret}
-                  />
-                </DialGlyph>
-              ),
-            }))}
-          />
-          <DialSelect
-            axis="pickerCaret"
-            label="Caret"
-            options={CARET_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <TriggerGlyph
-                    trigger={effective.selectTrigger}
-                    caret={option.value}
-                  />
-                </DialGlyph>
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="selectTrigger" />
+        <Row axis="pickerCaret" />
       </MemberSection>
       <MemberSection id="field" title="Field">
-        <More keys={["fieldLabel", "inputError"]}>
-          <DialSelect
-            axis="fieldLabel"
-            label="Label"
-            options={LABEL_OPTIONS.map((option) => ({
-              ...option,
-              preview: <LabelGlyph weight={option.value} />,
-            }))}
-          />
-          <DialSelect
-            axis="inputError"
-            label="Error message"
-            options={ERROR_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <DialGlyph>
-                  <ErrorGlyph kind={option.value} />
-                </DialGlyph>
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="fieldLabel" />
+        <Row axis="inputError" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
