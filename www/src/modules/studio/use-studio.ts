@@ -20,8 +20,19 @@ export interface Studio {
   effective: Effective
   /** The engine's view: what the preview renders and the export ships. */
   designSystem: DesignSystem
-  set: <K extends keyof StudioState & string>(key: K) => (value: StudioState[K]) => void
+  set: <K extends keyof StudioState & string>(
+    key: K,
+  ) => (value: StudioState[K]) => void
   setState: (state: StudioState) => void
+}
+
+// Every row reads the studio: resolve each state's system once.
+const SYSTEMS = new WeakMap<Effective, DesignSystem>()
+
+function systemOf(values: Effective): DesignSystem {
+  let system = SYSTEMS.get(values)
+  if (!system) SYSTEMS.set(values, (system = resolveDesignSystem(values)))
+  return system
 }
 
 export function useStudio(): Studio {
@@ -35,7 +46,7 @@ export function useStudio(): Studio {
     return {
       state,
       effective: values,
-      designSystem: resolveDesignSystem(values),
+      designSystem: systemOf(values),
       set,
       setState: edit,
     }

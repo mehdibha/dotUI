@@ -19,10 +19,26 @@ export type RowMap = Partial<Record<AxisKey, React.ComponentType>>
  *  never import each other. */
 export const RowsContext = createContext<RowMap>({})
 
+/** Where a key's row lives, as a host names it (the page's label). */
+export const PlaceLabel = createContext<(key: AxisKey) => string | undefined>(
+  () => undefined,
+)
+
+/** A host's name for the row it renders; popovers reset it. */
+export const RowLabel = createContext<string | undefined>(undefined)
+
+/** The row's label, as its host names it. */
+export const useRowLabel = (label: string) => useContext(RowLabel) ?? label
+
 /** A key's row, hosted anywhere: it edits that key everywhere. */
-export function Row({ axis }: { axis: AxisKey }) {
+export function Row({ axis, label }: { axis: AxisKey; label?: string }) {
   const Component = useContext(RowsContext)[axis]
-  return Component ? <Component /> : null
+  if (!Component) return null
+  return (
+    <RowLabel.Provider value={label}>
+      <Component />
+    </RowLabel.Provider>
+  )
 }
 
 /** Every member's specimen in the current system, fill-only. */
