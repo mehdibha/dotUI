@@ -1,4 +1,5 @@
 import { ActionsSheet } from "./actions"
+import { CommandSheet } from "./command"
 import { DatesSheet } from "./dates"
 import { DialogSheet, DrawerSheet } from "./dialog"
 import { DisplaySheet } from "./display"
@@ -16,6 +17,7 @@ export const SHEETS = {
   menu: MenuSheet,
   dialog: DialogSheet,
   drawer: DrawerSheet,
+  command: CommandSheet,
   navigation: NavigationSheet,
   feedback: FeedbackSheet,
   display: DisplaySheet,

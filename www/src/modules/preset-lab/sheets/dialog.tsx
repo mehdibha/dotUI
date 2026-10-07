@@ -52,7 +52,7 @@ function Form() {
 }
 
 /** The page under the overlay, so the backdrop has something to cover. */
-function Backdrop() {
+export function Backdrop() {
   return (
     <Sheet className="grid-cols-3">
       <h1 className="col-span-3 text-2xl">Issues</h1>
@@ -68,7 +68,7 @@ function Backdrop() {
           </CardContent>
         </Card>
       ))}
-      <div className="col-span-3 h-72 rounded-lg bg-muted" />
+      <div className="col-span-3 h-72 rounded-(--studio-radius-card) bg-muted" />
     </Sheet>
   )
 }
@@ -79,7 +79,7 @@ export function DialogSheet() {
     <>
       <Backdrop />
       <Modal isOpen isDismissable={false}>
-        <DialogContent>
+        <DialogContent showCloseButton>
           <Form />
         </DialogContent>
       </Modal>
@@ -92,7 +92,7 @@ export function DrawerSheet() {
     <>
       <Backdrop />
       <Drawer isOpen placement="right" className="w-[420px]">
-        <DialogContent>
+        <DialogContent showCloseButton>
           <Form />
         </DialogContent>
       </Drawer>

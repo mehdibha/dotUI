@@ -158,9 +158,11 @@
   /* Disabled axis: Fade dims the whole control (Solid recolors through the
      --disabled-* tokens below). Only the outermost disabled element dims, so
      a disabled field's input doesn't compound. A pending button keeps its
-     face. */
+     face; a current crumb is disabled only to stop navigation, so it stays
+     full strength. */
   :is([data-disabled], :disabled, [aria-disabled="true"]):not(
     [data-pending],
+    [data-current],
     :is([data-disabled], :disabled, [aria-disabled="true"]) *
   ) {
     opacity: var(--disabled-opacity, 1);
