@@ -2108,7 +2108,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				collapsible: { motion: "expand" },
 				"color-editor": { style: "default" },
 				command: { search: "field", inset: "inset", scale: "default" },
-				dialog: { sections: "open", footer: "end", close: "quiet", titles: "bold" },
+				dialog: { sections: "open", footer: "end", close: "faint", titles: "bold" },
 				drawer: { edge: "docked" },
 				empty: { titles: "bold" },
 				field: { error: "plain", label: "semibold" },
