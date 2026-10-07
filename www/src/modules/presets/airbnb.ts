@@ -30,6 +30,8 @@ export const airbnb = definePreset({
     // Titles from 22px track at -0.02em.
     titleStyle: "tight",
     fieldTextSize: "large",
+    // Cereal 500 labels; Plus Jakarta reads a step lighter at the same weight.
+    labelWeight: "semibold",
 
     // Shape
     // Base 16: controls, menus and cards 12, dialogs 32.
@@ -43,8 +45,8 @@ export const airbnb = definePreset({
     density: "spacious",
 
     // Surfaces
-    // Popovers 0 2px 16px .12, dialogs 0 8px 28px .28.
-    surfaceShadow: "medium",
+    // Bordered tiles are hairline-only; popovers 0 2px 16px .12.
+    surfaceShadow: "low",
     // Menus and dialogs are borderless; depth is the shadow.
     surfaceEdge: "none",
     // Guest and host pages are white edge to edge.
@@ -54,7 +56,7 @@ export const airbnb = definePreset({
     selectionHighlight: "browser",
 
     // States
-    // 2px white gap plus a 2px #222 ring; fields thicken to #222.
+    // A 2px #222 ring after a white gap; neutral is the nearest ink. Fields thicken to #222.
     focusColor: "neutral",
     focusInputStyle: "border",
     focusInputWeight: "thick",
@@ -83,6 +85,8 @@ export const airbnb = definePreset({
     sliderTrack: "hairline",
     // A 2px #222 outline on white ("Any" in Type of place); the #f7f7f7 wash has no option.
     cardSelected: "outline",
+    // Selected is ink everywhere; chips really take an ink edge, which has no option.
+    toggleSelected: "inverse",
     // The Dates | Flexible pill: a white chip on an #ebebeb track.
     segmentedSelected: "raised",
 
@@ -90,16 +94,14 @@ export const airbnb = definePreset({
     inputHover: "edge",
     inputHeight: "tall",
     inputError: "icon-message",
-    // − and + circles either side of the value.
+    // − and + at both ends; Airbnb's are free 32px circles, not cells.
     numberLayout: "split",
     selectTrigger: "field",
 
     // Menus & popovers
+    // The current sort option is bold only; the default check stands in.
     menuInset: "full-bleed",
     menuArrows: "none",
-    // No check: the current sort option is bold; the tint stands in for the weight.
-    menuIndicator: "none",
-    menuSelectedRow: "tint",
 
     // Dialogs
     dialogBackdrop: "scrim",
@@ -113,6 +115,8 @@ export const airbnb = definePreset({
     tabStyle: "line",
     linkUnderline: "always",
     linkColor: "neutral",
+    // Search results mark the current page with an ink circle.
+    paginationCurrent: "selected",
 
     // Feedback
     badgeStyle: "soft",
