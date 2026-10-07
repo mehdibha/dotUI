@@ -38,7 +38,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       footer: "border-t bg-muted/50 font-medium",
       row: [
         "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
-        "hover:bg-muted/50 data-[state=selected]:bg-selected data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/70 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/70",
+        "hover:bg-muted/50 data-[state=selected]:bg-selected-row data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected-row selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/70 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/70",
         "focus-visible:bg-selected/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
       cell: [

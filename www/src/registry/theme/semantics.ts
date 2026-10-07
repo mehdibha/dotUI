@@ -178,6 +178,17 @@ export function semanticVocabulary(
     "color-selected-hover": bg(ref("neutral", "400"), ["neutral"]),
     "color-selected-active": bg(ref("neutral", "500"), ["neutral"]),
     "color-fg-on-selected": fg(ref("neutral", "950")),
+    // Selected table and tree rows: two rungs lighter than a selected control
+    // (shadcn bg-muted, Primer, Polaris #f1f1f1); dark steps up one rung
+    // because its rows sit on lifted surfaces.
+    "color-selected-row": bg(
+      { light: ref("neutral", "100"), dark: ref("neutral", "200") },
+      ["neutral"],
+    ),
+    "color-selected-row-hover": bg(
+      { light: ref("neutral", "200"), dark: ref("neutral", "300") },
+      ["neutral"],
+    ),
     "color-neutral": bg(ref("neutral", "100"), ["neutral"]),
     "color-neutral-hover": bg(ref("neutral", "200"), ["neutral"]),
     "color-neutral-active": bg(ref("neutral", "300"), ["neutral"]),
@@ -201,15 +212,10 @@ export function semanticVocabulary(
     // each element's own background, so the same token paints brighter on
     // elevated surfaces (a border-t on a bg-card code bar reads stronger than
     // the frame around it). One fixed color reads identically everywhere.
-    // Light matches ~9% ink over the app bg; dark sits between the mids
-    // (Geist-style, ~L 0.25) so edges stay legible on the lighter elevated
-    // surfaces — a dark solid matched to the page-bg hairline would vanish
-    // on popover (both ~L 0.20).
+    // The same rungs in both modes: dark lifts cards, popovers and fields
+    // toward the border, so it needs the full two-rung gap light has.
     "color-border": bd(
-      {
-        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
-        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
-      },
+      mix(ref("neutral", "200"), 50, ref("neutral", "300")),
       NEUTRAL,
     ),
     // The control weight: field, control, and secondary-button edges.
