@@ -58,7 +58,13 @@ describe("extractStylesConfig", () => {
           s.includes("rounded-(--studio-alert-radius)"),
       ),
     ).toBe(true)
-    expect(cfg.params).toBeUndefined()
+    expect(Object.keys(cfg.params?.style ?? {})).toEqual([
+      "neutral",
+      "soft",
+      "soft-outline",
+      "outline",
+      "inverse",
+    ])
   })
 
   test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {

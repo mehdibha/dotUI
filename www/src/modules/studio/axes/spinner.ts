@@ -1,10 +1,7 @@
-/* Spinner — the indeterminate loading signature: ring (Material/Carbon/
-   shadcn) vs blades (Apple/Geist/Radix Themes) vs dots (HeroUI, chat UIs).
-   Each style's loop is its recipe's own.
+/* Spinner: the indeterminate loading signature, each style with its own
+   loop. Button, list-box, table and toast embed it.
 
-   Engine: `style` is a files-based enum param on `loader` — each value ships
-   its own base file. Ring is the icon library's own loader glyph, so it
-   follows the Icons chapter. */
+   Engine: a files-based enum param on `loader` (one base file per style). */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -16,9 +13,22 @@ export const SPINNER_DEFAULTS = {
 }
 
 export const STYLE_OPTIONS = [
-  { value: "ring", label: "Ring" },
-  { value: "blades", label: "Blades" },
-  { value: "dots", label: "Dots" },
+  {
+    value: "ring",
+    label: "Ring",
+    description: "shadcn, Polaris, HeroUI, Chakra, Material 3",
+  },
+  {
+    value: "ring-track",
+    label: "Ring + track",
+    description: "Primer, Spectrum 2, Fluent 2, Mantine",
+  },
+  {
+    value: "blades",
+    label: "Blades",
+    description: "Radix Themes, Geist, Apple",
+  },
+  { value: "dots", label: "Dots", description: "Ant Design" },
 ]
 
 export const SPINNER_SCHEMA: ChapterSchema<typeof SPINNER_DEFAULTS> = {

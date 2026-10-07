@@ -1,17 +1,39 @@
 "use client"
 
-/* Feedback — a bucket: badges and tags, spinner, skeleton, progress. */
+/* Feedback — a bucket: chips (badge and tag), alert, toast, and the loading
+   indicators. */
 
+import { useMemo } from "react"
+
+import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import { useStyles as useAlertStyles } from "@/registry/ui/alert/styles"
+import { useStyles as useBadgeStyles } from "@/registry/ui/badge/styles"
 import { Loader as BladesLoader } from "@/registry/ui/loader/base.blades"
 import { Loader as DotsLoader } from "@/registry/ui/loader/base.dots"
 import { Loader as RingLoader } from "@/registry/ui/loader/base.ring"
+import { Loader as RingTrackLoader } from "@/registry/ui/loader/base.ring-track"
+import { useStyles as useProgressStyles } from "@/registry/ui/progress-bar/styles"
+import { useStyles as useTagStyles } from "@/registry/ui/tag-group/styles"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
-import { INDETERMINATE_OPTIONS, TRACK_OPTIONS } from "../axes/progress"
+import { parseState } from "../axes"
+import type { StudioState } from "../axes"
+import { STYLE_OPTIONS as ALERT_OPTIONS } from "../axes/alert"
+import {
+  CASE_OPTIONS,
+  SHAPE_OPTIONS,
+  STYLE_OPTIONS as BADGE_OPTIONS,
+} from "../axes/badges"
+import {
+  COLOR_OPTIONS,
+  TRACK_OPTIONS,
+  TRACK_STYLE_OPTIONS,
+} from "../axes/progress"
 import { ANIMATION_OPTIONS } from "../axes/skeleton"
 import { STYLE_OPTIONS as SPINNER_OPTIONS } from "../axes/spinner"
-import { DialGlyph, DialSegmented, DialSelect, DialToggle } from "../dial"
+import { STATUS_OPTIONS, STYLE_OPTIONS as TOAST_OPTIONS } from "../axes/toast"
+import { DialGap, DialGlyph, DialList, DialSelect } from "../dial"
 import {
   FamilyHero,
   HeroMember,
@@ -19,87 +41,146 @@ import {
   More,
   UsesRow,
 } from "../family-page"
+import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-const CHIP: Record<string, string> = {
-  solid: "bg-accent text-fg-on-accent",
-  soft: "bg-accent-muted text-fg-accent",
-  outline: "border border-border-accent text-fg-accent",
-  "soft-outline": "border border-border-accent bg-accent-muted text-fg-accent",
+/* The vars a pick writes (Rounded badges, the progress fill). */
+const LOCAL_VARS = ["--studio-badge-radius", "--studio-progress-fill-color"]
+
+/** Specimens drawn by the registry's own recipes in one design system. */
+function System({
+  ds,
+  children,
+}: {
+  ds: DesignSystem
+  children: React.ReactNode
+}) {
+  const value = useMemo(
+    () => ({ params: ds.componentParams, density: "default" as const }),
+    [ds],
+  )
+  const style = Object.fromEntries(
+    LOCAL_VARS.flatMap((name) =>
+      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
+    ),
+  ) as React.CSSProperties
+  return (
+    <DesignSystemContext.Provider value={value}>
+      <span className="flex items-center gap-1.5" style={style}>
+        {children}
+      </span>
+    </DesignSystemContext.Provider>
+  )
 }
 
-/** The accent chip in one style and shape. */
-function ChipGlyph({
-  style,
-  shape,
-  children = "New",
-}: {
-  style: string
-  shape: string
-  children?: string
-}) {
+/** One design system per option of `key`, over the current picks. */
+function useSystems(
+  state: StudioState,
+  key: keyof StudioState,
+  options: readonly { value: string }[],
+) {
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        options.map(({ value }) => [
+          value,
+          designSystemOf({ ...state, [key]: value } as StudioState),
+        ]),
+      ),
+    [state, key, options],
+  )
+}
+
+type Tone = "neutral" | "success" | "danger"
+
+const CHIP_LABELS: Record<Tone, string> = {
+  neutral: "New",
+  success: "Live",
+  danger: "Error",
+}
+
+function Badges({ tones = ["neutral"] }: { tones?: Tone[] }) {
+  const styles = useBadgeStyles()
+  return tones.map((tone) => (
+    <span key={tone} className={styles({ variant: tone, size: "sm" })}>
+      {CHIP_LABELS[tone]}
+    </span>
+  ))
+}
+
+function TagSpecimen() {
+  const { tag } = useTagStyles()()
+  return <span className={tag()}>Tag</span>
+}
+
+/** A danger alert shrunk to its fill, edge and inks. */
+function AlertSpecimen() {
+  const { root } = useAlertStyles()()
   return (
     <span
-      className={cn(
-        "flex h-4 shrink-0 items-center px-1.5 text-[9px] font-medium",
-        shape === "pill" ? "rounded-full" : "rounded-[3px]",
-        CHIP[style],
-      )}
+      className={root({
+        variant: "danger",
+        className:
+          "flex h-4 w-8 items-center gap-1 rounded-[4px] px-1 py-0 *:[svg]:size-1.5 *:[svg]:translate-y-0",
+      })}
     >
-      {children}
+      <svg
+        viewBox="0 0 8 8"
+        aria-hidden
+        // Inline: a list row sizes every svg inside it.
+        style={{ width: 6, height: 6, flexShrink: 0 }}
+      >
+        <circle cx="4" cy="4" r="4" fill="currentColor" />
+      </svg>
+      <span className="h-0.5 w-3 rounded-full bg-current opacity-60" />
     </span>
   )
 }
 
-/** An inline alert and a toast: members with no rows of their own yet. */
-function AlertGlyph() {
+const TOAST_SURFACE: Record<string, string> = {
+  surface: "border border-border bg-popover",
+  inverse: "bg-inverse",
+}
+
+/** A toast on its surface; `status` paints a danger toast. */
+function ToastGlyph({ surface, status }: { surface: string; status?: string }) {
+  const inverse = surface === "inverse"
+  const box =
+    status === "bold"
+      ? "bg-danger"
+      : status === "soft"
+        ? "border border-border-danger bg-danger-muted"
+        : TOAST_SURFACE[surface]
+  const ink =
+    status === "bold"
+      ? "bg-fg-on-danger"
+      : status === "soft"
+        ? "bg-fg-danger"
+        : inverse
+          ? "bg-fg-inverse"
+          : "bg-fg"
+  const dot = status === "icon" ? (inverse ? "bg-danger" : "bg-fg-danger") : ink
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="2.75"
-        y="6.75"
-        width="18.5"
-        height="10.5"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <circle cx="7" cy="12" r="1.75" fill="currentColor" />
-      <path
-        d="M10.5 10.5h7M10.5 13.5h4.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        opacity=".45"
-      />
-    </svg>
+    <span
+      className={cn(
+        "flex h-3.5 w-9 shrink-0 items-center gap-1 rounded-[3px] px-1 shadow-xs",
+        box,
+      )}
+    >
+      {status && <span className={cn("size-1.5 rounded-full", dot)} />}
+      <span className={cn("h-0.5 w-4 rounded-full opacity-60", ink)} />
+    </span>
   )
 }
 
-function ToastGlyph() {
+function ToastStack({ surface, status }: { surface: string; status: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="3.75"
-        y="3.75"
-        width="16.5"
-        height="16.5"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity=".45"
-      />
-      <rect
-        x="9"
-        y="13.5"
-        width="9"
-        height="4.5"
-        rx="1.25"
-        fill="currentColor"
-      />
-    </svg>
+    <span className="flex flex-col gap-0.5">
+      <ToastGlyph surface={surface} />
+      <ToastGlyph surface={surface} status={status} />
+    </span>
   )
 }
 
@@ -151,64 +232,82 @@ function SkeletonGlyph({ animation }: { animation: string }) {
 
 const LOADERS: Record<string, typeof RingLoader> = {
   ring: RingLoader,
+  "ring-track": RingTrackLoader,
   blades: BladesLoader,
   dots: DotsLoader,
 }
 
-function ProgressGlyph({ track, gap }: { track: string; gap: boolean }) {
-  const weight = track === "thick" ? 5 : 2.5
+function ProgressSpecimen() {
+  const { track, fill } = useProgressStyles()()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d={gap ? "M14.5 12h5" : "M3 12h18"}
-        stroke="currentColor"
-        strokeWidth={weight}
-        strokeLinecap="round"
-        opacity=".3"
-      />
-      <path
-        d="M3 12h9"
-        stroke="currentColor"
-        strokeWidth={weight}
-        strokeLinecap="round"
-      />
-      {gap && <circle cx="21" cy="12" r="1.5" fill="currentColor" />}
-    </svg>
+    <span className={track({ className: "w-10" })}>
+      <span className={fill()} style={{ width: "60%" }} />
+    </span>
   )
 }
 
 /* --------------------------------- Section --------------------------------- */
 
 export function FeedbackPreview({ state }: { state: Effective }) {
-  return <ChipGlyph style={state.badgeStyle} shape={state.badgeShape} />
+  const ds = useMemo(
+    () =>
+      designSystemOf(
+        parseState({
+          badgeStyle: state.badgeStyle,
+          badgeShape: state.badgeShape,
+        }),
+      ),
+    [state.badgeStyle, state.badgeShape],
+  )
+  return (
+    <System ds={ds}>
+      <Badges />
+    </System>
+  )
 }
 
 export function FeedbackSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+  const { state, effective, designSystem } = studio
+  const styles = useSystems(state, "badgeStyle", BADGE_OPTIONS)
+  const shapes = useSystems(state, "badgeShape", SHAPE_OPTIONS)
+  const cases = useSystems(state, "badgeCase", CASE_OPTIONS)
+  const alerts = useSystems(state, "alertStyle", ALERT_OPTIONS)
+  const tracks = useSystems(state, "progressTrack", TRACK_OPTIONS)
+  const trackStyles = useSystems(
+    state,
+    "progressTrackStyle",
+    TRACK_STYLE_OPTIONS,
+  )
+  const fills = useSystems(state, "progressColor", COLOR_OPTIONS)
   const Spinner = LOADERS[effective.spinnerStyle] ?? RingLoader
+  const semantics = [
+    state.successSeed,
+    state.warningSeed,
+    state.dangerSeed,
+  ].some(Boolean)
   return (
     <>
       <FamilyHero>
         <HeroMember name="Badge">
-          <ChipGlyph
-            style={effective.badgeStyle}
-            shape={effective.badgeShape}
-          />
+          <System ds={designSystem}>
+            <Badges tones={["neutral", "success"]} />
+          </System>
         </HeroMember>
         <HeroMember name="Tag">
-          <ChipGlyph style={effective.badgeStyle} shape={effective.badgeShape}>
-            Tag
-          </ChipGlyph>
+          <System ds={designSystem}>
+            <TagSpecimen />
+          </System>
         </HeroMember>
         <HeroMember name="Alert">
-          <DialGlyph>
-            <AlertGlyph />
-          </DialGlyph>
+          <System ds={designSystem}>
+            <AlertSpecimen />
+          </System>
         </HeroMember>
         <HeroMember name="Toast">
-          <DialGlyph>
-            <ToastGlyph />
-          </DialGlyph>
+          <ToastStack
+            surface={effective.toastStyle}
+            status={effective.toastStatus}
+          />
         </HeroMember>
         <HeroMember name="Spinner">
           <Spinner className="size-5" />
@@ -219,31 +318,101 @@ export function FeedbackSection({ studio }: { studio: Studio }) {
           </DialGlyph>
         </HeroMember>
         <HeroMember name="Progress bar">
-          <DialGlyph>
-            <ProgressGlyph
-              track={effective.progressTrack}
-              gap={effective.progressGap}
-            />
-          </DialGlyph>
+          <System ds={designSystem}>
+            <ProgressSpecimen />
+          </System>
         </HeroMember>
       </FamilyHero>
-      <DialSelect
+      <DialList
         axis="badgeStyle"
         label="Badge style"
-        options={STYLE_OPTIONS.map((option) => ({
+        options={BADGE_OPTIONS.map((option) => ({
           ...option,
           preview: (
-            <ChipGlyph style={option.value} shape={effective.badgeShape} />
+            <System ds={styles[option.value]!}>
+              <Badges tones={["neutral", "danger"]} />
+            </System>
           ),
         }))}
       />
-      <DialSegmented
+      <DialGap />
+      <DialSelect
         axis="badgeShape"
         label="Badge shape"
-        options={SHAPE_OPTIONS}
+        options={SHAPE_OPTIONS.map((option) => ({
+          ...option,
+          preview: (
+            <System ds={shapes[option.value]!}>
+              <Badges />
+            </System>
+          ),
+        }))}
       />
-      <UsesRow axis="brand" label="Brand" />
+      <UsesRow
+        axis="dangerSeed"
+        label="Semantics"
+        value={semantics ? "Custom" : "Auto"}
+      />
+      <UsesRow axis="surfaceGlass" label="Glass" />
       <UsesRow axis="motion" label="Motion" />
+      <More keys={["badgeCase"]}>
+        <DialSelect
+          axis="badgeCase"
+          label="Badge case"
+          options={CASE_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <System ds={cases[option.value]!}>
+                <Badges />
+              </System>
+            ),
+          }))}
+        />
+      </More>
+      <MemberSection id="alert" title="Alert">
+        <DialSelect
+          axis="alertStyle"
+          label="Alert style"
+          options={ALERT_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <System ds={alerts[option.value]!}>
+                <AlertSpecimen />
+              </System>
+            ),
+          }))}
+        />
+      </MemberSection>
+      <MemberSection id="toast" title="Toast">
+        <DialSelect
+          axis="toastStyle"
+          label="Toast style"
+          options={TOAST_OPTIONS.map((option) => ({
+            ...option,
+            preview: (
+              <ToastGlyph
+                surface={option.value}
+                status={effective.toastStatus}
+              />
+            ),
+          }))}
+        />
+        <More keys={["toastStatus"]}>
+          <DialSelect
+            axis="toastStatus"
+            label="Status toasts"
+            options={STATUS_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <ToastGlyph
+                  surface={effective.toastStyle}
+                  status={option.value}
+                />
+              ),
+            }))}
+          />
+        </More>
+      </MemberSection>
       <MemberSection id="loading" title="Loading">
         <DialSelect
           axis="spinnerStyle"
@@ -257,8 +426,8 @@ export function FeedbackSection({ studio }: { studio: Studio }) {
           keys={[
             "skeletonAnimation",
             "progressTrack",
-            "progressIndeterminate",
-            "progressGap",
+            "progressTrackStyle",
+            "progressColor",
           ]}
         >
           <DialSelect
@@ -273,17 +442,45 @@ export function FeedbackSection({ studio }: { studio: Studio }) {
               ),
             }))}
           />
-          <DialSegmented
+          <DialSelect
             axis="progressTrack"
-            label="Progress"
-            options={TRACK_OPTIONS}
+            label="Progress thickness"
+            rowPreview={false}
+            options={TRACK_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <System ds={tracks[option.value]!}>
+                  <ProgressSpecimen />
+                </System>
+              ),
+            }))}
           />
-          <DialSegmented
-            axis="progressIndeterminate"
-            label="Indeterminate"
-            options={INDETERMINATE_OPTIONS}
+          <DialSelect
+            axis="progressTrackStyle"
+            label="Progress track"
+            rowPreview={false}
+            options={TRACK_STYLE_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <System ds={trackStyles[option.value]!}>
+                  <ProgressSpecimen />
+                </System>
+              ),
+            }))}
           />
-          <DialToggle axis="progressGap" label="Track gap" />
+          <DialSelect
+            axis="progressColor"
+            label="Progress fill"
+            rowPreview={false}
+            options={COLOR_OPTIONS.map((option) => ({
+              ...option,
+              preview: (
+                <System ds={fills[option.value]!}>
+                  <ProgressSpecimen />
+                </System>
+              ),
+            }))}
+          />
         </More>
       </MemberSection>
     </>

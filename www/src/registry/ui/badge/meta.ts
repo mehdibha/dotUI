@@ -18,6 +18,12 @@ const badgeMeta = {
       values: ["solid", "soft", "outline", "soft-outline"] as const,
       description: "The appearance a badge wears when none is set.",
     },
+    case: {
+      kind: "enum",
+      default: "sentence",
+      values: ["sentence", "uppercase"] as const,
+      description: "The badge label's case.",
+    },
   },
 } satisfies RegistryItem
 
