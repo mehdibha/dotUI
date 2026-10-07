@@ -10,25 +10,26 @@ import type { Effective, Studio } from "../state"
 
 const TOUCH = densityTier("touch").ladder
 
-/** A tier's button ladder, xs to lg, on one baseline. */
-function LadderGlyph({ density }: { density: string }) {
-  const { ladder } = densityTier(density)
+/** A tier's md control, its height to scale against Touch's. */
+function ControlGlyph({ density }: { density: string }) {
+  const h = (densityTier(density).ladder[2] / TOUCH[2]) * 14
   return (
-    <svg viewBox="0 0 16 16" aria-hidden>
-      {ladder.map((px, i) => {
-        const h = (px / TOUCH[3]) * 14
-        return (
-          <rect
-            key={i}
-            x={1 + i * 3.75}
-            y={15 - h}
-            width={2.5}
-            height={h}
-            rx={1}
-            fill="currentColor"
-          />
-        )
-      })}
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden>
+      <rect
+        x={0.75}
+        y={8 - h / 2}
+        width={14.5}
+        height={h}
+        rx={2.5}
+        stroke="currentColor"
+        strokeWidth={1.25}
+      />
+      <path
+        d="M5 8h6"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
@@ -103,7 +104,7 @@ export function SpaceSection({ studio }: { studio: Studio }) {
           ...option,
           preview: (
             <DialGlyph>
-              <LadderGlyph density={option.value} />
+              <ControlGlyph density={option.value} />
             </DialGlyph>
           ),
         }))}
