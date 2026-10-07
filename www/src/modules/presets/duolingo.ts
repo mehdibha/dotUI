@@ -11,6 +11,8 @@ export const duolingo = definePreset({
     // owl #58cc02 for CTAs and progress; macaw #1cb0f6 for selection and focus.
     brand: "#58cc02",
     preserveSeed: true,
+    // White labels on owl in light (2.09:1, priced); dark labels in dark.
+    solidInk: "white",
     selectionSeed: "#1cb0f6",
     successSeed: "#58cc02",
     warningSeed: "#ffc800",
@@ -37,7 +39,8 @@ export const duolingo = definePreset({
     controlStroke: "bold",
     density: "comfortable",
 
-    // Surfaces
+    // Surfaces: cards and choice tiles stand on a 2px lip.
+    surfaceEdge: "ledge",
     shellTone: "page",
 
     // States
