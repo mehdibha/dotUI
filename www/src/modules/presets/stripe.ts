@@ -9,37 +9,94 @@ export const stripe = definePreset({
   diff: {
     // Color
     brand: "#533afd",
-    neutralHue: 260,
-    successSeed: "#228403",
-    dangerSeed: "#df1b41",
+    // Checks, radios and switches fill one step lighter (form accent).
+    selectionSeed: "#675dff",
+    preserveSeed: true,
+    // Slate text #1A2C44, border #D4DEE9.
+    neutralHue: 256,
     neutralTint: 2,
+    successSeed: "#2b8700",
+    warningSeed: "#cc4b00",
+    dangerSeed: "#e61947",
     lightBg: 100,
+    // Dark page #14171d.
+    darkBg: 7.5,
 
     // Typography
-    // Söhne is proprietary; Inter is the closest free grotesque.
-    bodyFont: "Inter",
+    // Sail's base stack is the OS face at 14px.
+    bodyFont: "System",
     monoFont: "Source Code Pro",
+    uiTextSize: "14",
+    labelWeight: "semibold",
+    titleStyle: "bold",
+
+    // Icons
+    // Sail's 1.5/16 line on Lucide's 24 grid.
+    iconStroke: 2.25,
 
     // Shape
+    // Ladder at 8: badges 4, controls 6, popovers and dialogs 8.
     radiusPx: 8,
-    roleControl: "lg",
     roleItem: "sm",
-    roleCard: "xl",
+    rolePanel: "lg",
+    roleCard: "lg",
 
-    // Surfaces
-    surfaceShadow: "low",
+    // Space
+    // 28px controls.
+    density: "compact",
+
+    // Browser
+    selectionHighlight: "browser",
+    cursorDisabled: "default",
 
     // States
-    // Stripe's flush halo fails on blurple fills; Inset's bg line reads.
-    focusStyle: "inset",
-    focusInputWeight: "thick",
+    // 0 0 0 4px at 36%.
+    focusStyle: "halo",
+    focusStrength: "faint",
+    focusWidth: 4,
+    focusInputStyle: "ring",
+    disabledTreatment: "fade",
+
+    // Motion
+    motion: "smooth",
 
     // Components
+    buttonSecondary: "outline",
+    toggleSelected: "tint",
+    segmentedSelected: "ring",
+    cardSelected: "outline",
+    inputHover: "edge",
+    fieldLabel: "semibold",
+    inputError: "icon-message",
     pickerCaret: "double",
+    calendarDayShape: "circle",
+    calendarToday: "numeral",
+    calendarWeekdays: "double",
+    menuArrows: "none",
+    // 32px rows under 28px controls.
+    menuRows: "step",
+    dialogBackdrop: "wash",
+    // rgba(186,200,218,.7).
+    dialogBackdropStrength: "heavy",
+    dialogSections: "on-scroll",
+    mobileDialogs: "sheet",
+    tooltipStyle: "surface",
+    // Slate-800 toasts; only errors go solid red (Bold would paint every status).
+    toastStyle: "inverse",
     tabStyle: "line",
     tabsColor: "accent",
+    // The current sidebar item is blurple ink, no fill.
+    navMarker: "ink",
+    navWeight: "semibold",
+    navItemWeight: "regular-semibold",
+    accordionMarker: "leading-caret",
+    breadcrumbTone: "link",
     badgeStyle: "soft-outline",
-    menuRows: "step",
     badgeShape: "rounded",
+    kbdTreatment: "outline",
+    avatarShape: "rounded",
+    tableHeaderLabel: "strong",
+    // Sail's categorical series: #9966FF, #0055BC, #00A1C2, #ED6804…
+    chartPalette: "vivid",
   },
 })
