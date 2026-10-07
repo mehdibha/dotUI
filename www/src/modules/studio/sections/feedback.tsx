@@ -218,7 +218,7 @@ const LOADERS: Record<string, typeof RingLoader> = {
 function ProgressSpecimen() {
   const { track, fill } = useProgressStyles()()
   return (
-    <span className={track({ className: "w-10" })}>
+    <span className={track({ className: "w-16" })}>
       <span className={fill()} style={{ width: "60%" }} />
     </span>
   )
@@ -256,7 +256,7 @@ function BadgeShapeRow() {
         ...option,
         preview: (
           <System ds={shapes[option.value]!}>
-            <Badge />
+            <Badge danger />
           </System>
         ),
       }))}
@@ -275,7 +275,7 @@ function BadgeCaseRow() {
         ...option,
         preview: (
           <System ds={cases[option.value]!}>
-            <Badge />
+            <Badge danger />
           </System>
         ),
       }))}
@@ -393,6 +393,36 @@ function ProgressRow({
   )
 }
 
+function ProgressTrackRow() {
+  return (
+    <ProgressRow
+      axis="progressTrack"
+      label="Progress thickness"
+      options={TRACK_OPTIONS}
+    />
+  )
+}
+
+function ProgressTrackStyleRow() {
+  return (
+    <ProgressRow
+      axis="progressTrackStyle"
+      label="Progress track"
+      options={TRACK_STYLE_OPTIONS}
+    />
+  )
+}
+
+function ProgressColorRow() {
+  return (
+    <ProgressRow
+      axis="progressColor"
+      label="Progress fill"
+      options={COLOR_OPTIONS}
+    />
+  )
+}
+
 export const ROWS: RowMap = {
   badgeStyle: BadgeStyleRow,
   badgeShape: BadgeShapeRow,
@@ -402,27 +432,9 @@ export const ROWS: RowMap = {
   toastStatus: ToastStatusRow,
   spinnerStyle: SpinnerStyleRow,
   skeletonAnimation: SkeletonAnimationRow,
-  progressTrack: () => (
-    <ProgressRow
-      axis="progressTrack"
-      label="Progress thickness"
-      options={TRACK_OPTIONS}
-    />
-  ),
-  progressTrackStyle: () => (
-    <ProgressRow
-      axis="progressTrackStyle"
-      label="Progress track"
-      options={TRACK_STYLE_OPTIONS}
-    />
-  ),
-  progressColor: () => (
-    <ProgressRow
-      axis="progressColor"
-      label="Progress fill"
-      options={COLOR_OPTIONS}
-    />
-  ),
+  progressTrack: ProgressTrackRow,
+  progressTrackStyle: ProgressTrackStyleRow,
+  progressColor: ProgressColorRow,
 }
 
 /* --------------------------------- Section --------------------------------- */
