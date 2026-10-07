@@ -6,7 +6,9 @@
 import { useMemo } from "react"
 
 import { DesignSystemContext } from "@/lib/styles"
+import { ChevronRightIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
+import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
 import { UPPERCASE } from "@/registry/ui/button/styles"
 import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
 import {
@@ -147,6 +149,21 @@ function LinkSpecimen() {
   return (
     <span data-rac="" className={cn(link(), "text-sm")}>
       Pricing
+    </span>
+  )
+}
+
+function BreadcrumbsSpecimen({ separator }: { separator: string }) {
+  const { root, link, separator: glyph } = useBreadcrumbsStyles()()
+  return (
+    <span className={cn(root(), "flex-nowrap")}>
+      <span className={link()}>Docs</span>
+      <span aria-hidden className={glyph()}>
+        {separator === "slash" ? "/" : <ChevronRightIcon />}
+      </span>
+      <span data-current="" className={link()}>
+        Tabs
+      </span>
     </span>
   )
 }
@@ -371,11 +388,21 @@ function BreadcrumbSeparatorRow() {
 }
 
 function BreadcrumbToneRow() {
+  const { state, effective } = useStudio()
+  const tones = useSystems(state, "breadcrumbTone", ANCESTOR_OPTIONS)
   return (
-    <DialSegmented
+    <DialSelect
       axis="breadcrumbTone"
       label="Ancestors"
-      options={ANCESTOR_OPTIONS}
+      rowPreview={false}
+      options={ANCESTOR_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={tones[option.value]!}>
+            <BreadcrumbsSpecimen separator={effective.breadcrumbSeparator} />
+          </System>
+        ),
+      }))}
     />
   )
 }

@@ -114,6 +114,7 @@ function DayShapeRow() {
     <DialSelect
       axis="calendarDayShape"
       label="Day shape"
+      rowPreview={false}
       options={DAY_SHAPE_OPTIONS.map((option) => ({
         ...option,
         preview: <Day n={7} look={{ ...look, shape: option.value }} selected />,
