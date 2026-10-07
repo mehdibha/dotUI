@@ -7,6 +7,7 @@ import listBoxMeta from "@/registry/ui/list-box/meta"
 import menuMeta from "@/registry/ui/menu/meta"
 import { extractStylesConfig } from "@/publisher/build-time/extract-config"
 import { flatten } from "@/publisher/flatten"
+import { publish, selectPublishable } from "@/publisher/publish"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULT_STATE, parseState } from "./index"
@@ -134,6 +135,33 @@ describe("list rows", () => {
         .filter((c) => c.startsWith("min-h-"))
       expect(heights, `${rows} ${density}`).toEqual(want[i] ? [want[i]] : [])
     }
+  })
+
+  it("a floating list sizes its popover to its rows, within the viewport", async () => {
+    const shipped = async (name: string) => {
+      const { density, componentParams, tokens, color, icons } =
+        designSystemOf(DEFAULT_STATE)
+      const preset = { density, componentParams, tokens, color, icons }
+      const { item } = publish({
+        publishable: selectPublishable(await publishables[name]!(), preset),
+        preset,
+      })
+      return item.files?.[0]?.content ?? ""
+    }
+    const list = await shipped("list-box")
+    for (const cls of [
+      "in-data-trigger:whitespace-nowrap",
+      "in-data-trigger:min-w-[calc(max(var(--trigger-width,0px),--spacing(32))-2*1px)]",
+      "in-data-trigger:max-w-[calc(100vw-2rem)]",
+      "in-data-trigger:min-w-0 in-data-trigger:overflow-x-clip in-data-trigger:text-ellipsis",
+      "whitespace-normal text-fg-muted",
+    ])
+      expect(list).toContain(cls)
+    // Rows outside a popover still wrap.
+    expect(list).not.toMatch(/[\s"]whitespace-nowrap/)
+    expect(await shipped("popover")).toContain(
+      "has-[[role=menu],[role=listbox]]:min-w-min",
+    )
   })
 
   it("menu ships list-box's recipe and params, unchanged", () => {

@@ -16,8 +16,8 @@ const { useStyles, styles } = createStyles(popoverMeta, {
     slots: {
       popover: [
         "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
-        // Menus and pickers never squeeze a row onto two lines; the list
-        // inside sets the trigger-width floor.
+        // Menus and pickers size to their rows; the list inside sets the
+        // floor and the cap (list-box/styles.ts).
         "has-[[role=menu],[role=listbox]]:min-w-min",
       ],
       arrow: [

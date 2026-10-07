@@ -19,9 +19,9 @@ export const LIST_ROWS = {
         "layout-grid:orientation-vertical:grid-cols-2",
         "layout-grid:orientation-horizontal:grid-flow-col layout-grid:orientation-horizontal:grid-rows-2",
         "**:data-separator:my-1 **:data-separator:w-auto",
-        // A floating list sets its popover's floor (the trigger's width, less
-        // the popover's edge): the popover sizes to its rows (popover/styles.ts).
-        "in-data-trigger:min-w-[calc(max(var(--trigger-width,0px),--spacing(32))-2*var(--studio-overlay-stroke))]",
+        // A floating list sets its popover's width (popover/styles.ts): at
+        // least the trigger's, at most the viewport's; past that, labels truncate.
+        "in-data-trigger:min-w-[calc(max(var(--trigger-width,0px),--spacing(32))-2*var(--studio-overlay-stroke))] in-data-trigger:max-w-[calc(100vw-2rem)]",
       ],
       item: [
         "group/list-item relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-ui in-data-trigger:whitespace-nowrap disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
@@ -37,7 +37,10 @@ export const LIST_ROWS = {
       submenuIndicator: [
         "pointer-events-none absolute right-2 flex items-center justify-center",
       ],
-      itemLabel: [""],
+      itemLabel: [
+        // Clipped sideways only, so descenders stay whole.
+        "in-data-trigger:max-w-full in-data-trigger:min-w-0 in-data-trigger:overflow-x-clip in-data-trigger:text-ellipsis",
+      ],
       itemDescription: ["whitespace-normal text-fg-muted"],
       loadMore: ["flex w-full items-center justify-center py-1 text-fg-muted"],
       section: ["scroll-my-1"],
