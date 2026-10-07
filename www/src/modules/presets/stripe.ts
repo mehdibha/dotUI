@@ -27,10 +27,11 @@ export const stripe = definePreset({
     shellTone: "page",
 
     // Typography
-    // Sail's base stack is the OS face at 14px.
+    // Sail's base stack is the OS face.
     bodyFont: "System",
     monoFont: "Source Code Pro",
-    uiTextSize: "14",
+    // Visual Refresh 13px; 14 would also lift the 12px badge/caption tier.
+    uiTextSize: "13",
     labelWeight: "semibold",
     titleStyle: "bold",
 
