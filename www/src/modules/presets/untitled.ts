@@ -23,7 +23,8 @@ export const untitled = definePreset({
     bodyFont: "Inter",
     monoFont: "System Mono",
     labelWeight: "semibold",
-    titleStyle: "tight",
+    // 600 titles; the -2% tracking starts only at 36px.
+    titleStyle: "compact",
     // 16px field values beside 14px controls.
     fieldTextSize: "large",
 
@@ -79,8 +80,9 @@ export const untitled = definePreset({
     dialogBackdropStrength: "heavy",
     mobileDialogs: "sheet",
 
-    // Navigation
+    // Navigation: the pill tab is brand-50 with brand-700 ink.
     navWeight: "semibold",
+    tabsPill: "tint",
 
     // Feedback: 50 fill, 700 label, 200 ring.
     badgeStyle: "soft-outline",
