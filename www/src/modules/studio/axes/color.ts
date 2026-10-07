@@ -60,8 +60,6 @@ const BRAND_WASH = {
   "--color-selected": "var(--accent-100)",
   "--color-selected-hover": "var(--accent-200)",
   "--color-selected-active": "var(--accent-300)",
-  "--color-selected-row": "var(--accent-100)",
-  "--color-selected-row-hover": "var(--accent-200)",
   "--color-fg-on-selected": "var(--color-fg-accent)",
 }
 

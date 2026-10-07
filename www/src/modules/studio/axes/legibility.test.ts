@@ -1,8 +1,10 @@
 /* Legibility floors every preset keeps in both modes: the invalid edge reads,
    dark edges stay apart from the surfaces they sit on, selected rows stay
-   lighter than selected controls, and a recessed dark shell sinks no deeper
+   visible but lighter than selected controls, with focus, drag and drop
+   washes below them, and a recessed dark shell sinks no deeper
    than its light one. */
 
+import { readFileSync } from "node:fs"
 import { describe, expect, test } from "vitest"
 
 import { mixOklab, toOklch, wcag2 } from "@dotui/colors"
@@ -42,6 +44,41 @@ test.each(["input", "checkbox", "radio-group", "switch", "questionnaire"])(
   },
 )
 
+const ROW_SELECTED = 50
+
+const alphas = (classes: string, state: string) =>
+  [
+    ...classes.matchAll(
+      new RegExp(`(?:^|[\\s"])${state}:bg-selected(?:/(\\d+))?(?=[\\s"])`, "g"),
+    ),
+  ].map((m) => Number(m[1] ?? 100))
+
+test.each(["table", "tree"])(
+  "%s rows: focus, drag and drop washes stay lighter than a selected row",
+  async (name) => {
+    const { stylesConfig } = (await publishables[name]!()).publishable
+    const classes = JSON.stringify(stylesConfig)
+    expect(alphas(classes, "selected")).toContain(ROW_SELECTED)
+    for (const state of ["focus-visible", "dragging", "drop-target"])
+      for (const alpha of alphas(classes, state))
+        expect(alpha, state).toBeLessThan(ROW_SELECTED)
+    for (const alpha of alphas(classes, "selected:hover"))
+      expect(alpha).toBeGreaterThan(ROW_SELECTED)
+  },
+)
+
+test("a table row with keyboard focus inside keeps the ladder", () => {
+  const source = readFileSync(
+    new URL("../../../registry/ui/table/base.tsx", import.meta.url),
+    "utf8",
+  )
+  const focused = source.match(/isFocusVisibleWithin &&\s*"([^"]+)"/)![1]!
+  const unselected = Number(focused.match(/^bg-selected\/(\d+)/)![1])
+  const selected = Number(focused.match(/ selected:bg-selected\/(\d+)/)![1])
+  expect(unselected).toBeLessThan(ROW_SELECTED)
+  expect(selected).toBeGreaterThan(ROW_SELECTED)
+})
+
 describe.each(literals)("$id", ({ light, dark, theme }) => {
   test.each([
     ["light", light],
@@ -62,13 +99,17 @@ describe.each(literals)("$id", ({ light, dark, theme }) => {
     expect(border - L(dark["color-field"]!)).toBeGreaterThanOrEqual(fieldGap)
   })
 
-  test("a selected row is lighter than a selected control", () => {
-    expect(L(light["color-selected-row"]!)).toBeGreaterThan(
-      L(light["color-selected"]!),
+  test.each([
+    ["light", light],
+    ["dark", dark],
+  ] as const)("a selected row stays visible on the page in %s", (_, mode) => {
+    const page = toOklch(mode["color-bg"]!)
+    const row = mixOklab(
+      page,
+      100 - ROW_SELECTED,
+      toOklch(mode["color-selected"]!),
     )
-    expect(L(dark["color-selected-row"]!)).toBeLessThan(
-      L(dark["color-selected"]!),
-    )
+    expect(Math.abs(page.l - row.l)).toBeGreaterThanOrEqual(0.03)
   })
 
   test("a recessed dark shell sinks no deeper than the light one", () => {

@@ -178,17 +178,6 @@ export function semanticVocabulary(
     "color-selected-hover": bg(ref("neutral", "400"), ["neutral"]),
     "color-selected-active": bg(ref("neutral", "500"), ["neutral"]),
     "color-fg-on-selected": fg(ref("neutral", "950")),
-    // Selected table and tree rows: two rungs lighter than a selected control
-    // (shadcn bg-muted, Primer, Polaris #f1f1f1); dark steps up one rung
-    // because its rows sit on lifted surfaces.
-    "color-selected-row": bg(
-      { light: ref("neutral", "100"), dark: ref("neutral", "200") },
-      ["neutral"],
-    ),
-    "color-selected-row-hover": bg(
-      { light: ref("neutral", "200"), dark: ref("neutral", "300") },
-      ["neutral"],
-    ),
     "color-neutral": bg(ref("neutral", "100"), ["neutral"]),
     "color-neutral-hover": bg(ref("neutral", "200"), ["neutral"]),
     "color-neutral-active": bg(ref("neutral", "300"), ["neutral"]),
