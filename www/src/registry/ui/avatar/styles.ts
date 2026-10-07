@@ -32,17 +32,17 @@ const { useStyles, styles } = createStyles(avatarMeta, {
       size: {
         sm: {
           group:
-            "-space-x-1 *:data-avatar:size-6 *:data-avatar:not-last:*:data-avatar-fallback:pr-1.5",
+            "-space-x-1 *:data-avatar:size-6 *:data-avatar:not-last:*:data-avatar-fallback:pe-1.5",
           root: "size-6",
         },
         md: {
           group:
-            "-space-x-1.5 *:data-avatar:size-8 *:data-avatar:not-last:*:data-avatar-fallback:pr-2",
+            "-space-x-1.5 *:data-avatar:size-8 *:data-avatar:not-last:*:data-avatar-fallback:pe-2",
           root: "size-8",
         },
         lg: {
           group:
-            "*:data-avatar:size-10 *:data-avatar:not-last:*:data-avatar-fallback:pr-2.5",
+            "*:data-avatar:size-10 *:data-avatar:not-last:*:data-avatar-fallback:pe-2.5",
           root: "size-10",
         },
       },

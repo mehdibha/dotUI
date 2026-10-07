@@ -237,7 +237,7 @@ describe("shipped data display", () => {
 
   test("grouped initials center on what the next avatar leaves visible", async () => {
     const group = await shipped("avatar")
-    for (const pad of ["pr-1.5", "pr-2", "pr-2.5"])
+    for (const pad of ["pe-1.5", "pe-2", "pe-2.5"])
       expect(group).toContain(
         `*:data-avatar:not-last:*:data-avatar-fallback:${pad}`,
       )
