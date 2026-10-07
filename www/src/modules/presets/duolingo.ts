@@ -37,7 +37,8 @@ export const duolingo = definePreset({
     radiusPx: 16,
     roleItem: "xs",
     controlStroke: "bold",
-    density: "comfortable",
+    // Buttons 50px, fields 48px, small 32px.
+    density: "touch",
 
     // Surfaces: cards and choice tiles stand on a 2px lip.
     surfaceEdge: "ledge",

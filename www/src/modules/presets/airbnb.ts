@@ -30,7 +30,8 @@ export const airbnb = definePreset({
     roleCard: "xl",
 
     // Space
-    density: "comfortable",
+    // Buttons 32 / 40 / 48.
+    density: "spacious",
 
     // Surfaces
     surfaceEdge: "none",
@@ -70,7 +71,6 @@ export const airbnb = definePreset({
     calendarWeekdays: "double",
     sliderColor: "neutral",
     menuInset: "full-bleed",
-    menuRows: "match",
     tabStyle: "line",
     paginationCurrent: "primary",
     badgeStyle: "soft",

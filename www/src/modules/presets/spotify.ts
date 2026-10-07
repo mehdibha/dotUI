@@ -22,8 +22,6 @@ export const spotify = definePreset({
     // Typography
     // Circular is proprietary; Figtree is the closest free geometric.
     bodyFont: "Figtree",
-    // Fields set 16px values.
-    fieldTextSize: "large",
 
     // Shape
     radiusPx: 8,
@@ -32,8 +30,8 @@ export const spotify = definePreset({
     roleCard: "lg",
 
     // Space
-    // Live controls are 32/48px; comfortable is the closest tier.
-    density: "comfortable",
+    // Controls 32 / 48 / 56px with 16px labels and field values.
+    density: "touch",
 
     // Surfaces
     surfaceLayers: "tonal",

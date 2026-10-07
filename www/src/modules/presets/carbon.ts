@@ -36,7 +36,8 @@ export const carbon = definePreset({
     roleSurface: "none",
     rolePanel: "none",
     roleCard: "none",
-    density: "comfortable",
+    // Fields md 40, buttons lg 48.
+    density: "spacious",
 
     // Surfaces: flat tonal layers, no edges.
     surfaceLayers: "tonal",
