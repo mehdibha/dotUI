@@ -125,8 +125,6 @@ export const spotify = definePreset({
     // ProgressBar is 6px in essential-bright-accent, the check color.
     progressTrack: "medium",
     progressColor: "same-checks",
-    // New and Beta tags are solid fills with dark ink.
-    badgeStyle: "solid",
     badgeShape: "rounded",
   },
 })
