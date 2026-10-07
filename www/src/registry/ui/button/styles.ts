@@ -134,13 +134,13 @@ export const BUTTON_STYLES = {
 }
 
 /* The secondary button: each style's own, then the ones an open style can
-   swap in. */
+   swap in. An open trigger keeps its rest plate (shadcn, Supabase). */
 export const BUTTON_SECONDARY = {
   flat: {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+          "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
       },
     },
   },
@@ -148,7 +148,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_0_rgb(31_35_40/0.04)] hover:bg-neutral-hover disabled:shadow-none dark:shadow-none pressed:bg-neutral-active",
+          "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_0_rgb(31_35_40/0.04)] hover:bg-neutral-hover disabled:shadow-none dark:shadow-none pressed:not-aria-expanded:bg-neutral-active",
       },
     },
   },
@@ -174,7 +174,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border border-black/10 bg-(--secondary-plate) text-fg-on-neutral shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.2),inset_0_0.5px_0_1px_rgb(255_255_255)] [--secondary-plate:var(--color-card)] hover:[--secondary-plate:color-mix(in_oklab,var(--color-card),var(--color-neutral))] disabled:shadow-none dark:border-white/8 dark:shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.6),inset_0_0.5px_0_1px_rgb(255_255_255/0.06)] dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:[--secondary-plate:var(--color-neutral)] pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(26_26_26/0.12),inset_1px_0_1px_0_rgb(26_26_26/0.12),inset_0_2px_1px_0_rgb(26_26_26/0.2)]",
+          "border border-black/10 bg-(--secondary-plate) text-fg-on-neutral shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.2),inset_0_0.5px_0_1px_rgb(255_255_255)] [--secondary-plate:var(--color-card)] hover:[--secondary-plate:color-mix(in_oklab,var(--color-card),var(--color-neutral))] disabled:shadow-none dark:border-white/8 dark:shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.6),inset_0_0.5px_0_1px_rgb(255_255_255/0.06)] dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:not-aria-expanded:[--secondary-plate:var(--color-neutral)] pressed:not-aria-expanded:pt-0.5 pressed:not-aria-expanded:shadow-[inset_-1px_0_1px_0_rgb(26_26_26/0.12),inset_1px_0_1px_0_rgb(26_26_26/0.12),inset_0_2px_1px_0_rgb(26_26_26/0.2)]",
       },
     },
   },
@@ -184,7 +184,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:translate-y-0.5 pressed:shadow-none",
+          "border-(length:--studio-control-stroke) border-border-control bg-bg text-fg-on-neutral shadow-[0_2px_0_0_var(--color-border-control)] duration-0 hover:brightness-90 disabled:translate-y-0.5 disabled:shadow-none disabled:brightness-100 pressed:not-aria-expanded:translate-y-0.5 pressed:not-aria-expanded:shadow-none",
       },
     },
   },
@@ -193,7 +193,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-transparent text-fg-on-neutral hover:bg-neutral pressed:bg-neutral-hover",
+          "border-(length:--studio-control-stroke) border-border-control bg-transparent text-fg-on-neutral hover:bg-neutral pressed:not-aria-expanded:bg-neutral-hover",
       },
     },
   },
@@ -204,7 +204,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-(--secondary-plate) text-fg-on-neutral shadow-xs [--secondary-plate:var(--color-card)] hover:[--secondary-plate:var(--color-neutral)] disabled:shadow-none dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:[--secondary-plate:var(--color-neutral-hover)] dark:pressed:[--secondary-plate:var(--color-neutral-active)]",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--secondary-plate) text-fg-on-neutral shadow-xs [--secondary-plate:var(--color-card)] hover:[--secondary-plate:var(--color-neutral)] disabled:shadow-none dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:not-aria-expanded:[--secondary-plate:var(--color-neutral-hover)] dark:pressed:not-aria-expanded:[--secondary-plate:var(--color-neutral-active)]",
       },
     },
   },
@@ -213,7 +213,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+          "bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
       },
     },
   },
@@ -222,7 +222,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "bg-accent-muted text-fg-accent hover:bg-accent-muted-hover pressed:bg-accent-muted-hover",
+          "bg-accent-muted text-fg-accent hover:bg-accent-muted-hover pressed:not-aria-expanded:bg-accent-muted-hover",
       },
     },
   },
@@ -233,7 +233,7 @@ export const BUTTON_SECONDARY = {
     variants: {
       variant: {
         secondary:
-          "bg-(--secondary-solid) text-(--secondary-solid-fg) [--secondary-solid-fg:var(--color-fg-inverse)] [--secondary-solid:color-mix(in_oklab,var(--color-fg)_86%,var(--color-bg))] hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_79%,var(--color-bg))] dark:[--secondary-solid-fg:var(--color-fg)] dark:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_45%,var(--color-bg))] dark:hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_37%,var(--color-bg))] pressed:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_60%,var(--color-bg))] dark:pressed:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_19%,var(--color-bg))]",
+          "bg-(--secondary-solid) text-(--secondary-solid-fg) [--secondary-solid-fg:var(--color-fg-inverse)] [--secondary-solid:color-mix(in_oklab,var(--color-fg)_86%,var(--color-bg))] hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_79%,var(--color-bg))] dark:[--secondary-solid-fg:var(--color-fg)] dark:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_45%,var(--color-bg))] dark:hover:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_37%,var(--color-bg))] pressed:not-aria-expanded:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_60%,var(--color-bg))] dark:pressed:not-aria-expanded:[--secondary-solid:color-mix(in_oklab,var(--color-fg)_19%,var(--color-bg))]",
       },
     },
   },
