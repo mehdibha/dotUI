@@ -85,7 +85,7 @@ describe("field focus", () => {
     expect(thin).toMatchObject({
       "--focus-input-width": "0px",
       "--focus-input-edge": "0px",
-      "--focus-invalid-color": "var(--color-border-danger)",
+      "--focus-invalid-color": "var(--color-fg-danger)",
     })
     expect(
       resolve({ focusInputStyle: "border", focusInputWeight: "thick" }).tokens[
@@ -117,6 +117,24 @@ describe("field focus ink", () => {
     expect(
       resolve({ focusColor: "neutral", focusInputColor: "neutral" }).tokens,
     ).toEqual({})
+  })
+
+  test("on a Strong edge a neutral field focuses in the text ink", () => {
+    const edge = (state: Partial<typeof DEFAULTS>) =>
+      resolve(state).tokens["--focus-input-border"]
+    // The neutral ink is the Strong edge's own step (Airbnb, Spotify).
+    expect(
+      edge({
+        focusColor: "neutral",
+        controlEdge: "strong",
+        focusInputStyle: "border",
+      }),
+    ).toBe("var(--neutral-950)")
+    expect(edge({ focusInputColor: "neutral", controlEdge: "strong" })).toBe(
+      "var(--neutral-950)",
+    )
+    // An accent ink already differs from the edge.
+    expect(edge({ controlEdge: "strong" })).toBeUndefined()
   })
 
   test("under Ring the field wears the ring's ink", () => {

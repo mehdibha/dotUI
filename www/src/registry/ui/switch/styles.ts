@@ -18,7 +18,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
       ],
       indicator: [
         "inline-flex shrink-0 cursor-pointer items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
-        "invalid:border-border-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
+        "invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
       ],
       thumb:
         "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",

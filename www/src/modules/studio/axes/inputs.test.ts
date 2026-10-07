@@ -37,7 +37,7 @@ const SIGNATURE: Record<string, string> = {
   well: "var(--color-field)) border-border-control bg-field",
   filled: "border-transparent bg-field",
   indicator: "rounded-t-sm border-b",
-  underline: "invalid:focus:border-fg-danger",
+  underline: "focus:focus-input-underline",
 }
 
 /** The class tokens of a shell slot. */
@@ -228,7 +228,7 @@ describe("field shells", () => {
     for (const style of Object.keys(SIGNATURE)) {
       const content = await shipped("input", { input: { style } })
       const trigger = /\btrigger: "([^"]*)"/.exec(content)?.[1]
-      expect(trigger, style).toContain("invalid:border-border-danger")
+      expect(trigger, style).toContain("invalid:border-fg-danger")
     }
   })
 

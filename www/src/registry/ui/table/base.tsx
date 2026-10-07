@@ -397,7 +397,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                "bg-selected/70 hover:bg-selected/70 selected:bg-selected",
+                "bg-selected/30 hover:bg-selected/30 selected:bg-selected/70",
             ),
           }),
       )}

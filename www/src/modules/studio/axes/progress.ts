@@ -23,6 +23,9 @@ export const TRACK_STYLE_VALUES = ["plain", "bordered", "gap"] as const
 
 export const COLOR_VALUES = ["same-buttons", "same-checks"] as const
 
+/** What the follows resolve to: a source, or whatever the checks paint. */
+export const FILL_VALUES = [...SOURCE_VALUES, "checks"] as const
+
 const FILL_TOKENS: Record<string, string> = {
   neutral: "var(--color-inverse)",
   accent: "var(--color-accent)",
@@ -31,12 +34,24 @@ const FILL_TOKENS: Record<string, string> = {
 export const PROGRESS_SCHEMA: ChapterSchema<typeof PROGRESS_DEFAULTS> = {
   progressTrack: oneOf(TRACK_VALUES),
   progressTrackStyle: oneOf(TRACK_STYLE_VALUES),
-  // The panel offers only the two follows; this is what they resolve to.
-  progressColor: oneOf(SOURCE_VALUES),
+  progressColor: oneOf(FILL_VALUES),
+}
+
+/** The fill as a token, undefined where it is the buttons' own. */
+function fillToken(state: Effective): string | undefined {
+  const source = (value: string) =>
+    value === state.buttonColor ? undefined : FILL_TOKENS[value]
+  if (state.progressColor !== "checks") return source(state.progressColor)
+  // Off the selection leaf the checks paint their own source.
+  if (state.checkboxColor !== state.selectionColor)
+    return source(state.checkboxColor)
+  return state.selectionSeed || state.selectionColor !== state.buttonColor
+    ? "var(--color-selection)"
+    : undefined
 }
 
 export function resolveProgress(state: Effective): Resolved {
-  const fill = FILL_TOKENS[state.progressColor]
+  const fill = fillToken(state)
   return {
     params: {
       "progress-bar": {
@@ -44,10 +59,7 @@ export function resolveProgress(state: Effective): Resolved {
         trackStyle: state.progressTrackStyle,
       },
     },
-    tokens:
-      fill && state.progressColor !== state.buttonColor
-        ? { "--studio-progress-fill-color": fill }
-        : {},
+    tokens: fill ? { "--studio-progress-fill-color": fill } : {},
   }
 }
 
@@ -59,7 +71,12 @@ export const chapter = defineChapter({
   follows: {
     progressColor: [
       { kind: "same", id: "same-buttons", from: "buttonColor" },
-      { kind: "same", id: "same-checks", from: "checkboxColor" },
+      {
+        kind: "same",
+        id: "same-checks",
+        from: "checkboxColor",
+        map: { neutral: "checks", accent: "checks" },
+      },
     ],
   },
 })

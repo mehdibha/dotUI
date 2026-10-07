@@ -201,15 +201,10 @@ export function semanticVocabulary(
     // each element's own background, so the same token paints brighter on
     // elevated surfaces (a border-t on a bg-card code bar reads stronger than
     // the frame around it). One fixed color reads identically everywhere.
-    // Light matches ~9% ink over the app bg; dark sits between the mids
-    // (Geist-style, ~L 0.25) so edges stay legible on the lighter elevated
-    // surfaces — a dark solid matched to the page-bg hairline would vanish
-    // on popover (both ~L 0.20).
+    // The same rungs in both modes: dark lifts cards, popovers and fields
+    // toward the border, so it needs the full two-rung gap light has.
     "color-border": bd(
-      {
-        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
-        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
-      },
+      mix(ref("neutral", "200"), 50, ref("neutral", "300")),
       NEUTRAL,
     ),
     // The control weight: field, control, and secondary-button edges.
