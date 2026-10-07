@@ -16,24 +16,12 @@ import {
   SECTIONS_OPTIONS,
   STRENGTH_OPTIONS,
 } from "../axes/dialogs.meta"
-import { roleLabel } from "../axes/shape"
-import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
-import { PhoneGlyph, withPhoneGlyphs } from "./phone-glyph"
+import { useStudio } from "../use-studio"
+import { withPhoneGlyphs } from "./phone-glyph"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -291,9 +279,138 @@ function CloseGlyph({ close }: { close: string }) {
 
 const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
 
-/* --------------------------------- Section --------------------------------- */
+/* ---------------------------------- Rows ---------------------------------- */
+
+function DialogSectionsRow() {
+  const { state } = useStudio()
+  return (
+    <DialSelect
+      axis="dialogSections"
+      label="Sections"
+      options={SECTIONS_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <PanelGlyph
+            sections={option.value}
+            actions={
+              resolveEffective({ ...state, dialogSections: option.value })
+                .values.dialogActions
+            }
+          />,
+        ),
+      }))}
+    />
+  )
+}
+
+function DialogBackdropRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="dialogBackdrop"
+      holds={["dialogBackdropStrength", "dialogFrost"]}
+      label="Backdrop"
+      options={BACKDROP_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <BackdropGlyph
+            backdrop={option.value}
+            strength={effective.dialogBackdropStrength}
+          />,
+        ),
+      }))}
+    >
+      <Row axis="dialogBackdropStrength" />
+      <Row axis="dialogFrost" />
+    </DialSelect>
+  )
+}
+
+function DialogBackdropStrengthRow() {
+  return (
+    <DialSegmented
+      axis="dialogBackdropStrength"
+      label="Strength"
+      options={STRENGTH_OPTIONS}
+    />
+  )
+}
+
+function DialogFrostRow() {
+  return (
+    <DialSegmented axis="dialogFrost" label="Frost" options={FROST_OPTIONS} />
+  )
+}
 
 const MOBILE = withPhoneGlyphs(MOBILE_OPTIONS)
+
+function MobileDialogsRow() {
+  return <DialSelect axis="mobileDialogs" label="On mobile" options={MOBILE} />
+}
+
+const ACTIONS_ROW = ACTIONS_OPTIONS.map((option) => ({
+  ...option,
+  preview: glyph(<PanelGlyph sections="open" actions={option.value} />),
+}))
+
+function DialogActionsRow() {
+  return (
+    <DialSelect axis="dialogActions" label="Actions" options={ACTIONS_ROW} />
+  )
+}
+
+const CLOSE_ROW = CLOSE_OPTIONS.map((option) => ({
+  ...option,
+  preview: glyph(<CloseGlyph close={option.value} />),
+}))
+
+function DialogCloseRow() {
+  return <DialSelect axis="dialogClose" label="Close" options={CLOSE_ROW} />
+}
+
+function DialogEntranceRow() {
+  return (
+    <DialSegmented
+      axis="dialogEntrance"
+      label="Dialog entrance"
+      options={ENTRANCE_OPTIONS}
+    />
+  )
+}
+
+function DialogPositionRow() {
+  return (
+    <DialSegmented
+      axis="dialogPosition"
+      label="Position"
+      options={POSITION_OPTIONS}
+    />
+  )
+}
+
+const EDGE_ROW = EDGE_OPTIONS.map((option) => ({
+  ...option,
+  preview: glyph(<EdgeGlyph edge={option.value} />),
+}))
+
+function DrawerEdgeRow() {
+  return <DialSelect axis="drawerEdge" label="Sheet edge" options={EDGE_ROW} />
+}
+
+export const ROWS: RowMap = {
+  dialogSections: DialogSectionsRow,
+  dialogBackdrop: DialogBackdropRow,
+  dialogBackdropStrength: DialogBackdropStrengthRow,
+  dialogFrost: DialogFrostRow,
+  mobileDialogs: MobileDialogsRow,
+  dialogActions: DialogActionsRow,
+  dialogClose: DialogCloseRow,
+  dialogEntrance: DialogEntranceRow,
+  dialogPosition: DialogPositionRow,
+  drawerEdge: DrawerEdgeRow,
+}
+
+/* --------------------------------- Section --------------------------------- */
 
 export function DialogsPreview({ state }: { state: Effective }) {
   return glyph(
@@ -304,130 +421,25 @@ export function DialogsPreview({ state }: { state: Effective }) {
   )
 }
 
-export function DialogsSection({ studio }: { studio: Studio }) {
-  const { effective, state } = studio
+export function DialogsSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Dialog">
-          {glyph(
-            <PanelGlyph
-              sections={effective.dialogSections}
-              actions={effective.dialogActions}
-            />,
-          )}
-        </HeroMember>
-        <HeroMember name="Modal">
-          {glyph(
-            <BackdropGlyph
-              backdrop={effective.dialogBackdrop}
-              strength={effective.dialogBackdropStrength}
-            />,
-          )}
-        </HeroMember>
-        <HeroMember name="Drawer">
-          {glyph(<EdgeGlyph edge={effective.drawerEdge} />)}
-        </HeroMember>
-        <HeroMember name="Dialog on mobile">
-          {glyph(<PhoneGlyph layer={effective.mobileDialogs} />)}
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="dialogSections"
-        label="Sections"
-        options={SECTIONS_OPTIONS.map((option) => ({
-          ...option,
-          preview: glyph(
-            <PanelGlyph
-              sections={option.value}
-              actions={
-                resolveEffective({ ...state, dialogSections: option.value })
-                  .values.dialogActions
-              }
-            />,
-          ),
-        }))}
-      />
+      <Row axis="dialogSections" />
       <DialGap />
-      <DialSelect
-        axis="dialogBackdrop"
-        holds={["dialogBackdropStrength", "dialogFrost"]}
-        label="Backdrop"
-        options={BACKDROP_OPTIONS.map((option) => ({
-          ...option,
-          preview: glyph(
-            <BackdropGlyph
-              backdrop={option.value}
-              strength={effective.dialogBackdropStrength}
-            />,
-          ),
-        }))}
-      >
-        <DialSegmented
-          axis="dialogBackdropStrength"
-          label="Strength"
-          options={STRENGTH_OPTIONS}
-        />
-        <DialSegmented
-          axis="dialogFrost"
-          label="Frost"
-          options={FROST_OPTIONS}
-        />
-      </DialSelect>
-      <DialSelect axis="mobileDialogs" label="On mobile" options={MOBILE} />
-      <UsesRow
-        axis="rolePanel"
-        label="Panel corners"
-        value={roleLabel(effective, "rolePanel")}
-      />
-      <UsesRow axis="surfaceGlass" label="Glass" />
-      <UsesRow axis="motion" label="Motion" />
-      <More keys={["dialogActions", "dialogClose", "dialogEntrance"]}>
-        <DialSelect
-          axis="dialogActions"
-          label="Actions"
-          options={ACTIONS_OPTIONS.map((option) => ({
-            ...option,
-            preview: glyph(
-              <PanelGlyph sections="open" actions={option.value} />,
-            ),
-          }))}
-        />
-        <DialSelect
-          axis="dialogClose"
-          label="Close"
-          options={CLOSE_OPTIONS.map((option) => ({
-            ...option,
-            preview: glyph(<CloseGlyph close={option.value} />),
-          }))}
-        />
-        <DialSegmented
-          axis="dialogEntrance"
-          label="Entrance"
-          options={ENTRANCE_OPTIONS}
-        />
-      </More>
+      <Row axis="dialogBackdrop" />
+      <Row axis="mobileDialogs" />
+      <Row axis="rolePanel" />
+      <Row axis="surfaceGlass" />
+      <Row axis="dialogMotion" />
+      <Row axis="dialogActions" />
+      <Row axis="dialogClose" />
+      <Row axis="dialogEntrance" />
       <MemberSection id="modal" title="Modal">
-        <More keys={["dialogPosition"]}>
-          <DialSegmented
-            axis="dialogPosition"
-            label="Position"
-            options={POSITION_OPTIONS}
-          />
-        </More>
+        <Row axis="dialogPosition" />
       </MemberSection>
       <MemberSection id="drawer" title="Drawer">
-        <DialSelect
-          axis="drawerEdge"
-          label="Sheet edge"
-          options={EDGE_OPTIONS.map((option) => ({
-            ...option,
-            preview: glyph(<EdgeGlyph edge={option.value} />),
-          }))}
-        />
+        <Row axis="drawerEdge" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
