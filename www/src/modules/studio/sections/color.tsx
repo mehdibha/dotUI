@@ -177,6 +177,7 @@ export function ColorSection({ studio }: { studio: Studio }) {
     <>
       <DialTrigger
         label="Semantics"
+        holds={SEMANTIC_SEEDS.map(({ key }) => key)}
         value={
           <>
             <span className="flex items-center gap-1">

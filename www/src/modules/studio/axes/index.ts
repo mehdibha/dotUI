@@ -20,6 +20,7 @@ import * as breadcrumbs from "./breadcrumbs"
 import * as buttonGroups from "./button-groups"
 import * as buttons from "./buttons"
 import * as calendar from "./calendar"
+import * as card from "./card"
 import * as charts from "./charts"
 import * as checkbox from "./checkbox"
 import * as choiceCards from "./choice-cards"
@@ -55,6 +56,7 @@ import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
 import * as tabs from "./tabs"
+import * as toast from "./toast"
 import * as toggles from "./toggles"
 import * as tooltips from "./tooltips"
 import * as type from "./type"
@@ -79,6 +81,7 @@ export const CHAPTERS = [
   skeleton.chapter,
   spinner.chapter,
   progress.chapter,
+  toast.chapter,
   buttons.chapter,
   buttonGroups.chapter,
   toggles.chapter,
@@ -105,6 +108,7 @@ export const CHAPTERS = [
   kbd.chapter,
   avatars.chapter,
   tables.chapter,
+  card.chapter,
 ] as const
 
 type UnionToIntersection<U> = (

@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import * as React from "react"
 import * as CalendarPrimitive from "react-aria-components/Calendar"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar"
@@ -234,7 +234,9 @@ interface CalendarCellProps extends React.ComponentProps<
   typeof CalendarPrimitive.CalendarCell
 > {}
 const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
-  const { cell, cellInner } = useStyles()()
+  const range =
+    React.useContext(RangeCalendarPrimitive.RangeCalendarStateContext) !== null
+  const { cell, cellInner } = useStyles()({ range })
   return (
     <CalendarPrimitive.CalendarCell
       data-calendar-cell=""

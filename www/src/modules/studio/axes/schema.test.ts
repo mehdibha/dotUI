@@ -46,8 +46,8 @@ describe("state schema", () => {
     bad({ radiusPx: 1.99 })
     bad({ radiusPx: "10" })
 
-    ok({ progressGap: true })
-    bad({ progressGap: "true" })
+    ok({ surfaceGlass: true })
+    bad({ surfaceGlass: "true" })
 
     ok({ brand: "oklch(0.6 0.2 250)" })
     ok({ brand: "rebeccapurple" })

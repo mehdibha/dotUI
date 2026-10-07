@@ -58,9 +58,12 @@ export const CONTROL_EDGE_OPTIONS = [
   },
 ]
 
+/** The Strong edge, also Selection's check edge. */
+export const STRONG_EDGE = "var(--neutral-700)"
+
 const CONTROL_EDGE_TOKENS: Record<string, [string, string]> = {
   soft: ["var(--color-border)", "var(--neutral-400)"],
-  strong: ["var(--neutral-700)", "var(--neutral-800)"],
+  strong: [STRONG_EDGE, "var(--neutral-800)"],
 }
 
 /* The wash on a persistent selected item: table and tree rows, tags,
@@ -165,11 +168,16 @@ export function withSource<K extends PrimaryLeaf>(
  *  seed included). */
 export function fillScope(
   state: Effective,
-  scope: string,
+  scope: string | readonly string[],
   fill: string,
 ): Partial<ColorConfig> | undefined {
   if (fill === state.selectionColor) return undefined
-  return { scopes: { [scope]: fill as PrimaryColorSource } }
+  const scopes = typeof scope === "string" ? [scope] : scope
+  return {
+    scopes: Object.fromEntries(
+      scopes.map((s) => [s, fill as PrimaryColorSource]),
+    ),
+  }
 }
 
 /** Drops undefined entries so absent stays absent (the config's "default"). */

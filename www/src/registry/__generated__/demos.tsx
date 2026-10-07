@@ -2533,6 +2533,10 @@ export const DemosIndex: Record<
 		files: ["ui/table/demos/static-row-action.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/static-row-action")),
 	},
+	"table/demos/striped": {
+		files: ["ui/table/demos/striped.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/striped")),
+	},
 	"table/demos/tasks": {
 		files: ["ui/table/demos/tasks.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/tasks")),

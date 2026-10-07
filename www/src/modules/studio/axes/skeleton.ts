@@ -1,7 +1,5 @@
-/* Skeleton — how skeletons idle while content loads. Animation is the one
-   place a design system runs continuous ambient motion — shimmer
-   (Carbon/Ant) vs pulse (shadcn/MUI) vs none (Linear-style stillness). The
-   loop's cycle is the recipe's own.
+/* Skeleton: how placeholders idle while content loads. The loop's cycle is
+   the recipe's own.
 
    Engine: `animation` is an enum param on `skeleton`. */
 
@@ -15,9 +13,17 @@ export const SKELETON_DEFAULTS = {
 }
 
 export const ANIMATION_OPTIONS = [
-  { value: "shimmer", label: "Shimmer" },
-  { value: "pulse", label: "Pulse" },
-  { value: "none", label: "None" },
+  {
+    value: "shimmer",
+    label: "Shimmer",
+    description: "Spectrum 2, Geist, Primer, Carbon, Fluent 2, HeroUI",
+  },
+  {
+    value: "pulse",
+    label: "Pulse",
+    description: "shadcn, Radix Themes, Mantine, Chakra",
+  },
+  { value: "none", label: "None", description: "Polaris, Ant Design" },
 ]
 
 export const SKELETON_SCHEMA: ChapterSchema<typeof SKELETON_DEFAULTS> = {

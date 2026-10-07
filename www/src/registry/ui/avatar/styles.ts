@@ -5,10 +5,10 @@ import avatarMeta from "./meta"
 const { useStyles, styles } = createStyles(avatarMeta, {
   base: {
     slots: {
-      root: "group/avatar relative inline-flex size-8 shrink-0 rounded-(--studio-avatar-radius) bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
+      root: "group/avatar relative inline-flex size-8 shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
       image: "aspect-square size-full rounded-[inherit] object-cover",
       fallback: [
-        "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-ui group-data-[size=sm]/avatar:text-xs",
+        "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs",
         "group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem]",
       ],
       badge: [
@@ -20,7 +20,7 @@ const { useStyles, styles } = createStyles(avatarMeta, {
       group:
         "group/avatar-group flex -space-x-2 *:data-avatar:ring-2 *:data-avatar:ring-(--surface-bg,var(--color-bg))",
       groupCount: [
-        "relative flex shrink-0 items-center justify-center rounded-(--studio-avatar-radius) bg-muted text-fg-muted ring-2 ring-(--surface-bg,var(--color-bg))",
+        "relative flex shrink-0 items-center justify-center bg-muted text-fg-muted ring-2 ring-(--surface-bg,var(--color-bg))",
         "size-8 text-sm [&>svg]:size-4",
         "group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-[0.625rem] group-data-[size=sm]/avatar-group:[&>svg]:size-3",
         "group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5",
@@ -35,20 +35,41 @@ const { useStyles, styles } = createStyles(avatarMeta, {
     },
   },
   params: {
-    /* Tinted paints by the `data-tint` index the fallback hashes from its
-       text, so neighbours in a stack land on different washes. */
-    fallback: {
-      neutral: {},
-      tinted: {
+    shape: {
+      circle: {
+        slots: { root: "rounded-full", groupCount: "rounded-full" },
+      },
+      // Each size takes a rung: sm the small control's, md the item's, lg
+      // the control's; a group sizes (and rounds) its avatars itself.
+      rounded: {
         slots: {
-          fallback: [
-            "data-[tint=0]:bg-accent-muted data-[tint=0]:text-fg-accent",
-            "data-[tint=1]:bg-success-muted data-[tint=1]:text-fg-success",
-            "data-[tint=2]:bg-warning-muted data-[tint=2]:text-fg-warning",
-            "data-[tint=3]:bg-info-muted data-[tint=3]:text-fg-info",
+          groupCount: [
+            "rounded-(--studio-radius-item)",
+            "group-data-[size=lg]/avatar-group:rounded-(--studio-radius-control) group-data-[size=sm]/avatar-group:rounded-(--studio-radius-control-sm)",
           ],
         },
+        variants: {
+          size: {
+            sm: {
+              root: "rounded-(--studio-radius-control-sm)",
+              group: "*:data-avatar:rounded-(--studio-radius-control-sm)",
+            },
+            md: {
+              root: "rounded-(--studio-radius-item)",
+              group: "*:data-avatar:rounded-(--studio-radius-item)",
+            },
+            lg: {
+              root: "rounded-(--studio-radius-control)",
+              group: "*:data-avatar:rounded-(--studio-radius-control)",
+            },
+          },
+        },
       },
+    },
+    fallback: {
+      neutral: { slots: { fallback: "bg-muted" } },
+      // Radix Themes soft: the accent's muted fill and ink.
+      accent: { slots: { fallback: "bg-accent-muted text-fg-accent" } },
     },
   },
 })

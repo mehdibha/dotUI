@@ -1,7 +1,6 @@
-/* Tables — how a data grid separates its rows, and how loud its header row
-   is. Two axes because real systems mix them freely.
-
-   Engine: `separation` and `header` are enum params on `table`. */
+/* Tables — how loud the header row is: its band, and its labels' ink. Row
+   rules are mechanics; striping is a table prop. Tree and standalone lists
+   follow the table's selected rows (Color). */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -9,37 +8,63 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const TABLE_DEFAULTS = {
-  tableSeparation: "lines",
   tableHeader: "plain",
+  tableHeaderLabel: "muted",
 }
 
-/* Hairlines under every row is the modern default (shadcn, GitHub, Radix
-   Themes); zebra striping survives in dense data tools and classic
-   Bootstrap; plain drops both — the Linear list look. */
-export const SEPARATION_OPTIONS = [
-  { value: "lines", label: "Lines" },
-  { value: "striped", label: "Striped" },
-  { value: "plain", label: "Plain" },
+export const HEADER_OPTIONS = [
+  {
+    value: "plain",
+    label: "Plain",
+    credits: [
+      "shadcn",
+      "Geist",
+      "Atlassian",
+      "Fluent 2",
+      "Catalyst",
+      "Chakra (line)",
+      "Mantine",
+      "Radix Themes (ghost)",
+    ],
+  },
+  {
+    value: "filled",
+    label: "Filled",
+    credits: [
+      "Polaris",
+      "Primer",
+      "Carbon",
+      "Ant Design",
+      "Untitled UI",
+      "HeroUI",
+    ],
+  },
 ]
 
-/* shadcn leaves the header a bare muted-text line over the data; Ant and
-   Carbon paint a filled band (their gray-2 / layer-accent). */
-export const HEADER_OPTIONS = [
-  { value: "plain", label: "Plain" },
-  { value: "filled", label: "Filled" },
+export const HEADER_LABEL_OPTIONS = [
+  {
+    value: "strong",
+    label: "Strong",
+    credits: ["shadcn", "Carbon", "Ant Design", "Radix Themes", "Stripe"],
+  },
+  {
+    value: "muted",
+    label: "Muted",
+    credits: ["Primer", "Polaris", "shadcn sera", "Material 3", "Notion"],
+  },
 ]
 
 export const TABLE_SCHEMA: ChapterSchema<typeof TABLE_DEFAULTS> = {
-  tableSeparation: oneOf(SEPARATION_OPTIONS),
   tableHeader: oneOf(HEADER_OPTIONS),
+  tableHeaderLabel: oneOf(HEADER_LABEL_OPTIONS),
 }
 
 export function resolveTables(state: Effective): Resolved {
   return {
     params: {
       table: {
-        separation: state.tableSeparation,
         header: state.tableHeader,
+        headerLabel: state.tableHeaderLabel,
       },
     },
   }

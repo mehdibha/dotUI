@@ -16,17 +16,14 @@ const progressBarMeta = {
     track: {
       kind: "enum",
       default: "thin",
-      values: ["thin", "thick"] as const,
+      values: ["thin", "medium", "thick", "x-heavy"] as const,
+      description: "The bar's thickness.",
     },
-    indeterminate: {
+    trackStyle: {
       kind: "enum",
-      default: "slide",
-      values: ["slide", "pulse"] as const,
-    },
-    gap: {
-      kind: "enum",
-      default: "none",
-      values: ["none", "cut"] as const,
+      default: "plain",
+      values: ["plain", "bordered", "gap"] as const,
+      description: "How the track sits around the fill.",
     },
   },
 } satisfies RegistryItem

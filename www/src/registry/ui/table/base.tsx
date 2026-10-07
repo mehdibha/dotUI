@@ -150,14 +150,17 @@ TableContainer.displayName = "TableContainer"
 
 interface TableProps extends React.ComponentProps<
   typeof TablePrimitives.Table
-> {}
+> {
+  striped?: boolean
+}
 
-const Table = ({ className, ...props }: TableProps) => {
+const Table = ({ className, striped, ...props }: TableProps) => {
   const { table } = useStyles()()
 
   return (
     <TablePrimitives.Table
       data-slot="table"
+      data-striped={striped || undefined}
       className={composeRenderProps(className, (cn) =>
         table({ className: cn }),
       )}

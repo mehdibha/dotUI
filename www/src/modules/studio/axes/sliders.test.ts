@@ -1,37 +1,34 @@
 import { describe, expect, test } from "vitest"
 
 import { designSystemOf } from "../resolve"
-import { DEFAULT_STATE, parseState } from "./index"
+import { effective, parseState } from "./index"
+import { THUMB_OPTIONS } from "./sliders"
 
 describe("sliders axis", () => {
-  test("defaults resolve to the registry defaults and no tokens", () => {
-    const ds = designSystemOf(DEFAULT_STATE)
+  test("thumb and track land as slider params", () => {
+    const ds = designSystemOf(
+      parseState({ sliderThumb: "ring", sliderTrack: "medium" }),
+    )
     expect(ds.componentParams.slider).toEqual({
-      thumb: "circle",
-      track: "thin",
+      thumb: "ring",
+      track: "medium",
     })
     expect(ds.tokens).toEqual({})
   })
 
-  test("thumb and track land as slider params", () => {
-    const ds = designSystemOf(
-      parseState({ sliderThumb: "bar", sliderTrack: "thick" }),
-    )
-    expect(ds.componentParams.slider).toEqual({ thumb: "bar", track: "thick" })
-    expect(ds.tokens).toEqual({})
+  test("Auto track is the thumb's own: Handle rides Thick, the rest Thin", () => {
+    for (const { value } of THUMB_OPTIONS)
+      expect(
+        effective(parseState({ sliderThumb: value })).values.sliderTrack,
+        value,
+      ).toBe(value === "handle" ? "thick" : "thin")
   })
 
-  test("the fill leaves the buttons' source through the slider fill var", () => {
-    expect(
-      designSystemOf(parseState({ sliderColor: "neutral" })).tokens,
-    ).toEqual({ "--studio-slider-fill-color": "var(--color-inverse)" })
-    expect(
-      designSystemOf(parseState({ buttonColor: "neutral" })).tokens,
-    ).toEqual({ "--studio-slider-fill-color": "var(--color-accent)" })
-    expect(
-      designSystemOf(
-        parseState({ buttonColor: "neutral", sliderColor: "neutral" }),
-      ).tokens,
-    ).toEqual({})
+  test("a saved Hairline under Handle resolves to Thin", () => {
+    const { values, explain } = effective(
+      parseState({ sliderThumb: "handle", sliderTrack: "hairline" }),
+    )
+    expect(values.sliderTrack).toBe("thin")
+    expect(explain.sliderTrack?.rule).toBe("sliders/handle-needs-track")
   })
 })

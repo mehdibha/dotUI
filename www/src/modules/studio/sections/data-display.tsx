@@ -1,19 +1,22 @@
 "use client"
 
-/* Data display — a bucket: table, accordion, avatar, kbd. */
+/* Data display — a bucket: table, accordion, avatar, kbd, card. */
 
 import { cn } from "@/registry/lib/utils"
 
-import {
-  CONTAINER_OPTIONS,
-  MARKER_OPTIONS,
-  POSITION_OPTIONS,
-} from "../axes/accordion"
+import { CONTAINER_OPTIONS, MARKER_OPTIONS } from "../axes/accordion"
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
+import { FOOTER_OPTIONS } from "../axes/card"
 import { TREATMENT_OPTIONS } from "../axes/kbd"
-import { roleLabel } from "../axes/shape"
-import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
-import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { surfaceStyle } from "../axes/surfaces"
+import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables"
+import {
+  DialGap,
+  DialGlyph,
+  DialList,
+  DialSegmented,
+  DialSelect,
+} from "../dial"
 import {
   FamilyHero,
   HeroMember,
@@ -25,16 +28,19 @@ import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/** The grid: a header band or line, then three rows divided as chosen. */
-function TableGlyph({
-  separation,
-  header,
-}: {
-  separation: string
-  header: string
-}) {
+const glyph = (node: React.ReactNode) => <DialGlyph>{node}</DialGlyph>
+
+/** The grid: a header rule or band over its labels, then ruled rows. */
+function TableGlyph({ header, label }: { header: string; label: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {header === "filled" && (
+        <path
+          d="M3.75 9V6.25a1.5 1.5 0 0 1 1.5-1.5h13.5a1.5 1.5 0 0 1 1.5 1.5V9z"
+          fill="currentColor"
+          fillOpacity=".2"
+        />
+      )}
       <rect
         x="3"
         y="4"
@@ -45,110 +51,149 @@ function TableGlyph({
         strokeWidth="1.5"
         opacity=".45"
       />
-      {header === "filled" && (
-        <path
-          d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3H3z"
-          fill="currentColor"
-          opacity=".2"
-        />
-      )}
       <path d="M3 9h18" stroke="currentColor" strokeWidth="1.5" opacity=".45" />
-      {separation === "lines" && (
-        <path
-          d="M3 12.75h18M3 16.5h18"
-          stroke="currentColor"
-          strokeWidth="1"
-          opacity=".35"
-        />
-      )}
-      {separation === "striped" && (
-        <rect
-          x="3.75"
-          y="12.75"
-          width="16.5"
-          height="3.5"
-          fill="currentColor"
-          opacity=".12"
-        />
-      )}
       <path
-        d="M6 6.5h6M6 11h8M6 14.5h5M6 18h7"
+        d="M3.75 12.75h16.5M3.75 16.5h16.5"
+        stroke="currentColor"
+        opacity=".3"
+      />
+      <path
+        d="M6 6.75h4M13 6.75h4"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        opacity=".5"
+        opacity={label === "strong" ? 1 : 0.45}
       />
-    </svg>
-  )
-}
-
-function ContainerGlyph({ container }: { container: string }) {
-  if (container === "cards")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        {[3.5, 10, 16.5].map((y) => (
-          <rect
-            key={y}
-            x="4"
-            y={y}
-            width="16"
-            height="4"
-            rx="1.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          />
-        ))}
-      </svg>
-    )
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {container === "boxed" && (
-        <rect
-          x="3.75"
-          y="4.25"
-          width="16.5"
-          height="15.5"
-          rx="2.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      )}
       <path
-        d="M4 9.5h16M4 14.5h16"
+        d="M6 11h6M6 14.75h5M6 18.25h7"
         stroke="currentColor"
         strokeWidth="1.5"
-        opacity=".4"
+        strokeLinecap="round"
+        opacity=".7"
       />
-      {[5.75, 11, 16.25].map((y) => (
-        <rect
-          key={y}
-          x="7"
-          y={y}
-          width="10"
-          height="2"
-          rx="1"
-          fill="currentColor"
-        />
-      ))}
     </svg>
   )
 }
 
-function MarkerGlyph({ marker }: { marker: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
+/** Three items, the first open: their grouping and their marker. */
+function AccordionGlyph({
+  layout,
+  marker,
+}: {
+  layout: string
+  marker: string
+}) {
+  const leading = marker === "leading-caret"
+  const rows = layout === "separated" ? [4, 11.5, 16.5] : [5.25, 12.4, 17.25]
+  const title = (y: number) => (
+    <path
+      d={leading ? `M10 ${y}h6` : `M6.5 ${y}h7`}
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.5"
       strokeLinecap="round"
-      aria-hidden
-    >
-      {marker === "plus" ? (
-        <path d="M12 6v12M6 12h12" />
+    />
+  )
+  const mark = (y: number, open: boolean) =>
+    leading ? (
+      <path
+        d={
+          open
+            ? `M5.5 ${y - 1}l1.5 1.75 1.5-1.75`
+            : `M6 ${y - 1.5}l1.5 1.5L6 ${y + 1.5}`
+        }
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".6"
+      />
+    ) : (
+      <path
+        d={
+          open
+            ? `M16.5 ${y + 0.75}l1.5-1.5 1.5 1.5`
+            : `M16.5 ${y - 0.75}l1.5 1.5 1.5-1.5`
+        }
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity=".6"
+      />
+    )
+  const boxed = layout === "contained" || layout === "separated"
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {layout === "separated" ? (
+        <>
+          <rect
+            x="3.75"
+            y="1.75"
+            width="16.5"
+            height="7.75"
+            rx="1.5"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeOpacity=".55"
+          />
+          {[9.75, 14.75].map((y) => (
+            <rect
+              key={y}
+              x="3.75"
+              y={y}
+              width="16.5"
+              height="3.5"
+              rx="1.25"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeOpacity=".55"
+            />
+          ))}
+        </>
       ) : (
-        <path d="M7 10l5 5 5-5" strokeLinejoin="round" />
+        <>
+          {layout === "contained" && (
+            <>
+              <path
+                d="M3.75 4a1.25 1.25 0 0 1 1.25-1.25h14A1.25 1.25 0 0 1 20.25 4v6H3.75z"
+                fill="currentColor"
+                fillOpacity=".12"
+              />
+              <rect
+                x="3.75"
+                y="2.75"
+                width="16.5"
+                height="17"
+                rx="1.25"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeOpacity=".55"
+              />
+            </>
+          )}
+          {(layout === "divided" || layout === "contained") && (
+            <path
+              d={
+                boxed ? "M3.75 10h16.5M3.75 14.75h16.5" : "M3 10h18M3 14.75h18"
+              }
+              stroke="currentColor"
+              opacity=".4"
+            />
+          )}
+        </>
       )}
+      {rows.map((y, i) => (
+        <g key={y}>
+          {title(y)}
+          {mark(y, i === 0)}
+        </g>
+      ))}
+      <path
+        d={leading ? "M10 7.5h7" : "M6.5 7.5h9"}
+        stroke="currentColor"
+        strokeLinecap="round"
+        opacity=".4"
+      />
     </svg>
   )
 }
@@ -170,9 +215,9 @@ function AvatarGlyph({
         shape === "circle"
           ? "rounded-full"
           : large
-            ? "rounded-[7px]"
-            : "rounded-[5px]",
-        fallback === "tinted"
+            ? "rounded-[5px]"
+            : "rounded-[4px]",
+        fallback === "accent"
           ? "bg-accent-muted text-fg-accent"
           : "bg-muted text-fg-muted",
       )}
@@ -191,24 +236,35 @@ function KbdGlyph({ treatment }: { treatment: string }) {
           y="7"
           width="18"
           height="10"
-          rx="3"
+          rx="2.5"
           fill="currentColor"
           opacity=".15"
+        />
+      )}
+      {treatment === "outline" && (
+        <rect
+          x="3.5"
+          y="7"
+          width="17"
+          height="10"
+          rx="2.5"
+          stroke="currentColor"
+          strokeOpacity=".5"
         />
       )}
       {treatment === "keycap" && (
         <>
           <rect
-            x="4.5"
-            y="4.5"
-            width="15"
-            height="13"
-            rx="3"
+            x="3.5"
+            y="5.5"
+            width="17"
+            height="12"
+            rx="2.5"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1.25"
           />
           <path
-            d="M7.5 20.5h9"
+            d="M5.5 19.25h13"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
@@ -217,10 +273,10 @@ function KbdGlyph({ treatment }: { treatment: string }) {
       )}
       <text
         x="12"
-        y={treatment === "keycap" ? 11.5 : 12.5}
+        y={treatment === "keycap" ? 11.75 : 12.25}
         textAnchor="middle"
         dominantBaseline="central"
-        fontSize={treatment === "keycap" ? 7.5 : 8.5}
+        fontSize={treatment === "keycap" ? 7.5 : 8}
         fontWeight="500"
         fontFamily={
           treatment === "keycap" ? "ui-monospace, monospace" : undefined
@@ -233,16 +289,59 @@ function KbdGlyph({ treatment }: { treatment: string }) {
   )
 }
 
+/** A card: title, body, then the footer as it is set apart. */
+function CardGlyph({ footer }: { footer: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {footer === "band" && (
+        <path
+          d="M3.75 14.5h16.5v3.75a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5z"
+          fill="currentColor"
+          fillOpacity=".2"
+        />
+      )}
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="16.5"
+        rx="2.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity=".55"
+      />
+      {footer !== "none" && (
+        <path d="M3.75 14.5h16.5" stroke="currentColor" opacity=".5" />
+      )}
+      <path
+        d="M6 7.5h7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 10.5h11"
+        stroke="currentColor"
+        strokeLinecap="round"
+        opacity=".45"
+      />
+      <rect
+        x="14"
+        y="16.25"
+        width="4"
+        height="2"
+        rx=".75"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function DataDisplayPreview({ state }: { state: Effective }) {
-  return (
-    <DialGlyph>
-      <TableGlyph
-        separation={state.tableSeparation}
-        header={state.tableHeader}
-      />
-    </DialGlyph>
+  return glyph(
+    <TableGlyph header={state.tableHeader} label={state.tableHeaderLabel} />,
   )
 }
 
@@ -252,17 +351,20 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
     <>
       <FamilyHero>
         <HeroMember name="Table">
-          <DialGlyph>
+          {glyph(
             <TableGlyph
-              separation={effective.tableSeparation}
               header={effective.tableHeader}
-            />
-          </DialGlyph>
+              label={effective.tableHeaderLabel}
+            />,
+          )}
         </HeroMember>
         <HeroMember name="Accordion">
-          <DialGlyph>
-            <ContainerGlyph container={effective.accordionContainer} />
-          </DialGlyph>
+          {glyph(
+            <AccordionGlyph
+              layout={effective.accordionContainer}
+              marker={effective.accordionMarker}
+            />,
+          )}
         </HeroMember>
         <HeroMember name="Avatar">
           <AvatarGlyph
@@ -272,37 +374,38 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
           />
         </HeroMember>
         <HeroMember name="Kbd">
-          <DialGlyph>
-            <KbdGlyph treatment={effective.kbdTreatment} />
-          </DialGlyph>
+          {glyph(<KbdGlyph treatment={effective.kbdTreatment} />)}
+        </HeroMember>
+        <HeroMember name="Card">
+          {glyph(<CardGlyph footer={effective.cardFooter} />)}
         </HeroMember>
       </FamilyHero>
-      <DialSegmented
+      <DialList
         axis="tableHeader"
         label="Table header"
-        options={HEADER_OPTIONS}
+        options={HEADER_OPTIONS.map((option) => ({
+          ...option,
+          preview: glyph(
+            <TableGlyph
+              header={option.value}
+              label={effective.tableHeaderLabel}
+            />,
+          ),
+        }))}
       />
+      <DialGap />
+      <UsesRow axis="selectedWash" label="Selected" />
       <UsesRow
-        axis="roleCard"
-        label="Card corners"
-        value={roleLabel(effective, "roleCard")}
+        axis="surfaceLayers"
+        label="Surfaces"
+        value={surfaceStyle(effective).style.label}
       />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["tableSeparation"]}>
-        <DialSelect
-          axis="tableSeparation"
-          label="Table rows"
-          options={SEPARATION_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <DialGlyph>
-                <TableGlyph
-                  separation={option.value}
-                  header={effective.tableHeader}
-                />
-              </DialGlyph>
-            ),
-          }))}
+      <More keys={["tableHeaderLabel"]}>
+        <DialSegmented
+          axis="tableHeaderLabel"
+          label="Header label"
+          options={HEADER_LABEL_OPTIONS}
         />
       </More>
       <MemberSection id="accordion" title="Accordion">
@@ -311,10 +414,11 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
           label="Layout"
           options={CONTAINER_OPTIONS.map((option) => ({
             ...option,
-            preview: (
-              <DialGlyph>
-                <ContainerGlyph container={option.value} />
-              </DialGlyph>
+            preview: glyph(
+              <AccordionGlyph
+                layout={option.value}
+                marker={effective.accordionMarker}
+              />,
             ),
           }))}
         />
@@ -323,20 +427,14 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
           label="Marker"
           options={MARKER_OPTIONS.map((option) => ({
             ...option,
-            preview: (
-              <DialGlyph>
-                <MarkerGlyph marker={option.value} />
-              </DialGlyph>
+            preview: glyph(
+              <AccordionGlyph
+                layout={effective.accordionContainer}
+                marker={option.value}
+              />,
             ),
           }))}
         />
-        <More keys={["accordionMarkerPosition"]}>
-          <DialSegmented
-            axis="accordionMarkerPosition"
-            label="Marker position"
-            options={POSITION_OPTIONS}
-          />
-        </More>
       </MemberSection>
       <MemberSection id="avatar" title="Avatar">
         <DialSelect
@@ -367,11 +465,19 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
             label="Style"
             options={TREATMENT_OPTIONS.map((option) => ({
               ...option,
-              preview: (
-                <DialGlyph>
-                  <KbdGlyph treatment={option.value} />
-                </DialGlyph>
-              ),
+              preview: glyph(<KbdGlyph treatment={option.value} />),
+            }))}
+          />
+        </More>
+      </MemberSection>
+      <MemberSection id="card" title="Card">
+        <More keys={["cardFooter"]}>
+          <DialSelect
+            axis="cardFooter"
+            label="Footer"
+            options={FOOTER_OPTIONS.map((option) => ({
+              ...option,
+              preview: glyph(<CardGlyph footer={option.value} />),
             }))}
           />
         </More>

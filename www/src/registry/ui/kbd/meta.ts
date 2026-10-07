@@ -12,10 +12,10 @@ const kbdMeta = {
     },
   ],
   params: {
-    treatment: {
+    style: {
       kind: "enum",
       default: "chip",
-      values: ["text", "chip", "keycap"] as const,
+      values: ["chip", "outline", "keycap"] as const,
       description: "The chrome a keyboard key wears.",
     },
   },

@@ -324,6 +324,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { motionEntrance: "fade" },
   ],
   "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
+  "sliders/handle-needs-track": [
+    { sliderThumb: "handle", sliderTrack: "hairline" },
+    { sliderTrack: "hairline" },
+  ],
   "buttons/closed-style-owns-secondary": [
     { buttonStyle: "bevel", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
