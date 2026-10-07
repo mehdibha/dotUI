@@ -15,9 +15,9 @@ export const github = definePreset({
     successSeed: "#1f883d",
     warningSeed: "#9a6700",
     dangerSeed: "#cf222e",
-    // #59636e…#0d1117 sit at OKLCH h≈253, peak chroma ≈0.023.
+    // #59636e…#0d1117 sit at OKLCH h≈253; 1.8 lands #d1d9e0 and #59636e, dark stays short of C 0.014.
     neutralHue: 253,
-    neutralTint: 1.4,
+    neutralTint: 1.8,
     lightBg: 100,
     // #0d1117.
     darkBg: 5,
@@ -71,8 +71,8 @@ export const github = definePreset({
     // FormControl.Label is 14px 600.
     fieldLabel: "semibold",
     inputError: "icon-message",
+    // Primer's double triangle isn't in the catalog; Octicons' Unfold reads as a glitch.
     selectTrigger: "field",
-    pickerCaret: "double",
 
     // Menus & popovers
     menuArrows: "none",
