@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs"
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { FIELD_SHELLS } from "@/registry/ui/input/styles"
 
@@ -179,18 +180,90 @@ describe("field focus under every shell", () => {
     { focusInputStyle: "border", focusInputWeight: "thick" },
   ]
 
+  /* Each shell draws in its own shape: a box around itself, Indicator its
+     bottom rule (and a box halo), Underline everything under its rule. */
+  const SHAPES: Record<string, { focus: string; invalid: string }> = {
+    outline: { focus: "focus-input", invalid: "invalid-ring" },
+    raised: { focus: "focus-input", invalid: "invalid-ring" },
+    inset: { focus: "focus-input", invalid: "invalid-ring" },
+    well: { focus: "focus-input", invalid: "invalid-ring" },
+    filled: { focus: "focus-input", invalid: "invalid-ring" },
+    indicator: { focus: "focus-input-indicator", invalid: "invalid-ring" },
+    underline: {
+      focus: "focus-input-underline",
+      invalid: "invalid-ring-underline",
+    },
+  }
+
+  test("every shell has a shape", () => {
+    expect(Object.keys(SHAPES).sort()).toEqual(Object.keys(FIELD_SHELLS).sort())
+  })
+
   for (const [style, shell] of Object.entries(FIELD_SHELLS))
     test(style, () => {
+      const { focus, invalid } = SHAPES[style]!
+      for (const slot of ["input", "inputGroup", "textArea", "trigger"]) {
+        const classes = [shell.slots[slot as keyof typeof shell.slots]]
+          .flat(Infinity)
+          .join(" ")
+        const used = (pattern: RegExp) =>
+          new Set([...classes.matchAll(pattern)].map((match) => match[1]))
+        expect(
+          used(/:(focus-input[\w-]*)(?=\s|$)/g),
+          `${style} ${slot}`,
+        ).toEqual(new Set([focus]))
+        expect(
+          used(/:(invalid-ring[\w-]*)(?=\s|$)/g),
+          `${style} ${slot}`,
+        ).toEqual(new Set([invalid]))
+      }
+
       const classes = [shell.slots.input].flat(Infinity).join(" ")
       expect(classes).toContain("focus:not-invalid:border-border-focus")
-      const utility = /(?:^|\s)focus:(focus-input[\w-]*)/.exec(classes)?.[1]
-      expect(utility, `${style} wears a focus layer`).toBeDefined()
       const drawn = VALUES.map((value) =>
-        substitute(layer(utility!), {
-          ...theme,
-          ...resolve(value).tokens,
-        }),
+        substitute(layer(focus), { ...theme, ...resolve(value).tokens }),
       )
       expect(new Set(drawn).size, style).toBe(VALUES.length)
     })
+})
+
+/* Where a control's own part covers its box (a check, a thumb, a selected
+   pill, link text), the ring goes outside; rows and cells keep it inside. */
+describe("ring placement parity", () => {
+  const ringsOf = async (name: string) => {
+    const { stylesConfig } = (await publishables[name]!()).publishable
+    return new Set(
+      JSON.stringify(stylesConfig).match(/[\w:-]*focus-ring[\w-]*/g),
+    )
+  }
+
+  test.each(["checkbox", "radio-group", "switch"])(
+    "%s: bare outside, labelled card ring",
+    async (name) => {
+      expect(await ringsOf(name)).toEqual(
+        new Set([
+          "focus-visible:not-has-data-label:focus-ring-outside",
+          "focus-visible:has-data-label:focus-ring",
+        ]),
+      )
+    },
+  )
+
+  test.each([
+    "tabs",
+    "segmented-control",
+    "slider",
+    "color-thumb",
+    "color-swatch-picker",
+    "link",
+    "breadcrumbs",
+  ])("%s: outside", async (name) => {
+    for (const ring of await ringsOf(name))
+      expect(ring, name).toMatch(/:focus-ring-outside$/)
+  })
+
+  test.each(["tree", "table"])("%s: inside on rows and cells", async (name) => {
+    const rings = [...(await ringsOf(name))]
+    expect(rings.some((ring) => ring.endsWith(":focus-ring-inside"))).toBe(true)
+  })
 })
