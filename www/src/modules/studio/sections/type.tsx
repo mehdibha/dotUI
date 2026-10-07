@@ -149,18 +149,14 @@ function SectionLabel({ labels, mono }: { labels: string; mono: string }) {
 /** Control text in px: density's rung unless a size is pinned. */
 const uiPx = (state: Effective) =>
   state.uiTextSize === "auto"
-    ? state.density === "compact"
-      ? 12
-      : 14
+    ? densityTier(state.density).text
     : Number(state.uiTextSize)
 
 /** Field values: the control text, or one rung above it. */
 const fieldPx = (state: Effective) =>
   state.fieldTextSize === "same"
     ? uiPx(state)
-    : state.density === "compact"
-      ? 14
-      : 16
+    : densityTier(state.density).text + 2
 
 function FieldSpecimen({ px }: { px: number }) {
   return (
@@ -271,11 +267,7 @@ export function TypeSection({ studio }: { studio: Studio }) {
         }))}
       />
       <DialGap />
-      <UsesRow
-        axis="density"
-        label="Density"
-        value={densityTier(effective.density).label}
-      />
+      <UsesRow axis="density" label="Density" />
       <More keys={MORE_KEYS}>
         <FontRow
           axis="monoFont"

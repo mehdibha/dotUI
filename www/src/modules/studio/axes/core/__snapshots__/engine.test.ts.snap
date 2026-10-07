@@ -591,3 +591,12 @@ exports[`rules > type/14-is-native: fires, then holds back 1`] = `
   "tokens": {},
 }
 `;
+
+exports[`rules > type/field-text-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;

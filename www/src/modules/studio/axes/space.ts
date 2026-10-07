@@ -1,10 +1,11 @@
-/* Density — which of the registry's three hand-tuned tiers every component
-   wears (heights, insets, gaps, and the text size that rides with them). The
+/* Density — which of the registry's hand-tuned tiers every component wears
+   (heights, insets, gaps, and the text size that rides with them). The
    spacing unit stays Tailwind's 4px.
 
    Engine: `density` selects the tier layer `useStyles` composes live and the
    publisher flattens into the shipped classes. */
 
+import { DENSITIES } from "@/registry/types"
 import type { Density } from "@/registry/types"
 
 import { defineChapter } from "./core/types"
@@ -16,7 +17,7 @@ export const SPACE_DEFAULTS = {
   density: "default",
 }
 
-export const DENSITY_VALUES = ["compact", "default", "comfortable"] as const
+export const DENSITY_VALUES = DENSITIES
 
 export const SPACE_SCHEMA: ChapterSchema<typeof SPACE_DEFAULTS> = {
   density: oneOf(DENSITY_VALUES),

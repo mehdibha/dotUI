@@ -382,6 +382,10 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { uiTextSize: "14" },
     { uiTextSize: "14", density: "compact" },
   ],
+  "type/field-text-native": [
+    { fieldTextSize: "large", density: "touch" },
+    { fieldTextSize: "large", density: "spacious" },
+  ],
   "otp-field/underline-separates-cells": [
     { inputStyle: "underline" },
     { inputStyle: "filled" },

@@ -50,7 +50,7 @@ export const ROWS_OPTIONS = options(ROWS_VALUES, {
   },
   step: {
     label: "Step up",
-    description: "Polaris, Stripe, Material 3 (approx.)",
+    description: "Polaris, Stripe, Material 3",
   },
 })
 
