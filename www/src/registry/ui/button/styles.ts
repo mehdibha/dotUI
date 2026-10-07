@@ -15,10 +15,10 @@ export const BUTTON_VARIANTS = {
   primary:
     "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary))",
   secondary:
-    "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border",
+    "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
   quiet:
-    "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
-  link: "disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
+    "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+  link: "disabled:text-(--disabled-fg,var(--color-fg))",
   warning:
     "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning))",
   danger:
@@ -168,11 +168,13 @@ export const BUTTON_SECONDARY = {
       },
     },
   },
+  // Polaris: a white card plate (it holds on a grouped page) with a gray
+  // bottom lip; hover #fafafa sits between it and the #f7f7f7 press.
   bevel: {
     variants: {
       variant: {
         secondary:
-          "border border-black/10 bg-bg text-fg-on-neutral shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.2),inset_0_0.5px_0_1px_rgb(255_255_255)] hover:bg-card disabled:shadow-none dark:border-white/8 dark:bg-neutral dark:shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.6),inset_0_0.5px_0_1px_rgb(255_255_255/0.06)] dark:hover:bg-neutral-hover pressed:bg-neutral pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(26_26_26/0.12),inset_1px_0_1px_0_rgb(26_26_26/0.12),inset_0_2px_1px_0_rgb(26_26_26/0.2)]",
+          "border border-black/10 bg-(--secondary-plate) text-fg-on-neutral shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.2),inset_0_0.5px_0_1px_rgb(255_255_255)] [--secondary-plate:var(--color-card)] hover:[--secondary-plate:color-mix(in_oklab,var(--color-card),var(--color-neutral))] disabled:shadow-none dark:border-white/8 dark:shadow-[inset_0_-1px_0_0_rgb(0_0_0/0.6),inset_0_0.5px_0_1px_rgb(255_255_255/0.06)] dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:[--secondary-plate:var(--color-neutral)] pressed:pt-0.5 pressed:shadow-[inset_-1px_0_1px_0_rgb(26_26_26/0.12),inset_1px_0_1px_0_rgb(26_26_26/0.12),inset_0_2px_1px_0_rgb(26_26_26/0.2)]",
       },
     },
   },
@@ -196,12 +198,13 @@ export const BUTTON_SECONDARY = {
     },
   },
   // Supabase, Claude, shadcn vega: a card plate on an edge and an xs drop;
-  // dark lifts the plate instead.
+  // dark lifts the plate instead. The plate rides a local var so selected
+  // and disabled still win in dark.
   raised: {
     variants: {
       variant: {
         secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-card text-fg-on-neutral shadow-xs hover:bg-neutral disabled:shadow-none dark:bg-neutral dark:hover:bg-neutral-hover pressed:bg-neutral-hover dark:pressed:bg-neutral-active",
+          "border-(length:--studio-control-stroke) border-border-control bg-(--secondary-plate) text-fg-on-neutral shadow-xs [--secondary-plate:var(--color-card)] hover:[--secondary-plate:var(--color-neutral)] disabled:shadow-none dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:[--secondary-plate:var(--color-neutral-hover)] dark:pressed:[--secondary-plate:var(--color-neutral-active)]",
       },
     },
   },
@@ -390,7 +393,8 @@ const { useStyles, styles } = createStyles(buttonMeta, {
       "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--studio-btn-radius) bg-clip-padding font-(--studio-font-weight-label) whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-(--studio-button-state-duration) ease-(--studio-button-state-ease) select-ui",
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+      // Pending keeps the face; the spinner takes the label's ink.
+      "pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0",
       "disabled:cursor-disabled",
       "invalid:border-border-danger invalid:not-focus-visible:invalid-ring",
     ],
