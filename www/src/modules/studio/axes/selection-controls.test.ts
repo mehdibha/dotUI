@@ -11,6 +11,7 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { ClassValue } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
+import { EDGE_FLOOR } from "./checkbox"
 import { SELECTED_OPTIONS } from "./choice-cards.meta"
 import { STRONG_EDGE } from "./color"
 import { DEFAULT_STATE, parseState } from "./index"
@@ -188,6 +189,53 @@ describe("selection controls", () => {
       const strong = await shipped({ checkEdge: "strong" })
       expect(strong).toMatch(/ border-\(--check-edge\) /)
       expect(strong).not.toMatch(/--studio-|--neutral-/)
+      const soft = await shipped({ controlEdge: "soft" })
+      expect(soft).toMatch(/ border-\(--check-edge\) /)
+      expect(soft).not.toMatch(/--studio-|--neutral-/)
+    },
+  )
+
+  it("a Soft control edge floors the check edge and the switch track at Firm", () => {
+    expect(designSystemOf(parseState({ controlEdge: "soft" })).tokens).toEqual(
+      expect.objectContaining({
+        "--check-edge": EDGE_FLOOR,
+        "--studio-check-edge": "var(--check-edge)",
+        "--switch-track": EDGE_FLOOR,
+        "--studio-switch-track": "var(--switch-track)",
+      }),
+    )
+    // Strong checks stay strong; the track floors on its own.
+    const tokens = designSystemOf(
+      parseState({ controlEdge: "soft", checkEdge: "strong" }),
+    ).tokens
+    expect(tokens["--check-edge"]).toBe(STRONG_EDGE)
+    expect(tokens["--switch-track"]).toBe(EDGE_FLOOR)
+    for (const controlEdge of ["firm", "strong"]) {
+      const firm = designSystemOf(parseState({ controlEdge })).tokens
+      expect(firm["--check-edge"], controlEdge).toBeUndefined()
+      expect(firm["--switch-track"], controlEdge).toBeUndefined()
+    }
+  })
+
+  it.each(STYLE_OPTIONS.map((option) => option.value))(
+    "%s switch ships the control edge at Origin and the floor under Soft",
+    async (style) => {
+      const shipped = async (raw: Record<string, unknown>) => {
+        const preset = designSystemOf(
+          parseState({ ...raw, switchStyle: style }),
+        )
+        const { item } = publish({
+          publishable: selectPublishable(await publishables.switch!(), preset),
+          preset,
+        })
+        return (item.files ?? []).map((f) => f.content).join("\n")
+      }
+      const origin = await shipped({})
+      expect(origin).toMatch(/ (bg|border)-border-control /)
+      expect(origin).not.toMatch(/--studio-|switch-track/)
+      const soft = await shipped({ controlEdge: "soft" })
+      expect(soft).toMatch(/ (bg|border)-\(--switch-track\) /)
+      expect(soft).not.toMatch(/--studio-|--neutral-|border-control/)
     },
   )
 
