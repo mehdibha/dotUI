@@ -232,6 +232,15 @@ exports[`rules > charts/motion-off: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > choice-cards/accent-checks-hide-card-color: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
 exports[`rules > color/grouped-page: fires, then holds back 1`] = `
 {
   "color": {
@@ -322,6 +331,7 @@ exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
       "indicator": "none",
       "inset": "inset",
       "labels": "sentence",
+      "rows": "auto",
       "selected": "tint",
     },
     "menu": {
@@ -329,6 +339,7 @@ exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
       "indicator": "none",
       "inset": "inset",
       "labels": "sentence",
+      "rows": "auto",
       "selected": "tint",
     },
   },
@@ -453,6 +464,47 @@ exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
     },
   },
   "tokens": {},
+}
+`;
+
+exports[`rules > states/neutral-ring-hides-field-ink: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "overrides": {
+      "color-border-focus": {
+        "job": "solid",
+        "palette": "neutral",
+      },
+      "color-border-focus-muted": {
+        "job": "ui-active",
+        "palette": "neutral",
+      },
+    },
+    "primary": "accent",
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > states/ring-hides-field-ink: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
 }
 `;
 

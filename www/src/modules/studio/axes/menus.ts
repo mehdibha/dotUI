@@ -2,7 +2,7 @@
    select and combobox list-box, command), the arrows on anchored layers, and
    what pickers become on phones.
 
-   Engine: `indicator`, `highlight`, `inset` and `selected` are enum params on
+   Engine: `indicator`, `highlight`, `inset`, `selected` and `rows` are enum params on
    `menu` and `list-box`, one recipe (list-box LIST_ROWS); `search`, `scale`
    and `inset` on `command`; `tip` on `popover` and `tooltip`; `mobile` swaps
    the shipped popover file. */
@@ -18,6 +18,7 @@ export const MENU_DEFAULTS = {
   menuArrows: "tooltips",
   menuIndicator: "check-end",
   menuSelectedRow: "none",
+  menuRows: "auto",
   mobilePickers: "drawer",
   menuSearch: "field",
   menuScale: "default",
@@ -41,6 +42,10 @@ export const INDICATOR_VALUES = ["check-end", "check-start", "none"] as const
 
 export const SELECTED_ROW_VALUES = ["none", "tint"] as const
 
+/* Auto: the density's own rows. Match: the control height. Step up: one
+   step above it. */
+export const ROWS_VALUES = ["auto", "match", "step"] as const
+
 export const PICKER_VALUES = ["drawer", "anchored"] as const
 
 export const SEARCH_VALUES = ["field", "bar", "prompt"] as const
@@ -53,6 +58,7 @@ export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
   menuArrows: oneOf(ARROWS_VALUES),
   menuIndicator: oneOf(INDICATOR_VALUES),
   menuSelectedRow: oneOf(SELECTED_ROW_VALUES),
+  menuRows: oneOf(ROWS_VALUES),
   mobilePickers: oneOf(PICKER_VALUES),
   menuSearch: oneOf(SEARCH_VALUES),
   menuScale: oneOf(SCALE_VALUES),
@@ -64,6 +70,7 @@ export function resolveMenus(state: Effective): Resolved {
     highlight: state.menuHighlight,
     inset: state.menuInset,
     selected: state.menuSelectedRow,
+    rows: state.menuRows,
   }
   const [popoverTip, tooltipTip] = TIPS[state.menuArrows]!
   return {

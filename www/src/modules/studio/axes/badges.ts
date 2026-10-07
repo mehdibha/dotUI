@@ -18,6 +18,7 @@ export const STYLE_VALUES = [
   "soft",
   "outline",
   "soft-outline",
+  "dot",
 ] as const
 
 export const SHAPE_VALUES = ["pill", "rounded"] as const

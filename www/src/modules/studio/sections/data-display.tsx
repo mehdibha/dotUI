@@ -6,7 +6,7 @@ import { cn } from "@/registry/lib/utils"
 
 import { CONTAINER_OPTIONS, MARKER_OPTIONS } from "../axes/accordion.meta"
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars.meta"
-import { FOOTER_OPTIONS } from "../axes/card.meta"
+import { CARD_HEADER_OPTIONS, FOOTER_OPTIONS } from "../axes/card.meta"
 import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
 import { surfaceStyle } from "../axes/surfaces.meta"
 import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
@@ -289,10 +289,17 @@ function KbdGlyph({ treatment }: { treatment: string }) {
   )
 }
 
-/** A card: title, body, then the footer as it is set apart. */
-function CardGlyph({ footer }: { footer: string }) {
+/** A card: title, body, then the footer, each part set apart or not. */
+function CardGlyph({ header, footer }: { header: string; footer: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      {header === "band" && (
+        <path
+          d="M3.75 9.75V6.25a1.5 1.5 0 0 1 1.5-1.5h13.5a1.5 1.5 0 0 1 1.5 1.5v3.5z"
+          fill="currentColor"
+          fillOpacity=".2"
+        />
+      )}
       {footer === "band" && (
         <path
           d="M3.75 14.5h16.5v3.75a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5z"
@@ -310,17 +317,20 @@ function CardGlyph({ footer }: { footer: string }) {
         strokeWidth="1.5"
         opacity=".55"
       />
+      {header !== "none" && (
+        <path d="M3.75 9.75h16.5" stroke="currentColor" opacity=".5" />
+      )}
       {footer !== "none" && (
         <path d="M3.75 14.5h16.5" stroke="currentColor" opacity=".5" />
       )}
       <path
-        d="M6 7.5h7"
+        d="M6 7.25h7"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
       <path
-        d="M6 10.5h11"
+        d="M6 12h11"
         stroke="currentColor"
         strokeLinecap="round"
         opacity=".45"
@@ -377,7 +387,12 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
           {glyph(<KbdGlyph treatment={effective.kbdTreatment} />)}
         </HeroMember>
         <HeroMember name="Card">
-          {glyph(<CardGlyph footer={effective.cardFooter} />)}
+          {glyph(
+            <CardGlyph
+              header={effective.cardHeader}
+              footer={effective.cardFooter}
+            />,
+          )}
         </HeroMember>
       </FamilyHero>
       <DialList
@@ -471,13 +486,31 @@ export function DataDisplaySection({ studio }: { studio: Studio }) {
         </More>
       </MemberSection>
       <MemberSection id="card" title="Card">
-        <More keys={["cardFooter"]}>
+        <More keys={["cardHeader", "cardFooter"]}>
+          <DialSelect
+            axis="cardHeader"
+            label="Header"
+            options={CARD_HEADER_OPTIONS.map((option) => ({
+              ...option,
+              preview: glyph(
+                <CardGlyph
+                  header={option.value}
+                  footer={effective.cardFooter}
+                />,
+              ),
+            }))}
+          />
           <DialSelect
             axis="cardFooter"
             label="Footer"
             options={FOOTER_OPTIONS.map((option) => ({
               ...option,
-              preview: glyph(<CardGlyph footer={option.value} />),
+              preview: glyph(
+                <CardGlyph
+                  header={effective.cardHeader}
+                  footer={option.value}
+                />,
+              ),
             }))}
           />
         </More>

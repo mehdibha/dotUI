@@ -39,6 +39,7 @@ export const stripe = definePreset({
     tabStyle: "line",
     tabsColor: "accent",
     badgeStyle: "soft-outline",
+    menuRows: "step",
     badgeShape: "rounded",
   },
 })

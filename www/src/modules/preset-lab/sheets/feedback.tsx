@@ -21,7 +21,7 @@ import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 
 import { Cell, Sheet } from "./layout"
 
-const APPEARANCES = ["solid", "soft", "outline", "soft-outline"] as const
+const APPEARANCES = ["solid", "soft", "outline", "soft-outline", "dot"] as const
 const TONES = [
   "neutral",
   "accent",

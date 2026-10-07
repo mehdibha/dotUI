@@ -218,6 +218,49 @@ describe("selection controls", () => {
     )
   })
 
+  it("Accent cards fork off neutral checks only", () => {
+    const scope = (raw: Record<string, unknown>) =>
+      designSystemOf(parseState(raw)).color?.scopes?.["choice-card"]
+    expect(scope({ checkboxColor: "neutral", cardColor: "accent" })).toBe(
+      "accent",
+    )
+    expect(scope({ cardColor: "accent" })).toBeUndefined()
+    expect(scope({ checkboxColor: "neutral" })).toBeUndefined()
+  })
+
+  // `@theme inline` bakes `--color-selection` to `var(--selection)`, so the
+  // card must re-declare the `:root` names the export carries.
+  it("Accent cards ship the accent cluster on the card's root names", () => {
+    const preset = designSystemOf(
+      parseState({ checkboxColor: "neutral", cardColor: "accent" }),
+    )
+    const { css, cssVars } = mergePresetCssFields({}, preset)
+    const card = Object.keys(css ?? {}).find(
+      (selector) =>
+        selector.includes("[data-checkbox-control]") &&
+        !selector.startsWith(".dark"),
+    )
+    expect(card).toContain(":has([data-label])")
+    for (const selector of [card!, `.dark ${card}`]) {
+      const vars = css?.[selector] as Record<string, string>
+      expect(Object.keys(vars).sort(), selector).toEqual([
+        "--fg-on-selection",
+        "--selection",
+        "--selection-hover",
+        "--selection-muted",
+      ])
+      for (const [name, value] of Object.entries(vars)) {
+        expect(cssVars?.theme?.[`--color-${name.slice(2)}`]).toBe(
+          `var(${name})`,
+        )
+        expect(value, `${selector} ${name}`).toMatch(/^oklch\(/)
+      }
+    }
+    expect((css?.[card!] as Record<string, string>)["--selection"]).toBe(
+      cssVars?.light?.accent,
+    )
+  })
+
   // `dark:` outranks `disabled:` in the cascade, so a dark paint must opt out
   // of disabled wherever the slot also paints that property when disabled.
   it("no dark rule repaints a disabled control", async () => {

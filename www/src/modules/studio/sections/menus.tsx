@@ -8,6 +8,7 @@ import {
   INDICATOR_OPTIONS,
   INSET_OPTIONS,
   PICKER_OPTIONS,
+  ROWS_OPTIONS,
   SCALE_OPTIONS,
   SEARCH_OPTIONS,
   SELECTED_ROW_OPTIONS,
@@ -103,6 +104,44 @@ function SelectedRowGlyph({ selected }: { selected: string }) {
         strokeWidth="1.5"
         strokeLinecap="round"
         opacity=".45"
+      />
+    </svg>
+  )
+}
+
+/** A control beside a list row: shorter, as tall, or a step taller. */
+function RowsGlyph({ rows }: { rows: string }) {
+  const h = rows === "auto" ? 3.5 : rows === "match" ? 5 : 6.5
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect
+        x="2.75"
+        y="9.5"
+        width="6"
+        height="5"
+        rx="1.25"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        opacity=".45"
+      />
+      <rect
+        x="11"
+        y="4"
+        width="10.5"
+        height="16"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity=".45"
+      />
+      <rect
+        x="13"
+        y={12 - h / 2}
+        width="6.5"
+        height={h}
+        rx="1.25"
+        fill="currentColor"
+        opacity=".9"
       />
     </svg>
   )
@@ -387,7 +426,9 @@ export function MenusSection({ studio }: { studio: Studio }) {
         value={roleLabel(effective, "roleItem")}
       />
       <UsesRow axis="motion" label="Motion" />
-      <More keys={["menuIndicator", "menuSelectedRow", "mobilePickers"]}>
+      <More
+        keys={["menuIndicator", "menuSelectedRow", "menuRows", "mobilePickers"]}
+      >
         <DialSelect
           axis="menuIndicator"
           label="Check"
@@ -400,6 +441,13 @@ export function MenusSection({ studio }: { studio: Studio }) {
           label="Selected row"
           options={glyphs(SELECTED_ROW_OPTIONS, (value) => (
             <SelectedRowGlyph selected={value} />
+          ))}
+        />
+        <DialSelect
+          axis="menuRows"
+          label="Row height"
+          options={glyphs(ROWS_OPTIONS, (value) => (
+            <RowsGlyph rows={value} />
           ))}
         />
         <DialSelect axis="mobilePickers" label="On mobile" options={PICKERS} />

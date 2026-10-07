@@ -5,6 +5,7 @@ import {
   INDICATOR_VALUES,
   INSET_VALUES,
   PICKER_VALUES,
+  ROWS_VALUES,
   SCALE_VALUES,
   SEARCH_VALUES,
   SELECTED_ROW_VALUES,
@@ -41,6 +42,18 @@ export const SELECTED_ROW_OPTIONS = options(SELECTED_ROW_VALUES, {
   tint: { label: "Tint", description: "Material 3, Polaris, Carbon" },
 })
 
+export const ROWS_OPTIONS = options(ROWS_VALUES, {
+  auto: { label: "Auto", description: "shadcn, Notion, Supabase, Carbon" },
+  match: {
+    label: "Match",
+    description: "Radix Themes, Linear, Geist, Primer, Claude",
+  },
+  step: {
+    label: "Step up",
+    description: "Polaris, Stripe, Material 3 (approx.)",
+  },
+})
+
 export const PICKER_OPTIONS = options(PICKER_VALUES, {
   drawer: { label: "Drawer", description: "Geist, Notion, Stripe" },
   anchored: { label: "Anchored", description: "Primer, Radix Themes" },
@@ -63,6 +76,7 @@ export const OPTIONS = {
   menuArrows: ARROWS_OPTIONS,
   menuIndicator: INDICATOR_OPTIONS,
   menuSelectedRow: SELECTED_ROW_OPTIONS,
+  menuRows: ROWS_OPTIONS,
   mobilePickers: PICKER_OPTIONS,
   menuSearch: SEARCH_OPTIONS,
   menuScale: SCALE_OPTIONS,

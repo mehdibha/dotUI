@@ -327,6 +327,13 @@ describe("shipped code", () => {
     expect(code).not.toContain("text-xs")
   })
 
+  it("dot badges ship a neutral hairline pill with a status dot", async () => {
+    const code = await ship("badge", { badgeStyle: "dot" })
+    expect(code).toContain('appearance: "dot"')
+    expect(code).toContain("before:bg-(--chip-dot,var(--chip-fill))")
+    expect(code).toContain("[--chip-dot:var(--color-fg-muted)]")
+  })
+
   it("rounded badges ship the detail rung", async () => {
     expect(await ship("badge", { badgeShape: "rounded" })).toMatch(
       /rounded-(sm|md|xs|\[[^\]]+\])/,

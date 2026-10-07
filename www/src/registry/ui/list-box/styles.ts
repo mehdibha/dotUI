@@ -45,7 +45,7 @@ export const LIST_ROWS = {
     compact: {
       slots: {
         root: "text-xs/relaxed",
-        item: "min-h-7 gap-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
+        item: "gap-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
         sectionTitle: "py-1.5",
       },
     },
@@ -148,6 +148,25 @@ export const LIST_ROWS = {
             "selected:focus-visible:bg-selected-hover selected:focus-visible:text-fg-on-selected",
             "selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:bg-selected-hover selected:hover:not-in-[:is([role=menu],[data-trigger=ComboBox],[data-trigger=Select],[role=listbox]:has([data-focus-visible]))]:text-fg-on-selected",
           ],
+        },
+      },
+    },
+    // Row height: the density's own rows (shadcn), the control height
+    // (Radix Themes, Linear), or one step above it (Polaris, Stripe).
+    rows: {
+      auto: { density: { compact: { slots: { item: "min-h-7" } } } },
+      match: {
+        density: {
+          compact: { slots: { item: "min-h-7" } },
+          default: { slots: { item: "min-h-8" } },
+          comfortable: { slots: { item: "min-h-9" } },
+        },
+      },
+      step: {
+        density: {
+          compact: { slots: { item: "min-h-8" } },
+          default: { slots: { item: "min-h-9" } },
+          comfortable: { slots: { item: "min-h-10" } },
         },
       },
     },

@@ -321,6 +321,18 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusInputStyle: "ring", focusInputWeight: "thick" },
     { focusInputStyle: "border", focusInputWeight: "thick" },
   ],
+  "states/ring-hides-field-ink": [
+    { focusInputStyle: "ring", focusInputColor: "neutral" },
+    { focusInputStyle: "border", focusInputColor: "neutral" },
+  ],
+  "states/neutral-ring-hides-field-ink": [
+    { focusColor: "neutral", focusInputColor: "accent" },
+    { focusInputColor: "accent" },
+  ],
+  "choice-cards/accent-checks-hide-card-color": [
+    { cardColor: "neutral" },
+    { checkboxColor: "neutral", cardColor: "neutral" },
+  ],
   "motion/none-hides-entrance": [
     { motion: "none", motionEntrance: "fade" },
     { motionEntrance: "fade" },

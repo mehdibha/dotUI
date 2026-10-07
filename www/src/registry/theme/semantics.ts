@@ -318,6 +318,11 @@ export function semanticsFor(color: ColorSlice): SemanticVocabulary {
 /** The vocabulary `base/colors.css` declares (the site chrome's). */
 export const SITE_SEMANTICS = semanticsFor(SITE_COLOR_CONFIG)
 
+/** `choice-card`: a checkbox, radio or switch control in card mode (it holds
+ *  the label). */
+const CHOICE_CARD_SELECTOR =
+  ":is([data-checkbox-control],[data-radio-control],[data-switch-control]):has([data-label])"
+
 /** The selection cluster re-declared per component scope (`scopes`), keyed
  *  by the selector it lands on: `checkbox` → `[data-checkbox]`. */
 export function scopedSemantics(
@@ -325,7 +330,7 @@ export function scopedSemantics(
 ): Record<string, SemanticVocabulary> {
   return Object.fromEntries(
     Object.entries(color?.scopes ?? {}).map(([scope, source]) => [
-      `[data-${scope}]`,
+      scope === "choice-card" ? CHOICE_CARD_SELECTOR : `[data-${scope}]`,
       selectionCluster(source),
     ]),
   )

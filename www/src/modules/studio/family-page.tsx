@@ -6,7 +6,7 @@ import { useContext } from "react"
 import { ArrowUpRightIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
-import { DEFAULTS } from "./axes"
+import { DEFAULTS, effective } from "./axes"
 import { DialFolder } from "./dial"
 import { useCurrent } from "./selection"
 import { RevealAxis, useAxis, valueLabel } from "./use-axis"
@@ -95,6 +95,8 @@ export function More({
   children: React.ReactNode
 }) {
   const { state } = useCurrent()
+  const { explain } = effective(state)
+  if (keys.every((key) => explain[key]?.lock?.kind === "hide")) return null
   const edited = keys.filter((key) => state[key] !== DEFAULTS[key])
   return (
     <DialFolder title="More" defaultOpen={false} badge={edited.length}>

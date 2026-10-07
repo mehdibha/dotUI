@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       // The shell is input's; this adds the questionnaire's own invalid
       // state, which it marks with aria-invalid.
       input:
-        "aria-invalid:border-border-danger aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-border-danger",
+        "aria-invalid:border-border-danger aria-invalid:invalid-fill aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-border-danger",
       error: "mt-2 text-fg-danger",
       actions:
         "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center",

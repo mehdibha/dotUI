@@ -1,6 +1,7 @@
 import { createStyles } from "@/lib/styles"
 
 import {
+  CHIP_DOT,
   CHIP_NEUTRAL,
   CHIP_OUTLINE,
   CHIP_SOFT,
@@ -48,6 +49,7 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         soft: { tag: CHIP_SOFT },
         outline: { tag: CHIP_OUTLINE },
         "soft-outline": { tag: CHIP_SOFT_OUTLINE },
+        dot: { tag: CHIP_DOT },
       },
     },
     defaultVariants: {
