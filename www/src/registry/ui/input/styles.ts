@@ -196,7 +196,7 @@ const shellRadius = {
 }
 
 const boxed =
-  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
+  "border-(length:--studio-control-stroke) px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))"
 
 // shadcn nova: a clear box on the control edge, tinted in dark.
 const outlineShell = tv({
@@ -244,7 +244,7 @@ const filledShell = tv({
 // straight rule, so only its top corners round, and small. A ring or halo
 // goes around the box (Carbon); a border focus thickens the rule (M3).
 const indicatorShell = tv({
-  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
+  base: "rounded-t-(--studio-radius-detail) border-b-(length:--studio-control-stroke) border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,background-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "invalid:not-focus:invalid-ring focus:focus-input-indicator focus:not-invalid:border-(--focus-input-border)",
@@ -259,10 +259,10 @@ const indicatorShell = tv({
 // shadcn sera: a bottom rule only, no fill, no inline padding, no corners.
 // Every focus and invalid layer draws under the rule.
 const underlineShell = tv({
-  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-border-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control))",
+  base: "border-b-(length:--studio-control-stroke) border-border-control transition-[box-shadow,border-color,color] duration-(--studio-input-state-duration) ease-(--studio-input-state-ease) invalid:border-fg-danger invalid:invalid-fill invalid:ring-(color:--focus-invalid-color) disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
-      self: "invalid:not-focus:invalid-ring-underline focus:focus-input-underline focus:not-invalid:border-(--focus-input-border) invalid:focus:border-fg-danger",
+      self: "invalid:not-focus:invalid-ring-underline focus:focus-input-underline focus:not-invalid:border-(--focus-input-border)",
       group:
         "group-focus/combobox:focus-input-underline group-focus/combobox:not-invalid:border-(--focus-input-border) invalid:not-focus-within:invalid-ring-underline invalid:group-focus/combobox:border-fg-danger has-[[data-input-control][data-focused]]:focus-input-underline has-[[data-input-control][data-focused]]:not-invalid:border-(--focus-input-border) invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
       trigger:

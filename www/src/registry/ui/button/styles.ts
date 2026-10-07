@@ -392,7 +392,7 @@ const { useStyles, styles } = createStyles(buttonMeta, {
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
       "disabled:cursor-disabled",
-      "invalid:border-border-danger invalid:not-focus-visible:invalid-ring",
+      "invalid:border-fg-danger invalid:not-focus-visible:invalid-ring",
     ],
     variants: {
       variant: BUTTON_VARIANTS,

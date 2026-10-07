@@ -36,7 +36,7 @@ import { ArrowCursor, HandCursor, NotAllowedCursor } from "./cursors"
 const INK = "var(--color-border-focus)"
 const MUTED = "var(--color-border-focus-muted)"
 const BG = "var(--color-bg)"
-const DANGER = "var(--color-border-danger)"
+const DANGER = "var(--color-fg-danger)"
 const DANGER_MUTED = "var(--color-danger-muted)"
 const PCT: Record<string, number> = { solid: 100, soft: 50, faint: 30 }
 

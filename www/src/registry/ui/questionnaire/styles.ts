@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--studio-questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors duration-(--studio-questionnaire-state-duration) ease-(--studio-questionnaire-state-ease) select-ui",
         "hover:bg-muted/50",
         "data-checked:border-selection/40 data-checked:bg-muted",
-        "data-invalid:border-border-danger",
+        "data-invalid:border-fg-danger",
         "has-[>input:focus-visible]:focus-ring",
         "data-disabled:cursor-disabled data-disabled:text-(--disabled-fg,currentColor) data-disabled:hover:bg-transparent",
       ],
@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       // The shell is input's; this adds the questionnaire's own invalid
       // state, which it marks with aria-invalid.
       input:
-        "aria-invalid:border-border-danger aria-invalid:invalid-fill aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-border-danger",
+        "aria-invalid:border-fg-danger aria-invalid:invalid-fill aria-invalid:ring-(color:--focus-invalid-color) aria-invalid:not-focus:invalid-ring aria-invalid:focus:border-fg-danger",
       error: "mt-2 text-fg-danger",
       actions:
         "grid min-h-11 w-full grid-cols-[minmax(0,1fr)_auto_auto] items-center",

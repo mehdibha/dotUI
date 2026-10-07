@@ -57,10 +57,13 @@ export const INVALID_VALUES = ["edge", "halo", "tint"] as const
 export const INVALID_FILL =
   "light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))"
 
-/* Neutral field ink (Geist): the neutral ring pair's steps. */
+/* Neutral field ink (Geist): the neutral ring pair's steps. On a Strong edge,
+   which is that same 700 step, focus takes the text ink (Airbnb #222,
+   Spotify black / white). */
 export const NEUTRAL_FIELD_INK = {
   edge: "var(--neutral-700)",
   halo: "var(--neutral-300)",
+  strong: "var(--neutral-950)",
 }
 
 /** Solid: one grey for every variant. Fade: the control at 50%. */
@@ -156,7 +159,7 @@ export function resolveStates(state: Effective): Resolved {
       // The edge recolors; Thick adds what the stroke doesn't draw, inside.
       tokens["--focus-input-width"] = "0px"
       tokens["--focus-input-color"] = "var(--focus-input-border)"
-      tokens["--focus-invalid-color"] = "var(--color-border-danger)"
+      tokens["--focus-invalid-color"] = "var(--color-fg-danger)"
       tokens["--focus-input-edge"] = px(
         Math.max(0, BORDER_PX[weight]! - strokePx(state.controlStroke)),
       )
@@ -170,6 +173,8 @@ export function resolveStates(state: Effective): Resolved {
     if (state.focusInputStyle === "halo")
       tokens["--focus-input-color"] = NEUTRAL_FIELD_INK.halo
   }
+  if (state.focusInputColor === "neutral" && state.controlEdge === "strong")
+    tokens["--focus-input-border"] = NEUTRAL_FIELD_INK.strong
 
   // Invalid: the halo is as wide as the field's own focus halo.
   if (state.invalidStyle === "halo")
