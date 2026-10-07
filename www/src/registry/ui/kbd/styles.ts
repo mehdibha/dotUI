@@ -24,9 +24,11 @@ const { useStyles, styles } = createStyles(kbdMeta, {
       outline: {
         slots: { kbd: "border px-1 font-sans text-xs font-medium" },
       },
+      // Radix Themes: sans at 12px, so ⌘ and ⇧ stay legible (a mono
+      // fallback like Menlo draws them tiny).
       keycap: {
         slots: {
-          kbd: "border border-b-2 border-border bg-card px-1.5 font-mono text-[0.6875rem]",
+          kbd: "border border-b-2 border-border bg-card px-1.5 font-sans text-xs",
         },
       },
     },

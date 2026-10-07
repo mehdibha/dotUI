@@ -13,8 +13,8 @@ export const TREATMENT_OPTIONS = options(TREATMENT_VALUES, {
   keycap: {
     label: "Keycap",
     credits: [
-      "Primer",
       "Radix Themes (classic)",
+      "Primer (approx.)",
       "Chakra (raised)",
       "Mantine",
       "Ant Design",
