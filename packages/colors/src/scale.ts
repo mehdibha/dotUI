@@ -55,6 +55,8 @@ export interface ScaleOptions {
   tintPeak: number
   /** D7 — pin the seed verbatim at the solid step (light mode). */
   preserveSeed: boolean
+  /** White labels on the solid whatever their contrast (a priced miss). */
+  whiteInk?: boolean
   /** Skeleton override for background transposition (L*, jobs 1–8). */
   skeleton?: number[]
   /** Share the light pass's solid (Radix: step 700 is mode-invariant). */
@@ -123,7 +125,7 @@ function darkPole(solid: Oklch): Oklch {
  * to the |Lc(white)| < 40 pole rule on all 62 measured Radix scale-modes,
  * and it resolves the 29.5–60.8 Lc dead zone toward keeping the seed.
  */
-function solveOnColor(solid: Oklch): Oklch {
+export function solveOnColor(solid: Oklch): Oklch {
   if (onMeetsBars(WHITE, solid)) return WHITE
   let on = darkPole(solid)
   let l = on.l
@@ -285,11 +287,14 @@ export function buildScale(options: ScaleOptions): ScaleColors {
 
   // Solids (jobs 9–10). Step 700 is mode-invariant (verified: Radix shares
   // the identical step-9 across modes) — the dark pass reuses the light solve.
-  const { solid, on, clamped } = options.sharedSolid
+  const solved = options.sharedSolid
     ? { ...options.sharedSolid, clamped: false }
     : solveSolid(seed, chroma, hueAt, options.preserveSeed && mode === "light")
+  const { solid, clamped } = solved
+  const on = options.whiteInk ? WHITE : solved.on
+  // The hover shifts against the solved label, so it still moves.
   steps["700"] = solid
-  steps["800"] = hoverSolid(solid, on, mode, chroma)
+  steps["800"] = hoverSolid(solid, solved.on, mode, chroma)
   const on800 = on
 
   // Text (jobs 11–12), solved against this scale's own backgrounds from the
