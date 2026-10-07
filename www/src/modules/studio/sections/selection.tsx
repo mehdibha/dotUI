@@ -14,7 +14,7 @@ import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import { effective as resolve } from "../axes"
 import { cornerTokens, edgeTokens } from "../axes/checkbox"
 import { CORNER_OPTIONS, EDGE_OPTIONS } from "../axes/checkbox.meta"
-import { SELECTED_OPTIONS } from "../axes/choice-cards.meta"
+import { CARD_COLOR_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards.meta"
 import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
@@ -173,8 +173,11 @@ const slider = (thumb: string, track: string) => (
   </Recipe>
 )
 
-const card = (value: string) => (
-  <Recipe name="checkbox" params={{ "card-selected": value }}>
+const card = (value: string, color = "control") => (
+  <Recipe
+    name="checkbox"
+    params={{ "card-selected": value, "card-color": color }}
+  >
     <ChoiceCard />
   </Recipe>
 )
@@ -190,6 +193,10 @@ export function SelectionSection({ studio }: { studio: Studio }) {
   // A thumb's specimen rides the track it would resolve to.
   const trackFor = (thumb: string) =>
     resolve({ ...state, sliderThumb: thumb }).values.sliderTrack
+  const cardInk =
+    effective.cardColor === "accent" && effective.checkboxColor !== "accent"
+      ? "accent"
+      : "control"
   return (
     <>
       <FamilyHero>
@@ -202,7 +209,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           {slider(effective.sliderThumb, effective.sliderTrack)}
         </HeroMember>
         <HeroMember name="Choice card">
-          {card(effective.cardSelected)}
+          {card(effective.cardSelected, cardInk)}
         </HeroMember>
       </FamilyHero>
       <UsesRow axis="checkboxColor" label="Checked color" />
@@ -276,9 +283,25 @@ export function SelectionSection({ studio }: { studio: Studio }) {
           label="Selected"
           options={SELECTED_OPTIONS.map((option) => ({
             ...option,
-            preview: card(option.value),
+            preview: card(option.value, cardInk),
           }))}
         />
+        <More keys={["cardColor"]}>
+          <DialSelect
+            axis="cardColor"
+            label="Color"
+            options={[
+              { value: "same", label: "Same as checks" },
+              ...CARD_COLOR_OPTIONS.filter((o) => o.value === "accent"),
+            ].map((option) => ({
+              ...option,
+              preview: card(
+                effective.cardSelected,
+                option.value === "accent" ? "accent" : "control",
+              ),
+            }))}
+          />
+        </More>
       </MemberSection>
     </>
   )

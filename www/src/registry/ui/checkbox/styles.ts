@@ -25,6 +25,18 @@ export const CHOICE_CARD = {
   },
 }
 
+/* The card's ink: the control's own selection tokens, or the accent's
+   re-declared over them (the check inside follows). */
+export const CHOICE_CARD_COLOR = {
+  control: {},
+  accent: {
+    slots: {
+      control:
+        "has-data-label:[--color-fg-on-selection:var(--color-fg-on-accent)] has-data-label:[--color-selection:var(--color-accent)] has-data-label:[--color-selection-hover:var(--color-accent-hover)] has-data-label:[--color-selection-muted:var(--color-accent-muted)]",
+    },
+  },
+}
+
 const { useStyles, styles } = createStyles(checkboxMeta, {
   base: {
     slots: {
@@ -61,6 +73,7 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
   },
   params: {
     "card-selected": CHOICE_CARD,
+    "card-color": CHOICE_CARD_COLOR,
   },
 })
 
