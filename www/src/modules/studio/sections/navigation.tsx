@@ -1,7 +1,7 @@
 "use client"
 
-/* Navigation — how the current location is marked: tabs, the sidebar's
-   current item, links and breadcrumbs. */
+/* Navigation: how the current location is marked in tabs, the sidebar,
+   links and breadcrumbs. */
 
 import { useMemo } from "react"
 
@@ -38,17 +38,12 @@ import {
   TAB_STYLE_OPTIONS,
   WEIGHT_OPTIONS,
 } from "../axes/navigation.meta"
-import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -211,6 +206,222 @@ const weightOptions = (options: typeof ITEM_WEIGHT_OPTIONS) =>
     preview: WEIGHTS[option.value] && <WeightGlyph weight={option.value} />,
   }))
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+function TabStyleRow() {
+  const { state } = useStudio()
+  const styles = useSystems(state, "tabStyle", TAB_STYLE_OPTIONS)
+  return (
+    <DialSelect
+      axis="tabStyle"
+      label="Tabs"
+      rowPreview={false}
+      options={TAB_STYLE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={styles[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function NavMarkerRow() {
+  const { state } = useStudio()
+  const markers = useSystems(state, "navMarker", MARKER_OPTIONS)
+  return (
+    <DialSelect
+      axis="navMarker"
+      label="Current item"
+      rowPreview={false}
+      options={MARKER_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={markers[option.value]!}>
+            <SidebarSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function TabsColorRow() {
+  return (
+    <DialSegmented
+      axis="tabsColor"
+      label="Indicator color"
+      options={SOURCE_OPTIONS}
+    />
+  )
+}
+
+function TabIndicatorRow() {
+  const { state } = useStudio()
+  const indicators = useSystems(
+    { ...state, tabStyle: "line" } as StudioState,
+    "tabIndicator",
+    INDICATOR_OPTIONS,
+  )
+  return (
+    <DialSelect
+      axis="tabIndicator"
+      label="Line indicator"
+      rowPreview={false}
+      options={INDICATOR_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={indicators[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function NavWeightRow() {
+  return (
+    <DialSelect
+      axis="navWeight"
+      label="Weight"
+      options={weightOptions(WEIGHT_OPTIONS)}
+    />
+  )
+}
+
+function NavItemWeightRow() {
+  return (
+    <DialSelect
+      axis="navItemWeight"
+      label="Sidebar weight"
+      options={weightOptions(ITEM_WEIGHT_OPTIONS)}
+    />
+  )
+}
+
+function NavCaseRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="navCase"
+      label="Case"
+      options={CASE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <CaseGlyph
+            upper={
+              (option.value === "same"
+                ? effective.buttonCase
+                : option.value) === "uppercase"
+            }
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+function TabsPillRow() {
+  const { state } = useStudio()
+  const pills = useSystems(
+    { ...state, tabStyle: "pill" } as StudioState,
+    "tabsPill",
+    PILL_OPTIONS,
+  )
+  return (
+    <DialSelect
+      axis="tabsPill"
+      label="Pill fill"
+      rowPreview={false}
+      options={PILL_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={pills[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function LinkUnderlineRow() {
+  const { state } = useStudio()
+  const underlines = useSystems(state, "linkUnderline", UNDERLINE_OPTIONS)
+  return (
+    <DialSelect
+      axis="linkUnderline"
+      label="Underline"
+      options={UNDERLINE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={underlines[option.value]!}>
+            <LinkSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function LinkColorRow() {
+  return (
+    <DialSegmented
+      axis="linkColor"
+      label="Color"
+      options={LINK_COLOR_OPTIONS}
+    />
+  )
+}
+
+function BreadcrumbSeparatorRow() {
+  return (
+    <DialSegmented
+      axis="breadcrumbSeparator"
+      label="Separator"
+      options={SEPARATOR_OPTIONS}
+    />
+  )
+}
+
+function BreadcrumbToneRow() {
+  const { state, effective } = useStudio()
+  const tones = useSystems(state, "breadcrumbTone", ANCESTOR_OPTIONS)
+  return (
+    <DialSelect
+      axis="breadcrumbTone"
+      label="Ancestors"
+      rowPreview={false}
+      options={ANCESTOR_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={tones[option.value]!}>
+            <BreadcrumbsSpecimen separator={effective.breadcrumbSeparator} />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  tabStyle: TabStyleRow,
+  navMarker: NavMarkerRow,
+  tabsColor: TabsColorRow,
+  tabIndicator: TabIndicatorRow,
+  navWeight: NavWeightRow,
+  navItemWeight: NavItemWeightRow,
+  navCase: NavCaseRow,
+  tabsPill: TabsPillRow,
+  linkUnderline: LinkUnderlineRow,
+  linkColor: LinkColorRow,
+  breadcrumbSeparator: BreadcrumbSeparatorRow,
+  breadcrumbTone: BreadcrumbToneRow,
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function NavigationPreview({ state }: { state: Effective }) {
@@ -225,178 +436,30 @@ export function NavigationPreview({ state }: { state: Effective }) {
   )
 }
 
-export function NavigationSection({ studio }: { studio: Studio }) {
-  const { state, effective, designSystem } = studio
-  const styles = useSystems(state, "tabStyle", TAB_STYLE_OPTIONS)
-  const markers = useSystems(state, "navMarker", MARKER_OPTIONS)
-  const pills = useSystems(
-    { ...state, tabStyle: "pill" } as StudioState,
-    "tabsPill",
-    PILL_OPTIONS,
-  )
-  const indicators = useSystems(
-    { ...state, tabStyle: "line" } as StudioState,
-    "tabIndicator",
-    INDICATOR_OPTIONS,
-  )
-  const underlines = useSystems(state, "linkUnderline", UNDERLINE_OPTIONS)
+export function NavigationSection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Tabs">
-          <System ds={designSystem}>
-            <TabsSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Sidebar">
-          <System ds={designSystem}>
-            <SidebarSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Link">
-          <System ds={designSystem}>
-            <LinkSpecimen />
-          </System>
-        </HeroMember>
-        <HeroMember name="Breadcrumbs">
-          <System ds={designSystem}>
-            <BreadcrumbsSpecimen separator={effective.breadcrumbSeparator} />
-          </System>
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="tabStyle"
-        label="Tabs"
-        options={TAB_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={styles[option.value]!}>
-              <TabsSpecimen />
-            </System>
-          ),
-        }))}
-      />
+      <Row axis="tabStyle" />
+      <Row axis="navMarker" />
+      <Row axis="tabsColor" />
+      <Row axis="tabIndicator" />
+      <Row axis="navWeight" />
+      <Row axis="navItemWeight" />
+      <Row axis="navCase" />
+      <Row axis="tabsPill" />
       <DialGap />
-      <DialSelect
-        axis="navMarker"
-        label="Current item"
-        rowPreview={false}
-        options={MARKER_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <System ds={markers[option.value]!}>
-              <SidebarSpecimen />
-            </System>
-          ),
-        }))}
-      />
-      <DialSegmented
-        axis="tabsColor"
-        label="Indicator color"
-        options={SOURCE_OPTIONS}
-      />
-      <UsesRow axis="segmentedSelected" label="Segmented chip" />
-      <UsesRow axis="shellTone" label="App shell" />
-      <UsesRow axis="paginationCurrent" label="Pagination" />
-      <More
-        keys={[
-          "tabIndicator",
-          "navWeight",
-          "navItemWeight",
-          "navCase",
-          "tabsPill",
-        ]}
-      >
-        <DialSelect
-          axis="tabIndicator"
-          label="Line indicator"
-          rowPreview={false}
-          options={INDICATOR_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={indicators[option.value]!}>
-                <TabsSpecimen />
-              </System>
-            ),
-          }))}
-        />
-        <DialSelect
-          axis="navWeight"
-          label="Weight"
-          options={weightOptions(WEIGHT_OPTIONS)}
-        />
-        <DialSelect
-          axis="navItemWeight"
-          label="Sidebar weight"
-          options={weightOptions(ITEM_WEIGHT_OPTIONS)}
-        />
-        <DialSelect
-          axis="navCase"
-          label="Case"
-          options={CASE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <CaseGlyph
-                upper={
-                  (option.value === "same"
-                    ? effective.buttonCase
-                    : option.value) === "uppercase"
-                }
-              />
-            ),
-          }))}
-        />
-        <DialSelect
-          axis="tabsPill"
-          label="Pill fill"
-          rowPreview={false}
-          options={PILL_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={pills[option.value]!}>
-                <TabsSpecimen />
-              </System>
-            ),
-          }))}
-        />
-      </More>
+      <Row axis="segmentedSelected" />
+      <Row axis="shellTone" />
+      <Row axis="paginationCurrent" />
+      <Row axis="navMotion" />
       <MemberSection id="link" title="Links">
-        <DialSelect
-          axis="linkUnderline"
-          label="Underline"
-          options={UNDERLINE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <System ds={underlines[option.value]!}>
-                <LinkSpecimen />
-              </System>
-            ),
-          }))}
-        />
-        <More keys={["linkColor"]}>
-          <DialSegmented
-            axis="linkColor"
-            label="Color"
-            options={LINK_COLOR_OPTIONS}
-          />
-        </More>
+        <Row axis="linkUnderline" />
+        <Row axis="linkColor" />
       </MemberSection>
       <MemberSection id="breadcrumbs" title="Breadcrumbs">
-        <More keys={["breadcrumbSeparator", "breadcrumbTone"]}>
-          <DialSegmented
-            axis="breadcrumbSeparator"
-            label="Separator"
-            options={SEPARATOR_OPTIONS}
-          />
-          <DialSegmented
-            axis="breadcrumbTone"
-            label="Ancestors"
-            options={ANCESTOR_OPTIONS}
-          />
-        </More>
+        <Row axis="breadcrumbSeparator" />
+        <Row axis="breadcrumbTone" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}

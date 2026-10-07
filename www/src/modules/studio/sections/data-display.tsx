@@ -1,6 +1,6 @@
 "use client"
 
-/* Data display — a bucket: table, accordion, avatar, kbd, card. */
+/* Data display: table, accordion, avatar, kbd, card. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -8,24 +8,12 @@ import { CONTAINER_OPTIONS, MARKER_OPTIONS } from "../axes/accordion.meta"
 import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars.meta"
 import { CARD_HEADER_OPTIONS, FOOTER_OPTIONS } from "../axes/card.meta"
 import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
-import { surfaceStyle } from "../axes/surfaces.meta"
 import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
-import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialSegmented,
-  DialSelect,
-} from "../dial"
-import {
-  FamilyHero,
-  HeroMember,
-  MemberSection,
-  More,
-  UsesRow,
-} from "../family-page"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -199,25 +187,12 @@ function AccordionGlyph({
   )
 }
 
-function AvatarGlyph({
-  shape,
-  fallback,
-  large,
-}: {
-  shape: string
-  fallback: string
-  large?: boolean
-}) {
+function AvatarGlyph({ shape, fallback }: { shape: string; fallback: string }) {
   return (
     <span
       className={cn(
-        "flex shrink-0 items-center justify-center font-semibold",
-        large ? "size-6 text-[9px]" : "size-4 text-[7px]",
-        shape === "circle"
-          ? "rounded-full"
-          : large
-            ? "rounded-[5px]"
-            : "rounded-[4px]",
+        "flex size-4 shrink-0 items-center justify-center text-[7px] font-semibold",
+        shape === "circle" ? "rounded-full" : "rounded-[4px]",
         fallback === "accent"
           ? "bg-accent-muted text-fg-accent"
           : "bg-muted text-fg-muted",
@@ -348,6 +323,161 @@ function CardGlyph({ header, footer }: { header: string; footer: string }) {
   )
 }
 
+/* ---------------------------------- Rows ---------------------------------- */
+
+function TableHeaderRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="tableHeader"
+      label="Table header"
+      options={HEADER_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <TableGlyph
+            header={option.value}
+            label={effective.tableHeaderLabel}
+          />,
+        ),
+      }))}
+    />
+  )
+}
+
+function TableHeaderLabelRow() {
+  return (
+    <DialSegmented
+      axis="tableHeaderLabel"
+      label="Header label"
+      options={HEADER_LABEL_OPTIONS}
+    />
+  )
+}
+
+function AccordionContainerRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="accordionContainer"
+      label="Layout"
+      options={CONTAINER_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <AccordionGlyph
+            layout={option.value}
+            marker={effective.accordionMarker}
+          />,
+        ),
+      }))}
+    />
+  )
+}
+
+function AccordionMarkerRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="accordionMarker"
+      label="Marker"
+      options={MARKER_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <AccordionGlyph
+            layout={effective.accordionContainer}
+            marker={option.value}
+          />,
+        ),
+      }))}
+    />
+  )
+}
+
+function AvatarShapeRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="avatarShape"
+      label="Shape"
+      options={SHAPE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <AvatarGlyph
+            shape={option.value}
+            fallback={effective.avatarFallback}
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+function AvatarFallbackRow() {
+  return (
+    <DialSegmented
+      axis="avatarFallback"
+      label="Fallback"
+      options={FALLBACK_OPTIONS}
+    />
+  )
+}
+
+function KbdTreatmentRow() {
+  return (
+    <DialSelect
+      axis="kbdTreatment"
+      label="Style"
+      options={TREATMENT_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(<KbdGlyph treatment={option.value} />),
+      }))}
+    />
+  )
+}
+
+function CardHeaderRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="cardHeader"
+      label="Header"
+      options={CARD_HEADER_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <CardGlyph header={option.value} footer={effective.cardFooter} />,
+        ),
+      }))}
+    />
+  )
+}
+
+function CardFooterRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="cardFooter"
+      label="Footer"
+      options={FOOTER_OPTIONS.map((option) => ({
+        ...option,
+        preview: glyph(
+          <CardGlyph header={effective.cardHeader} footer={option.value} />,
+        ),
+      }))}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  tableHeader: TableHeaderRow,
+  tableHeaderLabel: TableHeaderLabelRow,
+  accordionContainer: AccordionContainerRow,
+  accordionMarker: AccordionMarkerRow,
+  avatarShape: AvatarShapeRow,
+  avatarFallback: AvatarFallbackRow,
+  kbdTreatment: KbdTreatmentRow,
+  cardHeader: CardHeaderRow,
+  cardFooter: CardFooterRow,
+}
+
 /* --------------------------------- Section --------------------------------- */
 
 export function DataDisplayPreview({ state }: { state: Effective }) {
@@ -356,168 +486,30 @@ export function DataDisplayPreview({ state }: { state: Effective }) {
   )
 }
 
-export function DataDisplaySection({ studio }: { studio: Studio }) {
-  const { effective } = studio
+export function DataDisplaySection(_: { studio: Studio }) {
   return (
     <>
-      <FamilyHero>
-        <HeroMember name="Table">
-          {glyph(
-            <TableGlyph
-              header={effective.tableHeader}
-              label={effective.tableHeaderLabel}
-            />,
-          )}
-        </HeroMember>
-        <HeroMember name="Accordion">
-          {glyph(
-            <AccordionGlyph
-              layout={effective.accordionContainer}
-              marker={effective.accordionMarker}
-            />,
-          )}
-        </HeroMember>
-        <HeroMember name="Avatar">
-          <AvatarGlyph
-            shape={effective.avatarShape}
-            fallback={effective.avatarFallback}
-            large
-          />
-        </HeroMember>
-        <HeroMember name="Kbd">
-          {glyph(<KbdGlyph treatment={effective.kbdTreatment} />)}
-        </HeroMember>
-        <HeroMember name="Card">
-          {glyph(
-            <CardGlyph
-              header={effective.cardHeader}
-              footer={effective.cardFooter}
-            />,
-          )}
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="tableHeader"
-        label="Table header"
-        options={HEADER_OPTIONS.map((option) => ({
-          ...option,
-          preview: glyph(
-            <TableGlyph
-              header={option.value}
-              label={effective.tableHeaderLabel}
-            />,
-          ),
-        }))}
-      />
+      <Row axis="tableHeader" />
+      <Row axis="tableHeaderLabel" />
       <DialGap />
-      <UsesRow axis="selectedWash" label="Selected" />
-      <UsesRow
-        axis="surfaceLayers"
-        label="Surfaces"
-        value={surfaceStyle(effective).style.label}
-      />
-      <UsesRow axis="motion" label="Motion" />
-      <More keys={["tableHeaderLabel"]}>
-        <DialSegmented
-          axis="tableHeaderLabel"
-          label="Header label"
-          options={HEADER_LABEL_OPTIONS}
-        />
-      </More>
+      <Row axis="selectedWash" />
+      <Row axis="surfaceLayers" />
+      <Row axis="displayMotion" />
       <MemberSection id="accordion" title="Accordion">
-        <DialSelect
-          axis="accordionContainer"
-          label="Layout"
-          options={CONTAINER_OPTIONS.map((option) => ({
-            ...option,
-            preview: glyph(
-              <AccordionGlyph
-                layout={option.value}
-                marker={effective.accordionMarker}
-              />,
-            ),
-          }))}
-        />
-        <DialSelect
-          axis="accordionMarker"
-          label="Marker"
-          options={MARKER_OPTIONS.map((option) => ({
-            ...option,
-            preview: glyph(
-              <AccordionGlyph
-                layout={effective.accordionContainer}
-                marker={option.value}
-              />,
-            ),
-          }))}
-        />
+        <Row axis="accordionContainer" />
+        <Row axis="accordionMarker" />
       </MemberSection>
       <MemberSection id="avatar" title="Avatar">
-        <DialSelect
-          axis="avatarShape"
-          label="Shape"
-          options={SHAPE_OPTIONS.map((option) => ({
-            ...option,
-            preview: (
-              <AvatarGlyph
-                shape={option.value}
-                fallback={effective.avatarFallback}
-              />
-            ),
-          }))}
-        />
-        <More keys={["avatarFallback"]}>
-          <DialSegmented
-            axis="avatarFallback"
-            label="Fallback"
-            options={FALLBACK_OPTIONS}
-          />
-        </More>
+        <Row axis="avatarShape" />
+        <Row axis="avatarFallback" />
       </MemberSection>
       <MemberSection id="kbd" title="Kbd">
-        <More keys={["kbdTreatment"]}>
-          <DialSelect
-            axis="kbdTreatment"
-            label="Style"
-            options={TREATMENT_OPTIONS.map((option) => ({
-              ...option,
-              preview: glyph(<KbdGlyph treatment={option.value} />),
-            }))}
-          />
-        </More>
+        <Row axis="kbdTreatment" />
       </MemberSection>
       <MemberSection id="card" title="Card">
-        <More keys={["cardHeader", "cardFooter"]}>
-          <DialSelect
-            axis="cardHeader"
-            label="Header"
-            options={CARD_HEADER_OPTIONS.map((option) => ({
-              ...option,
-              preview: glyph(
-                <CardGlyph
-                  header={option.value}
-                  footer={effective.cardFooter}
-                />,
-              ),
-            }))}
-          />
-          <DialSelect
-            axis="cardFooter"
-            label="Footer"
-            options={FOOTER_OPTIONS.map((option) => ({
-              ...option,
-              preview: glyph(
-                <CardGlyph
-                  header={effective.cardHeader}
-                  footer={option.value}
-                />,
-              ),
-            }))}
-          />
-        </More>
+        <Row axis="cardHeader" />
+        <Row axis="cardFooter" />
       </MemberSection>
     </>
   )
 }
-
-export const ROWS: RowMap = {}
