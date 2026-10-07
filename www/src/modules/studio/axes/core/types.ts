@@ -31,6 +31,9 @@ export type Follow =
       id: "same" | `same-${string}`
       from: string
       map?: Readonly<Record<string, unknown>>
+      /** A family's own copy of the source: the source's row reads Custom
+       *  while it differs, and editing the source resets it. */
+      scoped?: true
     }
   /** Picked from the source's effective value; total over its domain. A tuple
    *  `from` keys the table by joined values ("ledge|as-style"). */

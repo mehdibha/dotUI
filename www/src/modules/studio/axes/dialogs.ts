@@ -115,7 +115,7 @@ export function resolveDialogs(state: Effective): Resolved {
       },
       modal: {
         position: state.dialogPosition,
-        motion: state.motion === "none" ? "none" : state.dialogEntrance,
+        motion: state.dialogMotion === "none" ? "none" : state.dialogEntrance,
         mobile: state.mobileDialogs,
       },
       drawer: { edge: state.drawerEdge },
@@ -129,6 +129,14 @@ export const chapter = defineChapter({
   schema: DIALOG_SCHEMA,
   resolve: resolveDialogs,
   rules: [
+    {
+      // Motion hosts the entrance row too: a pin explains it there.
+      id: "dialogs/none-pins-entrance",
+      target: "dialogEntrance",
+      when: { key: "dialogMotion", in: ["none"] },
+      effect: { kind: "pin", value: "scale" },
+      cause: "dialogMotion",
+    },
     {
       id: "dialogs/frost-only-frosted",
       target: "dialogFrost",

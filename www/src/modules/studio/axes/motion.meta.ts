@@ -1,5 +1,6 @@
 import { options } from "./core/meta"
-import { ENTRANCE_VALUES, MOTION_VALUES } from "./motion"
+import type { Option } from "./core/meta"
+import { ENTRANCE_VALUES, FAMILY_MOTION_KEYS, MOTION_VALUES } from "./motion"
 
 export const MOTION_OPTIONS = options(MOTION_VALUES, {
   none: { label: "None", credits: ["Ant Design"] },
@@ -14,7 +15,14 @@ export const ENTRANCE_OPTIONS = options(ENTRANCE_VALUES, {
   fade: { label: "Fade", credits: ["Primer"] },
 })
 
+/** A family's own Motion row: the global one first, then its options. */
+export const FAMILY_MOTION_OPTIONS: Option[] = [
+  { value: "same", label: "Same as Motion" },
+  ...MOTION_OPTIONS,
+]
+
 export const OPTIONS = {
   motion: MOTION_OPTIONS,
   motionEntrance: ENTRANCE_OPTIONS,
+  ...Object.fromEntries(FAMILY_MOTION_KEYS.map((key) => [key, MOTION_OPTIONS])),
 }

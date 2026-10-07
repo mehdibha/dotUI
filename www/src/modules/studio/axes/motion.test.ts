@@ -12,6 +12,7 @@ import type { StudioState } from "."
 import { designSystemOf } from "../resolve"
 import {
   bezierCss,
+  FAMILY_MOTION_KEYS,
   legTiming,
   motionVars,
   springProgress,
@@ -19,8 +20,9 @@ import {
 } from "./motion"
 import { MOTION_OPTIONS } from "./motion.meta"
 
-const MOTION_VAR =
-  /^--studio-.+-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
+const MOTION_SUFFIX =
+  /-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
+const MOTION_VAR = new RegExp(`^--studio-.+${MOTION_SUFFIX.source}`)
 
 describe("timing", () => {
   test("beziers print as CSS, the linear one by keyword", () => {
@@ -47,7 +49,7 @@ describe("timing", () => {
 
 describe("role tables", () => {
   test("styles.css declares Standard, and every timing var is a member's", () => {
-    const standard = motionVars(tableOf("standard"))
+    const standard = motionVars(() => tableOf("standard"))
     const declared = Object.fromEntries(
       Object.entries(STYLE_VAR_DEFAULTS).filter(([name]) =>
         MOTION_VAR.test(name),
@@ -57,15 +59,16 @@ describe("role tables", () => {
   })
 
   test("every option times every member", () => {
-    const names = Object.keys(motionVars(tableOf("standard"))).sort()
+    const names = Object.keys(motionVars(() => tableOf("standard"))).sort()
     for (const { value } of MOTION_OPTIONS)
-      expect(Object.keys(motionVars(tableOf(value))).sort(), value).toEqual(
-        names,
-      )
+      expect(
+        Object.keys(motionVars(() => tableOf(value))).sort(),
+        value,
+      ).toEqual(names)
   })
 
   test("None is instant everywhere", () => {
-    const durations = Object.entries(motionVars(tableOf("none"))).filter(
+    const durations = Object.entries(motionVars(() => tableOf("none"))).filter(
       ([name]) => name.endsWith("duration"),
     )
     expect(durations.length).toBeGreaterThan(0)
@@ -120,7 +123,7 @@ describe("resolve", () => {
     }
   })
 
-  test("None stops every pattern and hides the entrance row", () => {
+  test("None stops every pattern and pins the entrance rows", () => {
     const state = parseState({
       motion: "none",
       motionEntrance: "fade",
@@ -131,7 +134,99 @@ describe("resolve", () => {
       expect(componentParams[name], name).toMatchObject({ motion: "none" })
     for (const name of ["accordion", "collapsible"])
       expect(componentParams[name], name).toMatchObject({ motion: "none" })
-    expect(effective(state).explain.motionEntrance?.lock?.kind).toBe("hide")
+    const { explain } = effective(state)
+    expect(explain.motionEntrance?.lock).toMatchObject({
+      kind: "pin",
+      cause: "menuMotion",
+    })
+    expect(explain.dialogEntrance?.lock).toMatchObject({
+      kind: "pin",
+      cause: "dialogMotion",
+    })
+  })
+})
+
+describe("per-family motion", () => {
+  // Members with their own vars; radio, toggle-button, token-field and collapsible ride a sibling's.
+  const TIMED: Record<string, string[]> = {
+    buttonMotion: ["button", "segmented-control"],
+    inputMotion: ["input"],
+    selectionMotion: ["checkbox", "slider", "switch"],
+    menuMotion: ["popover", "tooltip"],
+    dialogMotion: ["drawer", "modal"],
+    navMotion: ["breadcrumbs", "link", "sidebar", "tabs"],
+    displayMotion: ["accordion", "table"],
+    dateMotion: ["calendar", "time-picker"],
+    feedbackMotion: ["progress", "tag", "toast", "toast-swipe"],
+  }
+  const STOPPED: Record<string, string[]> = {
+    menuMotion: ["popover", "tooltip"],
+    dialogMotion: ["modal"],
+    displayMotion: ["accordion", "collapsible"],
+    feedbackMotion: ["toast"],
+  }
+  const members = (tokens: Record<string, string>) =>
+    [
+      ...new Set(
+        Object.keys(tokens).map((name) =>
+          name.replace(/^--studio-/, "").replace(MOTION_SUFFIX, ""),
+        ),
+      ),
+    ].sort()
+  const origin = designSystemOf(DEFAULT_STATE).componentParams
+
+  test("covers every family key", () => {
+    expect(Object.keys(TIMED).sort()).toEqual([...FAMILY_MOTION_KEYS].sort())
+  })
+
+  test("a family's own Motion times and stops only its members", () => {
+    for (const key of FAMILY_MOTION_KEYS) {
+      const { tokens, componentParams } = designSystemOf(
+        parseState({ [key]: "none" }),
+      )
+      expect(members(tokens), key).toEqual(TIMED[key])
+      const stopped = Object.keys(componentParams).filter(
+        (name) => componentParams[name] !== origin[name],
+      )
+      expect(stopped.sort(), key).toEqual(STOPPED[key] ?? [])
+      for (const name of stopped)
+        expect(componentParams[name], `${key}: ${name}`).toMatchObject({
+          motion: "none",
+        })
+    }
+  })
+
+  test("a family kept on Standard sits out a global change", () => {
+    const { tokens, componentParams } = designSystemOf(
+      parseState({ motion: "none", menuMotion: "standard" }),
+    )
+    expect(members(tokens)).not.toContain("popover")
+    expect(members(tokens)).toContain("button")
+    expect(componentParams.popover).toBe(origin.popover)
+    expect(componentParams.modal).toMatchObject({ motion: "none" })
+  })
+
+  test("members outside every family ride the global Motion", () => {
+    const pinned = Object.fromEntries(
+      FAMILY_MOTION_KEYS.map((key) => [key, "standard"]),
+    )
+    const { tokens } = designSystemOf(parseState({ motion: "none", ...pinned }))
+    expect(members(tokens)).toEqual([
+      "color-swatch-picker",
+      "message-scroller",
+      "questionnaire",
+    ])
+  })
+
+  test("Same as Motion ships what picking the global's value ships", () => {
+    for (const motion of ["none", "smooth", "expressive"]) {
+      const own = Object.fromEntries(
+        FAMILY_MOTION_KEYS.map((key) => [key, motion]),
+      )
+      expect(designSystemOf(parseState({ motion, ...own })), motion).toEqual(
+        designSystemOf(parseState({ motion })),
+      )
+    }
   })
 })
 
@@ -233,7 +328,7 @@ describe("shipped motion", () => {
   })
 
   test("Expressive overshoots what glides, never a color", async () => {
-    const vars = motionVars(tableOf("expressive"))
+    const vars = motionVars(() => tableOf("expressive"))
     const peak = (ease = "") =>
       Math.max(...(ease.match(/\d\.\d+(?= )/g) ?? ["0"]).map(Number))
     for (const id of ["switch", "segmented-control", "tabs"]) {
