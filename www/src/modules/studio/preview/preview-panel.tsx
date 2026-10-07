@@ -40,6 +40,7 @@ import { componentsData } from "@/modules/docs/components-list/components-data"
 import { usePreviewFocus } from "@/modules/studio/focus"
 import {
   BOARD_SLUG_PREFIX,
+  NO_INSET,
   pingIframe,
   sendInspectorMode,
   sendPreviewFocus,
@@ -49,7 +50,7 @@ import {
   sendToIframe,
   useInspectorExitMessages,
 } from "@/modules/studio/preset"
-import type { PreviewMode } from "@/modules/studio/preset"
+import type { PreviewFocusMessage, PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { useDocked } from "@/modules/studio/rows"
 import { CHAPTERS } from "@/modules/studio/state"
@@ -95,9 +96,35 @@ const BOARD_TITLES = new Map(
 
 /** The picker's first item: the preview shows what the panel is editing. */
 const FOLLOW = "follow-panel"
-/** How long a released focus keeps its board, so moving between popovers
- *  never flashes the user's preview. */
+// A board outlives its focus so hopping between popovers never flashes the user's preview.
 const FOCUS_RELEASE_MS = 200
+// Panel popovers are modal: a click dismisses one, a second opens the next.
+const CLICK_RELEASE_MS = 800
+
+/** Preview px the open panel popovers cover; null before one mounts. */
+function insetOf(iframe: HTMLIFrameElement, docked: boolean) {
+  const popovers = document.querySelectorAll("[data-panel-popover]")
+  if (!popovers.length) return null
+  const frame = iframe.getBoundingClientRect()
+  // Screen px to preview px, whatever the zoom.
+  const scale = (iframe.contentWindow?.innerWidth ?? frame.width) / frame.width
+  const inset = { left: 0, bottom: 0 }
+  for (const popover of popovers) {
+    const rect = popover.getBoundingClientRect()
+    const overlaps =
+      rect.right > frame.left &&
+      rect.left < frame.right &&
+      rect.bottom > frame.top &&
+      rect.top < frame.bottom
+    if (!overlaps) continue
+    if (docked) inset.bottom = Math.max(inset.bottom, frame.bottom - rect.top)
+    else inset.left = Math.max(inset.left, rect.right - frame.left)
+  }
+  return {
+    left: Math.round(Math.min(inset.left, frame.width) * scale),
+    bottom: Math.round(Math.min(inset.bottom, frame.height) * scale),
+  }
+}
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -189,9 +216,30 @@ export function PreviewPanel({ className }: { className?: string }) {
   const [following, setFollowing] = useState(true)
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<string | null>(null)
+  const lastPress = useRef(-Infinity)
+  useEffect(() => {
+    // A press that dismisses a popover; by rect, as the underlay covers the preview.
+    const onPress = ({ clientX: x, clientY: y }: PointerEvent) => {
+      if (!document.querySelector("[data-panel-popover]")) return
+      const rect = panelRef.current?.getBoundingClientRect()
+      const inPreview =
+        rect &&
+        x >= rect.left &&
+        x <= rect.right &&
+        y >= rect.top &&
+        y <= rect.bottom
+      if (!inPreview) lastPress.current = performance.now()
+    }
+    document.addEventListener("pointerdown", onPress, true)
+    return () => document.removeEventListener("pointerdown", onPress, true)
+  }, [])
   useEffect(() => {
     if (target || !following) return setBoard(target)
-    const timer = setTimeout(() => setBoard(null), FOCUS_RELEASE_MS)
+    const clicked = performance.now() - lastPress.current < CLICK_RELEASE_MS
+    const timer = setTimeout(
+      () => setBoard(null),
+      clicked ? CLICK_RELEASE_MS : FOCUS_RELEASE_MS,
+    )
     return () => clearTimeout(timer)
   }, [target, following])
 
@@ -311,28 +359,44 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
-  // Docked, panel popovers cover the dock, never the preview.
   const sentFocus = following ? focus : null
   useEffect(() => {
     const iframe = iframeRef.current
     if (!iframe) return
-    const send = () =>
-      sendPreviewFocus(iframe, {
-        member: sentFocus?.member,
-        axis: sentFocus?.axis,
-        popover: !!sentFocus?.popover && !docked,
-      })
-    if (iframe.contentWindow) send()
+    let message: PreviewFocusMessage = {
+      member: sentFocus?.member,
+      axis: sentFocus?.axis,
+      popover: !!sentFocus?.popover,
+      inset: NO_INSET,
+    }
+    const send = () => sendPreviewFocus(iframe, message)
+    // A popover can mount late (lazy content) and react-aria re-places it: send once it settles.
+    let frame = 0
+    let tries = 0
+    let last = ""
+    const measure = () => {
+      const inset = sentFocus?.popover ? insetOf(iframe, docked) : NO_INSET
+      const key = JSON.stringify(inset)
+      const settled = inset !== null && key === last
+      last = key
+      if (settled || ++tries > 60) {
+        message = { ...message, inset: inset ?? NO_INSET }
+        return send()
+      }
+      frame = requestAnimationFrame(measure)
+    }
+    frame = requestAnimationFrame(measure)
     iframe.addEventListener("load", send)
     const onReady = (event: MessageEvent) => {
       if (event.data?.type === "preview-ready") send()
     }
     window.addEventListener("message", onReady)
     return () => {
+      cancelAnimationFrame(frame)
       iframe.removeEventListener("load", send)
       window.removeEventListener("message", onReady)
     }
-  }, [sentFocus, docked])
+  }, [sentFocus, docked, zoom, size])
 
   // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
   // display mode, so it survives preview switches (the iframe remounts per preview).

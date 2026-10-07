@@ -10,13 +10,12 @@ import {
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
-  usePreviewFocusMessages,
   usePreviewNavigationMessages,
 } from "@/modules/studio/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
-import { BoardFocusContext } from "@/modules/studio/preview/boards/board"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import { designSystemOf, internDesignSystem } from "@/modules/studio/resolve"
@@ -97,8 +96,6 @@ export function PreviewPage() {
     }, []),
   })
 
-  const focus = usePreviewFocusMessages()
-
   // The route loader resolved the example chunk before this render, so this
   // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
@@ -135,9 +132,7 @@ export function PreviewPage() {
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}
       <ToastProvider />
-      <BoardFocusContext.Provider value={focus}>
-        {content}
-      </BoardFocusContext.Provider>
+      <BoardFocusProvider>{content}</BoardFocusProvider>
     </DesignSystemProvider>
   )
 }

@@ -1,29 +1,42 @@
 "use client"
 
-/* A board: what the preview shows while the panel works on a chapter or a
-   family — one section per member or row group, the focused one scrolled to. */
+// What the preview shows while the panel edits a chapter or family: one section per member.
 
 import { createContext, useContext, useEffect, useRef } from "react"
 
 import { cn } from "@/registry/lib/utils"
+import {
+  NO_INSET,
+  usePreviewFocusMessages,
+} from "@/modules/studio/preset/iframe-sync"
+import type { PreviewFocusMessage } from "@/modules/studio/preset/iframe-sync"
 
 import { BoardsIndex } from "."
 
-export interface BoardFocus {
-  member?: string
-  axis?: string
-  /** A panel popover covers the preview's left edge. */
-  popover: boolean
-}
+const BoardFocusContext = createContext<PreviewFocusMessage>({
+  popover: false,
+  inset: NO_INSET,
+})
 
-export const BoardFocusContext = createContext<BoardFocus>({ popover: false })
+// Its own component, so a focus message re-renders only the boards reading it.
+export function BoardFocusProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
+      {children}
+    </BoardFocusContext.Provider>
+  )
+}
 
 /** The panel's focus: which member and key it is editing. */
 export const useBoardFocus = () => useContext(BoardFocusContext)
 
 const RING_MS = 1200
 
-function focusedSection(root: Element, { member, axis }: BoardFocus) {
+function focusedSection(root: Element, member?: string, axis?: string) {
   const of = member && `[data-board-member="${CSS.escape(member)}"]`
   const holds = axis && `[data-board-axes~="${CSS.escape(axis)}"]`
   const selectors = [of && holds && of + holds, holds, of].filter(Boolean)
@@ -43,11 +56,11 @@ export function Board({
   className?: string
   children: React.ReactNode
 }) {
-  const focus = useBoardFocus()
+  const { member, axis, inset } = useBoardFocus()
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const section = ref.current && focusedSection(ref.current, focus)
+    const section = ref.current && focusedSection(ref.current, member, axis)
     if (!section) return
     section.scrollIntoView({ behavior: "smooth", block: "center" })
     section.dataset.focused = ""
@@ -56,15 +69,19 @@ export function Board({
       clearTimeout(timer)
       delete section.dataset.focused
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focus.member, focus.axis])
+  }, [member, axis])
 
   return (
-    // Padded clear of the panel popover over the preview's left edge.
     <div
       ref={ref}
       data-board=""
-      className={focus.popover ? "pl-68" : undefined}
+      style={
+        {
+          paddingLeft: inset.left,
+          paddingBottom: inset.bottom,
+          "--board-inset-bottom": `${inset.bottom}px`,
+        } as React.CSSProperties
+      }
     >
       <div
         className={cn(
@@ -81,8 +98,7 @@ export function Board({
   )
 }
 
-/** One member (or row group): `member` is the panel's member id, `axes` the
- *  keys whose rows land here. */
+/** `member`: the panel's member id or row group; `axes`: the keys whose rows land here. */
 export function BoardSection({
   member,
   axes = [],
@@ -101,7 +117,8 @@ export function BoardSection({
       data-board-member={member}
       data-board-axes={axes.join(" ")}
       aria-label={title}
-      className="group/section flex min-w-0 scroll-my-6 flex-col gap-3"
+      // Centred in what the docked popover leaves visible.
+      className="group/section flex min-w-0 scroll-mt-6 scroll-mb-[calc(--spacing(6)+var(--board-inset-bottom,0px))] flex-col gap-3"
     >
       <h2 className="text-xs font-medium text-fg-muted">{title}</h2>
       <div
@@ -145,9 +162,7 @@ const STATE_LABEL: Record<StateName, string> = {
   invalid: "Invalid",
 }
 
-/** The attributes react-aria sets in a state, so registry classes
- *  (`hover:` = `[data-rac][data-hovered]`) style a plain element as if live.
- *  Pressed implies hover, as it does under a pointer. */
+/** react-aria's state attributes, so registry classes style a plain element as if live. */
 export function stateProps(...states: StateName[]) {
   const props: Record<string, string> = { "data-rac": "" }
   for (const state of states) {
@@ -159,8 +174,7 @@ export function stateProps(...states: StateName[]) {
   return props
 }
 
-/** One specimen per state, side by side and frozen: `children` renders the
- *  specimen from the state's attributes (spread them on the styled element). */
+/** Frozen specimens side by side: spread `children`'s props on the styled element. */
 export function StateRow({
   states = ["rest", "hover", "pressed", "focus", "disabled"],
   children,

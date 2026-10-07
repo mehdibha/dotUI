@@ -141,6 +141,7 @@ export function PanelPopover({
   usePopoverFocus()
   return (
     <Popover
+      data-panel-popover=""
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}

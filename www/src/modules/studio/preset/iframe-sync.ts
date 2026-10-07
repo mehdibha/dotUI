@@ -15,9 +15,13 @@ export const BOARD_SLUG_PREFIX = "board-"
 export interface PreviewFocusMessage {
   member?: string
   axis?: string
-  /** A panel popover covers the preview's left edge. */
+  /** A panel popover is open. */
   popover: boolean
+  /** Preview px the open popovers cover, from the left (beside the panel) or the bottom (docked). */
+  inset: { left: number; bottom: number }
 }
+
+export const NO_INSET = { left: 0, bottom: 0 }
 
 type ParentToIframeMessage =
   | { type: "design-system"; data: DesignSystem }
@@ -184,18 +188,21 @@ export function usePreviewNavigationMessages(handlers: {
 export function usePreviewFocusMessages(): PreviewFocusMessage {
   const [focus, setFocus] = React.useState<PreviewFocusMessage>({
     popover: false,
+    inset: NO_INSET,
   })
   React.useEffect(() => {
     if (!isInIframe()) return
     const handleMessage = (event: MessageEvent) => {
       const data = event.data
       if (data?.type !== "preview-focus") return
+      const next: PreviewFocusMessage = {
+        member: data.member,
+        axis: data.axis,
+        popover: !!data.popover,
+        inset: data.inset ?? NO_INSET,
+      }
       setFocus((prev) =>
-        prev.member === data.member &&
-        prev.axis === data.axis &&
-        prev.popover === data.popover
-          ? prev
-          : { member: data.member, axis: data.axis, popover: !!data.popover },
+        JSON.stringify(prev) === JSON.stringify(next) ? prev : next,
       )
     }
     window.addEventListener("message", handleMessage)
