@@ -23,6 +23,7 @@ export const COLOR_DEFAULTS = {
   vividness: 1,
   neutralTint: 1,
   preserveSeed: false,
+  solidInk: "auto",
   /** Page L* per mode; dark 2 is dotUI's (the engine would pick 6). Light
    *  is Auto: Surfaces' Grouped takes it down to gray. */
   lightBg: "auto" as number | "auto",
@@ -34,6 +35,10 @@ export const COLOR_DEFAULTS = {
 /* What a role draws from: the neutral's text end (the shadcn school,
    black/white) or the brand ramp (Material, Linear, Radix Themes). */
 export const SOURCE_VALUES = ["neutral", "accent"] as const
+
+/* The label on a kept-exact brand solid in light: solved for contrast, or
+   white whatever it costs (Duolingo's #58cc02, 2.09:1). */
+export const SOLID_INK_VALUES = ["auto", "white"] as const
 
 /* How far a control's edge (fields, unchecked checks, outline buttons) sits
    from the surface hairline. */
@@ -84,6 +89,7 @@ export const COLOR_SCHEMA: ChapterSchema<typeof COLOR_DEFAULTS> = {
   vividness: range(VIVIDNESS_RANGE),
   neutralTint: range(NEUTRAL_TINT_RANGE),
   preserveSeed: BOOLEAN,
+  solidInk: oneOf(SOLID_INK_VALUES),
   lightBg: range(LIGHT_BG_RANGE),
   darkBg: range(DARK_BG_RANGE),
   controlEdge: oneOf(CONTROL_EDGE_VALUES),
@@ -176,6 +182,7 @@ export function buildColorConfig(state: Effective): ColorConfig {
     neutralTint: state.neutralTint === 1 ? undefined : state.neutralTint,
     neutralHue: state.neutralHue ?? undefined,
     preserveSeed: state.preserveSeed || undefined,
+    solidInk: state.solidInk === "white" ? ("white" as const) : undefined,
     primary: state.buttonColor === "accent" ? "accent" : undefined,
     selection:
       state.selectionColor === state.buttonColor
@@ -211,6 +218,15 @@ export const chapter = defineChapter({
     ],
   },
   rules: [
+    {
+      // The engine fits a loose seed so its label clears; only a kept-exact
+      // solid has a label to override.
+      id: "color/white-ink-needs-exact",
+      target: "solidInk",
+      when: { key: "preserveSeed", in: [false] },
+      effect: { kind: "hide" },
+      cause: "preserveSeed",
+    },
     {
       // Flat white cards with no edge vanish on a near-white page.
       id: "color/grouped-page",

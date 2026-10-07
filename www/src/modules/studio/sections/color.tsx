@@ -20,11 +20,16 @@ import {
   COLOR_DEFAULTS,
   VIVIDNESS_RANGE,
 } from "../axes/color"
-import { CONTROL_EDGE_OPTIONS, SELECTED_WASH_OPTIONS } from "../axes/color.meta"
+import {
+  CONTROL_EDGE_OPTIONS,
+  SELECTED_WASH_OPTIONS,
+  SOLID_INK_OPTIONS,
+} from "../axes/color.meta"
 import {
   DialColor,
   DialGap,
   DialPopover,
+  DialSegmented,
   DialSelect,
   DialSlider,
   DialToggle,
@@ -89,6 +94,11 @@ export function ColorPrimary({ studio }: { studio: Studio }) {
               label="Keep exact"
               value={state.preserveSeed}
               onChange={set("preserveSeed")}
+            />
+            <DialSegmented
+              axis="solidInk"
+              label="Ink"
+              options={SOLID_INK_OPTIONS}
             />
             <DialSlider
               label="Vividness"

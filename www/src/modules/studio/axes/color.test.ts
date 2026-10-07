@@ -70,6 +70,22 @@ describe("color axis", () => {
     ).toEqual({ light: 97, dark: "oled" })
   })
 
+  it("White ink reaches the engine only on a kept-exact brand", () => {
+    const owl = { brand: "#58cc02", solidInk: "white" }
+    const white = (state: Partial<typeof DEFAULTS>) => {
+      const theme = resolveColorConfig(designSystemOf(parseState(state)).color!)
+      return toOklch(theme.light.on.accent!["700"]).l > 0.999
+    }
+    expect(designSystemOf(parseState(owl)).color?.solidInk).toBeUndefined()
+    expect(white(owl)).toBe(false)
+    expect(
+      designSystemOf(parseState({ ...owl, preserveSeed: true })).color
+        ?.solidInk,
+    ).toBe("white")
+    expect(white({ ...owl, preserveSeed: true })).toBe(true)
+    expect(white({ ...owl, preserveSeed: true, solidInk: "auto" })).toBe(false)
+  })
+
   it("keeps a neutral primary off the accent default", () => {
     const { color } = designSystemOf(
       parseState(withSource(SOLID_LEAVES, "neutral")),
