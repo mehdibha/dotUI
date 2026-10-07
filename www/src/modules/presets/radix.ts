@@ -77,6 +77,8 @@ export const radix = definePreset({
     // A plain 40% black scrim, no blur; a 5px rise with a .97 scale.
     dialogBackdrop: "scrim",
     dialogEntrance: "rise",
+    // No built-in X; Faint is the quietest close.
+    dialogClose: "faint",
 
     // Navigation
     // A full-width 2px indigo line; labels 400 → 500 when active.
