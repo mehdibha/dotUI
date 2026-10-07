@@ -1,7 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { listenDesignSystemMessages } from "./iframe-sync"
-import type { ApplyDesignSystem, DesignSystemMessage } from "./iframe-sync"
+import { createApplier, listenDesignSystemMessages } from "./iframe-sync"
+import type {
+  AppliedDesignSystem,
+  ApplyDesignSystem,
+  DesignSystemMessage,
+} from "./iframe-sync"
 import type { DesignSystem } from "./types"
 
 const { lanes } = vi.hoisted(() => ({ lanes: [] as string[] }))
@@ -93,6 +97,20 @@ function deferred() {
     held.set(radius, () => ready(`prepared ${radius}`))
   }
   return { prepare, resolve: (radius: string) => held.get(radius)!() }
+}
+
+/** A preview whose renders commit only when the test says so. */
+function preview() {
+  const renders: AppliedDesignSystem<unknown>[] = []
+  const { apply, rendered } = createApplier<unknown>(
+    { designSystem: system("0px"), prepared: null },
+    (next) => void renders.push(next),
+  )
+  const commit = () => {
+    const next = renders.shift()
+    if (next) rendered(next)
+  }
+  return { apply, renders, commit }
 }
 
 const applied = (apply: { mock: { calls: unknown[][] } }) =>
@@ -262,6 +280,36 @@ describe("listenDesignSystemMessages", () => {
     vi.advanceTimersByTime(16 + 500)
     expect(attributes.has("data-studio-live")).toBe(true)
     commit()
+    vi.advanceTimersByTime(16)
+    expect(attributes.has("data-studio-live")).toBe(false)
+  })
+
+  it("keeps transitions off until a stalled render lands, even when the commit changes nothing", () => {
+    const { apply, renders, commit } = preview()
+    listenDesignSystemMessages((_, ready) => ready(null), apply)
+    post("1px")
+    vi.advanceTimersByTime(16 + 200)
+    post("1px", { live: false })
+    vi.advanceTimersByTime(16 + 100)
+    expect(renders).toHaveLength(2)
+    expect(attributes.has("data-studio-live")).toBe(true)
+    commit()
+    vi.advanceTimersByTime(16)
+    expect(attributes.has("data-studio-live")).toBe(true)
+    commit()
+    vi.advanceTimersByTime(16)
+    expect(attributes.has("data-studio-live")).toBe(false)
+  })
+
+  it("skips the render when the screen already shows the design system", () => {
+    const { apply, renders, commit } = preview()
+    listenDesignSystemMessages((_, ready) => ready(null), apply)
+    post("1px")
+    vi.advanceTimersByTime(16)
+    commit()
+    post("1px", { live: false })
+    vi.advanceTimersByTime(16)
+    expect(renders).toHaveLength(0)
     vi.advanceTimersByTime(16)
     expect(attributes.has("data-studio-live")).toBe(false)
   })

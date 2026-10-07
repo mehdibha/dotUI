@@ -13,7 +13,6 @@ export {
   sendPreviewWarm,
   sendToIframe,
   useAnnouncePreviewReady,
-  useDesignSystemMessages,
   useInspectMessages,
   useInspectorExitMessages,
   useInspectorModeMessages,

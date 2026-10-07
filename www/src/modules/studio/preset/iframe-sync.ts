@@ -3,6 +3,7 @@
 import * as React from "react"
 import { flushSync } from "react-dom"
 
+import { shareDesignSystem } from "./share-design-system"
 import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
@@ -170,7 +171,7 @@ export type PrepareDesignSystem<T> = (
 ) => void
 
 /** Renders `data`, then calls `committed` from the commit (at once if
- *  nothing changes). */
+ *  the screen already shows it). */
 export type ApplyDesignSystem<T> = (
   data: DesignSystem,
   prepared: T,
@@ -284,7 +285,7 @@ export function listenDesignSystemMessages<T>(
 }
 
 /** Inside the preview iframe: see `listenDesignSystemMessages`. */
-export function useDesignSystemMessages<T>(
+function useDesignSystemMessages<T>(
   prepare: PrepareDesignSystem<T>,
   apply: ApplyDesignSystem<T>,
 ) {
@@ -302,6 +303,54 @@ export function useDesignSystemMessages<T>(
         handlers.current.apply(data, prepared, committed),
     )
   }, [])
+}
+
+export interface AppliedDesignSystem<T> {
+  designSystem: DesignSystem
+  prepared: T
+  committed?: () => void
+}
+
+/** `apply` hands `render` the newest design system, reusing what it
+ *  shares with the last; `rendered` reports each commit. */
+export function createApplier<T>(
+  initial: AppliedDesignSystem<T>,
+  render: (next: AppliedDesignSystem<T>) => void,
+) {
+  let target = initial
+  let onScreen = initial
+  const apply: ApplyDesignSystem<T> = (data, prepared, committed) => {
+    const designSystem = shareDesignSystem(target.designSystem, data)
+    // Nothing to render, unless a stalled render is still on its way.
+    if (
+      target === onScreen &&
+      designSystem === target.designSystem &&
+      prepared === target.prepared
+    )
+      return committed()
+    target = { designSystem, prepared, committed }
+    render(target)
+  }
+  const rendered = (applied: AppliedDesignSystem<T>) => {
+    onScreen = applied
+    applied.committed?.()
+  }
+  return { apply, rendered }
+}
+
+/** Inside the preview iframe: the design system to render, following the
+ *  studio's messages. */
+export function useAppliedDesignSystem<T>(
+  prepare: PrepareDesignSystem<T>,
+  initial: () => AppliedDesignSystem<T>,
+) {
+  const [applied, setApplied] = React.useState(initial)
+  const [{ apply, rendered }] = React.useState(() =>
+    createApplier(applied, setApplied),
+  )
+  React.useLayoutEffect(() => rendered(applied), [rendered, applied])
+  useDesignSystemMessages(prepare, apply)
+  return applied
 }
 
 /** Inside the preview iframe: start loading what the parent is about to

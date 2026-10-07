@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { loadFontFaces } from "@/lib/fonts"
@@ -14,7 +14,7 @@ import {
 } from "@/modules/studio/__generated__/examples"
 import {
   useAnnouncePreviewReady,
-  useDesignSystemMessages,
+  useAppliedDesignSystem,
   usePreviewNavigationMessages,
   usePreviewWarmMessages,
 } from "@/modules/studio/preset/iframe-sync"
@@ -22,8 +22,6 @@ import type {
   PrepareDesignSystem,
   PreviewAssets,
 } from "@/modules/studio/preset/iframe-sync"
-import { shareDesignSystem } from "@/modules/studio/preset/share-design-system"
-import type { DesignSystem } from "@/modules/studio/preset/types"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
@@ -110,18 +108,16 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
-  const [applied, setApplied] = useState(() => {
-    const initial = resolveDesignSystem(getCurrent().state)
-    return {
-      designSystem: initial,
-      themeCss: initial.color && themeCssNow(initial.color),
-      committed: undefined as (() => void) | undefined,
-    }
-  })
-  const { designSystem, themeCss } = applied
-  // What the latest apply renders toward.
-  const target = useRef(applied)
-  useLayoutEffect(() => applied.committed?.(), [applied])
+  const { designSystem, prepared: themeCss } = useAppliedDesignSystem(
+    prepareThemeCss,
+    () => {
+      const initial = resolveDesignSystem(getCurrent().state)
+      return {
+        designSystem: initial,
+        prepared: initial.color && themeCssNow(initial.color),
+      }
+    },
+  )
 
   const navigate = route.useNavigate()
 
@@ -137,21 +133,6 @@ export function PreviewPage() {
           return next.length === prev.length ? prev : next
         })
     }, []),
-  )
-
-  useDesignSystemMessages(
-    prepareThemeCss,
-    useCallback(
-      (next: DesignSystem, css: string | undefined, committed: () => void) => {
-        const prev = target.current
-        const shared = shareDesignSystem(prev.designSystem, next)
-        if (shared === prev.designSystem && css === prev.themeCss)
-          return committed()
-        target.current = { designSystem: shared, themeCss: css, committed }
-        setApplied(target.current)
-      },
-      [],
-    ),
   )
 
   // The parent switches previews by navigating this document's own router — the
