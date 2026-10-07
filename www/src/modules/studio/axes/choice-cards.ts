@@ -1,9 +1,11 @@
 /* Choice cards — the card mode of checkbox, radio-group and switch: one
    `card-selected` param written to all three (the recipe's single source is
-   CHOICE_CARD in the checkbox styles). Every value paints with the selection
-   tokens; Accent re-declares them on the card as a `choice-card` recipe
-   scope, so the check inside follows. Where the control sits is markup, not
-   an axis. */
+   CHOICE_CARD in the checkbox styles). Every card paints with the selection
+   tokens; where a control's own fill differs from the card's, the card
+   re-declares them as a `choice-card` recipe scope, so the control inside
+   follows. Where the control sits is markup, not an axis. */
+
+import type { PrimaryColorSource } from "@/registry/theme"
 
 import { SOURCE_VALUES } from "./color"
 import { defineChapter } from "./core/types"
@@ -13,7 +15,8 @@ import type { ChapterSchema } from "./schema"
 
 export const CHOICE_CARD_DEFAULTS = {
   cardSelected: "tint",
-  cardColor: "same" as "same" | "neutral" | "accent",
+  // Same as checks (Supabase's neutral radio cards beside a brand radio).
+  cardColor: "same" as "same" | PrimaryColorSource,
 }
 
 /* Tint: a soft edge on a tinted surface (shadcn). Edged tint: a 1px
@@ -29,13 +32,13 @@ export const CHOICE_CARD_SCHEMA: ChapterSchema<typeof CHOICE_CARD_DEFAULTS> = {
 
 export function resolveChoiceCards(state: Effective): Resolved {
   const card = { "card-selected": state.cardSelected }
+  const fill = state.cardColor
+  const fills = [state.checkboxColor, state.radioColor, state.switchColor]
   return {
     params: { checkbox: card, "radio-group": card, switch: card },
-    // Accent cards beside neutral checks (Geist); else each control's own fill.
-    color:
-      state.cardColor === "accent" && state.checkboxColor !== "accent"
-        ? { scopes: { "choice-card": "accent" } }
-        : undefined,
+    color: fills.every((own) => own === fill)
+      ? undefined
+      : { scopes: { "choice-card": fill } },
   }
 }
 

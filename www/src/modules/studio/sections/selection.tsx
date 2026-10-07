@@ -14,7 +14,6 @@ import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import { effective as resolve } from "../axes"
 import { cornerTokens, edgeTokens } from "../axes/checkbox"
 import { CORNER_OPTIONS, EDGE_OPTIONS } from "../axes/checkbox.meta"
-import { resolveChoiceCards } from "../axes/choice-cards"
 import { CARD_COLOR_ROW, SELECTED_OPTIONS } from "../axes/choice-cards.meta"
 import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
@@ -208,7 +207,7 @@ export function SelectionSection({ studio }: { studio: Studio }) {
   // A thumb's specimen rides the track it would resolve to.
   const trackFor = (thumb: string) =>
     resolve({ ...state, sliderThumb: thumb }).values.sliderTrack
-  const accentCards = Boolean(resolveChoiceCards(effective).color)
+  const accentCards = effective.cardColor === "accent"
   return (
     <>
       <FamilyHero>
