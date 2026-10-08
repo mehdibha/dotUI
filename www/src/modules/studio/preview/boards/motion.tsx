@@ -146,7 +146,7 @@ function usePresence(
   { open = 1800, closed = 1000 } = {},
 ) {
   const inView = useInView(ref)
-  const [phase, setPhase] = useState<Phase>("closed")
+  const [phase, setPhase] = useState<Phase>("open")
   const quick = useRef(false)
 
   useEffect(() => {
@@ -679,12 +679,9 @@ function Toasts() {
   const inView = useInView(ref)
   const replay = useReplay(AXES.toasts)
   const [manager] = useState(() => ToastPrimitive.createToastManager())
-  const replayed = useRef(replay)
 
   useEffect(() => {
     if (!inView || !frame) return
-    const now = replayed.current !== replay
-    replayed.current = replay
     let index = 0
     const closers = new Set<ReturnType<typeof setTimeout>>()
     // Its own dismissal: Base UI pauses timeouts while the iframe is blurred.
@@ -696,16 +693,9 @@ function Toasts() {
       }, TOAST_MS)
       closers.add(closer)
     }
-    let interval: ReturnType<typeof setInterval> | undefined
-    const start = setTimeout(
-      () => {
-        add()
-        interval = setInterval(add, TOAST_MS + 1200)
-      },
-      now ? 0 : 600,
-    )
+    add()
+    const interval = setInterval(add, TOAST_MS + 600)
     return () => {
-      clearTimeout(start)
       clearInterval(interval)
       for (const closer of closers) clearTimeout(closer)
       manager.close()
@@ -719,7 +709,7 @@ function Toasts() {
           ref={setFrame}
           className={cn(
             FRAME,
-            "h-40 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]",
+            "h-32 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]",
           )}
         >
           {frame && (

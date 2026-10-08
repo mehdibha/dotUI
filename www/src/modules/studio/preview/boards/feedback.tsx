@@ -349,18 +349,18 @@ function StaticToast({ type, title, text, action }: (typeof TOASTS)[number]) {
 }
 
 const TILES = [
-  "bg-primary",
+  "bg-accent-muted",
   "bg-muted",
-  "bg-accent",
-  "bg-success",
+  "bg-info-muted",
+  "bg-success-muted",
   "bg-muted",
-  "bg-warning",
-  "bg-info",
+  "bg-warning-muted",
+  "bg-accent-muted",
   "bg-muted",
-  "bg-danger",
-  "bg-accent",
+  "bg-danger-muted",
+  "bg-info-muted",
   "bg-muted",
-  "bg-primary",
+  "bg-success-muted",
 ]
 
 /** A gallery under the toasts, so glass has something to frost. */
@@ -373,7 +373,7 @@ function Backdrop() {
       {[...TILES, ...TILES].map((tone, index) => (
         <div
           key={index}
-          className={cn("rounded-(--studio-radius-item) opacity-25", tone)}
+          className={cn("rounded-(--studio-radius-item)", tone)}
         />
       ))}
     </div>
