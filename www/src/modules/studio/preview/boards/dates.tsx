@@ -50,16 +50,20 @@ function useDates() {
   }
 }
 
-function useWide() {
+/** Whether the element is at least `min` px wide; the board's popover inset narrows it, not the viewport. */
+function useWiderThan(min: number) {
+  const ref = useRef<HTMLDivElement>(null)
   const [wide, setWide] = useState(false)
   useEffect(() => {
-    const query = matchMedia("(width >= 48rem)")
-    const update = () => setWide(query.matches)
-    update()
-    query.addEventListener("change", update)
-    return () => query.removeEventListener("change", update)
-  }, [])
-  return wide
+    const element = ref.current
+    if (!element) return
+    const observer = new ResizeObserver(([entry]) =>
+      setWide(entry!.contentRect.width >= min),
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [min])
+  return [ref, wide] as const
 }
 
 /** Flips on a loop while `on`, so a state transition replays. */
@@ -153,20 +157,23 @@ function SingleCalendar() {
 
 function TripCalendar() {
   const { range } = useDates()
-  const months = useWide() ? 2 : 1
+  const [ref, wide] = useWiderThan(560)
+  const months = wide ? 2 : 1
   return (
-    <RangeCalendar
-      aria-label="Trip dates"
-      defaultValue={range}
-      visibleDuration={{ months }}
-    >
-      <CalendarHeader />
-      <div className="flex items-start gap-8">
-        {Array.from({ length: months }, (_, offset) => (
-          <CalendarGrid key={offset} offset={{ months: offset }} />
-        ))}
-      </div>
-    </RangeCalendar>
+    <div ref={ref} className="flex w-full justify-center">
+      <RangeCalendar
+        aria-label="Trip dates"
+        defaultValue={range}
+        visibleDuration={{ months }}
+      >
+        <CalendarHeader />
+        <div className="flex items-start gap-8">
+          {Array.from({ length: months }, (_, offset) => (
+            <CalendarGrid key={offset} offset={{ months: offset }} />
+          ))}
+        </div>
+      </RangeCalendar>
+    </div>
   )
 }
 
@@ -184,14 +191,29 @@ function OpenPanel({ children }: { children: React.ReactNode }) {
 }
 
 function Column({ children }: { children: React.ReactNode }) {
-  return <div className="flex min-w-0 flex-col gap-7">{children}</div>
+  return (
+    <div className="flex w-full max-w-xs min-w-0 flex-col gap-7">
+      {children}
+    </div>
+  )
+}
+
+/** Two columns once the section itself is wide enough, whatever the viewport. */
+function Columns({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="@container w-full max-w-2xl">
+      <div className="grid grid-cols-1 items-start gap-x-12 gap-y-7 @xl:grid-cols-2">
+        {children}
+      </div>
+    </div>
+  )
 }
 
 function Pickers() {
   const { selected, range } = useDates()
   const [value, setValue] = useState<CalendarDate | null>(selected)
   return (
-    <div className="grid w-full max-w-2xl grid-cols-1 items-start gap-x-12 gap-y-7 md:grid-cols-2">
+    <Columns>
       <DatePicker value={value} onChange={setValue} isOpen className="w-fit">
         <Label>Due date</Label>
         <InputGroup className="w-60">
@@ -232,7 +254,7 @@ function Pickers() {
           </Popover>
         </DateRangePicker>
       </Column>
-    </div>
+    </Columns>
   )
 }
 
@@ -241,6 +263,7 @@ function TimeColumns() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     let frame = 0
+    let attempts = 0
     const center = () => {
       const columns = [
         ...(ref.current?.querySelectorAll<HTMLElement>(
@@ -255,7 +278,7 @@ function TimeColumns() {
           ] as const,
       )
       if (!pairs.length || pairs.some(([, item]) => !item)) {
-        frame = requestAnimationFrame(center)
+        if (++attempts < 60) frame = requestAnimationFrame(center)
         return
       }
       for (const [column, item] of pairs) {
@@ -278,7 +301,7 @@ function TimeColumns() {
 
 function Times() {
   return (
-    <div className="grid w-full max-w-2xl grid-cols-1 items-start gap-x-12 gap-y-7 md:grid-cols-2">
+    <Columns>
       <TimePicker defaultValue={new Time(9, 30)} isOpen className="w-fit">
         <Label>Reminder</Label>
         <InputGroup className="w-44">
@@ -303,7 +326,7 @@ function Times() {
           <DateInput />
         </TimeField>
       </Column>
-    </div>
+    </Columns>
   )
 }
 
