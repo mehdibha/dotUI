@@ -80,7 +80,7 @@ export const claude = definePreset({
     ...DEFAULT_MOTION,
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components

@@ -2,7 +2,7 @@
 
 /* Mobile — how overlays adapt below the touch line. Pickers is the loudest
    split: shadcn/Vaul and most product apps slide selects, menus and date
-   pickers into a bottom drawer, Geist keeps the popover anchored. Dialogs
+   pickers into a bottom sheet, Geist keeps the popover anchored. Dialogs
    split again: the classic modal stays centered, iOS-style systems drop it
    to a sheet. Popover + Center is Radix Themes' "same everywhere".
    Deliberately baseline, never axes: the mobile line itself (768px), hover
@@ -15,7 +15,7 @@ import { DialGlyph, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
 import type { Studio, StudioState } from "../state"
 
-type Layer = "drawer" | "popover" | "center" | "sheet"
+type Layer = "sheet" | "popover" | "center"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -56,7 +56,7 @@ function PhoneGlyph({ layer }: { layer: Layer }) {
           <rect x="8" y="9" width="8" height="6" rx="1" fill="currentColor" />
         </>
       )}
-      {(layer === "drawer" || layer === "sheet") && (
+      {layer === "sheet" && (
         <path
           d="M6.75 15.5a1.5 1.5 0 0 1 1.5-1.5h7.5a1.5 1.5 0 0 1 1.5 1.5v5.75H6.75z"
           fill="currentColor"

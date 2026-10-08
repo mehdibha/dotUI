@@ -506,9 +506,9 @@ export const componentsData: ComponentCategory[] = [
         status: "done",
       },
       {
-        name: "Drawer",
-        slug: "drawer",
-        href: "/docs/components/drawer",
+        name: "Sheet",
+        slug: "sheet",
+        href: "/docs/components/sheet",
         fill: true,
         status: "in review",
       },

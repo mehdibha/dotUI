@@ -754,7 +754,7 @@ describe("publish", () => {
   test("popover: ships a param value's registry deps only when it is selected", () => {
     const deps = {
       url: (name: string) => `https://dotui.org/r/${name}.json`,
-      known: new Set(["drawer", "use-mobile"]),
+      known: new Set(["sheet", "use-mobile"]),
     }
     const publishable = {
       template: TV_CONFIG_PLACEHOLDER,
@@ -765,28 +765,28 @@ describe("publish", () => {
         files: [
           {
             type: "registry:ui",
-            path: "ui/popover/base.drawer.tsx",
+            path: "ui/popover/base.sheet.tsx",
             target: "ui/popover.tsx",
           },
         ],
         params: {
           mobile: {
             kind: "enum",
-            default: "drawer",
-            values: ["drawer", "popover"],
-            registryDependencies: { drawer: ["drawer", "use-mobile"] },
+            default: "sheet",
+            values: ["sheet", "popover"],
+            registryDependencies: { sheet: ["sheet", "use-mobile"] },
           },
         },
       },
     } satisfies Publishable
 
-    const drawer = publish({
+    const sheet = publish({
       publishable,
       preset: { density: "default", componentParams: {} },
       deps,
     })
-    expect(drawer.item.registryDependencies).toEqual([
-      "https://dotui.org/r/drawer.json",
+    expect(sheet.item.registryDependencies).toEqual([
+      "https://dotui.org/r/sheet.json",
       "https://dotui.org/r/use-mobile.json",
     ])
 
@@ -799,6 +799,26 @@ describe("publish", () => {
       deps,
     })
     expect(plain.item.registryDependencies).toBeUndefined()
+  })
+
+  test("a declared version range replaces the bare dependency its import implies", () => {
+    const { item } = publish({
+      publishable: {
+        template: `import * as SheetPrimitives from "react-aria-components/Sheet"\nimport { useIsHidden } from "react-aria/private/collections/Hidden"\nconst s = ${TV_CONFIG_PLACEHOLDER};`,
+        stylesConfig: { base: {} },
+        meta: {
+          name: "sheet",
+          type: "registry:ui",
+          dependencies: ["react-aria-components@^1.22.0"],
+          files: [{ type: "registry:ui", path: "ui/sheet/base.tsx" }],
+        },
+      },
+      preset: { density: "default", componentParams: {} },
+    })
+    expect(item.dependencies).toEqual([
+      "react-aria-components@^1.22.0",
+      "react-aria",
+    ])
   })
 
   test("alert: rewrites the surface var when the preset retargets its role", () => {

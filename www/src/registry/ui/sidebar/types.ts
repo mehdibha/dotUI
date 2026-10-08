@@ -26,7 +26,7 @@ export interface SidebarProviderProps extends React.ComponentProps<"div"> {
 
 /**
  * The sidebar panel itself. Renders a fixed desktop panel and an off-canvas
- * Drawer on mobile, driven by the nearest `SidebarProvider`.
+ * Sheet on mobile, driven by the nearest `SidebarProvider`.
  */
 export interface SidebarProps extends React.ComponentProps<"nav"> {
   /**

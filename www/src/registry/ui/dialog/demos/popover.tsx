@@ -13,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import {
@@ -29,6 +28,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
+import { Sheet } from "@/registry/ui/sheet"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export default function Demo() {
@@ -59,7 +59,7 @@ export default function Demo() {
                 </DialogContent>
               )
               return isMobile ? (
-                <Drawer>{content}</Drawer>
+                <Sheet>{content}</Sheet>
               ) : (
                 <Popover>{content}</Popover>
               )

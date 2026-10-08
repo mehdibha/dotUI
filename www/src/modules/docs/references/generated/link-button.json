@@ -444,6 +444,50 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
+    "aria-current": {
+      "type": "\"date\" | \"false\" | \"location\" | \"page\" | \"step\" | \"time\" | \"true\" | boolean",
+      "detailedType": "| 'date'\n| 'false'\n| 'location'\n| 'page'\n| 'step'\n| 'time'\n| 'true'\n| boolean\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "date"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "location"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "page"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "step"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "time"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          }
+        ]
+      },
+      "description": "Indicates whether this element represents the current item within a container or set of related\nelements."
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -775,6 +819,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "suppressHydrationWarning": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "A React-only flag that suppresses the warning React normally logs when an element's\nserver-rendered content doesn't match the client render during hydration. See [React\ndocs](https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors)."
     },
     "target": {
       "type": "HTMLAttributeAnchorTarget",

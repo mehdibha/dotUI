@@ -53,7 +53,7 @@ const OVERLAYS: EntranceKey[] = [
   "accordionMotion",
 ]
 /* One pattern only: "off" is a zero duration, not a pattern. */
-const SLIDES: EntranceKey[] = ["drawerMotion", "messageScrollerMotion"]
+const SLIDES: EntranceKey[] = ["messageScrollerMotion"]
 
 const curve = (name: string): Curve => {
   const found = CURVES.find((c) => c.value === name)
@@ -118,7 +118,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
     popoverMotion: entrance("popoverMotion", 120, "snappy", 80, "snappy"),
     tooltipMotion: entrance("tooltipMotion", 100, "snappy", 60, "snappy"),
     modalMotion: entrance("modalMotion", 150, "snappy", 100, "snappy"),
-    drawerMotion: entrance("drawerMotion", 300, "fluid", 200, "fluid"),
     toastMotion: entrance("toastMotion", 250, "snappy", 150, "snappy"),
     toastSwipeMotion: timed(150, "ease-out"),
     messageScrollerMotion: entrance(
@@ -139,7 +138,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
     popoverMotion: entrance("popoverMotion", 200, "fluid", 150, "fluid"),
     tooltipMotion: entrance("tooltipMotion", 200, "fluid", 150, "fluid"),
     modalMotion: entrance("modalMotion", 300, "fluid", 200, "fluid"),
-    drawerMotion: entrance("drawerMotion", 500, "fluid", 400, "fluid"),
     toastMotion: entrance("toastMotion", 400, "fluid", 300, "fluid"),
     toastSwipeMotion: timed(250, "ease-out"),
     messageScrollerMotion: entrance(
@@ -159,7 +157,6 @@ export const MOTION_PRESETS: MotionPreset[] = [
     popoverMotion: entrance("popoverMotion", 200, "bouncy", 150, "ease-in"),
     tooltipMotion: entrance("tooltipMotion", 150, "bouncy", 100, "ease-in"),
     modalMotion: entrance("modalMotion", 250, "spring", 200, "ease-in"),
-    drawerMotion: entrance("drawerMotion", 300, "spring", 250, "ease-in"),
     toastMotion: entrance("toastMotion", 250, "bouncy", 200, "ease-in"),
     toastSwipeMotion: timed(200, "emphasized"),
     messageScrollerMotion: entrance(

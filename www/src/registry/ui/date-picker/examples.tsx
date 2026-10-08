@@ -13,8 +13,8 @@ import Placeholder from "./demos/placeholder"
 import ReadOnly from "./demos/read-only"
 import Required from "./demos/required"
 import TimeZones from "./demos/time-zones"
-import WithDrawer from "./demos/with-drawer"
 import WithModal from "./demos/with-modal"
+import WithSheet from "./demos/with-sheet"
 
 export default function DatePickerExamples() {
   return (
@@ -58,8 +58,8 @@ export default function DatePickerExamples() {
       <Example title="with modal">
         <WithModal />
       </Example>
-      <Example title="with drawer">
-        <WithDrawer />
+      <Example title="with sheet">
+        <WithSheet />
       </Example>
     </Examples>
   )

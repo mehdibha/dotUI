@@ -6,7 +6,7 @@ import * as PopoverPrimitives from "react-aria-components/Popover";
 import { useSlottedContext } from "react-aria-components/slots";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Drawer, DrawerHandle } from "@/components/ui/drawer";
+import { Sheet, SheetHandle } from "@/components/ui/sheet";
 import { tv } from "tailwind-variants";
 
 const popoverVariants = tv({
@@ -34,8 +34,8 @@ function Popover({
   const context = useSlottedContext(PopoverPrimitives.PopoverContext);
   const isMobile = useIsMobile();
 
-  // Below the mobile line, pickers and menus slide into a bottom drawer and
-  // submenus stack as nested drawers. Other non-modal popovers (a combobox
+  // Below the mobile line, pickers and menus slide into a bottom sheet and
+  // submenus stack as nested sheets. Other non-modal popovers (a combobox
   // list) keep their anchor: the page under them stays live. Render-prop
   // children read placement and entering state, which only the popover can
   // provide.
@@ -47,14 +47,14 @@ function Popover({
     typeof props.children !== "function"
   ) {
     return (
-      <Drawer
+      <Sheet
         isOpen={props.isOpen}
         defaultOpen={props.defaultOpen}
         onOpenChange={props.onOpenChange}
       >
-        <DrawerHandle />
+        <SheetHandle />
         {props.children}
-      </Drawer>
+      </Sheet>
     );
   }
 

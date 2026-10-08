@@ -41,8 +41,7 @@ const PANEL_OFFSET = EDGE_GAP + TRIGGER_SIZE + 8 // edge → panel's near side
  * ways an overlay would otherwise fight the panel:
  *
  * - `useInteractOutside` skips these targets, so nothing dismisses on a click
- *   in here — every registry overlay dismisses through it, the base-ui Drawer
- *   included.
+ *   in here — every registry overlay dismisses through it.
  * - `FocusScope` treats them as inside the scope, so a modal won't yank focus
  *   back out of a control you just clicked.
  * - `ariaHideOutside` leaves them visible to assistive tech.
@@ -192,7 +191,7 @@ export function DevTweaker() {
   return (
     <>
       {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-110 sits
-          above every registry layer (popovers, drawers and modals at z-50): you tweak features that live
+          above every registry layer (popovers, sheets and modals at z-50): you tweak features that live
           *inside* those overlays, so the panel has to outrank them. See TOP_LAYER below. */}
       <button
         type="button"

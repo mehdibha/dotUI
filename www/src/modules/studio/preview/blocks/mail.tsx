@@ -379,7 +379,7 @@ const MESSAGES: Message[] = [
         time: "Aug 17, 3:12 PM",
         paragraphs: [
           "We're at nine open AA issues, down from thirty-four in June. Seven are contrast on disabled controls — our disabled foreground sits at 3.1:1 against the muted surface and needs 4.5:1. Fixing it in the token layer clears all seven at once.",
-          "The other two are focus traps: the command palette doesn't return focus to its trigger, and the drawer lets Tab escape behind the overlay.",
+          "The other two are focus traps: the command palette doesn't return focus to its trigger, and the sheet lets Tab escape behind the overlay.",
         ],
       },
     ],

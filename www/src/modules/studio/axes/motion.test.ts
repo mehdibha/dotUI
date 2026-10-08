@@ -259,14 +259,13 @@ describe("shipped motion", () => {
       "popover",
       "tooltip",
       "modal",
-      "drawer",
       "toast",
       "accordion",
       "collapsible",
     ].filter((name) =>
       /ease-\[linear\(0,[^\s\]]+,1\)\]/.test(shipped[name] ?? ""),
     )
-    expect(sprung).toHaveLength(7)
+    expect(sprung).toHaveLength(6)
     expect(
       Object.values(shipped).filter((content) => content.includes("--studio-")),
     ).toEqual([])

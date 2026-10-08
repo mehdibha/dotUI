@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 
 import { cn } from "@/registry/lib/utils"
-import { useStyles as useDrawerStyles } from "@/registry/ui/drawer/styles"
 import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
+import { useStyles as useSheetStyles } from "@/registry/ui/sheet/styles"
 
 /**
  * Frozen-open overlay compositions for the preview cards. The trigger is a real
@@ -10,7 +10,7 @@ import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
  * static so nothing portals out of the card or touches focus.
  */
 
-export type SurfaceVariant = "popover" | "menu" | "modal" | "drawer" | "tooltip"
+export type SurfaceVariant = "popover" | "menu" | "modal" | "sheet" | "tooltip"
 
 const SURFACE_FRAME: Record<SurfaceVariant, string> = {
   popover:
@@ -18,7 +18,7 @@ const SURFACE_FRAME: Record<SurfaceVariant, string> = {
   menu: "rounded-(--studio-popover-radius) border bg-popover p-1 shadow-md",
   modal:
     "rounded-(--studio-modal-radius) border bg-(--studio-modal-background) p-4 text-sm shadow-lg",
-  drawer: "rounded-t-xl border-t bg-bg p-4 text-sm shadow-lg",
+  sheet: "rounded-t-xl border-t bg-bg p-4 text-sm shadow-lg",
   tooltip:
     "rounded-(--studio-tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
 }
@@ -50,7 +50,7 @@ export function Surface({
   )
 }
 
-/** A page mock (header + text and card blocks) for modal and drawer scenes, so
+/** A page mock (header + text and card blocks) for modal and sheet scenes, so
  *  the overlay reads as opened over real content. */
 export function PageMock() {
   return (
@@ -73,7 +73,7 @@ export function PageMock() {
 /**
  * Trigger + open surface, filling the card (`fill` demos). Anchored surfaces
  * hang below a top-aligned trigger (`align` picks centered or bottom-left) and crop at the card's bottom edge; modal
- * and drawer float over a dimmed backdrop.
+ * and sheet float over a dimmed backdrop.
  */
 export function OverlayPreview({
   variant,
@@ -86,7 +86,7 @@ export function OverlayPreview({
 }: {
   variant: SurfaceVariant
   trigger?: ReactNode
-  /** Modal/drawer: a page mock rendered behind the backdrop instead of a lone
+  /** Modal/sheet: a page mock rendered behind the backdrop instead of a lone
    *  trigger, so the overlay reads as opened over real content. */
   page?: ReactNode
   /** Extra classes for the anchored scene, e.g. a roomier inset. */
@@ -98,8 +98,8 @@ export function OverlayPreview({
   children: ReactNode
 }) {
   const modalBackdrop = useModalStyles()().backdrop
-  const drawerBackdrop = useDrawerStyles()().backdrop
-  if (variant === "modal" || variant === "drawer") {
+  const sheetBackdrop = useSheetStyles()().backdrop
+  if (variant === "modal" || variant === "sheet") {
     return (
       <div className="absolute inset-0">
         {page ?? (
@@ -109,9 +109,11 @@ export function OverlayPreview({
         )}
         <div
           aria-hidden
+          // The sheet's scrim keys off its place in the stack.
+          data-stack-index={0}
           className={cn(
             "absolute inset-0",
-            variant === "modal" ? modalBackdrop() : drawerBackdrop(),
+            variant === "modal" ? modalBackdrop() : sheetBackdrop(),
           )}
         />
         {variant === "modal" ? (
@@ -127,7 +129,7 @@ export function OverlayPreview({
           </div>
         ) : (
           <div className="absolute inset-x-3 bottom-0">
-            <Surface variant="drawer" className={surfaceClassName}>
+            <Surface variant="sheet" className={surfaceClassName}>
               {children}
             </Surface>
           </div>

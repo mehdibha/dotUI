@@ -1,7 +1,7 @@
 "use client"
 
 /* Dialogs — how modal layers meet the page: the scrim under them, where
-   a dialog rests. Backdrop writes Dialog and Drawer together. */
+   a dialog rests. Backdrop writes Dialog and Sheet together. */
 
 import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"

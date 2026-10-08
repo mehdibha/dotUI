@@ -990,7 +990,7 @@ export default function SettingsBlock() {
           <TooltipContent>Close</TooltipContent>
         </Tooltip>
         <SidebarInset className="min-w-0 overflow-y-auto bg-transparent">
-          {/* Mobile only — the sidebar is a drawer there and needs its trigger. */}
+          {/* Mobile only — the sidebar is a sheet there and needs its trigger. */}
           <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-2 border-b bg-(--studio-modal-background) px-3 md:hidden">
             <SidebarTrigger />
             <span className="font-medium">Settings</span>

@@ -84,7 +84,7 @@ export const airbnb = definePreset({
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "sheet",
 
     // Components
