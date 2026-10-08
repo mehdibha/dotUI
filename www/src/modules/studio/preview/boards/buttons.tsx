@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
 
+import { useComponentParams } from "@/lib/styles"
 import {
   ArrowRightIcon,
   BoldIcon,
@@ -57,12 +58,14 @@ interface Column {
 }
 
 const MATRIX_GAP = 12
+const WRAP_GAP = 16
 
-/** True when the matrix's columns fit the container: specimens and labels
- *  keep their natural width in either layout, so measure them directly. */
-function useMatrixFits(columns: number) {
+/** The layout that fits the container: the full matrix, or rows wrapped
+ *  into `perRow` equal cells, balanced so every row breaks the same way.
+ *  Specimens and labels keep their natural width in either, so measure them. */
+function useGridLayout(columns: number) {
   const ref = useRef<HTMLDivElement>(null)
-  const [fits, setFits] = useState(false)
+  const [layout, setLayout] = useState({ matrix: false, perRow: columns })
   useLayoutEffect(() => {
     const container = ref.current
     if (!container) return
@@ -74,8 +77,20 @@ function useMatrixFits(columns: number) {
         const i = Number(el.dataset.column)
         widths[i] = Math.max(widths[i] ?? 0, el.offsetWidth)
       }
-      const needed = widths.reduce((a, b) => a + b, 0) + MATRIX_GAP * columns
-      setFits(needed <= container.clientWidth)
+      const available = container.clientWidth
+      const matrix =
+        widths.reduce((a, b) => a + b, 0) + MATRIX_GAP * columns <= available
+      const cell = Math.max(88, ...widths.slice(1))
+      const fit = Math.max(
+        1,
+        Math.floor((available + WRAP_GAP) / (cell + WRAP_GAP)),
+      )
+      const perRow = Math.ceil(columns / Math.ceil(columns / fit))
+      setLayout((prev) =>
+        prev.matrix === matrix && prev.perRow === perRow
+          ? prev
+          : { matrix, perRow },
+      )
     }
     measure()
     const observer = new ResizeObserver(measure)
@@ -84,7 +99,7 @@ function useMatrixFits(columns: number) {
       observer.observe(el)
     return () => observer.disconnect()
   }, [columns])
-  return [ref, fits] as const
+  return [ref, layout] as const
 }
 
 /** Rows of frozen specimens under shared state columns; when the columns
@@ -103,7 +118,7 @@ function StateGrid({
   /** A row or column id the panel is editing. */
   emphasis?: string
 }) {
-  const [ref, matrix] = useMatrixFits(columns.length)
+  const [ref, { matrix, perRow }] = useGridLayout(columns.length)
   const label = (id: string) =>
     cn(
       "text-[11px] text-fg-muted transition-colors",
@@ -149,17 +164,17 @@ function StateGrid({
               {row.label}
             </span>
             <div
-              className={
-                matrix ? "contents" : "flex flex-wrap justify-center gap-4"
-              }
+              className={matrix ? "contents" : "grid gap-x-4 gap-y-4"}
+              style={{
+                gridTemplateColumns: matrix
+                  ? undefined
+                  : `repeat(${perRow}, minmax(0, 1fr))`,
+              }}
             >
               {columns.map((column, i) => (
                 <div
                   key={column.id}
-                  className={cn(
-                    "flex flex-col items-center gap-2",
-                    !matrix && "min-w-22",
-                  )}
+                  className="flex flex-col items-center gap-2"
                 >
                   <div data-column={i + 1} className="flex">
                     {row.render(stateProps(...column.states), column.id)}
@@ -178,6 +193,27 @@ function StateGrid({
       </div>
     </div>
   )
+}
+
+/** Board centres the focused section once; the popover's inset then narrows
+ *  the board and the grids above reflow, so centre it again. */
+function KeepFocusedInView() {
+  const ref = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const content = ref.current?.parentElement
+    if (!content) return
+    let height = content.offsetHeight
+    const observer = new ResizeObserver(() => {
+      if (content.offsetHeight === height) return
+      height = content.offsetHeight
+      content
+        .querySelector("section[data-focused]")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" })
+    })
+    observer.observe(content)
+    return () => observer.disconnect()
+  }, [])
+  return <span ref={ref} hidden />
 }
 
 /** A labelled line of live specimens. */
@@ -224,11 +260,24 @@ const VARIANTS = [
   { id: "danger", label: "Danger", text: "Delete" },
 ] as const
 
-/** The row or column the focused key styles most. */
+/** The row the focused key styles most. */
 const BUTTON_EMPHASIS: Record<string, string> = {
   buttonColor: "primary",
   buttonSecondary: "secondary",
-  buttonPress: "pressed",
+}
+
+/** True for `ms` after `value` changes. */
+function useChanged(value: unknown, ms: number) {
+  const [changed, setChanged] = useState(false)
+  const first = useRef(value)
+  useEffect(() => {
+    if (Object.is(value, first.current)) return
+    first.current = value
+    setChanged(true)
+    const timer = setTimeout(() => setChanged(false), ms)
+    return () => clearTimeout(timer)
+  }, [value, ms])
+  return changed
 }
 
 /** Flips every `ms` while `active`; false otherwise. */
@@ -248,8 +297,9 @@ function useBlink(active: boolean, ms = 600) {
 function ButtonStates() {
   const styles = useButtonStyles()
   const { axis } = useBoardFocus()
-  // A frozen press barely reads; while the panel edits it, press and release.
-  const released = useBlink(axis === "buttonPress")
+  // A frozen press barely reads; after Press changes, press and release.
+  const pressing = useChanged(useComponentParams("button").press, 3000)
+  const released = useBlink(pressing)
   return (
     <StateGrid
       columns={BUTTON_COLUMNS.map((column) =>
@@ -257,7 +307,7 @@ function ButtonStates() {
           ? { ...column, states: ["hover"] }
           : column,
       )}
-      emphasis={axis && BUTTON_EMPHASIS[axis]}
+      emphasis={pressing ? "pressed" : axis && BUTTON_EMPHASIS[axis]}
       rows={VARIANTS.map(({ id, label, text }) => ({
         id,
         label,
@@ -573,6 +623,7 @@ function Pages() {
 export default function ButtonsBoard() {
   return (
     <Board id="buttons">
+      <KeepFocusedInView />
       <BoardSection
         member="button"
         title="Button"
