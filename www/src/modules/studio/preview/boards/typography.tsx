@@ -61,9 +61,7 @@ import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
-import { Board, BoardSection } from "./board"
-
-const SPEC_LABEL = "text-[11px] text-fg-muted"
+import { Board, BoardSection, CAPTION } from "./board"
 
 const STACK = "flex-col flex-nowrap items-stretch justify-start gap-8"
 
@@ -92,7 +90,7 @@ function Specimen({
 }) {
   return (
     <div className={className}>
-      <div className={SPEC_LABEL}>{label}</div>
+      <div className={CAPTION}>{label}</div>
       <div className="mt-2">{children}</div>
     </div>
   )

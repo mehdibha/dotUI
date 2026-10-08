@@ -40,9 +40,7 @@ import {
 } from "@/registry/ui/table"
 import { TextField } from "@/registry/ui/text-field"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
-
-const SPEC_LABEL = "text-[11px] text-fg-muted"
+import { Board, BoardSection, CAPTION, useBoardFocus } from "./board"
 
 const STACK =
   "@container flex-col flex-nowrap items-stretch justify-start gap-10"
@@ -202,7 +200,7 @@ function Specimen({
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="flex h-10 items-center gap-3">{children}</div>
-      <span className={SPEC_LABEL}>{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }

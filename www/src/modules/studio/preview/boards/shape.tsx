@@ -63,7 +63,14 @@ import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
-import { Board, BoardSection, stateProps } from "./board"
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  Specimen,
+  stateProps,
+  useRootTokens,
+} from "./board"
 
 const ROLES = [
   {
@@ -92,20 +99,6 @@ const ROLES = [
     className: "rounded-(--studio-radius-card)",
   },
 ]
-
-/** Bumps when the provider rewrites the root's tokens, so measured radii follow. */
-function useRootTokens() {
-  const [version, setVersion] = useState(0)
-  useEffect(() => {
-    const observer = new MutationObserver(() => setVersion((v) => v + 1))
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["style"],
-    })
-    return () => observer.disconnect()
-  }, [])
-  return version
-}
 
 function radiusLabel(element: HTMLElement) {
   const px = Number.parseFloat(getComputedStyle(element).borderTopLeftRadius)
@@ -140,7 +133,7 @@ function RoleTile({
       />
       <span className="flex flex-col items-center text-xs">
         <span>{label}</span>
-        <span className="text-[11px] text-fg-muted tabular-nums">{radius}</span>
+        <span className={cn(CAPTION, "tabular-nums")}>{radius}</span>
       </span>
     </div>
   )
@@ -158,23 +151,6 @@ function Ladder() {
           version={version}
         />
       ))}
-    </div>
-  )
-}
-
-function Specimen({
-  label,
-  className,
-  children,
-}: {
-  label: string
-  className?: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className={cn("flex min-w-0 flex-col items-center gap-3", className)}>
-      {children}
-      <span className="text-[11px] text-fg-muted">{label}</span>
     </div>
   )
 }
@@ -478,7 +454,7 @@ export default function ShapeBoard() {
         member="panels"
         title="Panels"
         axes={["rolePanel"]}
-        className="items-end gap-x-10 gap-y-8"
+        className="items-center gap-x-10 gap-y-8"
       >
         <Specimen label="Dialog" className="w-full max-w-sm">
           <DialogSpecimen />

@@ -57,7 +57,7 @@ import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
+import { Board, BoardSection, CAPTION, useBoardFocus } from "./board"
 
 /* ---------------------------------- Loops ---------------------------------- */
 
@@ -146,7 +146,7 @@ function usePresence(
   { open = 1800, closed = 1000 } = {},
 ) {
   const inView = useInView(ref)
-  const [phase, setPhase] = useState<Phase>("closed")
+  const [phase, setPhase] = useState<Phase>("open")
   const quick = useRef(false)
 
   useEffect(() => {
@@ -224,7 +224,7 @@ function Specimen({
       >
         {children}
       </div>
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }
@@ -279,7 +279,10 @@ function Controls() {
   return (
     <div
       ref={ref}
-      className={cn(GRID, "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3")}
+      className={cn(
+        GRID,
+        "grid-cols-1 @xl/section:grid-cols-2 @4xl/section:grid-cols-3",
+      )}
     >
       <Specimen label="Switch">
         <Switch isSelected={on}>
@@ -413,7 +416,10 @@ function TooltipStage({ replay }: { replay: number }) {
   const { content, arrow } = useTooltipStyles()()
   return (
     <Specimen label="Tooltip">
-      <div ref={ref} className={cn(STAGE, "h-32 items-center sm:h-72")}>
+      <div
+        ref={ref}
+        className={cn(STAGE, "h-32 items-center @3xl/section:h-72")}
+      >
         <div className="relative">
           <Button variant="secondary" isIconOnly aria-label="Copy link">
             <CopyIcon />
@@ -522,7 +528,7 @@ function PickerStage({ replay }: { replay: number }) {
 function Overlays() {
   const replay = useReplay(AXES.overlays)
   return (
-    <div className={cn(GRID, "grid-cols-1 sm:grid-cols-3")}>
+    <div className={cn(GRID, "grid-cols-1 @3xl/section:grid-cols-3")}>
       <MenuStage replay={replay} />
       <TooltipStage replay={replay} />
       <PickerStage replay={replay} />
@@ -648,7 +654,7 @@ function DrawerStage({ replay }: { replay: number }) {
 function Dialogs() {
   const replay = useReplay(AXES.dialogs)
   return (
-    <div className={cn(GRID, "grid-cols-1 md:grid-cols-2")}>
+    <div className={cn(GRID, "grid-cols-1 @2xl/section:grid-cols-2")}>
       <ModalStage replay={replay} />
       <DrawerStage replay={replay} />
     </div>
@@ -673,12 +679,9 @@ function Toasts() {
   const inView = useInView(ref)
   const replay = useReplay(AXES.toasts)
   const [manager] = useState(() => ToastPrimitive.createToastManager())
-  const replayed = useRef(replay)
 
   useEffect(() => {
     if (!inView || !frame) return
-    const now = replayed.current !== replay
-    replayed.current = replay
     let index = 0
     const closers = new Set<ReturnType<typeof setTimeout>>()
     // Its own dismissal: Base UI pauses timeouts while the iframe is blurred.
@@ -690,16 +693,9 @@ function Toasts() {
       }, TOAST_MS)
       closers.add(closer)
     }
-    let interval: ReturnType<typeof setInterval> | undefined
-    const start = setTimeout(
-      () => {
-        add()
-        interval = setInterval(add, TOAST_MS + 1200)
-      },
-      now ? 0 : 600,
-    )
+    add()
+    const interval = setInterval(add, TOAST_MS + 600)
     return () => {
-      clearTimeout(start)
       clearInterval(interval)
       for (const closer of closers) clearTimeout(closer)
       manager.close()
@@ -713,7 +709,7 @@ function Toasts() {
           ref={setFrame}
           className={cn(
             FRAME,
-            "h-40 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]",
+            "h-32 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]",
           )}
         >
           {frame && (
@@ -788,7 +784,7 @@ function Loading() {
   return (
     <div
       ref={ref}
-      className={cn(GRID, "grid-cols-1 items-center md:grid-cols-3")}
+      className={cn(GRID, "grid-cols-1 items-center @2xl/section:grid-cols-3")}
     >
       <Specimen label="Skeleton">
         <Skeleton isLoading className="flex w-full max-w-56 flex-col gap-4">

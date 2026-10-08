@@ -58,29 +58,10 @@ import {
 import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
 import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 
-import { Board, BoardSection, StateRow, useBoardFocus } from "./board"
-
-const LABEL = "text-[11px] text-fg-muted"
+import { Board, BoardSection, Specimen, StateRow, useBoardFocus } from "./board"
 
 // Specimen links point nowhere: keep the board where it is.
 const stay = (event: React.MouseEvent) => event.preventDefault()
-
-function Specimen({
-  label,
-  className,
-  children,
-}: {
-  label: string
-  className?: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className={className ?? "flex flex-col items-center gap-3"}>
-      {children}
-      <span className={LABEL}>{label}</span>
-    </div>
-  )
-}
 
 /* ----------------------------------- Tabs ---------------------------------- */
 
@@ -89,7 +70,7 @@ const PROJECT_TABS = ["overview", "deployments", "analytics"]
 /** Walks the selection across the tabs while the panel edits their motion. */
 function useReplay() {
   const { axis } = useBoardFocus()
-  const playing = axis === "navMotion" || axis === "motion"
+  const playing = axis === "navMotion"
   const [selected, setSelected] = useState<Key>("overview")
   useEffect(() => {
     if (!playing) return
@@ -132,7 +113,7 @@ function ProjectTabs({
 
 // Wide rows scroll at phone width, as they would in an app.
 const SCROLLER =
-  "flex max-w-full flex-col items-center-safe gap-3 overflow-x-auto [scrollbar-width:none]"
+  "max-w-full items-center-safe overflow-x-auto [scrollbar-width:none]"
 
 const VARIANTS = [
   { variant: "segmented", label: "Segmented" },
@@ -186,6 +167,8 @@ const PROJECTS = [
   { name: "Mobile app", meta: "Updated yesterday" },
   { name: "Brand refresh", meta: "Updated 3d ago" },
   { name: "Q4 planning", meta: "Updated last week" },
+  { name: "Onboarding flow", meta: "Updated 2w ago" },
+  { name: "Pricing page", meta: "Updated last month" },
 ]
 
 /** An app shell: the sidebar on its tone, the content panel inset in it. */
@@ -275,7 +258,7 @@ function SidebarStates() {
   return (
     <div className="border-t bg-sidebar px-5 py-8">
       <StateRow
-        states={["rest", "hover", "pressed", "selected", "focus", "disabled"]}
+        states={["rest", "hover", "pressed", "focus", "selected", "disabled"]}
       >
         {(props, state) => (
           <span
@@ -390,14 +373,14 @@ function LinkSpecimens() {
         onClickCapture={stay}
         className="flex w-full flex-wrap items-start justify-center gap-x-16 gap-y-8"
       >
-        <Specimen label="In text" className="flex max-w-sm flex-col gap-3">
+        <Specimen label="In text" className="max-w-sm items-stretch">
           <p className="text-sm/relaxed text-fg-muted">
             Your trial ends in 5 days. <Link href="#">Upgrade your plan</Link>{" "}
             to keep unlimited projects, or <Link href="#">compare plans</Link>{" "}
             first.
           </p>
         </Specimen>
-        <Specimen label="Standalone" className="flex flex-col gap-3">
+        <Specimen label="Standalone" className="items-stretch">
           <div className="flex flex-col items-start gap-2.5 text-sm">
             <Link href="#">
               <BookOpenIcon className="size-4" />
@@ -509,7 +492,6 @@ export default function NavBoard() {
           "navWeight",
           "navCase",
           "navMotion",
-          "motion",
         ]}
         className={STACK}
       >

@@ -43,9 +43,7 @@ import { useStyles as useTagStyles } from "@/registry/ui/tag-group/styles"
 import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 import { useStyles as useToastStyles } from "@/registry/ui/toast/styles"
 
-import { Board, BoardSection, StateRow, useBoardFocus } from "./board"
-
-const SPEC_LABEL = "text-[11px] text-fg-muted"
+import { Board, BoardSection, CAPTION, StateRow, useBoardFocus } from "./board"
 
 const STACK =
   "@container flex-col flex-nowrap items-stretch justify-start gap-10"
@@ -83,7 +81,7 @@ function BadgeSection() {
       <div className="flex flex-wrap justify-center gap-x-10 gap-y-8">
         {STATUSES.map(({ variant, label, text, Icon }) => (
           <div key={variant} className="flex flex-col items-center gap-3">
-            <span className={SPEC_LABEL}>{label}</span>
+            <span className={CAPTION}>{label}</span>
             <Badge variant={variant} size="lg">
               {text}
             </Badge>
@@ -224,7 +222,7 @@ function AlertSection() {
     <BoardSection
       member="alert"
       title="Alert"
-      axes={["alertStyle", "dangerSeed"]}
+      axes={["alertStyle", "successSeed", "warningSeed", "dangerSeed"]}
       className={STACK}
     >
       <div className="grid gap-4">
@@ -351,18 +349,18 @@ function StaticToast({ type, title, text, action }: (typeof TOASTS)[number]) {
 }
 
 const TILES = [
-  "bg-primary",
+  "bg-accent-muted",
   "bg-muted",
-  "bg-accent",
-  "bg-success",
+  "bg-info-muted",
+  "bg-success-muted",
   "bg-muted",
-  "bg-warning",
-  "bg-info",
+  "bg-warning-muted",
+  "bg-accent-muted",
   "bg-muted",
-  "bg-danger",
-  "bg-accent",
+  "bg-danger-muted",
+  "bg-info-muted",
   "bg-muted",
-  "bg-primary",
+  "bg-success-muted",
 ]
 
 /** A gallery under the toasts, so glass has something to frost. */
@@ -375,7 +373,7 @@ function Backdrop() {
       {[...TILES, ...TILES].map((tone, index) => (
         <div
           key={index}
-          className={cn("rounded-(--studio-radius-item) opacity-25", tone)}
+          className={cn("rounded-(--studio-radius-item)", tone)}
         />
       ))}
     </div>

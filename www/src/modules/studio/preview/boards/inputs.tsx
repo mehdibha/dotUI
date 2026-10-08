@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import { ChevronDownIcon, CopyIcon, MailIcon, SendIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -37,7 +35,14 @@ import {
 } from "@/registry/ui/select"
 import { TextField } from "@/registry/ui/text-field"
 
-import { Board, BoardSection, stateProps, useBoardFocus } from "./board"
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  stateProps,
+  useBoardFocus,
+  useLoop,
+} from "./board"
 
 /* ---------------------------------- States --------------------------------- */
 
@@ -53,8 +58,8 @@ const STATES: { state: FieldState; label: string; value: string }[] = [
   { state: "rest", label: "Rest", value: "ada@acme.dev" },
   { state: "hover", label: "Hover", value: "ada@acme.dev" },
   { state: "focus", label: "Focus", value: "ada@acme.dev" },
-  { state: "invalid", label: "Invalid", value: "ada@acme" },
   { state: "disabled", label: "Disabled", value: "ada@acme.dev" },
+  { state: "invalid", label: "Invalid", value: "ada@acme" },
   { state: "readonly", label: "Read-only", value: "ada@acme.dev" },
 ]
 
@@ -62,7 +67,6 @@ const STATES: { state: FieldState; label: string; value: string }[] = [
 const STATE_OF_AXIS: Record<string, FieldState> = {
   inputHover: "hover",
   focusInputStyle: "focus",
-  focusInputColor: "focus",
   inputMotion: "focus",
   inputError: "invalid",
 }
@@ -78,26 +82,15 @@ function fieldAttributes(state: FieldState) {
   return stateProps(state)
 }
 
-/** Flips on a loop while `on`, so a state transition replays. */
-function useReplay(on: boolean) {
-  const [phase, setPhase] = useState(true)
-  useEffect(() => {
-    if (!on) return setPhase(true)
-    const timer = setInterval(() => setPhase((phase) => !phase), 1100)
-    return () => clearInterval(timer)
-  }, [on])
-  return phase
-}
-
 function InputStates() {
   const { input } = useInputStyles()()
   const { axis } = useBoardFocus()
   const emphasis = axis ? STATE_OF_AXIS[axis] : undefined
-  const replay = useReplay(axis === "inputMotion")
+  const replay = useLoop(axis === "inputMotion", 1100, true)
   return (
     <div
       inert
-      className="grid w-full grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3"
+      className="grid w-full grid-cols-2 gap-x-5 gap-y-6 @xl/section:grid-cols-3"
     >
       {STATES.map(({ state, label, value }) => {
         const shown = state === "focus" && !replay ? "rest" : state
@@ -117,7 +110,7 @@ function InputStates() {
               {...fieldAttributes(shown)}
               className={input({ className: "w-full" })}
             />
-            <span className="text-[11px] text-fg-muted">{label}</span>
+            <span className={CAPTION}>{label}</span>
           </div>
         )
       })}
@@ -137,7 +130,7 @@ function Grid({
   return (
     <div
       className={cn(
-        "grid w-full grid-cols-1 items-start gap-x-8 gap-y-7 sm:grid-cols-2",
+        "grid w-full grid-cols-1 items-start gap-x-8 gap-y-7 @xl/section:grid-cols-2",
         className,
       )}
     >
@@ -178,7 +171,7 @@ function TextFields() {
         </InputGroup>
       </TextField>
       <TextField
-        className="sm:col-span-2"
+        className="@xl/section:col-span-2"
         defaultValue="Fixed the export dialog losing its scroll position on resize."
       >
         <Label>Release notes</Label>
@@ -190,7 +183,7 @@ function TextFields() {
 
 function Fields() {
   return (
-    <Grid className="md:grid-cols-3">
+    <Grid className="@2xl/section:grid-cols-3">
       <TextField defaultValue="Acme Inc.">
         <Label>Workspace name</Label>
         <Input />
@@ -212,10 +205,10 @@ function Fields() {
 
 function NumberFields() {
   return (
-    <Grid className="md:grid-cols-3">
+    <Grid className="@2xl/section:grid-cols-3">
       <NumberField defaultValue={12} minValue={1}>
         <Label>Seats</Label>
-        <NumberFieldGroup>
+        <NumberFieldGroup className="w-full">
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
@@ -227,7 +220,7 @@ function NumberFields() {
         formatOptions={{ style: "currency", currency: "USD" }}
       >
         <Label>Price</Label>
-        <NumberFieldGroup>
+        <NumberFieldGroup className="w-full">
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
@@ -241,7 +234,7 @@ function NumberFields() {
         formatOptions={{ style: "percent" }}
       >
         <Label>Discount</Label>
-        <NumberFieldGroup>
+        <NumberFieldGroup className="w-full">
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
@@ -343,7 +336,7 @@ function OpenSelect() {
 
 function Selects() {
   return (
-    <Grid className="md:grid-cols-3">
+    <Grid className="@2xl/section:grid-cols-3">
       <Select defaultSelectedKey="fra">
         <Label>Region</Label>
         <SelectTrigger className="w-full" />
@@ -383,38 +376,28 @@ function Selects() {
 /** A field beside the button that submits it: heights and styles meet. */
 function Pairs() {
   return (
-    <div className="flex w-full max-w-lg flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <TextField aria-label="Invite by email" className="min-w-0 flex-1">
-          <Input placeholder="you@company.com" />
-        </TextField>
-        <Button variant="primary">
-          <SendIcon />
-          Invite
-        </Button>
-      </div>
-      <div className="flex items-center gap-2">
-        <Select
-          aria-label="Branch"
-          defaultSelectedKey="main"
-          className="min-w-0 flex-1"
-        >
-          <SelectTrigger className="w-full" />
-          <SelectContent>
-            <SelectItem id="main">main</SelectItem>
-            <SelectItem id="dev">develop</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button>Deploy</Button>
-      </div>
-      <div className="flex items-center gap-2">
-        <SearchField
-          aria-label="Filter"
-          placeholder="Filter members"
-          className="min-w-0 flex-1"
-        />
-        <Button>Export</Button>
-      </div>
+    <div className="grid w-full max-w-lg grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-4">
+      <TextField aria-label="Invite by email" className="min-w-0">
+        <Input placeholder="you@company.com" />
+      </TextField>
+      <Button variant="primary" className="w-full">
+        <SendIcon />
+        Invite
+      </Button>
+      <Select aria-label="Branch" defaultSelectedKey="main" className="min-w-0">
+        <SelectTrigger className="w-full" />
+        <SelectContent>
+          <SelectItem id="main">main</SelectItem>
+          <SelectItem id="dev">develop</SelectItem>
+        </SelectContent>
+      </Select>
+      <Button className="w-full">Deploy</Button>
+      <SearchField
+        aria-label="Filter"
+        placeholder="Filter members"
+        className="min-w-0"
+      />
+      <Button className="w-full">Export</Button>
     </div>
   )
 }
@@ -429,7 +412,6 @@ export default function InputsBoard() {
           "inputStyle",
           "inputHover",
           "focusInputStyle",
-          "focusInputColor",
           "roleControl",
           "inputMotion",
           "inputError",

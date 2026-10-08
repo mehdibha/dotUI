@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import { createParamValue } from "@/lib/styles"
 import { AreaChart } from "@/registry/ui/chart-area"
 import { BarChart } from "@/registry/ui/chart-bar"
@@ -9,7 +7,7 @@ import { LineChart } from "@/registry/ui/chart-line"
 import { PieChart } from "@/registry/ui/chart-pie"
 import { RadialBarChart } from "@/registry/ui/chart-radial"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
+import { Board, BoardSection, useBoardFocus, useLoop } from "./board"
 
 const SHARED = ["chartPalette", "brand", "chartMotion", "motion"]
 const GRIDDED = ["chartPalette", "brand", "chartGrid", "chartMotion", "motion"]
@@ -24,22 +22,6 @@ const useChartMotion = createParamValue({
   defaultValue: "spring",
   values: { spring: "spring", ease: "ease", none: "none" },
 })
-
-/** Swaps between two data sets while the panel edits motion, so transitions play. */
-function usePhase() {
-  const { axis } = useBoardFocus()
-  const playing = axis === "chartMotion" || axis === "motion"
-  const [phase, setPhase] = useState<0 | 1>(0)
-  useEffect(() => {
-    if (!playing) return
-    const timer = setInterval(() => setPhase((p) => (p ? 0 : 1)), 1600)
-    return () => {
-      clearInterval(timer)
-      setPhase(0)
-    }
-  }, [playing])
-  return phase
-}
 
 /* ---------------------------------- Data ---------------------------------- */
 
@@ -165,7 +147,10 @@ const thousands = (value: unknown) =>
 /* ---------------------------------- Board ---------------------------------- */
 
 export default function ChartsBoard() {
-  const phase = usePhase()
+  const { axis } = useBoardFocus()
+  const phase = useLoop(axis === "chartMotion" || axis === "motion", 1600)
+    ? 1
+    : 0
   // A new transition replays every chart's entrance.
   const motion = useChartMotion()
   const total = SHARE[phase].reduce((sum, row) => sum + row.visitors, 0)
@@ -206,6 +191,7 @@ export default function ChartsBoard() {
             x="month"
             y={["free", "pro", "team"]}
             labels={PLANS}
+            axes
             legend
             height={HEIGHT}
             ariaLabel="Signups by plan, January through June"
@@ -224,6 +210,8 @@ export default function ChartsBoard() {
             labels={PERCENTILES}
             curve="monotone"
             points
+            axes
+            formatY={(value) => `${String(value)}ms`}
             legend
             height={HEIGHT}
             ariaLabel="API response time percentiles this week, in milliseconds"

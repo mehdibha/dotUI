@@ -1,4 +1,4 @@
-import { useEffect, useRef, useSyncExternalStore } from "react"
+import { useEffect, useRef } from "react"
 
 import { useComponentParams } from "@/lib/styles"
 import {
@@ -39,52 +39,18 @@ import {
 import {
   Board,
   BoardSection,
-  StateRow,
+  CAPTION,
+  Specimen,
   stateProps,
+  StateRow,
   useBoardFocus,
+  useRootToken,
 } from "./board"
-
-const LABEL = "text-[11px] text-fg-muted"
 
 const STACK = "flex-col flex-nowrap items-stretch justify-start gap-8"
 
 // Keyboard focus: inputs style `focus:`, everything else `focus-visible:`.
 const FOCUSED = { ...stateProps("focus"), "data-focused": "true" }
-
-/** A frozen specimen with its name under it, like StateRow's labels. */
-function Specimen({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex flex-col items-center gap-2">
-      {children}
-      <span className={LABEL}>{label}</span>
-    </div>
-  )
-}
-
-// The provider writes tokens onto <html>'s style.
-const subscribeRoot = (onChange: () => void) => {
-  const observer = new MutationObserver(onChange)
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["style"],
-  })
-  return () => observer.disconnect()
-}
-
-/** A root token as the preview resolves it. */
-const useRootToken = (name: string) =>
-  useSyncExternalStore(
-    subscribeRoot,
-    () =>
-      getComputedStyle(document.documentElement).getPropertyValue(name).trim(),
-    () => "",
-  )
 
 const CURSORS: Record<string, () => React.ReactNode> = {
   pointer: HandCursor,
@@ -104,8 +70,7 @@ function Cursor({ token }: { token: string }) {
 
 /* ---------------------------------- Focus ---------------------------------- */
 
-/** The focused select trigger the `select` params build: a button trigger takes
- *  the control ring, a field trigger the field focus. */
+/** The focused select trigger: a button trigger rings, a field trigger takes field focus. */
 function SelectSpecimen({ as }: { as: "button" | "field" }) {
   const { trigger, caret } = useComponentParams("select")
   const button = useButtonStyles()
@@ -113,7 +78,7 @@ function SelectSpecimen({ as }: { as: "button" | "field" }) {
   if ((trigger === "field" ? "field" : "button") !== as) return null
   const Caret = caret === "double" ? ChevronsUpDownIcon : ChevronDownIcon
   return (
-    <Specimen label="Select">
+    <Specimen className="gap-2" label="Select">
       <span
         {...FOCUSED}
         className={
@@ -144,7 +109,7 @@ function FocusSpecimens() {
       inert
       className="flex flex-wrap items-end justify-center gap-x-10 gap-y-8"
     >
-      <Specimen label="Button">
+      <Specimen className="gap-2" label="Button">
         <button
           type="button"
           {...FOCUSED}
@@ -153,7 +118,7 @@ function FocusSpecimens() {
           Publish
         </button>
       </Specimen>
-      <Specimen label="Secondary">
+      <Specimen className="gap-2" label="Secondary">
         <button
           type="button"
           {...FOCUSED}
@@ -162,12 +127,12 @@ function FocusSpecimens() {
           Preview
         </button>
       </Specimen>
-      <Specimen label="Link">
+      <Specimen className="gap-2" label="Link">
         <span {...FOCUSED} className={link({})}>
           View invoice
         </span>
       </Specimen>
-      <Specimen label="Checkbox">
+      <Specimen className="gap-2" label="Checkbox">
         <span className={checkbox.root()}>
           <span {...selected} className={checkbox.control()}>
             <span {...selected} className={checkbox.indicator()}>
@@ -177,14 +142,14 @@ function FocusSpecimens() {
           <Label elementType="span">Remember me</Label>
         </span>
       </Specimen>
-      <Specimen label="Switch">
+      <Specimen className="gap-2" label="Switch">
         <span {...selected} className={toggle.control()}>
           <span {...selected} className={toggle.indicator()}>
             <span {...selected} className={toggle.thumb()} />
           </span>
         </span>
       </Specimen>
-      <Specimen label="Tabs">
+      <Specimen className="gap-2" label="Tabs">
         <div className={tabs.root({ orientation: "horizontal" })}>
           <div
             data-rac=""
@@ -243,7 +208,7 @@ function FieldFocusSpecimens() {
         className="flex flex-wrap items-start justify-center gap-x-6 gap-y-6"
       >
         <SelectSpecimen as="field" />
-        <Specimen label="Text area">
+        <Specimen className="gap-2" label="Text area">
           <textarea
             {...FOCUSED}
             aria-label="Notes"
@@ -269,7 +234,7 @@ function Surface({
 }) {
   const { popover } = usePopoverStyles()()
   return (
-    <Specimen label={label}>
+    <Specimen className="gap-2" label={label}>
       <div className={popover({ className: "w-52 shrink-0" })}>{children}</div>
     </Specimen>
   )
@@ -359,7 +324,7 @@ function HoverPressSpecimens() {
 function Controls({ disabled }: { disabled?: boolean }) {
   return (
     <div className="flex min-w-0 flex-col gap-5">
-      <span className={LABEL}>{disabled ? "Disabled" : "Enabled"}</span>
+      <span className={CAPTION}>{disabled ? "Disabled" : "Enabled"}</span>
       <div className="flex flex-wrap gap-2">
         <span className="relative">
           <Button variant="primary" isDisabled={disabled}>
@@ -393,7 +358,7 @@ function DisabledMenu() {
   const { popover } = usePopoverStyles()()
   return (
     <div className="flex min-w-0 flex-col gap-5">
-      <span className={LABEL}>Menu</span>
+      <span className={CAPTION}>Menu</span>
       <div className={popover({ className: "w-52" })}>
         <MenuContent aria-label="Workspace actions">
           <MenuItem>Invite people</MenuItem>
@@ -407,8 +372,7 @@ function DisabledMenu() {
 
 /* -------------------------------- Selection -------------------------------- */
 
-// One range from mid-sentence through the control row: control labels light
-// up only when control text selects.
+// One range from mid-sentence through the controls: their labels light up only when control text selects.
 function SelectionSpecimen() {
   const { axis } = useBoardFocus()
   const startRef = useRef<HTMLSpanElement>(null)

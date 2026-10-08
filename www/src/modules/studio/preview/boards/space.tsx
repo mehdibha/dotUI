@@ -38,6 +38,7 @@ import {
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
 import {
+  Sidebar,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -70,9 +71,7 @@ const font: Read = (el) => {
   return `${+parseFloat(style.fontSize).toFixed(1)} / ${+parseFloat(style.lineHeight).toFixed(1)}px`
 }
 
-/** Reads `target` (else the first child) after layout and again whenever it
- *  resizes, mounts (collections render their items late) or the root's
- *  tokens or theme change. */
+/** Re-reads `target` (else the first child) on resize, late mounts and token changes. */
 function useMeasure(read: Read, target?: string) {
   const ref = useRef<HTMLDivElement>(null)
   const [value, setValue] = useState("")
@@ -324,17 +323,22 @@ function Rows() {
           </div>
         </Spec>
         <Spec label="sidebar item" target="[data-slot=sidebar-menu-button]">
-          <SidebarProvider className="min-h-0 w-48 rounded-(--studio-sidebar-radius,var(--radius-lg)) border bg-sidebar p-2 [--surface-bg:var(--color-sidebar)]">
-            <SidebarMenu>
-              {NAV.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton isActive={item.isActive}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+          <SidebarProvider className="min-h-0 w-48">
+            {/* The floating variant's group, so the panel takes its frame. */}
+            <div data-variant="floating" className="group w-full">
+              <Sidebar collapsible="none" className="w-full p-2">
+                <SidebarMenu>
+                  {NAV.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton isActive={item.isActive}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </Sidebar>
+            </div>
           </SidebarProvider>
         </Spec>
       </div>
@@ -424,7 +428,7 @@ export default function SpaceBoard() {
       <BoardSection member="rows" title="Rows" axes={["density", "menuRows"]}>
         <Rows />
       </BoardSection>
-      <BoardSection member="text" title="Text" axes={["density", "uiTextSize"]}>
+      <BoardSection member="text" title="Text" axes={["density"]}>
         <Text />
       </BoardSection>
     </Board>

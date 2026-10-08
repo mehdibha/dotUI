@@ -7,6 +7,7 @@ import { XIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
+import { Card, CardContent } from "@/registry/ui/card"
 import {
   DialogBody,
   DialogDescription,
@@ -22,7 +23,7 @@ import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
 import { TextField } from "@/registry/ui/text-field"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
+import { Board, BoardSection, CAPTION, useBoardFocus } from "./board"
 
 /* --------------------------------- Replay --------------------------------- */
 
@@ -106,21 +107,20 @@ function Page() {
       </div>
       <div className="grid grid-cols-1 gap-3 p-5 @md:grid-cols-2 @3xl:grid-cols-3">
         {PROJECTS.map((project) => (
-          <div
-            key={project.name}
-            className="flex flex-col gap-3 rounded-(--studio-radius-card) border bg-card p-3"
-          >
-            <div
-              className={cn(
-                "h-14 rounded-(--studio-radius-item) opacity-70",
-                project.tone,
-              )}
-            />
-            <div className="flex flex-col text-sm">
-              <span className="font-medium">{project.name}</span>
-              <span className="text-xs text-fg-muted">{project.meta}</span>
-            </div>
-          </div>
+          <Card key={project.name} size="sm">
+            <CardContent className="flex flex-col gap-3">
+              <div
+                className={cn(
+                  "h-14 rounded-(--studio-radius-item) opacity-70",
+                  project.tone,
+                )}
+              />
+              <div className="flex flex-col text-sm">
+                <span className="font-medium">{project.name}</span>
+                <span className="text-xs text-fg-muted">{project.meta}</span>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
@@ -356,7 +356,7 @@ function Specimen({
       <div className="w-full overflow-hidden rounded-(--studio-radius-card) border">
         {children}
       </div>
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }
@@ -460,7 +460,7 @@ function PopoverStage() {
   const { popover } = usePopoverStyles()()
   const { content } = useDialogStyles()()
   return (
-    <Screen height="20rem">
+    <Screen height="22rem">
       <div
         data-popover=""
         className={popover({ className: "absolute top-14 right-4 w-72" })}
@@ -503,7 +503,6 @@ export default function DialogsBoard() {
           "dialogMotion",
           "dialogEntrance",
           "dialogPosition",
-          "motion",
         ]}
         className={FRAME}
       >

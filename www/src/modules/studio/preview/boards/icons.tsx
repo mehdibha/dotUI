@@ -46,6 +46,7 @@ import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
 import { SearchField } from "@/registry/ui/search-field"
 import { Separator } from "@/registry/ui/separator"
 import {
+  Sidebar,
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuButton,
@@ -53,7 +54,7 @@ import {
   SidebarProvider,
 } from "@/registry/ui/sidebar"
 
-import { Board, BoardSection } from "./board"
+import { Board, BoardSection, CAPTION } from "./board"
 
 const SET = [
   SearchIcon,
@@ -121,7 +122,7 @@ function Tile({
     <div
       className={cn("flex min-w-0 flex-col gap-3", wide && "@xl:col-span-2")}
     >
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
       <div className={className}>{children}</div>
     </div>
   )
@@ -194,20 +195,25 @@ export default function IconsBoard() {
               </div>
             </Tile>
             <Tile label="Sidebar">
-              <SidebarProvider className="min-h-0 w-full max-w-60 rounded-(--studio-sidebar-radius,var(--radius-lg)) border bg-sidebar p-2 [--surface-bg:var(--color-sidebar)]">
-                <SidebarMenu>
-                  {NAV.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton isActive={item.isActive}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                      {item.badge && (
-                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                      )}
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
+              <SidebarProvider className="min-h-0 w-full max-w-60">
+                {/* The floating variant's group, so the panel takes its frame. */}
+                <div data-variant="floating" className="group w-full">
+                  <Sidebar collapsible="none" className="w-full p-2">
+                    <SidebarMenu>
+                      {NAV.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton isActive={item.isActive}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                          {item.badge && (
+                            <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                          )}
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </Sidebar>
+                </div>
               </SidebarProvider>
             </Tile>
             <Tile label="Alerts" wide className="grid gap-3 @3xl:grid-cols-3">
@@ -240,9 +246,7 @@ export default function IconsBoard() {
                 key={size}
                 className="grid grid-cols-[3rem_1fr] items-center @3xl:flex @3xl:flex-col-reverse @3xl:gap-4"
               >
-                <span className="text-[11px] text-fg-muted tabular-nums">
-                  {size}px
-                </span>
+                <span className={cn(CAPTION, "tabular-nums")}>{size}px</span>
                 <div className="flex items-center gap-3 text-fg @3xl:justify-center">
                   {SIZED.slice(0, size === 32 ? 3 : SIZED.length).map(
                     (Icon, i) => (

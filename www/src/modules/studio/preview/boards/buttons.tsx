@@ -46,7 +46,14 @@ import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
 
-import { Board, BoardSection, stateProps, useBoardFocus } from "./board"
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  stateProps,
+  useBoardFocus,
+  useLoop,
+} from "./board"
 import type { StateName } from "./board"
 
 type Frozen = ReturnType<typeof stateProps>
@@ -60,9 +67,7 @@ interface Column {
 const MATRIX_GAP = 12
 const WRAP_GAP = 16
 
-/** The layout that fits the container: the full matrix, or rows wrapped
- *  into `perRow` equal cells, balanced so every row breaks the same way.
- *  Specimens and labels keep their natural width in either, so measure them. */
+/** Full matrix when it fits, else balanced wrapped rows of `perRow` cells. */
 function useGridLayout(columns: number) {
   const ref = useRef<HTMLDivElement>(null)
   const [layout, setLayout] = useState({ matrix: false, perRow: columns })
@@ -102,8 +107,7 @@ function useGridLayout(columns: number) {
   return [ref, layout] as const
 }
 
-/** Rows of frozen specimens under shared state columns; when the columns
- *  don't fit, each row wraps with every specimen under its own label. */
+/** Frozen specimens under shared state columns, wrapped when they don't fit. */
 function StateGrid({
   columns,
   rows,
@@ -120,10 +124,7 @@ function StateGrid({
 }) {
   const [ref, { matrix, perRow }] = useGridLayout(columns.length)
   const label = (id: string) =>
-    cn(
-      "text-[11px] text-fg-muted transition-colors",
-      emphasis === id && "font-medium text-fg",
-    )
+    cn(CAPTION, "transition-colors", emphasis === id && "font-medium text-fg")
   return (
     <div ref={ref} className="w-full">
       <div
@@ -195,8 +196,7 @@ function StateGrid({
   )
 }
 
-/** Board centres the focused section once; the popover's inset then narrows
- *  the board and the grids above reflow, so centre it again. */
+/** Re-centres the focused section once the popover inset reflows the grids above. */
 function KeepFocusedInView() {
   const ref = useRef<HTMLSpanElement>(null)
   useEffect(() => {
@@ -236,7 +236,7 @@ function Line({
       >
         {children}
       </div>
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }
@@ -280,26 +280,12 @@ function useChanged(value: unknown, ms: number) {
   return changed
 }
 
-/** Flips every `ms` while `active`; false otherwise. */
-function useBlink(active: boolean, ms = 600) {
-  const [on, setOn] = useState(false)
-  useEffect(() => {
-    if (!active) return
-    const timer = setInterval(() => setOn((on) => !on), ms)
-    return () => {
-      clearInterval(timer)
-      setOn(false)
-    }
-  }, [active, ms])
-  return on
-}
-
 function ButtonStates() {
   const styles = useButtonStyles()
   const { axis } = useBoardFocus()
   // A frozen press barely reads; after Press changes, press and release.
   const pressing = useChanged(useComponentParams("button").press, 3000)
-  const released = useBlink(pressing)
+  const released = useLoop(pressing, 600)
   return (
     <StateGrid
       columns={BUTTON_COLUMNS.map((column) =>
@@ -345,9 +331,7 @@ function ButtonAnatomy() {
               <Button size={size} isIconOnly aria-label="Copy">
                 <CopyIcon />
               </Button>
-              <span className="pb-4 text-[11px] text-fg-muted @xl:pb-0">
-                {size}
-              </span>
+              <span className={cn(CAPTION, "pb-4 @xl:pb-0")}>{size}</span>
             </div>
           ))}
         </div>
@@ -407,16 +391,13 @@ function useLinger(active: boolean, ms = 6000) {
   return active || lingering
 }
 
-/** Steps hover, press and selection while the panel edits motion or the
- *  pointer rests on it. */
+/** Steps hover, press and selection while motion is edited or hovered. */
 function MotionLoop() {
   const button = useButtonStyles()
   const toggle = useToggleStyles()
   const { axis } = useBoardFocus()
   const [hovered, setHovered] = useState(false)
-  const playing = useLinger(
-    hovered || axis === "buttonMotion" || axis === "motion",
-  )
+  const playing = useLinger(hovered || axis === "buttonMotion")
   const [step, setStep] = useState(0)
 
   useEffect(() => {
