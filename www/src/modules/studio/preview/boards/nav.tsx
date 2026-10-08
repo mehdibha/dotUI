@@ -70,7 +70,7 @@ const PROJECT_TABS = ["overview", "deployments", "analytics"]
 /** Walks the selection across the tabs while the panel edits their motion. */
 function useReplay() {
   const { axis } = useBoardFocus()
-  const playing = axis === "navMotion" || axis === "motion"
+  const playing = axis === "navMotion"
   const [selected, setSelected] = useState<Key>("overview")
   useEffect(() => {
     if (!playing) return
@@ -490,7 +490,6 @@ export default function NavBoard() {
           "navWeight",
           "navCase",
           "navMotion",
-          "motion",
         ]}
         className={STACK}
       >

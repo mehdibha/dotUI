@@ -503,7 +503,6 @@ export default function DialogsBoard() {
           "dialogMotion",
           "dialogEntrance",
           "dialogPosition",
-          "motion",
         ]}
         className={FRAME}
       >

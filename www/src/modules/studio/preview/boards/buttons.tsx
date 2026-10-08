@@ -397,9 +397,7 @@ function MotionLoop() {
   const toggle = useToggleStyles()
   const { axis } = useBoardFocus()
   const [hovered, setHovered] = useState(false)
-  const playing = useLinger(
-    hovered || axis === "buttonMotion" || axis === "motion",
-  )
+  const playing = useLinger(hovered || axis === "buttonMotion")
   const [step, setStep] = useState(0)
 
   useEffect(() => {

@@ -422,7 +422,7 @@ export default function SpaceBoard() {
       <BoardSection member="rows" title="Rows" axes={["density", "menuRows"]}>
         <Rows />
       </BoardSection>
-      <BoardSection member="text" title="Text" axes={["density", "uiTextSize"]}>
+      <BoardSection member="text" title="Text" axes={["density"]}>
         <Text />
       </BoardSection>
     </Board>

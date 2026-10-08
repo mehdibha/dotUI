@@ -67,7 +67,6 @@ const STATES: { state: FieldState; label: string; value: string }[] = [
 const STATE_OF_AXIS: Record<string, FieldState> = {
   inputHover: "hover",
   focusInputStyle: "focus",
-  focusInputColor: "focus",
   inputMotion: "focus",
   inputError: "invalid",
 }
@@ -423,7 +422,6 @@ export default function InputsBoard() {
           "inputStyle",
           "inputHover",
           "focusInputStyle",
-          "focusInputColor",
           "roleControl",
           "inputMotion",
           "inputError",
