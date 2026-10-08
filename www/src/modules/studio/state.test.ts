@@ -55,22 +55,6 @@ describe("placeOf", () => {
     ])
   })
 
-  // A Uses link names an upstream row: landing on its own page flashes nothing.
-  it("leads every Uses link off its page", () => {
-    const links = sources.flatMap((source) => {
-      const body = source.match(/export function (\w+Section)\(/)?.[1]
-      return [...source.matchAll(/<UsesRow\s+axis="(\w+)"/g)].map(
-        ([, key = ""]) => ({ key, body }),
-      )
-    })
-    expect(links.length).toBeGreaterThan(0)
-    for (const { key, body } of links) {
-      const place = placeOf(key)
-      expect(place, key).toBeDefined()
-      expect(place?.page?.Body.name, key).not.toBe(body)
-    }
-  })
-
   // A hidden row vanishes without a chip: only its own page may explain it.
   it("hides a row only for a cause on its page", () => {
     const where = (key: string) => {

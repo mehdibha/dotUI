@@ -22,6 +22,7 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { PRIMARY_LEAVES, primaryValue, withSource } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
 import { SOURCE_OPTIONS } from "../axes/color.meta"
+import { OPTIONS } from "../axes/meta"
 import {
   DIAL_CHEVRON,
   DIAL_LABEL,
@@ -234,9 +235,11 @@ function SourceSwatch({
 
 /* ---------------------------------- Row ----------------------------------- */
 
-const CHOICES = ["accent", "neutral"].flatMap((id) =>
-  SOURCE_OPTIONS.filter((option) => option.value === id),
-)
+/** Accent first, wherever a Primary source is picked. */
+const inOrder = <T extends { value: string }>(options: readonly T[]) =>
+  ["accent", "neutral"].flatMap((id) => options.filter((o) => o.value === id))
+
+const CHOICES = inOrder(SOURCE_OPTIONS)
 
 function ChoiceStrip({ ink }: { ink: Ink }) {
   return (
@@ -386,7 +389,7 @@ const leafRow = (leaf: PrimaryLeaf) =>
       <DialSelect
         axis={leaf}
         label="Color"
-        options={CHOICES.map((option) => {
+        options={inOrder(OPTIONS[leaf] ?? SOURCE_OPTIONS).map((option) => {
           const id = option.value as PrimaryColorSource
           return {
             ...option,

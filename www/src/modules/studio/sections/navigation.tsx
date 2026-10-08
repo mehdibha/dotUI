@@ -27,8 +27,7 @@ import type { DesignSystem } from "@/modules/studio/preset/types"
 import { parseState } from "../axes"
 import type { StudioState } from "../axes"
 import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
-import { SOURCE_OPTIONS } from "../axes/color.meta"
-import { LINK_COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links.meta"
+import { UNDERLINE_OPTIONS } from "../axes/links.meta"
 import {
   CASE_OPTIONS,
   INDICATOR_OPTIONS,
@@ -248,16 +247,6 @@ function NavMarkerRow() {
   )
 }
 
-function TabsColorRow() {
-  return (
-    <DialSegmented
-      axis="tabsColor"
-      label="Indicator color"
-      options={SOURCE_OPTIONS}
-    />
-  )
-}
-
 function TabIndicatorRow() {
   const { state } = useStudio()
   const indicators = useSystems(
@@ -367,16 +356,6 @@ function LinkUnderlineRow() {
   )
 }
 
-function LinkColorRow() {
-  return (
-    <DialSegmented
-      axis="linkColor"
-      label="Color"
-      options={LINK_COLOR_OPTIONS}
-    />
-  )
-}
-
 function BreadcrumbSeparatorRow() {
   return (
     <DialSegmented
@@ -410,14 +389,12 @@ function BreadcrumbToneRow() {
 export const ROWS: RowMap = {
   tabStyle: TabStyleRow,
   navMarker: NavMarkerRow,
-  tabsColor: TabsColorRow,
   tabIndicator: TabIndicatorRow,
   navWeight: NavWeightRow,
   navItemWeight: NavItemWeightRow,
   navCase: NavCaseRow,
   tabsPill: TabsPillRow,
   linkUnderline: LinkUnderlineRow,
-  linkColor: LinkColorRow,
   breadcrumbSeparator: BreadcrumbSeparatorRow,
   breadcrumbTone: BreadcrumbToneRow,
 }
@@ -441,7 +418,7 @@ export function NavigationSection(_: { studio: Studio }) {
     <>
       <Row axis="tabStyle" />
       <Row axis="navMarker" />
-      <Row axis="tabsColor" />
+      <Row axis="tabsColor" label="Indicator color" />
       <Row axis="tabIndicator" />
       <Row axis="navWeight" />
       <Row axis="navItemWeight" />
@@ -454,7 +431,7 @@ export function NavigationSection(_: { studio: Studio }) {
       <Row axis="navMotion" />
       <MemberSection id="link" title="Links">
         <Row axis="linkUnderline" />
-        <Row axis="linkColor" />
+        <Row axis="linkColor" label="Color" />
       </MemberSection>
       <MemberSection id="breadcrumbs" title="Breadcrumbs">
         <Row axis="breadcrumbSeparator" />
