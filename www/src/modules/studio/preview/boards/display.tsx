@@ -74,9 +74,10 @@ const ISSUES = [
   },
 ] as const
 
-// Phones keep the title and status.
+// Phones keep the title and status; titles wrap so wide badges still fit.
 const WIDE = "hidden @md:table-cell"
 const WIDER = "hidden @lg:table-cell"
+const TITLE = "font-medium whitespace-normal @sm:whitespace-nowrap"
 
 function TableSection() {
   return (
@@ -104,7 +105,7 @@ function TableSection() {
                 <TableCell className={`text-fg-muted tabular-nums ${WIDE}`}>
                   {issue.id}
                 </TableCell>
-                <TableCell className="font-medium">{issue.title}</TableCell>
+                <TableCell className={TITLE}>{issue.title}</TableCell>
                 <TableCell>
                   <Badge variant={issue.status[1]}>{issue.status[0]}</Badge>
                 </TableCell>
@@ -155,7 +156,10 @@ function AccordionSection() {
         setExpanded((keys) => new Set([keys.has("plans") ? "seats" : "plans"])),
       REPLAY_MS,
     )
-    return () => clearInterval(timer)
+    return () => {
+      clearInterval(timer)
+      setExpanded(new Set(["plans"]))
+    }
   }, [playing])
 
   return (
@@ -184,7 +188,7 @@ const PEOPLE = [
   { name: "Mehdi Ben Hadj Ali", initials: "MB", src: "mehdibha" },
   { name: "Tanner Linsley", initials: "TL", src: "tannerlinsley" },
   { name: "Devon Govett", initials: "DG", src: "devongovett" },
-]
+] as const
 
 const SIZES = ["sm", "md", "lg"] as const
 
@@ -215,10 +219,10 @@ function AvatarSection() {
         {SIZES.map((size) => (
           <Avatar key={size} size={size}>
             <AvatarImage
-              src="https://github.com/mehdibha.png"
-              alt="Mehdi Ben Hadj Ali"
+              src={`https://github.com/${PEOPLE[0].src}.png`}
+              alt={PEOPLE[0].name}
             />
-            <AvatarFallback>MB</AvatarFallback>
+            <AvatarFallback>{PEOPLE[0].initials}</AvatarFallback>
           </Avatar>
         ))}
       </Specimen>
