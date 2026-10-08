@@ -11,9 +11,8 @@ import { RadialBarChart } from "@/registry/ui/chart-radial"
 
 import { Board, BoardSection, useBoardFocus } from "./board"
 
-// Every chart on the board shows these; grid only where the chart draws one.
 const SHARED = ["chartPalette", "brand", "chartMotion", "motion"]
-const GRIDDED = [...SHARED.slice(0, 2), "chartGrid", ...SHARED.slice(2)]
+const GRIDDED = ["chartPalette", "brand", "chartGrid", "chartMotion", "motion"]
 
 // The legend keeps ~20px below itself: trim the card's bottom to match its top.
 const CARD = "flex-col flex-nowrap items-stretch justify-start pb-3 max-sm:pb-0"
