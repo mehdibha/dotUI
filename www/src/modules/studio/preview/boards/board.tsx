@@ -102,13 +102,12 @@ export function Board({
     >
       <div
         className={cn(
-          "mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-10 px-4 py-10 sm:px-10",
+          // The bottom clears the preview's floating toolbar.
+          "mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-10 px-4 pt-10 pb-24 sm:px-10",
           className,
         )}
       >
-        <h1 className="text-sm font-medium text-fg-muted">
-          {BoardsIndex[id]?.title}
-        </h1>
+        <h1 className="text-lg font-semibold">{BoardsIndex[id]?.title}</h1>
         {children}
       </div>
     </div>
