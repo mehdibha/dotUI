@@ -191,6 +191,7 @@ export default function ChartsBoard() {
             x="month"
             y={["free", "pro", "team"]}
             labels={PLANS}
+            axes
             legend
             height={HEIGHT}
             ariaLabel="Signups by plan, January through June"
@@ -209,6 +210,8 @@ export default function ChartsBoard() {
             labels={PERCENTILES}
             curve="monotone"
             points
+            axes
+            formatY={(value) => `${String(value)}ms`}
             legend
             height={HEIGHT}
             ariaLabel="API response time percentiles this week, in milliseconds"

@@ -167,6 +167,8 @@ const PROJECTS = [
   { name: "Mobile app", meta: "Updated yesterday" },
   { name: "Brand refresh", meta: "Updated 3d ago" },
   { name: "Q4 planning", meta: "Updated last week" },
+  { name: "Onboarding flow", meta: "Updated 2w ago" },
+  { name: "Pricing page", meta: "Updated last month" },
 ]
 
 /** An app shell: the sidebar on its tone, the content panel inset in it. */
@@ -256,7 +258,7 @@ function SidebarStates() {
   return (
     <div className="border-t bg-sidebar px-5 py-8">
       <StateRow
-        states={["rest", "hover", "pressed", "selected", "focus", "disabled"]}
+        states={["rest", "hover", "pressed", "focus", "selected", "disabled"]}
       >
         {(props, state) => (
           <span

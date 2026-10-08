@@ -86,9 +86,9 @@ type DayState =
 const DAY_STATES: { state: DayState; label: string; day: number }[] = [
   { state: "rest", label: "Rest", day: 12 },
   { state: "hover", label: "Hover", day: 13 },
-  { state: "selected", label: "Selected", day: 14 },
-  { state: "today", label: "Today", day: 15 },
-  { state: "focus", label: "Focus", day: 16 },
+  { state: "focus", label: "Focus", day: 14 },
+  { state: "selected", label: "Selected", day: 15 },
+  { state: "today", label: "Today", day: 16 },
   { state: "unavailable", label: "Unavailable", day: 17 },
 ]
 

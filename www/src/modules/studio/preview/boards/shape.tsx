@@ -454,7 +454,7 @@ export default function ShapeBoard() {
         member="panels"
         title="Panels"
         axes={["rolePanel"]}
-        className="items-end gap-x-10 gap-y-8"
+        className="items-center gap-x-10 gap-y-8"
       >
         <Specimen label="Dialog" className="w-full max-w-sm">
           <DialogSpecimen />

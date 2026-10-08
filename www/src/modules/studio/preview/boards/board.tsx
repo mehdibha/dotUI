@@ -139,7 +139,7 @@ export function BoardSection({
       <h2 className="text-xs font-medium text-fg-muted">{title}</h2>
       <div
         className={cn(
-          "flex min-w-0 flex-wrap items-center justify-center gap-4 rounded-(--studio-radius-panel) border bg-bg p-8 ring-accent/40 transition-shadow duration-500 group-data-focused/section:ring-4 max-sm:p-5",
+          "flex min-w-0 flex-wrap items-center justify-center gap-4 rounded-(--studio-radius-panel) border bg-bg p-8 ring-accent/40 transition-shadow duration-500 group-data-focused/section:ring-4 max-sm:p-4",
           className,
         )}
       >
