@@ -5,7 +5,6 @@
 import { useContext } from "react"
 
 import { DialLink } from "../dial"
-import type { RowMap } from "../family-page"
 import { PanelNav } from "../rows"
 import type { ChapterPage, Studio } from "../state"
 import { ButtonsPreview, ButtonsSection } from "./buttons"
@@ -208,5 +207,3 @@ export function ComponentsSection({ studio }: { studio: Studio }) {
     </>
   )
 }
-
-export const ROWS: RowMap = {}

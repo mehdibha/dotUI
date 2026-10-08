@@ -13,12 +13,7 @@ import {
   ROWS as colorRows,
   ColorSection,
 } from "./sections/color"
-import {
-  COMPONENT_PAGES,
-  ComponentsSection,
-  ROWS as componentsRows,
-} from "./sections/components"
-import { ROWS as cursorsRows } from "./sections/cursors"
+import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { ROWS as dataDisplayRows } from "./sections/data-display"
 import { ROWS as datesRows } from "./sections/dates"
 import { ROWS as dialogsRows } from "./sections/dialogs"
@@ -55,8 +50,6 @@ export const SECTION_ROWS: Record<string, RowMap> = {
   buttons: buttonsRows,
   charts: chartsRows,
   color: colorRows,
-  components: componentsRows,
-  cursors: cursorsRows,
   dataDisplay: dataDisplayRows,
   dates: datesRows,
   dialogs: dialogsRows,

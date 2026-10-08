@@ -9,7 +9,7 @@ import {
   useSlottedContext,
 } from "react-aria-components"
 
-export interface PreviewFocus {
+interface PreviewFocus {
   /** A board id: the open page, else the chapter the row sits in. */
   board: string
   /** The member section the row sits in. */

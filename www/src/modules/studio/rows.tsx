@@ -78,7 +78,7 @@ export function useMedia(query: string) {
 }
 /* Below `lg` the panel docks under the preview (or beside it, on short
    screens) and its popovers open over the dock, never the preview. */
-export const DOCKED_QUERY = "(max-width: 1023px)"
+const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
 /** Docked beside the preview (a phone on its side): the `dock-side` variant. */
 export const useDockSide = () =>
@@ -170,12 +170,6 @@ export function PanelPopover({
     </Popover>
   )
 }
-
-/** The left column of a row: the label, and the line under it that says what
- *  the axis actually changes. Rows stay one line until a description arrives.
- *  `text-left` is explicit — stacked, the label stretches to the column width
- *  and would otherwise inherit a `<button>`'s centered text. */
-/* ------------------------------- Group title ------------------------------ */
 
 /* ------------------------------- Drafting -------------------------------- */
 

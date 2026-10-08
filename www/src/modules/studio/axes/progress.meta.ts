@@ -36,7 +36,7 @@ export const COLOR_OPTIONS = options(COLOR_VALUES, {
   },
 })
 
-export const FILL_OPTIONS = options(FILL_VALUES, {
+const FILL_OPTIONS = options(FILL_VALUES, {
   neutral: { label: "Neutral" },
   accent: { label: "Accent" },
   checks: { label: "Checks" },

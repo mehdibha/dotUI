@@ -96,7 +96,7 @@ export const INVALID_OPTIONS = options(INVALID_VALUES, {
   tint: { label: "Tint", credits: ["Polaris", "Supabase (approx.)"] },
 })
 
-export const FIELD_INK_OPTIONS = options(SOURCE_VALUES, {
+const FIELD_INK_OPTIONS = options(SOURCE_VALUES, {
   neutral: { label: "Neutral", credits: ["Geist"] },
   accent: { label: "Accent" },
 })

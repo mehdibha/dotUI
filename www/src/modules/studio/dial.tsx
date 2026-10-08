@@ -2,9 +2,8 @@
 
 /* The panel's control language, after DialKit (dialkit.dev): 36px rows on a
    5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 70%
-   foreground, mono values on the right; a slider is its whole row; folders
-   fold in place between hairlines. Alpha surfaces keep both themes in one
-   set of classes. Folds are instant — chrome, not content. */
+   foreground, mono values on the right; a slider is its whole row. Alpha
+   surfaces keep both themes in one set of classes. */
 
 import { useContext, useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronDownIcon, ChevronRightIcon } from "lucide-react"
@@ -1141,7 +1140,7 @@ export interface DialOption {
 
 /** The segmented choice itself; the moving pill is the only motion. `null`
  *  selects nothing — a view over values that disagree. */
-export function SegmentedGroup({
+function SegmentedGroup({
   label,
   value,
   onChange,
@@ -1280,5 +1279,3 @@ export function DialToggle({
     />
   )
 }
-
-/* --------------------------------- Folder --------------------------------- */

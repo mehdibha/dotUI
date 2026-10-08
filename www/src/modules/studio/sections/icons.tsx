@@ -214,7 +214,7 @@ function IconLibraryRow({ label: labelProp }: { label: string }) {
   )
 }
 
-const LibraryRow = () => <IconLibraryRow label="Icon Library" />
+const LibraryRow = () => <IconLibraryRow label="Icon library" />
 
 const StrokeRow = () => (
   <DialSlider
