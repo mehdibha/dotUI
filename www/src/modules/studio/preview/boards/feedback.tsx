@@ -146,7 +146,7 @@ function TagSection() {
     <BoardSection
       member="tag"
       title="Tag"
-      axes={["badgeStyle", "feedbackMotion"]}
+      axes={["badgeStyle"]}
       className={STACK}
     >
       <div className="grid items-center gap-10 @2xl:grid-cols-[minmax(0,1fr)_auto] @2xl:gap-12">
@@ -370,7 +370,7 @@ function Backdrop() {
   return (
     <div
       aria-hidden
-      className="absolute inset-0 grid auto-rows-fr grid-cols-4 gap-3 p-3 @2xl:grid-cols-6"
+      className="absolute inset-0 grid auto-rows-[7rem] grid-cols-2 gap-3 p-3 @2xl:auto-rows-fr @2xl:grid-cols-6"
     >
       {[...TILES, ...TILES].map((tone, index) => (
         <div
@@ -422,27 +422,30 @@ function MotionSection() {
   const count = useRef(0)
 
   const step = useCallback(() => {
-    const toast =
-      LIVE_TOASTS[count.current++ % LIVE_TOASTS.length] ?? LIVE_TOASTS[0]
+    const toast = LIVE_TOASTS[count.current++ % LIVE_TOASTS.length]!
     manager.add({ title: toast.title, type: toast.type, timeout: 3000 })
     setOn((value) => !value)
   }, [manager])
 
   // One toast at rest, so the stage never reads empty.
   useEffect(() => {
+    if (playing) return
     const id = manager.add({
       title: "Changes saved",
       type: "success",
       timeout: 0,
     })
     return () => manager.close(id)
-  }, [manager])
+  }, [manager, playing])
 
   useEffect(() => {
     if (!playing) return
     step()
     const timer = setInterval(step, REPLAY_MS)
-    return () => clearInterval(timer)
+    return () => {
+      clearInterval(timer)
+      setOn(false)
+    }
   }, [playing, step])
 
   return (
@@ -456,7 +459,7 @@ function MotionSection() {
         <div
           ref={setStage}
           // Transformed, so the fixed toast viewport anchors to this stage.
-          className="relative h-52 w-full transform-gpu overflow-hidden rounded-(--studio-radius-card) border bg-muted/40 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]"
+          className="relative h-40 w-full transform-gpu overflow-hidden rounded-(--studio-radius-card) border bg-muted/40 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]"
         >
           <ToastProvider
             toastManager={manager}
