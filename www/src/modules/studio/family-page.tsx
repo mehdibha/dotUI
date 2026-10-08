@@ -48,7 +48,8 @@ export function MemberSection({
     <section
       data-member={id}
       aria-label={title}
-      className="mt-2.5 flex scroll-mt-2 flex-col gap-1.5"
+      // Every row hidden by a rule leaves no orphan title.
+      className="mt-2.5 flex scroll-mt-2 flex-col gap-1.5 [&:not(:has([data-axis],[data-holds]))]:hidden"
     >
       <span className="px-1 text-xs font-medium text-fg-muted">{title}</span>
       {children}

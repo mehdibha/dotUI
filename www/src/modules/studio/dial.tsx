@@ -112,8 +112,12 @@ export function PinnedRow({
     <div data-axis={axis} aria-disabled className={DIAL_ROW}>
       <span className={cn(DIAL_LABEL, "opacity-50")}>{label}</span>
       <span className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-[13px] font-medium text-fg/50">
-          {children}
+        {/* Short of room, the value wraps past the spacer out of sight: the chip says why. */}
+        <span className="flex h-5 min-w-0 flex-wrap justify-end overflow-hidden">
+          <span className="h-5" />
+          <span className="text-[13px]/5 font-medium whitespace-nowrap text-fg/50">
+            {children}
+          </span>
         </span>
         <Cause cause={cause} />
       </span>
