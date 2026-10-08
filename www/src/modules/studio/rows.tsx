@@ -177,17 +177,6 @@ export function PanelPopover({
  *  and would otherwise inherit a `<button>`'s centered text. */
 /* ------------------------------- Group title ------------------------------ */
 
-/** The line that opens a group: what the rows under it configure. Quieter than
- *  the chapter heading above it, and bound to its group — the margin sits on
- *  top, never between. */
-export function GroupTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
-      {children}
-    </span>
-  )
-}
-
 /* ------------------------------- Drafting -------------------------------- */
 
 /** A value the control owns while it's being dragged, reseeded whenever the

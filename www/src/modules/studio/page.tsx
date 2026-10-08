@@ -33,15 +33,8 @@ function untilMounted(attempt: () => boolean, frames = 30) {
   })
 }
 
-/** A member section in view; its More opens when every row is folded in it. */
-function showMember(section: Element) {
+const showMember = (section: Element) =>
   section.scrollIntoView({ block: "start" })
-  if (section.querySelector(":scope > :not(span, [data-folder])")) return
-  for (const trigger of section.querySelectorAll<HTMLElement>(
-    ":scope > [data-folder]:not([data-expanded]) > [data-folder-trigger]",
-  ))
-    trigger.click()
-}
 
 const memberOf = (scope: Element | null | undefined, title: string) =>
   [...(scope?.querySelectorAll("[data-member]") ?? [])].find(

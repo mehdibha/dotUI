@@ -57,13 +57,8 @@ export function valueLabel(key: AxisKey, value: unknown): string {
  *  first opens the row's chapter or page. */
 export const RevealAxis = createContext<(key: AxisKey) => void>(flashAxis)
 
-const closedFolder = (row: Element) =>
-  row.closest<HTMLElement>("[data-folder]:not([data-expanded])")
-
-/** Flashes a row in view, opening the folded More it sits in first. */
+/** Scrolls a row into view and flashes it. */
 export function revealRow(row: Element) {
-  const folder = closedFolder(row)
-  folder?.querySelector<HTMLElement>("[data-folder-trigger]")?.click()
   requestAnimationFrame(() => {
     row.scrollIntoView({ block: "nearest" })
     row.animate(
@@ -85,7 +80,7 @@ export function flashAxis(key: string): boolean {
     ...document.querySelectorAll(
       `[data-axis="${key}"], [data-holds~="${key}"]`,
     ),
-  ].find((el) => (closedFolder(el) ?? el).checkVisibility())
+  ].find((el) => el.checkVisibility())
   if (!row) return false
   revealRow(row)
   return true

@@ -7,21 +7,12 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useContext, useEffect, useRef, useState } from "react"
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  ChevronsUpDownIcon,
-} from "lucide-react"
+import { CheckIcon, ChevronDownIcon, ChevronRightIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
-  Disclosure,
-  DisclosurePanel,
-  Label as RacLabel,
   ListBox as RacListBox,
   ListBoxItem as RacListBoxItem,
-  Select as RacSelect,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -47,7 +38,6 @@ import { PlaceLabel, Row, RowLabel, useRowLabel } from "./family-page"
 import {
   ColorPickerPopover,
   PanelPopover,
-  PanelPopoverBoundary,
   PanelPopoverTitle,
   useDraft,
   useMedia,
@@ -590,151 +580,9 @@ export function DialPickList({
   )
 }
 
-/** A setting as a plain line, Linear's settings style: the label left, a
- *  compact picker right whose menu says what each option does. */
-export function DialPicker({
-  axis: key,
-  label: labelProp,
-  value: valueProp,
-  onChange: onChangeProp,
-  options,
-}: {
-  /** The key the row edits: value, change, hide and exclusions follow it. */
-  axis?: AxisKey
-  label: string
-  value?: string
-  onChange?: (value: string) => void
-  options: DialPickOption[]
-}) {
-  const label = useRowLabel(labelProp)
-  const { axis, hidden, pinned, exclude, held } = useAxisGate(key)
-  if (hidden) return null
-  const value = valueProp ?? String(axis?.effective)
-  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
-  const selected = options.find((option) => option.value === value)
-  const excluded = new Set(exclude?.options)
-  const cause = pinned ?? held
-  return (
-    <RacSelect
-      data-axis={key}
-      selectedKey={value}
-      onSelectionChange={(k) => k !== null && onChange(String(k))}
-      isDisabled={!!pinned}
-      disabledKeys={[
-        ...options.filter((o) => o.disabled).map((o) => o.value),
-        ...excluded,
-      ]}
-      className="flex h-9 w-full shrink-0 items-center justify-between gap-3 pr-1 pl-3 disabled:*:opacity-50"
-    >
-      <RacLabel className={DIAL_LABEL}>{label}</RacLabel>
-      <span className="flex min-w-0 items-center gap-1">
-        {cause && <Cause cause={cause} />}
-        <RacButton className="flex h-7 min-w-0 cursor-interactive items-center gap-1 rounded-md pr-1.5 pl-2 text-[13px] font-medium text-fg/80 focus-reset transition-colors hover:tint-5 focus-visible:focus-ring pressed:tint-10">
-          <span className="truncate">{selected?.label ?? value}</span>
-          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/50" />
-        </RacButton>
-      </span>
-      <PanelPopoverBoundary.Provider value={null}>
-        <PanelPopoverTitle.Provider value={label}>
-          <PanelPopover
-            placement="bottom end"
-            offset={4}
-            showArrow={false}
-            className="w-64 min-w-0 overflow-y-auto p-1"
-          >
-            <RacListBox className="flex flex-col gap-0.5 outline-hidden">
-              {options.map((option) => (
-                <PickItem
-                  key={option.value}
-                  option={option}
-                  aside={
-                    excluded.has(option.value) &&
-                    exclude && <Cause cause={exclude.cause} />
-                  }
-                />
-              ))}
-            </RacListBox>
-          </PanelPopover>
-        </PanelPopoverTitle.Provider>
-      </PanelPopoverBoundary.Provider>
-    </RacSelect>
-  )
-}
-
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
   return <div role="separator" className="-mx-2 my-1 h-px shrink-0 bg-fg/8" />
-}
-
-/** A page's main decision, every option in view: a titled list of rows, each
- *  a radio dot, the label and its specimen. */
-export function DialList({
-  axis: key,
-  label,
-  value: valueProp,
-  onChange: onChangeProp,
-  options,
-}: {
-  /** The key the list edits: value, change, hide and exclusions follow it. */
-  axis?: AxisKey
-  label: string
-  value?: string
-  onChange?: (value: string) => void
-  options: DialSelectOption[]
-}) {
-  const { axis, hidden, exclude, following } = useAxisGate(key)
-  if (hidden) return null
-  const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
-  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
-  return (
-    <div data-axis={key} className="flex flex-col">
-      <span className="flex h-9 items-center gap-2 px-1 text-xs font-medium text-fg/50">
-        {label}
-        {exclude && <Cause cause={exclude.cause} />}
-      </span>
-      <RacToggleButtonGroup
-        aria-label={label}
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={[value]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        orientation="vertical"
-        className="flex flex-col gap-1"
-      >
-        {options.map((option) => (
-          <RacToggleButton
-            key={option.value}
-            id={option.value}
-            isDisabled={exclude?.options?.includes(option.value)}
-            className="group/option flex min-h-10 w-full cursor-interactive items-center justify-between gap-3 rounded-lg tint-5 py-2 pr-2 pl-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40 selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span className="size-3 shrink-0 rounded-full border border-fg/30 transition-[border-width] group-selected/option:border-4 group-selected/option:border-fg" />
-              <span className="flex min-w-0 flex-col">
-                <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/85">
-                  <span className="truncate">{option.label}</span>
-                  {option.aside}
-                </span>
-                {subline(option) && (
-                  <span className="truncate text-xs text-fg/50">
-                    {subline(option)}
-                  </span>
-                )}
-              </span>
-            </span>
-            {option.preview && (
-              <span className="flex shrink-0 items-center gap-1.5 **:data-[slot=glyph]:size-5">
-                {option.preview}
-              </span>
-            )}
-          </RacToggleButton>
-        ))}
-      </RacToggleButtonGroup>
-    </div>
-  )
 }
 
 /* --------------------------------- Slider --------------------------------- */
@@ -1434,70 +1282,3 @@ export function DialToggle({
 }
 
 /* --------------------------------- Folder --------------------------------- */
-
-/** A titled group that folds in place, instantly: chrome, not content.
- *  `open` makes it controlled; `value` summarizes the contents; `badge`
- *  counts what was edited inside. */
-export function DialFolder({
-  title,
-  value,
-  defaultOpen = true,
-  open,
-  onOpenChange,
-  modified,
-  badge = 0,
-  children,
-}: {
-  title: string
-  value?: React.ReactNode
-  defaultOpen?: boolean
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  modified?: boolean
-  badge?: number
-  children: React.ReactNode
-}) {
-  return (
-    <Disclosure
-      data-folder
-      defaultExpanded={defaultOpen}
-      isExpanded={open}
-      onExpandedChange={onOpenChange}
-      className="flex w-full shrink-0 flex-col"
-    >
-      {({ isExpanded }) => (
-        <>
-          <RacButton
-            slot="trigger"
-            data-folder-trigger
-            className="flex h-9 w-full cursor-interactive items-center justify-between gap-2 rounded-lg px-3 text-left focus-reset transition-colors hover:tint-5 focus-visible:focus-ring"
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span className={DIAL_LABEL}>{title}</span>
-              {modified && <ModifiedDot />}
-              {badge > 0 && (
-                <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-semibold text-fg-on-accent tabular-nums">
-                  {badge}
-                  <span className="sr-only"> edited</span>
-                </span>
-              )}
-            </span>
-            <span className="flex min-w-0 items-center gap-2">
-              {value && (
-                <span className="truncate text-[13px] font-medium text-fg/50">
-                  {value}
-                </span>
-              )}
-              <ChevronDownIcon
-                className={cn(DIAL_CHEVRON, isExpanded && "rotate-180")}
-              />
-            </span>
-          </RacButton>
-          <DisclosurePanel>
-            <div className="flex flex-col gap-1.5 pt-1.5">{children}</div>
-          </DisclosurePanel>
-        </>
-      )}
-    </Disclosure>
-  )
-}
