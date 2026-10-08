@@ -279,7 +279,10 @@ function Controls() {
   return (
     <div
       ref={ref}
-      className={cn(GRID, "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3")}
+      className={cn(
+        GRID,
+        "grid-cols-1 @xl/section:grid-cols-2 @4xl/section:grid-cols-3",
+      )}
     >
       <Specimen label="Switch">
         <Switch isSelected={on}>
@@ -413,7 +416,10 @@ function TooltipStage({ replay }: { replay: number }) {
   const { content, arrow } = useTooltipStyles()()
   return (
     <Specimen label="Tooltip">
-      <div ref={ref} className={cn(STAGE, "h-32 items-center sm:h-72")}>
+      <div
+        ref={ref}
+        className={cn(STAGE, "h-32 items-center @3xl/section:h-72")}
+      >
         <div className="relative">
           <Button variant="secondary" isIconOnly aria-label="Copy link">
             <CopyIcon />
@@ -522,7 +528,7 @@ function PickerStage({ replay }: { replay: number }) {
 function Overlays() {
   const replay = useReplay(AXES.overlays)
   return (
-    <div className={cn(GRID, "grid-cols-1 sm:grid-cols-3")}>
+    <div className={cn(GRID, "grid-cols-1 @3xl/section:grid-cols-3")}>
       <MenuStage replay={replay} />
       <TooltipStage replay={replay} />
       <PickerStage replay={replay} />
@@ -648,7 +654,7 @@ function DrawerStage({ replay }: { replay: number }) {
 function Dialogs() {
   const replay = useReplay(AXES.dialogs)
   return (
-    <div className={cn(GRID, "grid-cols-1 md:grid-cols-2")}>
+    <div className={cn(GRID, "grid-cols-1 @2xl/section:grid-cols-2")}>
       <ModalStage replay={replay} />
       <DrawerStage replay={replay} />
     </div>
@@ -788,7 +794,7 @@ function Loading() {
   return (
     <div
       ref={ref}
-      className={cn(GRID, "grid-cols-1 items-center md:grid-cols-3")}
+      className={cn(GRID, "grid-cols-1 items-center @2xl/section:grid-cols-3")}
     >
       <Specimen label="Skeleton">
         <Skeleton isLoading className="flex w-full max-w-56 flex-col gap-4">

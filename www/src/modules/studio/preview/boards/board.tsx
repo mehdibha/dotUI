@@ -3,6 +3,7 @@
 // What the preview shows while the panel edits a chapter or family: one section per member.
 
 import { createContext, useContext, useEffect, useRef } from "react"
+import { useRouter } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
 import {
@@ -58,18 +59,27 @@ export function Board({
 }) {
   const { member, axis, inset } = useBoardFocus()
   const ref = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const section = ref.current && focusedSection(ref.current, member, axis)
     if (!section) return
-    section.scrollIntoView({ behavior: "smooth", block: "center" })
+    const reveal = () =>
+      section.scrollIntoView({ behavior: "smooth", block: "center" })
+    reveal()
+    // A first visit commits before the router's scroll reset, which would undo the reveal.
+    const unsubscribe = router.subscribe("onRendered", reveal)
     section.dataset.focused = ""
-    const timer = setTimeout(() => delete section.dataset.focused, RING_MS)
+    const timer = setTimeout(() => {
+      unsubscribe()
+      delete section.dataset.focused
+    }, RING_MS)
     return () => {
       clearTimeout(timer)
+      unsubscribe()
       delete section.dataset.focused
     }
-  }, [member, axis])
+  }, [member, axis, router])
 
   return (
     <div
@@ -117,8 +127,8 @@ export function BoardSection({
       data-board-member={member}
       data-board-axes={axes.join(" ")}
       aria-label={title}
-      // Centred in what the docked popover leaves visible.
-      className="group/section flex min-w-0 scroll-mt-6 scroll-mb-[calc(--spacing(6)+var(--board-inset-bottom,0px))] flex-col gap-3"
+      // Centred in what the docked popover leaves visible; a container so grids follow the inset.
+      className="group/section @container/section flex min-w-0 scroll-mt-6 scroll-mb-[calc(--spacing(6)+var(--board-inset-bottom,0px))] flex-col gap-3"
     >
       <h2 className="text-xs font-medium text-fg-muted">{title}</h2>
       <div
