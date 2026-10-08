@@ -16,6 +16,8 @@ interface PreviewFocus {
   member?: string
   /** The key the row edits. */
   axis?: string
+  /** Every key the row edits, when it edits several. */
+  holds?: string[]
   /** A panel popover is open. */
   popover: boolean
 }
@@ -53,26 +55,27 @@ export function focusOf(
     trigger.closest("[data-page]")?.getAttribute("data-page") ??
     trigger.closest("[data-chapter]")?.getAttribute("data-chapter")
   const row = trigger.closest("[data-axis], [data-holds]")
-  const axis =
-    row?.getAttribute("data-axis") ??
-    row?.getAttribute("data-holds")?.split(" ")[0]
+  const holds = row?.getAttribute("data-holds")?.split(" ").filter(Boolean)
+  const axis = row?.getAttribute("data-axis") || holds?.[0]
+  const keys = { axis, ...(holds && holds.length > 1 && { holds }) }
   if (board)
     return {
       board,
       member:
         trigger.closest("[data-member]")?.getAttribute("data-member") ??
         undefined,
-      axis: axis || undefined,
+      ...keys,
       popover: true,
     }
   if (!outer?.popover) return null
-  return { ...outer, axis: axis || outer.axis }
+  return axis ? { ...outer, holds: undefined, ...keys } : outer
 }
 
 /** Pushes a popover's focus until the returned cleanup runs. */
-export function pushPopoverFocus(trigger: Trigger) {
+export function pushPopoverFocus(trigger: Trigger, popover = true) {
   const focus = focusOf(trigger, popovers.at(-1)?.focus ?? null)
   if (!focus) return () => {}
+  if (!popover) focus.popover = popovers.length > 0
   const id = Symbol()
   popovers = [...popovers, { id, focus }]
   update()
@@ -92,6 +95,31 @@ export function usePopoverFocus() {
     if (!isOpen || !trigger) return
     return pushPopoverFocus(trigger)
   }, [isOpen, triggerRef])
+}
+
+let held: { row: Element; release: () => void } | null = null
+
+/** A row edited in place (segmented, slider): its focus until the pointer or keyboard moves off it. */
+export function holdEditFocus(row: Element | null) {
+  if (!row || held?.row === row) return
+  held?.release()
+  const pop = pushPopoverFocus(row, false)
+  const leave = (event: Event) => {
+    const to =
+      event.type === "pointerout"
+        ? (event as PointerEvent).relatedTarget
+        : event.target
+    if (row.isConnected && to instanceof Node && row.contains(to)) return
+    release()
+  }
+  const events = ["pointerout", "pointerdown", "focusin"] as const
+  const release = () => {
+    for (const type of events) document.removeEventListener(type, leave, true)
+    pop()
+    held = null
+  }
+  for (const type of events) document.addEventListener(type, leave, true)
+  held = { row, release }
 }
 
 const subscribe = (listener: () => void) => {

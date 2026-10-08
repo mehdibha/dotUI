@@ -34,6 +34,7 @@ import { Separator } from "@/registry/ui/separator"
 import { effective, SCOPES } from "./axes"
 import type { StudioState } from "./axes"
 import { PlaceLabel, Row, RowLabel, useRowLabel } from "./family-page"
+import { holdEditFocus } from "./focus"
 import {
   ColorPickerPopover,
   PanelPopover,
@@ -705,6 +706,10 @@ function SliderRow({
     )
 
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const commit = (next: number) => {
+    if (axis) holdEditFocus(wrapperRef.current)
+    onChange(next)
+  }
   const trackRef = useRef<HTMLDivElement>(null)
   const fillRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
@@ -767,7 +772,7 @@ function SliderRow({
     committed.current = next
     paint(toPct(next), SNAP)
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   const valueAt = (clientX: number) => {
@@ -911,7 +916,7 @@ function SliderRow({
     committed.current = next
     paint(toPct(next))
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   // The handle: hidden at rest (half-strength on touch), half-strength on
@@ -1150,20 +1155,24 @@ function SegmentedGroup({
 }: {
   label: string
   value: string | null
-  onChange: (value: string) => void
+  /** `row`: the row the group sits in. */
+  onChange: (value: string, row: Element | null) => void
   options: DialOption[]
   disabled?: readonly string[]
   className?: string
 }) {
+  const ref = useRef<HTMLDivElement>(null)
   return (
     <RacToggleButtonGroup
+      ref={ref}
       aria-label={label}
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={value === null ? [] : [value]}
       onSelectionChange={(keys) => {
         const next = keys.values().next().value
-        if (next) onChange(next as string)
+        if (next)
+          onChange(next as string, ref.current?.closest("[data-axis]") ?? null)
       }}
       className={cn("relative flex shrink-0 p-0.5", className)}
     >
@@ -1204,7 +1213,7 @@ export function DialSegmented({
   const { axis, hidden, pinned, exclude } = useAxisGate(key)
   if (hidden) return null
   const value = valueProp !== undefined ? valueProp : String(axis?.effective)
-  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
+  const set = onChangeProp ?? ((v: string) => axis?.set(v))
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -1217,7 +1226,10 @@ export function DialSegmented({
     <SegmentedGroup
       label={label}
       value={value}
-      onChange={onChange}
+      onChange={(next, row) => {
+        if (key) holdEditFocus(row)
+        set(next)
+      }}
       options={options}
       disabled={exclude?.options}
       className={stacked ? "w-full" : undefined}

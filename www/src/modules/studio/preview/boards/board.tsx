@@ -8,8 +8,8 @@ import { cn } from "@/registry/lib/utils"
 import {
   NO_INSET,
   usePreviewFocusMessages,
-} from "@/modules/studio/preset/iframe-sync"
-import type { PreviewFocusMessage } from "@/modules/studio/preset/iframe-sync"
+} from "@/modules/studio/preview/focus-message"
+import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
 
 import { BoardsIndex } from "."
 
@@ -36,10 +36,15 @@ export const useBoardFocus = () => useContext(BoardFocusContext)
 
 const RING_MS = 1200
 
-function focusedSection(root: Element, member?: string, axis?: string) {
+// A row that edits several keys lands on the first section showing any of them.
+function focusedSection(root: Element, member?: string, keys: string[] = []) {
   const of = member && `[data-board-member="${CSS.escape(member)}"]`
-  const holds = axis && `[data-board-axes~="${CSS.escape(axis)}"]`
-  const selectors = [of && holds && of + holds, holds, of].filter(Boolean)
+  const shows = keys.map((key) => `[data-board-axes~="${CSS.escape(key)}"]`)
+  const selectors = [
+    ...(of ? shows.map((key) => of + key) : []),
+    ...shows,
+    of,
+  ].filter(Boolean)
   for (const selector of selectors as string[]) {
     const section = root.querySelector<HTMLElement>(selector)
     if (section) return section
@@ -56,11 +61,14 @@ export function Board({
   className?: string
   children: React.ReactNode
 }) {
-  const { member, axis, inset } = useBoardFocus()
+  const { member, axis, holds, inset } = useBoardFocus()
   const ref = useRef<HTMLDivElement>(null)
+  const keys = [axis, ...(holds ?? [])].join(" ")
 
   useEffect(() => {
-    const section = ref.current && focusedSection(ref.current, member, axis)
+    const section =
+      ref.current &&
+      focusedSection(ref.current, member, keys.split(" ").filter(Boolean))
     if (!section) return
     section.scrollIntoView({ behavior: "smooth", block: "center" })
     section.dataset.focused = ""
@@ -69,7 +77,7 @@ export function Board({
       clearTimeout(timer)
       delete section.dataset.focused
     }
-  }, [member, axis])
+  }, [member, keys])
 
   return (
     <div

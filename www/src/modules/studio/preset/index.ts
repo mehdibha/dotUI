@@ -1,14 +1,11 @@
 export { DEFAULTS } from "./defaults"
 export {
   BOARD_SLUG_PREFIX,
-  NO_INSET,
   pingIframe,
-  type PreviewFocusMessage,
   type PreviewMode,
   sendInspect,
   sendInspectorExit,
   sendInspectorMode,
-  sendPreviewFocus,
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
