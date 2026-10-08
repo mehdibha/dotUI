@@ -88,7 +88,6 @@ export function SpaceSection() {
       <DialGap />
       <Row axis="inputHeight" />
       <Row axis="menuRows" />
-      <Row axis="uiTextSize" />
     </>
   )
 }

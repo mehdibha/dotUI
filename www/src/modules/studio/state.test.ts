@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest"
 import { KEY_OWNER, RULES } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
 import { FAMILY_MOTION_KEYS } from "./axes/motion"
-import { placeOf, SECTION_ROWS } from "./state"
+import { CHAPTERS, placeOf, SECTION_ROWS } from "./state"
 
 const SECTIONS = path.join(__dirname, "sections")
 const sources = readdirSync(SECTIONS)
@@ -22,6 +22,33 @@ describe("rows", () => {
         expect(owner.get(key), `${key} in ${section}`).toBeUndefined()
         owner.set(key, section)
       }
+  })
+})
+
+// One page shows a key once: the main page is every chapter, a family page its own body.
+describe("hosting", () => {
+  const fileOf = (name: string) =>
+    sources.find((s) => s.includes(`export function ${name}(`)) ?? ""
+  const hosted = (text: string) =>
+    [...text.matchAll(/<Row\s+axis="(\w+)"/g)].map(([, key]) => key)
+  const once = (keys: (string | undefined)[], page: string) => {
+    const seen = new Set<string>()
+    for (const key of keys) {
+      expect(seen.has(key!), `${key} twice on ${page}`).toBe(false)
+      seen.add(key!)
+    }
+  }
+
+  it("renders a key once on the main page", () => {
+    const names = CHAPTERS.flatMap((c) =>
+      c.pages ? [] : [c.Body.name, c.Primary?.name ?? ""],
+    )
+    once([...new Set(names.map(fileOf))].flatMap(hosted), "the main page")
+  })
+
+  it("renders a key once on each family page", () => {
+    for (const page of CHAPTERS.flatMap((c) => c.pages ?? []))
+      once(hosted(fileOf(page.Body.name)), page.id)
   })
 })
 
