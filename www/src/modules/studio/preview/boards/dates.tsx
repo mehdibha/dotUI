@@ -58,7 +58,7 @@ function useWiderThan(min: number) {
     const element = ref.current
     if (!element) return
     const observer = new ResizeObserver(([entry]) =>
-      setWide(entry!.contentRect.width >= min),
+      setWide((entry?.contentRect.width ?? 0) >= min),
     )
     observer.observe(element)
     return () => observer.disconnect()
