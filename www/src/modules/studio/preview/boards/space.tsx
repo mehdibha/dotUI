@@ -38,6 +38,7 @@ import {
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
 import {
+  Sidebar,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -322,17 +323,22 @@ function Rows() {
           </div>
         </Spec>
         <Spec label="sidebar item" target="[data-slot=sidebar-menu-button]">
-          <SidebarProvider className="min-h-0 w-48 rounded-(--studio-sidebar-radius,var(--radius-lg)) border bg-sidebar p-2 [--surface-bg:var(--color-sidebar)]">
-            <SidebarMenu>
-              {NAV.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton isActive={item.isActive}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+          <SidebarProvider className="min-h-0 w-48">
+            {/* The floating variant's group, so the panel takes its frame. */}
+            <div data-variant="floating" className="group w-full">
+              <Sidebar collapsible="none" className="w-full p-2">
+                <SidebarMenu>
+                  {NAV.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton isActive={item.isActive}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </Sidebar>
+            </div>
           </SidebarProvider>
         </Spec>
       </div>

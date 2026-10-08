@@ -46,6 +46,7 @@ import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
 import { SearchField } from "@/registry/ui/search-field"
 import { Separator } from "@/registry/ui/separator"
 import {
+  Sidebar,
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuButton,
@@ -194,20 +195,25 @@ export default function IconsBoard() {
               </div>
             </Tile>
             <Tile label="Sidebar">
-              <SidebarProvider className="min-h-0 w-full max-w-60 rounded-(--studio-sidebar-radius,var(--radius-lg)) border bg-sidebar p-2 [--surface-bg:var(--color-sidebar)]">
-                <SidebarMenu>
-                  {NAV.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton isActive={item.isActive}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                      {item.badge && (
-                        <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                      )}
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
+              <SidebarProvider className="min-h-0 w-full max-w-60">
+                {/* The floating variant's group, so the panel takes its frame. */}
+                <div data-variant="floating" className="group w-full">
+                  <Sidebar collapsible="none" className="w-full p-2">
+                    <SidebarMenu>
+                      {NAV.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton isActive={item.isActive}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                          {item.badge && (
+                            <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+                          )}
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </Sidebar>
+                </div>
               </SidebarProvider>
             </Tile>
             <Tile label="Alerts" wide className="grid gap-3 @3xl:grid-cols-3">
