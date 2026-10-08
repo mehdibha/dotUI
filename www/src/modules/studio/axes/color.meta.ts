@@ -7,8 +7,16 @@ import {
 import { options } from "./core/meta"
 
 export const SOURCE_OPTIONS = options(SOURCE_VALUES, {
-  neutral: { label: "Neutral" },
-  accent: { label: "Accent" },
+  neutral: {
+    label: "Neutral",
+    description: "Black, or white in dark mode",
+    credits: ["shadcn", "Geist"],
+  },
+  accent: {
+    label: "Accent",
+    description: "The brand color",
+    credits: ["Material 3", "Radix Themes"],
+  },
 })
 
 export const CONTROL_EDGE_OPTIONS = options(CONTROL_EDGE_VALUES, {

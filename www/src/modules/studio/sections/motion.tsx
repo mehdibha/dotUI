@@ -1,13 +1,23 @@
 "use client"
 
-/* Motion: the timing table, the anchored entrance, then links to family patterns. */
+/* Motion: the timing table, the anchored entrance, the rows that move; and
+   each family's own Motion, which its page hosts. */
 
-import { springProgress, springSettleMs, tableOf } from "../axes/motion"
-import { ENTRANCE_OPTIONS, MOTION_OPTIONS } from "../axes/motion.meta"
-import { DialGap, DialGlyph, DialList, DialSegmented } from "../dial"
-import { UsesRow } from "../family-page"
+import {
+  FAMILY_MOTION_KEYS,
+  springProgress,
+  springSettleMs,
+  tableOf,
+} from "../axes/motion"
+import {
+  ENTRANCE_OPTIONS,
+  FAMILY_MOTION_OPTIONS,
+  MOTION_OPTIONS,
+} from "../axes/motion.meta"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
+import type { Effective } from "../state"
 
 /** The anchored layers' entrance curve under a table; None is a step. */
 function MotionGlyph({ motion }: { motion: string }) {
@@ -46,34 +56,61 @@ export function MotionPreview({ state }: { state: Effective }) {
   )
 }
 
-export function MotionSection(_: { studio: Studio }) {
+const glyph = (motion: string) => (
+  <DialGlyph>
+    <MotionGlyph motion={motion} />
+  </DialGlyph>
+)
+
+const MOTION_ROW_OPTIONS = MOTION_OPTIONS.map((option) => ({
+  ...option,
+  preview: glyph(option.value),
+}))
+
+// "Same as Motion" wears the glyph of the table it resolves to.
+const FAMILY_ROW_OPTIONS = FAMILY_MOTION_OPTIONS.map((option) => ({
+  ...option,
+  preview: option.value === "same" ? undefined : glyph(option.value),
+}))
+
+function MotionRow() {
+  return (
+    <DialSelect axis="motion" label="Motion" options={MOTION_ROW_OPTIONS} />
+  )
+}
+
+function EntranceRow() {
+  return (
+    <DialSegmented
+      axis="motionEntrance"
+      label="Entrance"
+      options={ENTRANCE_OPTIONS}
+    />
+  )
+}
+
+const familyRow = (key: (typeof FAMILY_MOTION_KEYS)[number]) =>
+  function FamilyMotionRow() {
+    return <DialSelect axis={key} label="Motion" options={FAMILY_ROW_OPTIONS} />
+  }
+
+export function MotionSection() {
   return (
     <>
-      <DialList
-        axis="motion"
-        label="Motion"
-        options={MOTION_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <MotionGlyph motion={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
-      <DialSegmented
-        axis="motionEntrance"
-        label="Entrance"
-        options={ENTRANCE_OPTIONS}
-      />
+      <Row axis="motion" />
+      <Row axis="motionEntrance" />
       <DialGap />
-      <UsesRow axis="dialogEntrance" label="Dialog entrance" />
-      <UsesRow axis="mobilePickers" label="Pickers on mobile" />
-      <UsesRow axis="skeletonAnimation" label="Skeleton" />
-      <UsesRow axis="spinnerStyle" label="Spinner" />
-      <UsesRow axis="chartMotion" label="Chart transition" />
+      <Row axis="dialogEntrance" />
+      <Row axis="mobilePickers" />
+      <Row axis="skeletonAnimation" />
+      <Row axis="spinnerStyle" />
+      <Row axis="chartMotion" />
     </>
   )
 }
 
-export const ROWS: RowMap = {}
+export const ROWS: RowMap = {
+  motion: MotionRow,
+  motionEntrance: EntranceRow,
+  ...Object.fromEntries(FAMILY_MOTION_KEYS.map((key) => [key, familyRow(key)])),
+}

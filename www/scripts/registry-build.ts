@@ -317,7 +317,7 @@ async function buildStudioSearchIndex() {
       // A row's own label (a folded row's title) — the tag must not contain
       // another "<" before it.
       for (const match of source.matchAll(
-        /<(?!UsesRow\b)(?:\w+Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
+        /<(?!UsesRow\b)(?:\w*Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push([match.index, match[1] ?? ""])
       for (const match of source.matchAll(

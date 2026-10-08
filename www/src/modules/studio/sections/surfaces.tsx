@@ -29,16 +29,19 @@ import {
 } from "../axes/surfaces.meta"
 import type { SurfaceStyle } from "../axes/surfaces.meta"
 import {
-  DialPicker,
   DialPickList,
   DialPopover,
+  DialSelect,
   DialSeparator,
   DialSlider,
   DialTrigger,
   ModifiedDot,
 } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio, StudioState } from "../state"
+import { usePanelMode } from "../panel-mode"
+import type { Effective, StudioState } from "../state"
+import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
    drawn heavier than life so it reads at this size. */
@@ -132,14 +135,9 @@ const SURFACE_KEYS = [
   "darkBg",
 ]
 
-export function SurfacesRow({
-  studio,
-  theme,
-}: {
-  studio: Studio
-  theme: Theme
-}) {
-  const { state, effective: values, set, setState } = studio
+export function SurfacesRow() {
+  const { state, effective: values, set, setState } = useStudio()
+  const { theme } = usePanelMode()
   const { style, exact } = surfaceStyle(state)
   const edit = (patch: SurfaceStyle["values"] | Partial<StudioState>) =>
     setState({ ...state, ...patch })
@@ -159,43 +157,33 @@ export function SurfacesRow({
       <DialPopover className="w-80">
         <StyleList state={state} theme={theme} onChange={edit} />
         <DialSeparator />
-        <DialPicker
+        <DialSelect
           axis="surfaceLayers"
           label="Layers"
           options={LAYERS_OPTIONS}
         />
-        <DialPicker
+        <DialSelect
           axis="surfaceEdge"
           label="Edge"
-          options={EDGE_OPTIONS.map((option) => ({
-            ...option,
-            visual: (
-              <SurfaceGlyph
-                large
-                state={
-                  effective({ ...state, surfaceEdge: option.value }).values
-                }
-                theme={theme}
-              />
-            ),
-          }))}
+          options={EDGE_OPTIONS.map((option) => {
+            const values = effective({
+              ...state,
+              surfaceEdge: option.value,
+            }).values
+            return {
+              ...option,
+              preview: <SurfaceGlyph large state={values} theme={theme} />,
+              glyph: <SurfaceGlyph state={values} theme={theme} />,
+            }
+          })}
         />
-        <DialPicker
+        <DialSelect
           axis="surfaceShadow"
           label="Shadow"
           options={SHADOW_OPTIONS}
         />
-        <DialPicker
-          label="Overlays"
-          value={state.surfaceGlass ? "glass" : "solid"}
-          onChange={(value) => set("surfaceGlass")(value === "glass")}
-          options={GLASS_OPTIONS}
-        />
-        <DialPicker
-          axis="shellTone"
-          label="App shell"
-          options={SHELL_OPTIONS}
-        />
+        <Row axis="surfaceGlass" />
+        <Row axis="shellTone" />
         <DialSlider
           axis="lightBg"
           label="Light page"
@@ -264,4 +252,31 @@ function StyleList({
   )
 }
 
-export const ROWS: RowMap = {}
+function GlassRow() {
+  const { state, set } = useStudio()
+  return (
+    <DialSelect
+      axis="surfaceGlass"
+      label="Overlays"
+      value={state.surfaceGlass ? "glass" : "solid"}
+      onChange={(value) => set("surfaceGlass")(value === "glass")}
+      options={GLASS_OPTIONS}
+    />
+  )
+}
+
+function ShellRow() {
+  return (
+    <DialSelect axis="shellTone" label="App shell" options={SHELL_OPTIONS} />
+  )
+}
+
+export const ROWS: RowMap = {
+  surfaceLayers: SurfacesRow,
+  surfaceEdge: SurfacesRow,
+  surfaceShadow: SurfacesRow,
+  lightBg: SurfacesRow,
+  darkBg: SurfacesRow,
+  surfaceGlass: GlassRow,
+  shellTone: ShellRow,
+}

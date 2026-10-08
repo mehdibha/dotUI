@@ -26,10 +26,11 @@ import {
   STRENGTH_OPTIONS,
   WIDTH_OPTIONS,
 } from "../axes/states.meta"
-import { DialGap, DialList, DialSegmented, DialSelect } from "../dial"
-import { FamilyHero, HeroMember, More, UsesRow } from "../family-page"
+import { DialGap, DialSegmented, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
+import type { Effective } from "../state"
+import { useStudio } from "../use-studio"
 import { ArrowCursor, HandCursor, NotAllowedCursor } from "./cursors"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -62,7 +63,6 @@ function ringShadow({ style, strength, width }: Ring) {
 const SIZE = {
   row: "h-3.5 w-6 rounded-[4px]",
   card: "h-5 w-10 rounded-md",
-  hero: "h-7 w-16 rounded-md",
 }
 type Size = keyof typeof SIZE
 
@@ -203,195 +203,260 @@ function HighlightChip({ value }: { value: string }) {
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
+/* ---------------------------------- Rows ----------------------------------- */
 
 export function StatesPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} size="row" />
 }
 
-const MORE_KEYS = [
-  "focusStrength",
-  "focusWidth",
-  "focusInputWeight",
-  "focusInputColor",
-  "invalidStyle",
-  "cursorControls",
-  "cursorDisabled",
-  "selectionUiText",
-  "selectionHighlight",
-] as const
+const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
+  const ring = {
+    style: option.value,
+    strength: AUTO_STRENGTH[option.value]!,
+    width: AUTO_WIDTH[option.value]!,
+  }
+  return {
+    ...option,
+    preview: <ControlSpecimen ring={ring} size="card" />,
+    glyph: <ControlSpecimen ring={ring} size="row" />,
+  }
+})
 
-export function StatesSection({ studio }: { studio: Studio }) {
-  const { effective } = studio
-  const ring = ringOf(effective)
-  const weight = effective.focusInputWeight
-  const neutral = effective.focusInputColor === "neutral"
+const FocusStyleRow = () => (
+  <DialSelect
+    axis="focusStyle"
+    label="Focus ring"
+    options={FOCUS_STYLE_ROW_OPTIONS}
+  />
+)
+
+function FocusStrengthRow() {
+  const ring = ringOf(useStudio().effective)
   return (
-    <>
-      <FamilyHero>
-        <HeroMember name="Focus ring">
-          <ControlSpecimen ring={ring} size="hero" />
-        </HeroMember>
-        <HeroMember name="Field focus">
-          <FieldSpecimen
-            focus={effective.focusInputStyle}
-            weight={weight}
-            ring={ring}
-            neutral={neutral}
-            size="hero"
-          />
-        </HeroMember>
-        <HeroMember name="Disabled">
-          <DisabledSpecimen
-            treatment={effective.disabledTreatment}
-            size="hero"
-          />
-        </HeroMember>
-        <HeroMember name="Invalid">
-          <InvalidSpecimen invalid={effective.invalidStyle} size="hero" />
-        </HeroMember>
-      </FamilyHero>
-      <DialList
-        axis="focusStyle"
-        label="Focus ring"
-        options={FOCUS_STYLE_OPTIONS.map((option) => ({
+    <DialSelect
+      axis="focusStrength"
+      label="Ring strength"
+      rowPreview={false}
+      options={[
+        { value: "auto", label: "Auto" },
+        ...STRENGTH_OPTIONS.map((option) => ({
           ...option,
           preview: (
             <ControlSpecimen
-              ring={{
-                style: option.value,
-                strength: AUTO_STRENGTH[option.value]!,
-                width: AUTO_WIDTH[option.value]!,
-              }}
-              size="card"
-            />
-          ),
-        }))}
-      />
-      <DialGap />
-      <DialSelect
-        axis="focusInputStyle"
-        label="Field focus"
-        options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <FieldSpecimen
-              focus={option.value}
-              weight={weight}
-              ring={ring}
-              neutral={neutral}
+              ring={{ ...ring, strength: option.value }}
               size="row"
             />
           ),
-        }))}
-      />
-      <DialSelect
-        axis="disabledTreatment"
-        label="Disabled"
-        options={DISABLED_OPTIONS.map((option) => ({
+        })),
+      ]}
+    />
+  )
+}
+
+function FocusWidthRow() {
+  const { effective, set } = useStudio()
+  const ring = ringOf(effective)
+  return (
+    <DialSelect
+      axis="focusWidth"
+      label="Ring width"
+      rowPreview={false}
+      onChange={(value) =>
+        set("focusWidth")(value === "auto" ? "auto" : Number(value))
+      }
+      options={[
+        { value: "auto", label: "Auto" },
+        ...WIDTH_OPTIONS.map((option) => ({
           ...option,
-          preview: <DisabledSpecimen treatment={option.value} size="row" />,
-        }))}
-      />
+          value: String(option.value),
+          preview: (
+            <ControlSpecimen
+              ring={{ ...ring, width: option.value }}
+              size="row"
+            />
+          ),
+        })),
+      ]}
+    />
+  )
+}
+
+function FieldFocusRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="focusInputStyle"
+      label="Field focus"
+      options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <FieldSpecimen
+            focus={option.value}
+            weight={effective.focusInputWeight}
+            ring={ringOf(effective)}
+            neutral={effective.focusInputColor === "neutral"}
+            size="row"
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+const FieldFocusWeightRow = () => (
+  <DialSegmented
+    axis="focusInputWeight"
+    label="Field focus weight"
+    options={FOCUS_INPUT_WEIGHT_OPTIONS}
+  />
+)
+
+function FieldInkRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="focusInputColor"
+      label="Field ink"
+      options={FIELD_INK_ROW.map((option) => ({
+        ...option,
+        preview: (
+          <FieldSpecimen
+            focus={effective.focusInputStyle}
+            weight={effective.focusInputWeight}
+            ring={ringOf(effective)}
+            neutral={option.value === "neutral"}
+            size="row"
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+const DISABLED_ROW_OPTIONS = DISABLED_OPTIONS.map((option) => ({
+  ...option,
+  preview: <DisabledSpecimen treatment={option.value} size="row" />,
+}))
+
+const DisabledRow = () => (
+  <DialSelect
+    axis="disabledTreatment"
+    label="Disabled"
+    options={DISABLED_ROW_OPTIONS}
+  />
+)
+
+const INVALID_ROW_OPTIONS = INVALID_OPTIONS.map((option) => ({
+  ...option,
+  preview: <InvalidSpecimen invalid={option.value} size="row" />,
+}))
+
+const InvalidRow = () => (
+  <DialSelect
+    axis="invalidStyle"
+    label="Invalid"
+    options={INVALID_ROW_OPTIONS}
+  />
+)
+
+const CursorControlsRow = () => (
+  <DialSelect
+    axis="cursorControls"
+    label="Control cursor"
+    rowPreview={false}
+    options={cursorOptions(CURSOR_CONTROL_OPTIONS)}
+  />
+)
+
+const CursorDisabledRow = () => (
+  <DialSelect
+    axis="cursorDisabled"
+    label="Disabled cursor"
+    rowPreview={false}
+    options={cursorOptions(CURSOR_DISABLED_OPTIONS)}
+  />
+)
+
+/** A button label; a selectable one wears the highlight. */
+function ControlTextChip({ value }: { value: string }) {
+  return (
+    <span className="rounded-xs border border-fg/20 px-1 text-[11px]">
+      <span
+        className={cn(
+          value === "selectable" &&
+            "bg-text-selection text-fg-on-text-selection",
+        )}
+      >
+        Save
+      </span>
+    </span>
+  )
+}
+
+const CONTROL_TEXT_ROW_OPTIONS = CONTROL_TEXT_OPTIONS.map((option) => ({
+  ...option,
+  preview: <ControlTextChip value={option.value} />,
+}))
+
+const ControlTextRow = () => (
+  <DialSelect
+    axis="selectionUiText"
+    label="Control text"
+    rowPreview={false}
+    options={CONTROL_TEXT_ROW_OPTIONS}
+  />
+)
+
+const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
+  ...option,
+  preview: <HighlightChip value={option.value} />,
+}))
+
+const HighlightRow = () => (
+  <DialSelect
+    axis="selectionHighlight"
+    label="Text selection"
+    options={HIGHLIGHT_ROW_OPTIONS}
+  />
+)
+
+/* --------------------------------- Section --------------------------------- */
+
+export function StatesSection() {
+  return (
+    <>
+      <Row axis="focusStyle" />
+      <Row axis="focusInputStyle" />
+      <Row axis="disabledTreatment" />
       <DialGap />
-      <UsesRow axis="focusColor" label="Focus ink" />
-      <UsesRow axis="inputStyle" label="Fields" />
-      <More keys={MORE_KEYS}>
-        <DialSelect
-          axis="focusStrength"
-          label="Ring strength"
-          rowPreview={false}
-          options={[
-            { value: "auto", label: "Auto" },
-            ...STRENGTH_OPTIONS.map((option) => ({
-              ...option,
-              preview: (
-                <ControlSpecimen
-                  ring={{ ...ring, strength: option.value }}
-                  size="row"
-                />
-              ),
-            })),
-          ]}
-        />
-        <DialSelect
-          axis="focusWidth"
-          label="Ring width"
-          rowPreview={false}
-          onChange={(value) =>
-            studio.set("focusWidth")(value === "auto" ? "auto" : Number(value))
-          }
-          options={[
-            { value: "auto", label: "Auto" },
-            ...WIDTH_OPTIONS.map((option) => ({
-              ...option,
-              value: String(option.value),
-              preview: (
-                <ControlSpecimen
-                  ring={{ ...ring, width: option.value }}
-                  size="row"
-                />
-              ),
-            })),
-          ]}
-        />
-        <DialSegmented
-          axis="focusInputWeight"
-          label="Field focus weight"
-          options={FOCUS_INPUT_WEIGHT_OPTIONS}
-        />
-        <DialSelect
-          axis="focusInputColor"
-          label="Field ink"
-          options={FIELD_INK_ROW.map((option) => ({
-            ...option,
-            preview: (
-              <FieldSpecimen
-                focus={effective.focusInputStyle}
-                weight={weight}
-                ring={ring}
-                neutral={option.value === "neutral"}
-                size="row"
-              />
-            ),
-          }))}
-        />
-        <DialSelect
-          axis="invalidStyle"
-          label="Invalid"
-          options={INVALID_OPTIONS.map((option) => ({
-            ...option,
-            preview: <InvalidSpecimen invalid={option.value} size="row" />,
-          }))}
-        />
-        <DialSelect
-          axis="cursorControls"
-          label="Cursor on controls"
-          rowPreview={false}
-          options={cursorOptions(CURSOR_CONTROL_OPTIONS)}
-        />
-        <DialSelect
-          axis="cursorDisabled"
-          label="Cursor when disabled"
-          rowPreview={false}
-          options={cursorOptions(CURSOR_DISABLED_OPTIONS)}
-        />
-        <DialSelect
-          axis="selectionUiText"
-          label="Control text"
-          options={CONTROL_TEXT_OPTIONS}
-        />
-        <DialSelect
-          axis="selectionHighlight"
-          label="Text selection"
-          options={HIGHLIGHT_OPTIONS.map((option) => ({
-            ...option,
-            preview: <HighlightChip value={option.value} />,
-          }))}
-        />
-      </More>
+      <Row axis="focusColor" label="Ring color" />
+      <Row axis="focusStrength" />
+      <Row axis="focusWidth" />
+      <DialGap />
+      <Row axis="focusInputWeight" />
+      <Row axis="focusInputColor" />
+      <Row axis="inputStyle" />
+      <Row axis="invalidStyle" />
+      <DialGap />
+      <Row axis="cursorControls" />
+      <Row axis="cursorDisabled" />
+      <Row axis="selectionUiText" />
+      <Row axis="selectionHighlight" />
     </>
   )
 }
 
-export const ROWS: RowMap = {}
+export const ROWS: RowMap = {
+  focusStyle: FocusStyleRow,
+  focusStrength: FocusStrengthRow,
+  focusWidth: FocusWidthRow,
+  focusInputStyle: FieldFocusRow,
+  focusInputWeight: FieldFocusWeightRow,
+  focusInputColor: FieldInkRow,
+  disabledTreatment: DisabledRow,
+  invalidStyle: InvalidRow,
+  cursorControls: CursorControlsRow,
+  cursorDisabled: CursorDisabledRow,
+  selectionUiText: ControlTextRow,
+  selectionHighlight: HighlightRow,
+}
