@@ -326,10 +326,10 @@ const FILES = [
   },
 ]
 
-/** Tinted thumbnails, so glass has colour to blur; from sm the last column sits exactly under the menu. */
+/** Tinted thumbnails, so glass has colour to blur; the column under the menu is left empty. */
 function Gallery() {
   return (
-    <ul className="col-start-1 row-start-1 grid grid-cols-2 gap-x-4 gap-y-5 p-6 max-sm:p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))_14rem] lg:grid-cols-[repeat(3,minmax(0,1fr))_14rem] max-lg:[&>li:nth-child(n+7)]:hidden">
+    <ul className="col-start-1 row-start-1 grid grid-cols-2 gap-x-4 gap-y-5 p-6 max-sm:p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))_14rem] lg:grid-cols-[repeat(3,minmax(0,1fr))_14rem] max-sm:[&>li:nth-child(-n+4):nth-child(even)]:invisible max-lg:[&>li:nth-child(n+7)]:hidden">
       {FILES.map((file) => (
         <li key={file.label} className="flex min-w-0 flex-col gap-2">
           <span
@@ -729,7 +729,7 @@ function PhoneSpecimen() {
   return (
     <div
       inert
-      className="relative isolate flex h-120 w-72 max-w-full flex-col overflow-hidden rounded-[2.5rem] border-[6px] border-fg/10 bg-bg"
+      className="relative isolate flex h-96 w-72 max-w-full flex-col overflow-hidden rounded-[2.5rem] border-[6px] border-fg/10 bg-bg sm:h-120"
     >
       <div className="flex flex-col gap-4 px-4 pt-10">
         <span className="text-lg font-medium">Orders</span>
@@ -778,7 +778,10 @@ function PhoneSpecimen() {
       </div>
       {mobile === "drawer" && (
         <div className={overlay({ className: "absolute z-10" })}>
-          <div className={backdrop()} />
+          {/* Its blur escapes the phone's clip unless it carries the screen's radius. */}
+          <div
+            className={backdrop({ className: "rounded-[calc(2.5rem-6px)]" })}
+          />
           <div className="absolute inset-x-0 bottom-0 flex flex-col">
             <div data-drawer="" className={popup()}>
               <div data-orientation="horizontal" className={handle()} />
