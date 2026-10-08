@@ -5,7 +5,7 @@ import { DialGlyph } from "../dial"
 
 /** A phone with the layer drawn where it lands: anchored under a field,
  *  docked at the bottom, floating mid-screen, or filling it. */
-export function PhoneGlyph({ layer }: { layer: string }) {
+function PhoneGlyph({ layer }: { layer: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect

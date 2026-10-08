@@ -197,14 +197,6 @@ export function roleRadiusPx(state: Effective, key: ShapeRoleKey): number {
   return ratio === Infinity ? 999 : state.radiusPx * ratio
 }
 
-/** A role's rung as its row reads it: "md · 7.5px", "Auto · 6px", "Pill". */
-export function roleLabel(state: Effective, key: ShapeRoleKey): string {
-  const rung = SHAPE_RUNGS.find((r) => r.id === state[key])
-  if (rung && (rung.ratio === 0 || rung.ratio === Infinity)) return rung.label
-  const px = Math.round(roleRadiusPx(state, key) * 10) / 10
-  return `${rung?.label ?? "Auto"} · ${px}px`
-}
-
 export const ROLE_VARS: Record<ShapeRoleKey, string> = {
   roleControl: "--studio-radius-control",
   roleItem: "--studio-radius-item",

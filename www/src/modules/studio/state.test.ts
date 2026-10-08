@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest"
 import { KEY_OWNER, RULES } from "./axes"
 import { PRIMARY_LEAVES } from "./axes/color"
 import { FAMILY_MOTION_KEYS } from "./axes/motion"
-import { CHAPTERS, placeOf, SECTION_ROWS } from "./state"
+import { ALL_ROWS, CHAPTERS, placeOf, SECTION_ROWS } from "./state"
 
 const SECTIONS = path.join(__dirname, "sections")
 const sources = readdirSync(SECTIONS)
@@ -25,28 +25,41 @@ describe("rows", () => {
   })
 })
 
-// One page shows a key once: the main page is every chapter, a family page its own body.
+// One page shows a row once: the main page is every chapter, a family page its own body.
 describe("hosting", () => {
   const fileOf = (name: string) =>
     sources.find((s) => s.includes(`export function ${name}(`)) ?? ""
-  const hosted = (text: string) =>
-    [...text.matchAll(/<Row\s+axis="(\w+)"/g)].map(([, key]) => key)
-  const once = (keys: (string | undefined)[], page: string) => {
-    const seen = new Set<string>()
-    for (const key of keys) {
-      expect(seen.has(key!), `${key} twice on ${page}`).toBe(false)
-      seen.add(key!)
+  const rows: Record<string, unknown> = ALL_ROWS
+  const byName = (name: string) =>
+    Object.values(rows).filter(
+      (row) => typeof row === "function" && row.name === name,
+    )
+  // `<Row axis="key" />`, and a row rendered directly (`<SurfacesRow />`).
+  const hosted = (text: string): [string, unknown][] =>
+    [...text.matchAll(/<Row\s+axis="(\w+)"|<(\w+Row)\b/g)].flatMap(
+      ([, key, name = ""]): [string, unknown][] => {
+        if (key) return [[key, rows[key]]]
+        const found = byName(name)
+        return found.length === 1 ? [[name, found[0]]] : []
+      },
+    )
+  const once = (placed: [string, unknown][], page: string) => {
+    const seen = new Map<unknown, string>()
+    for (const [name, row] of placed) {
+      expect(row, `${name} has no row`).toBeDefined()
+      expect(seen.get(row), `${name} twice on ${page}`).toBeUndefined()
+      seen.set(row, name)
     }
   }
 
-  it("renders a key once on the main page", () => {
+  it("renders a row once on the main page", () => {
     const names = CHAPTERS.flatMap((c) =>
       c.pages ? [] : [c.Body.name, c.Primary?.name ?? ""],
     )
     once([...new Set(names.map(fileOf))].flatMap(hosted), "the main page")
   })
 
-  it("renders a key once on each family page", () => {
+  it("renders a row once on each family page", () => {
     for (const page of CHAPTERS.flatMap((c) => c.pages ?? []))
       once(hosted(fileOf(page.Body.name)), page.id)
   })

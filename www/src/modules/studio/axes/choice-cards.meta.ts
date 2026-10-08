@@ -11,7 +11,7 @@ export const SELECTED_OPTIONS = options(SELECTED_VALUES, {
   },
 })
 
-export const CARD_COLOR_OPTIONS = options(SOURCE_VALUES, {
+const CARD_COLOR_OPTIONS = options(SOURCE_VALUES, {
   neutral: { label: "Neutral" },
   accent: { label: "Accent", credits: ["Geist"] },
 })

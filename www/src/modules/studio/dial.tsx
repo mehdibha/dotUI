@@ -2,9 +2,8 @@
 
 /* The panel's control language, after DialKit (dialkit.dev): 36px rows on a
    5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 70%
-   foreground, mono values on the right; a slider is its whole row; folders
-   fold in place between hairlines. Alpha surfaces keep both themes in one
-   set of classes. Folds are instant — chrome, not content. */
+   foreground, mono values on the right; a slider is its whole row. Alpha
+   surfaces keep both themes in one set of classes. */
 
 import { useContext, useEffect, useRef, useState } from "react"
 import { CheckIcon, ChevronDownIcon, ChevronRightIcon } from "lucide-react"
@@ -35,6 +34,7 @@ import { Separator } from "@/registry/ui/separator"
 import { effective, SCOPES } from "./axes"
 import type { StudioState } from "./axes"
 import { PlaceLabel, Row, RowLabel, useRowLabel } from "./family-page"
+import { holdEditFocus } from "./focus"
 import {
   ColorPickerPopover,
   PanelPopover,
@@ -112,8 +112,12 @@ export function PinnedRow({
     <div data-axis={axis} aria-disabled className={DIAL_ROW}>
       <span className={cn(DIAL_LABEL, "opacity-50")}>{label}</span>
       <span className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-[13px] font-medium text-fg/50">
-          {children}
+        {/* Short of room, the value wraps past the spacer out of sight: the chip says why. */}
+        <span className="flex h-5 min-w-0 flex-wrap justify-end overflow-hidden">
+          <span className="h-5" />
+          <span className="text-[13px]/5 font-medium whitespace-nowrap text-fg/50">
+            {children}
+          </span>
         </span>
         <Cause cause={cause} />
       </span>
@@ -706,6 +710,10 @@ function SliderRow({
     )
 
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const commit = (next: number) => {
+    if (axis) holdEditFocus(wrapperRef.current)
+    onChange(next)
+  }
   const trackRef = useRef<HTMLDivElement>(null)
   const fillRef = useRef<HTMLDivElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
@@ -768,7 +776,7 @@ function SliderRow({
     committed.current = next
     paint(toPct(next), SNAP)
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   const valueAt = (clientX: number) => {
@@ -912,7 +920,7 @@ function SliderRow({
     committed.current = next
     paint(toPct(next))
     setDraft(next)
-    onChange(next)
+    commit(next)
   }
 
   // The handle: hidden at rest (half-strength on touch), half-strength on
@@ -1141,7 +1149,7 @@ export interface DialOption {
 
 /** The segmented choice itself; the moving pill is the only motion. `null`
  *  selects nothing — a view over values that disagree. */
-export function SegmentedGroup({
+function SegmentedGroup({
   label,
   value,
   onChange,
@@ -1151,20 +1159,24 @@ export function SegmentedGroup({
 }: {
   label: string
   value: string | null
-  onChange: (value: string) => void
+  /** `row`: the row the group sits in. */
+  onChange: (value: string, row: Element | null) => void
   options: DialOption[]
   disabled?: readonly string[]
   className?: string
 }) {
+  const ref = useRef<HTMLDivElement>(null)
   return (
     <RacToggleButtonGroup
+      ref={ref}
       aria-label={label}
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={value === null ? [] : [value]}
       onSelectionChange={(keys) => {
         const next = keys.values().next().value
-        if (next) onChange(next as string)
+        if (next)
+          onChange(next as string, ref.current?.closest("[data-axis]") ?? null)
       }}
       className={cn("relative flex shrink-0 p-0.5", className)}
     >
@@ -1205,7 +1217,7 @@ export function DialSegmented({
   const { axis, hidden, pinned, exclude } = useAxisGate(key)
   if (hidden) return null
   const value = valueProp !== undefined ? valueProp : String(axis?.effective)
-  const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
+  const set = onChangeProp ?? ((v: string) => axis?.set(v))
   if (pinned)
     return (
       <PinnedRow axis={key} label={label} cause={pinned}>
@@ -1218,7 +1230,10 @@ export function DialSegmented({
     <SegmentedGroup
       label={label}
       value={value}
-      onChange={onChange}
+      onChange={(next, row) => {
+        if (key) holdEditFocus(row)
+        set(next)
+      }}
       options={options}
       disabled={exclude?.options}
       className={stacked ? "w-full" : undefined}
@@ -1280,5 +1295,3 @@ export function DialToggle({
     />
   )
 }
-
-/* --------------------------------- Folder --------------------------------- */

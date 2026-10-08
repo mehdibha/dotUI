@@ -68,7 +68,7 @@ function Shell({ className }: { className?: string }) {
   )
 }
 
-/** The value an Auto or As-style row resolves from, as a plain tag. */
+/** The value an Auto row resolves from, as a plain tag. */
 function SourceTag({ children }: { children: React.ReactNode }) {
   return (
     <span className="rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/60">

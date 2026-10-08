@@ -40,18 +40,21 @@ import { componentsData } from "@/modules/docs/components-list/components-data"
 import { usePreviewFocus } from "@/modules/studio/focus"
 import {
   BOARD_SLUG_PREFIX,
-  NO_INSET,
   pingIframe,
   sendInspectorMode,
-  sendPreviewFocus,
   sendPreviewMode,
   sendPreviewNavigate,
   sendPreviewPrefetch,
   sendToIframe,
   useInspectorExitMessages,
 } from "@/modules/studio/preset"
-import type { PreviewFocusMessage, PreviewMode } from "@/modules/studio/preset"
+import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
+import {
+  NO_INSET,
+  sendPreviewFocus,
+} from "@/modules/studio/preview/focus-message"
+import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
 import { useDocked } from "@/modules/studio/rows"
 import { CHAPTERS } from "@/modules/studio/state"
 import { useStudio } from "@/modules/studio/use-studio"
@@ -366,6 +369,7 @@ export function PreviewPanel({ className }: { className?: string }) {
     let message: PreviewFocusMessage = {
       member: sentFocus?.member,
       axis: sentFocus?.axis,
+      holds: sentFocus?.holds,
       popover: !!sentFocus?.popover,
       inset: NO_INSET,
     }

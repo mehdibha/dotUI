@@ -13,7 +13,7 @@ export const UNDERLINE_OPTIONS = options(UNDERLINE_VALUES, {
   never: { label: "Never", credits: ["Stripe", "Duolingo", "Ant"] },
 })
 
-export const LINK_COLOR_OPTIONS = options(LINK_COLOR_VALUES, {
+const LINK_COLOR_OPTIONS = options(LINK_COLOR_VALUES, {
   accent: {
     label: "Accent",
     credits: ["Carbon", "Stripe", "Polaris", "Geist"],

@@ -70,6 +70,8 @@ function useSpecimens<T extends { value: string }>(
   key: keyof StudioState,
   options: readonly T[],
   specimen: React.ReactNode,
+  /** The row's specimen, when the popover's is wider. */
+  glyph?: React.ReactNode,
 ) {
   const { state } = useStudio()
   const systems = useMemo(
@@ -83,6 +85,7 @@ function useSpecimens<T extends { value: string }>(
   return systems.map(({ option, ds }) => ({
     ...option,
     preview: <System ds={ds}>{specimen}</System>,
+    ...(glyph && { glyph: <System ds={ds}>{glyph}</System> }),
   }))
 }
 
@@ -227,9 +230,14 @@ function CurrentGlyph({ current }: { current: string }) {
 /* ---------------------------------- Rows ---------------------------------- */
 
 function ButtonStyleRow() {
+  // A style draws the secondary too (unless Secondary overrides it).
   const options = useSpecimens(
     "buttonStyle",
     STYLE_OPTIONS,
+    <span className="flex gap-1">
+      <ButtonSpecimen variant="secondary" label="Cancel" />
+      <ButtonSpecimen variant="primary" label="Save" />
+    </span>,
     <ButtonSpecimen variant="primary" label="Save" />,
   )
   return (

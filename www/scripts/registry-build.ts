@@ -288,8 +288,7 @@ ${groupEntries.join("\n")}
 
 /** Studio panel search index: every settings row label and section title in
  *  each chapter, keyed by chapter id, family pages as "Page › Row". Read off
- *  the section JSX, plus the motion registry's entries and presets (their
- *  rows are data-driven). */
+ *  the section JSX. */
 async function buildStudioSearchIndex() {
   const studioDir = path.join(process.cwd(), "src/modules/studio")
   const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
@@ -314,16 +313,11 @@ async function buildStudioSearchIndex() {
     // reads "Section › Row".
     const rowLabels = (source: string) => {
       const found: Array<[number, string]> = []
-      // A row's own label (a folded row's title) — the tag must not contain
-      // another "<" before it.
+      // A row's own label — the tag must not contain another "<" before it.
       for (const match of source.matchAll(
-        /<(?!UsesRow\b)(?:\w*Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
+        /<(?:\w*Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
       ))
         found.push([match.index, match[1] ?? ""])
-      for (const match of source.matchAll(
-        /<GroupTitle>([^<{]+)<\/GroupTitle>/g,
-      ))
-        found.push([match.index, (match[1] ?? "").trim()])
       const members = [
         ...source.matchAll(/<MemberSection[^>]*?title="([^"]+)"/g),
       ].map((match) => ({
@@ -357,7 +351,9 @@ async function buildStudioSearchIndex() {
         : title[0]!.toUpperCase() + title.slice(1)
       const rows = rowLabels(await read(sibling))
       if (rows.length > 0 || page) labels.add(prefix)
-      for (const row of rows) labels.add(`${prefix} › ${row}`)
+      // The sibling's own row is the prefix entry already.
+      for (const row of rows)
+        if (row !== prefix) labels.add(`${prefix} › ${row}`)
     }
     lines.push(
       `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,

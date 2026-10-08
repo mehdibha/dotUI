@@ -51,7 +51,7 @@ describe("focusOf", () => {
     })
   })
 
-  it("takes the first held key when the row edits several", () => {
+  it("names every held key when the row edits several", () => {
     expect(
       focusOf(
         trigger(
@@ -59,8 +59,8 @@ describe("focusOf", () => {
           { "data-chapter": "shape" },
         ),
         null,
-      )?.axis,
-    ).toBe("rolePanel")
+      ),
+    ).toMatchObject({ axis: "rolePanel", holds: ["rolePanel", "roleCard"] })
   })
 
   it("keeps the outer popover's board inside a popover", () => {
