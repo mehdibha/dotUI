@@ -2,7 +2,14 @@
 
 // What the preview shows while the panel edits a chapter or family: one section per member.
 
-import { createContext, useContext, useEffect, useRef } from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react"
 import { useRouter } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
@@ -203,11 +210,70 @@ export function StateRow({
       {states.map((state) => (
         <div key={state} className="flex flex-col items-center gap-2">
           {children(stateProps(state), state)}
-          <span className="text-[11px] text-fg-muted">
-            {STATE_LABEL[state]}
-          </span>
+          <span className={CAPTION}>{STATE_LABEL[state]}</span>
         </div>
       ))}
     </div>
   )
+}
+
+/** A specimen's label. */
+export const CAPTION = "text-[11px] text-fg-muted"
+
+/** A specimen over its label. */
+export function Specimen({
+  label,
+  className,
+  children,
+}: {
+  label: string
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className={cn("flex min-w-0 flex-col items-center gap-3", className)}>
+      {children}
+      <span className={CAPTION}>{label}</span>
+    </div>
+  )
+}
+
+/** Flips every `ms` while `active`; back to `rest` when it stops. */
+export function useLoop(active: boolean, ms: number, rest = false) {
+  const [on, setOn] = useState(rest)
+  useEffect(() => {
+    if (!active) return
+    const timer = setInterval(() => setOn((value) => !value), ms)
+    return () => {
+      clearInterval(timer)
+      setOn(rest)
+    }
+  }, [active, ms, rest])
+  return on
+}
+
+// The provider writes tokens onto <html>'s style.
+function subscribeRoot(onChange: () => void) {
+  const observer = new MutationObserver(onChange)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["style"],
+  })
+  return () => observer.disconnect()
+}
+
+/** A root token as the preview resolves it. */
+export const useRootToken = (name: string) =>
+  useSyncExternalStore(
+    subscribeRoot,
+    () =>
+      getComputedStyle(document.documentElement).getPropertyValue(name).trim(),
+    () => "",
+  )
+
+/** Bumps when the provider rewrites the root's tokens. */
+export function useRootTokens() {
+  const [version, setVersion] = useState(0)
+  useEffect(() => subscribeRoot(() => setVersion((v) => v + 1)), [])
+  return version
 }

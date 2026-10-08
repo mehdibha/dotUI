@@ -53,7 +53,7 @@ import {
   SidebarProvider,
 } from "@/registry/ui/sidebar"
 
-import { Board, BoardSection } from "./board"
+import { Board, BoardSection, CAPTION } from "./board"
 
 const SET = [
   SearchIcon,
@@ -121,7 +121,7 @@ function Tile({
     <div
       className={cn("flex min-w-0 flex-col gap-3", wide && "@xl:col-span-2")}
     >
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
       <div className={className}>{children}</div>
     </div>
   )
@@ -240,9 +240,7 @@ export default function IconsBoard() {
                 key={size}
                 className="grid grid-cols-[3rem_1fr] items-center @3xl:flex @3xl:flex-col-reverse @3xl:gap-4"
               >
-                <span className="text-[11px] text-fg-muted tabular-nums">
-                  {size}px
-                </span>
+                <span className={cn(CAPTION, "tabular-nums")}>{size}px</span>
                 <div className="flex items-center gap-3 text-fg @3xl:justify-center">
                   {SIZED.slice(0, size === 32 ? 3 : SIZED.length).map(
                     (Icon, i) => (

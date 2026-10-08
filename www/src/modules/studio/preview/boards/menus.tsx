@@ -62,7 +62,13 @@ import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
-import { Board, BoardSection, StateRow, useBoardFocus } from "./board"
+import {
+  Board,
+  BoardSection,
+  StateRow,
+  useBoardFocus,
+  useRootTokens,
+} from "./board"
 
 /* --------------------------------- Frozen --------------------------------- */
 
@@ -134,20 +140,6 @@ function useAnchor(
     return () => observer.disconnect()
   }, [anchor, frame])
   return point
-}
-
-/** Bumps when the provider rewrites the root's tokens (the motion timings). */
-function useRootTokens() {
-  const [version, setVersion] = useState(0)
-  useEffect(() => {
-    const observer = new MutationObserver(() => setVersion((v) => v + 1))
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["style"],
-    })
-    return () => observer.disconnect()
-  }, [])
-  return version
 }
 
 /** Replays every `[data-entrance]` overlay's real entrance while the panel edits menu motion. */

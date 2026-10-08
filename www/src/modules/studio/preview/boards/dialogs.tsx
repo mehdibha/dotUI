@@ -22,7 +22,7 @@ import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
 import { TextField } from "@/registry/ui/text-field"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
+import { Board, BoardSection, CAPTION, useBoardFocus } from "./board"
 
 /* --------------------------------- Replay --------------------------------- */
 
@@ -356,7 +356,7 @@ function Specimen({
       <div className="w-full overflow-hidden rounded-(--studio-radius-card) border">
         {children}
       </div>
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }

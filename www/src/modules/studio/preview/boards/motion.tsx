@@ -57,7 +57,7 @@ import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { useStyles as useTooltipStyles } from "@/registry/ui/tooltip/styles"
 
-import { Board, BoardSection, useBoardFocus } from "./board"
+import { Board, BoardSection, CAPTION, useBoardFocus } from "./board"
 
 /* ---------------------------------- Loops ---------------------------------- */
 
@@ -224,7 +224,7 @@ function Specimen({
       >
         {children}
       </div>
-      <span className="text-[11px] text-fg-muted">{label}</span>
+      <span className={CAPTION}>{label}</span>
     </div>
   )
 }

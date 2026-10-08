@@ -70,9 +70,7 @@ const font: Read = (el) => {
   return `${+parseFloat(style.fontSize).toFixed(1)} / ${+parseFloat(style.lineHeight).toFixed(1)}px`
 }
 
-/** Reads `target` (else the first child) after layout and again whenever it
- *  resizes, mounts (collections render their items late) or the root's
- *  tokens or theme change. */
+/** Re-reads `target` (else the first child) on resize, late mounts and token changes. */
 function useMeasure(read: Read, target?: string) {
   const ref = useRef<HTMLDivElement>(null)
   const [value, setValue] = useState("")

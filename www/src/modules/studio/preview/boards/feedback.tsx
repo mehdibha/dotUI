@@ -43,9 +43,7 @@ import { useStyles as useTagStyles } from "@/registry/ui/tag-group/styles"
 import { ToastPrimitive, ToastProvider } from "@/registry/ui/toast"
 import { useStyles as useToastStyles } from "@/registry/ui/toast/styles"
 
-import { Board, BoardSection, StateRow, useBoardFocus } from "./board"
-
-const SPEC_LABEL = "text-[11px] text-fg-muted"
+import { Board, BoardSection, CAPTION, StateRow, useBoardFocus } from "./board"
 
 const STACK =
   "@container flex-col flex-nowrap items-stretch justify-start gap-10"
@@ -83,7 +81,7 @@ function BadgeSection() {
       <div className="flex flex-wrap justify-center gap-x-10 gap-y-8">
         {STATUSES.map(({ variant, label, text, Icon }) => (
           <div key={variant} className="flex flex-col items-center gap-3">
-            <span className={SPEC_LABEL}>{label}</span>
+            <span className={CAPTION}>{label}</span>
             <Badge variant={variant} size="lg">
               {text}
             </Badge>

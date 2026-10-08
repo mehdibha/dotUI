@@ -26,13 +26,12 @@ import { useStyles as useSwitchStyles } from "@/registry/ui/switch/styles"
 import {
   Board,
   BoardSection,
-  StateRow,
+  CAPTION,
   stateProps,
+  StateRow,
   useBoardFocus,
 } from "./board"
 import type { StateName } from "./board"
-
-const SPEC_LABEL = "text-[11px] text-fg-muted"
 
 const STACK =
   "@container flex-col flex-nowrap items-stretch justify-start gap-10"
@@ -63,13 +62,13 @@ function StateGrid({
     >
       <span />
       {states.map((state) => (
-        <span key={state} className={`${SPEC_LABEL} text-center`}>
+        <span key={state} className={`${CAPTION} text-center`}>
           {state.charAt(0).toUpperCase() + state.slice(1)}
         </span>
       ))}
       {rows.map((row) => (
         <Fragment key={row.label}>
-          <span className={`${SPEC_LABEL} pe-1`}>{row.label}</span>
+          <span className={`${CAPTION} pe-1`}>{row.label}</span>
           {states.map((state) => (
             <span key={state} className="flex justify-center">
               {children({ ...stateProps(state), ...row.attrs })}
@@ -302,7 +301,7 @@ function SliderSection() {
                 style={{ left: `${tick}%` }}
               >
                 <span className="h-1.5 w-px bg-border-control" />
-                <span className={`${SPEC_LABEL} tabular-nums`}>{tick}</span>
+                <span className={`${CAPTION} tabular-nums`}>{tick}</span>
               </span>
             ))}
           </div>

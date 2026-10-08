@@ -25,7 +25,14 @@ import { useStyles as usePopoverStyles } from "@/registry/ui/popover/styles"
 import { TimeField } from "@/registry/ui/time-field"
 import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
-import { Board, BoardSection, stateProps, useBoardFocus } from "./board"
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  stateProps,
+  useBoardFocus,
+  useLoop,
+} from "./board"
 
 const CALENDAR_AXES = [
   "calendarDayShape",
@@ -64,17 +71,6 @@ function useWiderThan(min: number) {
     return () => observer.disconnect()
   }, [min])
   return [ref, wide] as const
-}
-
-/** Flips on a loop while `on`, so a state transition replays. */
-function useReplay(on: boolean) {
-  const [phase, setPhase] = useState(true)
-  useEffect(() => {
-    if (!on) return setPhase(true)
-    const timer = setInterval(() => setPhase((phase) => !phase), 1100)
-    return () => clearInterval(timer)
-  }, [on])
-  return phase
 }
 
 /* -------------------------------- Day states -------------------------------- */
@@ -116,7 +112,7 @@ function DayStates() {
   const { root, cell } = useCalendarStyles()()
   const { axis } = useBoardFocus()
   const emphasis = axis ? STATE_OF_AXIS[axis] : undefined
-  const replay = useReplay(axis === "dateMotion")
+  const replay = useLoop(axis === "dateMotion", 1100, true)
   return (
     <div
       inert
@@ -141,7 +137,7 @@ function DayStates() {
               {day}
             </div>
           </div>
-          <span className="text-[11px] text-fg-muted">{label}</span>
+          <span className={CAPTION}>{label}</span>
         </div>
       ))}
     </div>

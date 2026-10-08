@@ -45,7 +45,7 @@ import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 import { useStyles as useTokenStyles } from "@/registry/ui/token-field/styles"
 
-import { Board, BoardSection, stateProps } from "./board"
+import { Board, BoardSection, CAPTION, stateProps } from "./board"
 
 /* ------------------------------- Specimens -------------------------------- */
 
@@ -69,13 +69,12 @@ function Specimen({
       >
         {children}
       </div>
-      <figcaption className="text-[11px] text-fg-muted">{label}</figcaption>
+      <figcaption className={CAPTION}>{label}</figcaption>
     </figure>
   )
 }
 
-/** A token-field token, at rest (the selected wash) or selected (the
- *  selection fill). */
+/** A token-field token: the selected wash at rest, the selection fill selected. */
 function Token({
   selected,
   children,
@@ -240,9 +239,7 @@ function NeutralsSection() {
         <dl className="flex flex-col gap-3">
           {TEXT_LADDER.map(({ label, className, text }) => (
             <div key={label} className="flex items-baseline gap-4">
-              <dt className="w-16 shrink-0 text-[11px] text-fg-muted">
-                {label}
-              </dt>
+              <dt className={cn(CAPTION, "w-16 shrink-0")}>{label}</dt>
               <dd className={cn("truncate text-sm", className)}>{text}</dd>
             </div>
           ))}
@@ -251,9 +248,7 @@ function NeutralsSection() {
           {SURFACE_SWATCHES.map(({ label, className }) => (
             <figure key={label} className="flex flex-col gap-1.5">
               <div className={cn("h-10 rounded-md border", className)} />
-              <figcaption className="text-[11px] text-fg-muted">
-                {label}
-              </figcaption>
+              <figcaption className={CAPTION}>{label}</figcaption>
             </figure>
           ))}
         </div>
@@ -625,9 +620,7 @@ function PalettesSection() {
     >
       {PALETTES.map(({ id, label }) => (
         <div key={id} className="flex items-center gap-4">
-          <span className="w-16 shrink-0 text-[11px] text-fg-muted">
-            {label}
-          </span>
+          <span className={cn(CAPTION, "w-16 shrink-0")}>{label}</span>
           <div className="grid h-6 flex-1 grid-cols-12 overflow-hidden rounded-md outline -outline-offset-1 outline-fg/5">
             {STEPS.map((step) => (
               <span

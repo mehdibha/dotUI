@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import { ChevronDownIcon, CopyIcon, MailIcon, SendIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
@@ -37,7 +35,14 @@ import {
 } from "@/registry/ui/select"
 import { TextField } from "@/registry/ui/text-field"
 
-import { Board, BoardSection, stateProps, useBoardFocus } from "./board"
+import {
+  Board,
+  BoardSection,
+  CAPTION,
+  stateProps,
+  useBoardFocus,
+  useLoop,
+} from "./board"
 
 /* ---------------------------------- States --------------------------------- */
 
@@ -78,22 +83,11 @@ function fieldAttributes(state: FieldState) {
   return stateProps(state)
 }
 
-/** Flips on a loop while `on`, so a state transition replays. */
-function useReplay(on: boolean) {
-  const [phase, setPhase] = useState(true)
-  useEffect(() => {
-    if (!on) return setPhase(true)
-    const timer = setInterval(() => setPhase((phase) => !phase), 1100)
-    return () => clearInterval(timer)
-  }, [on])
-  return phase
-}
-
 function InputStates() {
   const { input } = useInputStyles()()
   const { axis } = useBoardFocus()
   const emphasis = axis ? STATE_OF_AXIS[axis] : undefined
-  const replay = useReplay(axis === "inputMotion")
+  const replay = useLoop(axis === "inputMotion", 1100, true)
   return (
     <div
       inert
@@ -117,7 +111,7 @@ function InputStates() {
               {...fieldAttributes(shown)}
               className={input({ className: "w-full" })}
             />
-            <span className="text-[11px] text-fg-muted">{label}</span>
+            <span className={CAPTION}>{label}</span>
           </div>
         )
       })}
