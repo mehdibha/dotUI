@@ -1005,7 +1005,7 @@ export function PresetOverview({
 
         <Section
           index="05"
-          panelId="shape"
+          panelId="space"
           icon={RulerIcon}
           title="Density & spacing"
           description="Density sets control heights and padding across every component; the spacing scale keeps rhythm consistent."
@@ -1015,7 +1015,7 @@ export function PresetOverview({
 
         <Section
           index="06"
-          panelId="details"
+          panelId="color"
           icon={LayersIcon}
           title="Surfaces & elevation"
           description="Layered surface tokens and a restrained shadow ramp give depth without noise."
