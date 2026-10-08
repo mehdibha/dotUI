@@ -34,6 +34,8 @@ export interface Chapter {
   Preview?: React.ComponentType<{ state: StudioState }>
   /** Pages the body's rows open in place of the panel page. */
   pages?: ChapterPage[]
+  /** Registry items styled here, for the preview's inspector. */
+  components?: string[]
 }
 
 export interface ChapterPage {
@@ -41,6 +43,7 @@ export interface ChapterPage {
   label: string
   Preview?: React.ComponentType<{ state: StudioState }>
   Body: React.ComponentType<{ studio: Studio }>
+  components?: string[]
 }
 
 /* Identity first, then interactivity and the treatments every control
@@ -53,6 +56,7 @@ export const CHAPTERS: Chapter[] = [
     Primary: ColorPrimary,
     Body: ColorSection,
     Preview: ColorPreview,
+    components: ["card"],
   },
   {
     id: "typography",
@@ -89,11 +93,13 @@ export const CHAPTERS: Chapter[] = [
     label: "States",
     Body: StatesSection,
     Preview: StatesPreview,
+    components: ["field"],
   },
   {
     id: "motion",
     label: "Motion",
     Body: MotionSection,
+    components: ["toast"],
   },
   {
     id: "mobile",

@@ -29,6 +29,7 @@ import { Button } from "@/registry/ui/button"
 
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
+import { useInspectMessages } from "./preset"
 import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, ChapterPage, Studio } from "./state"
@@ -279,6 +280,20 @@ export function PanelPage({
         ?.scrollIntoView({ block: "start" }),
     )
   }
+
+  // From the preview: `component:<registry item>` (inspector) or a chapter id.
+  useInspectMessages((target) => {
+    const item = /^component:(.+)/.exec(target)?.[1]
+    const page = item && pages.find((p) => p.components?.includes(item))
+    if (page) {
+      setTucked(false)
+      return openPage(page.id)
+    }
+    const chapter = chapters.find((c) =>
+      item ? c.components?.includes(item) : c.id === target,
+    )
+    if (chapter) reveal(chapter.id)
+  })
 
   return (
     <PanelNav.Provider value={openPage}>
