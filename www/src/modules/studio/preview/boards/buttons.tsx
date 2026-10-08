@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import {
   ArrowRightIcon,
@@ -56,8 +56,39 @@ interface Column {
   states: StateName[]
 }
 
-/** Rows of frozen specimens under shared state columns; in a narrow
- *  section each row wraps, every specimen under its own label. */
+const MATRIX_GAP = 12
+
+/** True when the matrix's columns fit the container: specimens and labels
+ *  keep their natural width in either layout, so measure them directly. */
+function useMatrixFits(columns: number) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [fits, setFits] = useState(false)
+  useLayoutEffect(() => {
+    const container = ref.current
+    if (!container) return
+    const measure = () => {
+      const widths = Array.from({ length: columns + 1 }, () => 0)
+      for (const el of container.querySelectorAll<HTMLElement>(
+        "[data-column]",
+      )) {
+        const i = Number(el.dataset.column)
+        widths[i] = Math.max(widths[i] ?? 0, el.offsetWidth)
+      }
+      const needed = widths.reduce((a, b) => a + b, 0) + MATRIX_GAP * columns
+      setFits(needed <= container.clientWidth)
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    for (const el of container.querySelectorAll("[data-column]"))
+      observer.observe(el)
+    return () => observer.disconnect()
+  }, [columns])
+  return [ref, fits] as const
+}
+
+/** Rows of frozen specimens under shared state columns; when the columns
+ *  don't fit, each row wraps with every specimen under its own label. */
 function StateGrid({
   columns,
   rows,
@@ -72,38 +103,71 @@ function StateGrid({
   /** A row or column id the panel is editing. */
   emphasis?: string
 }) {
+  const [ref, matrix] = useMatrixFits(columns.length)
   const label = (id: string) =>
     cn(
       "text-[11px] text-fg-muted transition-colors",
       emphasis === id && "font-medium text-fg",
     )
   return (
-    <div className="@container w-full">
+    <div ref={ref} className="w-full">
       <div
         inert
-        className="flex flex-col gap-y-5 @4xl:grid @4xl:grid-cols-[auto_repeat(var(--columns),minmax(max-content,1fr))] @4xl:items-center @4xl:gap-x-4"
-        style={{ "--columns": columns.length } as React.CSSProperties}
+        className={cn(
+          "flex flex-col gap-y-5",
+          matrix && "grid items-center gap-x-3",
+        )}
+        style={{
+          gridTemplateColumns: matrix
+            ? `auto repeat(${columns.length}, minmax(max-content, 1fr))`
+            : undefined,
+        }}
       >
-        <span className="hidden @4xl:block" />
-        {columns.map((column) => (
+        {matrix && <span />}
+        {columns.map((column, i) => (
           <span
             key={column.id}
-            className={cn(label(column.id), "hidden text-center @4xl:block")}
+            data-column={i + 1}
+            className={cn(
+              label(column.id),
+              "justify-self-center",
+              !matrix && "hidden",
+            )}
           >
             {column.label}
           </span>
         ))}
         {rows.map((row) => (
           <Fragment key={row.id}>
-            <span className={label(row.id)}>{row.label}</span>
-            <div className="flex flex-wrap justify-center gap-4 @4xl:contents">
-              {columns.map((column) => (
+            <span
+              data-column={0}
+              className={cn(
+                label(row.id),
+                matrix ? "justify-self-start" : "self-center",
+              )}
+            >
+              {row.label}
+            </span>
+            <div
+              className={
+                matrix ? "contents" : "flex flex-wrap justify-center gap-4"
+              }
+            >
+              {columns.map((column, i) => (
                 <div
                   key={column.id}
-                  className="flex min-w-22 flex-col items-center gap-2 @4xl:min-w-0"
+                  className={cn(
+                    "flex flex-col items-center gap-2",
+                    !matrix && "min-w-22",
+                  )}
                 >
-                  {row.render(stateProps(...column.states), column.id)}
-                  <span className={cn(label(column.id), "@4xl:hidden")}>
+                  <div data-column={i + 1} className="flex">
+                    {row.render(stateProps(...column.states), column.id)}
+                  </div>
+                  <span
+                    data-column={i + 1}
+                    className={cn(label(column.id), matrix && "hidden")}
+                  >
                     {column.label}
                   </span>
                 </div>
@@ -167,12 +231,32 @@ const BUTTON_EMPHASIS: Record<string, string> = {
   buttonPress: "pressed",
 }
 
+/** Flips every `ms` while `active`; false otherwise. */
+function useBlink(active: boolean, ms = 600) {
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    if (!active) return
+    const timer = setInterval(() => setOn((on) => !on), ms)
+    return () => {
+      clearInterval(timer)
+      setOn(false)
+    }
+  }, [active, ms])
+  return on
+}
+
 function ButtonStates() {
   const styles = useButtonStyles()
   const { axis } = useBoardFocus()
+  // A frozen press barely reads; while the panel edits it, press and release.
+  const released = useBlink(axis === "buttonPress")
   return (
     <StateGrid
-      columns={BUTTON_COLUMNS}
+      columns={BUTTON_COLUMNS.map((column) =>
+        column.id === "pressed" && released
+          ? { ...column, states: ["hover"] }
+          : column,
+      )}
       emphasis={axis && BUTTON_EMPHASIS[axis]}
       rows={VARIANTS.map(({ id, label, text }) => ({
         id,
@@ -196,23 +280,27 @@ const SIZES = ["xs", "sm", "md", "lg"] as const
 
 function ButtonAnatomy() {
   return (
-    <div className="flex flex-col items-center gap-10">
-      <div className="flex flex-wrap justify-center gap-x-2 gap-y-6 sm:gap-x-5">
-        {SIZES.map((size) => (
-          <div
-            key={size}
-            className="grid grid-rows-[repeat(3,minmax(3rem,auto))_auto] items-center justify-items-center"
-          >
-            <Button size={size} variant="primary">
-              Publish
-            </Button>
-            <Button size={size}>Cancel</Button>
-            <Button size={size} isIconOnly aria-label="Copy">
-              <CopyIcon />
-            </Button>
-            <span className="text-[11px] text-fg-muted">{size}</span>
-          </div>
-        ))}
+    <div className="flex w-full flex-col items-center gap-10">
+      <div className="@container w-full">
+        <div className="mx-auto grid w-fit grid-cols-2 items-center justify-items-center gap-x-6 gap-y-3 @xl:grid-cols-4">
+          {SIZES.map((size) => (
+            <div
+              key={size}
+              className="row-span-4 grid grid-rows-subgrid items-center justify-items-center"
+            >
+              <Button size={size} variant="primary">
+                Publish
+              </Button>
+              <Button size={size}>Cancel</Button>
+              <Button size={size} isIconOnly aria-label="Copy">
+                <CopyIcon />
+              </Button>
+              <span className="pb-4 text-[11px] text-fg-muted @xl:pb-0">
+                {size}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
       <Line label="Icon only">
         <Button variant="primary" isIconOnly aria-label="New">
