@@ -20,7 +20,7 @@ import { Button } from "@/registry/ui/button"
 import { setPageFocus } from "./focus"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
-import { DOCKED_QUERY, DockLayer, PanelNav, useDockSide } from "./rows"
+import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
 import { placeOf } from "./state"
 import type { Chapter, ChapterPage, Studio } from "./state"
@@ -32,9 +32,6 @@ function untilMounted(attempt: () => boolean, frames = 30) {
     if (!attempt() && frames > 0) untilMounted(attempt, frames - 1)
   })
 }
-
-const showMember = (section: Element) =>
-  section.scrollIntoView({ block: "start" })
 
 const memberOf = (scope: Element | null | undefined, title: string) =>
   [...(scope?.querySelectorAll("[data-member]") ?? [])].find(
@@ -224,7 +221,7 @@ export function PanelPage({
   // A search hit lands on its row (a sub-axis on the row that holds it).
   const flash = (container: Element | null | undefined, label: string) => {
     const row = [...(container?.querySelectorAll("span") ?? [])].find(
-      (span) => span.textContent === label && !span.closest("[data-hero]"),
+      (span) => span.textContent === label,
     )
     const target = row?.closest(".rounded-lg") ?? row
     if (!target) return false
@@ -273,22 +270,16 @@ export function PanelPage({
         untilMounted(() => {
           const scope = layer?.querySelector(`[data-page="${target.id}"]`)
           const member = memberOf(scope, path[0] ?? "")
-          if (member && path.length === 1) showMember(member)
+          if (member && path.length === 1)
+            member.scrollIntoView({ block: "start" })
           return flash(path.length > 1 ? member : scope, path.at(-1) ?? "")
         })
       return
     }
-    if (window.matchMedia(DOCKED_QUERY).matches) return dock(id, axis)
-    setPageId(null)
-    // After an open page has given way to the chapters.
-    requestAnimationFrame(() =>
-      layer
-        ?.querySelector(`[data-chapter="${id}"]`)
-        ?.scrollIntoView({ block: "start" }),
-    )
+    dock(id, axis)
   }
 
-  // A cause chip or Uses link lands on its row: in view already, else on its
+  // A cause chip lands on its row: in view already, else on its
   // page or chapter first.
   const revealAxis = (key: string) => {
     if (flashAxis(key)) return
@@ -309,7 +300,7 @@ export function PanelPage({
       if (member)
         untilMounted(() => {
           const section = document.querySelector(`[data-member="${member}"]`)
-          if (section) showMember(section)
+          if (section) section.scrollIntoView({ block: "start" })
           return !!section
         })
     }
@@ -364,7 +355,16 @@ export function PanelPage({
                       variant="quiet"
                       isIconOnly
                       aria-label={`Back to ${page.chapter.label}`}
-                      onPress={() => setPageId(null)}
+                      onPress={() => {
+                        // A deep link's hash would reopen the page on reload.
+                        if (location.hash)
+                          history.replaceState(
+                            history.state,
+                            "",
+                            location.pathname + location.search,
+                          )
+                        setPageId(null)
+                      }}
                       className="data-icon-only:size-7 pointer-coarse:data-icon-only:size-9"
                     >
                       <ChevronLeftIcon />
