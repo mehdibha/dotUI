@@ -386,7 +386,7 @@ const leafRow = (leaf: PrimaryLeaf) =>
       <DialSelect
         axis={leaf}
         label="Color"
-        options={SOURCE_OPTIONS.map((option) => {
+        options={CHOICES.map((option) => {
           const id = option.value as PrimaryColorSource
           return {
             ...option,

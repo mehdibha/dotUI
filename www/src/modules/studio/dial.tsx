@@ -439,6 +439,8 @@ function SelectOptions({
       disallowEmptySelection
       selectedKeys={[value]}
       disabledKeys={[...(exclude?.options ?? []), CUSTOM]}
+      // The popover scrolls as one column; a nested list would collapse when docked.
+      className="max-h-none shrink-0 overflow-visible"
       onSelectionChange={(keys) => {
         if (keys === "all") return
         const next = keys.values().next().value
