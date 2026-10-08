@@ -34,25 +34,16 @@ import type { StateName } from "./board"
 
 const SPEC_LABEL = "text-[11px] text-fg-muted"
 
-const STACK = "flex-col flex-nowrap items-stretch justify-start gap-10"
+const STACK =
+  "@container flex-col flex-nowrap items-stretch justify-start gap-10"
 
-/** Live components beside their frozen states; stacked on phones. */
+/** Live components beside their frozen states; stacked in narrow sections. */
 const SPLIT =
-  "grid items-center gap-10 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12"
+  "grid items-center gap-10 @2xl:grid-cols-[minmax(0,1fr)_auto] @2xl:gap-12"
 
-/* -------------------------------- State grid ------------------------------- */
+const LIVE = "justify-self-center @2xl:justify-self-start"
 
 type Attrs = Record<string, string>
-
-const STATE_LABEL: Record<StateName, string> = {
-  rest: "Rest",
-  hover: "Hover",
-  pressed: "Pressed",
-  focus: "Focus",
-  selected: "Selected",
-  disabled: "Disabled",
-  invalid: "Invalid",
-}
 
 /** StateRow's frozen states, one row per value (unchecked, checked…). */
 function StateGrid({
@@ -67,13 +58,13 @@ function StateGrid({
   return (
     <div
       inert
-      className="grid items-center justify-center gap-x-5 gap-y-4 justify-self-center"
+      className="grid items-center justify-center gap-x-3 gap-y-4 justify-self-center @md:gap-x-5"
       style={{ gridTemplateColumns: `auto repeat(${states.length}, auto)` }}
     >
       <span />
       {states.map((state) => (
         <span key={state} className={`${SPEC_LABEL} text-center`}>
-          {STATE_LABEL[state]}
+          {state.charAt(0).toUpperCase() + state.slice(1)}
         </span>
       ))}
       {rows.map((row) => (
@@ -91,8 +82,6 @@ function StateGrid({
 }
 
 const SELECTED = { "data-selected": "true" }
-
-/* --------------------------------- Checkbox -------------------------------- */
 
 function FrozenCheckbox(attrs: Attrs) {
   const { root, control, indicator } = useCheckboxStyles()()
@@ -122,10 +111,7 @@ function CheckboxSection() {
       className={STACK}
     >
       <div className={SPLIT}>
-        <CheckboxGroup
-          defaultValue={["mentions", "digest"]}
-          className="justify-self-center sm:justify-self-start"
-        >
+        <CheckboxGroup defaultValue={["mentions", "digest"]} className={LIVE}>
           <Label>Email me about</Label>
           <Checkbox value="mentions">Mentions and replies</Checkbox>
           <Checkbox value="digest">Weekly digest</Checkbox>
@@ -149,8 +135,6 @@ function CheckboxSection() {
   )
 }
 
-/* ---------------------------------- Radio ---------------------------------- */
-
 function FrozenRadio(attrs: Attrs) {
   const { root, control, indicator } = useRadioStyles()()
   return (
@@ -173,10 +157,7 @@ function RadioSection() {
       className={STACK}
     >
       <div className={SPLIT}>
-        <RadioGroup
-          defaultValue="yearly"
-          className="justify-self-center sm:justify-self-start"
-        >
+        <RadioGroup defaultValue="yearly" className={LIVE}>
           <Label>Billing cycle</Label>
           <Radio value="monthly">Monthly</Radio>
           <Radio value="yearly">Yearly, save 20%</Radio>
@@ -197,8 +178,6 @@ function RadioSection() {
     </BoardSection>
   )
 }
-
-/* ---------------------------------- Switch --------------------------------- */
 
 function FrozenSwitch(attrs: Attrs) {
   const { root, control, indicator, thumb } = useSwitchStyles()()
@@ -222,7 +201,7 @@ function SwitchSection() {
       className={STACK}
     >
       <div className={SPLIT}>
-        <div className="flex w-full max-w-60 flex-col gap-4 justify-self-center sm:justify-self-start">
+        <div className={`flex w-full max-w-60 flex-col gap-4 ${LIVE}`}>
           {[
             { label: "Wi-Fi", on: true },
             { label: "Bluetooth", on: false },
@@ -234,7 +213,7 @@ function SwitchSection() {
               isDisabled={disabled}
               className="justify-between"
             >
-              <Label>{label}</Label>
+              <Label className="whitespace-nowrap">{label}</Label>
               <SwitchControl />
             </Switch>
           ))}
@@ -244,7 +223,7 @@ function SwitchSection() {
             { label: "Off", attrs: {} },
             { label: "On", attrs: SELECTED },
           ]}
-          states={["rest", "pressed", "focus", "disabled"]}
+          states={["rest", "pressed", "focus", "disabled", "invalid"]}
         >
           {(attrs) => <FrozenSwitch {...attrs} />}
         </StateGrid>
@@ -253,16 +232,13 @@ function SwitchSection() {
   )
 }
 
-/* ---------------------------------- Slider --------------------------------- */
-
 /** The slider's own slots on plain markup, its thumb at 60%. */
 function FrozenSlider(attrs: Attrs) {
   const { control, track, fill, thumb } = useSliderStyles()()
-  const orientation = "horizontal"
   return (
-    <span data-slider="" className="flex w-28">
-      <span {...attrs} className={control({ orientation })}>
-        <span {...attrs} className={track({ orientation })}>
+    <span data-slider="" className="flex w-[4.5rem] @lg:w-28">
+      <span {...attrs} className={control({ orientation: "horizontal" })}>
+        <span {...attrs} className={track({ orientation: "horizontal" })}>
           <span
             {...attrs}
             className={fill()}
@@ -271,7 +247,7 @@ function FrozenSlider(attrs: Attrs) {
         </span>
         <span
           {...attrs}
-          className={thumb({ orientation })}
+          className={thumb({ orientation: "horizontal" })}
           style={{
             position: "absolute",
             left: "60%",
@@ -293,7 +269,7 @@ function SliderSection() {
       axes={["sliderThumb", "sliderTrack", "sliderColor"]}
       className={STACK}
     >
-      <div className="grid items-start gap-x-12 gap-y-10 sm:grid-cols-2">
+      <div className="grid items-start gap-x-12 gap-y-10 @lg:grid-cols-2">
         <Slider defaultValue={60} className="w-full">
           <div className="flex items-center justify-between">
             <Label>Volume</Label>
@@ -346,8 +322,6 @@ function SliderSection() {
   )
 }
 
-/* ------------------------------- Choice cards ------------------------------ */
-
 const PLANS = [
   { id: "hobby", name: "Hobby", text: "Free for personal projects" },
   { id: "pro", name: "Pro", text: "$20 a month, for growing teams" },
@@ -362,46 +336,46 @@ function ChoiceCardsSection() {
       axes={["cardSelected", "cardColor"]}
       className={STACK}
     >
-      <RadioGroup defaultValue="pro" aria-label="Plan">
-        <div className="grid gap-3 sm:grid-cols-3">
-          {PLANS.map((plan) => (
-            <Radio key={plan.id} value={plan.id}>
-              <RadioControl>
-                <RadioIndicator />
-                <FieldContent>
-                  <Label>{plan.name}</Label>
-                  <Description>{plan.text}</Description>
-                </FieldContent>
-              </RadioControl>
-            </Radio>
-          ))}
+      <div className="flex flex-col gap-3">
+        <RadioGroup defaultValue="pro" aria-label="Plan">
+          <div className="grid gap-3 @xl:grid-cols-3">
+            {PLANS.map((plan) => (
+              <Radio key={plan.id} value={plan.id}>
+                <RadioControl>
+                  <RadioIndicator />
+                  <FieldContent>
+                    <Label>{plan.name}</Label>
+                    <Description>{plan.text}</Description>
+                  </FieldContent>
+                </RadioControl>
+              </Radio>
+            ))}
+          </div>
+        </RadioGroup>
+        <div className="grid gap-3 @lg:grid-cols-2">
+          <Checkbox defaultSelected>
+            <CheckboxControl className="self-stretch">
+              <CheckboxIndicator />
+              <FieldContent>
+                <Label>Email receipts</Label>
+                <Description>Sent to billing@acme.com</Description>
+              </FieldContent>
+            </CheckboxControl>
+          </Checkbox>
+          <Switch defaultSelected>
+            <SwitchControl className="self-stretch">
+              <FieldContent>
+                <Label>Auto-renew</Label>
+                <Description>Renews on November 1</Description>
+              </FieldContent>
+              <SwitchIndicator />
+            </SwitchControl>
+          </Switch>
         </div>
-      </RadioGroup>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Checkbox defaultSelected>
-          <CheckboxControl>
-            <CheckboxIndicator />
-            <FieldContent>
-              <Label>Email receipts</Label>
-              <Description>Sent to billing@acme.com</Description>
-            </FieldContent>
-          </CheckboxControl>
-        </Checkbox>
-        <Switch defaultSelected>
-          <SwitchControl>
-            <FieldContent>
-              <Label>Auto-renew</Label>
-              <Description>Renews on November 1</Description>
-            </FieldContent>
-            <SwitchIndicator />
-          </SwitchControl>
-        </Switch>
       </div>
     </BoardSection>
   )
 }
-
-/* ---------------------------------- Motion --------------------------------- */
 
 const REPLAY_MS = 1400
 
