@@ -10,7 +10,6 @@ import {
   useState,
   useSyncExternalStore,
 } from "react"
-import { useRouter } from "@tanstack/react-router"
 
 import { cn } from "@/registry/lib/utils"
 import {
@@ -26,16 +25,25 @@ const BoardFocusContext = createContext<PreviewFocusMessage>({
   inset: NO_INSET,
 })
 
+type OnRendered = (listener: () => void) => () => void
+
+/** The preview route's render events; boards never import the router (entry chunking). */
+const RenderedContext = createContext<OnRendered>(() => () => {})
+
 // Its own component, so a focus message re-renders only the boards reading it.
 export function BoardFocusProvider({
+  onRendered,
   children,
 }: {
+  onRendered: OnRendered
   children: React.ReactNode
 }) {
   return (
-    <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
-      {children}
-    </BoardFocusContext.Provider>
+    <RenderedContext.Provider value={onRendered}>
+      <BoardFocusContext.Provider value={usePreviewFocusMessages()}>
+        {children}
+      </BoardFocusContext.Provider>
+    </RenderedContext.Provider>
   )
 }
 
@@ -72,7 +80,7 @@ export function Board({
   const { member, axis, holds, inset } = useBoardFocus()
   const ref = useRef<HTMLDivElement>(null)
   const keys = [axis, ...(holds ?? [])].join(" ")
-  const router = useRouter()
+  const onRendered = useContext(RenderedContext)
 
   useEffect(() => {
     const section =
@@ -83,7 +91,7 @@ export function Board({
       section.scrollIntoView({ behavior: "smooth", block: "center" })
     reveal()
     // A first visit commits before the router's scroll reset, which would undo the reveal.
-    const unsubscribe = router.subscribe("onRendered", reveal)
+    const unsubscribe = onRendered(reveal)
     section.dataset.focused = ""
     const timer = setTimeout(() => {
       unsubscribe()
@@ -94,7 +102,7 @@ export function Board({
       unsubscribe()
       delete section.dataset.focused
     }
-  }, [member, keys, router])
+  }, [member, keys, onRendered])
 
   return (
     <div

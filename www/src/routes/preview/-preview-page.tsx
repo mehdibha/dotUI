@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useState } from "react"
-import { getRouteApi } from "@tanstack/react-router"
+import { getRouteApi, useRouter } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { ToastProvider } from "@/registry/ui/toast"
@@ -58,6 +58,11 @@ const route = getRouteApi("/preview/$slug")
 
 export function PreviewPage() {
   const { slug } = route.useParams()
+  const router = useRouter()
+  const onRendered = useCallback(
+    (listener: () => void) => router.subscribe("onRendered", listener),
+    [router],
+  )
   // Boots on the current design system (same origin, same storage); the
   // studio's messages take over from there.
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
@@ -132,7 +137,7 @@ export function PreviewPage() {
       {/* Inside the provider so toasts wear the previewed params; the app
           itself fires none. */}
       <ToastProvider />
-      <BoardFocusProvider>{content}</BoardFocusProvider>
+      <BoardFocusProvider onRendered={onRendered}>{content}</BoardFocusProvider>
     </DesignSystemProvider>
   )
 }
