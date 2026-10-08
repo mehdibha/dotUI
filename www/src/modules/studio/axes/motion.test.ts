@@ -5,39 +5,26 @@ import { publishables } from "@/registry/__generated__/publishables"
 import { STYLE_VAR_DEFAULTS } from "@/registry/__generated__/style-var-defaults"
 import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
+import { PRESETS } from "@/modules/presets"
 
-import { DEFAULT_STATE, DEFAULTS, parseState, validate } from "."
-import type { StudioState, StudioStateInput } from "."
-import { resolveDesignSystem } from "../resolve"
+import { DEFAULT_STATE, effective, parseState } from "."
+import type { StudioState } from "."
+import { designSystemOf } from "../resolve"
 import {
   bezierCss,
-  curveName,
-  curveTiming,
-  entranceVars,
-  isMotionValue,
-  loopVars,
-  resolveEntrance,
-  stateChangeVars,
+  FAMILY_MOTION_KEYS,
+  legTiming,
+  motionVars,
+  springProgress,
+  tableOf,
 } from "./motion"
-import type { Bezier, Entrance, Loop, StateChange } from "./motion"
-import type { MotionPreset } from "./motion-presets"
-import {
-  MOTION_KEYS as PRESET_KEYS,
-  MOTION_PRESETS,
-  motionBase,
-} from "./motion-presets"
-import { sameValue } from "./schema"
+import { MOTION_OPTIONS } from "./motion.meta"
 
-const ENTRANCE: Entrance = {
-  pattern: "scale",
-  enter: 200,
-  curve: { type: "easing", ease: [0, 0, 0.2, 1] },
-  exit: 150,
-  exitEase: [0, 0, 0.2, 1],
-}
-const PATTERNS = [{ value: "scale" }, { value: "fade" }]
+const MOTION_SUFFIX =
+  /-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
+const MOTION_VAR = new RegExp(`^--studio-.+${MOTION_SUFFIX.source}`)
 
-describe("motion vocabulary", () => {
+describe("timing", () => {
   test("beziers print as CSS, the linear one by keyword", () => {
     expect(bezierCss([0.25, 0.1, 0.25, 1])).toBe(
       "cubic-bezier(0.25, 0.1, 0.25, 1)",
@@ -46,161 +33,206 @@ describe("motion vocabulary", () => {
   })
 
   test("a spring runs as linear() for its settle time", () => {
-    const time = curveTiming({ type: "spring", bounce: 0.35 }, 300)
-    expect(time.ease).toMatch(/^linear\(0, .+, 1\)$/)
-    expect(time.ms).toBeGreaterThan(300)
-    expect(time.ms % 10).toBe(0)
-    // Past 1: the overshoot made it into the stops.
-    expect(
-      Math.max(...(time.ease.match(/\d\.\d+(?= )/g) ?? []).map(Number)),
-    ).toBeGreaterThan(1)
-    const physics = curveTiming(
-      { type: "physics", stiffness: 400, damping: 30, mass: 1 },
-      0,
-    )
-    expect(physics.ms).toBeGreaterThan(0)
-  })
-
-  test("an entrance writes only what leaves its defaults", () => {
-    expect(resolveEntrance("x", ENTRANCE, ENTRANCE)).toEqual({
-      tokens: {},
-      pattern: "scale",
-    })
-    expect(
-      resolveEntrance(
-        "x",
-        { ...ENTRANCE, enter: 300, pattern: "fade" },
-        ENTRANCE,
-      ),
-    ).toEqual({
-      tokens: { "--studio-x-enter-duration": "300ms" },
-      pattern: "fade",
-    })
-    const spring = resolveEntrance(
-      "x",
-      { ...ENTRANCE, curve: { type: "spring", bounce: 0.2 } },
-      ENTRANCE,
-    ).tokens
-    expect(Object.keys(spring)).toEqual([
-      "--studio-x-enter-duration",
-      "--studio-x-ease",
-    ])
-  })
-
-  test("validation rejects a malformed motion value", () => {
-    expect(isMotionValue("entrance", ENTRANCE, PATTERNS)).toBe(true)
-    expect(
-      isMotionValue("entrance", { ...ENTRANCE, pattern: "spin" }, PATTERNS),
-    ).toBe(false)
-    expect(
-      isMotionValue(
-        "entrance",
-        { ...ENTRANCE, curve: { type: "easing", ease: [1, 2] } },
-        PATTERNS,
-      ),
-    ).toBe(false)
-    expect(isMotionValue("state-change", { duration: "fast" })).toBe(false)
-    expect(
-      validate({ ...DEFAULTS, popoverMotion: { pattern: "spin" } }).ok,
-    ).toBe(false)
+    const travel = legTiming(tableOf("expressive").travel.enter)
+    expect(travel.ease).toMatch(/^linear\(0, .+, 1\)$/)
+    expect(travel.ms % 10).toBe(0)
+    // Spatial springs overshoot; effects springs never do.
+    const peak = (ease: string) =>
+      Math.max(...(ease.match(/\d\.\d+(?= )/g) ?? ["0"]).map(Number))
+    expect(peak(travel.ease)).toBeGreaterThan(1)
+    const micro = tableOf("expressive").micro.enter.curve
+    if (micro.type !== "physics") throw new Error("expected a spring")
+    for (let t = 0; t < 0.5; t += 0.01)
+      expect(springProgress(t, micro)).toBeLessThanOrEqual(1)
   })
 })
 
-/* A `<name>Motion` state key owns the `--studio-<name>-*` vars. */
-const idOf = (key: string) =>
-  key.replace(/Motion$/, "").replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
-/* The var-backed timings; a param-backed motion (the chart's named
-   transition) is its axis's own business. */
-const MOTION_KEYS = Object.keys(DEFAULT_STATE).filter(
-  (key) =>
-    key.endsWith("Motion") &&
-    typeof DEFAULTS[key as keyof StudioStateInput] === "object",
-) as (keyof StudioStateInput)[]
-const isEntrance = (value: unknown): value is Entrance =>
-  typeof value === "object" && value !== null && "pattern" in value
-const isLoop = (value: unknown): value is Loop =>
-  typeof value === "object" && value !== null && "cycle" in value
-const varsOf = (key: keyof StudioStateInput, value: unknown) =>
-  isEntrance(value)
-    ? entranceVars(idOf(key), value)
-    : isLoop(value)
-      ? loopVars(idOf(key), value)
-      : stateChangeVars(idOf(key), value as StateChange)
-
-/* Each component's motion vars live twice: the `:root` defaults in its
-   styles.css (what the publisher resolves) and its axis's state defaults
-   (what the panel starts from). */
-describe("component motion", () => {
-  const declared = (id: string, names: string[]) =>
-    Object.fromEntries(
-      names
-        .map((name) => `--studio-${id}-${name}`)
-        .filter((name) => name in STYLE_VAR_DEFAULTS)
-        .map((name) => [name, STYLE_VAR_DEFAULTS[name]]),
+describe("role tables", () => {
+  test("styles.css declares Standard, and every timing var is a member's", () => {
+    const standard = motionVars(() => tableOf("standard"))
+    const declared = Object.fromEntries(
+      Object.entries(STYLE_VAR_DEFAULTS).filter(([name]) =>
+        MOTION_VAR.test(name),
+      ),
     )
-  const ids = (suffix: string) =>
-    Object.keys(STYLE_VAR_DEFAULTS).flatMap((name) => {
-      const id = new RegExp(`^--studio-(.+)-${suffix}$`).exec(name)?.[1]
-      return id ? [id] : []
-    })
-  const state = DEFAULTS as Record<string, unknown>
-  const camel = (id: string) =>
-    id.replace(/-(\w)/g, (_, c: string) => c.toUpperCase())
+    expect(declared).toEqual(standard)
+  })
 
-  test.each(ids("enter-duration"))(
-    "%s: styles.css agrees with the entrance defaults",
-    (id) => {
-      const value = state[`${camel(id)}Motion`] as Entrance
-      expect(value).toBeDefined()
+  test("every option times every member", () => {
+    const names = Object.keys(motionVars(() => tableOf("standard"))).sort()
+    for (const { value } of MOTION_OPTIONS)
       expect(
-        declared(id, ["enter-duration", "ease", "exit-duration", "exit-ease"]),
-      ).toEqual(entranceVars(id, value))
-    },
-  )
+        Object.keys(motionVars(() => tableOf(value))).sort(),
+        value,
+      ).toEqual(names)
+  })
 
-  test.each(ids("state-duration"))(
-    "%s: styles.css agrees with the state-change defaults",
-    (id) => {
-      const value = state[`${camel(id)}Motion`] as StateChange
-      expect(value).toBeDefined()
-      expect(declared(id, ["state-duration", "state-ease"])).toEqual(
-        stateChangeVars(id, value),
-      )
-    },
-  )
-
-  test.each(ids("loop-duration"))(
-    "%s: styles.css agrees with the loop defaults",
-    (id) => {
-      const value = state[`${camel(id)}Motion`] as Loop
-      expect(value).toBeDefined()
-      expect(declared(id, ["loop-duration", "loop-ease"])).toEqual(
-        loopVars(id, value),
-      )
-    },
-  )
-
-  test.each(MOTION_KEYS)("%s writes its own component's vars only", (key) => {
-    const value = DEFAULTS[key] as Entrance | StateChange | Loop
-    const retimed = isEntrance(value)
-      ? { ...value, enter: value.enter + 50 }
-      : isLoop(value)
-        ? { ...value, cycle: value.cycle + 50 }
-        : { ...value, duration: value.duration + 50 }
-    const ds = resolveDesignSystem(parseState({ [key]: retimed }))
-    expect(Object.keys(ds.tokens).length).toBeGreaterThan(0)
-    expect(Object.keys(varsOf(key, retimed))).toEqual(
-      expect.arrayContaining(Object.keys(ds.tokens)),
+  test("None is instant everywhere", () => {
+    const durations = Object.entries(motionVars(() => tableOf("none"))).filter(
+      ([name]) => name.endsWith("duration"),
     )
-    expect(ds.componentParams).toEqual(
-      resolveDesignSystem(DEFAULT_STATE).componentParams,
+    expect(durations.length).toBeGreaterThan(0)
+    for (const [name, value] of durations) expect(value, name).toBe("0ms")
+  })
+})
+
+describe("resolve", () => {
+  test("Origin writes nothing and the registry's default patterns", () => {
+    const ds = designSystemOf(DEFAULT_STATE)
+    expect(ds.tokens).toEqual({})
+    expect(ds.componentParams.popover).toMatchObject({ motion: "scale" })
+    expect(ds.componentParams.tooltip).toMatchObject({ motion: "scale" })
+    expect(ds.componentParams.modal).toMatchObject({ motion: "scale" })
+    expect(ds.componentParams.toast).toMatchObject({ motion: "slide" })
+    expect(ds.componentParams.accordion).toMatchObject({ motion: "expand" })
+    expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
+  })
+
+  test("an option writes member vars only, and only what leaves Standard", () => {
+    for (const motion of ["smooth", "expressive", "none"]) {
+      const { tokens, componentParams } = designSystemOf(parseState({ motion }))
+      expect(Object.keys(tokens).length, motion).toBeGreaterThan(0)
+      for (const name of Object.keys(tokens))
+        expect(name, motion).toMatch(MOTION_VAR)
+      if (motion !== "none")
+        expect(componentParams).toEqual(
+          designSystemOf(DEFAULT_STATE).componentParams,
+        )
+    }
+  })
+
+  test("one entrance moves popover and tooltip together", () => {
+    for (const [entrance, param] of [
+      ["slide", "slide"],
+      ["fade", "fade"],
+    ]) {
+      const ds = designSystemOf(parseState({ motionEntrance: entrance }))
+      expect(ds.componentParams.popover).toMatchObject({ motion: param })
+      expect(ds.componentParams.tooltip).toMatchObject({ motion: param })
+      expect(ds.tokens).toEqual({})
+    }
+  })
+
+  test("the dialog entrance is its own pattern on the same timing", () => {
+    for (const dialogEntrance of ["rise", "drop"]) {
+      const ds = designSystemOf(parseState({ dialogEntrance }))
+      expect(ds.componentParams.modal).toMatchObject({
+        motion: dialogEntrance,
+      })
+      expect(ds.componentParams.popover).toMatchObject({ motion: "scale" })
+    }
+  })
+
+  test("None stops every pattern and pins the entrance rows", () => {
+    const state = parseState({
+      motion: "none",
+      motionEntrance: "fade",
+      dialogEntrance: "drop",
+    })
+    const { componentParams } = designSystemOf(state)
+    for (const name of ["popover", "tooltip", "modal", "toast", "chart"])
+      expect(componentParams[name], name).toMatchObject({ motion: "none" })
+    for (const name of ["accordion", "collapsible"])
+      expect(componentParams[name], name).toMatchObject({ motion: "none" })
+    const { explain } = effective(state)
+    expect(explain.motionEntrance?.lock).toMatchObject({
+      kind: "pin",
+      cause: "menuMotion",
+    })
+    expect(explain.dialogEntrance?.lock).toMatchObject({
+      kind: "pin",
+      cause: "dialogMotion",
+    })
+  })
+})
+
+describe("per-family motion", () => {
+  // Members with their own vars; radio, toggle-button, token-field and collapsible ride a sibling's.
+  const TIMED: Record<string, string[]> = {
+    buttonMotion: ["button", "segmented-control"],
+    inputMotion: ["input"],
+    selectionMotion: ["checkbox", "slider", "switch"],
+    menuMotion: ["popover", "tooltip"],
+    dialogMotion: ["drawer", "modal"],
+    navMotion: ["breadcrumbs", "link", "sidebar", "tabs"],
+    displayMotion: ["accordion", "table"],
+    dateMotion: ["calendar", "time-picker"],
+    feedbackMotion: ["progress", "tag", "toast", "toast-swipe"],
+  }
+  const STOPPED: Record<string, string[]> = {
+    menuMotion: ["popover", "tooltip"],
+    dialogMotion: ["modal"],
+    displayMotion: ["accordion", "collapsible"],
+    feedbackMotion: ["toast"],
+  }
+  const members = (tokens: Record<string, string>) =>
+    [
+      ...new Set(
+        Object.keys(tokens).map((name) =>
+          name.replace(/^--studio-/, "").replace(MOTION_SUFFIX, ""),
+        ),
+      ),
+    ].sort()
+  const origin = designSystemOf(DEFAULT_STATE).componentParams
+
+  test("covers every family key", () => {
+    expect(Object.keys(TIMED).sort()).toEqual([...FAMILY_MOTION_KEYS].sort())
+  })
+
+  test("a family's own Motion times and stops only its members", () => {
+    for (const key of FAMILY_MOTION_KEYS) {
+      const { tokens, componentParams } = designSystemOf(
+        parseState({ [key]: "none" }),
+      )
+      expect(members(tokens), key).toEqual(TIMED[key])
+      const stopped = Object.keys(componentParams).filter(
+        (name) => componentParams[name] !== origin[name],
+      )
+      expect(stopped.sort(), key).toEqual(STOPPED[key] ?? [])
+      for (const name of stopped)
+        expect(componentParams[name], `${key}: ${name}`).toMatchObject({
+          motion: "none",
+        })
+    }
+  })
+
+  test("a family kept on Standard sits out a global change", () => {
+    const { tokens, componentParams } = designSystemOf(
+      parseState({ motion: "none", menuMotion: "standard" }),
     )
+    expect(members(tokens)).not.toContain("popover")
+    expect(members(tokens)).toContain("button")
+    expect(componentParams.popover).toBe(origin.popover)
+    expect(componentParams.modal).toMatchObject({ motion: "none" })
+  })
+
+  test("members outside every family ride the global Motion", () => {
+    const pinned = Object.fromEntries(
+      FAMILY_MOTION_KEYS.map((key) => [key, "standard"]),
+    )
+    const { tokens } = designSystemOf(parseState({ motion: "none", ...pinned }))
+    expect(members(tokens)).toEqual([
+      "color-swatch-picker",
+      "message-scroller",
+      "questionnaire",
+    ])
+  })
+
+  test("Same as Motion ships what picking the global's value ships", () => {
+    for (const motion of ["none", "smooth", "expressive"]) {
+      const own = Object.fromEntries(
+        FAMILY_MOTION_KEYS.map((key) => [key, motion]),
+      )
+      expect(designSystemOf(parseState({ motion, ...own })), motion).toEqual(
+        designSystemOf(parseState({ motion })),
+      )
+    }
   })
 })
 
 /* What users install: every publishable item, shipped from a state. */
 async function shipAll(state: StudioState) {
-  const ds = resolveDesignSystem(state)
+  const ds = designSystemOf(state)
   const preset: PublishPreset = {
     density: ds.density,
     componentParams: ds.componentParams,
@@ -224,38 +256,61 @@ const THEME_MOTION =
   /--ease-enter|--ease-fluid-out|--transition-duration-(enter|exit)|--default-transition-duration|\b(duration|ease)-(enter|exit)\b|\bease-fluid-out\b/
 
 describe("shipped motion", () => {
-  test("the defaults write no motion tokens", () => {
-    const { tokens } = resolveDesignSystem(DEFAULT_STATE)
-    expect(
-      Object.keys(tokens).filter((name) => /-(duration|ease)$/.test(name)),
-    ).toEqual([])
-  })
-
   test("the theme ships no motion tokens", () => {
     expect(JSON.stringify(baseRegistryCss)).not.toMatch(THEME_MOTION)
   })
 
-  test("the defaults ship plain classes, no studio vars", async () => {
-    const shipped = Object.entries(await shipAll(DEFAULT_STATE))
+  test("Standard ships shadcn's classes", async () => {
+    const shipped = await shipAll(DEFAULT_STATE)
     expect(
-      shipped.filter(
-        ([, content]) =>
-          content.includes("--studio-") || THEME_MOTION.test(content),
-      ),
+      Object.entries(shipped)
+        .filter(([, c]) => c.includes("--studio-") || THEME_MOTION.test(c))
+        .map(([name]) => name),
     ).toEqual([])
+    // Tailwind's 150ms default ships no class.
+    expect(shipped.button).toContain(
+      "transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui",
+    )
+    expect(shipped["segmented-control"]).toContain(
+      "transition-[translate,width,height] motion-reduce:transition-none",
+    )
+    // shadcn's tooltip sets no duration: tw-animate's 150ms on `ease`.
+    expect(shipped.tooltip).toContain(
+      "transition-[transform,opacity,scale] ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change",
+    )
+    expect(shipped.popover).toContain("duration-100")
+    expect(shipped.modal).toContain(
+      "transition-opacity duration-100 ease-[cubic-bezier(0.25,0.1,0.25,1)] motion-reduce:transition-none",
+    )
+    expect(shipped.drawer).toContain(
+      "duration-450 ease-[cubic-bezier(0.22,1,0.36,1)]",
+    )
+    expect(shipped.drawer).toContain(
+      "data-ending-style:duration-[calc(400ms*var(--drawer-swipe-strength,1))]",
+    )
+    expect(shipped.sidebar).toContain(
+      "transition-[width] duration-200 ease-linear",
+    )
+    expect(shipped.toast).toContain(
+      "duration-400 ease-[cubic-bezier(0.25,0.1,0.25,1)] data-ending-style:data-swipe-direction:duration-200 data-ending-style:data-swipe-direction:ease-out",
+    )
   })
 
-  test("a spring entrance ships linear(); exits keep their bezier", async () => {
-    const springs = Object.fromEntries(
-      MOTION_KEYS.flatMap((key) => {
-        const value = DEFAULTS[key]
-        return isEntrance(value)
-          ? [[key, { ...value, curve: { type: "spring", bounce: 0.2 } }]]
-          : []
-      }),
-    )
-    const shipped = await shipAll(parseState({ ...springs }))
+  test("every option ships plain classes, no studio vars", async () => {
+    const survivors: string[] = []
+    for (const { value } of MOTION_OPTIONS) {
+      const shipped = await shipAll(parseState({ motion: value }))
+      for (const [name, content] of Object.entries(shipped))
+        if (content.includes("--studio-")) survivors.push(`${value}: ${name}`)
+    }
+    expect(survivors).toEqual([])
+  })
+
+  test("Expressive springs enters as linear(); exits keep a bezier", async () => {
+    const shipped = await shipAll(parseState({ motion: "expressive" }))
     const sprung = [
+      "button",
+      "switch",
       "popover",
       "tooltip",
       "modal",
@@ -263,81 +318,46 @@ describe("shipped motion", () => {
       "toast",
       "accordion",
       "collapsible",
-    ].filter((name) =>
-      /ease-\[linear\(0,[^\s\]]+,1\)\]/.test(shipped[name] ?? ""),
+    ].filter(
+      (name) => !/ease-\[linear\(0,[^\s\]]+,1\)\]/.test(shipped[name] ?? ""),
     )
-    expect(sprung).toHaveLength(7)
-    expect(
-      Object.values(shipped).filter((content) => content.includes("--studio-")),
-    ).toEqual([])
-    // The popover's exit stays on its bezier, now that it differs from the enter.
+    expect(sprung).toEqual([])
     expect(shipped.popover).toContain(
-      "exiting:ease-[cubic-bezier(0.25,0.1,0.25,1)]",
+      "exiting:ease-[cubic-bezier(0.3,0,0.8,0.15)]",
     )
   })
-})
 
-const presetById = (id: string) =>
-  MOTION_PRESETS.find((p) => p.id === id) as MotionPreset
-const motionOf = (values: Partial<StudioState>) =>
-  JSON.stringify(PRESET_KEYS.map((key) => values[key]))
-
-describe("motion presets", () => {
-  test("Default is the defaults, key order included", () => {
-    expect(motionOf(presetById("default").values)).toBe(motionOf(DEFAULT_STATE))
-  })
-
-  test("every preset reads back as itself, exactly", () => {
-    const read = MOTION_PRESETS.map((p) => {
-      const { preset, exact } = motionBase(parseState({ ...p.values }))
-      return `${preset.id}${exact ? "" : " (inexact)"}`
-    })
-    expect(read).toEqual(MOTION_PRESETS.map((p) => p.id))
-  })
-
-  test("one tweak stays on its preset, no longer exact", () => {
-    const snappy = presetById("snappy")
-    const state = parseState({
-      ...snappy.values,
-      buttonMotion: { ...snappy.values.buttonMotion, duration: 400 },
-    })
-    expect(motionBase(state)).toEqual({ preset: snappy, exact: false })
-  })
-
-  test("a preset writes named curves and slider-step durations", () => {
-    const off: string[] = []
-    for (const p of MOTION_PRESETS)
-      for (const key of PRESET_KEYS) {
-        const v = p.values[key] as Partial<Entrance & StateChange>
-        const d = DEFAULTS[key] as Partial<Entrance & StateChange>
-        if (typeof v !== "object") continue
-        // Off leaves curves alone; a curve a preset writes must be named.
-        const curves = [
-          !sameValue(v.curve, d.curve) && v.curve,
-          !sameValue(v.ease, d.ease) && v.ease && easing(v.ease),
-          !sameValue(v.exitEase, d.exitEase) &&
-            v.exitEase &&
-            easing(v.exitEase),
-        ]
-        for (const c of curves)
-          if (c && !curveName(c)) off.push(`${p.id} ${key}: unnamed curve`)
-        for (const ms of [v.enter, v.exit, v.duration])
-          if (ms !== undefined && ms % 10) off.push(`${p.id} ${key}: ${ms}ms`)
-      }
-    expect(off).toEqual([])
-  })
-
-  test("every preset ships plain classes, no studio vars", async () => {
-    const survivors: string[] = []
-    for (const p of MOTION_PRESETS) {
-      const shipped = await shipAll(parseState({ ...p.values }))
-      for (const [name, content] of Object.entries(shipped))
-        if (content.includes("--studio-")) survivors.push(`${p.id}: ${name}`)
+  test("Expressive overshoots what glides, never a color", async () => {
+    const vars = motionVars(() => tableOf("expressive"))
+    const peak = (ease = "") =>
+      Math.max(...(ease.match(/\d\.\d+(?= )/g) ?? ["0"]).map(Number))
+    for (const id of ["switch", "segmented-control", "tabs"]) {
+      expect(peak(vars[`--studio-${id}-state-ease`]), id).toBeGreaterThan(1)
+      expect(peak(vars[`--studio-${id}-color-ease`]), id).toBeLessThanOrEqual(1)
     }
-    expect(survivors).toEqual([])
+  })
+
+  test("Smooth exits shorter than it enters", async () => {
+    const shipped = await shipAll(parseState({ motion: "smooth" }))
+    expect(shipped.popover).toContain(
+      "duration-160 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    )
+    expect(shipped.popover).toContain("exiting:duration-100")
+    // Radix Themes' tooltip: 140ms in, no exit animation.
+    expect(shipped.tooltip).toContain(
+      "duration-140 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    )
+    expect(shipped.tooltip).toContain("exiting:duration-0")
   })
 })
 
-function easing(ease: Bezier) {
-  return { type: "easing" as const, ease }
-}
+describe("presets", () => {
+  test("Origin rides Standard; Material 3 and Radix take their own tables", () => {
+    const motion = Object.fromEntries(
+      PRESETS.map((p) => [p.id, p.state.motion]),
+    )
+    expect(motion.origin).toBe("standard")
+    expect(motion.material3).toBe("expressive")
+    expect(motion.radix).toBe("smooth")
+  })
+})

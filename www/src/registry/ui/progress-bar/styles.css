@@ -1,12 +1,12 @@
 :root {
-  --studio-progress-radius: var(--studio-radius-pill);
+  --studio-progress-radius: var(--studio-radius-track);
+  --studio-progress-fill-color: var(--color-primary);
   --studio-progress-state-duration: 150ms;
   --studio-progress-state-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @theme inline {
   --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
-  --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;
 }
 
 /* A 40%-wide segment crossing the track: -100% hides it left, 250% of its
@@ -17,15 +17,5 @@
   }
   to {
     transform: translateX(250%);
-  }
-}
-
-@keyframes progress-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 1;
   }
 }

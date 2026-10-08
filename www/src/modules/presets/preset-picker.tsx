@@ -580,11 +580,20 @@ function PresetPreviewFlyout({
   forcedMode?: "light" | "dark"
 }) {
   const designSystem = useMemo(() => item.resolve(), [item])
+  // Desktop-only, so the mobile swap is pinned: swapping it would remount a
+  // Select's hidden popover arrow into the picker's arrow context.
+  const params = useMemo(
+    () => ({
+      ...designSystem.componentParams,
+      popover: { ...designSystem.componentParams.popover, mobile: "drawer" },
+    }),
+    [designSystem],
+  )
 
   return (
     <DesignSystemProvider
       scoped
-      params={designSystem.componentParams}
+      params={params}
       tokens={designSystem.tokens}
       density={designSystem.density}
       color={designSystem.color}

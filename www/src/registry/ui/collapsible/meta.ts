@@ -16,9 +16,8 @@ const collapsibleMeta = {
     motion: {
       kind: "enum",
       default: "expand",
-      values: ["expand", "fade", "none"] as const,
-      description:
-        "How the panel opens and closes: its height alone, the height with a fade, or at once.",
+      values: ["expand", "none"] as const,
+      description: "How the panel opens and closes: its height, or at once.",
     },
   },
 } satisfies RegistryItem

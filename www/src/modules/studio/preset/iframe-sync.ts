@@ -8,6 +8,9 @@ import type { DesignSystem } from "./types"
 
 export type PreviewMode = "light" | "dark"
 
+/** A board's preview slug is this prefix and its panel page or chapter id. */
+export const BOARD_SLUG_PREFIX = "board-"
+
 type ParentToIframeMessage =
   | { type: "design-system"; data: DesignSystem }
   | { type: "preview-mode"; mode: PreviewMode }
@@ -100,7 +103,7 @@ export function pingIframe(iframe: HTMLIFrameElement | null) {
 
 /* ----------------------------- Listen (iframe) ----------------------------- */
 
-function isInIframe(): boolean {
+export function isInIframe(): boolean {
   try {
     return window.self !== window.top
   } catch {

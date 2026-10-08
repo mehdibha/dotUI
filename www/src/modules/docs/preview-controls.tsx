@@ -13,7 +13,7 @@ import { resolvePreset } from "@/modules/presets"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { pickerSections } from "@/modules/studio/picker-sections"
 import type { DesignSystem } from "@/modules/studio/preset"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { designSystemOf } from "@/modules/studio/resolve"
 import {
   keySelection,
   select,
@@ -111,7 +111,7 @@ export function useForcedPreviewMode(): PreviewMode | undefined {
 /** The design system the docs previews render in. */
 export function useResolvedPreset(): DesignSystem {
   const { sel, state } = useCurrent()
-  const own = useMemo(() => resolveDesignSystem(state), [state])
+  const own = useMemo(() => designSystemOf(state), [state])
   return sel.kind === "preset" ? resolvePreset(sel.id) : own
 }
 

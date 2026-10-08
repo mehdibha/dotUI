@@ -14,6 +14,8 @@ const { useStyles, styles } = createStyles(dropZoneMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

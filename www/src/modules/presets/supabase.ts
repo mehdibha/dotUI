@@ -1,146 +1,102 @@
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const supabase = definePreset({
   id: "supabase",
   name: "Supabase",
-  description: "Emerald on neutral graphite.",
-  swatch: "#34b27b",
+  description: "Deep emerald plates on pure gray, mono caps labels.",
+  swatch: "#3ecf8e",
   inspiredBy: "Supabase",
-  state: {
+  diff: {
     // Color
-    brand: "#3ecf8e",
-    buttonColor: "accent",
-    selectionColor: "neutral",
-    neutralHue: 160,
-    successSeed: "",
-    warningSeed: "",
-    dangerSeed: "",
-    selectionSeed: "",
-    vividness: 1,
-    neutralTint: 0.3,
-    // Primary is exactly #3ecf8e, as live.
+    // The 2026 plate is a deep emerald with light ink (#0e7e4e), not the mint.
+    brand: "#0e7e4e",
     preserveSeed: true,
-    lightBg: 99,
+    // The bright mint of rings, switches and the calendar (#30ba79).
+    selectionSeed: "#30ba79",
+    successSeed: "#3ecf8e",
+    warningSeed: "#ac5800",
+    dangerSeed: "#ab413e",
+    neutralTint: 0,
     darkBg: 6,
+    // chart-1..8: brand, blue, pink, violet, tomato, indigo, green, purple.
+    chartPalette: "vivid",
 
     // Typography
     headingFont: "Manrope",
     bodyFont: "Inter",
     monoFont: "Source Code Pro",
+    // Manrope 600 at -0.025em.
+    titleStyle: "tight",
+    uiTextSize: "13",
+    sectionLabels: "mono-caps",
 
     // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
+    // The dashboard passes 1.5 in 74 of 98 explicit stroke props.
+    iconStroke: 1.5,
 
     // Shape
+    // Tailwind radii × 4/3: 8px controls, 10.67px cards and dialogs.
     radiusPx: 10.5,
-    roleControl: "md",
-    roleItem: "xs",
     roleSurface: "md",
     rolePanel: "lg",
     roleCard: "lg",
 
     // Space
-    density: "default",
-    spacingUnit: 4,
+    // 26px buttons, 34px fields.
+    density: "compact",
+    inputHeight: "step",
 
     // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    surfaceGlass: false,
-
-    // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
-    selectionHighlight: "accent",
+    surfaceShadow: "low",
+    // The sidebar is the page color.
+    shellTone: "page",
 
     // States
-    focusColor: "accent",
-    // A halo of the bright seed is ~1.4:1 on white.
-    focusStyle: "ring",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
+    // A 2px ring at 55% of the mint behind a 2px page-colored offset.
+    focusStrength: "soft",
     focusInputStyle: "ring",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
-    focusInputBorderWidth: 1,
+    invalidStyle: "tint",
     disabledTreatment: "fade",
-    inputError: "border",
-
-    // Motion
-    ...DEFAULT_MOTION,
-
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
+    cursorDisabled: "default",
 
     // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
-    linkUnderline: "always",
-    linkColor: "neutral",
-    skeletonAnimation: "pulse",
-    spinnerStyle: "ring",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
     buttonStyle: "hairline",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "flat",
-    segmentedTrack: "filled",
-    switchColor: "accent",
+    buttonSecondary: "raised",
+    buttonPress: "scale",
+    // ButtonGroup is one bordered box split by dividers.
+    groupSeparator: "divider",
+    // A sliding accent-alpha chip; the default tone has no track at all.
+    segmentedSelected: "tone",
+    segmentedTrack: "outline",
     checkboxColor: "neutral",
-    checkCorner: "rounded",
-    radioColor: "accent",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "border",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
-    pickerCaret: "chevron",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
+    radioMark: "ring",
+    cardSelected: "outline",
+    // Hairline's Auto (Inset) beats Well: Supabase's well is 1.5% black in
+    // light and darker than the page in dark; hover darkens the edge.
+    inputHover: "edge",
+    sliderThumb: "solid",
     sliderColor: "neutral",
+    progressColor: "same-checks",
+    calendarWeekdays: "double",
+    menuArrows: "none",
     menuIndicator: "check-start",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "caps",
     menuSearch: "bar",
     menuScale: "large",
-    dialogBackdrop: "blur",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
+    dialogFrost: "subtle",
+    dialogSections: "divided",
     tooltipStyle: "surface",
     tabStyle: "line",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
-    breadcrumbSeparator: "chevron",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
+    // Tabs keep their weight; the product menu's current row goes semibold.
+    navWeight: "regular",
+    navItemWeight: "regular-semibold",
+    linkUnderline: "always",
+    linkColor: "neutral",
+    alertStyle: "soft-outline",
+    toastStatus: "soft",
     badgeStyle: "soft-outline",
-    badgeShape: "pill",
-    kbdTreatment: "chip",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "filled",
+    badgeCase: "uppercase",
+    kbdTreatment: "outline",
+    cardHeader: "rule",
+    cardFooter: "rule",
   },
 })

@@ -2,11 +2,13 @@
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as TagGroupPrimitives from "react-aria-components/TagGroup"
+import type { VariantProps } from "tailwind-variants"
 
 import { XIcon } from "@/registry/icons"
 import { Button } from "@/registry/ui/button"
 
 import { useStyles } from "./styles"
+import type { TagGroupStyles } from "./styles"
 
 // MARK: Separator
 
@@ -45,9 +47,10 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 
 // MARK: Separator
 
-interface TagProps extends TagGroupPrimitives.TagProps {}
+interface TagProps
+  extends TagGroupPrimitives.TagProps, VariantProps<TagGroupStyles> {}
 
-function Tag({ className, ...props }: TagProps) {
+function Tag({ className, appearance, ...props }: TagProps) {
   const { tag } = useStyles()()
   const textValue =
     typeof props.children === "string" ? props.children : undefined
@@ -57,7 +60,7 @@ function Tag({ className, ...props }: TagProps) {
       data-tag=""
       textValue={textValue}
       className={composeRenderProps(className, (className) =>
-        tag({ className }),
+        tag({ appearance, className }),
       )}
       {...props}
     >

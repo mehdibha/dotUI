@@ -1,0 +1,621 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "selection": "accent",
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > charts/motion-off: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "accordion": {
+      "layout": "divided",
+      "marker": "trailing-chevron",
+      "motion": "none",
+    },
+    "chart": {
+      "grid": "solid",
+      "motion": "none",
+    },
+    "collapsible": {
+      "motion": "none",
+    },
+    "modal": {
+      "mobile": "center",
+      "motion": "none",
+      "position": "center",
+    },
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "toast": {
+      "motion": "none",
+      "status": "icon",
+      "surface": "surface",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+      "tip": "tip",
+    },
+  },
+  "tokens": {
+    "--studio-accordion-enter-duration": "0ms",
+    "--studio-breadcrumbs-state-duration": "0ms",
+    "--studio-button-state-duration": "0ms",
+    "--studio-calendar-state-duration": "0ms",
+    "--studio-checkbox-state-duration": "0ms",
+    "--studio-color-swatch-picker-state-duration": "0ms",
+    "--studio-drawer-enter-duration": "0ms",
+    "--studio-drawer-exit-duration": "0ms",
+    "--studio-input-state-duration": "0ms",
+    "--studio-link-state-duration": "0ms",
+    "--studio-message-scroller-enter-duration": "0ms",
+    "--studio-message-scroller-exit-duration": "0ms",
+    "--studio-modal-enter-duration": "0ms",
+    "--studio-modal-exit-duration": "0ms",
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+    "--studio-progress-state-duration": "0ms",
+    "--studio-questionnaire-state-duration": "0ms",
+    "--studio-segmented-control-color-duration": "0ms",
+    "--studio-segmented-control-state-duration": "0ms",
+    "--studio-sidebar-state-duration": "0ms",
+    "--studio-slider-state-duration": "0ms",
+    "--studio-switch-color-duration": "0ms",
+    "--studio-switch-state-duration": "0ms",
+    "--studio-table-state-duration": "0ms",
+    "--studio-tabs-color-duration": "0ms",
+    "--studio-tabs-state-duration": "0ms",
+    "--studio-tag-state-duration": "0ms",
+    "--studio-time-picker-state-duration": "0ms",
+    "--studio-toast-enter-duration": "0ms",
+    "--studio-toast-exit-duration": "0ms",
+    "--studio-toast-swipe-state-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > color/grouped-page: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+      "light": 96,
+    },
+    "primary": "accent",
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-card": "light-dark(oklch(1 0 0), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--color-popover": "light-dark(oklch(1 0 0), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+    "--overlay-border": "light-dark(transparent, var(--color-border))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > color/white-ink-needs-exact: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > dialogs/bleed-needs-open-footer: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "dialog": {
+      "close": "quiet",
+      "footer": "end-rule",
+      "sections": "divided",
+      "titles": "quiet",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > dialogs/frost-only-frosted: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--studio-scrim-blur": "0",
+  },
+}
+`;
+
+exports[`rules > dialogs/none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "accordion": {
+      "layout": "divided",
+      "marker": "trailing-chevron",
+      "motion": "none",
+    },
+    "chart": {
+      "grid": "solid",
+      "motion": "none",
+    },
+    "collapsible": {
+      "motion": "none",
+    },
+    "modal": {
+      "mobile": "center",
+      "motion": "none",
+      "position": "center",
+    },
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "toast": {
+      "motion": "none",
+      "status": "icon",
+      "surface": "surface",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+      "tip": "tip",
+    },
+  },
+  "tokens": {
+    "--studio-accordion-enter-duration": "0ms",
+    "--studio-breadcrumbs-state-duration": "0ms",
+    "--studio-button-state-duration": "0ms",
+    "--studio-calendar-state-duration": "0ms",
+    "--studio-checkbox-state-duration": "0ms",
+    "--studio-color-swatch-picker-state-duration": "0ms",
+    "--studio-drawer-enter-duration": "0ms",
+    "--studio-drawer-exit-duration": "0ms",
+    "--studio-input-state-duration": "0ms",
+    "--studio-link-state-duration": "0ms",
+    "--studio-message-scroller-enter-duration": "0ms",
+    "--studio-message-scroller-exit-duration": "0ms",
+    "--studio-modal-enter-duration": "0ms",
+    "--studio-modal-exit-duration": "0ms",
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+    "--studio-progress-state-duration": "0ms",
+    "--studio-questionnaire-state-duration": "0ms",
+    "--studio-segmented-control-color-duration": "0ms",
+    "--studio-segmented-control-state-duration": "0ms",
+    "--studio-sidebar-state-duration": "0ms",
+    "--studio-slider-state-duration": "0ms",
+    "--studio-switch-color-duration": "0ms",
+    "--studio-switch-state-duration": "0ms",
+    "--studio-table-state-duration": "0ms",
+    "--studio-tabs-color-duration": "0ms",
+    "--studio-tabs-state-duration": "0ms",
+    "--studio-tag-state-duration": "0ms",
+    "--studio-time-picker-state-duration": "0ms",
+    "--studio-toast-enter-duration": "0ms",
+    "--studio-toast-exit-duration": "0ms",
+    "--studio-toast-swipe-state-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > icons/stroke-only-line-sets: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": "phosphor",
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > icons/weight-only-phosphor: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "none",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+  },
+  "tokens": {
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+  },
+}
+`;
+
+exports[`rules > motion/menus-none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "popover": {
+      "mobile": "drawer",
+      "motion": "none",
+      "tip": "none",
+    },
+    "tooltip": {
+      "motion": "none",
+      "style": "inverted",
+      "tip": "tip",
+    },
+  },
+  "tokens": {
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+    "--studio-tooltip-enter-duration": "0ms",
+    "--studio-tooltip-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > navigation/surface-needs-shell: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > otp-field/underline-separates-cells: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "underline",
+      "text": "same",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > sliders/handle-needs-track: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "slider": {
+      "thumb": "handle",
+      "track": "thin",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > states/neutral-ring-owns-field-ink: fires, then holds back 1`] = `
+{
+  "color": {
+    "background": {
+      "dark": 2,
+    },
+    "overrides": {
+      "color-border-focus": {
+        "job": "solid",
+        "palette": "neutral",
+      },
+      "color-border-focus-muted": {
+        "job": "ui-active",
+        "palette": "neutral",
+      },
+    },
+    "primary": "accent",
+    "seeds": {
+      "accent": "#0070f1",
+    },
+    "v": 2,
+  },
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > states/ring-hides-field-ink: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
+}
+`;
+
+exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--focus-input-color": "var(--focus-ring-color)",
+    "--focus-input-offset": "var(--focus-ring-offset)",
+    "--focus-input-width": "var(--focus-ring-width)",
+  },
+}
+`;
+
+exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-card": "light-dark(var(--neutral-25), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--overlay-border": "light-dark(transparent, var(--color-border))",
+    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+  },
+}
+`;
+
+exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "style": "flat",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "tone",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "inverse",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "solid",
+      "selected": "inverse",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {},
+}
+`;
+
+exports[`rules > type/14-is-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > type/field-text-native: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;

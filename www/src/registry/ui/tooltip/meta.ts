@@ -19,6 +19,12 @@ const tooltipMeta = {
       description:
         "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
+    tip: {
+      kind: "enum",
+      default: "tip",
+      values: ["tip", "none"] as const,
+      description: "Whether the tooltip points at its trigger.",
+    },
     motion: {
       kind: "enum",
       default: "scale",

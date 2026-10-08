@@ -26,8 +26,9 @@ import {
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from "./code-options"
-import { flatten } from "./flatten"
+import { dropOverridden, flatten } from "./flatten"
 import {
+  assertNoRampVars,
   assertNoStudioVars,
   paramVars,
   resolveClasses,
@@ -37,7 +38,7 @@ import {
 } from "./resolve-classes"
 import { resolveIconImports } from "./resolve-icons"
 import { serializeTvConfig } from "./serialize"
-import type { Publishable, PublishPreset } from "./types"
+import type { ClassValue, Publishable, PublishPreset, TvLayer } from "./types"
 
 export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%"
 
@@ -87,6 +88,8 @@ const FILE_IMPORT_NPM_DEPS = [
   "@hugeicons/react",
   "@hugeicons/core-free-icons",
   "@phosphor-icons/react",
+  "@nine-thirty-five/material-symbols-react",
+  "@primer/octicons-react",
   "@internationalized/date",
 ]
 
@@ -208,6 +211,53 @@ export interface PublishInput {
   deps?: DepResolver
 }
 
+/** The slots the shipped file reads, when only its `const { … } =
+ *  xVariants()` reads them; a shared recipe's other slots ship dead. */
+function destructuredSlots(template: string): Set<string> | undefined {
+  const hoisted = [
+    ...template.matchAll(/const \{([^}]*)\} = (\w+Variants)\(\);/g),
+  ]
+  const ident = hoisted[0]?.[2]
+  if (!ident || hoisted.some(([, , other]) => other !== ident)) return
+  // Called elsewhere, or exported for other components' slots.
+  if (template.split(ident).length - 1 !== hoisted.length + 1) return
+  return new Set(
+    hoisted.flatMap(([, names = ""]) =>
+      names.split(",").map((name) => name.split(":")[0]!.trim()),
+    ),
+  )
+}
+
+function pruneSlots(layer: TvLayer, used: Set<string>): TvLayer {
+  if (!layer.slots) return layer
+  const keep = <T>(slots: Record<string, T>) =>
+    Object.fromEntries(Object.entries(slots).filter(([k]) => used.has(k)))
+  const isMap = (v: unknown): v is Record<string, ClassValue> =>
+    typeof v === "object" && v !== null && !Array.isArray(v)
+  return {
+    ...layer,
+    slots: keep(layer.slots),
+    variants:
+      layer.variants &&
+      Object.fromEntries(
+        Object.entries(layer.variants).map(([name, values]) => [
+          name,
+          Object.fromEntries(
+            Object.entries(values).map(([k, v]) => [k, isMap(v) ? keep(v) : v]),
+          ),
+        ]),
+      ),
+    compoundVariants: layer.compoundVariants?.map((cv) =>
+      Object.fromEntries(
+        Object.entries(cv).map(([k, v]) => [
+          k,
+          (k === "class" || k === "className") && isMap(v) ? keep(v) : v,
+        ]),
+      ),
+    ),
+  }
+}
+
 export function publish({
   publishable,
   preset,
@@ -219,12 +269,15 @@ export function publish({
   const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
 
   // 1. Flatten base + density + param layers.
-  const flat = flatten({
+  const flattened = flatten({
     stylesConfig,
     meta,
     density: preset.density,
     paramSelections,
   })
+
+  const used = destructuredSlots(template)
+  const flat = used ? pruneSlots(flattened, used) : flattened
 
   // 2. Resolve studio vars (the builder's live-tweak indirection) to what the
   // preset lands on: styles.css defaults ← the selected params' vars ← the
@@ -235,7 +288,7 @@ export function publish({
     ...paramVars(meta, paramSelections),
     ...preset.tokens,
   })
-  let resolved = resolveClasses(flat, studioVars)
+  let resolved = dropOverridden(resolveClasses(flat, studioVars))
 
   // 2b. Code-style: collapse grouped class arrays to a single string per
   // slot/variant when the user prefers one-line-per-slot tv configs.
@@ -294,8 +347,12 @@ export function publish({
   // ship. Nothing studio-prefixed may survive into the item.
   const css = resolveCssFields(meta.css, studioVars)
   const cssVars = resolveCssFields(meta.cssVars, studioVars)
-  for (const file of files) assertNoStudioVars(file.content ?? "", file.path)
+  for (const file of files) {
+    assertNoStudioVars(file.content ?? "", file.path)
+    assertNoRampVars(file.content ?? "", file.path)
+  }
   assertNoStudioVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
+  assertNoRampVars(JSON.stringify([css, cssVars]), `${meta.name} css`)
 
   const registryDependencies = rewriteDeps(
     registryDepsFor(meta, paramSelections),

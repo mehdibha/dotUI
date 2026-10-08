@@ -1,89 +1,125 @@
-/* Menus — one language for every floating list: Menu, Select and ComboBox
-   listboxes, and the Command palette are one synced family, so one axis
-   writes all of them.
+/* Menus & popovers: one row language for every floating list (menu, the
+   select and combobox list-box, command), the arrows on anchored layers, and
+   what pickers become on phones.
 
-   Engine: `indicator`, `highlight`, `inset` and `labels` are enum params on
-   `menu` and `list-box` (highlight re-points the `--color-highlight` pair
-   through the param's vars); `search` and `scale` are enum params on
-   `command`, the search-led surface, which also takes `inset` so its list
-   gutter follows the rows. */
+   Engine: `indicator`, `highlight`, `inset`, `selected` and `rows` are enum params on
+   `menu` and `list-box`, one recipe (list-box LIST_ROWS); `search`, `scale`
+   and `inset` on `command`; `tip` on `popover` and `tooltip`; `mobile` swaps
+   the shipped popover file; `--studio-list-box-*` are the row washes. */
 
-import type { Resolved, StudioState } from "./index"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
+import { surfaceRecipe } from "./surfaces"
 
 export const MENU_DEFAULTS = {
-  menuIndicator: "check-end",
   menuHighlight: "neutral",
   menuInset: "inset",
-  menuLabels: "sentence",
+  menuArrows: "tooltips",
+  menuIndicator: "check-end",
+  menuSelectedRow: "none",
+  menuRows: "auto",
+  mobilePickers: "drawer",
   menuSearch: "field",
   menuScale: "default",
 }
 
-/* Leading check with a reserved gutter on every item (Radix, shadcn,
-   Material) or trailing on the selected item only (macOS, Arc). */
-export const INDICATOR_OPTIONS = [
-  { value: "check-start", label: "Leading check" },
-  { value: "check-end", label: "Trailing check" },
-]
+export const HIGHLIGHT_VALUES = ["neutral", "accent"] as const
 
-/* A neutral wash (Linear, Geist, Vercel) or the solid accent with inverted
-   text (macOS, Windows, Chakra). */
-export const HIGHLIGHT_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "accent", label: "Accent" },
-]
+export const INSET_VALUES = ["inset", "full-bleed"] as const
 
-export const INSET_OPTIONS = [
-  { value: "inset", label: "Inset" },
-  { value: "full-bleed", label: "Full bleed" },
-]
+export const ARROWS_VALUES = ["tooltips", "none", "popovers", "both"] as const
 
-export const LABEL_OPTIONS = [
-  { value: "sentence", label: "Sentence" },
-  { value: "caps", label: "Caps" },
-]
-
-/* A boxed field floating in the padding (shadcn/cmdk, Spotlight), a
-   full-bleed bar keeping the magnifier over a hairline, or a bare prompt
-   (Linear, Raycast). */
-export const SEARCH_OPTIONS = [
-  { value: "field", label: "Field" },
-  { value: "bar", label: "Bar" },
-  { value: "prompt", label: "Prompt" },
-]
-
-export const SCALE_OPTIONS = [
-  { value: "default", label: "Default" },
-  { value: "large", label: "Large" },
-]
-
-export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
-  menuIndicator: oneOf(INDICATOR_OPTIONS),
-  menuHighlight: oneOf(HIGHLIGHT_OPTIONS),
-  menuInset: oneOf(INSET_OPTIONS),
-  menuLabels: oneOf(LABEL_OPTIONS),
-  menuSearch: oneOf(SEARCH_OPTIONS),
-  menuScale: oneOf(SCALE_OPTIONS),
+/* Which layers draw a tip: [popover, tooltip]. */
+const TIPS: Record<string, [popover: string, tooltip: string]> = {
+  tooltips: ["none", "tip"],
+  none: ["none", "none"],
+  popovers: ["tip", "none"],
+  both: ["tip", "tip"],
 }
 
-export function resolveMenus(state: StudioState): Resolved {
-  const list = {
+export const INDICATOR_VALUES = ["check-end", "check-start", "none"] as const
+
+export const SELECTED_ROW_VALUES = ["none", "tint"] as const
+
+/* Auto: the density's own rows. Match: the control height. Step up: one
+   step above it. */
+export const ROWS_VALUES = ["auto", "match", "step"] as const
+
+export const PICKER_VALUES = ["drawer", "anchored"] as const
+
+export const SEARCH_VALUES = ["field", "bar", "prompt"] as const
+
+export const SCALE_VALUES = ["default", "large"] as const
+
+export const MENU_SCHEMA: ChapterSchema<typeof MENU_DEFAULTS> = {
+  menuHighlight: oneOf(HIGHLIGHT_VALUES),
+  menuInset: oneOf(INSET_VALUES),
+  menuArrows: oneOf(ARROWS_VALUES),
+  menuIndicator: oneOf(INDICATOR_VALUES),
+  menuSelectedRow: oneOf(SELECTED_ROW_VALUES),
+  menuRows: oneOf(ROWS_VALUES),
+  mobilePickers: oneOf(PICKER_VALUES),
+  menuSearch: oneOf(SEARCH_VALUES),
+  menuScale: oneOf(SCALE_VALUES),
+}
+
+export function resolveMenus(state: Effective): Resolved {
+  const rows = {
     indicator: state.menuIndicator,
     highlight: state.menuHighlight,
     inset: state.menuInset,
-    labels: state.menuLabels,
+    selected: state.menuSelectedRow,
+    rows: state.menuRows,
   }
+  const [popoverTip, tooltipTip] = TIPS[state.menuArrows]!
+  // A neutral tint sits a step under the neutral highlight, so the focused
+  // row is always the strongest; a brand wash already parts by hue.
+  const tokens: Record<string, string> =
+    state.menuSelectedRow === "tint" &&
+    state.menuHighlight === "neutral" &&
+    state.selectedWash === "neutral"
+      ? {
+          "--studio-list-box-selected":
+            "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+          "--studio-list-box-selected-highlight": "var(--color-selected)",
+        }
+      : {}
+  // The tip grows with a heavier overlay stroke: 10px at 1px, 14px at 2px.
+  const stroke = parseFloat(surfaceRecipe(state).stroke.overlay)
+  if (stroke > 1)
+    tokens["--studio-popover-tip-size"] =
+      `calc(var(--spacing) * ${Math.max(2.5, stroke * 1.75)})`
   return {
+    tokens,
     params: {
-      menu: list,
-      "list-box": list,
+      menu: rows,
+      "list-box": rows,
       command: {
         search: state.menuSearch,
-        inset: list.inset,
+        inset: state.menuInset,
         scale: state.menuScale,
       },
+      popover: { tip: popoverTip, mobile: state.mobilePickers },
+      tooltip: { tip: tooltipTip },
     },
   }
 }
+
+export const chapter = defineChapter({
+  id: "menus",
+  defaults: MENU_DEFAULTS,
+  schema: MENU_SCHEMA,
+  resolve: resolveMenus,
+  rules: [
+    {
+      // Neither a check nor a fill would leave the selection invisible.
+      id: "menus/check-or-fill",
+      target: "menuSelectedRow",
+      when: { key: "menuIndicator", in: ["none"] },
+      effect: { kind: "pin", value: "tint" },
+      cause: "menuIndicator",
+    },
+  ],
+})

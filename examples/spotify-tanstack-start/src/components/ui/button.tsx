@@ -9,26 +9,26 @@ import { type VariantProps, tv } from "tailwind-variants";
 import { Loader } from "@/components/ui/loader";
 
 const buttonVariants = tv({
-  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted disabled:cursor-disabled text-sm *:[svg]:not-with-[size]:size-4",
+  base: "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-full bg-clip-padding font-bold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-ui focus-reset focus-visible:focus-ring **:[svg]:pointer-events-none **:[svg]:shrink-0 pending:cursor-pending pending:[-webkit-text-fill-color:transparent] pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 disabled:cursor-disabled invalid:border-fg-danger invalid:not-focus-visible:invalid-ring text-base *:[svg]:not-with-[size]:size-5",
   variants: {
     variant: {
       primary:
         "text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) bg-primary hover:bg-primary-hover pressed:bg-primary-active",
       secondary:
-        "text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) pending:border-border border border-border-control bg-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) border border-border-control bg-transparent text-fg-on-neutral hover:bg-neutral pressed:not-aria-expanded:bg-neutral-hover",
       quiet:
-        "bg-transparent text-fg hover:bg-inverse/10 disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
-      link: "text-fg underline-offset-4 hover:underline disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
+        "bg-transparent text-fg hover:bg-inverse/10 disabled:text-(--disabled-fg,var(--color-fg)) pressed:bg-inverse/20",
+      link: "disabled:text-(--disabled-fg,var(--color-fg)) underline underline-offset-2 text-fg",
       warning:
         "text-fg-on-warning disabled:bg-(--disabled-bg,var(--color-warning)) disabled:text-(--disabled-fg,var(--color-fg-on-warning)) bg-warning hover:bg-warning-hover pressed:bg-warning-active",
       danger:
         "text-fg-on-danger disabled:bg-(--disabled-bg,var(--color-danger)) disabled:text-(--disabled-fg,var(--color-fg-on-danger)) bg-danger hover:bg-danger-hover pressed:bg-danger-active",
     },
     size: {
-      xs: "rounded-full h-7 gap-1 px-2.5 text-[0.8125rem] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 data-icon-only:size-7 **:[svg]:not-with-[size]:size-3.5",
-      sm: "h-8 gap-1 px-2.5 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 data-icon-only:size-8",
-      md: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 data-icon-only:size-9",
-      lg: "h-10 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 data-icon-only:size-10",
+      xs: "rounded-full h-7 gap-1 px-3 text-[0.8125rem] has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 data-icon-only:size-7 **:[svg]:not-with-[size]:size-3.5",
+      sm: "h-8 gap-1.5 px-4 text-sm has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 data-icon-only:size-8 **:[svg]:not-with-[size]:size-4",
+      md: "h-12 gap-2 px-6 has-data-[icon=inline-end]:pr-5 has-data-[icon=inline-start]:pl-5 data-icon-only:size-12",
+      lg: "h-14 gap-2 px-8 has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6 data-icon-only:size-14",
     },
     isIconOnly: {
       true: "p-0",

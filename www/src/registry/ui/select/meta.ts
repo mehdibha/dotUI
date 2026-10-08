@@ -11,8 +11,24 @@ const selectMeta = {
       target: "ui/select.tsx",
     },
   ],
-  registryDependencies: ["button", "field", "list-box", "popover"],
+  registryDependencies: ["field", "input", "list-box", "popover"],
   params: {
+    trigger: {
+      kind: "enum",
+      default: "button",
+      values: ["button", "field"] as const,
+      registryDependencies: { button: ["button"] },
+      files: {
+        field: [
+          {
+            type: "registry:ui",
+            path: "ui/select/base.field.tsx",
+            target: "ui/select.tsx",
+          },
+        ],
+      },
+      description: "What draws the trigger: a button, or the field shell.",
+    },
     caret: {
       kind: "enum",
       default: "chevron",

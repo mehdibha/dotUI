@@ -6,6 +6,7 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 import { CheckIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { useStyles as useInputStyles } from "@/registry/ui/input/styles"
 
 import { useStyles } from "./styles"
 
@@ -212,11 +213,12 @@ const QuestionnaireInput = ({
   ...props
 }: QuestionnaireInputProps) => {
   const { inputWrapper, input } = useStyles()()
+  const { input: shell } = useInputStyles()()
   return (
     <div data-questionnaire-input-wrapper="" className={inputWrapper()}>
       <QuestionnairePrimitive.Input
         data-questionnaire-input=""
-        className={input({ className })}
+        className={shell({ className: input({ className }) })}
         {...props}
       />
     </div>

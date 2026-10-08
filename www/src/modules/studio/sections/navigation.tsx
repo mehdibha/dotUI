@@ -1,273 +1,507 @@
 "use client"
 
-/* Navigation — how a link announces itself, the selected-tab signature, the
-   breadcrumb trail and the current page. Link and tab colors are leaves of
-   Color's Primary; pagination's cells wear Buttons' look. */
+/* Navigation: how the current location is marked in tabs, the sidebar,
+   links and breadcrumbs. */
 
+import { useMemo } from "react"
+
+import { DesignSystemContext } from "@/lib/styles"
+import { ChevronRightIcon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-
-import { SEPARATOR_OPTIONS, TONE_OPTIONS } from "../axes/breadcrumbs"
-import { UNDERLINE_OPTIONS } from "../axes/links"
-import { CURRENT_OPTIONS } from "../axes/pagination"
-import { TAB_STYLE_OPTIONS } from "../axes/tabs"
+import { useStyles as useBreadcrumbsStyles } from "@/registry/ui/breadcrumbs/styles"
+import { UPPERCASE } from "@/registry/ui/button/styles"
+import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
 import {
-  DialGap,
-  DialGlyph,
-  DialList,
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialTrigger,
-  optionLabel,
-} from "../dial"
-import type { Studio, StudioState } from "../state"
+  WEIGHT_BOLD,
+  WEIGHT_MEDIUM,
+  WEIGHT_MEDIUM_SEMIBOLD,
+  WEIGHT_REGULAR,
+  WEIGHT_REGULAR_MEDIUM,
+  WEIGHT_REGULAR_SEMIBOLD,
+  WEIGHT_SEMIBOLD,
+} from "@/registry/ui/segmented-control/styles"
+import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
+import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
+import type { DesignSystem } from "@/modules/studio/preset/types"
+
+import { parseState } from "../axes"
+import type { StudioState } from "../axes"
+import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
+import { UNDERLINE_OPTIONS } from "../axes/links.meta"
+import {
+  CASE_OPTIONS,
+  INDICATOR_OPTIONS,
+  ITEM_WEIGHT_OPTIONS,
+  MARKER_OPTIONS,
+  PILL_OPTIONS,
+  TAB_STYLE_OPTIONS,
+  WEIGHT_OPTIONS,
+} from "../axes/navigation.meta"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
+import type { RowMap } from "../family-page"
+import { designSystemOf } from "../resolve"
+import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-function LinkGlyph({ underline }: { underline: string }) {
+/* The tokens a pick writes that a specimen draws with (the shell tone, the
+   pill marker's corners). */
+const LOCAL_VARS = ["--color-sidebar", "--studio-sidebar-button-radius"]
+
+/** Specimens drawn by the registry's own recipes in one design system. */
+function System({
+  ds,
+  children,
+}: {
+  ds: DesignSystem
+  children: React.ReactNode
+}) {
+  const value = useMemo(
+    () => ({ params: ds.componentParams, density: "compact" as const }),
+    [ds],
+  )
+  const style = Object.fromEntries(
+    LOCAL_VARS.flatMap((name) =>
+      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
+    ),
+  ) as React.CSSProperties
   return (
-    <span
-      className={cn(
-        "shrink-0 text-[11px] font-medium text-fg/80 underline-offset-2",
-        underline === "always" && "underline",
-        underline === "hover" && "underline decoration-fg/30",
-      )}
-    >
-      Link
+    <DesignSystemContext.Provider value={value}>
+      <span className="flex items-center gap-1.5 text-fg" style={style}>
+        {children}
+      </span>
+    </DesignSystemContext.Provider>
+  )
+}
+
+/** One design system per option of `key`, over the current picks. */
+function useSystems(
+  state: StudioState,
+  key: keyof StudioState,
+  options: readonly { value: string }[],
+) {
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        options.map(({ value }) => [
+          value,
+          designSystemOf({ ...state, [key]: value } as StudioState),
+        ]),
+      ),
+    [state, key, options],
+  )
+}
+
+const TABS = ["Code", "Docs"]
+
+/** A tab list, the first tab selected, in the system's default variant. */
+function TabsSpecimen() {
+  const { root, list, item, indicator } = useTabsStyles()()
+  const horizontal = { orientation: "horizontal" } as const
+  return (
+    <span className={root(horizontal)}>
+      <span data-orientation="horizontal" className={list(horizontal)}>
+        {TABS.map((label, i) => (
+          <span
+            key={label}
+            data-orientation="horizontal"
+            data-selected={i === 0 || undefined}
+            className={item(horizontal)}
+          >
+            {i === 0 && (
+              <span
+                data-orientation="horizontal"
+                className={indicator(horizontal)}
+              />
+            )}
+            <span className="relative z-10">{label}</span>
+          </span>
+        ))}
+      </span>
     </span>
   )
 }
 
-function TabGlyph({ style }: { style: string }) {
-  if (style === "segmented")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="3"
-          y="7.5"
-          width="18"
-          height="9"
-          rx="3"
-          fill="currentColor"
-          opacity=".2"
-        />
-        <rect
-          x="4.5"
-          y="9"
-          width="7.5"
-          height="6"
-          rx="2"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
-  if (style === "line")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="7.5"
-          y="8.5"
-          width="9"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".5"
-        />
-        <path
-          d="M3 16h18"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          opacity=".3"
-        />
-        <path
-          d="M6.5 16h11"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    )
-  if (style === "pill")
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect
-          x="4.5"
-          y="7.5"
-          width="15"
-          height="9"
-          rx="4.5"
-          fill="currentColor"
-          opacity=".25"
-        />
-        <rect
-          x="8"
-          y="10.75"
-          width="8"
-          height="2.5"
-          rx="1.25"
-          fill="currentColor"
-          opacity=".7"
-        />
-      </svg>
-    )
+/** Sidebar items on the sidebar's tone, the first current. */
+function SidebarSpecimen() {
+  const { menuButton } = useSidebarStyles()()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M3 16.5h3.5v-5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5H21"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <rect
-        x="9.5"
-        y="11.5"
-        width="5"
-        height="2.5"
-        rx="1.25"
-        fill="currentColor"
-        opacity=".5"
-      />
-    </svg>
+    <span className="flex w-20 flex-col gap-0.5 rounded-md bg-sidebar p-1">
+      {["Inbox", "Drafts"].map((label, i) => (
+        <span
+          key={label}
+          data-size="sm"
+          data-active={i === 0 || undefined}
+          className={menuButton()}
+        >
+          {label}
+        </span>
+      ))}
+    </span>
   )
 }
 
-function SeparatorGlyph({ separator }: { separator: string }) {
+function LinkSpecimen() {
+  const link = useLinkStyles()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M2.5 12h4M17.5 12h4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        opacity=".35"
-      />
-      {separator === "slash" ? (
-        <path
-          d="M13.75 6.5 10.25 17.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      ) : (
-        <path
-          d="m10.5 7.5 4.5 4.5-4.5 4.5"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-    </svg>
+    <span data-rac="" className={cn(link(), "text-sm")}>
+      Pricing
+    </span>
   )
 }
 
-function CurrentGlyph({ current }: { current: string }) {
+function BreadcrumbsSpecimen({ separator }: { separator: string }) {
+  const { root, link, separator: glyph } = useBreadcrumbsStyles()()
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
-      {current === "filled" ? (
-        <rect
-          x="7.5"
-          y="7.5"
-          width="9"
-          height="9"
-          rx="2.5"
-          fill="currentColor"
-        />
-      ) : (
-        <rect
-          x="8.25"
-          y="8.25"
-          width="7.5"
-          height="7.5"
-          rx="2.25"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-      )}
-    </svg>
+    <span className={cn(root(), "flex-nowrap")}>
+      <span className={link()}>Docs</span>
+      <span aria-hidden className={glyph()}>
+        {separator === "slash" ? "/" : <ChevronRightIcon />}
+      </span>
+      <span data-current="" className={link()}>
+        Tabs
+      </span>
+    </span>
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
+const WEIGHTS: Record<string, { item: string }> = {
+  regular: WEIGHT_REGULAR,
+  "regular-medium": WEIGHT_REGULAR_MEDIUM,
+  "regular-semibold": WEIGHT_REGULAR_SEMIBOLD,
+  medium: WEIGHT_MEDIUM,
+  "medium-semibold": WEIGHT_MEDIUM_SEMIBOLD,
+  semibold: WEIGHT_SEMIBOLD,
+  bold: WEIGHT_BOLD,
+}
 
-export function NavigationPreview({ state }: { state: StudioState }) {
+/** A label at rest, then current, in the registry's weight classes. */
+function WeightGlyph({ weight }: { weight: string }) {
+  const { item } = WEIGHTS[weight]!
+  return (
+    <span className="flex items-center gap-1 text-[13px]">
+      <span className={cn(item, "text-fg/50")}>Aa</span>
+      <span data-selected="" className={cn(item, "text-fg")}>
+        Aa
+      </span>
+    </span>
+  )
+}
+
+/** A tab label in the registry's case classes. */
+function CaseGlyph({ upper }: { upper: boolean }) {
+  return (
+    <span className={cn("text-[13px] font-medium", upper && UPPERCASE)}>
+      Tabs
+    </span>
+  )
+}
+
+const weightOptions = (options: typeof ITEM_WEIGHT_OPTIONS) =>
+  options.map((option) => ({
+    ...option,
+    preview: WEIGHTS[option.value] && <WeightGlyph weight={option.value} />,
+  }))
+
+/** The row's tabs: a chip on a track, an underline, or a lone pill. */
+function TabStyleGlyph({ style }: { style: string }) {
   return (
     <DialGlyph>
-      <TabGlyph style={state.tabStyle} />
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+        {style === "segmented" && (
+          <>
+            <rect
+              x="2"
+              y="6.5"
+              width="20"
+              height="11"
+              rx="3"
+              fill="currentColor"
+              fillOpacity=".15"
+            />
+            <rect
+              x="3.5"
+              y="8"
+              width="9"
+              height="8"
+              rx="2"
+              fill="currentColor"
+              fillOpacity=".7"
+            />
+          </>
+        )}
+        {style === "line" && (
+          <>
+            <path d="M2 18.5h20" stroke="currentColor" opacity=".3" />
+            <path d="M3 18.25h9" stroke="currentColor" strokeWidth="2" />
+            <path
+              d="M4.5 12h6M14 12h6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity=".6"
+            />
+          </>
+        )}
+        {style === "pill" && (
+          <>
+            <rect
+              x="2"
+              y="7"
+              width="11"
+              height="10"
+              rx="5"
+              fill="currentColor"
+              fillOpacity=".7"
+            />
+            <path
+              d="M16 12h5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity=".5"
+            />
+          </>
+        )}
+      </svg>
     </DialGlyph>
   )
 }
 
-export function NavigationSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+/* ---------------------------------- Rows ---------------------------------- */
+
+function TabStyleRow() {
+  const { state } = useStudio()
+  const styles = useSystems(state, "tabStyle", TAB_STYLE_OPTIONS)
+  return (
+    <DialSelect
+      axis="tabStyle"
+      label="Tabs"
+      options={TAB_STYLE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={styles[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+        glyph: <TabStyleGlyph style={option.value} />,
+      }))}
+    />
+  )
+}
+
+function NavMarkerRow() {
+  const { state } = useStudio()
+  const markers = useSystems(state, "navMarker", MARKER_OPTIONS)
+  return (
+    <DialSelect
+      axis="navMarker"
+      label="Current item"
+      rowPreview={false}
+      options={MARKER_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={markers[option.value]!}>
+            <SidebarSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function TabIndicatorRow() {
+  const { state } = useStudio()
+  const indicators = useSystems(
+    { ...state, tabStyle: "line" } as StudioState,
+    "tabIndicator",
+    INDICATOR_OPTIONS,
+  )
+  return (
+    <DialSelect
+      axis="tabIndicator"
+      label="Line indicator"
+      rowPreview={false}
+      options={INDICATOR_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={indicators[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function NavWeightRow() {
+  return (
+    <DialSelect
+      axis="navWeight"
+      label="Weight"
+      options={weightOptions(WEIGHT_OPTIONS)}
+    />
+  )
+}
+
+function NavItemWeightRow() {
+  return (
+    <DialSelect
+      axis="navItemWeight"
+      label="Sidebar weight"
+      options={weightOptions(ITEM_WEIGHT_OPTIONS)}
+    />
+  )
+}
+
+function NavCaseRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="navCase"
+      label="Case"
+      options={CASE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <CaseGlyph
+            upper={
+              (option.value === "same"
+                ? effective.buttonCase
+                : option.value) === "uppercase"
+            }
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+function TabsPillRow() {
+  const { state } = useStudio()
+  const pills = useSystems(
+    { ...state, tabStyle: "pill" } as StudioState,
+    "tabsPill",
+    PILL_OPTIONS,
+  )
+  return (
+    <DialSelect
+      axis="tabsPill"
+      label="Pill fill"
+      rowPreview={false}
+      options={PILL_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={pills[option.value]!}>
+            <TabsSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function LinkUnderlineRow() {
+  const { state } = useStudio()
+  const underlines = useSystems(state, "linkUnderline", UNDERLINE_OPTIONS)
+  return (
+    <DialSelect
+      axis="linkUnderline"
+      label="Underline"
+      options={UNDERLINE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={underlines[option.value]!}>
+            <LinkSpecimen />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+function BreadcrumbSeparatorRow() {
+  return (
+    <DialSegmented
+      axis="breadcrumbSeparator"
+      label="Separator"
+      options={SEPARATOR_OPTIONS}
+    />
+  )
+}
+
+function BreadcrumbToneRow() {
+  const { state, effective } = useStudio()
+  const tones = useSystems(state, "breadcrumbTone", ANCESTOR_OPTIONS)
+  return (
+    <DialSelect
+      axis="breadcrumbTone"
+      label="Ancestors"
+      rowPreview={false}
+      options={ANCESTOR_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <System ds={tones[option.value]!}>
+            <BreadcrumbsSpecimen separator={effective.breadcrumbSeparator} />
+          </System>
+        ),
+      }))}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  tabStyle: TabStyleRow,
+  navMarker: NavMarkerRow,
+  tabIndicator: TabIndicatorRow,
+  navWeight: NavWeightRow,
+  navItemWeight: NavItemWeightRow,
+  navCase: NavCaseRow,
+  tabsPill: TabsPillRow,
+  linkUnderline: LinkUnderlineRow,
+  breadcrumbSeparator: BreadcrumbSeparatorRow,
+  breadcrumbTone: BreadcrumbToneRow,
+}
+
+/* --------------------------------- Section --------------------------------- */
+
+export function NavigationPreview({ state }: { state: Effective }) {
+  const ds = useMemo(
+    () => designSystemOf(parseState({ tabStyle: state.tabStyle })),
+    [state.tabStyle],
+  )
+  return (
+    <System ds={ds}>
+      <TabsSpecimen />
+    </System>
+  )
+}
+
+export function NavigationSection(_: { studio: Studio }) {
   return (
     <>
-      <DialList
-        label="Tabs"
-        value={state.tabStyle}
-        onChange={set("tabStyle")}
-        options={TAB_STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <TabGlyph style={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+      <Row axis="tabStyle" />
+      <Row axis="navMarker" />
+      <Row axis="tabsColor" label="Indicator color" />
+      <Row axis="tabIndicator" />
+      <Row axis="navWeight" />
+      <Row axis="navItemWeight" />
+      <Row axis="navCase" />
+      <Row axis="tabsPill" />
       <DialGap />
-      <DialSelect
-        label="Links"
-        value={state.linkUnderline}
-        onChange={set("linkUnderline")}
-        options={UNDERLINE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <LinkGlyph underline={option.value} />,
-        }))}
-      />
-      <DialTrigger
-        label="Breadcrumbs"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(SEPARATOR_OPTIONS, state.breadcrumbSeparator)}
-            </span>
-            <DialGlyph>
-              <SeparatorGlyph separator={state.breadcrumbSeparator} />
-            </DialGlyph>
-          </>
-        }
-      >
-        <DialPopover>
-          <DialSegmented
-            label="Separator"
-            value={state.breadcrumbSeparator}
-            onChange={set("breadcrumbSeparator")}
-            options={SEPARATOR_OPTIONS}
-          />
-          <DialSegmented
-            label="Crumbs"
-            value={state.breadcrumbTone}
-            onChange={set("breadcrumbTone")}
-            options={TONE_OPTIONS}
-          />
-        </DialPopover>
-      </DialTrigger>
-      <DialSelect
-        label="Pagination"
-        value={state.paginationCurrent}
-        onChange={set("paginationCurrent")}
-        options={CURRENT_OPTIONS.map((option) => ({
-          ...option,
-          preview: (
-            <DialGlyph>
-              <CurrentGlyph current={option.value} />
-            </DialGlyph>
-          ),
-        }))}
-      />
+      <Row axis="segmentedSelected" />
+      <Row axis="shellTone" />
+      <Row axis="paginationCurrent" />
+      <Row axis="navMotion" />
+      <MemberSection id="link" title="Links">
+        <Row axis="linkUnderline" />
+        <Row axis="linkColor" label="Color" />
+      </MemberSection>
+      <MemberSection id="breadcrumbs" title="Breadcrumbs">
+        <Row axis="breadcrumbSeparator" />
+        <Row axis="breadcrumbTone" />
+      </MemberSection>
     </>
   )
 }

@@ -1,54 +1,95 @@
 "use client"
 
-/* Density — one row: the tier, and under it in the same popover the spacing
-   unit that scales everything the tier measures. */
+/* Density: the tier, drawn to scale, and the rows that read it. */
 
-import { DENSITY_TIERS, densityTier, UNIT_RANGE } from "../axes/space"
-import { DialSelect, DialSlider } from "../dial"
-import type { Studio, StudioState } from "../state"
+import { DENSITY_VALUES } from "../axes/space"
+import { DENSITY_OPTIONS, densityTier } from "../axes/space.meta"
+import { DialGap, DialGlyph, DialSelect } from "../dial"
+import { Row } from "../family-page"
+import type { RowMap } from "../family-page"
+import type { Effective } from "../state"
 
-/** The three tiers as bars, the current one lit. */
-export function SpacePreview({ state }: { state: StudioState }) {
-  const tier = densityTier(state.density)
+const TOUCH = densityTier("touch").ladder
+
+/** A tier's md control, its height to scale against Touch's. */
+function ControlGlyph({ density }: { density: string }) {
+  const h = (densityTier(density).ladder[2] / TOUCH[2]) * 14
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden>
+      <rect
+        x={0.75}
+        y={8 - h / 2}
+        width={14.5}
+        height={h}
+        rx={2.5}
+        stroke="currentColor"
+        strokeWidth={1.25}
+      />
+      <path
+        d="M5 8h6"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+/** Every tier's md control as a bar, the current one lit. */
+export function SpacePreview({ state }: { state: Effective }) {
   return (
     <span className="flex h-4 items-end gap-0.5" aria-hidden>
-      {DENSITY_TIERS.map((t) => (
+      {DENSITY_VALUES.map((id) => (
         <span
-          key={t.id}
+          key={id}
           className="w-1 rounded-full bg-fg/25 data-active:bg-fg/80"
-          data-active={t.id === tier.id || undefined}
-          style={{ height: `${(t.control / 9) * 100}%` }}
+          data-active={id === state.density || undefined}
+          style={{ height: `${(densityTier(id).ladder[2] / TOUCH[2]) * 100}%` }}
         />
       ))}
     </span>
   )
 }
 
-export function SpaceSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+/** A tier's md control and its text, at 60% scale. */
+function ControlSpecimen({ density }: { density: string }) {
+  const { ladder, text } = densityTier(density)
   return (
-    <DialSelect
-      label="Density"
-      value={densityTier(state.density).id}
-      onChange={set("density")}
-      options={DENSITY_TIERS.map((t) => ({
-        value: t.id,
-        label: t.label,
-        description: t.description,
-      }))}
+    <span
+      className="flex w-12 items-center justify-center rounded-[4px] border border-current"
+      style={{ height: ladder[2] * 0.6, fontSize: text * 0.6 }}
+      aria-hidden
     >
-      <DialSlider
-        label="Spacing"
-        value={state.spacingUnit}
-        onChange={set("spacingUnit")}
-        minValue={UNIT_RANGE.min}
-        maxValue={UNIT_RANGE.max}
-        step={UNIT_RANGE.step}
-        format={(v) => `${v}px`}
-      />
-      <p className="px-3 text-xs text-fg/50">
-        Scales every padding, gap and height.
-      </p>
-    </DialSelect>
+      Aa
+    </span>
   )
 }
+
+const DENSITY_ROW_OPTIONS = DENSITY_OPTIONS.map((option) => ({
+  ...option,
+  preview: <ControlSpecimen density={option.value} />,
+  glyph: (
+    <DialGlyph>
+      <ControlGlyph density={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function DensityRow() {
+  return (
+    <DialSelect axis="density" label="Scale" options={DENSITY_ROW_OPTIONS} />
+  )
+}
+
+export function SpaceSection() {
+  return (
+    <>
+      <Row axis="density" />
+      <DialGap />
+      <Row axis="inputHeight" />
+      <Row axis="menuRows" />
+    </>
+  )
+}
+
+export const ROWS: RowMap = { density: DensityRow }

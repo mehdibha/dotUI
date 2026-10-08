@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_STATE, validate } from "@/modules/studio/axes"
+import {
+  DEFAULT_STATE,
+  DEFAULTS,
+  effective,
+  validate,
+} from "@/modules/studio/axes"
 
 import { ORIGIN, PRESETS } from "./index"
 
@@ -20,7 +25,26 @@ describe("built-in presets", () => {
   })
 
   it("start from Origin, the builder defaults", () => {
+    expect(ORIGIN.diff).toEqual({})
     expect(ORIGIN.state).toEqual(DEFAULT_STATE)
+  })
+
+  it("hold only what differs from Origin", () => {
+    for (const preset of PRESETS)
+      for (const [key, value] of Object.entries(preset.diff))
+        expect(value, `${preset.id}.${key}`).not.toBe(
+          DEFAULTS[key as keyof typeof DEFAULTS],
+        )
+  })
+
+  it("fire no rule: every value they write is the one that ships", () => {
+    for (const preset of PRESETS) {
+      const { explain } = effective(preset.state)
+      const fired = Object.entries(explain)
+        .filter(([, e]) => e?.rule)
+        .map(([key, e]) => `${key}: ${e?.rule}`)
+      expect(fired, preset.id).toEqual([])
+    }
   })
 
   it("credit the brand they recreate", () => {

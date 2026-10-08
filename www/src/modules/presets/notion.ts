@@ -1,4 +1,4 @@
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const notion = definePreset({
   id: "notion",
@@ -6,141 +6,96 @@ export const notion = definePreset({
   description: "Warm ink, quiet blue.",
   swatch: "#8e8b86",
   inspiredBy: "Notion",
-  state: {
+  diff: {
     // Color
-    // The app token; #0075de is the marketing blue.
+    // The app's --c-bluBacAccPri; #0075de is the marketing blue.
     brand: "#2783de",
-    buttonColor: "accent",
-    selectionColor: "accent",
-    neutralHue: 81,
-    successSeed: "",
-    warningSeed: "",
-    dangerSeed: "",
-    selectionSeed: "",
-    vividness: 1,
+    preserveSeed: true,
+    // White on #2783de (3.9:1), as the login Continue button.
+    solidInk: "white",
+    // Warm grays at OKLCH ~82°, about half the engine's lean.
+    neutralHue: 82,
     neutralTint: 0.5,
-    preserveSeed: false,
+    successSeed: "#46a171",
+    warningSeed: "#d8a32f",
+    dangerSeed: "#e56458",
     lightBg: 100,
-    darkBg: 8.8,
+    // #191919.
+    darkBg: 9,
+    // Fields and outline buttons share the rgba(28,19,1,.11) hairline.
+    controlEdge: "soft",
 
     // Typography
-    headingFont: "",
-    bodyFont: "Inter",
-    monoFont: "Geist Mono",
+    // The app runs on the OS stack; Inter is only the login face.
+    bodyFont: "System",
+    monoFont: "System Mono",
+    titleStyle: "compact",
+    // 14/20 UI text on Compact's 28px controls.
+    uiTextSize: "14",
+    fieldLabel: "medium",
 
     // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
+    // Proprietary outline set; 1.25px on a 20 grid.
+    iconStroke: 1.5,
 
     // Shape
-    radiusPx: 8,
-    roleControl: "md",
-    roleItem: "auto",
-    roleSurface: "lg",
-    rolePanel: "xl",
-    roleCard: "xl",
+    // Controls and rows 6, menus 10, dialogs 12, checkbox 3.
+    radiusPx: 6.5,
+    roleControl: "lg",
+    roleSurface: "xl",
+    rolePanel: "2xl",
 
     // Space
-    density: "default",
-    // 28px controls; density stays default.
-    spacingUnit: 3.5,
+    // md buttons and inputs are 28px.
+    density: "compact",
 
     // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    surfaceGlass: false,
-
-    // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "grab",
-    cursorDisabled: "default",
-    selectionUiText: "none",
-    selectionHighlight: "accent",
+    surfaceShadow: "low",
 
     // States
-    focusColor: "accent",
-    focusStyle: "ring",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
     focusInputStyle: "border",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
-    focusInputBorderWidth: 2,
+    focusInputWeight: "thick",
     disabledTreatment: "fade",
-    inputError: "border",
+    cursorDisabled: "default",
 
-    // Motion
-    ...DEFAULT_MOTION,
+    // Buttons
+    buttonSecondary: "outline",
+    // Settings switches: a white chip on a gray track.
+    segmentedSelected: "raised",
 
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "center",
+    // Selection
+    // Unchecked box: a 1px rgba(27,21,0,.19) edge.
+    checkEdge: "strong",
+    cardSelected: "outline",
 
-    // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
+    // Menus and overlays
+    menuArrows: "none",
+    // Rows are the control height (28px).
+    menuRows: "match",
+    menuSearch: "bar",
+    menuScale: "large",
+    dialogBackdrop: "scrim",
+    dialogBackdropStrength: "heavy",
+    dialogActions: "stack",
+    mobileDialogs: "sheet",
+
+    // Navigation
+    tabStyle: "pill",
     linkUnderline: "always",
     linkColor: "neutral",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "ring",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "flat",
-    segmentedTrack: "filled",
-    switchColor: "accent",
-    checkboxColor: "accent",
-    checkCorner: "rounded",
-    radioColor: "accent",
-    cardSelected: "tint",
-    cardControl: "start",
-    inputStyle: "outline",
-    inputHover: "none",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "right",
-    otpStyle: "group",
-    pickerCaret: "chevron",
-    calendarDayShape: "rounded",
-    calendarToday: "none",
-    calendarWeekdays: "single",
-    sliderThumb: "circle",
-    sliderTrack: "thin",
-    sliderColor: "accent",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
-    menuInset: "inset",
-    menuLabels: "sentence",
-    menuSearch: "bar",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
-    tabStyle: "pill",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "leading",
     breadcrumbSeparator: "slash",
-    breadcrumbTone: "muted",
-    paginationCurrent: "outline",
+
+    // Feedback
+    alertStyle: "soft",
+    toastStyle: "inverse",
+    spinnerStyle: "ring-track",
     badgeStyle: "soft",
     badgeShape: "rounded",
-    kbdTreatment: "text",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
+
+    // Display
+    accordionContainer: "plain",
+    accordionMarker: "leading-caret",
+    calendarDayShape: "circle",
+    calendarWeekdays: "triple",
   },
 })

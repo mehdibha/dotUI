@@ -7,7 +7,8 @@
  * icon library, so shipped code carries no dotui indirection:
  *
  *   lucide (default)  import { ChevronDownIcon } from "lucide-react";
- *   remix / tabler    import { RiArrowDownSLine as ChevronDownIcon } from "@remixicon/react";
+ *   component sets    import { RiArrowDownSLine as ChevronDownIcon } from "@remixicon/react";
+ *   (remix, tabler, phosphor, material-symbols, octicons)
  *   hugeicons         import { HugeiconsIcon } from "@hugeicons/react";
  *                     + data imports + a small component wrapper per icon,
  *                     emitted after the import block (hugeicons ships data
@@ -20,7 +21,11 @@
 // Relative import: this module is reachable from `vite.config.ts` (via
 // source-overlay → transform-base → publish), which node loads without the
 // `@/` alias — a value import through the alias would break config loading.
-import { phosphorWeights, registryIcons } from "../registry/icons/icon-map"
+import {
+  iconLibraries,
+  phosphorWeights,
+  registryIcons,
+} from "../registry/icons/icon-map"
 import type {
   IconLibraryName,
   PhosphorWeight,
@@ -32,11 +37,12 @@ const ICONS_IMPORT_RE =
 /** A top-level import statement (no quotes appear before the specifier). */
 const IMPORT_STATEMENT_RE = /^import[^'"]*(['"])[^'"]+\1;?/gm
 
-const LIBRARY_PACKAGES = {
-  remix: "@remixicon/react",
-  tabler: "@tabler/icons-react",
-  phosphor: "@phosphor-icons/react",
-} as const
+/** Libraries that ship one plain component per icon. */
+type ComponentLibrary = Exclude<IconLibraryName, "lucide" | "hugeicons">
+
+const LIBRARY_IMPORTS = Object.fromEntries(
+  iconLibraries.map((library) => [library.name, library.import]),
+) as Record<IconLibraryName, string>
 
 export interface ResolveIconOptions {
   /** Phosphor weight; anything not in `phosphorWeights` (or 'regular') is the default. */
@@ -72,7 +78,7 @@ function lucideImport(icons: ImportedIcon[]): string {
 
 function componentLibraryImport(
   icons: ImportedIcon[],
-  library: "remix" | "tabler" | "phosphor",
+  library: ComponentLibrary,
 ): string {
   const mapped: string[] = []
   const unmapped: ImportedIcon[] = []
@@ -85,7 +91,7 @@ function componentLibraryImport(
   const lines: string[] = []
   if (mapped.length > 0)
     lines.push(
-      `import { ${mapped.join(", ")} } from "${LIBRARY_PACKAGES[library]}";`,
+      `import { ${mapped.join(", ")} } from "${LIBRARY_IMPORTS[library]}";`,
     )
   if (unmapped.length > 0) lines.push(lucideImport(unmapped))
   return lines.join("\n")
@@ -218,8 +224,7 @@ export function resolveIconImports(
   return content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
     const icons = parseNamedImports(inner)
     if (icons.length === 0) return ""
-    if (library === "remix" || library === "tabler" || library === "phosphor")
-      return componentLibraryImport(icons, library)
-    return lucideImport(icons)
+    if (library === "lucide") return lucideImport(icons)
+    return componentLibraryImport(icons, library)
   })
 }

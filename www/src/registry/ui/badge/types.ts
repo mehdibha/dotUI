@@ -6,7 +6,7 @@ export interface BadgeProps extends React.ComponentProps<"span"> {
    * The visual appearance of the badge. Defaults to the design system's badge style.
    * @default 'solid'
    */
-  appearance?: "solid" | "soft" | "outline" | "soft-outline"
+  appearance?: "solid" | "soft" | "outline" | "soft-outline" | "dot"
   /**
    * The visual style of the badge.
    * @default 'neutral'

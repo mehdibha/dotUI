@@ -4,7 +4,7 @@ import * as ComboBoxPrimitive from "react-aria-components/ComboBox"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { cn } from "@/registry/lib/utils"
-import { fieldStyles } from "@/registry/ui/field"
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -20,6 +20,7 @@ const Combobox = <
   className,
   ...props
 }: ComboboxProps<T, M>) => {
+  const fieldStyles = useFieldStyles()
   return (
     <ComboBoxPrimitive.ComboBox
       data-field=""

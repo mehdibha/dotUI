@@ -1,5 +1,10 @@
 import { createStyles } from "@/lib/styles"
 
+import {
+  CHOICE_CARD,
+  CHOICE_CARD_PRESS,
+  CHOICE_CARD_SHELL,
+} from "../checkbox/styles"
 import switchMeta from "./meta"
 
 const { useStyles, styles } = createStyles(switchMeta, {
@@ -7,35 +12,30 @@ const { useStyles, styles } = createStyles(switchMeta, {
     slots: {
       root: "flex items-center has-data-description:items-start",
       control: [
-        "relative flex items-center gap-2 focus-reset not-has-data-label:rounded-(--studio-switch-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius)",
-        "transition-colors duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) has-data-label:w-full has-data-label:justify-between has-data-label:border has-data-label:p-2.5",
+        "relative flex items-center gap-2 focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring-outside disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-switch-card-radius) focus-visible:has-data-label:focus-ring",
+        "transition-colors duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease) has-data-label:justify-between",
+        CHOICE_CARD_SHELL,
       ],
       indicator: [
-        "inline-flex shrink-0 cursor-pointer items-center rounded-(--studio-switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
-        "selected:bg-selection",
-        "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+        "inline-flex shrink-0 cursor-pointer items-center transition-[background-color,border-color,box-shadow] duration-(--studio-switch-color-duration) ease-(--studio-switch-color-ease)",
+        "invalid:border-fg-danger invalid:invalid-ring read-only:cursor-default disabled:cursor-disabled",
       ],
-      thumb: [
-        "pointer-events-none block rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease) selected:bg-fg-on-selection",
-        "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
-      ],
+      thumb:
+        "pointer-events-none block duration-(--studio-switch-state-duration) ease-(--studio-switch-state-ease)",
     },
     variants: {
       size: {
         sm: {
           root: "has-data-description:**:data-label:mt-[calc((1.25rem-1lh)/2)]",
           indicator: "h-5 w-9",
-          thumb: "size-4 pressed:w-5 selected:ml-4 selected:pressed:ml-3",
         },
         md: {
           root: "has-data-description:**:data-label:mt-[calc((1.5rem-1lh)/2)]",
           indicator: "h-6 w-11",
-          thumb: "size-5 pressed:w-6 selected:ml-5 selected:pressed:ml-4",
         },
         lg: {
           root: "has-data-description:**:data-label:mt-[calc((1.75rem-1lh)/2)]",
           indicator: "h-7 w-13",
-          thumb: "size-6 pressed:w-7 selected:ml-6 selected:pressed:ml-5",
         },
       },
     },
@@ -59,29 +59,81 @@ const { useStyles, styles } = createStyles(switchMeta, {
         root: "gap-3",
       },
     },
-  },
-  /* The card treatment — synced with checkbox and radio-group, change all three
-     together. Every value paints with the selection tokens, so the card
-     follows the family fill. The switch card always trails its control, so
-     the family's `card-control` stops at the box and the dot. */
-  params: {
-    "card-selected": {
-      outline: {
-        slots: { control: "has-data-label:selected:border-selection" },
+    spacious: {
+      slots: {
+        root: "gap-3",
       },
-      tint: {
+    },
+    touch: {
+      slots: {
+        root: "gap-3",
+      },
+    },
+  },
+  params: {
+    style: {
+      inset: {
         slots: {
-          control:
-            "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
+          control: "not-has-data-label:rounded-(--studio-switch-radius)",
+          indicator: [
+            "rounded-(--studio-switch-radius) border border-transparent bg-(--studio-switch-track) p-0.5 selected:bg-selection",
+            "disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--studio-switch-track)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+          ],
+          thumb: [
+            "rounded-(--studio-switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] dark:not-disabled:selected:bg-fg-on-selection",
+            "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
+          ],
+        },
+        variants: {
+          size: {
+            sm: {
+              thumb: "size-4 pressed:w-5 selected:ml-4 selected:pressed:ml-3",
+            },
+            md: {
+              thumb: "size-5 pressed:w-6 selected:ml-5 selected:pressed:ml-4",
+            },
+            lg: {
+              thumb: "size-6 pressed:w-7 selected:ml-6 selected:pressed:ml-5",
+            },
+          },
         },
       },
-      "outline-tint": {
+      outlined: {
         slots: {
-          control:
-            "has-data-label:selected:border-selection has-data-label:selected:bg-selection-muted",
+          control: "not-has-data-label:rounded-(--studio-switch-radius)",
+          indicator: [
+            "rounded-(--studio-switch-radius) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-transparent p-0.5 selected:border-transparent selected:bg-selection",
+            "disabled:border-(--disabled-border,var(--studio-switch-track)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+          ],
+          thumb: [
+            "scale-60 rounded-(--studio-switch-radius) bg-(--studio-switch-track) transition-[background-color,margin,scale] pressed:scale-105 selected:scale-90 selected:bg-fg-on-selection selected:pressed:scale-105",
+            "disabled:bg-(--disabled-fg,var(--studio-switch-track)) disabled:selected:bg-(--disabled-selected-fg,var(--color-fg-on-selection))",
+          ],
+        },
+        variants: {
+          size: {
+            sm: { thumb: "size-4 selected:ml-4" },
+            md: { thumb: "size-5 selected:ml-5" },
+            lg: { thumb: "size-6 selected:ml-6" },
+          },
+        },
+      },
+      slab: {
+        slots: {
+          control: "not-has-data-label:rounded-(--studio-radius-control)",
+          indicator: [
+            "rounded-(--studio-radius-control) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-neutral selected:border-selection selected:bg-selection",
+            "disabled:border-(--disabled-border,var(--studio-switch-track)) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
+          ],
+          thumb: [
+            "h-full w-1/2 rounded-(--studio-radius-control-sm) border-(length:--studio-control-stroke) border-(--studio-switch-track) bg-bg transition-[background-color,border-color,margin] dark:not-disabled:bg-highlight selected:ml-[50%] selected:border-selection",
+            "disabled:bg-(--disabled-fg,var(--color-bg)) disabled:selected:border-(--disabled-border,var(--studio-switch-track))",
+          ],
         },
       },
     },
+    "card-selected": CHOICE_CARD,
+    "card-press": CHOICE_CARD_PRESS,
   },
 })
 

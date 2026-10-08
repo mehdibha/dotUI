@@ -7,7 +7,6 @@
 @import "./ui/accordion/styles.css";
 @import "./ui/alert/styles.css";
 @import "./ui/attachment/styles.css";
-@import "./ui/avatar/styles.css";
 @import "./ui/badge/styles.css";
 @import "./ui/breadcrumbs/styles.css";
 @import "./ui/bubble/styles.css";
@@ -26,11 +25,9 @@
 @import "./ui/field/styles.css";
 @import "./ui/group/styles.css";
 @import "./ui/input/styles.css";
-@import "./ui/kbd/styles.css";
 @import "./ui/link/styles.css";
 @import "./ui/list-box/styles.css";
 @import "./ui/loader/styles.css";
-@import "./ui/menu/styles.css";
 @import "./ui/message-scroller/styles.css";
 @import "./ui/modal/styles.css";
 @import "./ui/popover/styles.css";

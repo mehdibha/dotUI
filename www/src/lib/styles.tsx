@@ -38,6 +38,7 @@ import {
   SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
+import { DENSITIES } from "@/registry/types"
 import type {
   Density,
   EnumParamDef,
@@ -543,33 +544,41 @@ function useComponentParams(componentName: string): Record<string, string> {
   return params[componentName] ?? {}
 }
 
-interface DynamicComponentConfig<Props extends object, Value extends string> {
-  componentName: string
-  paramName: string
-  defaultValue: Value
-  components: Record<Value, React.ComponentType<Props>>
-  displayName?: string
-}
+type DynamicComponents<M, P extends PropertyKey> = Record<
+  EnumParamValuesOf<M, P>,
+  // oxlint-disable-next-line typescript/no-explicit-any
+  React.ComponentType<any>
+>
 
+/** One component per value of an enum param: the keys are exactly the meta's values. */
 function createDynamicComponent<
-  Props extends object,
-  const Value extends string,
+  const M extends RegistryItem,
+  const P extends EnumParamNamesOf<M> & string,
+  const C extends DynamicComponents<M, P>,
 >({
-  componentName,
+  meta,
   paramName,
-  defaultValue,
   components,
   displayName,
-}: DynamicComponentConfig<Props, Value>) {
-  function DynamicComponent(props: Props) {
-    const componentParams = useComponentParams(componentName)
-    const selectedValue = componentParams[paramName]
-    const Component =
-      selectedValue && Object.hasOwn(components, selectedValue)
-        ? components[selectedValue as Value]
-        : components[defaultValue]
+}: {
+  meta: M
+  paramName: P
+  components: C & Record<Exclude<keyof C, EnumParamValuesOf<M, P>>, never>
+  displayName?: string
+}) {
+  type Props = React.ComponentProps<C[EnumParamValuesOf<M, P>]>
+  const componentName = meta.name
+  const defaultValue = (meta.params as Record<P, EnumParamDef>)[paramName]
+    .default
 
-    return React.createElement(Component, props)
+  function DynamicComponent(props: Props) {
+    const selected = useComponentParams(componentName)[paramName]
+    const key =
+      selected && Object.hasOwn(components, selected) ? selected : defaultValue
+    return React.createElement(
+      components[key as EnumParamValuesOf<M, P>],
+      props,
+    )
   }
 
   DynamicComponent.displayName =
@@ -767,9 +776,8 @@ function createStyles<const M extends RegistryItem, const Base>(
   type AnyTv = ReturnType<typeof tv>
   const baseTv = tv(base as Parameters<typeof tv>[0]) as unknown as AnyTv
 
-  const densities: Density[] = ["compact", "default", "comfortable"]
   const densityTvs: Record<string, AnyTv> = {}
-  for (const d of densities) {
+  for (const d of DENSITIES) {
     const densityConfig = density?.[d]
     densityTvs[d] = densityConfig
       ? (tv({

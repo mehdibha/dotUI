@@ -13,10 +13,23 @@ const cardMeta = {
   ],
   registryDependencies: ["focus-styles"],
   params: {
-    style: {
+    header: {
       kind: "enum",
-      default: "default",
-      values: ["default", "tasnim"] as const,
+      default: "none",
+      values: ["none", "rule", "band"] as const,
+      description: "What sets the header apart: nothing, a rule, or a band.",
+    },
+    footer: {
+      kind: "enum",
+      default: "none",
+      values: ["none", "rule", "band"] as const,
+      description: "What sets the footer apart: nothing, a rule, or a band.",
+    },
+    titles: {
+      kind: "enum",
+      default: "quiet",
+      values: ["quiet", "compact", "tight", "bold", "display", "caps"] as const,
+      description: "The title recipe: size, weight, tracking and case.",
     },
   },
 } satisfies RegistryItem

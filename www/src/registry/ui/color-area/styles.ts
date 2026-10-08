@@ -16,6 +16,12 @@ const { useStyles, styles } = createStyles(colorAreaMeta, {
     comfortable: {
       base: "w-56",
     },
+    spacious: {
+      base: "w-56",
+    },
+    touch: {
+      base: "w-56",
+    },
   },
 })
 

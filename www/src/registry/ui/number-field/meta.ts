@@ -13,19 +13,25 @@ const numberFieldMeta = {
   name: "number-field",
   type: "registry:ui",
   group: "inputs",
-  files: [...file("right")],
-  registryDependencies: ["input", "field", "button"],
+  files: [...file("right-cells")],
+  registryDependencies: ["input", "field"],
   params: {
     steppers: {
       kind: "enum",
-      default: "right",
-      values: ["right", "split", "stacked"] as const,
+      default: "right-cells",
+      values: [
+        "right-cells",
+        "stacked-cells",
+        "stacked-inset",
+        "split",
+      ] as const,
       description:
-        "Where the stepper buttons sit: an attached pair on the right, one at each end, or a stacked chevron column.",
+        "Where the steppers sit in the field: cells at the end, a stacked column (divided or inset), or one at each end.",
       files: {
-        right: file("right"),
+        "right-cells": file("right-cells"),
+        "stacked-cells": file("stacked-cells"),
+        "stacked-inset": file("stacked-inset"),
         split: file("split"),
-        stacked: file("stacked"),
       },
     },
   },

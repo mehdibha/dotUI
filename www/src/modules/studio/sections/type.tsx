@@ -1,7 +1,7 @@
 "use client"
 
-/* Typography — the three font roles, each row set in its own face so the row
-   is the specimen. Heading reads Auto on the body font until pinned. */
+/* Typography: each face set in itself, then the voice of titles, labels and
+   control text. */
 
 import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
@@ -12,43 +12,61 @@ import { cn } from "@/registry/lib/utils"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
+import { TITLE_VOICE } from "../axes/type"
+import {
+  FIELD_TEXT_OPTIONS,
+  LABEL_WEIGHT_OPTIONS,
+  SECTION_LABEL_OPTIONS,
+  TITLE_OPTIONS,
+  UI_TEXT_OPTIONS,
+} from "../axes/type.meta"
 import {
   DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
-  DIAL_VALUE,
+  DialGap,
+  DialSegmented,
+  DialSelect,
 } from "../dial"
+import { Row, useRowLabel } from "../family-page"
+import type { RowMap } from "../family-page"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+import type { Effective } from "../state"
+import { ChipButton } from "../use-axis"
+import { useStudio } from "../use-studio"
 
-/** A font role as a dial row: label, the family in its own typeface, the
- *  searchable list under it. With `derived`, '' reads Auto on that family. */
+type FontKey = "headingFont" | "bodyFont" | "monoFont" | "readingFont"
+
+const SAME_AS_BODY = { id: "same", label: "Same as body" }
+
+/** A font role as a dial row, its family set in its own face. */
 function FontRow({
-  label,
-  value,
-  derived,
+  axis,
+  label: labelProp,
+  follow,
   categories,
-  onChange,
 }: {
+  axis: FontKey
   label: string
-  value: string
-  /** The family followed while `value` is ''. */
-  derived?: string
+  follow?: { id: string; label: string }
   categories: FontCategory[]
-  onChange: (family: string) => void
 }) {
-  const auto = derived !== undefined && value === ""
-  const resolved = value || derived || ""
+  const { state, effective, set } = useStudio()
+  const label = useRowLabel(labelProp)
+  const value = state[axis]
+  const resolved = effective[axis]
+  const onChange = set(axis)
+  const following = follow?.id === value
   useLoadedFamilies([resolved])
   return (
     <Select
       className="w-full"
-      selectedKey={value || null}
+      selectedKey={following ? null : value}
       onSelectionChange={(key) => onChange(key as string)}
       aria-label={label}
     >
-      <div className={cn(DIAL_ROW, "relative pr-0")}>
+      <div data-axis={axis} className={cn(DIAL_ROW, "relative pr-0")}>
         <RacButton
           className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
         >
@@ -58,12 +76,16 @@ function FontRow({
           {label}
         </span>
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
-          {auto && <span className={DIAL_VALUE}>Auto ·</span>}
+          {follow && !following && (
+            <ChipButton onPress={() => onChange(follow.id)}>
+              <span className="capitalize">{follow.id}</span>
+            </ChipButton>
+          )}
           <span
             className="truncate text-[13px] font-medium text-fg/70"
             style={{ fontFamily: fontStack(resolved) }}
           >
-            {resolved}
+            {following ? follow.label : resolved}
           </span>
           <ChevronDownIcon className={DIAL_CHEVRON} />
         </span>
@@ -76,42 +98,188 @@ function FontRow({
 }
 
 /** Beside the title: Aa in the heading face. */
-export function TypePreview({ state }: { state: StudioState }) {
-  const heading = state.headingFont || state.bodyFont
-  useLoadedFamilies([heading])
+export function TypePreview({ state }: { state: Effective }) {
+  useLoadedFamilies([state.headingFont])
   return (
     <span
       className="text-[15px]/none font-semibold"
-      style={{ fontFamily: fontStack(heading) }}
+      style={{ fontFamily: fontStack(state.headingFont) }}
     >
       Aa
     </span>
   )
 }
 
-export function TypeSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+/* -------------------------------- Specimens -------------------------------- */
+
+const WEIGHTS: Record<string, number> = {
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+}
+
+const TRACKING: Record<string, string> = { tight: "-0.025em", wider: "0.05em" }
+
+function titleSpecimen(value: string): React.CSSProperties {
+  const voice = TITLE_VOICE[value]
+  return {
+    fontWeight: WEIGHTS[voice?.weight ?? "medium"],
+    letterSpacing: voice?.tracking && TRACKING[voice.tracking],
+    textTransform: value === "caps" ? "uppercase" : undefined,
+  }
+}
+
+/** A section label as list-box and sidebar draw it. */
+function SectionLabel({ labels, mono }: { labels: string; mono: string }) {
+  const sentence = labels === "sentence"
+  return (
+    <span
+      className={cn(
+        "font-medium text-fg/50",
+        sentence ? "text-xs" : "tracking-wider uppercase",
+        labels === "caps" && "text-[11px]",
+        labels === "mono-caps" && "text-xs",
+      )}
+      style={labels === "mono-caps" ? { fontFamily: fontStack(mono) } : {}}
+    >
+      {sentence ? "Section" : "Label"}
+    </span>
+  )
+}
+
+/* ---------------------------------- Rows ----------------------------------- */
+
+const HeadingRow = () => (
+  <FontRow
+    axis="headingFont"
+    label="Heading"
+    follow={SAME_AS_BODY}
+    categories={["sans-serif", "serif", "display", "handwriting"]}
+  />
+)
+
+const BodyRow = () => (
+  <FontRow axis="bodyFont" label="Body" categories={["sans-serif", "serif"]} />
+)
+
+const MonoRow = () => (
+  <FontRow axis="monoFont" label="Mono" categories={["mono"]} />
+)
+
+const ReadingRow = () => (
+  <FontRow
+    axis="readingFont"
+    label="Reading"
+    follow={SAME_AS_BODY}
+    categories={["serif", "sans-serif"]}
+  />
+)
+
+function TitlesRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="titleStyle"
+      label="Titles"
+      options={TITLE_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <span
+            className="text-[13px] text-fg/80"
+            style={{
+              fontFamily: fontStack(effective.headingFont),
+              ...titleSpecimen(option.value),
+            }}
+          >
+            Aa
+          </span>
+        ),
+      }))}
+    />
+  )
+}
+
+const UiTextRow = () => (
+  <DialSegmented
+    axis="uiTextSize"
+    label="UI text size"
+    options={UI_TEXT_OPTIONS}
+  />
+)
+
+const FieldTextRow = () => (
+  <DialSegmented
+    axis="fieldTextSize"
+    label="Field text"
+    options={FIELD_TEXT_OPTIONS}
+  />
+)
+
+const LABEL_WEIGHT_ROW_OPTIONS = LABEL_WEIGHT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <span
+      className="text-[13px] text-fg/80"
+      style={{ fontWeight: WEIGHTS[option.value] }}
+    >
+      Aa
+    </span>
+  ),
+}))
+
+const LabelWeightRow = () => (
+  <DialSelect
+    axis="labelWeight"
+    label="Label weight"
+    options={LABEL_WEIGHT_ROW_OPTIONS}
+  />
+)
+
+function SectionLabelsRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="sectionLabels"
+      label="Section labels"
+      rowPreview={false}
+      options={SECTION_LABEL_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <SectionLabel labels={option.value} mono={effective.monoFont} />
+        ),
+      }))}
+    />
+  )
+}
+
+/* --------------------------------- Section --------------------------------- */
+
+export function TypeSection() {
   return (
     <>
-      <FontRow
-        label="Heading"
-        value={state.headingFont}
-        derived={state.bodyFont}
-        categories={["sans-serif", "serif", "display", "handwriting"]}
-        onChange={set("headingFont")}
-      />
-      <FontRow
-        label="Body"
-        value={state.bodyFont}
-        categories={["sans-serif", "serif"]}
-        onChange={set("bodyFont")}
-      />
-      <FontRow
-        label="Mono"
-        value={state.monoFont}
-        categories={["mono"]}
-        onChange={set("monoFont")}
-      />
+      <Row axis="headingFont" />
+      <Row axis="bodyFont" />
+      <Row axis="titleStyle" />
+      <DialGap />
+      <Row axis="monoFont" />
+      <Row axis="readingFont" />
+      <Row axis="uiTextSize" />
+      <Row axis="fieldTextSize" />
+      <Row axis="labelWeight" />
+      <Row axis="sectionLabels" />
     </>
   )
+}
+
+export const ROWS: RowMap = {
+  headingFont: HeadingRow,
+  bodyFont: BodyRow,
+  monoFont: MonoRow,
+  readingFont: ReadingRow,
+  titleStyle: TitlesRow,
+  uiTextSize: UiTextRow,
+  fieldTextSize: FieldTextRow,
+  labelWeight: LabelWeightRow,
+  sectionLabels: SectionLabelsRow,
 }

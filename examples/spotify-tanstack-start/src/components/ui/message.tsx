@@ -10,11 +10,11 @@ const messageVariants = tv({
     avatar:
       "flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full group-has-data-message-footer/message:-translate-y-8",
     content:
-      "flex w-full min-w-0 flex-col wrap-break-word group-data-[align=end]/message:*:self-end gap-2.5",
+      "flex w-full min-w-0 flex-col wrap-break-word group-data-[align=start]/message:[&_:is(p,li,blockquote,h1,h2,h3,h4,h5,h6)]:font-reading group-data-[align=end]/message:*:self-end gap-2.5",
     header:
-      "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-has-data-[variant=ghost]/message:px-0 px-4 text-xs",
+      "flex max-w-full min-w-0 items-center font-sans font-medium text-fg-muted group-has-data-[variant=ghost]/message:px-0 px-4 text-xs",
     footer:
-      "flex max-w-full min-w-0 items-center font-medium text-fg-muted group-data-[align=end]/message:justify-end group-has-data-[variant=ghost]/message:px-0 px-4 text-xs",
+      "flex max-w-full min-w-0 items-center font-sans font-medium text-fg-muted group-data-[align=end]/message:justify-end group-has-data-[variant=ghost]/message:px-0 px-4 text-xs",
   },
 });
 

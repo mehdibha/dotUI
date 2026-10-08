@@ -1,152 +1,134 @@
-import { DEFAULTS } from "@/modules/studio/axes"
-
-import { DEFAULT_MOTION, definePreset } from "./preset"
+import { definePreset } from "./preset"
 
 export const airbnb = definePreset({
   id: "airbnb",
   name: "Airbnb",
-  description: "Rausch accents, ink actions.",
+  description: "Rausch CTAs, ink selection, big soft targets.",
   swatch: "#ff385c",
   inspiredBy: "Airbnb",
-  state: {
+  diff: {
     // Color
+    // Rausch #ff385c, pinned verbatim; selection, checks and focus are ink #222.
     brand: "#ff385c",
-    // Primary CTAs and selection are ink #222; Rausch stays the accent.
-    buttonColor: "neutral",
+    preserveSeed: true,
     selectionColor: "neutral",
-    neutralHue: null,
     successSeed: "#038026",
     warningSeed: "#eb6100",
-    dangerSeed: "#d7251c",
-    selectionSeed: "",
-    vividness: 1,
+    // The rendered error family (text, field edges, icons).
+    dangerSeed: "#c13515",
     neutralTint: 0,
-    preserveSeed: true,
     lightBg: 100,
+    // The unshipped dark tokens: #111111 page.
     darkBg: 5,
+    // Field and checkbox edges are #8c8c8c, not the #dddddd hairline.
+    controlEdge: "strong",
 
     // Typography
-    headingFont: "",
     // Cereal is proprietary; Plus Jakarta Sans is the closest free match.
     bodyFont: "Plus Jakarta Sans",
-    monoFont: "Geist Mono",
-
-    // Icons
-    iconLibrary: "lucide",
-    iconStroke: 2,
-    iconWeight: "regular",
+    monoFont: "System Mono",
+    // Titles from 22px track at -0.02em.
+    titleStyle: "tight",
+    fieldTextSize: "large",
+    // Cereal 500 labels; Plus Jakarta reads a step lighter at the same weight.
+    labelWeight: "semibold",
 
     // Shape
+    // Base 16: controls, menus and cards 12, dialogs 32.
     radiusPx: 16,
-    roleControl: "md",
-    roleItem: "auto",
     roleSurface: "md",
-    rolePanel: "xl",
-    roleCard: "xl",
+    rolePanel: "2xl",
+    roleCard: "md",
 
     // Space
-    density: "comfortable",
-    spacingUnit: 4.5,
+    // Buttons 32 / 40 / 48, fields 56–60.
+    density: "spacious",
 
     // Surfaces
-    surfaceLayers: "same",
-    surfaceEdge: "none",
+    // Bordered tiles are hairline-only; popovers 0 2px 16px .12.
     surfaceShadow: "low",
-    surfaceGlass: false,
+    // Menus and dialogs are borderless; depth is the shadow.
+    surfaceEdge: "none",
+    // Guest and host pages are white edge to edge.
+    shellTone: "page",
 
     // Browser
-    cursorControls: "pointer",
-    cursorPending: "default",
-    cursorDragging: "inherit",
-    cursorDisabled: "not-allowed",
-    selectionUiText: "none",
     selectionHighlight: "browser",
 
     // States
-    // Airbnb never rings in Rausch.
+    // A 2px #222 ring after a white gap; neutral is the nearest ink. Fields thicken to #222.
     focusColor: "neutral",
-    focusStyle: "ring",
-    focusWidth: 2,
-    focusOffset: "gap",
-    focusGap: 2,
-    focusHaloStrength: 45,
     focusInputStyle: "border",
-    focusInputWidth: 2,
-    focusInputStrength: 30,
-    focusInputBorderWidth: 2,
-    disabledTreatment: "solid",
-    inputError: "border",
+    focusInputWeight: "thick",
+    // 1px #c13515 edge on a #fff5f3 fill.
+    invalidStyle: "tint",
 
     // Motion
-    ...DEFAULT_MOTION,
-    popoverMotion: { ...DEFAULTS.popoverMotion, pattern: "slide" },
-    tooltipMotion: { ...DEFAULTS.tooltipMotion, pattern: "slide" },
-    modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
+    // Popovers fade in with no visible zoom.
+    motionEntrance: "fade",
+    dialogEntrance: "rise",
 
-    // Mobile
-    mobilePickers: "drawer",
-    mobileDialogs: "sheet",
+    // Buttons
+    // #f2f2f2, no border.
+    buttonSecondary: "soft",
+    // Buttons and icon buttons shrink on press.
+    buttonPress: "scale",
 
-    // Components
-    chartPalette: "mono",
-    chartGrid: "solid",
-    linkUnderline: "always",
-    linkColor: "neutral",
-    skeletonAnimation: "shimmer",
-    spinnerStyle: "dots",
-    progressTrack: "thin",
-    progressIndeterminate: "slide",
-    progressGap: false,
-    buttonStyle: "flat",
-    buttonRadius: "auto",
-    groupSeparator: "auto",
-    toggleSelected: "fill",
-    segmentedSelected: "raised",
-    segmentedTrack: "outline",
+    // Selection
     switchColor: "neutral",
     checkboxColor: "neutral",
-    checkCorner: "square",
     radioColor: "neutral",
-    cardSelected: "outline-tint",
-    cardControl: "hidden",
-    inputStyle: "outline",
-    inputHover: "border",
-    addonLayout: "inside",
-    addonDivider: "hairline",
-    numberLayout: "split",
-    otpStyle: "group",
-    pickerCaret: "chevron",
-    calendarDayShape: "circle",
-    calendarToday: "none",
-    calendarWeekdays: "double",
-    sliderThumb: "outline",
-    sliderTrack: "thin",
+    // A 6px corner on a 22px box; the 16px base's detail rung reads as a circle.
+    checkCorner: "sharp",
     sliderColor: "neutral",
-    menuIndicator: "check-end",
-    menuHighlight: "neutral",
+    // 2px #dddddd price track.
+    sliderTrack: "hairline",
+    // A 2px #222 outline on white ("Any" in Type of place); the #f7f7f7 wash has no option.
+    cardSelected: "outline",
+    // Selected is ink everywhere; chips really take an ink edge, which has no option.
+    toggleSelected: "inverse",
+    // The Dates | Flexible pill: a white chip on an #ebebeb track.
+    segmentedSelected: "raised",
+
+    // Inputs
+    inputHover: "edge",
+    inputHeight: "tall",
+    inputError: "icon-message",
+    // − and + at both ends; Airbnb's are free 32px circles, not cells.
+    numberLayout: "split",
+    selectTrigger: "field",
+
+    // Menus & popovers
+    // The current sort option is bold only; the default check stands in.
     menuInset: "full-bleed",
-    menuLabels: "sentence",
-    menuSearch: "field",
-    menuScale: "default",
-    dialogBackdrop: "dim",
-    dialogPosition: "center",
-    popoverTip: "none",
-    popoverHeader: "title",
-    tooltipStyle: "inverted",
+    menuArrows: "none",
+
+    // Dialogs
+    dialogBackdrop: "scrim",
+    dialogSections: "divided",
+    // "Clear all" left, the confirm right.
+    dialogActions: "spread",
+    // Login opens as a full page at 390px.
+    mobileDialogs: "fullscreen",
+
+    // Navigation
     tabStyle: "line",
-    tabsColor: "neutral",
-    accordionContainer: "divided",
-    accordionMarker: "chevron",
-    accordionMarkerPosition: "trailing",
-    breadcrumbSeparator: "chevron",
-    breadcrumbTone: "muted",
-    paginationCurrent: "filled",
+    linkUnderline: "always",
+    linkColor: "neutral",
+    // Search results mark the current page with an ink circle.
+    paginationCurrent: "selected",
+
+    // Feedback
     badgeStyle: "soft",
     badgeShape: "rounded",
-    kbdTreatment: "chip",
-    avatarShape: "circle",
-    avatarFallback: "neutral",
-    tableSeparation: "lines",
-    tableHeader: "plain",
+    spinnerStyle: "dots",
+    skeletonAnimation: "pulse",
+    // 4px rating bars fill in ink.
+    progressColor: "same-checks",
+
+    // Data display
+    // 42px circle days, no today marker.
+    calendarDayShape: "circle",
+    calendarToday: "numeral",
   },
 })

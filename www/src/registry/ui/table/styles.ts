@@ -14,10 +14,10 @@ const { useStyles, styles } = createStyles(tableMeta, {
       // container's inner radius and the thead must stay filter-free.
       header: "sticky top-0 z-10",
       column: [
-        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden",
+        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
+        "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
       ],
       columnContent: "flex h-full min-w-0 items-center gap-1.5",
       columnLabel: "min-w-0 flex-1 truncate",
@@ -25,7 +25,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--studio-table-radius)-1px)] last:rounded-tr-[calc(var(--studio-table-radius)-1px)]",
         "[div]:flex [div]:h-full [div]:items-center",
-        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-['']",
+        "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-['']",
       ],
       selectionColumn: "w-10 min-w-10 px-2.5",
       sortIndicator:
@@ -37,16 +37,16 @@ const { useStyles, styles } = createStyles(tableMeta, {
       body: "data-empty:h-24 data-empty:text-center data-empty:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) [div]:h-full",
-        "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
-        "focus-visible:bg-accent-muted/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+        "group/row relative box-border cursor-default border-b bg-(--surface-bg,var(--color-bg))/70 focus-reset transition-colors duration-(--studio-table-state-duration) ease-(--studio-table-state-ease) last:border-b-0 in-data-striped:odd:bg-muted/40 [div]:h-full",
+        "hover:bg-muted/50 data-[state=selected]:bg-selected/50 data-[state=selected]:text-fg-on-selected pressed:bg-muted/70 selected:bg-selected/50 selected:text-fg-on-selected dragging:cursor-dragging dragging:bg-selected/30 dragging:text-fg dragging:opacity-70 drop-target:bg-selected/30",
+        "focus-visible:bg-selected/30 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
       cell: [
         "relative box-border h-10 align-middle leading-5 whitespace-nowrap focus-reset outline-hidden",
         "bg-clip-padding px-2.5",
         "[div]:flex [div]:h-full [div]:w-full [div]:items-center",
         "[&.text-center]:justify-center [&.text-right]:justify-end",
-        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-(--studio-table-cell-radius) data-focus-visible:before:[outline:var(--focus-ring-width)_solid_var(--focus-ring-color)] data-focus-visible:before:[outline-offset:calc(var(--focus-ring-width)*-1)] data-focus-visible:before:content-['']",
+        "focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-(--studio-table-cell-radius) focus-visible:before:focus-ring-inside focus-visible:before:content-[''] data-focus-visible:z-20 data-focus-visible:before:pointer-events-none data-focus-visible:before:absolute data-focus-visible:before:inset-0 data-focus-visible:before:rounded-(--studio-table-cell-radius) data-focus-visible:before:focus-ring-inside data-focus-visible:before:content-['']",
       ],
       selectionCell: [
         "w-10 min-w-10 px-2.5",
@@ -67,7 +67,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       ],
       expandButton: [
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-control-sm) text-fg-muted focus-reset focus-visible:focus-ring",
-        "hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
+        "group-disabled/row:text-(--disabled-fg,var(--color-fg-muted)) hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
       ],
       expandIcon:
         "size-3.5 transition-transform duration-(--studio-table-state-duration) ease-(--studio-table-state-ease)",
@@ -116,17 +116,32 @@ const { useStyles, styles } = createStyles(tableMeta, {
         dragCell: "px-1.5",
       },
     },
+    spacious: {
+      slots: {
+        table: "text-sm",
+        container: "scroll-pt-12",
+        column: "h-12 px-4",
+        chromeColumn: "h-12",
+        selectionColumn: "px-4",
+        cell: "h-12 px-4 leading-5",
+        selectionCell: "px-4",
+        dragCell: "px-2",
+      },
+    },
+    touch: {
+      slots: {
+        table: "text-sm",
+        container: "scroll-pt-14",
+        column: "h-14 px-4",
+        chromeColumn: "h-14",
+        selectionColumn: "px-4",
+        cell: "h-14 px-4 leading-5",
+        selectionCell: "px-4",
+        dragCell: "px-2",
+      },
+    },
   },
   params: {
-    separation: {
-      lines: {
-        slots: { row: "border-b last:border-b-0" },
-      },
-      striped: {
-        slots: { row: "odd:bg-muted/40" },
-      },
-      plain: {},
-    },
     /* The plain header blurs the rows scrolling under it; filled is opaque,
        so it needs no blur. */
     header: {
@@ -147,6 +162,10 @@ const { useStyles, styles } = createStyles(tableMeta, {
           chromeColumn: "bg-muted",
         },
       },
+    },
+    headerLabel: {
+      strong: { slots: { column: "text-fg" } },
+      muted: { slots: { column: "text-fg-muted" } },
     },
   },
 })

@@ -7,11 +7,11 @@
  * values instead, so every read resolves to what the preset lands on:
  *
  *   rounded-(--studio-btn-radius)              → rounded-md
- *   font-(--studio-btn-font-weight)            → font-medium
- *   shadow-(--studio-slider-thumb-shadow)      → shadow-none
+ *   font-(--studio-font-weight-label)          → font-medium
  *   [--surface-radius:var(--studio-card-radius)] → [--surface-radius:var(--radius-xl)]
  *   duration-(--studio-popover-enter-duration) → duration-200
  *   ease-(--studio-popover-ease)               → ease-out · ease-[cubic-bezier(…)]
+ *   border-(length:--studio-control-stroke)    → border · border-2 · border-[0.5px]
  *
  * The var → value map follows chains through other studio vars (button →
  * radius role → ladder rung). Values that name a Tailwind theme token become
@@ -158,10 +158,16 @@ const animationKey = (value: string) =>
  */
 function utilitySuffix(utility: string, value: string): string | undefined {
   const token =
-    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.]+)\)$/.exec(
+    /^var\(--(?:radius|shadow|blur|cursor|color|font-weight)-([\w.-]+)\)$/.exec(
       value,
     )
   if (token) return token[1]
+  // Tailwind's own spelling of an opacity modifier: `bg-highlight/60`.
+  const faded =
+    /^color-mix\(in oklab,\s*var\(--color-([\w.-]+)\)\s+([\d.]+)%,\s*transparent\)$/.exec(
+      value,
+    )
+  if (faded) return `${faded[1]}/${faded[2]}`
   const spacing =
     /^--spacing\(([\d.]+)\)$/.exec(value) ??
     /^calc\(var\(--spacing\)\s*\*\s*([\d.]+)\)$/.exec(value)
@@ -196,12 +202,34 @@ const HAS_TRANSITION =
   /(?:^|\s)transition(?:-(?!none\b|discrete\b|normal\b)\S+)?(?=\s|$)/
 const HAS_ANIMATION = /(?:^|[\s:])animate-(?:in|out)(?=\s|$)/
 
-/** The shipped form of one studio read: `duration-200`, `ease-[…]`. */
-function resolvedUtility(utility: string, value: string): string {
+/* Width utilities whose 1px form is the bare name (`border`, `border-b`). */
+const BARE_WIDTH = /^(?:border(?:-[xytrblse])?|divide-[xy])$/
+/* Width utilities spelled with a number at 1px (`ring-1`, `stroke-1`). */
+const NUMBERED_WIDTH = /^(?:inset-ring|ring|outline|stroke)$/
+/* Spacing utilities, whose 1px step is `px` (`-space-x-px`, `w-px`). */
+const SPACING =
+  /^(?:space-[xy]|gap(?:-[xy])?|[mp][xytrblse]?|w|h|size|inset(?:-[xy])?|top|right|bottom|left|start|end|translate-[xy])$/
+
+/** A px length on a width or spacing utility, as Tailwind spells it. */
+function lengthUtility(utility: string, value: string): string | undefined {
+  const n = /^(\d+(?:\.\d+)?)px$/.exec(value)?.[1]
+  if (n === undefined) return undefined
+  if (SPACING.test(utility)) return n === "1" ? `${utility}-px` : undefined
+  if (!BARE_WIDTH.test(utility) && !NUMBERED_WIDTH.test(utility))
+    return undefined
+  if (n === "1" && BARE_WIDTH.test(utility)) return utility
+  return Number.isInteger(Number(n)) ? `${utility}-${n}` : undefined
+}
+
+/** The shipped form of one studio read: `duration-200`, `ease-[…]`. A
+ *  `length:` hint survives only on a read left as a var. */
+function resolvedUtility(utility: string, value: string, hint = ""): string {
+  const length = lengthUtility(utility, value)
+  if (length !== undefined) return length
   const suffix = utilitySuffix(utility, value)
   if (suffix !== undefined) return `${utility}-${suffix}`
   const ref = /^var\((--[\w-]+)\)$/.exec(value)
-  if (ref) return `${utility}-(${ref[1]})`
+  if (ref) return `${utility}-(${hint}${ref[1]})`
   // Curves drop the spaces after commas; `linear()` stops keep theirs as `_`.
   const arbitrary =
     utility === "ease" || utility === "animate"
@@ -270,10 +298,10 @@ function isNoopRead(
 }
 
 /**
- * Rewrite one class string (or any text carrying class names). A rounded
- * utility whose var resolves to `0` is dropped with its variant prefix — a
- * square system ships no rounded class, not `rounded-none` — and so is a
- * no-op read (see isNoopRead). `context` is every class the element wears (the whole
+ * Rewrite one class string (or any text carrying class names). A rounded or
+ * backdrop-blur utility whose var resolves to `0` is dropped with its variant
+ * prefix — a square system ships no rounded class, not `rounded-none` — and so are a
+ * zero negative offset and a no-op read (see isNoopRead). `context` is every class the element wears (the whole
  * slot), which those motion drops are judged against.
  */
 export function rewriteClassString(
@@ -282,9 +310,9 @@ export function rewriteClassString(
   context = input,
 ): string {
   if (vars.size === 0 && !input.includes(STUDIO_VAR_PREFIX)) return input
-  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · utility · var · trail
+  // lead · variants (`max-md:`, `**:data-x:`, `*:[img]:first:`) · sign · utility · hint · var · trail
   const shorthand = new RegExp(
-    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)([a-z][a-z0-9-]*)-\\((${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
+    `( ?)((?:[\\w\\[\\]*&>./=-]+:)*)(-?)([a-z][a-z0-9-]*)-\\((length:)?(${STUDIO_VAR_PREFIX}[\\w-]+)\\)( ?)`,
     "g",
   )
   let dropped = false
@@ -303,23 +331,31 @@ export function rewriteClassString(
   )
   rewritten = rewritten.replace(
     shorthand,
-    (match, lead, variants, utility, name, trail) => {
+    (match, lead, variants, sign, utility, hint = "", name, trail) => {
       const value = vars.get(name)
       if (value === undefined) return match
       if (
-        (value === "0" && utility.startsWith("rounded")) ||
+        (value === "0" &&
+          (utility.startsWith("rounded") || utility === "backdrop-blur")) ||
+        // A zero offset (`-mt-[0px]` under a zero stroke) moves nothing.
+        (sign === "-" && /^0(?:px)?$/.test(value) && SPACING.test(utility)) ||
         isNoopRead(variants, utility, value, context, vars)
       ) {
         dropped = true
         return lead && trail ? " " : ""
       }
-      return `${lead}${variants}${resolvedUtility(utility, value)}${trail}`
+      return `${lead}${variants}${sign}${resolvedUtility(utility, value, hint)}${trail}`
     },
   )
   // A drop at either end of a class string leaves a stray space; file
   // content (markup around the tv config) keeps its whitespace.
   if (dropped && !/["'`\n]/.test(input)) rewritten = rewritten.trim()
-  return substituteVarReads(rewritten, (name) => vars.get(name)).text
+  // `p-[calc(3px-var(--studio-control-stroke))]` ships as `p-[2px]`.
+  return substituteVarReads(rewritten, (name) => vars.get(name)).text.replace(
+    /calc\((\d+(?:\.\d+)?)px([+-])(\d+(?:\.\d+)?)px\)/g,
+    (_, a: string, op: string, b: string) =>
+      `${Number(a) + (op === "-" ? -1 : 1) * Number(b)}px`,
+  )
 }
 
 /** Every class in a value, space-joined — the context a slot's reads share. */
@@ -466,6 +502,19 @@ export function resolveCssFields<
     return Object.keys(out).length > 0 ? out : undefined
   }
   return visit(css as CssObject) as T | undefined
+}
+
+/** A primitive ramp step (`--neutral-700`, `--on-accent-700`). Chart slots
+ *  ship; the ramps live only on the site. */
+const RAMP_VAR = /--(?!chart-)(?:on-)?[a-z]+-\d+(?![\w-])/g
+
+/** Shipped output must read semantic tokens, never a ramp the consumer lacks. */
+export function assertNoRampVars(text: string, where: string): void {
+  const hits = [...new Set(text.match(RAMP_VAR))]
+  if (hits.length === 0) return
+  throw new Error(
+    `${where}: palette ramp vars ${hits.join(", ")} never reach consumer CSS — read a semantic token`,
+  )
 }
 
 /** Shipped output must carry no studio var — the export owns its values. */

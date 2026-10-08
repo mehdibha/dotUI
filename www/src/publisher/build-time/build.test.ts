@@ -7,6 +7,8 @@
  * `publish.test.ts`.
  */
 
+import fs from "node:fs"
+import os from "node:os"
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
@@ -56,7 +58,13 @@ describe("extractStylesConfig", () => {
           s.includes("rounded-(--studio-alert-radius)"),
       ),
     ).toBe(true)
-    expect(cfg.params).toBeUndefined()
+    expect(Object.keys(cfg.params?.style ?? {})).toEqual([
+      "neutral",
+      "soft",
+      "soft-outline",
+      "outline",
+      "inverse",
+    ])
   })
 
   test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {
@@ -75,20 +83,54 @@ describe("extractStylesConfig", () => {
   test("input: resolves module-level const string refs (compactText)", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "input/styles.ts"))
     // `inputGroup: compactText` — the identifier resolves to its const literal.
-    expect(cfg.density?.compact?.slots?.inputGroup).toBe(
+    expect(cfg.params?.text?.same?.density?.compact?.slots?.inputGroup).toBe(
       "text-base sm:text-xs/relaxed",
     )
   })
 
-  test("input: resolves local tv() factory calls (tokens, outlineField)", () => {
+  test("toggle-button: resolves recipe tables imported by relative path", () => {
+    const button = extractStylesConfig(
+      path.join(REGISTRY_UI, "button/styles.ts"),
+    )
+    const toggle = extractStylesConfig(
+      path.join(REGISTRY_UI, "toggle-button/styles.ts"),
+    )
+    expect(toggle.base.variants?.variant).toEqual(button.base.variants?.variant)
+    expect(toggle.density).toEqual(button.density)
+    for (const param of ["style", "secondary", "press", "case"])
+      expect(toggle.params?.[param], param).toEqual(button.params?.[param])
+    expect(toggle.params?.selected).toEqual(button.params?.current)
+    expect(toggle.params?.style?.ledge).toBeDefined()
+  })
+
+  test("a relative import must name an exported const", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "extract-"))
+    fs.writeFileSync(path.join(dir, "table.ts"), "const HIDDEN = {}\n")
+    fs.writeFileSync(
+      path.join(dir, "styles.ts"),
+      'import { HIDDEN } from "./table"\nconst { styles } = createStyles(meta, { base: {}, params: { a: HIDDEN } })\n',
+    )
+    expect(() => extractStylesConfig(path.join(dir, "styles.ts"))).toThrow(
+      /not an exported const/,
+    )
+    fs.rmSync(dir, { recursive: true })
+  })
+
+  test("input: resolves local tv() factory calls (tokens, outlineShell)", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "input/styles.ts"))
-    // `tokens({ h: 6 })` in density.compact size.sm → the h=6 token string.
-    const sm = cfg.density?.compact?.variants?.size?.sm as Record<
+    // `h6` → `tokens({ h: 6 })` at height.controls, compact, size sm.
+    const controls = cfg.params?.height?.controls as {
+      density?: Record<
+        string,
+        { variants?: { size?: Record<string, unknown> } }
+      >
+    }
+    const sm = controls.density?.compact?.variants?.size?.sm as Record<
       string,
       string
     >
     expect(sm.input).toContain("[--input-h:--spacing(6)]")
-    // `outlineField({ focus: 'self' })` in params.style.outline.
+    // `outlineShell({ focus: 'self' })` in params.style.outline.
     const outline = cfg.params?.style?.outline?.slots?.input as string
     expect(outline).toContain("focus:focus-input")
     expect(outline).toContain("border-border-control")
@@ -200,6 +242,17 @@ describe("transformBase", () => {
     expect(template).not.toContain("useStyles")
     expect(template).not.toContain("const fieldStyles =")
     expect(template).toContain("fieldStyles().field({")
+  })
+
+  test("number-field: a component and its styles import merge into one", () => {
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "number-field/base.right-cells.tsx"),
+      componentName: "number-field",
+    })
+    expect(template.match(/from "@\/components\/ui\/input"/g)).toHaveLength(1)
+    expect(template).toContain(
+      'import { Input, inputStyles } from "@/components/ui/input"',
+    )
   })
 
   test("toast: aliased slot bindings hoist under their alias", () => {
@@ -348,22 +401,21 @@ describe("createParamValue folds", () => {
     const chevron = transformBase({
       baseTsxPath: accordion,
       componentName: "accordion",
-      paramSelection: { marker: "chevron" },
+      paramSelection: { marker: "trailing-chevron" },
     }).template
     expect(chevron).toContain("const glyph = <ChevronDownIcon />")
-    expect(chevron).not.toContain("PlusIcon")
+    expect(chevron).not.toContain("ChevronRightIcon")
     expect(chevron).not.toContain("createParamValue")
     expect(chevron).not.toContain("@/lib/styles")
 
-    const plus = transformBase({
+    const caret = transformBase({
       baseTsxPath: accordion,
       componentName: "accordion",
-      paramSelection: { marker: "plus" },
+      paramSelection: { marker: "leading-caret" },
     }).template
-    expect(plus).toContain("<PlusIcon")
-    expect(plus).toContain("<MinusIcon")
-    expect(plus).not.toContain("ChevronDownIcon")
-    expect(plus).not.toContain("useMarker")
+    expect(caret).toContain("const glyph = <ChevronRightIcon />")
+    expect(caret).not.toContain("ChevronDownIcon")
+    expect(caret).not.toContain("useMarker")
   })
 
   test("breadcrumbs: a string value folds to the literal", () => {
@@ -378,13 +430,13 @@ describe("createParamValue folds", () => {
   })
 
   test("pagination: the current-page variant folds to its name", () => {
-    const outline = transformBase({
+    const selected = transformBase({
       baseTsxPath: path.join(REGISTRY_UI, "pagination/base.tsx"),
       componentName: "pagination",
-      paramSelection: { current: "outline" },
+      paramSelection: { current: "selected" },
     }).template
-    expect(outline).toContain('const activeVariant = "secondary"')
-    expect(outline).not.toContain("createParamValue")
+    expect(selected).toContain('const activeVariant = "quiet"')
+    expect(selected).not.toContain("createParamValue")
   })
 
   test("hooks stay in place without a selection", () => {

@@ -4,44 +4,44 @@
    drawn and described; under a hairline, the settings a style is made of and
    each mode's page. */
 
-import { useState } from "react"
-
 import type { StepName, Theme } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
 
+import { effective } from "../axes"
 import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
+  shadowCss,
+  surfaceColorCss,
+  surfaceRecipe,
+} from "../axes/surfaces"
+import type { Mode, PerMode, SurfaceColor } from "../axes/surfaces"
+import {
   EDGE_OPTIONS,
-  flatAllowed,
   GLASS_OPTIONS,
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
-  surfaceColorCss,
-  surfaceRecipe,
+  SHELL_OPTIONS,
   SURFACE_STYLES,
   surfaceStyle,
-  withSurface,
-} from "../axes/surfaces"
-import type {
-  Mode,
-  PerMode,
-  SurfaceColor,
-  SurfaceStyle,
-} from "../axes/surfaces"
+} from "../axes/surfaces.meta"
+import type { SurfaceStyle } from "../axes/surfaces.meta"
 import {
-  DialPicker,
   DialPickList,
   DialPopover,
+  DialSelect,
   DialSeparator,
   DialSlider,
   DialTrigger,
   ModifiedDot,
 } from "../dial"
-import { selectionKey, useCurrent } from "../selection"
-import type { Studio, StudioState } from "../state"
+import { Row } from "../family-page"
+import type { RowMap } from "../family-page"
+import { usePanelMode } from "../panel-mode"
+import type { Effective, StudioState } from "../state"
+import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
    drawn heavier than life so it reads at this size. */
@@ -53,13 +53,20 @@ const GLYPH_SHADOWS = [
   "0 2px 4px rgb(0 0 0 / 0.32)",
 ]
 
+/* The card's edge at glyph scale: Bevel's rim is a shadow, Ledge's lip a
+   heavier bottom. */
+const GLYPH_STROKE: Record<string, string> = {
+  bevel: "0",
+  ledge: "1px 1px 2px",
+}
+
 /** A card on the page, light beside dark, in the system's own neutral. */
 function SurfaceGlyph({
   state,
   theme,
   large,
 }: {
-  state: StudioState
+  state: Effective
   theme: Theme
   large?: boolean
 }) {
@@ -79,6 +86,8 @@ function SurfaceGlyph({
         const hairline = `color-mix(in oklab, ${step(a)} 50%, ${step(b)})`
         const color = (pair: PerMode<SurfaceColor>) =>
           surfaceColorCss(pair[mode], { step, hairline })
+        const rim = recipe.card.shadow.filter((layer) => layer.inset)
+        const drop = GLYPH_SHADOWS[Math.min(cardRung(state), 4)]
         return (
           <span
             key={mode}
@@ -95,7 +104,10 @@ function SurfaceGlyph({
               style={{
                 background: color(recipe.card.bg),
                 borderColor: color(recipe.card.edge),
-                boxShadow: GLYPH_SHADOWS[Math.min(cardRung(state), 4)],
+                borderWidth: GLYPH_STROKE[state.surfaceEdge],
+                boxShadow: rim.length
+                  ? `${shadowCss(rim, color)}, ${drop}`
+                  : drop,
               }}
             />
           </span>
@@ -113,85 +125,68 @@ const PAGE_NAMES: Record<Mode, Record<number, string>> = {
 const formatPage = (mode: Mode) => (v: number) =>
   PAGE_NAMES[mode][v] ?? `L* ${v.toFixed(1)}`
 
-export function SurfacesRow({
-  studio,
-  theme,
-}: {
-  studio: Studio
-  theme: Theme
-}) {
-  const { state, set, setState } = studio
-  // The light page Grouped took, given back when Layers leaves it — kept per
-  // design system; editing a view keeps its key.
-  const { doc, view } = useCurrent()
-  const key = doc ? `system:${doc.id}` : selectionKey(view)
-  const [memory, setMemory] = useState<{ key: string; page?: number }>()
-  const before = memory?.key === key ? memory.page : undefined
+const SURFACE_KEYS = [
+  "surfaceLayers",
+  "surfaceEdge",
+  "surfaceShadow",
+  "surfaceGlass",
+  "shellTone",
+  "lightBg",
+  "darkBg",
+]
+
+export function SurfacesRow() {
+  const { state, effective: values, set, setState } = useStudio()
+  const { theme } = usePanelMode()
   const { style, exact } = surfaceStyle(state)
-  const commit = (next: ReturnType<typeof withSurface>) => {
-    setMemory({ key, page: next.before })
-    setState(next.state)
-  }
-  const edit = (patch: Parameters<typeof withSurface>[1]) =>
-    commit(withSurface(state, patch, before))
+  const edit = (patch: SurfaceStyle["values"] | Partial<StudioState>) =>
+    setState({ ...state, ...patch })
   return (
     <DialTrigger
       label="Surfaces"
+      holds={SURFACE_KEYS}
       chevron={false}
       value={
         <>
           {!exact && <ModifiedDot />}
           <span className="truncate">{style.label}</span>
-          <SurfaceGlyph state={state} theme={theme} />
+          <SurfaceGlyph state={values} theme={theme} />
         </>
       }
     >
       <DialPopover className="w-80">
-        <StyleList
-          state={state}
-          theme={theme}
-          before={before}
-          onChange={edit}
-        />
+        <StyleList state={state} theme={theme} onChange={edit} />
         <DialSeparator />
-        <DialPicker
+        <DialSelect
+          axis="surfaceLayers"
           label="Layers"
-          value={state.surfaceLayers}
-          onChange={(surfaceLayers) => edit({ surfaceLayers })}
           options={LAYERS_OPTIONS}
         />
-        <DialPicker
+        <DialSelect
+          axis="surfaceEdge"
           label="Edge"
-          value={state.surfaceEdge}
-          onChange={(surfaceEdge) => edit({ surfaceEdge })}
-          options={EDGE_OPTIONS}
+          options={EDGE_OPTIONS.map((option) => {
+            const values = effective({
+              ...state,
+              surfaceEdge: option.value,
+            }).values
+            return {
+              ...option,
+              preview: <SurfaceGlyph large state={values} theme={theme} />,
+              glyph: <SurfaceGlyph state={values} theme={theme} />,
+            }
+          })}
         />
-        <DialPicker
+        <DialSelect
+          axis="surfaceShadow"
           label="Shadow"
-          value={state.surfaceShadow}
-          onChange={(surfaceShadow) => edit({ surfaceShadow })}
-          options={SHADOW_OPTIONS.map((o) =>
-            o.value === "flat" && !flatAllowed(state)
-              ? {
-                  ...o,
-                  disabled: true,
-                  description: "Needs an edge, a tone or a gray page",
-                }
-              : o,
-          )}
+          options={SHADOW_OPTIONS}
         />
-        <DialPicker
-          label="Overlays"
-          value={state.surfaceGlass ? "glass" : "solid"}
-          onChange={(value) => set("surfaceGlass")(value === "glass")}
-          options={GLASS_OPTIONS}
-        />
+        <Row axis="surfaceGlass" />
+        <Row axis="shellTone" />
         <DialSlider
+          axis="lightBg"
           label="Light page"
-          value={state.lightBg}
-          onChange={(lightBg) =>
-            commit(withSurface({ ...state, lightBg }, {}, before))
-          }
           minValue={LIGHT_BG_RANGE.min}
           maxValue={LIGHT_BG_RANGE.max}
           step={LIGHT_BG_RANGE.step}
@@ -216,15 +211,14 @@ export function SurfacesRow({
 function StyleList({
   state,
   theme,
-  before,
   onChange,
 }: {
   state: StudioState
   theme: Theme
-  before: number | undefined
   onChange: (values: SurfaceStyle["values"]) => void
 }) {
   const { style, exact } = surfaceStyle(state)
+  const page = effective(state).values.lightBg
   return (
     <DialPickList
       label="Style"
@@ -235,7 +229,7 @@ function StyleList({
         if (next) onChange(next.values)
       }}
       options={SURFACE_STYLES.map((s) => {
-        const preview = withSurface(state, s.values, before).state
+        const preview = effective({ ...state, ...s.values }).values
         return {
           value: s.id,
           label: s.label,
@@ -246,7 +240,7 @@ function StyleList({
               large
               state={preview}
               theme={
-                preview.lightBg === state.lightBg
+                preview.lightBg === page
                   ? theme
                   : resolveColorConfigCached(buildColorConfig(preview))
               }
@@ -256,4 +250,33 @@ function StyleList({
       })}
     />
   )
+}
+
+function GlassRow() {
+  const { state, set } = useStudio()
+  return (
+    <DialSelect
+      axis="surfaceGlass"
+      label="Overlays"
+      value={state.surfaceGlass ? "glass" : "solid"}
+      onChange={(value) => set("surfaceGlass")(value === "glass")}
+      options={GLASS_OPTIONS}
+    />
+  )
+}
+
+function ShellRow() {
+  return (
+    <DialSelect axis="shellTone" label="App shell" options={SHELL_OPTIONS} />
+  )
+}
+
+export const ROWS: RowMap = {
+  surfaceLayers: SurfacesRow,
+  surfaceEdge: SurfacesRow,
+  surfaceShadow: SurfacesRow,
+  lightBg: SurfacesRow,
+  darkBg: SurfacesRow,
+  surfaceGlass: GlassRow,
+  shellTone: ShellRow,
 }

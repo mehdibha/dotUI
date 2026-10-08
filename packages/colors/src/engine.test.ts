@@ -258,6 +258,56 @@ describe("seed intake (D7)", () => {
     const theme = createTheme({ seeds: { accent: "#eab308" } })
     expect(theme.report.seedDelta.accent).toBeLessThan(0.12)
   })
+
+  test("solidInk white keeps white labels on a pinned light solid, priced", () => {
+    const owl = { seeds: { accent: "#58cc02" }, preserveSeed: true }
+    const isWhite = (color: string) => toOklch(color).l > 0.999
+    const auto = createTheme(owl)
+    expect(isWhite(auto.light.on.accent!["700"])).toBe(false)
+
+    const theme = createTheme({ ...owl, solidInk: "white" })
+    expect(toHex(toOklch(theme.light.scales.accent!["700"]))).toBe("#58cc02")
+    expect(isWhite(theme.light.on.accent!["700"])).toBe(true)
+    expect(isWhite(theme.light.on.accent!["800"])).toBe(true)
+    // The hover still moves; dark keeps the solved label.
+    expect(theme.light.scales.accent!["800"]).toBe(
+      auto.light.scales.accent!["800"],
+    )
+    expect(theme.dark).toEqual(auto.dark)
+    const miss = theme.report.guarantees.find(
+      (g) =>
+        g.scale === "accent" &&
+        g.mode === "light" &&
+        g.name === "on-solid" &&
+        !g.passes,
+    )
+    expect(miss).toBeDefined()
+    expect(
+      theme.report.warnings.some((w) => w.startsWith("accent/light: solidInk")),
+    ).toBe(true)
+  })
+
+  test("solidInk white leaves every other solid's label to the solver", () => {
+    const owl = {
+      seeds: { accent: "#58cc02", warning: "#fab219" },
+      preserveSeed: true,
+    }
+    const auto = createTheme(owl)
+    const white = createTheme({ ...owl, solidInk: "white" })
+    for (const name of ["neutral", "success", "warning", "danger", "info"]) {
+      expect(white.light.on[name]).toEqual(auto.light.on[name])
+      expect(white.light.scales[name]).toEqual(auto.light.scales[name])
+    }
+    // Amber keeps its dark label.
+    expect(toOklch(white.light.on.warning!["700"]).l).toBeLessThan(0.5)
+  })
+
+  test("solidInk white needs a pinned seed", () => {
+    const fitted = createTheme({ seeds: { accent: "#58cc02" } })
+    expect(
+      createTheme({ seeds: { accent: "#58cc02" }, solidInk: "white" }),
+    ).toEqual(fitted)
+  })
 })
 
 describe("backgrounds (D9/D12)", () => {

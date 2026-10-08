@@ -3,10 +3,8 @@
 /* Shape — the base radius, and a character: which rung each role of component
    wears. The character opens a grid of cards, each a small app drawn at that
    character's real radii on the current base, so the pick is made by feel.
-   Roles fold under the cards for the system that needs one role off the
+   Role rows sit under the cards for the system that needs one role off the
    curated path; a hand-set vector reads Custom. */
-
-import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
@@ -20,15 +18,20 @@ import {
   SHAPE_RUNGS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
+import { STROKE_OPTIONS, TRACK_OPTIONS } from "../axes/shape.meta"
 import {
-  DialFolder,
   DialPopover,
+  DialSegmented,
   DialSelect,
+  DialSeparator,
   DialSlider,
   DialTrigger,
 } from "../dial"
+import { Row } from "../family-page"
+import type { RowMap } from "../family-page"
 import { CardGrid } from "../patterns"
-import type { Studio, StudioState } from "../state"
+import type { Effective } from "../state"
+import { useStudio } from "../use-studio"
 
 const px = (value: number) => `${Math.round(value * 10) / 10}px`
 
@@ -40,7 +43,7 @@ function rungLabel(label: string, ratio: number, base: number): string {
 
 /** A small app at `state`'s real radii: a panel holding a field and a button
  *  (controls), over a menu (surface) with its highlighted item. */
-function AppGlyph({ state }: { state: StudioState }) {
+function AppGlyph({ state }: { state: Effective }) {
   const radius = (key: ShapeRoleKey) => ({
     borderRadius: roleRadiusPx(state, key),
   })
@@ -69,7 +72,7 @@ function AppGlyph({ state }: { state: StudioState }) {
 }
 
 /** The chapter's specimen: the surface corner with a control nested inside. */
-export function ShapePreview({ state }: { state: StudioState }) {
+export function ShapePreview({ state }: { state: Effective }) {
   const arc = (key: ShapeRoleKey, size: number) =>
     Math.min(roleRadiusPx(state, key), size)
   return (
@@ -86,39 +89,52 @@ export function ShapePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function shapeSummary(state: StudioState): string {
-  const character =
-    SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
-    "Custom"
-  return `${character} · ${px(state.radiusPx)}`
+/* ---------------------------------- Rows ----------------------------------- */
+
+const ROLE_ROW_LABELS: Record<ShapeRoleKey, string> = {
+  rolePanel: "Panel corners",
+  roleCard: "Card corners",
+  roleSurface: "Surface corners",
+  roleControl: "Control corners",
+  roleItem: "Item corners",
 }
 
-/** Mounted with the popover, so Roles opens on a custom vector each time. */
-function CharacterPanel({ studio }: { studio: Studio }) {
-  const { state, set, setState } = studio
-  const active = activeCharacter(state)
-  const [open, setOpen] = useState(active === undefined)
-  const options = (key: ShapeRoleKey) => [
-    ...(key === "roleItem" || key === "roleCard"
-      ? [
-          {
-            value: "auto",
-            label: `Auto · ${px(state.radiusPx * roleRatio({ ...state, [key]: "auto" }, key))}`,
-          },
-        ]
-      : []),
-    ...SHAPE_RUNGS.filter(
-      ({ id }) => id !== "full" || (key !== "rolePanel" && key !== "roleCard"),
-    ).map(({ id, label, ratio }) => ({
-      value: id,
-      label: rungLabel(label, ratio, state.radiusPx),
-    })),
-  ]
+/** One role's rung; the Character popover hosts all five. */
+const roleRow = (key: ShapeRoleKey) =>
+  function RoleRow() {
+    const { state, effective } = useStudio()
+    return (
+      <DialSelect
+        axis={key}
+        label={ROLE_ROW_LABELS[key]}
+        options={[
+          ...(key === "roleItem" || key === "roleCard"
+            ? [
+                {
+                  value: "auto",
+                  label: `Auto · ${px(state.radiusPx * roleRatio({ ...effective, [key]: "auto" }, key))}`,
+                },
+              ]
+            : []),
+          ...SHAPE_RUNGS.filter(
+            ({ id }) =>
+              id !== "full" || (key !== "rolePanel" && key !== "roleCard"),
+          ).map(({ id, label, ratio }) => ({
+            value: id,
+            label: rungLabel(label, ratio, state.radiusPx),
+          })),
+        ]}
+      />
+    )
+  }
+
+function CharacterPanel() {
+  const { state, effective, setState } = useStudio()
   return (
     <>
       <CardGrid
         label="Character"
-        value={active}
+        value={activeCharacter(state)}
         onChange={(id) => {
           const character = SHAPE_CHARACTERS.find((c) => c.id === id)
           if (character) setState({ ...state, ...character.vector })
@@ -126,59 +142,78 @@ function CharacterPanel({ studio }: { studio: Studio }) {
         options={SHAPE_CHARACTERS.map((character) => ({
           id: character.id,
           label: character.label,
-          children: <AppGlyph state={{ ...state, ...character.vector }} />,
+          children: <AppGlyph state={{ ...effective, ...character.vector }} />,
         }))}
       />
-      <DialFolder
-        title="Roles"
-        open={open}
-        onOpenChange={setOpen}
-        modified={active === undefined}
-      >
-        {SHAPE_ROLES.map(({ key, label }) => (
-          <DialSelect
-            key={key}
-            label={label}
-            value={state[key]}
-            onChange={set(key)}
-            options={options(key)}
-          />
-        ))}
-      </DialFolder>
+      <DialSeparator />
+      {SHAPE_ROLES.map(({ key, label }) => (
+        <Row key={key} axis={key} label={label} />
+      ))}
     </>
   )
 }
 
-export function ShapeSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+function CharacterRow() {
+  const { state } = useStudio()
   const character = SHAPE_CHARACTERS.find(
     (c) => c.id === activeCharacter(state),
   )
   return (
+    <DialTrigger
+      label="Character"
+      holds={SHAPE_ROLES.map((role) => role.key)}
+      value={
+        <span className={cn("truncate", !character && "text-fg/50")}>
+          {character?.label ?? "Custom"}
+        </span>
+      }
+    >
+      <DialPopover className="w-80">
+        <CharacterPanel />
+      </DialPopover>
+    </DialTrigger>
+  )
+}
+
+const RadiusRow = () => (
+  <DialSlider
+    axis="radiusPx"
+    label="Radius"
+    minValue={RADIUS_RANGE.min}
+    maxValue={RADIUS_RANGE.max}
+    step={RADIUS_RANGE.step}
+    format={px}
+  />
+)
+
+const ControlStrokeRow = () => (
+  <DialSegmented
+    axis="controlStroke"
+    label="Control stroke"
+    options={STROKE_OPTIONS}
+  />
+)
+
+const TracksRow = () => (
+  <DialSegmented axis="tracks" label="Tracks" options={TRACK_OPTIONS} />
+)
+
+/* --------------------------------- Section --------------------------------- */
+
+export function ShapeSection() {
+  return (
     <>
-      <DialSlider
-        label="Radius"
-        value={state.radiusPx}
-        onChange={set("radiusPx")}
-        minValue={RADIUS_RANGE.min}
-        maxValue={RADIUS_RANGE.max}
-        step={RADIUS_RANGE.step}
-        format={px}
-      />
-      <DialTrigger
-        label="Character"
-        value={
-          <>
-            <span className={cn("truncate", !character && "text-fg/50")}>
-              {character?.label ?? "Custom"}
-            </span>
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CharacterPanel studio={studio} />
-        </DialPopover>
-      </DialTrigger>
+      <Row axis="radiusPx" />
+      <CharacterRow />
+      <Row axis="controlStroke" />
+      <Row axis="tracks" />
     </>
   )
+}
+
+export const ROWS: RowMap = {
+  radiusPx: RadiusRow,
+  ...Object.fromEntries(SHAPE_ROLES.map(({ key }) => [key, roleRow(key)])),
+  controlStroke: ControlStrokeRow,
+  tracks: TracksRow,
 }

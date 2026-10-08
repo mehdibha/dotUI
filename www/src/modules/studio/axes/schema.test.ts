@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest"
 
 import {
   DEFAULT_STATE,
+  checkKey,
   DEFAULTS,
   parseState,
   salvageState,
   SCHEMA,
   validate,
 } from "./index"
-import { checkAxisValue } from "./schema"
 
 const issueKeys = (raw: unknown) => {
   const result = validate(raw)
@@ -23,10 +23,11 @@ describe("state schema", () => {
   })
 
   it("accepts every default, and fills missing keys with them", () => {
-    for (const [key, schema] of Object.entries(SCHEMA))
-      expect(
-        checkAxisValue(schema, DEFAULTS[key as keyof typeof DEFAULTS]),
-      ).toBeUndefined()
+    for (const key of Object.keys(SCHEMA))
+      expect([
+        key,
+        checkKey(key, DEFAULTS[key as keyof typeof DEFAULTS]),
+      ]).toEqual([key, undefined])
     expect(DEFAULT_STATE).toEqual(DEFAULT_STATE)
     const result = validate({ radiusPx: 4 })
     expect(result.ok && result.state).toEqual(parseState({ radiusPx: 4 }))
@@ -45,8 +46,8 @@ describe("state schema", () => {
     bad({ radiusPx: 1.99 })
     bad({ radiusPx: "10" })
 
-    ok({ progressGap: true })
-    bad({ progressGap: "true" })
+    ok({ surfaceGlass: true })
+    bad({ surfaceGlass: "true" })
 
     ok({ brand: "oklch(0.6 0.2 250)" })
     ok({ brand: "rebeccapurple" })
@@ -57,9 +58,14 @@ describe("state schema", () => {
   })
 
   it("allows Auto only where the axis has one", () => {
+    expect(issueKeys({ successSeed: "", neutralHue: null })).toEqual([])
     expect(
-      issueKeys({ headingFont: "", successSeed: "", neutralHue: null }),
+      issueKeys({ headingFont: "same", iconStroke: "auto", lightBg: "auto" }),
     ).toEqual([])
+    expect(issueKeys({ headingFont: "", iconStroke: "same" })).toEqual([
+      "headingFont",
+      "iconStroke",
+    ])
     expect(issueKeys({ bodyFont: "", brand: "", radiusPx: null })).toEqual([
       "bodyFont",
       "brand",
@@ -91,7 +97,7 @@ describe("state schema", () => {
         headingFont: "Inter, sans-serif",
         iconWeight: "bold; --x: 1",
         radiusPx: -1000,
-        focusHaloStrength: 1e6,
+        focusWidth: 1e6,
         vividness: Infinity,
         brand: "zzz",
         selectionSeed: "red; }",
@@ -108,7 +114,7 @@ describe("state schema", () => {
         "headingFont",
         "iconWeight",
         "radiusPx",
-        "focusHaloStrength",
+        "focusWidth",
         "vividness",
         "brand",
         "selectionSeed",

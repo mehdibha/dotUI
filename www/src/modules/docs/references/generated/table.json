@@ -2,6 +2,15 @@
   "name": "TableProps",
   "description": "A table displays data in rows and columns and enables a user to navigate its contents\nvia directional navigation keys, and optionally supports row selection and sorting.",
   "props": {
+    "striped": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether every other body row is shaded.",
+      "default": "false"
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",

@@ -11,15 +11,23 @@ const entrance =
 const offset =
   "placement-left:[--offset:translateX(var(--slide-offset))] placement-right:[--offset:translateX(calc(var(--slide-offset)*-1))] placement-top:[--offset:translateY(var(--slide-offset))] placement-bottom:[--offset:translateY(calc(var(--slide-offset)*-1))]"
 
+/* A stroked tip (popover, surface tooltip): sized with the overlay stroke
+   (styles.css), and the stroke drawn at its true width. */
+export const STROKED_TIP =
+  "[&>svg]:size-(--studio-popover-tip-size) [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border) [&>svg]:stroke-(length:--studio-overlay-stroke) [&_path]:[vector-effect:non-scaling-stroke] placement-left:-ml-(--studio-overlay-stroke) placement-right:-mr-(--studio-overlay-stroke) placement-top:-mt-(--studio-overlay-stroke) placement-bottom:-mb-(--studio-overlay-stroke)"
+
 const { useStyles, styles } = createStyles(popoverMeta, {
   base: {
     slots: {
       popover: [
-        "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
+        "z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--studio-popover-radius) border-(length:--studio-overlay-stroke) border-(--overlay-border) bg-popover/(--popover-alpha) shadow-(--shadow-popover,var(--shadow-md)) [backdrop-filter:var(--popover-backdrop-filter)] forced-color-adjust-none outline-none [--surface-bg:var(--color-popover)] [--surface-radius:var(--studio-popover-radius)]",
+        // Menus and pickers size to their rows; the list inside sets the
+        // floor and the cap (list-box/styles.ts).
+        "has-[[role=menu],[role=listbox]]:min-w-min",
       ],
       arrow: [
-        "block [&>svg]:size-2.5 [&>svg]:fill-popover/(--popover-alpha) [&>svg]:stroke-(--overlay-border)",
-        "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+        STROKED_TIP,
+        "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
   },
@@ -27,6 +35,8 @@ const { useStyles, styles } = createStyles(popoverMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
   params: {
     motion: {

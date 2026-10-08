@@ -1,57 +1,39 @@
-/* Tooltips — a surface decision of its own: shadcn, Radix and GitHub invert to
-   a near-black chip; MUI and Linear keep the tooltip on a bordered surface.
-   Motion: how the chip enters and leaves, apart from the popover's.
+/* Tooltips: the one anchored layer that breaks rank with the popover
+   material. Whether it points is Menus' Arrows row; how it enters, Motion's.
 
-   Engine: `style` and `motion` are enum params on `tooltip`; motion's timing
-   is its `--studio-tooltip-*` vars. */
+   Engine: `style` is an enum param on `tooltip`; corners read the inline
+   item rung, or the detail rung when square items would square it. */
 
-import type { Resolved, StudioState } from "./index"
-import { ease, resolveEntrance } from "./motion"
-import type { Entrance } from "./motion"
-import { entrance, oneOf } from "./schema"
+import { defineChapter } from "./core/types"
+import type { Effective, Resolved } from "./index"
+import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
-
-/* shadcn's (style-nova + tw-animate): fade, zoom from 95% and an 8px slide
-   in, fade and zoom out, tw-animate's 150ms both ways on CSS `ease`. */
-const MOTION: Entrance = {
-  pattern: "scale",
-  enter: 150,
-  curve: { type: "easing", ease: ease("ease") },
-  exit: 150,
-  exitEase: ease("ease"),
-}
+import { roleRung } from "./shape"
 
 export const TOOLTIP_DEFAULTS = {
   tooltipStyle: "inverted",
-  tooltipMotion: MOTION,
 }
 
-export const TOOLTIP_STYLE_OPTIONS = [
-  { value: "inverted", label: "Inverted" },
-  { value: "surface", label: "Surface" },
-]
-
-export const MOTION_PATTERNS = [
-  { value: "scale", label: "Scale" },
-  { value: "fade", label: "Fade" },
-  { value: "slide", label: "Slide" },
-  { value: "none", label: "None" },
-]
+export const TOOLTIP_STYLE_VALUES = ["inverted", "surface"] as const
 
 export const TOOLTIP_SCHEMA: ChapterSchema<typeof TOOLTIP_DEFAULTS> = {
-  tooltipStyle: oneOf(TOOLTIP_STYLE_OPTIONS),
-  tooltipMotion: entrance(MOTION_PATTERNS),
+  tooltipStyle: oneOf(TOOLTIP_STYLE_VALUES),
 }
 
-export function resolveTooltips(state: StudioState): Resolved {
-  const motion = resolveEntrance("tooltip", state.tooltipMotion, MOTION)
-  return {
-    tokens: motion.tokens,
-    params: {
-      tooltip: {
-        style: state.tooltipStyle,
-        motion: motion.pattern,
-      },
-    },
-  }
+export function resolveTooltips(state: Effective): Resolved {
+  // A chip keeps its corners while controls are rounded (Material 3: square
+  // menu rows, 4dp tooltips); it squares only with square controls.
+  const tokens: Record<string, string> =
+    roleRung(state, "roleItem") === "none" &&
+    roleRung(state, "roleControl") !== "none"
+      ? { "--studio-tooltip-radius": "var(--studio-radius-detail)" }
+      : {}
+  return { tokens, params: { tooltip: { style: state.tooltipStyle } } }
 }
+
+export const chapter = defineChapter({
+  id: "tooltips",
+  defaults: TOOLTIP_DEFAULTS,
+  schema: TOOLTIP_SCHEMA,
+  resolve: resolveTooltips,
+})

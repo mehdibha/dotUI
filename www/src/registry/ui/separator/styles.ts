@@ -19,6 +19,8 @@ const { useStyles, styles } = createStyles(separatorMeta, {
     compact: {},
     default: {},
     comfortable: {},
+    spacious: {},
+    touch: {},
   },
 })
 

@@ -12,12 +12,6 @@ const modalMeta = {
     },
   ],
   params: {
-    backdrop: {
-      kind: "enum",
-      default: "dim",
-      values: ["dim", "blur", "none"] as const,
-      description: "How the page reads under the open modal.",
-    },
     position: {
       kind: "enum",
       default: "center",
@@ -27,15 +21,42 @@ const modalMeta = {
     motion: {
       kind: "enum",
       default: "scale",
-      values: ["scale", "fade", "slide", "none"] as const,
+      values: ["scale", "rise", "drop", "none"] as const,
       description: "How the dialog enters and leaves.",
     },
     mobile: {
       kind: "enum",
       default: "center",
-      values: ["center", "sheet"] as const,
+      values: ["center", "sheet", "fullscreen"] as const,
+      registryDependencies: {
+        sheet: ["drawer", "use-mobile"],
+        fullscreen: ["button"],
+      },
+      files: {
+        center: [
+          {
+            type: "registry:ui",
+            path: "ui/modal/base.tsx",
+            target: "ui/modal.tsx",
+          },
+        ],
+        sheet: [
+          {
+            type: "registry:ui",
+            path: "ui/modal/base.sheet.tsx",
+            target: "ui/modal.tsx",
+          },
+        ],
+        fullscreen: [
+          {
+            type: "registry:ui",
+            path: "ui/modal/base.fullscreen.tsx",
+            target: "ui/modal.tsx",
+          },
+        ],
+      },
       description:
-        "Where the modal sits below the mobile line: centered, or docked to the bottom edge as a sheet.",
+        "What the modal becomes below the mobile line: centered, a bottom drawer, or the whole screen.",
     },
   },
 } satisfies RegistryItem

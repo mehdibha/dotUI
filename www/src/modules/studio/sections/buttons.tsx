@@ -1,162 +1,183 @@
 "use client"
 
-/* Buttons — the family's page: Button sets the look, a real system's recipe
-   copied whole, and the toggles, groups and segmented control below stay
-   coherent with it. Color is a leaf of Color's Primary. */
+/* Buttons — one recipe shared by toggles, groups, segmented, pagination. */
+
+import { useMemo } from "react"
 
 import { DesignSystemContext } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { useStyles } from "@/registry/ui/button/styles"
+import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import { useStyles as useGroupStyles } from "@/registry/ui/group/styles"
+import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
+import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { SEPARATOR_OPTIONS } from "../axes/button-groups"
-import { RADIUS_OPTIONS, STYLE_OPTIONS } from "../axes/buttons"
+import { parseState } from "../axes"
+import type { StudioState } from "../axes"
+import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
 import {
-  SELECTED_OPTIONS as SEGMENT_OPTIONS,
+  CASE_OPTIONS,
+  PRESS_OPTIONS,
+  RADIUS_OPTIONS,
+  SECONDARY_OPTIONS,
+  STYLE_OPTIONS,
+} from "../axes/buttons.meta"
+import { CURRENT_OPTIONS } from "../axes/pagination.meta"
+import {
+  SELECTED_OPTIONS as CHIP_OPTIONS,
   TRACK_OPTIONS,
-} from "../axes/segmented-control"
-import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles"
-import {
-  DialGap,
-  DialList,
-  DialPopover,
-  DialSegmented,
-  DialSelect,
-  DialTrigger,
-  optionLabel,
-} from "../dial"
-import { CardGrid } from "../patterns"
-import { GroupTitle } from "../rows"
-import type { Studio, StudioState } from "../state"
+} from "../axes/segmented-control.meta"
+import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
+import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { MemberSection, Row } from "../family-page"
+import type { RowMap } from "../family-page"
+import { designSystemOf } from "../resolve"
+import type { Effective, Studio } from "../state"
+import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
 
-/* One stable context per style, so the registry's style cache hits. */
-const STYLE_CONTEXT = Object.fromEntries(
-  STYLE_OPTIONS.map(({ value }) => [
-    value,
-    { params: { button: { style: value } }, density: "default" as const },
-  ]),
-)
+/* The button vars a pick writes (Pill corners), set where specimens render. */
+const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
 
-function Specimen({ tiny }: { tiny?: boolean }) {
-  const styles = useStyles()
-  if (tiny)
-    return (
-      <span
-        className={styles({
-          variant: "primary",
-          size: "xs",
-          className: "h-4 px-1.5 text-[9px]",
-        })}
-      >
-        Save
-      </span>
-    )
-  return (
-    <>
-      <span className={styles({ variant: "primary", size: "xs" })}>Save</span>
-      <span className={styles({ variant: "secondary", size: "xs" })}>
-        Cancel
-      </span>
-    </>
+/** Specimens drawn by the registry's own recipes in one design system. */
+function System({
+  ds,
+  children,
+}: {
+  ds: DesignSystem
+  children: React.ReactNode
+}) {
+  const value = useMemo(
+    () => ({ params: ds.componentParams, density: "default" as const }),
+    [ds],
   )
-}
-
-/** Buttons drawn by the registry's own recipe for one style. */
-function StyleSpecimen({ style, tiny }: { style: string; tiny?: boolean }) {
+  const style = Object.fromEntries(
+    LOCAL_VARS.flatMap((name) =>
+      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
+    ),
+  ) as React.CSSProperties
   return (
-    <DesignSystemContext.Provider
-      value={STYLE_CONTEXT[style] ?? STYLE_CONTEXT.flat!}
-    >
-      <Specimen tiny={tiny} />
+    <DesignSystemContext.Provider value={value}>
+      <span className="flex items-center gap-1.5" style={style}>
+        {children}
+      </span>
     </DesignSystemContext.Provider>
   )
 }
 
-const CORNER: Record<string, string> = {
-  auto: "rounded-[4px] border-dashed",
-  sharp: "rounded-none",
-  round: "rounded-[5px]",
-  pill: "rounded-full",
-}
-
-/** A button's outline at one corner; Auto is dashed, it follows Shape. */
-function RadiusGlyph({ radius }: { radius: string }) {
-  return (
-    <span
-      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[radius])}
-    />
+/** `options`, each previewed by `specimen` drawn in its own design system. */
+function useSpecimens<T extends { value: string }>(
+  key: keyof StudioState,
+  options: readonly T[],
+  specimen: React.ReactNode,
+  /** The row's specimen, when the popover's is wider. */
+  glyph?: React.ReactNode,
+) {
+  const { state } = useStudio()
+  const systems = useMemo(
+    () =>
+      options.map((option) => ({
+        option,
+        ds: designSystemOf({ ...state, [key]: option.value } as StudioState),
+      })),
+    [state, key, options],
   )
+  return systems.map(({ option, ds }) => ({
+    ...option,
+    preview: <System ds={ds}>{specimen}</System>,
+    ...(glyph && { glyph: <System ds={ds}>{glyph}</System> }),
+  }))
 }
 
-const TOGGLE_LOOK: Record<string, string> = {
-  fill: "bg-selected text-fg-on-selected",
-  chip: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  inverse: "bg-inverse text-fg-inverse",
-}
-
-/** A selected toggle wearing one look. */
-function ToggleGlyph({ look }: { look: string }) {
+function ButtonSpecimen({
+  variant,
+  label,
+}: {
+  variant: "primary" | "secondary"
+  label: string
+}) {
+  const styles = useButtonStyles()
   return (
-    <span
-      className={cn(
-        "flex h-4 shrink-0 items-center rounded-[4px] px-1.5 text-[9px] font-semibold",
-        TOGGLE_LOOK[look],
-      )}
-    >
-      Aa
+    <span data-button="" className={styles({ variant, size: "xs" })}>
+      {label}
     </span>
   )
 }
 
-/** Three attached segments, divided as the separator says. */
-function GroupGlyph({ separator }: { separator: string }) {
-  const divider =
-    separator === "divider"
-      ? "border-l border-fg/30"
-      : separator === "auto"
-        ? "border-l border-fg/12"
-        : ""
+/** A selected toggle. */
+function SelectedToggle() {
+  const styles = useToggleStyles()
   return (
-    <span className="flex h-4 shrink-0 overflow-hidden rounded-[4px] border border-fg/30">
-      {[0, 1, 2].map((i) => (
-        <span key={i} className={cn("w-2.5", i > 0 && divider)} />
+    <span
+      data-button=""
+      data-icon-only=""
+      data-selected
+      className={styles({ variant: "secondary", size: "xs", isIconOnly: true })}
+    >
+      B
+    </span>
+  )
+}
+
+/** Three attached buttons as the group draws their seams. */
+function GroupSpecimen() {
+  const { root } = useGroupStyles()()
+  const styles = useButtonStyles()
+  return (
+    <span className={root({ orientation: "horizontal" })}>
+      {["L", "C", "R"].map((letter) => (
+        <span
+          key={letter}
+          data-button=""
+          data-icon-only=""
+          className={styles({
+            variant: "secondary",
+            size: "xs",
+            isIconOnly: true,
+          })}
+        >
+          {letter}
+        </span>
       ))}
     </span>
   )
 }
 
+const CORNER: Record<string, string> = {
+  same: "rounded-[4px]",
+  pill: "rounded-full",
+}
+
+function CornerGlyph({ corners }: { corners: string }) {
+  return (
+    <span
+      className={cn("h-4 w-7 shrink-0 border border-fg/40", CORNER[corners])}
+    />
+  )
+}
+
 const CHIP: Record<string, string> = {
+  tone: "bg-selected text-fg-on-selected",
   raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
-  flat: "bg-selected text-fg-on-selected",
+  ring: "bg-bg text-fg ring-1 ring-border-control",
   inverse: "bg-inverse text-fg-inverse",
 }
 
 /** A three-segment control: the chip against its track. */
-function SegmentedGlyph({
-  selected,
-  track,
-  card,
-}: {
-  selected: string
-  track: string
-  card?: boolean
-}) {
+function SegmentedGlyph({ chip, track }: { chip: string; track: string }) {
   return (
     <span
       className={cn(
         "flex shrink-0 rounded-[5px] p-[2px]",
         track === "outline" ? "border border-border" : "bg-muted",
-        card && "mx-auto my-1.5",
       )}
     >
       {["A", "B", "C"].map((letter, i) => (
         <span
           key={letter}
           className={cn(
-            "flex items-center rounded-[3px] font-medium text-fg-muted",
-            card ? "h-5 px-2 text-[11px]" : "h-3 px-1 text-[8px]",
-            i === 0 && CHIP[selected],
+            "flex h-3 items-center rounded-[3px] px-1 text-[8px] font-medium text-fg-muted",
+            i === 0 && CHIP[chip],
           )}
         >
           {letter}
@@ -166,94 +187,236 @@ function SegmentedGlyph({
   )
 }
 
-/* --------------------------------- Section --------------------------------- */
-
-export function ButtonsPreview({ state }: { state: StudioState }) {
-  return <StyleSpecimen style={state.buttonStyle} tiny />
+/** The current page among quiet ones. */
+function CurrentGlyph({ current }: { current: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="4" cy="12" r="1.5" fill="currentColor" opacity=".4" />
+      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity=".4" />
+      {current === "primary" ? (
+        <rect
+          x="7.5"
+          y="7.5"
+          width="9"
+          height="9"
+          rx="2.5"
+          fill="currentColor"
+        />
+      ) : current === "selected" ? (
+        <rect
+          x="7.5"
+          y="7.5"
+          width="9"
+          height="9"
+          rx="2.5"
+          fill="currentColor"
+          opacity=".25"
+        />
+      ) : (
+        <rect
+          x="8.25"
+          y="8.25"
+          width="7.5"
+          height="7.5"
+          rx="2.25"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      )}
+    </svg>
+  )
 }
 
-export function ButtonsSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+/* ---------------------------------- Rows ---------------------------------- */
+
+function ButtonStyleRow() {
+  // A style draws the secondary too (unless Secondary overrides it).
+  const options = useSpecimens(
+    "buttonStyle",
+    STYLE_OPTIONS,
+    <span className="flex gap-1">
+      <ButtonSpecimen variant="secondary" label="Cancel" />
+      <ButtonSpecimen variant="primary" label="Save" />
+    </span>,
+    <ButtonSpecimen variant="primary" label="Save" />,
+  )
+  return (
+    <DialSelect axis="buttonStyle" label="Button style" options={options} />
+  )
+}
+
+function ButtonSecondaryRow() {
+  const options = useSpecimens(
+    "buttonSecondary",
+    SECONDARY_OPTIONS,
+    <ButtonSpecimen variant="secondary" label="Cancel" />,
+  )
+  return (
+    <DialSelect
+      axis="buttonSecondary"
+      label="Secondary"
+      rowPreview={false}
+      options={options}
+    />
+  )
+}
+
+const CORNER_ROW = RADIUS_OPTIONS.map((option) => ({
+  ...option,
+  preview: <CornerGlyph corners={option.value} />,
+}))
+
+function ButtonRadiusRow() {
+  return (
+    <DialSelect
+      axis="buttonRadius"
+      label="Corners"
+      rowPreview={false}
+      options={CORNER_ROW}
+    />
+  )
+}
+
+function ButtonPressRow() {
+  return (
+    <DialSegmented axis="buttonPress" label="Press" options={PRESS_OPTIONS} />
+  )
+}
+
+function ButtonCaseRow() {
+  return <DialSegmented axis="buttonCase" label="Case" options={CASE_OPTIONS} />
+}
+
+function ToggleSelectedRow() {
+  const options = useSpecimens(
+    "toggleSelected",
+    TOGGLE_OPTIONS,
+    <SelectedToggle />,
+  )
+  return <DialSelect axis="toggleSelected" label="Selected" options={options} />
+}
+
+function GroupSeparatorRow() {
+  const options = useSpecimens(
+    "groupSeparator",
+    SEPARATOR_OPTIONS,
+    <GroupSpecimen />,
+  )
+  return (
+    <DialSelect
+      axis="groupSeparator"
+      rowPreview={false}
+      label="Seam"
+      options={options}
+    />
+  )
+}
+
+function SegmentedSelectedRow() {
+  const { effective } = useStudio()
+  return (
+    <DialSelect
+      axis="segmentedSelected"
+      rowPreview={false}
+      label="Segmented chip"
+      options={CHIP_OPTIONS.map((option) => ({
+        ...option,
+        preview: (
+          <SegmentedGlyph
+            chip={
+              option.value === "auto"
+                ? effective.segmentedSelected
+                : option.value
+            }
+            track={effective.segmentedTrack}
+          />
+        ),
+      }))}
+    />
+  )
+}
+
+function SegmentedTrackRow() {
+  return (
+    <DialSegmented
+      axis="segmentedTrack"
+      label="Track"
+      options={TRACK_OPTIONS}
+    />
+  )
+}
+
+const CURRENT_ROW = CURRENT_OPTIONS.map((option) => ({
+  ...option,
+  preview: (
+    <DialGlyph>
+      <CurrentGlyph current={option.value} />
+    </DialGlyph>
+  ),
+}))
+
+function PaginationCurrentRow() {
+  return (
+    <DialSelect
+      axis="paginationCurrent"
+      label="Current page"
+      options={CURRENT_ROW}
+    />
+  )
+}
+
+export const ROWS: RowMap = {
+  buttonStyle: ButtonStyleRow,
+  buttonSecondary: ButtonSecondaryRow,
+  buttonRadius: ButtonRadiusRow,
+  buttonPress: ButtonPressRow,
+  buttonCase: ButtonCaseRow,
+  toggleSelected: ToggleSelectedRow,
+  groupSeparator: GroupSeparatorRow,
+  segmentedSelected: SegmentedSelectedRow,
+  segmentedTrack: SegmentedTrackRow,
+  paginationCurrent: PaginationCurrentRow,
+}
+
+/* --------------------------------- Section --------------------------------- */
+
+export function ButtonsPreview({ state }: { state: Effective }) {
+  const ds = useMemo(
+    () => designSystemOf(parseState({ buttonStyle: state.buttonStyle })),
+    [state.buttonStyle],
+  )
+  return (
+    <System ds={ds}>
+      <ButtonSpecimen variant="primary" label="Save" />
+    </System>
+  )
+}
+
+export function ButtonsSection(_: { studio: Studio }) {
   return (
     <>
-      <DialList
-        label="Style"
-        value={state.buttonStyle}
-        onChange={set("buttonStyle")}
-        options={STYLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <StyleSpecimen style={option.value} />,
-        }))}
-      />
+      <Row axis="buttonStyle" />
       <DialGap />
-      <DialSelect
-        label="Radius"
-        value={state.buttonRadius}
-        onChange={set("buttonRadius")}
-        options={RADIUS_OPTIONS.map((option) => ({
-          ...option,
-          preview: <RadiusGlyph radius={option.value} />,
-        }))}
-      />
-      <GroupTitle>Toggles & groups</GroupTitle>
-      <DialSelect
-        label="Toggles"
-        value={state.toggleSelected}
-        onChange={set("toggleSelected")}
-        options={TOGGLE_OPTIONS.map((option) => ({
-          ...option,
-          preview: <ToggleGlyph look={option.value} />,
-        }))}
-      />
-      <DialSelect
-        label="Groups"
-        value={state.groupSeparator}
-        onChange={set("groupSeparator")}
-        options={SEPARATOR_OPTIONS.map((option) => ({
-          ...option,
-          preview: <GroupGlyph separator={option.value} />,
-        }))}
-      />
-      <DialTrigger
-        label="Segmented"
-        value={
-          <>
-            <span className="truncate">
-              {optionLabel(SEGMENT_OPTIONS, state.segmentedSelected)}
-            </span>
-            <SegmentedGlyph
-              selected={state.segmentedSelected}
-              track={state.segmentedTrack}
-            />
-          </>
-        }
-      >
-        <DialPopover className="w-80">
-          <CardGrid
-            label="Selected"
-            columns={3}
-            value={state.segmentedSelected}
-            onChange={set("segmentedSelected")}
-            options={SEGMENT_OPTIONS.map((option) => ({
-              id: option.value,
-              label: option.label,
-              children: (
-                <SegmentedGlyph
-                  selected={option.value}
-                  track={state.segmentedTrack}
-                  card
-                />
-              ),
-            }))}
-          />
-          <DialSegmented
-            label="Track"
-            value={state.segmentedTrack}
-            onChange={set("segmentedTrack")}
-            options={TRACK_OPTIONS}
-          />
-        </DialPopover>
-      </DialTrigger>
+      <Row axis="buttonSecondary" />
+      <Row axis="buttonRadius" />
+      <Row axis="buttonColor" />
+      <Row axis="labelWeight" />
+      <Row axis="buttonMotion" />
+      <Row axis="buttonPress" />
+      <Row axis="buttonCase" />
+      <MemberSection id="toggle" title="Toggles">
+        <Row axis="toggleSelected" />
+      </MemberSection>
+      <MemberSection id="group" title="Groups">
+        <Row axis="groupSeparator" />
+      </MemberSection>
+      <MemberSection id="segmented" title="Segmented">
+        <Row axis="segmentedSelected" />
+        <Row axis="segmentedTrack" />
+      </MemberSection>
+      <MemberSection id="pagination" title="Pagination">
+        <Row axis="paginationCurrent" />
+      </MemberSection>
     </>
   )
 }

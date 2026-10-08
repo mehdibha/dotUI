@@ -794,7 +794,7 @@ export default function MailBlock() {
                     key={message.id}
                     id={message.id}
                     textValue={`${message.from} — ${message.subject}`}
-                    className="items-start data-selection-mode:pr-2 selected:bg-accent-muted"
+                    className="items-start data-selection-mode:pr-2 selected:bg-selected"
                   >
                     <MessageRow
                       message={message}

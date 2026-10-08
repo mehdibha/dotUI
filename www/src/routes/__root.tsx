@@ -7,6 +7,7 @@ import {
   HeadContent,
   Outlet,
   Scripts,
+  useMatch,
 } from "@tanstack/react-router"
 import { ThemeProvider } from "starter-themes"
 
@@ -80,7 +81,13 @@ export const Route = createRootRoute({
 function RootComponent() {
   // In the /create preview iframe, the customizer owns the displayed mode — force it so
   // the provider's own system / storage listeners can't revert it. `undefined` elsewhere.
-  const forcedTheme = usePreviewForcedTheme()
+  // Dev specimen sheets pin theirs from `?mode=` the same way.
+  const specimenMode = useMatch({
+    from: "/internal/specimens",
+    shouldThrow: false,
+    select: (match) => match.search.mode,
+  })
+  const forcedTheme = usePreviewForcedTheme() ?? specimenMode
 
   return (
     <ThemeProvider forcedTheme={forcedTheme}>

@@ -53,6 +53,7 @@ import {
   NEUTRAL_HUE_RANGE,
   NEUTRAL_TINT_RANGE,
 } from "@/modules/studio/axes/color"
+import { usePopoverFocus } from "@/modules/studio/focus"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
 
 /** Where row-attached overlays open. */
@@ -77,7 +78,7 @@ export function useMedia(query: string) {
 }
 /* Below `lg` the panel docks under the preview (or beside it, on short
    screens) and its popovers open over the dock, never the preview. */
-export const DOCKED_QUERY = "(max-width: 1023px)"
+const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
 /** Docked beside the preview (a phone on its side): the `dock-side` variant. */
 export const useDockSide = () =>
@@ -137,8 +138,10 @@ export function PanelPopover({
   const layer = useContext(DockLayer)
   const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
+  usePopoverFocus()
   return (
     <Popover
+      data-panel-popover=""
       placement={placement}
       boundaryElement={boundary ?? undefined}
       containerPadding={boundary ? 0 : undefined}
@@ -165,23 +168,6 @@ export function PanelPopover({
           ))
         : children}
     </Popover>
-  )
-}
-
-/** The left column of a row: the label, and the line under it that says what
- *  the axis actually changes. Rows stay one line until a description arrives.
- *  `text-left` is explicit — stacked, the label stretches to the column width
- *  and would otherwise inherit a `<button>`'s centered text. */
-/* ------------------------------- Group title ------------------------------ */
-
-/** The line that opens a group: what the rows under it configure. Quieter than
- *  the chapter heading above it, and bound to its group — the margin sits on
- *  top, never between. */
-export function GroupTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
-      {children}
-    </span>
   )
 }
 
