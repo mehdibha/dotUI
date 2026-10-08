@@ -224,7 +224,7 @@ function AlertSection() {
     <BoardSection
       member="alert"
       title="Alert"
-      axes={["alertStyle", "dangerSeed"]}
+      axes={["alertStyle", "successSeed", "warningSeed", "dangerSeed"]}
       className={STACK}
     >
       <div className="grid gap-4">
