@@ -193,7 +193,8 @@ function InviteDialog({ className }: { className?: string }) {
           Teammates can view and edit every project.
         </DialogDescription>
       </DialogHeader>
-      <DialogBody className="max-h-44 overflow-y-auto">
+      {/* Capped so it scrolls; a short viewport scrolls the whole dialog instead. */}
+      <DialogBody className="max-h-44 overflow-y-auto in-data-modal:[@container_(height<31.25rem)]:max-h-none">
         <TextField>
           <Label>Email</Label>
           <Input placeholder="name@company.com" />
@@ -430,7 +431,7 @@ function PhoneStage() {
   return (
     <div className="rounded-[2.75rem] border-[6px] border-fg/10 shadow-lg">
       <div className="w-68 overflow-hidden rounded-[2.4rem]">
-        <Screen height="34rem">
+        <Screen height="36rem">
           {mobile === "sheet" ? (
             <DrawerLayer placement="bottom" replay={replay}>
               <InviteDialog />
