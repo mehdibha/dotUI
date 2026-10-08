@@ -196,15 +196,61 @@ const PEOPLE = [
     variant: "neutral",
     tint: "bg-warning-muted text-fg-warning",
   },
+  {
+    name: "Noor Haddad",
+    role: "Editor",
+    variant: "info",
+    tint: "bg-danger-muted text-fg-danger",
+  },
+  {
+    name: "Jonas Weber",
+    role: "Viewer",
+    variant: "neutral",
+    tint: "bg-accent-muted text-fg-accent",
+  },
 ] as const
 
-function People() {
+const PERSON_ROW = 52
+
+/** A row height near `row` that ends a whole row exactly at the popover's bottom, so none peeks out half-covered. */
+function useRowHeight(
+  list: RefObject<HTMLElement | null>,
+  popover: RefObject<HTMLElement | null>,
+  row: number,
+  open = true,
+) {
+  const [height, setHeight] = useState<number>()
+  useLayoutEffect(() => {
+    const l = list.current
+    const p = popover.current
+    if (!l || !p) return
+    const measure = () => {
+      const room =
+        p.getBoundingClientRect().bottom - l.getBoundingClientRect().top
+      setHeight(room / Math.max(1, Math.round(room / row)))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(p)
+    return () => observer.disconnect()
+  }, [list, popover, row, open])
+  return open ? height : undefined
+}
+
+function People({
+  ref,
+  height = PERSON_ROW,
+}: {
+  ref: RefObject<HTMLUListElement | null>
+  height?: number
+}) {
   return (
-    <ul className="col-start-1 row-start-1 flex flex-col">
+    <ul ref={ref} className="col-start-1 row-start-1 flex flex-col self-start">
       {PEOPLE.map((person) => (
         <li
           key={person.name}
-          className="flex items-center gap-3 border-b px-6 py-3 text-sm last:border-b-0 max-sm:px-4"
+          style={{ height }}
+          className="flex shrink-0 items-center gap-3 border-b px-6 text-sm last:border-b-0 max-sm:px-4"
         >
           <span
             className={cn(
@@ -280,15 +326,15 @@ const FILES = [
   },
 ]
 
-/** Tinted thumbnails, so glass has colour to blur. */
+/** Tinted thumbnails, so glass has colour to blur; from sm the last column sits exactly under the menu. */
 function Gallery() {
   return (
-    <ul className="col-start-1 row-start-1 grid grid-cols-2 gap-x-4 gap-y-5 p-6 max-sm:p-4 sm:grid-cols-4 max-sm:[&>li:nth-child(n+7)]:hidden">
+    <ul className="col-start-1 row-start-1 grid grid-cols-2 gap-x-4 gap-y-5 p-6 max-sm:p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))_14rem] lg:grid-cols-[repeat(3,minmax(0,1fr))_14rem] max-lg:[&>li:nth-child(n+7)]:hidden">
       {FILES.map((file) => (
         <li key={file.label} className="flex min-w-0 flex-col gap-2">
           <span
             className={cn(
-              "flex aspect-[4/3] items-center justify-center rounded-(--studio-radius-surface) [&_svg]:size-6",
+              "flex h-28 items-center justify-center rounded-(--studio-radius-surface) sm:h-36 [&_svg]:size-6",
               file.tint,
             )}
           >
@@ -475,6 +521,8 @@ function PopoverSpecimen() {
   const trigger = useRef<HTMLButtonElement>(null)
   const panel = useRef<HTMLDivElement>(null)
   const anchor = useAnchor(trigger, panel)
+  const list = useRef<HTMLUListElement>(null)
+  const height = useRowHeight(list, panel, PERSON_ROW)
   return (
     <div inert className="flex flex-col">
       <div className="flex items-center gap-3 border-b px-6 py-3 max-sm:px-4">
@@ -485,7 +533,7 @@ function PopoverSpecimen() {
         </Button>
       </div>
       <div className="grid">
-        <People />
+        <People ref={list} height={height} />
         <div
           ref={panel}
           data-popover=""
@@ -506,7 +554,7 @@ function PopoverSpecimen() {
             </DialogHeader>
             <div className="flex gap-2">
               <TextField aria-label="Email" className="min-w-0 flex-1">
-                <Input placeholder="name@company.com" />
+                <Input placeholder="Email" />
               </TextField>
               <Button variant="primary">Invite</Button>
             </div>
@@ -634,6 +682,8 @@ function CommandSpecimen() {
 
 /* --------------------------------- Mobile --------------------------------- */
 
+const ORDER_ROW = 45
+
 const SORTS = ["Newest first", "Oldest first", "Price: low to high"]
 
 const ORDERS = [
@@ -669,11 +719,17 @@ function SortRows() {
 function PhoneSpecimen() {
   const mobile = useComponentParams("popover").mobile ?? "drawer"
   const { popover, arrow } = usePopoverStyles()()
-  const { backdrop, popup, handle } = useDrawerStyles()({ placement: "bottom" })
+  const list = useRef<HTMLUListElement>(null)
+  const picker = useRef<HTMLDivElement>(null)
+  const height =
+    useRowHeight(list, picker, ORDER_ROW, mobile === "anchored") ?? ORDER_ROW
+  const { overlay, backdrop, popup, handle } = useDrawerStyles()({
+    placement: "bottom",
+  })
   return (
     <div
       inert
-      className="relative isolate flex h-[30rem] w-72 max-w-full flex-col overflow-hidden rounded-[2.5rem] border-[6px] border-fg/10 bg-bg"
+      className="relative isolate flex h-120 w-72 max-w-full flex-col overflow-hidden rounded-[2.5rem] border-[6px] border-fg/10 bg-bg"
     >
       <div className="flex flex-col gap-4 px-4 pt-10">
         <span className="text-lg font-medium">Orders</span>
@@ -689,11 +745,12 @@ function PhoneSpecimen() {
         </Select>
       </div>
       <div className="mt-2 grid">
-        <ul className="col-start-1 row-start-1 flex flex-col px-5">
+        <ul ref={list} className="col-start-1 row-start-1 flex flex-col px-5">
           {ORDERS.map((order) => (
             <li
               key={order.label}
-              className="flex items-center gap-3 border-b py-3 text-sm last:border-b-0"
+              style={{ height }}
+              className="flex shrink-0 items-center gap-3 border-b text-sm last:border-b-0"
             >
               <span className="truncate">{order.label}</span>
               <span className="ml-auto text-fg-muted tabular-nums">
@@ -704,9 +761,11 @@ function PhoneSpecimen() {
         </ul>
         {mobile === "anchored" && (
           <div
+            ref={picker}
             data-popover=""
             data-trigger="Select"
             data-placement="bottom"
+            data-entrance=""
             className={popover({
               className:
                 "relative col-start-1 row-start-1 mx-4 self-start overflow-visible",
@@ -718,18 +777,17 @@ function PhoneSpecimen() {
         )}
       </div>
       {mobile === "drawer" && (
-        <>
-          <div className={backdrop({ className: "z-10" })} />
-          <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col">
-            <div
-              data-drawer=""
-              className={popup({ className: "[--drawer-bleed:0px]" })}
-            >
+        <div className={overlay({ className: "absolute z-10" })}>
+          <div className={backdrop()} />
+          <div className="absolute inset-x-0 bottom-0 flex flex-col">
+            <div data-drawer="" className={popup()}>
               <div data-orientation="horizontal" className={handle()} />
               <SortRows />
+              {/* The phone's home-indicator inset. */}
+              <div className="h-3 shrink-0" />
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   )
@@ -750,8 +808,8 @@ const ROW_KEYS = [
 const STAGE =
   "flex-col flex-nowrap items-stretch justify-start gap-0 overflow-hidden p-0 max-sm:p-0"
 
-/** Two sections side by side once both fit. */
-const PAIR = "grid grid-cols-1 gap-10 lg:grid-cols-2"
+/** List box over Tooltip, beside the taller phone, once both columns fit. */
+const SPLIT = "grid grid-cols-1 gap-10 lg:grid-cols-2"
 
 export default function MenusBoard() {
   useEntranceReplay()
@@ -760,13 +818,13 @@ export default function MenusBoard() {
       <BoardSection
         member="menu"
         title="Menu"
-        axes={[...ROW_KEYS, "menuArrows", "surfaceGlass", "menuMotion"]}
+        axes={[...ROW_KEYS, "surfaceGlass", "menuMotion"]}
         className={STAGE}
       >
         <MenuSpecimen />
       </BoardSection>
 
-      <div className={PAIR}>
+      <div className={SPLIT}>
         <BoardSection
           member="list-box"
           title="List box"
@@ -778,25 +836,7 @@ export default function MenusBoard() {
             <ListRowStates />
           </div>
         </BoardSection>
-        <BoardSection
-          member="mobile"
-          title="Mobile"
-          axes={["mobilePickers"]}
-          className="flex-1"
-        >
-          <PhoneSpecimen />
-        </BoardSection>
-      </div>
-
-      <div className={PAIR}>
-        <BoardSection
-          member="popover"
-          title="Popover"
-          axes={["menuArrows", "surfaceGlass", "menuMotion"]}
-          className={cn(STAGE, "flex-1")}
-        >
-          <PopoverSpecimen />
-        </BoardSection>
+        {/* First to hold menuArrows: its tip sits near its top, in view when docked. */}
         <BoardSection
           member="tooltip"
           title="Tooltip"
@@ -805,7 +845,26 @@ export default function MenusBoard() {
         >
           <TooltipSpecimen />
         </BoardSection>
+        <div className="grid lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <BoardSection
+            member="mobile"
+            title="Mobile"
+            axes={["mobilePickers"]}
+            className="flex-1"
+          >
+            <PhoneSpecimen />
+          </BoardSection>
+        </div>
       </div>
+
+      <BoardSection
+        member="popover"
+        title="Popover"
+        axes={["menuArrows", "surfaceGlass", "menuMotion"]}
+        className={STAGE}
+      >
+        <PopoverSpecimen />
+      </BoardSection>
 
       <BoardSection
         member="command"
