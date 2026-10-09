@@ -6,7 +6,7 @@
    and derived "Auto" value is what ships. The palettes lead — Brand, Neutral,
    Semantics — then Primary; Vividness sits under Brand, its seed. */
 
-import { useMemo } from "react"
+import { useContext, useMemo } from "react"
 import { useTheme } from "starter-themes"
 
 import { STEPS, toOklch } from "@dotui/colors"
@@ -22,14 +22,19 @@ import {
 import {
   DialColor,
   DialGap,
-  DialPopover,
+  DialLink,
   DialSlider,
   DialToggle,
   DialTrigger,
   ModifiedDot,
 } from "../dial"
-import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
-import type { Studio, StudioState } from "../state"
+import {
+  neutralFamily,
+  NeutralPickerPopover,
+  NeutralStrip,
+  PanelNav,
+} from "../rows"
+import type { ChapterPage, Studio, StudioState } from "../state"
 import { PrimaryRow } from "./primary"
 import { SurfacesRow } from "./surfaces"
 
@@ -140,53 +145,86 @@ export function ColorPreview({ state }: { state: StudioState }) {
   )
 }
 
+function useSemantics(state: StudioState) {
+  const { m } = usePanelMode(state)
+  const selection =
+    m.scales.selection?.["700"] ??
+    m.scales[state.selectionColor]?.[
+      state.selectionColor === "neutral" ? "950" : "700"
+    ]
+  return SEMANTIC_SEEDS.map((seed) => ({
+    ...seed,
+    color:
+      (seed.palette === "selection"
+        ? selection
+        : m.scales[seed.palette]?.["700"]) ?? m.background,
+  }))
+}
+
+/* Each dot but the last is cut where the next one overlaps it (12px dots,
+   4px overlap, 1.5px gap), so the stack reads on any row tint. */
+const STACK_CUTOUT =
+  "radial-gradient(circle at 14px 50%, #0000 7.5px, #000 8px)"
+
+/** The four semantic colors, stacked. */
+export function SemanticsPreview({ state }: { state: StudioState }) {
+  const semantics = useSemantics(state)
+  return (
+    <span className="flex -space-x-1">
+      {semantics.map(({ key, color }, i) => (
+        <span
+          key={key}
+          className="size-3 shrink-0 rounded-full"
+          style={{
+            background: color,
+            mask: i < semantics.length - 1 ? STACK_CUTOUT : undefined,
+          }}
+        />
+      ))}
+    </span>
+  )
+}
+
+function SemanticsPage({ studio }: { studio: Studio }) {
+  const { state, set } = studio
+  return useSemantics(state).map(({ key, label, color }) => (
+    <DialColor
+      key={key}
+      label={label}
+      value={state[key]}
+      derived={color}
+      onChange={set(key)}
+    />
+  ))
+}
+
+export const COLOR_PAGES: ChapterPage[] = [
+  {
+    id: "semantics",
+    label: "Semantics",
+    Preview: SemanticsPreview,
+    Body: SemanticsPage,
+  },
+]
+
 /** Semantics and primary. */
 export function ColorSection({ studio }: { studio: Studio }) {
-  const { state, set } = studio
+  const { state } = studio
   const { m } = usePanelMode(state)
-
-  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
-  const semantic = (palette: string) =>
-    palette === "selection"
-      ? (m.scales.selection?.["700"] ??
-        m.scales[state.selectionColor]?.[
-          state.selectionColor === "neutral" ? "950" : "700"
-        ] ??
-        m.background)
-      : solid(palette)
-  const semanticsCustom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
+  const open = useContext(PanelNav)
+  const custom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
   return (
     <>
-      <DialTrigger
+      <DialLink
         label="Semantics"
-        swatch
+        onPress={() => open("semantics")}
         value={
           <>
-            {semanticsCustom && <ModifiedDot />}
-            <span className="grid size-4 shrink-0 grid-cols-2 gap-0.5">
-              {SEMANTIC_SEEDS.map(({ key, palette }) => (
-                <span
-                  key={key}
-                  className="rounded-full"
-                  style={{ background: semantic(palette) }}
-                />
-              ))}
-            </span>
+            {custom && <ModifiedDot />}
+            <SemanticsPreview state={state} />
           </>
         }
-      >
-        <DialPopover>
-          {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
-            <DialColor
-              key={key}
-              label={label}
-              value={state[key]}
-              derived={semantic(palette)}
-              onChange={set(key)}
-            />
-          ))}
-        </DialPopover>
-      </DialTrigger>
+      />
       <DialGap />
       <PrimaryRow studio={studio} m={m} />
     </>

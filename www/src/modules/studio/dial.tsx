@@ -7,7 +7,12 @@
    set of classes. Folds are instant — chrome, not content. */
 
 import { useEffect, useRef, useState } from "react"
-import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon } from "lucide-react"
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronsUpDownIcon,
+} from "lucide-react"
 import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
@@ -49,9 +54,9 @@ export const DIAL_ROW =
   "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
-export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/60"
+export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
 export const DIAL_VALUE =
-  "truncate font-mono text-[13px] font-medium text-fg/85"
+  "truncate font-mono text-[13px] font-medium text-fg/60"
 
 /** The option's label, or the raw value when it is off the list. */
 export const optionLabel = (
@@ -122,7 +127,7 @@ export function DialTrigger({
     <Dialog>
       <RacButton className={cn(DIAL_ROW, DIAL_PRESS, swatch && "pr-2.5")}>
         <span className={DIAL_LABEL}>{label}</span>
-        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/85">
+        <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
           {value}
         </span>
       </RacButton>
@@ -150,7 +155,7 @@ export function DialPopover({
   )
 }
 
-/** A row that opens a page in place of the panel: label, value. */
+/** A row that opens a page in place of the panel: label, value, a chevron. */
 export function DialLink({
   label,
   value,
@@ -161,10 +166,11 @@ export function DialLink({
   onPress: () => void
 }) {
   return (
-    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS)}>
+    <RacButton onPress={onPress} className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
       <span className={DIAL_LABEL}>{label}</span>
-      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/85">
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
+        <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
       </span>
     </RacButton>
   )

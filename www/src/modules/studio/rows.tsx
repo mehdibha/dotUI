@@ -34,6 +34,7 @@ import {
 } from "@/registry/ui/color-swatch-picker"
 import { Command } from "@/registry/ui/command"
 import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
@@ -50,6 +51,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 import {
   NEUTRAL_HUE_RANGE,
   NEUTRAL_TINT_RANGE,
@@ -403,7 +405,6 @@ function NeutralSlider({
 /** What the row reads back: the family the committed value lands on. */
 export function neutralFamily(value: NeutralValue, brandHue: number) {
   if (value.tint === 0) return PURE_GRAY.label
-  if (value.hue === null) return "Auto"
   return nearestFamilyName(value.hue ?? brandHue)
 }
 
@@ -437,8 +438,8 @@ export function NeutralStrip({
   )
 }
 
-/** The neutral's popover: family seeds, then the hue and tint sliders. Must
- *  render inside a Dialog trigger. */
+/** The neutral's popover: Match brand, family seeds, then the hue and tint
+ *  sliders. Must render inside a Dialog trigger. */
 export function NeutralPickerPopover({
   value,
   onChange,
@@ -457,21 +458,26 @@ export function NeutralPickerPopover({
   // a full engine run, too slow to resolve per frame.
   const [hue, setHue] = useDraft(value.hue ?? brandHue)
   const [tint, setTint] = useDraft(value.tint)
-  const family =
-    tint === 0
-      ? PURE_GRAY.label
-      : value.hue === null && hue === brandHue
-        ? "Auto"
-        : nearestFamilyName(hue)
+  const family = tint === 0 ? PURE_GRAY.label : nearestFamilyName(hue)
   const preset =
     value.tint === 0
       ? PURE_GRAY.id
-      : value.hue === null
-        ? "brand"
-        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
+      : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
+        <Switch
+          size="sm"
+          isSelected={value.hue === null}
+          onChange={(match) =>
+            onChange({ ...value, hue: match ? null : brandHue })
+          }
+          className="px-1 pt-1"
+        >
+          <Label className="flex-1">Match brand</Label>
+          <SwitchControl />
+        </Switch>
+        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}
@@ -489,20 +495,6 @@ export function NeutralPickerPopover({
           }}
           className="flex justify-between"
         >
-          {/* Auto is named, not a dot: following the brand is the default
-              and a gray that quietly tracks another color has to say so. */}
-          <RacToggleButton
-            id="brand"
-            onHoverStart={() => setHovered("Auto")}
-            onHoverEnd={() => setHovered(null)}
-            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-          >
-            <span
-              className="size-4 rounded-full"
-              style={{ background: sample(brandHue) }}
-            />
-            Auto
-          </RacToggleButton>
           {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
             <RacToggleButton
               key={option.id}

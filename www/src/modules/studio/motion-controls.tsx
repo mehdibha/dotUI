@@ -381,7 +381,7 @@ export function MotionRow({
       className={cn(DIAL_ROW, DIAL_PRESS)}
     >
       <span className={DIAL_LABEL}>{entry.label}</span>
-      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/85">
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {differs(entry, state, base) && <ModifiedDot />}
         <span className="truncate">{summaryOf(entry, state)}</span>
         {!timing.off && timing.curve && (

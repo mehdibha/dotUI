@@ -356,7 +356,7 @@ function PrimaryPanel({
         >
           <span className={DIAL_LABEL}>Custom</span>
           {primary === "mixed" && (
-            <span className="truncate text-[13px] font-medium text-fg/85">
+            <span className="truncate text-[13px] font-medium text-fg/60">
               {leavesSummary(state)}
             </span>
           )}

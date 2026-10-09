@@ -55,7 +55,7 @@ function FontRow({
         </span>
         <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-3">
           <span
-            className="truncate text-[13px] font-medium text-fg/85"
+            className="truncate text-[13px] font-medium text-fg/60"
             style={{ fontFamily: fontStack(resolved) }}
           >
             {resolved}
