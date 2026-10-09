@@ -89,7 +89,13 @@ export const spotify = definePreset({
 
     // Components
     chartPalette: "mono",
-    chartGrid: "solid",
+    chartAxes: "minimal",
+    chartGrid: "lines",
+    chartLines: "smooth",
+    chartArea: "tint",
+    chartBars: "rounded",
+    chartLegend: "bottom",
+    chartMotion: "spring",
     linkUnderline: "hover",
     linkColor: "neutral",
     skeletonAnimation: "shimmer",

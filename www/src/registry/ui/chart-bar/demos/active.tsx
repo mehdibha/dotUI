@@ -1,64 +1,46 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { defineChart } from "@tanstack/charts"
 import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { chartDefaults } from "@/registry/ui/chart"
-import { BarChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
-  { browser: "chrome", visitors: 187 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 275 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 187 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 275 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const LABELS: Record<string, string> = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "browser",
+      y: "visitors",
+      color: "browser",
+      z: "browser",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+      states: [{ when: { focus: "unmatched" }, style: { fillOpacity: 0.3 } }],
+    }),
+  ],
+})
 
 export default function ChartBarActive() {
-  const [active, setActive] = useState<string | null>(null)
-
-  /* The focused bar is repainted by a second layer at full opacity: `marks` is
-     identity-compared, so a new array is what rebuilds the chart. */
-  const highlight = useMemo(
-    () =>
-      active === null
-        ? []
-        : [
-            barY(
-              data.filter((row) => row.browser === active),
-              {
-                x: "browser",
-                y: "visitors",
-                z: labelOf,
-                color: labelOf,
-                radius: chartDefaults.barRadius,
-              },
-            ),
-          ],
-    [active],
-  )
-
   return (
-    <BarChart
-      data={data}
-      x="browser"
-      y="visitors"
-      series="browser"
-      labels={LABELS}
-      fillOpacity={active === null ? 1 : 0.3}
-      marks={highlight}
-      animate={false}
-      onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, with the focused bar highlighted"
     />
   )

@@ -1,12 +1,9 @@
-/* Charts — the data-viz look: the categorical series strategy and the
-   gridline treatment.
-
-   Engine: the color engine generates `--chart-1..8` per mode from the brand
-   accent, so the palette rides on the color recipe as `chartPalette` (absent
-   = tonal shades, the shadcn-parity default); the grid is an enum param on
-   the `chart` container every chart renders through. Motion is the `motion`
-   enum param on `chart`: a JS transition (the marks animate their geometry,
-   not CSS), folded to its literal on publish. */
+/* Charts — the categorical series strategy and the chart look. The color
+   engine generates `--chart-1..8` per mode from the brand accent, so the
+   palette rides on the color recipe as `chartPalette` (absent = tonal
+   shades, the shadcn-parity default). The look is `chart` params: each
+   swaps lines of the kit's `chartLook` literal. Chart motion lives in the
+   Motion chapter. */
 
 import type { ColorConfig } from "@/registry/theme"
 
@@ -18,7 +15,12 @@ import type { ChapterSchema } from "./schema"
 
 export const CHART_DEFAULTS = {
   chartPalette: "mono",
-  chartGrid: "solid",
+  chartAxes: "minimal",
+  chartGrid: "lines",
+  chartLines: "smooth",
+  chartArea: "tint",
+  chartBars: "rounded",
+  chartLegend: "bottom",
   chartMotion: "spring",
 }
 
@@ -31,10 +33,37 @@ export const PALETTE_OPTIONS = [
   { value: "muted", label: "Muted" },
 ]
 
+/* Category labels only (shadcn), or value labels too (Tremor, Vercel). */
+export const AXES_OPTIONS = [
+  { value: "minimal", label: "Minimal" },
+  { value: "labeled", label: "Labeled" },
+]
+
 export const GRID_OPTIONS = [
-  { value: "solid", label: "Solid" },
+  { value: "lines", label: "Lines" },
   { value: "dashed", label: "Dashed" },
-  { value: "none", label: "None" },
+]
+
+export const LINES_OPTIONS = [
+  { value: "smooth", label: "Smooth" },
+  { value: "straight", label: "Straight" },
+  { value: "fine", label: "Fine" },
+]
+
+export const AREA_OPTIONS = [
+  { value: "tint", label: "Tint" },
+  { value: "solid", label: "Solid" },
+]
+
+export const BARS_OPTIONS = [
+  { value: "rounded", label: "Rounded" },
+  { value: "square", label: "Square" },
+  { value: "slim", label: "Slim" },
+]
+
+export const LEGEND_OPTIONS = [
+  { value: "bottom", label: "Bottom" },
+  { value: "top", label: "Top" },
 ]
 
 const physics = (stiffness: number, damping: number): Curve => ({
@@ -44,22 +73,19 @@ const physics = (stiffness: number, damping: number): Curve => ({
   mass: 1,
 })
 
-/* shadcn's charts ride recharts' tween (CSS `ease`, 400ms on bars); dotUI's
-   default is react-spring's default config, and the other springs are its
-   named ones. `curve` is each value's specimen, mirroring the transitions in
-   `ui/chart/base.tsx`; none has nothing to draw. */
+/* Quick is a 300ms ease-out tween (Carbon); Spring is react-spring's default
+   config, Bouncy its wobbly one. `curve` is each value's specimen, mirroring
+   `chartLooks.motion` in `ui/chart/meta.ts`. */
 export const MOTION_OPTIONS: { value: string; label: string; curve?: Curve }[] =
   [
-    { value: "spring", label: "Spring", curve: physics(170, 26) },
-    { value: "stiff", label: "Stiff", curve: physics(210, 20) },
-    { value: "wobbly", label: "Wobbly", curve: physics(180, 12) },
-    { value: "slow", label: "Slow", curve: physics(280, 60) },
+    { value: "off", label: "Off" },
     {
-      value: "ease",
-      label: "Ease",
-      curve: { type: "easing", ease: ease("ease") },
+      value: "quick",
+      label: "Quick",
+      curve: { type: "easing", ease: ease("ease-out") },
     },
-    { value: "none", label: "None" },
+    { value: "spring", label: "Spring", curve: physics(170, 26) },
+    { value: "bouncy", label: "Bouncy", curve: physics(180, 12) },
   ]
 
 /** The recipe's series strategy for a palette option; `undefined` is the
@@ -70,7 +96,12 @@ export function chartPaletteOf(palette: string): ColorConfig["chartPalette"] {
 
 export const CHART_SCHEMA: ChapterSchema<typeof CHART_DEFAULTS> = {
   chartPalette: oneOf(PALETTE_OPTIONS),
+  chartAxes: oneOf(AXES_OPTIONS),
   chartGrid: oneOf(GRID_OPTIONS),
+  chartLines: oneOf(LINES_OPTIONS),
+  chartArea: oneOf(AREA_OPTIONS),
+  chartBars: oneOf(BARS_OPTIONS),
+  chartLegend: oneOf(LEGEND_OPTIONS),
   chartMotion: oneOf(MOTION_OPTIONS),
 }
 
@@ -79,6 +110,16 @@ export function resolveCharts(state: StudioState): Resolved {
   return {
     // A recipe slice, not a recipe: resolve.ts completes it against the default.
     ...(chartPalette ? { color: { chartPalette } as ColorConfig } : {}),
-    params: { chart: { grid: state.chartGrid, motion: state.chartMotion } },
+    params: {
+      chart: {
+        axes: state.chartAxes,
+        grid: state.chartGrid,
+        lines: state.chartLines,
+        area: state.chartArea,
+        bars: state.chartBars,
+        legend: state.chartLegend,
+        motion: state.chartMotion,
+      },
+    },
   }
 }

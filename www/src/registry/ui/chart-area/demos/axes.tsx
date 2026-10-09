@@ -1,8 +1,13 @@
 "use client"
 
-import type { ChartValue } from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "January", desktop: 18600 },
@@ -13,21 +18,38 @@ const data = [
   { month: "June", desktop: 21400 },
 ]
 
-// Module scope: a formatter defined in render would rebuild the scene.
-const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
-const formatCompact = (value: ChartValue) => compact.format(Number(value))
+
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scalePoint,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export default function ChartAreaAxes() {
   return (
-    <AreaChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      axes
-      formatX={shortMonth}
-      formatY={formatCompact}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

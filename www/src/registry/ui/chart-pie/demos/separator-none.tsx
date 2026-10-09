@@ -1,32 +1,37 @@
 "use client"
 
-import { PieChart } from "@/registry/ui/chart-pie"
+import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
+
+import { Chart, chartSliceTooltip } from "@/registry/ui/chart"
 
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), { color: "browser" }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
-// No separator stroke: the slices meet edge to edge.
 export default function ChartPieSeparatorNone() {
   return (
-    <PieChart
-      data={data}
-      value="visitors"
-      name="browser"
-      labels={labels}
-      strokeWidth={0}
+    <Chart
+      definition={chart}
       ariaLabel="Visitors by browser, without slice separators"
     />
   )

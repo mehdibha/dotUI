@@ -3,15 +3,23 @@ import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
-import chartMeta from "@/registry/ui/chart/meta"
+import chartMeta, { chartLooks, lookLine } from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { resolveDesignSystem } from "../resolve"
-import { MOTION_OPTIONS } from "./charts"
-import { DEFAULT_STATE, DEFAULTS, parseState } from "./index"
+import {
+  AREA_OPTIONS,
+  AXES_OPTIONS,
+  BARS_OPTIONS,
+  GRID_OPTIONS,
+  LEGEND_OPTIONS,
+  LINES_OPTIONS,
+  MOTION_OPTIONS,
+} from "./charts"
+import { DEFAULT_STATE, parseState } from "./index"
 import type { StudioState } from "./index"
 
-/** What the chart container ships under the studio state. */
+/** The chart kit as it ships under the studio state. */
 async function shipped(state: StudioState = DEFAULT_STATE) {
   const ds = resolveDesignSystem(state)
   const preset = {
@@ -28,14 +36,28 @@ async function shipped(state: StudioState = DEFAULT_STATE) {
   return item.files?.[0]?.content ?? ""
 }
 
+const LOOKS = {
+  axes: ["chartAxes", AXES_OPTIONS],
+  grid: ["chartGrid", GRID_OPTIONS],
+  lines: ["chartLines", LINES_OPTIONS],
+  area: ["chartArea", AREA_OPTIONS],
+  bars: ["chartBars", BARS_OPTIONS],
+  legend: ["chartLegend", LEGEND_OPTIONS],
+  motion: ["chartMotion", MOTION_OPTIONS],
+} as const
+
 describe("charts axes", () => {
-  it("defaults keep the recipe untouched and the grid solid", () => {
+  it("defaults keep the recipe untouched and every look on its default", () => {
     const ds = resolveDesignSystem(DEFAULT_STATE)
     expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "spring",
-    })
+    expect(ds.componentParams.chart).toEqual(
+      Object.fromEntries(
+        Object.entries(chartMeta.params).map(([key, def]) => [
+          key,
+          def.default,
+        ]),
+      ),
+    )
     expect(Object.keys(ds.tokens).some((k) => k.startsWith("--chart"))).toBe(
       false,
     )
@@ -51,58 +73,40 @@ describe("charts axes", () => {
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
   })
 
-  it("the grid is a param on the chart container", () => {
-    for (const chartGrid of ["dashed", "none"]) {
-      const ds = resolveDesignSystem(parseState({ chartGrid }))
-      expect(ds.componentParams.chart).toEqual({
-        grid: chartGrid,
-        motion: "spring",
-      })
-      expect(ds.color).toEqual(DEFAULT_COLOR_CONFIG)
+  it("each look's options are its chart param's values", () => {
+    for (const [param, [, options]] of Object.entries(LOOKS)) {
+      const def = chartMeta.params[param as keyof typeof LOOKS]
+      expect(options.map((o) => o.value).sort()).toEqual([...def.values].sort())
     }
   })
-})
 
-/* The transition each option ships, as `ui/chart/base.tsx` writes it. */
-function transitionSource(option: (typeof MOTION_OPTIONS)[number]): string {
-  const { curve } = option
-  if (!curve) return "false"
-  if (curve.type === "physics")
-    return `{ type: "spring", stiffness: ${curve.stiffness}, damping: ${curve.damping} }`
-  return `{ type: "tween", duration: 400, easing: "ease" }`
-}
-
-describe("chart motion", () => {
-  it("the options are the chart's motion param, specimens included", () => {
-    expect(MOTION_OPTIONS.map((o) => o.value)).toEqual([
-      ...chartMeta.params.motion.values,
-    ])
-    expect(DEFAULTS.chartMotion).toBe(chartMeta.params.motion.default)
+  it("each swap names one line of the kit's defaults, unambiguously", () => {
     const base = readFileSync(
       new URL("../../../registry/ui/chart/base.tsx", import.meta.url),
       "utf8",
     )
-    for (const option of MOTION_OPTIONS)
-      expect(base).toContain(`${option.value}: ${transitionSource(option)},`)
+    const swaps = Object.values(chartMeta.params).flatMap((def) =>
+      Object.values(def.source ?? {}).flatMap((swap) => Object.entries(swap)),
+    )
+    const froms = new Set(swaps.map(([from]) => from))
+    for (const from of froms) expect(base.split(from).length).toBe(2)
+    for (const [, to] of swaps) {
+      for (const from of froms) expect(to.includes(from)).toBe(false)
+    }
   })
 
-  it("a pick is a chart param, never a token", () => {
-    const ds = resolveDesignSystem(parseState({ chartMotion: "wobbly" }))
-    expect(ds.componentParams.chart).toEqual({
-      grid: "solid",
-      motion: "wobbly",
-    })
-    expect(ds.tokens).toEqual(resolveDesignSystem(DEFAULT_STATE).tokens)
-  })
-
-  it("ships the selected transition as a literal", async () => {
-    for (const option of MOTION_OPTIONS) {
-      const content = await shipped(parseState({ chartMotion: option.value }))
-      expect(content).toContain(
-        `const systemMotion: Exclude<ChartAnimate, true> = ${transitionSource(option)}`,
-      )
-      expect(content).not.toContain("createParamValue")
-      expect(content).not.toContain("--studio-")
+  it("ships every look as the fields of the kit's look literal", async () => {
+    for (const [param, [stateKey, options]] of Object.entries(LOOKS)) {
+      for (const { value } of options) {
+        const content = await shipped(parseState({ [stateKey]: value }))
+        const fields = (
+          chartLooks[param as keyof typeof LOOKS] as Record<string, object>
+        )[value]
+        for (const [key, field] of Object.entries(fields ?? {})) {
+          expect(content).toContain(lookLine(key, field))
+        }
+        expect(content).not.toContain("--studio-")
+      }
     }
   })
 })

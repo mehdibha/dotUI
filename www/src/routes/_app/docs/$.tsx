@@ -32,7 +32,6 @@ const MOVED: Record<string, Moved> = {
   "getting-started/installation": { to: "installation" },
   "getting-started/cli": { to: "installation" },
   "getting-started/api-reference/cli": { to: "installation" },
-  "components/chart": { to: "charts" },
   "components/chat": { to: "components/message" },
   "components/context-menu": { to: "components/menu", hash: "triggers" },
   "components/disclosure": { to: "components/collapsible" },

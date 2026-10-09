@@ -1,6 +1,25 @@
 "use client"
 
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialDot,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
+
+import {
+  Chart,
+  chartAngleLabels,
+  chartLook,
+  polarDecorative,
+} from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,15 +30,55 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.62,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+        // The line already carries each point's focus.
+        polarDecorative(radialDot(data, { ...series, r: 4 })),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
+
 export default function ChartRadarRadius() {
   return (
-    <RadarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      radiusRatio={0.62}
-      points
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

@@ -1,10 +1,13 @@
 "use client"
 
+import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { LineChart } from "@/registry/ui/chart-line"
-
-const SERIES = "Desktop"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -15,26 +18,42 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-/* Ring markers instead of the built-in `points` dots. Reusing the line's `z`
-   keeps the pair in one focus group. */
-const rings = dot(data, {
-  x: "month",
-  y: "desktop",
-  z: () => SERIES,
-  r: 5,
-  fill: "var(--color-bg)",
-  stroke: "var(--chart-1)",
-  strokeWidth: 2,
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+    // Decorative: the line keeps the focus stops and the tooltip rows.
+    decorative(
+      dot(data, {
+        x: "month",
+        y: "desktop",
+        r: 5,
+        fill: "var(--color-bg)",
+        stroke: "var(--chart-1)",
+        strokeWidth: 2,
+      }),
+    ),
+  ],
 })
 
 export default function ChartLineDotsCustom() {
   return (
-    <LineChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: SERIES }}
-      marks={[rings]}
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

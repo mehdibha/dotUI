@@ -1,6 +1,19 @@
 "use client"
 
-import { RadarChart } from "@/registry/ui/chart-radar"
+import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
+
+import { Chart, chartAngleLabels, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -11,14 +24,53 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
+
 export default function ChartRadarGridCircle() {
   return (
-    <RadarChart
-      data={data}
-      x="month"
-      y="desktop"
-      labels={{ desktop: "Desktop" }}
-      gridShape="circle"
+    <Chart
+      definition={chart}
       ariaLabel="Desktop visitors, January through June"
     />
   )

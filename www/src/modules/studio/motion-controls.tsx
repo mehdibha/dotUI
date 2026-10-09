@@ -266,7 +266,7 @@ export const MOTION: MotionEntry[] = [
   },
   {
     // Charts animate their marks' geometry in JS, not CSS: the motion is a
-    // named transition the publisher folds to its literal, not a timing.
+    // named transition the publisher folds into the kit's defaults.
     id: "chart",
     label: "Chart",
     kind: "js",
@@ -316,8 +316,8 @@ export function timingOf(entry: MotionEntry, state: StudioState): Timing {
   if (entry.kind === "js") {
     const option = CHART_MOTION.find((o) => o.value === value)
     if (!option?.curve) return { off: true, enter: 0, ease: "linear" }
-    // The tween's 400ms is the chart's own; a spring times itself.
-    const { ms, ease } = curveTiming(option.curve, 400)
+    // The tween's 300ms is the chart's own; a spring times itself.
+    const { ms, ease } = curveTiming(option.curve, 300)
     return { off: false, enter: ms, ease, curve: option.curve }
   }
   const v = value as StateChange | Loop
