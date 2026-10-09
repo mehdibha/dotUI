@@ -360,7 +360,7 @@ function BezierInput({
         spellCheck={false}
         className={cn(
           DIAL_VALUE,
-          "h-7 min-w-0 flex-1 rounded-md bg-transparent px-1.5 text-right focus-reset focus-visible:tint-10 focus-visible:text-fg",
+          "h-7 min-w-0 flex-1 rounded-md bg-transparent px-1.5 text-right focus-reset focus-visible:tint-10",
         )}
       />
     </div>

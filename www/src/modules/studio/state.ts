@@ -4,7 +4,12 @@
    section in sections/ owns its body; its axes live in axes/. */
 
 import type { StudioState } from "./axes"
-import { ColorPreview, ColorPrimary, ColorSection } from "./sections/color"
+import {
+  COLOR_PAGES,
+  ColorPreview,
+  ColorPrimary,
+  ColorSection,
+} from "./sections/color"
 import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
 import { IconsPreview, IconsSection } from "./sections/icons"
 import {
@@ -53,6 +58,7 @@ export const CHAPTERS: Chapter[] = [
     Primary: ColorPrimary,
     Body: ColorSection,
     Preview: ColorPreview,
+    pages: COLOR_PAGES,
   },
   {
     id: "typography",

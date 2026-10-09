@@ -1,7 +1,6 @@
 "use client"
 
-/* Patterns built on the dial language: a pick from illustrated cards, and a
-   palette color as a dot. */
+/* Patterns built on the dial language: a pick from illustrated cards. */
 
 import {
   ToggleButton as RacToggleButton,
@@ -9,17 +8,6 @@ import {
 } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-
-/** A palette's color as a dot before an option label — an option that names a
- *  color should show it. */
-export function PaletteDot({ color }: { color: string }) {
-  return (
-    <span
-      className="size-2 shrink-0 rounded-full"
-      style={{ backgroundColor: color }}
-    />
-  )
-}
 
 /* -------------------------------- Card grid -------------------------------- */
 

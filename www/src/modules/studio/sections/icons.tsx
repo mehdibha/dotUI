@@ -152,7 +152,7 @@ function IconLibraryRow({
     >
       <RacButton className={cn(DIAL_ROW, DIAL_PRESS)}>
         <span className={DIAL_LABEL}>{label}</span>
-        <SelectValue className="truncate text-[13px] font-medium text-fg/70">
+        <SelectValue className="truncate text-[13px] font-medium text-fg/60">
           {({ selectedText }) => selectedText}
         </SelectValue>
       </RacButton>

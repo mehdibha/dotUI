@@ -3,7 +3,7 @@
 /* Every animated component once, with its state and control. Followers
    (synced group members) ride their lead's key, never a second one. */
 
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
@@ -21,7 +21,6 @@ import { sameValue } from "./axes/schema"
 import { MOTION_PATTERNS as TOAST_PATTERNS } from "./axes/toast"
 import { MOTION_PATTERNS as TOOLTIP_PATTERNS } from "./axes/tooltips"
 import {
-  DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
@@ -382,7 +381,7 @@ export function MotionRow({
       className={cn(DIAL_ROW, DIAL_PRESS)}
     >
       <span className={DIAL_LABEL}>{entry.label}</span>
-      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/70">
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {differs(entry, state, base) && <ModifiedDot />}
         <span className="truncate">{summaryOf(entry, state)}</span>
         {!timing.off && timing.curve && (
@@ -390,7 +389,6 @@ export function MotionRow({
             <CurveGlyph curve={timing.curve} />
           </DialGlyph>
         )}
-        <ChevronRightIcon className={DIAL_CHEVRON} />
       </span>
     </RacButton>
   )

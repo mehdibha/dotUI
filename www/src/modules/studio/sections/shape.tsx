@@ -68,21 +68,15 @@ function AppGlyph({ state }: { state: StudioState }) {
   )
 }
 
-/** The chapter's specimen: the surface corner with a control nested inside. */
+/** The chapter's specimen: one corner at the control radius. */
 export function ShapePreview({ state }: { state: StudioState }) {
-  const arc = (key: ShapeRoleKey, size: number) =>
-    Math.min(roleRadiusPx(state, key), size)
   return (
-    <span className="relative block size-5 shrink-0">
-      <span
-        className="absolute top-0 left-0 size-5 border-t-2 border-l-2 border-fg/40"
-        style={{ borderTopLeftRadius: arc("roleSurface", 20) }}
-      />
-      <span
-        className="absolute top-0 left-0 size-3 border-t-2 border-l-2 border-fg/80"
-        style={{ borderTopLeftRadius: arc("roleControl", 12) }}
-      />
-    </span>
+    <span
+      className="block size-3.5 shrink-0 border-t-[1.5px] border-l-[1.5px] border-current"
+      style={{
+        borderTopLeftRadius: Math.min(roleRadiusPx(state, "roleControl"), 14),
+      }}
+    />
   )
 }
 
