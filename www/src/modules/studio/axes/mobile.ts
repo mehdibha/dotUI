@@ -2,11 +2,11 @@
    768px viewport breakpoint; Tailwind's `md`). Popover + Center renders the
    same everywhere (Radix Themes). Pickers is the loudest split: shadcn/Vaul and
    most product apps slide selects, menus and date pickers into a bottom
-   drawer, Geist keeps the popover anchored. Dialogs: the classic modal stays
+   sheet, Geist keeps the popover anchored. Dialogs: the classic modal stays
    centered, iOS-style systems drop it to a sheet.
 
-   Engine: `popover.mobile` swaps the shipped popover file — the drawer
-   variant renders a Drawer below the line for modal popovers and nests one
+   Engine: `popover.mobile` swaps the shipped popover file — the sheet
+   variant renders a Sheet below the line for modal popovers and nests one
    per submenu (a combobox list keeps its anchor); `modal.mobile` is a class
    slice that docks the modal to the bottom edge. */
 
@@ -15,12 +15,12 @@ import { oneOf } from "./schema"
 import type { ChapterSchema } from "./schema"
 
 export const MOBILE_DEFAULTS = {
-  mobilePickers: "drawer",
+  mobilePickers: "sheet",
   mobileDialogs: "center",
 }
 
 export const PICKER_OPTIONS = [
-  { value: "drawer", label: "Drawer" },
+  { value: "sheet", label: "Sheet" },
   { value: "popover", label: "Popover" },
 ]
 

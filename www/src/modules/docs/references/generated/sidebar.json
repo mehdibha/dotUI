@@ -1,6 +1,6 @@
 {
   "name": "SidebarProps",
-  "description": "The sidebar panel itself. Renders a fixed desktop panel and an off-canvas\nDrawer on mobile, driven by the nearest `SidebarProvider`.",
+  "description": "The sidebar panel itself. Renders a fixed desktop panel and an off-canvas\nSheet on mobile, driven by the nearest `SidebarProvider`.",
   "extendsElement": "nav",
   "props": {
     "side": {

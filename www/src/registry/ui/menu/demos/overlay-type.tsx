@@ -5,27 +5,27 @@ import React from "react"
 import { MenuIcon } from "@/registry/__generated__/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { Button } from "@/registry/ui/button"
-import { Drawer } from "@/registry/ui/drawer"
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { Radio, RadioGroup } from "@/registry/ui/radio-group"
+import { Sheet } from "@/registry/ui/sheet"
 
-type Type = "modal" | "drawer" | "popover"
+type Type = "modal" | "sheet" | "popover"
 
 const OVERLAYS: Record<
   Type,
   React.ComponentType<{ children?: React.ReactNode }>
 > = {
   modal: Modal,
-  drawer: Drawer,
+  sheet: Sheet,
   popover: Popover,
 }
 
 export default function Demo() {
   const [type, setType] = React.useState<Type>("popover")
-  const [mobileType, setMobileType] = React.useState<Type>("drawer")
+  const [mobileType, setMobileType] = React.useState<Type>("sheet")
   return (
     <div className="flex items-center gap-14">
       <Menu>
@@ -54,7 +54,7 @@ export default function Demo() {
           <FieldGroup>
             <Radio value="popover">Popover</Radio>
             <Radio value="modal">Modal</Radio>
-            <Radio value="drawer">Drawer</Radio>
+            <Radio value="sheet">Sheet</Radio>
           </FieldGroup>
         </RadioGroup>
         <RadioGroup
@@ -65,7 +65,7 @@ export default function Demo() {
           <FieldGroup>
             <Radio value="popover">Popover</Radio>
             <Radio value="modal">Modal</Radio>
-            <Radio value="drawer">Drawer</Radio>
+            <Radio value="sheet">Sheet</Radio>
           </FieldGroup>
         </RadioGroup>
       </div>

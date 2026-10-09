@@ -57,7 +57,6 @@ export const SEARCH_INDEX: Record<string, string[]> = {
 		"Swatch picker",
 		"Slider",
 		"Dialog",
-		"Drawer",
 		"Popover",
 		"Tooltip",
 		"Toast",

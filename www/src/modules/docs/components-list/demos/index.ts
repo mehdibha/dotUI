@@ -30,7 +30,6 @@ import { CommandDemo } from "./command"
 import { DateFieldDemo } from "./date-field"
 import { DatePickerDemo } from "./date-picker"
 import { DialogDemo } from "./dialog"
-import { DrawerDemo } from "./drawer"
 import { EmptyDemo } from "./empty"
 import { FieldDemo } from "./field"
 import { FileTriggerDemo } from "./file-trigger"
@@ -58,6 +57,7 @@ import { RadioGroupDemo } from "./radio-group"
 import { SearchFieldDemo } from "./search-field"
 import { SelectDemo } from "./select"
 import { SeparatorDemo } from "./separator"
+import { SheetDemo } from "./sheet"
 import { SidebarDemo } from "./sidebar"
 import { SkeletonDemo } from "./skeleton"
 import { SliderDemo } from "./slider"
@@ -106,7 +106,7 @@ export const componentDemos: Record<string, ComponentType> = {
   "date-field": DateFieldDemo,
   "date-picker": DatePickerDemo,
   dialog: DialogDemo,
-  drawer: DrawerDemo,
+  sheet: SheetDemo,
   empty: EmptyDemo,
   field: FieldDemo,
   "file-trigger": FileTriggerDemo,

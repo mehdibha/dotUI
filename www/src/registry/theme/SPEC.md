@@ -57,7 +57,7 @@ unchanged; 80 components consume them. Changes:
 - **Muted tint surfaces become real tokens** (`color-primary-muted` etc.
   re-derived from subtle-bg jobs); the ad-hoc
   `color-mix(...)` recipes in checkbox/radio/calendar migrate onto them.
-- **New tokens** 🟡: `color-overlay` (modal/drawer scrim — today hardcoded
+- **New tokens** 🟡: `color-overlay` (modal/sheet scrim — today hardcoded
   `bg-black/70`) and `color-fg-on-overlay`; `color-thumb` (switch/slider
   thumb — today `bg-white`). Flagged as the missing axes recon found; two
   design systems disagree on both.

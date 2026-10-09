@@ -11,8 +11,8 @@ import {
   DialogInset,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { Modal } from "@/registry/ui/modal"
+import { Sheet } from "@/registry/ui/sheet"
 
 export default function Demo() {
   return (
@@ -44,11 +44,7 @@ export default function Demo() {
               </DialogFooter>
             </DialogContent>
           )
-          return isMobile ? (
-            <Drawer>{content}</Drawer>
-          ) : (
-            <Modal>{content}</Modal>
-          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
         }}
       />
     </Dialog>

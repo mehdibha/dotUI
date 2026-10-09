@@ -78,7 +78,7 @@ export const stripe = definePreset({
     ...DEFAULT_MOTION,
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components

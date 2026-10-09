@@ -6,7 +6,7 @@ import { resolveDesignSystem } from "../resolve"
 describe("mobile axis", () => {
   it("defaults resolve to the registry defaults and no tokens", () => {
     const ds = resolveDesignSystem(DEFAULT_STATE)
-    expect(ds.componentParams.popover?.mobile).toBe("drawer")
+    expect(ds.componentParams.popover?.mobile).toBe("sheet")
     expect(ds.componentParams.modal?.mobile).toBe("center")
     expect(ds.tokens).toEqual({})
   })

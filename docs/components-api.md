@@ -3558,7 +3558,7 @@ import {
 
 ## react-hook-form FormControl with DatePicker (value mapping)
 
-Destructure `value`/`onChange` to convert between the form's string and `DateValue`; picker is responsive (Drawer on mobile, Popover on desktop).
+Destructure `value`/`onChange` to convert between the form's string and `DateValue`; picker is responsive (Sheet on mobile, Popover on desktop).
 
 ```tsx
 import { parseDate } from "@internationalized/date"
@@ -3569,7 +3569,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { DatePicker } from "@/components/ui/date-picker"
 import { DialogContent } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Label } from "@/components/ui/field"
 import { DateInput, InputGroup, InputGroupAddon } from "@/components/ui/input"
 import { Popover } from "@/components/ui/popover"
@@ -3603,7 +3603,7 @@ import { FormControl } from "@/components/ui/react-hook-form"
               <Calendar aria-label="Pick a date" />
             </DialogContent>
           )
-          return isMobile ? <Drawer>{content}</Drawer> : <Popover>{content}</Popover>
+          return isMobile ? <Sheet>{content}</Sheet> : <Popover>{content}</Popover>
         }}
       />
     </DatePicker>
@@ -6218,7 +6218,7 @@ import { Popover } from "@/components/ui/popover"
 </Card>
 ```
 
-## Combobox in dialog (responsive modal/drawer)
+## Combobox in dialog (responsive modal/sheet)
 
 ```tsx
 import { ChevronDownIcon } from "@/components/icons"
@@ -6234,7 +6234,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Label } from "@/components/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/components/ui/input"
 import { ListBox, ListBoxItem } from "@/components/ui/list-box"
@@ -6279,7 +6279,7 @@ import { Popover } from "@/components/ui/popover"
           </DialogFooter>
         </DialogContent>
       )
-      return isMobile ? <Drawer>{content}</Drawer> : <Modal>{content}</Modal>
+      return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
     }}
   />
 </Dialog>
@@ -7171,12 +7171,12 @@ import { Popover } from "@/components/ui/popover"
 </Menu>
 ```
 
-## Menu in Drawer
+## Menu in Sheet
 
 ```tsx
 import { BellIcon, LogOutIcon, SettingsIcon, UserIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 import {
   Menu,
   MenuContent,
@@ -7189,9 +7189,9 @@ import { Separator } from "@/components/ui/separator"
 
 ```tsx
 <Menu>
-  <Button variant="secondary">Open drawer menu</Button>
-  <Drawer placement="bottom">
-    <DrawerHandle />
+  <Button variant="secondary">Open sheet menu</Button>
+  <Sheet>
+    <SheetHandle />
     <MenuContent>
       <MenuSection>
         <MenuSectionHeader>Account</MenuSectionHeader>
@@ -7214,7 +7214,7 @@ import { Separator } from "@/components/ui/separator"
         Log out
       </MenuItem>
     </MenuContent>
-  </Drawer>
+  </Sheet>
 </Menu>
 ```
 
@@ -7251,13 +7251,13 @@ import { Separator } from "@/components/ui/separator"
 </Menu>
 ```
 
-## Menu responsive overlay (popover on desktop, drawer on mobile)
+## Menu responsive overlay (popover on desktop, sheet on mobile)
 
 ```tsx
 import { MenuIcon } from "@/components/icons"
 import { Responsive } from "@/lib/responsive"
 import { Button } from "@/components/ui/button"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Menu, MenuContent, MenuItem } from "@/components/ui/menu"
 import { Popover } from "@/components/ui/popover"
 ```
@@ -7269,7 +7269,7 @@ import { Popover } from "@/components/ui/popover"
   </Button>
   <Responsive
     render={(isMobile) => {
-      const Overlay = isMobile ? Drawer : Popover
+      const Overlay = isMobile ? Sheet : Popover
       return (
         <Overlay>
           <MenuContent>
@@ -7298,7 +7298,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Menu, MenuContent, MenuItem, MenuSub } from "@/components/ui/menu"
 import { Modal } from "@/components/ui/modal"
 import { Popover } from "@/components/ui/popover"
@@ -7350,7 +7350,7 @@ import { Separator } from "@/components/ui/separator"
           </DialogBody>
         </DialogContent>
       )
-      return isMobile ? <Drawer>{content}</Drawer> : <Modal>{content}</Modal>
+      return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
     }}
   />
 </Dialog>
@@ -8161,7 +8161,7 @@ class TagFieldValue extends TokenFieldValue {
 
 ## Dialog
 
-A dialog is the trigger + content; the overlay (Modal, Drawer, Popover) is a sibling of the trigger inside `Dialog`.
+A dialog is the trigger + content; the overlay (Modal, Sheet, Popover) is a sibling of the trigger inside `Dialog`.
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8252,9 +8252,9 @@ import { TextField } from "@/components/ui/text-field"
 </Dialog>
 ```
 
-## Dialog responsive (Modal on desktop, Drawer on mobile)
+## Dialog responsive (Modal on desktop, Sheet on mobile)
 
-The same `DialogContent` is rendered in a Drawer below the mobile breakpoint and in a Modal above it.
+The same `DialogContent` is rendered in a Sheet below the mobile breakpoint and in a Modal above it.
 
 ```tsx
 import { Responsive } from "@/lib/responsive"
@@ -8266,7 +8266,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Modal } from "@/components/ui/modal"
 ```
 
@@ -8283,7 +8283,7 @@ import { Modal } from "@/components/ui/modal"
           </DialogHeader>
         </DialogContent>
       )
-      return isMobile ? <Drawer>{content}</Drawer> : <Modal>{content}</Modal>
+      return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
     }}
   />
 </Dialog>
@@ -8364,7 +8364,7 @@ const [isOpen, setOpen] = React.useState(false)
 
 ## Dialog non-dismissable
 
-`isDismissable` lives on the overlay (Modal or Drawer), not on `Dialog`.
+`isDismissable` lives on the overlay (Modal or Sheet), not on `Dialog`.
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8816,7 +8816,7 @@ const [tab, setTab] = React.useState<MenuPrimitives.Key>("general")
 </Dialog>
 ```
 
-## Drawer
+## Sheet
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8827,42 +8827,75 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open drawer</Button>
-  <Drawer>
+  <Button>Open sheet</Button>
+  <Sheet>
     <DialogContent>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
         <DialogTitle>Drag me down</DialogTitle>
       </DialogHeader>
       <DialogBody>Or click outside to dismiss.</DialogBody>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer placement
+## Sheet position
+
+`position` is one of bottom, top, start, end, left, right, center; `swipeDirection` defaults to it.
 
 ```tsx
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open drawer</Button>
-  <Drawer placement="right">
-    <DialogContent>Drawer content</DialogContent>
-  </Drawer>
+  <Button>Open sheet</Button>
+  <Sheet position="end">
+    <DialogContent>Sheet content</DialogContent>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer with dialog parts
+## Sheet snap points
+
+`snapPoints` stops the sheet partway open: each value is how much of it shows, in pixels or a CSS length (percentages of the sheet). It opens at the first.
+
+```tsx
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
+```
+
+```tsx
+<Dialog>
+  <Button>Open sheet</Button>
+  <Sheet snapPoints={[240]}>
+    <DialogContent>
+      <SheetHandle />
+      <DialogHeader>
+        <DialogTitle>Harborlight Coffee</DialogTitle>
+      </DialogHeader>
+      <DialogBody>Drag up to read the rest, or swipe down to dismiss.</DialogBody>
+    </DialogContent>
+  </Sheet>
+</Dialog>
+```
+
+## Sheet with dialog parts
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8875,15 +8908,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open dialog drawer</Button>
-  <Drawer>
+  <Button>Open dialog sheet</Button>
+  <Sheet>
     <DialogContent showCloseButton>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
         <DialogTitle>Project settings</DialogTitle>
         <DialogDescription>
@@ -8900,13 +8933,13 @@ import { Drawer, DrawerHandle } from "@/components/ui/drawer"
         </Button>
       </DialogFooter>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer controlled
+## Sheet controlled
 
-Without a `Dialog` wrapper the drawer is driven by `isOpen` / `onOpenChange`.
+Without a `Dialog` wrapper the sheet is driven by `isOpen` / `onOpenChange`.
 
 ```tsx
 import React from "react"
@@ -8918,25 +8951,27 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 const [open, setOpen] = React.useState(false)
 
 <Button onPress={() => setOpen(true)}>Open</Button>
-<Drawer isOpen={open} onOpenChange={setOpen}>
+<Sheet isOpen={open} onOpenChange={setOpen}>
   <DialogContent>
-    <DrawerHandle />
+    <SheetHandle />
     <DialogHeader>
       <DialogTitle>Controlled</DialogTitle>
     </DialogHeader>
     <DialogBody>Drag to dismiss, click outside, or press Escape.</DialogBody>
   </DialogContent>
-</Drawer>
+</Sheet>
 ```
 
-## Drawer non-dismissable
+## Sheet prevent dismissal
+
+`preventDismissal` blocks swiping, outside interaction and Escape.
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8948,15 +8983,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open non-dismissable</Button>
-  <Drawer swipeToDismiss={false} isDismissable={false} isKeyboardDismissDisabled>
+  <Button>Open sheet</Button>
+  <Sheet preventDismissal>
     <DialogContent>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
         <DialogTitle>Confirm action</DialogTitle>
       </DialogHeader>
@@ -8965,11 +9000,11 @@ import { Drawer, DrawerHandle } from "@/components/ui/drawer"
         <Button slot="close">Acknowledge</Button>
       </DialogFooter>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer nested
+## Sheet nested
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -8981,39 +9016,39 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open parent drawer</Button>
-  <Drawer>
+  <Button>Open parent sheet</Button>
+  <Sheet>
     <DialogContent>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
-        <DialogTitle>Parent drawer</DialogTitle>
+        <DialogTitle>Parent sheet</DialogTitle>
       </DialogHeader>
-      <DialogBody>Open the child drawer below.</DialogBody>
+      <DialogBody>Open the child sheet below.</DialogBody>
       <DialogFooter>
         <Dialog>
-          <Button>Open child drawer</Button>
-          <Drawer>
+          <Button>Open child sheet</Button>
+          <Sheet>
             <DialogContent>
-              <DrawerHandle />
+              <SheetHandle />
               <DialogHeader>
-                <DialogTitle>Child drawer</DialogTitle>
+                <DialogTitle>Child sheet</DialogTitle>
               </DialogHeader>
               <DialogBody>The parent stays open underneath.</DialogBody>
             </DialogContent>
-          </Drawer>
+          </Sheet>
         </Dialog>
       </DialogFooter>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer scrollable
+## Sheet scrollable
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -9024,19 +9059,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open scrollable drawer</Button>
-  <Drawer>
+  <Button>Open scrollable sheet</Button>
+  <Sheet>
     <DialogContent>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
         <DialogTitle>Scrollable content</DialogTitle>
       </DialogHeader>
-      <DialogBody className="max-h-80 overflow-y-auto">
+      <DialogBody className="overflow-y-auto">
         {items.map((item) => (
           <p key={item.id} className="border-b py-3">
             {item.label}
@@ -9044,11 +9079,11 @@ import { Drawer, DrawerHandle } from "@/components/ui/drawer"
         ))}
       </DialogBody>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
 ```
 
-## Drawer with form
+## Sheet with form
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -9061,7 +9096,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle } from "@/components/ui/drawer"
+import { Sheet, SheetHandle } from "@/components/ui/sheet"
 import { Label } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { TextField } from "@/components/ui/text-field"
@@ -9069,13 +9104,15 @@ import { TextField } from "@/components/ui/text-field"
 
 ```tsx
 <Dialog>
-  <Button>Open form drawer</Button>
-  <Drawer>
+  <Button>Open form sheet</Button>
+  <Sheet>
     <DialogContent>
-      <DrawerHandle />
+      <SheetHandle />
       <DialogHeader>
         <DialogTitle>Edit profile</DialogTitle>
-        <DialogDescription>Inputs don't trigger drag.</DialogDescription>
+        <DialogDescription>
+          The sheet keeps the field in view above the keyboard.
+        </DialogDescription>
       </DialogHeader>
       <DialogBody className="flex flex-col gap-3">
         <TextField>
@@ -9094,46 +9131,8 @@ import { TextField } from "@/components/ui/text-field"
         <Button slot="close">Save</Button>
       </DialogFooter>
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </Dialog>
-```
-
-## Drawer page indent
-
-Wrap the app root so the page scales back behind an open drawer; `DrawerProvider` scopes the visual state explicitly and is optional.
-
-```tsx
-import {
-  DrawerIndent,
-  DrawerIndentBackground,
-  DrawerProvider,
-} from "@/components/ui/drawer"
-```
-
-```tsx
-<DrawerProvider>
-  <DrawerIndentBackground />
-  <DrawerIndent>{children}</DrawerIndent>
-</DrawerProvider>
-```
-
-## Drawer with swipe area
-
-`DrawerSwipeArea` is an edge region that opens the drawer by swiping.
-
-```tsx
-import { DialogContent } from "@/components/ui/dialog"
-import { Drawer, DrawerHandle, DrawerSwipeArea } from "@/components/ui/drawer"
-```
-
-```tsx
-<Drawer placement="left">
-  <DrawerSwipeArea />
-  <DialogContent>
-    <DrawerHandle />
-    Drawer content
-  </DialogContent>
-</Drawer>
 ```
 
 ## Popover
@@ -9292,7 +9291,7 @@ import { Popover } from "@/components/ui/popover"
 </Dialog>
 ```
 
-## Popover responsive (Drawer on mobile)
+## Popover responsive (Sheet on mobile)
 
 ```tsx
 import { Responsive } from "@/lib/responsive"
@@ -9305,7 +9304,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { Popover } from "@/components/ui/popover"
 ```
 
@@ -9326,7 +9325,7 @@ import { Popover } from "@/components/ui/popover"
           </DialogHeader>
         </DialogContent>
       )
-      return isMobile ? <Drawer>{content}</Drawer> : <Popover>{content}</Popover>
+      return isMobile ? <Sheet>{content}</Sheet> : <Popover>{content}</Popover>
     }}
   />
 </Dialog>
@@ -10607,7 +10606,7 @@ import { Modal } from "@/components/ui/modal"
 </DatePicker>
 ```
 
-## Date Picker in a drawer
+## Date Picker in a sheet
 
 ```tsx
 import { CalendarIcon } from "@/components/icons"
@@ -10615,7 +10614,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { DatePicker } from "@/components/ui/date-picker"
 import { DialogContent } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { DateInput, InputGroup, InputGroupAddon } from "@/components/ui/input"
 ```
 
@@ -10629,11 +10628,11 @@ import { DateInput, InputGroup, InputGroupAddon } from "@/components/ui/input"
       </Button>
     </InputGroupAddon>
   </InputGroup>
-  <Drawer placement="bottom">
+  <Sheet>
     <DialogContent>
       <Calendar />
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </DatePicker>
 ```
 
@@ -10810,7 +10809,7 @@ import { Popover } from "@/components/ui/popover"
 </DateRangePicker>
 ```
 
-## Date Range Picker in a modal or drawer
+## Date Range Picker in a modal or sheet
 
 ```tsx
 import { CalendarIcon } from "@/components/icons"
@@ -10818,7 +10817,7 @@ import { Button } from "@/components/ui/button"
 import { RangeCalendar } from "@/components/ui/calendar"
 import { DateRangePicker } from "@/components/ui/date-picker"
 import { DialogContent } from "@/components/ui/dialog"
-import { Drawer } from "@/components/ui/drawer"
+import { Sheet } from "@/components/ui/sheet"
 import { DateInput, InputGroup, InputGroupAddon } from "@/components/ui/input"
 import { Modal } from "@/components/ui/modal"
 ```
@@ -10835,11 +10834,11 @@ import { Modal } from "@/components/ui/modal"
       </Button>
     </InputGroupAddon>
   </InputGroup>
-  <Drawer placement="bottom">
+  <Sheet>
     <DialogContent>
       <RangeCalendar />
     </DialogContent>
-  </Drawer>
+  </Sheet>
 </DateRangePicker>
 
 <DateRangePicker className="w-52" aria-label="Meeting date">

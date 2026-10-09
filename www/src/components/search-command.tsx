@@ -2,13 +2,13 @@ import React from "react"
 import type * as PageTree from "fumadocs-core/page-tree"
 
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   ModalBackdrop,
   ModalOverlay,
   ModalPanel,
   ModalViewport,
 } from "@/registry/ui/modal"
+import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
 // The dialog body pulls in the Orama search client, the fumadocs search hook
 // and react-aria's Autocomplete (~25 KB gz). Load it lazily on first open so it
@@ -22,7 +22,7 @@ const loadSearchDialog = () =>
   })
 
 // The header swaps its trigger at lg (1024px): below it the hamburger is the
-// only way in, so the drawer branch must cover the same range. The registry
+// only way in, so the sheet branch must cover the same range. The registry
 // useIsMobile splits at 768px, which would hand 768–1023px an autofocused
 // desktop modal instead.
 function useIsBelowLg() {
@@ -100,7 +100,7 @@ export function SearchCommand({
       >
         {children}
       </span>
-      {/* Modal on desktop, Drawer below lg; content remounts on open so the search resets. */}
+      {/* Modal on desktop, Sheet below lg; content remounts on open so the search resets. */}
       {(() => {
         const content = (
           <DialogContent
@@ -110,7 +110,7 @@ export function SearchCommand({
             {SearchDialog && (
               <SearchDialog
                 items={items}
-                // The drawer doubles as the nav menu — opening with the
+                // The sheet doubles as the nav menu — opening with the
                 // keyboard up would punish browse intent.
                 autoFocus={!isMobile}
                 onClose={() => setIsOpen(false)}
@@ -122,12 +122,12 @@ export function SearchCommand({
           // Match the desktop modal's raised surface. Near-full-height sheet
           // (mirrors base-ui.com's mobile search): the input sits at the top,
           // structurally clear of the iOS keyboard, and the results list
-          // flexes below it. The drawer's keyboard inset keeps the list's
+          // flexes below it. The sheet's keyboard inset keeps the list's
           // bottom above the keyboard.
-          <Drawer className="h-[calc(100dvh-3rem+var(--drawer-bleed))] bg-(--neutral-100)">
-            <DrawerHandle />
+          <Sheet className="h-[calc(100dvh-3rem)] bg-(--neutral-100)">
+            <SheetHandle />
             {content}
-          </Drawer>
+          </Sheet>
         ) : (
           // Composed (not <Modal>) so the panel AND backdrop appear
           // instantly. duration-0 needs `!`: tailwind-merge can't dedupe it

@@ -9,20 +9,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { Radio, RadioGroup } from "@/registry/ui/radio-group"
+import { Sheet } from "@/registry/ui/sheet"
 
-type Type = "modal" | "drawer" | "popover"
+type Type = "modal" | "sheet" | "popover"
 
 const OVERLAYS: Record<
   Type,
   React.ComponentType<{ children?: React.ReactNode }>
 > = {
   modal: Modal,
-  drawer: Drawer,
+  sheet: Sheet,
   popover: Popover,
 }
 
@@ -55,7 +55,7 @@ export default function Demo() {
         <Label>Type</Label>
         <FieldGroup>
           <Radio value="modal">Modal</Radio>
-          <Radio value="drawer">Drawer</Radio>
+          <Radio value="sheet">Sheet</Radio>
           <Radio value="popover">Popover</Radio>
         </FieldGroup>
       </RadioGroup>

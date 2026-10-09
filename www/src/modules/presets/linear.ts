@@ -78,7 +78,7 @@ export const linear = definePreset({
     ...DEFAULT_MOTION,
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components

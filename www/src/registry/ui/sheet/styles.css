@@ -1,0 +1,18 @@
+:root {
+  --studio-sheet-radius: var(--studio-radius-panel);
+  --studio-sheet-handle-radius: var(--studio-radius-pill);
+}
+
+/* Both run on the sheet's swipe progress, not on time. */
+@keyframes sheet-backdrop {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-stack {
+  to {
+    scale: 0.95;
+    translate: var(--sheet-stack-offset);
+  }
+}

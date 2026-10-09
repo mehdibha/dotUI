@@ -1181,13 +1181,13 @@ export const DemosIndex: Record<
 		files: ["ui/date-picker/demos/range/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/uncontrolled")),
 	},
-	"date-picker/demos/range/with-drawer": {
-		files: ["ui/date-picker/demos/range/with-drawer.tsx"],
-		component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/with-drawer")),
-	},
 	"date-picker/demos/range/with-modal": {
 		files: ["ui/date-picker/demos/range/with-modal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/with-modal")),
+	},
+	"date-picker/demos/range/with-sheet": {
+		files: ["ui/date-picker/demos/range/with-sheet.tsx"],
+		component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/with-sheet")),
 	},
 	"date-picker/demos/read-only": {
 		files: ["ui/date-picker/demos/read-only.tsx"],
@@ -1205,13 +1205,13 @@ export const DemosIndex: Record<
 		files: ["ui/date-picker/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-picker/demos/uncontrolled")),
 	},
-	"date-picker/demos/with-drawer": {
-		files: ["ui/date-picker/demos/with-drawer.tsx"],
-		component: React.lazy(() => import("@/registry/ui/date-picker/demos/with-drawer")),
-	},
 	"date-picker/demos/with-modal": {
 		files: ["ui/date-picker/demos/with-modal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-picker/demos/with-modal")),
+	},
+	"date-picker/demos/with-sheet": {
+		files: ["ui/date-picker/demos/with-sheet.tsx"],
+		component: React.lazy(() => import("@/registry/ui/date-picker/demos/with-sheet")),
 	},
 	"dialog/demos/alert-dialog": {
 		files: ["ui/dialog/demos/alert-dialog.tsx"],
@@ -1241,10 +1241,6 @@ export const DemosIndex: Record<
 		files: ["ui/dialog/demos/dismissable.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/dismissable")),
 	},
-	"dialog/demos/drawer": {
-		files: ["ui/dialog/demos/drawer.tsx"],
-		component: React.lazy(() => import("@/registry/ui/dialog/demos/drawer")),
-	},
 	"dialog/demos/inset-content": {
 		files: ["ui/dialog/demos/inset-content.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/inset-content")),
@@ -1257,6 +1253,10 @@ export const DemosIndex: Record<
 		files: ["ui/dialog/demos/popover.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/popover")),
 	},
+	"dialog/demos/sheet": {
+		files: ["ui/dialog/demos/sheet.tsx"],
+		component: React.lazy(() => import("@/registry/ui/dialog/demos/sheet")),
+	},
 	"dialog/demos/title": {
 		files: ["ui/dialog/demos/title.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/title")),
@@ -1264,46 +1264,6 @@ export const DemosIndex: Record<
 	"dialog/demos/types": {
 		files: ["ui/dialog/demos/types.tsx"],
 		component: React.lazy(() => import("@/registry/ui/dialog/demos/types")),
-	},
-	"drawer/demos/basic": {
-		files: ["ui/drawer/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/basic")),
-	},
-	"drawer/demos/controlled": {
-		files: ["ui/drawer/demos/controlled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/controlled")),
-	},
-	"drawer/demos/dialog-parts": {
-		files: ["ui/drawer/demos/dialog-parts.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/dialog-parts")),
-	},
-	"drawer/demos/handle-only": {
-		files: ["ui/drawer/demos/handle-only.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/handle-only")),
-	},
-	"drawer/demos/indent": {
-		files: ["ui/drawer/demos/indent.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/indent")),
-	},
-	"drawer/demos/nested": {
-		files: ["ui/drawer/demos/nested.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/nested")),
-	},
-	"drawer/demos/non-dismissable": {
-		files: ["ui/drawer/demos/non-dismissable.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/non-dismissable")),
-	},
-	"drawer/demos/placement": {
-		files: ["ui/drawer/demos/placement.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/placement")),
-	},
-	"drawer/demos/scrollable": {
-		files: ["ui/drawer/demos/scrollable.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/scrollable")),
-	},
-	"drawer/demos/with-form": {
-		files: ["ui/drawer/demos/with-form.tsx"],
-		component: React.lazy(() => import("@/registry/ui/drawer/demos/with-form")),
 	},
 	"drop-zone/demos/basic": {
 		files: ["ui/drop-zone/demos/basic.tsx"],
@@ -1821,10 +1781,6 @@ export const DemosIndex: Record<
 		files: ["ui/menu/demos/with-destructive.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-destructive")),
 	},
-	"menu/demos/with-drawer": {
-		files: ["ui/menu/demos/with-drawer.tsx"],
-		component: React.lazy(() => import("@/registry/ui/menu/demos/with-drawer")),
-	},
 	"menu/demos/with-icons": {
 		files: ["ui/menu/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-icons")),
@@ -1832,6 +1788,10 @@ export const DemosIndex: Record<
 	"menu/demos/with-modal": {
 		files: ["ui/menu/demos/with-modal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-modal")),
+	},
+	"menu/demos/with-sheet": {
+		files: ["ui/menu/demos/with-sheet.tsx"],
+		component: React.lazy(() => import("@/registry/ui/menu/demos/with-sheet")),
 	},
 	"menu/demos/with-shortcuts": {
 		files: ["ui/menu/demos/with-shortcuts.tsx"],
@@ -2280,6 +2240,42 @@ export const DemosIndex: Record<
 	"separator/demos/orientation": {
 		files: ["ui/separator/demos/orientation.tsx"],
 		component: React.lazy(() => import("@/registry/ui/separator/demos/orientation")),
+	},
+	"sheet/demos/basic": {
+		files: ["ui/sheet/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/basic")),
+	},
+	"sheet/demos/controlled": {
+		files: ["ui/sheet/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/controlled")),
+	},
+	"sheet/demos/dialog-parts": {
+		files: ["ui/sheet/demos/dialog-parts.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/dialog-parts")),
+	},
+	"sheet/demos/nested": {
+		files: ["ui/sheet/demos/nested.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/nested")),
+	},
+	"sheet/demos/position": {
+		files: ["ui/sheet/demos/position.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/position")),
+	},
+	"sheet/demos/prevent-dismissal": {
+		files: ["ui/sheet/demos/prevent-dismissal.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/prevent-dismissal")),
+	},
+	"sheet/demos/scrollable": {
+		files: ["ui/sheet/demos/scrollable.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/scrollable")),
+	},
+	"sheet/demos/snap-points": {
+		files: ["ui/sheet/demos/snap-points.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/snap-points")),
+	},
+	"sheet/demos/with-form": {
+		files: ["ui/sheet/demos/with-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sheet/demos/with-form")),
 	},
 	"sidebar/demos/badges-and-actions": {
 		files: ["ui/sidebar/demos/badges-and-actions.tsx"],

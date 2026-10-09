@@ -83,7 +83,7 @@ export const github = definePreset({
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "fade" },
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components

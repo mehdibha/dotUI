@@ -84,7 +84,7 @@ export const spotify = definePreset({
     modalMotion: { ...DEFAULTS.modalMotion, pattern: "slide" },
 
     // Mobile
-    mobilePickers: "drawer",
+    mobilePickers: "sheet",
     mobileDialogs: "center",
 
     // Components
