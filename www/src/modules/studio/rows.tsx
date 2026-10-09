@@ -451,7 +451,7 @@ export function NeutralPickerPopover({
   brandHue: number
   ramp: string[]
 }) {
-  // Seven dots can't carry their names at 20px, so the Hue readout speaks for
+  // The dots can't carry their names at 20px, so the Hue readout speaks for
   // whichever one you're pointing at.
   const [hovered, setHovered] = useState<string | null>(null)
   // Sliders drag through drafts and commit on release: the neutral scale is
@@ -493,7 +493,7 @@ export function NeutralPickerPopover({
             const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
             onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
           }}
-          className="flex justify-between"
+          className="flex gap-2"
         >
           {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
             <RacToggleButton
@@ -513,7 +513,7 @@ export function NeutralPickerPopover({
 
         <NeutralSlider
           label="Hue"
-          note={hovered ?? family}
+          note={hovered ?? `${Math.round(hue)}°`}
           value={hue}
           range={NEUTRAL_HUE_RANGE}
           track={HUE_TRACK}
@@ -532,10 +532,25 @@ export function NeutralPickerPopover({
           onChangeEnd={(next) => onChange({ ...value, tint: next })}
         />
 
-        <div className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60">
-          {ramp.map((step) => (
-            <span key={step} className="flex-1" style={{ background: step }} />
-          ))}
+        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
+        <div className="flex flex-col gap-1">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className={GROUP_LABEL}>Preview</span>
+            <span className="text-[11px] text-fg-muted">{family}</span>
+          </div>
+          <div
+            role="img"
+            aria-label={`${family} scale`}
+            className="flex h-6 overflow-hidden rounded-lg inset-ring-1 inset-ring-border/60"
+          >
+            {ramp.map((step) => (
+              <span
+                key={step}
+                className="flex-1"
+                style={{ background: step }}
+              />
+            ))}
+          </div>
         </div>
       </DialogContent>
     </PanelPopover>
