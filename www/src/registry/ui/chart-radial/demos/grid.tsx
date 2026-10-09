@@ -1,34 +1,57 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle, radialGrid } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/registry/ui/chart"
-import { radialChart } from "@/registry/ui/chart-radial"
+import { Chart, chartLook, chartSliceTooltip } from "@/registry/ui/chart"
 
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
-    },
-    innerRadius: 0.3,
-    radiusRatio: 0.95,
-    grid: true,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.3, ({ radius }) => radius],
+        },
+        // The gridlines step through the whole radius, not the rings.
+        grid: {
+          channel: "radius",
+          scale: scaleLinear().domain([0, 1]),
+          range: [0, ({ radius }) => radius],
+        },
+      },
+      radiusRatio: 0.95,
+      guides: [
+        radialGrid({
+          scale: "grid",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: chartLook.barRadius,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export default function ChartRadialGrid() {
   return (

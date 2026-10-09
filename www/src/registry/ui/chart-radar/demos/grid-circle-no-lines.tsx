@@ -1,9 +1,19 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/registry/ui/chart"
-import { radarChart } from "@/registry/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -14,15 +24,46 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    spokes: false,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        // The month labels without their spokes.
+        angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export default function ChartRadarGridCircleNoLines() {
   return (

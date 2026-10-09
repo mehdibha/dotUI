@@ -2,9 +2,9 @@
 
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/registry/ui/chart"
-import { pieChart } from "@/registry/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/registry/ui/chart"
 import {
   Select,
   SelectContent,
@@ -13,47 +13,60 @@ import {
 } from "@/registry/ui/select"
 
 const data = [
-  { month: "january", desktop: 186 },
-  { month: "february", desktop: 305 },
-  { month: "march", desktop: 237 },
-  { month: "april", desktop: 173 },
-  { month: "may", desktop: 209 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 173 },
+  { month: "May", desktop: 209 },
 ]
 
-const labels = {
-  january: "January",
-  february: "February",
-  march: "March",
-  april: "April",
-  may: "May",
-}
+const slices = pie(data, { value: "desktop" })
+
+const ring = {
+  color: "month",
+  innerRadius: ({ radius }: { radius: number }) => radius * 0.6,
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
 
 export default function ChartPieInteractive() {
-  const [active, setActive] = useState(0)
-  const row = data[active] ?? data[0]
+  const [month, setMonth] = useState("January")
+  const row = data.find((entry) => entry.month === month)
   const chart = useMemo(
     () =>
-      defineChart(
-        pieChart(data, {
-          value: "desktop",
-          name: "month",
-          labels,
-          innerRadius: 0.6,
-          outerRadius: 0.88,
-          activeIndex: active,
-        }),
-      ),
-    [active],
+      defineChart({
+        scales: { x: null, y: null },
+        marks: [
+          polar({
+            scales: { angle: null, radius: null },
+            radiusRatio: 0.9,
+            marks: [
+              radialArc(slices, {
+                ...ring,
+                outerRadius: ({ radius }) => radius * 0.88,
+              }),
+              polarDecorative(
+                radialArc(
+                  slices.filter((slice) => slice.month === month),
+                  { ...ring, outerRadius: ({ radius }) => radius * 0.96 },
+                ),
+              ),
+            ],
+          }),
+        ],
+        focus: "nearest",
+        tooltip: chartSliceTooltip("month", "desktop"),
+      }),
+    [month],
   )
 
   return (
     <div className="flex w-full flex-col gap-4">
       <Select
         aria-label="Month"
-        value={row?.month ?? null}
+        value={month}
         onChange={(key) => {
-          const index = data.findIndex((entry) => entry.month === key)
-          if (index !== -1) setActive(index)
+          if (key !== null) setMonth(String(key))
         }}
         className="w-40 self-end"
       >
@@ -61,7 +74,7 @@ export default function ChartPieInteractive() {
         <SelectContent>
           {data.map((entry) => (
             <SelectItem key={entry.month} id={entry.month}>
-              {labels[entry.month as keyof typeof labels]}
+              {entry.month}
             </SelectItem>
           ))}
         </SelectContent>

@@ -1,6 +1,6 @@
 "use client"
 
-/* Charts — the categorical series palette and the chart looks. */
+/* Charts — the categorical series palette and the chart look. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -9,7 +9,6 @@ import {
   AXES_OPTIONS,
   BARS_OPTIONS,
   GRID_OPTIONS,
-  GUIDE_OPTIONS,
   LEGEND_OPTIONS,
   LINES_OPTIONS,
   PALETTE_OPTIONS,
@@ -70,26 +69,11 @@ const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
   axes: {
     minimal: <path d="M5 21h1m5 0h1m5 0h1" opacity=".6" />,
     labeled: <path d="M2 6h2m-2 6h2m-2 6h2M8 21h1m5 0h1m5 0h1" opacity=".6" />,
-    baseline: (
-      <>
-        <path d="M2 6h2m-2 6h2" opacity=".6" />
-        <path d="M6 18h16" />
-      </>
-    ),
-    right: (
-      <>
-        <path d="M20 6h2m-2 6h2" opacity=".6" />
-        <path d="M2 18h16" />
-      </>
-    ),
   },
   grid: {
     lines: <path d="M3 7h18M3 12h18M3 17h18" opacity=".5" />,
     dashed: (
       <path d="M3 7h18M3 12h18M3 17h18" strokeDasharray="2 2" opacity=".5" />
-    ),
-    full: (
-      <path d="M3 7h18M3 12h18M3 17h18M7 3v18M12 3v18M17 3v18" opacity=".5" />
     ),
   },
   lines: {
@@ -99,17 +83,6 @@ const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
   },
   area: {
     tint: <path d={`${POLYLINE}v14H3Z`} fill="currentColor" fillOpacity=".3" />,
-    gradient: (
-      <>
-        <defs>
-          <linearGradient id="chart-glyph-fade" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="currentColor" stopOpacity=".6" />
-            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={`${POLYLINE}v14H3Z`} fill="url(#chart-glyph-fade)" />
-      </>
-    ),
     solid: (
       <path d={`${POLYLINE}v14H3Z`} fill="currentColor" fillOpacity=".7" />
     ),
@@ -118,13 +91,6 @@ const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
     rounded: (
       <path
         d="M4 21V12a2 2 0 0 1 4 0v9m2 0V6a2 2 0 0 1 4 0v15m2 0V10a2 2 0 0 1 4 0v11"
-        fill="currentColor"
-        stroke="none"
-      />
-    ),
-    tip: (
-      <path
-        d="M4 21V12a2 2 0 0 1 4 0v9Zm6 0V6a2 2 0 0 1 4 0v15Zm6 0V10a2 2 0 0 1 4 0v11Z"
         fill="currentColor"
         stroke="none"
       />
@@ -145,7 +111,6 @@ const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
     ),
   },
   legend: {
-    off: <path d={POLYLINE} />,
     bottom: (
       <>
         <path d="M3 13 8 7l5 3 8-6" />
@@ -156,21 +121,6 @@ const GLYPHS: Record<string, Record<string, React.ReactNode>> = {
       <>
         <path d="M5 4h4m4 0h4" strokeWidth="3" opacity=".6" />
         <path d="M3 20 8 14l5 3 8-6" />
-      </>
-    ),
-  },
-  guide: {
-    none: <path d={POLYLINE} />,
-    line: (
-      <>
-        <path d="M13 3v18" opacity=".5" />
-        <path d={POLYLINE} />
-      </>
-    ),
-    dashed: (
-      <>
-        <path d="M13 3v18" strokeDasharray="2 2" opacity=".5" />
-        <path d={POLYLINE} />
       </>
     ),
   },
@@ -192,12 +142,6 @@ const LOOKS = [
     label: "Legend",
     glyphs: "legend",
     options: LEGEND_OPTIONS,
-  },
-  {
-    key: "chartGuide",
-    label: "Hover guide",
-    glyphs: "guide",
-    options: GUIDE_OPTIONS,
   },
 ] as const
 

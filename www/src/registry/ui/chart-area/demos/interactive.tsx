@@ -2,9 +2,15 @@
 
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsY } from "@tanstack/charts/transform/stack"
+import { scaleUtc } from "d3-scale"
 
-import { Chart } from "@/registry/ui/chart"
-import { areaChart } from "@/registry/ui/chart-area"
+import { Chart, chartFades, chartLegend, chartLook } from "@/registry/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -29,27 +35,63 @@ const day = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 })
 
+const devices = { mobile: "Mobile", desktop: "Desktop" }
+const fields = ["mobile", "desktop"] as const
+
 const RANGES = { "90d": 90, "30d": 30, "7d": 7 } as const
 type Range = keyof typeof RANGES
 
 export default function ChartAreaInteractive() {
   const [range, setRange] = useState<Range>("90d")
-  // Dates put the x axis on a time scale.
-  const chart = useMemo(
-    () =>
-      defineChart(
-        areaChart(data.slice(-RANGES[range]), {
-          x: "date",
-          y: ["mobile", "desktop"],
-          labels: { desktop: "Desktop", mobile: "Mobile" },
-          stacked: true,
-          fill: "gradient",
-          legend: true,
-          formatX: (value) => day.format(value as Date),
-        }),
-      ),
-    [range],
-  )
+  const chart = useMemo(() => {
+    const rows = stackRowsY(
+      fold(data.slice(-RANGES[range]), {
+        fields,
+        as: { key: "device", value: "visitors" },
+      }),
+      { x: "date", y: "visitors", z: "device" },
+    )
+    const series = {
+      x: "date",
+      color: (row: (typeof rows)[number]) => devices[row.device],
+      curve: chartLook.curve,
+    } as const
+    return defineChart({
+      scales: {
+        x: {
+          scale: scaleUtc,
+          nice: true,
+          axis: { ticks: { format: (value) => day.format(value as Date) } },
+        },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: chartLook.valueAxis,
+        },
+      },
+      color: { legend: chartLegend },
+      gradients: chartFades,
+      marks: [
+        decorative(
+          areaY(rows, {
+            ...series,
+            y1: "y1",
+            y2: "y2",
+            fill: (row) => `url(#chart-fade-${fields.indexOf(row.device)})`,
+          }),
+        ),
+        areaY(rows, { ...series, y1: "y1", y2: "y2", fillOpacity: 0 }),
+        decorative(
+          lineY(rows, {
+            ...series,
+            y: "y2",
+            strokeWidth: chartLook.strokeWidth,
+          }),
+        ),
+      ],
+    })
+  }, [range])
 
   return (
     <div className="flex w-full flex-col gap-4">

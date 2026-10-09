@@ -7,130 +7,212 @@ description: Plots a handful of categories around a circle, so a series reads as
 
 A radar chart wraps a category axis into a circle and draws each series as a closed shape. Reach for it when the reader should judge a _profile_ — the balance across five to eight categories — and compare two of them at a glance. It is a poor tool for reading exact values or for ranking: the eye compares areas, and area grows with the square of the value. When precision matters, use the [bar chart](/docs/components/chart-bar).
 
-`radarChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Radar charts are [`radialArea` and `radialLine`](https://tanstack.com/charts/latest/docs/reference/marks/polar) marks inside `polar()`, rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-radar
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
-Point `x` at the category field and `y` at the value field — one row per category. A chart is a figure, so `ariaLabel` is required.
+A point scale spreads the categories around the circle, a linear scale runs the values out from the center. Point the marks' `angle` at the category field and `radius` at the value field, and close the shape with `curveLinearClosed`:
 
 ```tsx
 const data = [
   { month: "Jan", desktop: 186 },
   { month: "Feb", desktop: 305 },
   { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
 }
 ```
 
-## Data shape
+`z` names the series in the tooltip. The area pulls the radius scale down to zero, and `nice: 4` rounds it to the four rings, so the outer ring is the edge. `radiusRatio` leaves room outside the circle for the labels, and `focusGroupAngle` focuses the nearest spoke. The rings and spokes take their dash from [`chartLook`](/docs/components/chart#the-look), so they match your gridlines; the fill and outline are plain numbers. Without x and y scales, the chart is square.
 
-Two shapes work, and both draw the same chart.
+## Several series
 
-**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
-
-```tsx
-radarChart(data, {
-  x: "month",
-  y: ["desktop", "mobile"],
-  labels: { desktop: "Desktop", mobile: "Mobile" },
-})
-```
-
-**Long** rows carry one row per series per category, with the series key in its own field. Pass that field as `series`; series take colors in the order they first appear, or in the order of the keys you list in `order`:
+Rows with one column per series fold into one row per point. Give each its display name through `color`; series take colors from `--chart-1` through `--chart-8` in the order they appear:
 
 ```tsx
-radarChart(data, {
-  x: "month",
-  y: "visitors",
-  series: "device",
-  labels: { desktop: "Desktop", mobile: "Mobile" },
+import { fold } from "@tanstack/charts/transform/fold"
+
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
 })
+
+const series = {
+  angle: "month",
+  radius: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+} as const
 ```
 
-Series take colors from `--chart-1` through `--chart-8` in order. Every series is drawn on one shared radius scale running from zero to the largest value, nicened — `max` pins the outer ring instead. A radar with two units on it is a chart with two meanings, so normalize first.
+Every series is drawn on one shared radius scale. A radar with two units on it is a chart with two meanings, so normalize first.
+
+Add `color: { legend: chartLegend }` to the definition for a color legend, and shrink `radiusRatio` to `0.68` so the labels clear it. An icon legend is HTML: render it beside the chart, as in the [Icon Legend](#examples) example.
 
 ## Shape
 
-`fill` sets the series fill opacity — `0` draws outlines only. `strokeWidth` sets the outline, `points` adds a dot at every category, and `radiusRatio` sets how much of the available radius the radar fills, leaving room for the labels.
-
-## Grid and labels
-
-The rings, the spokes, and the circumference labels are three separate switches: `grid` draws the rings, `spokes` the lines running out to each category, and `axes` the labels. `gridShape` makes the rings circles instead of polygons, `gridTicks` sets how many there are, and `gridFill` tints the area inside the outer one.
+`fillOpacity` sets the area fill and `strokeWidth` the outline. For outlines only, drop the area. Lines alone don't pull the radius scale to zero, so give it the domain:
 
 ```tsx
-radarChart(data, {
-  x: "month",
-  y: "desktop",
-  gridShape: "circle",
-  gridFill: 0.2,
-  spokes: false,
-})
+const max = Math.max(...rows.map((row) => row.visitors))
+
+radius: { scale: scaleLinear().domain([0, max]), nice: 4 }
 ```
 
-`formatX` rewrites the circumference labels and the tooltip title, and `axisDetail` adds a second, muted line above each one — the value at that spoke, a share, a delta. `formatY` formats the tooltip values. `legend` shows or hides the color legend — left unset, it follows the [chart defaults](/docs/components/chart#defaults).
-
-## Composing
-
-A radar draws in polar coordinates, so extra layers go through the `marks` option rather than the chart's top-level marks — they share the radar's angle and radius scales. Wrap a layer in `polarDecorative` to paint it without making it a focus stop or a tooltip row. Here each row also carries a `target`:
+For a dot at every category, add a `radialDot`. Wrap it in `polarDecorative`, since the line already carries each point's focus:
 
 ```tsx
-import { radialLine } from "@tanstack/charts/polar"
-import { curveLinearClosed } from "d3-shape"
+import { radialDot } from "@tanstack/charts/polar"
 
 import { polarDecorative } from "@/components/ui/chart"
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    marks: [
-      polarDecorative(
-        radialLine(data, {
-          angle: "month",
-          radius: "target",
-          curve: curveLinearClosed,
-          stroke: "var(--color-fg-muted)",
-          strokeDasharray: "4 4",
-        }),
-      ),
-    ],
+polarDecorative(radialDot(data, { ...series, r: 4 }))
+```
+
+## Grid and labels
+
+The rings, the spokes, and the circumference labels are guides. `radialGrid` draws the rings: `shape: "circle"` makes them circles, and `ticks` sets how many there are. `angleGrid` draws the spokes and the labels. `strokeOpacity: 0` keeps only the labels, and `labels: false` keeps only the spokes. Leave a guide out to drop it.
+
+```tsx
+guides: [
+  radialGrid({ ticks: 4, shape: "circle" }),
+  angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
+]
+```
+
+A guide is any object with a `render` function. To tint the area inside the outer ring, render a `radialGrid` with only the outer value, first so it sits under the rings. A `fill` on the regular rings would stack up ring over ring:
+
+```tsx
+guides: [
+  {
+    render: (context) =>
+      radialGrid({
+        values: context.layout.scales.radius?.domain.slice(-1),
+        shape: "circle",
+        fill: "var(--chart-1)",
+        fillOpacity: 0.2,
+        stroke: "none",
+      }).render(context),
+  },
+  radialGrid({ ticks: 4, shape: "circle" }),
+  angleGrid({ ...chartAngleLabels }),
+]
+```
+
+`format` rewrites the circumference labels. A second `angleGrid` adds a second line to each one — the value at that spoke, a share, a delta. Nudge the two lines apart:
+
+```tsx
+const values = new Map(data.map((row) => [row.month, row.desktop]))
+
+guides: [
+  angleGrid({
+    ...chartAngleLabels,
+    labelDy: (label) => chartAngleLabels.labelDy(label) + 7,
+  }),
+  angleGrid({
+    ...chartAngleLabels,
+    labelDy: (label) => chartAngleLabels.labelDy(label) - 7,
+    format: (month) => String(values.get(String(month)) ?? ""),
+    strokeOpacity: 0,
+  }),
+]
+```
+
+## Composing
+
+Extra layers go in `polar()`'s `marks`, so they share the radar's angle and radius scales. Wrap a layer in `polarDecorative` to paint it without making it a focus stop or a tooltip row. Here each row also carries a `target`:
+
+```tsx
+polarDecorative(
+  radialLine(data, {
+    angle: "month",
+    radius: "target",
+    curve: curveLinearClosed,
+    stroke: "var(--color-fg-muted)",
+    strokeDasharray: "4 4",
   }),
 )
 ```
 
-The radius scale only reads the series, so set `max` when a layer reaches past them. HTML — a score in the middle, an icon legend — goes in `Chart`'s children, or beside the chart.
+Every layer on the radius scale widens it, so a target past the series still fits. HTML — a score in the middle, an icon legend — goes in `Chart`'s children, or beside the chart.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between spokes, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Hovering or focusing a spoke reports every series at that category, named and valued — color alone never carries the distinction.
+- Hovering or focusing a spoke reports every series at that category, named and valued. Color alone never carries the distinction — name every series, and add `chartLegend` when a chart has more than one.
 
 ## Examples
 
@@ -156,9 +238,3 @@ The radius scale only reads the series, so set `max` when a layer reaches past t
   <Example name="chart-radar/demos/grid-none" title="No Grid" />
   <Example name="chart-radar/demos/radius" title="Radius" />
 </Examples>
-
-## API Reference
-
-### radarChart
-
-<Reference name="radar-chart" />

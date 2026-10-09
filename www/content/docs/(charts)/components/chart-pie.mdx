@@ -7,74 +7,134 @@ description: A circle divided into slices, for parts of a single whole.
 
 A pie chart answers one question: how does this total break down? It reads well with a handful of slices and a clear leader, and badly with a dozen near-equal ones — comparing angles is harder than comparing lengths. When the ranking matters more than the share, use a [bar chart](/docs/components/chart-bar).
 
-`pieChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Pie charts are [`radialArc`](https://tanstack.com/charts/latest/docs/reference/marks/polar) marks inside `polar()`, laid out by `pie()` and rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-pie
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
-One row per slice. `value` names the field holding the slice size, `name` the field naming the slice. A chart is a figure, so `ariaLabel` is required.
+One row per slice. `pie()` turns the rows into angles, and `radialArc` draws a slice for each:
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
 ]
 
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: { chrome: "Chrome", safari: "Safari", firefox: "Firefox" },
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
 }
 ```
 
-Slices are drawn in data order, clockwise from twelve o'clock, and take colors from `--chart-1` through `--chart-8` in the same order — sort the rows to change either. `labels` names the slices in the legend, the labels, and the tooltip.
+Without x and y scales the chart is square, and arcs carry their own angles, so `polar()` needs no scales either. A slice's x and y are its angle and radius: `focus: "nearest"` focuses the slice under the pointer, and `chartSliceTooltip` names and values it from its own fields.
 
-## Geometry
+Slices are drawn in data order, clockwise from twelve o'clock, and take colors from `--chart-1` through `--chart-8` in the same order — sort the rows to change either. A stroke in the page background separates them. Slices read nothing from [`chartLook`](/docs/components/chart#the-look); `Chart` applies its legend placement and motion.
 
-Radii are shares of the chart radius, never pixels, so a pie keeps its proportions at every size.
+## Donuts
 
-- `innerRadius` above `0` makes it a donut. `0.55` is a good starting point.
-- `outerRadius` shrinks the ring inside the chart radius; `radiusRatio` reserves room around the whole pie for labels.
-- `startAngle` and `endAngle` are radians clockwise from twelve o'clock. `endAngle: Math.PI` draws a semicircle.
-- `padAngle` opens a gap between slices, `cornerRadius` rounds their corners.
-
-Slices are separated by a stroke in the page background; `strokeWidth: 0` lets them touch, and `stroke` changes the color.
+Radii are shares of the chart radius, never pixels, so a pie keeps its proportions at every size. `innerRadius` above zero makes it a donut; `0.55` is a good starting point:
 
 ```tsx
-pieChart(data, {
-  value: "visitors",
-  name: "browser",
-  innerRadius: 0.55,
-  strokeWidth: 0,
+radialArc(pie(data, { value: "visitors" }), {
+  color: "browser",
+  innerRadius: ({ radius }) => radius * 0.55,
 })
 ```
 
-`activeIndex` pushes one slice out of the ring by `activeOffset`, to call out the slice the surrounding copy is about. Drive it from state to follow a selection — memoize the definition over it.
+`outerRadius` shrinks the ring the same way, and `radiusRatio` on `polar()` leaves room around the whole pie. `pie()` takes `startAngle` and `endAngle` in radians clockwise from twelve o'clock (`endAngle: Math.PI` draws a semicircle) and `gapAngle` to open a gap between slices. `cornerRadius` on the arc rounds the slices; leaving out `stroke` lets them touch.
+
+## Highlighting a slice
+
+To call out one slice, draw it again over the ring, grown past it. Wrap the copy in `polarDecorative` so it paints without becoming a second focus stop:
+
+```tsx
+import { polarDecorative } from "@/components/ui/chart"
+
+const slices = pie(data, { value: "visitors" })
+
+const ring = {
+  color: "browser",
+  innerRadius: ({ radius }: { radius: number }) => radius * 0.55,
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
+
+marks: [
+  radialArc(slices, { ...ring, outerRadius: ({ radius }) => radius * 0.88 }),
+  polarDecorative(
+    radialArc(
+      slices.filter((slice) => slice.browser === "Chrome"),
+      { ...ring, outerRadius: ({ radius }) => radius },
+    ),
+  ),
+]
+```
+
+To follow a selection, filter by state and memoize the definition over it, as in the [Interactive](#examples) example.
 
 ## Labels and center content
 
-`dataLabels` draws text on each slice — `true` for the values, or an object that picks `text: "name"`, places the labels with `radius`, and styles them with `fill` and `fontSize`. `formatValue` formats the values, in the labels and the tooltip alike. Slice labels are decorative: they paint but never become keyboard stops or tooltip targets — the arc beneath them carries the interaction.
+Slice labels are `radialText` marks over the same slices. Text is placed through scales, so give `polar()` identity scales: angles in radians, radii as shares of the chart radius.
+
+```tsx
+import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+
+const slices = pie(data, { value: "visitors" })
+
+polar({
+  scales: {
+    angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
+    radius: { scale: scaleLinear().domain([0, 1]) },
+  },
+  radiusRatio: 0.9,
+  marks: [
+    radialArc(slices, { color: "browser" }),
+    polarDecorative(
+      radialText(slices, {
+        angle: "angle",
+        radius: 0.72,
+        text: "visitors",
+        fill: "var(--color-fg)",
+        fontSize: 12,
+      }),
+    ),
+  ],
+})
+```
+
+`text: "browser"` prints the slice names instead, and each slice's `fraction` holds its share of the total, for percentages. `polarDecorative` keeps the labels out of the focus order; the arc beneath them carries the interaction.
 
 The hole in a donut is best filled with plain HTML: `Chart`'s children render over the chart and ignore the pointer.
 
@@ -89,66 +149,70 @@ The hole in a donut is best filled with plain HTML: `Chart`'s children render ov
 
 ## Concentric rings
 
-A second series is a second ring, not a stack. `pieRing` builds one from its own rows; pass it as the chart's `marks`, which draw inside the pie's polar frame. Give each extra ring its own `id`.
+A second series is a second ring, not a stack. Lay out each series with its own `pie()` and draw both arcs in one `polar()`:
 
 ```tsx
-import { pieChart, pieRing } from "@/components/ui/chart-pie"
+const ring = {
+  color: "month",
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
 
-const chart = defineChart(
-  pieChart(desktop, {
-    value: "desktop",
-    name: "month",
-    outerRadius: 0.6,
-    marks: pieRing(mobile, {
-      id: "mobile",
-      value: "mobile",
-      name: "month",
-      innerRadius: 0.7,
-      outerRadius: 0.95,
-    }),
-  }),
-)
-```
-
-Both rings name their slices by the same field, so one month is one color from the middle out.
-
-## Composing
-
-`marks` takes any TanStack Charts polar mark, so labels the options don't cover are a few lines of the library's grammar. Wrap them in `polarDecorative` so they paint without becoming focus stops:
-
-```tsx
-import { pie, radialText } from "@tanstack/charts/polar"
-
-import { polarDecorative } from "@/components/ui/chart"
-
-const percent = new Intl.NumberFormat("en-US", { style: "percent" })
-
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    innerRadius: 0.55,
-    marks: [
-      polarDecorative(
-        radialText(pie(data, { value: "visitors" }), {
-          angle: (slice) => slice.angle,
-          radius: () => 0.78,
-          text: (slice) => percent.format(slice.fraction),
-          fill: "var(--color-bg)",
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(desktop, { value: "desktop" }), {
+          ...ring,
+          outerRadius: ({ radius }) => radius * 0.6,
         }),
-      ),
-    ],
-  }),
-)
+        radialArc(pie(mobile, { value: "mobile" }), {
+          ...ring,
+          innerRadius: ({ radius }) => radius * 0.7,
+          outerRadius: ({ radius }) => radius * 0.95,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("month", "value"),
+})
 ```
 
-Text and other scaled polar marks read angles in radians and radii as shares of the chart radius. `pieChart` returns a plain spec, so spread it to change anything else — `tooltip: false`, or `motion: false` to repaint without the entrance sweep.
+Both rings color their slices by the same field, so one month is one color from the middle out. `pie()` keeps each slice's size in `value`, so one tooltip reads both rings.
+
+## Legend
+
+`color: { legend: chartLegend }` names the slices below the pie, or wherever your design system puts legends. Lower `radiusRatio` to make room for it:
+
+```tsx
+import { chartLegend } from "@/components/ui/chart"
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  color: { legend: chartLegend },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.85,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), { color: "browser" }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
+```
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between slices, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Color alone never carries the distinction — the legend, tooltip, and slice labels all name the slice.
+- Color alone never carries the distinction — write the slice names into the data so the tooltip names every slice, and add `chartLegend` or name labels to show them without hovering.
 - `tooltip: false` keeps the focus stops but removes their live region, so screen readers land on silent slices. Turn it off only for a decorative chart.
 
 ## Examples
@@ -166,13 +230,3 @@ Text and other scaled polar marks read angles in radians and radii as shares of 
   <Example name="chart-pie/demos/stacked" title="Stacked Rings" />
   <Example name="chart-pie/demos/interactive" title="Interactive" />
 </Examples>
-
-## API Reference
-
-### pieChart
-
-<Reference name="pie-chart" />
-
-### pieRing
-
-<Reference name="pie-ring" />

@@ -7,26 +7,28 @@ description: A filled line chart for values that accumulate, compose, or are rea
 
 An area chart is a line chart whose fill carries meaning: distance from a baseline, or the span between two boundaries. Reach for it when the reader should compare magnitude or composition — not just because a filled chart looks stronger. When only the trend matters, use the [line chart](/docs/components/chart-line).
 
-`areaChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Area charts are [`areaY`](https://tanstack.com/charts/latest/docs/reference/marks/line-and-area) marks edged by a `lineY`, rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-area
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
-Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
+A point scale holds the categories, a linear scale the values. The fill and its upper edge are two marks sharing the same channels:
 
 ```tsx
 const data = [
@@ -35,88 +37,224 @@ const data = [
   { month: "Mar", desktop: 237 },
 ]
 
-const chart = defineChart(
-  areaChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
 }
 ```
 
-## Data shape
+An area's own stroke would outline the whole shape, so the edge is a separate line. It is `decorative`, so the area's points are the only focus stops. `z` names the series in the tooltip. `curve`, `strokeWidth`, `fillOpacity`, and the value axis come from [`chartLook`](/docs/components/chart#the-look), so the area follows your design system — set a value instead to fix one chart's look.
 
-Two shapes work, and both draw the same chart.
+## Several series
 
-**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
+Rows with one column per series fold into one row per point. Give each its display name through `color`, which also draws one area per series; series take colors from `--chart-1` through `--chart-8` in the order they appear:
 
 ```tsx
-areaChart(data, {
-  x: "month",
-  y: ["desktop", "mobile"],
-  labels: { desktop: "Desktop", mobile: "Mobile" },
+import { fold } from "@tanstack/charts/transform/fold"
+
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
 })
-```
 
-**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`; series take colors in the order they first appear, or in the order of the keys you list in `order`:
-
-```tsx
-areaChart(data, {
+const series = {
   x: "month",
   y: "visitors",
-  series: "channel",
-  labels: { organic_search: "Organic search", paid_social: "Paid social" },
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+marks: [
+  areaY(rows, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
+  decorative(lineY(rows, { ...series, strokeWidth: chartLook.strokeWidth })),
+]
+```
+
+Areas with the same x stack by default. `y1: 0` gives each its own baseline, so the series overlap instead.
+
+Rows that already carry one row per series per x value need no fold. Point `color` at a label map, and set the color order with `color.domain` when it should differ from the data:
+
+```tsx
+const channels: Record<string, string> = {
+  organic_search: "Organic search",
+  paid_social: "Paid social",
+}
+
+const series = {
+  x: "month",
+  y: "visitors",
+  color: (row: (typeof data)[number]) => channels[row.channel],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales,
+  color: { domain: ["Paid social", "Organic search"] },
+  marks: [
+    areaY(data, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
 })
 ```
 
-Series take colors from `--chart-1` through `--chart-8` in order. A `null` value leaves a gap rather than dropping to zero. When `x` holds `Date`s, the axis is a time scale.
+A `null` value leaves a gap rather than dropping to zero.
 
 ## Stacking
 
-`stacked` stacks the series on one another, in order; the tooltip still reports each band's own value.
+Stack the rows up front with `stackRowsY`. Each row gets its band's bounds in `y1` and `y2`, so the area fills between them and the edge traces the top:
 
 ```tsx
-areaChart(data, {
+import { stackRowsY } from "@tanstack/charts/transform/stack"
+
+const rows = stackRowsY(
+  fold(data, {
+    fields: ["desktop", "mobile", "other"],
+    as: { key: "device", value: "visitors" },
+  }),
+  { x: "month", y: "visitors", z: "device" },
+)
+
+const series = {
   x: "month",
-  y: ["desktop", "mobile", "other"],
-  stacked: true,
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+marks: [
+  areaY(rows, {
+    ...series,
+    y1: "y1",
+    y2: "y2",
+    fillOpacity: chartLook.areaOpacity,
+  }),
+  decorative(
+    lineY(rows, { ...series, y: "y2", strokeWidth: chartLook.strokeWidth }),
+  ),
+]
+```
+
+Series stack in the order they appear, and the tooltip still reports each band's own value. Positive values stack up from zero and negative values down from it. `offset: "normalize"` divides each band by its x-group total for a 100% stack — format the value axis as a percentage.
+
+## Gradient
+
+A fill that fades toward the baseline is three marks. Add `chartFades` to the chart's `gradients`, paint the fade from a decorative copy of the area, and keep the interactive area transparent:
+
+```tsx
+import { chartFades } from "@/components/ui/chart"
+
+const fields = ["desktop", "mobile"] as const
+
+const rows = fold(data, {
+  fields,
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales,
+  gradients: chartFades,
+  marks: [
+    decorative(
+      areaY(rows, {
+        ...series,
+        y1: 0,
+        fill: (row) => `url(#chart-fade-${fields.indexOf(row.device)})`,
+      }),
+    ),
+    areaY(rows, { ...series, y1: 0, fillOpacity: 0 }),
+    decorative(lineY(rows, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
 })
 ```
 
-Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. `stacked: "normalize"` divides each band by its own x-group total for a 100% stack — format the value axis as a percentage with `formatY`.
+`chartFades` holds one fade per series color: `url(#chart-fade-0)` fades `--chart-1`, and so on. Reading the slot from the folded `fields` keeps each fade on its series' color. The tooltip swatch takes the interactive area's fill, which must stay the series color — fill it with the gradient and the swatch shows the gradient's URL instead. A single series fills with `"url(#chart-fade-0)"`.
 
 ## Shape
 
-`curve` sets the interpolation: `natural`, `monotone`, `linear`, or `step`. `fill` takes an opacity, or `"gradient"` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge. Left unset, the curve and width follow the `lines` look and the fill the `area` look.
+`chartCurves` sets the interpolation: `natural`, `monotone`, `linear`, or `step`. Pass the same curve to the area and its edge, which the shared `series` object does:
 
-Interpolation only changes the path drawn between observations. It does not smooth the data or create evidence between samples.
+```tsx
+import { chartCurves } from "@/components/ui/chart"
+
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+} as const
+```
+
+`points: true` on the edge draws a dot at every point. Interpolation only changes the path drawn between observations. It does not smooth the data or create evidence between samples.
 
 ## Axes and formatting
 
-`axes` shows the x axis, both, the y axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `crosshair` draws a guide at the hovered position. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+Every axis gets the house look: no domain line, no tick marks, labels clear of the plot. `axis: false` hides one; an object shows it, and `ticks.format` formats its labels — and the tooltip values on that axis:
 
-## Composing
+```tsx
+y: {
+  scale: scaleLinear,
+  nice: true,
+  grid: true,
+  axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+}
+```
 
-`areaChart` returns a plain spec, so you extend it like any TanStack Charts definition — add a target rule, a highlighted band, or end labels:
+When `x` holds `Date`s, put it on a time scale. `scaleUtc` from `d3-scale` comes with the chart; `nice` rounds the ends to tidy dates:
+
+```tsx
+import { scaleUtc } from "d3-scale"
+
+x: {
+  scale: scaleUtc,
+  nice: true,
+  axis: { ticks: { format: (value) => day.format(value as Date) } },
+}
+```
+
+`grid: true` draws your design system's gridlines, and `color: { legend: chartLegend }` adds the color legend.
+
+## Annotations
+
+Targets, highlighted bands, and end labels are marks too. Wrap them in `decorative` so they paint without becoming focus stops or tooltip rows:
 
 ```tsx
 import { ruleY } from "@tanstack/charts/rule"
 
-const areas = areaChart(data, { x: "month", y: "desktop" })
-
-const chart = defineChart({
-  ...areas,
-  marks: [...areas.marks, ruleY([200], { strokeDasharray: "4 4" })],
-})
+marks: [
+  areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+  decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  decorative(ruleY([200], { strokeDasharray: "4 4" })),
+]
 ```
-
-`areaSeries` returns just the marks — the fill and its edge — to draw areas inside any chart. With `fill: "gradient"`, add `chartFades()` to the chart's `gradients`.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
-- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it. Focus reads a whole x position at once, so a stacked chart announces every series there.
+- Color alone never carries the distinction — name every series, and add `chartLegend` when a chart has more than one.
 
 ## Examples
 
@@ -132,13 +270,3 @@ const chart = defineChart({
   <Example name="chart-area/demos/step" title="Step" />
   <Example name="chart-area/demos/interactive" title="Interactive" />
 </Examples>
-
-## API Reference
-
-### areaChart
-
-<Reference name="area-chart" />
-
-### areaSeries
-
-<Reference name="area-series" />

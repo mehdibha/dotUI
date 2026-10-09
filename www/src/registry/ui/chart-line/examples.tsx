@@ -1,7 +1,12 @@
+import { useMemo } from "react"
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/registry/ui/chart"
-import { lineChart } from "@/registry/ui/chart-line"
+import { Chart, chartCurves, useChartLook } from "@/registry/ui/chart"
+import type { ChartLook } from "@/registry/ui/chart"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -14,22 +19,51 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const labels = { desktop: "Desktop", mobile: "Mobile" }
+const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-const single = defineChart(
-  lineChart(data, { x: "month", y: "desktop", labels, points: true }),
-)
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
 
-const multiple = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels,
-    curve: "monotone",
-  }),
-)
+// Built from the live look, so the studio restyles the lines as it changes.
+function charts(look: ChartLook) {
+  const scales = {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, nice: true, grid: true, axis: look.valueAxis },
+  }
+  return {
+    single: defineChart({
+      scales,
+      marks: [
+        lineY(data, {
+          x: "month",
+          y: "desktop",
+          z: () => "Desktop",
+          curve: look.curve,
+          strokeWidth: look.strokeWidth,
+          points: true,
+        }),
+      ],
+    }),
+    multiple: defineChart({
+      scales,
+      marks: [
+        lineY(rows, {
+          x: "month",
+          y: "visitors",
+          color: (row) => devices[row.device],
+          curve: chartCurves.monotone,
+          strokeWidth: look.strokeWidth,
+        }),
+      ],
+    }),
+  }
+}
 
 export default function ChartLineExamples() {
+  const look = useChartLook()
+  const { single, multiple } = useMemo(() => charts(look), [look])
   return (
     <Examples>
       <Example title="Default">

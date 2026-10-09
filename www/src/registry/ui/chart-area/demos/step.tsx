@@ -1,9 +1,13 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/registry/ui/chart"
-import { areaChart } from "@/registry/ui/chart-area"
+import { Chart, chartCurves, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -14,14 +18,28 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    curve: "step",
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export default function ChartAreaStep() {
   return (

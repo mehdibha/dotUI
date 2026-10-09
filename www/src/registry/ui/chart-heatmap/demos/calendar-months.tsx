@@ -1,9 +1,13 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/registry/ui/chart"
-import { heatmapChart } from "@/registry/ui/chart-heatmap"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 /* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
 const months = [
@@ -41,15 +45,52 @@ const millimeters = new Intl.NumberFormat("en-US", {
   unit: "millimeter",
 })
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "month",
-    y: "year",
-    value: "rainfall",
-    label: "Rainfall",
-    formatValue: (value) => millimeters.format(Number(value)),
-  }),
-)
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({
+      label: "Rainfall",
+      format: (value) => millimeters.format(value),
+    }),
+  },
+  marks: [
+    cell(data, {
+      x: "month",
+      y: "year",
+      color: "rainfall",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.month} · ${points[0].datum.year}`,
+      rows: points.map((point) => ({
+        label: "Rainfall",
+        value: millimeters.format(point.datum.rainfall),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export default function ChartHeatmapCalendarMonths() {
   return (

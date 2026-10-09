@@ -7,26 +7,26 @@ description: Draws one line per series across an ordered domain, themed by your 
 
 A line chart answers how a value changes across an ordered domain — months, days, versions. Reach for it when the trend is the point; when the area under the line carries meaning too, use the [area chart](/docs/components/chart-area).
 
-`lineChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Line charts are [`lineY`](https://tanstack.com/charts/latest/docs/reference/marks/line-and-area) marks rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-line
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
-Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
+A point scale holds the categories, a linear scale the values. Point the line's `x` at the category field and `y` at the value field:
 
 ```tsx
 const data = [
@@ -35,93 +35,138 @@ const data = [
   { month: "Mar", desktop: 237 },
 ]
 
-const chart = defineChart(
-  lineChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
 }
 ```
 
-## Data shape
+`z` names the series in the tooltip. `curve`, `strokeWidth`, and the value axis come from [`chartLook`](/docs/components/chart#the-look), so the line follows your design system — set a value instead to fix one chart's look.
 
-Two shapes work, and both draw the same chart.
+## Several series
 
-**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
+Rows with one column per series fold into one row per point. Give each its display name through `color`, which also draws one line per series; series take colors from `--chart-1` through `--chart-8` in the order they appear:
 
 ```tsx
-lineChart(data, {
-  x: "month",
-  y: ["desktop", "mobile"],
-  labels: { desktop: "Desktop", mobile: "Mobile" },
+import { fold } from "@tanstack/charts/transform/fold"
+
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
 })
-```
 
-**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`:
-
-```tsx
-lineChart(data, {
-  x: "month",
-  y: "visitors",
-  series: "device",
-  labels: { desktop: "Desktop", mobile: "Mobile" },
-})
-```
-
-Series take colors from `--chart-1` through `--chart-8` in the order they first appear. `order` lists series keys to lead it — the legend and the tooltip follow:
-
-```tsx
-lineChart(data, {
+lineY(rows, {
   x: "month",
   y: "visitors",
-  series: "device",
-  order: ["mobile", "desktop"],
+  color: (row) => devices[row.device],
+  curve: chartLook.curve,
+  strokeWidth: chartLook.strokeWidth,
 })
 ```
 
-When `x` holds `Date`s, the axis is a time scale.
+Rows that already name their series in a field need no fold: write the display names in the data and point `color` at that field. Add `color: { legend: chartLegend }` to the definition for a color legend, placed where your design system puts it.
 
-## Shape
+## Curves and points
 
-`curve` sets the path between points: `natural`, `monotone`, `linear`, or `step`. `strokeWidth` and `strokeDasharray` set the stroke — curve and width default to the `lines` look — and `points` draws a dot at every point.
+`chartLook.curve` follows your design system. To fix one chart's curve, pick it from `chartCurves`: `natural`, `monotone`, `linear`, or `step`. `points: true` draws a dot at every point:
 
-Interpolation only changes how the line travels between observations — it does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side.
+```tsx
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
+
+lineY(data, {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+  strokeWidth: chartLook.strokeWidth,
+  points: true,
+})
+```
+
+Interpolation only changes how the line travels between observations. It does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side. The line follows the rows in the order you pass them, so sort them by `x` first.
+
+## Time
+
+When `x` holds `Date`s, put it on a time scale. `scaleUtc` from `d3-scale` comes with the chart; `nice` rounds the ends to tidy dates:
+
+```tsx
+import { scaleUtc } from "d3-scale"
+
+x: {
+  scale: scaleUtc,
+  nice: true,
+  axis: { ticks: { format: (value) => day.format(value as Date) } },
+}
+```
 
 ## Axes and formatting
 
-`axes` shows the x axis, both, the y axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest. `crosshair` draws a guide at the hovered position. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+Every axis gets the house look: no domain line, no tick marks, labels clear of the plot. `axis: false` hides one; an object shows it, and `ticks.format` formats its labels — and the tooltip values on that axis:
 
-## Composing
+```tsx
+scales: {
+  x: {
+    scale: scalePoint,
+    axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+  },
+  y: {
+    scale: scaleLinear,
+    nice: true,
+    grid: true,
+    axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+  },
+}
+```
 
-`lineChart` returns a plain spec, so you extend it like any TanStack Charts definition. Labels, reference rules, and custom dots are marks straight from `@tanstack/charts`, on the same scales:
+`grid: true` draws your design system's gridlines.
+
+## Annotations
+
+Labels, markers, and custom dots are marks too. Wrap them in `decorative` so they paint without becoming focus stops or tooltip rows; the line keeps both:
 
 ```tsx
 import { decorative } from "@tanstack/charts/mark/decorative"
 import { text } from "@tanstack/charts/text"
 
-const lines = lineChart(data, { x: "month", y: "desktop", points: true })
-
-const chart = defineChart({
-  ...lines,
-  marks: [
-    ...lines.marks,
-    decorative(
-      text(data, { x: "month", y: "desktop", text: "desktop", dy: -12 }),
-    ),
-  ],
-})
+marks: [
+  lineY(data, { x: "month", y: "desktop", z: () => "Desktop", points: true }),
+  decorative(
+    text(data, { x: "month", y: "desktop", text: "desktop", dy: -12 }),
+  ),
+]
 ```
 
-Wrap an annotation in `decorative` so it paints without becoming a focus stop — the line's points keep the keyboard stops and the tooltip rows. A marker that stands in for the line's own point, like a dot colored per category, can instead join the line's focus group: give it a `z` of the series' display name.
+A marker that stands in for the line's own point can join the line's focus group instead: give it the line's series name as `z`, as in the [Dot Colors](#examples) example.
 
-`lineSeries` returns just the line mark, to draw lines inside any chart — over bars, or on a second axis.
+A line is a mark like any other, so it draws inside any chart — over bars, or on a second axis, as in the [`Chart`](/docs/components/chart) example.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
-- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it. Focus reads every series at that position at once.
+- Color alone never carries the distinction — name every series, and add `chartLegend` when a chart has more than one.
 - When exact values matter, put a real table or a short summary next to the chart — HTML the reader can select, translate, and print.
 
 ## Examples
@@ -129,7 +174,7 @@ Wrap an annotation in `decorative` so it paints without becoming a focus stop �
 <Examples>
   <Example name="chart-line/demos/default" title="Default" />
   <Example name="chart-line/demos/multiple" title="Multiple Series" />
-  <Example name="chart-line/demos/legend" title="Toggle Legend" />
+  <Example name="chart-line/demos/legend" title="Legend" />
   <Example name="chart-line/demos/linear" title="Linear" />
   <Example name="chart-line/demos/step" title="Step" />
   <Example name="chart-line/demos/dots" title="Dots" />
@@ -140,13 +185,3 @@ Wrap an annotation in `decorative` so it paints without becoming a focus stop �
   <Example name="chart-line/demos/interactive" title="Interactive" />
   <Example name="chart-line/demos/label-custom" title="Custom Labels" />
 </Examples>
-
-## API Reference
-
-### lineChart
-
-<Reference name="line-chart" />
-
-### lineSeries
-
-<Reference name="line-series" />

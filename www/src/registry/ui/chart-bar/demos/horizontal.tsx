@@ -1,9 +1,10 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -14,14 +15,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    horizontal: true,
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+    y: { scale: chartBand },
+  },
+  marks: [
+    barX(data, {
+      x: "desktop",
+      y: "month",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+  focus: "group-y",
+})
 
 export default function ChartBarHorizontal() {
   return (

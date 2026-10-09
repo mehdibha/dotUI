@@ -7,141 +7,166 @@ description: Compares categories with bars — grouped, stacked, horizontal, or 
 
 A bar chart compares values across categories: one bar per category, or one bar per series inside each category band. Bars are read by their length from zero, so the value axis always includes zero — when only the trend over time matters, use the [line chart](/docs/components/chart-line).
 
-`barChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Bar charts are [`barY`](https://tanstack.com/charts/latest/docs/reference/marks/bar-and-rect) marks rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-bar
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
-Point `x` at the category field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
+A band scale holds the categories, a linear scale the values. Point the bar's `x` at the category field and `y` at the value field:
 
 ```tsx
 const data = [
-  { month: "Jan", desktop: 186, mobile: 80 },
-  { month: "Feb", desktop: 305, mobile: 200 },
-  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export function Example() {
-  return <Chart definition={chart} ariaLabel="Visitors per month" />
+  return <Chart definition={chart} ariaLabel="Desktop visitors per month" />
 }
 ```
 
-## Data shape
+`z` names the series in the tooltip. `radius`, `maxThickness`, and the value axis come from [`chartLook`](/docs/components/chart#the-look), so the bars follow your design system — set a number instead to fix one chart's look.
 
-Two shapes work, and both draw the same chart.
+## Several series
 
-**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`; series that share a category sit side by side in its band:
+Rows with one column per series fold into one row per bar. Give each its display name through `color`; series take colors from `--chart-1` through `--chart-8` in the order they appear:
 
 ```tsx
-barChart(data, {
+import { group } from "@tanstack/charts/group"
+import { fold } from "@tanstack/charts/transform/fold"
+
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+barY(rows, {
   x: "month",
-  y: ["desktop", "mobile"],
-  labels: { desktop: "Desktop", mobile: "Mobile" },
-})
-```
-
-**Long** rows carry one value and name their own series. Pass a single `y` and the series field as `series`; series take colors in the order they first appear, or in the order of the keys you list in `order`:
-
-```tsx
-const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-]
-
-barChart(data, {
-  x: "browser",
   y: "visitors",
-  series: "browser",
-  labels: { chrome: "Chrome", safari: "Safari" },
+  color: (row) => devices[row.device],
+  layout: group({ padding: 0.15 }),
 })
 ```
 
-Naming the category field as `series` is how each bar gets its own color, as in the [Per-category color](#examples) example — with one series per category, every bar keeps the full band. Series take colors from `--chart-1` through `--chart-8` in order.
+`group()` sets the series side by side in each band. When the category is the series — one colored bar per browser — write the display names in the data and point both `color` and `z` at that field, as in the [Per-category color](#examples) example.
 
 ## Stacking
 
-`stacked` stacks the series inside each band, in order; the tooltip still reports each segment's own value.
+`layout: stack()` stacks the series inside each band, in order; the tooltip still reports each segment's own value. Round only the outer end, so segments meet flush:
 
 ```tsx
-barChart(data, {
+import { stack } from "@tanstack/charts/stack"
+
+barY(rows, {
   x: "month",
-  y: ["desktop", "mobile", "tablet"],
-  stacked: true,
+  y: "visitors",
+  color: (row) => devices[row.device],
+  layout: stack(),
+  radius: { end: chartLook.barRadius },
 })
 ```
 
-Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself, and only the outer end of each stack is rounded. `stacked: "normalize"` divides each band by its own total for a 100% stack — format the value axis as a percentage with `formatY`.
+Positive values stack up from zero and negative values down from it. `stack({ offset: "normalize" })` divides each band by its total for a 100% stack — format the value axis as a percentage.
 
 ## Orientation
 
-`horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is then `x`, so `formatX` formats the numbers; the category axis is the one shown by default, and focus groups along the categories.
+`barX` puts the categories on the y axis and the values on x, which is what long category names want. Swap the scales, and focus the categories with `focus: "group-y"`:
 
 ```tsx
-barChart(data, { x: "month", y: "desktop", horizontal: true })
+import { barX } from "@tanstack/charts/bar"
+
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+    y: { scale: chartBand },
+  },
+  marks: [barX(data, { x: "desktop", y: "month", z: () => "Desktop" })],
+  focus: "group-y",
+})
 ```
-
-## Shape
-
-`cornerRadius` rounds the corners and `maxThickness` caps how thick a bar gets — both default to the `bars` look. `inset` trims pixels from both categorical edges of every bar, and `fill` sets the fill opacity.
 
 ## Axes and formatting
 
-`axes` shows the category axis, both, the value axis, or neither; `grid: false` drops the gridlines and `legend` shows or hides the color legend — `legend: "toggle"` lets readers click a series to hide it and hover one to dim the rest, when series share a band. `crosshair` highlights the hovered category. Left unset, each follows your design system's [chart defaults](/docs/components/chart#defaults). `formatX` and `formatY` format the ticks — and the tooltip, which reads values the way the axes print them.
+Every axis gets the house look: no domain line, no tick marks, labels clear of the plot. `axis: false` hides one; an object shows it, and `ticks.format` formats its labels — and the tooltip values on that axis:
 
-## Composing
+```tsx
+y: {
+  scale: scaleLinear,
+  nice: true,
+  grid: true,
+  axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+}
+```
 
-`barChart` returns a plain spec, so you extend it like any TanStack Charts definition. Spread it and add marks — a baseline under the bars, labels over them:
+`grid: true` draws your design system's gridlines.
+
+## Annotations
+
+Labels, baselines, and targets are marks too. Wrap them in `decorative` so they paint without becoming focus stops or tooltip rows:
 
 ```tsx
 import { decorative } from "@tanstack/charts/mark/decorative"
 import { ruleY } from "@tanstack/charts/rule"
 import { text } from "@tanstack/charts/text"
 
-const bars = barChart(data, { x: "month", y: "desktop" })
-
-const chart = defineChart({
-  ...bars,
-  marks: [
-    ruleY([0], { stroke: "var(--color-border)" }),
-    ...bars.marks,
-    decorative(
-      text(data, { x: "month", y: "desktop", text: "desktop", dy: -10 }),
-    ),
-  ],
-})
+marks: [
+  ruleY([0], { stroke: "var(--color-border)" }),
+  barY(data, { x: "month", y: "desktop", z: () => "Desktop" }),
+  decorative(
+    text(data, { x: "month", y: "desktop", text: "desktop", dy: -10 }),
+  ),
+]
 ```
 
-Wrap annotations in `decorative` so they paint without becoming focus stops or tooltip rows. To restyle the bars on focus, replace them with a raw `barY` and its `states` — the [Highlight on focus](#examples) example dims every bar but the focused one.
-
-`barSeries` returns just the bar mark, to draw bars inside any chart — the [`Chart`](/docs/components/chart) page combines one with a line on a second axis.
+To restyle the bars on focus, give them `states` — the [Highlight on focus](#examples) example dims every bar but the focused one.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure: describe what the bars measure, not the chart type. Add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys walk the categories, `Home` and `End` jump to the ends, `Enter` and Space pin the tooltip, and `Escape` dismisses it. Focus reads a whole category at once, so a grouped or stacked chart announces every series in the band.
-- Color alone never carries the meaning — pass `labels` so every series has a name in the legend and tooltip, and keep the legend on when a chart has more than one series.
+- Color alone never carries the meaning — name every series, and add `chartLegend` when a chart has more than one.
 
 ## Examples
 
@@ -158,13 +183,3 @@ Wrap annotations in `decorative` so they paint without becoming focus stops or t
   <Example name="chart-bar/demos/active" title="Highlight on focus" />
   <Example name="chart-bar/demos/interactive" title="Interactive" />
 </Examples>
-
-## API Reference
-
-### barChart
-
-<Reference name="bar-chart" />
-
-### barSeries
-
-<Reference name="bar-series" />

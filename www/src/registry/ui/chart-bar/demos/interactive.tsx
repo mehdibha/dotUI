@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -41,15 +42,30 @@ export default function ChartBarInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
   const chart = useMemo(
     () =>
-      defineChart(
-        barChart(data, {
-          x: "date",
-          y: series,
-          labels,
-          cornerRadius: 2,
-          formatX: (value) => day.format(new Date(String(value))),
-        }),
-      ),
+      defineChart({
+        scales: {
+          x: {
+            scale: chartBand,
+            axis: {
+              ticks: { format: (value) => day.format(new Date(String(value))) },
+            },
+          },
+          y: {
+            scale: scaleLinear,
+            nice: true,
+            grid: true,
+            axis: chartLook.valueAxis,
+          },
+        },
+        marks: [
+          barY(data, {
+            x: "date",
+            y: series,
+            z: () => labels[series],
+            radius: 2,
+          }),
+        ],
+      }),
     [series],
   )
 

@@ -1,11 +1,12 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "January", desktop: 186 },
@@ -16,20 +17,21 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-const bars = barChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
-  horizontal: true,
-  grid: false,
-})
-
 /* Both labels ride inside the bar: the category anchors to the value
    baseline, the value to the bar's end. */
 const chart = defineChart({
-  ...bars,
+  scales: {
+    x: { scale: scaleLinear, nice: true, axis: false },
+    y: { scale: chartBand, axis: false },
+  },
   marks: [
-    ...bars.marks,
+    barX(data, {
+      x: "desktop",
+      y: "month",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
     decorative(
       text(data, {
         x: () => 0,
@@ -54,6 +56,7 @@ const chart = defineChart({
       }),
     ),
   ],
+  focus: "group-y",
 })
 
 export default function ChartBarLabelCustom() {

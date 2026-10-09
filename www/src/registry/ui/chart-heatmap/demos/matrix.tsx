@@ -1,9 +1,13 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/registry/ui/chart"
-import { heatmapChart } from "@/registry/ui/chart-heatmap"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 /* Sessions per weekday and hour: a daily shape scaled by how busy the day is. */
 const hours = [
@@ -37,16 +41,51 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "hour",
-    y: "day",
-    value: "sessions",
-    label: "Sessions",
-    labelX: "Hour",
-    labelY: "Day",
-  }),
-)
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand, axis: { label: "Hour" } },
+    y: { scale: scaleBand, axis: { label: "Day" } },
+  },
+  // Equal bins over the rounded extent, one per color.
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({ label: "Sessions" }),
+  },
+  marks: [
+    cell(data, {
+      x: "hour",
+      y: "day",
+      color: "sessions",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  // A cell is read on its own, not against its column.
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.hour} · ${points[0].datum.day}`,
+      rows: points.map((point) => ({
+        label: "Sessions",
+        value: String(point.datum.sessions),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export default function ChartHeatmapMatrix() {
   return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />

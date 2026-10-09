@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 
 import { publishables } from "@/registry/__generated__/publishables"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
-import chartMeta from "@/registry/ui/chart/meta"
+import chartMeta, { chartLooks, lookLine } from "@/registry/ui/chart/meta"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { resolveDesignSystem } from "../resolve"
@@ -12,7 +12,6 @@ import {
   AXES_OPTIONS,
   BARS_OPTIONS,
   GRID_OPTIONS,
-  GUIDE_OPTIONS,
   LEGEND_OPTIONS,
   LINES_OPTIONS,
   MOTION_OPTIONS,
@@ -44,7 +43,6 @@ const LOOKS = {
   area: ["chartArea", AREA_OPTIONS],
   bars: ["chartBars", BARS_OPTIONS],
   legend: ["chartLegend", LEGEND_OPTIONS],
-  guide: ["chartGuide", GUIDE_OPTIONS],
   motion: ["chartMotion", MOTION_OPTIONS],
 } as const
 
@@ -97,12 +95,16 @@ describe("charts axes", () => {
     }
   })
 
-  it("ships every look as a literal in the kit's defaults", async () => {
-    expect(await shipped()).toContain('  axes: "minimal",')
+  it("ships every look as the fields of the kit's look literal", async () => {
     for (const [param, [stateKey, options]] of Object.entries(LOOKS)) {
       for (const { value } of options) {
         const content = await shipped(parseState({ [stateKey]: value }))
-        expect(content).toContain(`  ${param}: "${value}",`)
+        const fields = (
+          chartLooks[param as keyof typeof LOOKS] as Record<string, object>
+        )[value]
+        for (const [key, field] of Object.entries(fields ?? {})) {
+          expect(content).toContain(lookLine(key, field))
+        }
         expect(content).not.toContain("--studio-")
       }
     }

@@ -1,7 +1,13 @@
+import { useMemo } from "react"
 import { defineChart } from "@tanstack/charts"
+import { barX, barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { stack } from "@tanstack/charts/stack"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, useChartLook } from "@/registry/ui/chart"
+import type { ChartLook } from "@/registry/ui/chart"
 import { Example } from "@/modules/studio/preview/example"
 import { Examples } from "@/modules/studio/preview/examples"
 
@@ -14,26 +20,61 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const labels = { desktop: "Desktop", mobile: "Mobile" }
+const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-const grouped = defineChart(
-  barChart(data, { x: "month", y: ["desktop", "mobile"], labels }),
-)
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
 
-const stacked = defineChart(
-  barChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels,
-    stacked: true,
-  }),
-)
-
-const horizontal = defineChart(
-  barChart(data, { x: "month", y: "desktop", labels, horizontal: true }),
-)
+// Built from the live look, so the studio restyles the bars as it changes.
+function charts(look: ChartLook) {
+  const value = {
+    scale: scaleLinear,
+    nice: true,
+    grid: true,
+    axis: look.valueAxis,
+  }
+  const bar = { radius: look.barRadius, maxThickness: look.barMaxThickness }
+  return {
+    grouped: defineChart({
+      scales: { x: { scale: chartBand }, y: value },
+      marks: [
+        barY(rows, {
+          ...bar,
+          x: "month",
+          y: "visitors",
+          color: (row) => devices[row.device],
+          layout: group({ padding: 0.15 }),
+        }),
+      ],
+    }),
+    stacked: defineChart({
+      scales: { x: { scale: chartBand }, y: value },
+      marks: [
+        barY(rows, {
+          ...bar,
+          x: "month",
+          y: "visitors",
+          color: (row) => devices[row.device],
+          layout: stack(),
+          radius: { end: look.barRadius },
+        }),
+      ],
+    }),
+    horizontal: defineChart({
+      scales: { x: value, y: { scale: chartBand } },
+      marks: [
+        barX(data, { ...bar, x: "desktop", y: "month", z: () => "Desktop" }),
+      ],
+      focus: "group-y",
+    }),
+  }
+}
 
 export default function ChartBarExamples() {
+  const look = useChartLook()
+  const { grouped, stacked, horizontal } = useMemo(() => charts(look), [look])
   return (
     <Examples>
       <Example title="Grouped">

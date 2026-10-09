@@ -16739,12 +16739,13 @@ import { QRCode } from "@/components/ui/qr-code"
 
 # Charts
 
-Charts are TanStack Charts definitions rendered by `Chart`, which fills in the design system's theme, axis look, tooltip, focus, and motion wherever the definition is silent. Each family ships a builder — `barChart`, `lineChart`, `areaChart`, `pieChart`, `radarChart`, `radialChart`, `heatmapChart` — that returns a plain spec for `defineChart`: rows plus the fields to read (`x`, `y` as one field or several for wide rows, `series` for long rows), `labels` for display names, `order` for color order, `axes`, `grid`, `legend` (`"toggle"` to hide series), `crosshair`, `formatX` / `formatY`, `dataLabels` on pies, radial bars, and heatmaps. What a chart leaves unset — axes, grid, lines, area, bars, legend, hover guide, motion — follows the `chartDefaults` literal in `chart.tsx`, or `Chart`'s `defaults` prop. Spread the result to extend it with raw `@tanstack/charts` marks; `barSeries`, `lineSeries`, and `areaSeries` return marks to compose several kinds in one chart. Keep definitions at module scope or in `useMemo` — they're compared by identity. `ariaLabel` is required. Series take `--chart-1..8` in order.
+Charts are plain TanStack Charts definitions — `defineChart({ scales, color, marks })` with marks like `barY`, `lineY`, `areaY`, and `polar` + `radialArc` — rendered by `Chart` from `@/components/ui/chart`, which fills in what a definition leaves unset: the theme (`--chart-1..8`), axis and grid look, house tooltip (category title, a row per series), focus `group-x`, keyboard, and motion. There are no chart builders: copy a recipe below and change it. Marks read the design system's look from `chartLook` (`curve`, `strokeWidth`, `areaOpacity`, `barRadius`, `barMaxThickness`, `valueAxis`); helpers are `chartBand`, `chartCurves`, `chartColors`, `chartLegend`, `chartFades`, `chartSliceTooltip` (pies/rings: `focus: "nearest"`), `chartAngleLabels` (radar), `polarDecorative`. Wide rows fold with `fold` from `@tanstack/charts/transform/fold`; name a single series with `z: () => "Name"`. Keep definitions at module scope or in `useMemo` — they're compared by identity. `ariaLabel` is required.
 
 ## Chart
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
 import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
 import { ruleY } from "@tanstack/charts/rule"
@@ -16752,8 +16753,7 @@ import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 import { tooltip } from "@tanstack/charts/tooltip"
 
-import { Chart, chartCurves, chartScales } from "@/components/ui/chart"
-import { barSeries } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -16774,15 +16774,16 @@ const usd = new Intl.NumberFormat("en-US", {
 })
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 
-/* A dotUI bar series, a raw TanStack line on a second y axis, and a dashed
-   target: one definition, every mark on the house look. */
+/* Bars, a line on a second y axis, and a dashed target in one definition. */
 const chart = defineChart({
   scales: {
-    ...chartScales({
-      x: "band",
-      y: { format: (value) => usd.format(Number(value)) },
-      axes: true,
-    }),
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => usd.format(Number(value)) } },
+    },
     margin: {
       scale: scaleLinear,
       channel: "y",
@@ -16792,10 +16793,13 @@ const chart = defineChart({
     },
   },
   marks: [
-    barSeries(data, {
+    barY(data, {
       x: "month",
       y: "revenue",
-      labels: { revenue: "Revenue" },
+      color: () => "Revenue",
+      z: () => "Revenue",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
     }),
     ruleY([TARGET], {
       stroke: "var(--color-fg-muted)",
@@ -16820,6 +16824,7 @@ const chart = defineChart({
       yScale: "margin",
       color: () => "Margin",
       curve: chartCurves.monotone,
+      strokeWidth: chartLook.strokeWidth,
       points: true,
     }),
   ],
@@ -16853,9 +16858,10 @@ export function ChartComposed() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -16868,9 +16874,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  barChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      // Names the series in the tooltip.
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export function ChartBarDefault() {
   return (
@@ -16886,9 +16910,12 @@ export function ChartBarDefault() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -16901,13 +16928,35 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+// One row per bar.
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(rows, {
+      x: "month",
+      y: "visitors",
+      color: (row) => devices[row.device],
+      layout: group({ padding: 0.15 }),
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export function ChartBarMultiple() {
   return (
@@ -16923,9 +16972,12 @@ export function ChartBarMultiple() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { stack } from "@tanstack/charts/stack"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLegend, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -16938,15 +16990,36 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, tablet: 85 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: ["desktop", "mobile", "tablet"],
-    labels: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" },
-    stacked: true,
-    legend: true,
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile", "tablet"],
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  color: { legend: chartLegend },
+  marks: [
+    barY(rows, {
+      x: "month",
+      y: "visitors",
+      color: (row) => devices[row.device],
+      layout: stack(),
+      // Only the top of each stack is rounded, so segments meet flush.
+      radius: { end: chartLook.barRadius },
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export function ChartBarStacked() {
   return (
@@ -16962,9 +17035,10 @@ export function ChartBarStacked() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -16977,14 +17051,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    horizontal: true,
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+    y: { scale: chartBand },
+  },
+  marks: [
+    barX(data, {
+      x: "desktop",
+      y: "month",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+  focus: "group-y",
+})
 
 export function ChartBarHorizontal() {
   return (
@@ -17000,36 +17087,44 @@ export function ChartBarHorizontal() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
 // One series per category: every bar lands on its own palette slot.
-const chart = defineChart(
-  barChart(data, {
-    x: "browser",
-    y: "visitors",
-    series: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
     },
-    horizontal: true,
-  }),
-)
+    y: { scale: chartBand },
+  },
+  marks: [
+    barX(data, {
+      x: "visitors",
+      y: "browser",
+      color: "browser",
+      z: "browser",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+  focus: "group-y",
+})
 
 export function ChartBarMixed() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -17040,33 +17135,45 @@ export function ChartBarMixed() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
 import { ruleY } from "@tanstack/charts/rule"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { month: "Jan", change: 186, trend: "gain" },
-  { month: "Feb", change: 205, trend: "gain" },
-  { month: "Mar", change: -207, trend: "loss" },
-  { month: "Apr", change: 173, trend: "gain" },
-  { month: "May", change: -209, trend: "loss" },
-  { month: "Jun", change: 214, trend: "gain" },
+  { month: "Jan", change: 186, trend: "Gain" },
+  { month: "Feb", change: 205, trend: "Gain" },
+  { month: "Mar", change: -207, trend: "Loss" },
+  { month: "Apr", change: 173, trend: "Gain" },
+  { month: "May", change: -209, trend: "Loss" },
+  { month: "Jun", change: 214, trend: "Gain" },
 ]
 
-const bars = barChart(data, {
-  x: "month",
-  y: "change",
-  series: "trend",
-  labels: { gain: "Gain", loss: "Loss" },
-})
-
-// A baseline under the bars, so the sign flip reads as a crossing.
 const chart = defineChart({
-  ...bars,
-  marks: [ruleY([0], { stroke: "var(--color-border)" }), ...bars.marks],
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    // A baseline under the bars, so the sign flip reads as a crossing.
+    ruleY([0], { stroke: "var(--color-border)" }),
+    barY(data, {
+      x: "month",
+      y: "change",
+      color: "trend",
+      z: "trend",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
 })
 
 export function ChartBarNegative() {
@@ -17083,9 +17190,10 @@ export function ChartBarNegative() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17100,17 +17208,29 @@ const data = [
 
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-/* The axis formats are the tooltip's too. */
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axes: true,
-    formatX: (value) => String(value).slice(0, 3),
-    formatY: (value) => compact.format(Number(value)),
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: chartBand,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export function ChartBarAxes() {
   return (
@@ -17126,11 +17246,12 @@ export function ChartBarAxes() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17143,17 +17264,25 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const bars = barChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
-})
-
-// Decorative, so the labels never become focus stops or tooltip rows.
 const chart = defineChart({
-  ...bars,
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
   marks: [
-    ...bars.marks,
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+    // Decorative, so the labels never become focus stops or tooltip rows.
     decorative(
       text(data, {
         x: "month",
@@ -17181,11 +17310,12 @@ export function ChartBarLabel() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barX } from "@tanstack/charts/bar"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17198,20 +17328,21 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-const bars = barChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
-  horizontal: true,
-  grid: false,
-})
-
 /* Both labels ride inside the bar: the category anchors to the value
    baseline, the value to the bar's end. */
 const chart = defineChart({
-  ...bars,
+  scales: {
+    x: { scale: scaleLinear, nice: true, axis: false },
+    y: { scale: chartBand, axis: false },
+  },
   marks: [
-    ...bars.marks,
+    barX(data, {
+      x: "desktop",
+      y: "month",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
     decorative(
       text(data, {
         x: () => 0,
@@ -17236,6 +17367,7 @@ const chart = defineChart({
       }),
     ),
   ],
+  focus: "group-y",
 })
 
 export function ChartBarLabelCustom() {
@@ -17252,35 +17384,43 @@ export function ChartBarLabelCustom() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 187 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 275 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 187 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 275 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "browser",
-    y: "visitors",
-    series: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
     },
-    states: [{ when: { focus: "unmatched" }, style: { fillOpacity: 0.3 } }],
-  }),
-)
+  },
+  marks: [
+    barY(data, {
+      x: "browser",
+      y: "visitors",
+      color: "browser",
+      z: "browser",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+      states: [{ when: { focus: "unmatched" }, style: { fillOpacity: 0.3 } }],
+    }),
+  ],
+})
 
 export function ChartBarActive() {
   return (
@@ -17297,9 +17437,10 @@ export function ChartBarActive() {
 ```tsx
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -17338,15 +17479,30 @@ export function ChartBarInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
   const chart = useMemo(
     () =>
-      defineChart(
-        barChart(data, {
-          x: "date",
-          y: series,
-          labels,
-          cornerRadius: 2,
-          formatX: (value) => day.format(new Date(String(value))),
-        }),
-      ),
+      defineChart({
+        scales: {
+          x: {
+            scale: chartBand,
+            axis: {
+              ticks: { format: (value) => day.format(new Date(String(value))) },
+            },
+          },
+          y: {
+            scale: scaleLinear,
+            nice: true,
+            grid: true,
+            axis: chartLook.valueAxis,
+          },
+        },
+        marks: [
+          barY(data, {
+            x: "date",
+            y: series,
+            z: () => labels[series],
+            radius: 2,
+          }),
+        ],
+      }),
     [series],
   )
 
@@ -17383,9 +17539,11 @@ export function ChartBarInteractive() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17398,9 +17556,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  lineChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      // Names the series in the tooltip.
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineDefault() {
   return (
@@ -17416,9 +17592,12 @@ export function ChartLineDefault() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17431,14 +17610,34 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    curve: "monotone",
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+// One row per point.
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(rows, {
+      x: "month",
+      y: "visitors",
+      color: (row) => devices[row.device],
+      curve: chartCurves.monotone,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineMultiple() {
   return (
@@ -17450,13 +17649,16 @@ export function ChartLineMultiple() {
 }
 ```
 
-## Line chart toggle legend
+## Line chart legend
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLegend, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17469,15 +17671,34 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, tablet: 160 },
 ]
 
-/* Click a series to hide it; hover one to dim the rest. */
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: ["desktop", "mobile", "tablet"],
-    labels: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" },
-    legend: "toggle",
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile", "tablet"],
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  color: { legend: chartLegend },
+  marks: [
+    lineY(rows, {
+      x: "month",
+      y: "visitors",
+      color: (row) => devices[row.device],
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineLegend() {
   return (
@@ -17493,9 +17714,11 @@ export function ChartLineLegend() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17508,14 +17731,26 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    curve: "linear",
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartCurves.linear,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineLinear() {
   return (
@@ -17531,9 +17766,11 @@ export function ChartLineLinear() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17546,14 +17783,26 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    curve: "step",
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartCurves.step,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineStep() {
   return (
@@ -17569,9 +17818,11 @@ export function ChartLineStep() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17584,14 +17835,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    points: true,
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+      points: true,
+    }),
+  ],
+})
 
 export function ChartLineDots() {
   return (
@@ -17608,10 +17872,12 @@ export function ChartLineDots() {
 ```tsx
 import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17624,25 +17890,37 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const line = lineChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+    // Decorative: the line keeps the focus stops and the tooltip rows.
+    decorative(
+      dot(data, {
+        x: "month",
+        y: "desktop",
+        r: 5,
+        fill: "var(--color-bg)",
+        stroke: "var(--chart-1)",
+        strokeWidth: 2,
+      }),
+    ),
+  ],
 })
-
-// Decorative: the line keeps the focus stops and the tooltip rows.
-const rings = decorative(
-  dot(data, {
-    x: "month",
-    y: "desktop",
-    r: 5,
-    fill: "var(--color-bg)",
-    stroke: "var(--chart-1)",
-    strokeWidth: 2,
-  }),
-)
-
-const chart = defineChart({ ...line, marks: [...line.marks, rings] })
 
 export function ChartLineDotsCustom() {
   return (
@@ -17659,14 +17937,14 @@ export function ChartLineDotsCustom() {
 ```tsx
 import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
-const SERIES = "Visitors"
-
 const data = [
   { browser: "Chrome", visitors: 275, color: "var(--chart-1)" },
   { browser: "Safari", visitors: 200, color: "var(--chart-2)" },
@@ -17675,25 +17953,29 @@ const data = [
   { browser: "Other", visitors: 90, color: "var(--chart-5)" },
 ]
 
-const line = lineChart(data, {
-  x: "browser",
-  y: "visitors",
-  labels: { visitors: SERIES },
+// The line's series name as `z` keeps each dot in the line's focus group.
+const series = { x: "browser", y: "visitors", z: () => "Visitors" } as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      ...series,
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+    // `dot.fill` is a constant, so per-point color means one mark per color.
+    ...data.map((row) => dot([row], { ...series, r: 4, fill: row.color })),
+  ],
 })
-
-/* `dot.fill` is a constant, so per-point color means one mark per color. The
-   line's series name as `z` keeps each dot in the line's focus group. */
-const dots = data.map((row) =>
-  dot([row], {
-    x: "browser",
-    y: "visitors",
-    z: () => SERIES,
-    r: 4,
-    fill: row.color,
-  }),
-)
-
-const chart = defineChart({ ...line, marks: [...line.marks, ...dots] })
 
 export function ChartLineDotsColors() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -17704,9 +17986,11 @@ export function ChartLineDotsColors() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17721,17 +18005,29 @@ const data = [
 
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-/* The axis formats are the tooltip's too. */
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axes: true,
-    formatX: (value) => String(value).slice(0, 3),
-    formatY: (value) => compact.format(Number(value)),
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scalePoint,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+  ],
+})
 
 export function ChartLineAxes() {
   return (
@@ -17747,11 +18043,13 @@ export function ChartLineAxes() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 import { text } from "@tanstack/charts/text"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17764,25 +18062,37 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const line = lineChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
-  points: true,
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+      points: true,
+    }),
+    decorative(
+      text(data, {
+        x: "month",
+        y: "desktop",
+        text: "desktop",
+        dy: -12,
+        fontSize: 12,
+        fill: "var(--color-fg-muted)",
+      }),
+    ),
+  ],
 })
-
-const labels = decorative(
-  text(data, {
-    x: "month",
-    y: "desktop",
-    text: "desktop",
-    dy: -12,
-    fontSize: 12,
-    fill: "var(--color-fg-muted)",
-  }),
-)
-
-const chart = defineChart({ ...line, marks: [...line.marks, labels] })
 
 export function ChartLineLabel() {
   return (
@@ -17799,9 +18109,11 @@ export function ChartLineLabel() {
 ```tsx
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scaleUtc } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -17840,15 +18152,30 @@ export function ChartLineInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
   const chart = useMemo(
     () =>
-      defineChart(
-        lineChart(data, {
-          x: "date",
-          y: series,
-          labels,
-          curve: "monotone",
-          formatX: (value) => day.format(value as Date),
-        }),
-      ),
+      defineChart({
+        scales: {
+          x: {
+            scale: scaleUtc,
+            nice: true,
+            axis: { ticks: { format: (value) => day.format(value as Date) } },
+          },
+          y: {
+            scale: scaleLinear,
+            nice: true,
+            grid: true,
+            axis: chartLook.valueAxis,
+          },
+        },
+        marks: [
+          lineY(data, {
+            x: "date",
+            y: series,
+            z: () => labels[series],
+            curve: chartCurves.monotone,
+            strokeWidth: chartLook.strokeWidth,
+          }),
+        ],
+      }),
     [series],
   )
 
@@ -17886,20 +18213,17 @@ export function ChartLineInteractive() {
 ```tsx
 import { defineChart } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
+import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 import { text } from "@tanstack/charts/text"
 
-import { Chart } from "@/components/ui/chart"
-import { lineChart } from "@/components/ui/chart-line"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
-interface Row {
-  month: string
-  desktop: number
-}
-
-const data: Row[] = [
+const data = [
   { month: "Jan", desktop: 186 },
   { month: "Feb", desktop: 305 },
   { month: "Mar", desktop: 237 },
@@ -17908,45 +18232,47 @@ const data: Row[] = [
   { month: "Jun", desktop: 214 },
 ]
 
-const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
-  rows.reduce((winner, row) => (best(row, winner) ? row : winner))
-
-/* Annotate a chosen few rows, not every point: pick them in data preparation
-   so the intent stays auditable. */
+// Annotate a chosen few rows, picked in data preparation.
+const peak = data.reduce((max, row) => (row.desktop > max.desktop ? row : max))
+const low = data.reduce((min, row) => (row.desktop < min.desktop ? row : min))
 const extremes = [
-  {
-    ...pick(data, (a, b) => a.desktop > b.desktop),
-    label: "Peak",
-    dy: -16,
-  },
-  { ...pick(data, (a, b) => a.desktop < b.desktop), label: "Low", dy: 22 },
+  { ...peak, label: "Peak", dy: -16 },
+  { ...low, label: "Low", dy: 22 },
 ]
 
-const line = lineChart(data, {
-  x: "month",
-  y: "desktop",
-  labels: { desktop: "Desktop" },
-})
-
-const markers = decorative(
-  dot(extremes, { x: "month", y: "desktop", r: 4, fill: "var(--chart-1)" }),
-)
-
-const callouts = decorative(
-  text(extremes, {
-    x: "month",
-    y: "desktop",
-    text: (row) => `${row.label} · ${row.desktop}`,
-    dy: (row) => row.dy,
-    fontSize: 12,
-    fontWeight: 600,
-    fill: "var(--color-fg)",
-  }),
-)
-
 const chart = defineChart({
-  ...line,
-  marks: [...line.marks, markers, callouts],
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+    }),
+    decorative(
+      dot(extremes, { x: "month", y: "desktop", r: 4, fill: "var(--chart-1)" }),
+    ),
+    decorative(
+      text(extremes, {
+        x: "month",
+        y: "desktop",
+        text: (row) => `${row.label} · ${row.desktop}`,
+        dy: (row) => row.dy,
+        fontSize: 12,
+        fontWeight: 600,
+        fill: "var(--color-fg)",
+      }),
+    ),
+  ],
 })
 
 export function ChartLineLabelCustom() {
@@ -17963,9 +18289,13 @@ export function ChartLineLabelCustom() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -17978,9 +18308,30 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  areaChart(data, { x: "month", y: "desktop", labels: { desktop: "Desktop" } }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  // Names the series in the tooltip.
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    // The edge is its own mark: an area's stroke would outline the whole shape.
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaDefault() {
   return (
@@ -17996,9 +18347,14 @@ export function ChartAreaDefault() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLegend, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18011,14 +18367,37 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    legend: true,
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const series = {
+  x: "month",
+  y: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  color: { legend: chartLegend },
+  marks: [
+    // A zero baseline overlaps the series instead of stacking them.
+    areaY(rows, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(rows, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaLegend() {
   return (
@@ -18034,9 +18413,14 @@ export function ChartAreaLegend() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartFades, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18049,14 +18433,47 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    fill: "gradient",
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+const fields = ["desktop", "mobile"] as const
+
+const rows = fold(data, {
+  fields,
+  as: { key: "device", value: "visitors" },
+})
+
+const series = {
+  x: "month",
+  y: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+/* The gradient paints from a decorative copy: the interactive area keeps the
+   series color, which the tooltip swatch reads. `y1: 0` overlaps the series
+   instead of stacking them. */
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  gradients: chartFades,
+  marks: [
+    decorative(
+      areaY(rows, {
+        ...series,
+        y1: 0,
+        fill: (row) => `url(#chart-fade-${fields.indexOf(row.device)})`,
+      }),
+    ),
+    areaY(rows, { ...series, y1: 0, fillOpacity: 0 }),
+    decorative(lineY(rows, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaGradient() {
   return (
@@ -18072,9 +18489,15 @@ export function ChartAreaGradient() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsY } from "@tanstack/charts/transform/stack"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18087,14 +18510,45 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: ["desktop", "mobile", "other"],
-    labels: { desktop: "Desktop", mobile: "Mobile", other: "Other" },
-    stacked: true,
+const devices = { desktop: "Desktop", mobile: "Mobile", other: "Other" }
+
+// Stacked up front, so each edge can trace its band's top (`y2`).
+const rows = stackRowsY(
+  fold(data, {
+    fields: ["desktop", "mobile", "other"],
+    as: { key: "device", value: "visitors" },
   }),
+  { x: "month", y: "visitors", z: "device" },
 )
+
+const series = {
+  x: "month",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(rows, {
+      ...series,
+      y1: "y1",
+      y2: "y2",
+      fillOpacity: chartLook.areaOpacity,
+    }),
+    decorative(
+      lineY(rows, { ...series, y: "y2", strokeWidth: chartLook.strokeWidth }),
+    ),
+  ],
+})
 
 export function ChartAreaStacked() {
   return (
@@ -18110,9 +18564,15 @@ export function ChartAreaStacked() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsY } from "@tanstack/charts/transform/stack"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18125,20 +18585,48 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140, other: 160 },
 ]
 
+const devices = { desktop: "Desktop", mobile: "Mobile", other: "Other" }
+
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 
 /* `"normalize"` divides each band by its x-group total, so the stack fills
    the plot and reads as share rather than volume. */
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: ["desktop", "mobile", "other"],
-    labels: { desktop: "Desktop", mobile: "Mobile", other: "Other" },
-    stacked: "normalize",
-    axes: true,
-    formatY: (value) => percent.format(Number(value)),
+const rows = stackRowsY(
+  fold(data, {
+    fields: ["desktop", "mobile", "other"],
+    as: { key: "device", value: "visitors" },
   }),
+  { x: "month", y: "visitors", z: "device", offset: "normalize" },
 )
+
+const series = {
+  x: "month",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => percent.format(Number(value)) } },
+    },
+  },
+  marks: [
+    areaY(rows, {
+      ...series,
+      y1: "y1",
+      y2: "y2",
+      fillOpacity: chartLook.areaOpacity,
+    }),
+    decorative(
+      lineY(rows, { ...series, y: "y2", strokeWidth: chartLook.strokeWidth }),
+    ),
+  ],
+})
 
 export function ChartAreaStackedExpand() {
   return (
@@ -18154,9 +18642,13 @@ export function ChartAreaStackedExpand() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18176,15 +18668,35 @@ const data = [
   { month: "Jun", channel: "paid_social", visitors: 140 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "visitors",
-    series: "channel",
-    order: ["paid_social", "organic_search"],
-    labels: { organic_search: "Organic search", paid_social: "Paid social" },
-  }),
-)
+const channels: Record<string, string> = {
+  organic_search: "Organic search",
+  paid_social: "Paid social",
+}
+
+const series = {
+  x: "month",
+  y: "visitors",
+  color: (row: (typeof data)[number]) => channels[row.channel],
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  // The domain orders the colors: paid social takes the first.
+  color: { domain: ["Paid social", "Organic search"] },
+  marks: [
+    areaY(data, { ...series, y1: 0, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaLabels() {
   return (
@@ -18200,9 +18712,13 @@ export function ChartAreaLabels() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18217,17 +18733,31 @@ const data = [
 
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-/* The axis formats are the tooltip's too. */
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axes: true,
-    formatX: (value) => String(value).slice(0, 3),
-    formatY: (value) => compact.format(Number(value)),
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scalePoint,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaAxes() {
   return (
@@ -18243,9 +18773,13 @@ export function ChartAreaAxes() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18258,14 +18792,28 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    curve: "linear",
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.linear,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaLinear() {
   return (
@@ -18281,9 +18829,13 @@ export function ChartAreaLinear() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartCurves, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18296,14 +18848,28 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    curve: "step",
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartCurves.step,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export function ChartAreaStep() {
   return (
@@ -18320,9 +18886,15 @@ export function ChartAreaStep() {
 ```tsx
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsY } from "@tanstack/charts/transform/stack"
+import { scaleUtc } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { areaChart } from "@/components/ui/chart-area"
+import { Chart, chartFades, chartLegend, chartLook } from "@/components/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -18349,27 +18921,63 @@ const day = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 })
 
+const devices = { mobile: "Mobile", desktop: "Desktop" }
+const fields = ["mobile", "desktop"] as const
+
 const RANGES = { "90d": 90, "30d": 30, "7d": 7 } as const
 type Range = keyof typeof RANGES
 
 export function ChartAreaInteractive() {
   const [range, setRange] = useState<Range>("90d")
-  // Dates put the x axis on a time scale.
-  const chart = useMemo(
-    () =>
-      defineChart(
-        areaChart(data.slice(-RANGES[range]), {
-          x: "date",
-          y: ["mobile", "desktop"],
-          labels: { desktop: "Desktop", mobile: "Mobile" },
-          stacked: true,
-          fill: "gradient",
-          legend: true,
-          formatX: (value) => day.format(value as Date),
-        }),
-      ),
-    [range],
-  )
+  const chart = useMemo(() => {
+    const rows = stackRowsY(
+      fold(data.slice(-RANGES[range]), {
+        fields,
+        as: { key: "device", value: "visitors" },
+      }),
+      { x: "date", y: "visitors", z: "device" },
+    )
+    const series = {
+      x: "date",
+      color: (row: (typeof rows)[number]) => devices[row.device],
+      curve: chartLook.curve,
+    } as const
+    return defineChart({
+      scales: {
+        x: {
+          scale: scaleUtc,
+          nice: true,
+          axis: { ticks: { format: (value) => day.format(value as Date) } },
+        },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: chartLook.valueAxis,
+        },
+      },
+      color: { legend: chartLegend },
+      gradients: chartFades,
+      marks: [
+        decorative(
+          areaY(rows, {
+            ...series,
+            y1: "y1",
+            y2: "y2",
+            fill: (row) => `url(#chart-fade-${fields.indexOf(row.device)})`,
+          }),
+        ),
+        areaY(rows, { ...series, y1: "y1", y2: "y2", fillOpacity: 0 }),
+        decorative(
+          lineY(rows, {
+            ...series,
+            y: "y2",
+            strokeWidth: chartLook.strokeWidth,
+          }),
+        ),
+      ],
+    })
+  }, [range])
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -18399,35 +19007,40 @@ export function ChartAreaInteractive() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          // The surface color, so the slices read apart.
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  // A slice's x and y are its angle and radius: focus the nearest slice.
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieSimple() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -18438,36 +19051,39 @@ export function ChartPieSimple() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    innerRadius: 0.55,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          innerRadius: ({ radius }) => radius * 0.55,
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieDonut() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -18478,40 +19094,54 @@ export function ChartPieDonut() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const slices = pie(data, { value: "visitors" })
+
+const ring = {
+  color: "browser",
+  innerRadius: ({ radius }: { radius: number }) => radius * 0.55,
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
 
 // Static, so the highlighted slice reads without hovering.
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    innerRadius: 0.55,
-    outerRadius: 0.88,
-    activeIndex: 0,
-    activeOffset: 0.12,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(slices, {
+          ...ring,
+          outerRadius: ({ radius }) => radius * 0.88,
+        }),
+        // Chrome again, grown past the ring.
+        polarDecorative(
+          radialArc(
+            slices.filter((slice) => slice.browser === "Chrome"),
+            { ...ring, outerRadius: ({ radius }) => radius },
+          ),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieDonutActive() {
   return (
@@ -18527,38 +19157,41 @@ export function ChartPieDonutActive() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
-
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
 
 const total = data.reduce((sum, row) => sum + row.visitors, 0)
 
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    innerRadius: 0.6,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          innerRadius: ({ radius }) => radius * 0.6,
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieDonutText() {
   return (
@@ -18580,36 +19213,54 @@ export function ChartPieDonutText() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const slices = pie(data, { value: "visitors" })
 
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    dataLabels: { radius: 0.72 },
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      // Identity scales: a label sits at its slice's angle, a share of the radius out.
+      scales: {
+        angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
+        radius: { scale: scaleLinear().domain([0, 1]) },
+      },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(slices, {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+        polarDecorative(
+          radialText(slices, {
+            angle: "angle",
+            radius: 0.72,
+            text: "visitors",
+            fill: "var(--color-fg)",
+            fontSize: 12,
+          }),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieLabel() {
   return (
@@ -18625,36 +19276,53 @@ export function ChartPieLabel() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const slices = pie(data, { value: "visitors" })
 
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    dataLabels: { radius: 0.6, fill: "var(--color-bg)", fontSize: 15 },
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
+        radius: { scale: scaleLinear().domain([0, 1]) },
+      },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(slices, {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+        polarDecorative(
+          radialText(slices, {
+            angle: "angle",
+            radius: 0.6,
+            text: "visitors",
+            fill: "var(--color-bg)",
+            fontSize: 15,
+          }),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieLabelCustom() {
   return (
@@ -18670,36 +19338,53 @@ export function ChartPieLabelCustom() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc, radialText } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
+const slices = pie(data, { value: "visitors" })
 
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    dataLabels: { text: "name", radius: 0.68, fontSize: 11 },
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, 2 * Math.PI]) },
+        radius: { scale: scaleLinear().domain([0, 1]) },
+      },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(slices, {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+        polarDecorative(
+          radialText(slices, {
+            angle: "angle",
+            radius: 0.68,
+            text: "browser",
+            fill: "var(--color-fg)",
+            fontSize: 11,
+          }),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieLabelList() {
   return (
@@ -18715,37 +19400,39 @@ export function ChartPieLabelList() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartLegend, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    legend: true,
-    radiusRatio: 0.85,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  color: { legend: chartLegend },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.85,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), {
+          color: "browser",
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 2,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieLegend() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -18756,36 +19443,34 @@ export function ChartPieLegend() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const labels = {
-  chrome: "Chrome",
-  safari: "Safari",
-  firefox: "Firefox",
-  edge: "Edge",
-  other: "Other",
-}
-
-const chart = defineChart(
-  pieChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels,
-    strokeWidth: 0,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(data, { value: "visitors" }), { color: "browser" }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartPieSeparatorNone() {
   return (
@@ -18801,54 +19486,59 @@ export function ChartPieSeparatorNone() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart, pieRing } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const desktop = [
-  { month: "january", desktop: 186 },
-  { month: "february", desktop: 305 },
-  { month: "march", desktop: 237 },
-  { month: "april", desktop: 173 },
-  { month: "may", desktop: 209 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 173 },
+  { month: "May", desktop: 209 },
 ]
 
 const mobile = [
-  { month: "january", mobile: 80 },
-  { month: "february", mobile: 200 },
-  { month: "march", mobile: 120 },
-  { month: "april", mobile: 190 },
-  { month: "may", mobile: 130 },
+  { month: "January", mobile: 80 },
+  { month: "February", mobile: 200 },
+  { month: "March", mobile: 120 },
+  { month: "April", mobile: 190 },
+  { month: "May", mobile: 130 },
 ]
 
-const labels = {
-  january: "January",
-  february: "February",
-  march: "March",
-  april: "April",
-  may: "May",
-}
+const ring = {
+  color: "month",
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
 
-/* A second series is a second ring. Both rings name slices by month, so a
+/* A second series is a second ring. Both rings color slices by month, so a
    month is one color from the middle out. */
-const chart = defineChart(
-  pieChart(desktop, {
-    value: "desktop",
-    name: "month",
-    labels,
-    outerRadius: 0.6,
-    marks: pieRing(mobile, {
-      id: "mobile",
-      value: "mobile",
-      name: "month",
-      labels,
-      innerRadius: 0.7,
-      outerRadius: 0.95,
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(desktop, { value: "desktop" }), {
+          ...ring,
+          outerRadius: ({ radius }) => radius * 0.6,
+        }),
+        radialArc(pie(mobile, { value: "mobile" }), {
+          ...ring,
+          innerRadius: ({ radius }) => radius * 0.7,
+          outerRadius: ({ radius }) => radius * 0.95,
+        }),
+      ],
     }),
-  }),
-)
+  ],
+  focus: "nearest",
+  // `value` is the slice's size, whichever ring it sits in.
+  tooltip: chartSliceTooltip("month", "value"),
+})
 
 export function ChartPieStacked() {
   return (
@@ -18865,9 +19555,9 @@ export function ChartPieStacked() {
 ```tsx
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
 
-import { Chart } from "@/components/ui/chart"
-import { pieChart } from "@/components/ui/chart-pie"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 import {
   Select,
   SelectContent,
@@ -18878,47 +19568,60 @@ import {
 
 ```tsx
 const data = [
-  { month: "january", desktop: 186 },
-  { month: "february", desktop: 305 },
-  { month: "march", desktop: 237 },
-  { month: "april", desktop: 173 },
-  { month: "may", desktop: 209 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 173 },
+  { month: "May", desktop: 209 },
 ]
 
-const labels = {
-  january: "January",
-  february: "February",
-  march: "March",
-  april: "April",
-  may: "May",
-}
+const slices = pie(data, { value: "desktop" })
+
+const ring = {
+  color: "month",
+  innerRadius: ({ radius }: { radius: number }) => radius * 0.6,
+  stroke: "var(--surface-bg,var(--color-bg))",
+  strokeWidth: 2,
+} as const
 
 export function ChartPieInteractive() {
-  const [active, setActive] = useState(0)
-  const row = data[active] ?? data[0]
+  const [month, setMonth] = useState("January")
+  const row = data.find((entry) => entry.month === month)
   const chart = useMemo(
     () =>
-      defineChart(
-        pieChart(data, {
-          value: "desktop",
-          name: "month",
-          labels,
-          innerRadius: 0.6,
-          outerRadius: 0.88,
-          activeIndex: active,
-        }),
-      ),
-    [active],
+      defineChart({
+        scales: { x: null, y: null },
+        marks: [
+          polar({
+            scales: { angle: null, radius: null },
+            radiusRatio: 0.9,
+            marks: [
+              radialArc(slices, {
+                ...ring,
+                outerRadius: ({ radius }) => radius * 0.88,
+              }),
+              polarDecorative(
+                radialArc(
+                  slices.filter((slice) => slice.month === month),
+                  { ...ring, outerRadius: ({ radius }) => radius * 0.96 },
+                ),
+              ),
+            ],
+          }),
+        ],
+        focus: "nearest",
+        tooltip: chartSliceTooltip("month", "desktop"),
+      }),
+    [month],
   )
 
   return (
     <div className="flex w-full flex-col gap-4">
       <Select
         aria-label="Month"
-        value={row?.month ?? null}
+        value={month}
         onChange={(key) => {
-          const index = data.findIndex((entry) => entry.month === key)
-          if (index !== -1) setActive(index)
+          if (key !== null) setMonth(String(key))
         }}
         className="w-40 self-end"
       >
@@ -18926,7 +19629,7 @@ export function ChartPieInteractive() {
         <SelectContent>
           {data.map((entry) => (
             <SelectItem key={entry.month} id={entry.month}>
-              {labels[entry.month as keyof typeof labels]}
+              {entry.month}
             </SelectItem>
           ))}
         </SelectContent>
@@ -18951,9 +19654,19 @@ export function ChartPieInteractive() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -18966,13 +19679,52 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-  }),
-)
+// Names the series in the tooltip.
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        // Nice to the rings' 4 ticks, so the outer ring is the edge.
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      // Room outside the circle for the month labels.
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  // Two months can share a screen x: focus the nearest spoke instead.
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarDefault() {
   return (
@@ -18988,9 +19740,25 @@ export function ChartRadarDefault() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialDot,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import {
+  Chart,
+  chartAngleLabels,
+  chartLook,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19003,14 +19771,50 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    points: true,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+        // The line already carries each point's focus.
+        polarDecorative(radialDot(data, { ...series, r: 4 })),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarDots() {
   return (
@@ -19026,9 +19830,26 @@ export function ChartRadarDots() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialDot,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import {
+  Chart,
+  chartAngleLabels,
+  chartLook,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19041,14 +19862,56 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    points: true,
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const series = {
+  angle: "month",
+  radius: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+        polarDecorative(radialDot(rows, { ...series, r: 4 })),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarMultiple() {
   return (
@@ -19064,9 +19927,25 @@ export function ChartRadarMultiple() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import {
+  Chart,
+  chartAngleLabels,
+  chartLegend,
+  chartLook,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19079,14 +19958,57 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    legend: true,
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const series = {
+  angle: "month",
+  radius: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  color: { legend: chartLegend },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      // Smaller, so the month labels clear the legend.
+      radiusRatio: 0.68,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarLegend() {
   return (
@@ -19102,10 +20024,21 @@ export function ChartRadarLegend() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { curveLinearClosed } from "d3-shape"
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19118,11 +20051,55 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const labels = { desktop: "Desktop", mobile: "Mobile" }
+const devices = { desktop: "Desktop", mobile: "Mobile" }
 
-const chart = defineChart(
-  radarChart(data, { x: "month", y: ["desktop", "mobile"], labels }),
-)
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const series = {
+  angle: "month",
+  radius: "visitors",
+  color: (row: (typeof rows)[number]) => devices[row.device],
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(rows, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 /* An icon legend is HTML beside the chart: the SVG legend draws color swatches. */
 export function ChartRadarIcons() {
@@ -19135,11 +20112,11 @@ export function ChartRadarIcons() {
       <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">
         <span className="flex items-center gap-1.5">
           <MonitorIcon className="size-4" />
-          {labels.desktop}
+          {devices.desktop}
         </span>
         <span className="flex items-center gap-1.5">
           <SmartphoneIcon className="size-4" />
-          {labels.mobile}
+          {devices.mobile}
         </span>
       </div>
     </div>
@@ -19151,9 +20128,19 @@ export function ChartRadarIcons() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { fold } from "@tanstack/charts/transform/fold"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19166,15 +20153,47 @@ const data = [
   { month: "Jun", desktop: 174, mobile: 204 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    fill: 0,
-    spokes: false,
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const max = Math.max(...rows.map((row) => row.visitors))
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        // Lines alone don't pull the radius to zero, as an area does.
+        radius: { scale: scaleLinear().domain([0, max]), nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        // The month labels without their spokes.
+        angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
+      ],
+      marks: [
+        radialLine(rows, {
+          angle: "month",
+          radius: "visitors",
+          color: (row) => devices[row.device],
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarLinesOnly() {
   return (
@@ -19190,9 +20209,19 @@ export function ChartRadarLinesOnly() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19207,14 +20236,56 @@ const data = [
 
 const values = new Map(data.map((row) => [row.month, row.desktop]))
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axisDetail: (month) => String(values.get(String(month)) ?? ""),
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        // Two label lines: the month below, its value above.
+        angleGrid({
+          ...chartAngleLabels,
+          labelDy: (label) => chartAngleLabels.labelDy(label) + 7,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          labelDy: (label) => chartAngleLabels.labelDy(label) - 7,
+          format: (month) => String(values.get(String(month)) ?? ""),
+          strokeOpacity: 0,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarLabelCustom() {
   return (
@@ -19230,9 +20301,19 @@ export function ChartRadarLabelCustom() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19245,14 +20326,48 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridCircle() {
   return (
@@ -19268,9 +20383,19 @@ export function ChartRadarGridCircle() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19283,15 +20408,46 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    spokes: false,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        // The month labels without their spokes.
+        angleGrid({ ...chartAngleLabels, strokeOpacity: 0 }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridCircleNoLines() {
   return (
@@ -19307,9 +20463,19 @@ export function ChartRadarGridCircleNoLines() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19322,16 +20488,59 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    gridFill: 0.2,
-    fill: 0.5,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        // A fill on the rings would stack up: fill the outer ring alone.
+        {
+          render: (context) =>
+            radialGrid({
+              values: context.layout.scales.radius?.domain.slice(-1),
+              shape: "circle",
+              fill: "var(--chart-1)",
+              fillOpacity: 0.2,
+              stroke: "none",
+            }).render(context),
+        },
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.5,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridCircleFill() {
   return (
@@ -19347,9 +20556,19 @@ export function ChartRadarGridCircleFill() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19362,15 +20581,59 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridFill: 0.2,
-    fill: 0.5,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        // A fill on the rings would stack up: fill the outer ring alone.
+        {
+          render: (context) =>
+            radialGrid({
+              values: context.layout.scales.radius?.domain.slice(-1),
+              shape: "polygon",
+              fill: "var(--chart-1)",
+              fillOpacity: 0.2,
+              stroke: "none",
+            }).render(context),
+        },
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.5,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridFill() {
   return (
@@ -19386,9 +20649,19 @@ export function ChartRadarGridFill() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19401,16 +20674,59 @@ const data = [
   { month: "Jun", desktop: 264 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    gridShape: "circle",
-    gridFill: 0.2,
-    fill: 1,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      guides: [
+        // A fill on the rings would stack up: fill the outer ring alone.
+        {
+          render: (context) =>
+            radialGrid({
+              values: context.layout.scales.radius?.domain.slice(-1),
+              shape: "circle",
+              fill: "var(--chart-1)",
+              fillOpacity: 0.2,
+              stroke: "none",
+            }).render(context),
+        },
+        radialGrid({
+          ticks: 4,
+          shape: "circle",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 1,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridCustom() {
   return (
@@ -19426,9 +20742,18 @@ export function ChartRadarGridCustom() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import { Chart, chartAngleLabels } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19441,14 +20766,39 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    grid: false,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.78,
+      // The month labels without their spokes.
+      guides: [angleGrid({ ...chartAngleLabels, strokeOpacity: 0 })],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarGridNone() {
   return (
@@ -19464,9 +20814,25 @@ export function ChartRadarGridNone() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import {
+  angleGrid,
+  focusGroupAngle,
+  polar,
+  radialArea,
+  radialDot,
+  radialGrid,
+  radialLine,
+} from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { curveLinearClosed } from "d3-shape"
 
-import { Chart } from "@/components/ui/chart"
-import { radarChart } from "@/components/ui/chart-radar"
+import {
+  Chart,
+  chartAngleLabels,
+  chartLook,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19479,15 +20845,50 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  radarChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    radiusRatio: 0.62,
-    points: true,
-  }),
-)
+const series = {
+  angle: "month",
+  radius: "desktop",
+  z: () => "Desktop",
+} as const
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scalePoint },
+        radius: { scale: scaleLinear, nice: 4 },
+      },
+      radiusRatio: 0.62,
+      guides: [
+        radialGrid({
+          ticks: 4,
+          shape: "polygon",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+        angleGrid({
+          ...chartAngleLabels,
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialArea(data, {
+          ...series,
+          curve: curveLinearClosed,
+          fillOpacity: 0.6,
+        }),
+        radialLine(data, {
+          ...series,
+          curve: curveLinearClosed,
+          strokeWidth: 1.5,
+        }),
+        // The line already carries each point's focus.
+        polarDecorative(radialDot(data, { ...series, r: 4 })),
+      ],
+    }),
+  ],
+  focus: focusGroupAngle,
+})
 
 export function ChartRadarRadius() {
   return (
@@ -19503,37 +20904,66 @@ export function ChartRadarRadius() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import {
+  Chart,
+  chartLegend,
+  chartLook,
+  chartSliceTooltip,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
-    },
-    innerRadius: 0.3,
-    radiusRatio: 0.95,
-    track: true,
-    legend: true,
-  }),
-)
+const max = Math.max(...data.map((row) => row.visitors))
+
+// One ring per browser, innermost first.
+const chart = defineChart({
+  scales: { x: null, y: null },
+  color: { legend: chartLegend },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, max]) },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.3, ({ radius }) => radius],
+        },
+      },
+      radiusRatio: 0.95,
+      marks: [
+        // The track behind each ring stays put while the rings sweep in.
+        polarDecorative(
+          radialBarAngle(data, {
+            angle: () => max,
+            radius: "browser",
+            fill: "var(--color-muted)",
+            motion: false,
+          }),
+        ),
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: chartLook.barRadius,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartRadialSimple() {
   return <Chart definition={chart} ariaLabel="Visitors by browser" />
@@ -19544,36 +20974,59 @@ export function ChartRadialSimple() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle, radialGrid } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import { Chart, chartLook, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
-    },
-    innerRadius: 0.3,
-    radiusRatio: 0.95,
-    grid: true,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.3, ({ radius }) => radius],
+        },
+        // The gridlines step through the whole radius, not the rings.
+        grid: {
+          channel: "radius",
+          scale: scaleLinear().domain([0, 1]),
+          range: [0, ({ radius }) => radius],
+        },
+      },
+      radiusRatio: 0.95,
+      guides: [
+        radialGrid({
+          scale: "grid",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: chartLook.barRadius,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartRadialGrid() {
   return (
@@ -19589,37 +21042,73 @@ export function ChartRadialGrid() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle, radialText } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import {
+  Chart,
+  chartLook,
+  chartSliceTooltip,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [
-  { browser: "chrome", visitors: 275 },
-  { browser: "safari", visitors: 200 },
-  { browser: "firefox", visitors: 187 },
-  { browser: "edge", visitors: 173 },
-  { browser: "other", visitors: 90 },
+  { browser: "Chrome", visitors: 275 },
+  { browser: "Safari", visitors: 200 },
+  { browser: "Firefox", visitors: 187 },
+  { browser: "Edge", visitors: 173 },
+  { browser: "Other", visitors: 90 },
 ]
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: {
-      chrome: "Chrome",
-      safari: "Safari",
-      firefox: "Firefox",
-      edge: "Edge",
-      other: "Other",
-    },
-    innerRadius: 0.25,
-    radiusRatio: 0.95,
-    track: true,
-    dataLabels: true,
-  }),
-)
+const max = Math.max(...data.map((row) => row.visitors))
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, max]) },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.25, ({ radius }) => radius],
+        },
+      },
+      radiusRatio: 0.95,
+      marks: [
+        polarDecorative(
+          radialBarAngle(data, {
+            angle: () => max,
+            fill: "var(--color-muted)",
+            motion: false,
+          }),
+        ),
+        radialBarAngle(data, {
+          angle: "visitors",
+          color: "browser",
+          cornerRadius: chartLook.barRadius,
+        }),
+        /* Rings sit at their row index, the default, so the names can find
+           them: a text radius must be a number. */
+        polarDecorative(
+          radialText(data, {
+            angle: 0,
+            radius: (_row, { index }) => index,
+            text: "browser",
+            anchor: "start",
+            dx: 8,
+            fill: "var(--color-fg)",
+            fontSize: 11,
+          }),
+        ),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartRadialLabel() {
   return (
@@ -19635,30 +21124,52 @@ export function ChartRadialLabel() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import { Chart, chartSliceTooltip, polarDecorative } from "@/components/ui/chart"
 ```
 
 ```tsx
-const data = [{ browser: "safari", visitors: 1260 }]
+const data = [{ browser: "Safari", visitors: 1260 }]
 
-const deg = (value: number) => (value * Math.PI) / 180
+const max = 1600
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: { safari: "Safari" },
-    endAngle: deg(250),
-    innerRadius: 0.78,
-    outerRadius: 0.95,
-    radiusRatio: 0.9,
-    cornerRadius: 999,
-    track: true,
-    max: 1600,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, max]) },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.78, ({ radius }) => radius * 0.95],
+        },
+      },
+      endAngle: (250 * Math.PI) / 180,
+      radiusRatio: 0.9,
+      marks: [
+        polarDecorative(
+          radialBarAngle(data, {
+            angle: () => max,
+            radius: "browser",
+            fill: "var(--color-muted)",
+            motion: false,
+          }),
+        ),
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: "full",
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartRadialText() {
   return (
@@ -19676,31 +21187,68 @@ export function ChartRadialText() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle, radialGrid } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import {
+  Chart,
+  chartLook,
+  chartSliceTooltip,
+  polarDecorative,
+} from "@/components/ui/chart"
 ```
 
 ```tsx
-const data = [{ browser: "safari", visitors: 1260 }]
+const data = [{ browser: "Safari", visitors: 1260 }]
 
-const deg = (value: number) => (value * Math.PI) / 180
+const max = 1600
 
-const chart = defineChart(
-  radialChart(data, {
-    value: "visitors",
-    name: "browser",
-    labels: { safari: "Safari" },
-    endAngle: deg(100),
-    innerRadius: 0.66,
-    outerRadius: 0.95,
-    radiusRatio: 0.9,
-    cornerRadius: 999,
-    track: true,
-    max: 1600,
-    grid: true,
-  }),
-)
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, max]) },
+        radius: {
+          scale: () => scaleBand().paddingInner(0.2),
+          range: [({ radius }) => radius * 0.66, ({ radius }) => radius * 0.95],
+        },
+        grid: {
+          channel: "radius",
+          scale: scaleLinear().domain([0, 1]),
+          range: [0, ({ radius }) => radius],
+        },
+      },
+      endAngle: (100 * Math.PI) / 180,
+      radiusRatio: 0.9,
+      guides: [
+        radialGrid({
+          scale: "grid",
+          strokeDasharray: chartLook.grid.strokeDasharray,
+        }),
+      ],
+      marks: [
+        polarDecorative(
+          radialBarAngle(data, {
+            angle: () => max,
+            radius: "browser",
+            fill: "var(--color-muted)",
+            motion: false,
+          }),
+        ),
+        radialBarAngle(data, {
+          angle: "visitors",
+          radius: "browser",
+          color: "browser",
+          cornerRadius: "full",
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("browser", "visitors"),
+})
 
 export function ChartRadialShape() {
   return (
@@ -19721,30 +21269,62 @@ export function ChartRadialShape() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { polar, radialBarAngle } from "@tanstack/charts/polar"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { fold } from "@tanstack/charts/transform/fold"
+import { stackRowsX } from "@tanstack/charts/transform/stack"
 
-import { Chart } from "@/components/ui/chart"
-import { radialChart } from "@/components/ui/chart-radial"
+import { Chart, chartSliceTooltip } from "@/components/ui/chart"
 ```
 
 ```tsx
 const data = [{ month: "january", desktop: 1260, mobile: 570 }]
 
-// An array of fields stacks one ring, cumulative from `startAngle`.
-const chart = defineChart(
-  radialChart(data, {
-    value: ["desktop", "mobile"],
-    name: "month",
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-    startAngle: -Math.PI / 2,
-    endAngle: Math.PI / 2,
-    innerRadius: 0.7,
-    outerRadius: 0.98,
-    radiusRatio: 0.9,
-    barPadding: 0.06,
-    cornerRadius: 5,
-    max: 2200,
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+// One segment per device, each starting where the one before it ends.
+const rows = stackRowsX(
+  fold(data, {
+    fields: ["desktop", "mobile"],
+    as: { key: "device", value: "visitors" },
   }),
+  {
+    x: "visitors",
+    y: "month",
+    // `z` names each segment; the row type doesn't flow into accessors here.
+    z: (row: { device: keyof typeof devices }) => devices[row.device],
+  },
 )
+
+const chart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: {
+        angle: { scale: scaleLinear().domain([0, 2200]) },
+        radius: {
+          scale: scaleBand,
+          range: [({ radius }) => radius * 0.7, ({ radius }) => radius * 0.98],
+        },
+      },
+      startAngle: -Math.PI / 2,
+      endAngle: Math.PI / 2,
+      radiusRatio: 0.9,
+      marks: [
+        radialBarAngle(rows, {
+          angle1: "x1",
+          angle2: "x2",
+          radius: "month",
+          color: "z",
+          cornerRadius: 5,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("z", "visitors"),
+})
 
 export function ChartRadialStacked() {
   return (
@@ -19765,9 +21345,13 @@ export function ChartRadialStacked() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { heatmapChart } from "@/components/ui/chart-heatmap"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19803,16 +21387,51 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "hour",
-    y: "day",
-    value: "sessions",
-    label: "Sessions",
-    labelX: "Hour",
-    labelY: "Day",
-  }),
-)
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand, axis: { label: "Hour" } },
+    y: { scale: scaleBand, axis: { label: "Day" } },
+  },
+  // Equal bins over the rounded extent, one per color.
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({ label: "Sessions" }),
+  },
+  marks: [
+    cell(data, {
+      x: "hour",
+      y: "day",
+      color: "sessions",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  // A cell is read on its own, not against its column.
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.hour} · ${points[0].datum.day}`,
+      rows: points.map((point) => ({
+        label: "Sessions",
+        value: String(point.datum.sessions),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export function ChartHeatmapMatrix() {
   return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />
@@ -19823,9 +21442,13 @@ export function ChartHeatmapMatrix() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { heatmapChart } from "@/components/ui/chart-heatmap"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19865,15 +21488,52 @@ const millimeters = new Intl.NumberFormat("en-US", {
   unit: "millimeter",
 })
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "month",
-    y: "year",
-    value: "rainfall",
-    label: "Rainfall",
-    formatValue: (value) => millimeters.format(Number(value)),
-  }),
-)
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({
+      label: "Rainfall",
+      format: (value) => millimeters.format(value),
+    }),
+  },
+  marks: [
+    cell(data, {
+      x: "month",
+      y: "year",
+      color: "rainfall",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.month} · ${points[0].datum.year}`,
+      rows: points.map((point) => ({
+        label: "Rainfall",
+        value: millimeters.format(point.datum.rainfall),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export function ChartHeatmapCalendarMonths() {
   return (
@@ -19890,9 +21550,13 @@ export function ChartHeatmapCalendarMonths() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleThreshold } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { heatmapChart, heatmapColors } from "@/components/ui/chart-heatmap"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19912,18 +21576,50 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
-/* The cuts are a policy, not an extent: one incident is already worth
-   seeing, ten is an outage week. */
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "week",
-    y: "service",
-    value: "incidents",
-    label: "Incidents",
-    colors: heatmapColors("var(--chart-4)", 4),
-    thresholds: [1, 4, 10],
-  }),
-)
+const colors = [
+  "color-mix(in oklab, var(--chart-4) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-4) 73%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-4) 77%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-4) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  /* The cuts are a policy, not an extent: one incident is already worth
+     seeing, ten is an outage week. */
+  color: {
+    scale: scaleThreshold<number, string>,
+    domain: [1, 4, 10],
+    range: colors,
+    legend: colorLegend({ label: "Incidents" }),
+  },
+  marks: [
+    cell(data, {
+      x: "week",
+      y: "service",
+      color: "incidents",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title:
+        points[0] && `${points[0].datum.week} · ${points[0].datum.service}`,
+      rows: points.map((point) => ({
+        label: "Incidents",
+        value: String(point.datum.incidents),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export function ChartHeatmapDiscreteScale() {
   return (
@@ -19940,9 +21636,15 @@ export function ChartHeatmapDiscreteScale() {
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { text } from "@tanstack/charts/text"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { heatmapChart } from "@/components/ui/chart-heatmap"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
 ```tsx
@@ -19966,16 +21668,72 @@ const percent = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 })
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "quarter",
-    y: "region",
-    value: "share",
-    label: "Adoption",
-    dataLabels: true,
-    formatValue: (value) => percent.format(Number(value)),
-  }),
-)
+// Low values fade into the surface, high ones deepen toward the foreground.
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const shares = data.map((row) => row.share)
+
+// The chart's bins again, so each label knows the color of the cell under it.
+const shade = scaleQuantize<string>()
+  .domain([Math.min(...shares), Math.max(...shares)])
+  .range(colors)
+  .nice(5)
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({
+      label: "Adoption",
+      format: (value) => percent.format(value),
+    }),
+  },
+  marks: [
+    cell(data, {
+      x: "quarter",
+      y: "region",
+      color: "share",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+    decorative(
+      text(data, {
+        x: "quarter",
+        y: "region",
+        text: (row) => percent.format(row.share),
+        // Black or white from the cell's lightness: at least 4.9:1 on every step.
+        fill: (row) =>
+          `oklch(from ${shade(row.share)} calc((0.58 - l) * 100) 0 0)`,
+        fontSize: 11,
+      }),
+    ),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title:
+        points[0] && `${points[0].datum.quarter} · ${points[0].datum.region}`,
+      rows: points.map((point) => ({
+        label: "Adoption",
+        value: percent.format(point.datum.share),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export function ChartHeatmapWithValues() {
   return (

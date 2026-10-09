@@ -1,6 +1,6 @@
 {
   "name": "ChartProps",
-  "description": "Renders a TanStack Charts definition with the design system's defaults:\nthe theme, the axis look, focus, keyboard navigation, the tooltip, and\nmotion. Anything the definition sets wins.",
+  "description": "Renders a TanStack Charts definition in the design system: the theme, the\naxis and grid look, focus, keyboard navigation, the tooltip, and motion.\nAnything the definition sets wins.",
   "props": {
     "definition": {
       "type": "DomChartDefinition<unknown, ChartValue, ChartValue>",
@@ -27,15 +27,15 @@
       },
       "description": "Longer description, announced after the name."
     },
-    "defaults": {
-      "type": "ChartDefaults",
-      "detailedType": "ChartDefaults | undefined",
+    "look": {
+      "type": "ChartLook",
+      "detailedType": "ChartLook | undefined",
       "typeAst": {
         "type": "identifier",
-        "name": "ChartDefaults"
+        "name": "ChartLook"
       },
-      "description": "The look a definition's unset values are filled from: axes, grid, lines,\narea, bars, legend, hover guide and motion. Anything the definition or\nits builder sets wins.",
-      "default": "chartDefaults"
+      "description": "The look the chart fills its gridlines, legend placement and motion from.",
+      "default": "chartLook"
     },
     "height": {
       "type": "number",

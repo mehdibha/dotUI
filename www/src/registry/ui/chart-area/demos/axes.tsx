@@ -1,9 +1,13 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/registry/ui/chart"
-import { areaChart } from "@/registry/ui/chart-area"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "January", desktop: 18600 },
@@ -16,17 +20,31 @@ const data = [
 
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-/* The axis formats are the tooltip's too. */
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axes: true,
-    formatX: (value) => String(value).slice(0, 3),
-    formatY: (value) => compact.format(Number(value)),
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: scalePoint,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    areaY(data, { ...series, fillOpacity: chartLook.areaOpacity }),
+    decorative(lineY(data, { ...series, strokeWidth: chartLook.strokeWidth })),
+  ],
+})
 
 export default function ChartAreaAxes() {
   return (

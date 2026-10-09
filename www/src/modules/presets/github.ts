@@ -93,8 +93,7 @@ export const github = definePreset({
     chartLines: "smooth",
     chartArea: "tint",
     chartBars: "rounded",
-    chartLegend: "off",
-    chartGuide: "none",
+    chartLegend: "bottom",
     chartMotion: "spring",
     // Underlined at rest so links don't rely on color alone (WCAG 1.4.1).
     linkUnderline: "always",

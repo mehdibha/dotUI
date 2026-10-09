@@ -1,9 +1,12 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { fold } from "@tanstack/charts/transform/fold"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
@@ -14,13 +17,35 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: ["desktop", "mobile"],
-    labels: { desktop: "Desktop", mobile: "Mobile" },
-  }),
-)
+const devices = { desktop: "Desktop", mobile: "Mobile" }
+
+// One row per bar.
+const rows = fold(data, {
+  fields: ["desktop", "mobile"],
+  as: { key: "device", value: "visitors" },
+})
+
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(rows, {
+      x: "month",
+      y: "visitors",
+      color: (row) => devices[row.device],
+      layout: group({ padding: 0.15 }),
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export default function ChartBarMultiple() {
   return (

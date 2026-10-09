@@ -1,7 +1,16 @@
 "use client"
 
 import { type ReactNode, useMemo, useState } from "react"
+import type { ChartValue } from "@tanstack/charts"
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
+import { lineY } from "@tanstack/charts/line"
+import { pie, polar, radialArc } from "@tanstack/charts/polar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { fold } from "@tanstack/charts/transform/fold"
 
 import {
   ArrowDownIcon,
@@ -51,10 +60,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { Chart, chartColor } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
-import { lineChart } from "@/registry/ui/chart-line"
-import { pieChart } from "@/registry/ui/chart-pie"
+import {
+  Chart,
+  chartBand,
+  chartColors,
+  chartLegend,
+  chartSliceTooltip,
+  useChartLook,
+} from "@/registry/ui/chart"
 import {
   Dialog,
   DialogBody,
@@ -163,39 +176,46 @@ const CASHFLOW = [
 
 const cashflowLabels = { income: "Income", spending: "Spending" }
 
-/* Row order drives the pie's palette-slot assignment, so the dot list below
-   can reuse the same index via `chartColor`. */
-const CATEGORY_SPEND = [
-  { category: "housing", amount: 1850 },
-  { category: "groceries", amount: 642 },
-  { category: "dining", amount: 388 },
-  { category: "transport", amount: 214 },
-  { category: "subscriptions", amount: 96 },
-  { category: "travel", amount: 302 },
-]
+const cashflowRows = fold(CASHFLOW, {
+  fields: ["income", "spending"],
+  as: { key: "flow", value: "amount" },
+})
 
-const categoryLabels = {
-  housing: "Housing",
-  groceries: "Groceries",
-  dining: "Dining",
-  transport: "Transport",
-  subscriptions: "Subscriptions",
-  travel: "Travel",
-}
+/* Row order drives the pie's palette-slot assignment, so the dot list below
+   can reuse the same index via `chartColors`. */
+const CATEGORY_SPEND = [
+  { category: "Housing", amount: 1850 },
+  { category: "Groceries", amount: 642 },
+  { category: "Dining", amount: 388 },
+  { category: "Transport", amount: 214 },
+  { category: "Subscriptions", amount: 96 },
+  { category: "Travel", amount: 302 },
+]
 
 const CATEGORY_TOTAL = CATEGORY_SPEND.reduce((sum, row) => sum + row.amount, 0)
 
-const categoryChart = defineChart(
-  pieChart(CATEGORY_SPEND, {
-    value: "amount",
-    name: "category",
-    labels: categoryLabels,
-    innerRadius: 0.6,
-    strokeWidth: 4,
-    // The category list below is the legend.
-    legend: false,
-  }),
-)
+// The category list below is the legend.
+const categoryChart = defineChart({
+  scales: { x: null, y: null },
+  marks: [
+    polar({
+      scales: { angle: null, radius: null },
+      radiusRatio: 0.9,
+      marks: [
+        radialArc(pie(CATEGORY_SPEND, { value: "amount" }), {
+          color: "category",
+          innerRadius: ({ radius }) => radius * 0.6,
+          stroke: "var(--surface-bg,var(--color-bg))",
+          strokeWidth: 4,
+        }),
+      ],
+    }),
+  ],
+  focus: "nearest",
+  tooltip: chartSliceTooltip("category", "amount", (value) =>
+    currency(value, 0),
+  ),
+})
 
 const RANGES = [
   { id: "3m", label: "3M", months: 3 },
@@ -486,24 +506,30 @@ function AccountSparkline({
   series: readonly number[]
   label: string
 }) {
-  const chart = useMemo(() => {
-    const data = series.map((value, index) => ({
-      point: `M${index + 1}`,
-      value,
-    }))
-    return defineChart({
-      ...lineChart(data, {
-        x: "point",
-        y: "value",
-        axes: false,
-        grid: false,
-        legend: false,
-        crosshair: false,
+  const look = useChartLook()
+  const chart = useMemo(
+    () =>
+      defineChart({
+        scales: {
+          x: { scale: scalePoint, axis: false },
+          y: { scale: scaleLinear, nice: true, axis: false },
+        },
+        marks: [
+          lineY(
+            series.map((value, index) => ({ point: index, value })),
+            {
+              x: "point",
+              y: "value",
+              stroke: color,
+              curve: look.curve,
+              strokeWidth: look.strokeWidth,
+            },
+          ),
+        ],
+        tooltip: false,
       }),
-      color: { range: [color] },
-      tooltip: false,
-    })
-  }, [color, series])
+    [color, series, look],
+  )
 
   return <Chart definition={chart} height={48} ariaLabel={label} />
 }
@@ -616,19 +642,43 @@ function CashflowCard() {
 
   const months = RANGES.find((r) => r.id === range)?.months ?? 6
   const data = useMemo(() => CASHFLOW.slice(CASHFLOW.length - months), [months])
-  const chart = useMemo(
-    () =>
-      defineChart(
-        barChart(data, {
-          x: "month",
-          y: ["income", "spending"],
-          labels: cashflowLabels,
-          formatX: (value) => String(value).slice(0, 3),
-          formatY: (value) => compactCurrency.format(Number(value)),
-        }),
-      ),
-    [data],
-  )
+  const look = useChartLook()
+  const chart = useMemo(() => {
+    const months = new Set(data.map((row) => row.month))
+    const usd = (value: ChartValue) => compactCurrency.format(Number(value))
+    return defineChart({
+      scales: {
+        x: {
+          scale: chartBand,
+          axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+        },
+        y: {
+          scale: scaleLinear,
+          nice: true,
+          grid: true,
+          axis: look.valueAxis && { ...look.valueAxis, ticks: { format: usd } },
+        },
+      },
+      color: { legend: chartLegend },
+      marks: [
+        barY(
+          cashflowRows.filter((row) => months.has(row.month)),
+          {
+            x: "month",
+            y: "amount",
+            color: (row) => cashflowLabels[row.flow],
+            layout: group({ padding: 0.15 }),
+            radius: look.barRadius,
+            maxThickness: look.barMaxThickness,
+          },
+        ),
+      ],
+      tooltip: {
+        use: tooltip,
+        items: [{ channel: "y", text: (point) => usd(point.yValue) }],
+      },
+    })
+  }, [data, look])
   const spent = data.reduce((sum, row) => sum + row.spending, 0)
   const earned = data.reduce((sum, row) => sum + row.income, 0)
 
@@ -713,11 +763,9 @@ function CategoriesCard() {
               <span
                 aria-hidden
                 className="size-2.5 shrink-0 rounded-full"
-                style={{ background: chartColor(index) }}
+                style={{ background: chartColors[index] }}
               />
-              <span className="truncate">
-                {categoryLabels[row.category as keyof typeof categoryLabels]}
-              </span>
+              <span className="truncate">{row.category}</span>
               <span className="ml-auto shrink-0 text-fg-muted tabular-nums">
                 {currency(row.amount, 0)}
               </span>

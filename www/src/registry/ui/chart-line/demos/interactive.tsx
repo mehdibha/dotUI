@@ -2,9 +2,11 @@
 
 import { useMemo, useState } from "react"
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scaleUtc } from "d3-scale"
 
-import { Chart } from "@/registry/ui/chart"
-import { lineChart } from "@/registry/ui/chart-line"
+import { Chart, chartCurves, chartLook } from "@/registry/ui/chart"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -41,15 +43,30 @@ export default function ChartLineInteractive() {
   const [series, setSeries] = useState<Series>("desktop")
   const chart = useMemo(
     () =>
-      defineChart(
-        lineChart(data, {
-          x: "date",
-          y: series,
-          labels,
-          curve: "monotone",
-          formatX: (value) => day.format(value as Date),
-        }),
-      ),
+      defineChart({
+        scales: {
+          x: {
+            scale: scaleUtc,
+            nice: true,
+            axis: { ticks: { format: (value) => day.format(value as Date) } },
+          },
+          y: {
+            scale: scaleLinear,
+            nice: true,
+            grid: true,
+            axis: chartLook.valueAxis,
+          },
+        },
+        marks: [
+          lineY(data, {
+            x: "date",
+            y: series,
+            z: () => labels[series],
+            curve: chartCurves.monotone,
+            strokeWidth: chartLook.strokeWidth,
+          }),
+        ],
+      }),
     [series],
   )
 

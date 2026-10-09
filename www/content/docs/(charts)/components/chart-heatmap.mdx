@@ -7,26 +7,28 @@ description: Show one value per pair of categories, with color carrying the magn
 
 A heatmap answers where something concentrates. Two categorical axes place every cell exactly, and color carries the one value that belongs to that pair — the shape of a week, a season, or a service's bad month, read in one pass.
 
-`heatmapChart` builds the chart from your rows and the fields to read; [`Chart`](/docs/components/chart) renders it in your design system.
+Heatmaps are [`cell`](https://tanstack.com/charts/latest/docs/reference/marks/bar-and-rect) marks rendered by [`Chart`](/docs/components/chart). Copy an example below and change what you need.
 
 ## Installation
 
 ```npm
-npx shadcn@latest add @dotui/chart-heatmap
+npx shadcn@latest add @dotui/chart
 ```
-
-It brings the [`chart`](/docs/components/chart) core along with it.
 
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { scaleBand } from "@tanstack/charts/scales/band"
+import { tooltip } from "@tanstack/charts/tooltip"
+import { scaleQuantize } from "d3-scale"
 
-import { Chart } from "@/components/ui/chart"
-import { heatmapChart } from "@/components/ui/chart-heatmap"
+import { Chart, chartLook } from "@/components/ui/chart"
 ```
 
-A heatmap reads long rows: one row per cell, with the column field, the row field, and the value. A chart is a figure, so `ariaLabel` is required.
+A heatmap reads long rows: one row per cell, with the column field, the row field, and the value. Two band scales place the cells, and a color scale bins the value:
 
 ```tsx
 const data = [
@@ -35,73 +37,133 @@ const data = [
   { day: "Tue", hour: "09", sessions: 30 },
 ]
 
-const chart = defineChart(
-  heatmapChart(data, {
-    x: "hour",
-    y: "day",
-    value: "sessions",
-    label: "Sessions",
-  }),
-)
+const colors = [
+  "color-mix(in oklab, var(--chart-1) 20%, var(--surface-bg,var(--color-bg)))",
+  "color-mix(in oklab, var(--chart-1) 60%, var(--surface-bg,var(--color-bg)))",
+  "var(--chart-1)",
+  "color-mix(in oklab, var(--chart-1) 66%, var(--color-fg))",
+  "color-mix(in oklab, var(--chart-1) 32%, var(--color-fg))",
+]
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scaleBand },
+    y: { scale: scaleBand },
+  },
+  color: {
+    scale: scaleQuantize<string>,
+    range: colors,
+    nice: true,
+    legend: colorLegend({ label: "Sessions" }),
+  },
+  marks: [
+    cell(data, {
+      x: "hour",
+      y: "day",
+      color: "sessions",
+      radius: Math.min(chartLook.barRadius, 2),
+      inset: 1,
+    }),
+  ],
+  focus: "nearest",
+  tooltip: {
+    use: tooltip,
+    anchor: "point",
+    content: (points) => ({
+      title: points[0] && `${points[0].datum.hour} · ${points[0].datum.day}`,
+      rows: points.map((point) => ({
+        label: "Sessions",
+        value: String(point.datum.sessions),
+        color: point.color,
+      })),
+    }),
+  },
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Sessions by weekday and hour" />
 }
 ```
 
-Both axes are band scales, so the categories appear in the order the rows first mention them — sort your data, and the matrix follows. `label` names what the value means: it titles the legend and labels the value in the tooltip. `labelX` and `labelY` title the two axes, and `formatX` and `formatY` format their labels — and the tooltip title with them.
-
-Cells tile the plot, so there are no gridlines — the cell edges are the grid. Axes and the legend are on by default: the labels are the cells' identity, and the ramp is the only key to the color.
+The categories appear in the order the rows first mention them — sort your data, and the matrix follows. The band scales have no padding: the cells tile the plot, `inset` leaves a pixel between them, and the cell edges are the grid. Cells round their corners with [`chartLook.barRadius`](/docs/components/chart#the-look), up to 2px, so they follow your bars.
 
 ## Color
 
-Color is the whole reading, so it is binned rather than continuous: each bin is a distinct step, and the legend prints the boundaries between them. `colors` is the ramp, low to high, and its length is the number of bins.
+Color is the whole reading, so it is binned rather than continuous: each bin is a distinct step, and the legend prints the boundaries between them. `range` is the ramp, low to high, and its length is the number of bins.
+
+The low steps of the ramp above fade into the surface and the high steps toward the foreground, so it stays sequential in light and dark without a second set of values. Swap `--chart-1` for another series color, or use any array of CSS colors.
+
+`scaleQuantize` with `nice: true` splits the rounded extent into equal bins. When the cuts are a policy rather than an extent — one incident is already worth seeing, ten is an outage week — use `scaleThreshold` and list the cuts in `domain`:
 
 ```tsx
-import { heatmapChart, heatmapColors } from "@/components/ui/chart-heatmap"
+import { scaleThreshold } from "d3-scale"
 
-heatmapChart(data, {
-  x: "hour",
-  y: "day",
-  value: "sessions",
-  colors: heatmapColors("var(--chart-4)", 6),
-})
+color: {
+  scale: scaleThreshold<number, string>,
+  domain: [1, 4, 10],
+  range: [
+    "color-mix(in oklab, var(--chart-4) 20%, var(--surface-bg,var(--color-bg)))",
+    "color-mix(in oklab, var(--chart-4) 73%, var(--surface-bg,var(--color-bg)))",
+    "color-mix(in oklab, var(--chart-4) 77%, var(--color-fg))",
+    "color-mix(in oklab, var(--chart-4) 32%, var(--color-fg))",
+  ],
+  legend: colorLegend({ label: "Incidents" }),
+}
 ```
 
-`heatmapColors(color, steps)` builds a ramp from one color — `--chart-1` and five steps by default. The low steps fade into the surface and the high steps toward the foreground, so the ramp stays sequential in light and dark without a second set of values. Any array of CSS colors works in its place.
+There is always one more color than cut. `colorLegend` draws the bins and their boundaries, and `label` names what the value means.
 
-Without `thresholds`, the bins split the observed extent evenly. Pass `thresholds` when the cuts are a policy rather than an extent — one incident is already worth seeing, ten is an outage week:
+## Formatting
+
+A value prints in up to three places — the legend, the tooltip, and the cells — and each formats its own:
 
 ```tsx
-heatmapChart(incidents, {
-  x: "week",
-  y: "service",
-  value: "incidents",
-  label: "Incidents",
-  colors: heatmapColors("var(--chart-4)", 4),
-  thresholds: [1, 4, 10],
+const millimeters = new Intl.NumberFormat("en-US", {
+  style: "unit",
+  unit: "millimeter",
 })
+
+legend: colorLegend({
+  label: "Rainfall",
+  format: (value) => millimeters.format(value),
+})
+
+// in the tooltip's content
+value: millimeters.format(point.datum.rainfall)
 ```
 
-There is always one more color than cut.
+`axis: { label: "Hour" }` titles an axis, and `axis: false` hides one.
 
 ## Values in cells
 
-`dataLabels` writes each number inside its cell, and `formatValue` formats it — in the cells, the legend, and the tooltip at once. Each label picks black or white from the lightness of the cell under it, so it stays readable at both ends of the ramp.
+Labels are a `text` mark over the cells, wrapped in `decorative` so they never become focus stops. Each label picks black or white from the lightness of the cell under it, so it stays readable at both ends of the ramp:
 
 ```tsx
-const percent = new Intl.NumberFormat("en-US", { style: "percent" })
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { text } from "@tanstack/charts/text"
 
-heatmapChart(adoption, {
-  x: "quarter",
-  y: "region",
-  value: "share",
-  dataLabels: true,
-  formatValue: (value) => percent.format(Number(value)),
-})
+const shares = data.map((row) => row.share)
+
+// The chart's bins again, so each label knows the color of the cell under it.
+const shade = scaleQuantize<string>()
+  .domain([Math.min(...shares), Math.max(...shares)])
+  .range(colors)
+  .nice(5)
+
+decorative(
+  text(data, {
+    x: "quarter",
+    y: "region",
+    text: (row) => percent.format(row.share),
+    fill: (row) => `oklch(from ${shade(row.share)} calc((0.58 - l) * 100) 0 0)`,
+    fontSize: 11,
+  }),
+)
 ```
 
-Only turn it on when the cells are large enough to hold a number — a dozen cells, not a hundred. Everywhere else the tooltip is the place for exact figures.
+`shade` rebuilds the chart's color scale over the same extent, rounded the same way as `nice: true`. Change one, and change the other.
+
+Only print values when the cells are large enough to hold a number — a dozen cells, not a hundred. Everywhere else the tooltip is the place for exact figures.
 
 ## Size
 
@@ -113,44 +175,33 @@ Only turn it on when the cells are large enough to hold a number — a dozen cel
 
 ## Tooltip and focus
 
-Each cell is its own focus stop: hovering or arrowing onto a cell reports that cell alone, titled by its column and row — `15 · Thu` — with one row for the value. The tooltip attaches to the cell rather than to its column.
+`focus: "nearest"` makes each cell its own focus stop: hovering or arrowing onto a cell reports that cell alone, not its whole column. `anchor: "point"` attaches the tooltip to the cell, and `content` titles it by column and row — `15 · Thu` — with one row for the value. Edit `content` to show other fields of the row.
 
-Both live in the returned spec as `focus` and `tooltip`, so you replace them the same way you extend anything else.
+## Annotations
 
-## Composing
-
-`heatmapChart` returns a plain spec, so you extend it like any TanStack Charts definition. To outline one cell, draw a raw `cell` mark over the others — `decorative` keeps it out of the focus order:
+To outline one cell, draw another `cell` mark over the others. `decorative` keeps it out of the focus order:
 
 ```tsx
 import { decorative } from "@tanstack/charts/mark/decorative"
-import { cell } from "@tanstack/charts/rect"
 
-const heatmap = heatmapChart(data, { x: "hour", y: "day", value: "sessions" })
-
-const chart = defineChart({
-  ...heatmap,
-  marks: [
-    ...heatmap.marks,
-    decorative(
-      cell([{ day: "Thu", hour: "15" }], {
-        x: "hour",
-        y: "day",
-        fill: "none",
-        stroke: "var(--color-fg)",
-        strokeWidth: 1.5,
-        radius: 2,
-        inset: 1,
-      }),
-    ),
-  ],
-})
+decorative(
+  cell([{ day: "Thu", hour: "15" }], {
+    x: "hour",
+    y: "day",
+    fill: "none",
+    stroke: "var(--color-fg)",
+    strokeWidth: 1.5,
+    radius: Math.min(chartLook.barRadius, 2),
+    inset: 1,
+  }),
+)
 ```
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between cells, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
-- A heatmap encodes its measure in color alone, which is exactly the encoding a reader may not perceive. The legend is visual guidance and is hidden from assistive technology, so give the value a `label` and turn on `dataLabels` whenever the cells can hold the numbers.
+- A heatmap encodes its measure in color alone, which is exactly the encoding a reader may not perceive. The legend is visual guidance and is hidden from assistive technology, so name the value in the tooltip's rows, and print the values in the cells whenever they fit.
 - `tooltip: false` in a definition keeps the focus stops but removes their live region, so screen readers land on silent points. Never turn it off on a heatmap — the tooltip is the only place the exact value is spoken.
 
 ## Examples
@@ -161,9 +212,3 @@ const chart = defineChart({
   <Example name="chart-heatmap/demos/discrete-scale" title="Discrete Scale" />
   <Example name="chart-heatmap/demos/with-values" title="With Values" />
 </Examples>
-
-## API Reference
-
-### heatmapChart
-
-<Reference name="heatmap-chart" />

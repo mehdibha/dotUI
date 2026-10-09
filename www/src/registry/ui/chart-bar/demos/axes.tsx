@@ -1,9 +1,10 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "January", desktop: 18600 },
@@ -16,17 +17,29 @@ const data = [
 
 const compact = new Intl.NumberFormat("en-US", { notation: "compact" })
 
-/* The axis formats are the tooltip's too. */
-const chart = defineChart(
-  barChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    axes: true,
-    formatX: (value) => String(value).slice(0, 3),
-    formatY: (value) => compact.format(Number(value)),
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: {
+      scale: chartBand,
+      axis: { ticks: { format: (value) => String(value).slice(0, 3) } },
+    },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => compact.format(Number(value)) } },
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
+})
 
 export default function ChartBarAxes() {
   return (

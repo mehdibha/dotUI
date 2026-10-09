@@ -34,30 +34,20 @@ export function getDemoComponent(key: string) {
 export const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn", "bun"] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
 
-/** Family id from a demo key: `chart-bar/demos/multiple` → `chart-bar`. */
-export function familyOf(demoKey: string): string {
-  return demoKey.slice(0, demoKey.indexOf("/"))
-}
-
 /**
- * The registry items to install for a variant: its family, plus any other
- * registry UI components the variant's source imports (e.g. a stat-card demo
- * pulls in `card`). Matches the rewritten display source, so the paths are
- * the installed `@/ui/*` ones, not `@/registry/ui/*`.
+ * The registry items to install for a variant: the chart kit, plus any other
+ * registry UI components the variant's source imports (e.g. a segmented
+ * control). Matches the rewritten display source, so the paths are the
+ * installed `@/components/ui/*` ones.
  */
-export function installItems(demoKey: string, source: string | null): string[] {
-  const family = familyOf(demoKey)
-  if (!source) return [family]
+export function installItems(source: string | null): string[] {
   const extras = new Set<string>()
-  for (const match of source.matchAll(/@\/ui\/([a-z0-9-]+)/g)) {
+  for (const match of source?.matchAll(/@\/components\/ui\/([a-z0-9-]+)/g) ??
+    []) {
     const name = match[1]
-    // Skip the chart core and sibling chart families — installing the family
-    // item already pulls those in.
-    if (name && name !== "chart" && !name.startsWith("chart-")) {
-      extras.add(name)
-    }
+    if (name && name !== "chart") extras.add(name)
   }
-  return [family, ...[...extras].sort()]
+  return ["chart", ...[...extras].sort()]
 }
 
 /** The shadcn install command per package manager for a set of registry items. */
@@ -126,7 +116,7 @@ export const POLAR_FAMILIES = new Set([
 ])
 
 export interface ChartFamily {
-  /** Registry item id, e.g. `chart-bar`. */
+  /** Demo folder, e.g. `chart-bar`. */
   id: string
   /** Family label, e.g. `Bar chart`. */
   name: string

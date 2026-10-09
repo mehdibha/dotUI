@@ -1,9 +1,11 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { lineY } from "@tanstack/charts/line"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/registry/ui/chart"
-import { lineChart } from "@/registry/ui/chart-line"
+import { Chart, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186 },
@@ -14,14 +16,27 @@ const data = [
   { month: "Jun", desktop: 214 },
 ]
 
-const chart = defineChart(
-  lineChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    points: true,
-  }),
-)
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    lineY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      curve: chartLook.curve,
+      strokeWidth: chartLook.strokeWidth,
+      points: true,
+    }),
+  ],
+})
 
 export default function ChartLineDots() {
   return (

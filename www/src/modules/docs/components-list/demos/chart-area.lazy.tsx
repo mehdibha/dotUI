@@ -1,9 +1,13 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { lineY } from "@tanstack/charts/line"
+import { decorative } from "@tanstack/charts/mark/decorative"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
+import { scalePoint } from "@tanstack/charts/scales/point"
 
-import { Chart } from "@/registry/ui/chart"
-import { areaChart } from "@/registry/ui/chart-area"
+import { Chart, chartFades, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 96 },
@@ -16,17 +20,25 @@ const data = [
   { month: "Aug", desktop: 352 },
 ]
 
-const chart = defineChart(
-  areaChart(data, {
-    x: "month",
-    y: "desktop",
-    labels: { desktop: "Desktop" },
-    fill: "gradient",
-    strokeWidth: 1.5,
-    points: true,
-    grid: false,
-  }),
-)
+const series = {
+  x: "month",
+  y: "desktop",
+  z: () => "Desktop",
+  curve: chartLook.curve,
+} as const
+
+const chart = defineChart({
+  scales: {
+    x: { scale: scalePoint },
+    y: { scale: scaleLinear, nice: true, axis: false },
+  },
+  gradients: chartFades,
+  marks: [
+    decorative(areaY(data, { ...series, fill: "url(#chart-fade-0)" })),
+    areaY(data, { ...series, fillOpacity: 0 }),
+    decorative(lineY(data, { ...series, strokeWidth: 1.5, points: true })),
+  ],
+})
 
 export default function ChartAreaVisitors() {
   return (

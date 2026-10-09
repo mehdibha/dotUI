@@ -1,6 +1,7 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
 import { lineY } from "@tanstack/charts/line"
 import { decorative } from "@tanstack/charts/mark/decorative"
 import { ruleY } from "@tanstack/charts/rule"
@@ -8,8 +9,7 @@ import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { text } from "@tanstack/charts/text"
 import { tooltip } from "@tanstack/charts/tooltip"
 
-import { Chart, chartCurves, chartScales } from "@/registry/ui/chart"
-import { barSeries } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartCurves, chartLook } from "@/registry/ui/chart"
 
 const data = [
   { month: "Jan", revenue: 18_600, margin: 0.21 },
@@ -28,15 +28,16 @@ const usd = new Intl.NumberFormat("en-US", {
 })
 const percent = new Intl.NumberFormat("en-US", { style: "percent" })
 
-/* A dotUI bar series, a raw TanStack line on a second y axis, and a dashed
-   target: one definition, every mark on the house look. */
+/* Bars, a line on a second y axis, and a dashed target in one definition. */
 const chart = defineChart({
   scales: {
-    ...chartScales({
-      x: "band",
-      y: { format: (value) => usd.format(Number(value)) },
-      axes: true,
-    }),
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: { ticks: { format: (value) => usd.format(Number(value)) } },
+    },
     margin: {
       scale: scaleLinear,
       channel: "y",
@@ -46,10 +47,13 @@ const chart = defineChart({
     },
   },
   marks: [
-    barSeries(data, {
+    barY(data, {
       x: "month",
       y: "revenue",
-      labels: { revenue: "Revenue" },
+      color: () => "Revenue",
+      z: () => "Revenue",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
     }),
     ruleY([TARGET], {
       stroke: "var(--color-fg-muted)",
@@ -74,6 +78,7 @@ const chart = defineChart({
       yScale: "margin",
       color: () => "Margin",
       curve: chartCurves.monotone,
+      strokeWidth: chartLook.strokeWidth,
       points: true,
     }),
   ],

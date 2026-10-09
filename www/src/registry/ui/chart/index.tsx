@@ -1,27 +1,42 @@
 "use client"
 
+import { useMemo } from "react"
 import type { ChartValue } from "@tanstack/charts"
 
 import { useComponentParams } from "@/lib/styles"
 
-import type { ChartDefaults, ChartProps } from "./base"
-import { Chart as BaseChart, chartDefaults } from "./base"
+import type { ChartLook, ChartProps } from "./base"
+import { Chart as BaseChart, chartCurves, chartLook } from "./base"
+import { chartLooks } from "./meta"
 
 export * from "./base"
 
-// The shipped file carries the chosen looks in its `chartDefaults` literal
-// (meta.ts `source`); here they ride the design-system context.
+/** The design system's chart look, live: the shipped file carries it as the `chartLook` literal. */
+export function useChartLook(): ChartLook {
+  const params = useComponentParams("chart")
+  const key = JSON.stringify(params)
+  return useMemo(() => {
+    const fields = Object.entries(chartLooks).map(
+      ([param, options]) =>
+        (options as Record<string, object>)[params[param] ?? ""] ?? {},
+    )
+    const look = Object.assign({}, chartLook, ...fields) as Omit<
+      ChartLook,
+      "curve"
+    > & { curve: ChartLook["curve"] | keyof typeof chartCurves }
+    return {
+      ...look,
+      curve:
+        typeof look.curve === "string" ? chartCurves[look.curve] : look.curve,
+    }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
+}
+
 export function Chart<
   TDatum,
   TXValue extends ChartValue = ChartValue,
   TYValue extends ChartValue = ChartValue,
 >(props: ChartProps<TDatum, TXValue, TYValue>) {
-  const params = useComponentParams("chart")
-  const defaults = Object.fromEntries(
-    (Object.keys(chartDefaults) as (keyof ChartDefaults)[]).map((key) => [
-      key,
-      params[key] ?? chartDefaults[key],
-    ]),
-  ) as unknown as ChartDefaults
-  return <BaseChart defaults={defaults} {...props} />
+  return <BaseChart look={useChartLook()} {...props} />
 }

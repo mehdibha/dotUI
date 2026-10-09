@@ -1,31 +1,43 @@
 "use client"
 
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
 import { ruleY } from "@tanstack/charts/rule"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/registry/ui/chart"
-import { barChart } from "@/registry/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/registry/ui/chart"
 
 const data = [
-  { month: "Jan", change: 186, trend: "gain" },
-  { month: "Feb", change: 205, trend: "gain" },
-  { month: "Mar", change: -207, trend: "loss" },
-  { month: "Apr", change: 173, trend: "gain" },
-  { month: "May", change: -209, trend: "loss" },
-  { month: "Jun", change: 214, trend: "gain" },
+  { month: "Jan", change: 186, trend: "Gain" },
+  { month: "Feb", change: 205, trend: "Gain" },
+  { month: "Mar", change: -207, trend: "Loss" },
+  { month: "Apr", change: 173, trend: "Gain" },
+  { month: "May", change: -209, trend: "Loss" },
+  { month: "Jun", change: 214, trend: "Gain" },
 ]
 
-const bars = barChart(data, {
-  x: "month",
-  y: "change",
-  series: "trend",
-  labels: { gain: "Gain", loss: "Loss" },
-})
-
-// A baseline under the bars, so the sign flip reads as a crossing.
 const chart = defineChart({
-  ...bars,
-  marks: [ruleY([0], { stroke: "var(--color-border)" }), ...bars.marks],
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    // A baseline under the bars, so the sign flip reads as a crossing.
+    ruleY([0], { stroke: "var(--color-border)" }),
+    barY(data, {
+      x: "month",
+      y: "change",
+      color: "trend",
+      z: "trend",
+      radius: chartLook.barRadius,
+      maxThickness: chartLook.barMaxThickness,
+    }),
+  ],
 })
 
 export default function ChartBarNegative() {

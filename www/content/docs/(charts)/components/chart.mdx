@@ -5,9 +5,9 @@ description: Renders any TanStack Charts definition in your design system — co
 
 <Demo name="chart/demos/composed" />
 
-dotUI charts are [TanStack Charts](https://tanstack.com/charts) definitions. You write them with the library's grammar — marks, scales, and channels — or start from a chart builder like `barChart` or `areaChart`. Either way, `Chart` renders the definition and fills in everything it leaves unset with your design system's defaults.
+dotUI charts are [TanStack Charts](https://tanstack.com/charts) definitions. You write them with the library's grammar — marks, scales, and channels — and `Chart` renders them in your design system, filling in whatever a definition leaves unset.
 
-There is no second chart vocabulary to learn: what TanStack Charts documents works here, and anything you set wins.
+There is no second chart vocabulary to learn: what TanStack Charts documents works here, and anything you set wins. Start from an example on the [chart pages](/docs/charts) and change what you need.
 
 ## Installation
 
@@ -15,18 +15,17 @@ There is no second chart vocabulary to learn: what TanStack Charts documents wor
 npx shadcn@latest add @dotui/chart
 ```
 
-Every chart family installs it along with its builder.
-
 ## Usage
 
 ```tsx
 import { defineChart } from "@tanstack/charts"
+import { barY } from "@tanstack/charts/bar"
+import { scaleLinear } from "@tanstack/charts/scales/linear"
 
-import { Chart } from "@/components/ui/chart"
-import { barChart } from "@/components/ui/chart-bar"
+import { Chart, chartBand, chartLook } from "@/components/ui/chart"
 ```
 
-Build the definition, then render it:
+Define the chart, then render it:
 
 ```tsx
 const data = [
@@ -35,7 +34,25 @@ const data = [
   { month: "Mar", desktop: 237 },
 ]
 
-const chart = defineChart(barChart(data, { x: "month", y: "desktop" }))
+const chart = defineChart({
+  scales: {
+    x: { scale: chartBand },
+    y: {
+      scale: scaleLinear,
+      nice: true,
+      grid: true,
+      axis: chartLook.valueAxis,
+    },
+  },
+  marks: [
+    barY(data, {
+      x: "month",
+      y: "desktop",
+      z: () => "Desktop",
+      radius: chartLook.barRadius,
+    }),
+  ],
+})
 
 export function Example() {
   return <Chart definition={chart} ariaLabel="Desktop visitors by month" />
@@ -46,107 +63,69 @@ A definition is compared by identity. Define it at module scope, or memoize it o
 
 ```tsx
 const chart = useMemo(
-  () => defineChart(barChart(rows, { x: "month", y: metric })),
+  () => defineChart({ scales, marks: [barY(rows, { x: "month", y: metric })] }),
   [rows, metric],
 )
 ```
 
-## Builders
-
-Each chart family ships a builder that returns a plain chart spec — scales, color, marks, and the focus and tooltip behavior that chart type needs. Pass it straight to `defineChart`, or spread it and change what you need:
-
-```tsx
-import { ruleY } from "@tanstack/charts/rule"
-
-const bars = barChart(data, { x: "month", y: "desktop" })
-
-const chart = defineChart({
-  ...bars,
-  marks: [...bars.marks, ruleY([250], { strokeDasharray: "4 4" })],
-})
-```
-
-The cartesian families also export their marks on their own — `barSeries`, `lineSeries`, `areaSeries` — so several kinds share one chart. The example above draws a `barSeries`, a raw `lineY` on a second y axis, and a dashed target in one definition.
-
-| Builder        | Family                                        |
-| -------------- | --------------------------------------------- |
-| `barChart`     | [Bar Chart](/docs/components/chart-bar)       |
-| `lineChart`    | [Line Chart](/docs/components/chart-line)     |
-| `areaChart`    | [Area Chart](/docs/components/chart-area)     |
-| `pieChart`     | [Pie Chart](/docs/components/chart-pie)       |
-| `radarChart`   | [Radar Chart](/docs/components/chart-radar)   |
-| `radialChart`  | [Radial Chart](/docs/components/chart-radial) |
-| `heatmapChart` | [Heatmap](/docs/components/chart-heatmap)     |
-
 ## What Chart fills in
 
-`Chart` applies these defaults to every definition, builder or hand-written. Each one only fills a gap:
+`Chart` applies these to every definition. Each one only fills a gap:
 
 - **Theme** — series colors from `--chart-1` through `--chart-8`, muted text, and border-colored gridlines, in light and dark.
-- **Axes** — no domain line and no tick marks; labels sit clear of the plot.
-- **Tooltip** — your popover surface, titled by the category and one row per series. Values read the way the axes print them, so an axis `format` is the tooltip's too.
+- **Axes** — no domain line and no tick marks, labels clear of the plot. `axis: false` hides an axis.
+- **Gridlines** — `grid: true` draws your design system's gridlines.
+- **Tooltip** — your popover surface, titled by the category with a row per series. A stacked segment reports its own value, and values read the way the axes print them.
 - **Focus** — `group-x`: hovering a position reports every series there. Arrow keys move between positions.
 - **Motion** — marks move between data states, bars and slices enter in sequence, and reduced motion is respected.
 - **Size** — without a `height`, 16:9 of its width; square for charts without x and y scales, like pies, radars, and radial bars.
 
-`withChartDefaults(definition)` applies the same defaults outside `Chart` — for an SVG export, or another framework's host.
+`withChartLook(definition)` applies the same, to render a definition through another host — an SVG export, or another framework's adapter.
 
-## Defaults
+## The look
 
-How those defaults look is your design system's, set in the studio and written into `chartDefaults` at the top of `chart.tsx`:
+How charts look is your design system's: the studio writes it into `chartLook` at the top of `chart.tsx`.
 
 ```tsx
-export const chartDefaults: ChartDefaults = {
-  axes: "minimal",
-  grid: "lines",
-  lines: "smooth",
-  area: "tint",
-  bars: "rounded",
-  legend: "off",
-  guide: "none",
-  motion: "spring",
+export const chartLook: ChartLook = {
+  curve: chartCurves.natural,
+  strokeWidth: 2,
+  areaOpacity: 0.4,
+  barRadius: 4,
+  barMaxThickness: undefined,
+  valueAxis: false,
+  grid: { strokeOpacity: 1 },
+  legend: "bottom",
+  motion: { type: "spring", stiffness: 170, damping: 26 },
 }
 ```
 
-| Key      | Values                                    | What it sets                                                               |
-| -------- | ----------------------------------------- | -------------------------------------------------------------------------- |
-| `axes`   | `minimal`, `labeled`, `baseline`, `right` | Category labels only, value labels too, a baseline, or values on the right |
-| `grid`   | `lines`, `dashed`, `full`                 | Gridlines along the value axis, dashed, or on both axes                    |
-| `lines`  | `smooth`, `straight`, `fine`              | The curve and width of lines and area edges                                |
-| `area`   | `tint`, `gradient`, `solid`               | How areas are filled                                                       |
-| `bars`   | `rounded`, `tip`, `square`, `slim`        | The shape of bars, radial bars, and heatmap cells                          |
-| `legend` | `off`, `bottom`, `top`                    | Where a chart with several series shows its legend                         |
-| `guide`  | `none`, `line`, `dashed`                  | The guide drawn at the hovered position                                    |
-| `motion` | `off`, `quick`, `spring`, `bouncy`        | How marks move between data states                                         |
+`Chart` reads `grid`, `legend`, and `motion` itself. Marks read the rest — the examples pass `chartLook.curve`, `chartLook.barRadius`, and the others to their marks — so editing a value here restyles every chart that does. A chart that sets its own value keeps it.
 
-They only fill gaps. A builder option or anything set in the definition wins — `barChart(data, { cornerRadius: 0 })` draws square bars whatever `bars` says, and `legend: false` hides a legend the defaults would show.
+| Field             | What it sets                                            |
+| ----------------- | ------------------------------------------------------- |
+| `curve`           | How lines and area edges travel between points          |
+| `strokeWidth`     | The width of lines and area edges                       |
+| `areaOpacity`     | How strongly areas are filled                           |
+| `barRadius`       | The corners of bars, radial bars, and heatmap cells     |
+| `barMaxThickness` | The widest a bar gets, in pixels                        |
+| `valueAxis`       | The value axis labels; `false` keeps only the gridlines |
+| `grid`            | The gridlines wherever a scale sets `grid: true`        |
+| `legend`          | Where `chartLegend` sits                                |
+| `motion`          | How marks move between data states; `false` jumps       |
 
-Edit the literal to change every chart at once, or pass `defaults` to one `Chart`:
-
-```tsx
-<Chart
-  definition={chart}
-  defaults={{ ...chartDefaults, lines: "straight", guide: "dashed" }}
-  ariaLabel="Revenue by month"
-/>
-```
-
-Builder marks — including `barSeries`, `lineSeries`, and `areaSeries` inside your own spec — follow the lines, area, and bars looks. Raw TanStack Charts marks draw exactly as you wrote them. Hand-written specs pick up the axes, grid, legend, and guide looks through the helpers below.
+Pass `look` to one `Chart` to render it with another look — `Chart` applies its gridlines, legend placement, and motion.
 
 ## Helpers
 
-The `chart` item also exports the pieces the builders are made of, for charts you write by hand:
-
-- `chartScales({ x, y, axes, grid })` — the x and y scales. Kinds are `"point"`, `"band"`, `"linear"`, and `"time"`; pass an object to add a `format`, a `label`, or any TanStack Charts scale option. Leave `axes` and `grid` unset to follow the defaults.
-- `chartSeries(data, { x, y, series, labels, order })` — reads wide or long rows into one row per value: `{ x, y, series, key, datum }`.
-- `chartColorScale(names, legend)` — the categorical color scale. Leave `legend` unset to follow the defaults, or pass `true`, `false`, or `"toggle"`.
-- `chartLegend({ toggle, placement })` — the color legend. With `toggle`, readers click a series to hide or show it and hover one to dim the rest; `Chart` keeps which series are hidden. Add `legendEmphasis` to a mark's `states` for the dimming.
-- `chartGuide(crosshair)` — spread into a spec to draw the defaults' hover guide; `true` draws one even when the defaults don't.
-- `chartLook(defaults)` and `chartMarks(build)` — for your own builder: `chartLook` resolves the curve, widths, and radii marks draw with, and marks returned through `chartMarks` restyle when a `Chart` gets other `defaults`.
-- `chartFade(slot)` and `chartFades()` — a series fill that fades toward the baseline, and the gradients the chart needs for it.
-- `chartColors`, `chartColor(index)`, `chartCurves` — the palette and the named curves.
-- `chartTooltipContent` — the default tooltip rows, to call from your own `content`.
-- `polarDecorative(mark)` — paints a polar mark without making it a focus stop.
+- `chartColors` — the series colors, `var(--chart-1)` through `var(--chart-8)`.
+- `chartCurves` — `natural`, `monotone`, `step`, and `linear` interpolation for lines and areas.
+- `chartBand` — a band scale with room between and around the bands, for bars.
+- `chartLegend` — the color legend: `color: { legend: chartLegend }`.
+- `chartFades` — a fade toward the baseline per series color. Add them to `gradients` and fill an area with `url(#chart-fade-0)`.
+- `chartSliceTooltip(label, value)` — the tooltip for pies and radial bars, whose points are angles and radii: a row per slice, named and valued from its fields.
+- `chartAngleLabels` — nudges a radar's circumference labels clear of the circle: `angleGrid({ ...chartAngleLabels })`.
+- `polarDecorative(mark)` — paints a mark inside `polar()` without making it a focus stop.
 
 Annotations — labels, target rules, highlights — usually shouldn't be focus stops. Wrap them in `decorative()` from `@tanstack/charts/mark/decorative`, or `polarDecorative()` inside a polar chart, so arrow keys and the tooltip skip them.
 
