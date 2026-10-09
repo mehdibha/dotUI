@@ -1,12 +1,11 @@
 /**
- * `ColorConfig` v2 — the persisted recipe for a design system's colors.
+ * `ColorConfig` v2 — the recipe for a design system's colors.
  *
  * Stores seeds + engine axes, never expanded ramps: `resolveColorConfig`
- * (in `primitives.ts`) feeds these to the `@dotui/colors` engine. One engine,
- * no algorithm menu — the v1 `{algorithm, knobs}` shape migrates below.
+ * (in `primitives.ts`) feeds these to the `@dotui/colors` engine.
  */
 
-import { STATUS_SEEDS, toOklch } from "@dotui/colors"
+import { toOklch } from "@dotui/colors"
 
 import type {
   PrimaryColorSource,
@@ -69,7 +68,6 @@ export interface ColorConfig {
    */
   chartPalette?: "vivid" | "muted"
 }
-export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
  * dotUI's default palette (Origin): a blue brand accent that also fills the
@@ -91,9 +89,6 @@ export const SITE_COLOR_CONFIG: ColorConfig = {
   seeds: { accent: "#438cd6" },
   background: { dark: 2 },
 }
-
-/** Engine status defaults, re-exported for the customizer's seed pickers. */
-export const DEFAULT_STATUS_SEEDS = STATUS_SEEDS
 
 /** True when the engine can parse `value` as a color (its render-time bar). */
 function isColor(value: unknown): value is string {
@@ -181,7 +176,7 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
 }
 
 /**
- * Salvage a decoded v2 color slice field by field: a corrupt or out-of-range
+ * Salvage a color config field by field: a corrupt or out-of-range
  * axis is clamped or dropped, never taking valid siblings with it. Anything
  * else falls back to the default, and every kept seed is verified parseable —
  * never a render explosion. The validator in front of the engine

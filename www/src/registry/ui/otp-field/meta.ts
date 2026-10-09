@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const otpFieldMeta = {
   name: "otp-field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",
@@ -15,7 +14,6 @@ const otpFieldMeta = {
   registryDependencies: ["field", "input"],
   params: {
     cells: {
-      kind: "enum",
       default: "group",
       values: ["group", "boxes", "underline"] as const,
       description:

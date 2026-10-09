@@ -32,7 +32,7 @@ import { UploadAvatar } from "@/components/showcase/upload-avatar"
 import { UsageCredits } from "@/components/showcase/usage-credits"
 
 // Every showcase card in one place — the single source of truth for what the
-// landing grid and the /create preview masonry render.
+// landing grid and the /studio preview masonry render.
 const CARDS = {
   accountMenu: <AccountMenu />,
   agentTasks: <AgentTasks />,
@@ -161,7 +161,7 @@ export const CardsGrid = memo(function CardsGrid({
   )
 })
 
-// The /create preview canvas — the shadcn-create shape: a fixed-pixel,
+// The /studio preview canvas — the shadcn-create shape: a fixed-pixel,
 // horizontally scrollable life-size surface rather than a fluid grid, so card
 // size comes from the ~340px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col

@@ -7,12 +7,12 @@ import { siteConfig } from "@/config/site"
 import { useIsMobile } from "@/registry/hooks/use-mobile"
 import { toastManager, ToastProvider } from "@/registry/ui/toast"
 import { getPreset } from "@/modules/presets"
-import { StudioPanel } from "@/modules/studio/create"
 import { StudioHeaderActions } from "@/modules/studio/export"
 import { PreviewPanel } from "@/modules/studio/preview/preview-panel"
 import { PanelPopoverBoundary } from "@/modules/studio/rows"
 import { getCurrent, select } from "@/modules/studio/selection"
 import { fetchSnapshot } from "@/modules/studio/share"
+import { StudioPanel } from "@/modules/studio/studio-panel"
 import { flush, isUnreadable, storageFailed } from "@/modules/studio/workspace"
 
 export function createSearchSchema(

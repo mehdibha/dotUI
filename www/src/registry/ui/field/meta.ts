@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const fieldMeta = {
   name: "field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const fieldMeta = {
   registryDependencies: ["text"],
   params: {
     error: {
-      kind: "enum",
       default: "border",
       values: ["border", "message", "bar"] as const,
       files: {

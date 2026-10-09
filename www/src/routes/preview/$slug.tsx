@@ -6,7 +6,7 @@ export const Route = createFileRoute("/preview/$slug")({
   validateSearch: (
     search: Record<string, unknown>,
   ): { mode?: "light" | "dark" } => ({
-    // Initial display mode, baked in by the /create parent (read directly from
+    // Initial display mode, baked in by the /studio parent (read directly from
     // location by usePreviewForcedTheme; declared so the router keeps it).
     mode:
       search.mode === "light" || search.mode === "dark"

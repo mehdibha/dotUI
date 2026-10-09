@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const toggleButtonGroupMeta = {
   name: "toggle-button-group",
   type: "registry:ui",
-  group: "buttons",
   files: [
     {
       type: "registry:ui",
@@ -15,7 +14,6 @@ const toggleButtonGroupMeta = {
   // Synced with group: the studio's Button groups axis writes both.
   params: {
     separator: {
-      kind: "enum",
       default: "auto",
       values: ["auto", "divider", "none"] as const,
     },

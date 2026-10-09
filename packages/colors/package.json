@@ -11,19 +11,17 @@
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "culori": "^4.0.2",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@adobe/leonardo-contrast-colors": "^1.1.0",
     "@dotui/ts-config": "workspace:*",
     "@radix-ui/colors": "^3.0.0",
     "@types/culori": "^4.0.1",
     "apca-w3": "^0.1.9",
-    "bezier-easing": "^3.0.1",
     "typescript": "catalog:"
   }
 }

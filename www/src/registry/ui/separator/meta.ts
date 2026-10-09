@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const separatorMeta = {
   name: "separator",
   type: "registry:ui",
-  group: "containers",
   files: [
     {
       type: "registry:ui",

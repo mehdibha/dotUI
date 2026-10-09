@@ -49,11 +49,7 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   return options
 }
 
-/**
- * Resolve a config through the engine. Salvages first — this also runs in
- * the publisher path on decoded request data, where a clamped axis beats a
- * deep engine throw.
- */
+/** Resolve a config through the engine. Salvages first: a clamped axis beats a deep engine throw. */
 export function resolveColorConfig(config: ColorConfig): Theme {
   return createTheme(themeOptionsFromConfig(salvageColorConfig(config)))
 }

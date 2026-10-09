@@ -46,7 +46,6 @@
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.16",
-    "chokidar-cli": "^3.0.0",
     "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
     "puppeteer": "^25.0.2",

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const sliderMeta = {
   name: "slider",
   type: "registry:ui",
-  group: "sliders",
   files: [
     {
       type: "registry:ui",
@@ -11,17 +10,15 @@ const sliderMeta = {
       target: "ui/slider.tsx",
     },
   ],
-  registryDependencies: ["field", "focus-styles"],
+  registryDependencies: ["field"],
   dependencies: ["react-aria"],
   params: {
     thumb: {
-      kind: "enum",
       default: "circle",
       values: ["circle", "outline", "bar"] as const,
       description: "The knob riding the track.",
     },
     track: {
-      kind: "enum",
       default: "thin",
       values: ["thin", "thick"] as const,
       description: "The track weight: a hairline, or a level bar.",

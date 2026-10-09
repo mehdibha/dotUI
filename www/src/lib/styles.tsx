@@ -38,12 +38,7 @@ import {
   SITE_SEMANTICS,
 } from "@/registry/theme"
 import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
-import type {
-  Density,
-  EnumParamDef,
-  ParamDef,
-  RegistryItem,
-} from "@/registry/types"
+import type { Density, ParamDef, RegistryItem } from "@/registry/types"
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -687,16 +682,16 @@ export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
 
 /* ----- Meta-driven param shape inference ----- */
 
-type EnumParamNamesOf<M> = M extends { params: infer P }
+type ParamNamesOf<M> = M extends { params: infer P }
   ? P extends Record<string, ParamDef>
-    ? { [K in keyof P]: P[K] extends EnumParamDef ? K : never }[keyof P]
+    ? keyof P
     : never
   : never
 
-type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
+type ParamValuesOf<M, K extends PropertyKey> = M extends {
   params: { [P in K]: infer Def }
 }
-  ? Def extends EnumParamDef
+  ? Def extends ParamDef
     ? Def["values"][number]
     : never
   : never
@@ -706,12 +701,12 @@ type ParamValueTv<Base> = ExtendingTv<Base> & {
   density?: Partial<Record<Density, ExtendingTv<Base>>>
 }
 
-type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
+type ParamsConfig<M, Base> = [ParamNamesOf<M>] extends [never]
   ? { params?: never }
   : {
       params?: {
-        [K in EnumParamNamesOf<M>]?: {
-          [V in EnumParamValuesOf<M, K> & string]?: ParamValueTv<Base>
+        [K in ParamNamesOf<M>]?: {
+          [V in ParamValuesOf<M, K> & string]?: ParamValueTv<Base>
         }
       }
     }
@@ -740,7 +735,7 @@ type InferTv<Base> = TVReturnType<
 type CreateStylesConfig<M, Base> = {
   base: Base
   density?: Record<Density, ExtendingTv<Base>>
-} & EnumParamsConfig<M, Base>
+} & ParamsConfig<M, Base>
 
 function createStyles<const M extends RegistryItem, const Base>(
   meta: M,
@@ -756,11 +751,10 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 
   const metaParams = (meta.params ?? {}) as Record<string, ParamDef>
-  const enumParamNames: string[] = []
+  const paramNames = Object.keys(metaParams)
   const paramDefaults: Record<string, string> = {}
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
-    if (def.kind === "enum") enumParamNames.push(paramName)
   }
 
   /* ----- Build per-density tv functions ----- */
@@ -786,7 +780,7 @@ function createStyles<const M extends RegistryItem, const Base>(
   ): ReturnType<typeof tv> {
     const defaultTv = densityTvs.default ?? baseTv
     let current: ReturnType<typeof tv> = densityTvs[d] ?? defaultTv
-    for (const paramName of enumParamNames) {
+    for (const paramName of paramNames) {
       const selectedValue =
         paramSelection[paramName] ?? paramDefaults[paramName]
       if (!selectedValue) continue

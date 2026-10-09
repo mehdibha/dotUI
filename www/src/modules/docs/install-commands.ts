@@ -7,7 +7,7 @@ export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
 
 /**
  * The user's package manager, shared across every install surface (docs code
- * tabs, the /create export dialog) so one choice follows them everywhere.
+ * tabs, the /studio export dialog) so one choice follows them everywhere.
  */
 export const packageManagerStore = createPersistedStore<PackageManager>(
   "dotui-package-manager",

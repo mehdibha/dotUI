@@ -9,30 +9,6 @@ import type {
  */
 export type Density = "compact" | "default" | "comfortable"
 
-/**
- * Component groups for style editor UI organization.
- * Components in the same group share the same visual style.
- */
-export type ComponentGroup =
-  | "buttons"
-  | "inputs"
-  | "pickers"
-  | "selection-controls"
-  | "overlays"
-  | "menus-lists"
-  | "feedback"
-  | "progress"
-  | "tags"
-  | "navigation"
-  | "disclosure"
-  | "containers"
-  | "sliders"
-  | "color-swatches"
-  | "calendar"
-  | "drop-zone"
-  | "typography"
-  | "charts"
-
 /* ------------------------------- Params ------------------------------- */
 
 export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
@@ -41,8 +17,7 @@ export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
  * A param: the user picks one of a fixed set of named values. Each value can
  * carry tv slices in `createStyles` and/or CSS vars in `vars` here.
  */
-export type EnumParamDef = {
-  kind: "enum"
+export type ParamDef = {
   default: string
   values: readonly string[]
   /**
@@ -65,11 +40,7 @@ export type EnumParamDef = {
   description?: string
 }
 
-export type ParamDef = EnumParamDef
-
 export type RegistryItem = ShadcnRegistryItem & {
-  /** Component group for style editor UI organization */
-  group?: ComponentGroup | null
   /** The studio axes this component answers to: 1-of-N named values that
    *  carry tv slices and/or global CSS vars. */
   params?: Record<string, ParamDef>

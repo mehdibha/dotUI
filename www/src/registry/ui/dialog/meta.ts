@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const dialogMeta = {
   name: "dialog",
   type: "registry:ui",
-  group: "overlays",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const dialogMeta = {
   registryDependencies: ["responsive", "modal", "drawer", "popover", "button"],
   params: {
     header: {
-      kind: "enum",
       default: "title",
       values: ["title", "band"] as const,
       description:

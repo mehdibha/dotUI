@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const textFieldMeta = {
   name: "text-field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",

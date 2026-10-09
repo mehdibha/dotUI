@@ -84,20 +84,6 @@ export const registryIcons: Record<
     hugeicons: "ShoppingBag01Icon",
     phosphor: "ShoppingBagIcon",
   },
-  WandIcon: {
-    lucide: "WandIcon",
-    remix: "RiMagicLine",
-    tabler: "IconWand",
-    hugeicons: "MagicWand01Icon",
-    phosphor: "MagicWandIcon",
-  },
-  MousePointerIcon: {
-    lucide: "MousePointerIcon",
-    remix: "RiCursorLine",
-    tabler: "IconPointer",
-    hugeicons: "Cursor01Icon",
-    phosphor: "CursorIcon",
-  },
   MoreHorizontalIcon: {
     lucide: "MoreHorizontalIcon",
     remix: "RiMoreLine",
@@ -175,20 +161,6 @@ export const registryIcons: Record<
     hugeicons: "CheckmarkCircle02Icon",
     phosphor: "CheckCircleIcon",
   },
-  LightbulbIcon: {
-    lucide: "LightbulbIcon",
-    remix: "RiLightbulbLine",
-    tabler: "IconBulb",
-    hugeicons: "BulbIcon",
-    phosphor: "LightbulbIcon",
-  },
-  ContainerIcon: {
-    lucide: "ContainerIcon",
-    remix: "RiBox3Line",
-    tabler: "IconBox",
-    hugeicons: "CubeIcon",
-    phosphor: "CubeIcon",
-  },
   ZapIcon: {
     lucide: "ZapIcon",
     remix: "RiFlashlightLine",
@@ -251,13 +223,6 @@ export const registryIcons: Record<
     tabler: "IconUpload",
     hugeicons: "Upload01Icon",
     phosphor: "UploadSimpleIcon",
-  },
-  CloudCogIcon: {
-    lucide: "CloudCogIcon",
-    remix: "RiCloudLine",
-    tabler: "IconCloudCog",
-    hugeicons: "AiCloud01Icon",
-    phosphor: "CloudIcon",
   },
   GitBranchIcon: {
     lucide: "GitBranchIcon",
@@ -413,13 +378,6 @@ export const registryIcons: Record<
     hugeicons: "Clock01Icon",
     phosphor: "ClockIcon",
   },
-  CalendarPlusIcon: {
-    lucide: "CalendarPlusIcon",
-    remix: "RiCalendarEventLine",
-    tabler: "IconCalendarPlus",
-    hugeicons: "CalendarAdd01Icon",
-    phosphor: "CalendarPlusIcon",
-  },
   ListFilterIcon: {
     lucide: "ListFilterIcon",
     remix: "RiFilterLine",
@@ -448,13 +406,6 @@ export const registryIcons: Record<
     hugeicons: "ArrowRight02Icon",
     phosphor: "ArrowRightIcon",
   },
-  VolumeX: {
-    lucide: "VolumeX",
-    remix: "RiVolumeMuteLine",
-    tabler: "IconVolume",
-    hugeicons: "VolumeOffIcon",
-    phosphor: "SpeakerXIcon",
-  },
   CheckIcon: {
     lucide: "CheckIcon",
     remix: "RiCheckLine",
@@ -482,13 +433,6 @@ export const registryIcons: Record<
     tabler: "IconTrash",
     hugeicons: "Delete01Icon",
     phosphor: "TrashIcon",
-  },
-  BluetoothIcon: {
-    lucide: "BluetoothIcon",
-    remix: "RiBluetoothLine",
-    tabler: "IconBluetooth",
-    hugeicons: "BluetoothIcon",
-    phosphor: "BluetoothIcon",
   },
   MoreVerticalIcon: {
     lucide: "MoreVerticalIcon",
@@ -538,13 +482,6 @@ export const registryIcons: Record<
     tabler: "IconEye",
     hugeicons: "EyeIcon",
     phosphor: "EyeIcon",
-  },
-  LayoutIcon: {
-    lucide: "LayoutIcon",
-    remix: "RiLayoutLine",
-    tabler: "IconLayout",
-    hugeicons: "Layout01Icon",
-    phosphor: "LayoutIcon",
   },
   PaletteIcon: {
     lucide: "PaletteIcon",
@@ -623,13 +560,6 @@ export const registryIcons: Record<
     hugeicons: "CheckmarkBadge02Icon",
     phosphor: "SealCheckIcon",
   },
-  ArrowLeftCircleIcon: {
-    lucide: "ArrowLeftCircleIcon",
-    remix: "RiArrowLeftCircleLine",
-    tabler: "IconCircleArrowLeft",
-    hugeicons: "CircleArrowLeft02Icon",
-    phosphor: "ArrowCircleLeftIcon",
-  },
   FlipHorizontalIcon: {
     lucide: "FlipHorizontalIcon",
     remix: "RiFlipHorizontalLine",
@@ -650,13 +580,6 @@ export const registryIcons: Record<
     tabler: "IconRotateClockwise2",
     hugeicons: "Rotate01Icon",
     phosphor: "ArrowClockwiseIcon",
-  },
-  Clock2Icon: {
-    lucide: "Clock2Icon",
-    remix: "RiTimeLine",
-    tabler: "IconClockHour2",
-    hugeicons: "Clock03Icon",
-    phosphor: "ClockIcon",
   },
   CaptionsIcon: {
     lucide: "CaptionsIcon",
@@ -741,20 +664,6 @@ export const registryIcons: Record<
     tabler: "IconList",
     hugeicons: "Menu05Icon",
     phosphor: "ListIcon",
-  },
-  ZoomInIcon: {
-    lucide: "ZoomInIcon",
-    remix: "RiZoomInLine",
-    tabler: "IconZoomIn",
-    hugeicons: "ZoomInAreaIcon",
-    phosphor: "MagnifyingGlassPlusIcon",
-  },
-  ZoomOutIcon: {
-    lucide: "ZoomOutIcon",
-    remix: "RiZoomOutLine",
-    tabler: "IconZoomOut",
-    hugeicons: "ZoomOutAreaIcon",
-    phosphor: "MagnifyingGlassMinusIcon",
   },
   BellIcon: {
     lucide: "BellIcon",
@@ -931,27 +840,6 @@ export const registryIcons: Record<
     hugeicons: "ChartLineData01Icon",
     phosphor: "ChartLineIcon",
   },
-  ChartBarIcon: {
-    lucide: "ChartBarIcon",
-    remix: "RiBarChartLine",
-    tabler: "IconChartBar",
-    hugeicons: "ChartColumnIcon",
-    phosphor: "ChartBarIcon",
-  },
-  ChartPieIcon: {
-    lucide: "ChartPieIcon",
-    remix: "RiPieChartLine",
-    tabler: "IconChartPie",
-    hugeicons: "PieChartIcon",
-    phosphor: "ChartPieIcon",
-  },
-  TerminalSquareIcon: {
-    lucide: "TerminalSquareIcon",
-    remix: "RiTerminalLine",
-    tabler: "IconTerminal2",
-    hugeicons: "SourceCodeSquareIcon",
-    phosphor: "TerminalWindowIcon",
-  },
   BookOpen: {
     lucide: "BookOpen",
     remix: "RiBookOpenLine",
@@ -973,13 +861,6 @@ export const registryIcons: Record<
     hugeicons: "CropIcon",
     phosphor: "FrameCornersIcon",
   },
-  PieChartIcon: {
-    lucide: "PieChartIcon",
-    remix: "RiPieChartLine",
-    tabler: "IconChartPie",
-    hugeicons: "PieChartIcon",
-    phosphor: "ChartPieSliceIcon",
-  },
   MapIcon: {
     lucide: "MapIcon",
     remix: "RiMapLine",
@@ -993,13 +874,6 @@ export const registryIcons: Record<
     tabler: "IconShoppingCart",
     hugeicons: "ShoppingCart01Icon",
     phosphor: "ShoppingCartIcon",
-  },
-  LifeBuoy: {
-    lucide: "LifeBuoy",
-    remix: "RiLifebuoyLine",
-    tabler: "IconLifebuoy",
-    hugeicons: "ChartRingIcon",
-    phosphor: "LifebuoyIcon",
   },
   Send: {
     lucide: "Send",
@@ -1077,20 +951,6 @@ export const registryIcons: Record<
     tabler: "IconUser",
     hugeicons: "UserIcon",
     phosphor: "UserIcon",
-  },
-  ArrowRightCircleIcon: {
-    lucide: "ArrowRightCircleIcon",
-    remix: "RiArrowRightCircleLine",
-    tabler: "IconCircleArrowRight",
-    hugeicons: "CircleArrowRight02Icon",
-    phosphor: "ArrowCircleRightIcon",
-  },
-  LogInIcon: {
-    lucide: "LogInIcon",
-    remix: "RiLoginBoxLine",
-    tabler: "IconLogin",
-    hugeicons: "Login01Icon",
-    phosphor: "SignInIcon",
   },
   PenSquareIcon: {
     lucide: "PenSquareIcon",

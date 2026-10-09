@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const paginationMeta = {
   name: "pagination",
   type: "registry:ui",
-  group: "navigation",
   files: [
     {
       type: "registry:ui",
@@ -14,7 +13,6 @@ const paginationMeta = {
   registryDependencies: ["button"],
   params: {
     current: {
-      kind: "enum",
       default: "outline",
       values: ["filled", "outline"] as const,
       description:

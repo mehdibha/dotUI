@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const chartHeatmapMeta = {
   name: "chart-heatmap",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",
