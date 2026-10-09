@@ -20,7 +20,6 @@ import {
 } from "../src/publisher/build-time/build-publishables"
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps"
 import { BUNDLED_INTO_INIT, registryDepsFor } from "../src/publisher/publish"
-import { registryBase } from "../src/registry/base/registry"
 import { registryHooks } from "../src/registry/hooks/registry"
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map"
 import {
@@ -332,7 +331,7 @@ ${groupEntries.join("\n")}
 
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ create/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
+    `  ✓ studio/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
   )
 }
 
@@ -441,9 +440,8 @@ function toItemIdent(scope: "ui" | "lib", slug: string): string {
 }
 
 // Emits __generated__/registry-items.ts — the single source of truth for
-// registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts minus the
-// ORPHAN_ALLOWLIST. Committed and load-bearing for the app: ui/registry.ts +
-// lib/registry.ts re-export it. This script derives its own fresh item lists
+// registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts. Committed
+// and load-bearing for the app: ui/registry.ts + lib/registry.ts re-export it. This script derives its own fresh item lists
 // (loadRegisteredItems) rather than importing the manifest, so a stale manifest
 // never blocks regenerating it.
 async function buildRegistryItemsManifest() {
@@ -498,30 +496,9 @@ ${arrayBlock("registryLib", "lib", lib)}
 // ============================================================================
 
 /**
- * Folders that have a `meta.ts` on disk but are intentionally EXCLUDED from the
- * generated registry (work-in-progress, not shipped). This single Set is the
- * source of truth read by BOTH the glob that emits __generated__/registry-items.ts
- * AND the build-time guards — so emitter and guard can never disagree about the
- * registered set. Removing an entry makes that folder start shipping on the next
- * build:registry; adding a slug keeps a WIP item out.
- *
- *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
- *                         not exist yet.
- *   ui/tanstack-form     WIP — name:"form"; stub (index.tsx + meta only).
- *
- * NOTE: react-hook-form and tanstack-form both declare name:"form"; they never
- * collide because both are excluded here (and bare ui/form has no meta.ts).
- */
-const ORPHAN_ALLOWLIST = new Set<string>([
-  "ui/react-hook-form",
-  "ui/tanstack-form",
-])
-
-/**
- * Directories under `src/registry/<scope>` that have a `meta.ts` on disk, minus
- * the ORPHAN_ALLOWLIST, sorted by slug. The ONE place the glob + exclusion lives
- * — both the manifest emitter and the item loader call it, so they can never
- * disagree about what is registered.
+ * Directories under `src/registry/<scope>` that have a `meta.ts` on disk,
+ * sorted by slug. Both the manifest emitter and the item loader call it, so
+ * they can never disagree about what is registered.
  */
 async function listRegistryFolders(scope: "ui" | "lib"): Promise<string[]> {
   const scopeDir = path.join(REGISTRY_DIR, scope)
@@ -530,7 +507,6 @@ async function listRegistryFolders(scope: "ui" | "lib"): Promise<string[]> {
   for (const entry of dirEntries) {
     if (!entry.isDirectory()) continue
     if (!existsSync(path.join(scopeDir, entry.name, "meta.ts"))) continue
-    if (ORPHAN_ALLOWLIST.has(`${scope}/${entry.name}`)) continue
     folders.push(entry.name)
   }
   return folders.sort()
@@ -558,47 +534,6 @@ async function loadRegisteredItems(
   return items
 }
 
-/** Fails if an ORPHAN_ALLOWLIST entry no longer has a meta.ts on disk (rotted entry). */
-function checkAllowlistStale(): string[] {
-  const errors: string[] = []
-  for (const key of ORPHAN_ALLOWLIST) {
-    if (!existsSync(path.join(REGISTRY_DIR, key, "meta.ts"))) {
-      errors.push(
-        `Stale ORPHAN_ALLOWLIST entry "${key}" — ${key}/meta.ts no longer exists. ` +
-          `Remove it from ORPHAN_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  return errors
-}
-
-/** Non-fatal: warns when an excluded ui/* folder looks production-ready (has demos/examples). */
-function checkAllowlistReadiness(): void {
-  for (const key of ORPHAN_ALLOWLIST) {
-    if (!key.startsWith("ui/")) continue
-    const dir = path.join(REGISTRY_DIR, key)
-    if (
-      existsSync(path.join(dir, "demos")) ||
-      existsSync(path.join(dir, "examples.tsx"))
-    ) {
-      console.warn(
-        `  ⚠ ${key} is allowlisted (excluded from the registry) but has demos/examples — ` +
-          `looks production-ready. Consider removing it from ORPHAN_ALLOWLIST so it ships.`,
-      )
-    }
-  }
-}
-
-/**
- * Derived dep names whose target is NOT a registered item yet — a known packaging gap.
- * Skipped so the drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed
- * by DEP-NAME and covers the hooks scope, so it is deliberately DISTINCT from
- * ORPHAN_ALLOWLIST (folder-path keyed, ui|lib only) — do not unify them. Drop an entry
- * once its target is a registered item, and the guard will then require consumers to
- * declare it. Currently empty — every derived dep resolves to a registered item.
- */
-const UNREGISTERED_DEP_ALLOWLIST = new Set<string>()
-
 /**
  * Asserts each registered ui item DECLARES every registry dependency its shipped base
  * file(s) import. The shipped import graph is a SUBSET of the intended dependency
@@ -610,9 +545,7 @@ async function checkRegistryDepsDrift(
   registryLib: RegistryItem[],
 ): Promise<string[]> {
   const registeredNames = new Set<string>(
-    [...registryBase, ...registryUi, ...registryLib, ...registryHooks].map(
-      (item) => item.name,
-    ),
+    [...registryUi, ...registryLib, ...registryHooks].map((item) => item.name),
   )
   const errors: string[] = []
 
@@ -630,7 +563,6 @@ async function checkRegistryDepsDrift(
       for (const dep of derived) {
         if (declared.has(dep)) continue
         if (BUNDLED_INTO_INIT.has(dep)) continue
-        if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue
         if (registeredNames.has(dep)) {
           errors.push(
             `registryDependencies drift: "${meta.name}" ${baseFile.path} imports "${dep}" but meta omits it. ` +
@@ -639,7 +571,7 @@ async function checkRegistryDepsDrift(
         } else {
           errors.push(
             `Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
-              `not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+              `and not bundled. Register it.`,
           )
         }
       }
@@ -655,7 +587,7 @@ function selectionsShipping(
 ): Record<string, string> {
   const selections: Record<string, string> = {}
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.files) continue
+    if (!def.files) continue
     for (const [value, files] of Object.entries(def.files)) {
       if (files.some((file) => file.path === filePath)) {
         selections[paramName] = value
@@ -665,11 +597,7 @@ function selectionsShipping(
   return selections
 }
 
-/**
- * Asserts `meta.name` is globally unique across all REGISTERED items
- * (base + ui + lib + hooks). Unregistered/allowlisted items are not
- * checked here, so the two unregistered name:"form" folders don't collide.
- */
+/** Asserts `meta.name` is globally unique across ui, lib and hooks items. */
 function checkUniqueRegisteredNames(
   registryUi: RegistryItem[],
   registryLib: RegistryItem[],
@@ -677,7 +605,6 @@ function checkUniqueRegisteredNames(
   const seen = new Map<string, string>() // name -> scope it was first seen in
   const errors: string[] = []
   const groups: Array<[string, RegistryItem[]]> = [
-    ["base", registryBase as unknown as RegistryItem[]],
     ["ui", registryUi],
     ["lib", registryLib],
     ["hooks", registryHooks],
@@ -704,9 +631,7 @@ async function checkRegistryIntegrity(
   registryUi: RegistryItem[],
   registryLib: RegistryItem[],
 ) {
-  checkAllowlistReadiness()
   const errors = [
-    ...checkAllowlistStale(),
     ...(await checkRegistryDepsDrift(registryUi, registryLib)),
     ...checkUniqueRegisteredNames(registryUi, registryLib),
   ]
@@ -716,9 +641,7 @@ async function checkRegistryIntegrity(
       `Registry integrity check failed:\n  - ${errors.join("\n  - ")}`,
     )
   }
-  console.log(
-    "  ✓ registry integrity (allowlist fresh, deps declared, names unique)",
-  )
+  console.log("  ✓ registry integrity (deps declared, names unique)")
 }
 
 // ============================================================================
@@ -729,48 +652,14 @@ async function checkRegistryIntegrity(
 // production. See www/src/publisher/publish-smoke.test.ts for the compile guard.
 // ============================================================================
 
-/**
- * ui items allowed to NOT emit a publishable, name → reason. Mirrors
- * ORPHAN_ALLOWLIST: a skip that is NOT listed here fails the build, and a listed
- * name that DID publish is stale and also fails. Every registered ui item must
- * publish, so this starts EMPTY — an extractor/transform error is a build break,
- * never a silent skip (the original #477 failure).
- */
-const SKIP_ALLOWLIST = new Map<string, string>()
-
-/** Guard 1: fails on any unexplained publishable skip and on stale allowlist entries. */
+/** Guard 1: every registered item must emit a publishable — a skip is a build break. */
 function checkPublishableSkips(build: PublishablesBuild): string[] {
-  const errors: string[] = []
-  for (const { name, reason } of build.skipped) {
-    if (SKIP_ALLOWLIST.has(name)) continue
-    errors.push(
+  return build.skipped.map(
+    ({ name, reason }) =>
       `Publishable "${name}" was skipped: ${reason}\n` +
-        `      Fix ui/${name} so it emits a publishable, or (only if intentional) add ` +
-        `"${name}" to SKIP_ALLOWLIST in scripts/registry-build.ts with a reason.`,
-    )
-  }
-  for (const name of SKIP_ALLOWLIST.keys()) {
-    if (build.builtNames.has(name)) {
-      errors.push(
-        `Stale SKIP_ALLOWLIST entry "${name}" — it now publishes fine. ` +
-          `Remove it from SKIP_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  return errors
+      `      Fix ui/${name} so it emits a publishable.`,
+  )
 }
-
-/**
- * Registered lib/hook items referenced as `registryDependencies` that are NOT
- * independently servable at GET /r/{name}.json (only ui items become publishables).
- * shadcn add would fall through to its DEFAULT registry for these bare names —
- * the exact #477 failure. They are a KNOWN packaging gap: the fix is to ship the
- * file inline (as ui/tabs does with lib/context) or make lib/hooks servable.
- * name → reason. Keyed by DEP-NAME; distinct from ORPHAN_ALLOWLIST (folder-path)
- * and UNREGISTERED_DEP_ALLOWLIST (derived-import gaps). Drop an entry once the
- * dep is inlined or becomes a publishable, and the guard requires it to resolve.
- */
-const KNOWN_UNSERVABLE_DEPS = new Map<string, string>()
 
 /**
  * Guard 2: every publishable's `registryDependencies` must resolve to something
@@ -783,50 +672,22 @@ function checkDependencyClosure(
   build: PublishablesBuild,
 ): string[] {
   const errors: string[] = []
-  const referenced = new Set<string>()
   for (const meta of registryUi) {
     if (!build.builtNames.has(meta.name)) continue
     for (const dep of registryDepsFor(meta)) {
       if (build.builtNames.has(dep)) continue
       if (BUNDLED_INTO_INIT.has(dep)) continue
       if (dep.includes("://") || dep.startsWith("@")) continue
-      if (KNOWN_UNSERVABLE_DEPS.has(dep)) {
-        referenced.add(dep)
-        continue
-      }
       errors.push(
         `Dangling registryDependency: "${meta.name}" declares "${dep}", which is not a ` +
           `published component, not bundled into init, and not an absolute-URL / @namespace dep. ` +
           `shadcn add would resolve "${dep}" against its DEFAULT registry (the #477 failure). ` +
-          `Publish "${dep}" (add ui/${dep}), fix the name in ui/${meta.name}/meta.ts, or — if it is a ` +
-          `known lib/hook gap — add it to KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
-      )
-    }
-  }
-  for (const [dep, reason] of KNOWN_UNSERVABLE_DEPS) {
-    if (build.builtNames.has(dep)) {
-      errors.push(
-        `Stale KNOWN_UNSERVABLE_DEPS entry "${dep}" — it now publishes and is servable. ` +
-          `Remove it from KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
-      )
-    } else if (!referenced.has(dep)) {
-      errors.push(
-        `Stale KNOWN_UNSERVABLE_DEPS entry "${dep}" — no publishable declares it anymore (${reason}). ` +
-          `Remove it from KNOWN_UNSERVABLE_DEPS in scripts/registry-build.ts.`,
+          `Publish "${dep}" (add ui/${dep}) or fix the name in ui/${meta.name}/meta.ts.`,
       )
     }
   }
   return errors
 }
-
-/**
- * Non-component `@dotui/<name>` install targets docs may advertise, name →
- * reason. Starts EMPTY: every install name in the docs must resolve to a
- * publishable or a served route (see SERVED_ROUTE_NAMES). An entry here is a
- * standing excuse for a name that 404s, so add one only for a genuinely
- * unservable target, with a reason; a name that starts publishing makes it stale.
- */
-const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
 
 /**
  * Names that resolve to a real `/r/<name>.json` file but aren't components, so
@@ -854,8 +715,7 @@ const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 /**
  * Guard 3: every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
- * URLs; each must be a publishable, a served route (SERVED_ROUTE_NAMES), or an
- * allowlisted non-component. This is what would have caught `@dotui/text-field`
+ * URLs; each must be a publishable or a served route (SERVED_ROUTE_NAMES). This is what would have caught `@dotui/text-field`
  * advertising a component that 404'd.
  */
 async function checkDocsRegistryConsistency(
@@ -864,7 +724,6 @@ async function checkDocsRegistryConsistency(
   const docsDir = path.join(process.cwd(), "content/docs")
   const files = await listMdxFiles(docsDir)
   const errors: string[] = []
-  const seen = new Set<string>()
 
   for (const file of files) {
     const source = await fs.readFile(file, "utf8")
@@ -885,34 +744,15 @@ async function checkDocsRegistryConsistency(
           if (!name) continue
           if (build.builtNames.has(name)) continue
           if (SERVED_ROUTE_NAMES.has(name)) continue
-          if (DOCS_INSTALL_NAME_ALLOWLIST.has(name)) {
-            seen.add(name)
-            continue
-          }
           errors.push(
             `${path.relative(process.cwd(), file)}:${i + 1} advertises "@dotui/${name}", ` +
-              `which is not a published component. Publish "${name}" (add ui/${name}), fix the docs ` +
-              `name, or — if it is a known non-component target — add it to DOCS_INSTALL_NAME_ALLOWLIST ` +
-              `in scripts/registry-build.ts.`,
+              `which is not a published component. Publish "${name}" (add ui/${name}) or fix the docs name.`,
           )
         }
       }
     })
   }
 
-  for (const [name, reason] of DOCS_INSTALL_NAME_ALLOWLIST) {
-    if (build.builtNames.has(name)) {
-      errors.push(
-        `Stale DOCS_INSTALL_NAME_ALLOWLIST entry "${name}" — it now publishes as a component. ` +
-          `Remove it from DOCS_INSTALL_NAME_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    } else if (!seen.has(name)) {
-      errors.push(
-        `Stale DOCS_INSTALL_NAME_ALLOWLIST entry "${name}" — no docs page advertises it anymore (${reason}). ` +
-          `Remove it from DOCS_INSTALL_NAME_ALLOWLIST in scripts/registry-build.ts.`,
-      )
-    }
-  }
   return errors
 }
 

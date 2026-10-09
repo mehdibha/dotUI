@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const dropZoneMeta = {
   name: "drop-zone",
   type: "registry:ui",
-  group: "drop-zone",
   files: [
     {
       type: "registry:ui",

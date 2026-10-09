@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const chartBarMeta = {
   name: "chart-bar",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",

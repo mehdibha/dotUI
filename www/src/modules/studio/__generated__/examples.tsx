@@ -60,7 +60,6 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"qr-code": () => import("@/registry/ui/qr-code/examples"),
 	questionnaire: () => import("@/registry/ui/questionnaire/examples"),
 	"radio-group": () => import("@/registry/ui/radio-group/examples"),
-	"react-hook-form": () => import("@/registry/ui/react-hook-form/examples"),
 	"search-field": () => import("@/registry/ui/search-field/examples"),
 	"segmented-control": () => import("@/registry/ui/segmented-control/examples"),
 	select: () => import("@/registry/ui/select/examples"),

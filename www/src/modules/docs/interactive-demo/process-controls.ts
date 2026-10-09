@@ -31,7 +31,7 @@ import type {
 export async function buildControlsFromReference(
   name: string,
   controlInputs: ControlInput[],
-  demoSource?: string,
+  demoSource: string,
 ): Promise<Control[]> {
   const reference = await loadApiReference(name)
 
@@ -59,12 +59,9 @@ export async function buildControlsFromReference(
     controls.push(inferredControl)
   }
 
-  // SourceFirst: the default the user SEES in the demo's param signature is the
-  // authoritative control default (Problem #4 fix) — it overrides the reference
-  // default, which can be alphabetized/absent. Legacy callers pass no source.
-  if (demoSource) {
-    applyParamDefaults(controls, readParamDefaults(demoSource))
-  }
+  // The default the user sees in the demo's param signature wins over the
+  // reference default, which can be alphabetized or absent.
+  applyParamDefaults(controls, readParamDefaults(demoSource))
 
   return controls
 }

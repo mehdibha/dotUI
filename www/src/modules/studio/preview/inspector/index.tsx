@@ -64,7 +64,7 @@ function propsOf(fiber: FiberLike): [string, unknown][] {
 }
 
 /**
- * The /create preview inspector — rendered inside the preview iframe. Toggled
+ * The /studio preview inspector — rendered inside the preview iframe. Toggled
  * from the parent's toolbar; hovering highlights the nearest dotUI component
  * (matched by identity against the registry exports) with its name and props,
  * clicking opens that component's params in the panel, Escape exits.

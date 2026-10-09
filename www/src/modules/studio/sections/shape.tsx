@@ -86,13 +86,6 @@ export function ShapePreview({ state }: { state: StudioState }) {
   )
 }
 
-export function shapeSummary(state: StudioState): string {
-  const character =
-    SHAPE_CHARACTERS.find((c) => c.id === activeCharacter(state))?.label ??
-    "Custom"
-  return `${character} · ${px(state.radiusPx)}`
-}
-
 /** Mounted with the popover, so Roles opens on a custom vector each time. */
 function CharacterPanel({ studio }: { studio: Studio }) {
   const { state, set, setState } = studio

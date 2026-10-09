@@ -26,13 +26,11 @@ const fixtureMeta = {
   files: [{ type: "registry:ui", path: "fake.tsx", target: "fake.tsx" }],
   params: {
     style: {
-      kind: "enum",
       default: "default",
       values: ["default", "alt"] as const,
       vars: { alt: { "--fixture-bg": "var(--neutral-100)" } },
     },
     highlight: {
-      kind: "enum",
       default: "subtle",
       values: ["subtle", "accent"] as const,
     },
@@ -276,7 +274,7 @@ const _missingValues = {
   files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
   params: {
     // @ts-expect-error — values is required for enum params
-    style: { kind: "enum", default: "default" },
+    style: { default: "default" },
   },
 } satisfies RegistryItem
 

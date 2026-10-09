@@ -1,6 +1,6 @@
-# /create — experience spec (draft 2)
+# /studio — experience spec (draft 2)
 
-What building a design system on dotui.org/create should feel like. Layout
+What building a design system on dotui.org/studio should feel like. Layout
 candidates are judged against this page, not against taste. Draft — correct it;
 every wrong line here is cheaper than a wrong prototype.
 
@@ -19,7 +19,7 @@ hiding capability.
 | **Deep build** | 1–4 h+ | Recreate a target look (their brand, a Linear-like system) with precision | Never wonders "can it do X?"; finds any axis in seconds; ends in export |
 | **Return visit** | 2–5 min | Change one thing, re-export | Cold-start find → change → out, under a minute |
 
-**Decided (Aug 2026): first touch and deep build carry equal weight.** /create
+**Decided (Aug 2026): first touch and deep build carry equal weight.** /studio
 is both the marketing demo and the working tool, and a candidate that
 sacrifices either loses. Practically: the identity layer must delight a
 2-minute visitor, the structure must not cap the hours-long build, and the

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const searchFieldMeta = {
   name: "search-field",
   type: "registry:ui",
-  group: "inputs",
   files: [
     {
       type: "registry:ui",

@@ -158,8 +158,7 @@ function SidebarProvider({
     }
   }, [isMobile, isOpen, setOpen]);
 
-  // Toggle with ⌘B / Ctrl+B. Inlined (rather than the use-keyboard-shortcut hook)
-  // so the shipped sidebar stays a single self-contained file.
+  // Toggle with ⌘B / Ctrl+B.
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (

@@ -41,7 +41,7 @@ export function getExamplesPromise(slug: string) {
   return promise
 }
 
-// Embedded, the preview sits inside the /create panel's rounded card; a native
+// Embedded, the preview sits inside the /studio panel's rounded card; a native
 // viewport scrollbar would cut into the card edge. Hide it — wheel/trackpad
 // scrolling is unaffected. Standalone (open-in-new-tab) previews keep it.
 const EMBEDDED_SCROLLBAR_CSS = `

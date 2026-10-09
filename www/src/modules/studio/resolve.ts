@@ -19,7 +19,7 @@ const enumVars = new Map<
 >()
 for (const item of registryUi) {
   for (const [paramName, def] of Object.entries(item.params ?? {})) {
-    if (def.kind !== "enum" || !def.vars) continue
+    if (!def.vars) continue
     const byParam = enumVars.get(item.name) ?? {}
     byParam[paramName] = def.vars
     enumVars.set(item.name, byParam)

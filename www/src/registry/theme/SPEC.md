@@ -55,12 +55,10 @@ unchanged; 80 components consume them. Changes:
   `tailwindcss-autocontrast` plugin is dropped from the pipeline and from
   exported dependencies; `--on-*` ship as literals.
 - **Muted tint surfaces become real tokens** (`color-primary-muted` etc.
-  re-derived from subtle-bg jobs); the ad-hoc
-  `color-mix(...)` recipes in checkbox/radio/calendar migrate onto them.
-- **New tokens** 🟡: `color-overlay` (modal/drawer scrim — today hardcoded
-  `bg-black/70`) and `color-fg-on-overlay`; `color-thumb` (switch/slider
-  thumb — today `bg-white`). Flagged as the missing axes recon found; two
-  design systems disagree on both.
+  re-derived from subtle-bg jobs); the ad-hoc `color-mix(...)` recipes in
+  checkbox/radio/calendar moved onto them.
+- **New tokens**: `color-overlay` (modal/drawer scrim) and `color-thumb`
+  (switch thumb). 🟡 `color-fg-on-overlay` is not added yet.
 - **Broken/dead cleanup**: `fg-onMutedDanger` (broken camelCase class) fixed
   to a real token; `--shadow-shine`/`--color-shine` dead pair removed;
   zero-consumer tokens either wired to their intended components or dropped
@@ -72,7 +70,7 @@ unchanged; 80 components consume them. Changes:
 ## T4. Primary is a role mapping, not a special case ✅
 
 `primary` resolves through one table: `roles: { primary: 'neutral' | 'accent' }`
-(default `neutral` — Vercel-style black/white actions). Every emitter
+(absent = `neutral`, Vercel-style black/white actions; Origin sets `accent`). Every emitter
 (preview, scoped, publisher, v0 bundle) resolves roles through the same
 resolver; the four hand-maintained `primary === 'accent'` branches die. The
 model generalizes to future role remaps (e.g. `info → accent`) without new
@@ -81,7 +79,7 @@ emitters.
 ## T5. Config schema v2 ✅
 
 ```ts
-interface ColorConfig2 {
+interface ColorConfig {
   v: 2
   seeds: {
     accent: string
@@ -90,16 +88,19 @@ interface ColorConfig2 {
     warning?: string
     danger?: string
     info?: string
+    selection?: string // splits selection controls + focus onto their own ramp
   } // absent status seeds → engine defaults (CVD-gated)
-  background?: { light?: number; dark?: number } // bg lightness, engine D9/D12
+  background?: { light?: number; dark?: number | "oled" } // bg lightness, engine D9/D12
   vividness?: number // scales the fitted chroma curve (engine D5)
   hueShift?: number // scalar on the family bend table (engine D6)
   neutralTint?: number // whisper-tint amount (engine D8)
+  neutralHue?: number // hue the neutral tint leans toward; absent = the accent's
   preserveSeed?: boolean // exact-seed pin, prints its ΔEok price (engine D7)
   primary?: "accent" // role mapping; absent = neutral
   selection?: "neutral" | "accent" // the selection cluster's source; absent = the primary's
   scopes?: Record<string, "neutral" | "accent"> // per-control forks, re-declared under `[data-<scope>]`
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
+  chartPalette?: "vivid" | "muted" // categorical chart series; absent = tonal accent shades (engine D11)
 }
 ```
 
@@ -122,7 +123,7 @@ interface ColorConfig2 {
   `@theme inline`. Users own ~90 readable values, not generator output.
   `tailwindcss-autocontrast` removed from `DEFAULT_DEPENDENCIES`.
 
-## T7. /create color experience 🟡
+## T7. /studio color experience 🟡
 
 Two tiers (the panel/schema.tsx lab prototype had the right instinct; it and
 the current flat section are both replaced):
@@ -154,10 +155,10 @@ token overrides.
 
 ## T8. Playground first 🔬
 
-`/internal/colors` (dev-only route): old vs new vs Radix side-by-side ramps,
-APCA/WCAG grids per pairing, CVD simulation, and real component compositions
-(the yellow warning-banner test). It is the acceptance surface for the
-engine rewrite and stays after it ships.
+`/internal/color-lab` (dev-only route): generated ramps beside reference
+systems, contrast grids per pairing, and real component compositions (the
+yellow warning-banner test). It stays the acceptance surface for engine
+changes.
 
 ## Non-goals (this rewrite)
 

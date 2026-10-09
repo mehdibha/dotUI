@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const menuMeta = {
   name: "menu",
   type: "registry:ui",
-  group: "menus-lists",
   files: [
     {
       type: "registry:ui",
@@ -14,13 +13,11 @@ const menuMeta = {
   registryDependencies: ["button", "popover"],
   params: {
     indicator: {
-      kind: "enum",
       default: "check-end",
       values: ["check-start", "check-end"] as const,
       description: "Where the selected item's check sits.",
     },
     highlight: {
-      kind: "enum",
       default: "neutral",
       values: ["neutral", "accent"] as const,
       vars: {
@@ -36,13 +33,11 @@ const menuMeta = {
       description: "How focused/active items are highlighted.",
     },
     inset: {
-      kind: "enum",
       default: "inset",
       values: ["inset", "full-bleed"] as const,
       description: "Rounded items in a padded gutter, or edge-to-edge rows.",
     },
     labels: {
-      kind: "enum",
       default: "sentence",
       values: ["sentence", "caps"] as const,
       description: "Section header casing.",

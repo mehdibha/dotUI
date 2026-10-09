@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types"
 const chartRadarMeta = {
   name: "chart-radar",
   type: "registry:ui",
-  group: "charts",
   files: [
     {
       type: "registry:ui",

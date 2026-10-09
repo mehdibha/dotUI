@@ -78,7 +78,7 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  // In the /create preview iframe, the customizer owns the displayed mode — force it so
+  // In the /studio preview iframe, the customizer owns the displayed mode — force it so
   // the provider's own system / storage listeners can't revert it. `undefined` elsewhere.
   const forcedTheme = usePreviewForcedTheme()
 
@@ -104,7 +104,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
         <script dangerouslySetInnerHTML={{ __html: PREVIEW_PENDING_SCRIPT }} />
         <HeadContent />
       </head>

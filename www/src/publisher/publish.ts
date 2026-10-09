@@ -47,10 +47,6 @@ export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%"
  * `registryDependencies` so shadcn doesn't 404 looking for them.
  */
 export const BUNDLED_INTO_INIT = new Set([
-  // focus-ring / focus-reset / focus-input utilities ship in base.css.
-  "focus-styles",
-  // The @theme vocabulary ships in the init item's cssVars.
-  "theme",
   // cn() helper ships as `lib/utils.ts` in the init item.
   "utils",
 ])
@@ -118,7 +114,7 @@ export function registryDepsFor(
 ): string[] {
   const deps = [...(meta.registryDependencies ?? [])]
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.registryDependencies) continue
+    if (!def.registryDependencies) continue
     const values = selections
       ? [selections[paramName] ?? def.default]
       : Object.keys(def.registryDependencies)
@@ -163,7 +159,7 @@ export function selectPublishable(
 
   if (!mod.publishableByPath) return mod.publishable
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.files) continue
+    if (!def.files) continue
     const value = selections[paramName] ?? def.default
     const filesForValue = def.files[value]
     const targetFile = filesForValue?.[0]
@@ -180,7 +176,6 @@ function applySourceSubstitutions(
   selections: Record<string, string>,
 ): string {
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== "enum") continue
     const swaps = def.source?.[selections[paramName] ?? def.default]
     for (const [from, to] of Object.entries(swaps ?? {})) {
       content = content.replaceAll(from, to)
@@ -248,7 +243,7 @@ export function publish({
   let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
 
   // 4a. Param values that rewrite source text — an icon identifier, a prop
-  // default (see `EnumParamDef.source`).
+  // default (see `ParamDef.source`).
   content = applySourceSubstitutions(content, meta, paramSelections)
 
   // 4b. Resolve the source's `// MARK:` markers: always drop the internal
@@ -265,7 +260,7 @@ export function publish({
   // config (e.g. color-swatch's `rounded-(--studio-color-swatch-radius)`).
   content = rewriteClassString(content, studioVars)
 
-  // 5. Assemble shadcn item — drop dotui-only fields (params, group).
+  // 5. Assemble shadcn item — drop dotui-only fields (params).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
   // object and cast at the boundary.

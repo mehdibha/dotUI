@@ -37,7 +37,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         className,
       )}
     >
-      {/* Keyed by pathname: navigating to a page with no root overflow (/create
+      {/* Keyed by pathname: navigating to a page with no root overflow (/studio
           fills the viewport exactly) turns the scroll timeline inactive, and a
           newly inactive timeline HOLDS the animation's last progress — arriving
           from a scrolled page would freeze the blur fully on. Remounting restarts

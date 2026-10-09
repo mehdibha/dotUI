@@ -102,7 +102,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 /* ---------------------------------------------------------------------------
  * Logs — the observability console of "Meridian", a commerce platform: filter
  * bar, dense monospace event stream with expandable payloads, volume chart and
- * ingest health. Rendered inside the /create preview under the live system.
+ * ingest health. Rendered inside the /studio preview under the live system.
  * ------------------------------------------------------------------------- */
 
 type Level = "error" | "warn" | "info" | "debug"

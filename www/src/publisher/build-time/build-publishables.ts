@@ -19,11 +19,7 @@ import type { StylesConfig } from "../types"
 import { cssToRegistryFields } from "./css-to-registry-fields"
 import { extractStylesConfig } from "./extract-config"
 import { paramSelections, selectionKey } from "./fold-param-values"
-import {
-  paramValueHooksOf,
-  transformBase,
-  TV_CONFIG_PLACEHOLDER,
-} from "./transform-base"
+import { paramValueHooksOf, transformBase } from "./transform-base"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
@@ -54,7 +50,7 @@ export async function buildPublishables({
     try {
       const result = await buildOne({ meta, metas, registryDir, outDir })
       if (result === "skipped") {
-        skipped.push({ name: meta.name, reason: "no base.tsx in meta.files" })
+        skipped.push({ name: meta.name, reason: "no files in meta.files" })
       } else if (typeof result === "string") {
         written.push(result)
       }
@@ -67,7 +63,7 @@ export async function buildPublishables({
   // Emit the runtime lookup index so the route handler can resolve a
   // component name without dynamically constructing import paths.
   const indexPath = path.join(outDir, "index.ts")
-  await fs.writeFile(indexPath, renderIndex(written, outDir), "utf8")
+  await fs.writeFile(indexPath, renderIndex(written), "utf8")
   written.push(indexPath)
 
   // Convert the base CSS sources into shadcn registry fields so the init
@@ -150,7 +146,7 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
   }
 }
 
-function renderIndex(writtenPaths: string[], outDir: string): string {
+function renderIndex(writtenPaths: string[]): string {
   const names = writtenPaths
     .filter((p) => p.endsWith(".ts") && !p.endsWith("/index.ts"))
     .map((p) => path.basename(p, ".ts"))
@@ -177,8 +173,6 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
     `export const PUBLISHABLE_NAMES: readonly string[] = ${JSON.stringify(names)};`,
   )
   lines.push(``)
-  // Silence the unused warning for callers that only use `publishables`.
-  void outDir
   return lines.join("\n")
 }
 
@@ -446,7 +440,7 @@ export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
     if (isBaseFile(file, meta.name)) byKey.set(file.path, file)
   }
   for (const def of Object.values(meta.params ?? {})) {
-    if (def.kind !== "enum" || !def.files) continue
+    if (!def.files) continue
     for (const fileList of Object.values(def.files)) {
       for (const file of fileList) {
         if (isBaseFile(file, meta.name)) byKey.set(file.path, file)
@@ -637,21 +631,4 @@ function templateLiteral(template: string): string {
     .replace(/`/g, "\\`")
     .replace(/\$\{/g, "\\${")
   return `\`${escaped}\``
-}
-
-/**
- * Sanity check used by `assertPlaceholderInTemplate` callers when wiring up
- * the request-time route — exposed so the build script can fail fast when a
- * `useStyles()`-using component's transform somehow produces a template
- * without a placeholder.
- */
-export function assertPlaceholderInTemplate(
-  name: string,
-  template: string,
-): void {
-  if (!template.includes(TV_CONFIG_PLACEHOLDER)) {
-    throw new Error(
-      `[publisher] template for "${name}" has no ${TV_CONFIG_PLACEHOLDER} placeholder`,
-    )
-  }
 }

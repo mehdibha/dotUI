@@ -46,21 +46,8 @@ overrides:
   "@types/react": 19.2.2
   "@types/react-dom": 19.2.1
 
-# @hookform/resolvers/zod imports zod/v4/core but doesn't declare zod as a
-# peer, so pnpm never links zod into its instance; the import only survives
-# via hoist fallback, which rolldown's strict resolution rejects on Vercel.
-packageExtensions:
-  "@hookform/resolvers":
-    peerDependencies:
-      zod: "*"
-    peerDependenciesMeta:
-      zod:
-        optional: true
-
 minimumReleaseAgeExclude:
-  - cnfast@0.0.8
   - starter-themes@0.0.2
-  - tailwindcss-autocontrast@0.0.4
   - tailwindcss-with@0.0.2
   - "@react-types/shared@3.36.1"
   - "@internationalized/date@3.12.3"
@@ -91,5 +78,3 @@ minimumReleaseAgeExclude:
   - "@typescript/typescript-win32-arm64@7.0.2"
   - "@typescript/typescript-win32-x64@7.0.2"
   - typescript@7.0.2
-  - "@tanstack/charts@0.7.2"
-  - "@tanstack/react-charts@0.7.2"
