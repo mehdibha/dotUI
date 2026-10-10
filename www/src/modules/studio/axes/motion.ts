@@ -296,13 +296,15 @@ const ENTRANCE_PARAM: Record<string, string> = {
   fade: "fade",
 }
 
-/** Each component's own Motion and the members it times; the rest ride
- *  `motion`. Radio rides checkbox's vars; its page hosts Checkbox's row. */
+/** Each component's own Motion and the members it times, kin included:
+ *  tags time like buttons, swatches and questions like checkboxes, the
+ *  message scroller like toasts. Radio rides checkbox's vars; its page hosts
+ *  Checkbox's row. */
 const COMPONENTS = {
-  buttonMotion: ["button", "toggle-button"],
+  buttonMotion: ["button", "toggle-button", "tag"],
   segmentedMotion: ["segmented-control"],
   fieldMotion: ["input", "token-field"],
-  checkboxMotion: ["checkbox"],
+  checkboxMotion: ["checkbox", "color-swatch-picker", "questionnaire"],
   switchMotion: ["switch"],
   sliderMotion: ["slider"],
   popoverMotion: ["popover"],
@@ -315,7 +317,7 @@ const COMPONENTS = {
   tableMotion: ["table"],
   accordionMotion: ["accordion", "collapsible"],
   calendarMotion: ["calendar", "time-picker"],
-  toastMotion: ["toast", "toast-swipe"],
+  toastMotion: ["toast", "toast-swipe", "message-scroller"],
   progressMotion: ["progress"],
 } as const
 

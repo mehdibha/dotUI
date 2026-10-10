@@ -28,8 +28,8 @@ one line there.
 - A key the four Styles draw apart joins `COLUMNS` in `../style.ts` (Flat =
   its default), and any option only some Styles allow joins `ALLOWED`.
 - Renaming or removing a key or a value breaks saved states and share links:
-  bump `STATE_VERSION` in `../migrate.ts` and add the `STEPS` entry that
-  rewrites the old shape.
+  bump `STATE_VERSION` in `../version.ts` and add the `STEPS` entry in
+  `../migrate.ts` that rewrites the old shape.
 
 ## Add a follow (Same as / Auto)
 

@@ -1,12 +1,7 @@
 import type { StateIssue } from "@/modules/studio/axes"
 
-import {
-  parseSnapshot,
-  parseSnapshotInput,
-  SNAPSHOT_ID,
-  snapshotId,
-  stored,
-} from "./snapshot"
+import { parseSnapshot, parseSnapshotInput } from "./parse"
+import { SNAPSHOT_ID, snapshotId, stored } from "./snapshot"
 import type { Snapshot } from "./snapshot"
 import type { SnapshotStore } from "./store"
 

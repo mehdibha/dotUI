@@ -3,8 +3,11 @@
 /* The user's design systems, and the one unsaved slot, kept in this browser.
    Records are read leniently (states migrated, a bad field taking its
    default) and every write re-reads storage first, so tabs never clobber
-   each other. Edits land in memory at once and in storage at most every
-   200 ms. What is on screen lives in `selection.ts`. */
+   each other. A state from an older build loads `migrate` on the side; until
+   it lands, the state reads as is, is written back untouched, and edits to
+   it wait (selection.ts). Edits land
+   in memory at once and in storage at most every 200 ms. What is on screen
+   lives in `selection.ts`. */
 
 import { useSyncExternalStore } from "react"
 
@@ -25,7 +28,7 @@ import {
   validate,
 } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
-import { migrate, stamp } from "@/modules/studio/axes/migrate"
+import { STATE_VERSION, stamp } from "@/modules/studio/axes/version"
 
 /** A read-only starting point: a preset, or a shared link's snapshot. */
 export type View =
@@ -75,7 +78,54 @@ const isTime = (value: unknown): value is number =>
 const isName = (value: unknown): value is string =>
   typeof value === "string" && value === cleanName(value) && value.length > 0
 
-const load = (raw: unknown) => salvageState(migrate(raw))
+type Store = ReturnType<typeof createPersistedStore<never>>
+
+let migrate: ((raw: unknown) => unknown) | undefined
+let migrating: Promise<void> | undefined
+let migrated = false
+const holders: Store[] = []
+// Read before `migrate` landed: each one's stored state, written back as is.
+const unmigrated = new WeakMap<StudioState, unknown>()
+
+/** Loads `migrate`, then reads every held state again through it and writes
+ *  the upgrade back. */
+export function upgradeStored(): Promise<void> {
+  migrating ??= import("@/modules/studio/axes/migrate").then(
+    (module) => {
+      migrate = module.migrate
+      for (const store of holders) {
+        migrated = false
+        store.reload()
+        if (migrated && !store.isUnreadable()) store.set(store.get())
+      }
+    },
+    () => {
+      migrating = undefined
+    },
+  )
+  return migrating
+}
+
+/** Read before `migrate` landed: its look isn't known yet. */
+export const isUnmigrated = (state: StudioState) => unmigrated.has(state)
+
+/** A store whose value holds states, upgraded with the workspace's. */
+export function holdsStates(store: Store) {
+  holders.push(store)
+}
+
+function load(raw: unknown): StudioState {
+  if (isRecord(raw) && raw.version === STATE_VERSION) {
+    const { version: _, ...state } = raw
+    return salvageState(state)
+  }
+  migrated = true
+  if (migrate) return salvageState(migrate(raw))
+  void upgradeStored()
+  const state = salvageState(raw)
+  unmigrated.set(state, raw)
+  return state
+}
 
 export function parseView(raw: unknown): View | undefined {
   if (!isRecord(raw) || typeof raw.id !== "string") return
@@ -147,15 +197,18 @@ export function storageFailed(unreadable = false) {
 }
 
 /** A `JSON.stringify` replacer that stamps every state with its version, so
- *  a later build can migrate it. */
+ *  a later build can migrate it; one not migrated yet is written as read. */
 export const stampStates = (key: string, value: unknown) =>
-  key === "state" ? stamp(value as StudioState) : value
+  key === "state"
+    ? (unmigrated.get(value as StudioState) ?? stamp(value as StudioState))
+    : value
 
 const store = createPersistedStore<Workspace>(KEY, EMPTY, {
   decode: parseWorkspace,
   encode: (workspace) => JSON.stringify(workspace, stampStates),
   onWriteError: storageFailed,
 })
+holdsStates(store)
 
 /** Whether stored systems can't be read: none are listed, and none is
  *  written over. */

@@ -151,10 +151,10 @@ describe("resolve", () => {
 describe("per-component motion", () => {
   // Members with their own vars; toggle-button, token-field, radio and collapsible ride a sibling's.
   const TIMED: Record<string, string[]> = {
-    buttonMotion: ["button"],
+    buttonMotion: ["button", "tag"],
     segmentedMotion: ["segmented-control"],
     fieldMotion: ["input"],
-    checkboxMotion: ["checkbox"],
+    checkboxMotion: ["checkbox", "color-swatch-picker", "questionnaire"],
     switchMotion: ["switch"],
     sliderMotion: ["slider"],
     popoverMotion: ["popover"],
@@ -167,7 +167,7 @@ describe("per-component motion", () => {
     tableMotion: ["table"],
     accordionMotion: ["accordion"],
     calendarMotion: ["calendar", "time-picker"],
-    toastMotion: ["toast", "toast-swipe"],
+    toastMotion: ["message-scroller", "toast", "toast-swipe"],
     progressMotion: ["progress"],
   }
   const STOPPED: Record<string, string[]> = {
@@ -240,19 +240,14 @@ describe("per-component motion", () => {
     expect(componentParams.popover).toEqual(origin.popover)
   })
 
-  test("members outside every component ride the global Motion", () => {
+  test("every member is some component's", () => {
     const pinned = Object.fromEntries(
       COMPONENT_MOTION_KEYS.map((key) => [key, "standard"]),
     )
     const { tokens } = designSystemOf(
       parseState({ motion: "smooth", ...pinned }),
     )
-    expect(members(tokens)).toEqual([
-      "color-swatch-picker",
-      "message-scroller",
-      "questionnaire",
-      "tag",
-    ])
+    expect(members(tokens)).toEqual([])
   })
 
   test("Same as motion ships what picking the global's value ships", () => {

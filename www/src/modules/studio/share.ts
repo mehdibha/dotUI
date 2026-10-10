@@ -7,15 +7,12 @@
 
 import { useEffect, useState } from "react"
 
-import {
-  canonicalJson,
-  parseSnapshot,
-  SNAPSHOT_ID,
-} from "@/lib/snapshots/snapshot"
+import { parseSnapshot } from "@/lib/snapshots/parse"
+import { canonicalJson, SNAPSHOT_ID } from "@/lib/snapshots/snapshot"
 import type { Snapshot } from "@/lib/snapshots/snapshot"
 
 import type { StudioState } from "./axes"
-import { stamp } from "./axes/migrate"
+import { stamp } from "./axes/version"
 import type { Current } from "./selection"
 
 export type Source = { kind: "preset" | "snapshot"; id: string }

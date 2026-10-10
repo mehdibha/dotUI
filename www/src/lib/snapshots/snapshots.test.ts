@@ -4,7 +4,8 @@ import path from "node:path"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { DEFAULT_STATE, parseState } from "@/modules/studio/axes"
-import { STATE_VERSION, stamp } from "@/modules/studio/axes/migrate"
+import main from "@/modules/studio/axes/__fixtures__/main-states.json"
+import { STATE_VERSION, stamp } from "@/modules/studio/axes/version"
 
 import {
   createSnapshot,
@@ -12,7 +13,8 @@ import {
   MAX_BODY_BYTES,
   readSnapshot,
 } from "./handlers"
-import { canonicalJson, parseSnapshot, snapshotId } from "./snapshot"
+import { parseSnapshot } from "./parse"
+import { canonicalJson, snapshotId } from "./snapshot"
 import type { Snapshot } from "./snapshot"
 import { fileStore, memoryStore } from "./store"
 import type { SnapshotStore } from "./store"
@@ -27,6 +29,16 @@ const post = (store: SnapshotStore, body: unknown) =>
   )
 
 const valid = { name: "Acme", state: { radiusPx: 4 } }
+
+const MAIN_DEFAULTS = Object.fromEntries(
+  Object.entries(main.schema).map(([key, { default: value }]) => [key, value]),
+)
+
+/** A state as main stored it: every one of main's keys. */
+const mainState = (diff: Record<string, unknown>) => ({
+  ...MAIN_DEFAULTS,
+  ...diff,
+})
 
 async function save(store: SnapshotStore, body: unknown = valid) {
   const response = await post(store, body)
@@ -94,16 +106,53 @@ describe("POST /api/snapshots", () => {
     const store = memoryStore()
     const id = await save(store, {
       name: "Acme",
-      state: { buttonStyle: "bevel", inputStyle: "line", spacingUnit: 5 },
+      state: mainState({ buttonStyle: "bevel", inputStyle: "line" }),
     })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       parseState({
         style: "tactile",
         surfaceEdge: "line",
         menuSelectedRow: "none",
+        segmentedSelected: "tone",
         inputStyle: "underline",
+        inputHover: "none",
       }),
     )
+  })
+
+  it("keeps an unversioned current state as it is", async () => {
+    const store = memoryStore()
+    for (const state of [
+      { surfaceLayers: "tonal" },
+      { dialogMotion: "none" },
+    ]) {
+      const id = await save(store, { name: "Acme", state })
+      expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
+        parseState(state),
+      )
+    }
+  })
+
+  it("refuses a bad current state rather than reading it as main's", async () => {
+    const store = memoryStore()
+    const response = await post(store, {
+      name: "Acme",
+      state: { style: "tactile", radiusPx: {} },
+    })
+    expect(response.status).toBe(400)
+  })
+
+  it("answers any version without hanging", async () => {
+    const store = memoryStore()
+    for (const version of [-1e300, 1.5, 1e300]) {
+      const id = await save(store, {
+        name: "Acme",
+        state: { version, radiusPx: 4 },
+      })
+      expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
+        parseState({ radiusPx: 4 }),
+      )
+    }
   })
 
   it("keeps a current state as it is", async () => {
@@ -270,11 +319,11 @@ describe("loadSnapshot", () => {
       JSON.stringify({
         schema: 1,
         name: "A",
-        state: { inputStyle: "line", toggleSelected: "fill", spacingUnit: 5 },
+        state: mainState({ inputStyle: "line", toggleSelected: "fill" }),
       }),
     )
     expect((await loadSnapshot("0123456789", store))?.state).toEqual(
-      parseState({ inputStyle: "underline" }),
+      parseState({ inputStyle: "underline", inputHover: "none" }),
     )
   })
 

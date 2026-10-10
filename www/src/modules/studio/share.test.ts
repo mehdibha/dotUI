@@ -2,7 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
-import { STATE_VERSION } from "@/modules/studio/axes/migrate"
+import { parseState } from "@/modules/studio/axes"
+import main from "@/modules/studio/axes/__fixtures__/main-states.json"
+import { STATE_VERSION } from "@/modules/studio/axes/version"
 
 const linear = getPreset("linear")!
 
@@ -56,5 +58,24 @@ describe("snapshotOf", () => {
     await snapshotOf({ name: "Acme", state: linear.state })
     const body = JSON.parse(String(fetch.mock.calls[0]![1].body))
     expect(body.state).toEqual({ version: STATE_VERSION, ...linear.state })
+  })
+})
+
+describe("fetchSnapshot", () => {
+  it("migrates a snapshot main stored", async () => {
+    const state = {
+      ...Object.fromEntries(
+        Object.entries(main.schema).map(([key, { default: v }]) => [key, v]),
+      ),
+      sliderThumb: "bar",
+    }
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => Response.json({ schema: 1, name: "Acme", state })),
+    )
+    const { fetchSnapshot } = await import("./share")
+    expect((await fetchSnapshot("abcdefghij"))?.state).toEqual(
+      parseState({ sliderThumb: "handle", sliderTrack: "thin" }),
+    )
   })
 })

@@ -1,23 +1,16 @@
 /* Saved states from older builds, brought to today's keys before they are
    validated. A stored state carries its `version`; an unversioned one is
-   main's (version 2, before Style and per-component motion), unless it has a
-   Style already. React-free. */
+   main's (version 2) when it holds what only main had, else current. */
 
+import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
 import { COLUMNS, excludedUnder, STYLE_KEYS, STYLE_VALUES } from "./style"
-
-export const STATE_VERSION = 3
+import { STATE_VERSION } from "./version"
 
 type Raw = Record<string, unknown>
 
 const isRecord = (value: unknown): value is Raw =>
   typeof value === "object" && value !== null && !Array.isArray(value)
-
-/** The state as stored: stamped with the version it was written at. */
-export const stamp = (state: StudioState) => ({
-  version: STATE_VERSION,
-  ...state,
-})
 
 /** A stored state at `STATE_VERSION`, its stamp removed. Anything but an
  *  object is returned as is, for validation to refuse. */
@@ -25,22 +18,33 @@ export function migrate(raw: unknown): unknown {
   if (!isRecord(raw)) return raw
   const { version, ...rest } = raw
   let state: Raw = rest
-  let v = typeof version === "number" ? version : "style" in rest ? 3 : 2
+  // Out of range is unversioned: a step per version, never unbounded.
+  const known =
+    Number.isInteger(version) &&
+    Number(version) >= 2 &&
+    Number(version) <= STATE_VERSION
+  let v = known ? Number(version) : isMain(rest) ? 2 : STATE_VERSION
   for (; v < STATE_VERSION; v++) state = STEPS[v]?.(state) ?? state
   return state
 }
 
+// Main's keys with no home today, or one of its motion objects.
+const isMain = (state: Raw) =>
+  Object.entries(state).some(
+    ([key, value]) =>
+      GONE.has(key) || (MAIN_MOTION.has(key) && isRecord(value)),
+  )
+
 /* ------------------------------ main → v3 ------------------------------ */
 
 /* Main's values that read differently now; null takes today's default (a
-   main default, or a value with no home). */
+   main default drawn the same, or a value with no home). */
 const VALUES: Record<string, Record<string, unknown>> = {
   accordionContainer: { boxed: "contained", cards: "separated" },
   accordionMarker: { chevron: null, plus: null },
   avatarFallback: { tinted: "accent" },
   breadcrumbTone: { accent: "link" },
   buttonRadius: { auto: null, sharp: null, round: null },
-  buttonStyle: { flat: null },
   calendarDayShape: { rounded: null, square: null },
   calendarToday: { none: null },
   chartMotion: { stiff: "spring", wobbly: "spring", slow: "ease" },
@@ -48,35 +52,24 @@ const VALUES: Record<string, Record<string, unknown>> = {
   dialogBackdrop: { dim: null, blur: null, none: "wash" },
   disabledTreatment: { alpha: "fade" },
   focusStyle: { duo: "inset" },
-  focusWidth: { 2: null, 5: 4, 6: 4 },
+  focusWidth: { 5: 4, 6: 4 },
   groupSeparator: { none: "shared-edge" },
   headingFont: { "": null },
-  iconStroke: { 2: null },
   inputError: { border: null, message: "icon-message", bar: null },
-  inputHover: { none: null, border: "edge" },
-  inputStyle: {
-    outline: null,
-    line: "underline",
-    "filled-line-bottom": "indicator",
-  },
+  inputHover: { border: "edge" },
+  inputStyle: { line: "underline", "filled-line-bottom": "indicator" },
   kbdTreatment: { text: null },
-  lightBg: { 99: null },
-  menuInset: { inset: null },
   mobilePickers: { popover: "anchored" },
   numberLayout: { right: null, stacked: "stacked-cells" },
   otpStyle: { group: null, boxes: "separate", underline: null },
   paginationCurrent: { outline: null, filled: "primary" },
-  segmentedSelected: { flat: null },
+  segmentedSelected: { flat: "tone" },
   sliderThumb: { circle: null, outline: "ring", bar: "handle" },
-  sliderTrack: { thin: null },
-  surfaceEdge: { line: null },
-  surfaceLayers: { same: null },
-  surfaceShadow: { flat: null },
   tabStyle: { enclosed: null },
-  toggleSelected: { fill: null, chip: null },
+  toggleSelected: { fill: "tone", chip: null },
 }
 
-/* Keys with no home, or read into another key below. */
+/* Main's keys with no home, or read into another key below. */
 const GONE = new Set([
   "accordionMarkerPosition",
   "addonDivider",
@@ -86,10 +79,7 @@ const GONE = new Set([
   "colorSwatchPickerMotion",
   "cursorDragging",
   "cursorPending",
-  "dateMotion",
-  "displayMotion",
   "drawerMotion",
-  "feedbackMotion",
   "focusGap",
   "focusHaloStrength",
   "focusInputBorderWidth",
@@ -99,18 +89,14 @@ const GONE = new Set([
   "inputMotion",
   "loaderMotion",
   "menuLabels",
-  "menuMotion",
   "messageScrollerMotion",
   "modalMotion",
-  "motionEntrance",
-  "navMotion",
   "popoverHeader",
   "popoverTip",
   "progressGap",
   "progressIndeterminate",
   "questionnaireMotion",
   "segmentedControlMotion",
-  "selectionMotion",
   "skeletonMotion",
   "spacingUnit",
   "tableSeparation",
@@ -163,6 +149,8 @@ const MOTION: Record<string, [source: string, timings: readonly string[]]> = {
   ],
 }
 
+const MAIN_MOTION = new Set(Object.values(MOTION).map(([source]) => source))
+
 const CURVES: Record<string, string> = {
   "0.25,0.1,0.25,1": "ease",
   "0,0,0.2,1": "ease-out",
@@ -202,19 +190,6 @@ const ENTRANCES: Record<string, [key: string, patterns: Raw]> = {
   modalMotion: ["dialogEntrance", { slide: "rise" }],
 }
 
-/* #889's per-family Motion (preview builds only), fanned out. */
-const FAMILIES: Record<string, string[]> = {
-  buttonMotion: ["segmentedMotion"],
-  inputMotion: ["fieldMotion"],
-  selectionMotion: ["checkboxMotion", "switchMotion", "sliderMotion"],
-  menuMotion: ["popoverMotion", "tooltipMotion"],
-  dialogMotion: ["sheetMotion"],
-  navMotion: ["tabsMotion", "sidebarMotion", "linkMotion"],
-  displayMotion: ["tableMotion", "accordionMotion"],
-  dateMotion: ["calendarMotion"],
-  feedbackMotion: ["toastMotion", "progressMotion"],
-}
-
 function motionFrom(main: Raw, state: Raw) {
   const tempos: Raw = {}
   for (const [key, [source, timings]] of Object.entries(MOTION)) {
@@ -235,37 +210,43 @@ function motionFrom(main: Raw, state: Raw) {
     if (typeof pattern === "string" && patterns[pattern])
       state[key] = patterns[pattern]
   }
-
-  for (const [family, members] of Object.entries(FAMILIES))
-    if (typeof main[family] === "string" && main[family] !== "same")
-      for (const key of members) state[key] ??= main[family]
-  if (typeof main.motionEntrance === "string")
-    for (const key of ["popoverEntrance", "tooltipEntrance"])
-      state[key] = main.motionEntrance
-  if (state.motion === "none") {
-    delete state.motion
-    for (const key of Object.keys(MOTION)) state[key] ??= "none"
-  }
 }
 
-/** The Style that keeps the saved picks (Bevel buttons are Tactile's); every
- *  Style key keeps the look it had, which was Flat's column. */
-function withStyle(state: Raw): Raw {
-  if (state.style !== undefined) return state
+const sameValues = (a: Raw, b: Raw) =>
+  Object.keys(a).every((key) => Object.is(a[key], b[key]))
+
+const defaults: Raw = DEFAULTS
+
+/* A pick no Style allows beside another (main's tonal layers with hairline
+   buttons) loses one side; page layering outweighs a control's. */
+const WEIGHTS: Partial<Record<string, number>> = { surfaceLayers: 2 }
+
+/** Main's look pinned key by key, under the Style that keeps most of it
+ *  (main had none: Flat, unless a pick is another Style's; Style keys main
+ *  never had draw Flat's column); then each key goes back to its default
+ *  follow wherever that draws the same. A pick a rule changes or locks is
+ *  kept, for when the rule lets go. */
+function settle(picks: Raw): Raw {
   const conflicts = (style: string) =>
     STYLE_KEYS.filter((key) =>
-      excludedUnder(key, style).includes(state[key] as string),
-    ).length
+      excludedUnder(key, style).includes(picks[key] as string),
+    ).reduce((sum, key) => sum + (WEIGHTS[key] ?? 1), 0)
   const style = STYLE_VALUES.reduce((best, s) =>
     conflicts(s) < conflicts(best) ? s : best,
   )
-  const next: Raw = style === "flat" ? { ...state } : { ...state, style }
-  for (const key of STYLE_KEYS) {
-    const value = state[key] ?? COLUMNS[key].flat
-    if (value === COLUMNS[key][style]) delete next[key]
-    else next[key] = value
+  const pinned: Raw = { ...picks, style }
+  for (const key of STYLE_KEYS) pinned[key] ??= COLUMNS[key].flat
+  let state = salvageState(pinned)
+  const { values: look, explain } = effective(state)
+  // Sources before the keys that follow them.
+  for (const [key, { lock, rule }] of Object.entries(explain)) {
+    const fallback = defaults[key]
+    if (rule || (lock && Object.hasOwn(picks, key))) continue
+    if (!FOLLOWS[key]?.some((follow) => follow.id === fallback)) continue
+    const next = { ...state, [key]: fallback } as StudioState
+    if (sameValues(look, effective(next).values)) state = next
   }
-  return next
+  return state
 }
 
 function fromMain(main: Raw): Raw {
@@ -303,7 +284,7 @@ function fromMain(main: Raw): Raw {
     state.focusInputWeight = "thick"
 
   motionFrom(main, state)
-  return withStyle(state)
+  return settle(state)
 }
 
 /** `STEPS[v]` takes a version-v state to v + 1. */

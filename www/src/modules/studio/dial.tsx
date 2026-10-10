@@ -314,14 +314,7 @@ export function DialSelect({
       value={
         <>
           <span className="truncate">
-            {resolved ? (
-              <>
-                <span className="capitalize">{following} · </span>
-                {resolved.label}
-              </>
-            ) : (
-              (selected?.label ?? value)
-            )}
+            {(resolved ?? selected)?.label ?? value}
           </span>
           {rowPreview && (shown?.glyph ?? shown?.preview)}
         </>
