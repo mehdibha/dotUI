@@ -4,7 +4,9 @@ import { describe, expect, it } from "vitest"
 import { lstarOf, toOklch } from "@dotui/colors"
 
 import { SCHEMA, validate } from "../axes"
+import type { StudioState } from "../axes"
 import { SOLID_LEAVES } from "../axes/color"
+import { roleRung } from "../axes/shape"
 import {
   cleanImportName,
   fitDensity,
@@ -13,11 +15,23 @@ import {
   importDesignMd,
 } from "./index"
 import type { DesignMdImport, ImportItem } from "./index"
-import { box, dim, parseDesignMd, shadows, shadowStrength } from "./parse"
+import {
+  box,
+  dim,
+  isRecord,
+  parseDesignMd,
+  proseFonts,
+  REF_BUDGET_WARNING,
+  shadows,
+  shadowStrength,
+} from "./parse"
 import { resolveFamily } from "./typography"
 
 const fixture = (name: string) =>
   readFileSync(new URL(`./fixtures/${name}.md`, import.meta.url), "utf8")
+
+const md = (frontmatter: string, body = "") =>
+  `---\n${frontmatter.trim()}\n---\n\n# Fixture Inline\n\n${body}`
 
 const FIXTURES = [
   "light-full",
@@ -42,6 +56,34 @@ const statusOf = (result: DesignMdImport, id: string) =>
   (["mapped", "approximated", "unmapped"] as const).find((status) =>
     result.report[status].some((item) => item.id === id),
   )
+const itemOf = (result: DesignMdImport, id: string) =>
+  items(result).find((item) => item.id === id)
+
+function fullState(result: DesignMdImport): StudioState {
+  const valid = validate(result.state)
+  if (!valid.ok) throw new Error("invalid state")
+  return valid.state
+}
+
+const ROLE_KEYS = {
+  control: "roleControl",
+  card: "roleCard",
+  surface: "roleSurface",
+  panel: "rolePanel",
+} as const
+
+// Every reported rung is the rung the state renders.
+function expectRungsRendered(result: DesignMdImport) {
+  const state = fullState(result)
+  for (const role of ["control", "card", "surface", "panel"] as const) {
+    const item = result.report.mapped
+      .concat(result.report.approximated)
+      .find((i) => i.id === `radius:${role}`)
+    if (!item?.result || item.result === "Pill" || item.result === "None")
+      continue
+    expect(roleRung(state, ROLE_KEYS[role])).toBe(item.result)
+  }
+}
 
 const FIXED_IDS = new Set([
   "brand",
@@ -78,17 +120,22 @@ const FIXED_IDS = new Set([
 const PARAM_IDS =
   /^(page:(light|dark)|mode-derived:(light|dark)|status:(success|warning|danger)|font:(heading|body|mono)|radius:(base|control|card|surface|panel)|(color-role|exact-role-color|radius-token|component-recipe):[a-z0-9-]+)$/
 
+function expectInvariants(result: DesignMdImport) {
+  expect(validate(result.state).ok).toBe(true)
+  for (const key of Object.keys(result.state))
+    expect(Object.hasOwn(SCHEMA, key)).toBe(true)
+  for (const item of items(result)) {
+    expect(item.id).toMatch(/^[a-z-]+(:[a-z0-9-]+)?$/)
+    expect(FIXED_IDS.has(item.id) || PARAM_IDS.test(item.id)).toBe(true)
+  }
+  expectRungsRendered(result)
+}
+
 describe("invariants over every fixture", () => {
   it.each(FIXTURES)("%s", async (name) => {
     const text = fixture(name)
     const result = await importDesignMd(text)
-    expect(validate(result.state).ok).toBe(true)
-    for (const key of Object.keys(result.state))
-      expect(Object.hasOwn(SCHEMA, key)).toBe(true)
-    for (const item of items(result)) {
-      expect(item.id).toMatch(/^[a-z-]+(:[a-z0-9-]+)?$/)
-      expect(FIXED_IDS.has(item.id) || PARAM_IDS.test(item.id)).toBe(true)
-    }
+    expectInvariants(result)
     expect(JSON.stringify(await importDesignMd(text))).toBe(
       JSON.stringify(result),
     )
@@ -106,7 +153,7 @@ describe("fixtures", () => {
     expect(statusOf(r, "brand")).toBe("mapped")
     const canvas = toOklch("#faf8f3")
     expect(s.lightBg).toBe(Math.round(lstarOf(canvas) * 2) / 2)
-    expect(Math.abs(s.neutralHue! - canvas.h)).toBeLessThanOrEqual(15)
+    expect(Math.abs((s.neutralHue ?? 0) - canvas.h)).toBeLessThanOrEqual(15)
     expect(s.neutralTint).toBeGreaterThan(1)
     expect([s.successSeed, s.warningSeed, s.dangerSeed]).toEqual([
       "#2f9e44",
@@ -122,6 +169,7 @@ describe("fixtures", () => {
     expect([s.density, s.spacingUnit]).toEqual(["comfortable", 4])
     expect(statusOf(r, "density")).toBe("mapped")
     expect(s.surfaceShadow).toBe("low")
+    expect(itemOf(r, "surface-shadow")?.value).toBe("0 1px 3px rgba(0,0,0,0.1)")
     expect(s.surfaceEdge).toBe("line")
     expect(s.surfaceLayers).toBe("same")
     expect(statusOf(r, "type-scale")).toBe("unmapped")
@@ -146,6 +194,8 @@ describe("fixtures", () => {
     expect(r.state.focusColor).toBeUndefined()
     expect(r.state.tabsColor).toBeUndefined()
     expect(statusOf(r, "button-source")).toBe("mapped")
+    // The brand isn't the button's: a candidate, so approximated.
+    expect(statusOf(r, "brand")).toBe("approximated")
 
     const gray = await importDesignMd(text.replace(/^\s+link: .*\n/m, ""))
     expect(gray.state.brand).toBe("#111111")
@@ -194,18 +244,19 @@ describe("fixtures", () => {
   it("refs: nested, embedded, cyclic and unquoted values", async () => {
     const text = fixture("refs")
     const doc = await parseDesignMd(text)
-    const colors = doc.tokens!.colors as Record<string, unknown>
-    const button = (doc.tokens!.components as Record<string, any>)[
-      "button-primary"
-    ]
-    expect(colors.primary).toBe("#abcdef")
-    expect(colors.ink).toBe("#222222")
-    expect(button.padding).toBe("0.5rem 1rem")
-    expect(button.border).toBe("1px solid #e0e0e0")
-    expect(button.typography).toEqual({
-      fontFamily: "Inter",
-      fontSize: "0.875rem",
-      lineHeight: "1.25rem",
+    const colors = doc.tokens?.colors
+    const components = doc.tokens?.components
+    const button = isRecord(components) ? components["button-primary"] : {}
+    expect(isRecord(colors) && colors.primary).toBe("#abcdef")
+    expect(isRecord(colors) && colors.ink).toBe("#222222")
+    expect(button).toMatchObject({
+      padding: "0.5rem 1rem",
+      border: "1px solid #e0e0e0",
+      typography: {
+        fontFamily: "Inter",
+        fontSize: "0.875rem",
+        lineHeight: "1.25rem",
+      },
     })
     expect(doc.warnings.some((w) => w.startsWith("unresolved reference"))).toBe(
       true,
@@ -275,6 +326,405 @@ describe("fixtures", () => {
   })
 })
 
+describe("hostile input", () => {
+  const spacingFile = (spacing: string, layout = "") =>
+    md(
+      `
+name: Fixture Spacing
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+spacing:
+${spacing}
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    height: 36px
+`,
+      `## Layout\n\n${layout}\n`,
+    )
+
+  it.each([
+    ["a 0px grid", spacingFile("  sm: 8px", "A 0px grid for icons.")],
+    ["a 0px base unit", spacingFile("  sm: 8px", "The base unit is 0px.")],
+    ["a 0.1px spacing", spacingFile("  hair: 0.1px")],
+    ["a 0.01rem spacing", spacingFile("  hair: 0.01rem")],
+    [
+      "a 400-digit grid",
+      spacingFile("  sm: 8px", `A ${"9".repeat(400)}px grid.`),
+    ],
+  ])("%s ends", { timeout: 2000 }, async (_, text) => {
+    const r = await importDesignMd(text)
+    expectInvariants(r)
+    expect(r.state.spacingUnit ?? 4).toBeGreaterThanOrEqual(3)
+  })
+
+  it("reference fan-out stops at the budget", { timeout: 5000 }, async () => {
+    const levels = Array.from({ length: 8 }, (_, level) => {
+      const next = level + 1
+      const refs = Array.from(
+        { length: 12 },
+        (_, i) => `    k${i}: "{fan.l${next}}"`,
+      ).join("\n")
+      return `  l${level}:\n${refs}`
+    }).join("\n")
+    const text = md(`
+name: Fixture Fan
+colors:
+  primary: "#3b5bdb"
+fan:
+${levels}
+  l8: "#ffffff"
+`)
+    const start = Date.now()
+    const r = await importDesignMd(text)
+    expect(Date.now() - start).toBeLessThan(3000)
+    expect(r.warnings).toContain(REF_BUDGET_WARNING)
+    expect(r.state.brand).toBe("#3b5bdb")
+  })
+
+  it("non-ASCII token names keep distinct, valid ids", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Unicode
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+  主色: "#ff00aa"
+  辅色: "#00aaff"
+rounded:
+  md: 8px
+  圆角: 13px
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: 8px
+  卡片:
+    rounded: 13px
+  组件:
+    rounded: 13px
+`),
+    )
+    expectInvariants(r)
+    const colorIds = items(r)
+      .map((i) => i.id)
+      .filter((id) => id.startsWith("exact-role-color:"))
+    expect(new Set(colorIds).size).toBe(2)
+    expect(
+      items(r).filter((i) => i.id.startsWith("component-recipe:")),
+    ).toHaveLength(2)
+  })
+})
+
+describe("mapping", () => {
+  it("a 3xl card renders at 3xl", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Big Card
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+rounded:
+  md: 0.5rem
+  card: 1.5rem
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: "{rounded.md}"
+  card:
+    rounded: "{rounded.card}"
+`),
+    )
+    expect(itemOf(r, "radius:card")?.result).toBe("3xl")
+    expect(roleRung(fullState(r), "roleCard")).toBe("3xl")
+    expectInvariants(r)
+  })
+
+  it("finite pill tokens, and no pill from a zero height", async () => {
+    const pill = await importDesignMd(
+      md(`
+name: Fixture Finite Pill
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+rounded:
+  md: 8px
+  pill: 32px
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: "{rounded.pill}"
+  text-input:
+    rounded: "{rounded.md}"
+`),
+    )
+    expect(pill.state.buttonRadius).toBe("pill")
+    expect(pill.state.roleControl).not.toBe("full")
+
+    const zero = await importDesignMd(
+      md(`
+name: Fixture Zero Height
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: 0
+    height: 0
+`),
+    )
+    expect(zero.state.roleControl).toBe("none")
+    expect(itemOf(zero, "radius:control")?.result).not.toBe("Pill")
+  })
+
+  it("every target a pill: no fitted base, dropped pills reported", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture All Pill
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: 9999px
+  text-input:
+    rounded: 9999px
+  card:
+    rounded: 9999px
+  modal:
+    rounded: 9999px
+  menu:
+    rounded: 9999px
+`),
+    )
+    expect(r.state.radiusPx).toBeUndefined()
+    expect(statusOf(r, "radius:base")).toBeUndefined()
+    expect(r.state.roleControl).toBe("full")
+    for (const role of ["card", "panel", "surface"])
+      expect(statusOf(r, `radius:${role}`)).toBe("unmapped")
+
+    const scale = await importDesignMd(
+      md(`
+name: Fixture Pill Scale
+colors:
+  primary: "#3b5bdb"
+rounded:
+  md: 8px
+  lg: 9999px
+`),
+    )
+    expect(scale.state.radiusPx).toBe(10.5)
+    expect(statusOf(scale, "radius:card")).toBe("unmapped")
+  })
+
+  it("mono: a sans in a *-mono entry doesn't become the mono font", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Mono
+colors:
+  primary: "#3b5bdb"
+typography:
+  body:
+    fontFamily: Inter
+  eyebrow-mono:
+    fontFamily: "Inter, sans-serif"
+  caption-mono:
+    fontFamily: "Inter, sans-serif"
+  code:
+    fontFamily: "SFMono-Regular, Menlo, monospace"
+`),
+    )
+    expect(r.state.monoFont).toBeUndefined()
+    expect(resolveFamily("Inter, sans-serif", "mono", "").family).toBe(
+      "Geist Mono",
+    )
+  })
+
+  it("brand: link names, not status accents; candidates approximated", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Expo-like
+colors:
+  primary: "#000000"
+  canvas: "#ffffff"
+  accent-warning: "#ab6400"
+  text-link: "#0d74ce"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+`),
+    )
+    expect(r.state.brand).toBe("#0d74ce")
+    expect(statusOf(r, "brand")).toBe("approximated")
+
+    const unnamed = await importDesignMd(
+      md(`
+name: Fixture Unnamed Hue
+colors:
+  primary: "#ffffff"
+  canvas: "#000000"
+  m-blue: "#0066b1"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+`),
+    )
+    expect(unnamed.state.brand).toBe("#0066b1")
+    expect(statusOf(unnamed, "brand")).toBe("approximated")
+  })
+
+  it("near-black button with a named accent: buttons ink, brand approximated", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Ink
+colors:
+  primary: "#150f23"
+  canvas: "#ffffff"
+  accent-violet: "#6a5fc1"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+`),
+    )
+    expect(r.state.brand).toBe("#6a5fc1")
+    expect(r.state.buttonColor).toBe("neutral")
+    expect(statusOf(r, "brand")).toBe("approximated")
+  })
+
+  it("prose: a dark default canvas makes a dark file", async () => {
+    const r = await importDesignMd(`# Fixture Prose Dark
+
+## Colors
+
+- **Green** (\`#1ed760\`): Primary brand accent, CTAs
+- **Near Black** (\`#121212\`): Deepest background surface
+- **Silver** (\`#b3b3b3\`): Secondary text
+`)
+    expect(r.state.lightBg).toBeUndefined()
+    expect(r.state.darkBg).toBe(Math.round(lstarOf(toOklch("#121212")) * 2) / 2)
+    expect(statusOf(r, "mode-derived:light")).toBe("approximated")
+  })
+
+  it("surface-shadow names a card's shadow prop as its source", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Card Shadow
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+components:
+  card:
+    shadow: "0 1px 3px rgba(0,0,0,0.1)"
+`),
+    )
+    expect(itemOf(r, "surface-shadow")?.source).toBe("components.card.shadow")
+  })
+
+  it("edge: a card ring shadow is a hairline", async () => {
+    const r = await importDesignMd(
+      md(
+        `
+name: Fixture Ring
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+components:
+  text-input:
+    border: "1px solid #eeeeee"
+  card:
+    backgroundColor: "{colors.canvas}"
+`,
+        "## Elevation & Depth\n\n| Level | Treatment | Use |\n|---|---|---|\n| 1 | `0 0 0 1px #00000014` | Default card chrome |\n",
+      ),
+    )
+    expect(r.state.surfaceEdge).toBe("line")
+    expect(r.state.surfaceShadow).toBe("flat")
+  })
+
+  it("link underline: whole-word links, hover on press", async () => {
+    const tab = await importDesignMd(
+      md(
+        'name: Fixture Tab\ncolors:\n  primary: "#3b5bdb"',
+        "## Components\n\n**tab-active** — label in `{typography.nav-link}`, 2px underline rule.\n",
+      ),
+    )
+    expect(tab.state.linkUnderline).toBeUndefined()
+    const press = await importDesignMd(
+      md(
+        'name: Fixture Press\ncolors:\n  primary: "#3b5bdb"',
+        "## Components\n\n**text-link** — Inline body links in coral. Underlined on press.\n",
+      ),
+    )
+    expect(press.state.linkUnderline).toBe("hover")
+  })
+
+  it("fonts: serif bodies and per-face substitutes", () => {
+    const wired = [
+      "1. **WiredDisplay** — the proprietary high-contrast serif for display headlines.",
+      "Inter is loaded as a fourth fallback face for utility pages.",
+      "### Note on Font Substitutes",
+      "- **WiredDisplay** — *Playfair Display* at large sizes.",
+      "- **BreveText** — *Lora* at 16px.",
+    ].join("\n")
+    const faces = ["WiredDisplay", "BreveText"]
+    expect(
+      resolveFamily(
+        'BreveText, Georgia, "Times New Roman", serif',
+        "body",
+        wired,
+        faces,
+      ).family,
+    ).toBe("Lora")
+    expect(resolveFamily("WiredDisplay", "heading", wired, faces).family).toBe(
+      "Playfair Display",
+    )
+
+    const resend = [
+      "- **Domaine Display** — proprietary editorial serif for hero headlines.",
+      "- **ABC Favorit** — proprietary humanist sans-serif for body copy.",
+      "When proprietary families cannot be licensed, **Söhne** or **Tiempos Headline** stand in for Domaine Display, and **Geist** or **Inter Tight** can replace ABC Favorit.",
+    ].join("\n")
+    const pair = ["Domaine Display", "ABC Favorit"]
+    expect(
+      resolveFamily("Domaine Display", "heading", resend, pair).family,
+    ).not.toBe("Geist")
+    expect(resolveFamily("ABC Favorit", "body", resend, pair).family).toBe(
+      "Geist",
+    )
+  })
+
+  it("proseFonts: the formats prose-only files use", () => {
+    expect(
+      proseFonts(
+        [
+          "- **Display & UI**: `LamboType`, Roboto, Helvetica Neue — custom face",
+          "- **Fallback/UI**: `Open Sans` — system fallback",
+          "- **Code / Technical**: `IBM Plex Mono`, fallback: `ui-monospace`",
+        ].join("\n"),
+      ),
+    ).toEqual({
+      heading: "LamboType, Roboto, Helvetica Neue",
+      body: "LamboType, Roboto, Helvetica Neue",
+      mono: "IBM Plex Mono, ui-monospace",
+    })
+    expect(
+      proseFonts(
+        [
+          "- **Manuka** (Klim) — fallback: Impact, Helvetica. The signature display face.",
+          "- **PolySans** — fallback: Helvetica, Arial. The UI and body workhorse.",
+          "- **PolySans is the workhorse.** Mono is used for labels, tags, and buttons.",
+          "**Primary:** `SoDoSans, Arial, sans-serif` — the corporate face",
+        ].join("\n"),
+      ),
+    ).toEqual({
+      heading: "Manuka, Impact, Helvetica",
+      body: "PolySans, Helvetica, Arial",
+    })
+  })
+})
+
 describe("primitives", () => {
   it("dim", () => {
     expect(dim("12px")).toBe(12)
@@ -285,6 +735,7 @@ describe("primitives", () => {
     expect(dim("-3.0px")).toBe(-3)
     expect(dim("50%")).toBeUndefined()
     expect(dim("auto")).toBeUndefined()
+    expect(dim(`${"9".repeat(400)}px`)).toBeUndefined()
   })
 
   it("box", () => {
@@ -301,22 +752,23 @@ describe("primitives", () => {
   })
 
   it("shadows", () => {
-    const rgbaFirst = shadows("rgba(15, 15, 15, 0.08) 0px 4px 12px 0px")
-    expect(rgbaFirst).toHaveLength(1)
-    expect(rgbaFirst[0]).toMatchObject({ x: 0, y: 4, blur: 12, spread: 0 })
-    expect(shadowStrength(rgbaFirst[0]!)).toBeCloseTo(1.28)
+    const [rgbaFirst, ...noMore] = shadows(
+      "rgba(15, 15, 15, 0.08) 0px 4px 12px 0px",
+    )
+    expect(noMore).toHaveLength(0)
+    expect(rgbaFirst).toMatchObject({ x: 0, y: 4, blur: 12, spread: 0 })
+    expect(rgbaFirst && shadowStrength(rgbaFirst)).toBeCloseTo(1.28)
 
-    const colorLast = shadows(
+    const [first, second] = shadows(
       "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px -1px #0000001a",
     )
-    expect(colorLast).toHaveLength(2)
-    expect(shadowStrength(colorLast[0]!)).toBeCloseTo(0.4)
-    expect(colorLast[1]!.alpha).toBeCloseTo(0x1a / 255)
-    expect(colorLast[1]!.spread).toBe(-1)
+    expect(first && shadowStrength(first)).toBeCloseTo(0.4)
+    expect(second?.alpha).toBeCloseTo(0x1a / 255)
+    expect(second?.spread).toBe(-1)
 
-    const ring = shadows("0 0 0 1px #00000014 inset")
-    expect(ring[0]).toMatchObject({ inset: true, spread: 1, blur: 0 })
-    expect(ring[0]!.alpha).toBeCloseTo(0x14 / 255)
+    const [ring] = shadows("0 0 0 1px #00000014 inset")
+    expect(ring).toMatchObject({ inset: true, spread: 1, blur: 0 })
+    expect(ring?.alpha).toBeCloseTo(0x14 / 255)
 
     expect(shadows("box-shadow: rgba(0,55,112,0.08) 0 1px 3px;")).toHaveLength(
       1,
@@ -361,6 +813,9 @@ describe("primitives", () => {
     expect(cleanImportName("Design System Inspired by Notion")).toBe("Notion")
     expect(cleanImportName("Dell 1996 Inspired")).toBe("Dell 1996")
     expect(cleanImportName("Together-AI-design-analysis")).toBe("Together AI")
+    expect(cleanImportName("Nintendo.com (2001) Analysis")).toBe(
+      "Nintendo.com (2001)",
+    )
     expect(cleanImportName("design-analysis")).toBe("Imported design system")
   })
 })

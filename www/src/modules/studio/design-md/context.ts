@@ -1,6 +1,3 @@
-/* What the chapters share: the report, the file's tokens and components,
-   and the key families components are matched by. */
-
 import { WHISPER_LINE } from "@dotui/colors"
 import type { Oklch } from "@dotui/colors"
 
@@ -11,13 +8,11 @@ import type {
   ImportItem,
   ImportStatus,
 } from "./index"
-import { color, colorNotes, isRecord, proseColors } from "./parse"
+import { color, colorNotes, escapeRegExp, isRecord, proseColors } from "./parse"
 import type { ParsedColor, ParsedDesignMd } from "./parse"
 
 export type Mode = "light" | "dark"
 export type State = Partial<StudioStateInput>
-
-/* --------------------------------- context -------------------------------- */
 
 export interface Ctx {
   doc: ParsedDesignMd
@@ -47,13 +42,13 @@ export const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max)
 export const fmt = (value: number) => String(Number(value.toFixed(2)))
 export const px = (value: number) => `${fmt(value)}px`
+export const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1)
 
 export const hueGap = (a: number, b: number) => {
   const d = Math.abs(a - b) % 360
   return d > 180 ? 360 - d : d
 }
-
-/* ------------------------------ the file's data --------------------------- */
 
 export interface ColorToken {
   name: string
@@ -80,7 +75,6 @@ const INPUT_KEY = [
   /search-(input|field)/,
   /^select$/,
 ]
-const CARD_KEY = /card|tile/
 const NOT_CARD =
   /mockup|screenshot|illustration|hero|logo|image|avatar|badge|banner|band/
 const SURFACE_KEY =
@@ -89,7 +83,6 @@ const PANEL_KEY = /modal|dialog|sheet|drawer/
 export const SIZE_SUFFIX = /-(xs|sm|small|lg|large|xl)$/
 
 const isInput = (key: string) => INPUT_KEY.some((re) => re.test(key))
-const isCard = (key: string) => CARD_KEY.test(key) && !NOT_CARD.test(key)
 
 function flatten(
   record: Record<string, unknown>,
@@ -151,21 +144,23 @@ export function readComponents(doc: ParsedDesignMd): Component[] {
     .filter((entry): entry is [string, Record<string, unknown>] =>
       isRecord(entry[1]),
     )
-    .map(([key, props]) => ({
-      key: key.toLowerCase(),
-      props,
-      raw: isRecord(raw) && isRecord(raw[key]) ? raw[key] : {},
-    }))
+    .map(([key, props]) => {
+      const rawProps = isRecord(raw) ? raw[key] : undefined
+      return {
+        key: key.toLowerCase(),
+        props,
+        raw: isRecord(rawProps) ? rawProps : {},
+      }
+    })
 }
 
 export const opaque = (
   c?: ParsedColor,
 ): c is ParsedColor & { oklch: Oklch; hex: string } =>
-  !!c?.oklch && c.alpha >= 1
-export const chromatic = (c?: ParsedColor) =>
+  !!c?.oklch && !!c.hex && c.alpha >= 1
+export const chromatic = (c?: ParsedColor): boolean =>
   opaque(c) && c.oklch.c >= WHISPER_LINE
 
-/** The primary button's key, by the naming the corpus uses. */
 export function buttonKey(components: Component[]): string | undefined {
   const keys = components.map((c) => c.key).filter((k) => !STATE_SUFFIX.test(k))
   return (
@@ -202,13 +197,17 @@ export function families(components: Component[]): Families {
   const btn = buttonKey(components)
   const sized = btn
     ? new RegExp(
-        `^${btn.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}-(xs|sm|small|md|lg|large|xl|pill|default|base)$`,
+        `^${escapeRegExp(btn)}-(xs|sm|small|md|lg|large|xl|pill|default|base)$`,
       )
     : undefined
+  const blocks = (re: RegExp) =>
+    nonState.filter((c) => re.test(c.key) && !NOT_CARD.test(c.key))
+  // Tiles are often full-bleed sections; they stand in only without cards.
+  const cards = blocks(/card/)
   return {
     button: nonState.filter((c) => c.key === btn || sized?.test(c.key)),
     input: nonState.filter((c) => isInput(c.key)),
-    card: nonState.filter((c) => isCard(c.key)),
+    card: cards.length > 0 ? cards : blocks(/tile/),
     surface: nonState.filter((c) => SURFACE_KEY.test(c.key)),
     panel: nonState.filter((c) => PANEL_KEY.test(c.key)),
   }

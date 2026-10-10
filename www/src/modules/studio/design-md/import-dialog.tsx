@@ -1,9 +1,5 @@
 "use client"
 
-/* Import DESIGN.md: paste, drop, pick or link a file, read the report of
-   what maps, and create a design system from it. Lazy: the parser and its
-   YAML chunk load only when this opens. */
-
 import { useEffect, useRef, useState } from "react"
 
 import { cleanName, MAX_NAME_LENGTH } from "@/lib/snapshots/snapshot"
@@ -54,8 +50,7 @@ const CATEGORIES: Record<ImportCategory, string> = {
   motion: "Motion",
 }
 
-/** A raw GitHub URL for a pasted GitHub file link; no other host serves
- *  DESIGN.md with CORS. */
+// Raw GitHub only: no other host serves DESIGN.md with CORS.
 function rawUrl(text: string): string | undefined {
   const value = text.trim()
   if (!value || /\s/.test(value)) return
@@ -139,15 +134,30 @@ function ImportForm({ close }: { close: () => void }) {
       setResult(undefined)
       return
     }
+    if (new TextEncoder().encode(text).length > MAX_BYTES) {
+      setResult(undefined)
+      setError(TOO_LARGE)
+      return
+    }
     const timer = setTimeout(() => {
-      void importDesignMd(text).then((next) => {
-        if (id !== request.current) return
-        setResult(next)
-        if (!nameEdited.current)
-          setName(
-            uniqueName(next.name ?? "Imported design system", systems.current),
-          )
-      })
+      importDesignMd(text)
+        .then((next) => {
+          if (id !== request.current) return
+          setResult(next)
+          if (!nameEdited.current)
+            setName(
+              uniqueName(
+                next.name ?? "Imported design system",
+                systems.current,
+              ),
+            )
+        })
+        .catch((e: unknown) => {
+          if (id !== request.current) return
+          console.error(e)
+          setResult(undefined)
+          setError("Couldn't read that file.")
+        })
     }, 150)
     return () => clearTimeout(timer)
   }, [text])

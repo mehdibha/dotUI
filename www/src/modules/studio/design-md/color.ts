@@ -1,6 +1,3 @@
-/* Color: page, brand and button source, status seeds, the neutral's hue and
-   tint, then every other token checked against the generated palette. */
-
 import {
   createTheme,
   deltaEok,
@@ -11,7 +8,7 @@ import {
   toOklch,
   WHISPER_LINE,
 } from "@dotui/colors"
-import type { Theme } from "@dotui/colors"
+import type { Oklch, Theme } from "@dotui/colors"
 
 import { resolveColorConfig } from "@/registry/theme"
 
@@ -20,6 +17,7 @@ import { buildColorConfig, SOLID_LEAVES, withSource } from "../axes/color"
 import {
   add,
   buttonKey,
+  capitalize,
   chromatic,
   clamp,
   fmt,
@@ -33,6 +31,9 @@ import {
 } from "./context"
 import type { ColorToken, Component, Ctx, Mode, State } from "./context"
 import { color, kebab, median } from "./parse"
+import type { ParsedColor } from "./parse"
+
+type Solid = ParsedColor & { oklch: Oklch; hex: string }
 
 const PAGE = [
   "canvas",
@@ -76,6 +77,39 @@ const STATUS_KEYS = {
 } as const
 const INFO = ["info", "semantic-info", "status-info"]
 const PAGE_NOTE = /\b(default )?page (background|body)\b/i
+// Prose-only files name the page loosely: "Deepest background surface".
+const LOOSE_PAGE_NOTE =
+  /\b(default|main|dominant|deepest) (?:(?!(cards?|buttons?|inputs?|fields?)\b)[\w-]+ ){0,2}(background|canvas|surface)\b/i
+// A dark page token that the file calls its default canvas wins.
+const DARK_DEFAULT_NOTE =
+  /\b(default|primary|main|dominant) (?:[\w-]+ ){0,2}(canvas|background|page floor)\b/i
+const BRAND_NOTES = [
+  /primary (buttons?|actions?|ctas?)\b|button fill|filled[- ]cta|primary filled/i,
+  /\b(primary|brand)\b/i,
+  /\bCTAs?\b|call[- ]to[- ]action/i,
+]
+const BRAND_NAMES = [
+  "primary",
+  "accent",
+  "brand",
+  "link",
+  "link-blue",
+  "text-link",
+  "link-primary",
+  "link-default",
+  "action",
+  "tertiary",
+  "secondary",
+]
+const BRAND_PREFIXES = ["accent-", "brand-", "link-", "text-link-", "action-"]
+const NOT_BRAND_WORD =
+  /\b(success|warning|error|danger|info|caution|critical|positive|negative|destructive|sale|fallback)\b/
+const NOT_BRAND_ANY =
+  /^(surface|hairline|border|on|canvas|bg|background|ink|text|body|muted?|shadow|overlay)(-|$)|ring|focus|terminal|mockup|syntax|code|chart/
+// Below this L* a chromatic button reads as ink, not a brand hue.
+const INK_LSTAR = 15
+// A guessed brand must clear the neutral line the fidelity check uses.
+const NEUTRAL_C = 0.06
 
 export interface ColorResult {
   mode: Mode
@@ -83,50 +117,71 @@ export interface ColorResult {
   brand?: string
 }
 
-function brandCandidates(tokens: ColorToken[]): ColorToken[] {
+const usable = (t: ColorToken) =>
+  opaque(t.color) &&
+  t.color.oklch.c >= NEUTRAL_C &&
+  lstarOf(t.color.oklch) >= INK_LSTAR &&
+  !NOT_BRAND_WORD.test(t.key) &&
+  !STATE_SUFFIX.test(t.key) &&
+  !GRADIENT.test(t.key)
+
+// A brand-named token first; else, when allowed, any other chromatic token.
+function brandCandidate(
+  tokens: ColorToken[],
+  anyName: boolean,
+): { token: ColorToken; named: boolean } | undefined {
   const named = [
-    "primary",
-    "accent",
-    "brand",
-    "link",
-    "link-blue",
-    "tertiary",
-    "secondary",
-  ]
-  const byName = (name: string) => tokens.find((t) => t.key === name)
-  const prefixed = (prefix: string) =>
-    tokens.filter((t) => t.key.startsWith(prefix) && !STATE_SUFFIX.test(t.key))
-  return [
-    ...named.map(byName),
-    ...prefixed("accent-"),
-    ...prefixed("brand-"),
-    byName("info"),
-  ].filter((t): t is ColorToken => !!t)
+    ...BRAND_NAMES.map((name) => tokens.find((t) => t.key === name)),
+    ...BRAND_PREFIXES.flatMap((prefix) =>
+      tokens.filter((t) => t.key.startsWith(prefix)),
+    ),
+  ].find((t): t is ColorToken => !!t && usable(t))
+  if (named) return { token: named, named: true }
+  const other = anyName
+    ? tokens.find(
+        (t) =>
+          usable(t) &&
+          !NOT_BRAND_ANY.test(t.key) &&
+          opaque(t.color) &&
+          lstarOf(t.color.oklch) <= 90,
+      )
+    : undefined
+  return other && { token: other, named: false }
 }
 
 export function mapColor(
   ctx: Ctx,
   tokens: ColorToken[],
   components: Component[],
+  proseOnly: boolean,
 ): ColorResult {
   const { state } = ctx
   const consumed = new Set<string>()
+  const solid = (t?: ColorToken): Solid | undefined =>
+    t && opaque(t.color) ? t.color : undefined
   const find = (names: readonly string[]) =>
     names
-      .map((name) => tokens.find((t) => t.key === name && opaque(t.color)))
+      .map((name) => tokens.find((t) => t.key === name && solid(t)))
       .find((t) => !!t)
+  const noted = (re: RegExp, test: (t: ColorToken) => unknown = solid) =>
+    tokens.find((t) => t.note && re.test(t.note) && test(t))
 
   // Page: the alias, unless the colors prose calls another token the page.
   let page = find(PAGE)
   if (!page?.note || !PAGE_NOTE.test(page.note)) {
-    const noted = tokens.find(
-      (t) => t.note && PAGE_NOTE.test(t.note) && opaque(t.color),
-    )
-    if (noted) page = noted
+    const named =
+      noted(PAGE_NOTE) ??
+      (proseOnly ? noted(LOOSE_PAGE_NOTE) : undefined) ??
+      DARK_PAGE.map((name) => tokens.find((t) => t.key === name))
+        .filter((t) => t?.note && DARK_DEFAULT_NOTE.test(t.note))
+        .find((t) => !!solid(t))
+    if (named) page = named
   }
-  const pageL = page && lstarOf(page.color!.oklch!)
+  const pageColor = solid(page)
+  const pageL = pageColor && lstarOf(pageColor.oklch)
   const mode: Mode = pageL === undefined || pageL >= 50 ? "light" : "dark"
   const darkPage = mode === "light" ? find(DARK_PAGE) : undefined
+  const darkColor = solid(darkPage)
   if (page) consumed.add(page.key)
   if (darkPage) consumed.add(darkPage.key)
 
@@ -134,18 +189,17 @@ export function mapColor(
   const btnKey = buttonKey(components)
   const btn = components.find((c) => c.key === btnKey)
   const btnColor = btn && color(btn.props.backgroundColor)
-  let fill = opaque(btnColor) ? btnColor : undefined
-  let fillToken = fill ? refToken(btn!.raw.backgroundColor) : undefined
+  let fill: Solid | undefined = opaque(btnColor) ? btnColor : undefined
+  let fillToken = fill ? refToken(btn?.raw.backgroundColor) : undefined
   const guessed = !fill
   if (!fill) {
     // Prose-only files name roles in the bullet, not the token.
     const primary =
-      tokens.find((t) => t.key === "primary" && opaque(t.color)) ??
-      tokens.find(
-        (t) =>
-          t.note && /\b(primary|brand)\b/i.test(t.note) && chromatic(t.color),
+      tokens.find((t) => t.key === "primary" && solid(t)) ??
+      BRAND_NOTES.map((re) => noted(re, (t) => chromatic(t.color))).find(
+        (t) => !!t,
       )
-    fill = primary?.color as typeof fill
+    fill = solid(primary)
     fillToken = primary?.key
   }
   if (fillToken) consumed.add(fillToken)
@@ -153,54 +207,64 @@ export function mapColor(
     ? `colors.${fillToken ?? "primary"}`
     : `components.${btnKey}.backgroundColor`
 
+  const inky = !!fill && chromatic(fill) && lstarOf(fill.oklch) < INK_LSTAR
+  const alt =
+    fill && chromatic(fill) && !inky ? undefined : brandCandidate(tokens, !inky)
+  if (alt) consumed.add(alt.token.key)
+  const altColor = solid(alt?.token)
+  const altSource = alt && `colors.${alt.token.name}`
+
   let brand: string | undefined
-  if (fill && chromatic(fill)) {
+  if (fill && !alt && chromatic(fill)) {
     brand = fill.hex
-    add(ctx, "mapped", "color", {
+    add(ctx, statusOf(!inky), "color", {
       id: "brand",
-      label: "Brand color from the primary button",
+      label: inky
+        ? "Near-black button taken as the brand: no other brand color"
+        : guessed
+          ? `Brand color from ${fillToken ?? "the primary color"}`
+          : "Brand color from the primary button",
       source: fillSource,
       keys: ["brand", "preserveSeed"],
       value: fill.hex,
       result: brand,
     })
-  } else {
-    const alt = brandCandidates(tokens).find((t) => chromatic(t.color))
-    if (alt) consumed.add(alt.key)
-    if (fill) {
-      brand = alt?.color!.hex ?? fill.hex
-      Object.assign(state, withSource(SOLID_LEAVES, "neutral"))
-      add(ctx, guessed ? "approximated" : "mapped", "color", {
-        id: "button-source",
-        label: guessed
-          ? "Guessed: the file has no button component"
-          : "Buttons and selected controls fill with the neutral ink",
-        source: fillSource,
-        keys: [...SOLID_LEAVES],
-        value: fill.hex,
-        result: "neutral",
-      })
-      add(ctx, "mapped", "color", {
-        id: "brand",
-        label: alt
-          ? `Brand color from ${alt.name}; buttons stay ink`
-          : "Brand kept achromatic: the file has no chromatic color",
-        source: alt ? `colors.${alt.name}` : fillSource,
-        keys: ["brand", "preserveSeed"],
-        value: alt?.color!.hex ?? fill.hex,
-        result: brand,
-      })
-    } else if (alt) {
-      brand = alt.color!.hex
-      add(ctx, "approximated", "color", {
-        id: "brand",
-        label: `No primary color; took ${alt.name}`,
-        source: `colors.${alt.name}`,
-        keys: ["brand", "preserveSeed"],
-        value: brand,
-        result: brand,
-      })
-    }
+  } else if (fill) {
+    brand = altColor?.hex ?? fill.hex
+    Object.assign(state, withSource(SOLID_LEAVES, "neutral"))
+    add(ctx, guessed ? "approximated" : "mapped", "color", {
+      id: "button-source",
+      label: guessed
+        ? "Guessed: the file has no button component"
+        : "Buttons and selected controls fill with the neutral ink",
+      source: fillSource,
+      keys: [...SOLID_LEAVES],
+      value: fill.hex,
+      result: "neutral",
+    })
+    const ink = inky ? "Near-black buttons stay ink" : "Buttons stay ink"
+    add(ctx, statusOf(!alt), "color", {
+      id: "brand",
+      label: !alt
+        ? "Brand kept achromatic: the file has no usable chromatic color"
+        : alt.named
+          ? `${ink}; brand color from ${alt.token.name}`
+          : `${ink}; brand guessed from ${alt.token.name}, no brand-named color`,
+      source: altSource ?? fillSource,
+      keys: ["brand", "preserveSeed"],
+      value: brand,
+      result: brand,
+    })
+  } else if (alt && altColor) {
+    brand = altColor.hex
+    add(ctx, "approximated", "color", {
+      id: "brand",
+      label: `No primary color; took ${alt.token.name}`,
+      source: altSource,
+      keys: ["brand", "preserveSeed"],
+      value: brand,
+      result: brand,
+    })
   }
   if (brand) {
     state.brand = brand
@@ -222,16 +286,17 @@ export function mapColor(
       .find((t) => !!t)
     if (!token) continue
     consumed.add(token.key)
-    if (chromatic(token.color)) {
-      state[STATUS_KEYS[name]] = token.color!.hex
-      statusHexes.push(token.color!.hex!)
+    const seed = solid(token)
+    if (seed && chromatic(seed)) {
+      state[STATUS_KEYS[name]] = seed.hex
+      statusHexes.push(seed.hex)
       add(ctx, "mapped", "color", {
         id: `status:${name}`,
-        label: `${name[0]!.toUpperCase()}${name.slice(1)} seed`,
+        label: `${capitalize(name)} seed`,
         source: `colors.${token.name}`,
         keys: [STATUS_KEYS[name]],
-        value: token.color!.hex,
-        result: token.color!.hex,
+        value: seed.hex,
+        result: seed.hex,
       })
     } else
       unmappedRole(ctx, token, "not a usable seed (achromatic or translucent)")
@@ -243,10 +308,11 @@ export function mapColor(
     unmappedRole(ctx, token, "the studio has no info seed")
   }
 
-  // Page lightness per mode.
-  if (page && pageL !== undefined) {
+  if (page && pageColor && pageL !== undefined) {
     const rounded = round(pageL, 0.5)
     const source = `colors.${page.name}`
+    const delta = (value: number) =>
+      value === rounded ? undefined : `L* ${pageL.toFixed(1)} → ${value}`
     if (mode === "light") {
       const value = clamp(rounded, 90, 100)
       if (value !== DEFAULTS.lightBg) state.lightBg = value
@@ -255,10 +321,9 @@ export function mapColor(
         label: "Light page lightness",
         source,
         keys: ["lightBg"],
-        value: page.color!.hex,
+        value: pageColor.hex,
         result: `L* ${value}`,
-        delta:
-          value === rounded ? undefined : `L* ${pageL.toFixed(1)} → ${value}`,
+        delta: delta(value),
       })
     } else {
       const value = clamp(rounded, 0, 20)
@@ -268,10 +333,9 @@ export function mapColor(
         label: "Dark page lightness",
         source,
         keys: ["darkBg"],
-        value: page.color!.hex,
+        value: pageColor.hex,
         result: value === 0 ? "OLED black" : `L* ${value}`,
-        delta:
-          value === rounded ? undefined : `L* ${pageL.toFixed(1)} → ${value}`,
+        delta: delta(value),
       })
       add(ctx, "approximated", "color", {
         id: "mode-derived:light",
@@ -280,8 +344,8 @@ export function mapColor(
       })
     }
   }
-  if (darkPage) {
-    const darkL = lstarOf(darkPage.color!.oklch!)
+  if (darkPage && darkColor) {
+    const darkL = lstarOf(darkColor.oklch)
     const value = clamp(round(darkL, 0.5), 0, 20)
     if (value !== DEFAULTS.darkBg) state.darkBg = value
     add(ctx, "approximated", "color", {
@@ -289,7 +353,7 @@ export function mapColor(
       label: `Dark page taken from ${darkPage.name} — may be a dark section, not a dark theme`,
       source: `colors.${darkPage.name}`,
       keys: ["darkBg"],
-      value: darkPage.color!.hex,
+      value: darkColor.hex,
       result: value === 0 ? "OLED black" : `L* ${value}`,
       delta: `L* ${darkL.toFixed(1)} → ${value}`,
     })
@@ -314,7 +378,7 @@ function unmappedRole(ctx: Ctx, token: ColorToken, reason: string) {
   })
 }
 
-/** How much tint a sample implies at the neutral step nearest its L*. */
+// How much tint a sample implies at the neutral step nearest its L*.
 export function impliedTint(
   chroma: number,
   lightness: number,
@@ -323,10 +387,10 @@ export function impliedTint(
 ): number {
   let nearest = 0
   stepLstars.forEach((l, i) => {
-    if (Math.abs(l - lightness) < Math.abs(stepLstars[nearest]! - lightness))
-      nearest = i
+    const best = stepLstars[nearest] ?? l
+    if (Math.abs(l - lightness) < Math.abs(best - lightness)) nearest = i
   })
-  return chroma / (NEUTRAL_TINT_PEAK * NEUTRAL_TINT_SHAPE[mode][nearest]!)
+  return chroma / (NEUTRAL_TINT_PEAK * (NEUTRAL_TINT_SHAPE[mode][nearest] ?? 1))
 }
 
 function engineBackground(state: State) {
@@ -367,26 +431,24 @@ function mapNeutral(
       ? undefined
       : Math.round(((Math.atan2(y, x) * 180) / Math.PI + 360) % 360) % 360
 
-  const theme = createTheme({
+  const neutral = createTheme({
     seeds: { accent: state.brand ?? DEFAULTS.brand },
     neutralHue: mean,
     neutralTint: 1,
     background: engineBackground(state),
-  })
-  const stepLstars = STEPS.map((step) =>
-    lstarOf(toOklch(theme[mode].scales.neutral![step])),
-  )
+  })[mode].scales.neutral
+  if (!neutral) return
+  const stepLstars = STEPS.map((step) => lstarOf(toOklch(neutral[step])))
   const implied = samples.map((s) =>
     impliedTint(s.oklch.c, s.l, mode, stepLstars),
   )
-  const mid = median(implied)!
-  const tint = clamp(round(mid, 0.05), 0, 2)
-  const tintValue = Number(tint.toFixed(2))
+  const mid = median(implied) ?? 0
+  const tint = Number(clamp(round(mid, 0.05), 0, 2).toFixed(2))
 
   // A hue on pure grays (tint 0) would change nothing.
   const setHue =
     mean !== undefined &&
-    tintValue > 0 &&
+    tint > 0 &&
     (achromaticBrand || hueGap(mean, brand.h) > 20)
   if (setHue) {
     state.neutralHue = mean
@@ -398,7 +460,7 @@ function mapNeutral(
     })
   }
 
-  if (achromaticBrand && mean === undefined && tintValue > 0) {
+  if (achromaticBrand && mean === undefined && tint > 0) {
     add(ctx, "approximated", "color", {
       id: "neutral-tint",
       label: "Grays kept pure: no hue to tint them with",
@@ -410,19 +472,18 @@ function mapNeutral(
   }
   const exact =
     implied.every((v) => Math.abs(v - mid) <= 0.3) && round(mid, 0.05) <= 2
-  if (tintValue !== DEFAULTS.neutralTint) state.neutralTint = tintValue
+  if (tint !== DEFAULTS.neutralTint) state.neutralTint = tint
   add(ctx, statusOf(exact), "color", {
     id: "neutral-tint",
     label: "Neutral tint from the file's grays",
     keys: ["neutralTint"],
-    result: String(tintValue),
+    result: String(tint),
     delta: exact
       ? undefined
       : `implied ${Math.min(...implied).toFixed(2)}–${Math.max(...implied).toFixed(2)}`,
   })
 }
 
-/** The final theme the state resolves to. */
 function themeOf(state: State): Theme {
   const valid = validate(state)
   return resolveColorConfig(
@@ -443,18 +504,20 @@ function checkFidelity(
     )
   ) {
     const at = ctx.report.mapped.findIndex((item) => item.id === "brand")
-    if (at !== -1) {
-      const [item] = ctx.report.mapped.splice(at, 1)
+    const [item] = at === -1 ? [] : ctx.report.mapped.splice(at, 1)
+    if (item)
       ctx.report.approximated.push({
-        ...item!,
-        delta: `ΔE ${theme.report.seedDelta.accent!.toFixed(3)}`,
+        ...item,
+        delta: `ΔE ${(theme.report.seedDelta.accent ?? 0).toFixed(3)}`,
       })
-    }
   }
 
   const scales = theme[mode].scales
   const palettes = ["accent", "success", "warning", "danger"]
-    .map((name) => ({ name, solid: toOklch(scales[name]!["700"]) }))
+    .flatMap((name) => {
+      const scale = scales[name]
+      return scale ? [{ name, scale, solid: toOklch(scale["700"]) }] : []
+    })
     .filter((p) => p.solid.c >= WHISPER_LINE)
 
   for (const token of tokens) {
@@ -471,31 +534,29 @@ function checkFidelity(
       continue
     }
     const c = token.color
-    if (!c?.oklch) continue
+    if (!c?.oklch || !c.hex) continue
     if (c.alpha < 1) {
       unmappedRole(ctx, token, "translucent colors have no token")
       continue
     }
+    const { h } = c.oklch
     const palette =
       c.oklch.c < 0.06
-        ? "neutral"
+        ? { name: "neutral", scale: scales.neutral }
         : palettes
-            .filter((p) => hueGap(p.solid.h, c.oklch!.h) <= 20)
-            .sort(
-              (a, b) =>
-                hueGap(a.solid.h, c.oklch!.h) - hueGap(b.solid.h, c.oklch!.h),
-            )[0]?.name
-    if (!palette) {
+            .filter((p) => hueGap(p.solid.h, h) <= 20)
+            .sort((a, b) => hueGap(a.solid.h, h) - hueGap(b.solid.h, h))[0]
+    if (!palette?.scale) {
       unmappedRole(ctx, token, "an extra hue the palette doesn't generate")
       continue
     }
     let best = { step: "", delta: Infinity }
     for (const step of STEPS) {
-      const delta = deltaEok(c.oklch, toOklch(scales[palette]![step]))
+      const delta = deltaEok(c.oklch, toOklch(palette.scale[step]))
       if (delta < best.delta) best = { step, delta }
     }
     if (best.delta > 0.1) {
-      unmappedRole(ctx, token, `no ${palette} step comes close`)
+      unmappedRole(ctx, token, `no ${palette.name} step comes close`)
       continue
     }
     add(ctx, statusOf(best.delta <= 0.02), "color", {
@@ -503,7 +564,7 @@ function checkFidelity(
       label: `${token.name} on a generated step`,
       source: `colors.${token.name}`,
       value: c.hex,
-      result: `${palette} ${best.step}`,
+      result: `${palette.name} ${best.step}`,
       delta: best.delta <= 0.02 ? undefined : `ΔE ${best.delta.toFixed(3)}`,
     })
   }

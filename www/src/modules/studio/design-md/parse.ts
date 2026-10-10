@@ -1,8 +1,3 @@
-/* A DESIGN.md (Google Stitch's format) read into plain data: the frontmatter
-   with its references resolved, the body split into canonical sections, and
-   the unit parsers the mapper shares. Lenient by design: real files break
-   the spec, so a bad block is skipped with a warning, never fatal. */
-
 import { toHex, toOklch } from "@dotui/colors"
 import type { Oklch } from "@dotui/colors"
 
@@ -53,20 +48,16 @@ const SECTION_ALIASES: Record<string, SectionName> = {
 export interface Heading {
   level: 2 | 3
   text: string
-  /** The canonical section it sits in, if any. */
   section?: SectionName
 }
 
 export interface ParsedDesignMd {
-  /** The frontmatter, references resolved. */
   tokens?: Record<string, unknown>
-  /** The frontmatter as written, for which token a reference names. */
+  // The frontmatter as written, for which token a reference names.
   raw?: Record<string, unknown>
-  /** Frontmatter `name`, else the H1. */
   title?: string
-  /** Each canonical section's text, first occurrence only. */
   sections: Partial<Record<Exclude<SectionName, "ignored">, string>>
-  /** The body without its ignored sections. */
+  // The body without its ignored sections.
   prose: string
   headings: Heading[]
   warnings: string[]
@@ -75,17 +66,29 @@ export interface ParsedDesignMd {
 export const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value)
 
-export const kebab = (name: string) =>
-  name
+function hash(text: string) {
+  let h = 0x811c9dc5
+  for (const ch of text) h = Math.imul(h ^ (ch.codePointAt(0) ?? 0), 0x01000193)
+  return (h >>> 0).toString(36)
+}
+
+export function kebab(name: string) {
+  const base = name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
+  // Non-ASCII names keep a hash, so distinct names keep distinct ids.
+  return /[^ -~]/.test(name)
+    ? [base, hash(name)].filter(Boolean).join("-")
+    : base
+}
 
-/* ------------------------------- primitives ------------------------------- */
+export const escapeRegExp = (text: string) =>
+  text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 
 const LENGTH = /^(-?(?:\d+\.?\d*|\.\d+))(px|rem|em)?$/i
 
-/** A length in px: rem and em count 16px, a bare number is px. */
+// rem and em count 16px; a bare number is px.
 export function dim(value: unknown): number | undefined {
   if (typeof value === "number")
     return Number.isFinite(value) ? value : undefined
@@ -93,6 +96,7 @@ export function dim(value: unknown): number | undefined {
   const match = LENGTH.exec(value.trim())
   if (!match) return
   const n = Number(match[1])
+  if (!Number.isFinite(n)) return
   const unit = match[2]?.toLowerCase()
   return unit === "rem" || unit === "em" ? n * 16 : n
 }
@@ -104,22 +108,19 @@ export interface Box {
   left: number
 }
 
-/** A CSS 1–4 value shorthand. */
 export function box(value: unknown): Box | undefined {
   if (typeof value === "number") return box(String(value))
   if (typeof value !== "string") return
   const parts = value.trim().split(/\s+/).map(dim)
-  if (parts.length < 1 || parts.length > 4) return
-  if (parts.some((part) => part === undefined)) return
-  const [top, right = top, bottom = top, left = right] = parts as number[]
-  return { top: top!, right: right!, bottom: bottom!, left: left! }
+  if (parts.length > 4 || !parts.every((p): p is number => p !== undefined))
+    return
+  const [top = 0, right = top, bottom = top, left = right] = parts
+  return { top, right, bottom, left }
 }
 
 export interface ParsedColor {
-  /** Absent only on `transparent`. */
   oklch?: Oklch
   alpha: number
-  /** Lowercase `#rrggbb`. */
   hex?: string
 }
 
@@ -127,18 +128,13 @@ const fraction = (text: string) =>
   text.endsWith("%") ? Number(text.slice(0, -1)) / 100 : Number(text)
 
 function alphaOf(css: string): number {
-  const hex = /^#([0-9a-f]{4}|[0-9a-f]{8})$/i.exec(css)
-  if (hex) {
-    const digits = hex[1]!
-    const a = digits.length === 4 ? digits[3]!.repeat(2) : digits.slice(6)
-    return parseInt(a, 16) / 255
-  }
-  const slash = /\/\s*([\d.]+%?)\s*\)$/.exec(css)
-  if (slash) return fraction(slash[1]!)
-  const legacy = /^(?:rgba?|hsla?)\(([^)]*)\)$/i.exec(css)
-  const parts = legacy?.[1]!.split(",")
-  if (parts?.length === 4) return fraction(parts[3]!.trim())
-  return 1
+  const hex = /^#(?:[0-9a-f]{3}([0-9a-f])|[0-9a-f]{6}([0-9a-f]{2}))$/i.exec(css)
+  if (hex) return parseInt(hex[1]?.repeat(2) ?? hex[2] ?? "ff", 16) / 255
+  const slash = /\/\s*([\d.]+%?)\s*\)$/.exec(css)?.[1]
+  if (slash) return fraction(slash)
+  const parts = /^(?:rgba?|hsla?)\(([^)]*)\)$/i.exec(css)?.[1]?.split(",")
+  const legacy = parts?.length === 4 ? parts[3] : undefined
+  return legacy ? fraction(legacy.trim()) : 1
 }
 
 export function color(value: unknown): ParsedColor | undefined {
@@ -168,7 +164,6 @@ export interface ShadowLayer {
 const COLOR_IN_SHADOW =
   /(?:rgba?|hsla?|oklch|oklab|lab|lch)\([^)]*\)|#[0-9a-fA-F]{3,8}\b/
 
-/** Splits on `separator` outside parentheses. */
 function splitTopLevel(text: string, separator: string): string[] {
   const parts: string[] = []
   let depth = 0
@@ -186,7 +181,6 @@ function splitTopLevel(text: string, separator: string): string[] {
   return parts
 }
 
-/** A `box-shadow` value's layers; anything that isn't one is dropped. */
 export function shadows(css: string): ShadowLayer[] {
   const value = css
     .trim()
@@ -207,11 +201,11 @@ export function shadows(css: string): ShadowLayer[] {
       .filter((word) => word.toLowerCase() !== "inset")
       .map((word) => (LENGTH.test(word) ? dim(word) : undefined))
     if (lengths.length < 2 || lengths.length > 4) continue
-    if (lengths.some((length) => length === undefined)) continue
-    const [x, y, blur = 0, spread = 0] = lengths as number[]
+    if (!lengths.every((l): l is number => l !== undefined)) continue
+    const [x = 0, y = 0, blur = 0, spread = 0] = lengths
     layers.push({
-      x: x!,
-      y: y!,
+      x,
+      y,
       blur,
       spread,
       inset,
@@ -225,9 +219,8 @@ export function shadows(css: string): ShadowLayer[] {
 export const shadowStrength = (layer: ShadowLayer) =>
   (Math.abs(layer.y) + layer.blur) * layer.alpha
 
-/** Inline code spans when the text has any, else the text itself. */
 export function codeOrText(text: string): string[] {
-  const spans = [...text.matchAll(/`([^`]+)`/g)].map((match) => match[1]!)
+  const spans = [...text.matchAll(/`([^`]+)`/g)].map((match) => match[1] ?? "")
   return spans.length > 0 ? spans : [text]
 }
 
@@ -235,10 +228,11 @@ export function median(values: number[]): number | undefined {
   if (values.length === 0) return
   const sorted = [...values].sort((a, b) => a - b)
   const mid = sorted.length >> 1
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1]! + sorted[mid]!) / 2
+  const upper = sorted[mid] ?? 0
+  return sorted.length % 2 ? upper : ((sorted[mid - 1] ?? upper) + upper) / 2
 }
 
-/** Prose split into sentences, table rows kept whole. */
+// Table rows stay whole.
 export function sentences(text: string): string[] {
   return text
     .split("\n")
@@ -248,8 +242,6 @@ export function sentences(text: string): string[] {
     .map((sentence) => sentence.trim())
     .filter(Boolean)
 }
-
-/* ------------------------------- frontmatter ------------------------------ */
 
 const YAML_OPTIONS = {
   uniqueKeys: false,
@@ -261,8 +253,9 @@ function topLevelBlocks(source: string) {
   const blocks: { key: string; text: string }[] = []
   for (const line of source.split("\n")) {
     const opens = /^[^\s#][^:]*:/.exec(line)
+    const last = blocks.at(-1)
     if (opens) blocks.push({ key: opens[0].slice(0, -1), text: line })
-    else if (blocks.length > 0) blocks[blocks.length - 1]!.text += `\n${line}`
+    else if (last) last.text += `\n${line}`
   }
   return blocks
 }
@@ -291,10 +284,7 @@ async function parseYaml(
   }
 }
 
-const escapeRegExp = (text: string) =>
-  text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-
-/** YAML reads an unquoted `#hex` as a comment; take it from the line. */
+// YAML reads an unquoted `#hex` as a comment; take it from the line.
 function recoverHexes(colors: unknown, source: string) {
   if (!isRecord(colors)) return
   for (const [key, value] of Object.entries(colors)) {
@@ -307,21 +297,25 @@ function recoverHexes(colors: unknown, source: string) {
   }
 }
 
-/* ------------------------------- references ------------------------------- */
-
 const PATH = "[A-Za-z][\\w-]*(?:\\.[\\w-]+)+"
 const WHOLE_REF = new RegExp(`^\\{(${PATH})\\}$`)
 const EMBEDDED_REF = new RegExp(`\\{(${PATH})\\}`, "g")
+const BARE_PATH = new RegExp(`^${PATH}$`)
 const MAX_DEPTH = 8
+// Fan-out refs copy subtrees; past this many nodes the rest stays literal.
+const MAX_NODES = 50_000
+export const REF_BUDGET_WARNING =
+  "references expand too far — the rest left unresolved"
 
-/** `{colors.primary}` left unquoted parses as a one-key flow map. */
+// `{colors.primary}` left unquoted parses as a one-key flow map.
 function flowRef(value: Record<string, unknown>): string | undefined {
-  const keys = Object.keys(value)
-  if (keys.length !== 1 || value[keys[0]!] !== null) return
-  return new RegExp(`^${PATH}$`).test(keys[0]!) ? keys[0] : undefined
+  const [key, ...rest] = Object.keys(value)
+  if (key === undefined || rest.length > 0 || value[key] !== null) return
+  return BARE_PATH.test(key) ? key : undefined
 }
 
 function resolver(root: Record<string, unknown>, warnings: Set<string>) {
+  let nodes = 0
   const lookup = (path: string) =>
     path
       .split(".")
@@ -346,9 +340,13 @@ function resolver(root: Record<string, unknown>, warnings: Set<string>) {
   }
 
   function resolve(value: unknown, stack: string[] = []): unknown {
+    if (++nodes > MAX_NODES) {
+      warnings.add(REF_BUDGET_WARNING)
+      return value
+    }
     if (typeof value === "string") {
-      const whole = WHOLE_REF.exec(value.trim())
-      if (whole) return follow(whole[1]!, value, stack)
+      const whole = WHOLE_REF.exec(value.trim())?.[1]
+      if (whole) return follow(whole, value, stack)
       return value.replace(EMBEDDED_REF, (literal, path: string) => {
         const resolved = follow(path, literal, stack)
         if (typeof resolved === "string" || typeof resolved === "number")
@@ -370,8 +368,6 @@ function resolver(root: Record<string, unknown>, warnings: Set<string>) {
 
   return resolve
 }
-
-/* -------------------------------- sections -------------------------------- */
 
 const normalizeHeading = (text: string) =>
   text
@@ -396,35 +392,34 @@ function splitBody(body: string, warnings: string[]) {
 
   for (const line of body.split("\n")) {
     if (/^\s*(```|~~~)/.test(line)) fenced = !fenced
-    const h2 = !fenced && /^## (.+)$/.exec(line)
+    const h2: string | undefined = fenced
+      ? undefined
+      : /^## (.+)$/.exec(line)?.[1]?.trim()
     if (h2) {
       close()
-      const name = normalizeHeading(h2[1]!)
-      const canonical = SECTION_ALIASES[name]
+      const canonical = SECTION_ALIASES[normalizeHeading(h2)]
       currentLines = undefined
       current = canonical
       if (canonical && canonical !== "ignored") {
         if (sections[canonical] !== undefined) {
-          warnings.push(`duplicate section '${h2[1]!.trim()}' — used the first`)
+          warnings.push(`duplicate section '${h2}' — used the first`)
           current = undefined
         } else currentLines = []
       }
-      headings.push({ level: 2, text: h2[1]!.trim(), section: canonical })
+      headings.push({ level: 2, text: h2, section: canonical })
       if (canonical !== "ignored") prose.push(line)
       continue
     }
-    const h3 = !fenced && /^### (.+)$/.exec(line)
-    if (h3) headings.push({ level: 3, text: h3[1]!.trim(), section: current })
-    const title = !fenced && /^# (.+)$/.exec(line)
-    if (title && h1 === undefined) h1 = title[1]!.trim()
+    const h3 = fenced ? undefined : /^### (.+)$/.exec(line)?.[1]?.trim()
+    if (h3) headings.push({ level: 3, text: h3, section: current })
+    const title = fenced ? undefined : /^# (.+)$/.exec(line)?.[1]?.trim()
+    if (title && h1 === undefined) h1 = title
     currentLines?.push(line)
     if (current !== "ignored") prose.push(line)
   }
   close()
   return { sections, headings, prose: prose.join("\n"), h1 }
 }
-
-/* --------------------------------- parse --------------------------------- */
 
 export async function parseDesignMd(input: string): Promise<ParsedDesignMd> {
   const warnings: string[] = []
@@ -454,7 +449,8 @@ export async function parseDesignMd(input: string): Promise<ParsedDesignMd> {
   if (raw) {
     recoverHexes(raw.colors, source)
     const unresolved = new Set<string>()
-    tokens = resolver(raw, unresolved)(raw) as Record<string, unknown>
+    const resolved = resolver(raw, unresolved)(raw)
+    tokens = isRecord(resolved) ? resolved : {}
     warnings.push(...unresolved)
   }
 
@@ -471,61 +467,88 @@ export async function parseDesignMd(input: string): Promise<ParsedDesignMd> {
   }
 }
 
-/* ------------------------------ prose fallback ---------------------------- */
-
 const PROSE_COLOR =
   /^\s*[-*]\s+\*\*(.+?)\*\*\s*\(\s*`?(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\)|oklch\([^)]*\))`?[^)]*\)\s*[:—–-]\s*(.*)$/
 
-/** `- **Cream** (`#f7f4ed`): Page background…` bullets, by kebab name. */
 export function proseColors(
   section: string,
 ): { name: string; value: string; note: string }[] {
   const found: { name: string; value: string; note: string }[] = []
   for (const line of section.split("\n")) {
-    const match = PROSE_COLOR.exec(line)
-    if (!match) continue
-    const name = kebab(match[1]!)
+    const [, label = "", value = "", note = ""] = PROSE_COLOR.exec(line) ?? []
+    const name = kebab(label)
     if (name && !found.some((entry) => entry.name === name))
-      found.push({ name, value: match[2]!, note: match[3]! })
+      found.push({ name, value, note })
   }
   return found
 }
 
-/** What each `{colors.x}` bullet says about its token. */
+// What each `{colors.x}` bullet says about its token.
 export function colorNotes(section: string): Map<string, string> {
   const notes = new Map<string, string>()
   for (const line of section.split("\n")) {
-    const match =
-      /^\s*[-*]\s+.*?\{colors\.([\w-]+)\}[^)]*\)\s*[:—–-]?\s*(.*)$/.exec(line)
-    if (match && !notes.has(match[1]!.toLowerCase()))
-      notes.set(match[1]!.toLowerCase(), match[2]!)
+    const [, token, note = ""] =
+      /^\s*[-*]\s+.*?\{colors\.([\w-]+)\}[^)]*\)\s*[:—–-]?\s*(.*)$/.exec(
+        line,
+      ) ?? []
+    if (token && !notes.has(token.toLowerCase()))
+      notes.set(token.toLowerCase(), note)
   }
   return notes
 }
 
 export type FontRole = "body" | "heading" | "mono"
 
-const PROSE_FONT =
-  /\*\*(Primary|Display|Heading|Headline|Body|Text|Mono(?:space)?|Code)\*\*\s*:\s*`([^`]+)`/g
+// `**Label**: stack` lines, or `**Family** — description` in a list.
+const FONT_LINE = /^\s*(?:(?:[-*]|\d+\.)\s+)?\*\*([^*]+?)\*\*:?\s*(.*)$/
+const LABEL_ROLES: [FontRole, RegExp][] = [
+  ["mono", /\b(mono(space)?|code|technical)\b/i],
+  ["heading", /\b(display|headings?|headlines?|titles?|hero)\b/i],
+  ["body", /\b(body|text|ui|primary|universal|paragraph|copy)\b/i],
+]
+const DESCRIPTION_ROLES: [FontRole, RegExp][] = [
+  ["mono", /\bmono(space|spaced)?\b|\bcode\b/i],
+  ["heading", /\b(display|headlines?|headings?)\b/i],
+  ["body", /\b(body|UI)\b/],
+]
+const NOT_A_ROLE = /fallback|loading|cjk|script|icon|weight/i
+const FALLBACK_PREFIX = /^(?:with )?fallbacks?\s*:\s*/i
 
-const FONT_ROLE: Record<string, FontRole> = {
-  primary: "body",
-  body: "body",
-  text: "body",
-  display: "heading",
-  heading: "heading",
-  headline: "heading",
-  mono: "mono",
-  monospace: "mono",
-  code: "mono",
+const rolesIn = (text: string, table: [FontRole, RegExp][]) =>
+  table.filter(([, re]) => re.test(text)).map(([role]) => role)
+
+const looksLikeFamily = (entry: string) =>
+  entry.length > 0 && entry.length <= 40 && entry.split(/\s+/).length <= 4
+
+function stackOf(text: string): string[] {
+  const head = text.split(/\s*[—–]\s|\.\s|\s-\s/)[0] ?? ""
+  return head
+    .replace(/`/g, "")
+    .split(",")
+    .map((entry) => entry.trim().replace(FALLBACK_PREFIX, "").trim())
+    .filter(looksLikeFamily)
 }
 
-/** `**Primary**: `Inter`` lines, first per role. */
 export function proseFonts(section: string): Partial<Record<FontRole, string>> {
   const fonts: Partial<Record<FontRole, string>> = {}
-  for (const match of section.matchAll(PROSE_FONT)) {
-    const role = FONT_ROLE[match[1]!.toLowerCase()]!
-    fonts[role] ??= match[2]!
+  for (const line of section.split("\n")) {
+    const [, rawLabel = "", rest = ""] = FONT_LINE.exec(line) ?? []
+    const label = rawLabel.replace(/:$/, "").trim()
+    if (!label || NOT_A_ROLE.test(label) || !looksLikeFamily(label)) continue
+    let roles = rolesIn(label, LABEL_ROLES)
+    let stack: string[]
+    if (roles.length > 0) {
+      // A role label names its stack in code: **Body**: `Inter`.
+      if (!rest.includes("`")) continue
+      stack = stackOf(rest.replace(/^:\s*/, ""))
+    } else {
+      if (/[.!?]$/.test(label) || !/^\s*[(—–,-]/.test(rest)) continue
+      roles = rolesIn(rest, DESCRIPTION_ROLES)
+      const fallbacks = /fallbacks?\s*:\s*([^.—–]+)/i.exec(rest)?.[1] ?? ""
+      stack = [label, ...stackOf(fallbacks)]
+    }
+    if (stack.length === 0) continue
+    for (const role of roles) fonts[role] ??= stack.join(", ")
   }
   return fonts
 }

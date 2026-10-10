@@ -1,6 +1,3 @@
-/* Surfaces, input style and the prose-only rules (icons, links, and the
-   evidence for axes the studio doesn't have). */
-
 import { lstarOf } from "@dotui/colors"
 
 import { validate } from "../axes"
@@ -21,6 +18,7 @@ import type { ShadowLayer } from "./parse"
 
 const CARD_ROW_EXCLUDED =
   /hover|modal|dialog|dropdown|menu|popover|mockup|screenshot|focus|toast|tooltip/i
+const ELEVATION_SOURCE = "prose: Elevation & Depth"
 
 function tableRows(section: string): string[][] {
   return section
@@ -38,6 +36,7 @@ function tableRows(section: string): string[][] {
 
 const cellShadows = (cell: string) => codeOrText(cell).flatMap(shadows)
 
+// A 0 0 0 1px shadow, inset or not, draws a hairline.
 const isRing = (layer: ShadowLayer) =>
   layer.x === 0 && layer.y === 0 && layer.blur === 0 && layer.spread === 1
 
@@ -85,23 +84,28 @@ export function mapSurfaces(
     })
   }
 
-  // Edge: the components' own border vocabulary first, then prose.
   const cardRow = tableRows(elevation).find(
     (cells) =>
       cells.some((cell) => /\bcards?\b/i.test(cell)) &&
       !cells.some((cell) => CARD_ROW_EXCLUDED.test(cell)),
   )
   const cardRowLayers = cardRow?.flatMap(cellShadows) ?? []
+  const cardShadow = fam.card.find((c) => typeof c.props.shadow === "string")
+  const cardShadowCss = String(cardShadow?.props.shadow ?? "")
+  const cardShadowLayers = shadows(cardShadowCss)
+  const ring = [...cardRowLayers, ...cardShadowLayers].some(isRing)
+
+  // Edge: the components' own border vocabulary first, then prose.
   const borderVocab = components.some(
     (c) => "border" in c.props || "borderColor" in c.props,
   )
   let edge: { value: string; exact: boolean } | undefined
-  if (borderVocab && fam.card.length > 0)
-    edge = {
-      value: fam.card.some((c) => hasBorder(c.props)) ? "line" : "none",
-      exact: true,
-    }
-  else {
+  if (borderVocab && fam.card.length > 0) {
+    const bordered = fam.card.some((c) => hasBorder(c.props))
+    edge = bordered
+      ? { value: "line", exact: true }
+      : { value: ring ? "line" : "none", exact: !ring }
+  } else {
     for (const sentence of sentences(`${elevation}\n${componentsProse}`)) {
       if (!/\bcards?\b/i.test(sentence)) continue
       if (
@@ -117,8 +121,7 @@ export function mapSurfaces(
         break
       }
     }
-    if (!edge && cardRowLayers.some((l) => l.inset && isRing(l)))
-      edge = { value: "line", exact: false }
+    if (!edge && ring) edge = { value: "line", exact: false }
   }
   if (edge) {
     state.surfaceEdge = edge.value
@@ -126,9 +129,11 @@ export function mapSurfaces(
       id: "surface-edge",
       label:
         edge.value === "line"
-          ? "Cards drawn with a hairline"
+          ? ring && !edge.exact
+            ? "Cards drawn with a hairline (a 1px ring shadow)"
+            : "Cards drawn with a hairline"
           : "Cards without a border",
-      source: edge.exact ? "components" : "prose: Elevation & Depth",
+      source: edge.exact ? "components" : ELEVATION_SOURCE,
       keys: ["surfaceEdge"],
       result: edge.value,
     })
@@ -137,32 +142,37 @@ export function mapSurfaces(
   // Shadow: the elevation table's card row, a card's shadow, then keywords.
   const strengthOf = (layers: ShadowLayer[]) =>
     Math.max(0, ...layers.filter((l) => !l.inset).map(shadowStrength))
-  const cardShadow = fam.card
-    .map((c) => c.props.shadow)
-    .find((s): s is string => typeof s === "string")
-  let shadow: { tier: string; exact: boolean; value?: string } | undefined
+  let shadow:
+    | { tier: string; exact: boolean; source: string; value?: string }
+    | undefined
   if (cardRow)
     shadow = {
       tier: shadowTier(strengthOf(cardRowLayers)),
       exact: true,
-      value: cardRow.join(" | "),
+      source: ELEVATION_SOURCE,
+      value:
+        cardRow
+          .flatMap(codeOrText)
+          .filter((text) => shadows(text).length > 0)
+          .join(", ") || "none",
     }
   else if (cardShadow)
     shadow = {
-      tier: shadowTier(strengthOf(shadows(cardShadow))),
+      tier: shadowTier(strengthOf(cardShadowLayers)),
       exact: true,
-      value: cardShadow,
+      source: `components.${cardShadow.key}.shadow`,
+      value: cardShadowCss,
     }
   else if (
     /no (drop )?shadows?|shadowless|flat design|resists?[^.]{0,20}shadows|shadows? (are )?(rare|minimal)/i.test(
       elevation,
     )
   )
-    shadow = { tier: "flat", exact: false }
+    shadow = { tier: "flat", exact: false, source: ELEVATION_SOURCE }
   else if (/(subtle|soft|faint) (drop )?shadow/i.test(elevation))
-    shadow = { tier: "low", exact: false }
+    shadow = { tier: "low", exact: false, source: ELEVATION_SOURCE }
   else if (/(deep|dramatic|heavy|pronounced) shadow/i.test(elevation))
-    shadow = { tier: "high", exact: false }
+    shadow = { tier: "high", exact: false, source: ELEVATION_SOURCE }
   if (shadow) {
     state.surfaceShadow = shadow.tier
     const full = validate(state)
@@ -171,9 +181,7 @@ export function mapSurfaces(
     add(ctx, statusOf(shadow.exact && !lifted), "surfaces", {
       id: "surface-shadow",
       label: "Card shadow",
-      source: shadow.exact
-        ? "prose: Elevation & Depth"
-        : "prose: Elevation & Depth (keywords)",
+      source: shadow.exact ? shadow.source : `${shadow.source} (keywords)`,
       keys: ["surfaceShadow"],
       value: shadow.value,
       result: state.surfaceShadow,
@@ -185,7 +193,9 @@ export function mapSurfaces(
 
   const parsed = [
     ...tableRows(elevation).flat().flatMap(cellShadows),
-    ...[...elevation.matchAll(/`([^`]+)`/g)].flatMap((m) => shadows(m[1]!)),
+    ...[...elevation.matchAll(/`([^`]+)`/g)].flatMap((m) =>
+      shadows(m[1] ?? ""),
+    ),
     ...components
       .map((c) => c.props.shadow)
       .filter((s): s is string => typeof s === "string")
@@ -255,17 +265,20 @@ export function mapSurfaces(
   }
 }
 
-/* ---------------------------------- prose --------------------------------- */
+// Whole-word "link", so a `nav-link` token name doesn't count.
+const LINK_WORD = /(?<![\w-])links?(?![\w-])/i
 
 export function mapProse(ctx: Ctx) {
   const { doc, state } = ctx
   const prose = doc.prose
 
-  const icon = /\b(Lucide|Phosphor|Tabler|Remix ?Icon|Hugeicons)\b/i.exec(prose)
+  const icon = /\b(Lucide|Phosphor|Tabler|Remix ?Icon|Hugeicons)\b/i.exec(
+    prose,
+  )?.[1]
   const library =
     icon &&
     LIBRARY_OPTIONS.find(
-      (o) => o.value === icon[1]!.toLowerCase().replace(/\s*icon$/, ""),
+      (o) => o.value === icon.toLowerCase().replace(/\s*icon$/, ""),
     )
   if (library) {
     state.iconLibrary = library.value
@@ -273,7 +286,7 @@ export function mapProse(ctx: Ctx) {
       id: "icon-library",
       label: "Icon library named in the file",
       keys: ["iconLibrary"],
-      value: icon[1],
+      value: icon,
       result: library.label,
     })
   } else if (
@@ -286,15 +299,18 @@ export function mapProse(ctx: Ctx) {
       label: "The file's icon set isn't one the studio ships",
     })
 
-  const linkSentences = sentences(prose).filter(
-    (s) => /link/i.test(s) && /underline/i.test(s),
-  )
-  if (linkSentences.length > 0) {
-    const underline = linkSentences.some((s) =>
-      /no underline|never underline|without (an )?underline/i.test(s),
+  // Lines, not sentences: "links… Underlined on hover." spans two.
+  const linkLines = prose
+    .split("\n")
+    .filter((line) => LINK_WORD.test(line) && /underline/i.test(line))
+  if (linkLines.length > 0) {
+    const underline = linkLines.some((s) =>
+      /no underline|never underline|without (an )?underline|not underlined/i.test(
+        s,
+      ),
     )
       ? "never"
-      : linkSentences.some((s) => /hover/i.test(s))
+      : linkLines.some((s) => /hover|press|focus/i.test(s))
         ? "hover"
         : "always"
     state.linkUnderline = underline

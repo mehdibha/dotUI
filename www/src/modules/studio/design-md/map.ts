@@ -1,7 +1,3 @@
-/* A parsed DESIGN.md mapped onto the studio's existing axes, chapter by
-   chapter, with a report of what mapped, what was approximated and what has
-   no axis yet. Never adds an axis: what doesn't fit is reported. */
-
 import { cleanName } from "@/lib/snapshots/snapshot"
 
 import { validate } from "../axes"
@@ -24,15 +20,13 @@ import { mapTypography } from "./typography"
 export function cleanImportName(raw: string): string {
   const name = raw
     .trim()
-    .replace(/[-_ ]?(inspired[-_ ])?design[-_ ]analysis$/i, "")
+    .replace(/[-_ ]?(inspired[-_ ])?(design[-_ ])?analysis$/i, "")
     .replace(/^design system (inspired by|for)\s+/i, "")
     .replace(/[-_ ]inspired$/i, "")
     .replace(/[-_]+/g, " ")
     .trim()
   return cleanName(name) || "Imported design system"
 }
-
-/* ----------------------------------- map ---------------------------------- */
 
 export function mapDesignMd(doc: ParsedDesignMd): DesignMdImport {
   const ctx: Ctx = {
@@ -57,7 +51,7 @@ export function mapDesignMd(doc: ParsedDesignMd): DesignMdImport {
   const prose = source === "prose"
   const components = prose ? [] : readComponents(doc)
   const fam = families(components)
-  const colors = mapColor(ctx, tokens, components)
+  const colors = mapColor(ctx, tokens, components, prose)
   mapTypography(ctx, prose)
   if (!prose) {
     mapShape(ctx, components, fam)
