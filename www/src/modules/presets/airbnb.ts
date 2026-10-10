@@ -7,6 +7,11 @@ export const airbnb = definePreset({
   swatch: "#ff385c",
   inspiredBy: "Airbnb",
   diff: {
+    // Style
+    // Popovers drop 0 2px 16px .12 while bordered tiles stay hairline. The
+    // Dates | Flexible pill is a white chip on an #ebebeb track.
+    style: "soft",
+
     // Color
     // Rausch #ff385c, pinned verbatim; selection, checks and focus are ink #222.
     brand: "#ff385c",
@@ -45,8 +50,6 @@ export const airbnb = definePreset({
     density: "spacious",
 
     // Surfaces
-    // Bordered tiles are hairline-only; popovers 0 2px 16px .12.
-    surfaceShadow: "low",
     // Menus and dialogs are borderless; depth is the shadow.
     surfaceEdge: "none",
     // Guest and host pages are white edge to edge.
@@ -65,7 +68,8 @@ export const airbnb = definePreset({
 
     // Motion
     // Popovers fade in with no visible zoom.
-    motionEntrance: "fade",
+    popoverEntrance: "fade",
+    tooltipEntrance: "fade",
     dialogEntrance: "rise",
 
     // Buttons
@@ -87,8 +91,6 @@ export const airbnb = definePreset({
     cardSelected: "outline",
     // Selected is ink everywhere; chips really take an ink edge, which has no option.
     toggleSelected: "inverse",
-    // The Dates | Flexible pill: a white chip on an #ebebeb track.
-    segmentedSelected: "raised",
 
     // Inputs
     inputHover: "edge",

@@ -84,7 +84,9 @@ describe("navigation axes", () => {
       params({ segmentedSelected: "ring", segmentedTrack: "outline" }).tabs,
     ).toMatchObject({ chip: "ring", track: "outline" })
     // Auto follows the button style there too.
-    expect(params({ buttonStyle: "bevel" }).tabs?.chip).toBe("raised")
+    expect(params({ style: "tactile", buttonStyle: "bevel" }).tabs?.chip).toBe(
+      "raised",
+    )
   })
 
   test("pill tabs follow the toggle's selected look until overridden", () => {

@@ -1,6 +1,6 @@
 "use client"
 
-/* A family page's parts. */
+/* Rows by key: each section exports its own, any page hosts them. */
 
 import { createContext, useContext } from "react"
 
@@ -11,11 +11,6 @@ export type RowMap = Partial<Record<AxisKey, React.ComponentType>>
 
 /** `ALL_ROWS`, provided by the panel so sections never import each other. */
 export const RowsContext = createContext<RowMap>({})
-
-/** A key's page, by its short label. */
-export const PlaceLabel = createContext<(key: AxisKey) => string | undefined>(
-  () => undefined,
-)
 
 /** A host's name for the row it renders; popovers reset it. */
 export const RowLabel = createContext<string | undefined>(undefined)
@@ -31,28 +26,5 @@ export function Row({ axis, label }: { axis: AxisKey; label?: string }) {
     <RowLabel.Provider value={label}>
       <Component />
     </RowLabel.Provider>
-  )
-}
-
-/** A member's rows under its name; `/studio#<family>/<id>` lands here. */
-export function MemberSection({
-  id,
-  title,
-  children,
-}: {
-  id: string
-  title: string
-  children: React.ReactNode
-}) {
-  return (
-    <section
-      data-member={id}
-      aria-label={title}
-      // Every row hidden by a rule leaves no orphan title.
-      className="mt-2.5 flex scroll-mt-2 flex-col gap-1.5 [&:not(:has([data-axis],[data-holds]))]:hidden"
-    >
-      <span className="px-1 text-xs font-medium text-fg-muted">{title}</span>
-      {children}
-    </section>
   )
 }

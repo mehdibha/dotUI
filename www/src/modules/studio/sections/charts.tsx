@@ -9,10 +9,8 @@ import {
   MOTION_OPTIONS,
   PALETTE_OPTIONS,
 } from "../axes/charts.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 
 /* -------------------------------- Specimens -------------------------------- */
 
@@ -112,23 +110,4 @@ export const ROWS: RowMap = {
   chartPalette: PaletteRow,
   chartGrid: GridRow,
   chartMotion: ChartMotionRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function ChartsPreview({ state }: { state: Effective }) {
-  return <SeriesGlyph palette={state.chartPalette} />
-}
-
-export function ChartsSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="chartPalette" />
-      <Row axis="chartGrid" />
-      <Row axis="chartMotion" />
-      <DialGap />
-      <Row axis="brand" />
-      <Row axis="motion" />
-    </>
-  )
 }

@@ -57,7 +57,8 @@ export const vercel = definePreset({
 
     // Motion
     // Menus fade in without zooming.
-    motionEntrance: "fade",
+    popoverEntrance: "fade",
+    tooltipEntrance: "fade",
 
     // Buttons
     buttonSecondary: "outline",

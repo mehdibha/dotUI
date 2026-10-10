@@ -16,6 +16,7 @@ import { STYLE_OPTIONS as BUTTON_STYLES } from "./buttons.meta"
 import { STRONG_EDGE } from "./color"
 import { AUTO_STYLE, STYLE_HOVER } from "./inputs"
 import { STYLE_OPTIONS } from "./inputs.meta"
+import { ALLOWED } from "./style"
 
 const shipped = async (
   name: string,
@@ -82,7 +83,8 @@ describe("inputs", () => {
       BUTTON_STYLES.map((o) => o.value).sort(),
     )
     for (const [buttonStyle, style] of Object.entries(AUTO_STYLE)) {
-      const { values } = effective(parseState({ buttonStyle }))
+      const owner = ALLOWED.buttonStyle?.[buttonStyle]?.[0] ?? "flat"
+      const { values } = effective(parseState({ style: owner, buttonStyle }))
       expect(values.inputStyle, buttonStyle).toBe(style)
       expect(values.inputHover, buttonStyle).toBe(STYLE_HOVER[style])
     }
@@ -94,6 +96,7 @@ describe("inputs", () => {
     )
     const system = designSystemOf(
       parseState({
+        style: "tactile",
         inputStyle: "well",
         inputHover: "none",
         inputHeight: "step",

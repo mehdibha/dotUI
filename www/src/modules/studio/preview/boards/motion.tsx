@@ -67,16 +67,24 @@ const AXES = {
   controls: [
     "motion",
     "buttonMotion",
-    "selectionMotion",
-    "navMotion",
-    "inputMotion",
-    "dateMotion",
+    "segmentedMotion",
+    "fieldMotion",
+    "checkboxMotion",
+    "switchMotion",
+    "tabsMotion",
+    "calendarMotion",
   ],
-  overlays: ["motionEntrance", "menuMotion", "mobilePickers"],
-  dialogs: ["dialogEntrance", "dialogMotion"],
-  toasts: ["feedbackMotion"],
-  disclosure: ["displayMotion"],
-  loading: ["skeletonAnimation", "spinnerStyle", "feedbackMotion"],
+  overlays: [
+    "popoverEntrance",
+    "tooltipEntrance",
+    "popoverMotion",
+    "tooltipMotion",
+    "mobilePickers",
+  ],
+  dialogs: ["dialogEntrance", "dialogMotion", "sheetMotion"],
+  toasts: ["toastMotion"],
+  disclosure: ["accordionMotion"],
+  loading: ["skeletonAnimation", "spinnerStyle", "progressMotion"],
   charts: ["chartMotion"],
 } as const
 
@@ -709,7 +717,7 @@ function Toasts() {
           ref={setFrame}
           className={cn(
             FRAME,
-            "h-32 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]",
+            "h-32 **:data-[slot=toast-viewport]:w-[calc(100%-2*var(--toast-inset))]",
           )}
         >
           {frame && (

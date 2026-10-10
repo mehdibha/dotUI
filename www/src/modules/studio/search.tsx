@@ -4,9 +4,10 @@
    command: search field on top, results under it once there's a query (the
    full index is the panel itself, so an empty query shows a prompt instead).
    Docked, the field sits at the bottom, on the keyboard, and an empty query
-   lists every row under its chapter. Opens instantly on purpose: it's a frequent gesture.
-   Selecting scrolls to the chapter. ⌘P, not ⌘K — the site header's docs
-   search owns ⌘K everywhere, /studio included. */
+   lists every row under its chapter. Opens instantly on purpose: it's a
+   frequent gesture. A row reads "Page › Row"; selecting one lands on it.
+   ⌘P, not ⌘K — the site header's docs search owns ⌘K everywhere, /studio
+   included. */
 
 import { useEffect, useMemo, useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
@@ -25,7 +26,6 @@ import {
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { SEARCH_INDEX } from "./__generated__/search-index"
 import { PanelPopover, PanelPopoverTitle, useDocked, useMedia } from "./rows"
 import type { Chapter } from "./state"
 
@@ -49,15 +49,28 @@ function categories(chapters: Chapter[]): Entry[] {
   }))
 }
 
-/** Every settings row, under its chapter; a page's row carries its aliases. */
+/** A chapter's rows and pages, each with the names it answers to; a
+ *  page's rows read "Page › Row". */
+function rowsOf(chapter: Chapter) {
+  const rows = new Map<string, string[] | undefined>()
+  for (const row of chapter.rows ?? []) rows.set(row.name, row.aliases)
+  for (const page of chapter.pages ?? []) {
+    rows.set(page.label, page.aliases)
+    for (const row of page.rows ?? [])
+      rows.set(`${page.label} › ${row}`, undefined)
+  }
+  return rows
+}
+
+/** Every settings row, under its chapter. */
 function axes(chapters: Chapter[]): Entry[] {
   return chapters.flatMap((chapter) =>
-    (SEARCH_INDEX[chapter.id] ?? []).map((axis) => ({
+    [...rowsOf(chapter)].map(([axis, aliases]) => ({
       id: `${chapter.id}/${axis}`,
       chapterId: chapter.id,
       category: chapter.label,
       axis,
-      aliases: chapter.pages?.find((page) => page.label === axis)?.aliases,
+      aliases,
     })),
   )
 }

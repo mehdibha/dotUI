@@ -1,8 +1,9 @@
 "use client"
 
-/* Icons — the library, and the one axis that library exposes: stroke width on
-   line sets, weight on Phosphor. The library picker shows a wall of glyphs
-   drawn by the library under the pointer, so the pick is made by look. */
+/* Icons — the library, and under its picker the one axis that library
+   exposes: stroke width on line sets, weight on Phosphor. The picker shows a
+   wall of glyphs drawn by the library under the pointer, so the pick is made
+   by look. */
 
 import { useRef, useState } from "react"
 import {
@@ -50,7 +51,6 @@ import {
 import { Row, useRowLabel } from "../family-page"
 import type { RowMap } from "../family-page"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
-import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
 
 const SPECIMEN_ICONS = [
@@ -115,23 +115,12 @@ function Glyphs(props: {
   )
 }
 
-/** Beside the title: the strip as the library draws it. */
-export function IconsPreview({ state }: { state: Effective }) {
-  return (
-    <Glyphs
-      library={state.iconLibrary as IconLibraryName}
-      weight={state.iconWeight as PhosphorWeight}
-      stroke={state.iconStroke}
-    />
-  )
-}
-
 /** A select that stays open on pick: the libraries by name beside a wall of
  *  every specimen drawn by the one under the pointer or keyboard focus — the
  *  selected one at rest. */
-function IconLibraryRow({ label: labelProp }: { label: string }) {
+function LibraryRow() {
   const { effective, set } = useStudio()
-  const label = useRowLabel(labelProp)
+  const label = useRowLabel("Icons")
   const value = effective.iconLibrary as IconLibraryName
   const onChange = set("iconLibrary")
   const weight = effective.iconWeight as PhosphorWeight
@@ -147,14 +136,18 @@ function IconLibraryRow({ label: labelProp }: { label: string }) {
       shouldCloseOnSelect={false}
       onOpenChange={(isOpen) => !isOpen && setPeek(null)}
     >
-      <RacButton data-axis="iconLibrary" className={cn(DIAL_ROW, DIAL_PRESS)}>
+      <RacButton
+        data-axis="iconLibrary"
+        data-holds="iconStroke iconWeight"
+        className={cn(DIAL_ROW, DIAL_PRESS)}
+      >
         <span className={DIAL_LABEL}>{label}</span>
         <SelectValue className="truncate text-[13px] font-medium text-fg/60">
           {({ selectedText }) => selectedText}
         </SelectValue>
       </RacButton>
       <PanelPopoverTitle.Provider value={label}>
-        <PanelPopover className="w-112 min-w-0">
+        <PanelPopover className="w-md min-w-0">
           {/* Crossing to the wall keeps the peek; leaving falls back to the focused row. */}
           <div
             className="flex min-h-0 gap-1.5 overflow-y-auto overscroll-contain p-2"
@@ -208,13 +201,16 @@ function IconLibraryRow({ label: labelProp }: { label: string }) {
               })}
             </div>
           </div>
+          {/* Gone with both rows, on a library that exposes neither. */}
+          <div className="flex shrink-0 flex-col gap-1.5 border-t border-fg/8 p-2 [&:not(:has([data-axis]))]:hidden">
+            <Row axis="iconStroke" />
+            <Row axis="iconWeight" />
+          </div>
         </PanelPopover>
       </PanelPopoverTitle.Provider>
     </RacSelect>
   )
 }
-
-const LibraryRow = () => <IconLibraryRow label="Icon library" />
 
 const StrokeRow = () => (
   <DialSlider
@@ -237,16 +233,6 @@ const WEIGHT_ROW_OPTIONS = WEIGHT_OPTIONS.map((option) => ({
 const WeightRow = () => (
   <DialSelect axis="iconWeight" label="Weight" options={WEIGHT_ROW_OPTIONS} />
 )
-
-export function IconsSection() {
-  return (
-    <>
-      <Row axis="iconLibrary" />
-      <Row axis="iconStroke" />
-      <Row axis="iconWeight" />
-    </>
-  )
-}
 
 export const ROWS: RowMap = {
   iconLibrary: LibraryRow,

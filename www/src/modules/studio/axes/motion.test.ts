@@ -7,18 +7,18 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 import { PRESETS } from "@/modules/presets"
 
-import { DEFAULT_STATE, effective, parseState } from "."
+import { DEFAULT_STATE, effective, followersOf, parseState, setKey } from "."
 import type { StudioState } from "."
 import { designSystemOf } from "../resolve"
 import {
   bezierCss,
-  FAMILY_MOTION_KEYS,
+  COMPONENT_MOTION_KEYS,
   legTiming,
   motionVars,
   springProgress,
   tableOf,
 } from "./motion"
-import { MOTION_OPTIONS } from "./motion.meta"
+import { COMPONENT_MOTION_OPTIONS } from "./motion.meta"
 
 const MOTION_SUFFIX =
   /-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
@@ -60,7 +60,7 @@ describe("role tables", () => {
 
   test("every option times every member", () => {
     const names = Object.keys(motionVars(() => tableOf("standard"))).sort()
-    for (const { value } of MOTION_OPTIONS)
+    for (const { value } of COMPONENT_MOTION_OPTIONS)
       expect(
         Object.keys(motionVars(() => tableOf(value))).sort(),
         value,
@@ -88,28 +88,30 @@ describe("resolve", () => {
     expect(ds.componentParams.collapsible).toEqual({ motion: "expand" })
   })
 
-  test("an option writes member vars only, and only what leaves Standard", () => {
-    for (const motion of ["smooth", "expressive", "none"]) {
+  test("a tempo writes member vars only, and only what leaves Standard", () => {
+    for (const motion of ["smooth", "expressive"]) {
       const { tokens, componentParams } = designSystemOf(parseState({ motion }))
       expect(Object.keys(tokens).length, motion).toBeGreaterThan(0)
       for (const name of Object.keys(tokens))
         expect(name, motion).toMatch(MOTION_VAR)
-      if (motion !== "none")
-        expect(componentParams).toEqual(
-          designSystemOf(DEFAULT_STATE).componentParams,
-        )
+      expect(componentParams).toEqual(
+        designSystemOf(DEFAULT_STATE).componentParams,
+      )
     }
   })
 
-  test("one entrance moves popover and tooltip together", () => {
+  test("each entrance moves its own pattern", () => {
     for (const [entrance, param] of [
       ["slide", "slide"],
       ["fade", "fade"],
     ]) {
-      const ds = designSystemOf(parseState({ motionEntrance: entrance }))
-      expect(ds.componentParams.popover).toMatchObject({ motion: param })
-      expect(ds.componentParams.tooltip).toMatchObject({ motion: param })
-      expect(ds.tokens).toEqual({})
+      const popover = designSystemOf(parseState({ popoverEntrance: entrance }))
+      expect(popover.componentParams.popover).toMatchObject({ motion: param })
+      expect(popover.componentParams.tooltip).toMatchObject({ motion: "scale" })
+      expect(popover.tokens).toEqual({})
+      const tooltip = designSystemOf(parseState({ tooltipEntrance: entrance }))
+      expect(tooltip.componentParams.tooltip).toMatchObject({ motion: param })
+      expect(tooltip.componentParams.popover).toMatchObject({ motion: "scale" })
     }
   })
 
@@ -123,47 +125,57 @@ describe("resolve", () => {
     }
   })
 
-  test("None stops every pattern and pins the entrance rows", () => {
-    const state = parseState({
-      motion: "none",
-      motionEntrance: "fade",
-      dialogEntrance: "drop",
-    })
-    const { componentParams } = designSystemOf(state)
-    for (const name of ["popover", "tooltip", "modal", "toast", "chart"])
-      expect(componentParams[name], name).toMatchObject({ motion: "none" })
-    for (const name of ["accordion", "collapsible"])
-      expect(componentParams[name], name).toMatchObject({ motion: "none" })
-    const { explain } = effective(state)
-    expect(explain.motionEntrance?.lock).toMatchObject({
-      kind: "pin",
-      cause: "menuMotion",
-    })
-    expect(explain.dialogEntrance?.lock).toMatchObject({
-      kind: "pin",
-      cause: "dialogMotion",
-    })
+  test("a component's None stops its pattern and pins its entrance row", () => {
+    for (const [key, entrance, param] of [
+      ["popoverMotion", "popoverEntrance", "popover"],
+      ["tooltipMotion", "tooltipEntrance", "tooltip"],
+      ["dialogMotion", "dialogEntrance", "modal"],
+    ] as const) {
+      const state = parseState({
+        [key]: "none",
+        popoverEntrance: "fade",
+        tooltipEntrance: "fade",
+        dialogEntrance: "drop",
+      })
+      expect(designSystemOf(state).componentParams[param], key).toMatchObject({
+        motion: "none",
+      })
+      expect(effective(state).explain[entrance]?.lock, key).toMatchObject({
+        kind: "pin",
+        cause: key,
+      })
+    }
   })
 })
 
-describe("per-family motion", () => {
-  // Members with their own vars; radio, toggle-button, token-field and collapsible ride a sibling's.
+describe("per-component motion", () => {
+  // Members with their own vars; toggle-button, token-field, radio and collapsible ride a sibling's.
   const TIMED: Record<string, string[]> = {
-    buttonMotion: ["button", "segmented-control"],
-    inputMotion: ["input"],
-    selectionMotion: ["checkbox", "slider", "switch"],
-    menuMotion: ["popover", "tooltip"],
-    dialogMotion: ["drawer", "modal"],
-    navMotion: ["breadcrumbs", "link", "sidebar", "tabs"],
-    displayMotion: ["accordion", "table"],
-    dateMotion: ["calendar", "time-picker"],
-    feedbackMotion: ["progress", "tag", "toast", "toast-swipe"],
+    buttonMotion: ["button"],
+    segmentedMotion: ["segmented-control"],
+    fieldMotion: ["input"],
+    checkboxMotion: ["checkbox"],
+    switchMotion: ["switch"],
+    sliderMotion: ["slider"],
+    popoverMotion: ["popover"],
+    tooltipMotion: ["tooltip"],
+    dialogMotion: ["modal"],
+    sheetMotion: ["drawer"],
+    tabsMotion: ["tabs"],
+    sidebarMotion: ["sidebar"],
+    linkMotion: ["breadcrumbs", "link"],
+    tableMotion: ["table"],
+    accordionMotion: ["accordion"],
+    calendarMotion: ["calendar", "time-picker"],
+    toastMotion: ["toast", "toast-swipe"],
+    progressMotion: ["progress"],
   }
   const STOPPED: Record<string, string[]> = {
-    menuMotion: ["popover", "tooltip"],
+    popoverMotion: ["popover"],
+    tooltipMotion: ["tooltip"],
     dialogMotion: ["modal"],
-    displayMotion: ["accordion", "collapsible"],
-    feedbackMotion: ["toast"],
+    accordionMotion: ["accordion", "collapsible"],
+    toastMotion: ["toast"],
   }
   const members = (tokens: Record<string, string>) =>
     [
@@ -175,12 +187,15 @@ describe("per-family motion", () => {
     ].sort()
   const origin = designSystemOf(DEFAULT_STATE).componentParams
 
-  test("covers every family key", () => {
-    expect(Object.keys(TIMED).sort()).toEqual([...FAMILY_MOTION_KEYS].sort())
+  test("covers every component key, each following Motion by default", () => {
+    expect(Object.keys(TIMED).sort()).toEqual([...COMPONENT_MOTION_KEYS].sort())
+    for (const key of COMPONENT_MOTION_KEYS)
+      expect(DEFAULT_STATE[key], key).toBe("same")
+    expect(followersOf(DEFAULT_STATE, "motion")).toEqual([])
   })
 
-  test("a family's own Motion times and stops only its members", () => {
-    for (const key of FAMILY_MOTION_KEYS) {
+  test("a component's own Motion times and stops only its members", () => {
+    for (const key of COMPONENT_MOTION_KEYS) {
       const { tokens, componentParams } = designSystemOf(
         parseState({ [key]: "none" }),
       )
@@ -193,35 +208,59 @@ describe("per-family motion", () => {
         expect(componentParams[name], `${key}: ${name}`).toMatchObject({
           motion: "none",
         })
+      expect(
+        members(designSystemOf(parseState({ [key]: "expressive" })).tokens),
+        key,
+      ).toEqual(TIMED[key])
     }
   })
 
-  test("a family kept on Standard sits out a global change", () => {
-    const { tokens, componentParams } = designSystemOf(
-      parseState({ motion: "none", menuMotion: "standard" }),
-    )
-    expect(members(tokens)).not.toContain("popover")
-    expect(members(tokens)).toContain("button")
-    expect(componentParams.popover).toBe(origin.popover)
-    expect(componentParams.modal).toMatchObject({ motion: "none" })
+  test("picking the global keeps every override", () => {
+    const state = parseState({ buttonMotion: "none", popoverMotion: "smooth" })
+    const next = setKey(state, "motion", "expressive")
+    expect(next).toMatchObject({
+      motion: "expressive",
+      buttonMotion: "none",
+      popoverMotion: "smooth",
+    })
+    expect(followersOf(next, "motion")).toEqual([
+      "buttonMotion",
+      "popoverMotion",
+    ])
+    const { tokens } = designSystemOf(next)
+    expect(tokens["--studio-button-state-duration"]).toBe("0ms")
+    expect(tokens["--studio-popover-enter-duration"]).toBe("160ms")
+    expect(tokens["--studio-switch-state-ease"]).toMatch(/^linear\(/)
   })
 
-  test("members outside every family ride the global Motion", () => {
-    const pinned = Object.fromEntries(
-      FAMILY_MOTION_KEYS.map((key) => [key, "standard"]),
+  test("a component kept on Standard sits out a global change", () => {
+    const { tokens, componentParams } = designSystemOf(
+      parseState({ motion: "smooth", popoverMotion: "standard" }),
     )
-    const { tokens } = designSystemOf(parseState({ motion: "none", ...pinned }))
+    expect(members(tokens)).not.toContain("popover")
+    expect(members(tokens)).toContain("tooltip")
+    expect(componentParams.popover).toEqual(origin.popover)
+  })
+
+  test("members outside every component ride the global Motion", () => {
+    const pinned = Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((key) => [key, "standard"]),
+    )
+    const { tokens } = designSystemOf(
+      parseState({ motion: "smooth", ...pinned }),
+    )
     expect(members(tokens)).toEqual([
       "color-swatch-picker",
       "message-scroller",
       "questionnaire",
+      "tag",
     ])
   })
 
-  test("Same as Motion ships what picking the global's value ships", () => {
-    for (const motion of ["none", "smooth", "expressive"]) {
+  test("Same as motion ships what picking the global's value ships", () => {
+    for (const motion of ["smooth", "expressive"]) {
       const own = Object.fromEntries(
-        FAMILY_MOTION_KEYS.map((key) => [key, motion]),
+        COMPONENT_MOTION_KEYS.map((key) => [key, motion]),
       )
       expect(designSystemOf(parseState({ motion, ...own })), motion).toEqual(
         designSystemOf(parseState({ motion })),
@@ -298,8 +337,12 @@ describe("shipped motion", () => {
 
   test("every option ships plain classes, no studio vars", async () => {
     const survivors: string[] = []
-    for (const { value } of MOTION_OPTIONS) {
-      const shipped = await shipAll(parseState({ motion: value }))
+    for (const { value } of COMPONENT_MOTION_OPTIONS) {
+      const shipped = await shipAll(
+        parseState(
+          Object.fromEntries(COMPONENT_MOTION_KEYS.map((key) => [key, value])),
+        ),
+      )
       for (const [name, content] of Object.entries(shipped))
         if (content.includes("--studio-")) survivors.push(`${value}: ${name}`)
     }

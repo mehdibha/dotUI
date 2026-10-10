@@ -1,10 +1,10 @@
-/* Motion: role tables copied from real systems, each member timed by its family's own Motion (else the global one) into its `--studio-<id>-*` vars. */
+/* Motion: role tables copied from real systems, each member timed by its component's own Motion (else the global one) into its `--studio-<id>-*` vars. */
 
 import { defineChapter } from "./core/types"
 import type { Follow } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
-import type { ChapterSchema } from "./schema"
+import type { AxisSchema, ChapterSchema } from "./schema"
 
 type Bezier = [number, number, number, number]
 
@@ -283,12 +283,10 @@ export function motionVars(
 
 /* ---------------------------------- Chapter -------------------------------- */
 
-export const MOTION_VALUES = [
-  "none",
-  "standard",
-  "smooth",
-  "expressive",
-] as const
+export const MOTION_VALUES = ["standard", "smooth", "expressive"] as const
+
+/** A component's own Motion can also stop it. */
+export const COMPONENT_MOTION_VALUES = ["none", ...MOTION_VALUES] as const
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
@@ -298,78 +296,79 @@ const ENTRANCE_PARAM: Record<string, string> = {
   fade: "fade",
 }
 
-export const MOTION_DEFAULTS = {
-  motion: "standard",
-  motionEntrance: "zoom",
-  buttonMotion: "same",
-  inputMotion: "same",
-  selectionMotion: "same",
-  menuMotion: "same",
-  dialogMotion: "same",
-  navMotion: "same",
-  displayMotion: "same",
-  dateMotion: "same",
-  feedbackMotion: "same",
-}
+/** Each component's own Motion and the members it times; the rest ride
+ *  `motion`. Radio rides checkbox's vars, so Checkbox times it. */
+const COMPONENTS = {
+  buttonMotion: ["button", "toggle-button"],
+  segmentedMotion: ["segmented-control"],
+  fieldMotion: ["input", "token-field"],
+  checkboxMotion: ["checkbox"],
+  switchMotion: ["switch"],
+  sliderMotion: ["slider"],
+  popoverMotion: ["popover"],
+  tooltipMotion: ["tooltip"],
+  dialogMotion: ["modal"],
+  sheetMotion: ["drawer"],
+  tabsMotion: ["tabs"],
+  sidebarMotion: ["sidebar"],
+  linkMotion: ["link", "breadcrumbs"],
+  tableMotion: ["table"],
+  accordionMotion: ["accordion", "collapsible"],
+  calendarMotion: ["calendar", "time-picker"],
+  toastMotion: ["toast", "toast-swipe"],
+  progressMotion: ["progress"],
+} as const
 
-/** Each family's own Motion and the members it times; the rest ride `motion`. */
-const FAMILIES = {
-  buttonMotion: ["button", "toggle-button", "segmented-control"],
-  inputMotion: ["input", "token-field"],
-  selectionMotion: ["checkbox", "radio", "switch", "slider"],
-  menuMotion: ["popover", "tooltip"],
-  dialogMotion: ["modal", "drawer"],
-  navMotion: ["tabs", "sidebar", "link", "breadcrumbs"],
-  displayMotion: ["table", "accordion", "collapsible"],
-  dateMotion: ["calendar", "time-picker"],
-  feedbackMotion: ["toast", "toast-swipe", "progress", "tag"],
-} satisfies Partial<Record<keyof typeof MOTION_DEFAULTS, string[]>>
+export type ComponentMotionKey = keyof typeof COMPONENTS
 
-type FamilyKey = keyof typeof FAMILIES
+export const COMPONENT_MOTION_KEYS = Object.keys(
+  COMPONENTS,
+) as ComponentMotionKey[]
 
-export const FAMILY_MOTION_KEYS = Object.keys(FAMILIES) as FamilyKey[]
-
-const FAMILY_OF: Record<string, FamilyKey> = Object.fromEntries(
-  FAMILY_MOTION_KEYS.flatMap((key) => FAMILIES[key].map((id) => [id, key])),
+const KEY_OF: Record<string, ComponentMotionKey> = Object.fromEntries(
+  COMPONENT_MOTION_KEYS.flatMap((key) =>
+    COMPONENTS[key].map((id) => [id, key]),
+  ),
 )
 
-const FAMILY_SCHEMA = oneOf(MOTION_VALUES)
+export const MOTION_DEFAULTS = {
+  motion: "standard",
+  popoverEntrance: "zoom",
+  tooltipEntrance: "zoom",
+  ...(Object.fromEntries(
+    COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
+  ) as Record<ComponentMotionKey, string>),
+}
 
 export const MOTION_SCHEMA: ChapterSchema<typeof MOTION_DEFAULTS> = {
   motion: oneOf(MOTION_VALUES),
-  motionEntrance: oneOf(ENTRANCE_VALUES),
-  buttonMotion: FAMILY_SCHEMA,
-  inputMotion: FAMILY_SCHEMA,
-  selectionMotion: FAMILY_SCHEMA,
-  menuMotion: FAMILY_SCHEMA,
-  dialogMotion: FAMILY_SCHEMA,
-  navMotion: FAMILY_SCHEMA,
-  displayMotion: FAMILY_SCHEMA,
-  dateMotion: FAMILY_SCHEMA,
-  feedbackMotion: FAMILY_SCHEMA,
+  popoverEntrance: oneOf(ENTRANCE_VALUES),
+  tooltipEntrance: oneOf(ENTRANCE_VALUES),
+  ...(Object.fromEntries(
+    COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(COMPONENT_MOTION_VALUES)]),
+  ) as Record<ComponentMotionKey, AxisSchema>),
 }
 
 const SAME_AS_MOTION: readonly Follow[] = [
-  { kind: "same", id: "same", from: "motion", scoped: true },
+  { kind: "same", id: "same", from: "motion" },
 ]
 
 const STANDARD_VARS = motionVars(() => STANDARD)
 
 export function resolveMotion(state: Effective): Resolved {
-  const motionOf = (member: string) => state[FAMILY_OF[member] ?? "motion"]
+  const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
   const vars = motionVars((member) => tableOf(motionOf(member)))
   const off = (member: string) => motionOf(member) === "none"
-  const entrance = off("popover")
-    ? "none"
-    : (ENTRANCE_PARAM[state.motionEntrance] ?? "scale")
+  const entrance = (member: string, value: string) =>
+    off(member) ? "none" : (ENTRANCE_PARAM[value] ?? "scale")
   return {
     // Only what leaves Standard: Origin writes nothing.
     tokens: Object.fromEntries(
       Object.entries(vars).filter(([name, v]) => STANDARD_VARS[name] !== v),
     ),
     params: {
-      popover: { motion: entrance },
-      tooltip: { motion: entrance },
+      popover: { motion: entrance("popover", state.popoverEntrance) },
+      tooltip: { motion: entrance("tooltip", state.tooltipEntrance) },
       toast: { motion: off("toast") ? "none" : "slide" },
       accordion: { motion: off("accordion") ? "none" : "expand" },
       collapsible: { motion: off("collapsible") ? "none" : "expand" },
@@ -383,16 +382,22 @@ export const chapter = defineChapter({
   schema: MOTION_SCHEMA,
   resolve: resolveMotion,
   follows: Object.fromEntries(
-    FAMILY_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
+    COMPONENT_MOTION_KEYS.map((key) => [key, SAME_AS_MOTION]),
   ),
   rules: [
     {
-      // The entrance row sits on Motion, its cause on Menus: a pin, not a hide.
-      id: "motion/menus-none-pins-entrance",
-      target: "motionEntrance",
-      when: { key: "menuMotion", in: ["none"] },
+      id: "motion/popover-none-pins-entrance",
+      target: "popoverEntrance",
+      when: { key: "popoverMotion", in: ["none"] },
       effect: { kind: "pin", value: "zoom" },
-      cause: "menuMotion",
+      cause: "popoverMotion",
+    },
+    {
+      id: "motion/tooltip-none-pins-entrance",
+      target: "tooltipEntrance",
+      when: { key: "tooltipMotion", in: ["none"] },
+      effect: { kind: "pin", value: "zoom" },
+      cause: "tooltipMotion",
     },
   ],
 })

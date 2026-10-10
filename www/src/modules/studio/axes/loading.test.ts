@@ -7,6 +7,7 @@ import type { PublishPreset } from "@/publisher/types"
 import { parseState } from "."
 import type { StudioState } from "."
 import { designSystemOf } from "../resolve"
+import { COMPONENT_MOTION_KEYS } from "./motion"
 
 /* One item as users install it from a studio state. */
 async function ship(name: string, state: Partial<StudioState> = {}) {
@@ -60,8 +61,11 @@ describe("loops", () => {
     )
   })
 
-  test("Motion None leaves the loops running", async () => {
-    const { css } = await ship("skeleton", { motion: "none" })
+  test("every component Motion at None leaves the loops running", async () => {
+    const off = Object.fromEntries(
+      COMPONENT_MOTION_KEYS.map((k) => [k, "none"]),
+    )
+    const { css } = await ship("skeleton", off)
     expect(css).toContain("skeleton-shimmer 2s")
   })
 })

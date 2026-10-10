@@ -7,6 +7,9 @@ export const polaris = definePreset({
   swatch: "#303030",
   inspiredBy: "Shopify Polaris",
   diff: {
+    // Style
+    style: "tactile",
+
     // Color
     // Blue #005bd3 is emphasis only: links and focus. Fills are charcoal.
     brand: "#005bd3",
@@ -51,7 +54,6 @@ export const polaris = definePreset({
     // Surfaces
     // White cards on the gray page, rimmed by ShadowBevel instead of a border.
     surfaceLayers: "grouped",
-    surfaceEdge: "bevel",
     surfaceShadow: "low",
     // The #ebebeb sidebar around the admin's page.
     shellTone: "recessed",
@@ -65,10 +67,10 @@ export const polaris = definePreset({
     invalidStyle: "tint",
 
     // Motion
-    motionEntrance: "slide",
+    popoverEntrance: "slide",
+    tooltipEntrance: "slide",
 
     // Buttons
-    buttonStyle: "bevel",
     // ButtonGroup segmented: attached outlined buttons, #ccc pressed segment.
     segmentedSelected: "tone",
     segmentedTrack: "outline",
@@ -88,7 +90,6 @@ export const polaris = definePreset({
 
     // Menus & popovers
     tooltipStyle: "surface",
-    menuSelectedRow: "tint",
     menuRows: "step",
     mobilePickers: "anchored",
 

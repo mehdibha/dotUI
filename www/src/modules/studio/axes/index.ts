@@ -25,7 +25,7 @@ import * as charts from "./charts"
 import * as checkbox from "./checkbox"
 import * as choiceCards from "./choice-cards"
 import * as color from "./color"
-import { createEngine } from "./core/effective"
+import { createEngine, followSources } from "./core/effective"
 import type { Explained, Follow, FollowId, Resolved, Rule } from "./core/types"
 import * as dialogs from "./dialogs"
 import * as field from "./field"
@@ -53,6 +53,8 @@ import * as sliders from "./sliders"
 import * as space from "./space"
 import * as spinner from "./spinner"
 import * as states from "./states"
+import * as style from "./style"
+import type { StyleKey } from "./style"
 import * as surfaces from "./surfaces"
 import * as switchAxis from "./switch"
 import * as tables from "./tables"
@@ -65,6 +67,7 @@ export type { Resolved }
 
 /* Resolver order: a later chapter wins a token or param collision. */
 export const CHAPTERS = [
+  style.chapter,
   color.chapter,
   type.chapter,
   icons.chapter,
@@ -118,12 +121,17 @@ type UnionToIntersection<U> = (
   : never
 type Merged = UnionToIntersection<(typeof CHAPTERS)[number]["defaults"]>
 
-export type StudioStateInput = { [K in keyof Merged]: Merged[K] }
+/** A Style key may also hold the "style" follow id. */
+export type StudioStateInput = {
+  [K in keyof Merged]: K extends StyleKey ? Merged[K] | "style" : Merged[K]
+}
 type Key = keyof StudioStateInput & string
 
+/* A Style key's chapter default is its Flat column; saved, it is "style". */
 export const DEFAULTS = Object.assign(
   {},
   ...CHAPTERS.map((chapter) => chapter.defaults),
+  Object.fromEntries(style.STYLE_KEYS.map((key) => [key, "style"])),
 ) as StudioStateInput
 
 export const SCHEMA = Object.assign(
@@ -131,24 +139,35 @@ export const SCHEMA = Object.assign(
   ...CHAPTERS.map((chapter) => chapter.schema),
 ) as Record<Key, AxisSchema>
 
-export const FOLLOWS: Readonly<Record<string, readonly Follow[]>> =
-  Object.assign({}, ...CHAPTERS.map((chapter) => chapter.follows ?? {}))
-
-export const RULES: readonly Rule[] = CHAPTERS.flatMap(
-  (chapter): readonly Rule[] => chapter.rules ?? [],
+const CHAPTER_FOLLOWS: Record<string, readonly Follow[]> = Object.assign(
+  {},
+  ...CHAPTERS.map((chapter) => chapter.follows ?? {}),
 )
 
-/** A global key → its scoped copies (`scoped` same follows). */
-export const SCOPES: Readonly<Record<string, readonly string[]>> =
-  Object.entries(FOLLOWS).reduce<Record<string, string[]>>(
-    (scopes, [key, list]) => {
-      for (const follow of list)
-        if (follow.kind === "same" && follow.scoped)
-          (scopes[follow.from] ??= []).push(key)
-      return scopes
-    },
-    {},
-  )
+export const FOLLOWS: Readonly<Record<string, readonly Follow[]>> = {
+  ...CHAPTER_FOLLOWS,
+  ...Object.fromEntries(
+    style.STYLE_KEYS.map((key) => [
+      key,
+      [style.FOLLOWS[key], ...(CHAPTER_FOLLOWS[key] ?? [])],
+    ]),
+  ),
+}
+
+export const RULES: readonly Rule[] = [
+  ...CHAPTERS.flatMap((chapter): readonly Rule[] => chapter.rules ?? []),
+  ...style.RULES,
+]
+
+/* A source key → [follower, follow id] for every follow reading it. */
+const FOLLOWERS = new Map<string, [Key, unknown][]>()
+for (const [key, list] of Object.entries(FOLLOWS))
+  for (const follow of list)
+    for (const from of followSources(follow))
+      FOLLOWERS.set(from, [
+        ...(FOLLOWERS.get(from) ?? []),
+        [key as Key, follow.id],
+      ])
 
 /** Which chapter owns each key. */
 export const KEY_OWNER: Readonly<Record<string, string>> = Object.fromEntries(
@@ -239,17 +258,14 @@ export function parseState(raw: unknown): StudioState {
 
 export const DEFAULT_STATE = parseState({})
 
-/** `key`'s scoped copies edited away from it (its row reads Custom). A
- *  scoped copy defaults to its follow id (tested). */
-export const overridersOf = (state: StudioState, key: string): Key[] =>
-  ((SCOPES[key] ?? []) as Key[]).filter((k) => state[k] !== DEFAULTS[k])
+/** Keys that can follow `key` but are saved off that follow: a Motion
+ *  row's custom components, a Style's explicit picks. */
+export const followersOf = (state: StudioState, key: string): Key[] =>
+  (FOLLOWERS.get(key) ?? []).flatMap(([k, id]) => (state[k] === id ? [] : [k]))
 
-/** `state` with `key` set; setting a global resets its scoped copies. */
-export function setKey(state: StudioState, key: Key, value: unknown) {
-  const next: Record<string, unknown> = { ...state, [key]: value }
-  for (const k of SCOPES[key] ?? []) next[k] = DEFAULTS[k as Key]
-  return next as StudioState
-}
+/** `state` with `key` set. */
+export const setKey = (state: StudioState, key: Key, value: unknown) =>
+  ({ ...state, [key]: value }) as StudioState
 
 /** Key-by-key equality. */
 export const sameState = (a: StudioState, b: StudioState) =>

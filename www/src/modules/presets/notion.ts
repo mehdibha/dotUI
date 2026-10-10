@@ -7,6 +7,9 @@ export const notion = definePreset({
   swatch: "#8e8b86",
   inspiredBy: "Notion",
   diff: {
+    // Style: low drops; settings switches are a white chip on a gray track.
+    style: "soft",
+
     // Color
     // The app's --c-bluBacAccPri; #0075de is the marketing blue.
     brand: "#2783de",
@@ -49,9 +52,6 @@ export const notion = definePreset({
     // md buttons and inputs are 28px.
     density: "compact",
 
-    // Surfaces
-    surfaceShadow: "low",
-
     // States
     focusInputStyle: "border",
     focusInputWeight: "thick",
@@ -60,8 +60,6 @@ export const notion = definePreset({
 
     // Buttons
     buttonSecondary: "outline",
-    // Settings switches: a white chip on a gray track.
-    segmentedSelected: "raised",
 
     // Selection
     // Unchecked box: a 1px rgba(27,21,0,.19) edge.

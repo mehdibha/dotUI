@@ -8,8 +8,8 @@ import type { PublishPreset } from "@/publisher/types"
 import { designSystemOf } from "../resolve"
 import { DEFAULT_EFFECTIVE, DEFAULT_STATE, DEFAULTS, parseState } from "./index"
 import {
-  activeCharacter,
   SHAPE_CHARACTERS,
+  SHAPE_ROLES,
   SHAPE_RUNGS,
   SHAPE_SCHEMA,
   shapeVars,
@@ -21,10 +21,13 @@ const resolve = (overrides: Partial<typeof DEFAULTS>) =>
 const vector = (id: string) =>
   SHAPE_CHARACTERS.find((character) => character.id === id)!.vector
 
+const rolesOf = (state: typeof DEFAULT_STATE) =>
+  Object.fromEntries(SHAPE_ROLES.map(({ key }) => [key, state[key]]))
+
 describe("shape axis", () => {
   test("defaults emit nothing", () => {
     expect(resolve({}).tokens).toEqual({})
-    expect(activeCharacter(DEFAULT_STATE)).toBe("standard")
+    expect(rolesOf(DEFAULT_STATE)).toEqual(vector("standard"))
   })
 
   test("roles.css declares the default rungs", () => {
@@ -61,7 +64,6 @@ describe("shape axis", () => {
   })
 
   test("auto cards sit one rung below panels", () => {
-    expect(activeCharacter(parseState({ rolePanel: "2xl" }))).toBeUndefined()
     expect(resolve({ rolePanel: "2xl" }).tokens).toEqual({
       "--studio-radius-panel": "var(--radius-2xl)",
       "--studio-radius-card": "var(--radius-xl)",
@@ -148,7 +150,7 @@ describe("shape axis", () => {
 
   test("states saved before cards were a role keep their character", () => {
     expect(
-      activeCharacter(
+      rolesOf(
         parseState({
           roleControl: "3xl",
           roleItem: "auto",
@@ -156,10 +158,9 @@ describe("shape axis", () => {
           rolePanel: "3xl",
         }),
       ),
-    ).toBe("round")
-    // Retired characters (Crisp, Soft, Pill) keep their roles and read Custom.
+    ).toEqual(vector("round"))
+    // Retired characters (Crisp, Soft, Pill) keep their roles.
     const pill = parseState({ roleControl: "full", roleSurface: "lg" })
-    expect(activeCharacter(pill)).toBeUndefined()
     expect(pill.roleControl).toBe("full")
   })
 })

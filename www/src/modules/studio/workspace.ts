@@ -1,10 +1,10 @@
 "use client"
 
 /* The user's design systems, and the one unsaved slot, kept in this browser.
-   Records are read leniently (a bad field takes its default) and every write
-   re-reads storage first, so tabs never clobber each other. Edits land in
-   memory at once and in storage at most every 200 ms. What is on screen
-   lives in `selection.ts`. */
+   Records are read leniently (states migrated, a bad field taking its
+   default) and every write re-reads storage first, so tabs never clobber
+   each other. Edits land in memory at once and in storage at most every
+   200 ms. What is on screen lives in `selection.ts`. */
 
 import { useSyncExternalStore } from "react"
 
@@ -25,6 +25,7 @@ import {
   validate,
 } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
+import { migrate, stamp } from "@/modules/studio/axes/migrate"
 
 /** A read-only starting point: a preset, or a shared link's snapshot. */
 export type View =
@@ -74,6 +75,8 @@ const isTime = (value: unknown): value is number =>
 const isName = (value: unknown): value is string =>
   typeof value === "string" && value === cleanName(value) && value.length > 0
 
+const load = (raw: unknown) => salvageState(migrate(raw))
+
 export function parseView(raw: unknown): View | undefined {
   if (!isRecord(raw) || typeof raw.id !== "string") return
   if (raw.kind === "preset" && getPreset(raw.id))
@@ -83,7 +86,7 @@ export function parseView(raw: unknown): View | undefined {
       kind: "link",
       id: raw.id,
       name: raw.name,
-      state: salvageState(raw.state),
+      state: load(raw.state),
     }
 }
 
@@ -96,7 +99,7 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
       typeof raw.from === "string" && getPreset(raw.from)
         ? raw.from
         : undefined,
-    state: salvageState(raw.state),
+    state: load(raw.state),
     updatedAt: isTime(raw.updatedAt) ? raw.updatedAt : 0,
   }
 }
@@ -104,7 +107,7 @@ function parseDoc(raw: unknown): DesignSystemDoc | undefined {
 function parseUnsaved(raw: unknown): Unsaved | undefined {
   if (!isRecord(raw)) return
   const from = parseView(raw.from)
-  if (from) return { from, state: salvageState(raw.state) }
+  if (from) return { from, state: load(raw.state) }
 }
 
 /** A record without an id is dropped. Anything but schema 2 throws, so the
@@ -143,9 +146,14 @@ export function storageFailed(unreadable = false) {
   })
 }
 
+/** A `JSON.stringify` replacer that stamps every state with its version, so
+ *  a later build can migrate it. */
+export const stampStates = (key: string, value: unknown) =>
+  key === "state" ? stamp(value as StudioState) : value
+
 const store = createPersistedStore<Workspace>(KEY, EMPTY, {
   decode: parseWorkspace,
-  encode: (workspace) => JSON.stringify(workspace),
+  encode: (workspace) => JSON.stringify(workspace, stampStates),
   onWriteError: storageFailed,
 })
 

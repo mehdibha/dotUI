@@ -390,7 +390,7 @@ function ToastSection() {
     >
       <Backdrop />
       <div inert className="relative w-full p-8 max-sm:p-6">
-        <div className="mx-auto grid max-w-[49rem] justify-items-center gap-3 @2xl:grid-cols-2">
+        <div className="mx-auto grid max-w-196 justify-items-center gap-3 @2xl:grid-cols-2">
           {TOASTS.map((toast) => (
             <StaticToast key={toast.type} {...toast} />
           ))}
@@ -410,10 +410,10 @@ const LIVE_TOASTS = [
 
 const REPLAY_MS = 1600
 
-/** Live toasts, a gliding bar and a toggling tag, replayed while the panel edits their motion. */
+/** Live toasts and a gliding bar, replayed while the panel edits their motion. */
 function MotionSection() {
   const { axis } = useBoardFocus()
-  const playing = axis === "feedbackMotion"
+  const playing = axis === "toastMotion" || axis === "progressMotion"
   const [manager] = useState(() => ToastPrimitive.createToastManager())
   const [stage, setStage] = useState<HTMLDivElement | null>(null)
   const [on, setOn] = useState(false)
@@ -448,16 +448,16 @@ function MotionSection() {
 
   return (
     <BoardSection
-      member="toast"
+      member="motion"
       title="Motion"
-      axes={["feedbackMotion"]}
+      axes={["toastMotion", "progressMotion"]}
       className={STACK}
     >
       <div className="grid items-center gap-8 @2xl:grid-cols-[minmax(0,1fr)_minmax(0,16rem)] @2xl:gap-12">
         <div
           ref={setStage}
           // Transformed, so the fixed toast viewport anchors to this stage.
-          className="relative h-40 w-full transform-gpu overflow-hidden rounded-(--studio-radius-card) border bg-muted/40 [&_[data-slot=toast-viewport]]:w-[calc(100%-2*var(--toast-inset))]"
+          className="relative h-40 w-full transform-gpu overflow-hidden rounded-(--studio-radius-card) border bg-muted/40 **:data-[slot=toast-viewport]:w-[calc(100%-2*var(--toast-inset))]"
         >
           <ToastProvider
             toastManager={manager}
@@ -471,29 +471,13 @@ function MotionSection() {
             </div>
           </ToastProvider>
         </div>
-        <div className="flex flex-col gap-6">
-          <ProgressBar value={on ? 80 : 25} className="w-full">
-            <div className="flex items-center justify-between gap-2">
-              <Label>Syncing</Label>
-              <ProgressBarOutput />
-            </div>
-            <ProgressBarControl />
-          </ProgressBar>
-          <TagGroup
-            selectionMode="single"
-            disallowEmptySelection
-            selectedKeys={[on ? "week" : "day"]}
-            onSelectionChange={(keys) =>
-              setOn(keys !== "all" && keys.has("week"))
-            }
-          >
-            <Label>Range</Label>
-            <TagList>
-              <Tag id="day">Today</Tag>
-              <Tag id="week">This week</Tag>
-            </TagList>
-          </TagGroup>
-        </div>
+        <ProgressBar value={on ? 80 : 25} className="w-full">
+          <div className="flex items-center justify-between gap-2">
+            <Label>Syncing</Label>
+            <ProgressBarOutput />
+          </div>
+          <ProgressBarControl />
+        </ProgressBar>
       </div>
     </BoardSection>
   )
@@ -506,7 +490,7 @@ const SPINNER_SIZES = ["size-3", "size-4", "size-5", "size-6", "size-8"]
 function SpinnerSection() {
   return (
     <BoardSection
-      member="loading"
+      member="spinner"
       title="Spinner"
       axes={["spinnerStyle"]}
       className="gap-x-12 gap-y-8"
@@ -533,7 +517,7 @@ function SpinnerSection() {
 function SkeletonSection() {
   return (
     <BoardSection
-      member="loading"
+      member="skeleton"
       title="Skeleton"
       axes={["skeletonAnimation"]}
       className="items-start gap-8"
@@ -583,7 +567,7 @@ const BARS = [
 function ProgressSection() {
   return (
     <BoardSection
-      member="loading"
+      member="progress"
       title="Progress"
       axes={["progressTrack", "progressTrackStyle", "progressColor"]}
       className={STACK}

@@ -97,7 +97,7 @@ describe("color axis", () => {
 
 describe("control edge", () => {
   it("Firm is Origin's edge and emits nothing", () => {
-    expect(DEFAULTS.controlEdge).toBe("firm")
+    expect(DEFAULT_EFFECTIVE.controlEdge).toBe("firm")
     expect(Object.keys(tokensOf({}))).not.toContain("--color-border-control")
   })
 

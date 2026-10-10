@@ -2,42 +2,35 @@
 
 /* The panel's chapters, in page order. */
 
-import { KEY_OWNER } from "./axes"
+import { DEFAULTS, KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
-import { PRIMARY_LEAVES } from "./axes/color"
 import { ROWS as buttonsRows } from "./sections/buttons"
 import { ROWS as chartsRows } from "./sections/charts"
-import {
-  ColorPreview,
-  ColorPrimary,
-  ROWS as colorRows,
-  ColorSection,
-} from "./sections/color"
-import { COMPONENT_PAGES, ComponentsSection } from "./sections/components"
+import { ROWS as colorRows } from "./sections/color"
+import { COMPONENT_CHAPTERS, COMPONENTS, isSingle } from "./sections/components"
 import { ROWS as dataDisplayRows } from "./sections/data-display"
 import { ROWS as datesRows } from "./sections/dates"
 import { ROWS as dialogsRows } from "./sections/dialogs"
 import { ROWS as feedbackRows } from "./sections/feedback"
-import { IconsPreview, ROWS as iconsRows, IconsSection } from "./sections/icons"
+import {
+  FOUNDATION_KEYS,
+  FOUNDATION_PAGES,
+  FOUNDATION_ROWS,
+  FoundationsSection,
+} from "./sections/foundations"
+import { ROWS as iconsRows } from "./sections/icons"
 import { ROWS as inputsRows } from "./sections/inputs"
 import { ROWS as menusRows } from "./sections/menus"
-import {
-  MotionPreview,
-  ROWS as motionRows,
-  MotionSection,
-} from "./sections/motion"
+import { ROWS as motionRows } from "./sections/motion"
 import { ROWS as navigationRows } from "./sections/navigation"
 import { ROWS as primaryRows } from "./sections/primary"
 import { ROWS as selectionRows } from "./sections/selection"
-import { ROWS as shapeRows, ShapePreview, ShapeSection } from "./sections/shape"
-import { ROWS as spaceRows, SpacePreview, SpaceSection } from "./sections/space"
-import {
-  ROWS as statesRows,
-  StatesPreview,
-  StatesSection,
-} from "./sections/states"
+import { ROWS as shapeRows } from "./sections/shape"
+import { ROWS as spaceRows } from "./sections/space"
+import { ROWS as statesRows } from "./sections/states"
+import { ROWS as styleRows } from "./sections/style"
 import { ROWS as surfacesRows } from "./sections/surfaces"
-import { ROWS as typeRows, TypePreview, TypeSection } from "./sections/type"
+import { ROWS as typeRows } from "./sections/type"
 
 export type { Effective, StudioState } from "./axes"
 import type { RowMap } from "./family-page"
@@ -64,6 +57,7 @@ export const SECTION_ROWS: Record<string, RowMap> = {
   shape: shapeRows,
   space: spaceRows,
   states: statesRows,
+  style: styleRows,
   surfaces: surfacesRows,
   type: typeRows,
 }
@@ -77,94 +71,45 @@ export const ALL_ROWS: RowMap = Object.assign(
 export interface Chapter {
   id: string
   label: string
-  /** Axis modules (or single keys) whose rows sit here, when not the
-   *  chapter's own id. */
+  /** Keys (or axis modules) whose rows sit on the chapter itself. */
   owners?: string[]
-  /** Former names search still answers to. */
+  /** Other names search answers to. */
   aliases?: string[]
-  /** The rows on the page: the chapter's two or three decisions that matter. */
-  Primary?: React.ComponentType<{ studio: Studio }>
-  /** The rest of the chapter. */
+  /** Its rows' names, and others each answers to, for search. */
+  rows?: { name: string; aliases?: string[] }[]
   Body: React.ComponentType<{ studio: Studio }>
-  /** A glyph-sized specimen of the chapter's state, beside its title. */
-  Preview?: React.ComponentType<{ state: Effective }>
   /** Pages the body's rows open in place of the panel page. */
   pages?: ChapterPage[]
 }
 
 export interface ChapterPage {
-  /** Also its deep link: `/studio#<id>[/<member>]`. */
+  /** Also its deep link: `/studio#<id>`. */
   id: string
   label: string
-  /** Axis modules (or single keys) whose rows sit here. */
+  /** Keys (or axis modules) whose rows sit here. */
   owners?: string[]
-  /** Component names search answers to. */
+  /** Other names search answers to. */
   aliases?: string[]
+  /** Its rows' names, for search. */
+  rows?: string[]
   Preview?: React.ComponentType<{ state: Effective }>
   Body: React.ComponentType<{ studio: Studio }>
 }
 
-/* The foundations, flat, then every component family behind one row. */
 export const CHAPTERS: Chapter[] = [
   {
-    id: "color",
-    label: "Color",
-    owners: ["color", "surfaces", ...PRIMARY_LEAVES],
-    Primary: ColorPrimary,
-    Body: ColorSection,
-    Preview: ColorPreview,
+    id: "foundations",
+    label: "Foundations",
+    owners: FOUNDATION_KEYS,
+    rows: FOUNDATION_ROWS,
+    Body: FoundationsSection,
+    pages: FOUNDATION_PAGES,
   },
-  {
-    id: "typography",
-    label: "Typography",
-    owners: ["type"],
-    aliases: ["Menu labels"],
-    Body: TypeSection,
-    Preview: TypePreview,
-  },
-  {
-    id: "icons",
-    label: "Icons",
-    Body: IconsSection,
-    Preview: IconsPreview,
-  },
-  {
-    id: "shape",
-    label: "Shape",
-    Body: ShapeSection,
-    Preview: ShapePreview,
-  },
-  {
-    id: "space",
-    label: "Density",
-    aliases: ["Spacing"],
-    Body: SpaceSection,
-    Preview: SpacePreview,
-  },
-  {
-    id: "states",
-    label: "States",
-    owners: ["states", "selection"],
-    aliases: ["Interactivity"],
-    Body: StatesSection,
-    Preview: StatesPreview,
-  },
-  {
-    id: "motion",
-    label: "Motion",
-    Body: MotionSection,
-    Preview: MotionPreview,
-  },
-  {
-    id: "components",
-    label: "Components",
-    Body: ComponentsSection,
-    pages: COMPONENT_PAGES,
-  },
+  ...COMPONENT_CHAPTERS,
 ]
 
-const lists = (place: { id: string; owners?: string[] }, name: string) =>
-  (place.owners ?? [place.id]).includes(name)
+const lists = (place: { owners?: string[] }, name: string) =>
+  place.owners?.includes(name) ?? false
 
 /** Where a key's row sits: a place that lists the key itself wins over the
  *  one that lists its module. */
@@ -178,5 +123,40 @@ export function placeOf(
       const page = chapter.pages?.find((p) => lists(p, name))
       if (page) return { chapter, page }
     }
+  }
+}
+
+/* Hashes from the family pages, to the page that holds most of the old one. */
+const MOVED: Record<string, string> = {
+  buttons: "button",
+  "buttons/segmented": "segmented-control",
+  inputs: "field",
+  "inputs/otp": "otp-field",
+  selection: "checkbox",
+  menus: "menu",
+  dialogs: "dialog",
+  "dialogs/drawer": "sheet",
+  nav: "tabs",
+  dates: "calendar",
+  display: "table",
+  feedback: "badge",
+  "feedback/loading": "progress",
+  charts: "chart",
+  states: "interaction",
+}
+
+/** What `/studio#<hash>` opens: a page, else the row a key or a one-row
+ *  component sits on. Old `#<family>[/<member>]` hashes land nearby. */
+export function linkTarget(
+  hash: string,
+): { page: string } | { key: string } | undefined {
+  const [family = "", member = ""] = hash.split("/")
+  const pages = CHAPTERS.flatMap((chapter) => chapter.pages ?? [])
+  for (const id of [MOVED[hash], member, MOVED[family], family]) {
+    if (!id) continue
+    if (pages.some((page) => page.id === id)) return { page: id }
+    const single = COMPONENTS.find((c) => c.id === id && isSingle(c))
+    const key = single?.rows[0]?.[0] ?? (Object.hasOwn(DEFAULTS, id) && id)
+    if (key) return { key }
   }
 }

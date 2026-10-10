@@ -9,8 +9,8 @@ import { RadialBarChart } from "@/registry/ui/chart-radial"
 
 import { Board, BoardSection, useBoardFocus, useLoop } from "./board"
 
-const SHARED = ["chartPalette", "brand", "chartMotion", "motion"]
-const GRIDDED = ["chartPalette", "brand", "chartGrid", "chartMotion", "motion"]
+const SHARED = ["chartPalette", "brand", "chartMotion"]
+const GRIDDED = ["chartPalette", "brand", "chartGrid", "chartMotion"]
 
 // The legend keeps ~20px below itself: trim the card's bottom to match its top.
 const CARD = "flex-col flex-nowrap items-stretch justify-start pb-3 max-sm:pb-0"
@@ -148,9 +148,7 @@ const thousands = (value: unknown) =>
 
 export default function ChartsBoard() {
   const { axis } = useBoardFocus()
-  const phase = useLoop(axis === "chartMotion" || axis === "motion", 1600)
-    ? 1
-    : 0
+  const phase = useLoop(axis === "chartMotion", 1600) ? 1 : 0
   // A new transition replays every chart's entrance.
   const motion = useChartMotion()
   const total = SHARE[phase].reduce((sum, row) => sum + row.visitors, 0)
@@ -160,7 +158,7 @@ export default function ChartsBoard() {
       <div key={motion} className="grid gap-10 md:grid-cols-2">
         <div className="min-w-0 md:col-span-2">
           <BoardSection
-            member="area"
+            member="chart"
             title="Area chart"
             axes={GRIDDED}
             className={CARD}
@@ -181,7 +179,7 @@ export default function ChartsBoard() {
           </BoardSection>
         </div>
         <BoardSection
-          member="bar"
+          member="chart"
           title="Bar chart"
           axes={GRIDDED}
           className={CARD}
@@ -198,7 +196,7 @@ export default function ChartsBoard() {
           />
         </BoardSection>
         <BoardSection
-          member="line"
+          member="chart"
           title="Line chart"
           axes={GRIDDED}
           className={CARD}
@@ -218,7 +216,7 @@ export default function ChartsBoard() {
           />
         </BoardSection>
         <BoardSection
-          member="pie"
+          member="chart"
           title="Donut chart"
           axes={SHARED}
           className={CARD}
@@ -242,7 +240,7 @@ export default function ChartsBoard() {
           </PieChart>
         </BoardSection>
         <BoardSection
-          member="radial"
+          member="chart"
           title="Radial chart"
           axes={GRIDDED}
           className={CARD}

@@ -3,7 +3,8 @@ import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
-import { DEFAULT_STATE } from "@/modules/studio/axes"
+import { DEFAULT_STATE, parseState } from "@/modules/studio/axes"
+import { STATE_VERSION, stamp } from "@/modules/studio/axes/migrate"
 
 import {
   createSnapshot,
@@ -78,9 +79,40 @@ describe("POST /api/snapshots", () => {
     expect(
       await save(store, {
         ...valid,
-        state: { ...DEFAULT_STATE, radiusPx: 4 },
+        state: stamp(parseState({ radiusPx: 4 })),
       }),
     ).toBe(id)
+  })
+
+  it("stores the state stamped with its version", async () => {
+    const store = memoryStore()
+    const id = await save(store)
+    expect(JSON.parse((await store.get(id))!).state.version).toBe(STATE_VERSION)
+  })
+
+  it("migrates an unversioned state from main", async () => {
+    const store = memoryStore()
+    const id = await save(store, {
+      name: "Acme",
+      state: { buttonStyle: "bevel", inputStyle: "line", spacingUnit: 5 },
+    })
+    expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
+      parseState({
+        style: "tactile",
+        surfaceEdge: "line",
+        menuSelectedRow: "none",
+        inputStyle: "underline",
+      }),
+    )
+  })
+
+  it("keeps a current state as it is", async () => {
+    const store = memoryStore()
+    const state = parseState({ style: "soft", surfaceShadow: "flat" })
+    const id = await save(store, { name: "Acme", state: stamp(state) })
+    expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
+      state,
+    )
   })
 
   it("never overwrites an existing id", async () => {
@@ -181,7 +213,7 @@ describe("GET /api/snapshots/$id", () => {
     expect(await response.json()).toEqual({
       schema: 1,
       name: "Acme",
-      state: { ...DEFAULT_STATE, radiusPx: 4 },
+      state: { version: STATE_VERSION, ...DEFAULT_STATE, radiusPx: 4 },
     })
   })
 
@@ -229,6 +261,21 @@ describe("loadSnapshot", () => {
       name: "A",
       state: { ...DEFAULT_STATE, radiusPx: 4 },
     })
+  })
+
+  it("migrates a snapshot stored by main", async () => {
+    const store = memoryStore()
+    await store.put(
+      "0123456789",
+      JSON.stringify({
+        schema: 1,
+        name: "A",
+        state: { inputStyle: "line", toggleSelected: "fill", spacingUnit: 5 },
+      }),
+    )
+    expect((await loadSnapshot("0123456789", store))?.state).toEqual(
+      parseState({ inputStyle: "underline" }),
+    )
   })
 
   it.each([

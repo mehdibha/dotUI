@@ -39,6 +39,7 @@ import * as sliders from "./sliders.meta"
 import * as space from "./space.meta"
 import * as spinner from "./spinner.meta"
 import * as states from "./states.meta"
+import * as style from "./style.meta"
 import * as surfaces from "./surfaces.meta"
 import * as switchAxis from "./switch.meta"
 import * as tables from "./tables.meta"
@@ -86,6 +87,7 @@ export const OPTIONS: Readonly<Partial<Record<string, readonly Option[]>>> =
     sliders.OPTIONS,
     spinner.OPTIONS,
     states.OPTIONS,
+    style.OPTIONS,
     surfaces.OPTIONS,
     switchAxis.OPTIONS,
     tables.OPTIONS,

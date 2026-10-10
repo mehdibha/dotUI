@@ -11,7 +11,6 @@ import { useStyles as useGroupStyles } from "@/registry/ui/group/styles"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { parseState } from "../axes"
 import type { StudioState } from "../axes"
 import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
 import {
@@ -27,11 +26,9 @@ import {
   TRACK_OPTIONS,
 } from "../axes/segmented-control.meta"
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -376,47 +373,4 @@ export const ROWS: RowMap = {
   segmentedSelected: SegmentedSelectedRow,
   segmentedTrack: SegmentedTrackRow,
   paginationCurrent: PaginationCurrentRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function ButtonsPreview({ state }: { state: Effective }) {
-  const ds = useMemo(
-    () => designSystemOf(parseState({ buttonStyle: state.buttonStyle })),
-    [state.buttonStyle],
-  )
-  return (
-    <System ds={ds}>
-      <ButtonSpecimen variant="primary" label="Save" />
-    </System>
-  )
-}
-
-export function ButtonsSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="buttonStyle" />
-      <DialGap />
-      <Row axis="buttonSecondary" />
-      <Row axis="buttonRadius" />
-      <Row axis="buttonColor" />
-      <Row axis="labelWeight" />
-      <Row axis="buttonMotion" />
-      <Row axis="buttonPress" />
-      <Row axis="buttonCase" />
-      <MemberSection id="toggle" title="Toggles">
-        <Row axis="toggleSelected" />
-      </MemberSection>
-      <MemberSection id="group" title="Groups">
-        <Row axis="groupSeparator" />
-      </MemberSection>
-      <MemberSection id="segmented" title="Segmented">
-        <Row axis="segmentedSelected" />
-        <Row axis="segmentedTrack" />
-      </MemberSection>
-      <MemberSection id="pagination" title="Pagination">
-        <Row axis="paginationCurrent" />
-      </MemberSection>
-    </>
-  )
 }

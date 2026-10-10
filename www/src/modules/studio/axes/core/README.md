@@ -34,15 +34,19 @@ to the follow id (`"auto"`, `"same"`), typed `number | "auto"` etc.
 - `auto`: `table[source value]`; the table is total over the source's options
   (tested). A tuple `from` keys the table by joined values (`"a|b"`).
 
-Validation accepts the follow ids; resolvers only ever see the resolved value.
+A follow landing on another follow id of its key resolves once more, never
+twice. Validation accepts the follow ids; resolvers only ever see the resolved
+value. `followersOf(state, key)` lists the keys saved off their follow of
+`key` (a Motion row's custom components). Setting a key never resets them.
 
-## Scoped copies
+## Style
 
-A `same` follow with `scoped: true` makes the follower a family's own copy of
-a global key (`buttonMotion` of `motion`): same vocabulary, default = the
-follow id. `SCOPES[global]` lists them. While a copy differs from its follow
-id, the global's row reads Custom and lists the overriding rows; setting the
-global (`setKey`) resets every copy.
+`../style.ts` owns `style` and, from `../index.ts`, twelve keys of other
+chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
+its column, whose Flat entry is the key's chapter default (Origin). An
+option another style owns is an exclude rule with `cause: "style"` and
+`fallback: "style"`, so it lands on the column. `pickStyle` drops only the
+picks the new style excludes; `resetToStyle` drops them all.
 
 ## Add a rule
 
@@ -51,8 +55,9 @@ Author it in the TARGET's module (`rules: [...]`, id `<module>/<name>`):
 `when` reads effective upstream keys (never the target), `cause` is one of them.
 
 - `pin` — value forced; the row is dimmed with a cause chip.
-- `exclude` — enum options (with a `fallback`) or a numeric range (`above` /
-  `below`) unavailable; a saved value inside it resolves to the fallback/bound.
+- `exclude` — enum options (with a `fallback`, which may be a follow id) or a
+  numeric range (`above` / `below`) unavailable; a saved value inside it
+  resolves to the fallback/bound.
   Options show disabled with the chip; a slider greys the range.
 - `hide` — the row is not rendered; the value resolves to `value`, else the
   key's default.

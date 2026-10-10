@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
+import type { Key } from "react-aria-components"
 
 import { useComponentParams } from "@/lib/styles"
 import {
@@ -29,15 +30,6 @@ import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { Group } from "@/registry/ui/group"
-import {
-  Pagination,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationList,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/registry/ui/pagination"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -375,7 +367,6 @@ function ButtonAnatomy() {
 /* --------------------------------- Motion --------------------------------- */
 
 const LOOP: StateName[][] = [[], ["hover"], ["pressed"], ["hover"]]
-const RANGES = ["day", "week", "month"] as const
 
 /** True while `active`, and for `ms` after. */
 function useLinger(active: boolean, ms = 6000) {
@@ -437,16 +428,45 @@ function MotionLoop() {
           <StarIcon />
         </span>
       </div>
-      <SegmentedControl
-        aria-label="Range"
-        selectedKeys={[RANGES[Math.floor(step / 2) % RANGES.length] ?? "day"]}
-        className="pointer-events-none"
-      >
-        <SegmentedControlItem id="day">Day</SegmentedControlItem>
-        <SegmentedControlItem id="week">Week</SegmentedControlItem>
-        <SegmentedControlItem id="month">Month</SegmentedControlItem>
-      </SegmentedControl>
     </div>
+  )
+}
+
+/* -------------------------------- Segmented ------------------------------- */
+
+const RANGES = ["day", "week", "month", "year"]
+
+/** Walks the selection while the panel edits the segmented control's motion. */
+function RangeControl() {
+  const { axis } = useBoardFocus()
+  const playing = axis === "segmentedMotion"
+  const [selected, setSelected] = useState<Key>("week")
+  useEffect(() => {
+    if (!playing) return
+    const timer = setInterval(
+      () =>
+        setSelected(
+          (key) =>
+            RANGES[(RANGES.indexOf(String(key)) + 1) % RANGES.length] ?? "day",
+        ),
+      900,
+    )
+    return () => clearInterval(timer)
+  }, [playing])
+  return (
+    <SegmentedControl
+      aria-label="Range"
+      selectedKeys={[selected]}
+      onSelectionChange={(keys) => {
+        const [key] = keys
+        if (key !== undefined) setSelected(key)
+      }}
+    >
+      <SegmentedControlItem id="day">Day</SegmentedControlItem>
+      <SegmentedControlItem id="week">Week</SegmentedControlItem>
+      <SegmentedControlItem id="month">Month</SegmentedControlItem>
+      <SegmentedControlItem id="year">Year</SegmentedControlItem>
+    </SegmentedControl>
   )
 }
 
@@ -529,76 +549,6 @@ function FormatGroup({ variant }: { variant?: "quiet" }) {
   )
 }
 
-/* ------------------------------- Pagination ------------------------------- */
-
-const PAGES = 12
-
-function pagesAround(current: number) {
-  const shown = [1, current - 1, current, current + 1, PAGES].filter(
-    (page, i, all) => page >= 1 && page <= PAGES && all.indexOf(page) === i,
-  )
-  return shown.flatMap((page, i) =>
-    i > 0 && page - (shown[i - 1] ?? page) > 1
-      ? (["gap", page] as const)
-      : [page],
-  )
-}
-
-function Pages() {
-  const [page, setPage] = useState(5)
-  return (
-    <Pagination className="@container">
-      <PaginationList>
-        {[false, true].map((narrow) => (
-          <PaginationItem
-            key={String(narrow)}
-            className={narrow ? "@md:hidden" : "@max-md:hidden"}
-          >
-            <PaginationPrevious
-              isIconOnly={narrow}
-              isDisabled={page === 1}
-              onPress={() => setPage(page - 1)}
-            />
-          </PaginationItem>
-        ))}
-        {pagesAround(page).map((item, i) =>
-          item === "gap" ? (
-            <PaginationItem key={`gap-${i}`} className="@max-md:hidden">
-              <PaginationEllipsis />
-            </PaginationItem>
-          ) : (
-            <PaginationItem
-              key={item}
-              // A narrow section keeps the current page and its neighbours.
-              className={cn(Math.abs(item - page) > 1 && "@max-md:hidden")}
-            >
-              <PaginationLink
-                isActive={item === page}
-                aria-label={`Page ${item}`}
-                onPress={() => setPage(item)}
-              >
-                {item}
-              </PaginationLink>
-            </PaginationItem>
-          ),
-        )}
-        {[false, true].map((narrow) => (
-          <PaginationItem
-            key={String(narrow)}
-            className={narrow ? "@md:hidden" : "@max-md:hidden"}
-          >
-            <PaginationNext
-              isIconOnly={narrow}
-              isDisabled={page === PAGES}
-              onPress={() => setPage(page + 1)}
-            />
-          </PaginationItem>
-        ))}
-      </PaginationList>
-    </Pagination>
-  )
-}
-
 /* ---------------------------------- Board --------------------------------- */
 
 export default function ButtonsBoard() {
@@ -608,7 +558,13 @@ export default function ButtonsBoard() {
       <BoardSection
         member="button"
         title="Button"
-        axes={["buttonStyle", "buttonSecondary", "buttonColor", "buttonPress"]}
+        axes={[
+          "style",
+          "buttonStyle",
+          "buttonSecondary",
+          "buttonColor",
+          "buttonPress",
+        ]}
       >
         <ButtonStates />
       </BoardSection>
@@ -688,17 +644,12 @@ export default function ButtonsBoard() {
         </Line>
       </BoardSection>
       <BoardSection
-        member="segmented"
-        title="Segmented"
-        axes={["segmentedSelected", "segmentedTrack"]}
+        member="segmented-control"
+        title="Segmented control"
+        axes={["segmentedSelected", "segmentedTrack", "segmentedMotion"]}
         className="gap-x-10 gap-y-8"
       >
-        <SegmentedControl defaultSelectedKeys={["week"]} aria-label="Range">
-          <SegmentedControlItem id="day">Day</SegmentedControlItem>
-          <SegmentedControlItem id="week">Week</SegmentedControlItem>
-          <SegmentedControlItem id="month">Month</SegmentedControlItem>
-          <SegmentedControlItem id="year">Year</SegmentedControlItem>
-        </SegmentedControl>
+        <RangeControl />
         <SegmentedControl defaultSelectedKeys={["grid"]} aria-label="Layout">
           <SegmentedControlItem id="grid">
             <LayoutGridIcon />
@@ -713,13 +664,6 @@ export default function ButtonsBoard() {
             Table
           </SegmentedControlItem>
         </SegmentedControl>
-      </BoardSection>
-      <BoardSection
-        member="pagination"
-        title="Pagination"
-        axes={["paginationCurrent"]}
-      >
-        <Pages />
       </BoardSection>
     </Board>
   )

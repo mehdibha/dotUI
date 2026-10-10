@@ -1,8 +1,8 @@
 "use client"
 
-/* States — focus, field focus, disabled and invalid on every control, then
-   the cursors and whether control text selects. Specimens draw each recipe
-   with the panel's own inks at its real geometry. */
+/* Interaction — focus, field focus, invalid and disabled on every control,
+   then the cursors and text selection. Specimens draw each recipe with the
+   panel's own inks at its real geometry. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -26,7 +26,7 @@ import {
   STRENGTH_OPTIONS,
   WIDTH_OPTIONS,
 } from "../axes/states.meta"
-import { DialGap, DialSegmented, DialSelect } from "../dial"
+import { DialSegmented, DialSelect } from "../dial"
 import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import type { Effective } from "../state"
@@ -205,7 +205,7 @@ function HighlightChip({ value }: { value: string }) {
 
 /* ---------------------------------- Rows ----------------------------------- */
 
-export function StatesPreview({ state }: { state: Effective }) {
+export function InteractionPreview({ state }: { state: Effective }) {
   return <ControlSpecimen ring={ringOf(state)} size="row" />
 }
 
@@ -225,9 +225,14 @@ const FOCUS_STYLE_ROW_OPTIONS = FOCUS_STYLE_OPTIONS.map((option) => {
 const FocusStyleRow = () => (
   <DialSelect
     axis="focusStyle"
+    holds={["focusStrength", "focusWidth", "focusColor"]}
     label="Focus ring"
     options={FOCUS_STYLE_ROW_OPTIONS}
-  />
+  >
+    <Row axis="focusStrength" />
+    <Row axis="focusWidth" />
+    <Row axis="focusColor" />
+  </DialSelect>
 )
 
 function FocusStrengthRow() {
@@ -235,7 +240,7 @@ function FocusStrengthRow() {
   return (
     <DialSelect
       axis="focusStrength"
-      label="Ring strength"
+      label="Strength"
       rowPreview={false}
       options={[
         { value: "auto", label: "Auto" },
@@ -259,7 +264,7 @@ function FocusWidthRow() {
   return (
     <DialSelect
       axis="focusWidth"
-      label="Ring width"
+      label="Width"
       rowPreview={false}
       onChange={(value) =>
         set("focusWidth")(value === "auto" ? "auto" : Number(value))
@@ -286,6 +291,7 @@ function FieldFocusRow() {
   return (
     <DialSelect
       axis="focusInputStyle"
+      holds={["focusInputWeight", "focusInputColor"]}
       label="Field focus"
       options={FOCUS_INPUT_STYLE_OPTIONS.map((option) => ({
         ...option,
@@ -299,14 +305,17 @@ function FieldFocusRow() {
           />
         ),
       }))}
-    />
+    >
+      <Row axis="focusInputWeight" />
+      <Row axis="focusInputColor" />
+    </DialSelect>
   )
 }
 
 const FieldFocusWeightRow = () => (
   <DialSegmented
     axis="focusInputWeight"
-    label="Field focus weight"
+    label="Weight"
     options={FOCUS_INPUT_WEIGHT_OPTIONS}
   />
 )
@@ -316,7 +325,7 @@ function FieldInkRow() {
   return (
     <DialSelect
       axis="focusInputColor"
-      label="Field ink"
+      label="Ink"
       options={FIELD_INK_ROW.map((option) => ({
         ...option,
         preview: (
@@ -415,36 +424,13 @@ const HIGHLIGHT_ROW_OPTIONS = HIGHLIGHT_OPTIONS.map((option) => ({
 const HighlightRow = () => (
   <DialSelect
     axis="selectionHighlight"
+    holds={["selectionUiText"]}
     label="Text selection"
     options={HIGHLIGHT_ROW_OPTIONS}
-  />
+  >
+    <Row axis="selectionUiText" />
+  </DialSelect>
 )
-
-/* --------------------------------- Section --------------------------------- */
-
-export function StatesSection() {
-  return (
-    <>
-      <Row axis="focusStyle" />
-      <Row axis="focusInputStyle" />
-      <Row axis="disabledTreatment" />
-      <DialGap />
-      <Row axis="focusColor" label="Ring color" />
-      <Row axis="focusStrength" />
-      <Row axis="focusWidth" />
-      <DialGap />
-      <Row axis="focusInputWeight" />
-      <Row axis="focusInputColor" />
-      <Row axis="inputStyle" />
-      <Row axis="invalidStyle" />
-      <DialGap />
-      <Row axis="cursorControls" />
-      <Row axis="cursorDisabled" />
-      <Row axis="selectionUiText" />
-      <Row axis="selectionHighlight" />
-    </>
-  )
-}
 
 export const ROWS: RowMap = {
   focusStyle: FocusStyleRow,

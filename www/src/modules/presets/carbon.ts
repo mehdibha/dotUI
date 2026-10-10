@@ -7,6 +7,11 @@ export const carbon = definePreset({
   swatch: "#0f62fe",
   inspiredBy: "IBM Carbon",
   diff: {
+    // Style
+    // #f4f4f4 layers on white, no edges; field bottom lines are #8d8d8d.
+    // Toggles select solid: Inverse #1f1f1f barely parts from the #393939 secondary.
+    style: "tonal",
+
     // Color
     brand: "#0f62fe",
     preserveSeed: true,
@@ -17,8 +22,6 @@ export const carbon = definePreset({
     // White page, G100 #161616 (L* 7.25).
     lightBg: 100,
     darkBg: 7,
-    // Field bottom lines are #8d8d8d.
-    controlEdge: "strong",
     selectionHighlight: "browser",
     // Checks, radios and the slider are #161616.
     checkboxColor: "neutral",
@@ -45,9 +48,8 @@ export const carbon = definePreset({
     // Fields md 40, buttons lg 48.
     density: "spacious",
 
-    // Surfaces: #f4f4f4 layers on white, no edges.
-    surfaceLayers: "tonal",
-    surfaceEdge: "none",
+    // Surfaces
+    surfaceShadow: "flat",
     shellTone: "page",
 
     // States: a 2px inset focus, white inner stroke on filled buttons.
@@ -55,17 +57,14 @@ export const carbon = definePreset({
     focusInputStyle: "ring",
 
     // Motion: menus and popovers appear with no transform.
-    motionEntrance: "fade",
+    popoverEntrance: "fade",
+    tooltipEntrance: "fade",
 
     // Buttons: #393939 secondary.
     buttonSecondary: "solid",
-    // Tone is excluded under a solid secondary; Inverse #1f1f1f barely parts from #393939.
-    toggleSelected: "solid",
-    segmentedSelected: "inverse",
     segmentedTrack: "outline",
 
     // Inputs: a #f4f4f4 field with one bottom line; TextInput has no hover.
-    inputStyle: "indicator",
     inputHover: "none",
     inputError: "icon-field",
     selectTrigger: "field",
@@ -78,9 +77,7 @@ export const carbon = definePreset({
     cardSelected: "outline",
 
     // Menus & popovers: a tip on tooltips only; Menu and Dropdown draw none.
-    menuInset: "full-bleed",
     menuIndicator: "check-start",
-    menuSelectedRow: "tint",
     // Dropdown options are 40px, the field height.
     menuRows: "match",
     mobilePickers: "anchored",
@@ -103,7 +100,6 @@ export const carbon = definePreset({
 
     // Feedback: inverse notifications and toasts.
     alertStyle: "inverse",
-    toastStyle: "inverse",
     badgeStyle: "soft",
     progressTrack: "thick",
 

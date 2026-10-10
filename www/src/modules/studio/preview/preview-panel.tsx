@@ -50,13 +50,14 @@ import {
 } from "@/modules/studio/preset"
 import type { PreviewMode } from "@/modules/studio/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
+import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
+import type { BoardId } from "@/modules/studio/preview/boards/titles"
 import {
   NO_INSET,
   sendPreviewFocus,
 } from "@/modules/studio/preview/focus-message"
 import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
 import { useDocked } from "@/modules/studio/rows"
-import { CHAPTERS } from "@/modules/studio/state"
 import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -88,14 +89,6 @@ const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
 const previewName = (slug: string) =>
   [...PREVIEW_ITEMS, ...ALL_COMPONENTS].find((item) => item.slug === slug)
     ?.name ?? slug
-
-/** Boards share their panel chapter's or page's id and label. */
-const BOARD_TITLES = new Map(
-  CHAPTERS.flatMap((chapter) => [
-    [chapter.id, chapter.label] as const,
-    ...(chapter.pages ?? []).map((page) => [page.id, page.label] as const),
-  ]),
-)
 
 /** The picker's first item: the preview shows what the panel is editing. */
 const FOLLOW = "follow-panel"
@@ -218,7 +211,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   const focus = usePreviewFocus()
   const [following, setFollowing] = useState(true)
   const target = following ? (focus?.board ?? null) : null
-  const [board, setBoard] = useState<string | null>(null)
+  const [board, setBoard] = useState<BoardId | null>(null)
   const lastPress = useRef(-Infinity)
   useEffect(() => {
     // A press that dismisses a popover; by rect, as the underlay covers the preview.
@@ -522,7 +515,7 @@ export function PreviewPanel({ className }: { className?: string }) {
             space to grow into inside the pill's shrink-to-fit box and
             collapses the value to a sliver. */}
         <SelectValue className="min-w-0 flex-initial max-sm:sr-only">
-          {board ? BOARD_TITLES.get(board) : previewName(preview)}
+          {board ? BOARD_TITLES[board] : previewName(preview)}
         </SelectValue>
         <ChevronsUpDownIcon data-icon="inline-end" className="max-sm:hidden" />
         <PanelsTopLeftIcon className="sm:hidden" />

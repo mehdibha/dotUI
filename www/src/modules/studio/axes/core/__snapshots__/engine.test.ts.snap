@@ -25,6 +25,22 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "style": "well",
       "text": "same",
     },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
     "toggle-button": {
       "case": "sentence",
       "linkColor": "accent",
@@ -39,7 +55,16 @@ exports[`rules > button-groups/ledge-gaps-groups: fires, then holds back 1`] = `
       "separator": "shared-edge",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
 }
 `;
 
@@ -68,6 +93,22 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "style": "well",
       "text": "same",
     },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
     "toggle-button": {
       "case": "sentence",
       "linkColor": "accent",
@@ -82,7 +123,16 @@ exports[`rules > buttons/closed-style-owns-press: fires, then holds back 1`] = `
       "separator": "shared-edge",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
 }
 `;
 
@@ -106,6 +156,22 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "hover": "none",
       "style": "inset",
       "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
     },
     "segmented-control": {
       "case": "sentence",
@@ -133,7 +199,16 @@ exports[`rules > buttons/closed-style-owns-secondary: fires, then holds back 1`]
       "style": "bevel",
     },
   },
-  "tokens": {},
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
 }
 `;
 
@@ -152,83 +227,6 @@ exports[`rules > buttons/solid-needs-brand-primary: fires, then holds back 1`] =
   "icons": undefined,
   "params": {},
   "tokens": {},
-}
-`;
-
-exports[`rules > charts/motion-off: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "accordion": {
-      "layout": "divided",
-      "marker": "trailing-chevron",
-      "motion": "none",
-    },
-    "chart": {
-      "grid": "solid",
-      "motion": "none",
-    },
-    "collapsible": {
-      "motion": "none",
-    },
-    "modal": {
-      "mobile": "center",
-      "motion": "none",
-      "position": "center",
-    },
-    "popover": {
-      "mobile": "drawer",
-      "motion": "none",
-      "tip": "none",
-    },
-    "toast": {
-      "motion": "none",
-      "status": "icon",
-      "surface": "surface",
-    },
-    "tooltip": {
-      "motion": "none",
-      "style": "inverted",
-      "tip": "tip",
-    },
-  },
-  "tokens": {
-    "--studio-accordion-enter-duration": "0ms",
-    "--studio-breadcrumbs-state-duration": "0ms",
-    "--studio-button-state-duration": "0ms",
-    "--studio-calendar-state-duration": "0ms",
-    "--studio-checkbox-state-duration": "0ms",
-    "--studio-color-swatch-picker-state-duration": "0ms",
-    "--studio-drawer-enter-duration": "0ms",
-    "--studio-drawer-exit-duration": "0ms",
-    "--studio-input-state-duration": "0ms",
-    "--studio-link-state-duration": "0ms",
-    "--studio-message-scroller-enter-duration": "0ms",
-    "--studio-message-scroller-exit-duration": "0ms",
-    "--studio-modal-enter-duration": "0ms",
-    "--studio-modal-exit-duration": "0ms",
-    "--studio-popover-enter-duration": "0ms",
-    "--studio-popover-exit-duration": "0ms",
-    "--studio-progress-state-duration": "0ms",
-    "--studio-questionnaire-state-duration": "0ms",
-    "--studio-segmented-control-color-duration": "0ms",
-    "--studio-segmented-control-state-duration": "0ms",
-    "--studio-sidebar-state-duration": "0ms",
-    "--studio-slider-state-duration": "0ms",
-    "--studio-switch-color-duration": "0ms",
-    "--studio-switch-state-duration": "0ms",
-    "--studio-table-state-duration": "0ms",
-    "--studio-tabs-color-duration": "0ms",
-    "--studio-tabs-state-duration": "0ms",
-    "--studio-tag-state-duration": "0ms",
-    "--studio-time-picker-state-duration": "0ms",
-    "--studio-toast-enter-duration": "0ms",
-    "--studio-toast-exit-duration": "0ms",
-    "--studio-toast-swipe-state-duration": "0ms",
-    "--studio-tooltip-enter-duration": "0ms",
-    "--studio-tooltip-exit-duration": "0ms",
-  },
 }
 `;
 
@@ -299,74 +297,15 @@ exports[`rules > dialogs/none-pins-entrance: fires, then holds back 1`] = `
   "color": undefined,
   "icons": undefined,
   "params": {
-    "accordion": {
-      "layout": "divided",
-      "marker": "trailing-chevron",
-      "motion": "none",
-    },
-    "chart": {
-      "grid": "solid",
-      "motion": "none",
-    },
-    "collapsible": {
-      "motion": "none",
-    },
     "modal": {
       "mobile": "center",
       "motion": "none",
       "position": "center",
     },
-    "popover": {
-      "mobile": "drawer",
-      "motion": "none",
-      "tip": "none",
-    },
-    "toast": {
-      "motion": "none",
-      "status": "icon",
-      "surface": "surface",
-    },
-    "tooltip": {
-      "motion": "none",
-      "style": "inverted",
-      "tip": "tip",
-    },
   },
   "tokens": {
-    "--studio-accordion-enter-duration": "0ms",
-    "--studio-breadcrumbs-state-duration": "0ms",
-    "--studio-button-state-duration": "0ms",
-    "--studio-calendar-state-duration": "0ms",
-    "--studio-checkbox-state-duration": "0ms",
-    "--studio-color-swatch-picker-state-duration": "0ms",
-    "--studio-drawer-enter-duration": "0ms",
-    "--studio-drawer-exit-duration": "0ms",
-    "--studio-input-state-duration": "0ms",
-    "--studio-link-state-duration": "0ms",
-    "--studio-message-scroller-enter-duration": "0ms",
-    "--studio-message-scroller-exit-duration": "0ms",
     "--studio-modal-enter-duration": "0ms",
     "--studio-modal-exit-duration": "0ms",
-    "--studio-popover-enter-duration": "0ms",
-    "--studio-popover-exit-duration": "0ms",
-    "--studio-progress-state-duration": "0ms",
-    "--studio-questionnaire-state-duration": "0ms",
-    "--studio-segmented-control-color-duration": "0ms",
-    "--studio-segmented-control-state-duration": "0ms",
-    "--studio-sidebar-state-duration": "0ms",
-    "--studio-slider-state-duration": "0ms",
-    "--studio-switch-color-duration": "0ms",
-    "--studio-switch-state-duration": "0ms",
-    "--studio-table-state-duration": "0ms",
-    "--studio-tabs-color-duration": "0ms",
-    "--studio-tabs-state-duration": "0ms",
-    "--studio-tag-state-duration": "0ms",
-    "--studio-time-picker-state-duration": "0ms",
-    "--studio-toast-enter-duration": "0ms",
-    "--studio-toast-exit-duration": "0ms",
-    "--studio-toast-swipe-state-duration": "0ms",
-    "--studio-tooltip-enter-duration": "0ms",
-    "--studio-tooltip-exit-duration": "0ms",
   },
 }
 `;
@@ -418,7 +357,7 @@ exports[`rules > menus/check-or-fill: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > motion/menus-none-pins-entrance: fires, then holds back 1`] = `
+exports[`rules > motion/popover-none-pins-entrance: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -428,6 +367,19 @@ exports[`rules > motion/menus-none-pins-entrance: fires, then holds back 1`] = `
       "motion": "none",
       "tip": "none",
     },
+  },
+  "tokens": {
+    "--studio-popover-enter-duration": "0ms",
+    "--studio-popover-exit-duration": "0ms",
+  },
+}
+`;
+
+exports[`rules > motion/tooltip-none-pins-entrance: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
     "tooltip": {
       "motion": "none",
       "style": "inverted",
@@ -435,8 +387,6 @@ exports[`rules > motion/menus-none-pins-entrance: fires, then holds back 1`] = `
     },
   },
   "tokens": {
-    "--studio-popover-enter-duration": "0ms",
-    "--studio-popover-exit-duration": "0ms",
     "--studio-tooltip-enter-duration": "0ms",
     "--studio-tooltip-exit-duration": "0ms",
   },
@@ -537,6 +487,264 @@ exports[`rules > states/ring-hides-field-weight: fires, then holds back 1`] = `
     "--focus-input-offset": "var(--focus-ring-offset)",
     "--focus-input-width": "var(--focus-ring-width)",
   },
+}
+`;
+
+exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/buttonStyle-soft: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "raised",
+      "style": "flat",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "raised",
+      "selected": "tone",
+      "style": "flat",
+    },
+  },
+  "tokens": {
+    "--shadow-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-tactile: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "style": "bevel",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "none",
+      "style": "inset",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "inset",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "raised",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "raised",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "tone",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "bevel",
+      "selected": "tone",
+      "style": "bevel",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--overlay-border": "transparent",
+    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16))",
+    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "--studio-card-stroke": "0px",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+    "--studio-overlay-stroke": "0px",
+  },
+}
+`;
+
+exports[`rules > style/buttonStyle-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "style": "flat",
+    },
+    "command": {
+      "inset": "full-bleed",
+      "scale": "default",
+      "search": "field",
+    },
+    "group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "tint",
+      "style": "indicator",
+      "text": "same",
+    },
+    "list-box": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "full-bleed",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "menu": {
+      "highlight": "neutral",
+      "indicator": "check-end",
+      "inset": "full-bleed",
+      "labels": "sentence",
+      "rows": "auto",
+      "selected": "tint",
+    },
+    "otp-field": {
+      "cells": "separate",
+    },
+    "segmented-control": {
+      "case": "sentence",
+      "selected": "inverse",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "tabs": {
+      "case": "sentence",
+      "chip": "inverse",
+      "color": "neutral",
+      "indicator": "full",
+      "pill": "solid",
+      "style": "segmented",
+      "track": "filled",
+      "weight": "medium",
+    },
+    "toast": {
+      "motion": "slide",
+      "status": "solid-icon",
+      "surface": "inverse",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "tonal",
+      "selected": "solid",
+      "style": "flat",
+    },
+    "toggle-button-group": {
+      "segments": "attached",
+      "separator": "divider",
+    },
+  },
+  "tokens": {
+    "--card-border": "transparent",
+    "--color-border-control": "var(--neutral-700)",
+    "--color-border-control-hover": "var(--neutral-800)",
+    "--color-card": "light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100)))",
+    "--color-popover": "light-dark(var(--neutral-50), color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)))",
+    "--overlay-border": "transparent",
+    "--shadow-card": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 1px 3px 0 light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 1px 2px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-modal": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 10px 15px -3px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 4px 6px -4px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--shadow-popover": "0 0 2px 0 light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.24)), 0 4px 6px -1px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2)), 0 2px 4px -2px light-dark(rgb(0 0 0 / 0.1), rgb(0 0 0 / 0.2))",
+    "--studio-list-box-selected": "color-mix(in oklab, var(--color-highlight) 50%, transparent)",
+    "--studio-list-box-selected-highlight": "var(--color-selected)",
+  },
+}
+`;
+
+exports[`rules > style/inputStyle-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceEdge-flat-soft-tonal: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
+}
+`;
+
+exports[`rules > style/surfaceLayers-flat-soft-tactile: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {},
+  "tokens": {},
 }
 `;
 

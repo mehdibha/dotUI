@@ -24,7 +24,6 @@ import { useStyles as useSidebarStyles } from "@/registry/ui/sidebar/styles"
 import { useStyles as useTabsStyles } from "@/registry/ui/tabs/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { parseState } from "../axes"
 import type { StudioState } from "../axes"
 import { ANCESTOR_OPTIONS, SEPARATOR_OPTIONS } from "../axes/breadcrumbs.meta"
 import { UNDERLINE_OPTIONS } from "../axes/links.meta"
@@ -37,11 +36,9 @@ import {
   TAB_STYLE_OPTIONS,
   WEIGHT_OPTIONS,
 } from "../axes/navigation.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -462,46 +459,4 @@ export const ROWS: RowMap = {
   linkUnderline: LinkUnderlineRow,
   breadcrumbSeparator: BreadcrumbSeparatorRow,
   breadcrumbTone: BreadcrumbToneRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function NavigationPreview({ state }: { state: Effective }) {
-  const ds = useMemo(
-    () => designSystemOf(parseState({ tabStyle: state.tabStyle })),
-    [state.tabStyle],
-  )
-  return (
-    <System ds={ds}>
-      <TabsSpecimen />
-    </System>
-  )
-}
-
-export function NavigationSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="tabStyle" />
-      <Row axis="navMarker" />
-      <Row axis="tabsColor" label="Indicator color" />
-      <Row axis="tabIndicator" />
-      <Row axis="navWeight" />
-      <Row axis="navItemWeight" />
-      <Row axis="navCase" />
-      <Row axis="tabsPill" />
-      <DialGap />
-      <Row axis="segmentedSelected" />
-      <Row axis="shellTone" />
-      <Row axis="paginationCurrent" />
-      <Row axis="navMotion" />
-      <MemberSection id="link" title="Links">
-        <Row axis="linkUnderline" />
-        <Row axis="linkColor" label="Color" />
-      </MemberSection>
-      <MemberSection id="breadcrumbs" title="Breadcrumbs">
-        <Row axis="breadcrumbSeparator" />
-        <Row axis="breadcrumbTone" />
-      </MemberSection>
-    </>
-  )
 }

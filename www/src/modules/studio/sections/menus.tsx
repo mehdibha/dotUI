@@ -14,10 +14,8 @@ import {
   SELECTED_ROW_OPTIONS,
 } from "../axes/menus.meta"
 import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 
@@ -412,39 +410,4 @@ export const ROWS: RowMap = {
   tooltipStyle: TooltipStyleRow,
   menuSearch: MenuSearchRow,
   menuScale: MenuScaleRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function MenusPreview({ state }: { state: Effective }) {
-  return (
-    <DialGlyph>
-      <HighlightGlyph highlight={state.menuHighlight} />
-    </DialGlyph>
-  )
-}
-
-export function MenusSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="menuHighlight" />
-      <DialGap />
-      <Row axis="menuInset" />
-      <Row axis="menuArrows" />
-      <Row axis="surfaceGlass" />
-      <Row axis="roleItem" />
-      <Row axis="menuMotion" />
-      <Row axis="menuIndicator" />
-      <Row axis="menuSelectedRow" />
-      <Row axis="menuRows" />
-      <Row axis="mobilePickers" />
-      <MemberSection id="tooltip" title="Tooltip">
-        <Row axis="tooltipStyle" />
-      </MemberSection>
-      <MemberSection id="command" title="Command">
-        <Row axis="menuSearch" />
-        <Row axis="menuScale" />
-      </MemberSection>
-    </>
-  )
 }

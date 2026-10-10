@@ -17,7 +17,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { DeleteDialog } from "./delete-dialog"
-import { PlaceLabel, RowsContext } from "./family-page"
+import { RowsContext } from "./family-page"
 import { NameDialog } from "./name-dialog"
 import type { NameRequest } from "./name-dialog"
 import { PanelPage } from "./page"
@@ -32,7 +32,7 @@ import {
   UNSAVED_NOTE,
   useCurrent,
 } from "./selection"
-import { ALL_ROWS, CHAPTERS, placeOf } from "./state"
+import { ALL_ROWS, CHAPTERS } from "./state"
 import { useStudio } from "./use-studio"
 import {
   copyName,
@@ -44,12 +44,6 @@ import {
 import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
-
-/** A key's page, short: "Menus & popovers" reads "Menus". */
-const placeLabel = (key: string) => {
-  const place = placeOf(key)
-  return (place?.page?.label ?? place?.chapter.label)?.split(" & ")[0]
-}
 
 // Touch-sized rows on phones.
 const MENU_ROW = "pointer-coarse:min-h-11"
@@ -235,9 +229,7 @@ export function StudioPanel({ className }: { className?: string }) {
       )}
     >
       <RowsContext.Provider value={ALL_ROWS}>
-        <PlaceLabel.Provider value={placeLabel}>
-          <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
-        </PlaceLabel.Provider>
+        <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
       </RowsContext.Provider>
       <NameDialog request={naming} onClose={() => setNaming(undefined)} />
       <DeleteDialog

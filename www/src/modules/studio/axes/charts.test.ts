@@ -90,11 +90,6 @@ describe("chart motion", () => {
     expect(ds.tokens).toEqual(designSystemOf(DEFAULT_STATE).tokens)
   })
 
-  it("Motion None pins it off", () => {
-    const ds = designSystemOf(parseState({ motion: "none" }))
-    expect(ds.componentParams.chart).toEqual({ grid: "solid", motion: "none" })
-  })
-
   it("ships the selected transition as a literal", async () => {
     for (const option of MOTION_OPTIONS) {
       const content = await shipped(parseState({ chartMotion: option.value }))

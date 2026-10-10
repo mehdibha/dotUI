@@ -67,7 +67,7 @@ const STATES: { state: FieldState; label: string; value: string }[] = [
 const STATE_OF_AXIS: Record<string, FieldState> = {
   inputHover: "hover",
   focusInputStyle: "focus",
-  inputMotion: "focus",
+  fieldMotion: "focus",
   inputError: "invalid",
 }
 
@@ -86,7 +86,7 @@ function InputStates() {
   const { input } = useInputStyles()()
   const { axis } = useBoardFocus()
   const emphasis = axis ? STATE_OF_AXIS[axis] : undefined
-  const replay = useLoop(axis === "inputMotion", 1100, true)
+  const replay = useLoop(axis === "fieldMotion", 1100, true)
   return (
     <div
       inert
@@ -406,21 +406,21 @@ export default function InputsBoard() {
   return (
     <Board id="inputs">
       <BoardSection
-        member="input"
+        member="field"
         title="Input"
         axes={[
           "inputStyle",
           "inputHover",
           "focusInputStyle",
           "roleControl",
-          "inputMotion",
+          "fieldMotion",
           "inputError",
         ]}
       >
         <InputStates />
       </BoardSection>
       <BoardSection
-        member="input"
+        member="field"
         title="Text fields"
         axes={["inputStyle", "inputHeight", "roleControl"]}
       >
@@ -440,7 +440,7 @@ export default function InputsBoard() {
       >
         <NumberFields />
       </BoardSection>
-      <BoardSection member="otp" title="OTP field" axes={["otpStyle"]}>
+      <BoardSection member="otp-field" title="OTP field" axes={["otpStyle"]}>
         <Codes />
       </BoardSection>
       <BoardSection
@@ -451,7 +451,7 @@ export default function InputsBoard() {
         <Selects />
       </BoardSection>
       <BoardSection
-        member="input"
+        member="field"
         title="With a button"
         axes={["buttonStyle", "inputHeight"]}
       >

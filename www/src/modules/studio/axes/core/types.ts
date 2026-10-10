@@ -1,6 +1,6 @@
 /* The engine's data shapes: a chapter (one axis module), follows (Same as /
-   Auto) and rules (pin / exclude / hide). Isomorphic and React-free — part of
-   the docs closure, so keep it small. See README.md. */
+   Auto / Style) and rules (pin / exclude / hide). Isomorphic and React-free —
+   part of the docs closure, so keep it small. See README.md. */
 
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
@@ -22,7 +22,7 @@ export interface Resolved {
 }
 
 /** Saved sentinels a follow resolves; never reach a resolver. */
-export type FollowId = "auto" | "same" | `same-${string}`
+export type FollowId = "auto" | "style" | "same" | `same-${string}`
 
 export type Follow =
   /** The source's effective value, in the same vocabulary (optionally mapped). */
@@ -31,15 +31,13 @@ export type Follow =
       id: "same" | `same-${string}`
       from: string
       map?: Readonly<Record<string, unknown>>
-      /** A family's own copy of the source: the source's row reads Custom
-       *  while it differs, and editing the source resets it. */
-      scoped?: true
     }
   /** Picked from the source's effective value; total over its domain. A tuple
-   *  `from` keys the table by joined values ("ledge|as-style"). */
+   *  `from` keys the table by joined values ("ledge|as-style"). "style" is
+   *  the general Style's column. */
   | {
       kind: "auto"
-      id: "auto"
+      id: "auto" | "style"
       from: string | readonly string[]
       table: Readonly<Record<string, unknown>>
     }
@@ -54,7 +52,8 @@ export type Cond =
 export type Effect =
   /** Row disabled; effective = value. */
   | { kind: "pin"; value: unknown }
-  /** Enum options unavailable; an excluded value becomes `fallback`. */
+  /** Enum options unavailable; an excluded value becomes `fallback` (a
+   *  follow id resolves like a saved one). */
   | { kind: "exclude"; options: readonly string[]; fallback: string }
   /** A numeric range unavailable; a value inside it clamps to the bound. */
   | { kind: "exclude"; above?: number; below?: number }

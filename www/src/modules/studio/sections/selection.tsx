@@ -19,9 +19,7 @@ import { MARK_OPTIONS } from "../axes/radio.meta"
 import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders.meta"
 import { STYLE_OPTIONS } from "../axes/switch.meta"
 import { DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -314,40 +312,4 @@ export const ROWS: RowMap = {
   sliderTrack: SliderTrackRow,
   cardSelected: CardSelectedRow,
   cardColor: CardColorRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function SelectionPreview({ state }: { state: Effective }) {
-  return mark(state.radioMark)
-}
-
-export function SelectionSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="checkboxColor" />
-      <Row axis="controlEdge" />
-      <Row axis="controlStroke" />
-      <Row axis="selectionMotion" />
-      <Row axis="checkCorner" />
-      <Row axis="checkEdge" />
-      <MemberSection id="radio" title="Radio">
-        <Row axis="radioMark" />
-        <Row axis="radioColor" />
-      </MemberSection>
-      <MemberSection id="switch" title="Switch">
-        <Row axis="switchStyle" />
-        <Row axis="switchColor" />
-      </MemberSection>
-      <MemberSection id="slider" title="Slider">
-        <Row axis="sliderThumb" />
-        <Row axis="sliderTrack" />
-        <Row axis="sliderColor" />
-      </MemberSection>
-      <MemberSection id="choice-card" title="Choice cards">
-        <Row axis="cardSelected" />
-        <Row axis="cardColor" />
-      </MemberSection>
-    </>
-  )
 }

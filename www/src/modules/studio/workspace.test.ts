@@ -4,6 +4,7 @@ import { cleanName } from "@/lib/snapshots/snapshot"
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
 import { parseState } from "@/modules/studio/axes"
+import { STATE_VERSION } from "@/modules/studio/axes/migrate"
 
 const KEY = "dotui:design-systems"
 
@@ -203,6 +204,46 @@ describe("workspace", () => {
       win.seed(KEY, slot(from))
       expect(ws.getWorkspace().unsaved).toBeUndefined()
     }
+  })
+
+  it("migrates main's states and stamps every state it writes", async () => {
+    win.seed(
+      KEY,
+      JSON.stringify({
+        schema: 2,
+        systems: [
+          {
+            id: "a",
+            name: "Acme",
+            state: { inputStyle: "line" },
+            updatedAt: 1,
+          },
+        ],
+        unsaved: {
+          from: {
+            kind: "link",
+            id: "0123456789",
+            name: "Shared",
+            state: { inputHover: "border" },
+          },
+          state: { buttonStyle: "bevel" },
+        },
+      }),
+    )
+    const ws = await load()
+    const { systems, unsaved } = ws.getWorkspace()
+    expect(systems[0]!.state).toEqual(parseState({ inputStyle: "underline" }))
+    expect(unsaved!.from).toMatchObject({
+      state: parseState({ inputHover: "edge" }),
+    })
+    expect(unsaved!.state.style).toBe("tactile")
+    ws.rename("a", "Acme 2")
+    const raw = stored()
+    expect(raw.systems[0].state.version).toBe(STATE_VERSION)
+    expect(raw.unsaved.state.version).toBe(STATE_VERSION)
+    expect(raw.unsaved.from.state.version).toBe(STATE_VERSION)
+    vi.resetModules()
+    expect((await load()).getWorkspace()).toEqual(ws.getWorkspace())
   })
 
   it("reads an unknown format as empty and never writes over it", async () => {

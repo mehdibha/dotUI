@@ -48,7 +48,7 @@ const store = createPersistedStore<Selection>("dotui:current", ORIGIN_VIEW, {
       return ORIGIN_VIEW
     }
   },
-  encode: (sel) => JSON.stringify(sel),
+  encode: (sel) => JSON.stringify(sel, workspace.stampStates),
   onWriteError: workspace.storageFailed,
 })
 

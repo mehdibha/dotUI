@@ -48,14 +48,4 @@ export const chapter = defineChapter({
   defaults: CHART_DEFAULTS,
   schema: CHART_SCHEMA,
   resolve: resolveCharts,
-  rules: [
-    {
-      // A chart would otherwise animate in a system where nothing moves.
-      id: "charts/motion-off",
-      target: "chartMotion",
-      when: { key: "motion", in: ["none"] },
-      effect: { kind: "pin", value: "none" },
-      cause: "motion",
-    },
-  ],
 })

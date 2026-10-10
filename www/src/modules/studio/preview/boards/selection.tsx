@@ -235,7 +235,7 @@ function SwitchSection() {
 function FrozenSlider(attrs: Attrs) {
   const { control, track, fill, thumb } = useSliderStyles()()
   return (
-    <span data-slider="" className="flex w-[4.5rem] @lg:w-28">
+    <span data-slider="" className="flex w-18 @lg:w-28">
       <span {...attrs} className={control({ orientation: "horizontal" })}>
         <span {...attrs} className={track({ orientation: "horizontal" })}>
           <span
@@ -378,10 +378,17 @@ function ChoiceCardsSection() {
 
 const REPLAY_MS = 1400
 
-/** Live controls that flip on their own while the panel edits Selection's motion. */
+const MOTION_KEYS = [
+  "checkboxMotion",
+  "radioMotion",
+  "switchMotion",
+  "sliderMotion",
+]
+
+/** Live controls that flip on their own while the panel edits one's motion. */
 function MotionSection() {
   const { axis } = useBoardFocus()
-  const playing = axis === "selectionMotion"
+  const playing = !!axis && MOTION_KEYS.includes(axis)
   const [on, setOn] = useState(true)
 
   useEffect(() => {
@@ -392,9 +399,9 @@ function MotionSection() {
 
   return (
     <BoardSection
-      member="checkbox"
+      member="motion"
       title="Motion"
-      axes={["selectionMotion"]}
+      axes={MOTION_KEYS}
       className="gap-x-10 gap-y-6"
     >
       <Checkbox isSelected={on} onChange={setOn}>
@@ -429,10 +436,10 @@ export default function SelectionBoard() {
   return (
     <Board id="selection">
       <CheckboxSection />
-      <MotionSection />
       <RadioSection />
       <SwitchSection />
       <SliderSection />
+      <MotionSection />
       <ChoiceCardsSection />
     </Board>
   )

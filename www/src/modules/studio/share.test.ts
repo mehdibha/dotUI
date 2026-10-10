@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { installFakeWindow } from "@/lib/test-fake-window"
 import { getPreset } from "@/modules/presets"
+import { STATE_VERSION } from "@/modules/studio/axes/migrate"
 
 const linear = getPreset("linear")!
 
@@ -44,5 +45,16 @@ describe("snapshotOf", () => {
     const content = { name: "Acme", state: linear.state }
     await expect(snapshotOf(content)).rejects.toThrow("500")
     expect(await snapshotOf(content)).toBe("abcdefghij")
+  })
+
+  it("posts the state stamped with its version", async () => {
+    const fetch = vi.fn(async (_url: string, _init: RequestInit) =>
+      Response.json({ id: "abcdefghij" }),
+    )
+    vi.stubGlobal("fetch", fetch)
+    const { snapshotOf } = await import("./share")
+    await snapshotOf({ name: "Acme", state: linear.state })
+    const body = JSON.parse(String(fetch.mock.calls[0]![1].body))
+    expect(body.state).toEqual({ version: STATE_VERSION, ...linear.state })
   })
 })

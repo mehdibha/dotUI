@@ -9,10 +9,8 @@ import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars.meta"
 import { CARD_HEADER_OPTIONS, FOOTER_OPTIONS } from "../axes/card.meta"
 import { TREATMENT_OPTIONS } from "../axes/kbd.meta"
 import { HEADER_LABEL_OPTIONS, HEADER_OPTIONS } from "../axes/tables.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -511,40 +509,4 @@ export const ROWS: RowMap = {
   kbdTreatment: KbdTreatmentRow,
   cardHeader: CardHeaderRow,
   cardFooter: CardFooterRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function DataDisplayPreview({ state }: { state: Effective }) {
-  return glyph(
-    <TableGlyph header={state.tableHeader} label={state.tableHeaderLabel} />,
-  )
-}
-
-export function DataDisplaySection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="tableHeader" />
-      <Row axis="tableHeaderLabel" />
-      <DialGap />
-      <Row axis="selectedWash" />
-      <Row axis="surfaceLayers" />
-      <Row axis="displayMotion" />
-      <MemberSection id="accordion" title="Accordion">
-        <Row axis="accordionContainer" />
-        <Row axis="accordionMarker" />
-      </MemberSection>
-      <MemberSection id="avatar" title="Avatar">
-        <Row axis="avatarShape" />
-        <Row axis="avatarFallback" />
-      </MemberSection>
-      <MemberSection id="kbd" title="Kbd">
-        <Row axis="kbdTreatment" />
-      </MemberSection>
-      <MemberSection id="card" title="Card">
-        <Row axis="cardHeader" />
-        <Row axis="cardFooter" />
-      </MemberSection>
-    </>
-  )
 }

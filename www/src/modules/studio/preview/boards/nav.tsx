@@ -12,11 +12,8 @@ import {
   FolderIcon,
   HomeIcon,
   InboxIcon,
-  LayoutGridIcon,
-  ListIcon,
   PlusIcon,
   SparklesIcon,
-  TableIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import {
@@ -38,10 +35,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/registry/ui/pagination"
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
 import {
   Sidebar,
   SidebarContent,
@@ -70,7 +63,7 @@ const PROJECT_TABS = ["overview", "deployments", "analytics"]
 /** Walks the selection across the tabs while the panel edits their motion. */
 function useReplay() {
   const { axis } = useBoardFocus()
-  const playing = axis === "navMotion"
+  const playing = axis === "tabsMotion"
   const [selected, setSelected] = useState<Key>("overview")
   useEffect(() => {
     if (!playing) return
@@ -112,8 +105,7 @@ function ProjectTabs({
 }
 
 // Wide rows scroll at phone width, as they would in an app.
-const SCROLLER =
-  "max-w-full items-center-safe overflow-x-auto [scrollbar-width:none]"
+const SCROLLER = "max-w-full items-center-safe overflow-x-auto scrollbar-none"
 
 const VARIANTS = [
   { variant: "segmented", label: "Segmented" },
@@ -276,33 +268,7 @@ function SidebarStates() {
   )
 }
 
-/* ------------------------------ Hosted members ----------------------------- */
-
-function Segmented() {
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-      <SegmentedControl defaultSelectedKeys={["week"]} aria-label="Range">
-        <SegmentedControlItem id="day">Day</SegmentedControlItem>
-        <SegmentedControlItem id="week">Week</SegmentedControlItem>
-        <SegmentedControlItem id="month">Month</SegmentedControlItem>
-      </SegmentedControl>
-      <SegmentedControl defaultSelectedKeys={["grid"]} aria-label="View">
-        <SegmentedControlItem id="grid">
-          <LayoutGridIcon />
-          Grid
-        </SegmentedControlItem>
-        <SegmentedControlItem id="list">
-          <ListIcon />
-          List
-        </SegmentedControlItem>
-        <SegmentedControlItem id="table">
-          <TableIcon />
-          Table
-        </SegmentedControlItem>
-      </SegmentedControl>
-    </div>
-  )
-}
+/* -------------------------------- Pagination ------------------------------- */
 
 const PAGES = 12
 
@@ -491,7 +457,7 @@ export default function NavBoard() {
           "tabsPill",
           "navWeight",
           "navCase",
-          "navMotion",
+          "tabsMotion",
         ]}
         className={STACK}
       >
@@ -506,18 +472,12 @@ export default function NavBoard() {
           "shellTone",
           "tabsColor",
           "navCase",
+          "sidebarMotion",
         ]}
         className="block overflow-hidden p-0 max-sm:p-0"
       >
         <AppShell />
         <SidebarStates />
-      </BoardSection>
-      <BoardSection
-        member="segmented-control"
-        title="Segmented control"
-        axes={["segmentedSelected", "navWeight", "navCase"]}
-      >
-        <Segmented />
       </BoardSection>
       <BoardSection
         member="pagination"
@@ -531,7 +491,7 @@ export default function NavBoard() {
       <BoardSection
         member="link"
         title="Links"
-        axes={["linkUnderline", "linkColor"]}
+        axes={["linkUnderline", "linkColor", "linkMotion"]}
         className={STACK}
       >
         <LinkSpecimens />

@@ -1,8 +1,8 @@
 "use client"
 
 /* Color — its rows are the specimen, drawn by the engine the preview runs in
-   the panel's own mode. The palettes lead — Brand, Neutral, Surfaces — then
-   Semantics, Primary and the control inks. */
+   the panel's own mode. Brand and Neutral sit on the main page; the Color &
+   surfaces page holds the semantics, Primary, the surfaces and control inks. */
 
 import { STEPS, toOklch } from "@dotui/colors"
 import type { Mode, StepName } from "@dotui/colors"
@@ -15,23 +15,19 @@ import {
 } from "../axes/color.meta"
 import {
   DialColor,
-  DialGap,
   DialPopover,
   DialSegmented,
   DialSelect,
   DialSlider,
   DialToggle,
   DialTrigger,
+  ModifiedDot,
 } from "../dial"
-import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import { PaletteDot } from "../patterns"
 import { neutralFamily, NeutralPickerPopover, NeutralStrip } from "../rows"
 import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
-import { PrimaryRow } from "./primary"
-import { SurfacesRow } from "./surfaces"
 
 const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
@@ -108,7 +104,7 @@ function NeutralRow() {
       axis="neutralHue"
       holds={["neutralTint"]}
       label="Neutral"
-      chevron={false}
+      swatch
       value={
         <>
           <span className="truncate">{neutralFamily(neutral, brandHue)}</span>
@@ -128,40 +124,70 @@ function NeutralRow() {
   )
 }
 
+/** The semantic solids, the selection one read the way the engine paints it. */
+function useSemantics(state: Effective) {
+  const { m } = usePanelMode(state)
+  const selection =
+    m.scales.selection?.["700"] ??
+    m.scales[state.selectionColor]?.[
+      state.selectionColor === "neutral" ? "950" : "700"
+    ]
+  return SEMANTIC_SEEDS.map((seed) => ({
+    ...seed,
+    color:
+      (seed.palette === "selection"
+        ? selection
+        : m.scales[seed.palette]?.["700"]) ?? m.background,
+  }))
+}
+
+/* Each dot but the last is cut where the next one overlaps it (12px dots,
+   4px overlap, 1.5px gap), so the stack reads on any row tint. */
+const STACK_CUTOUT =
+  "radial-gradient(circle at 14px 50%, #0000 7.5px, #000 8px)"
+
+/** The four semantic colors, stacked. */
+export function SemanticsPreview({ state }: { state: Effective }) {
+  const semantics = useSemantics(state)
+  return (
+    <span className="flex -space-x-1">
+      {semantics.map(({ key, color }, i) => (
+        <span
+          key={key}
+          className="size-3 shrink-0 rounded-full"
+          style={{
+            background: color,
+            mask: i < semantics.length - 1 ? STACK_CUTOUT : undefined,
+          }}
+        />
+      ))}
+    </span>
+  )
+}
+
 function SemanticsRow() {
-  const { state, set } = useStudio()
-  const { m, step } = useStep()
-  const semantic = (palette: string) =>
-    palette === "selection"
-      ? (m.scales.selection?.["700"] ??
-        m.scales[state.selectionColor]?.[
-          state.selectionColor === "neutral" ? "950" : "700"
-        ] ??
-        m.background)
-      : step(palette, "700")
+  const { state, effective, set } = useStudio()
+  const semantics = useSemantics(effective)
   const custom = SEMANTIC_SEEDS.some(({ key }) => state[key] !== "")
   return (
     <DialTrigger
       label="Semantics"
       holds={SEMANTIC_SEEDS.map(({ key }) => key)}
+      swatch
       value={
         <>
-          <span className="flex items-center gap-1">
-            {SEMANTIC_SEEDS.map(({ key, palette }) => (
-              <PaletteDot key={key} color={semantic(palette)} />
-            ))}
-          </span>
-          {custom ? "Custom" : "Auto"}
+          {custom && <ModifiedDot />}
+          <SemanticsPreview state={effective} />
         </>
       }
     >
       <DialPopover>
-        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
+        {semantics.map(({ key, label, color }) => (
           <DialColor
             key={key}
             label={label}
             value={state[key]}
-            derived={semantic(palette)}
+            derived={color}
             onChange={set(key)}
           />
         ))}
@@ -200,7 +226,7 @@ function SelectedWashRow() {
   return (
     <DialSelect
       axis="selectedWash"
-      label="Selected"
+      label="Selected wash"
       options={SELECTED_WASH_OPTIONS.map((option) => {
         const [palette, name] = WASH[option.value] ?? ["neutral", "300"]
         return {
@@ -214,49 +240,6 @@ function SelectedWashRow() {
         }
       })}
     />
-  )
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-/** The decisions on the page: the two seeds every color derives from, and the
- *  surfaces they paint. */
-export function ColorPrimary() {
-  return (
-    <>
-      <Row axis="brand" />
-      <Row axis="neutralHue" />
-      <SurfacesRow />
-    </>
-  )
-}
-
-/** Beside the title: the brand over the neutral it sits on. */
-export function ColorPreview({ state }: { state: Effective }) {
-  const { m } = usePanelMode(state)
-  const dots = [m.scales.neutral?.["900"], m.scales.accent?.["700"]]
-  return (
-    <span className="flex items-center -space-x-1">
-      {dots.map((color, i) => (
-        <span
-          key={i}
-          className="size-3 rounded-full ring-2 ring-(--panel-surface)"
-          style={{ backgroundColor: color ?? m.background }}
-        />
-      ))}
-    </span>
-  )
-}
-
-export function ColorSection() {
-  return (
-    <>
-      <Row axis="successSeed" />
-      <DialGap />
-      <PrimaryRow />
-      <Row axis="controlEdge" />
-      <Row axis="selectedWash" />
-    </>
   )
 }
 

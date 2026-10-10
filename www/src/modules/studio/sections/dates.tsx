@@ -11,10 +11,9 @@ import {
   TODAY_OPTIONS,
   WEEKDAY_OPTIONS,
 } from "../axes/calendar.meta"
-import { DialGap, DialSelect } from "../dial"
-import { Row } from "../family-page"
+import { DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
+import type { Effective } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -178,26 +177,4 @@ export const ROWS: RowMap = {
   calendarToday: TodayRow,
   calendarTodayColor: TodayColorRow,
   calendarWeekdays: WeekdaysRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function DatesPreview({ state }: { state: Effective }) {
-  const look = lookOf(state)
-  return <Day n={7} look={look} selected />
-}
-
-export function DatesSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="calendarDayShape" />
-      <Row axis="calendarToday" />
-      <Row axis="calendarTodayColor" />
-      <Row axis="calendarWeekdays" />
-      <DialGap />
-      <Row axis="checkboxColor" />
-      <Row axis="inputStyle" />
-      <Row axis="dateMotion" />
-    </>
-  )
 }

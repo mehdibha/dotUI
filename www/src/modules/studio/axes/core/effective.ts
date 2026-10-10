@@ -31,7 +31,7 @@ export function holds(cond: Cond, values: State): boolean {
   return "in" in cond ? cond.in.includes(value) : !cond.notIn.includes(value)
 }
 
-const followSources = (follow: Follow): readonly string[] =>
+export const followSources = (follow: Follow): readonly string[] =>
   typeof follow.from === "string" ? [follow.from] : follow.from
 
 /** Each touched key → the keys it reads (follow sources, rule conditions). */
@@ -115,11 +115,14 @@ export function createEngine(input: EngineInput) {
   const followFor = (key: string, value: unknown) =>
     follows[key]?.find((follow) => follow.id === value)
 
-  /** The default as it resolves now (a follow default reads its source). */
-  const resolvedDefault = (key: string, values: State) => {
-    const value = defaults[key]
+  /** A follow id through its follow; landing on another of the key's follow
+   *  ids ("style" → "auto"), it resolves once more, never twice. */
+  function resolveValue(key: string, value: unknown, values: State) {
     const follow = followFor(key, value)
-    return follow ? resolveFollow(follow, values) : value
+    if (!follow) return value
+    const next = resolveFollow(follow, values)
+    const hop = followFor(key, next)
+    return hop ? resolveFollow(hop, values) : next
   }
 
   function apply(effect: Effect, key: string, value: unknown, values: State) {
@@ -127,11 +130,13 @@ export function createEngine(input: EngineInput) {
       case "pin":
         return effect.value
       case "hide":
-        return "value" in effect ? effect.value : resolvedDefault(key, values)
+        return "value" in effect
+          ? effect.value
+          : resolveValue(key, defaults[key], values)
       case "exclude":
         if ("options" in effect)
           return effect.options.includes(value as string)
-            ? effect.fallback
+            ? resolveValue(key, effect.fallback, values)
             : value
         if (typeof value !== "number") return value
         if (effect.above !== undefined && value > effect.above)
@@ -154,7 +159,7 @@ export function createEngine(input: EngineInput) {
       const entry: Explained = { saved: value, effective: value }
       const follow = followFor(key, value)
       if (follow) {
-        value = resolveFollow(follow, values)
+        value = resolveValue(key, value, values)
         entry.via = follow.id
       }
       for (const rule of rulesByTarget.get(key) ?? []) {

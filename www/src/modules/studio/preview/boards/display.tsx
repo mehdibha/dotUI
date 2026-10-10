@@ -82,7 +82,7 @@ function TableSection() {
     <BoardSection
       member="table"
       title="Table"
-      axes={["tableHeader", "tableHeaderLabel", "selectedWash"]}
+      axes={["tableHeader", "tableHeaderLabel", "tableMotion", "selectedWash"]}
       className={STACK}
     >
       <TableContainer>
@@ -141,10 +141,10 @@ const QUESTIONS = [
 
 const REPLAY_MS = 1400
 
-/** Opens and closes on its own while the panel edits the family's motion. */
+/** Opens and closes on its own while the panel edits its motion. */
 function AccordionSection() {
   const { axis } = useBoardFocus()
-  const playing = axis === "displayMotion"
+  const playing = axis === "accordionMotion"
   const [expanded, setExpanded] = useState<Set<Key>>(new Set(["plans"]))
 
   useEffect(() => {
@@ -164,7 +164,7 @@ function AccordionSection() {
     <BoardSection
       member="accordion"
       title="Accordion"
-      axes={["accordionContainer", "accordionMarker", "displayMotion"]}
+      axes={["accordionContainer", "accordionMarker", "accordionMotion"]}
     >
       <Accordion
         expandedKeys={expanded}

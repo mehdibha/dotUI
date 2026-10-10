@@ -7,6 +7,9 @@ export const linear = definePreset({
   swatch: "#828fff",
   inspiredBy: "Linear",
   diff: {
+    // Style: low drops on menus and dialogs; a near-white secondary with a ring.
+    style: "soft",
+
     // Color
     brand: "#5e6ad2",
     // Grays sit near OKLCH chroma 0.002.
@@ -37,7 +40,6 @@ export const linear = definePreset({
     // Surfaces
     // White menus and dialogs over the #f8f8f9 panel.
     surfaceLayers: "grouped",
-    surfaceShadow: "low",
     // An #efeff0 frame around a bordered #f8f8f9 panel.
     shellTone: "recessed",
 
@@ -50,10 +52,10 @@ export const linear = definePreset({
     cursorDisabled: "default",
 
     // Buttons
-    // Near-white controlSecondary with a ring and a low drop.
-    buttonSecondary: "raised",
     // Every app button computes 9999px.
     buttonRadius: "pill",
+    // The chip follows the button style, not Soft's raised one.
+    segmentedSelected: "auto",
     segmentedTrack: "outline",
 
     // Selection

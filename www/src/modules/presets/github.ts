@@ -53,7 +53,8 @@ export const github = definePreset({
 
     // Motion
     // Anchored overlays only fade (200ms).
-    motionEntrance: "fade",
+    popoverEntrance: "fade",
+    tooltipEntrance: "fade",
 
     // Buttons
     buttonStyle: "hairline",

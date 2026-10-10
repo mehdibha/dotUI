@@ -1,5 +1,6 @@
 import { salvageState, validate } from "@/modules/studio/axes"
 import type { StateIssue, StudioState } from "@/modules/studio/axes"
+import { migrate, stamp } from "@/modules/studio/axes/migrate"
 
 /** An immutable, content-addressed copy of a design system. */
 export interface Snapshot {
@@ -49,15 +50,18 @@ export function canonicalJson(value: unknown): string {
   return JSON.stringify(value)
 }
 
-/** 10 base62 chars of the content's SHA-256. */
-export async function snapshotId({
+/** The snapshot as stored: its state stamped with its version. */
+export const stored = ({ schema, name, state }: Snapshot) => ({
   schema,
   name,
-  state,
-}: Snapshot): Promise<string> {
+  state: stamp(state),
+})
+
+/** 10 base62 chars of the stored content's SHA-256. */
+export async function snapshotId(snapshot: Snapshot): Promise<string> {
   const digest = await crypto.subtle.digest(
     "SHA-256",
-    new TextEncoder().encode(canonicalJson({ schema, name, state })),
+    new TextEncoder().encode(canonicalJson(stored(snapshot))),
   )
   let n = 0n
   for (const byte of new Uint8Array(digest)) n = (n << 8n) | BigInt(byte)
@@ -77,8 +81,8 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const INPUT_KEYS = ["name", "state"]
 
-/** A `POST /api/snapshots` body: `{ name, state }`, name stripped.
- *  Strict: an unknown key or a bad value is an issue. */
+/** A `POST /api/snapshots` body: `{ name, state }`, name stripped, state
+ *  migrated. Strict: an unknown key or a bad value is an issue. */
 export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
   if (!isRecord(raw))
     return { ok: false, issues: [{ key: "", problem: "expected an object" }] }
@@ -94,7 +98,7 @@ export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
       key: "name",
       problem: `expected 1–${MAX_NAME_LENGTH} characters`,
     })
-  const state = validate(raw.state)
+  const state = validate(migrate(raw.state))
   if (!state.ok)
     for (const { key, problem } of state.issues)
       issues.push({ key: key ? `state.${key}` : "state", problem })
@@ -105,15 +109,15 @@ export function parseSnapshotInput(raw: unknown): Parsed<Snapshot> {
   }
 }
 
-/** A stored snapshot, read leniently so links outlive schema changes:
- *  unknown keys are ignored and a bad field takes its default. Only an
- *  unknown format is unreadable. */
+/** A stored snapshot, read leniently so links outlive schema changes: the
+ *  state is migrated, unknown keys are ignored and a bad field takes its
+ *  default. Only an unknown format is unreadable. */
 export function parseSnapshot(raw: unknown): Snapshot | undefined {
   if (!isRecord(raw) || raw.schema !== 1) return
   const { name } = raw
   return {
     schema: 1,
     name: (typeof name === "string" && cleanName(name)) || "Untitled",
-    state: salvageState(raw.state),
+    state: salvageState(migrate(raw.state)),
   }
 }

@@ -5,6 +5,7 @@ import {
   parseSnapshotInput,
   SNAPSHOT_ID,
   snapshotId,
+  stored,
 } from "./snapshot"
 import type { Snapshot } from "./snapshot"
 import type { SnapshotStore } from "./store"
@@ -78,7 +79,7 @@ export const createSnapshot = (request: Request, store: SnapshotStore) =>
     const input = parseSnapshotInput(raw)
     if (!input.ok) return invalid(input.issues)
     const id = await snapshotId(input.value)
-    await store.put(id, JSON.stringify(input.value))
+    await store.put(id, JSON.stringify(stored(input.value)))
     return Response.json({ id }, { headers: NO_STORE })
   })
 

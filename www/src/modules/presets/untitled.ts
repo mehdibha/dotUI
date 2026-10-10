@@ -7,6 +7,9 @@ export const untitled = definePreset({
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
+    // Style
+    style: "soft",
+
     // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
     preserveSeed: true,
@@ -39,7 +42,6 @@ export const untitled = definePreset({
     density: "comfortable",
 
     // Surfaces: a white sidebar beside the white page, split by a hairline.
-    surfaceShadow: "low",
     shellTone: "page",
 
     // States: focus thickens the edge to 2px brand, no halo.
@@ -48,12 +50,14 @@ export const untitled = definePreset({
     disabledTreatment: "fade",
 
     // Motion: menus fade with a 2px nudge.
-    motionEntrance: "fade",
+    popoverEntrance: "fade",
+    tooltipEntrance: "fade",
     chartMotion: "ease",
 
     // Buttons: Rim light's Auto field is the raised field.
     buttonStyle: "rim-light",
-    segmentedSelected: "raised",
+    // The secondary is rim-lit too.
+    buttonSecondary: "as-style",
     // A #fafafa track read by its hairline: nearer Outline than Filled.
     segmentedTrack: "outline",
     paginationCurrent: "selected",

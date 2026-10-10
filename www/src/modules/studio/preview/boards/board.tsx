@@ -18,7 +18,8 @@ import {
 } from "@/modules/studio/preview/focus-message"
 import type { PreviewFocusMessage } from "@/modules/studio/preview/focus-message"
 
-import { BoardsIndex } from "."
+import { BOARD_TITLES } from "./titles"
+import type { BoardId } from "./titles"
 
 const BoardFocusContext = createContext<PreviewFocusMessage>({
   popover: false,
@@ -72,8 +73,7 @@ export function Board({
   className,
   children,
 }: {
-  /** The panel page or chapter it shows. */
-  id: string
+  id: BoardId
   className?: string
   children: React.ReactNode
 }) {
@@ -81,8 +81,12 @@ export function Board({
   const ref = useRef<HTMLDivElement>(null)
   const keys = [axis, ...(holds ?? [])].join(" ")
   const onRendered = useContext(RenderedContext)
+  const revealed = useRef<string>(undefined)
 
   useEffect(() => {
+    // A closing popover leaves the board where it is; a new member moves it.
+    if (!keys && member === revealed.current) return
+    revealed.current = member
     const section =
       ref.current &&
       focusedSection(ref.current, member, keys.split(" ").filter(Boolean))
@@ -123,7 +127,7 @@ export function Board({
           className,
         )}
       >
-        <h1 className="text-lg font-semibold">{BoardsIndex[id]?.title}</h1>
+        <h1 className="text-lg font-semibold">{BOARD_TITLES[id]}</h1>
         {children}
       </div>
     </div>

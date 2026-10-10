@@ -11,7 +11,7 @@
    `border` · `border-2`. */
 
 import { defineChapter } from "./core/types"
-import type { Effective, Resolved, StudioStateInput } from "./index"
+import type { Effective, Resolved } from "./index"
 import { oneOf, range } from "./schema"
 import type { ChapterSchema } from "./schema"
 
@@ -131,15 +131,6 @@ export const SHAPE_CHARACTERS: Array<{
 
 export const rungIndex = (id: string) =>
   SHAPE_RUNGS.findIndex((rung) => rung.id === id)
-
-/** The character whose vector matches the roles, or undefined when custom. */
-export function activeCharacter(
-  state: Pick<StudioStateInput, ShapeRoleKey>,
-): string | undefined {
-  return SHAPE_CHARACTERS.find((character) =>
-    SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
-  )?.id
-}
 
 const rungAt = (index: number) =>
   SHAPE_RUNGS[Math.min(Math.max(index, 0), SHAPE_RUNGS.length - 1)]!.id

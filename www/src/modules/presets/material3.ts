@@ -7,6 +7,10 @@ export const material3 = definePreset({
   swatch: "#6750a4",
   inspiredBy: "Material 3",
   diff: {
+    // Style: tone separates layers, not hairlines; menus keep a level-2 shadow.
+    // outline #79747e on fields and buttons, #49454f on checks.
+    style: "tonal",
+
     // Color
     brand: "#6750a4",
     preserveSeed: true,
@@ -17,8 +21,6 @@ export const material3 = definePreset({
     // surface #fef7ff (tone 98) and #141218 (tone 6).
     lightBg: 98,
     darkBg: 6,
-    // outline #79747e on fields and buttons, #49454f on checks.
-    controlEdge: "strong",
     // secondary-container #e8def8 behind selected rows and chips.
     selectedWash: "brand",
 
@@ -42,10 +44,7 @@ export const material3 = definePreset({
     // 40dp buttons, 56dp fields, 48dp menu rows.
     density: "spacious",
 
-    // Surfaces: tone separates layers, not hairlines; menus keep a level-2 shadow.
-    surfaceLayers: "tonal",
-    surfaceEdge: "none",
-    surfaceShadow: "low",
+    // Surfaces
     // The nav rail sits a tone below borderless content panels.
     shellTone: "recessed",
 
@@ -61,16 +60,16 @@ export const material3 = definePreset({
 
     // Motion
     motion: "expressive",
-    motionEntrance: "slide",
+    popoverEntrance: "slide",
+    tooltipEntrance: "slide",
 
     // Buttons
-    buttonSecondary: "tonal",
     buttonRadius: "pill",
-    toggleSelected: "solid",
+    // The chip follows the button style, not Tonal's inverse one.
+    segmentedSelected: "auto",
     segmentedTrack: "outline",
 
     // Inputs: the 56dp filled field with a bottom indicator.
-    inputStyle: "indicator",
     inputHeight: "tall",
     inputError: "icon-field",
     selectTrigger: "field",
@@ -84,10 +83,8 @@ export const material3 = definePreset({
     sliderThumb: "handle",
 
     // Menus & popovers: full-bleed rows, no check, a tinted selected row.
-    menuInset: "full-bleed",
     menuArrows: "none",
     menuIndicator: "none",
-    menuSelectedRow: "tint",
     menuRows: "step",
     mobilePickers: "anchored",
     // The docked search view: a bare input over a divider.
@@ -108,7 +105,6 @@ export const material3 = definePreset({
     // Chips: 1px #79747e outline, 8px corners.
     badgeStyle: "outline",
     badgeShape: "rounded",
-    toastStyle: "inverse",
     progressTrackStyle: "gap",
 
     // Display

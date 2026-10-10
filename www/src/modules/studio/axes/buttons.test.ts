@@ -14,6 +14,7 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULTS, effective, parseState } from "./index"
+import { ALLOWED } from "./style"
 
 const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
   const ds = designSystemOf(parseState(state))
@@ -35,6 +36,12 @@ const shipped = async (name: string, state: Partial<typeof DEFAULTS> = {}) => {
   return item.files?.[0]?.content ?? ""
 }
 
+/* A button style under the first Style that allows it. */
+const owned = (buttonStyle: string) => ({
+  buttonStyle,
+  style: ALLOWED.buttonStyle?.[buttonStyle]?.[0] ?? "flat",
+})
+
 /* A class only that style's recipe uses. */
 const SIGNATURE: Record<string, string> = {
   hairline: "border-black/15",
@@ -48,7 +55,7 @@ describe("button styles", () => {
   test("each style ships its own recipe and no other's", async () => {
     for (const name of ["button", "toggle-button"])
       for (const buttonStyle of ["flat", ...Object.keys(SIGNATURE)]) {
-        const content = await shipped(name, { buttonStyle })
+        const content = await shipped(name, owned(buttonStyle))
         for (const [other, signature] of Object.entries(SIGNATURE))
           expect(content.includes(signature), `${name}/${buttonStyle}`).toBe(
             other === buttonStyle,
@@ -58,7 +65,7 @@ describe("button styles", () => {
   })
 
   test("Ledge: a 4px lip from the fill ramp, a 2px lip under the secondary", async () => {
-    const content = await shipped("button", { buttonStyle: "ledge" })
+    const content = await shipped("button", owned("ledge"))
     expect(content).toContain("pressed:translate-y-1")
     expect(content).toContain("shadow-[0_2px_0_0_var(--color-border-control)]")
     expect(content).not.toContain(
@@ -84,7 +91,7 @@ describe("button styles", () => {
     expect(secondary).toContain("text-fg-on-neutral")
     expect(secondary).toContain("duration-0")
     const at = (controlStroke: string) =>
-      shipped("button", { buttonStyle: "ledge", controlStroke })
+      shipped("button", { ...owned("ledge"), controlStroke })
     expect(await at("regular")).toContain("border border-border-control")
     const bold = await at("bold")
     expect(bold).toContain("border-2 border-border-control")
@@ -172,7 +179,7 @@ describe("buttons axes", () => {
     ).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
-      buttonStyle: "bevel",
+      ...owned("bevel"),
       buttonSecondary: "soft",
       buttonPress: "scale",
     })
@@ -184,7 +191,7 @@ describe("buttons axes", () => {
   })
 
   test("Ledge groups sit apart and their seam row goes inert", () => {
-    const state = parseState({ buttonStyle: "ledge" })
+    const state = parseState(owned("ledge"))
     const { componentParams } = designSystemOf(state)
     expect(componentParams.group?.segments).toBe("gapped")
     expect(componentParams["toggle-button-group"]?.segments).toBe("gapped")
@@ -218,7 +225,7 @@ describe("buttons axes", () => {
     expect(seam({ buttonSecondary: "tonal" })).toBe("divider")
     expect(seam({ buttonSecondary: "solid" })).toBe("divider")
     // Under a closed style the hidden secondary reads As style.
-    expect(seam({ buttonStyle: "bevel", buttonSecondary: "soft" })).toBe(
+    expect(seam({ ...owned("bevel"), buttonSecondary: "soft" })).toBe(
       "shared-edge",
     )
   })
@@ -229,8 +236,8 @@ describe("buttons axes", () => {
         ?.selected
     expect(chip({})).toBe("tone")
     expect(chip({ buttonStyle: "hairline" })).toBe("ring")
-    expect(chip({ buttonStyle: "bevel" })).toBe("raised")
-    expect(chip({ buttonStyle: "bevel", segmentedSelected: "inverse" })).toBe(
+    expect(chip(owned("bevel"))).toBe("raised")
+    expect(chip({ ...owned("bevel"), segmentedSelected: "inverse" })).toBe(
       "inverse",
     )
   })
@@ -300,7 +307,7 @@ describe("shipped buttons", () => {
 
   test("gapped groups ship no attach mechanics", async () => {
     for (const name of ["group", "toggle-button-group"]) {
-      const ledge = await shipped(name, { buttonStyle: "ledge" })
+      const ledge = await shipped(name, owned("ledge"))
       expect(ledge, name).toContain("gap-2")
       expect(ledge, name).not.toContain("rounded-l-none")
       expect(ledge, name).not.toContain("shadow-none")
@@ -312,7 +319,7 @@ describe("shipped buttons", () => {
 describe("button states", () => {
   test("pending keeps the face and inks the spinner", async () => {
     for (const buttonStyle of ["flat", "ledge"]) {
-      const content = await shipped("button", { buttonStyle })
+      const content = await shipped("button", owned(buttonStyle))
       expect(content).toContain("pending:[-webkit-text-fill-color:transparent]")
       expect(content).not.toMatch(/pending:(?:bg|border|text)-/)
     }

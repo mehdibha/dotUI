@@ -97,7 +97,7 @@ const STATE_OF_AXIS: Record<string, DayState> = {
   calendarToday: "today",
   calendarTodayColor: "today",
   checkboxColor: "selected",
-  dateMotion: "focus",
+  calendarMotion: "focus",
 }
 
 function dayAttributes(state: DayState) {
@@ -112,7 +112,7 @@ function DayStates() {
   const { root, cell } = useCalendarStyles()()
   const { axis } = useBoardFocus()
   const emphasis = axis ? STATE_OF_AXIS[axis] : undefined
-  const replay = useLoop(axis === "dateMotion", 1100, true)
+  const replay = useLoop(axis === "calendarMotion", 1100, true)
   return (
     <div
       inert
@@ -332,7 +332,7 @@ export default function DatesBoard() {
       <BoardSection
         member="calendar"
         title="Calendar"
-        axes={[...CALENDAR_AXES, "dateMotion"]}
+        axes={[...CALENDAR_AXES, "calendarMotion"]}
         className="gap-x-20 gap-y-10"
       >
         <SingleCalendar />
@@ -355,7 +355,7 @@ export default function DatesBoard() {
       <BoardSection
         member="time"
         title="Time"
-        axes={["inputStyle", "checkboxColor", "dateMotion"]}
+        axes={["inputStyle", "checkboxColor", "calendarMotion"]}
       >
         <Times />
       </BoardSection>

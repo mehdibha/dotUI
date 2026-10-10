@@ -1,23 +1,41 @@
 "use client"
 
-/* Motion: the timing table, the anchored entrance, the rows that move; and
-   each family's own Motion, which its page hosts. */
+/* Motion: the global tempo, each component's own Motion and the popover and
+   tooltip entrances. Component pages host their rows. */
 
+import { Button as RacButton } from "react-aria-components"
+
+import { cn } from "@/registry/lib/utils"
+
+import { followersOf } from "../axes"
 import {
-  FAMILY_MOTION_KEYS,
+  COMPONENT_MOTION_KEYS,
   springProgress,
   springSettleMs,
   tableOf,
 } from "../axes/motion"
+import type { ComponentMotionKey } from "../axes/motion"
 import {
+  COMPONENT_MOTION_OPTIONS,
   ENTRANCE_OPTIONS,
-  FAMILY_MOTION_OPTIONS,
+  MOTION_COMPONENTS,
   MOTION_OPTIONS,
+  SAME_AS_MOTION,
 } from "../axes/motion.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { Row } from "../family-page"
+import {
+  DIAL_LABEL,
+  DIAL_PRESS,
+  DIAL_ROW,
+  DialGlyph,
+  DialPickList,
+  DialPopover,
+  DialSegmented,
+  DialSelect,
+  DialSeparator,
+  DialTrigger,
+} from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective } from "../state"
+import { useStudio } from "../use-studio"
 
 /** The anchored layers' entrance curve under a table; None is a step. */
 function MotionGlyph({ motion }: { motion: string }) {
@@ -48,69 +66,114 @@ function MotionGlyph({ motion }: { motion: string }) {
   )
 }
 
-export function MotionPreview({ state }: { state: Effective }) {
-  return (
-    <DialGlyph>
-      <MotionGlyph motion={state.motion} />
-    </DialGlyph>
-  )
-}
-
 const glyph = (motion: string) => (
   <DialGlyph>
     <MotionGlyph motion={motion} />
   </DialGlyph>
 )
 
-const MOTION_ROW_OPTIONS = MOTION_OPTIONS.map((option) => ({
+const TEMPO_OPTIONS = MOTION_OPTIONS.map((option) => ({
   ...option,
-  preview: glyph(option.value),
+  visual: glyph(option.value),
 }))
 
-// "Same as Motion" wears the glyph of the table it resolves to.
-const FAMILY_ROW_OPTIONS = FAMILY_MOTION_OPTIONS.map((option) => ({
-  ...option,
-  preview: option.value === "same" ? undefined : glyph(option.value),
-}))
+// "Same as motion" wears the glyph of the tempo it resolves to.
+const COMPONENT_ROW_OPTIONS = [
+  SAME_AS_MOTION,
+  ...COMPONENT_MOTION_OPTIONS.map((option) => ({
+    ...option,
+    preview: glyph(option.value),
+  })),
+]
 
+const tempoLabel = (value: string) =>
+  COMPONENT_MOTION_OPTIONS.find((option) => option.value === value)?.label ??
+  value
+
+/** The global tempo; its popover names the components on their own. */
 function MotionRow() {
+  const { state, set, setState } = useStudio()
+  const custom = followersOf(state, "motion")
   return (
-    <DialSelect axis="motion" label="Motion" options={MOTION_ROW_OPTIONS} />
+    <DialTrigger
+      axis="motion"
+      label="Motion"
+      value={
+        <>
+          <span className="truncate">
+            {tempoLabel(state.motion)}
+            {custom.length > 0 && ` · ${custom.length} custom`}
+          </span>
+          {glyph(state.motion)}
+        </>
+      }
+    >
+      <DialPopover>
+        <DialPickList
+          label="Motion"
+          value={state.motion}
+          onChange={set("motion")}
+          options={TEMPO_OPTIONS}
+        />
+        {custom.length > 0 && (
+          <>
+            <DialSeparator />
+            {custom.map((key) => {
+              const tempo = String(state[key])
+              return (
+                <div
+                  key={key}
+                  className="flex h-7 items-center justify-between gap-3 px-1 text-[13px] font-medium"
+                >
+                  <span className="text-fg/85">
+                    {MOTION_COMPONENTS[key as ComponentMotionKey]}
+                  </span>
+                  <span className="flex items-center gap-2 text-fg/60">
+                    {tempoLabel(tempo)}
+                    {glyph(tempo)}
+                  </span>
+                </div>
+              )
+            })}
+            <RacButton
+              onPress={() =>
+                setState({
+                  ...state,
+                  ...Object.fromEntries(
+                    custom.map((key) => [key, SAME_AS_MOTION.value]),
+                  ),
+                })
+              }
+              className={cn(DIAL_ROW, DIAL_PRESS, "mt-1 justify-center")}
+            >
+              <span className={DIAL_LABEL}>Reset all</span>
+            </RacButton>
+          </>
+        )}
+      </DialPopover>
+    </DialTrigger>
   )
 }
 
-function EntranceRow() {
-  return (
-    <DialSegmented
-      axis="motionEntrance"
-      label="Entrance"
-      options={ENTRANCE_OPTIONS}
-    />
-  )
-}
-
-const familyRow = (key: (typeof FAMILY_MOTION_KEYS)[number]) =>
-  function FamilyMotionRow() {
-    return <DialSelect axis={key} label="Motion" options={FAMILY_ROW_OPTIONS} />
+const componentRow = (key: ComponentMotionKey) =>
+  function ComponentMotionRow() {
+    return (
+      <DialSelect axis={key} label="Motion" options={COMPONENT_ROW_OPTIONS} />
+    )
   }
 
-export function MotionSection() {
-  return (
-    <>
-      <Row axis="motion" />
-      <Row axis="motionEntrance" />
-      <DialGap />
-      <Row axis="dialogEntrance" />
-      <Row axis="mobilePickers" />
-      <Row axis="skeletonAnimation" />
-      <Row axis="spinnerStyle" />
-      <Row axis="chartMotion" />
-    </>
-  )
-}
+const entranceRow = (key: "popoverEntrance" | "tooltipEntrance") =>
+  function EntranceRow() {
+    return (
+      <DialSegmented axis={key} label="Entrance" options={ENTRANCE_OPTIONS} />
+    )
+  }
 
 export const ROWS: RowMap = {
   motion: MotionRow,
-  motionEntrance: EntranceRow,
-  ...Object.fromEntries(FAMILY_MOTION_KEYS.map((key) => [key, familyRow(key)])),
+  popoverEntrance: entranceRow("popoverEntrance"),
+  tooltipEntrance: entranceRow("tooltipEntrance"),
+  ...Object.fromEntries(
+    COMPONENT_MOTION_KEYS.map((key) => [key, componentRow(key)]),
+  ),
 }

@@ -16,10 +16,9 @@ import {
   SECTIONS_OPTIONS,
   STRENGTH_OPTIONS,
 } from "../axes/dialogs.meta"
-import { DialGap, DialGlyph, DialSegmented, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSegmented, DialSelect } from "../dial"
+import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 import { withPhoneGlyphs } from "./phone-glyph"
 
@@ -408,38 +407,4 @@ export const ROWS: RowMap = {
   dialogEntrance: DialogEntranceRow,
   dialogPosition: DialogPositionRow,
   drawerEdge: DrawerEdgeRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function DialogsPreview({ state }: { state: Effective }) {
-  return glyph(
-    <PanelGlyph
-      sections={state.dialogSections}
-      actions={state.dialogActions}
-    />,
-  )
-}
-
-export function DialogsSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="dialogSections" />
-      <DialGap />
-      <Row axis="dialogBackdrop" />
-      <Row axis="mobileDialogs" />
-      <Row axis="rolePanel" />
-      <Row axis="surfaceGlass" />
-      <Row axis="dialogMotion" />
-      <Row axis="dialogActions" />
-      <Row axis="dialogClose" />
-      <Row axis="dialogEntrance" />
-      <MemberSection id="modal" title="Modal">
-        <Row axis="dialogPosition" />
-      </MemberSection>
-      <MemberSection id="drawer" title="Drawer">
-        <Row axis="drawerEdge" />
-      </MemberSection>
-    </>
-  )
 }

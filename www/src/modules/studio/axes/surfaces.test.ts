@@ -25,6 +25,7 @@ import {
   effective,
   parseState,
 } from "./index"
+import { excludedUnder, STYLE_VALUES } from "./style"
 import {
   NO_SHADOW,
   shadowCss,
@@ -37,9 +38,6 @@ import {
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
-  SURFACE_STYLES,
-  styleScore,
-  surfaceStyle,
 } from "./surfaces.meta"
 
 const SURFACE_TOKENS = [
@@ -65,11 +63,21 @@ const HALF = "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))"
 const QUARTER = "color-mix(in oklab, var(--neutral-50) 75%, var(--neutral-100))"
 const WHITE = "oklch(1 0 0)"
 
-const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
-  designSystemOf(parseState({ ...overrides })).tokens
+/* The first Style that allows every value (Bevel edges under Tactile). */
+const ownerOf = (values: Partial<typeof DEFAULTS>) =>
+  STYLE_VALUES.find((style) =>
+    Object.entries(values).every(
+      ([key, value]) => !excludedUnder(key, style).includes(String(value)),
+    ),
+  )
 
-const resolved = (values: Partial<typeof DEFAULTS>) =>
-  effective(parseState({ ...values }))
+const owned = (values: Partial<typeof DEFAULTS>) =>
+  parseState({ style: ownerOf(values) ?? "flat", ...values })
+
+const tokensFor = (overrides: Partial<typeof DEFAULTS>) =>
+  designSystemOf(owned(overrides)).tokens
+
+const resolved = (values: Partial<typeof DEFAULTS>) => effective(owned(values))
 
 const PALETTE = {
   step: (s: string) => `var(--neutral-${s})`,
@@ -91,6 +99,7 @@ const registryColor = (token: string, mode: Mode) => {
   return targetCss("light" in target ? target[mode] : target)
 }
 
+/* Every combination some Style allows. */
 const combos = LAYERS_OPTIONS.flatMap((l) =>
   EDGE_OPTIONS.flatMap((e) =>
     SHADOW_OPTIONS.map((s) => ({
@@ -99,7 +108,7 @@ const combos = LAYERS_OPTIONS.flatMap((l) =>
       surfaceShadow: s.value,
     })),
   ),
-)
+).filter((values) => ownerOf(values))
 
 describe("surfaces", () => {
   test("defaults emit no surface tokens", () => {
@@ -123,51 +132,22 @@ describe("surfaces", () => {
     },
   )
 
-  test("Outlined is the default, and every style reads back as itself", () => {
-    expect(surfaceStyle(DEFAULT_STATE)).toMatchObject({
-      style: { id: "outlined" },
-      exact: true,
-    })
-    for (const s of SURFACE_STYLES) {
-      const state = parseState(s.values)
-      expect(surfaceStyle(state)).toEqual({ style: s, exact: true })
-      expect(effective(state).values.surfaceShadow).toBe(s.values.surfaceShadow)
-    }
-  })
-
-  test("every combination names one closest style, without ties", () => {
-    for (const values of combos) {
-      const state = parseState(values)
-      const scores = SURFACE_STYLES.map((s) => styleScore(state, s))
-      const best = Math.max(...scores)
-      expect(
-        scores.filter((n) => n === best),
-        JSON.stringify(values),
-      ).toHaveLength(1)
-    }
-    const named = (values: Partial<typeof DEFAULTS>) =>
-      surfaceStyle(parseState(values)).style.id
-    expect(named({ surfaceShadow: "medium" })).toBe("soft")
-    expect(named({ surfaceEdge: "none", surfaceShadow: "high" })).toBe(
-      "elevated",
-    )
-    expect(named({ surfaceLayers: "grouped", surfaceEdge: "line" })).toBe(
-      "grouped",
-    )
-    expect(named({ surfaceLayers: "tonal", surfaceShadow: "low" })).toBe(
-      "tonal",
-    )
-  })
-
   test("flat cards with no edge on the page render Low, saved Flat kept", () => {
-    const { values, explain } = resolved({ surfaceEdge: "none" })
+    const { values, explain } = resolved({
+      surfaceEdge: "none",
+      surfaceShadow: "flat",
+    })
     expect(values.surfaceShadow).toBe("low")
     expect(explain.surfaceShadow).toMatchObject({
       saved: "flat",
       rule: "surfaces/flat-needs-separation",
     })
     expect(
-      resolved({ surfaceEdge: "none", surfaceLayers: "tonal" }).values,
+      resolved({
+        surfaceEdge: "none",
+        surfaceLayers: "tonal",
+        surfaceShadow: "flat",
+      }).values,
     ).toMatchObject({ surfaceShadow: "flat" })
   })
 
@@ -423,7 +403,7 @@ describe("app shell", () => {
 
 describe("drawn edges", () => {
   const shippedItem = async (name: string, state: Partial<typeof DEFAULTS>) => {
-    const ds = designSystemOf(parseState(state))
+    const ds = designSystemOf(owned(state))
     const preset: PublishPreset = {
       density: ds.density,
       componentParams: ds.componentParams,
@@ -514,9 +494,9 @@ describe("drawn edges", () => {
       "has-data-label:pressed:mt-[2px] has-data-label:pressed:border-b-2 has-data-label:disabled:mt-[2px] has-data-label:disabled:border-b-2"
     const state = { surfaceEdge: "ledge", controlStroke: "bold" }
     for (const name of ["checkbox", "radio-group", "switch"]) {
-      expect(
-        designSystemOf(parseState(state)).componentParams[name],
-      ).toMatchObject({ "card-press": "sink" })
+      expect(designSystemOf(owned(state)).componentParams[name]).toMatchObject({
+        "card-press": "sink",
+      })
       expect(await shippedItem(name, state), name).toContain(sink)
       const origin = await shippedItem(name, {})
       expect(origin, name).not.toContain("pressed:mt-")

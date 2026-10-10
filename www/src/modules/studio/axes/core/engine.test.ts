@@ -13,15 +13,15 @@ import {
   DEFAULTS,
   effective,
   FOLLOWS,
+  followersOf,
   KEY_OWNER,
-  overridersOf,
   parseState,
   RULES,
   SCHEMA,
-  SCOPES,
   setKey,
 } from "../index"
 import type { StudioState } from "../index"
+import { RULES as STYLE_RULES } from "../style"
 import { condKeys, createEngine, findCycle, holds, keyGraph } from "./effective"
 import type { Cond } from "./types"
 
@@ -107,25 +107,6 @@ describe("catalog", () => {
     }
   })
 
-  it("scoped copies are plain `same` follows over the source's vocabulary", () => {
-    const scoped = Object.entries(FOLLOWS).flatMap(([key, list]) =>
-      list
-        .filter((f) => "scoped" in f && f.scoped)
-        .map((f) => [key, f] as const),
-    )
-    expect(scoped.length).toBeGreaterThan(0)
-    for (const [key, follow] of scoped) {
-      expect(follow.kind, key).toBe("same")
-      if (follow.kind !== "same") continue
-      expect(follow.map, key).toBeUndefined()
-      expect(DEFAULTS[key as keyof typeof DEFAULTS], key).toBe(follow.id)
-      expect(enumValues(key), key).toEqual(enumValues(follow.from))
-      expect(SCOPES[follow.from], key).toContain(key)
-    }
-    const copies = Object.values(SCOPES).flat()
-    expect(copies.sort()).toEqual(scoped.map(([key]) => key).sort())
-  })
-
   it("param vars write only their item's own --studio-<item>-* vars", () => {
     for (const item of registryUi)
       for (const [param, def] of Object.entries(item.params ?? {}))
@@ -142,7 +123,9 @@ describe("catalog", () => {
     const ids = RULES.map((rule) => rule.id)
     expect(new Set(ids).size).toBe(ids.length)
     for (const rule of RULES) {
-      expect(rule.id.split("/")[0], rule.id).toBe(KEY_OWNER[rule.target])
+      expect(rule.id.split("/")[0], rule.id).toBe(
+        STYLE_RULES.includes(rule) ? "style" : KEY_OWNER[rule.target],
+      )
       const keys = condKeys(rule.when)
       for (const key of keys) expect(SCHEMA, rule.id).toHaveProperty(key)
       expect(keys, rule.id).toContain(rule.cause)
@@ -158,12 +141,10 @@ describe("catalog", () => {
         ).toBeUndefined()
       if (effect.kind === "exclude" && "options" in effect) {
         const domain = enumValues(rule.target)
-        for (const option of [...effect.options, effect.fallback])
+        for (const option of effect.options)
           expect(domain, rule.id).toContain(option)
-        expect(
-          checkConcrete(rule.target, effect.fallback),
-          rule.id,
-        ).toBeUndefined()
+        // A follow id resolves like a saved one.
+        expect(checkKey(rule.target, effect.fallback), rule.id).toBeUndefined()
         expect(effect.options, rule.id).not.toContain(effect.fallback)
       }
     }
@@ -298,6 +279,45 @@ describe("effective", () => {
     expect(explain.iconStroke?.rule).toBeUndefined()
   })
 
+  it("resolves a follow landing on another follow id once more, never twice", () => {
+    const { effective: run } = createEngine({
+      defaults: { s: "a", src: "x", k: "style" },
+      follows: {
+        k: [
+          {
+            kind: "auto",
+            id: "style",
+            from: "s",
+            table: { a: "auto", b: "fixed", c: "bad" },
+          },
+          {
+            kind: "auto",
+            id: "auto",
+            from: "src",
+            table: { x: "style", y: "deep" },
+          },
+        ],
+      },
+      rules: [
+        {
+          id: "t/k",
+          target: "k",
+          when: { key: "s", in: ["b"] },
+          effect: { kind: "exclude", options: ["bad"], fallback: "style" },
+          cause: "s",
+        },
+      ],
+    })
+    expect(run({ s: "a", src: "y", k: "style" }).values.k).toBe("deep")
+    expect(run({ s: "b", src: "y", k: "style" }).values.k).toBe("fixed")
+    expect(run({ s: "a", src: "x", k: "style" }).values.k).toBe("style")
+    expect(run({ s: "a", src: "y", k: "style" }).explain.k?.via).toBe("style")
+    // An excluded pick falls back through the follow.
+    const held = run({ s: "b", src: "y", k: "bad" })
+    expect(held.values.k).toBe("fixed")
+    expect(held.explain.k).toMatchObject({ rule: "t/k", saved: "bad" })
+  })
+
   it("pins, and resolves a `same` map", () => {
     const { effective: run } = createEngine({
       defaults: { a: "x", b: "same", c: "free" },
@@ -323,37 +343,26 @@ describe("effective", () => {
   })
 })
 
-describe("scoped copies", () => {
-  it("a copy edited away makes its global Custom", () => {
-    expect(overridersOf(DEFAULT_STATE, "motion")).toEqual([])
-    const state = parseState({ buttonMotion: "expressive", menuMotion: "same" })
-    expect(overridersOf(state, "motion")).toEqual(["buttonMotion"])
-    // A copy picking the global's value explicitly still overrides it.
-    expect(
-      overridersOf(parseState({ dialogMotion: "standard" }), "motion"),
-    ).toEqual(["dialogMotion"])
-    expect(overridersOf(state, "buttonMotion")).toEqual([])
-  })
-
-  it("setting the global resets every copy in one edit", () => {
+describe("followers", () => {
+  it("lists the keys saved off their follow of a source", () => {
+    expect(followersOf(DEFAULT_STATE, "motion")).toEqual([])
     const state = parseState({
       buttonMotion: "expressive",
-      feedbackMotion: "none",
-      motionEntrance: "fade",
+      toastMotion: "same",
     })
-    const next = setKey(state, "motion", "smooth")
-    expect(overridersOf(next, "motion")).toEqual([])
-    expect(next).toMatchObject({
+    expect(followersOf(state, "motion")).toEqual(["buttonMotion"])
+    // Picking the source's value explicitly still leaves the follow.
+    expect(
+      followersOf(parseState({ dialogMotion: "standard" }), "motion"),
+    ).toEqual(["dialogMotion"])
+    expect(followersOf(state, "buttonMotion")).toEqual([])
+  })
+
+  it("setting a source keeps its followers' picks", () => {
+    const state = parseState({ buttonMotion: "expressive" })
+    expect(setKey(state, "motion", "smooth")).toMatchObject({
       motion: "smooth",
-      buttonMotion: "same",
-      feedbackMotion: "same",
-      motionEntrance: "fade",
-    })
-    // A copy's own edit leaves the global and its siblings alone.
-    expect(setKey(state, "buttonMotion", "none")).toMatchObject({
-      motion: "standard",
-      buttonMotion: "none",
-      feedbackMotion: "none",
+      buttonMotion: "expressive",
     })
   })
 })
@@ -380,7 +389,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "surfaces/flat-needs-separation": [
     { surfaceEdge: "none" },
-    { surfaceEdge: "none", surfaceLayers: "tonal" },
+    { style: "tonal", surfaceEdge: "none" },
   ],
   "icons/stroke-only-line-sets": [
     { iconLibrary: "phosphor", iconStroke: 2.5 },
@@ -402,15 +411,18 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { focusColor: "neutral", focusInputColor: "accent" },
     { focusInputColor: "accent" },
   ],
-  "motion/menus-none-pins-entrance": [
-    { menuMotion: "none", motionEntrance: "fade" },
-    { motion: "none", menuMotion: "standard", motionEntrance: "fade" },
+  "motion/popover-none-pins-entrance": [
+    { popoverMotion: "none", popoverEntrance: "fade" },
+    { popoverMotion: "standard", popoverEntrance: "fade" },
+  ],
+  "motion/tooltip-none-pins-entrance": [
+    { tooltipMotion: "none", tooltipEntrance: "fade" },
+    { tooltipMotion: "standard", tooltipEntrance: "fade" },
   ],
   "dialogs/none-pins-entrance": [
-    { motion: "none", dialogEntrance: "drop" },
+    { dialogMotion: "none", dialogEntrance: "drop" },
     { dialogMotion: "smooth", dialogEntrance: "drop" },
   ],
-  "charts/motion-off": [{ motion: "none" }, { chartMotion: "ease" }],
   "sliders/handle-needs-track": [
     { sliderThumb: "handle", sliderTrack: "hairline" },
     { sliderTrack: "hairline" },
@@ -424,15 +436,15 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonColor: "neutral", buttonSecondary: "solid" },
   ],
   "buttons/closed-style-owns-secondary": [
-    { buttonStyle: "bevel", buttonSecondary: "outline" },
+    { style: "tactile", buttonSecondary: "outline" },
     { buttonStyle: "hairline", buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
-    { buttonStyle: "ledge", buttonPress: "nudge" },
+    { style: "tactile", buttonStyle: "ledge", buttonPress: "nudge" },
     { buttonPress: "nudge" },
   ],
   "button-groups/ledge-gaps-groups": [
-    { buttonStyle: "ledge", groupSeparator: "divider" },
+    { style: "tactile", buttonStyle: "ledge", groupSeparator: "divider" },
     { groupSeparator: "divider" },
   ],
   "menus/check-or-fill": [
@@ -462,6 +474,34 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   "otp-field/underline-separates-cells": [
     { inputStyle: "underline" },
     { inputStyle: "filled" },
+  ],
+  "style/buttonStyle-flat": [
+    { buttonStyle: "gloss" },
+    { style: "soft", buttonStyle: "gloss" },
+  ],
+  "style/buttonStyle-soft": [
+    { style: "soft", buttonStyle: "bevel" },
+    { style: "tactile", buttonStyle: "bevel" },
+  ],
+  "style/buttonStyle-tonal": [
+    { style: "tonal", buttonStyle: "hairline" },
+    { buttonStyle: "hairline" },
+  ],
+  "style/buttonStyle-tactile": [
+    { style: "tactile", buttonStyle: "hairline" },
+    { style: "tactile", buttonStyle: "ledge" },
+  ],
+  "style/surfaceEdge-flat-soft-tonal": [
+    { surfaceEdge: "ledge" },
+    { style: "tactile", surfaceEdge: "ledge" },
+  ],
+  "style/surfaceLayers-flat-soft-tactile": [
+    { surfaceLayers: "tonal" },
+    { style: "tonal", surfaceLayers: "tonal" },
+  ],
+  "style/inputStyle-flat-soft-tonal": [
+    { inputStyle: "well" },
+    { style: "tactile", inputStyle: "well" },
   ],
 }
 

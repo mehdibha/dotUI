@@ -15,7 +15,6 @@ import { Loader as RingTrackLoader } from "@/registry/ui/loader/base.ring-track"
 import { useStyles as useProgressStyles } from "@/registry/ui/progress-bar/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
-import { parseState } from "../axes"
 import type { StudioState } from "../axes"
 import { STYLE_OPTIONS as ALERT_OPTIONS } from "../axes/alert.meta"
 import {
@@ -34,12 +33,10 @@ import {
   STATUS_OPTIONS,
   STYLE_OPTIONS as TOAST_OPTIONS,
 } from "../axes/toast.meta"
-import { DialGap, DialGlyph, DialSelect } from "../dial"
+import { DialGlyph, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
-import { MemberSection, Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { designSystemOf } from "../resolve"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -435,52 +432,4 @@ export const ROWS: RowMap = {
   progressTrack: ProgressTrackRow,
   progressTrackStyle: ProgressTrackStyleRow,
   progressColor: ProgressColorRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function FeedbackPreview({ state }: { state: Effective }) {
-  const ds = useMemo(
-    () =>
-      designSystemOf(
-        parseState({
-          badgeStyle: state.badgeStyle,
-          badgeShape: state.badgeShape,
-        }),
-      ),
-    [state.badgeStyle, state.badgeShape],
-  )
-  return (
-    <System ds={ds}>
-      <Badge />
-    </System>
-  )
-}
-
-export function FeedbackSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="badgeStyle" />
-      <Row axis="badgeShape" />
-      <Row axis="badgeCase" />
-      <DialGap />
-      <Row axis="dangerSeed" />
-      <Row axis="surfaceGlass" />
-      <Row axis="feedbackMotion" />
-      <MemberSection id="alert" title="Alert">
-        <Row axis="alertStyle" />
-      </MemberSection>
-      <MemberSection id="toast" title="Toast">
-        <Row axis="toastStyle" />
-        <Row axis="toastStatus" />
-      </MemberSection>
-      <MemberSection id="loading" title="Loading">
-        <Row axis="spinnerStyle" />
-        <Row axis="skeletonAnimation" />
-        <Row axis="progressTrack" />
-        <Row axis="progressTrackStyle" />
-        <Row axis="progressColor" />
-      </MemberSection>
-    </>
-  )
 }

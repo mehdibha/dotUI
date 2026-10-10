@@ -18,10 +18,8 @@ import {
 import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field.meta"
 import { OTP_STYLE_OPTIONS } from "../axes/otp-field.meta"
 import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
-import { DialGap, DialGlyph, DialSelect } from "../dial"
-import { MemberSection, Row } from "../family-page"
+import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../family-page"
-import type { Effective, Studio } from "../state"
 import { useStudio } from "../use-studio"
 
 /* -------------------------------- Specimens -------------------------------- */
@@ -374,39 +372,4 @@ export const ROWS: RowMap = {
   pickerCaret: PickerCaretRow,
   fieldLabel: FieldLabelRow,
   inputError: InputErrorRow,
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function InputsPreview({ state }: { state: Effective }) {
-  return <ShellSpecimen style={state.inputStyle} className="h-5 w-10" />
-}
-
-export function InputsSection(_: { studio: Studio }) {
-  return (
-    <>
-      <Row axis="inputStyle" />
-      <DialGap />
-      <Row axis="buttonStyle" />
-      <Row axis="focusInputStyle" />
-      <Row axis="roleControl" />
-      <Row axis="inputMotion" />
-      <Row axis="inputHover" />
-      <Row axis="inputHeight" />
-      <MemberSection id="number-field" title="Number field">
-        <Row axis="numberLayout" />
-      </MemberSection>
-      <MemberSection id="otp" title="OTP field">
-        <Row axis="otpStyle" />
-      </MemberSection>
-      <MemberSection id="select" title="Select">
-        <Row axis="selectTrigger" />
-        <Row axis="pickerCaret" />
-      </MemberSection>
-      <MemberSection id="field" title="Field">
-        <Row axis="fieldLabel" />
-        <Row axis="inputError" />
-      </MemberSection>
-    </>
-  )
 }

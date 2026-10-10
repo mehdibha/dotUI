@@ -116,9 +116,9 @@ describe("menus axis", () => {
       designSystemOf(parseState(input)).tokens["--studio-popover-tip-size"]
     expect(tip({})).toBeUndefined()
     expect(tip({ controlStroke: "bold" })).toBeUndefined()
-    expect(tip({ surfaceEdge: "ledge", controlStroke: "bold" })).toBe(
-      "calc(var(--spacing) * 3.5)",
-    )
+    expect(
+      tip({ style: "tactile", surfaceEdge: "ledge", controlStroke: "bold" }),
+    ).toBe("calc(var(--spacing) * 3.5)")
   })
 
   it("check None pins a tinted selected row", () => {
@@ -271,6 +271,7 @@ describe("triggers and keys", () => {
     expect(await shipped("popover")).toContain("[&>svg]:size-2.5")
     expect(
       await shipped("popover", {
+        style: "tactile",
         surfaceEdge: "ledge",
         controlStroke: "bold",
         menuArrows: "both",

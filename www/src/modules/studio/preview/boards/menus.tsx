@@ -142,15 +142,24 @@ function useAnchor(
   return point
 }
 
-/** Replays every `[data-entrance]` overlay's real entrance while the panel edits menu motion. */
+// The overlays each key times, by their `data-entrance`.
+const ENTRANCE_OF: Record<string, string> = {
+  popoverMotion: "popover",
+  popoverEntrance: "popover",
+  tooltipMotion: "tooltip",
+  tooltipEntrance: "tooltip",
+}
+
+/** Replays the edited overlays' real entrance while the panel edits their motion. */
 function useEntranceReplay() {
   const { axis } = useBoardFocus()
   const { params } = useContext(DesignSystemContext)
   const tokens = useRootTokens()
   useEffect(() => {
-    if (axis !== "menuMotion") return
+    const overlay = axis && ENTRANCE_OF[axis]
+    if (!overlay) return
     for (const el of document.querySelectorAll<HTMLElement>(
-      "[data-entrance]",
+      `[data-entrance="${overlay}"]`,
     )) {
       // Jump to react-aria's `entering` state, then release it to animate in.
       el.style.transition = "none"
@@ -385,7 +394,7 @@ function MenuSpecimen() {
           data-popover=""
           data-trigger="MenuTrigger"
           data-placement="bottom"
-          data-entrance=""
+          data-entrance="popover"
           className={popover({
             className:
               "relative col-start-1 row-start-1 -mt-1 mr-6 mb-6 w-56 self-start justify-self-end max-sm:mr-4",
@@ -531,7 +540,7 @@ function PopoverSpecimen() {
           data-popover=""
           data-trigger="DialogTrigger"
           data-placement="bottom"
-          data-entrance=""
+          data-entrance="popover"
           className={popover({
             className:
               "relative col-start-1 row-start-1 mx-4 -mt-1 mb-6 w-72 max-w-[calc(100%-2rem)] self-start justify-self-end",
@@ -600,7 +609,7 @@ function TooltipSpecimen() {
         >
           <div
             data-placement="bottom"
-            data-entrance=""
+            data-entrance="tooltip"
             className={content({ className: "relative whitespace-nowrap" })}
           >
             Add link <span className="opacity-60">⌘K</span>
@@ -757,7 +766,7 @@ function PhoneSpecimen() {
             data-popover=""
             data-trigger="Select"
             data-placement="bottom"
-            data-entrance=""
+            data-entrance="popover"
             className={popover({
               className:
                 "relative col-start-1 row-start-1 mx-4 self-start overflow-visible",
@@ -813,7 +822,7 @@ export default function MenusBoard() {
       <BoardSection
         member="menu"
         title="Menu"
-        axes={[...ROW_KEYS, "surfaceGlass", "menuMotion"]}
+        axes={[...ROW_KEYS, "surfaceGlass", "popoverMotion", "popoverEntrance"]}
         className={STAGE}
       >
         <MenuSpecimen />
@@ -835,7 +844,13 @@ export default function MenusBoard() {
         <BoardSection
           member="tooltip"
           title="Tooltip"
-          axes={["tooltipStyle", "menuArrows", "surfaceGlass", "menuMotion"]}
+          axes={[
+            "tooltipStyle",
+            "menuArrows",
+            "surfaceGlass",
+            "tooltipMotion",
+            "tooltipEntrance",
+          ]}
           className={cn(STAGE, "flex-1")}
         >
           <TooltipSpecimen />
@@ -855,7 +870,12 @@ export default function MenusBoard() {
       <BoardSection
         member="popover"
         title="Popover"
-        axes={["menuArrows", "surfaceGlass", "menuMotion"]}
+        axes={[
+          "menuArrows",
+          "surfaceGlass",
+          "popoverMotion",
+          "popoverEntrance",
+        ]}
         className={STAGE}
       >
         <PopoverSpecimen />

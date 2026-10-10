@@ -1,15 +1,17 @@
 "use client"
 
 /* Typography: each face set in itself, then the voice of titles, labels and
-   control text. */
+   control text. Font sits on the main page; Heading and Reading match it
+   until pinned. */
 
-import { ChevronDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
+import { Label } from "@/registry/ui/field"
 import { Select } from "@/registry/ui/select"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 import { useLoadedFamilies } from "@/modules/studio/fonts"
 
 import { TITLE_VOICE } from "../axes/type"
@@ -21,35 +23,34 @@ import {
   UI_TEXT_OPTIONS,
 } from "../axes/type.meta"
 import {
-  DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
-  DialGap,
   DialSegmented,
   DialSelect,
 } from "../dial"
-import { Row, useRowLabel } from "../family-page"
+import { useRowLabel } from "../family-page"
 import type { RowMap } from "../family-page"
 import { FontListPopover, PanelPopoverTitle } from "../rows"
 import type { Effective } from "../state"
-import { ChipButton } from "../use-axis"
 import { useStudio } from "../use-studio"
 
 type FontKey = "headingFont" | "bodyFont" | "monoFont" | "readingFont"
 
-const SAME_AS_BODY = { id: "same", label: "Same as body" }
+/** The follow id of a role that matches Font until pinned. */
+const MATCH = "same"
 
-/** A font role as a dial row, its family set in its own face. */
+/** A font role as a dial row, its family set in its own face. With `match`,
+ *  a switch over the list follows Font or pins the family it shows. */
 function FontRow({
   axis,
   label: labelProp,
-  follow,
+  match,
   categories,
 }: {
   axis: FontKey
   label: string
-  follow?: { id: string; label: string }
+  match?: boolean
   categories: FontCategory[]
 }) {
   const { state, effective, set } = useStudio()
@@ -57,12 +58,12 @@ function FontRow({
   const value = state[axis]
   const resolved = effective[axis]
   const onChange = set(axis)
-  const following = follow?.id === value
+  const matching = match && value === MATCH
   useLoadedFamilies([resolved])
   return (
     <Select
       className="w-full"
-      selectedKey={following ? null : value}
+      selectedKey={matching ? null : value}
       onSelectionChange={(key) => onChange(key as string)}
       aria-label={label}
     >
@@ -75,23 +76,26 @@ function FontRow({
         <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
           {label}
         </span>
-        <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2.5">
-          {follow && !following && (
-            <ChipButton onPress={() => onChange(follow.id)}>
-              <span className="capitalize">{follow.id}</span>
-            </ChipButton>
-          )}
-          <span
-            className="truncate text-[13px] font-medium text-fg/70"
-            style={{ fontFamily: fontStack(resolved) }}
-          >
-            {following ? follow.label : resolved}
-          </span>
-          <ChevronDownIcon className={DIAL_CHEVRON} />
+        <span
+          className="pointer-events-none relative truncate pr-3 text-[13px] font-medium text-fg/60"
+          style={{ fontFamily: fontStack(resolved) }}
+        >
+          {resolved}
         </span>
       </div>
       <PanelPopoverTitle.Provider value={label}>
-        <FontListPopover categories={categories} />
+        <FontListPopover categories={categories}>
+          {match && (
+            <Switch
+              size="sm"
+              isSelected={matching}
+              onChange={(on) => onChange(on ? MATCH : resolved)}
+            >
+              <Label className="flex-1">Match font</Label>
+              <SwitchControl />
+            </Switch>
+          )}
+        </FontListPopover>
       </PanelPopoverTitle.Provider>
     </Select>
   )
@@ -154,13 +158,13 @@ const HeadingRow = () => (
   <FontRow
     axis="headingFont"
     label="Heading"
-    follow={SAME_AS_BODY}
+    match
     categories={["sans-serif", "serif", "display", "handwriting"]}
   />
 )
 
 const BodyRow = () => (
-  <FontRow axis="bodyFont" label="Body" categories={["sans-serif", "serif"]} />
+  <FontRow axis="bodyFont" label="Font" categories={["sans-serif", "serif"]} />
 )
 
 const MonoRow = () => (
@@ -171,7 +175,7 @@ const ReadingRow = () => (
   <FontRow
     axis="readingFont"
     label="Reading"
-    follow={SAME_AS_BODY}
+    match
     categories={["serif", "sans-serif"]}
   />
 )
@@ -250,25 +254,6 @@ function SectionLabelsRow() {
         ),
       }))}
     />
-  )
-}
-
-/* --------------------------------- Section --------------------------------- */
-
-export function TypeSection() {
-  return (
-    <>
-      <Row axis="headingFont" />
-      <Row axis="bodyFont" />
-      <Row axis="titleStyle" />
-      <DialGap />
-      <Row axis="monoFont" />
-      <Row axis="readingFont" />
-      <Row axis="uiTextSize" />
-      <Row axis="fieldTextSize" />
-      <Row axis="labelWeight" />
-      <Row axis="sectionLabels" />
-    </>
   )
 }
 

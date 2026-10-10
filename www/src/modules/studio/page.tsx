@@ -22,7 +22,7 @@ import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { DockLayer, PanelNav, useDockSide } from "./rows"
 import { PanelSearch } from "./search"
-import { placeOf } from "./state"
+import { linkTarget, placeOf } from "./state"
 import type { Chapter, ChapterPage, Studio } from "./state"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 
@@ -33,11 +33,6 @@ function untilMounted(attempt: () => boolean, frames = 30) {
   })
 }
 
-const memberOf = (scope: Element | null | undefined, title: string) =>
-  [...(scope?.querySelectorAll("[data-member]") ?? [])].find(
-    (section) => section.getAttribute("aria-label") === title,
-  )
-
 function ChapterBlock({
   chapter,
   studio,
@@ -47,7 +42,7 @@ function ChapterBlock({
   studio: Studio
   docked: boolean
 }) {
-  const { Primary, Body, Preview } = chapter
+  const { Body } = chapter
   return (
     <section
       data-chapter={chapter.id}
@@ -59,19 +54,11 @@ function ChapterBlock({
     >
       <h2
         id={`chapter-${chapter.id}`}
-        className="flex h-9 items-center justify-between gap-2 px-1 max-lg:sr-only"
+        className="truncate px-1 text-xs/9 font-medium text-fg/50 max-lg:sr-only"
       >
-        <span className="truncate text-xs font-medium text-fg/50">
-          {chapter.label}
-        </span>
-        {Preview && (
-          <span className="flex shrink-0 items-center text-fg/60">
-            <Preview state={studio.effective} />
-          </span>
-        )}
+        {chapter.label}
       </h2>
       <div className="flex flex-col gap-1.5 pb-2.5 max-lg:py-2">
-        {Primary && <Primary studio={studio} />}
         <Body studio={studio} />
       </div>
     </section>
@@ -260,20 +247,17 @@ export function PanelPage({
   }
 
   const reveal = (id: string, axis?: string) => {
-    // "Buttons › Toggles › Selected" names a page, a member and a row.
-    const [first, ...path] = axis?.split(" › ") ?? []
+    // "Checkbox › Corner" names a page and its row; a row a popover holds
+    // ("Surfaces › Layers") lands on the row that opens it.
+    const [first, row] = axis?.split(" › ") ?? []
     const target = pages.find((p) => p.chapter.id === id && p.label === first)
     if (target) {
       setTucked(false)
       openPage(target.id)
-      if (path.length > 0)
-        untilMounted(() => {
-          const scope = layer?.querySelector(`[data-page="${target.id}"]`)
-          const member = memberOf(scope, path[0] ?? "")
-          if (member && path.length === 1)
-            member.scrollIntoView({ block: "start" })
-          return flash(path.length > 1 ? member : scope, path.at(-1) ?? "")
-        })
+      if (row)
+        untilMounted(() =>
+          flash(layer?.querySelector(`[data-page="${target.id}"]`), row),
+        )
       return
     }
     dock(id, axis)
@@ -290,19 +274,14 @@ export function PanelPage({
     untilMounted(() => flashAxis(key))
   }
 
-  // `/studio#<page>[/<member>]` opens a family page at a member's section.
+  // `/studio#<page>` opens a page; a one-row component's id lands on its row.
   useEffect(() => {
     const follow = () => {
-      const [id, member] = decodeURIComponent(location.hash.slice(1)).split("/")
-      if (!id || !pages.some((p) => p.id === id)) return
+      const target = linkTarget(decodeURIComponent(location.hash.slice(1)))
+      if (!target) return
       setTucked(false)
-      openPage(id)
-      if (member)
-        untilMounted(() => {
-          const section = document.querySelector(`[data-member="${member}"]`)
-          if (section) section.scrollIntoView({ block: "start" })
-          return !!section
-        })
+      if ("page" in target) openPage(target.page)
+      else revealAxis(target.key)
     }
     follow()
     window.addEventListener("hashchange", follow)

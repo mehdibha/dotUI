@@ -7,7 +7,7 @@
 
 import { createContext, useContext } from "react"
 
-import { effective, FOLLOWS, overridersOf, setKey } from "./axes"
+import { effective, FOLLOWS, setKey } from "./axes"
 import type { StudioState } from "./axes"
 import type { Explained } from "./axes/core/types"
 import { OPTIONS } from "./axes/meta"
@@ -20,11 +20,8 @@ export interface Axis {
   saved: unknown
   effective: unknown
   explain: Explained
-  /** The follow ids the key accepts ("auto", "same"). */
+  /** The follow ids the key accepts ("auto", "same", "style"). */
   follows: string[]
-  /** Scoped copies edited away from this key: its row reads Custom. */
-  overriders: AxisKey[]
-  /** Setting a global resets its scoped copies. */
   set: (value: unknown) => void
 }
 
@@ -40,7 +37,6 @@ export function useAxis(key: AxisKey | undefined): Axis | undefined {
     effective: values[key],
     explain: explain[key] ?? { saved: state[key], effective: values[key] },
     follows: (FOLLOWS[key] ?? []).map((follow) => follow.id),
-    overriders: overridersOf(state, key),
     set: (value) => edit(setKey(state, key, value)),
   }
 }
@@ -112,13 +108,12 @@ export function ChipButton({
   )
 }
 
-/** The cause row's value, linking to it; `place` names its page. */
-export function CauseChip({ cause, place }: { cause: string; place?: string }) {
+/** The cause row's value, linking to it. */
+export function CauseChip({ cause }: { cause: string }) {
   const reveal = useContext(RevealAxis)
   const axis = useAxis(cause as AxisKey)
   return (
     <ChipButton onPress={() => reveal(axis.key)}>
-      {place && `${place} · `}
       {valueLabel(axis.key, axis.effective)}
     </ChipButton>
   )

@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest"
 import { registryUi } from "@/registry/ui/registry"
 
 import { searchEntries } from "./search"
+import { COMPONENTS, isSingle } from "./sections/components"
+import { FOUNDATION_PAGES, MAIN_ROWS, PAGE_ROWS } from "./sections/foundations"
 import { CHAPTERS } from "./state"
 
 const contains = (text: string, needle: string) =>
@@ -12,7 +14,7 @@ const search = (query: string) =>
     entry.axis ? `${entry.category} › ${entry.axis}` : entry.category,
   )
 
-/* Items no family page styles. */
+/* Items no component row styles. */
 const UNSTYLED = new Set([
   "attachment",
   "bubble",
@@ -41,10 +43,37 @@ const UNSTYLED = new Set([
 
 describe("panel search", () => {
   it("lists matching chapters, then matching rows", () => {
-    const results = search("Menu")
-    expect(results[0]).toBe("Typography")
-    expect(results).toContain("Components › Menus & popovers")
-    expect(results).toContain("Components › Menus & popovers › Highlight")
+    const results = search("Navigation")
+    expect(results[0]).toBe("Navigation")
+    expect(search("Corner")).toContain("Forms › Checkbox › Corner")
+  })
+
+  it("reads every component row as Page › Row", () => {
+    const categoryOf = (id: string) =>
+      CHAPTERS.find((chapter) => chapter.id === id)?.label
+    for (const { label, chapter } of COMPONENTS)
+      expect(search(label), label).toContain(
+        `${categoryOf(chapter)} › ${label}`,
+      )
+    for (const { label, chapter, rows } of COMPONENTS.filter(
+      (component) => !isSingle(component),
+    ))
+      for (const [, row] of rows)
+        expect(search(row), `${label} › ${row}`).toContain(
+          `${categoryOf(chapter)} › ${label} › ${row}`,
+        )
+  })
+
+  it("reads every foundation row as Page › Row", () => {
+    for (const [, row] of MAIN_ROWS)
+      expect(search(row), row).toContain(`Foundations › ${row}`)
+    for (const { id, label } of FOUNDATION_PAGES)
+      for (const [, row] of PAGE_ROWS[id]?.flat() ?? [])
+        expect(search(row), row).toContain(`Foundations › ${label} › ${row}`)
+  })
+
+  it("finds a one-row component by its row's name", () => {
+    expect(search("Steppers")).toContain("Forms › Number field")
   })
 
   it("reaches every styled component by name", () => {

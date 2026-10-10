@@ -286,94 +286,6 @@ ${groupEntries.join("\n")}
   )
 }
 
-/** Studio panel search index: every settings row label and section title in
- *  each chapter, keyed by chapter id, family pages as "Page › Row". Read off
- *  the section JSX. */
-async function buildStudioSearchIndex() {
-  const studioDir = path.join(process.cwd(), "src/modules/studio")
-  const targetPath = path.join(studioDir, "__generated__", "search-index.ts")
-  const state = await fs.readFile(path.join(studioDir, "state.ts"), "utf8")
-
-  const sectionOf = new Map<string, string>()
-  for (const [, names = "", file = ""] of state.matchAll(
-    /import \{([^}]+)\} from "\.\/sections\/([\w-]+)"/g,
-  )) {
-    for (const name of names.split(",")) sectionOf.set(name.trim(), file)
-  }
-
-  const lines: string[] = []
-  for (const [, id = "", body = ""] of state.matchAll(
-    /id: "([\w-]+)",[\s\S]*?Body: (\w+),/g,
-  )) {
-    const file = sectionOf.get(body)
-    if (!file) continue
-    const read = (name: string) =>
-      fs.readFile(path.join(studioDir, "sections", `${name}.tsx`), "utf8")
-    // Row labels in source order; a row inside a family page's member section
-    // reads "Section › Row".
-    const rowLabels = (source: string) => {
-      const found: Array<[number, string]> = []
-      // A row's own label — the tag must not contain another "<" before it.
-      for (const match of source.matchAll(
-        /<(?:\w*Row|Dial\w+|CardGrid|MemberSection)(?:(?!<)[\s\S])*?\s(?:title|label)="([^"]+)"/g,
-      ))
-        found.push([match.index, match[1] ?? ""])
-      const members = [
-        ...source.matchAll(/<MemberSection[^>]*?title="([^"]+)"/g),
-      ].map((match) => ({
-        title: match[1] ?? "",
-        start: match.index,
-        end: source.indexOf("</MemberSection>", match.index),
-      }))
-      return found
-        .sort(([a], [b]) => a - b)
-        .map(([at, label]) => {
-          const member = members.find((m) => at > m.start && at < m.end)
-          return member ? `${member.title} › ${label}` : label
-        })
-    }
-    const source = await read(file)
-    const labels = new Set<string>(rowLabels(source))
-    // A chapter of pages (Components) indexes each page's rows under its
-    // label; a row a sibling file renders (Color's Primary) under the file's.
-    const pages = new Map<string, string>()
-    for (const [, label = "", page = ""] of source.matchAll(
-      /label: "([^"]+)",[\s\S]*?Body: (\w+),/g,
-    ))
-      pages.set(page, label)
-    for (const [, names = "", sibling = ""] of source.matchAll(
-      /import \{([^}]+)\} from "\.\/([\w-]+)"/g,
-    )) {
-      const page = names.split(",").find((name) => pages.has(name.trim()))
-      const title = sibling.replace(/-/g, " ")
-      const prefix = page
-        ? pages.get(page.trim())!
-        : title[0]!.toUpperCase() + title.slice(1)
-      const rows = rowLabels(await read(sibling))
-      if (rows.length > 0 || page) labels.add(prefix)
-      // The sibling's own row is the prefix entry already.
-      for (const row of rows)
-        if (row !== prefix) labels.add(`${prefix} › ${row}`)
-    }
-    lines.push(
-      `  "${id}": [${[...labels].map((l) => JSON.stringify(l)).join(", ")}],`,
-    )
-  }
-
-  const content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "tsx scripts/registry-build.ts" to regenerate
-
-/** Settings row labels per chapter id, for the panel search. */
-export const SEARCH_INDEX: Record<string, string[]> = {
-${lines.join("\n")}
-}
-`
-  await writeGeneratedFile(targetPath, content)
-  console.log(
-    `  ✓ studio/__generated__/search-index.ts (${lines.length} chapters)`,
-  )
-}
-
 // ============================================================================
 // Generated item manifest: registryUi / registryLib globbed from meta.ts
 // ============================================================================
@@ -1019,7 +931,6 @@ async function main() {
     await buildInternalDemos()
     await buildInternalIcons()
     await buildInternalExamples()
-    await buildStudioSearchIndex()
 
     console.log("\nGenerating shadcn publishables")
     // lib/hook items publish too (as verbatim files) so registryDependencies

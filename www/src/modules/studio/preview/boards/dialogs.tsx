@@ -32,7 +32,7 @@ type Overlay = "dialog" | "drawer" | "mobile"
 /** The overlay the panel is editing; the stage dialog by default. */
 function useFocusedOverlay(): Overlay {
   const { member, axis } = useBoardFocus()
-  if (member === "drawer" || axis === "drawerEdge") return "drawer"
+  if (member === "sheet") return "drawer"
   if (axis === "mobileDialogs") return "mobile"
   return "dialog"
 }
@@ -490,7 +490,7 @@ export default function DialogsBoard() {
   return (
     <Board id="dialogs">
       <BoardSection
-        member="modal"
+        member="dialog"
         title="Dialog"
         axes={[
           "dialogSections",
@@ -517,9 +517,9 @@ export default function DialogsBoard() {
         <AlertStage />
       </BoardSection>
       <BoardSection
-        member="drawer"
-        title="Drawer"
-        axes={["drawerEdge", "rolePanel", "dialogBackdrop", "dialogMotion"]}
+        member="sheet"
+        title="Sheet"
+        axes={["drawerEdge", "rolePanel", "dialogBackdrop", "sheetMotion"]}
         className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2"
       >
         <DrawerStages />

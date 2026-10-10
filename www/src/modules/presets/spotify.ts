@@ -7,6 +7,12 @@ export const spotify = definePreset({
   swatch: "#1ed760",
   inspiredBy: "Spotify",
   diff: {
+    // Style
+    // Containers step up one gray (#1f1f1f on #121212), no borders, soft drops.
+    // Field, checkbox and radio edges are #7c7c7c, far above the #292929 dividers.
+    // Toasts are a white box on the dark app.
+    style: "tonal",
+
     // Color
     // Bright-accent #1ed760 under black ink, verbatim in both themes.
     brand: "#1ed760",
@@ -20,8 +26,6 @@ export const spotify = definePreset({
     lightBg: 100,
     // background-base #121212 is L* 5.5.
     darkBg: 5.5,
-    // Field, checkbox and radio edges are #7c7c7c, far above the #292929 dividers.
-    controlEdge: "strong",
 
     // Typography
     // Spotify Mix is proprietary; Figtree is the closest free geometric grotesk.
@@ -45,10 +49,6 @@ export const spotify = definePreset({
     density: "touch",
 
     // Surfaces
-    // Containers step up one gray (#1f1f1f on #121212), no borders, soft drops.
-    surfaceLayers: "tonal",
-    surfaceEdge: "none",
-    surfaceShadow: "low",
     // A #000 frame around 8px-rounded #121212 panels.
     shellTone: "recessed",
 
@@ -65,7 +65,8 @@ export const spotify = definePreset({
 
     // Motion
     // Overlays fade in while sliding 4px from the trigger side.
-    motionEntrance: "slide",
+    popoverEntrance: "slide",
+    tooltipEntrance: "slide",
 
     // Links
     // Inline text links are always underlined.
@@ -78,7 +79,6 @@ export const spotify = definePreset({
     buttonSecondary: "outline",
     // Selected filter chips flip to white on black ink (black on white in light).
     toggleSelected: "inverse",
-    segmentedSelected: "inverse",
 
     // Inputs
     // A page-colored box on the edge; Outline tints it #333 in dark.
@@ -100,6 +100,9 @@ export const spotify = definePreset({
     // Menus & popovers
     // Menus, selects and tooltips never point (Popovers would tip menus too).
     menuArrows: "none",
+    // Inset rows; the current one is not tinted.
+    menuInset: "inset",
+    menuSelectedRow: "none",
     tooltipStyle: "surface",
 
     // Dialogs
@@ -123,8 +126,6 @@ export const spotify = definePreset({
 
     // Feedback
     alertStyle: "soft",
-    // A white box on the dark app.
-    toastStyle: "inverse",
     spinnerStyle: "ring-track",
     // ProgressBar is 6px in essential-bright-accent, the check color.
     progressTrack: "medium",

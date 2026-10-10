@@ -6,7 +6,10 @@ import {
   effective,
   validate,
 } from "@/modules/studio/axes"
+import { COLUMNS } from "@/modules/studio/axes/style"
+import { designSystemOf } from "@/modules/studio/resolve"
 
+import pinned from "./__fixtures__/baseline-889.json"
 import { ORIGIN, PRESETS } from "./index"
 
 describe("built-in presets", () => {
@@ -29,12 +32,15 @@ describe("built-in presets", () => {
     expect(ORIGIN.state).toEqual(DEFAULT_STATE)
   })
 
-  it("hold only what differs from Origin", () => {
+  it("hold only what differs from Origin and their Style", () => {
     for (const preset of PRESETS)
-      for (const [key, value] of Object.entries(preset.diff))
-        expect(value, `${preset.id}.${key}`).not.toBe(
-          DEFAULTS[key as keyof typeof DEFAULTS],
-        )
+      for (const [key, value] of Object.entries(preset.diff)) {
+        const column = COLUMNS[key as keyof typeof COLUMNS]
+        const implied = column
+          ? column[preset.state.style]
+          : DEFAULTS[key as keyof typeof DEFAULTS]
+        expect(value, `${preset.id}.${key}`).not.toBe(implied)
+      }
   })
 
   it("fire no rule: every value they write is the one that ships", () => {
@@ -45,6 +51,17 @@ describe("built-in presets", () => {
         .map(([key, e]) => `${key}: ${e?.rule}`)
       expect(fired, preset.id).toEqual([])
     }
+  })
+
+  // A preset's output is pinned: a change that moves one updates the fixture on purpose.
+  it("resolve to their pinned design systems", () => {
+    expect(Object.keys(pinned).sort()).toEqual(
+      PRESETS.map((preset) => preset.id).sort(),
+    )
+    for (const preset of PRESETS)
+      expect(designSystemOf(preset.state), preset.id).toEqual(
+        pinned[preset.id as keyof typeof pinned],
+      )
   })
 
   it("credit the brand they recreate", () => {

@@ -7,6 +7,9 @@ export const duolingo = definePreset({
   swatch: "#58cc02",
   inspiredBy: "Duolingo",
   diff: {
+    // Style
+    style: "tactile",
+
     // Color
     // owl #58cc02 for CTAs and progress; macaw #1cb0f6 for selection and focus.
     brand: "#58cc02",
@@ -77,7 +80,6 @@ export const duolingo = definePreset({
     menuArrows: "both",
     // No check on the current item; the row tint marks it.
     menuIndicator: "none",
-    menuSelectedRow: "tint",
 
     // Dialogs
     dialogBackdrop: "scrim",

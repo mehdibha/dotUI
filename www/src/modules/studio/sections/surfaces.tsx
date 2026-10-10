@@ -1,16 +1,14 @@
 "use client"
 
-/* Surfaces — one row under Color. Its popover leads with the styles, each
-   drawn and described; under a hairline, the settings a style is made of and
-   each mode's page. */
+/* Surfaces — one row on the Color & surfaces page: the settings the Style
+   paints them with, and each mode's page. */
 
 import type { StepName, Theme } from "@dotui/colors"
 
-import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
 
 import { effective } from "../axes"
-import { buildColorConfig, DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
+import { DARK_BG_RANGE, LIGHT_BG_RANGE } from "../axes/color"
 import {
   cardRung,
   shadowCss,
@@ -24,23 +22,13 @@ import {
   LAYERS_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
-  SURFACE_STYLES,
-  surfaceStyle,
 } from "../axes/surfaces.meta"
-import type { SurfaceStyle } from "../axes/surfaces.meta"
-import {
-  DialPickList,
-  DialPopover,
-  DialSelect,
-  DialSeparator,
-  DialSlider,
-  DialTrigger,
-  ModifiedDot,
-} from "../dial"
+import { DialPopover, DialSelect, DialSlider, DialTrigger } from "../dial"
 import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import type { Effective, StudioState } from "../state"
+import type { Effective } from "../state"
+import { valueLabel } from "../use-axis"
 import { useStudio } from "../use-studio"
 
 /* The card's shadow at glyph scale, by Tailwind rung (none, xs, sm, md, lg),
@@ -136,27 +124,24 @@ const SURFACE_KEYS = [
 ]
 
 export function SurfacesRow() {
-  const { state, effective: values, set, setState } = useStudio()
+  const { state, effective: values, set } = useStudio()
   const { theme } = usePanelMode()
-  const { style, exact } = surfaceStyle(state)
-  const edit = (patch: SurfaceStyle["values"] | Partial<StudioState>) =>
-    setState({ ...state, ...patch })
   return (
     <DialTrigger
       label="Surfaces"
       holds={SURFACE_KEYS}
-      chevron={false}
+      swatch
       value={
         <>
-          {!exact && <ModifiedDot />}
-          <span className="truncate">{style.label}</span>
+          <span className="truncate">
+            {valueLabel("surfaceEdge", values.surfaceEdge)} ·{" "}
+            {valueLabel("surfaceShadow", values.surfaceShadow)}
+          </span>
           <SurfaceGlyph state={values} theme={theme} />
         </>
       }
     >
-      <DialPopover className="w-80">
-        <StyleList state={state} theme={theme} onChange={edit} />
-        <DialSeparator />
+      <DialPopover className="w-72">
         <DialSelect
           axis="surfaceLayers"
           label="Layers"
@@ -203,52 +188,6 @@ export function SurfacesRow() {
         />
       </DialPopover>
     </DialTrigger>
-  )
-}
-
-/** The styles, each drawn as picking it would land. Mounted only while the
- *  popover is open, so the Grouped preview's color solve runs on demand. */
-function StyleList({
-  state,
-  theme,
-  onChange,
-}: {
-  state: StudioState
-  theme: Theme
-  onChange: (values: SurfaceStyle["values"]) => void
-}) {
-  const { style, exact } = surfaceStyle(state)
-  const page = effective(state).values.lightBg
-  return (
-    <DialPickList
-      label="Style"
-      value={exact ? style.id : undefined}
-      modified={exact ? undefined : style.id}
-      onChange={(id) => {
-        const next = SURFACE_STYLES.find((s) => s.id === id)
-        if (next) onChange(next.values)
-      }}
-      options={SURFACE_STYLES.map((s) => {
-        const preview = effective({ ...state, ...s.values }).values
-        return {
-          value: s.id,
-          label: s.label,
-          note: s.credits,
-          description: s.description,
-          visual: (
-            <SurfaceGlyph
-              large
-              state={preview}
-              theme={
-                preview.lightBg === page
-                  ? theme
-                  : resolveColorConfigCached(buildColorConfig(preview))
-              }
-            />
-          ),
-        }
-      })}
-    />
   )
 }
 

@@ -1,14 +1,13 @@
 "use client"
 
-/* Primary — the Color chapter's view over every role that paints with a
-   source (axes/color.ts PRIMARY_LEAVES). Accent and Neutral write all of
-   them; Custom sets each leaf, and is the selection while they disagree.
-   Each leaf also has its own row, which family pages host. Previews draw the
-   role at glyph scale in the engine's own colors. */
+/* Primary — a view over every role that paints with a source (axes/color.ts
+   PRIMARY_LEAVES). Accent and Neutral write all of them; while they disagree
+   it reads Custom and lists each. Each leaf has its own row on its
+   component's page. Previews draw the role at glyph scale in the engine's
+   own colors. */
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
+import { CheckIcon } from "lucide-react"
 import {
-  Button as RacButton,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
@@ -17,26 +16,23 @@ import type { ModeOutput } from "@dotui/colors"
 
 import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
-import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
 import { PRIMARY_LEAVES, primaryValue, withSource } from "../axes/color"
 import type { PrimaryLeaf } from "../axes/color"
 import { SOURCE_OPTIONS } from "../axes/color.meta"
 import { OPTIONS } from "../axes/meta"
 import {
-  DIAL_CHEVRON,
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
   DialPopover,
   DialSelect,
+  DialSeparator,
   DialTrigger,
   subline,
 } from "../dial"
-import { Row } from "../family-page"
 import type { RowMap } from "../family-page"
 import { usePanelMode } from "../panel-mode"
-import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
 import { useStudio } from "../use-studio"
 
@@ -251,27 +247,41 @@ function ChoiceStrip({ ink }: { ink: Ink }) {
   )
 }
 
-function leavesSummary(state: Studio["state"]) {
-  const neutral = PRIMARY_LEAVES.filter((l) => state[l] === "neutral").length
-  return `${neutral} neutral · ${PRIMARY_LEAVES.length - neutral} accent`
+const LEAF_LABELS: Record<PrimaryLeaf, string> = {
+  buttonColor: "Button",
+  checkboxColor: "Checkbox",
+  radioColor: "Radio",
+  switchColor: "Switch",
+  selectionColor: "Selected fill",
+  sliderColor: "Slider",
+  tabsColor: "Tabs",
+  linkColor: "Link",
+  focusColor: "Focus ring",
 }
 
-/** Each leaf's own row. */
-function CustomPanel() {
+/** Where each leaf stands while they disagree; each is set on its own page. */
+function LeafList({
+  state,
+  ink,
+}: {
+  state: Studio["state"]
+  ink: Record<PrimaryColorSource, Ink>
+}) {
   return (
-    <PanelPopover className="w-64 min-w-0">
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-2">
-        <Row axis="buttonColor" label="Buttons" />
-        <Row axis="checkboxColor" label="Checkbox" />
-        <Row axis="radioColor" label="Radio" />
-        <Row axis="switchColor" label="Switch" />
-        <Row axis="selectionColor" label="Selection" />
-        <Row axis="sliderColor" label="Slider" />
-        <Row axis="tabsColor" label="Tabs" />
-        <Row axis="linkColor" label="Links" />
-        <Row axis="focusColor" label="Focus ring" />
-      </DialogContent>
-    </PanelPopover>
+    <dl className="flex flex-col px-3 py-1 text-[13px] font-medium">
+      {PRIMARY_LEAVES.map((leaf) => {
+        const source = state[leaf] as PrimaryColorSource
+        return (
+          <div key={leaf} className="flex h-7 items-center justify-between">
+            <dt className="text-fg/85">{LEAF_LABELS[leaf]}</dt>
+            <dd className="flex items-center gap-2 text-fg/60">
+              {source === "accent" ? "Accent" : "Neutral"}
+              <SourceSwatch value={source} ink={ink} />
+            </dd>
+          </div>
+        )
+      })}
+    </dl>
   )
 }
 
@@ -333,24 +343,12 @@ function PrimaryPanel({
           </RacToggleButton>
         ))}
       </RacToggleButtonGroup>
-      <Dialog>
-        <RacButton
-          className={cn(DIAL_ROW, DIAL_PRESS, primary === "mixed" && "tint-10")}
-        >
-          <span className={DIAL_LABEL}>Custom</span>
-          <span className="flex min-w-0 items-center gap-2">
-            {primary === "mixed" && (
-              <span className="truncate text-[13px] font-medium text-fg/50">
-                {leavesSummary(state)}
-              </span>
-            )}
-            <ChevronRightIcon className={DIAL_CHEVRON} />
-          </span>
-        </RacButton>
-        <PanelPopoverTitle.Provider value="Custom">
-          <CustomPanel />
-        </PanelPopoverTitle.Provider>
-      </Dialog>
+      {primary === "mixed" && (
+        <>
+          <DialSeparator />
+          <LeafList state={state} ink={ink} />
+        </>
+      )}
     </>
   )
 }
@@ -364,8 +362,7 @@ export function PrimaryRow() {
   return (
     <DialTrigger
       label="Primary"
-      holds={PRIMARY_LEAVES}
-      chevron={false}
+      swatch
       value={
         <>
           {label}
@@ -380,7 +377,7 @@ export function PrimaryRow() {
   )
 }
 
-/** One leaf on its own source; family pages host it. */
+/** One leaf on its own source; its component's page hosts it. */
 const leafRow = (leaf: PrimaryLeaf) =>
   function LeafRow() {
     const ink = inks(usePanelMode().m)
