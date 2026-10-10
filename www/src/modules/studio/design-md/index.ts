@@ -55,4 +55,6 @@ export async function importDesignMd(text: string): Promise<DesignMdImport> {
   return mapDesignMd(await parseDesignMd(text))
 }
 
-export { cleanImportName, fitDensity, fitRadius, impliedTint } from "./map"
+export { impliedTint } from "./color"
+export { cleanImportName } from "./map"
+export { fitDensity, fitRadius } from "./shape"

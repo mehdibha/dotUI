@@ -13,8 +13,8 @@ import {
   importDesignMd,
 } from "./index"
 import type { DesignMdImport, ImportItem } from "./index"
-import { resolveFamily } from "./map"
 import { box, dim, parseDesignMd, shadows, shadowStrength } from "./parse"
+import { resolveFamily } from "./typography"
 
 const fixture = (name: string) =>
   readFileSync(new URL(`./fixtures/${name}.md`, import.meta.url), "utf8")

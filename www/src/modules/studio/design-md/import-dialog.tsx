@@ -109,6 +109,7 @@ function ImportForm({ close }: { close: () => void }) {
     const id = ++request.current
     const url = rawUrl(text)
     if (url) {
+      setResult(undefined)
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT)
       setFetching(true)
