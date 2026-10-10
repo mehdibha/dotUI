@@ -75,6 +75,7 @@
     "tw-animate-css": "^1.3.5",
     "unist-util-visit": "^5.0.0",
     "uqr": "^0.1.3",
+    "yaml": "2.9.0",
     "zod": "catalog:"
   },
   "devDependencies": {

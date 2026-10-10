@@ -17,7 +17,15 @@ export {
 } from "./theme"
 export type { ThemeOptions } from "./schema"
 
-export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from "./data"
+export {
+  NEUTRAL_TINT_PEAK,
+  NEUTRAL_TINT_SHAPE,
+  STATUS_SEEDS,
+  STEPS,
+  type StatusName,
+  type StepName,
+  WHISPER_LINE,
+} from "./data"
 
 export { type GuaranteeResult } from "./verify"
 export { type Mode } from "./scale"

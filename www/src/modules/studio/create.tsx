@@ -4,7 +4,7 @@
    design system, its chrome wired to the workspace. The picker lists the
    user's systems and the presets, and opens at ?gallery=. */
 
-import { useMemo, useRef, useState } from "react"
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import { RotateCcwIcon, SaveIcon } from "lucide-react"
@@ -44,6 +44,9 @@ import type { DesignSystemDoc } from "./workspace"
 
 const routeApi = getRouteApi("/_app/studio")
 
+const loadImportDialog = () => import("./design-md/import-dialog")
+const ImportDialog = lazy(loadImportDialog)
+
 // Touch-sized rows on phones.
 const MENU_ROW = "pointer-coarse:min-h-11"
 
@@ -81,6 +84,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const navigate = routeApi.useNavigate()
   const [naming, setNaming] = useState<NameRequest>()
   const [deleting, setDeleting] = useState<DesignSystemDoc>()
+  const [importing, setImporting] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const sections = useMemo(() => pickerSections(workspace), [workspace])
@@ -114,6 +118,11 @@ export function StudioPanel({ className }: { className?: string }) {
 
   // Unreadable stored systems: nothing saves or is created.
   const canSave = !isUnreadable()
+
+  // Fetched once the picker opens, so the dialog shows without a wait.
+  useEffect(() => {
+    if (gallery === true && canSave) void loadImportDialog()
+  }, [gallery, canSave])
   // The unsaved slot, or a shared link as is; the user's systems save
   // themselves.
   const savable = current.unsaved
@@ -212,6 +221,9 @@ export function StudioPanel({ className }: { className?: string }) {
         selectedId={current.key}
         onPick={(item) => select(keySelection(item.id))}
         onCreate={canSave ? () => askNew("current", "") : undefined}
+        onImport={
+          canSave ? () => afterPicker(() => setImporting(true)) : undefined
+        }
         withPreview
         renderItemMenu={(item) => renderItemMenu(item.id)}
       >
@@ -234,6 +246,11 @@ export function StudioPanel({ className }: { className?: string }) {
         onDelete={remove}
         onClose={() => setDeleting(undefined)}
       />
+      {importing && (
+        <Suspense fallback={null}>
+          <ImportDialog onClose={() => setImporting(false)} />
+        </Suspense>
+      )}
     </div>
   )
 }
