@@ -70,7 +70,9 @@ export function mapSurfaces(
     const diff = cardL - pageL
     const layers = Math.abs(diff) < 1 ? "same" : diff > 0 ? "grouped" : "tonal"
     state.surfaceLayers = layers
-    add(ctx, layers === "grouped" ? "approximated" : "mapped", "surfaces", {
+    // Tonal is one shade; a card far below the page is a different surface.
+    const exact = layers === "same" || (layers === "tonal" && diff >= -6)
+    add(ctx, exact ? "mapped" : "approximated", "surfaces", {
       id: "surface-layers",
       label:
         layers === "grouped"
@@ -97,6 +99,8 @@ export function mapSurfaces(
   const cardShadow = fam.card.find((c) => typeof c.props.shadow === "string")
   const cardShadowCss = String(cardShadow?.props.shadow ?? "")
   const cardShadowLayers = shadows(cardShadowCss)
+  const cardShadowSays =
+    cardShadowLayers.length > 0 || /^none$/i.test(cardShadowCss.trim())
   const ring = [...cardRowLayers, ...cardShadowLayers].some(isRing)
 
   // Edge: the components' own border vocabulary first, then prose.
@@ -160,7 +164,7 @@ export function mapSurfaces(
           .filter((text) => shadows(text).length > 0)
           .join(", ") || "none",
     }
-  else if (cardShadow)
+  else if (cardShadow && cardShadowSays)
     shadow = {
       tier: shadowTier(strengthOf(cardShadowLayers)),
       exact: true,

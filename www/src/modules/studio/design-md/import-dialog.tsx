@@ -309,13 +309,8 @@ function Report({ result }: { result: DesignMdImport }) {
                   <ul className="flex flex-col gap-0.5">
                     {list.map((item) => (
                       <li key={item.id} className="flex gap-2">
-                        <span className="min-w-0 flex-1 truncate">
-                          {item.label}
-                        </span>
-                        <span
-                          title={detail(item)}
-                          className="max-w-1/2 shrink-0 truncate text-fg-muted tabular-nums"
-                        >
+                        <span className="min-w-0 flex-1">{item.label}</span>
+                        <span className="max-w-1/2 min-w-0 text-right wrap-break-word text-fg-muted tabular-nums">
                           {detail(item)}
                         </span>
                       </li>

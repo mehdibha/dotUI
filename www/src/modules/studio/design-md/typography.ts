@@ -230,7 +230,7 @@ export function resolveFamily(
   return {
     family: fallback,
     exact: false,
-    label: "no open match, used the default",
+    label: `no open match, used ${fallback}`,
   }
 }
 

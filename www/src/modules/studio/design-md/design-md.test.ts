@@ -834,6 +834,17 @@ colors:
     expect(itemOf(none, "surface-shadow")?.result).toBe("flat")
   })
 
+  it("an unparseable card shadow prop is not an exact flat", async () => {
+    for (const shadow of ["var(--shadow-md)", "large soft shadow"]) {
+      const r = await importDesignMd(
+        md(
+          `name: Fixture Bad Prop\ncolors:\n  primary: "#3b5bdb"\n  canvas: "#ffffff"\ncomponents:\n  card:\n    shadow: "${shadow}"`,
+        ),
+      )
+      expect(statusOf(r, "surface-shadow")).not.toBe("mapped")
+    }
+  })
+
   it("a prose brand guess clears the chroma and L* floor", async () => {
     const r = await importDesignMd(`# Fixture Prose Ink
 
