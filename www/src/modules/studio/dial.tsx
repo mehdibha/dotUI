@@ -67,15 +67,6 @@ export const optionLabel = (
   value: string,
 ) => options.find((o) => o.value === value)?.label ?? value
 
-/** A popover option's hover preview: onChange by default, a pure edit, or off. */
-export type OptionPreview = false | ((value: string) => void)
-
-const previewRun = (
-  preview: OptionPreview | undefined,
-  onChange: (value: string) => void,
-  value: string,
-) => (preview === false ? undefined : () => (preview ?? onChange)(value))
-
 /* ---------------------------------- Rows ---------------------------------- */
 
 /** A 16px SVG specimen beside a row's value or an option's label. */
@@ -320,7 +311,7 @@ function PickItem({
 }: {
   option: DialPickOption
   modified?: boolean
-  run?: () => void
+  run: () => void
 }) {
   const previewProps = useOptionPreview()
   return (
@@ -373,7 +364,8 @@ export function DialPickList({
   label: string
   value: string | undefined
   onChange: (value: string) => void
-  preview?: OptionPreview
+  /** What hovering an option previews, when it isn't onChange. */
+  preview?: (value: string) => void
   options: DialPickOption[]
   modified?: string
 }) {
@@ -395,7 +387,7 @@ export function DialPickList({
           key={option.value}
           option={option}
           modified={option.value === modified}
-          run={previewRun(preview, onChange, option.value)}
+          run={() => (preview ?? onChange)(option.value)}
         />
       ))}
     </RacListBox>
@@ -414,7 +406,8 @@ export function DialPicker({
   label: string
   value: string
   onChange: (value: string) => void
-  preview?: OptionPreview
+  /** What hovering an option previews, when it isn't onChange. */
+  preview?: (value: string) => void
   options: DialPickOption[]
 }) {
   const selected = options.find((option) => option.value === value)
@@ -443,7 +436,7 @@ export function DialPicker({
                 <PickItem
                   key={option.value}
                   option={option}
-                  run={previewRun(preview, onChange, option.value)}
+                  run={() => (preview ?? onChange)(option.value)}
                 />
               ))}
             </RacListBox>
@@ -472,7 +465,6 @@ export function DialList({
   onChange: (value: string) => void
   options: DialSelectOption[]
 }) {
-  const previewProps = useOptionPreview()
   return (
     <div className="flex flex-col">
       <span className="flex h-9 items-center px-1 text-xs font-medium text-fg/50">
@@ -494,7 +486,6 @@ export function DialList({
           <RacToggleButton
             key={option.value}
             id={option.value}
-            {...previewProps(() => onChange(option.value))}
             className="group/option flex min-h-10 w-full cursor-interactive items-center justify-between gap-3 rounded-lg tint-5 py-2 pr-2 pl-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
           >
             <span className="flex min-w-0 items-center gap-2">
@@ -979,18 +970,15 @@ export function SegmentedGroup({
   label,
   value,
   onChange,
-  preview,
   options,
   className,
 }: {
   label: string
   value: string | null
   onChange: (value: string) => void
-  preview?: OptionPreview
   options: DialOption[]
   className?: string
 }) {
-  const previewProps = useOptionPreview()
   return (
     <RacToggleButtonGroup
       aria-label={label}
@@ -1007,7 +995,6 @@ export function SegmentedGroup({
         <RacToggleButton
           key={option.value}
           id={option.value}
-          {...previewProps(previewRun(preview, onChange, option.value))}
           className="relative isolate flex h-7 flex-1 cursor-interactive items-center justify-center rounded-md px-2 text-[13px] font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 pointer-coarse:min-w-11 selected:text-fg/95"
         >
           <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-fg/10 duration-150 ease-out motion-safe:transition-[translate,width,height]" />
@@ -1025,13 +1012,11 @@ export function DialSegmented({
   label,
   value,
   onChange,
-  preview,
   options,
 }: {
   label: string
   value: string | null
   onChange: (value: string) => void
-  preview?: OptionPreview
   options: DialOption[]
 }) {
   // Two options sit beside the label; more stack under it, sharing the width.
@@ -1041,7 +1026,6 @@ export function DialSegmented({
       label={label}
       value={value}
       onChange={onChange}
-      preview={preview}
       options={options}
       className={stacked ? "w-full" : undefined}
     />
@@ -1070,16 +1054,13 @@ export function DialChips({
   label,
   value,
   onChange,
-  preview,
   options,
 }: {
   label: string
   value: string | undefined
   onChange: (value: string) => void
-  preview?: OptionPreview
   options: DialOption[]
 }) {
-  const previewProps = useOptionPreview()
   return (
     <div className={cn(DIAL_ROW, "h-auto flex-col items-stretch gap-0 pb-1.5")}>
       <span className={cn(DIAL_LABEL, "flex h-9 items-center")}>{label}</span>
@@ -1097,7 +1078,6 @@ export function DialChips({
           <RacToggleButton
             key={option.value}
             id={option.value}
-            {...previewProps(previewRun(preview, onChange, option.value))}
             className="flex h-7 cursor-interactive items-center justify-center truncate rounded-md tint-5 px-1.5 text-xs font-medium text-fg/60 focus-reset transition-colors hover:text-fg/90 focus-visible:focus-ring pointer-coarse:h-8 selected:tint-15 selected:text-fg"
           >
             {option.label}

@@ -5,7 +5,6 @@
    drawn by the library under the pointer, so the pick is made by look. */
 
 import { memo, useRef, useState } from "react"
-import { mergeProps } from "react-aria"
 import type { ListBoxItemProps } from "react-aria-components"
 import {
   Button as RacButton,
@@ -233,11 +232,7 @@ function LibraryItem({
 } & Pick<ListBoxItemProps, "onHoverStart" | "onFocusChange">) {
   const previewProps = useOptionPreview()
   return (
-    <ListBoxItem
-      id={id}
-      textValue={label}
-      {...mergeProps(previewProps(run), props)}
-    >
+    <ListBoxItem id={id} textValue={label} {...previewProps(run)} {...props}>
       {label}
     </ListBoxItem>
   )

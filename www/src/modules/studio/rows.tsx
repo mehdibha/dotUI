@@ -7,12 +7,10 @@
 import {
   createContext,
   useContext,
-  useRef,
   useState,
   useSyncExternalStore,
 } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
-import { mergeProps } from "react-aria"
 import type { Color } from "react-aria-components"
 import {
   ColorFieldStateContext,
@@ -57,12 +55,12 @@ import {
   NEUTRAL_TINT_RANGE,
 } from "@/modules/studio/axes/color"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
-import { previewNow, showLive, warmPreview } from "@/modules/studio/live"
+import { useSliderPreview, warmPreview } from "@/modules/studio/live"
 import {
   OptionPreviewScope,
+  popoverPreviewProps,
   useHighlightPreview,
   useOptionPreview,
-  watchPopover,
 } from "@/modules/studio/option-preview"
 
 /** Where row-attached overlays open. */
@@ -165,8 +163,7 @@ export function PanelPopover({
           "absolute! inset-x-0! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-stacked:top-auto! dock-stacked:bottom-(--dock-chrome)! dock-stacked:max-h-[42svh]! dock-stacked:min-h-[calc(100%-var(--dock-chrome))] dock-stacked:rounded-b-none dock-stacked:border-b-0 dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
       )}
       {...props}
-      ref={watchPopover}
-      onPointerLeave={() => showLive(null, { settle: true })}
+      {...popoverPreviewProps}
     >
       {composeRenderProps(children, (children) => (
         <OptionPreviewScope.Provider value>
@@ -236,7 +233,8 @@ export function ColorPickerPopover({
   /** Rows under the hex field — settings that belong to this one color. */
   children?: React.ReactNode
 }) {
-  const preview = (color: Color) => previewNow(() => commit(color))
+  const area = useSliderPreview(commit)
+  const hue = useSliderPreview(commit)
   return (
     <PanelPopover placement={placement} className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
@@ -246,16 +244,14 @@ export function ColorPickerPopover({
           colorSpace="hsb"
           xChannel="saturation"
           yChannel="brightness"
-          onChange={preview}
-          onChangeEnd={commit}
+          {...area}
           className="w-full rounded-xl max-lg:aspect-auto max-lg:h-28 max-lg:shrink-0"
         />
         <ColorSlider
           aria-label="Hue"
           colorSpace="hsb"
           channel="hue"
-          onChange={preview}
-          onChangeEnd={commit}
+          {...hue}
           className="w-full"
         >
           <ColorSliderControl className="h-5 rounded-full" />
@@ -383,9 +379,11 @@ function NeutralSlider({
   track: string
   /** The sample the thumb carries — the color at the current value. */
   thumb: string
+  /** The draft, every step. */
   onChange: (value: number) => void
   onChangeEnd: (value: number) => void
 }) {
+  const drag = useSliderPreview(onChangeEnd)
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between gap-2">
@@ -398,8 +396,12 @@ function NeutralSlider({
         minValue={range.min}
         maxValue={range.max}
         step={range.step}
-        onChange={(v) => onChange(v as number)}
-        onChangeEnd={(v) => onChangeEnd(v as number)}
+        onPointerDownCapture={drag.onPointerDownCapture}
+        onChange={(v) => {
+          onChange(v as number)
+          drag.onChange(v as number)
+        }}
+        onChangeEnd={(v) => drag.onChangeEnd(v as number)}
         className="w-full"
       >
         <SliderControl>
@@ -481,15 +483,61 @@ export function NeutralPickerPopover({
       : value.hue === null && hue === brandHue
         ? "Auto"
         : nearestFamilyName(hue)
+  const preset =
+    value.tint === 0
+      ? PURE_GRAY.id
+      : value.hue === null
+        ? "brand"
+        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
       <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
-        <NeutralSeeds
-          value={value}
-          onChange={onChange}
-          brandHue={brandHue}
-          onPoint={setHovered}
-        />
+        {/* Seeds, same as the brand picker: one tap to a known gray family,
+            then the sliders for anything between them. Tapping while flat
+            also restores the lean, or the tap would do nothing visible. */}
+        <RacToggleButtonGroup
+          aria-label="Neutral presets"
+          selectionMode="single"
+          disallowEmptySelection
+          selectedKeys={preset ? [preset] : []}
+          onSelectionChange={(keys) => {
+            const next = keys.values().next().value
+            if (!next) return
+            if (next === PURE_GRAY.id) return onChange({ ...value, tint: 0 })
+            const picked = NEUTRAL_FAMILIES.find((option) => option.id === next)
+            onChange({ hue: picked?.hue ?? null, tint: value.tint || 1 })
+          }}
+          className="flex justify-between"
+        >
+          {/* Auto is named, not a dot: following the brand is the default
+              and a gray that quietly tracks another color has to say so. */}
+          <RacToggleButton
+            id="brand"
+            onHoverStart={() => setHovered("Auto")}
+            onHoverEnd={() => setHovered(null)}
+            className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
+          >
+            <span
+              className="size-4 rounded-full"
+              style={{ background: sample(brandHue) }}
+            />
+            Auto
+          </RacToggleButton>
+          {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
+            <RacToggleButton
+              key={option.id}
+              id={option.id}
+              aria-label={option.label}
+              onHoverStart={() => setHovered(option.label)}
+              onHoverEnd={() => setHovered(null)}
+              style={{
+                background:
+                  option.hue === null ? sample(0, 0) : sample(option.hue),
+              }}
+              className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
+            />
+          ))}
+        </RacToggleButtonGroup>
 
         <NeutralSlider
           label="Hue"
@@ -498,10 +546,7 @@ export function NeutralPickerPopover({
           range={NEUTRAL_HUE_RANGE}
           track={HUE_TRACK}
           thumb={sample(hue)}
-          onChange={(next) => {
-            setHue(next)
-            previewNow(() => onChange({ ...value, hue: next }))
-          }}
+          onChange={setHue}
           onChangeEnd={(next) => onChange({ ...value, hue: next })}
         />
 
@@ -511,10 +556,7 @@ export function NeutralPickerPopover({
           range={NEUTRAL_TINT_RANGE}
           track={`linear-gradient(to right, ${sample(hue, 0)}, ${sample(hue)})`}
           thumb={sample(hue, tint)}
-          onChange={(next) => {
-            setTint(next)
-            previewNow(() => onChange({ ...value, tint: next }))
-          }}
+          onChange={setTint}
           onChangeEnd={(next) => onChange({ ...value, tint: next })}
         />
 
@@ -525,84 +567,6 @@ export function NeutralPickerPopover({
         </div>
       </DialogContent>
     </PanelPopover>
-  )
-}
-
-/** Seeds, same as the brand picker: one tap to a known gray family, then the
- *  sliders for anything between them. Tapping while flat also restores the
- *  lean, or the tap would do nothing visible. */
-function NeutralSeeds({
-  value,
-  onChange,
-  brandHue,
-  onPoint,
-}: {
-  value: NeutralValue
-  onChange: (value: NeutralValue) => void
-  brandHue: number
-  /** The seed under the pointer, by name. */
-  onPoint: (label: string | null) => void
-}) {
-  const previewProps = useOptionPreview()
-  const preset =
-    value.tint === 0
-      ? PURE_GRAY.id
-      : value.hue === null
-        ? "brand"
-        : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
-  const pick = (id: string): NeutralValue =>
-    id === PURE_GRAY.id
-      ? { ...value, tint: 0 }
-      : {
-          hue: NEUTRAL_FAMILIES.find((option) => option.id === id)?.hue ?? null,
-          tint: value.tint || 1,
-        }
-  const seed = (id: string, label: string) =>
-    mergeProps(
-      previewProps(() => onChange(pick(id))),
-      {
-        onHoverStart: () => onPoint(label),
-        onHoverEnd: () => onPoint(null),
-      },
-    )
-  return (
-    <RacToggleButtonGroup
-      aria-label="Neutral presets"
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={preset ? [preset] : []}
-      onSelectionChange={(keys) => {
-        const next = keys.values().next().value
-        if (next) onChange(pick(next as string))
-      }}
-      className="flex justify-between"
-    >
-      {/* Auto is named, not a dot: following the brand is the default and a
-          gray that quietly tracks another color has to say so. */}
-      <RacToggleButton
-        id="brand"
-        {...seed("brand", "Auto")}
-        className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring pointer-coarse:h-7 selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
-      >
-        <span
-          className="size-4 rounded-full"
-          style={{ background: sample(brandHue) }}
-        />
-        Auto
-      </RacToggleButton>
-      {[{ ...PURE_GRAY, hue: null }, ...NEUTRAL_FAMILIES].map((option) => (
-        <RacToggleButton
-          key={option.id}
-          id={option.id}
-          aria-label={option.label}
-          {...seed(option.id, option.label)}
-          style={{
-            background: option.hue === null ? sample(0, 0) : sample(option.hue),
-          }}
-          className="size-5 cursor-interactive rounded-full focus-reset ring-offset-2 ring-offset-card focus-visible:focus-ring pointer-coarse:size-7 selected:ring-2 selected:ring-accent"
-        />
-      ))}
-    </RacToggleButtonGroup>
   )
 }
 
@@ -703,11 +667,9 @@ function FontLabel({
   highlighted: boolean
   run: () => void
 }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  useHighlightPreview(ref, highlighted, run)
+  useHighlightPreview(highlighted, run)
   return (
     <span
-      ref={ref}
       data-preview-family={family}
       style={{ fontFamily: fontStack(family) }}
     >

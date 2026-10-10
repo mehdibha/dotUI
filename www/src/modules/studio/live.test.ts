@@ -1,3 +1,5 @@
+import { createElement } from "react"
+import { renderToString } from "react-dom/server"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { installFakeWindow } from "@/lib/test-fake-window"
@@ -17,19 +19,6 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-/** A pointer event, as the window's capture phase sees it. */
-const pointer = (
-  type:
-    | "pointerdown"
-    | "pointermove"
-    | "pointerup"
-    | "lostpointercapture"
-    | "contextmenu",
-  pointerId = 1,
-  init: { buttons?: number; pointerType?: string } = {},
-) =>
-  window.dispatchEvent(Object.assign(new Event(type), { pointerId, ...init }))
-
 async function load() {
   const live = await import("./live")
   const selection = await import("./selection")
@@ -41,7 +30,6 @@ async function load() {
   const shown = () => live.getLive()?.radiusPx ?? null
   const listener = vi.fn<() => void>()
   live.subscribeLive(listener)
-  pointer("pointerdown")
   return { live, selection, committed, radius, onChange, shown, listener }
 }
 
@@ -136,122 +124,18 @@ describe("commit", () => {
 })
 
 describe("drag", () => {
-  it("holds the preview against settled ones until it ends", async () => {
-    const { live, onChange, shown } = await load()
-    live.previewNow(onChange(7))
-    live.previewSettled(onChange(5))
-    live.showLive(null, { settle: true })
-    vi.runAllTimers()
-    expect(shown()).toBe(7)
-    onChange(7)()
-    live.previewSettled(onChange(5))
-    vi.runAllTimers()
-    expect(shown()).toBe(5)
-  })
-
-  it("drops when the pointer lifts without a commit", async () => {
-    const { live, onChange, shown } = await load()
-    live.previewNow(onChange(7))
-    pointer("pointerup")
-    expect(shown()).toBe(7)
-    vi.runAllTimers()
-    expect(shown()).toBeNull()
-    live.previewSettled(onChange(5))
-    vi.runAllTimers()
-    expect(shown()).toBe(5)
-  })
-
-  it("holds while another pointer lifts", async () => {
-    const { live, onChange, shown } = await load()
-    live.previewNow(onChange(7))
-    pointer("pointerdown", 2)
-    pointer("pointerup", 2)
-    vi.runAllTimers()
-    expect(shown()).toBe(7)
-    pointer("pointerup")
-    vi.runAllTimers()
-    expect(shown()).toBeNull()
-  })
-
-  it("commits a step made without a pointer: keys, assistive tech", async () => {
-    const { live, selection, onChange, shown } = await load()
-    pointer("pointerup")
-    live.previewNow(onChange(7))
-    expect(shown()).toBeNull()
-    expect(selection.getCurrent().state.radiusPx).toBe(7)
-    live.previewSettled(onChange(5))
-    vi.runAllTimers()
-    expect(shown()).toBe(5)
-  })
-
-  it.each(["contextmenu", "blur", "visibilitychange"])(
-    "forgets the pressed pointers on %s, whose release can go missing",
-    async (type) => {
-      const { live, selection, onChange, shown } = await load()
-      live.previewNow(onChange(7))
-      window.dispatchEvent(new Event(type))
-      vi.runAllTimers()
-      expect(shown()).toBeNull()
-      live.previewNow(onChange(5))
-      expect(shown()).toBeNull()
-      expect(selection.getCurrent().state.radiusPx).toBe(5)
-    },
-  )
-
-  it("keeps a long-press's drag through its context menu", async () => {
+  it("shows each tick at once, and the commit ending it paints at once", async () => {
     const { live, selection, committed, onChange, shown } = await load()
     live.previewNow(onChange(7))
-    pointer("contextmenu", 1, { pointerType: "touch" })
-    vi.runAllTimers()
     expect(shown()).toBe(7)
-    pointer("pointermove", 1, { buttons: 1 })
-    live.previewNow(onChange(5))
-    expect(shown()).toBe(5)
-    expect(selection.getCurrent().state).toEqual(committed)
-  })
-
-  it("holds a pointer that moves still pressed after a blur", async () => {
-    const { live, selection, committed, onChange, shown } = await load()
-    window.dispatchEvent(new Event("blur"))
-    pointer("pointermove", 1, { buttons: 1 })
-    live.previewNow(onChange(5))
-    expect(shown()).toBe(5)
-    expect(selection.getCurrent().state).toEqual(committed)
-  })
-
-  it("forgets a pointer that moves with no button down", async () => {
-    const { live, selection, onChange, shown } = await load()
-    live.previewNow(onChange(7))
-    pointer("pointermove", 1, { buttons: 0 })
-    vi.runAllTimers()
-    expect(shown()).toBeNull()
-    live.previewNow(onChange(5))
-    expect(selection.getCurrent().state.radiusPx).toBe(5)
-  })
-
-  it("forgets a pointer whose capture is lost", async () => {
-    const { live, selection, onChange } = await load()
-    pointer("lostpointercapture")
-    live.previewNow(onChange(5))
-    expect(selection.getCurrent().state.radiusPx).toBe(5)
-  })
-
-  it("tells a drag's preview, and the commit ending it, from the rest", async () => {
-    const { live, onChange } = await load()
-    live.previewNow(onChange(7))
     expect(live.isDragPreview()).toBe(true)
+    expect(selection.getCurrent().state).toEqual(committed)
     onChange(7)()
+    expect(shown()).toBeNull()
     expect(live.isDragPreview()).toBe(true)
     live.previewSettled(onChange(5))
     vi.runAllTimers()
-    expect(live.getLive()?.radiusPx).toBe(5)
-    expect(live.isDragPreview()).toBe(false)
-    live.previewNow(onChange(6))
-    pointer("pointerup")
-    vi.runAllTimers()
-    expect(live.getLive()).toBeNull()
-    expect(live.isDragPreview()).toBe(true)
-    onChange(4)()
+    expect(shown()).toBe(5)
     expect(live.isDragPreview()).toBe(false)
   })
 
@@ -260,11 +144,55 @@ describe("drag", () => {
     live.previewNow(onChange(7))
     live.clearSettled()
     expect(shown()).toBe(7)
-    onChange(7)()
+    live.clearLive()
+    expect(shown()).toBeNull()
+    expect(live.isDragPreview()).toBe(true)
     live.previewSettled(onChange(5))
     vi.runAllTimers()
     live.clearSettled()
     expect(shown()).toBeNull()
+  })
+})
+
+describe("slider", () => {
+  async function slider() {
+    const loaded = await load()
+    let props:
+      | ReturnType<typeof loaded.live.useSliderPreview<number>>
+      | undefined
+    function Probe() {
+      props = loaded.live.useSliderPreview((px: number) =>
+        loaded.onChange(px)(),
+      )
+      return null
+    }
+    renderToString(createElement(Probe))
+    if (!props) throw new Error("not rendered")
+    return { ...loaded, props }
+  }
+
+  it("previews a pointer's drag and commits as it ends", async () => {
+    const { selection, committed, shown, props } = await slider()
+    props.onPointerDownCapture()
+    props.onChange(7)
+    props.onChange(9)
+    expect(shown()).toBe(9)
+    expect(selection.getCurrent().state).toEqual(committed)
+    props.onChangeEnd(9)
+    expect(shown()).toBeNull()
+    expect(selection.getCurrent().state.radiusPx).toBe(9)
+  })
+
+  it("commits a step made without a pointer: keys, assistive tech", async () => {
+    const { selection, shown, props } = await slider()
+    props.onChange(5)
+    expect(shown()).toBeNull()
+    expect(selection.getCurrent().state.radiusPx).toBe(5)
+    props.onPointerDownCapture()
+    props.onChangeEnd(6)
+    props.onChange(4)
+    expect(shown()).toBeNull()
+    expect(selection.getCurrent().state.radiusPx).toBe(4)
   })
 })
 

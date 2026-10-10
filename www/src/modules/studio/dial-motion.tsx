@@ -390,7 +390,6 @@ export function CurveField({
   const [editing, setEditing] = useState(false)
   const custom = editing || !name
   const presets = CURVES.filter((c) => springs || c.curve.type === "easing")
-  const named = (next: string) => presets.find((c) => c.value === next)?.curve
   return (
     <>
       <DialChips
@@ -398,11 +397,9 @@ export function CurveField({
         value={custom ? "custom" : name}
         onChange={(next) => {
           setEditing(next === "custom")
-          const curve = named(next)
-          if (curve) onChange(curve)
+          const named = presets.find((c) => c.value === next)
+          if (named) onChange(named.curve)
         }}
-        // Hovering Custom keeps the curve; only a pick opens the editor.
-        preview={(next) => onChange(named(next) ?? value)}
         options={[
           ...presets.map((c) => ({ value: c.value, label: c.label })),
           { value: "custom", label: "Custom" },
@@ -566,7 +563,6 @@ export function DialMotion({
               label="Phase"
               value={leg}
               onChange={setPhase}
-              preview={false}
               options={phases}
             />
           )}

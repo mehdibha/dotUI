@@ -35,7 +35,6 @@ import {
   DialTrigger,
   SegmentedGroup,
 } from "../dial"
-import { useOptionPreview } from "../option-preview"
 import { PanelPopover, PanelPopoverTitle } from "../rows"
 import type { Studio } from "../state"
 
@@ -312,9 +311,6 @@ function PrimaryPanel({
 }) {
   const { state, setState } = studio
   const primary = primaryValue(state)
-  const previewProps = useOptionPreview()
-  const choose = (source: PrimaryColorSource) =>
-    setState({ ...state, ...withSource(PRIMARY_LEAVES, source) })
   return (
     <>
       <RacToggleButtonGroup
@@ -324,7 +320,11 @@ function PrimaryPanel({
         selectedKeys={primary === "mixed" ? [] : [primary]}
         onSelectionChange={(keys) => {
           const next = keys.values().next().value
-          if (next) choose(next as PrimaryColorSource)
+          if (next)
+            setState({
+              ...state,
+              ...withSource(PRIMARY_LEAVES, next as PrimaryColorSource),
+            })
         }}
         className="flex flex-col gap-1.5"
       >
@@ -332,7 +332,6 @@ function PrimaryPanel({
           <RacToggleButton
             key={choice.id}
             id={choice.id}
-            {...previewProps(() => choose(choice.id))}
             className={cn(DIAL_ROW, DIAL_PRESS, "selected:tint-10")}
           >
             {({ isSelected }) => (

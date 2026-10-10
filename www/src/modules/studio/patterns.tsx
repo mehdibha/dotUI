@@ -4,8 +4,8 @@
    palette color as a dot. */
 
 import {
-  ToggleButton as RacToggleButton,
-  ToggleButtonGroup as RacToggleButtonGroup,
+  ListBox as RacListBox,
+  ListBoxItem as RacListBoxItem,
 } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
@@ -50,16 +50,19 @@ export function CardGrid({
 }) {
   const previewProps = useOptionPreview()
   return (
-    <RacToggleButtonGroup
+    <RacListBox
       aria-label={label}
+      layout="grid"
       selectionMode="single"
+      disallowEmptySelection
       selectedKeys={value ? [value] : []}
       onSelectionChange={(keys) => {
+        if (keys === "all") return
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
       className={cn(
-        "grid gap-1.5",
+        "grid gap-1.5 outline-hidden",
         // The docked popover spans a portrait screen: three across keeps it short.
         columns === 3
           ? "grid-cols-3 dock-side:grid-cols-2"
@@ -67,9 +70,10 @@ export function CardGrid({
       )}
     >
       {options.map((option) => (
-        <RacToggleButton
+        <RacListBoxItem
           key={option.id}
           id={option.id}
+          textValue={option.label}
           {...previewProps(() => onChange(option.id))}
           className="group/card flex cursor-interactive flex-col gap-2.5 rounded-lg tint-5 p-3 text-left focus-reset transition-colors hover:tint-10 focus-visible:focus-ring selected:tint-10 selected:inset-ring-1 selected:inset-ring-fg/25"
         >
@@ -80,8 +84,8 @@ export function CardGrid({
             </span>
           </span>
           {option.children}
-        </RacToggleButton>
+        </RacListBoxItem>
       ))}
-    </RacToggleButtonGroup>
+    </RacListBox>
   )
 }
