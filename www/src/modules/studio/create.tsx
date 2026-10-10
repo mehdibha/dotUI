@@ -84,7 +84,8 @@ export function StudioPanel({ className }: { className?: string }) {
   const navigate = routeApi.useNavigate()
   const [naming, setNaming] = useState<NameRequest>()
   const [deleting, setDeleting] = useState<DesignSystemDoc>()
-  const [importing, setImporting] = useState(false)
+  // Undefined until first opened; then kept mounted so the dialog fades out.
+  const [importing, setImporting] = useState<boolean>()
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const sections = useMemo(() => pickerSections(workspace), [workspace])
@@ -96,11 +97,14 @@ export function StudioPanel({ className }: { className?: string }) {
     })
   }
 
-  /** Closes the picker for a dialog, which opens once focus is back on the
-   *  picker's trigger, to return there. */
+  /** Closes the picker for a dialog, which opens with focus on the picker's
+   *  trigger, to return there: the pressed item is gone by then. */
   function afterPicker(open: () => void) {
     setGalleryOpen(false)
-    requestAnimationFrame(open)
+    requestAnimationFrame(() => {
+      triggerRef.current?.focus()
+      open()
+    })
   }
 
   const askName = (request: NameRequest) =>
@@ -246,9 +250,12 @@ export function StudioPanel({ className }: { className?: string }) {
         onDelete={remove}
         onClose={() => setDeleting(undefined)}
       />
-      {importing && (
+      {importing !== undefined && (
         <Suspense fallback={null}>
-          <ImportDialog onClose={() => setImporting(false)} />
+          <ImportDialog
+            isOpen={importing}
+            onClose={() => setImporting(false)}
+          />
         </Suspense>
       )}
     </div>

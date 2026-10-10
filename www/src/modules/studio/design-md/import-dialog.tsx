@@ -72,11 +72,17 @@ async function fetchText(url: string, signal: AbortSignal): Promise<string> {
   return text
 }
 
-export default function ImportDialog({ onClose }: { onClose: () => void }) {
+export default function ImportDialog({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) {
   return (
     // Not dismissed by a press outside, like the name dialog.
     <Modal
-      isOpen
+      isOpen={isOpen}
       onOpenChange={(isOpen) => !isOpen && onClose()}
       isDismissable={false}
       className="sm:max-w-lg"
@@ -306,8 +312,11 @@ function Report({ result }: { result: DesignMdImport }) {
                         <span className="min-w-0 flex-1 truncate">
                           {item.label}
                         </span>
-                        <span className="shrink-0 text-fg-muted tabular-nums">
-                          {item.delta ?? item.value ?? item.result}
+                        <span
+                          title={detail(item)}
+                          className="max-w-1/2 shrink-0 truncate text-fg-muted tabular-nums"
+                        >
+                          {detail(item)}
                         </span>
                       </li>
                     ))}
@@ -327,6 +336,14 @@ function Report({ result }: { result: DesignMdImport }) {
       </div>
     </div>
   )
+}
+
+// What the file said, and what was applied when it differs.
+function detail({ delta, value, result }: ImportItem) {
+  if (delta) return delta
+  return value && result && value !== result
+    ? `${value} → ${result}`
+    : (value ?? result)
 }
 
 function byCategory(items: ImportItem[]): [ImportCategory, ImportItem[]][] {
