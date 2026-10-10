@@ -4,7 +4,9 @@ import {
   lstarOf,
   NEUTRAL_TINT_PEAK,
   NEUTRAL_TINT_SHAPE,
+  SEED_SNAP_BOUND,
   STEPS,
+  toHex,
   toOklch,
   WHISPER_LINE,
 } from "@dotui/colors"
@@ -83,6 +85,8 @@ const LOOSE_PAGE_NOTE =
 // A dark page token that the file calls its default canvas wins.
 const DARK_DEFAULT_NOTE =
   /\b(default|primary|main|dominant) (?:[\w-]+ ){0,2}(canvas|background|page floor)\b/i
+// "Main canvas in dark mode" only says which mode the token belongs to.
+const MODE_QUALIFIED = /\bdark (mode|theme|sections?)\b/i
 const BRAND_NOTES = [
   /primary (buttons?|actions?|ctas?)\b|button fill|filled[- ]cta|primary filled/i,
   /\b(primary|brand)\b/i,
@@ -101,11 +105,19 @@ const BRAND_NAMES = [
   "tertiary",
   "secondary",
 ]
-const BRAND_PREFIXES = ["accent-", "brand-", "link-", "text-link-", "action-"]
+const BRAND_PREFIXES = [
+  "accent-",
+  "brand-",
+  "primary-",
+  "link-",
+  "text-link-",
+  "action-",
+]
 const NOT_BRAND_WORD =
   /\b(success|warning|error|danger|info|caution|critical|positive|negative|destructive|sale|fallback)\b/
+// Reds read as danger, so a guess never lands on one.
 const NOT_BRAND_ANY =
-  /^(surface|hairline|border|on|canvas|bg|background|ink|text|body|muted?|shadow|overlay)(-|$)|ring|focus|terminal|mockup|syntax|code|chart/
+  /^(surface|hairline|border|on|canvas|bg|background|ink|text|body|muted?|shadow|overlay|red|rose|crimson)(-|$)|ring|focus|terminal|mockup|syntax|code|chart/
 // Below this L* a chromatic button reads as ink, not a brand hue.
 const INK_LSTAR = 15
 // A guessed brand must clear the neutral line the fidelity check uses.
@@ -125,6 +137,12 @@ const usable = (t: ColorToken) =>
   !STATE_SUFFIX.test(t.key) &&
   !GRADIENT.test(t.key)
 
+// A numbered palette's mid step stands for the hue.
+const stepGap = (key: string) => {
+  const step = /-(\d{2,3})$/.exec(key)?.[1]
+  return step ? Math.abs(Number(step) - 500) : 0
+}
+
 // A brand-named token first; else, when allowed, any other chromatic token.
 function brandCandidate(
   tokens: ColorToken[],
@@ -133,7 +151,9 @@ function brandCandidate(
   const named = [
     ...BRAND_NAMES.map((name) => tokens.find((t) => t.key === name)),
     ...BRAND_PREFIXES.flatMap((prefix) =>
-      tokens.filter((t) => t.key.startsWith(prefix)),
+      tokens
+        .filter((t) => t.key.startsWith(prefix))
+        .sort((a, b) => stepGap(a.key) - stepGap(b.key)),
     ),
   ].find((t): t is ColorToken => !!t && usable(t))
   if (named) return { token: named, named: true }
@@ -168,22 +188,40 @@ export function mapColor(
 
   // Page: the alias, unless the colors prose calls another token the page.
   let page = find(PAGE)
+  // The light page, kept for lightBg when a dark canvas is the default.
+  let lightPage: ColorToken | undefined
   if (!page?.note || !PAGE_NOTE.test(page.note)) {
     const named =
-      noted(PAGE_NOTE) ??
-      (proseOnly ? noted(LOOSE_PAGE_NOTE) : undefined) ??
-      DARK_PAGE.map((name) => tokens.find((t) => t.key === name))
-        .filter((t) => t?.note && DARK_DEFAULT_NOTE.test(t.note))
-        .find((t) => !!solid(t))
+      noted(PAGE_NOTE) ?? (proseOnly ? noted(LOOSE_PAGE_NOTE) : undefined)
     if (named) page = named
+    else if (!page?.note || !DARK_DEFAULT_NOTE.test(page.note)) {
+      const dark = DARK_PAGE.map((name) =>
+        tokens.find((t) => t.key === name),
+      ).find((t) => {
+        const c = solid(t)
+        return (
+          !!c &&
+          !!t?.note &&
+          DARK_DEFAULT_NOTE.test(t.note) &&
+          !MODE_QUALIFIED.test(t.note) &&
+          lstarOf(c.oklch) < 50
+        )
+      })
+      if (dark) {
+        lightPage = page
+        page = dark
+      }
+    }
   }
   const pageColor = solid(page)
   const pageL = pageColor && lstarOf(pageColor.oklch)
   const mode: Mode = pageL === undefined || pageL >= 50 ? "light" : "dark"
   const darkPage = mode === "light" ? find(DARK_PAGE) : undefined
   const darkColor = solid(darkPage)
-  if (page) consumed.add(page.key)
-  if (darkPage) consumed.add(darkPage.key)
+  const lightColor = mode === "light" ? pageColor : solid(lightPage)
+  const lightL = lightColor && lstarOf(lightColor.oklch)
+  const lightToken = mode === "light" ? page : lightPage
+  for (const t of [page, darkPage, lightPage]) if (t) consumed.add(t.key)
 
   // Brand, and which source the buttons fill from.
   const btnKey = buttonKey(components)
@@ -196,9 +234,7 @@ export function mapColor(
     // Prose-only files name roles in the bullet, not the token.
     const primary =
       tokens.find((t) => t.key === "primary" && solid(t)) ??
-      BRAND_NOTES.map((re) => noted(re, (t) => chromatic(t.color))).find(
-        (t) => !!t,
-      )
+      BRAND_NOTES.map((re) => noted(re, usable)).find((t) => !!t)
     fill = solid(primary)
     fillToken = primary?.key
   }
@@ -308,41 +344,43 @@ export function mapColor(
     unmappedRole(ctx, token, "the studio has no info seed")
   }
 
-  if (page && pageColor && pageL !== undefined) {
+  const hasLight =
+    !!lightToken && !!lightColor && lightL !== undefined && lightL >= 50
+  if (hasLight) {
+    const rounded = round(lightL, 0.5)
+    const value = clamp(rounded, 90, 100)
+    if (value !== DEFAULTS.lightBg) state.lightBg = value
+    add(ctx, statusOf(value === rounded), "color", {
+      id: "page:light",
+      label: "Light page lightness",
+      source: `colors.${lightToken.name}`,
+      keys: ["lightBg"],
+      value: lightColor.hex,
+      result: `L* ${value}`,
+      delta:
+        value === rounded ? undefined : `L* ${lightL.toFixed(1)} → ${value}`,
+    })
+  }
+  if (page && pageColor && pageL !== undefined && mode === "dark") {
     const rounded = round(pageL, 0.5)
-    const source = `colors.${page.name}`
-    const delta = (value: number) =>
-      value === rounded ? undefined : `L* ${pageL.toFixed(1)} → ${value}`
-    if (mode === "light") {
-      const value = clamp(rounded, 90, 100)
-      if (value !== DEFAULTS.lightBg) state.lightBg = value
-      add(ctx, statusOf(value === rounded), "color", {
-        id: "page:light",
-        label: "Light page lightness",
-        source,
-        keys: ["lightBg"],
-        value: pageColor.hex,
-        result: `L* ${value}`,
-        delta: delta(value),
-      })
-    } else {
-      const value = clamp(rounded, 0, 20)
-      if (value !== DEFAULTS.darkBg) state.darkBg = value
-      add(ctx, statusOf(value === rounded), "color", {
-        id: "page:dark",
-        label: "Dark page lightness",
-        source,
-        keys: ["darkBg"],
-        value: pageColor.hex,
-        result: value === 0 ? "OLED black" : `L* ${value}`,
-        delta: delta(value),
-      })
+    const value = clamp(rounded, 0, 20)
+    if (value !== DEFAULTS.darkBg) state.darkBg = value
+    add(ctx, statusOf(value === rounded), "color", {
+      id: "page:dark",
+      label: "Dark page lightness",
+      source: `colors.${page.name}`,
+      keys: ["darkBg"],
+      value: pageColor.hex,
+      result: value === 0 ? "OLED black" : `L* ${value}`,
+      delta:
+        value === rounded ? undefined : `L* ${pageL.toFixed(1)} → ${value}`,
+    })
+    if (!hasLight)
       add(ctx, "approximated", "color", {
         id: "mode-derived:light",
         label:
           "Light mode is generated from the same seeds; the file documents dark only",
       })
-    }
   }
   if (darkPage && darkColor) {
     const darkL = lstarOf(darkColor.oklch)
@@ -498,17 +536,21 @@ function checkFidelity(
   mode: Mode,
 ) {
   const theme = themeOf(ctx.state)
-  if (
-    theme.report.warnings.some((w) =>
-      w.startsWith("accent: seed lightness sits outside the solid job window"),
+  // Only the accent is pinned: the engine re-solves status seeds.
+  for (const name of Object.keys(STATUS_KEYS)) {
+    const delta = theme.report.seedDelta[name] ?? 0
+    const clamped = theme.report.warnings.some((w) =>
+      w.startsWith(`${name}: seed lightness sits outside the solid job window`),
     )
-  ) {
-    const at = ctx.report.mapped.findIndex((item) => item.id === "brand")
+    if (delta <= SEED_SNAP_BOUND && !clamped) continue
+    const at = ctx.report.mapped.findIndex((i) => i.id === `status:${name}`)
     const [item] = at === -1 ? [] : ctx.report.mapped.splice(at, 1)
+    const solid = theme.light.scales[name]?.["700"]
     if (item)
       ctx.report.approximated.push({
         ...item,
-        delta: `ΔE ${(theme.report.seedDelta.accent ?? 0).toFixed(3)}`,
+        result: solid ? toHex(toOklch(solid)) : item.result,
+        delta: `ΔE ${delta.toFixed(3)}`,
       })
   }
 

@@ -20,6 +20,7 @@ export type { ThemeOptions } from "./schema"
 export {
   NEUTRAL_TINT_PEAK,
   NEUTRAL_TINT_SHAPE,
+  SEED_SNAP_BOUND,
   STATUS_SEEDS,
   STEPS,
   type StatusName,

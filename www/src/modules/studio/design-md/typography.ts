@@ -5,7 +5,7 @@ import {
 } from "@/lib/fonts"
 import type { FontCategory, FontOption } from "@/lib/fonts"
 
-import { add, statusOf } from "./context"
+import { add, capitalize, statusOf } from "./context"
 import type { Ctx } from "./context"
 import { dim, escapeRegExp, isRecord, proseFonts, sentences } from "./parse"
 import type { FontRole } from "./parse"
@@ -172,11 +172,11 @@ export function resolveFamily(
     const font = catalogFont(entry)
     if (!font || (role === "mono" && font.category !== "mono")) continue
     return i === 0
-      ? { family: font.family, exact: true, label: "Font from the file" }
+      ? { family: font.family, exact: true, label: "from the file" }
       : {
           family: font.family,
           exact: false,
-          label: "Used the file's listed fallback",
+          label: "the file's listed fallback",
         }
   }
 
@@ -213,14 +213,14 @@ export function resolveFamily(
           return {
             family: CATALOG.get(normalizeFamily(family))?.family ?? family,
             exact: false,
-            label: "Substitute named in the file",
+            label: "substitute named in the file",
           }
       }
 
   for (const entry of entries)
     for (const [pattern, family] of ALIASES)
       if (pattern.test(entry) && categoryOf(family) === want)
-        return { family, exact: false, label: "Closest open alternative" }
+        return { family, exact: false, label: "closest open alternative" }
   const fallback =
     want === "mono"
       ? DEFAULT_MONO_FAMILY
@@ -230,7 +230,7 @@ export function resolveFamily(
   return {
     family: fallback,
     exact: false,
-    label: "No open match; used the default",
+    label: "no open match, used the default",
   }
 }
 
@@ -343,7 +343,7 @@ export function mapTypography(ctx: Ctx, proseOnly: boolean) {
     }
     add(ctx, statusOf(resolution.exact && !prosey), "typography", {
       id: `font:${role}`,
-      label: resolution.label,
+      label: `${capitalize(role)} font: ${resolution.label}`,
       source: entry.source,
       keys: [ROLE_KEY[role]],
       value: entry.stack,

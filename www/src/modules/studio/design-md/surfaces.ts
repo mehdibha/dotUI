@@ -90,6 +90,10 @@ export function mapSurfaces(
       !cells.some((cell) => CARD_ROW_EXCLUDED.test(cell)),
   )
   const cardRowLayers = cardRow?.flatMap(cellShadows) ?? []
+  // A card row counts only with a parsed shadow or a literal none.
+  const cardRowSays =
+    cardRowLayers.length > 0 ||
+    !!cardRow?.some((cell) => /^`?none`?$/i.test(cell))
   const cardShadow = fam.card.find((c) => typeof c.props.shadow === "string")
   const cardShadowCss = String(cardShadow?.props.shadow ?? "")
   const cardShadowLayers = shadows(cardShadowCss)
@@ -145,7 +149,7 @@ export function mapSurfaces(
   let shadow:
     | { tier: string; exact: boolean; source: string; value?: string }
     | undefined
-  if (cardRow)
+  if (cardRow && cardRowSays)
     shadow = {
       tier: shadowTier(strengthOf(cardRowLayers)),
       exact: true,

@@ -131,11 +131,16 @@ export function mapShape(ctx: Ctx, components: Component[], fam: Families) {
   if (known.includes("control") && known.every((r) => targets[r] === 0)) {
     const square = SHAPE_CHARACTERS.find((c) => c.id === "square")?.vector
     Object.assign(state, square)
+    // The control row also owns the roles the file doesn't size.
+    const others = Object.keys(square ?? {}).filter(
+      (key) => !known.some((role) => ROLE_KEY[role] === key),
+    ) as (keyof typeof state)[]
     for (const role of known)
       add(ctx, exactness(true), "shape", {
         id: `radius:${role}`,
         label: `Square ${role}s${note}`,
-        keys: [ROLE_KEY[role]],
+        keys:
+          role === "control" ? [ROLE_KEY[role], ...others] : [ROLE_KEY[role]],
         value: "0px",
         result: "None",
       })
@@ -191,10 +196,12 @@ export function mapShape(ctx: Ctx, components: Component[], fam: Families) {
         if (!rung || target === undefined) continue
         const fitted = radius * ratioOf(rung)
         const exact = Math.abs(fitted - target) <= 0.5
+        // Without a panel target, the panel follows the card a rung up.
+        const derived = role === "card" && !panel
         add(ctx, exactness(exact), "shape", {
           id: `radius:${role}`,
-          label: `${capitalize(role)} radius${note}`,
-          keys: [ROLE_KEY[role]],
+          label: `${capitalize(role)} radius${derived ? ", panels follow" : ""}${note}`,
+          keys: derived ? ["roleCard", "rolePanel"] : [ROLE_KEY[role]],
           value: px(target),
           result: rung,
           delta: exact ? undefined : `${px(fitted)} vs ${px(target)}`,

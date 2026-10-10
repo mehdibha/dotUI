@@ -122,8 +122,11 @@ const PARAM_IDS =
 
 function expectInvariants(result: DesignMdImport) {
   expect(validate(result.state).ok).toBe(true)
-  for (const key of Object.keys(result.state))
+  const reported = new Set(items(result).flatMap((item) => item.keys ?? []))
+  for (const key of Object.keys(result.state)) {
     expect(Object.hasOwn(SCHEMA, key)).toBe(true)
+    expect([...reported]).toContain(key)
+  }
   for (const item of items(result)) {
     expect(item.id).toMatch(/^[a-z-]+(:[a-z0-9-]+)?$/)
     expect(FIXED_IDS.has(item.id) || PARAM_IDS.test(item.id)).toBe(true)
@@ -693,6 +696,160 @@ components:
     expect(resolveFamily("ABC Favorit", "body", resend, pair).family).toBe(
       "Geist",
     )
+  })
+
+  it("status seeds the engine moves are approximated", async () => {
+    const full = await importDesignMd(fixture("light-full"))
+    expect(statusOf(full, "status:warning")).toBe("approximated")
+    expect(itemOf(full, "status:warning")?.delta).toMatch(/^ΔE 0\.0[3-9]/)
+    const r = await importDesignMd(
+      md(`
+name: Fixture Dark Status
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+  success: "#052e16"
+  warning: "#ffff00"
+  error: "#450a0a"
+`),
+    )
+    expectInvariants(r)
+    for (const name of ["success", "warning", "danger"])
+      expect(statusOf(r, `status:${name}`)).toBe("approximated")
+  })
+
+  it("a mode-qualified dark canvas keeps a light file light", async () => {
+    for (const [colors, lightHex] of [
+      [
+        `
+  canvas: "#ffffff"
+  canvas-dark: "#0b0b0c"
+  ink: "#111111"`,
+        "#ffffff",
+      ],
+      [
+        `
+  background: "#fafafa"
+  background-dark: "#09090b"`,
+        "#fafafa",
+      ],
+    ] as const) {
+      const notes = colors.includes("canvas-dark")
+        ? "- **Canvas** (`{colors.canvas}`): Main canvas in light mode.\n- **Canvas Dark** (`{colors.canvas-dark}`): Main canvas in dark mode.\n"
+        : "- **Background Dark** (`{colors.background-dark}`): Primary background for dark mode.\n"
+      const r = await importDesignMd(
+        md(
+          `name: Fixture Two Modes\ncolors:\n  primary: "#3b5bdb"${colors}`,
+          `## Colors\n\n${notes}`,
+        ),
+      )
+      expectInvariants(r)
+      expect(statusOf(r, "page:light")).toBeDefined()
+      expect(itemOf(r, "page:light")?.value).toBe(lightHex)
+      expect(statusOf(r, "page:dark")).toBe("approximated")
+      expect(statusOf(r, "mode-derived:light")).toBeUndefined()
+      expect(itemOf(r, "color-role:ink")?.result ?? "").not.toMatch(/ 50$/)
+    }
+    const fafafa = await importDesignMd(
+      md(
+        'name: F\ncolors:\n  background: "#fafafa"\n  background-dark: "#09090b"',
+      ),
+    )
+    expect(fafafa.state.lightBg).toBe(
+      Math.round(lstarOf(toOklch("#fafafa")) * 2) / 2,
+    )
+  })
+
+  it("a dark default canvas keeps the light page for lightBg", async () => {
+    const r = await importDesignMd(
+      md(
+        'name: Fixture Dark First\ncolors:\n  primary: "#3b5bdb"\n  canvas: "#f5f5f5"\n  canvas-dark: "#0b0b0c"',
+        "## Colors\n\n- **Canvas Dark** (`{colors.canvas-dark}`): The default canvas; the site is dark-first.\n",
+      ),
+    )
+    expectInvariants(r)
+    expect(statusOf(r, "page:dark")).toBe("mapped")
+    expect(r.state.lightBg).toBe(
+      Math.round(lstarOf(toOklch("#f5f5f5")) * 2) / 2,
+    )
+    expect(statusOf(r, "mode-derived:light")).toBeUndefined()
+  })
+
+  it("a derived panel rung is listed on the card row", async () => {
+    const full = await importDesignMd(fixture("light-full"))
+    expect(itemOf(full, "radius:card")?.keys).toContain("rolePanel")
+    const r = await importDesignMd(
+      md(`
+name: Fixture Card Only
+colors:
+  primary: "#3b5bdb"
+  canvas: "#ffffff"
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    rounded: 6px
+  card:
+    rounded: 0px
+`),
+    )
+    expectInvariants(r)
+    expect(r.state.rolePanel).toBe("none")
+    expect(itemOf(r, "radius:card")?.keys).toContain("rolePanel")
+  })
+
+  it("a nested primary palette is the brand, at its mid step", async () => {
+    const r = await importDesignMd(
+      md(`
+name: Fixture Nested
+colors:
+  canvas: "#ffffff"
+  red:
+    500: "#e03131"
+  primary:
+    600: "#4c4fd6"
+    500: "#5b5ee8"
+  blue:
+    500: "#1c7ed6"
+`),
+    )
+    expectInvariants(r)
+    expect(r.state.brand).toBe("#5b5ee8")
+    expect(statusOf(r, "exact-role-color:primary-600")).toBeUndefined()
+  })
+
+  it("an unparseable card row shadow is not an exact flat", async () => {
+    const r = await importDesignMd(
+      md(
+        'name: Fixture Bad Shadow\ncolors:\n  primary: "#3b5bdb"\n  canvas: "#ffffff"',
+        "## Elevation & Depth\n\n| Level | Treatment | Use |\n|---|---|---|\n| 1 | `0 1px NaNpx rgba(0,0,0,1e9)` | Cards |\n",
+      ),
+    )
+    expect(statusOf(r, "surface-shadow")).not.toBe("mapped")
+    const none = await importDesignMd(
+      md(
+        'name: Fixture No Shadow\ncolors:\n  primary: "#3b5bdb"\n  canvas: "#ffffff"',
+        "## Elevation & Depth\n\n| Level | Treatment | Use |\n|---|---|---|\n| 0 | none | Cards |\n",
+      ),
+    )
+    expect(itemOf(none, "surface-shadow")?.result).toBe("flat")
+  })
+
+  it("a prose brand guess clears the chroma and L* floor", async () => {
+    const r = await importDesignMd(`# Fixture Prose Ink
+
+## Colors
+
+- **Abyss** (\`#001115\`): Primary button fill
+- **Paper** (\`#ffffff\`): Page background
+- **Teal** (\`#0f9fb5\`): Links and highlights
+`)
+    expect(r.state.brand).not.toBe("#001115")
+  })
+
+  it("font rows name the role", async () => {
+    const r = await importDesignMd(fixture("light-full"))
+    expect(itemOf(r, "font:body")?.label).toMatch(/^Body font/)
+    expect(itemOf(r, "font:heading")?.label).toMatch(/^Heading font/)
   })
 
   it("proseFonts: the formats prose-only files use", () => {
